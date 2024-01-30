@@ -13,6 +13,6 @@
 
 class CEventParams;
 
-int EventProperties_Gesture( CEventParams *params );
+int EventProperties_Gesture(CEventParams *params);
 
 #endif // EVENTPROPERTIES_GESTURE_H

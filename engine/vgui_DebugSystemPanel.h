@@ -23,18 +23,18 @@ class CDebugOptionsPanel;
 class CDebugSystemPanel : public vgui::Panel
 {
 	typedef vgui::Panel BaseClass;
-public:
 
-	CDebugSystemPanel( vgui::Panel *parent, char const *panelName );
+public:
+	CDebugSystemPanel(vgui::Panel *parent, char const *panelName);
 
 	// Trap visibility so that we can force the cursor on
-	virtual void SetVisible( bool state );
-	virtual void OnCommand( char const *command );
+	virtual void SetVisible(bool state);
+	virtual void OnCommand(char const *command);
 
 private:
-	CDebugMenuButton	*m_pDebugMenu;
+	CDebugMenuButton *m_pDebugMenu;
 
-	vgui::DHANDLE< CDebugOptionsPanel >	m_hDebugOptions;
+	vgui::DHANDLE<CDebugOptionsPanel> m_hDebugOptions;
 };
 
 #endif // VGUI_DEBUGSYSTEMPANEL_H

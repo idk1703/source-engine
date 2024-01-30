@@ -18,21 +18,18 @@
 #pragma once
 #endif
 
-
 /// Set the parent of a given control point on a given effect to the index of another control point. This is
 /// in fact entirely redundant given the function is actually on the CNewParticleEffect, but is included here
 /// for uniformity of interface.
-void CParticleProperty::SetControlPointParent( CNewParticleEffect *pEffect, int whichControlPoint, int parentIdx )
+void CParticleProperty::SetControlPointParent(CNewParticleEffect *pEffect, int whichControlPoint, int parentIdx)
 {
 	pEffect->SetControlPointParent(whichControlPoint, parentIdx);
 }
 
 /// Given an index, return a pointer to the relevant particle effect structure. For convenience.
-CNewParticleEffect *CParticleProperty::GetParticleEffectFromIdx( int idx )
+CNewParticleEffect *CParticleProperty::GetParticleEffectFromIdx(int idx)
 {
 	return m_ParticleEffects[idx].pParticleEffect.GetObject();
 }
-
-
 
 #endif // #ifndef PARTICLEPROPERTY_INLINES_H

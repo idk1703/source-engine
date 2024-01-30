@@ -15,7 +15,6 @@
 class CBoneList
 {
 public:
-
 	CBoneList();
 
 	void Release();
@@ -23,19 +22,17 @@ public:
 	static CBoneList *Alloc();
 
 public:
-
-	int			m_nBones;
-	Vector		m_vecPos[ MAXSTUDIOBONES ];
-	Quaternion	m_quatRot[ MAXSTUDIOBONES ];
+	int m_nBones;
+	Vector m_vecPos[MAXSTUDIOBONES];
+	Quaternion m_quatRot[MAXSTUDIOBONES];
 
 private:
-	bool		m_bShouldDelete;
+	bool m_bShouldDelete;
 };
 
 class CFlexList
 {
 public:
-
 	CFlexList();
 
 	void Release();
@@ -43,12 +40,11 @@ public:
 	static CFlexList *Alloc();
 
 public:
-
-	int			m_nNumFlexes;
-	float		m_flexWeights[ MAXSTUDIOFLEXCTRL ];
+	int m_nNumFlexes;
+	float m_flexWeights[MAXSTUDIOFLEXCTRL];
 
 private:
-	bool		m_bShouldDelete;
+	bool m_bShouldDelete;
 };
 
 #endif // BONELIST_H

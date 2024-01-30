@@ -52,21 +52,23 @@ void print_vec(float *vec, int len, char *name);
 unsigned int be_int(unsigned int i);
 unsigned int le_int(unsigned int i);
 
-
 unsigned short be_short(unsigned short s);
 unsigned short le_short(unsigned short s);
 
-/** Speex wrapper for calloc. To do your own dynamic allocation, all you need to do is replace this function, speex_realloc and speex_free */
-void *speex_alloc (int size);
+/** Speex wrapper for calloc. To do your own dynamic allocation, all you need to do is replace this function,
+ * speex_realloc and speex_free */
+void *speex_alloc(int size);
 
-/** Speex wrapper for realloc. To do your own dynamic allocation, all you need to do is replace this function, speex_alloc and speex_free */
-void *speex_realloc (void *ptr, int size);
+/** Speex wrapper for realloc. To do your own dynamic allocation, all you need to do is replace this function,
+ * speex_alloc and speex_free */
+void *speex_realloc(void *ptr, int size);
 
-/** Speex wrapper for calloc. To do your own dynamic allocation, all you need to do is replace this function, speex_realloc and speex_alloc */
-void speex_free (void *ptr);
+/** Speex wrapper for calloc. To do your own dynamic allocation, all you need to do is replace this function,
+ * speex_realloc and speex_alloc */
+void speex_free(void *ptr);
 
 /** Speex wrapper for mem_move */
-void *speex_move (void *dest, void *src, int n);
+void *speex_move(void *dest, void *src, int n);
 
 void speex_error(char *str);
 

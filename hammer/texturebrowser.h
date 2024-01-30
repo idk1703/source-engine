@@ -9,20 +9,20 @@
 #define TEXTUREBROWSER_H
 #pragma once
 
-
 #include "resource.h"
 #include "AutoSelCombo.h"
 #include "texturewindow.h"
 
-
 class CTextureBrowser : public CDialog
 {
 public:
-
 	CTextureBrowser(CWnd *pParent);
 
 	//{{AFX_DATA(CTextureBrowser)
-	enum { IDD = IDD_TEXTURES };
+	enum
+	{
+		IDD = IDD_TEXTURES
+	};
 	//}}AFX_DATA
 
 	void SetInitialTexture(LPCTSTR);
@@ -36,7 +36,6 @@ public:
 	CTextureWindow m_cTextureWindow; // dvs: make protected
 
 protected:
-
 	//{{AFX_MSG(CTextureBrowser)
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnSelendokTexturesize();
@@ -66,14 +65,14 @@ protected:
 
 	static CStringArray m_FilterHistory;
 	static int m_nFilterHistory;
-	static char m_szLastKeywords[MAX_PATH];	// The text in the keywords combo when the user last exited the browser.
+	static char m_szLastKeywords[MAX_PATH]; // The text in the keywords combo when the user last exited the browser.
 
 	CComboBox m_cSizeList;
 	CStatic m_cCurName;
 	CStatic m_cCurDescription;
 	CButton m_cUsed;
 	char szInitialTexture[128];
-	char m_szNameFilter[128];				// Overrides the name filter history for a single browser session.
+	char m_szNameFilter[128]; // Overrides the name filter history for a single browser session.
 	DWORD m_uLastFilterChange;
 	BOOL m_bFilterChanged;
 	BOOL m_bUsed;
@@ -85,16 +84,15 @@ protected:
 	CButton m_FilterEnvMask;
 	CButton m_ShowErrors;
 
-	TextureWindowTexList m_TextureSubList;	// Holds a specific sublist of textures to browse.
+	TextureWindowTexList m_TextureSubList; // Holds a specific sublist of textures to browse.
 };
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns the name of the currently selected texture.
 //-----------------------------------------------------------------------------
 CString CTextureBrowser::GetCurTexture(void)
 {
-	return(CString(m_cTextureWindow.szCurTexture));
+	return (CString(m_cTextureWindow.szCurTexture));
 }
 
 #endif // TEXTUREBROWSER_H

@@ -20,7 +20,6 @@
 #include <CoreServices.h>
 #endif
 
-
 #ifndef __ICAAPPLICATION__
 #include <ICAApplication.h>
 #endif
@@ -32,9 +31,5 @@
 #ifndef __ICACAMERA__
 #include <ICACamera.h>
 #endif
-
-
-
-
 
 #endif /* __IMAGECAPTURE__ */

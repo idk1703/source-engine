@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 // This is the null header file used to remove Telemetry calls.
 
-#define TMERR_DISABLED 1
+#define TMERR_DISABLED		1
 #define TMPRINTF_TOKEN_NONE 0
 
 #define tmGetSessionName(...)
@@ -9,22 +9,22 @@
 #define tmEndTryLockEx(...)
 #define tmSetLockState(...)
 #define tmSetLockStateEx(...)
-#define tmSetLockStateMinTime(...) 0
+#define tmSetLockStateMinTime(...)	 0
 #define tmSetLockStateMinTimeEx(...) 0
 #define tmSignalLockCount(...)
 
-#define tmCheckVersion(...) 0
-#define tmGetCallStack(...) 0
-#define tmSendCallStack( ... ) TMPRINTF_TOKEN_NONE
-#define tmGetCallStackR(...) 0
-#define tmSendCallStackR(...) TMPRINTF_TOKEN_NONE
+#define tmCheckVersion(...)			  0
+#define tmGetCallStack(...)			  0
+#define tmSendCallStack(...)		  TMPRINTF_TOKEN_NONE
+#define tmGetCallStackR(...)		  0
+#define tmSendCallStackR(...)		  TMPRINTF_TOKEN_NONE
 #define tmSendCallStackWithSkipR(...) TMPRINTF_TOKEN_NONE
 
-#define tmGetVersion(...) 0
-#define tmStartup(...)  TMERR_DISABLED
+#define tmGetVersion(...)			  0
+#define tmStartup(...)				  TMERR_DISABLED
 #define tmGetPlatformInformation(...) TMERR_DISABLED
-#define tmInitializeContext(...) TMERR_DISABLED
-#define tmShutdown(...) TMERR_DISABLED
+#define tmInitializeContext(...)	  TMERR_DISABLED
+#define tmShutdown(...)				  TMERR_DISABLED
 
 #define tmEnter(...)
 #define tmEnterEx(...)
@@ -69,7 +69,7 @@
 #define tmPlotU64(...)
 #define tmPlotS64(...)
 
-#define tmPPUGetListener(...) TMERR_DISABLED
+#define tmPPUGetListener(...)		 TMERR_DISABLED
 #define tmPPURegisterSPUProgram(...) TMERR_DISABLED
 #define tmSPUBindContextToListener(...)
 #define tmSPUUpdateTime(...)
@@ -77,7 +77,7 @@
 
 #define NTELEMETRY 1
 
-#define TM_CONTEXT_LITE(val) ((char*)(val))
-#define TM_CONTEXT_FULL(val) ((char*)(val))
+#define TM_CONTEXT_LITE(val) ((char *)(val))
+#define TM_CONTEXT_FULL(val) ((char *)(val))
 
 typedef char *HTELEMETRY;

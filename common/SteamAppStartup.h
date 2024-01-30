@@ -19,7 +19,7 @@
 //			if it returns true, then exit
 //			if it ruturns false, then continue with normal startup
 //-----------------------------------------------------------------------------
-bool ShouldLaunchAppViaSteam(const char *cmdLine, const char *steamFilesystemDllName, const char *stdioFilesystemDllName);
-
+bool ShouldLaunchAppViaSteam(const char *cmdLine, const char *steamFilesystemDllName,
+							 const char *stdioFilesystemDllName);
 
 #endif // STEAMAPPSTARTUP_H

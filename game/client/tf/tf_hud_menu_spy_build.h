@@ -20,7 +20,7 @@
 
 using namespace vgui;
 
-#define ALL_BUILDINGS	-1
+#define ALL_BUILDINGS	  -1
 #define NUM_SPY_BUILDINGS 3
 
 enum spybuildmenulayouts_t
@@ -32,27 +32,22 @@ struct SpyConstructBuilding_t
 {
 	SpyConstructBuilding_t() {}
 
-	SpyConstructBuilding_t( bool bEnabled,
-							 ObjectType_t type,
-							 int iMode,
-							 const char *pszConstructAvailableObjectRes,
-							 const char *pszConstructAlreadyBuiltObjectRes,
-							 const char *pszConstructCantAffordObjectRes,
-							 const char *pszConstructUnavailableObjectRes,
-							 const char *pszDestroyActiveObjectRes,
-							 const char *pszDestroyInactiveObjectRes,
-							 const char *pszDestroyUnavailableObjectRes )
-							 : m_bEnabled( bEnabled )
-							 , m_iObjectType ( type )
-							 , m_iMode( iMode )
-							 , m_pszConstructAvailableObjectRes( pszConstructAvailableObjectRes )
-							 , m_pszConstructAlreadyBuiltObjectRes( pszConstructAlreadyBuiltObjectRes )
-							 , m_pszConstructCantAffordObjectRes( pszConstructCantAffordObjectRes )
-							 , m_pszConstructUnavailableObjectRes( pszConstructUnavailableObjectRes )
-							 , m_pszDestroyActiveObjectRes( pszDestroyActiveObjectRes )
-							 , m_pszDestroyInactiveObjectRes( pszDestroyInactiveObjectRes )
-							 , m_pszDestroyUnavailableObjectRes( pszDestroyUnavailableObjectRes )
-	{}
+	SpyConstructBuilding_t(bool bEnabled, ObjectType_t type, int iMode, const char *pszConstructAvailableObjectRes,
+						   const char *pszConstructAlreadyBuiltObjectRes, const char *pszConstructCantAffordObjectRes,
+						   const char *pszConstructUnavailableObjectRes, const char *pszDestroyActiveObjectRes,
+						   const char *pszDestroyInactiveObjectRes, const char *pszDestroyUnavailableObjectRes)
+		: m_bEnabled(bEnabled),
+		  m_iObjectType(type),
+		  m_iMode(iMode),
+		  m_pszConstructAvailableObjectRes(pszConstructAvailableObjectRes),
+		  m_pszConstructAlreadyBuiltObjectRes(pszConstructAlreadyBuiltObjectRes),
+		  m_pszConstructCantAffordObjectRes(pszConstructCantAffordObjectRes),
+		  m_pszConstructUnavailableObjectRes(pszConstructUnavailableObjectRes),
+		  m_pszDestroyActiveObjectRes(pszDestroyActiveObjectRes),
+		  m_pszDestroyInactiveObjectRes(pszDestroyInactiveObjectRes),
+		  m_pszDestroyUnavailableObjectRes(pszDestroyUnavailableObjectRes)
+	{
+	}
 
 	bool m_bEnabled;
 	ObjectType_t m_iObjectType;
@@ -73,28 +68,14 @@ struct SpyConstructBuilding_t
 //-----------------------------------------------------------------------------
 struct SpyConstructBuildingReplacement_t
 {
-	SpyConstructBuildingReplacement_t(	ObjectType_t type,
-								int iMode,
-								const char *strConstructionAvailable,
-								const char *strConstructionAlreadyBuilt,
-								const char *strConstructionCantAfford,
-								const char *strConstructionUnavailable,
-								const char *strDestructionActive,
-								const char *strDestructionInactive,
-								const char *strDestructionUnavailable,
-								int iReplacementSlots,
-								int iDisableSlots
-								)
-								: m_building( true,
-											  type,
-											  iMode,
-											  strConstructionAvailable,
-											  strConstructionAlreadyBuilt,
-											  strConstructionCantAfford,
-											  strConstructionUnavailable,
-											  strDestructionActive,
-											  strDestructionInactive,
-											  strDestructionUnavailable )
+	SpyConstructBuildingReplacement_t(ObjectType_t type, int iMode, const char *strConstructionAvailable,
+									  const char *strConstructionAlreadyBuilt, const char *strConstructionCantAfford,
+									  const char *strConstructionUnavailable, const char *strDestructionActive,
+									  const char *strDestructionInactive, const char *strDestructionUnavailable,
+									  int iReplacementSlots, int iDisableSlots)
+		: m_building(true, type, iMode, strConstructionAvailable, strConstructionAlreadyBuilt,
+					 strConstructionCantAfford, strConstructionUnavailable, strDestructionActive,
+					 strDestructionInactive, strDestructionUnavailable)
 
 	{
 		m_iReplacementSlots = iReplacementSlots;
@@ -111,31 +92,34 @@ extern const SpyConstructBuildingReplacement_t s_alternateSpyBuildings[];
 
 class CHudMenuSpyBuild : public CHudBaseBuildMenu
 {
-	DECLARE_CLASS_SIMPLE( CHudMenuSpyBuild, CHudBaseBuildMenu );
+	DECLARE_CLASS_SIMPLE(CHudMenuSpyBuild, CHudBaseBuildMenu);
 
 public:
-	CHudMenuSpyBuild( const char *pElementName );
+	CHudMenuSpyBuild(const char *pElementName);
 
-	virtual void ApplySchemeSettings( IScheme *scheme ) OVERRIDE;
-	virtual void SetVisible( bool state ) OVERRIDE;
-	virtual void OnTick( void ) OVERRIDE;
-	virtual bool ShouldDraw( void ) OVERRIDE;
+	virtual void ApplySchemeSettings(IScheme *scheme) OVERRIDE;
+	virtual void SetVisible(bool state) OVERRIDE;
+	virtual void OnTick(void) OVERRIDE;
+	virtual bool ShouldDraw(void) OVERRIDE;
 
-	int	HudElementKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
-	virtual int GetRenderGroupPriority() { return 50; }
-	int	CalcCustomBuildMenuLayout( void ) const;
+	int HudElementKeyInput(int down, ButtonCode_t keynum, const char *pszCurrentBinding);
+	virtual int GetRenderGroupPriority()
+	{
+		return 50;
+	}
+	int CalcCustomBuildMenuLayout(void) const;
 
-	static void ReplaceBuildings( SpyConstructBuilding_t (&targetBuildings)[ NUM_SPY_BUILDINGS ] );
-	static void GetBuildingIDAndModeFromSlot( int iSlot, int &iBuilding, int &iMode, const SpyConstructBuilding_t (&buildings)[ NUM_SPY_BUILDINGS ] );
+	static void ReplaceBuildings(SpyConstructBuilding_t (&targetBuildings)[NUM_SPY_BUILDINGS]);
+	static void GetBuildingIDAndModeFromSlot(int iSlot, int &iBuilding, int &iMode,
+											 const SpyConstructBuilding_t (&buildings)[NUM_SPY_BUILDINGS]);
 
 private:
-
-	void SendBuildMessage( int iSlot );
-	bool SendDestroyMessage( int iSlot );
-	void SetSelectedItem( int iSlot );
-	void UpdateHintLabels( void );	// show/hide the bright and dim build, destroy hint labels
+	void SendBuildMessage(int iSlot);
+	bool SendDestroyMessage(int iSlot);
+	void SetSelectedItem(int iSlot);
+	void UpdateHintLabels(void); // show/hide the bright and dim build, destroy hint labels
 	void InitBuildings();
-	bool CanBuild( int iSlot );
+	bool CanBuild(int iSlot);
 
 	EditablePanel *m_pAvailableObjects[NUM_SPY_BUILDINGS];
 	EditablePanel *m_pAlreadyBuiltObjects[NUM_SPY_BUILDINGS];
@@ -157,4 +141,4 @@ private:
 
 #endif // STAGING_ONLY
 
-#endif	// TF_HUD_MENU_SPY_BUILD_H
+#endif // TF_HUD_MENU_SPY_BUILD_H

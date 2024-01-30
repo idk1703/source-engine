@@ -18,21 +18,19 @@
 #include "cs_player.h"
 #endif
 
-
 #ifdef _WIN32
 #pragma once
 #endif
 
 struct blackmarket_items_t
 {
-	const char		*pClassname;
-	int				iDefaultPrice;
+	const char *pClassname;
+	int iDefaultPrice;
 };
 
 extern blackmarket_items_t blackmarket_items[];
 
-void BlackMarketAddWeapon( const char *pWeaponName, CCSPlayer *pBuyer );
-
+void BlackMarketAddWeapon(const char *pWeaponName, CCSPlayer *pBuyer);
 
 enum
 {
@@ -48,12 +46,11 @@ enum
 class CBlackMarketElement
 {
 public:
-
-	DECLARE_CLASS_NOBASE( CBlackMarketElement );
+	DECLARE_CLASS_NOBASE(CBlackMarketElement);
 
 	// For CNetworkVars.
 	void NetworkStateChanged();
-	void NetworkStateChanged( void *pVar );
+	void NetworkStateChanged(void *pVar);
 
 	CBlackMarketElement()
 	{
@@ -62,24 +59,22 @@ public:
 		m_iWeaponID = 0;
 	}
 
-	CNetworkVar( int, m_iPrice );
-	CNetworkVar( int, m_iWeaponID );
+	CNetworkVar(int, m_iPrice);
+	CNetworkVar(int, m_iWeaponID);
 
-	int  m_iTimesBought;
+	int m_iTimesBought;
 };
-
 
 #else
 
 class C_BlackMarketElement
 {
 public:
-
 	// This allows the datatables to access private members.
 	ALLOW_DATATABLES_PRIVATE_ACCESS();
 
-	int		m_iWeaponID;
-	int		m_iPrice;
+	int m_iWeaponID;
+	int m_iPrice;
 };
 
 #define CBlackMarketElement C_BlackMarketElement

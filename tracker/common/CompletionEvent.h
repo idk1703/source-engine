@@ -28,5 +28,4 @@ void Event_WaitForEvent(EventHandle_t event, unsigned long timeoutMilliseconds);
 // If the event has no threads waiting on it, the next thread to wait on it will be let right through
 void Event_SignalEvent(EventHandle_t event);
 
-
 #endif // COMPLETIONEVENT_H

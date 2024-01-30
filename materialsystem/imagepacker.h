@@ -19,23 +19,21 @@
 
 #define MAX_MAX_LIGHTMAP_WIDTH 2048
 
-
 //-----------------------------------------------------------------------------
 // This packs a single lightmap
 //-----------------------------------------------------------------------------
 class CImagePacker
 {
 public:
-	bool Reset( int nSortId, int maxLightmapWidth, int maxLightmapHeight );
-	bool AddBlock( int width, int height,
-		int *returnX, int *returnY );
-	void GetMinimumDimensions( int *returnWidth, int *returnHeight );
-	float GetEfficiency( void );
+	bool Reset(int nSortId, int maxLightmapWidth, int maxLightmapHeight);
+	bool AddBlock(int width, int height, int *returnX, int *returnY);
+	void GetMinimumDimensions(int *returnWidth, int *returnHeight);
+	float GetEfficiency(void);
 	int GetSortId() const;
 	void IncrementSortId();
 
 protected:
-	int GetMaxYIndex( int firstX, int width );
+	int GetMaxYIndex(int firstX, int width);
 
 	int m_MaxLightmapWidth;
 	int m_MaxLightmapHeight;
@@ -51,7 +49,6 @@ protected:
 	int m_nSortID;
 };
 
-
 //-----------------------------------------------------------------------------
 // Inline methods
 //-----------------------------------------------------------------------------
@@ -64,6 +61,5 @@ inline void CImagePacker::IncrementSortId()
 {
 	++m_nSortID;
 }
-
 
 #endif // IMAGEPACKER_H

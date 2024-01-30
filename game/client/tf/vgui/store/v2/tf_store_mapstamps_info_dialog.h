@@ -18,19 +18,20 @@
 //-----------------------------------------------------------------------------
 class CTFMapStampsInfoDialog : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CTFMapStampsInfoDialog, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CTFMapStampsInfoDialog, vgui::EditablePanel);
+
 public:
-	CTFMapStampsInfoDialog( vgui::Panel *pParent, const char *pName = "" );
+	CTFMapStampsInfoDialog(vgui::Panel *pParent, const char *pName = "");
 
-	void			DoClose();
+	void DoClose();
 
-	virtual void	ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void	OnCommand( const char *command );
-	virtual void	PerformLayout( void );
-	virtual void	OnMouseReleased(vgui::MouseCode code);
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void OnCommand(const char *command);
+	virtual void PerformLayout(void);
+	virtual void OnMouseReleased(vgui::MouseCode code);
 
-	Panel			*m_pBgPanel;
-	EditablePanel	*m_pDlgFrame;
+	Panel *m_pBgPanel;
+	EditablePanel *m_pDlgFrame;
 };
 
 #endif // TF_MAPS_INFO_DIALOG_H

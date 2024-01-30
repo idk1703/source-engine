@@ -6,7 +6,7 @@
 // $Date:         $
 // $NoKeywords: $
 //=============================================================================//
-#if !defined( MODEL_TYPES_H )
+#if !defined(MODEL_TYPES_H)
 #define MODEL_TYPES_H
 #ifdef _WIN32
 #pragma once
@@ -25,17 +25,16 @@
 #define STUDIO_NO_OVERRIDE_FOR_ATTACH	0x00000200
 
 // Not a studio flag, but used to flag when we want studio stats
-#define STUDIO_GENERATE_STATS			0x01000000
+#define STUDIO_GENERATE_STATS 0x01000000
 
 // Not a studio flag, but used to flag model as using shadow depth material override
-#define STUDIO_SSAODEPTHTEXTURE			0x08000000
+#define STUDIO_SSAODEPTHTEXTURE 0x08000000
 
 // Not a studio flag, but used to flag model as using shadow depth material override
-#define STUDIO_SHADOWDEPTHTEXTURE		0x40000000
+#define STUDIO_SHADOWDEPTHTEXTURE 0x40000000
 
 // Not a studio flag, but used to flag model as a non-sorting brush model
-#define STUDIO_TRANSPARENCY				0x80000000
-
+#define STUDIO_TRANSPARENCY 0x80000000
 
 enum modtype_t
 {

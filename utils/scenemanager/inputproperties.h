@@ -17,13 +17,13 @@
 //-----------------------------------------------------------------------------
 struct CInputParams : public CBaseDialogParams
 {
-	char		m_szPrompt[ 256 ];
+	char m_szPrompt[256];
 
 	// i/o input text
-	char		m_szInputText[ 1024 ];
+	char m_szInputText[1024];
 };
 
 // Display/create dialog
-int InputProperties( CInputParams *params );
+int InputProperties(CInputParams *params);
 
 #endif // INPUTPROPERTIES_H

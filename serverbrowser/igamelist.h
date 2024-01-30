@@ -12,7 +12,7 @@
 #endif
 
 class gameserveritem_t;
-#if defined( STEAM )
+#if defined(STEAM)
 #include "steam2common.h"
 #include "FindSteam2Servers.h"
 #else
@@ -20,7 +20,6 @@ class gameserveritem_t;
 #include "FindSteamServers.h"
 #endif
 #include "netadr.h"
-
 
 typedef enum
 {
@@ -37,11 +36,13 @@ struct serverdisplay_t
 		m_iServerID = -1;
 		m_bDoNotRefresh = true;
 	}
-	int			m_iListID;		// the VGUI2 list panel index for displaying this server
-	int			m_iServerID;	// the matchmaking interface index for this server
-	bool		m_bDoNotRefresh;
-	bool operator==( const serverdisplay_t &rhs ) const { return rhs.m_iServerID == m_iServerID; }
-
+	int m_iListID;	 // the VGUI2 list panel index for displaying this server
+	int m_iServerID; // the matchmaking interface index for this server
+	bool m_bDoNotRefresh;
+	bool operator==(const serverdisplay_t &rhs) const
+	{
+		return rhs.m_iServerID == m_iServerID;
+	}
 };
 
 //-----------------------------------------------------------------------------
@@ -50,7 +51,6 @@ struct serverdisplay_t
 class IGameList
 {
 public:
-
 	enum InterfaceItem_e
 	{
 		FILTERS,
@@ -86,6 +86,5 @@ public:
 	// Get code to use for tracking how people are connecting to servers
 	virtual const char *GetConnectCode() = 0;
 };
-
 
 #endif // IGAMELIST_H

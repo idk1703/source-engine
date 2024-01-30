@@ -11,8 +11,8 @@
 #pragma once
 #endif
 
-void SV_CreateNetworkStringTables( void );
+void SV_CreateNetworkStringTables(void);
 
-void SV_PrintStringTables( void );
+void SV_PrintStringTables(void);
 
 #endif // NETWORKSTRINGTABLESERVER_H

@@ -26,7 +26,8 @@
 //-----------------------------------------------------------------------------
 class CPlayerPanel : public vgui::PropertyPage, public IServerDataResponse
 {
-	DECLARE_CLASS_SIMPLE( CPlayerPanel, vgui::PropertyPage );
+	DECLARE_CLASS_SIMPLE(CPlayerPanel, vgui::PropertyPage);
+
 public:
 	CPlayerPanel(vgui::Panel *parent, const char *name);
 	~CPlayerPanel();
@@ -48,13 +49,13 @@ private:
 	virtual void OnCommand(const char *command);
 
 	// msg handlers
-	MESSAGE_FUNC_INT( OnOpenContextMenu, "OpenContextMenu", itemID );
-	MESSAGE_FUNC( OnItemSelected, "ItemSelected" );
+	MESSAGE_FUNC_INT(OnOpenContextMenu, "OpenContextMenu", itemID);
+	MESSAGE_FUNC(OnItemSelected, "ItemSelected");
 
-	MESSAGE_FUNC( OnKickButtonPressed, "KickPlayer" );
-	MESSAGE_FUNC( OnBanButtonPressed, "BanPlayer" );
-	MESSAGE_FUNC( KickSelectedPlayers, "KickSelectedPlayers" );
-	MESSAGE_FUNC_CHARPTR_CHARPTR( AddBanByID, "AddBanValue", id, time );
+	MESSAGE_FUNC(OnKickButtonPressed, "KickPlayer");
+	MESSAGE_FUNC(OnBanButtonPressed, "BanPlayer");
+	MESSAGE_FUNC(KickSelectedPlayers, "KickSelectedPlayers");
+	MESSAGE_FUNC_CHARPTR_CHARPTR(AddBanByID, "AddBanValue", id, time);
 
 	vgui::ListPanel *m_pPlayerListPanel;
 	vgui::Button *m_pKickButton;

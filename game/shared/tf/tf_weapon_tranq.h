@@ -22,8 +22,7 @@
 class CTFTranq : public CTFWeaponBaseGun
 {
 public:
-
-	DECLARE_CLASS( CTFTranq, CTFWeaponBaseGun );
+	DECLARE_CLASS(CTFTranq, CTFWeaponBaseGun);
 	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
@@ -35,11 +34,13 @@ public:
 	CTFTranq() {}
 	~CTFTranq() {}
 
-	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_TRANQ; }
+	virtual int GetWeaponID(void) const
+	{
+		return TF_WEAPON_TRANQ;
+	}
 
 private:
-
-	CTFTranq( const CTFTranq & ) {}
+	CTFTranq(const CTFTranq &) {}
 };
 
 #endif // TF_WEAPON_TRANQ_H

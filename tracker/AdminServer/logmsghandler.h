@@ -16,7 +16,6 @@
 #include "player.h"
 #include "rcon.h"
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Socket handler for pinging internet servers
 //-----------------------------------------------------------------------------
@@ -34,9 +33,7 @@ public:
 	// returns the text of the last message recieved
 	const char *GetBuf();
 
-
 private:
-
 	IResponse *m_pLogList;
 	bool m_bNewMessage;
 	char message[512];

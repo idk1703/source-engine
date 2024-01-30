@@ -10,9 +10,7 @@
 #pragma once
 #endif
 
-
 #include "utlvector.h"
-
 
 enum ModType_t
 {
@@ -22,7 +20,6 @@ enum ModType_t
 	ModType_SourceCodeOnly
 };
 
-
 class CGameConfig
 {
 public:
@@ -30,16 +27,15 @@ public:
 	CUtlVector<char> m_ModDir;
 };
 
+const char *GetIniFilePath();
 
-const char* GetIniFilePath();
-
-void UtlStrcpy( CUtlVector<char> &dest, const char *pSrc );
-void LoadGameConfigs( CUtlVector<CGameConfig*> &configs );
-bool AddConfigToGameIni( const char *pModName, const char *pModDirectory, const char *pSourceIniFilename="new_mod_config.ini" );
-void AddDefaultHalfLife2Config( bool bForce );
-void AddDefaultHL2MPConfig( bool bForce );
+void UtlStrcpy(CUtlVector<char> &dest, const char *pSrc);
+void LoadGameConfigs(CUtlVector<CGameConfig *> &configs);
+bool AddConfigToGameIni(const char *pModName, const char *pModDirectory,
+						const char *pSourceIniFilename = "new_mod_config.ini");
+void AddDefaultHalfLife2Config(bool bForce);
+void AddDefaultHL2MPConfig(bool bForce);
 void AddDefaultHammerIniFile();
-bool AddConfig( const char *pModName, const char *pModDirectory, ModType_t modType );
-
+bool AddConfig(const char *pModName, const char *pModDirectory, ModType_t modType);
 
 #endif // CONFIGS_H

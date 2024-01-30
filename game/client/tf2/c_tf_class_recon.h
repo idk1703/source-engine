@@ -18,20 +18,22 @@
 class C_PlayerClassRecon : public C_PlayerClass
 {
 
-	DECLARE_CLASS( C_PlayerClassRecon, C_PlayerClass );
+	DECLARE_CLASS(C_PlayerClassRecon, C_PlayerClass);
 
 public:
-
-	C_PlayerClassRecon( C_BaseTFPlayer *pPlayer );
+	C_PlayerClassRecon(C_BaseTFPlayer *pPlayer);
 	virtual ~C_PlayerClassRecon();
 
 	DECLARE_PREDICTABLE();
 
-	PlayerClassReconData_t *GetClassData( void ) { return &m_ClassData; }
+	PlayerClassReconData_t *GetClassData(void)
+	{
+		return &m_ClassData;
+	}
 
-	PlayerClassReconData_t	m_ClassData;
+	PlayerClassReconData_t m_ClassData;
 };
 
-EXTERN_RECV_TABLE( DT_PlayerClassReconData )
+EXTERN_RECV_TABLE(DT_PlayerClassReconData)
 
 #endif // C_TF_CLASS_RECON_H

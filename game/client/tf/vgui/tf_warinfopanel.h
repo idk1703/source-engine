@@ -1,7 +1,6 @@
 #ifndef TF_WARINFOPANEL_H
 #define TF_WARINFOPANEL_H
 
-
 #include "vgui_controls/EditablePanel.h"
 #include "tf_wardata.h"
 #include "vgui_controls/ProgressBar.h"
@@ -14,43 +13,45 @@ class CExLabel;
 
 class CWarStandingPanel : public EditablePanel, public CGameEventListener
 {
-	DECLARE_CLASS_SIMPLE( CWarStandingPanel, EditablePanel );
-public:
-	CWarStandingPanel( Panel* pParent, const char* pszPanelname );
+	DECLARE_CLASS_SIMPLE(CWarStandingPanel, EditablePanel);
 
-	virtual void ApplySchemeSettings( IScheme *pScheme ) OVERRIDE;
-	virtual void ApplySettings( KeyValues *inResourceData ) OVERRIDE;
+public:
+	CWarStandingPanel(Panel *pParent, const char *pszPanelname);
+
+	virtual void ApplySchemeSettings(IScheme *pScheme) OVERRIDE;
+	virtual void ApplySettings(KeyValues *inResourceData) OVERRIDE;
 	virtual void OnThink() OVERRIDE;
 	virtual void PerformLayout() OVERRIDE;
-	virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
-private:
+	virtual void FireGameEvent(IGameEvent *event) OVERRIDE;
 
+private:
 	float GetPercentAnimated() const;
 
 	struct TeamScore_t
 	{
 		TeamScore_t()
-			: m_nLastScore( 0 )
-			, m_nNewScore( 0 )
-			, m_pTeamProgressBar( NULL )
-			, m_pContainerPanel( NULL )
-			, m_pTeamLabel( NULL )
-			, m_pScoreLabel( NULL )
-		{}
+			: m_nLastScore(0),
+			  m_nNewScore(0),
+			  m_pTeamProgressBar(NULL),
+			  m_pContainerPanel(NULL),
+			  m_pTeamLabel(NULL),
+			  m_pScoreLabel(NULL)
+		{
+		}
 		int m_nLastScore;
 		int m_nNewScore;
-		ContinuousProgressBar	*m_pTeamProgressBar;
-		EditablePanel* m_pContainerPanel;
-		CExLabel* m_pTeamLabel;
-		CExLabel* m_pScoreLabel;
+		ContinuousProgressBar *m_pTeamProgressBar;
+		EditablePanel *m_pContainerPanel;
+		CExLabel *m_pTeamLabel;
+		CExLabel *m_pScoreLabel;
 	};
 
 	bool m_bNeedsLerp;
 	TeamScore_t m_Scores[2];
 	float m_flLastUpdateTime;
-	ContinuousProgressBar	*m_pTeam0ProgressBar;
-	ContinuousProgressBar	*m_pTeam1ProgressBar;
-	CUtlString				m_strWarName;
+	ContinuousProgressBar *m_pTeam0ProgressBar;
+	ContinuousProgressBar *m_pTeam1ProgressBar;
+	CUtlString m_strWarName;
 };
 
 //-----------------------------------------------------------------------------
@@ -58,24 +59,33 @@ private:
 //-----------------------------------------------------------------------------
 class CWarLandingPanel : public EditablePanel, public CLocalSteamSharedObjectListener
 {
-	DECLARE_CLASS_SIMPLE( CWarLandingPanel, EditablePanel );
-public:
-	CWarLandingPanel( Panel *pParent, const char *pszPanelName );
+	DECLARE_CLASS_SIMPLE(CWarLandingPanel, EditablePanel);
 
-	virtual void ApplySchemeSettings( IScheme *pScheme ) OVERRIDE;
-	virtual void ApplySettings( KeyValues *inResourceData );
-	virtual void OnCommand( const char *pCommand ) OVERRIDE;
+public:
+	CWarLandingPanel(Panel *pParent, const char *pszPanelName);
+
+	virtual void ApplySchemeSettings(IScheme *pScheme) OVERRIDE;
+	virtual void ApplySettings(KeyValues *inResourceData);
+	virtual void OnCommand(const char *pCommand) OVERRIDE;
 	virtual void OnThink() OVERRIDE;
 	virtual void PerformLayout() OVERRIDE;
 
-	virtual void SOCreated( const CSteamID & steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent ) { UpdateWarStatus( steamIDOwner, pObject, eEvent ); }
-	virtual void SOUpdated( const CSteamID & steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent ) { UpdateWarStatus( steamIDOwner, pObject, eEvent ); }
-	virtual void SODestroyed( const CSteamID & steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent ) { UpdateWarStatus( steamIDOwner, pObject, eEvent ); }
+	virtual void SOCreated(const CSteamID &steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent)
+	{
+		UpdateWarStatus(steamIDOwner, pObject, eEvent);
+	}
+	virtual void SOUpdated(const CSteamID &steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent)
+	{
+		UpdateWarStatus(steamIDOwner, pObject, eEvent);
+	}
+	virtual void SODestroyed(const CSteamID &steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent)
+	{
+		UpdateWarStatus(steamIDOwner, pObject, eEvent);
+	}
 
-	virtual void SetVisible( bool bVisible ) OVERRIDE;
+	virtual void SetVisible(bool bVisible) OVERRIDE;
 
 private:
-
 	enum EJoiningState_t
 	{
 		NO_ACTION = 0,
@@ -85,7 +95,7 @@ private:
 		FAILED_RESPONSE_RECIEVED_WAITING_FOR_USER_CONFIRMATION,
 	};
 
-	void UpdateWarStatus( const CSteamID & steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent );
+	void UpdateWarStatus(const CSteamID &steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent);
 
 	void UpdateUIState();
 
@@ -97,4 +107,4 @@ private:
 	EJoiningState_t m_eJoiningState;
 };
 
-#endif //TF_WARINFOPANEL_H
+#endif // TF_WARINFOPANEL_H

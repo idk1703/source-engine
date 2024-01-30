@@ -29,25 +29,25 @@ public:
 	void LoadCurrentGameInfo();
 
 	// loads gameinfo from null-terminated string
-	void LoadGameInfoFromBuffer( const char *buffer );
+	void LoadGameInfoFromBuffer(const char *buffer);
 
 	// data accessors
-   	const wchar_t *GetGameTitle();
-   	const wchar_t *GetGameTitle2();
+	const wchar_t *GetGameTitle();
+	const wchar_t *GetGameTitle2();
 	const char *GetGameName();
 
-   	bool IsMultiplayerOnly();
-   	bool IsSinglePlayerOnly();
+	bool IsMultiplayerOnly();
+	bool IsSinglePlayerOnly();
 
 	bool HasPortals();
 
 	bool NoDifficulty();
-  	bool NoModels();
-  	bool NoHiModel();
-  	bool NoCrosshair();
+	bool NoModels();
+	bool NoHiModel();
+	bool NoCrosshair();
 	bool AdvCrosshair();
 	int AdvCrosshairLevel();
-   	const char *GetFallbackDir();
+	const char *GetFallbackDir();
 	bool UseGameLogo();
 	bool UseBots();
 	bool HasHDContent();
@@ -60,7 +60,6 @@ private:
 	wchar_t m_wcsGameTitle2[128];
 	KeyValues *m_pModData;
 };
-
 
 // singleton accessor
 extern CModInfo &ModInfo();

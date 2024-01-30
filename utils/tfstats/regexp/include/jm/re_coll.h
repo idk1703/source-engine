@@ -20,11 +20,11 @@
  *
  */
 
- /*
-	*   FILE     re_coll.h
-	*   VERSION  2.12
-	*   This is an internal header file, do not include directly
-	*/
+/*
+ *   FILE     re_coll.h
+ *   VERSION  2.12
+ *   This is an internal header file, do not include directly
+ */
 
 #ifndef RE_COLL_H
 #define RE_COLL_H
@@ -39,21 +39,21 @@
 
 JM_NAMESPACE(__JM)
 
-JM_IX_DECL bool RE_CALL re_lookup_def_collate_name(re_str<char>& buf, const char* name);
+JM_IX_DECL bool RE_CALL re_lookup_def_collate_name(re_str<char> &buf, const char *name);
 
 void RE_CALL re_init_collate();
 void RE_CALL re_free_collate();
 void RE_CALL re_update_collate();
-JM_IX_DECL bool RE_CALL __re_lookup_collate(re_str<char>& buf, const char* p);
+JM_IX_DECL bool RE_CALL __re_lookup_collate(re_str<char> &buf, const char *p);
 
-inline bool RE_CALL re_lookup_collate(re_str<char>& buf, const char* first, const char* last)
+inline bool RE_CALL re_lookup_collate(re_str<char> &buf, const char *first, const char *last)
 {
 	re_str<char> s(first, last);
 	return __re_lookup_collate(buf, s.c_str());
 }
 
 #ifndef JM_NO_WCSTRING
-JM_IX_DECL bool RE_CALL re_lookup_collate(re_str<wchar_t>& out, const wchar_t* first, const wchar_t* last);
+JM_IX_DECL bool RE_CALL re_lookup_collate(re_str<wchar_t> &out, const wchar_t *first, const wchar_t *last);
 #endif
 
 JM_END_NAMESPACE

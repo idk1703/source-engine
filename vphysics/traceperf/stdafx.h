@@ -6,7 +6,6 @@
 
 #pragma once
 
-
 #include "phyfile.h"
 #include "vphysics_interface.h"
 #include "tier0/icommandline.h"

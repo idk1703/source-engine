@@ -19,30 +19,31 @@
 
 class CTransformDlg : public CDialog
 {
-// Construction
+	// Construction
 public:
-	CTransformDlg(CWnd* pParent = NULL);   // standard constructor
+	CTransformDlg(CWnd *pParent = NULL); // standard constructor
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CTransformDlg)
-	enum { IDD = IDD_TRANSFORM };
-	int		m_iMode;
-	float	m_X;
-	float	m_Y;
-	float	m_Z;
+	enum
+	{
+		IDD = IDD_TRANSFORM
+	};
+	int m_iMode;
+	float m_X;
+	float m_Y;
+	float m_Z;
 	//}}AFX_DATA
 
-
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CTransformDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
 protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
+													 //}}AFX_VIRTUAL
 
+	// Implementation
+protected:
 	// Generated message map functions
 	//{{AFX_MSG(CTransformDlg)
 	//}}AFX_MSG

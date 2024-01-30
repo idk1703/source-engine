@@ -109,9 +109,9 @@
 //--------------------------------------------------------------------------------------------------------------
 
 #ifdef POSIX
-void DownloadThread( void *voidPtr );
+void DownloadThread(void *voidPtr);
 #else
-DWORD __stdcall DownloadThread( void *voidPtr );
+DWORD __stdcall DownloadThread(void *voidPtr);
 #endif
 #endif // DOWNLOAD_INTERNAL_H
 

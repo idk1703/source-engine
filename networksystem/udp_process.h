@@ -15,7 +15,7 @@ class IConnectionlessPacketHandler;
 class ILookupChannel;
 class CNetPacket;
 
-void UDP_ProcessSocket( CUDPSocket *socket, IConnectionlessPacketHandler *handler, ILookupChannel *lookup );
-void UDP_ProcessConnectionlessPacket( CNetPacket *pPacket, IConnectionlessPacketHandler *pHandler );
+void UDP_ProcessSocket(CUDPSocket *socket, IConnectionlessPacketHandler *handler, ILookupChannel *lookup);
+void UDP_ProcessConnectionlessPacket(CNetPacket *pPacket, IConnectionlessPacketHandler *pHandler);
 
 #endif // UDP_PROCESS_H

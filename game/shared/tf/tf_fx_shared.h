@@ -17,15 +17,15 @@
 #include "tf_player.h"
 #endif
 
-void FX_WeaponSound ( int iPlayer, WeaponSound_t soundType, const Vector &vecOrigin, CTFWeaponInfo *pWeaponInfo );
-void StartGroupingSounds( void );
-void EndGroupingSounds( void );
-bool IsFixedWeaponSpreadEnabled( void );
+void FX_WeaponSound(int iPlayer, WeaponSound_t soundType, const Vector &vecOrigin, CTFWeaponInfo *pWeaponInfo);
+void StartGroupingSounds(void);
+void EndGroupingSounds(void);
+bool IsFixedWeaponSpreadEnabled(void);
 
 // This runs on both the client and the server.
 // On the server, it only does the damage calculations.
 // On the client, it does all the effects.
-void FX_FireBullets( CTFWeaponBase *pWpn, int iPlayer, const Vector &vecOrigin, const QAngle &vecAngles,
-					 int iWeapon, int iMode, int iSeed, float flSpread, float flDamage = -1.0f, bool bCritical = false );
+void FX_FireBullets(CTFWeaponBase *pWpn, int iPlayer, const Vector &vecOrigin, const QAngle &vecAngles, int iWeapon,
+					int iMode, int iSeed, float flSpread, float flDamage = -1.0f, bool bCritical = false);
 
 #endif // TF_FX_SHARED_H

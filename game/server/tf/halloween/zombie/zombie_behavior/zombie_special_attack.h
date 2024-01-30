@@ -8,16 +8,18 @@
 
 //---------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------
-class CZombieSpecialAttack : public Action< CZombie >
+class CZombieSpecialAttack : public Action<CZombie>
 {
 public:
-	virtual ActionResult< CZombie >	OnStart( CZombie *me, Action< CZombie > *priorAction );
-	virtual ActionResult< CZombie >	Update( CZombie *me, float interval );
+	virtual ActionResult<CZombie> OnStart(CZombie *me, Action<CZombie> *priorAction);
+	virtual ActionResult<CZombie> Update(CZombie *me, float interval);
 
-	virtual const char *GetName( void ) const	{ return "Special Attack"; }		// return name of this action
+	virtual const char *GetName(void) const
+	{
+		return "Special Attack";
+	} // return name of this action
 private:
-
-	void DoSpecialAttack( CZombie *me );
+	void DoSpecialAttack(CZombie *me);
 
 	CountdownTimer m_stompTimer;
 };

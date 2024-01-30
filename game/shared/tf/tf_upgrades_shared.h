@@ -17,16 +17,15 @@ class CTFPlayer;
 class CMannVsMachineUpgrades
 {
 public:
-	char szAttrib[ MAX_ATTRIBUTE_DESCRIPTION_LENGTH ];
-	char szIcon[ MAX_PATH ];
+	char szAttrib[MAX_ATTRIBUTE_DESCRIPTION_LENGTH];
+	char szIcon[MAX_PATH];
 	float flIncrement;
 	float flCap;
 	int nCost;
 	int nUIGroup;
 	int nQuality;
-	int nTier;		// If set, upgrades in the same tier - for the same player/item - will be mutually exclusive
+	int nTier; // If set, upgrades in the same tier - for the same player/item - will be mutually exclusive
 };
-
 
 class CMannVsMachineUpgradeManager : public CAutoGameSystem
 {
@@ -36,22 +35,21 @@ public:
 	virtual void LevelInitPostEntity();
 	virtual void LevelShutdownPostEntity();
 
-	void ParseUpgradeBlockForUIGroup( KeyValues *pKV, int iDefaultUIGroup );
+	void ParseUpgradeBlockForUIGroup(KeyValues *pKV, int iDefaultUIGroup);
 
-	int GetAttributeIndexByName( const char* pszAttributeName );
+	int GetAttributeIndexByName(const char *pszAttributeName);
 
-	void LoadUpgradesFile( void );
-	void LoadUpgradesFileFromPath( const char *pszPath );
+	void LoadUpgradesFile(void);
+	void LoadUpgradesFileFromPath(const char *pszPath);
 
 public:
-	CUtlVector< CMannVsMachineUpgrades > m_Upgrades;
+	CUtlVector<CMannVsMachineUpgrades> m_Upgrades;
 
 private:
-	CUtlMap< const char*, int > m_AttribMap;
-
+	CUtlMap<const char *, int> m_AttribMap;
 };
 
 extern CMannVsMachineUpgradeManager g_MannVsMachineUpgrades;
-int GetUpgradeStepData( CTFPlayer *pPlayer, int nWeaponSlot, int nUpgradeIndex, int &nCurrentStep, bool &bOverCap );
+int GetUpgradeStepData(CTFPlayer *pPlayer, int nWeaponSlot, int nUpgradeIndex, int &nCurrentStep, bool &bOverCap);
 
 #endif // TF_UPGRADES_H

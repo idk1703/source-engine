@@ -6,7 +6,6 @@
 // $NoKeywords: $
 //=============================================================================//
 
-
 #ifndef CS_HUD_HEALTHPANEL_H
 #define CS_HUD_HEALTHPANEL_H
 #ifdef _WIN32
@@ -29,17 +28,19 @@
 class CCSHealthPanel : public vgui::Panel
 {
 public:
-	DECLARE_CLASS_SIMPLE( CCSHealthPanel, vgui::Panel );
+	DECLARE_CLASS_SIMPLE(CCSHealthPanel, vgui::Panel);
 
-	CCSHealthPanel( vgui::Panel *parent, const char *name );
+	CCSHealthPanel(vgui::Panel *parent, const char *name);
 	virtual void Paint();
-	void SetHealth( float flHealth ){ m_flHealth = ( flHealth <= 1.0 ) ? flHealth : 1.0f; }
+	void SetHealth(float flHealth)
+	{
+		m_flHealth = (flHealth <= 1.0) ? flHealth : 1.0f;
+	}
 
 private:
-
-	float	m_flHealth; // percentage from 0.0 -> 1.0
-	int		m_iMaterialIndex;
-	int		m_iDeadMaterialIndex;
+	float m_flHealth; // percentage from 0.0 -> 1.0
+	int m_iMaterialIndex;
+	int m_iDeadMaterialIndex;
 };
 
 //-----------------------------------------------------------------------------
@@ -47,31 +48,33 @@ private:
 //-----------------------------------------------------------------------------
 class CCSHudPlayerHealth : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CCSHudPlayerHealth, EditablePanel );
+	DECLARE_CLASS_SIMPLE(CCSHudPlayerHealth, EditablePanel);
 
 public:
+	CCSHudPlayerHealth(Panel *parent, const char *name);
 
-	CCSHudPlayerHealth( Panel *parent, const char *name );
-
-	virtual const char *GetResFilename( void ) { return "resource/UI/FreezePanelKillerHealth.res"; }
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual const char *GetResFilename(void)
+	{
+		return "resource/UI/FreezePanelKillerHealth.res";
+	}
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 	virtual void Reset();
 
-	void	SetHealth( int iNewHealth, int iMaxHealth, int iMaxBuffedHealth );
-	void	HideHealthBonusImage( void );
+	void SetHealth(int iNewHealth, int iMaxHealth, int iMaxBuffedHealth);
+	void HideHealthBonusImage(void);
 
 protected:
-	//virtual void OnThink();
+	// virtual void OnThink();
 
 protected:
-	float				m_flNextThink;
+	float m_flNextThink;
 
 private:
-	CCSHealthPanel		*m_pHealthImage;
-	vgui::ImagePanel	*m_pHealthImageBG;
+	CCSHealthPanel *m_pHealthImage;
+	vgui::ImagePanel *m_pHealthImageBG;
 
-	int					m_nHealth;
-	int					m_nMaxHealth;
+	int m_nHealth;
+	int m_nMaxHealth;
 };
 
 #endif

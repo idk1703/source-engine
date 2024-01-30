@@ -10,8 +10,7 @@
 #pragma once
 #endif
 
-
-void GenerateSolutionForPerforceChangelist( CProjectDependencyGraph &dependencyGraph, CUtlVector<int> &changelists, IBaseSolutionGenerator *pGenerator, const char *pSolutionFilename );
-
+void GenerateSolutionForPerforceChangelist(CProjectDependencyGraph &dependencyGraph, CUtlVector<int> &changelists,
+										   IBaseSolutionGenerator *pGenerator, const char *pSolutionFilename);
 
 #endif // P4SLN_H

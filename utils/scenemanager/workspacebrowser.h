@@ -26,32 +26,30 @@ class CWorkspaceManager;
 class CWorkspaceBrowser : public mxWindow
 {
 	typedef mxWindow BaseClass;
+
 public:
+	CWorkspaceBrowser(mxWindow *parent, CWorkspaceManager *manager, int id);
 
-	CWorkspaceBrowser( mxWindow *parent, CWorkspaceManager *manager, int id );
+	CWorkspace *GetWorkspace();
+	void SetWorkspace(CWorkspace *w);
+	void AddProject(CProject *project);
 
-	CWorkspace	*GetWorkspace();
-	void		SetWorkspace( CWorkspace *w );
-	void		AddProject( CProject *project );
+	virtual int handleEvent(mxEvent *event);
 
-	virtual		int handleEvent( mxEvent *event );
+	ITreeItem *GetSelectedItem();
 
-	ITreeItem	*GetSelectedItem();
-
-	void		PopulateTree();
+	void PopulateTree();
 
 	static int CALLBACK CompareFunc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort);
 
-
-	void		JumpTo( ITreeItem *item );
+	void JumpTo(ITreeItem *item);
 
 private:
-
 	CWorkspaceManager *GetManager();
 
-	void		OnTreeItemSelected( int x, int y, bool rightmouse, bool doubleclick );
+	void OnTreeItemSelected(int x, int y, bool rightmouse, bool doubleclick);
 
-	CWorkspace	*m_pCurrentWorkspace;
+	CWorkspace *m_pCurrentWorkspace;
 
 	CBrowserTree *m_pTree;
 
@@ -60,7 +58,7 @@ private:
 		NUM_BITMAPS = 12,
 	};
 
-	ITreeItem	*m_pLastSelected;
+	ITreeItem *m_pLastSelected;
 	CWorkspaceManager *m_pManager;
 };
 

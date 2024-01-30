@@ -16,7 +16,7 @@
 
 #ifdef CLIENT_DLL
 #define CTFPlayer C_TFPlayer
-#define CTFItem C_TFItem
+#define CTFItem	  C_TFItem
 #endif
 
 class CTFPlayer;
@@ -28,20 +28,23 @@ class CTFPlayer;
 class CTFItem : public CDynamicProp
 {
 public:
-	DECLARE_CLASS( CTFItem,CDynamicProp  )
+	DECLARE_CLASS(CTFItem, CDynamicProp)
 	DECLARE_NETWORKCLASS();
 
 	// Unique identifier.
 	virtual unsigned int GetItemID() const;
 
 	// Pick up and drop.
-	virtual void PickUp( CTFPlayer *pPlayer, bool bInvisible );
-	virtual void Drop( CTFPlayer *pPlayer, bool bVisible, bool bThrown = false, bool bMessage = true );
+	virtual void PickUp(CTFPlayer *pPlayer, bool bInvisible);
+	virtual void Drop(CTFPlayer *pPlayer, bool bVisible, bool bThrown = false, bool bMessage = true);
 
 #ifdef CLIENT_DLL
 	virtual bool ShouldDraw();
 	virtual ShadowType_t ShadowCastType();
-	virtual bool ShouldHideGlowEffect( void ) { return false; }
+	virtual bool ShouldHideGlowEffect(void)
+	{
+		return false;
+	}
 #endif
 };
 

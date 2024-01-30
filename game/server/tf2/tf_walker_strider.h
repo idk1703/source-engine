@@ -10,51 +10,42 @@
 #pragma once
 #endif
 
-
 #include "tf_walker_base.h"
-
 
 class CWalkerStrider : public CWalkerBase
 {
 public:
-	DECLARE_CLASS( CWalkerStrider, CWalkerBase );
+	DECLARE_CLASS(CWalkerStrider, CWalkerBase);
 	DECLARE_SERVERCLASS();
 
 	CWalkerStrider();
 
-
-// CWalkerBase.
+	// CWalkerBase.
 protected:
 	virtual void WalkerThink();
 
-
-// CBaseObject.
+	// CBaseObject.
 public:
-	virtual bool StartBuilding( CBaseEntity *pBuilder );
+	virtual bool StartBuilding(CBaseEntity *pBuilder);
 
-
-// CBaseEntity.
+	// CBaseEntity.
 public:
 	virtual void Precache();
 	virtual void Spawn();
-	virtual void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
 
-
-// CBaseAnimating.
+	// CBaseAnimating.
 public:
-	virtual bool GetAttachment( int iAttachment, matrix3x4_t &attachmentToWorld );
-	virtual void HandleAnimEvent( animevent_t *pEvent );
+	virtual bool GetAttachment(int iAttachment, matrix3x4_t &attachmentToWorld);
+	virtual void HandleAnimEvent(animevent_t *pEvent);
 
-
-// IServerVehicle.
+	// IServerVehicle.
 public:
-	virtual bool IsPassengerVisible( int nRole );
+	virtual bool IsPassengerVisible(int nRole);
 
-
-// IVehicle overrides.
+	// IVehicle overrides.
 public:
-	virtual void SetupMove( CBasePlayer *pPlayer, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move );
-
+	virtual void SetupMove(CBasePlayer *pPlayer, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move);
 
 private:
 	void Fire();
@@ -62,12 +53,10 @@ private:
 	void Crouch();
 	void UnCrouch();
 
-	void FootHit( const char *pFootName );
-
-
+	void FootHit(const char *pFootName);
 
 private:
-	CNetworkVar( bool, m_bCrouched );
+	CNetworkVar(bool, m_bCrouched);
 	float m_flNextCrouchTime;
 
 	bool m_bFiring;
@@ -80,6 +69,5 @@ private:
 
 	QAngle m_vDriverAngles;
 };
-
 
 #endif // TF_WALKER_STRIDER_H

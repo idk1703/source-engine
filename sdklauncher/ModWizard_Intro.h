@@ -10,17 +10,16 @@
 #pragma once
 #endif
 
-
 #include <vgui_controls/WizardSubPanel.h>
 #include <vgui_controls/RadioButton.h>
 
 #include "configs.h"
 
-
-// --------------------------------------------------------------------------------------------------------------------- //
-// CreateModWizard sub panel 1.
-// This panel just tells them about the wizard and what it's going to do, and gives them a chance to cancel.
-// --------------------------------------------------------------------------------------------------------------------- //
+// ---------------------------------------------------------------------------------------------------------------------
+// // CreateModWizard sub panel 1. This panel just tells them about the wizard and what it's going to do, and gives them
+// a chance to cancel.
+// ---------------------------------------------------------------------------------------------------------------------
+// //
 
 namespace vgui
 {
@@ -31,9 +30,9 @@ namespace vgui
 		typedef WizardSubPanel BaseClass;
 
 	public:
-		CModWizardSubPanel_Intro( Panel *parent, const char *panelName );
+		CModWizardSubPanel_Intro(Panel *parent, const char *panelName);
 
-		virtual WizardSubPanel* GetNextSubPanel();
+		virtual WizardSubPanel *GetNextSubPanel();
 		virtual void OnDisplayAsNext();
 		virtual void PerformLayout();
 		virtual bool OnNextButton();
@@ -46,7 +45,6 @@ namespace vgui
 		RadioButton *m_pSourceCodeOnlyButton;
 	};
 
-}
-
+} // namespace vgui
 
 #endif // MODWIZARD_INTRO_H

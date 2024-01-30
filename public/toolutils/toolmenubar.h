@@ -12,11 +12,9 @@
 #pragma once
 #endif
 
-
 #include "vgui_controls/menubar.h"
 
 using namespace vgui;
-
 
 //-----------------------------------------------------------------------------
 // Forward declarations
@@ -25,7 +23,7 @@ namespace vgui
 {
 	class Panel;
 	class Label;
-}
+} // namespace vgui
 
 class CBaseToolSystem;
 
@@ -34,38 +32,36 @@ class CBaseToolSystem;
 //-----------------------------------------------------------------------------
 class CToolMenuBar : public vgui::MenuBar
 {
-	DECLARE_CLASS_SIMPLE( CToolMenuBar, vgui::MenuBar );
+	DECLARE_CLASS_SIMPLE(CToolMenuBar, vgui::MenuBar);
 
 public:
-	CToolMenuBar( CBaseToolSystem *parent, const char *panelName );
+	CToolMenuBar(CBaseToolSystem *parent, const char *panelName);
 	virtual void PerformLayout();
-	void SetToolName( const char *name );
-	void SetInfo( const char *text );
+	void SetToolName(const char *name);
+	void SetInfo(const char *text);
 
 	CBaseToolSystem *GetToolSystem();
 
 protected:
-	Label		*m_pInfo;
-	Label		*m_pToolName;
+	Label *m_pInfo;
+	Label *m_pToolName;
 	CBaseToolSystem *m_pToolSystem;
 };
-
 
 //-----------------------------------------------------------------------------
 // Main menu bar version that stores file name on it
 //-----------------------------------------------------------------------------
 class CToolFileMenuBar : public CToolMenuBar
 {
-	DECLARE_CLASS_SIMPLE( CToolFileMenuBar, CToolMenuBar );
+	DECLARE_CLASS_SIMPLE(CToolFileMenuBar, CToolMenuBar);
 
 public:
-	CToolFileMenuBar( CBaseToolSystem *parent, const char *panelName );
+	CToolFileMenuBar(CBaseToolSystem *parent, const char *panelName);
 	virtual void PerformLayout();
-	void SetFileName( const char *pFileName );
+	void SetFileName(const char *pFileName);
 
 private:
-	Label		*m_pFileName;
+	Label *m_pFileName;
 };
-
 
 #endif // TOOLMENUBAR_H

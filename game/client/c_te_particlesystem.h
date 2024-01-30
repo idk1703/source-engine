@@ -14,16 +14,14 @@
 #ifndef C_TE_PARTICLESYSTEM_H
 #define C_TE_PARTICLESYSTEM_H
 
-
 #include "particlemgr.h"
 #include "c_basetempentity.h"
 #include "particles_simple.h"
 
+#define SIMSHIFT 10
 
-#define SIMSHIFT	10
-
-
-typedef enum {
+typedef enum
+{
 	pt_static,
 	pt_grav,
 	pt_slowgrav,
@@ -36,27 +34,21 @@ typedef enum {
 	pt_vox_grav,
 	pt_snow,
 	pt_rain,
-	pt_clientcustom   // Must have callback function specified
+	pt_clientcustom // Must have callback function specified
 } ptype_t;
-
-
 
 class C_TEParticleSystem : public C_BaseTempEntity
 {
 public:
-
-	DECLARE_CLASS( C_TEParticleSystem, C_BaseTempEntity );
+	DECLARE_CLASS(C_TEParticleSystem, C_BaseTempEntity);
 	DECLARE_CLIENTCLASS();
 
-					C_TEParticleSystem();
-
+	C_TEParticleSystem();
 
 public:
-
 	// particle effect sort origin
-	Vector			m_vecOrigin;
+	Vector m_vecOrigin;
 };
-
 
 // This is the class that legacy tempents use to emit particles.
 // They use it in this pattern:
@@ -67,40 +59,37 @@ public:
 class CTEParticleRenderer : public CParticleEffect
 {
 public:
-	DECLARE_CLASS( CTEParticleRenderer, CParticleEffect );
-	virtual						~CTEParticleRenderer();
+	DECLARE_CLASS(CTEParticleRenderer, CParticleEffect);
+	virtual ~CTEParticleRenderer();
 
 	// Create a CTEParticleRenderer. Pass in your sort origin (m_vecOrigin).
-	static CSmartPtr<CTEParticleRenderer>	Create( const char *pDebugName, const Vector &vOrigin );
+	static CSmartPtr<CTEParticleRenderer> Create(const char *pDebugName, const Vector &vOrigin);
 
-	StandardParticle_t*		AddParticle();
+	StandardParticle_t *AddParticle();
 
-	CParticleMgr*			GetParticleMgr();
+	CParticleMgr *GetParticleMgr();
 
-	void					SetParticleType( StandardParticle_t *pParticle, ptype_t type );
-	ptype_t					GetParticleType( StandardParticle_t *pParticle );
+	void SetParticleType(StandardParticle_t *pParticle, ptype_t type);
+	ptype_t GetParticleType(StandardParticle_t *pParticle);
 
 	// Get/set lifetime. Note: lifetime here is a counter. You set it to a value and it
 	// counts down and disappears after that long.
-	void					SetParticleLifetime( StandardParticle_t *pParticle, float lifetime );
-	float					GetParticleLifetime( StandardParticle_t *pParticle );
+	void SetParticleLifetime(StandardParticle_t *pParticle, float lifetime);
+	float GetParticleLifetime(StandardParticle_t *pParticle);
 
-
-// IParticleEffect overrides.
+	// IParticleEffect overrides.
 public:
-	virtual void RenderParticles( CParticleRenderIterator *pIterator );
-	virtual void SimulateParticles( CParticleSimulateIterator *pIterator );
+	virtual void RenderParticles(CParticleRenderIterator *pIterator);
+	virtual void SimulateParticles(CParticleSimulateIterator *pIterator);
 
 private:
-					CTEParticleRenderer( const char *pDebugName );
-					CTEParticleRenderer( const CTEParticleRenderer & ); // not defined, not accessible
+	CTEParticleRenderer(const char *pDebugName);
+	CTEParticleRenderer(const CTEParticleRenderer &); // not defined, not accessible
 
-	int				m_nActiveParticles;
-	float			m_ParticleSize;
-	PMaterialHandle	m_MaterialHandle;
+	int m_nActiveParticles;
+	float m_ParticleSize;
+	PMaterialHandle m_MaterialHandle;
 };
-
-
 
 // ------------------------------------------------------------------------ //
 // Inlines.
@@ -125,6 +114,5 @@ inline float CTEParticleRenderer::GetParticleLifetime(StandardParticle_t *pParti
 {
 	return pParticle->m_Lifetime;
 }
-
 
 #endif

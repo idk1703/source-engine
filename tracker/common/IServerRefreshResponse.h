@@ -29,6 +29,4 @@ public:
 	virtual void RefreshComplete() = 0;
 };
 
-
-
 #endif // ISERVERREFRESHRESPONSE_H

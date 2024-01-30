@@ -27,14 +27,11 @@
 				defining __JM_STD on the command line. */
 /* #define __JM_STD */
 
-
 /* __JM_STDC              Defines the namespace used by the C Library defs.
 				Defaults to "std" as recomended by the latest
 				draft standard, can be redefined by defining
 				__JM_STDC on the command line. */
 /* #define __JM_STDC */
-
-
 
 /* Compiler options: */
 
@@ -162,7 +159,6 @@
 /* JM_SIZEOF_WCHAR_T         sizeof(wchar_t) */
 /* #define JM_SIZEOF_WCHAR_T */
 
-
 /* STL options: */
 
 /* JM_NO_EXCEPTION_H         Define if you do not a compliant <exception>
@@ -257,37 +253,36 @@
 				front_insert_iterator<> do not have assignment operators */
 /* #define JM_NO_OI_ASSIGN */
 
-
 #if JM_INT64_T == 0
 #define JM_NO_INT64
 #elif JM_INT64_T == 1
-#define JM_INT64t short
+#define JM_INT64t	  short
 #define JM_IMM64(val) val
 #elif JM_INT64_T == 2
-#define JM_INT64t int
+#define JM_INT64t	  int
 #define JM_IMM64(val) val
 #elif JM_INT64_T == 3
-#define JM_INT64t long
+#define JM_INT64t	  long
 #define JM_IMM64(val) val##L
 #elif JM_INT64_T == 4
-#define JM_INT64t int64_t
+#define JM_INT64t	  int64_t
 #define JM_IMM64(val) INT64_C(val)
 #elif JM_INT64_T == 5
-#define JM_INT64t long long
+#define JM_INT64t	  long long
 #define JM_IMM64(val) val##LL
 #elif JM_INT64_T == 6
-#define JM_INT64t __int64
+#define JM_INT64t	  __int64
 #define JM_IMM64(val) val##i64
 #else
 syntax error: unknown value for JM_INT64_T
 #endif
 
 #if JM_DISTANCE_T == 0
-#  define JM_DISTANCE(i, j, n) n = j - i
+#define JM_DISTANCE(i, j, n) n = j - i
 #elif JM_DISTANCE_T == 1
-#  define JM_DISTANCE(i, j, n) n = __JM_STD::distance(i, j)
+#define JM_DISTANCE(i, j, n) n = __JM_STD::distance(i, j)
 #elif JM_DISTANCE_T == 2
-#  define JM_DISTANCE(i, j, n) (n = 0, __JM_STD::distance(i, j, n))
+#define JM_DISTANCE(i, j, n) (n = 0, __JM_STD::distance(i, j, n))
 #else
 syntax erorr
 #endif
@@ -311,67 +306,66 @@ syntax erorr
 #endif
 
 #if JM_OI_T == 0
-# define JM_OUTPUT_ITERATOR(T, D) dummy_iterator_base<T>
+#define JM_OUTPUT_ITERATOR(T, D) dummy_iterator_base<T>
 #elif JM_OI_T == 1
-# define JM_OUTPUT_ITERATOR(T, D) __JM_STD::iterator<__JM_STD::output_iterator_tag, T, D, T*, T&>
+#define JM_OUTPUT_ITERATOR(T, D) __JM_STD::iterator<__JM_STD::output_iterator_tag, T, D, T *, T &>
 #elif JM_OI_T == 2
-# define JM_OUTPUT_ITERATOR(T, D) __JM_STD::iterator<__JM_STD::output_iterator_tag, T, D>
+#define JM_OUTPUT_ITERATOR(T, D) __JM_STD::iterator<__JM_STD::output_iterator_tag, T, D>
 #elif JM_OI_T == 3
-# define JM_OUTPUT_ITERATOR(T, D) __JM_STD::output_iterator
+#define JM_OUTPUT_ITERATOR(T, D) __JM_STD::output_iterator
 #else
 syntax error
 #endif
 
 #if JM_II_T == 0
-# define JM_INPUT_ITERATOR(T, D) dummy_iterator_base<T>
+#define JM_INPUT_ITERATOR(T, D) dummy_iterator_base<T>
 #elif JM_II_T == 1
-#define JM_INPUT_ITERATOR(T, D) __JM_STD::iterator<__JM_STD::input_iterator_tag, T, D, T*, T&>
+#define JM_INPUT_ITERATOR(T, D) __JM_STD::iterator<__JM_STD::input_iterator_tag, T, D, T *, T &>
 #elif JM_II_T == 2
 #define JM_INPUT_ITERATOR(T, D) __JM_STD::iterator<__JM_STD::input_iterator_tag, T, D>
 #elif JM_II_T == 3
-# define JM_INPUT_ITERATOR(T, D) __JM_STD::input_iterator<T, D>
+#define JM_INPUT_ITERATOR(T, D) __JM_STD::input_iterator<T, D>
 #elif JM_II_T == 4
-# define JM_INPUT_ITERATOR(T, D) __JM_STD::input_iterator<T>
+#define JM_INPUT_ITERATOR(T, D) __JM_STD::input_iterator<T>
 #else
 syntax error
 #endif
 
 #if JM_FI_T == 0
-# define JM_FWD_ITERATOR(T, D) dummy_iterator_base<T>
+#define JM_FWD_ITERATOR(T, D) dummy_iterator_base<T>
 #elif JM_FI_T == 1
-# define JM_FWD_ITERATOR(T, D) __JM_STD::iterator<__JM_STD::forward_iterator_tag, T, D, T*, T&>
+#define JM_FWD_ITERATOR(T, D) __JM_STD::iterator<__JM_STD::forward_iterator_tag, T, D, T *, T &>
 #elif JM_FI_T == 2
-# define JM_FWD_ITERATOR(T, D) __JM_STD::iterator<__JM_STD::forward_iterator_tag, T, D>
+#define JM_FWD_ITERATOR(T, D) __JM_STD::iterator<__JM_STD::forward_iterator_tag, T, D>
 #elif JM_FI_T == 3
-# define JM_FWD_ITERATOR(T, D) __JM_STD::forward_iterator<T, D>
+#define JM_FWD_ITERATOR(T, D) __JM_STD::forward_iterator<T, D>
 #else
-syntax error
+	syntax error
 #endif
 
 #if JM_BI_T == 0
-# define JM_BIDI_ITERATOR(T, D) dummy_iterator_base<T>
+#define JM_BIDI_ITERATOR(T, D) dummy_iterator_base<T>
 #elif JM_BI_T == 1
-# define JM_BIDI_ITERATOR(T, D) __JM_STD::iterator<__JM_STD::bidirectional_iterator_tag, T, D, T*, T&>
+#define JM_BIDI_ITERATOR(T, D) __JM_STD::iterator<__JM_STD::bidirectional_iterator_tag, T, D, T *, T &>
 #elif JM_BI_T == 2
-# define JM_BIDI_ITERATOR(T, D) __JM_STD::iterator<__JM_STD::bidirectional_iterator_tag, T, D>
+#define JM_BIDI_ITERATOR(T, D) __JM_STD::iterator<__JM_STD::bidirectional_iterator_tag, T, D>
 #elif JM_BI_T == 3
-# define JM_BIDI_ITERATOR(T, D) __JM_STD::bidirectional_iterator<T, D>
+#define JM_BIDI_ITERATOR(T, D) __JM_STD::bidirectional_iterator<T, D>
 #else
-syntax error
+		syntax error
 #endif
 
 #if JM_RI_T == 0
-# define JM_RA_ITERATOR(T, D) dummy_iterator_base<T>
+#define JM_RA_ITERATOR(T, D) dummy_iterator_base<T>
 #elif JM_RI_T == 1
-# define JM_RA_ITERATOR(T, D) __JM_STD::iterator<__JM_STD::random_access_iterator_tag, T, D, T*, T&>
+#define JM_RA_ITERATOR(T, D) __JM_STD::iterator<__JM_STD::random_access_iterator_tag, T, D, T *, T &>
 #elif JM_RI_T == 2
-# define JM_RA_ITERATOR(T, D) __JM_STD::iterator<__JM_STD::random_access_iterator_tag, T, D>
+#define JM_RA_ITERATOR(T, D) __JM_STD::iterator<__JM_STD::random_access_iterator_tag, T, D>
 #elif JM_RI_T == 3
-# define JM_RA_ITERATOR(T, D) __JM_STD::random_access_iterator<T, D>
+#define JM_RA_ITERATOR(T, D) __JM_STD::random_access_iterator<T, D>
 #else
-syntax error
+			syntax error
 #endif
-
 
 #ifndef JM_NO_EXCEPTION_H
 #include <exception>
@@ -387,24 +381,22 @@ syntax error
 #endif
 
 #ifdef JM_NO_MEMORY_H
- #define JM_OLD_ALLOCATORS
- #define REBIND_INSTANCE(x, y, inst) re_alloc_binder<x, y>(inst)
- #define REBIND_TYPE(x, y) re_alloc_binder<x, y>
- #define JM_DEF_ALLOC_PARAM(x) JM_DEFAULT_PARAM( jm_def_alloc )
- #define JM_DEF_ALLOC(x) jm_def_alloc
+#define JM_OLD_ALLOCATORS
+#define REBIND_INSTANCE(x, y, inst) re_alloc_binder<x, y>(inst)
+#define REBIND_TYPE(x, y)			re_alloc_binder<x, y>
+#define JM_DEF_ALLOC_PARAM(x)		JM_DEFAULT_PARAM(jm_def_alloc)
+#define JM_DEF_ALLOC(x)				jm_def_alloc
 
- #define JM_NEED_BINDER
- #define JM_NEED_ALLOC
+#define JM_NEED_BINDER
+#define JM_NEED_ALLOC
 #else
 #include <memory>
- #define REBIND_INSTANCE(x, y, inst) y::JM_NESTED_TEMPLATE_DECL rebind<x>::other(inst)
- #define REBIND_TYPE(x, y) y::JM_NESTED_TEMPLATE_DECL rebind<x>::other
- #define JM_DEF_ALLOC_PARAM(x) JM_TRICKY_DEFAULT_PARAM( __JM_STD::allocator<x> )
- #define JM_DEF_ALLOC(x) __JM_STD::allocator<x>
+#define REBIND_INSTANCE(x, y, inst) y::JM_NESTED_TEMPLATE_DECL rebind<x>::other(inst)
+#define REBIND_TYPE(x, y)			y::JM_NESTED_TEMPLATE_DECL rebind<x>::other
+#define JM_DEF_ALLOC_PARAM(x)		JM_TRICKY_DEFAULT_PARAM(__JM_STD::allocator<x>)
+#define JM_DEF_ALLOC(x)				__JM_STD::allocator<x>
 #endif
 
-
 #endif // JM_AUTO_CONFIGURE
-
 
 #endif /* JM_OPT_H */

@@ -11,7 +11,7 @@
 #pragma once
 #endif
 
-void CL_Parse_ReliableEvent( void );
-void CL_Parse_Event( void );
+void CL_Parse_ReliableEvent(void);
+void CL_Parse_Event(void);
 
 #endif // CL_PARSE_EVENT_H

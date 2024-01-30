@@ -21,14 +21,14 @@
 #endif
 #endif
 
-//HFX_PURE_INTERFACE
+// HFX_PURE_INTERFACE
 #if HFX_MSVC >= 7
 #define HFX_PURE_INTERFACE __declspec(novtable)
 #else
 #define HFX_PURE_INTERFACE
 #endif
 
-//HFX_ABSTRACT
+// HFX_ABSTRACT
 #if HFX_MSVC >= 8
 #define HFX_ABSTRACT abstract
 #else
@@ -37,15 +37,15 @@
 
 #define HFX_EXPLICIT explicit
 
-//HFX_INLINE
-#if _MSC_VER>=1000
+// HFX_INLINE
+#if _MSC_VER >= 1000
 #define HFX_INLINE __forceinline
 
 #else
 #define HFX_INLINE inline
 #endif
 
-//HFX_ALIGN
+// HFX_ALIGN
 #if HFX_MSVC > 6
 #define HFX_ALIGN(nBits) __declspec(align(nBits))
 #else

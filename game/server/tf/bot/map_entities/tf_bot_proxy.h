@@ -6,33 +6,32 @@
 #ifndef TF_BOT_PROXY_H
 #define TF_BOT_PROXY_H
 
-
 class CTFBot;
 class CTFBotActionPoint;
 
-
 class CTFBotProxy : public CPointEntity
 {
-	DECLARE_CLASS( CTFBotProxy, CPointEntity );
+	DECLARE_CLASS(CTFBotProxy, CPointEntity);
+
 public:
 	DECLARE_DATADESC();
 
-	CTFBotProxy( void );
-	virtual ~CTFBotProxy() { }
+	CTFBotProxy(void);
+	virtual ~CTFBotProxy() {}
 
-	void Think( void );
+	void Think(void);
 
 	// Input
-	void InputSetTeam( inputdata_t &inputdata );
-	void InputSetClass( inputdata_t &inputdata );
-	void InputSetMovementGoal( inputdata_t &inputdata );
-	void InputSpawn( inputdata_t &inputdata );
-	void InputDelete( inputdata_t &inputdata );
+	void InputSetTeam(inputdata_t &inputdata);
+	void InputSetClass(inputdata_t &inputdata);
+	void InputSetMovementGoal(inputdata_t &inputdata);
+	void InputSpawn(inputdata_t &inputdata);
+	void InputDelete(inputdata_t &inputdata);
 
-	void OnInjured( void );
-	void OnKilled( void );
-	void OnAttackingEnemy( void );
-	void OnKilledEnemy( void );
+	void OnInjured(void);
+	void OnKilled(void);
+	void OnAttackingEnemy(void);
+	void OnKilledEnemy(void);
 
 protected:
 	// Output
@@ -50,9 +49,8 @@ protected:
 	string_t m_actionPointName;
 	float m_respawnInterval;
 
-	CHandle< CTFBot > m_bot;
-	CHandle< CTFBotActionPoint > m_moveGoal;
+	CHandle<CTFBot> m_bot;
+	CHandle<CTFBotActionPoint> m_moveGoal;
 };
-
 
 #endif // TF_BOT_PROXY_H

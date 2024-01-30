@@ -11,7 +11,7 @@
 #endif
 
 #pragma warning(push, 1)
-#pragma warning(disable:4701 4702 4530)
+#pragma warning(disable : 4701 4702 4530)
 #include <fstream>
 #pragma warning(pop)
 #include "fgdlib/HelperInfo.h"
@@ -21,13 +21,10 @@
 #include "IEditorTexture.h"
 #include "utlvector.h"
 
-
 class MDkeyvalue;
 class KeyValues;
 
-
-#define MAX_DIRECTORY_SIZE	32
-
+#define MAX_DIRECTORY_SIZE 32
 
 enum MAPFORMAT
 {
@@ -40,18 +37,17 @@ enum MAPFORMAT
 
 struct MatExlcusions_s
 {
-	char szDirectory[MAX_PATH];		// Where we store the material exclusion directories
-	bool bUserGenerated;			// If the user specified this ( default:  false -- FGD defined )
+	char szDirectory[MAX_PATH]; // Where we store the material exclusion directories
+	bool bUserGenerated;		// If the user specified this ( default:  false -- FGD defined )
 };
 
 class CGameConfig
 {
 public:
-
 	CGameConfig();
 
-		static CGameConfig *GetActiveGame(void);
-		static void SetActiveGame(CGameConfig *pGame);
+	static CGameConfig *GetActiveGame(void);
+	static void SetActiveGame(CGameConfig *pGame);
 
 	inline TEXTUREFORMAT GetTextureFormat(void);
 	inline void SetTextureFormat(TEXTUREFORMAT eFormat);
@@ -65,16 +61,16 @@ public:
 	inline const char *GetCordonTexture(void);
 	inline void SetCordonTexture(const char *szCordonTexture);
 
-		inline void GetSteamExe(CString &str);
-		inline void GetSteamDir(CString &str);
-		inline void GetSteamUserDir(CString &str);
-		inline void GetSteamAppID(CString &str);
+	inline void GetSteamExe(CString &str);
+	inline void GetSteamDir(CString &str);
+	inline void GetSteamUserDir(CString &str);
+	inline void GetSteamAppID(CString &str);
 
-		inline MAPFORMAT GetMapFormat();
+	inline MAPFORMAT GetMapFormat();
 
-	CUtlVector< MatExlcusions_s > m_MaterialExclusions;
+	CUtlVector<MatExlcusions_s> m_MaterialExclusions;
 
-	DWORD dwID;	// assigned on load
+	DWORD dwID; // assigned on load
 
 	char szName[128];
 	int nGDFiles;
@@ -90,10 +86,10 @@ public:
 	char szMapDir[128];
 	char szBSPDir[128];
 	char m_szModDir[128];
-	int	 m_MaterialExcludeCount;
+	int m_MaterialExcludeCount;
 
 	CStringArray GDFiles;
-	GameData GD;	// gamedata files loaded
+	GameData GD; // gamedata files loaded
 	CGamePalette Palette;
 
 	BOOL Import(std::fstream &, float fVersion);
@@ -118,10 +114,10 @@ protected:
 	int m_nDefaultLightmapScale;
 	char m_szCordonTexture[MAX_PATH];
 
-		// These settings are loaded from GameInfo.txt:
-		char m_szSteamDir[MAX_PATH];			// The full path to steam.exe
-		char m_szSteamUserDir[MAX_PATH];		// The full path to the users's directory under SteamApps
-		char m_szSteamAppID[32];				// The app id to add to the command line when launching the game via Steam.
+	// These settings are loaded from GameInfo.txt:
+	char m_szSteamDir[MAX_PATH];	 // The full path to steam.exe
+	char m_szSteamUserDir[MAX_PATH]; // The full path to the users's directory under SteamApps
+	char m_szSteamAppID[32];		 // The app id to add to the command line when launching the game via Steam.
 };
 
 //-----------------------------------------------------------------------------
@@ -132,15 +128,13 @@ MAPFORMAT CGameConfig::GetMapFormat()
 	return mapformat;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 TEXTUREFORMAT CGameConfig::GetTextureFormat(void)
 {
-	return(textureformat);
+	return (textureformat);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -150,33 +144,29 @@ void CGameConfig::SetTextureFormat(TEXTUREFORMAT eFormat)
 	textureformat = eFormat;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 const char *CGameConfig::GetCordonTexture(void)
 {
-	return(m_szCordonTexture);
+	return (m_szCordonTexture);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 void CGameConfig::SetCordonTexture(const char *szCordonTexture)
 {
-	Q_strncpy( m_szCordonTexture, szCordonTexture, sizeof( m_szCordonTexture ) );
+	Q_strncpy(m_szCordonTexture, szCordonTexture, sizeof(m_szCordonTexture));
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 int CGameConfig::GetDefaultLightmapScale(void)
 {
-	return(m_nDefaultLightmapScale);
+	return (m_nDefaultLightmapScale);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -186,15 +176,13 @@ void CGameConfig::SetDefaultLightmapScale(int nScale)
 	m_nDefaultLightmapScale = nScale;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 float CGameConfig::GetDefaultTextureScale(void)
 {
-	return(m_fDefaultTextureScale);
+	return (m_fDefaultTextureScale);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -204,7 +192,6 @@ void CGameConfig::SetDefaultTextureScale(float fScale)
 	m_fDefaultTextureScale = fScale;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Returns the full path to steam.exe, found by searching up from
 //			whatever directory hammer is in.
@@ -213,7 +200,6 @@ void CGameConfig::GetSteamDir(CString &str)
 {
 	str = m_szSteamDir;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns the full path to steam.exe, found by searching up from
@@ -225,7 +211,6 @@ void CGameConfig::GetSteamExe(CString &str)
 	str += "\\steam.exe";
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Returns the full path to steam.exe, found by searching up from
 //			whatever directory hammer is in.
@@ -235,7 +220,6 @@ void CGameConfig::GetSteamUserDir(CString &str)
 	str = m_szSteamUserDir;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
@@ -244,11 +228,9 @@ void CGameConfig::GetSteamAppID(CString &str)
 	str = m_szSteamAppID;
 }
 
-
 extern GameData *pGD;
 extern CGameConfig *g_pGameConfig;
 extern float g_MAX_MAP_COORD;
 extern float g_MIN_MAP_COORD;
-
 
 #endif // GAMECONFIG_H

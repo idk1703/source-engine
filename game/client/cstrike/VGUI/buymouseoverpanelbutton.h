@@ -31,10 +31,11 @@ class BuyMouseOverPanelButton : public MouseOverPanelButton
 {
 private:
 	typedef MouseOverPanelButton BaseClass;
+
 public:
-	BuyMouseOverPanelButton(vgui::Panel *parent, const char *panelName, vgui::EditablePanel *panel) :
-	  MouseOverPanelButton( parent, panelName, panel)
-	  {
+	BuyMouseOverPanelButton(vgui::Panel *parent, const char *panelName, vgui::EditablePanel *panel)
+		: MouseOverPanelButton(parent, panelName, panel)
+	{
 		m_iPrice = 0;
 		m_iPreviousPrice = 0;
 		m_iASRestrict = 0;
@@ -42,63 +43,70 @@ public:
 		m_command = NULL;
 		m_bIsBargain = false;
 
-		m_pBlackMarketPrice = NULL;//new EditablePanel( parent, "BlackMarket_Labels" );
-		if ( m_pBlackMarketPrice )
+		m_pBlackMarketPrice = NULL; // new EditablePanel( parent, "BlackMarket_Labels" );
+		if(m_pBlackMarketPrice)
 		{
-			m_pBlackMarketPrice->LoadControlSettings( "Resource/UI/BlackMarket_Labels.res" );
+			m_pBlackMarketPrice->LoadControlSettings("Resource/UI/BlackMarket_Labels.res");
 
-			int x,y,wide,tall;
-			GetClassPanel()->GetBounds( x, y, wide, tall );
-			m_pBlackMarketPrice->SetBounds( x, y, wide, tall );
+			int x, y, wide, tall;
+			GetClassPanel()->GetBounds(x, y, wide, tall);
+			m_pBlackMarketPrice->SetBounds(x, y, wide, tall);
 			int px, py;
-			GetClassPanel()->GetPinOffset( px, py );
+			GetClassPanel()->GetPinOffset(px, py);
 			int rx, ry;
-			GetClassPanel()->GetResizeOffset( rx, ry );
+			GetClassPanel()->GetResizeOffset(rx, ry);
 			// Apply pin settings from template, too
-			m_pBlackMarketPrice->SetAutoResize( GetClassPanel()->GetPinCorner(), GetClassPanel()->GetAutoResize(), px, py, rx, ry );
+			m_pBlackMarketPrice->SetAutoResize(GetClassPanel()->GetPinCorner(), GetClassPanel()->GetAutoResize(), px,
+											   py, rx, ry);
 		}
-	  }
+	}
 
-	virtual void ApplySettings( KeyValues *resourceData )
+	virtual void ApplySettings(KeyValues *resourceData)
 	{
-		BaseClass::ApplySettings( resourceData );
+		BaseClass::ApplySettings(resourceData);
 
-		KeyValues *kv = resourceData->FindKey( "cost", false );
-		if( kv ) // if this button has a cost defined for it
+		KeyValues *kv = resourceData->FindKey("cost", false);
+		if(kv) // if this button has a cost defined for it
 		{
 			m_iPrice = kv->GetInt(); // save the price away
 		}
 
-		kv = resourceData->FindKey( "as_restrict", false );
-		if( kv ) // if this button has a map limitation for it
+		kv = resourceData->FindKey("as_restrict", false);
+		if(kv) // if this button has a map limitation for it
 		{
 			m_iASRestrict = kv->GetInt(); // save the as_restrict away
 		}
 
-		kv = resourceData->FindKey( "de_useonly", false );
-		if( kv ) // if this button has a map limitation for it
+		kv = resourceData->FindKey("de_useonly", false);
+		if(kv) // if this button has a map limitation for it
 		{
 			m_iDEUseOnly = kv->GetInt(); // save the de_useonly away
 		}
 
-		if ( m_command )
+		if(m_command)
 		{
 			delete[] m_command;
 			m_command = NULL;
 		}
-		kv = resourceData->FindKey( "command", false );
-		if ( kv )
+		kv = resourceData->FindKey("command", false);
+		if(kv)
 		{
-			m_command = CloneString( kv->GetString() );
+			m_command = CloneString(kv->GetString());
 		}
 
 		SetPriceState();
 		SetMapTypeState();
 	}
 
-	int GetASRestrict() { return m_iASRestrict; }
+	int GetASRestrict()
+	{
+		return m_iASRestrict;
+	}
 
-	int GetDEUseOnly() { return m_iDEUseOnly; }
+	int GetDEUseOnly()
+	{
+		return m_iDEUseOnly;
+	}
 
 	virtual void PerformLayout()
 	{
@@ -107,21 +115,21 @@ public:
 		SetMapTypeState();
 
 #ifndef CS_SHIELD_ENABLED
-		if ( !Q_stricmp( GetName(), "shield" ) )
+		if(!Q_stricmp(GetName(), "shield"))
 		{
-			SetVisible( false );
-			SetEnabled( false );
+			SetVisible(false);
+			SetEnabled(false);
 		}
 #endif
 	}
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme )
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme)
 	{
-		BaseClass::ApplySchemeSettings( pScheme );
+		BaseClass::ApplySchemeSettings(pScheme);
 
-		m_avaliableColor = pScheme->GetColor( "Label.TextColor", Color( 0, 0, 0, 0 ) );
-		m_unavailableColor = pScheme->GetColor( "Label.DisabledFgColor2", Color( 0, 0, 0, 0 ) );
-		m_bargainColor = Color( 0, 255, 0, 192 );
+		m_avaliableColor = pScheme->GetColor("Label.TextColor", Color(0, 0, 0, 0));
+		m_unavailableColor = pScheme->GetColor("Label.DisabledFgColor2", Color(0, 0, 0, 0));
+		m_bargainColor = Color(0, 255, 0, 192);
 
 		SetPriceState();
 		SetMapTypeState();
@@ -129,19 +137,19 @@ public:
 
 	void SetPriceState()
 	{
-		if ( CSGameRules() && CSGameRules()->IsBlackMarket() )
+		if(CSGameRules() && CSGameRules()->IsBlackMarket())
 		{
 			SetMarketState();
 		}
 		else
 		{
-			if ( GetParent() )
+			if(GetParent())
 			{
-				Panel *pPanel = dynamic_cast< Panel * >(GetParent()->FindChildByName( "MarketSticker" ) );
+				Panel *pPanel = dynamic_cast<Panel *>(GetParent()->FindChildByName("MarketSticker"));
 
-				if ( pPanel )
+				if(pPanel)
 				{
-					pPanel->SetVisible( false );
+					pPanel->SetVisible(false);
 				}
 			}
 
@@ -150,89 +158,89 @@ public:
 
 		C_CSPlayer *pPlayer = C_CSPlayer::GetLocalCSPlayer();
 
-		if ( m_iPrice &&  ( pPlayer && m_iPrice > pPlayer->GetAccount() ) )
+		if(m_iPrice && (pPlayer && m_iPrice > pPlayer->GetAccount()))
 		{
-			SetFgColor( m_unavailableColor );
-			SetCommand( "buy_unavailable" );
+			SetFgColor(m_unavailableColor);
+			SetCommand("buy_unavailable");
 		}
 		else
 		{
-			if ( m_bIsBargain == false )
+			if(m_bIsBargain == false)
 			{
-				SetFgColor( m_avaliableColor );
+				SetFgColor(m_avaliableColor);
 			}
 			else
 			{
-				SetFgColor( m_bargainColor );
+				SetFgColor(m_bargainColor);
 			}
 
-			SetCommand( m_command );
+			SetCommand(m_command);
 		}
 	}
 
-	void SetMarketState( void )
+	void SetMarketState(void)
 	{
 		Panel *pClassPanel = GetClassPanel();
-		if ( pClassPanel )
+		if(pClassPanel)
 		{
-			pClassPanel->SetVisible( false );
+			pClassPanel->SetVisible(false);
 		}
 
-		if ( m_pBlackMarketPrice )
+		if(m_pBlackMarketPrice)
 		{
-			Label *pLabel = dynamic_cast< Label * >(m_pBlackMarketPrice->FindChildByName( "pricelabel" ) );
+			Label *pLabel = dynamic_cast<Label *>(m_pBlackMarketPrice->FindChildByName("pricelabel"));
 
-			if ( pLabel )
+			if(pLabel)
 			{
 				const int BufLen = 2048;
 				wchar_t wbuf[BufLen] = L"";
 				const wchar_t *formatStr = g_pVGuiLocalize->Find("#Cstrike_MarketPreviousPrice");
 
-				if ( !formatStr )
+				if(!formatStr)
 					formatStr = L"%s1";
 
 				char strPrice[16];
 				wchar_t szPrice[64];
-				Q_snprintf( strPrice, sizeof( strPrice ), "%d", m_iPreviousPrice );
+				Q_snprintf(strPrice, sizeof(strPrice), "%d", m_iPreviousPrice);
 
-				g_pVGuiLocalize->ConvertANSIToUnicode( strPrice, szPrice, sizeof(szPrice));
+				g_pVGuiLocalize->ConvertANSIToUnicode(strPrice, szPrice, sizeof(szPrice));
 
-				g_pVGuiLocalize->ConstructString( wbuf, sizeof(wbuf), formatStr, 1, szPrice );
-				pLabel->SetText( wbuf );
-				pLabel->SetVisible( true );
+				g_pVGuiLocalize->ConstructString(wbuf, sizeof(wbuf), formatStr, 1, szPrice);
+				pLabel->SetText(wbuf);
+				pLabel->SetVisible(true);
 			}
 
-			pLabel = dynamic_cast< Label * >(m_pBlackMarketPrice->FindChildByName( "price" ) );
+			pLabel = dynamic_cast<Label *>(m_pBlackMarketPrice->FindChildByName("price"));
 
-			if ( pLabel )
+			if(pLabel)
 			{
 				const int BufLen = 2048;
 				wchar_t wbuf[BufLen] = L"";
 				const wchar_t *formatStr = g_pVGuiLocalize->Find("#Cstrike_MarketCurrentPrice");
 
-				if ( !formatStr )
+				if(!formatStr)
 					formatStr = L"%s1";
 
 				char strPrice[16];
 				wchar_t szPrice[64];
-				Q_snprintf( strPrice, sizeof( strPrice ), "%d", m_iPrice );
+				Q_snprintf(strPrice, sizeof(strPrice), "%d", m_iPrice);
 
-				g_pVGuiLocalize->ConvertANSIToUnicode( strPrice, szPrice, sizeof(szPrice));
+				g_pVGuiLocalize->ConvertANSIToUnicode(strPrice, szPrice, sizeof(szPrice));
 
-				g_pVGuiLocalize->ConstructString( wbuf, sizeof(wbuf), formatStr, 1, szPrice );
-				pLabel->SetText( wbuf );
-				pLabel->SetVisible( true );
+				g_pVGuiLocalize->ConstructString(wbuf, sizeof(wbuf), formatStr, 1, szPrice);
+				pLabel->SetText(wbuf);
+				pLabel->SetVisible(true);
 			}
 
-			pLabel = dynamic_cast< Label * >(m_pBlackMarketPrice->FindChildByName( "difference" ) );
+			pLabel = dynamic_cast<Label *>(m_pBlackMarketPrice->FindChildByName("difference"));
 
-			if ( pLabel )
+			if(pLabel)
 			{
 				const int BufLen = 2048;
 				wchar_t wbuf[BufLen] = L"";
 				const wchar_t *formatStr = g_pVGuiLocalize->Find("#Cstrike_MarketDeltaPrice");
 
-				if ( !formatStr )
+				if(!formatStr)
 					formatStr = L"%s1";
 
 				char strPrice[16];
@@ -240,50 +248,50 @@ public:
 
 				int iDifference = m_iPreviousPrice - m_iPrice;
 
-				if ( iDifference >= 0 )
+				if(iDifference >= 0)
 				{
-					pLabel->SetFgColor( m_bargainColor );
+					pLabel->SetFgColor(m_bargainColor);
 				}
 				else
 				{
-					pLabel->SetFgColor( Color( 192, 28, 0, 255 ) );
+					pLabel->SetFgColor(Color(192, 28, 0, 255));
 				}
 
-				Q_snprintf( strPrice, sizeof( strPrice ), "%d", abs( iDifference ) );
+				Q_snprintf(strPrice, sizeof(strPrice), "%d", abs(iDifference));
 
-				g_pVGuiLocalize->ConvertANSIToUnicode( strPrice, szPrice, sizeof(szPrice));
+				g_pVGuiLocalize->ConvertANSIToUnicode(strPrice, szPrice, sizeof(szPrice));
 
-				g_pVGuiLocalize->ConstructString( wbuf, sizeof(wbuf), formatStr, 1, szPrice );
-				pLabel->SetText( wbuf );
-				pLabel->SetVisible( true );
+				g_pVGuiLocalize->ConstructString(wbuf, sizeof(wbuf), formatStr, 1, szPrice);
+				pLabel->SetText(wbuf);
+				pLabel->SetVisible(true);
 			}
 
-			ImagePanel *pImage = dynamic_cast< ImagePanel * >(m_pBlackMarketPrice->FindChildByName( "classimage" ) );
+			ImagePanel *pImage = dynamic_cast<ImagePanel *>(m_pBlackMarketPrice->FindChildByName("classimage"));
 
-			if ( pImage )
+			if(pImage)
 			{
-				ImagePanel *pClassImage = dynamic_cast< ImagePanel * >(GetClassPanel()->FindChildByName( "classimage" ) );
+				ImagePanel *pClassImage = dynamic_cast<ImagePanel *>(GetClassPanel()->FindChildByName("classimage"));
 
-				if ( pClassImage )
+				if(pClassImage)
 				{
-					pImage->SetSize( pClassImage->GetWide(), pClassImage->GetTall() );
-					pImage->SetImage( pClassImage->GetImage() );
+					pImage->SetSize(pClassImage->GetWide(), pClassImage->GetTall());
+					pImage->SetImage(pClassImage->GetImage());
 				}
 			}
 
-			if ( GetParent() )
+			if(GetParent())
 			{
-				Panel *pPanel = dynamic_cast< Panel * >(GetParent()->FindChildByName( "MarketSticker" ) );
+				Panel *pPanel = dynamic_cast<Panel *>(GetParent()->FindChildByName("MarketSticker"));
 
-				if ( pPanel )
+				if(pPanel)
 				{
-					if ( m_bIsBargain )
+					if(m_bIsBargain)
 					{
-						pPanel->SetVisible( true );
+						pPanel->SetVisible(true);
 					}
 					else
 					{
-						pPanel->SetVisible( false );
+						pPanel->SetVisible(false);
 					}
 				}
 			}
@@ -294,57 +302,58 @@ public:
 	{
 		CCSGameRules *pRules = CSGameRules();
 
-		if ( pRules )
+		if(pRules)
 		{
-			if( pRules->IsVIPMap() )
+			if(pRules->IsVIPMap())
 			{
-				if ( m_iASRestrict )
+				if(m_iASRestrict)
 				{
-					SetFgColor( m_unavailableColor );
-					SetCommand( "buy_unavailable" );
+					SetFgColor(m_unavailableColor);
+					SetCommand("buy_unavailable");
 				}
 			}
 
-			if ( !pRules->IsBombDefuseMap() )
+			if(!pRules->IsBombDefuseMap())
 			{
-				if ( m_iDEUseOnly )
+				if(m_iDEUseOnly)
 				{
-					SetFgColor( m_unavailableColor );
-					SetCommand( "buy_unavailable" );
+					SetFgColor(m_unavailableColor);
+					SetCommand("buy_unavailable");
 				}
 			}
 		}
 	}
 
-	void SetBargainButton( bool state )
+	void SetBargainButton(bool state)
 	{
 		m_bIsBargain = state;
 	}
 
-	void SetCurrentPrice( int iPrice )
+	void SetCurrentPrice(int iPrice)
 	{
 		m_iPrice = iPrice;
 	}
 
-	void SetPreviousPrice( int iPrice )
+	void SetPreviousPrice(int iPrice)
 	{
 		m_iPreviousPrice = iPrice;
 	}
 
-	const char *GetBuyCommand( void )
+	const char *GetBuyCommand(void)
 	{
 		return m_command;
 	}
 
 	virtual void ShowPage()
 	{
-		if ( g_lastPanel )
+		if(g_lastPanel)
 		{
-			for( int i = 0; i< g_lastPanel->GetParent()->GetChildCount(); i++ )
+			for(int i = 0; i < g_lastPanel->GetParent()->GetChildCount(); i++)
 			{
-				MouseOverPanelButton *buyButton = dynamic_cast<MouseOverPanelButton *>(g_lastPanel->GetParent()->GetChild(i));
+				MouseOverPanelButton *buyButton =
+					dynamic_cast<MouseOverPanelButton *>(g_lastPanel->GetParent()->GetChild(i));
 
-				if ( buyButton )
+				if(buyButton)
 				{
 					buyButton->HidePage();
 				}
@@ -353,14 +362,14 @@ public:
 
 		BaseClass::ShowPage();
 
-		if ( !Q_stricmp( m_command, "vguicancel" ) )
+		if(!Q_stricmp(m_command, "vguicancel"))
 			return;
 
-		if ( CSGameRules() && CSGameRules()->IsBlackMarket() )
+		if(CSGameRules() && CSGameRules()->IsBlackMarket())
 		{
-			if ( m_pBlackMarketPrice && !m_pBlackMarketPrice->IsVisible() )
+			if(m_pBlackMarketPrice && !m_pBlackMarketPrice->IsVisible())
 			{
-				m_pBlackMarketPrice->SetVisible( true );
+				m_pBlackMarketPrice->SetVisible(true);
 			}
 		}
 	}
@@ -369,14 +378,13 @@ public:
 	{
 		BaseClass::HidePage();
 
-		if ( m_pBlackMarketPrice && m_pBlackMarketPrice->IsVisible() )
+		if(m_pBlackMarketPrice && m_pBlackMarketPrice->IsVisible())
 		{
-			m_pBlackMarketPrice->SetVisible( false );
+			m_pBlackMarketPrice->SetVisible(false);
 		}
 	}
 
 private:
-
 	int m_iPrice;
 	int m_iPreviousPrice;
 	int m_iASRestrict;
@@ -390,8 +398,7 @@ private:
 	char *m_command;
 
 public:
-		vgui::EditablePanel *m_pBlackMarketPrice;
+	vgui::EditablePanel *m_pBlackMarketPrice;
 };
-
 
 #endif // BUYMOUSEOVERPANELBUTTON_H

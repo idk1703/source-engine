@@ -10,8 +10,6 @@
 #pragma once
 #endif
 
-
-void respawn( CBaseEntity *pEdict, bool fCopyCorpse );
-
+void respawn(CBaseEntity *pEdict, bool fCopyCorpse);
 
 #endif // TF_CLIENT_H

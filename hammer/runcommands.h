@@ -24,12 +24,12 @@ enum
 // command:
 typedef struct
 {
-	BOOL bEnable;				// Run this command?
+	BOOL bEnable; // Run this command?
 
-	int iSpecialCmd;			// Nonzero if special command exists
+	int iSpecialCmd; // Nonzero if special command exists
 	char szRun[MAX_PATH];
 	char szParms[MAX_PATH];
-	BOOL bLongFilenames;		// Obsolete, but kept here for file backwards compatibility
+	BOOL bLongFilenames; // Obsolete, but kept here for file backwards compatibility
 	BOOL bEnsureCheck;
 	char szEnsureFn[MAX_PATH];
 	BOOL bUseProcessWnd;
@@ -38,10 +38,10 @@ typedef struct
 } CCOMMAND, *PCCOMMAND;
 
 // list of commands:
-typedef CArray<CCOMMAND, CCOMMAND&> CCommandArray;
+typedef CArray<CCOMMAND, CCOMMAND &> CCommandArray;
 
 // run a list of commands:
-bool RunCommands(CCommandArray& Commands, LPCTSTR pszDocName);
+bool RunCommands(CCommandArray &Commands, LPCTSTR pszDocName);
 void FixGameVars(char *pszSrc, char *pszDst, BOOL bUseQuotes = TRUE);
 bool IsRunningCommands();
 

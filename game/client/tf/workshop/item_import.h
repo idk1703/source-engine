@@ -31,10 +31,11 @@ enum MATERIAL_FILE_TYPE
 //-----------------------------------------------------------------------------
 class CTFFileImportDialog : public vgui::Frame
 {
-	DECLARE_CLASS_SIMPLE( CTFFileImportDialog, Frame );
+	DECLARE_CLASS_SIMPLE(CTFFileImportDialog, Frame);
 
 public:
-	enum BUILD_RESULT {
+	enum BUILD_RESULT
+	{
 		BUILD_OKAY,
 		BUILD_FAILED_NOSDK,
 		BUILD_FAILED_NONAME,
@@ -71,7 +72,8 @@ public:
 
 		NUM_BUILD_RESULTS
 	};
-	enum LOAD_RESULT {
+	enum LOAD_RESULT
+	{
 		LOAD_OKAY,
 		LOAD_FAILED,
 		LOAD_FAILED_BADMODEL,
@@ -83,7 +85,8 @@ public:
 		LOAD_FAIL_ANIMATIONTOOLONG,
 		NUM_LOAD_RESULTS
 	};
-	enum SAVE_RESULT {
+	enum SAVE_RESULT
+	{
 		SAVE_OKAY,
 		SAVE_FAILED,
 		NUM_SAVE_RESULTS
@@ -112,109 +115,114 @@ public:
 	};
 
 public:
-	CTFFileImportDialog( vgui::Panel *parent );
+	CTFFileImportDialog(vgui::Panel *parent);
 
 	virtual ~CTFFileImportDialog();
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 
-	virtual void OnCommand( const char *command );
-			void OnCommandLoad();
-			void OnCommandSave();
-			void OnCommandBrowseIcon();
-			void OnCommandBrowseLOD( int index );
-			void OnCommandBrowseAnimationSource();
-			void OnCommandBrowseAnimationVCD();
-			void OnCommandSwapVMT();
-			void OnCommandEditMaterial( int nSkinIndex, int nMaterialIndex );
-			void OnCommandEditMaterialDone( int nSkinIndex, int nMaterialIndex );
-			void OnCommandEditQC();
-			void OnCommandEditQCI();
-			void OnCommandEditQCDone();
-			void OnCommandEditQCIDone();
-			bool OnCommandBuild( BUILD_STAGE buildStage );
-			void OnCommandUpdateBodygroup();
+	virtual void OnCommand(const char *command);
+	void OnCommandLoad();
+	void OnCommandSave();
+	void OnCommandBrowseIcon();
+	void OnCommandBrowseLOD(int index);
+	void OnCommandBrowseAnimationSource();
+	void OnCommandBrowseAnimationVCD();
+	void OnCommandSwapVMT();
+	void OnCommandEditMaterial(int nSkinIndex, int nMaterialIndex);
+	void OnCommandEditMaterialDone(int nSkinIndex, int nMaterialIndex);
+	void OnCommandEditQC();
+	void OnCommandEditQCI();
+	void OnCommandEditQCDone();
+	void OnCommandEditQCIDone();
+	bool OnCommandBuild(BUILD_STAGE buildStage);
+	void OnCommandUpdateBodygroup();
 
-			void OnOpen();
+	void OnOpen();
 
 	virtual void OnClose();
 
-	MESSAGE_FUNC_PARAMS( OnTextChanged, "TextChanged", data );
+	MESSAGE_FUNC_PARAMS(OnTextChanged, "TextChanged", data);
 
-	MESSAGE_FUNC_CHARPTR( OnFileSelected, "FileSelected", fullpath );
+	MESSAGE_FUNC_CHARPTR(OnFileSelected, "FileSelected", fullpath);
 
-	MESSAGE_FUNC_PTR( OnRadioButtonChecked, "RadioButtonChecked", panel );
+	MESSAGE_FUNC_PTR(OnRadioButtonChecked, "RadioButtonChecked", panel);
 
-	KeyValues *GetItemValues() { return m_pItemValues; }
+	KeyValues *GetItemValues()
+	{
+		return m_pItemValues;
+	}
 
-	void SetItemName( const char *pszName );
+	void SetItemName(const char *pszName);
 	const char *GetItemName();
-	bool IsValidPrefab( const char *pszPrefab );
-	void SetItemPrefab( const char *pszPrefab );
+	bool IsValidPrefab(const char *pszPrefab);
+	void SetItemPrefab(const char *pszPrefab);
 	const char *GetItemPrefab();
-	bool GetItemPrefabValue( const char *pszPrefab, const char *pszName, CUtlString& strOutput );
-	void SelectClass( int nClassIndex );
-	void SetItemIcon( const char *pszFilePath );
+	bool GetItemPrefabValue(const char *pszPrefab, const char *pszName, CUtlString &strOutput);
+	void SelectClass(int nClassIndex);
+	void SetItemIcon(const char *pszFilePath);
 	const char *GetItemIcon();
-	void SetPaintable( bool bPaintable, int nMaterialIndex );
-	bool IsPaintable( int nMaterialIndex );
+	void SetPaintable(bool bPaintable, int nMaterialIndex);
+	bool IsPaintable(int nMaterialIndex);
 	bool IsAnyVMTPaintable();
-	const char *GetUserAnimationQCTemplate( int nSelectedClass, bool bPerforce = false );
-	const char *GetQCTemplate( int nSelectedClass );
-	const char *GetQCITemplate( int nSelectedClass );
+	const char *GetUserAnimationQCTemplate(int nSelectedClass, bool bPerforce = false);
+	const char *GetQCTemplate(int nSelectedClass);
+	const char *GetQCITemplate(int nSelectedClass);
 	void ClearLODs();
-	LOAD_RESULT SetLOD( int selectedClass, int nModelIndex, const char *pszFilePath, KeyValues* pKV = NULL );
+	LOAD_RESULT SetLOD(int selectedClass, int nModelIndex, const char *pszFilePath, KeyValues *pKV = NULL);
 	void UpdateLODDisplay();
-	int GetModelTriangleBudget( int selectedClass, int nModelIndex );
+	int GetModelTriangleBudget(int selectedClass, int nModelIndex);
 	int GetModelBoneBudget();
-	bool SetMaterial( int nMaterialPanelIndex, const char* pszFilePath, MATERIAL_FILE_TYPE fileType );
-	bool SetMaterial( int selectedSkin, int nMaterialIndex, const char *pszFilePath, MATERIAL_FILE_TYPE fileType );
-	const char* GetMaterialTextureFile( int selectedSkin, int nMaterialIndex, MATERIAL_FILE_TYPE fileType );
-	CUtlString GetMaterialName( int selectedSkin, int nMaterialIndex );
+	bool SetMaterial(int nMaterialPanelIndex, const char *pszFilePath, MATERIAL_FILE_TYPE fileType);
+	bool SetMaterial(int selectedSkin, int nMaterialIndex, const char *pszFilePath, MATERIAL_FILE_TYPE fileType);
+	const char *GetMaterialTextureFile(int selectedSkin, int nMaterialIndex, MATERIAL_FILE_TYPE fileType);
+	CUtlString GetMaterialName(int selectedSkin, int nMaterialIndex);
 	void ClearMaterials();
-	void ClearMaterial( int nSkinIndex, int nMaterialIndex );
+	void ClearMaterial(int nSkinIndex, int nMaterialIndex);
 	void UpdateMaterialDisplay();
-	void UpdateMaterialDisplay( int nSkinIndex, int nMaterialIndex );
-	const char *GetMaterialText( int nSkinIndex, int nMaterialIndex, CUtlBuffer &sMaterialText );
-	bool SetMaterialText( int nSkinIndex, int nMaterialIndex, const char* pszMaterialText );
-	BUILD_RESULT ValidateMaterialValues( KeyValues *pKV, int nMaterialIndex );
-	void RemoveUnnecessaryParametersFromVMT( KeyValues *pKV, int nMaterialIndex );
-	void RemoveLightParameters( KeyValues *pKV, int nMaterialIndex );
-	void RemovePaintParameters( KeyValues *pKV, int nMaterialIndex );
-	void RemoveTranslucentParameters( KeyValues *pKV );
-	void RemoveCubeMapParameters( KeyValues *pKV );
-	void RemoveSelfIllumParameters( KeyValues *pKV );
+	void UpdateMaterialDisplay(int nSkinIndex, int nMaterialIndex);
+	const char *GetMaterialText(int nSkinIndex, int nMaterialIndex, CUtlBuffer &sMaterialText);
+	bool SetMaterialText(int nSkinIndex, int nMaterialIndex, const char *pszMaterialText);
+	BUILD_RESULT ValidateMaterialValues(KeyValues *pKV, int nMaterialIndex);
+	void RemoveUnnecessaryParametersFromVMT(KeyValues *pKV, int nMaterialIndex);
+	void RemoveLightParameters(KeyValues *pKV, int nMaterialIndex);
+	void RemovePaintParameters(KeyValues *pKV, int nMaterialIndex);
+	void RemoveTranslucentParameters(KeyValues *pKV);
+	void RemoveCubeMapParameters(KeyValues *pKV);
+	void RemoveSelfIllumParameters(KeyValues *pKV);
 
 	void UpdateBodygroupsDisplay();
-	void SetBodygroup( KeyValues* pBodygroupKey );
+	void SetBodygroup(KeyValues *pBodygroupKey);
 
-	LOAD_RESULT SetAnimationSource( int selectedClass, const char *pszFilePath, KeyValues* pKV = NULL );
-	LOAD_RESULT SetAnimationVCD( int selectedClass, const char *pszFilePath, KeyValues* pKV = NULL );
-	void SetAnimationDuration( int selectedClass, float flDuration );
-	BUILD_RESULT VerifyVCD( const CAssetTF &asset );
+	LOAD_RESULT SetAnimationSource(int selectedClass, const char *pszFilePath, KeyValues *pKV = NULL);
+	LOAD_RESULT SetAnimationVCD(int selectedClass, const char *pszFilePath, KeyValues *pKV = NULL);
+	void SetAnimationDuration(int selectedClass, float flDuration);
+	BUILD_RESULT VerifyVCD(const CAssetTF &asset);
 	void UpdateAnimationSourceDisplay();
 	void UpdateAnimationVCDDisplay();
 	void UpdateAnimDurationDisplay();
 
-	void SetDirty( bool bDirty );
+	void SetDirty(bool bDirty);
 
-	void SetLoopableTaunt( bool bLoopable, float flLoopStartTime );
+	void SetLoopableTaunt(bool bLoopable, float flLoopStartTime);
 	bool IsLoopableTaunt() const;
 	float GetAnimationLoopStartTime() const;
 
-	BUILD_RESULT AddTauntToAsset( CAssetTF &asset, int nClassIndex, bool bIsMulticlass, BUILD_STAGE buildStage, KeyValues *pItemData, KeyValues *pBuildMessageVariables );
-	BUILD_RESULT AddModelToAsset( CAssetTF &asset, int nClassIndex, bool bIsMulticlass, BUILD_STAGE buildStage, KeyValues *pItemData, KeyValues *pBuildMessageVariables );
-	BUILD_RESULT AddMaterialsToAsset( CAssetTF &asset, KeyValues *pItemData, KeyValues *pBuildMessageVariables );
+	BUILD_RESULT AddTauntToAsset(CAssetTF &asset, int nClassIndex, bool bIsMulticlass, BUILD_STAGE buildStage,
+								 KeyValues *pItemData, KeyValues *pBuildMessageVariables);
+	BUILD_RESULT AddModelToAsset(CAssetTF &asset, int nClassIndex, bool bIsMulticlass, BUILD_STAGE buildStage,
+								 KeyValues *pItemData, KeyValues *pBuildMessageVariables);
+	BUILD_RESULT AddMaterialsToAsset(CAssetTF &asset, KeyValues *pItemData, KeyValues *pBuildMessageVariables);
 	bool CheckSourceSDK();
-	BUILD_RESULT Build( BUILD_STAGE buildStage, KeyValues *pBuildMessageVariables );
-	KeyValues *BuildSessionData( const char *pszItemName );
-	KeyValues *BuildItemSchema( const char *pszItemName );
-	LOAD_RESULT Load( const char *pszFilePath, const char *pathID, CUtlString &sFailedPath );
-	LOAD_RESULT LoadTxt( const char *pszFilePath, const char *pathID, CUtlString &sFailedPath );
-	LOAD_RESULT LoadZip( const char *pszFilePath, const char *pathID, CUtlString &sFailedPath );
-	SAVE_RESULT Save( const char *pszFilePath, const char *pathID );
+	BUILD_RESULT Build(BUILD_STAGE buildStage, KeyValues *pBuildMessageVariables);
+	KeyValues *BuildSessionData(const char *pszItemName);
+	KeyValues *BuildItemSchema(const char *pszItemName);
+	LOAD_RESULT Load(const char *pszFilePath, const char *pathID, CUtlString &sFailedPath);
+	LOAD_RESULT LoadTxt(const char *pszFilePath, const char *pathID, CUtlString &sFailedPath);
+	LOAD_RESULT LoadZip(const char *pszFilePath, const char *pathID, CUtlString &sFailedPath);
+	SAVE_RESULT Save(const char *pszFilePath, const char *pathID);
 
-	void SavePreviewData( CAssetTF &asset );
+	void SavePreviewData(CAssetTF &asset);
 	bool SetupPreviewData();
 	void CleanupPreviewData();
 
@@ -222,12 +230,12 @@ protected:
 	bool IsMulticlass();
 	const char *GetClassFolder();
 	bool AnyClassHasModels();
-	bool ClassHasModels( int nClassIndex );
+	bool ClassHasModels(int nClassIndex);
 	bool DidSpecifyAllMaterials();
 	bool AreClassesLODCountMatch();
 	bool AreClassesMaterialCountMatch();
 	bool AnyClassHasTauntSources();
-	bool ClassHasTauntSources( int nClassIndex );
+	bool ClassHasTauntSources(int nClassIndex);
 
 	void GetWorkshopData();
 	void SetWorkshopData();
@@ -235,22 +243,23 @@ protected:
 private:
 	bool ShouldP4AddOrEdit() const;
 	bool IsPartnerContent() const;
-	const char* GetWorkshopFolder() const;
+	const char *GetWorkshopFolder() const;
 
-	int GetCustomBones( int selectedClass, const char* pszFileName, CUtlStringList& strBoneList );
-	void SetLODPanelEnable( bool bEnable, int nModelIndex );
-	void SetSkinType( int nSkinType );
-	void SetEquipRegion( const char* pszEquipRegion );
-	void SetWorkshopID( const char* pszWorkshopID );
-	bool IsTFEnglishNameValid( item_definition_index_t defIndex );
-	void SetTFEnglishName( const char* pszTFEnglishName );
-	void UpdateUIForPrefab( ImportPrefab_t nPrefab );
-	item_definition_index_t AddKeyValuesToItemWorkshopSchema( KeyValues *pKV );
+	int GetCustomBones(int selectedClass, const char *pszFileName, CUtlStringList &strBoneList);
+	void SetLODPanelEnable(bool bEnable, int nModelIndex);
+	void SetSkinType(int nSkinType);
+	void SetEquipRegion(const char *pszEquipRegion);
+	void SetWorkshopID(const char *pszWorkshopID);
+	bool IsTFEnglishNameValid(item_definition_index_t defIndex);
+	void SetTFEnglishName(const char *pszTFEnglishName);
+	void UpdateUIForPrefab(ImportPrefab_t nPrefab);
+	item_definition_index_t AddKeyValuesToItemWorkshopSchema(KeyValues *pKV);
 
 	int m_nSelectedClass;
 	ImportPrefab_t m_nPrefab;
 
-	enum FileOpenMode {
+	enum FileOpenMode
+	{
 		FILE_OPEN_NONE,
 		FILE_OPEN_LOAD,
 		FILE_OPEN_SAVE,
@@ -264,42 +273,42 @@ private:
 
 	KeyValues *m_pItemValues;
 	KeyValues *m_pPreviewSchema;
-	CUtlVector< CUtlString > m_vecPreviewFiles;
-	CUtlVector< CUtlString > m_vecCustomModFiles;
+	CUtlVector<CUtlString> m_vecPreviewFiles;
+	CUtlVector<CUtlString> m_vecCustomModFiles;
 	CUtlBuffer m_tempQC;
 
 	vgui::TextEntry *m_pNameTextEntry;
-	vgui::ComboBox	*m_pTypeComboBox;
-	vgui::Button	*m_pSwapVMTButton;
-	vgui::ComboBox	*m_pSkinComboBox;
+	vgui::ComboBox *m_pTypeComboBox;
+	vgui::Button *m_pSwapVMTButton;
+	vgui::ComboBox *m_pSkinComboBox;
 	vgui::TextEntry *m_pWorkshopIDTextEntry;
 	vgui::TextEntry *m_pTFEnglishNameTextEntry;
 	vgui::CheckButton *m_pPerforceCheckButton;
 	vgui::CheckButton *m_pPartnerCheckButton;
 
-	vgui::EditablePanel	*m_pEquipRegionPanel;
-	vgui::ComboBox	*m_pEquipRegionComboBox;
+	vgui::EditablePanel *m_pEquipRegionPanel;
+	vgui::ComboBox *m_pEquipRegionComboBox;
 
 	vgui::ImagePanel *m_pIconImagePanel;
-	CUtlVector< vgui::CheckButton* > m_pPaintableCheckButtons;
+	CUtlVector<vgui::CheckButton *> m_pPaintableCheckButtons;
 
 	vgui::RadioButton *m_pClassRadioButtons[TF_LAST_NORMAL_CLASS];
 	vgui::Panel *m_pClassHighlights[TF_LAST_NORMAL_CLASS];
 
-	vgui::EditablePanel	*m_pBodygroupsPanel;
-	CUtlVector< vgui::CheckButton* > m_pBodygroups;
+	vgui::EditablePanel *m_pBodygroupsPanel;
+	CUtlVector<vgui::CheckButton *> m_pBodygroups;
 
-	vgui::EditablePanel	*m_pLODsPanel;
-	CUtlVector< vgui::Panel* > m_pLODPanels;
-	CUtlVector< vgui::Label* > m_pLODFiles;
-	CUtlVector< vgui::Label* > m_pLODDetails;
+	vgui::EditablePanel *m_pLODsPanel;
+	CUtlVector<vgui::Panel *> m_pLODPanels;
+	CUtlVector<vgui::Label *> m_pLODFiles;
+	CUtlVector<vgui::Label *> m_pLODDetails;
 
 	vgui::EditablePanel *m_pSkinsPanel;
-	CUtlVector< vgui::Panel* > m_pMaterialPanels;
-	CUtlVector< vgui::Label* > m_pMaterialLabels;
-	CUtlVector< vgui::Label* > m_pMaterialFiles;
+	CUtlVector<vgui::Panel *> m_pMaterialPanels;
+	CUtlVector<vgui::Label *> m_pMaterialLabels;
+	CUtlVector<vgui::Label *> m_pMaterialFiles;
 
-	vgui::EditablePanel	*m_pTauntInputPanel;
+	vgui::EditablePanel *m_pTauntInputPanel;
 	vgui::Label *m_pAnimationSourceFile;
 	vgui::Label *m_pAnimationVCDFile;
 	vgui::Label *m_pAnimationDurationLabel;
@@ -311,7 +320,7 @@ private:
 	vgui::DHANDLE<CTFFileImportTextEditDialog> m_pTextEditDialog;
 	vgui::DHANDLE<CTFImportMaterialEditDialog> m_pMaterialEditDialog;
 	vgui::DHANDLE<CImportPreviewItemPanel> m_pPreviewDialog;
-	CTFPlayerModelPanel	*m_pPlayerModelPanel;
+	CTFPlayerModelPanel *m_pPlayerModelPanel;
 
 	bool m_bWasCheatOn;
 };

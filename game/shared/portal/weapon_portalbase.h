@@ -13,9 +13,9 @@
 #include "basecombatweapon_shared.h"
 #include "portal_weapon_parse.h"
 
-#if defined( CLIENT_DLL )
-	#define CWeaponPortalBase C_WeaponPortalBase
-	void UTIL_ClipPunchAngleOffset( QAngle &in, const QAngle &punch, const QAngle &clip );
+#if defined(CLIENT_DLL)
+#define CWeaponPortalBase C_WeaponPortalBase
+void UTIL_ClipPunchAngleOffset(QAngle &in, const QAngle &punch, const QAngle &clip);
 #endif
 
 class CPortal_Player;
@@ -26,107 +26,117 @@ class CPortal_Player;
 // Given an ammo type (like from a weapon's GetPrimaryAmmoType()), this compares it
 // against the ammo name you specify.
 // MIKETODO: this should use indexing instead of searching and strcmp()'ing all the time.
-bool IsAmmoType( int iAmmoType, const char *pAmmoName );
+bool IsAmmoType(int iAmmoType, const char *pAmmoName);
 
 typedef enum
 {
 	WEAPON_NONE = 0,
 
-	//Melee
+	// Melee
 	WEAPON_CROWBAR,
 
-	//Special
+	// Special
 	WEAPON_PORTALGUN,
 	WEAPON_PHYSCANNON,
 
-	//Pistols
+	// Pistols
 	WEAPON_PISTOL,
 	WEAPON_357,
 
-	//Machineguns
+	// Machineguns
 	WEAPON_SMG,
 	WEAPON_AR2,
 
-	//Grenades
+	// Grenades
 	WEAPON_FRAG,
 	WEAPON_BUGBAIT,
 
-	//Other
+	// Other
 	WEAPON_SHOTGUN,
 	WEAPON_CROSSBOW,
 	WEAPON_RPG,
 
-	WEAPON_MAX,		// number of weapons weapon index
+	WEAPON_MAX, // number of weapons weapon index
 
 } PortalWeaponID;
 
 class CWeaponPortalBase : public CBaseCombatWeapon
 {
 public:
-	DECLARE_CLASS( CWeaponPortalBase, CBaseCombatWeapon );
+	DECLARE_CLASS(CWeaponPortalBase, CBaseCombatWeapon);
 	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CWeaponPortalBase();
 
-	#ifdef GAME_DLL
-		DECLARE_DATADESC();
+#ifdef GAME_DLL
+	DECLARE_DATADESC();
 
-		void SendReloadSoundEvent( void );
+	void SendReloadSoundEvent(void);
 
-		void Materialize( void );
-	#endif
+	void Materialize(void);
+#endif
 
 	// All predicted weapons need to implement and return true
-	virtual bool	IsPredicted() const;
+	virtual bool IsPredicted() const;
 
-	CBasePlayer* GetPlayerOwner() const;
-	CPortal_Player* GetPortalPlayerOwner() const;
+	CBasePlayer *GetPlayerOwner() const;
+	CPortal_Player *GetPortalPlayerOwner() const;
 
 	// Get specific Portal weapon ID (ie: WEAPON_PORTALGUN, etc)
-	virtual PortalWeaponID GetWeaponID( void ) const { return WEAPON_NONE; }
+	virtual PortalWeaponID GetWeaponID(void) const
+	{
+		return WEAPON_NONE;
+	}
 
-	void WeaponSound( WeaponSound_t sound_type, float soundtime = 0.0f );
+	void WeaponSound(WeaponSound_t sound_type, float soundtime = 0.0f);
 
-	CPortalSWeaponInfo const	&GetPortalWpnData() const;
+	CPortalSWeaponInfo const &GetPortalWpnData() const;
 
-
-	virtual void FireBullets( const FireBulletsInfo_t &info );
+	virtual void FireBullets(const FireBulletsInfo_t &info);
 
 public:
-	#if defined( CLIENT_DLL )
+#if defined(CLIENT_DLL)
 
-		virtual int		DrawModel( int flags );
-		virtual bool	ShouldDraw( void );
-		virtual bool	ShouldDrawCrosshair( void ) { return true; }
-		virtual bool	ShouldPredict();
-		virtual void	OnDataChanged( DataUpdateType_t type );
-		virtual void	DrawCrosshair();
+	virtual int DrawModel(int flags);
+	virtual bool ShouldDraw(void);
+	virtual bool ShouldDrawCrosshair(void)
+	{
+		return true;
+	}
+	virtual bool ShouldPredict();
+	virtual void OnDataChanged(DataUpdateType_t type);
+	virtual void DrawCrosshair();
 
-		virtual void	DoAnimationEvents( CStudioHdr *pStudio );
-		virtual void	GetRenderBounds( Vector& theMins, Vector& theMaxs );
+	virtual void DoAnimationEvents(CStudioHdr *pStudio);
+	virtual void GetRenderBounds(Vector &theMins, Vector &theMaxs);
 
-		virtual bool	OnFireEvent( C_BaseViewModel *pViewModel, const Vector& origin, const QAngle& angles, int event, const char *options );
+	virtual bool OnFireEvent(C_BaseViewModel *pViewModel, const Vector &origin, const QAngle &angles, int event,
+							 const char *options);
 
-	#else
+#else
 
-		virtual void	Spawn();
+	virtual void Spawn();
 
-	#endif
+#endif
 
-	float		m_flPrevAnimTime;
-	float  m_flNextResetCheckTime;
+	float m_flPrevAnimTime;
+	float m_flNextResetCheckTime;
 
-	Vector	GetOriginalSpawnOrigin( void ) { return m_vOriginalSpawnOrigin;	}
-	QAngle	GetOriginalSpawnAngles( void ) { return m_vOriginalSpawnAngles;	}
+	Vector GetOriginalSpawnOrigin(void)
+	{
+		return m_vOriginalSpawnOrigin;
+	}
+	QAngle GetOriginalSpawnAngles(void)
+	{
+		return m_vOriginalSpawnAngles;
+	}
 
 private:
-
-	CWeaponPortalBase( const CWeaponPortalBase & );
+	CWeaponPortalBase(const CWeaponPortalBase &);
 
 	Vector m_vOriginalSpawnOrigin;
 	QAngle m_vOriginalSpawnAngles;
 };
-
 
 #endif // WEAPON_PORTALBASE_H

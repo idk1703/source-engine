@@ -14,7 +14,6 @@
 #include <vgui_controls/PropertyPage.h>
 #include "HapticControlBox.h"
 
-
 class CCvarNegateCheckButton;
 class CKeyToggleCheckButton;
 class CCvarToggleCheckButton;
@@ -24,14 +23,14 @@ namespace vgui
 {
 	class Label;
 	class Panel;
-}
+} // namespace vgui
 
 //-----------------------------------------------------------------------------
 // Purpose: Mouse Details, Part of OptionsDialog
 //-----------------------------------------------------------------------------
 class COptionsSubHaptics : public vgui::PropertyPage
 {
-	DECLARE_CLASS_SIMPLE( COptionsSubHaptics, vgui::PropertyPage );
+	DECLARE_CLASS_SIMPLE(COptionsSubHaptics, vgui::PropertyPage);
 
 public:
 	COptionsSubHaptics(vgui::Panel *parent);
@@ -46,55 +45,50 @@ protected:
 	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 
 private:
-	MESSAGE_FUNC_PTR( OnControlModified, "ControlModified", panel );
-	MESSAGE_FUNC_PTR( OnTextChanged, "TextChanged", panel );
-	MESSAGE_FUNC_PTR( OnCheckButtonChecked, "CheckButtonChecked", panel )
+	MESSAGE_FUNC_PTR(OnControlModified, "ControlModified", panel);
+	MESSAGE_FUNC_PTR(OnTextChanged, "TextChanged", panel);
+	MESSAGE_FUNC_PTR(OnCheckButtonChecked, "CheckButtonChecked", panel)
 	{
-		OnControlModified( panel );
+		OnControlModified(panel);
 	}
 
 	vgui::Label *m_pForceMasterPreLabel;
-	CCvarSlider	*m_pForceMasterSlider;
+	CCvarSlider *m_pForceMasterSlider;
 
 	vgui::Label *m_pForceRecoilPreLabel;
-	CCvarSlider	*m_pForceRecoilSlider;
-
+	CCvarSlider *m_pForceRecoilSlider;
 
 	vgui::Label *m_pForceDamagePreLabel;
-	CCvarSlider	*m_pForceDamageSlider;
+	CCvarSlider *m_pForceDamageSlider;
 
 	vgui::Label *m_pForceMovementPreLabel;
-	CCvarSlider	*m_pForceMovementSlider;
+	CCvarSlider *m_pForceMovementSlider;
 
-
-
-	//Player
+	// Player
 	vgui::Label *m_pPlayerBoxPreLabel;
 	vgui::Label *m_pPlayerBoxScalePreLabel;
-	CCvarSlider	* m_pPlayerBoxScale;
-	ControlBoxVisual* m_pPlayerBoxVisual;
+	CCvarSlider *m_pPlayerBoxScale;
+	ControlBoxVisual *m_pPlayerBoxVisual;
 	vgui::Label *m_pPlayerBoxStiffnessPreLabel;
-	CCvarSlider	*m_pPlayerBoxStiffnessSlider;
+	CCvarSlider *m_pPlayerBoxStiffnessSlider;
 	vgui::Label *m_pPlayerBoxTurnPreLabel;
-	CCvarSlider	*m_pPlayerBoxTurnSlider;
+	CCvarSlider *m_pPlayerBoxTurnSlider;
 	vgui::Label *m_pPlayerBoxAimPreLabel;
-	CCvarSlider	*m_pPlayerBoxAimSlider;
+	CCvarSlider *m_pPlayerBoxAimSlider;
 
-	//Vehicle
+	// Vehicle
 	vgui::Label *m_pVehicleBoxPreLabel;
 	vgui::Label *m_pVehicleBoxScalePreLabel;
-	CCvarSlider	* m_pVehicleBoxScale;
-	ControlBoxVisual* m_pVehicleBoxVisual;
+	CCvarSlider *m_pVehicleBoxScale;
+	ControlBoxVisual *m_pVehicleBoxVisual;
 	vgui::Label *m_pVehicleBoxStiffnessPreLabel;
-	CCvarSlider	* m_pVehicleBoxStiffnessSlider;
+	CCvarSlider *m_pVehicleBoxStiffnessSlider;
 	vgui::Label *m_pVehicleBoxTurnPreLabel;
-	CCvarSlider	*m_pVehicleBoxTurnSlider;
+	CCvarSlider *m_pVehicleBoxTurnSlider;
 	vgui::Label *m_pVehicleBoxAimPreLabel;
-	CCvarSlider	*m_pVehicleBoxAimSlider;
+	CCvarSlider *m_pVehicleBoxAimSlider;
 
-	//Control Box Stuff
+	// Control Box Stuff
 };
-
-
 
 #endif // OPTIONS_SUB_MOUSE_H

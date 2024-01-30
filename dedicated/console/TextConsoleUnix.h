@@ -20,19 +20,19 @@
 class CTextConsoleUnix : public CTextConsole
 {
 public:
-	virtual ~CTextConsoleUnix() { }
+	virtual ~CTextConsoleUnix() {}
 
 	// CTextConsole
-	bool		Init();
-	void		ShutDown();
-	void		Print( char * pszMsg );
+	bool Init();
+	void ShutDown();
+	void Print(char *pszMsg);
 
-	void		SetTitle( char *pszTitle );
-	void		SetStatusLine( char *pszStatus );
-	void		UpdateStatus();
+	void SetTitle(char *pszTitle);
+	void SetStatusLine(char *pszStatus);
+	void UpdateStatus();
 
-	char *		GetLine( int index, char *buf, int buflen );
-	int			GetWidth();
+	char *GetLine(int index, char *buf, int buflen);
+	int GetWidth();
 
 private:
 	bool m_bConDebug;

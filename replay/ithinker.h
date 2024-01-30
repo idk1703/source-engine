@@ -17,9 +17,9 @@
 class IThinker : public IBaseInterface
 {
 public:
-	virtual void		Think() = 0;
-	virtual void		PostThink() = 0;
-	virtual bool		ShouldThink() const = 0;
+	virtual void Think() = 0;
+	virtual void PostThink() = 0;
+	virtual bool ShouldThink() const = 0;
 };
 
 //----------------------------------------------------------------------------------------

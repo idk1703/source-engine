@@ -16,8 +16,7 @@
 class IResListGenerator
 {
 public:
-
-	virtual void Init( char const *pchBaseDir, char const *pchGameDir ) = 0;
+	virtual void Init(char const *pchBaseDir, char const *pchGameDir) = 0;
 	virtual void Shutdown() = 0;
 	virtual bool IsActive() = 0;
 

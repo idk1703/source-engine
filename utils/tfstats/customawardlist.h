@@ -19,7 +19,7 @@
 #include <list>
 
 using namespace std;
-typedef list<CCustomAward*>::iterator CCustomAwardIterator;
+typedef list<CCustomAward *>::iterator CCustomAwardIterator;
 //------------------------------------------------------------------------------------------------------
 // Purpose: this is just a thin wrapper around a list of CCustomAward*s
 // also provided is a static factory method to read a list of custom awards
@@ -28,12 +28,18 @@ typedef list<CCustomAward*>::iterator CCustomAwardIterator;
 class CCustomAwardList
 {
 public:
-	list<CCustomAward*> theList;
+	list<CCustomAward *> theList;
 
-	//factory method
-	static CCustomAwardList* readCustomAwards(string mapname);
+	// factory method
+	static CCustomAwardList *readCustomAwards(string mapname);
 
-	CCustomAwardIterator begin(){return theList.begin();}
-	CCustomAwardIterator end(){return theList.end();}
+	CCustomAwardIterator begin()
+	{
+		return theList.begin();
+	}
+	CCustomAwardIterator end()
+	{
+		return theList.end();
+	}
 };
 #endif // CUSTOMAWARDLIST_H

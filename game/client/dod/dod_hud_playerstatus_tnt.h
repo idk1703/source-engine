@@ -21,18 +21,17 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 class CDoDHudTNT : public CDoDCutEditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CDoDHudTNT, CDoDCutEditablePanel );
+	DECLARE_CLASS_SIMPLE(CDoDHudTNT, CDoDCutEditablePanel);
 
 public:
-	CDoDHudTNT( vgui::Panel *parent, const char *name );
+	CDoDHudTNT(vgui::Panel *parent, const char *name);
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void ApplySettings( KeyValues *inResourceData );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void ApplySettings(KeyValues *inResourceData);
 	virtual void OnThink();
-	virtual void SetVisible( bool state );
+	virtual void SetVisible(bool state);
 
 private:
-
 	CIconPanel *m_pIconTNT;
 	CIconPanel *m_pIconTNT_Missing;
 
@@ -43,7 +42,7 @@ private:
 	int m_iIconW;
 	int m_iIconH;
 
-	CPanelAnimationVar( float, m_flIconAlpha, "icon_alpha", "255" );
+	CPanelAnimationVar(float, m_flIconAlpha, "icon_alpha", "255");
 };
 
 #endif // DOD_HUD_PLAYERSTATUS_TNT_H

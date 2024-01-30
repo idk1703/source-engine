@@ -10,30 +10,30 @@
 
 class CTFBotActionPoint;
 
-
 //-----------------------------------------------------------------------
 class CMannVsMachineLogic : public CPointEntity
 {
-	DECLARE_CLASS( CMannVsMachineLogic, CPointEntity );
+	DECLARE_CLASS(CMannVsMachineLogic, CPointEntity);
+
 public:
 	DECLARE_DATADESC();
 
 	CMannVsMachineLogic();
 	virtual ~CMannVsMachineLogic();
 
-	virtual void Spawn( void );
-	void Update( void );
+	virtual void Spawn(void);
+	void Update(void);
 
-	void SetupOnRoundStart( void );
+	void SetupOnRoundStart(void);
 
 	virtual int UpdateTransmitState()
 	{
-		return SetTransmitState( FL_EDICT_ALWAYS );
+		return SetTransmitState(FL_EDICT_ALWAYS);
 	}
 
 private:
-	CHandle< CPopulationManager > m_populationManager;
-	void InitPopulationManager( void );
+	CHandle<CPopulationManager> m_populationManager;
+	void InitPopulationManager(void);
 
 	float m_flNextAlarmCheck;
 };

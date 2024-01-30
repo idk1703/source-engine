@@ -8,27 +8,29 @@
 
 #include "tf_powerup.h"
 
-class CTFBotGetHealth : public Action< CTFBot >
+class CTFBotGetHealth : public Action<CTFBot>
 {
 public:
-	static bool IsPossible( CTFBot *me );	// Return true if this Action has what it needs to perform right now
+	static bool IsPossible(CTFBot *me); // Return true if this Action has what it needs to perform right now
 
-	virtual ActionResult< CTFBot >	OnStart( CTFBot *me, Action< CTFBot > *priorAction );
-	virtual ActionResult< CTFBot >	Update( CTFBot *me, float interval );
+	virtual ActionResult<CTFBot> OnStart(CTFBot *me, Action<CTFBot> *priorAction);
+	virtual ActionResult<CTFBot> Update(CTFBot *me, float interval);
 
-	virtual EventDesiredResult< CTFBot > OnStuck( CTFBot *me );
-	virtual EventDesiredResult< CTFBot > OnMoveToSuccess( CTFBot *me, const Path *path );
-	virtual EventDesiredResult< CTFBot > OnMoveToFailure( CTFBot *me, const Path *path, MoveToFailureType reason );
+	virtual EventDesiredResult<CTFBot> OnStuck(CTFBot *me);
+	virtual EventDesiredResult<CTFBot> OnMoveToSuccess(CTFBot *me, const Path *path);
+	virtual EventDesiredResult<CTFBot> OnMoveToFailure(CTFBot *me, const Path *path, MoveToFailureType reason);
 
-	virtual QueryResultType ShouldHurry( const INextBot *me ) const;					// are we in a hurry?
+	virtual QueryResultType ShouldHurry(const INextBot *me) const; // are we in a hurry?
 
-	virtual const char *GetName( void ) const	{ return "GetHealth"; };
+	virtual const char *GetName(void) const
+	{
+		return "GetHealth";
+	};
 
 private:
 	PathFollower m_path;
-	CHandle< CTFPowerup > m_healthKit;
+	CHandle<CTFPowerup> m_healthKit;
 	bool m_isGoalDispenser;
 };
-
 
 #endif // TF_BOT_GET_HEALTH_H

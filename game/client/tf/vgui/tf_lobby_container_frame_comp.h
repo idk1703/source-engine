@@ -7,7 +7,6 @@
 #ifndef TF_LOBBY_CONTAINER_FRAME_COMP_H
 #define TF_LOBBY_CONTAINER_FRAME_COMP_H
 
-
 #include "cbase.h"
 //#include "tf_pvelobbypanel.h"
 #include "game/client/iviewport.h"
@@ -52,7 +51,8 @@ class CBaseLobbyPanel;
 // This is a big fat kludge so I can use the PropertyPage
 class CLobbyContainerFrame_Comp : public CBaseLobbyContainerFrame
 {
-	DECLARE_CLASS_SIMPLE( CLobbyContainerFrame_Comp, CBaseLobbyContainerFrame );
+	DECLARE_CLASS_SIMPLE(CLobbyContainerFrame_Comp, CBaseLobbyContainerFrame);
+
 public:
 	CLobbyContainerFrame_Comp();
 	~CLobbyContainerFrame_Comp();
@@ -60,18 +60,23 @@ public:
 	//
 	// PropertyDialog overrides
 	//
-	virtual void ShowPanel( bool bShow ) OVERRIDE;
-	virtual void OnCommand( const char *command ) OVERRIDE;
+	virtual void ShowPanel(bool bShow) OVERRIDE;
+	virtual void OnCommand(const char *command) OVERRIDE;
 
 protected:
-
 	virtual void WriteControls();
 
 private:
-	virtual const char* GetResFile() const OVERRIDE { return "Resource/UI/LobbyContainerFrame_Comp.res"; }
-	virtual TF_MatchmakingMode GetHandledMode() const { return TF_Matchmaking_LADDER; }
+	virtual const char *GetResFile() const OVERRIDE
+	{
+		return "Resource/UI/LobbyContainerFrame_Comp.res";
+	}
+	virtual TF_MatchmakingMode GetHandledMode() const
+	{
+		return TF_Matchmaking_LADDER;
+	}
 	virtual bool VerifyPartyAuthorization() const;
 	virtual void HandleBackPressed() OVERRIDE;
 };
 
-#endif //TF_LOBBY_CONTAINER_FRAME_COMP_H
+#endif // TF_LOBBY_CONTAINER_FRAME_COMP_H

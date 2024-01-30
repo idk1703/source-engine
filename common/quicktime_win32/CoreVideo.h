@@ -16,7 +16,6 @@
 #include <TargetConditionals.h>
 #include <AvailabilityMacros.h>
 
-
 #if TARGET_OS_MAC
 #include <QuartzCore/CVReturn.h>
 #include <QuartzCore/CVBase.h>

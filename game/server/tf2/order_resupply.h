@@ -11,28 +11,22 @@
 #pragma once
 #endif
 
-
 #include "orders.h"
 
-
 class CPlayerClass;
-
 
 class COrderResupply : public COrder
 {
 public:
-	DECLARE_CLASS( COrderResupply, COrder );
+	DECLARE_CLASS(COrderResupply, COrder);
 	DECLARE_SERVERCLASS();
 
 	// Create an order for the player.
-	static bool		CreateOrder( CPlayerClass *pClass );
+	static bool CreateOrder(CPlayerClass *pClass);
 
-
-// COrder overrides.
+	// COrder overrides.
 public:
-
-	virtual bool	Update();
+	virtual bool Update();
 };
-
 
 #endif // ORDER_RESUPPLY_H

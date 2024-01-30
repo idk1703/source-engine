@@ -21,7 +21,10 @@ class IShaderShadow;
 //-----------------------------------------------------------------------------
 struct WeaponSheenPassVars_t
 {
-	WeaponSheenPassVars_t() { memset( this, 0xFF, sizeof(WeaponSheenPassVars_t) ); }
+	WeaponSheenPassVars_t()
+	{
+		memset(this, 0xFF, sizeof(WeaponSheenPassVars_t));
+	}
 
 	int m_nSheenMap;
 	int m_nSheenMapMask;
@@ -39,13 +42,15 @@ struct WeaponSheenPassVars_t
 	int m_nBumpTransform;
 };
 
-static const float kDefaultSheenColorTint[4] = { 0.0f, 1.0f, 0.0f, 1.0f };
+static const float kDefaultSheenColorTint[4] = {0.0f, 1.0f, 0.0f, 1.0f};
 
-void InitParamsWeaponSheenPass( CBaseVSShader *pShader, IMaterialVar** params, const char *pMaterialName, WeaponSheenPassVars_t &info );
-void InitWeaponSheenPass( CBaseVSShader *pShader, IMaterialVar** params, WeaponSheenPassVars_t &info );
-void DrawWeaponSheenPass( CBaseVSShader *pShader, IMaterialVar** params, IShaderDynamicAPI *pShaderAPI,
-						   IShaderShadow* pShaderShadow, WeaponSheenPassVars_t &info, VertexCompressionType_t vertexCompression );
+void InitParamsWeaponSheenPass(CBaseVSShader *pShader, IMaterialVar **params, const char *pMaterialName,
+							   WeaponSheenPassVars_t &info);
+void InitWeaponSheenPass(CBaseVSShader *pShader, IMaterialVar **params, WeaponSheenPassVars_t &info);
+void DrawWeaponSheenPass(CBaseVSShader *pShader, IMaterialVar **params, IShaderDynamicAPI *pShaderAPI,
+						 IShaderShadow *pShaderShadow, WeaponSheenPassVars_t &info,
+						 VertexCompressionType_t vertexCompression);
 
-bool ShouldDrawMaterialSheen ( IMaterialVar** params, WeaponSheenPassVars_t &info );
+bool ShouldDrawMaterialSheen(IMaterialVar **params, WeaponSheenPassVars_t &info);
 
 #endif // WEAPON_SHEEN_PASS_HELPER_H

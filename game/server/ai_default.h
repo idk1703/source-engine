@@ -115,7 +115,6 @@ enum
 	// IMPORTANT: This must be the last enum
 	// ======================================
 	LAST_SHARED_SCHEDULE
-
 };
 
 #endif // AI_DEFAULT_H

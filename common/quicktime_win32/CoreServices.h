@@ -23,8 +23,7 @@
 */
 #ifndef TARGET_API_MAC_CARBON
 #define TARGET_API_MAC_CARBON 1
-#endif  /* !defined(TARGET_API_MAC_CARBON) */
-
+#endif /* !defined(TARGET_API_MAC_CARBON) */
 
 #ifndef __CONDITIONALMACROS__
 #include <ConditionalMacros.h>
@@ -373,6 +372,5 @@
 #ifndef __WSMETHODINVOCATION__
 #include <WSMethodInvocation.h>
 #endif
-
 
 #endif /* __CORESERVICES__ */

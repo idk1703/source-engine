@@ -16,40 +16,35 @@
 #ifndef PARTICLEDRAW_H
 #define PARTICLEDRAW_H
 
-
 class IMaterial;
 class CMeshBuilder;
 class CParticleSubTexture;
 
-
 class ParticleDraw
 {
-friend class CParticleEffectBinding;
+	friend class CParticleEffectBinding;
 
 public:
+	ParticleDraw();
 
-					ParticleDraw();
-
-	void			Init( CMeshBuilder *pMeshBuilder, IMaterial *pMaterial, float fTimeDelta );
+	void Init(CMeshBuilder *pMeshBuilder, IMaterial *pMaterial, float fTimeDelta);
 
 	// Time delta..
-	float			GetTimeDelta() const;
+	float GetTimeDelta() const;
 
 	// Get the material being used (mostly useful for getting the tcoord padding).
-	//IMaterial*		GetPMaterial();
+	// IMaterial*		GetPMaterial();
 
 	// This can return NULL if the particle system is only being simulated.
-	CMeshBuilder*	GetMeshBuilder();
+	CMeshBuilder *GetMeshBuilder();
 
-	CParticleSubTexture	*m_pSubTexture;
+	CParticleSubTexture *m_pSubTexture;
 
 private:
-	CMeshBuilder	*m_pMeshBuilder;
-	IMaterial		*m_pMaterial;
-	float			m_fTimeDelta;
+	CMeshBuilder *m_pMeshBuilder;
+	IMaterial *m_pMaterial;
+	float m_fTimeDelta;
 };
-
-
 
 // ------------------------------------------------------------------------- //
 // Inlines
@@ -60,7 +55,7 @@ inline ParticleDraw::ParticleDraw()
 	m_pMaterial = 0;
 }
 
-inline void ParticleDraw::Init( CMeshBuilder *pMeshBuilder, IMaterial *pMaterial, float fTimeDelta )
+inline void ParticleDraw::Init(CMeshBuilder *pMeshBuilder, IMaterial *pMaterial, float fTimeDelta)
 {
 	m_pMeshBuilder = pMeshBuilder;
 	m_pMaterial = pMaterial;
@@ -72,7 +67,7 @@ inline float ParticleDraw::GetTimeDelta() const
 	return m_fTimeDelta;
 }
 
-inline CMeshBuilder* ParticleDraw::GetMeshBuilder()
+inline CMeshBuilder *ParticleDraw::GetMeshBuilder()
 {
 	return m_pMeshBuilder;
 }

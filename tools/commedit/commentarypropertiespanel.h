@@ -14,7 +14,6 @@
 #include "tier1/utlstring.h"
 #include "datamodel/dmehandle.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
@@ -29,24 +28,23 @@ namespace vgui
 	class ListPanel;
 	class CheckButton;
 	class RadioButton;
-}
-
+} // namespace vgui
 
 //-----------------------------------------------------------------------------
 // Panel that shows all entities in the level
 //-----------------------------------------------------------------------------
 class CCommentaryPropertiesPanel : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CCommentaryPropertiesPanel, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CCommentaryPropertiesPanel, vgui::EditablePanel);
 
 public:
-	CCommentaryPropertiesPanel( CCommEditDoc *pDoc, vgui::Panel* pParent );   // standard constructor
+	CCommentaryPropertiesPanel(CCommEditDoc *pDoc, vgui::Panel *pParent); // standard constructor
 
 	// Inherited from Panel
-	virtual void OnCommand( const char *pCommand );
+	virtual void OnCommand(const char *pCommand);
 
 	// Sets the object to look at
-	void SetObject( CDmeCommentaryNodeEntity *pEntity );
+	void SetObject(CDmeCommentaryNodeEntity *pEntity);
 
 private:
 	// Populates the commentary node fields
@@ -56,8 +54,8 @@ private:
 	void PopulateInfoTargetFields();
 
 	// Text to attribute...
-	void TextEntryToAttribute( vgui::TextEntry *pEntry, const char *pAttributeName );
-	void TextEntriesToVector( vgui::TextEntry *pEntry[3], const char *pAttributeName );
+	void TextEntryToAttribute(vgui::TextEntry *pEntry, const char *pAttributeName);
+	void TextEntriesToVector(vgui::TextEntry *pEntry[3], const char *pAttributeName);
 
 	// Updates entity state when text fields change
 	void UpdateCommentaryNode();
@@ -67,17 +65,17 @@ private:
 	void PickSound();
 
 	// Called when sound recording is requested
-	void RecordSound( );
+	void RecordSound();
 
 	// Called when the audio picker button is selected
-	void PickInfoTarget( vgui::TextEntry *pControl );
+	void PickInfoTarget(vgui::TextEntry *pControl);
 
 	// Messages handled
-	MESSAGE_FUNC_PARAMS( OnTextChanged, "TextChanged", kv );
-	MESSAGE_FUNC_PARAMS( OnSoundSelected, "SoundSelected", kv );
-	MESSAGE_FUNC_PARAMS( OnPicked, "Picked", kv );
-	MESSAGE_FUNC_PARAMS( OnFileSelected, "FileSelected", kv );
-	MESSAGE_FUNC_PARAMS( OnSoundRecorded, "SoundRecorded", kv );
+	MESSAGE_FUNC_PARAMS(OnTextChanged, "TextChanged", kv);
+	MESSAGE_FUNC_PARAMS(OnSoundSelected, "SoundSelected", kv);
+	MESSAGE_FUNC_PARAMS(OnPicked, "Picked", kv);
+	MESSAGE_FUNC_PARAMS(OnFileSelected, "FileSelected", kv);
+	MESSAGE_FUNC_PARAMS(OnSoundRecorded, "SoundRecorded", kv);
 
 	CCommEditDoc *m_pDoc;
 
@@ -106,8 +104,7 @@ private:
 	vgui::TextEntry *m_pTargetPosition[3];
 	vgui::TextEntry *m_pTargetOrientation[3];
 
-	CDmeHandle< CDmeCommentaryNodeEntity > m_hEntity;
+	CDmeHandle<CDmeCommentaryNodeEntity> m_hEntity;
 };
-
 
 #endif // COMMENTARYPROPERTIESPANEL_H

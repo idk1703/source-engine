@@ -18,18 +18,19 @@
 //-----------------------------------------------------------------------------
 class C_ObjectMapDefined : public C_BaseObject
 {
-	DECLARE_CLASS( C_ObjectMapDefined, C_BaseObject );
+	DECLARE_CLASS(C_ObjectMapDefined, C_BaseObject);
+
 public:
 	DECLARE_CLIENTCLASS();
 
 	C_ObjectMapDefined();
 
-	virtual const char	*GetTargetDescription( void ) const;
+	virtual const char *GetTargetDescription(void) const;
 
 private:
-	C_ObjectMapDefined( const C_ObjectMapDefined & ); // not defined, not accessible
+	C_ObjectMapDefined(const C_ObjectMapDefined &); // not defined, not accessible
 
-	char	m_szCustomName[ MAX_OBJ_CUSTOMNAME_SIZE ];
+	char m_szCustomName[MAX_OBJ_CUSTOMNAME_SIZE];
 };
 
 #endif // C_OBJ_MAPDEFINED_H

@@ -21,18 +21,17 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 class CDoDHudFireSelect : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CDoDHudFireSelect, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CDoDHudFireSelect, vgui::EditablePanel);
 
 public:
-	CDoDHudFireSelect( vgui::Panel *parent, const char *name );
+	CDoDHudFireSelect(vgui::Panel *parent, const char *name);
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 	virtual void OnThink();
-	virtual void SetVisible( bool state );
+	virtual void SetVisible(bool state);
 
 private:
-
-	CDoDCutEditablePanel		*m_pBackground;
+	CDoDCutEditablePanel *m_pBackground;
 
 	CIconPanel *m_pIconMP44;
 	CIconPanel *m_pIconBAR;

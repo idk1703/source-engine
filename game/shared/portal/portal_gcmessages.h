@@ -13,16 +13,14 @@
 #pragma once
 #endif
 
-
 enum EGCMsg
 {
-	k_EMsgGCPortalBase =								5000,
-	k_EMsgGCReportWarKill =						k_EMsgGCPortalBase + 1, //War kill tracking. No longer in use
+	k_EMsgGCPortalBase = 5000,
+	k_EMsgGCReportWarKill = k_EMsgGCPortalBase + 1, // War kill tracking. No longer in use
 
 	// Development only messages
-	k_EMsgGCPortalDEVBase =							6000,
-	k_EMsgGCDev_GrantWarKill =					k_EMsgGCPortalDEVBase + 1, //War kill tracking. No longer in use
+	k_EMsgGCPortalDEVBase = 6000,
+	k_EMsgGCDev_GrantWarKill = k_EMsgGCPortalDEVBase + 1, // War kill tracking. No longer in use
 };
-
 
 #endif

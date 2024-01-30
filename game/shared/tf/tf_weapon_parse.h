@@ -20,24 +20,24 @@
 
 struct WeaponData_t
 {
-	int		m_nDamage;
-	int		m_nBulletsPerShot;
-	float	m_flRange;
-	float	m_flSpread;
-	float	m_flPunchAngle;
-	float	m_flTimeFireDelay;				// Time to delay between firing
-	float	m_flTimeIdle;					// Time to idle after firing
-	float	m_flTimeIdleEmpty;				// Time to idle after firing last bullet in clip
-	float	m_flTimeReloadStart;			// Time to start into a reload (ie. shotgun)
-	float	m_flTimeReload;					// Time to reload
-	bool	m_bDrawCrosshair;				// Should the weapon draw a crosshair
-	int		m_iProjectile;					// The type of projectile this mode fires
-	int		m_iAmmoPerShot;					// How much ammo each shot consumes
-	float	m_flProjectileSpeed;			// Start speed for projectiles (nail, etc.); NOTE: union with something non-projectile
-	float	m_flSmackDelay;					// how long after swing should damage happen for melee weapons
-	bool	m_bUseRapidFireCrits;
+	int m_nDamage;
+	int m_nBulletsPerShot;
+	float m_flRange;
+	float m_flSpread;
+	float m_flPunchAngle;
+	float m_flTimeFireDelay;   // Time to delay between firing
+	float m_flTimeIdle;		   // Time to idle after firing
+	float m_flTimeIdleEmpty;   // Time to idle after firing last bullet in clip
+	float m_flTimeReloadStart; // Time to start into a reload (ie. shotgun)
+	float m_flTimeReload;	   // Time to reload
+	bool m_bDrawCrosshair;	   // Should the weapon draw a crosshair
+	int m_iProjectile;		   // The type of projectile this mode fires
+	int m_iAmmoPerShot;		   // How much ammo each shot consumes
+	float m_flProjectileSpeed; // Start speed for projectiles (nail, etc.); NOTE: union with something non-projectile
+	float m_flSmackDelay;	   // how long after swing should damage happen for melee weapons
+	bool m_bUseRapidFireCrits;
 
-	void Init( void )
+	void Init(void)
 	{
 		m_nDamage = 0;
 		m_nBulletsPerShot = 0;
@@ -60,52 +60,53 @@ struct WeaponData_t
 class CTFWeaponInfo : public FileWeaponInfo_t
 {
 public:
-
-	DECLARE_CLASS_GAMEROOT( CTFWeaponInfo, FileWeaponInfo_t );
+	DECLARE_CLASS_GAMEROOT(CTFWeaponInfo, FileWeaponInfo_t);
 
 	CTFWeaponInfo();
 	~CTFWeaponInfo();
 
-	virtual void Parse( ::KeyValues *pKeyValuesData, const char *szWeaponName );
+	virtual void Parse(::KeyValues *pKeyValuesData, const char *szWeaponName);
 
-	WeaponData_t const &GetWeaponData( int iWeapon ) const	{ return m_WeaponData[iWeapon]; }
+	WeaponData_t const &GetWeaponData(int iWeapon) const
+	{
+		return m_WeaponData[iWeapon];
+	}
 
 public:
+	WeaponData_t m_WeaponData[2];
 
-	WeaponData_t	m_WeaponData[2];
-
-	int		m_iWeaponType;
+	int m_iWeaponType;
 
 	// Grenade.
-	bool	m_bGrenade;
-	float	m_flDamageRadius;
-	float	m_flPrimerTime;
-	bool	m_bLowerWeapon;
-	bool	m_bSuppressGrenTimer;
+	bool m_bGrenade;
+	float m_flDamageRadius;
+	float m_flPrimerTime;
+	bool m_bLowerWeapon;
+	bool m_bSuppressGrenTimer;
 
 	// Skins
-	bool	m_bHasTeamSkins_Viewmodel;
-	bool	m_bHasTeamSkins_Worldmodel;
+	bool m_bHasTeamSkins_Viewmodel;
+	bool m_bHasTeamSkins_Worldmodel;
 
 	// Muzzle flash
-	char	m_szMuzzleFlashModel[128];
-	float	m_flMuzzleFlashModelDuration;
-	char	m_szMuzzleFlashParticleEffect[128];
+	char m_szMuzzleFlashModel[128];
+	float m_flMuzzleFlashModelDuration;
+	char m_szMuzzleFlashParticleEffect[128];
 
 	// Tracer
-	char	m_szTracerEffect[128];
+	char m_szTracerEffect[128];
 
 	// Eject Brass
-	bool	m_bDoInstantEjectBrass;
-	char	m_szBrassModel[128];
+	bool m_bDoInstantEjectBrass;
+	char m_szBrassModel[128];
 
 	// Explosion Effect
-	char	m_szExplosionSound[128];
-	char	m_szExplosionEffect[128];
-	char	m_szExplosionPlayerEffect[128];
-	char	m_szExplosionWaterEffect[128];
+	char m_szExplosionSound[128];
+	char m_szExplosionEffect[128];
+	char m_szExplosionPlayerEffect[128];
+	char m_szExplosionWaterEffect[128];
 
-	bool	m_bDontDrop;
+	bool m_bDontDrop;
 };
 
 #endif // TF_WEAPON_PARSE_H

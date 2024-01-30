@@ -27,13 +27,13 @@
 //-----------------------------------------------------------------------------
 struct CEditPhraseParams : public CBaseDialogParams
 {
-	char		m_szPrompt[ 256 ];
+	char m_szPrompt[256];
 
 	// i/o input text
-	wchar_t		m_szInputText[ 1024 ];
+	wchar_t m_szInputText[1024];
 };
 
 // Display/create dialog
-int EditPhrase( CEditPhraseParams *params );
+int EditPhrase(CEditPhraseParams *params);
 
 #endif // EDITPHRASE_H

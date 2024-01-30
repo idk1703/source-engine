@@ -17,21 +17,21 @@ class CObjectBunkerLadder;
 // ------------------------------------------------------------------------ //
 class CObjectBunker : public CBaseObject
 {
-	DECLARE_CLASS( CObjectBunker, CBaseObject );
+	DECLARE_CLASS(CObjectBunker, CBaseObject);
 
 public:
 	DECLARE_SERVERCLASS();
 
-	CObjectBunker( void );
+	CObjectBunker(void);
 
-	virtual void	Spawn( void );
-	virtual void	Precache( void );
-	virtual void	GetControlPanelInfo( int nPanelIndex, const char *&pPanelName );
-	virtual void	UpdateOnRemove( void );
-	virtual void	FinishedBuilding( void );
+	virtual void Spawn(void);
+	virtual void Precache(void);
+	virtual void GetControlPanelInfo(int nPanelIndex, const char *&pPanelName);
+	virtual void UpdateOnRemove(void);
+	virtual void FinishedBuilding(void);
 
 private:
-	CHandle<CObjectBunkerLadder>		m_hLadder;
+	CHandle<CObjectBunkerLadder> m_hLadder;
 };
 
 //-----------------------------------------------------------------------------
@@ -39,22 +39,21 @@ private:
 //-----------------------------------------------------------------------------
 class CObjectBunkerLadder : public CBaseAnimating
 {
-	DECLARE_CLASS( CObjectBunkerLadder, CBaseAnimating );
+	DECLARE_CLASS(CObjectBunkerLadder, CBaseAnimating);
 
 public:
-
 	DECLARE_SERVERCLASS();
 
-	static CObjectBunkerLadder* Create( const Vector &vOrigin, const QAngle &vAngles, CBaseEntity *pParent );
+	static CObjectBunkerLadder *Create(const Vector &vOrigin, const QAngle &vAngles, CBaseEntity *pParent);
 
 	CObjectBunkerLadder();
 
-	void	Spawn();
-	void	Precache();
-	virtual int	OnTakeDamage( const CTakeDamageInfo &info );
+	void Spawn();
+	void Precache();
+	virtual int OnTakeDamage(const CTakeDamageInfo &info);
 
 public:
-	EHANDLE		m_hBunker;
+	EHANDLE m_hBunker;
 };
 
 #endif // TF_OBJ_BUNKER_H

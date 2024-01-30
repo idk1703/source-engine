@@ -20,14 +20,14 @@
 class TimedEvent
 {
 public:
-				TimedEvent()
-				{
-					m_TimeBetweenEvents = -1;
-					m_fNextEvent = 0;
-				}
+	TimedEvent()
+	{
+		m_TimeBetweenEvents = -1;
+		m_fNextEvent = 0;
+	}
 
 	// Rate is in events per second (ie: rate of 15 will trigger 15 events per second).
-	inline void	Init(float rate)
+	inline void Init(float rate)
 	{
 		m_TimeBetweenEvents = 1.0f / rate;
 		m_fNextEvent = 0;
@@ -41,7 +41,7 @@ public:
 	inline bool NextEvent(float &curDelta)
 	{
 		// If this goes off, you didn't call Init().
-		Assert( m_TimeBetweenEvents != -1 );
+		Assert(m_TimeBetweenEvents != -1);
 
 		if(curDelta >= m_fNextEvent)
 		{
@@ -58,8 +58,8 @@ public:
 	}
 
 private:
-	float		m_TimeBetweenEvents;
-	float		m_fNextEvent;	// When the next event should be triggered.
+	float m_TimeBetweenEvents;
+	float m_fNextEvent; // When the next event should be triggered.
 };
 
 #endif // TIMEDEVENT_H

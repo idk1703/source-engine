@@ -36,7 +36,7 @@ public:
 	virtual void FreeKeyValuesMemory(void *pMem) = 0;
 
 	// symbol table access (used for key names)
-	virtual HKeySymbol GetSymbolForString( const char *name, bool bCreate = true ) = 0;
+	virtual HKeySymbol GetSymbolForString(const char *name, bool bCreate = true) = 0;
 	virtual const char *GetStringForSymbol(HKeySymbol symbol) = 0;
 
 	// for debugging, adds KeyValues record into global list so we can track memory leaks
@@ -44,10 +44,11 @@ public:
 	virtual void RemoveKeyValuesFromMemoryLeakList(void *pMem) = 0;
 
 	// maintain a cache of KeyValues we load from disk. This saves us quite a lot of time on app startup.
-	virtual void AddFileKeyValuesToCache( const KeyValues* _kv, const char *resourceName, const char *pathID ) = 0;
-	virtual bool LoadFileKeyValuesFromCache( KeyValues* _outKv, const char *resourceName, const char *pathID, IBaseFileSystem *filesystem ) const = 0;
-	virtual void InvalidateCache( ) = 0;
-	virtual void InvalidateCacheForFile( const char *resourceName, const char *pathID ) = 0;
+	virtual void AddFileKeyValuesToCache(const KeyValues *_kv, const char *resourceName, const char *pathID) = 0;
+	virtual bool LoadFileKeyValuesFromCache(KeyValues *_outKv, const char *resourceName, const char *pathID,
+											IBaseFileSystem *filesystem) const = 0;
+	virtual void InvalidateCache() = 0;
+	virtual void InvalidateCacheForFile(const char *resourceName, const char *pathID) = 0;
 };
 
 VSTDLIB_INTERFACE IKeyValuesSystem *KeyValuesSystem();

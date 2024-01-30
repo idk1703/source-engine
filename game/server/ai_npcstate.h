@@ -8,7 +8,7 @@
 #ifndef AI_NPCSTATE_H
 #define AI_NPCSTATE_H
 
-#if defined( _WIN32 )
+#if defined(_WIN32)
 #pragma once
 #endif
 
@@ -21,9 +21,8 @@ enum NPC_STATE
 	NPC_STATE_COMBAT,
 	NPC_STATE_SCRIPT,
 	NPC_STATE_PLAYDEAD,
-	NPC_STATE_PRONE,				// When in clutches of barnacle
+	NPC_STATE_PRONE, // When in clutches of barnacle
 	NPC_STATE_DEAD
-
 };
 
 #endif // AI_NPCSTATE_H

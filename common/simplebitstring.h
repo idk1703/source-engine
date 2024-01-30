@@ -31,7 +31,6 @@
 #pragma once
 #endif
 
-
 //*****************************************************************************
 //
 // Include files required by this header.
@@ -45,43 +44,37 @@
 // All precompiled headers (Stable.h) include this first to give use a common
 // place for including order-dependent library headers (things that need to go first).
 
-
-
-
-
 class CSimpleBitString
 {
 public:
-	explicit CSimpleBitString( uint32 ReserveNumBits = 0 )
-		:
-		m_uNumBits( 0 ),
-		m_vecU8()
+	explicit CSimpleBitString(uint32 ReserveNumBits = 0) : m_uNumBits(0), m_vecU8()
 	{
-		m_vecU8.EnsureCapacity( (ReserveNumBits / 8) + 1 );
-		m_vecU8[ m_vecU8.AddToTail() ] = 0x00;	// always need 1 byte
+		m_vecU8.EnsureCapacity((ReserveNumBits / 8) + 1);
+		m_vecU8[m_vecU8.AddToTail()] = 0x00; // always need 1 byte
 	}
 
 	void clear()
 	{
 		m_uNumBits = 0;
 		m_vecU8.RemoveAll();
-	m_vecU8[ m_vecU8.AddToTail() ] = 0x00;  // always need 1 byte
+		m_vecU8[m_vecU8.AddToTail()] = 0x00; // always need 1 byte
 	}
 
-	void AppendBits( uint64 data, uint32 NumSignificantLowBitsOfData );
-	void AppendBits( const uint8 * pData, uint32 NumBitsOfData );
+	void AppendBits(uint64 data, uint32 NumSignificantLowBitsOfData);
+	void AppendBits(const uint8 *pData, uint32 NumBitsOfData);
 
-	void ReversiblyObfusticateBitsFromStart( uint32 NumBits, const uint8 * pObfusticationData, size_t uSizeOfObfusticationData );
-	uint8	 GetByteChecksumFromStart( uint32 NumBits ) const;
+	void ReversiblyObfusticateBitsFromStart(uint32 NumBits, const uint8 *pObfusticationData,
+											size_t uSizeOfObfusticationData);
+	uint8 GetByteChecksumFromStart(uint32 NumBits) const;
 
 	uint GetCurrNumBits() const
 	{
 		return m_uNumBits;
 	}
 
-	const uint8 * data() const
+	const uint8 *data() const
 	{
-		return & m_vecU8[0];
+		return &m_vecU8[0];
 	}
 
 	size_t size() const
@@ -90,21 +83,15 @@ public:
 	}
 
 private:
-	uint32				m_uNumBits;
-	CUtlVector<uint8>	m_vecU8;
+	uint32 m_uNumBits;
+	CUtlVector<uint8> m_vecU8;
 
 public:
-
 	// Iterator class for retrieving bits
 	class iterator
 	{
 	public:
-		explicit iterator( const CSimpleBitString & bs )
-			:
-			m_rSimpleBitString( bs ),
-			m_uNextBitIdx( 0 )
-		{
-		}
+		explicit iterator(const CSimpleBitString &bs) : m_rSimpleBitString(bs), m_uNextBitIdx(0) {}
 
 		void ResetToStart()
 		{
@@ -121,39 +108,33 @@ public:
 			return m_rSimpleBitString.m_uNumBits - m_uNextBitIdx;
 		}
 
-		uint32 GetNextBits( uint32 NumBitsToGet );
-		uint64 GetNextBits64( uint32 NumBitsToGet );
+		uint32 GetNextBits(uint32 NumBitsToGet);
+		uint64 GetNextBits64(uint32 NumBitsToGet);
 
-		void SkipNextBits( uint32 NumBitsToSkip )
+		void SkipNextBits(uint32 NumBitsToSkip)
 		{
-			if ( m_uNextBitIdx + NumBitsToSkip > m_rSimpleBitString.m_uNumBits )
+			if(m_uNextBitIdx + NumBitsToSkip > m_rSimpleBitString.m_uNumBits)
 			{
-				AssertMsg( false, "Not enough bits in CSimpleBitString" );
+				AssertMsg(false, "Not enough bits in CSimpleBitString");
 				NumBitsToSkip = 0;
 			}
 
 			m_uNextBitIdx += NumBitsToSkip;
 		}
 
-		bool operator ==( const iterator & other ) const
+		bool operator==(const iterator &other) const
 		{
-			return		(& m_rSimpleBitString == & other.m_rSimpleBitString)
-					&&	m_uNextBitIdx == other.m_uNextBitIdx;
+			return (&m_rSimpleBitString == &other.m_rSimpleBitString) && m_uNextBitIdx == other.m_uNextBitIdx;
 		}
 
-		void	DoAssertClassInvariant() const;
+		void DoAssertClassInvariant() const;
 
 	private:
-		const CSimpleBitString &	m_rSimpleBitString;	//lint !e1725 reference
-		uint32						m_uNextBitIdx;
+		const CSimpleBitString &m_rSimpleBitString; // lint !e1725 reference
+		uint32 m_uNextBitIdx;
 	};
 
 	friend class iterator;
-
 };
-
-
-
-
 
 #endif

@@ -19,22 +19,25 @@
 class CTFCTeamMenu : public CTeamMenu
 {
 private:
-	DECLARE_CLASS_SIMPLE( CTFCTeamMenu, CTeamMenu );
+	DECLARE_CLASS_SIMPLE(CTFCTeamMenu, CTeamMenu);
 
 public:
 	CTFCTeamMenu(IViewPort *pViewPort);
 	~CTFCTeamMenu();
 
-	virtual void ApplySettings( KeyValues *inResourceData );
+	virtual void ApplySettings(KeyValues *inResourceData);
 
 	void Update();
-	void ShowPanel( bool bShow );
+	void ShowPanel(bool bShow);
 
 private:
-	enum { NUM_TEAMS = 3 };
+	enum
+	{
+		NUM_TEAMS = 3
+	};
 
 	// VGUI2 override
-	void OnCommand( const char *command);
+	void OnCommand(const char *command);
 	// helper functions
 	void SetVisibleButton(const char *textEntryName, bool state);
 };

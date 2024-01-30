@@ -41,27 +41,42 @@ enum
 abstract_class CTeamMessage
 {
 public:
-	CTeamMessage( CTFTeam *pTeam, int iMessageID, CBaseEntity *pEntity, float flTTL );
+	CTeamMessage(CTFTeam * pTeam, int iMessageID, CBaseEntity *pEntity, float flTTL);
 
-	static CTeamMessage *Create( CTFTeam *pTeam, int iMessageID, CBaseEntity *pEntity );
+	static CTeamMessage *Create(CTFTeam * pTeam, int iMessageID, CBaseEntity *pEntity);
 
 	// Called when the team manager wants me to fire myself
-	virtual void	FireMessage( void ) = 0;
+	virtual void FireMessage(void) = 0;
 
 	// Accessors
-	virtual int			GetID( void ) { return m_iMessageID; };
-	virtual float		GetTTL( void ) { return m_flTTL; };
-	virtual CBaseEntity *GetEntity( void ) { return m_hEntity; };
-	virtual CTFTeam		*GetTeam( void ) { return m_pTeam; };
+	virtual int GetID(void)
+	{
+		return m_iMessageID;
+	};
+	virtual float GetTTL(void)
+	{
+		return m_flTTL;
+	};
+	virtual CBaseEntity *GetEntity(void)
+	{
+		return m_hEntity;
+	};
+	virtual CTFTeam *GetTeam(void)
+	{
+		return m_pTeam;
+	};
 
-	virtual void		SetData( char *pszData ) { return; }
+	virtual void SetData(char *pszData)
+	{
+		return;
+	}
 
 protected:
-	int			m_iMessageID;
-	float		m_flTTL;
-	EHANDLE		m_hEntity;
-	CTFTeam		*m_pTeam;
-	CUtlSymbol	m_SoundName;
+	int m_iMessageID;
+	float m_flTTL;
+	EHANDLE m_hEntity;
+	CTFTeam *m_pTeam;
+	CUtlSymbol m_SoundName;
 };
 
 //-----------------------------------------------------------------------------
@@ -70,14 +85,17 @@ protected:
 class CTeamMessage_Sound : public CTeamMessage
 {
 public:
-	CTeamMessage_Sound( CTFTeam *pTeam, int iMessageID, CBaseEntity *pEntity, float flTTL );
+	CTeamMessage_Sound(CTFTeam *pTeam, int iMessageID, CBaseEntity *pEntity, float flTTL);
 
 	// Set my sound
-	virtual void	SetSound( char *sSound );
+	virtual void SetSound(char *sSound);
 	// Called when the team manager wants me to fire myself
-	virtual void	FireMessage( void );
+	virtual void FireMessage(void);
 
-	virtual void	SetData( char *pszData ) { SetSound( pszData ); }
+	virtual void SetData(char *pszData)
+	{
+		SetSound(pszData);
+	}
 };
 
 #endif // TEAM_MESSAGES_H

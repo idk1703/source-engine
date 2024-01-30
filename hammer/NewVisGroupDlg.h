@@ -13,7 +13,6 @@
 #include "resource.h"
 #include "GroupList.h"
 
-
 class CNewVisGroupDlg : public CDialog
 {
 public:
@@ -25,18 +24,20 @@ public:
 	bool GetHideObjectsOption(void);
 
 	//{{AFX_DATA(CNewVisGroupDlg)
-	enum { IDD = IDD_NEW_VISGROUP };
+	enum
+	{
+		IDD = IDD_NEW_VISGROUP
+	};
 	//}}AFX_DATA
 
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CNewVisGroupDlg)
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange *pDX);
 	virtual BOOL OnInitDialog(void);
 	//}}AFX_VIRTUAL
 
 protected:
-
 	void UpdateGroupList(void);
 
 	// Generated message map functions
@@ -55,7 +56,6 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 };
-
 
 //-----------------------------------------------------------------------------
 // Purpose:

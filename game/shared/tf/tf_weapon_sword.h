@@ -20,7 +20,7 @@
 #endif
 
 #ifdef CLIENT_DLL
-#define CTFSword C_TFSword
+#define CTFSword  C_TFSword
 #define CTFKatana C_TFKatana
 #endif
 
@@ -36,37 +36,42 @@ class CTFDecapitationMeleeWeaponBase : public CTFWeaponBaseMelee
 #endif
 {
 public:
-
-	DECLARE_CLASS( CTFDecapitationMeleeWeaponBase, CTFWeaponBaseMelee );
+	DECLARE_CLASS(CTFDecapitationMeleeWeaponBase, CTFWeaponBaseMelee);
 
 	CTFDecapitationMeleeWeaponBase();
 
-	virtual void		Precache( void );
-	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_SWORD; }
-	virtual int			GetCustomDamageType() const			{ return TF_DMG_CUSTOM_DECAPITATION; }
-	virtual float		GetMeleeDamage( CBaseEntity *pTarget, int* piDamageType, int* piCustomDamage );
-	virtual Activity	TranslateViewmodelHandActivityInternal( Activity actBase );
+	virtual void Precache(void);
+	virtual int GetWeaponID(void) const
+	{
+		return TF_WEAPON_SWORD;
+	}
+	virtual int GetCustomDamageType() const
+	{
+		return TF_DMG_CUSTOM_DECAPITATION;
+	}
+	virtual float GetMeleeDamage(CBaseEntity *pTarget, int *piDamageType, int *piCustomDamage);
+	virtual Activity TranslateViewmodelHandActivityInternal(Activity actBase);
 
-	virtual bool		CanDecapitate( void );
-	virtual void		SetupGameEventListeners( void );
-	virtual void		OnDecapitation( CTFPlayer *pDeadPlayer ) {}
+	virtual bool CanDecapitate(void);
+	virtual void SetupGameEventListeners(void);
+	virtual void OnDecapitation(CTFPlayer *pDeadPlayer) {}
 
 #ifdef GAME_DLL
-	virtual bool		Holster( CBaseCombatWeapon *pSwitchingTo = NULL );
-	virtual void		FireGameEvent( IGameEvent *event );
+	virtual bool Holster(CBaseCombatWeapon *pSwitchingTo = NULL);
+	virtual void FireGameEvent(IGameEvent *event);
 #endif
 
 #ifdef CLIENT_DLL
-	virtual void		UpdateAttachmentModels( void );
-	virtual int			DrawOverriddenViewmodel( C_BaseViewModel *pViewmodel, int flags );
+	virtual void UpdateAttachmentModels(void);
+	virtual int DrawOverriddenViewmodel(C_BaseViewModel *pViewmodel, int flags);
 #endif // CLIENT_DLL
 
 protected:
-	bool				m_bHolstering;
+	bool m_bHolstering;
 
 private:
 #ifdef CLIENT_DLL
-	EHANDLE				m_hShield;
+	EHANDLE m_hShield;
 #endif // CLIENT_DLL
 };
 
@@ -77,37 +82,41 @@ private:
 class CTFSword : public CTFDecapitationMeleeWeaponBase
 {
 public:
-
-	DECLARE_CLASS( CTFSword, CTFDecapitationMeleeWeaponBase );
+	DECLARE_CLASS(CTFSword, CTFDecapitationMeleeWeaponBase);
 	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CTFSword() {}
 	virtual ~CTFSword() {}
 
-	virtual void		WeaponReset( void );
-	virtual float		GetSwordSpeedMod( void );
-	virtual int			GetSwordHealthMod();
-	virtual int			GetSwingRange( void );
-	virtual void		OnDecapitation( CTFPlayer *pDeadPlayer );
+	virtual void WeaponReset(void);
+	virtual float GetSwordSpeedMod(void);
+	virtual int GetSwordHealthMod();
+	virtual int GetSwingRange(void);
+	virtual void OnDecapitation(CTFPlayer *pDeadPlayer);
 
-	virtual bool		Deploy( void );
+	virtual bool Deploy(void);
 
-	float				GetProgress( void ) { return 0.f; }
-	int					GetCount( void );
-	const char*			GetEffectLabelText( void ) { return "#TF_BERZERK"; }
+	float GetProgress(void)
+	{
+		return 0.f;
+	}
+	int GetCount(void);
+	const char *GetEffectLabelText(void)
+	{
+		return "#TF_BERZERK";
+	}
 
 #ifdef CLIENT_DLL
-	virtual void		WeaponIdle( void );
+	virtual void WeaponIdle(void);
 #endif
 
 private:
-
-	CTFSword( const CTFSword& ) {}
+	CTFSword(const CTFSword &) {}
 
 #ifdef CLIENT_DLL
-	float				m_flNextIdleWavRoll;
-	int					m_iPrevWavDecap;
+	float m_flNextIdleWavRoll;
+	int m_iPrevWavDecap;
 #endif
 };
 
@@ -118,26 +127,24 @@ private:
 class CTFKatana : public CTFDecapitationMeleeWeaponBase
 {
 public:
-
-	DECLARE_CLASS( CTFKatana, CTFDecapitationMeleeWeaponBase );
+	DECLARE_CLASS(CTFKatana, CTFDecapitationMeleeWeaponBase);
 	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CTFKatana();
 	virtual ~CTFKatana() {}
 
-	virtual bool	Deploy( void );
-	virtual float	GetMeleeDamage( CBaseEntity *pTarget, int* piDamageType, int* piCustomDamage );
-	virtual void	OnDecapitation( CTFPlayer *pDeadPlayer );
+	virtual bool Deploy(void);
+	virtual float GetMeleeDamage(CBaseEntity *pTarget, int *piDamageType, int *piCustomDamage);
+	virtual void OnDecapitation(CTFPlayer *pDeadPlayer);
 
-	virtual int		GetActivityWeaponRole() const OVERRIDE;
+	virtual int GetActivityWeaponRole() const OVERRIDE;
 
 protected:
-	virtual int		GetSkinOverride() const;
+	virtual int GetSkinOverride() const;
 
 private:
-	CNetworkVar( bool, m_bIsBloody );
+	CNetworkVar(bool, m_bIsBloody);
 };
-
 
 #endif // TF_WEAPON_SWORD_H

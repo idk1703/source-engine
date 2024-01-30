@@ -19,38 +19,41 @@
 class CFuncNoPortalVolume : public CBaseEntity
 {
 public:
-	DECLARE_CLASS( CFuncNoPortalVolume, CBaseEntity );
+	DECLARE_CLASS(CFuncNoPortalVolume, CBaseEntity);
 
 	CFuncNoPortalVolume();
 	~CFuncNoPortalVolume();
 
 	// Overloads from base entity
-	virtual void	Spawn( void );
+	virtual void Spawn(void);
 
-	void OnActivate( void );
+	void OnActivate(void);
 
 	// Inputs to flip functionality on and off
-	void InputActivate( inputdata_t &inputdata );
-	void InputDeactivate( inputdata_t &inputdata );
-	void InputToggle( inputdata_t &inputdata );
+	void InputActivate(inputdata_t &inputdata);
+	void InputDeactivate(inputdata_t &inputdata);
+	void InputToggle(inputdata_t &inputdata);
 
 	// misc public methods
-	unsigned int GetIndex () { return m_iListIndex; } // returns the list index of this camera
-	bool IsActive() { return m_bActive; }	// is this area currently blocking portals
+	unsigned int GetIndex()
+	{
+		return m_iListIndex;
+	} // returns the list index of this camera
+	bool IsActive()
+	{
+		return m_bActive;
+	} // is this area currently blocking portals
 
-	CFuncNoPortalVolume		*m_pNext;			// Needed for the template list
+	CFuncNoPortalVolume *m_pNext; // Needed for the template list
 
 	DECLARE_DATADESC();
 
 private:
-	bool					m_bActive;			// are we currently blocking portals
-	unsigned int			m_iListIndex;		// what is my index into the global noportal_volume list
-
-
+	bool m_bActive;			   // are we currently blocking portals
+	unsigned int m_iListIndex; // what is my index into the global noportal_volume list
 };
 
 // Global interface for getting the list of noportal_volumes
-CFuncNoPortalVolume* GetNoPortalVolumeList();
-
+CFuncNoPortalVolume *GetNoPortalVolumeList();
 
 #endif

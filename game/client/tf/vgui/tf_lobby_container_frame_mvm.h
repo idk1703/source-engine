@@ -7,7 +7,6 @@
 #ifndef TF_LOBBY_CONTAINER_FRAME_MVM_H
 #define TF_LOBBY_CONTAINER_FRAME_MVM_H
 
-
 #include "cbase.h"
 //#include "tf_pvelobbypanel.h"
 #include "tf_lobby_container_frame.h"
@@ -15,13 +14,13 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 class CBaseLobbyPanel;
 
 // This is a big fat kludge so I can use the PropertyPage
 class CLobbyContainerFrame_MvM : public CBaseLobbyContainerFrame
 {
-	DECLARE_CLASS_SIMPLE( CLobbyContainerFrame_MvM, CBaseLobbyContainerFrame );
+	DECLARE_CLASS_SIMPLE(CLobbyContainerFrame_MvM, CBaseLobbyContainerFrame);
+
 public:
 	CLobbyContainerFrame_MvM();
 	~CLobbyContainerFrame_MvM();
@@ -29,14 +28,19 @@ public:
 	//
 	// PropertyDialog overrides
 	//
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme) OVERRIDE;
 	virtual void OnKeyCodePressed(vgui::KeyCode code) OVERRIDE;
-	virtual void OnCommand( const char *command ) OVERRIDE;
+	virtual void OnCommand(const char *command) OVERRIDE;
 
 private:
-
-	virtual const char* GetResFile() const OVERRIDE { return "Resource/UI/LobbyContainerFrame_MvM.res"; }
-	virtual TF_MatchmakingMode GetHandledMode() const { return TF_Matchmaking_MVM; }
+	virtual const char *GetResFile() const OVERRIDE
+	{
+		return "Resource/UI/LobbyContainerFrame_MvM.res";
+	}
+	virtual TF_MatchmakingMode GetHandledMode() const
+	{
+		return TF_Matchmaking_MVM;
+	}
 	virtual bool VerifyPartyAuthorization() const OVERRIDE;
 	virtual void WriteControls() OVERRIDE;
 	virtual void HandleBackPressed() OVERRIDE;
@@ -46,4 +50,4 @@ private:
 	vgui::Button *m_pPracticeButton;
 };
 
-#endif //TF_LOBBY_CONTAINER_FRAME_MVM_H
+#endif // TF_LOBBY_CONTAINER_FRAME_MVM_H

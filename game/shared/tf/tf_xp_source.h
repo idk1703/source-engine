@@ -15,26 +15,26 @@
 #include "tf_gcmessages.h"
 
 #ifdef GC
-	#include "tf_gc.h"
+#include "tf_gc.h"
 #endif
 
 //---------------------------------------------------------------------------------
 // Purpose: Contains a delta for a player's XP
 //---------------------------------------------------------------------------------
-class CXPSource : public GCSDK::CProtoBufSharedObject< CMsgTFXPSource, k_EEconTypeXPSource >
+class CXPSource : public GCSDK::CProtoBufSharedObject<CMsgTFXPSource, k_EEconTypeXPSource>
 {
 public:
 	CXPSource();
 #ifdef GC
-	CXPSource( CMsgTFXPSource msg );
-	DECLARE_CLASS_MEMPOOL( CXPSource );
+	CXPSource(CMsgTFXPSource msg);
+	DECLARE_CLASS_MEMPOOL(CXPSource);
 
-	virtual bool BYieldingAddInsertToTransaction( GCSDK::CSQLAccess & sqlAccess );
-	virtual bool BYieldingAddWriteToTransaction( GCSDK::CSQLAccess & sqlAccess, const CUtlVector< int > &fields );
-	virtual bool BYieldingAddRemoveToTransaction( GCSDK::CSQLAccess & sqlAccess );
+	virtual bool BYieldingAddInsertToTransaction(GCSDK::CSQLAccess &sqlAccess);
+	virtual bool BYieldingAddWriteToTransaction(GCSDK::CSQLAccess &sqlAccess, const CUtlVector<int> &fields);
+	virtual bool BYieldingAddRemoveToTransaction(GCSDK::CSQLAccess &sqlAccess);
 
-	void WriteToRecord( CSchPlayerXPSources *pWarData ) const;
-	void ReadFromRecord( const CSchPlayerXPSources & warData );
+	void WriteToRecord(CSchPlayerXPSources *pWarData) const;
+	void ReadFromRecord(const CSchPlayerXPSources &warData);
 #endif // GC
 };
 

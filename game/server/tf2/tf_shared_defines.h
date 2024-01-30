@@ -16,13 +16,13 @@
 #pragma once
 
 // Zone states
-#define ZONE_FRIENDLY		1
-#define ZONE_ENEMY			2
-#define ZONE_CONTESTED		3
+#define ZONE_FRIENDLY  1
+#define ZONE_ENEMY	   2
+#define ZONE_CONTESTED 3
 
 // Loot state
-#define LOOT_NOT			0
-#define LOOT_CAPABLE		1
-#define LOOT_LOOTING		2
+#define LOOT_NOT	 0
+#define LOOT_CAPABLE 1
+#define LOOT_LOOTING 2
 
 #endif // TF_DEFINES_H

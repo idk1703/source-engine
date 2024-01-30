@@ -20,14 +20,14 @@ namespace vgui
 {
 	class Label;
 	class Panel;
-}
+} // namespace vgui
 
 //-----------------------------------------------------------------------------
 // Purpose: Mouse Details, Part of OptionsDialog
 //-----------------------------------------------------------------------------
 class COptionsSubPortal : public vgui::PropertyPage
 {
-	DECLARE_CLASS_SIMPLE( COptionsSubPortal, vgui::PropertyPage );
+	DECLARE_CLASS_SIMPLE(COptionsSubPortal, vgui::PropertyPage);
 
 public:
 	COptionsSubPortal(vgui::Panel *parent);
@@ -40,20 +40,18 @@ protected:
 	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 
 private:
-	MESSAGE_FUNC( OnCheckButtonChecked, "CheckButtonChecked" )
+	MESSAGE_FUNC(OnCheckButtonChecked, "CheckButtonChecked")
 	{
 		OnControlModified();
 	}
-	MESSAGE_FUNC( OnControlModified, "ControlModified" );
-	MESSAGE_FUNC( OnTextChanged, "TextChanged" )
+	MESSAGE_FUNC(OnControlModified, "ControlModified");
+	MESSAGE_FUNC(OnTextChanged, "TextChanged")
 	{
 		OnControlModified();
 	}
 
-	CCvarToggleCheckButton		*m_pPortalFunnelCheckBox;
-	vgui::ComboBox				*m_pPortalDepthCombo;
+	CCvarToggleCheckButton *m_pPortalFunnelCheckBox;
+	vgui::ComboBox *m_pPortalDepthCombo;
 };
-
-
 
 #endif // OPTIONS_SUB_MOUSE_H

@@ -15,32 +15,31 @@
 #include "toolframework/itoolentity.h"
 #include "materialsystem/MaterialSystemUtil.h"
 
-
 //-----------------------------------------------------------------------------
 // Represents an editable entity; draws its helpers
 //-----------------------------------------------------------------------------
 class CDmeVMFEntity : public CDmeMdlRenderable<CDmElement>
 {
-	DEFINE_ELEMENT( CDmeVMFEntity, CDmeMdlRenderable<CDmElement> );
+	DEFINE_ELEMENT(CDmeVMFEntity, CDmeMdlRenderable<CDmElement>);
 
 public:
 	// Inherited from CDmElement
-	virtual	void	OnAttributeChanged( CDmAttribute *pAttribute );
+	virtual void OnAttributeChanged(CDmAttribute *pAttribute);
 
 public:
 	// Inherited from DmeRenderable
-	virtual const Vector &GetRenderOrigin( void );
-	virtual const QAngle &GetRenderAngles( void );
-	virtual int	DrawModel( int flags );
-	virtual bool IsTransparent( void );
-	virtual void GetRenderBounds( Vector& mins, Vector& maxs );
+	virtual const Vector &GetRenderOrigin(void);
+	virtual const QAngle &GetRenderAngles(void);
+	virtual int DrawModel(int flags);
+	virtual bool IsTransparent(void);
+	virtual void GetRenderBounds(Vector &mins, Vector &maxs);
 
 public:
 	int GetEntityId() const;
 
 	// Returns the next available entity id
 	static int GetNextEntityId();
-	static void SetNextEntityId( int nEntityId );
+	static void SetNextEntityId(int nEntityId);
 
 	const char *GetClassName() const;
 	const char *GetTargetName() const;
@@ -49,35 +48,41 @@ public:
 
 	// Entity Key iteration
 	CDmAttribute *FirstEntityKey();
-	CDmAttribute *NextEntityKey( CDmAttribute *pEntityKey );
+	CDmAttribute *NextEntityKey(CDmAttribute *pEntityKey);
 
 	// Attach/detach from an engine entity with the same editor index
-	void AttachToEngineEntity( HTOOLHANDLE hToolHandle );
+	void AttachToEngineEntity(HTOOLHANDLE hToolHandle);
 
-	void SetRenderOrigin( const Vector &vecOrigin );
-	void SetRenderAngles( const QAngle &angles );
+	void SetRenderOrigin(const Vector &vecOrigin);
+	void SetRenderAngles(const QAngle &angles);
 
-	void MarkDirty( bool bDirty = true );
-	bool IsDirty( void ) { return m_bIsDirty; };
+	void MarkDirty(bool bDirty = true);
+	bool IsDirty(void)
+	{
+		return m_bIsDirty;
+	};
 
-	void MarkDeleted( bool bDeleted = true );
-	bool IsDeleted( void ) { return m_bIsDeleted; };
+	void MarkDeleted(bool bDeleted = true);
+	bool IsDeleted(void)
+	{
+		return m_bIsDeleted;
+	};
 
-	bool CopyFromServer( CBaseEntity *pServerEnt );
-	bool CopyFromServer( CBaseEntity *pServerEnt, const char *szField );
-	bool CopyFromServer( CBaseEntity *pServerEnt, const char *szSrcField, const char *szDstField );
-	bool CopyToServer( void );
+	bool CopyFromServer(CBaseEntity *pServerEnt);
+	bool CopyFromServer(CBaseEntity *pServerEnt, const char *szField);
+	bool CopyFromServer(CBaseEntity *pServerEnt, const char *szSrcField, const char *szDstField);
+	bool CopyToServer(void);
 
-	bool IsSameOnServer( CBaseEntity *pServerEntity );
-	bool CreateOnServer( void );
+	bool IsSameOnServer(CBaseEntity *pServerEntity);
+	bool CreateOnServer(void);
 
 private:
-	bool IsEntityKey( CDmAttribute *pEntityKey );
+	bool IsEntityKey(CDmAttribute *pEntityKey);
 
 	// Draws the helper for the entity
-	void DrawSprite( IMaterial *pMaterial );
-	void DrawDragHelpers( IMaterial *pMaterial );
-	void DrawFloorTarget( IMaterial *pMaterial );
+	void DrawSprite(IMaterial *pMaterial);
+	void DrawDragHelpers(IMaterial *pMaterial);
+	void DrawFloorTarget(IMaterial *pMaterial);
 
 	CDmaVar<Vector> m_vecLocalOrigin;
 	// CDmAttributeVar<QAngle> m_vecLocalAngles;
@@ -88,7 +93,7 @@ private:
 	CDmaVar<bool> m_bIsPlaceholder;
 
 	// The entity it's connected to in the engine
-	HTOOLHANDLE	m_hEngineEntity;
+	HTOOLHANDLE m_hEngineEntity;
 
 	CMaterialReference m_Wireframe;
 
@@ -108,7 +113,6 @@ private:
 	static int s_nNextEntityId;
 };
 
-
 //-----------------------------------------------------------------------------
 // Inline methods
 //-----------------------------------------------------------------------------
@@ -126,6 +130,5 @@ inline bool CDmeVMFEntity::IsPlaceholder() const
 {
 	return m_bIsPlaceholder;
 }
-
 
 #endif // DMEVMFENTITY_H

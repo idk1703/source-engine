@@ -24,29 +24,32 @@
 class CTFGrenadeNail : public CTFWeaponBaseGrenade
 {
 public:
-
-	DECLARE_CLASS( CTFGrenadeNail, CTFWeaponBaseGrenade );
+	DECLARE_CLASS(CTFGrenadeNail, CTFWeaponBaseGrenade);
 	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-//	DECLARE_ACTTABLE();
+	//	DECLARE_ACTTABLE();
 
 	CTFGrenadeNail() {}
 
 	// Unique identifier.
-	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_GRENADE_NAIL; }
+	virtual int GetWeaponID(void) const
+	{
+		return TF_WEAPON_GRENADE_NAIL;
+	}
 
 // Server specific.
 #ifdef GAME_DLL
 
 	DECLARE_DATADESC();
 
-	virtual CTFWeaponBaseGrenadeProj *EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags = 0 );
+	virtual CTFWeaponBaseGrenadeProj *EmitGrenade(Vector vecSrc, QAngle vecAngles, Vector vecVel,
+												  AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime,
+												  int iflags = 0);
 
 #endif
 
 public:
-
-	CTFGrenadeNail( const CTFGrenadeNail & ) {}
+	CTFGrenadeNail(const CTFGrenadeNail &) {}
 };
 
 //=============================================================================
@@ -58,11 +61,13 @@ public:
 class CNailGrenadeController : public IMotionEvent
 {
 	DECLARE_SIMPLE_DATADESC();
-public:
-	virtual simresult_e	Simulate( IPhysicsMotionController *pController, IPhysicsObject *pObject, float deltaTime, Vector &linear, AngularImpulse &angular );
 
 public:
-	void SetDesiredPosAndOrientation( Vector pos, QAngle orientation );
+	virtual simresult_e Simulate(IPhysicsMotionController *pController, IPhysicsObject *pObject, float deltaTime,
+								 Vector &linear, AngularImpulse &angular);
+
+public:
+	void SetDesiredPosAndOrientation(Vector pos, QAngle orientation);
 
 private:
 	Vector m_vecDesiredPosition;
@@ -75,31 +80,34 @@ private:
 class CTFGrenadeNailProjectile : public CTFWeaponBaseGrenadeProj
 {
 public:
-
 	~CTFGrenadeNailProjectile();
 
-	DECLARE_CLASS( CTFGrenadeNailProjectile, CTFWeaponBaseGrenadeProj );
+	DECLARE_CLASS(CTFGrenadeNailProjectile, CTFWeaponBaseGrenadeProj);
 	DECLARE_DATADESC();
 
 	// Unique identifier.
-	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_GRENADE_NAIL; }
+	virtual int GetWeaponID(void) const
+	{
+		return TF_WEAPON_GRENADE_NAIL;
+	}
 
 	// Creation.
-	static CTFGrenadeNailProjectile *Create( const Vector &position, const QAngle &angles, const Vector &velocity,
-		                                       const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, float timer, int iFlags = 0 );
+	static CTFGrenadeNailProjectile *Create(const Vector &position, const QAngle &angles, const Vector &velocity,
+											const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner,
+											const CTFWeaponInfo &weaponInfo, float timer, int iFlags = 0);
 
 	// Overrides.
-	virtual void	Spawn();
-	virtual void	Precache();
-	virtual void	BounceSound( void );
-	virtual void	Detonate();
-	virtual int		OnTakeDamage( const CTakeDamageInfo &info );
+	virtual void Spawn();
+	virtual void Precache();
+	virtual void BounceSound(void);
+	virtual void Detonate();
+	virtual int OnTakeDamage(const CTakeDamageInfo &info);
 
-	void StartEmittingNails( void );
-	void EmitNails( void );
+	void StartEmittingNails(void);
+	void EmitNails(void);
 
-	CNailGrenadeController		m_GrenadeController;
-	IPhysicsMotionController	*m_pMotionController;
+	CNailGrenadeController m_GrenadeController;
+	IPhysicsMotionController *m_pMotionController;
 
 public:
 	bool m_bActivated;

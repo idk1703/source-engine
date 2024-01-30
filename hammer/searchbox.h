@@ -12,31 +12,29 @@
 
 class CSearchBox : public CComboBox
 {
-// Construction
+	// Construction
 public:
 	CSearchBox();
 
-// Attributes
+	// Attributes
 public:
-
-// Operations
+	// Operations
 public:
-
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CSearchBox)
-	public:
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
+public:
+	virtual BOOL PreTranslateMessage(MSG *pMsg);
 	//}}AFX_VIRTUAL
 
-// Implementation
+	// Implementation
 public:
 	virtual ~CSearchBox();
 
 	// Generated message map functions
 protected:
 	//{{AFX_MSG(CSearchBox)
-		// NOTE - the ClassWizard will add and remove member functions here.
+	// NOTE - the ClassWizard will add and remove member functions here.
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()

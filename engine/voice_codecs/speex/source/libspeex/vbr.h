@@ -32,7 +32,6 @@
 
 */
 
-
 #ifndef VBR_H
 #define VBR_H
 
@@ -42,7 +41,8 @@ extern float vbr_nb_thresh[9][11];
 extern float vbr_hb_thresh[5][11];
 extern float vbr_uhb_thresh[2][11];
 
-typedef struct VBRState {
+typedef struct VBRState
+{
 	float energy_alpha;
 	float average_energy;
 	float last_energy;
@@ -54,7 +54,7 @@ typedef struct VBRState {
 	float noise_level;
 	float noise_accum;
 	float noise_accum_count;
-	int   consec_noise;
+	int consec_noise;
 } VBRState;
 
 void vbr_init(VBRState *vbr);

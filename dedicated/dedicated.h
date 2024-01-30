@@ -18,21 +18,17 @@
 
 #include "appframework/tier3app.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
 class IDedicatedServerAPI;
-
 
 //-----------------------------------------------------------------------------
 // Singleton interfaces
 //-----------------------------------------------------------------------------
 extern IDedicatedServerAPI *engine;
 
-
-extern char g_szEXEName[ MAX_PATH ];
-
+extern char g_szEXEName[MAX_PATH];
 
 //-----------------------------------------------------------------------------
 // Inner loop: initialize, shutdown main systems, load steam to
@@ -49,30 +45,28 @@ class CDedicatedAppSystemGroup : public DEDICATED_BASECLASS
 
 public:
 	// Methods of IApplication
-	virtual bool Create( );
-	virtual bool PreInit( );
-	virtual int Main( );
+	virtual bool Create();
+	virtual bool PreInit();
+	virtual int Main();
 	virtual void PostShutdown();
 	virtual void Destroy();
 
 	// Used to chain to base class
-	AppModule_t LoadModule( CreateInterfaceFn factory )
+	AppModule_t LoadModule(CreateInterfaceFn factory)
 	{
-		return CSteamAppSystemGroup::LoadModule( factory );
+		return CSteamAppSystemGroup::LoadModule(factory);
 	}
 
 	// Method to add various global singleton systems
-	bool AddSystems( AppSystemInfo_t *pSystems )
+	bool AddSystems(AppSystemInfo_t *pSystems)
 	{
-		return CSteamAppSystemGroup::AddSystems( pSystems );
+		return CSteamAppSystemGroup::AddSystems(pSystems);
 	}
 
-	void *FindSystem( const char *pInterfaceName )
+	void *FindSystem(const char *pInterfaceName)
 	{
-		return CSteamAppSystemGroup::FindSystem( pInterfaceName );
+		return CSteamAppSystemGroup::FindSystem(pInterfaceName);
 	}
 };
-
-
 
 #endif // DEDICATED_H

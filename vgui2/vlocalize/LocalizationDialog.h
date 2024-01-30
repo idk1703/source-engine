@@ -15,13 +15,13 @@
 
 namespace vgui
 {
-class Button;
-class ComboBox;
-class Label;
-class TextEntry;
-class ListPanel;
-class MenuButton;
-};
+	class Button;
+	class ComboBox;
+	class Label;
+	class TextEntry;
+	class ListPanel;
+	class MenuButton;
+}; // namespace vgui
 
 //-----------------------------------------------------------------------------
 // Purpose: Main localization dialog class
@@ -65,6 +65,5 @@ private:
 
 	typedef vgui::Frame BaseClass;
 };
-
 
 #endif // LOCALIZATIONDIALOG_H

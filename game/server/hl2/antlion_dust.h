@@ -13,20 +13,19 @@
 class CTEAntlionDust : public CTEParticleSystem
 {
 public:
-
-	DECLARE_CLASS( CTEAntlionDust, CTEParticleSystem );
+	DECLARE_CLASS(CTEAntlionDust, CTEParticleSystem);
 	DECLARE_SERVERCLASS();
 
-					CTEAntlionDust( const char *name );
-	virtual			~CTEAntlionDust( void );
+	CTEAntlionDust(const char *name);
+	virtual ~CTEAntlionDust(void);
 
-	virtual void	Test( const Vector& current_origin, const QAngle& current_angles ) { };
+	virtual void Test(const Vector &current_origin, const QAngle &current_angles) {};
 
-	CNetworkVector( m_vecOrigin );
-	CNetworkVar( QAngle, m_vecAngles );
-	CNetworkVar( bool, m_bBlockedSpawner );
+	CNetworkVector(m_vecOrigin);
+	CNetworkVar(QAngle, m_vecAngles);
+	CNetworkVar(bool, m_bBlockedSpawner);
 };
 
-void UTIL_CreateAntlionDust( const Vector &origin, const QAngle &angles, bool bBlockedSpawner = false );
+void UTIL_CreateAntlionDust(const Vector &origin, const QAngle &angles, bool bBlockedSpawner = false);
 
-#endif	//ANTLION_DUST_H
+#endif // ANTLION_DUST_H

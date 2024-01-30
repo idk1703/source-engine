@@ -16,21 +16,20 @@
 class CCustomFilename
 {
 public:
-	CCustomFilename( CRC32_t value )
+	CCustomFilename(CRC32_t value)
 	{
 		char hex[16];
-		Q_binarytohex( (byte *)&value, sizeof( value ), hex, sizeof( hex ) );
-		Q_snprintf( m_Filename, sizeof( m_Filename ), "user_custom/%c%c/%s.dat", hex[0], hex[1], hex );
+		Q_binarytohex((byte *)&value, sizeof(value), hex, sizeof(hex));
+		Q_snprintf(m_Filename, sizeof(m_Filename), "user_custom/%c%c/%s.dat", hex[0], hex[1], hex);
 	}
 
 	char m_Filename[MAX_OSPATH];
 };
 
 // Validate a VTF file.
-bool LogoFile_IsValidVTFFile( const void *pData, int len );
+bool LogoFile_IsValidVTFFile(const void *pData, int len);
 
 // Read in and validate a logo file.
-bool LogoFile_ReadFile( CRC32_t crcValue, CUtlVector<char> &fileData );
-
+bool LogoFile_ReadFile(CRC32_t crcValue, CUtlVector<char> &fileData);
 
 #endif // LOGOFILE_SHARED_H

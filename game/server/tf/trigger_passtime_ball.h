@@ -17,13 +17,13 @@
 class CTriggerPasstimeBall : public CBaseEntity
 {
 public:
-	DECLARE_CLASS( CTriggerPasstimeBall, CBaseEntity );
+	DECLARE_CLASS(CTriggerPasstimeBall, CBaseEntity);
 	DECLARE_DATADESC();
 	virtual void Spawn() OVERRIDE;
 
 private:
 	void Update();
-	bool BTouching( CBaseEntity *pEnt );
+	bool BTouching(CBaseEntity *pEnt);
 
 	bool m_bPresent;
 	COutputEvent m_onBallEnter;

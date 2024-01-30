@@ -30,40 +30,49 @@ enum fisttypes_t
 class CTFFists : public CTFWeaponBaseMelee
 {
 public:
-
-	DECLARE_CLASS( CTFFists, CTFWeaponBaseMelee );
+	DECLARE_CLASS(CTFFists, CTFWeaponBaseMelee);
 	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CTFFists() {}
-	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_FISTS; }
+	virtual int GetWeaponID(void) const
+	{
+		return TF_WEAPON_FISTS;
+	}
 
 	virtual void ItemPreFrame();
 	virtual void PrimaryAttack();
 	virtual void SecondaryAttack();
-	virtual bool Holster( CBaseCombatWeapon *pSwitchingTo );
+	virtual bool Holster(CBaseCombatWeapon *pSwitchingTo);
 
-	virtual void SendPlayerAnimEvent( CTFPlayer *pPlayer );
+	virtual void SendPlayerAnimEvent(CTFPlayer *pPlayer);
 
-	virtual void DoViewModelAnimation( void );
+	virtual void DoViewModelAnimation(void);
 
-	virtual bool HideWhileStunned( void ) { return false; }
+	virtual bool HideWhileStunned(void)
+	{
+		return false;
+	}
 
-	void Punch( void );
+	void Punch(void);
 
 #ifdef GAME_DLL
-	virtual void OnEntityHit( CBaseEntity *pEntity, CTakeDamageInfo *info );
+	virtual void OnEntityHit(CBaseEntity *pEntity, CTakeDamageInfo *info);
 #endif
 
-	virtual bool AllowTaunts( void );
+	virtual bool AllowTaunts(void);
 
-	int			 GetFistType( void ) { int iMode = 0; CALL_ATTRIB_HOOK_INT( iMode, set_weapon_mode ); return iMode; };
+	int GetFistType(void)
+	{
+		int iMode = 0;
+		CALL_ATTRIB_HOOK_INT(iMode, set_weapon_mode);
+		return iMode;
+	};
 
-	virtual void	SetWeaponVisible( bool visible ){}  // intentionally never hiding the fists
+	virtual void SetWeaponVisible(bool visible) {} // intentionally never hiding the fists
 
 private:
-
-	CTFFists( const CTFFists & ) {}
+	CTFFists(const CTFFists &) {}
 };
 
 #endif // TF_WEAPON_FISTS_H

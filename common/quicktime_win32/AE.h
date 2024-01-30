@@ -20,7 +20,6 @@
 #include <CoreServices.h>
 #endif
 
-
 #ifndef __AEDATAMODEL__
 #include <AEDataModel.h>
 #endif
@@ -52,7 +51,5 @@
 #ifndef __AEMACH__
 #include <AEMach.h>
 #endif
-
-
 
 #endif /* __AE__ */

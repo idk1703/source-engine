@@ -25,7 +25,6 @@
 #include <stdint.h>
 #endif
 
-
 #if PRAGMA_ONCE
 #pragma once
 #endif
@@ -37,21 +36,19 @@
 #include <stdint.h>
 
 #if !defined(CG_INLINE)
-#  if defined(__GNUC__)
-#    define CG_INLINE static __inline__
-#  elif defined(__MWERKS__)
-#    define CG_INLINE static inline
-#  else
-#    define CG_INLINE static
-#  endif
+#if defined(__GNUC__)
+#define CG_INLINE static __inline__
+#elif defined(__MWERKS__)
+#define CG_INLINE static inline
+#else
+#define CG_INLINE static
 #endif
-
+#endif
 
 #ifdef PRAGMA_IMPORT_OFF
 #pragma import off
 #elif PRAGMA_IMPORT
 #pragma import reset
 #endif
-
 
 #endif /* CGBASE_H_ */

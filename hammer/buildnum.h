@@ -9,6 +9,6 @@
 #define BUILDNUM_H
 #pragma once
 
-int build_number( void );
+int build_number(void);
 
 #endif // BUILDNUM_H

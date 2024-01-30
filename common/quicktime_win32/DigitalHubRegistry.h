@@ -24,9 +24,6 @@
 #include <AERegistry.h>
 #endif
 
-
-
-
 #if PRAGMA_ONCE
 #pragma once
 #endif
@@ -36,18 +33,19 @@
 #endif
 
 /* class */
-enum {
-	kDigiHubEventClass            = FOUR_CHAR_CODE('dhub')
+enum
+{
+	kDigiHubEventClass = FOUR_CHAR_CODE('dhub')
 };
 
-
 /* events*/
-enum {
-	kDigiHubMusicCD               = FOUR_CHAR_CODE('aucd'), /* 1635083108 0x61756364*/
-	kDigiHubPictureCD             = FOUR_CHAR_CODE('picd'), /* 1885954916 0x70696364*/
-	kDigiHubVideoDVD              = FOUR_CHAR_CODE('vdvd'), /* 1986295396 0x76647664*/
-	kDigiHubBlankCD               = FOUR_CHAR_CODE('bcd '), /* 1650680864 0x62636420*/
-	kDigiHubBlankDVD              = FOUR_CHAR_CODE('bdvd') /* 1650751076 0x62647664*/
+enum
+{
+	kDigiHubMusicCD = FOUR_CHAR_CODE('aucd'),	/* 1635083108 0x61756364*/
+	kDigiHubPictureCD = FOUR_CHAR_CODE('picd'), /* 1885954916 0x70696364*/
+	kDigiHubVideoDVD = FOUR_CHAR_CODE('vdvd'),	/* 1986295396 0x76647664*/
+	kDigiHubBlankCD = FOUR_CHAR_CODE('bcd '),	/* 1650680864 0x62636420*/
+	kDigiHubBlankDVD = FOUR_CHAR_CODE('bdvd')	/* 1650751076 0x62647664*/
 };
 
 /*
@@ -80,6 +78,5 @@ enum {
 #elif PRAGMA_IMPORT
 #pragma import reset
 #endif
-
 
 #endif /* __DIGITALHUBREGISTRY__ */

@@ -16,23 +16,23 @@
 class CKeyToggleCheckButton : public vgui::CheckButton
 {
 public:
-	CKeyToggleCheckButton( vgui::Panel *parent, const char *panelName, const char *text,
-		char const *keyname, char const *cmdname );
+	CKeyToggleCheckButton(vgui::Panel *parent, const char *panelName, const char *text, char const *keyname,
+						  char const *cmdname);
 	~CKeyToggleCheckButton();
 
-	//virtual void	SetSelected( bool state );
-	virtual void	Paint();
+	// virtual void	SetSelected( bool state );
+	virtual void Paint();
 
-	void			Reset();
-	void			ApplyChanges();
-	bool			HasBeenModified();
+	void Reset();
+	void ApplyChanges();
+	bool HasBeenModified();
 
 private:
 	typedef vgui::CheckButton BaseClass;
 
-	char			*m_pszKeyName;
-	char			*m_pszCmdName;
+	char *m_pszKeyName;
+	char *m_pszCmdName;
 
-	bool			m_bStartValue;
+	bool m_bStartValue;
 };
 #endif // KEYTOGGLECHECKBUTTON_H

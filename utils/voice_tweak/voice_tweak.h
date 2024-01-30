@@ -16,10 +16,10 @@
 #endif // _MSC_VER > 1000
 
 #ifndef __AFXWIN_H__
-	#error include 'stdafx.h' before including this file for PCH
+#error include 'stdafx.h' before including this file for PCH
 #endif
 
-#include "resource.h"		// main symbols
+#include "resource.h" // main symbols
 #include "voice_mixer_controls.h"
 #include "ivoicerecord.h"
 #include "iwaveout.h"
@@ -27,14 +27,10 @@
 #include "interface.h"
 #include "voice_gain.h"
 
-
-#define VOICE_TWEAK_SAMPLE_RATE	22050
-
+#define VOICE_TWEAK_SAMPLE_RATE 22050
 
 // Pass in the english string ID, and this returns the string ID in the current language.
-int MapLanguageStringID( int idEnglish );
-
-
+int MapLanguageStringID(int idEnglish);
 
 /////////////////////////////////////////////////////////////////////////////
 // CVoiceTweakApp:
@@ -47,32 +43,30 @@ public:
 	CVoiceTweakApp();
 	~CVoiceTweakApp();
 
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CVoiceTweakApp)
-	public:
+public:
 	virtual BOOL InitInstance();
 	//}}AFX_VIRTUAL
 
 	// Init and deinit the record, waveOut, and voice codec.
-	bool				StartDevices();
-	void				StopDevices();
+	bool StartDevices();
+	void StopDevices();
 
-	IVoiceRecord		*m_pVoiceRecord;
-	IWaveOut			*m_pWaveOut;
+	IVoiceRecord *m_pVoiceRecord;
+	IWaveOut *m_pWaveOut;
 
-	IMixerControls		*m_pMixerControls;
+	IMixerControls *m_pMixerControls;
 
-
-// Implementation
+	// Implementation
 
 	//{{AFX_MSG(CVoiceTweakApp)
-		// NOTE - the ClassWizard will add and remove member functions here.
-		//    DO NOT EDIT what you see in these blocks of generated code !
+	// NOTE - the ClassWizard will add and remove member functions here.
+	//    DO NOT EDIT what you see in these blocks of generated code !
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
-
 
 /////////////////////////////////////////////////////////////////////////////
 

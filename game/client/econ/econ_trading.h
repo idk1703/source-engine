@@ -22,19 +22,19 @@ CSteamID Trading_GetLocalPlayerSteamID();
  * Request a trade session with the player by player index (i.e. in the same game)
  * @param iPlayerIdx
  */
-void Trading_RequestTrade( int iPlayerIdx );
+void Trading_RequestTrade(int iPlayerIdx);
 
 /**
  * Request a trade session with the player by CSteamID
  * @param steamID
  */
-void Trading_RequestTrade( const CSteamID &steamID );
+void Trading_RequestTrade(const CSteamID &steamID);
 
 /**
  * Sends a gift to the player with the given steamID
  * @param steamID
  * @param giftItem
  */
-void Trading_SendGift( const CSteamID &steamID, const CEconItemView& giftItem );
+void Trading_SendGift(const CSteamID &steamID, const CEconItemView &giftItem);
 
 #endif // TF_TRADING_H

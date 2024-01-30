@@ -20,7 +20,6 @@
 #include <CoreFoundation.h>
 #endif
 
-
 #ifndef __CGBASE__
 #include <CGBase.h>
 #endif
@@ -92,8 +91,5 @@
 #ifndef __CGPDFDOCUMENT__
 #include <CGPDFDocument.h>
 #endif
-
-
-
 
 #endif /* __COREGRAPHICS__ */

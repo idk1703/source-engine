@@ -23,40 +23,48 @@
 //-----------------------------------------------------------------------------
 class CTFMedicCallerPanel : public vgui::EditablePanel, public CGameEventListener
 {
-	DECLARE_CLASS_SIMPLE( CTFMedicCallerPanel, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CTFMedicCallerPanel, vgui::EditablePanel);
+
 public:
-	CTFMedicCallerPanel( vgui::Panel *parent, const char *name );
-	~CTFMedicCallerPanel( void );
+	CTFMedicCallerPanel(vgui::Panel *parent, const char *name);
+	~CTFMedicCallerPanel(void);
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void PerformLayout( void );
-	virtual void OnTick( void );
-	virtual void PaintBackground( void );
-	virtual void Paint( void );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void PerformLayout(void);
+	virtual void OnTick(void);
+	virtual void PaintBackground(void);
+	virtual void Paint(void);
 
-	virtual const char *GetControlSettingFile() const { return "resource/UI/MedicCallerPanel.res"; }
+	virtual const char *GetControlSettingFile() const
+	{
+		return "resource/UI/MedicCallerPanel.res";
+	}
 
-	void	GetCallerPosition( const Vector &vecDelta, float flRadius, float *xpos, float *ypos, float *flRotation );
-	void	SetEntity( C_BaseEntity *pEntity, float flDuration, Vector &vecOffset );
-	void	SetMedicCallerType( MedicCallerType nType );
-	static void AddMedicCaller( C_BaseEntity *pEntity, float flDuration, Vector &vecOffset, MedicCallerType nType = CALLER_TYPE_NORMAL );
+	void GetCallerPosition(const Vector &vecDelta, float flRadius, float *xpos, float *ypos, float *flRotation);
+	void SetEntity(C_BaseEntity *pEntity, float flDuration, Vector &vecOffset);
+	void SetMedicCallerType(MedicCallerType nType);
+	static void AddMedicCaller(C_BaseEntity *pEntity, float flDuration, Vector &vecOffset,
+							   MedicCallerType nType = CALLER_TYPE_NORMAL);
 
-	virtual void FireGameEvent( IGameEvent *event );
+	virtual void FireGameEvent(IGameEvent *event);
 
 protected:
-	C_BaseEntity	*GetEntity() const { return m_hEntity; }
+	C_BaseEntity *GetEntity() const
+	{
+		return m_hEntity;
+	}
 
 private:
-	IMaterial		*m_pArrowMaterial;
-	float			m_flRemoveAt;
-	Vector			m_vecOffset;
+	IMaterial *m_pArrowMaterial;
+	float m_flRemoveAt;
+	Vector m_vecOffset;
 	CHandle<C_BaseEntity> m_hEntity;
-	int				m_iDrawArrow;
-	bool			m_bOnscreen;
-	bool			m_bBurning;
-	bool			m_bBleeding;
-	float			m_flPanelScale;
-	int				m_nCallerType;
+	int m_iDrawArrow;
+	bool m_bOnscreen;
+	bool m_bBurning;
+	bool m_bBleeding;
+	float m_flPanelScale;
+	int m_nCallerType;
 };
 
 #endif // TF_HUD_MEDICCALLERS_H

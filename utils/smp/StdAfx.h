@@ -29,7 +29,6 @@
 #endif
 #define _ATL_APARTMENT_THREADED
 
-
 #include <atlbase.h>
 
 extern CComModule _Module;

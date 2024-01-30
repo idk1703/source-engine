@@ -26,11 +26,11 @@ public:
 	{
 		*((int *)this) = 0;
 	}
-	Color(int _r,int _g,int _b)
+	Color(int _r, int _g, int _b)
 	{
 		SetColor(_r, _g, _b, 0);
 	}
-	Color(int _r,int _g,int _b,int _a)
+	Color(int _r, int _g, int _b, int _a)
 	{
 		SetColor(_r, _g, _b, _a);
 	}
@@ -56,7 +56,7 @@ public:
 		_a = _color[3];
 	}
 
-	void SetRawColor( int color32 )
+	void SetRawColor(int color32)
 	{
 		*((int *)this) = color32;
 	}
@@ -66,10 +66,22 @@ public:
 		return *((int *)this);
 	}
 
-	inline int r() const	{ return _color[0]; }
-	inline int g() const	{ return _color[1]; }
-	inline int b() const	{ return _color[2]; }
-	inline int a() const	{ return _color[3]; }
+	inline int r() const
+	{
+		return _color[0];
+	}
+	inline int g() const
+	{
+		return _color[1];
+	}
+	inline int b() const
+	{
+		return _color[2];
+	}
+	inline int a() const
+	{
+		return _color[3];
+	}
 
 	unsigned char &operator[](int index)
 	{
@@ -81,23 +93,23 @@ public:
 		return _color[index];
 	}
 
-	bool operator == (const Color &rhs) const
+	bool operator==(const Color &rhs) const
 	{
-		return ( *((int *)this) == *((int *)&rhs) );
+		return (*((int *)this) == *((int *)&rhs));
 	}
 
-	bool operator != (const Color &rhs) const
+	bool operator!=(const Color &rhs) const
 	{
 		return !(operator==(rhs));
 	}
 
-	Color &operator=( const Color &rhs )
+	Color &operator=(const Color &rhs)
 	{
-		SetRawColor( rhs.GetRawColor() );
+		SetRawColor(rhs.GetRawColor());
 		return *this;
 	}
 
-	Color &operator=( const color32 &rhs )
+	Color &operator=(const color32 &rhs)
 	{
 		_color[0] = rhs.r;
 		_color[1] = rhs.g;
@@ -119,6 +131,5 @@ public:
 private:
 	unsigned char _color[4];
 };
-
 
 #endif // COLOR_H

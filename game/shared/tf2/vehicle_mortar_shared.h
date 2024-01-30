@@ -10,9 +10,7 @@
 #pragma once
 #endif
 
-
 // How long it takes to deploy the mortar.
-#define VEHICLE_MORTAR_DEPLOY_WAIT_TIME	3
-
+#define VEHICLE_MORTAR_DEPLOY_WAIT_TIME 3
 
 #endif // VEHICLE_MORTAR_SHARED_H

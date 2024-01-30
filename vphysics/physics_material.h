@@ -16,14 +16,14 @@ class IVP_Material_Manager;
 class IPhysicsSurfacePropsInternal : public IPhysicsSurfaceProps
 {
 public:
-	virtual IVP_Material *GetIVPMaterial( int materialIndex ) = 0;
+	virtual IVP_Material *GetIVPMaterial(int materialIndex) = 0;
 
-	virtual int GetIVPMaterialIndex( const IVP_Material *pIVP ) const = 0;
-	virtual IVP_Material_Manager *GetIVPManager( void ) = 0;
-	virtual int RemapIVPMaterialIndex( int ivpMaterialIndex ) const = 0;
+	virtual int GetIVPMaterialIndex(const IVP_Material *pIVP) const = 0;
+	virtual IVP_Material_Manager *GetIVPManager(void) = 0;
+	virtual int RemapIVPMaterialIndex(int ivpMaterialIndex) const = 0;
 };
 
-extern IPhysicsSurfacePropsInternal	*physprops;
+extern IPhysicsSurfacePropsInternal *physprops;
 
 // Special material indices outside of the normal system
 enum

@@ -14,17 +14,11 @@
 #ifndef INCLUDED_MXTAB
 #define INCLUDED_MXTAB
 
-
-
 #ifndef INCLUDED_MXWIDGET
 #include "mxtk/mxWidget.h"
 #endif
 
-
-
 class mxWindow;
-
-
 
 class mxTab_i;
 class mxTab : public mxWidget
@@ -33,23 +27,21 @@ class mxTab : public mxWidget
 
 public:
 	// CREATORS
-	mxTab (mxWindow *parent, int x, int y, int w, int h, int id = 0);
-	virtual ~mxTab ();
+	mxTab(mxWindow *parent, int x, int y, int w, int h, int id = 0);
+	virtual ~mxTab();
 
 	// MANIPULATORS
-	void add (mxWidget *widget, const char *text);
-	void remove (int index);
-	void select (int index);
+	void add(mxWidget *widget, const char *text);
+	void remove(int index);
+	void select(int index);
 
 	// ACCESSORS
-	int getSelectedIndex () const;
+	int getSelectedIndex() const;
 
 private:
 	// NOT IMPLEMENTED
-	mxTab (const mxTab&);
-	mxTab& operator= (const mxTab&);
+	mxTab(const mxTab &);
+	mxTab &operator=(const mxTab &);
 };
-
-
 
 #endif // INCLUDED_MXTAB

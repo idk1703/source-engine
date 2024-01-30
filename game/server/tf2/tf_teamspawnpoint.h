@@ -20,21 +20,20 @@ class CTeam;
 class CTeamSpawnPoint : public CPointEntity
 {
 public:
-	DECLARE_CLASS( CTeamSpawnPoint, CPointEntity );
+	DECLARE_CLASS(CTeamSpawnPoint, CPointEntity);
 
-	void	Activate( void );
-	bool	IsValid( CBasePlayer *pPlayer );
+	void Activate(void);
+	bool IsValid(CBasePlayer *pPlayer);
 
 	COutputEvent m_OnPlayerSpawn;
 
 protected:
-	int		m_iDisabled;
+	int m_iDisabled;
 
-	void	EnableSpawn( void );
-	void	DisableSpawn( void );
+	void EnableSpawn(void);
+	void DisableSpawn(void);
 
 	DECLARE_DATADESC();
 };
-
 
 #endif // TF_TEAMSPAWNPOINT_H

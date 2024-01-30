@@ -22,35 +22,37 @@ private:
 	DECLARE_CLASS_SIMPLE(CCSBuySubMenu, CBuySubMenu);
 
 public:
-	CCSBuySubMenu (vgui::Panel *parent,const char *name = "BuySubMenu") : CBuySubMenu( parent, name )
+	CCSBuySubMenu(vgui::Panel *parent, const char *name = "BuySubMenu") : CBuySubMenu(parent, name)
 	{
 		m_backgroundLayoutFinished = false;
 	};
 
 protected:
-
 	virtual void OnThink();
 	void UpdateVestHelmPrice();
 
-	virtual void OnCommand( const char *command );
+	virtual void OnCommand(const char *command);
 
-	MouseOverPanelButton* CreateNewMouseOverPanelButton(EditablePanel * panel)
+	MouseOverPanelButton *CreateNewMouseOverPanelButton(EditablePanel *panel)
 	{
 		return new BuyMouseOverPanelButton(this, NULL, panel);
 	}
 
-	CBuySubMenu* CreateNewSubMenu() { return new CCSBuySubMenu( this, "BuySubMenu" ); }
+	CBuySubMenu *CreateNewSubMenu()
+	{
+		return new CCSBuySubMenu(this, "BuySubMenu");
+	}
 
 	// Background panel -------------------------------------------------------
 
 	virtual void PerformLayout();
-	virtual void OnSizeChanged(int newWide, int newTall);	// called after the size of a panel has been changed
+	virtual void OnSizeChanged(int newWide, int newTall); // called after the size of a panel has been changed
 
-	void HandleBlackMarket( void );
+	void HandleBlackMarket(void);
 
 	bool m_backgroundLayoutFinished;
 
 	// End background panel ---------------------------------------------------
 };
 
-#endif //CSBUYSUBMENU_H
+#endif // CSBUYSUBMENU_H

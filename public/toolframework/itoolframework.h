@@ -25,19 +25,18 @@ struct SpatializationInfo_t;
 class KeyValues;
 class CBoneList;
 
-
 //-----------------------------------------------------------------------------
 // Standard messages
 //-----------------------------------------------------------------------------
 struct BaseEntityRecordingState_t
 {
-	BaseEntityRecordingState_t() :
-		m_flTime( 0.0f ),
-		m_pModelName( 0 ),
-		m_nOwner( -1 ),
-		m_nEffects( 0 ),
-		m_bVisible( false ),
-		m_bRecordFinalVisibleSample( false )
+	BaseEntityRecordingState_t()
+		: m_flTime(0.0f),
+		  m_pModelName(0),
+		  m_nOwner(-1),
+		  m_nEffects(0),
+		  m_bVisible(false),
+		  m_bRecordFinalVisibleSample(false)
 	{
 		m_vecRenderOrigin.Init();
 		m_vecRenderAngles.Init();
@@ -88,12 +87,12 @@ struct CameraRecordingState_t
 
 struct MonitorRecordingState_t
 {
-	bool	m_bActive;
-	float	m_flFOV;
-	bool	m_bFogEnabled;
-	float	m_flFogStart;
-	float	m_flFogEnd;
-	Color	m_FogColor;
+	bool m_bActive;
+	float m_flFOV;
+	bool m_bFogEnabled;
+	float m_flFogStart;
+	float m_flFogEnd;
+	Color m_FogColor;
 };
 
 struct EntityTeleportedRecordingState_t
@@ -107,59 +106,59 @@ struct EntityTeleportedRecordingState_t
 
 struct PortalRecordingState_t
 {
-	int				m_nPortalId;
-	int				m_nLinkedPortalId;
-	float			m_fStaticAmount;
-	float			m_fSecondaryStaticAmount;
-	float			m_fOpenAmount;
-	bool			m_bIsPortal2; //for any set of portals, one must be portal 1, and the other portal 2. Uses different render targets
+	int m_nPortalId;
+	int m_nLinkedPortalId;
+	float m_fStaticAmount;
+	float m_fSecondaryStaticAmount;
+	float m_fOpenAmount;
+	bool m_bIsPortal2; // for any set of portals, one must be portal 1, and the other portal 2. Uses different render
+					   // targets
 };
 
 struct ParticleSystemCreatedState_t
 {
-	int				m_nParticleSystemId;
-	const char *	m_pName;
-	float			m_flTime;
-	int				m_nOwner;
+	int m_nParticleSystemId;
+	const char *m_pName;
+	float m_flTime;
+	int m_nOwner;
 };
 
 struct ParticleSystemDestroyedState_t
 {
-	int				m_nParticleSystemId;
-	float			m_flTime;
+	int m_nParticleSystemId;
+	float m_flTime;
 };
 
 struct ParticleSystemStopEmissionState_t
 {
-	int				m_nParticleSystemId;
-	float			m_flTime;
-	bool			m_bInfiniteOnly;
+	int m_nParticleSystemId;
+	float m_flTime;
+	bool m_bInfiniteOnly;
 };
 
 struct ParticleSystemSetControlPointObjectState_t
 {
-	int				m_nParticleSystemId;
-	float			m_flTime;
-	int				m_nControlPoint;
-	int				m_nObject;
+	int m_nParticleSystemId;
+	float m_flTime;
+	int m_nControlPoint;
+	int m_nObject;
 };
 
 struct ParticleSystemSetControlPointPositionState_t
 {
-	int				m_nParticleSystemId;
-	float			m_flTime;
-	int				m_nControlPoint;
-	Vector			m_vecPosition;
+	int m_nParticleSystemId;
+	float m_flTime;
+	int m_nControlPoint;
+	Vector m_vecPosition;
 };
 
 struct ParticleSystemSetControlPointOrientationState_t
 {
-	int				m_nParticleSystemId;
-	float			m_flTime;
-	int				m_nControlPoint;
-	Quaternion		m_qOrientation;
+	int m_nParticleSystemId;
+	float m_flTime;
+	int m_nControlPoint;
+	Quaternion m_qOrientation;
 };
-
 
 //-----------------------------------------------------------------------------
 // Purpose: This interface lives in the engine and handles loading up/unloading all
@@ -168,91 +167,91 @@ struct ParticleSystemSetControlPointOrientationState_t
 class IToolFrameworkInternal : public IAppSystem
 {
 public: // Client Hooks
-	virtual bool	ClientInit( CreateInterfaceFn clientFactory ) = 0;
-	virtual void	ClientShutdown() = 0;
+	virtual bool ClientInit(CreateInterfaceFn clientFactory) = 0;
+	virtual void ClientShutdown() = 0;
 
 	// Level init, shutdown
-	virtual void	ClientLevelInitPreEntityAllTools() = 0;
+	virtual void ClientLevelInitPreEntityAllTools() = 0;
 	// entities are created / spawned / precached here
-	virtual void	ClientLevelInitPostEntityAllTools() = 0;
+	virtual void ClientLevelInitPostEntityAllTools() = 0;
 
-	virtual void	ClientLevelShutdownPreEntityAllTools() = 0;
+	virtual void ClientLevelShutdownPreEntityAllTools() = 0;
 	// Entities are deleted / released here...
-	virtual void	ClientLevelShutdownPostEntityAllTools() = 0;
+	virtual void ClientLevelShutdownPostEntityAllTools() = 0;
 
-	virtual void	ClientPreRenderAllTools() = 0;
-	virtual void	ClientPostRenderAllTools() = 0;
+	virtual void ClientPreRenderAllTools() = 0;
+	virtual void ClientPostRenderAllTools() = 0;
 
 	// Should we render with a thirdperson camera?
-	virtual bool	IsThirdPersonCamera() = 0;
+	virtual bool IsThirdPersonCamera() = 0;
 
 	// is the current tool recording?
-	virtual bool	IsToolRecording() = 0;
+	virtual bool IsToolRecording() = 0;
 
-public:  // Server Hooks
+public: // Server Hooks
 	// Level init, shutdown
-	virtual bool	ServerInit( CreateInterfaceFn serverFactory ) = 0;
-	virtual void	ServerShutdown() = 0;
+	virtual bool ServerInit(CreateInterfaceFn serverFactory) = 0;
+	virtual void ServerShutdown() = 0;
 
-	virtual void	ServerLevelInitPreEntityAllTools() = 0;
+	virtual void ServerLevelInitPreEntityAllTools() = 0;
 	// entities are created / spawned / precached here
-	virtual void	ServerLevelInitPostEntityAllTools() = 0;
+	virtual void ServerLevelInitPostEntityAllTools() = 0;
 
-	virtual void	ServerLevelShutdownPreEntityAllTools() = 0;
+	virtual void ServerLevelShutdownPreEntityAllTools() = 0;
 	// Entities are deleted / released here...
-	virtual void	ServerLevelShutdownPostEntityAllTools() = 0;
+	virtual void ServerLevelShutdownPostEntityAllTools() = 0;
 	// end of level shutdown
 
 	// Called each frame before entities think
-	virtual void	ServerFrameUpdatePreEntityThinkAllTools() = 0;
+	virtual void ServerFrameUpdatePreEntityThinkAllTools() = 0;
 	// called after entities think
-	virtual void	ServerFrameUpdatePostEntityThinkAllTools() = 0;
-	virtual void	ServerPreClientUpdateAllTools() = 0;
+	virtual void ServerFrameUpdatePostEntityThinkAllTools() = 0;
+	virtual void ServerPreClientUpdateAllTools() = 0;
 
-	virtual void	ServerPreSetupVisibilityAllTools() = 0;
+	virtual void ServerPreSetupVisibilityAllTools() = 0;
 
-public:  // Other Hooks
+public: // Other Hooks
 	// If any tool returns false, the engine will not actually quit
 	// FIXME:  Not implemented yet
-	virtual bool	CanQuit() = 0;
+	virtual bool CanQuit() = 0;
 
 	// Called at end of Host_Init
-	virtual bool	PostInit() = 0;
+	virtual bool PostInit() = 0;
 
-	virtual void	Think( bool finalTick ) = 0;
+	virtual void Think(bool finalTick) = 0;
 
-	virtual void	PostMessage( KeyValues *msg ) = 0;
+	virtual void PostMessage(KeyValues *msg) = 0;
 
-	virtual bool	GetSoundSpatialization( int iUserData, int guid, SpatializationInfo_t& info ) = 0;
+	virtual bool GetSoundSpatialization(int iUserData, int guid, SpatializationInfo_t &info) = 0;
 
-	virtual void	HostRunFrameBegin() = 0;
-	virtual void	HostRunFrameEnd() = 0;
+	virtual void HostRunFrameBegin() = 0;
+	virtual void HostRunFrameEnd() = 0;
 
-	virtual void	RenderFrameBegin() = 0;
-	virtual void	RenderFrameEnd() = 0;
+	virtual void RenderFrameBegin() = 0;
+	virtual void RenderFrameEnd() = 0;
 
 	// Paintmode is an enum declared in enginevgui.h
-	virtual void	VGui_PreRenderAllTools( int paintMode ) = 0;
-	virtual void	VGui_PostRenderAllTools( int paintMode ) = 0;
+	virtual void VGui_PreRenderAllTools(int paintMode) = 0;
+	virtual void VGui_PostRenderAllTools(int paintMode) = 0;
 
-	virtual void	VGui_PreSimulateAllTools() = 0;
-	virtual void	VGui_PostSimulateAllTools() = 0;
+	virtual void VGui_PreSimulateAllTools() = 0;
+	virtual void VGui_PostSimulateAllTools() = 0;
 
 	// Are we using tools?
-	virtual bool	InToolMode() = 0;
+	virtual bool InToolMode() = 0;
 
 	// Should the game be allowed to render the world?
-	virtual bool	ShouldGameRenderView() = 0;
+	virtual bool ShouldGameRenderView() = 0;
 
-	virtual IMaterialProxy *LookupProxy( const char *proxyName ) = 0;
+	virtual IMaterialProxy *LookupProxy(const char *proxyName) = 0;
 
-public:  // general framework hooks
-	virtual int			GetToolCount() = 0;
-	virtual char const	*GetToolName( int index ) = 0;
-	virtual void		SwitchToTool( int index ) = 0;
-	virtual IToolSystem *SwitchToTool( const char *pToolName ) = 0;
-	virtual bool		IsTopmostTool( const IToolSystem *sys ) = 0;
-	virtual const IToolSystem *GetToolSystem( int index ) const = 0;
+public: // general framework hooks
+	virtual int GetToolCount() = 0;
+	virtual char const *GetToolName(int index) = 0;
+	virtual void SwitchToTool(int index) = 0;
+	virtual IToolSystem *SwitchToTool(const char *pToolName) = 0;
+	virtual bool IsTopmostTool(const IToolSystem *sys) = 0;
+	virtual const IToolSystem *GetToolSystem(int index) const = 0;
 	virtual IToolSystem *GetTopmostTool() = 0;
 };
 
@@ -260,6 +259,6 @@ public:  // general framework hooks
 extern IToolFrameworkInternal *toolframework;
 
 // Exposed to launcher to automatically add AppSystemGroup hooks
-#define VTOOLFRAMEWORK_INTERFACE_VERSION  "VTOOLFRAMEWORKVERSION002"
+#define VTOOLFRAMEWORK_INTERFACE_VERSION "VTOOLFRAMEWORKVERSION002"
 
 #endif // ITOOLFRAMEWORK_H

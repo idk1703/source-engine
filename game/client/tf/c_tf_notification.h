@@ -14,10 +14,10 @@
 #include "econ/econ_notifications.h"
 #include "tf_notification.h"
 
-
 class CClientNotification : public CEconNotification
 {
 	friend class CTFSupportNotificationDialog;
+
 public:
 	CClientNotification();
 	virtual ~CClientNotification() OVERRIDE;
@@ -30,10 +30,16 @@ public:
 	virtual bool BHighPriority() OVERRIDE;
 
 	// Should show up on the main menu only -- these go away on dismissal
-	virtual bool BShowInGameElements() const OVERRIDE { return false; }
+	virtual bool BShowInGameElements() const OVERRIDE
+	{
+		return false;
+	}
 
-	void Update( const CTFNotification* notification );
-	uint64 NotificationID() const { return m_ulNotificationID; }
+	void Update(const CTFNotification *notification);
+	uint64 NotificationID() const
+	{
+		return m_ulNotificationID;
+	}
 
 private:
 	void OnDialogAcknowledged();
@@ -44,9 +50,9 @@ private:
 	// m_pText sometimes points to a static string we don't own, so this guy owns any text that we do.
 	CUtlString m_strText;
 
-	// Is this a support message? If so, the user must trigger the notification to view the message in a pop-up before they can dismiss.
-	bool   m_bSupportMessage;
-
+	// Is this a support message? If so, the user must trigger the notification to view the message in a pop-up before
+	// they can dismiss.
+	bool m_bSupportMessage;
 };
 
 class CAutobalanceVolunteerNotification : public CEconNotification
@@ -56,17 +62,35 @@ public:
 
 	virtual ~CAutobalanceVolunteerNotification() OVERRIDE {}
 
-	virtual bool BShowInGameElements() const OVERRIDE { return true; }
-	virtual EType NotificationType() OVERRIDE { return eType_AcceptDecline; }
+	virtual bool BShowInGameElements() const OVERRIDE
+	{
+		return true;
+	}
+	virtual EType NotificationType() OVERRIDE
+	{
+		return eType_AcceptDecline;
+	}
 
-	virtual void Accept() OVERRIDE { SendResponse( true ); }
-	virtual void Decline() OVERRIDE { SendResponse( false ); }
-	virtual void Expired() OVERRIDE { Decline(); }
+	virtual void Accept() OVERRIDE
+	{
+		SendResponse(true);
+	}
+	virtual void Decline() OVERRIDE
+	{
+		SendResponse(false);
+	}
+	virtual void Expired() OVERRIDE
+	{
+		Decline();
+	}
 
-	static bool IsNotificationType( CEconNotification *pNotification ) { return dynamic_cast<CAutobalanceVolunteerNotification *>( pNotification ) != NULL; }
+	static bool IsNotificationType(CEconNotification *pNotification)
+	{
+		return dynamic_cast<CAutobalanceVolunteerNotification *>(pNotification) != NULL;
+	}
 
 private:
-	void SendResponse( bool bResponse );
+	void SendResponse(bool bResponse);
 };
 
 #endif // C_TF_NOTIFICATIONS_H

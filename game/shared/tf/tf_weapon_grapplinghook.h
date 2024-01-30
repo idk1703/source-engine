@@ -21,7 +21,7 @@
 class CTFGrapplingHook : public CTFRocketLauncher
 {
 public:
-	DECLARE_CLASS( CTFGrapplingHook, CTFRocketLauncher );
+	DECLARE_CLASS(CTFGrapplingHook, CTFRocketLauncher);
 	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
@@ -32,62 +32,80 @@ public:
 
 	CTFGrapplingHook();
 
-	virtual void	Precache() OVERRIDE;
-	virtual CBaseEntity *FireProjectile( CTFPlayer *pPlayer ) OVERRIDE;
-	virtual void	ItemPostFrame( void ) OVERRIDE;
-	virtual bool	CanAttack( void ) OVERRIDE;
-	virtual void	PrimaryAttack( void ) OVERRIDE;
-	virtual bool	Deploy( void ) OVERRIDE;
-	virtual bool	Holster( CBaseCombatWeapon *pSwitchingTo ) OVERRIDE;
-	virtual void	GetProjectileFireSetup( CTFPlayer *pPlayer, Vector vecOffset, Vector *vecSrc, QAngle *angForward, bool bHitTeammates = true, float flEndDist = 2000.f ) OVERRIDE;
+	virtual void Precache() OVERRIDE;
+	virtual CBaseEntity *FireProjectile(CTFPlayer *pPlayer) OVERRIDE;
+	virtual void ItemPostFrame(void) OVERRIDE;
+	virtual bool CanAttack(void) OVERRIDE;
+	virtual void PrimaryAttack(void) OVERRIDE;
+	virtual bool Deploy(void) OVERRIDE;
+	virtual bool Holster(CBaseCombatWeapon *pSwitchingTo) OVERRIDE;
+	virtual void GetProjectileFireSetup(CTFPlayer *pPlayer, Vector vecOffset, Vector *vecSrc, QAngle *angForward,
+										bool bHitTeammates = true, float flEndDist = 2000.f) OVERRIDE;
 
-	virtual int		GetWeaponID( void ) const OVERRIDE { return TF_WEAPON_GRAPPLINGHOOK; }
-	virtual float	GetProjectileSpeed( void ) OVERRIDE;
-	virtual float	GetProjectileGravity( void ) OVERRIDE { return 0.f; }
-	virtual int		GetWeaponProjectileType( void ) const OVERRIDE { return TF_PROJECTILE_GRAPPLINGHOOK; }
-	virtual bool	ShouldRemoveDisguiseOnPrimaryAttack() const OVERRIDE { return false; }
-	virtual bool	ShouldRemoveInvisibilityOnPrimaryAttack() const OVERRIDE { return false; }
-	virtual int		GetCanAttackFlags() const OVERRIDE { return TF_CAN_ATTACK_FLAG_GRAPPLINGHOOK; }
+	virtual int GetWeaponID(void) const OVERRIDE
+	{
+		return TF_WEAPON_GRAPPLINGHOOK;
+	}
+	virtual float GetProjectileSpeed(void) OVERRIDE;
+	virtual float GetProjectileGravity(void) OVERRIDE
+	{
+		return 0.f;
+	}
+	virtual int GetWeaponProjectileType(void) const OVERRIDE
+	{
+		return TF_PROJECTILE_GRAPPLINGHOOK;
+	}
+	virtual bool ShouldRemoveDisguiseOnPrimaryAttack() const OVERRIDE
+	{
+		return false;
+	}
+	virtual bool ShouldRemoveInvisibilityOnPrimaryAttack() const OVERRIDE
+	{
+		return false;
+	}
+	virtual int GetCanAttackFlags() const OVERRIDE
+	{
+		return TF_CAN_ATTACK_FLAG_GRAPPLINGHOOK;
+	}
 
-	virtual bool	SendWeaponAnim( int iActivity );
+	virtual bool SendWeaponAnim(int iActivity);
 
-	virtual void	PlayWeaponShootSound( void ) OVERRIDE;
+	virtual void PlayWeaponShootSound(void) OVERRIDE;
 
 #ifdef CLIENT_DLL
-	virtual void	UpdateOnRemove() OVERRIDE;
-	virtual void	OnDataChanged( DataUpdateType_t type ) OVERRIDE;
+	virtual void UpdateOnRemove() OVERRIDE;
+	virtual void OnDataChanged(DataUpdateType_t type) OVERRIDE;
 #endif // CLIENT_DLL
 
-
 	// acttable override
-	virtual acttable_t *ActivityList( int &iActivityCount ) OVERRIDE;
+	virtual acttable_t *ActivityList(int &iActivityCount) OVERRIDE;
 
 	// poseparam override
-	virtual poseparamtable_t *PoseParamList( int &iPoseParamCount ) OVERRIDE;
+	virtual poseparamtable_t *PoseParamList(int &iPoseParamCount) OVERRIDE;
 
 #ifdef GAME_DLL
-	void			ActivateRune();
+	void ActivateRune();
 #endif // GAME_DLL
 
 private:
 #ifdef GAME_DLL
-	void			RemoveHookProjectile( bool bForce = false );
-	bool			IsLatchedToTargetPlayer() const;
-	bool			m_bReleasedAfterLatched;
+	void RemoveHookProjectile(bool bForce = false);
+	bool IsLatchedToTargetPlayer() const;
+	bool m_bReleasedAfterLatched;
 #endif // GAME_DLL
 
 #ifdef CLIENT_DLL
-	void			StartHookSound();
-	void			StopHookSound();
-	void			UpdateHookSound();
-	CSoundPatch		*m_pHookSound;
-	bool			m_bLatched;
-	float			m_flNextSupernovaDenyWarning;
+	void StartHookSound();
+	void StopHookSound();
+	void UpdateHookSound();
+	CSoundPatch *m_pHookSound;
+	bool m_bLatched;
+	float m_flNextSupernovaDenyWarning;
 #endif // CLIENT_DLL
 
-	void			OnHookReleased( bool bForce );
+	void OnHookReleased(bool bForce);
 
-	CNetworkHandle( CBaseEntity, m_hProjectile );
+	CNetworkHandle(CBaseEntity, m_hProjectile);
 	CountdownTimer m_startFiringTimer;
 	CountdownTimer m_startPullingTimer;
 };
@@ -104,7 +122,7 @@ public:
 
 	~CEquipGrapplingHookNotification()
 	{
-		if ( !m_bHasTriggered )
+		if(!m_bHasTriggered)
 		{
 			m_bHasTriggered = true;
 		}
@@ -116,15 +134,30 @@ public:
 		CEconNotification::MarkForDeletion();
 	}
 
-	virtual bool BShowInGameElements() const { return true; }
-	virtual EType NotificationType() { return eType_AcceptDecline; }
+	virtual bool BShowInGameElements() const
+	{
+		return true;
+	}
+	virtual EType NotificationType()
+	{
+		return eType_AcceptDecline;
+	}
 
 	virtual void Accept();
-	virtual void Trigger() { Accept(); }
-	virtual void Decline() { MarkForDeletion(); }
+	virtual void Trigger()
+	{
+		Accept();
+	}
+	virtual void Decline()
+	{
+		MarkForDeletion();
+	}
 	virtual void UpdateTick();
 
-	static bool IsNotificationType( CEconNotification *pNotification ) { return dynamic_cast< CEquipGrapplingHookNotification *>( pNotification ) != NULL; }
+	static bool IsNotificationType(CEconNotification *pNotification)
+	{
+		return dynamic_cast<CEquipGrapplingHookNotification *>(pNotification) != NULL;
+	}
 
 private:
 	bool m_bHasTriggered;

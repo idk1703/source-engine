@@ -16,9 +16,9 @@
 #include "shaderapi/ishaderapi.h"
 #include "locald3dtypes.h"
 
-
 // uncomment to get dynamic compilation for HLSL shaders
-// X360 NOTE: By default, the system looks for a shared folder named "stdshaders" on the host machine and is completely compatible with -dvd. Ensure that the share is writable if you plan on generating UPDB's.
+// X360 NOTE: By default, the system looks for a shared folder named "stdshaders" on the host machine and is completely
+// compatible with -dvd. Ensure that the share is writable if you plan on generating UPDB's.
 //#define DYNAMIC_SHADER_COMPILE
 
 // Uncomment to use remoteshadercompiler.exe as a shader compile server
@@ -45,7 +45,6 @@
 // uncomment to get disassembled (asm) shader code in your game dir as *.asm
 //#define WRITE_ASSEMBLY
 
-
 enum VertexShaderLightTypes_t
 {
 	LIGHT_NONE = -1,
@@ -62,7 +61,6 @@ enum VertexShaderLightTypes_t
 abstract_class IShaderManager
 {
 protected:
-
 	// The current vertex and pixel shader index
 	int m_nVertexShaderIndex;
 	int m_nPixelShaderIndex;
@@ -73,25 +71,27 @@ public:
 	virtual void Shutdown() = 0;
 
 	// Compiles vertex shaders
-	virtual IShaderBuffer *CompileShader( const char *pProgram, size_t nBufLen, const char *pShaderVersion ) = 0;
+	virtual IShaderBuffer *CompileShader(const char *pProgram, size_t nBufLen, const char *pShaderVersion) = 0;
 
 	// New version of these methods	[dx10 port]
-	virtual VertexShaderHandle_t CreateVertexShader( IShaderBuffer* pShaderBuffer ) = 0;
-	virtual void DestroyVertexShader( VertexShaderHandle_t hShader ) = 0;
-	virtual PixelShaderHandle_t CreatePixelShader( IShaderBuffer* pShaderBuffer ) = 0;
-	virtual void DestroyPixelShader( PixelShaderHandle_t hShader ) = 0;
+	virtual VertexShaderHandle_t CreateVertexShader(IShaderBuffer * pShaderBuffer) = 0;
+	virtual void DestroyVertexShader(VertexShaderHandle_t hShader) = 0;
+	virtual PixelShaderHandle_t CreatePixelShader(IShaderBuffer * pShaderBuffer) = 0;
+	virtual void DestroyPixelShader(PixelShaderHandle_t hShader) = 0;
 
 	// Creates vertex, pixel shaders
-	virtual VertexShader_t CreateVertexShader( const char *pVertexShaderFile, int nStaticVshIndex = 0, char *debugLabel = NULL  ) = 0;
-	virtual PixelShader_t CreatePixelShader( const char *pPixelShaderFile, int nStaticPshIndex = 0, char *debugLabel = NULL ) = 0;
+	virtual VertexShader_t CreateVertexShader(const char *pVertexShaderFile, int nStaticVshIndex = 0,
+											  char *debugLabel = NULL) = 0;
+	virtual PixelShader_t CreatePixelShader(const char *pPixelShaderFile, int nStaticPshIndex = 0,
+											char *debugLabel = NULL) = 0;
 
 	// Sets which dynamic version of the vertex + pixel shader to use
-	FORCEINLINE void SetVertexShaderIndex( int vshIndex );
-	FORCEINLINE void SetPixelShaderIndex( int pshIndex );
+	FORCEINLINE void SetVertexShaderIndex(int vshIndex);
+	FORCEINLINE void SetPixelShaderIndex(int pshIndex);
 
 	// Sets the vertex + pixel shader render state
-	virtual void SetVertexShader( VertexShader_t shader ) = 0;
-	virtual void SetPixelShader( PixelShader_t shader ) = 0;
+	virtual void SetVertexShader(VertexShader_t shader) = 0;
+	virtual void SetPixelShader(PixelShader_t shader) = 0;
 
 	// Resets the vertex + pixel shader state
 	virtual void ResetShaderState() = 0;
@@ -104,15 +104,15 @@ public:
 	virtual void PurgeUnusedVertexAndPixelShaders() = 0;
 
 	// The low-level dx call to set the vertex shader state
-	virtual void BindVertexShader( VertexShaderHandle_t shader ) = 0;
-	virtual void BindPixelShader( PixelShaderHandle_t shader ) = 0;
+	virtual void BindVertexShader(VertexShaderHandle_t shader) = 0;
+	virtual void BindPixelShader(PixelShaderHandle_t shader) = 0;
 
-#if defined( _X360 )
+#if defined(_X360)
 	virtual const char *GetActiveVertexShaderName() = 0;
 	virtual const char *GetActivePixelShaderName() = 0;
 #endif
 
-#if defined( DX_TO_GL_ABSTRACTION )
+#if defined(DX_TO_GL_ABSTRACTION)
 	virtual void DoStartupShaderPreloading() = 0;
 #endif
 };
@@ -122,12 +122,12 @@ public:
 // Methods related to setting vertex + pixel shader state
 //
 //-----------------------------------------------------------------------------
-FORCEINLINE void IShaderManager::SetVertexShaderIndex( int vshIndex )
+FORCEINLINE void IShaderManager::SetVertexShaderIndex(int vshIndex)
 {
 	m_nVertexShaderIndex = vshIndex;
 }
 
-FORCEINLINE void IShaderManager::SetPixelShaderIndex( int pshIndex )
+FORCEINLINE void IShaderManager::SetPixelShaderIndex(int pshIndex)
 {
 	m_nPixelShaderIndex = pshIndex;
 }

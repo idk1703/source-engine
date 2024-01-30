@@ -19,9 +19,12 @@ class CPasstimeBallControllerHoming : public CPasstimeBallController
 public:
 	CPasstimeBallControllerHoming();
 	~CPasstimeBallControllerHoming();
-	void SetTargetSpeed( float f );
-	void SetMaxBounces( int i ) { m_iMaxBounces = i; }
-	void StartHoming( CPasstimeBall *pBall, CTFPlayer *pTarget, bool isCharged );
+	void SetTargetSpeed(float f);
+	void SetMaxBounces(int i)
+	{
+		m_iMaxBounces = i;
+	}
+	void StartHoming(CPasstimeBall *pBall, CTFPlayer *pTarget, bool isCharged);
 
 private:
 	CHandle<CTFPlayer> m_hTarget;
@@ -33,11 +36,11 @@ private:
 
 	void StopHoming();
 	virtual bool IsActive() const OVERRIDE;
-	virtual bool Apply( CPasstimeBall *ball ) OVERRIDE;
-	virtual void OnBallCollision( CPasstimeBall *ball, int index, gamevcollisionevent_t *ev ) OVERRIDE;
-	virtual void OnBallPickedUp( CPasstimeBall *ball, CTFPlayer *catcher ) OVERRIDE;
-	virtual void OnBallDamaged( CPasstimeBall *ball ) OVERRIDE;
-	virtual void OnBallSpawned( CPasstimeBall *ball ) OVERRIDE;
+	virtual bool Apply(CPasstimeBall *ball) OVERRIDE;
+	virtual void OnBallCollision(CPasstimeBall *ball, int index, gamevcollisionevent_t *ev) OVERRIDE;
+	virtual void OnBallPickedUp(CPasstimeBall *ball, CTFPlayer *catcher) OVERRIDE;
+	virtual void OnBallDamaged(CPasstimeBall *ball) OVERRIDE;
+	virtual void OnBallSpawned(CPasstimeBall *ball) OVERRIDE;
 	virtual void OnDisabled() OVERRIDE;
 };
 

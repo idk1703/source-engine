@@ -11,17 +11,17 @@
 #endif
 
 #ifdef GAME_DLL
-	#include "tf_powerup.h"
-	#include "entity_currencypack.h"
+#include "tf_powerup.h"
+#include "entity_currencypack.h"
 #else
-	#include "c_entity_currencypack.h"
+#include "c_entity_currencypack.h"
 #endif
 
 #ifdef CLIENT_DLL
-	#define CBonusPack C_BonusPack
+#define CBonusPack C_BonusPack
 #endif
 
-DECLARE_AUTO_LIST( IBonusPackAutoList );
+DECLARE_AUTO_LIST(IBonusPackAutoList);
 
 class CBonusPack
 #ifdef GAME_DLL
@@ -29,33 +29,36 @@ class CBonusPack
 #else
 	: public C_BaseAnimating
 #endif
-	, public IBonusPackAutoList
+	,
+	  public IBonusPackAutoList
 {
 public:
 	DECLARE_DATADESC();
 #ifdef GAME_DLL
-	DECLARE_CLASS( CBonusPack, CCurrencyPack );
+	DECLARE_CLASS(CBonusPack, CCurrencyPack);
 #else
-	DECLARE_CLASS( CBonusPack, C_BaseAnimating );
+	DECLARE_CLASS(CBonusPack, C_BaseAnimating);
 #endif
 	DECLARE_NETWORKCLASS();
 
 	CBonusPack();
 
-	virtual void	Spawn( void ) OVERRIDE;
-	virtual void	Precache( void ) OVERRIDE;
+	virtual void Spawn(void) OVERRIDE;
+	virtual void Precache(void) OVERRIDE;
 #ifdef GAME_DLL
-	virtual bool	AffectedByRadiusCollection() const OVERRIDE { return false; }
-	virtual bool	MyTouch( CBasePlayer *pPlayer ) OVERRIDE;
-	virtual bool	ValidTouch( CBasePlayer *pPlayer ) OVERRIDE;
+	virtual bool AffectedByRadiusCollection() const OVERRIDE
+	{
+		return false;
+	}
+	virtual bool MyTouch(CBasePlayer *pPlayer) OVERRIDE;
+	virtual bool ValidTouch(CBasePlayer *pPlayer) OVERRIDE;
 
-	virtual const char *GetDefaultPowerupModel( void ) OVERRIDE
+	virtual const char *GetDefaultPowerupModel(void) OVERRIDE
 	{
 		return "models/bots/bot_worker/bot_worker_powercore.mdl";
 	}
 
 private:
-
 	void BlinkThink();
 
 	int m_nBlinkCount;

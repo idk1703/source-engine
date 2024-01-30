@@ -15,29 +15,25 @@
 
 #include "dme_controls/AttributeBasePickerPanel.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
 class CPickerFrame;
-
 
 //-----------------------------------------------------------------------------
 // CAttributeShaderPickerPanel
 //-----------------------------------------------------------------------------
 class CAttributeShaderPickerPanel : public CAttributeBasePickerPanel
 {
-	DECLARE_CLASS_SIMPLE( CAttributeShaderPickerPanel, CAttributeBasePickerPanel );
+	DECLARE_CLASS_SIMPLE(CAttributeShaderPickerPanel, CAttributeBasePickerPanel);
 
 public:
-	CAttributeShaderPickerPanel( vgui::Panel *parent, const AttributeWidgetInfo_t &info );
+	CAttributeShaderPickerPanel(vgui::Panel *parent, const AttributeWidgetInfo_t &info);
 	~CAttributeShaderPickerPanel();
 
 private:
-	MESSAGE_FUNC_PARAMS( OnPicked, "Picked", kv );
+	MESSAGE_FUNC_PARAMS(OnPicked, "Picked", kv);
 	virtual void ShowPickerDialog();
 };
-
-
 
 #endif // ATTRIBUTESHADERPICKERPANEL_H

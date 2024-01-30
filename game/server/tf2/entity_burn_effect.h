@@ -11,31 +11,24 @@
 #pragma once
 #endif
 
-
 #include "baseentity.h"
 #include "server_class.h"
-
 
 class CEntityBurnEffect : public CBaseEntity
 {
 public:
-
-	DECLARE_CLASS( CEntityBurnEffect, CBaseEntity );
+	DECLARE_CLASS(CEntityBurnEffect, CBaseEntity);
 	DECLARE_SERVERCLASS();
 
-	static CEntityBurnEffect* Create( CBaseEntity *pBurningEntity );
+	static CEntityBurnEffect *Create(CBaseEntity *pBurningEntity);
 
-
-// Overrides.
+	// Overrides.
 public:
-
-	virtual	int		UpdateTransmitState();
-	virtual int		ShouldTransmit( const CCheckTransmitInfo *pInfo	);
-
+	virtual int UpdateTransmitState();
+	virtual int ShouldTransmit(const CCheckTransmitInfo *pInfo);
 
 private:
-	CNetworkHandle( CBaseEntity, m_hBurningEntity );
+	CNetworkHandle(CBaseEntity, m_hBurningEntity);
 };
-
 
 #endif // ENTITY_BURN_EFFECT_H

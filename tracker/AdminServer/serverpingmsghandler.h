@@ -30,7 +30,4 @@ private:
 	CServerPing *m_pServerPing;
 };
 
-
-
-
 #endif // SERVERPINGMSGHANDLERDETAILS_H

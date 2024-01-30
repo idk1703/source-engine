@@ -21,11 +21,10 @@
 class CSocket;
 class IResponse;
 
-class CCMDList: public IResponse
+class CCMDList : public IResponse
 {
 public:
-
-	CCMDList(IResponse *target,serveritem_t &server, const char *rconPassword);
+	CCMDList(IResponse *target, serveritem_t &server, const char *rconPassword);
 	~CCMDList();
 
 	serveritem_t &GetServer();
@@ -38,9 +37,7 @@ public:
 	virtual void ServerResponded();
 	virtual void ServerFailedToRespond();
 
-
 private:
-
 	serveritem_t m_Server;
 	CUtlVector<char *> m_CMDList;
 	IResponse *m_pResponseTarget;
@@ -49,8 +46,6 @@ private:
 
 	bool m_bGotCommands;
 	char m_szRconPassword[100];
-
 };
-
 
 #endif // CMDLIST_H

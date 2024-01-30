@@ -8,39 +8,39 @@
 
 */
 
-
 #ifndef __QTLOADLIBRARYUTILS__
 #define __QTLOADLIBRARYUTILS__
 
 #include <windows.h>
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-// QuickTime version of LoadLibrary() which searches QT directories for DLLs.
-extern HINSTANCE QTLoadLibrary(const char *szDLL);
+	// QuickTime version of LoadLibrary() which searches QT directories for DLLs.
+	extern HINSTANCE QTLoadLibrary(const char *szDLL);
 
-// Simple routines to mimic GetSystemDirectory() as much as possible.
-extern UINT GetQTSystemDirectoryA(LPSTR lpBuffer, UINT uSize);
-extern UINT GetQTExtensionDirectoryA(LPSTR lpBuffer, UINT uSize);
-extern UINT GetQTApplicationDirectoryA(LPSTR lpBuffer, UINT uSize);
-extern UINT GetQTComponentDirectoryA(LPSTR lpBuffer, UINT uSize);
+	// Simple routines to mimic GetSystemDirectory() as much as possible.
+	extern UINT GetQTSystemDirectoryA(LPSTR lpBuffer, UINT uSize);
+	extern UINT GetQTExtensionDirectoryA(LPSTR lpBuffer, UINT uSize);
+	extern UINT GetQTApplicationDirectoryA(LPSTR lpBuffer, UINT uSize);
+	extern UINT GetQTComponentDirectoryA(LPSTR lpBuffer, UINT uSize);
 
 // be Unicode compatible in the next release of QuickTime
-#define GetQTSystemDirectory		GetQTSystemDirectoryA
-#define GetQTExtensionDirectory		GetQTExtensionDirectoryA
-#define GetQTApplicationDirectory	GetQTApplicationDirectoryA
-#define GetQTComponentDirectory		GetQTComponentDirectoryA
+#define GetQTSystemDirectory	  GetQTSystemDirectoryA
+#define GetQTExtensionDirectory	  GetQTExtensionDirectoryA
+#define GetQTApplicationDirectory GetQTApplicationDirectoryA
+#define GetQTComponentDirectory	  GetQTComponentDirectoryA
 
 #ifdef __cplusplus
 }
 #endif
 
-#define kQuickTimeKeyName			"Software\\Apple Computer, Inc.\\QuickTime"
-#define kQTAppsDirKeyName			"InstallDir"
-#define kQTSysDirKeyName			"QTSysDir"
-#define kQTExtDirKeyName			"QTExtDir"
-#define kQTComponentDirKeyName		"QTComponentsDir"
+#define kQuickTimeKeyName	   "Software\\Apple Computer, Inc.\\QuickTime"
+#define kQTAppsDirKeyName	   "InstallDir"
+#define kQTSysDirKeyName	   "QTSysDir"
+#define kQTExtDirKeyName	   "QTExtDir"
+#define kQTComponentDirKeyName "QTComponentsDir"
 
 #endif // !__QTLOADLIBRARYUTILS__

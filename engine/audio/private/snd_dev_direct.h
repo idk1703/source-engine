@@ -9,6 +9,6 @@
 #pragma once
 
 class IAudioDevice;
-IAudioDevice *Audio_CreateDirectSoundDevice( void );
+IAudioDevice *Audio_CreateDirectSoundDevice(void);
 
 #endif // SND_DEV_DIRECT_H

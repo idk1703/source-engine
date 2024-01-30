@@ -9,9 +9,8 @@
 #define PORTAL_PLAYER_SHARED_H
 #pragma once
 
-#define PORTAL_PUSHAWAY_THINK_INTERVAL		(1.0f / 20.0f)
+#define PORTAL_PUSHAWAY_THINK_INTERVAL (1.0f / 20.0f)
 #include "studio.h"
-
 
 enum
 {
@@ -28,11 +27,10 @@ enum
 };
 
 extern const char *g_pszChellConcepts[];
-int GetChellConceptIndexFromString( const char *pszConcept );
+int GetChellConceptIndexFromString(const char *pszConcept);
 
-#if defined( CLIENT_DLL )
+#if defined(CLIENT_DLL)
 #define CPortal_Player C_Portal_Player
 #endif
 
-
-#endif //PORTAL_PLAYER_SHARED_h
+#endif // PORTAL_PLAYER_SHARED_h

@@ -23,14 +23,12 @@ class CBaseTechnology;
 //-----------------------------------------------------------------------------
 class C_TFCTeam : public C_Team
 {
-	DECLARE_CLASS( C_TFCTeam, C_Team );
+	DECLARE_CLASS(C_TFCTeam, C_Team);
 	DECLARE_CLIENTCLASS();
 
 public:
-
-					C_TFCTeam();
-	virtual			~C_TFCTeam();
+	C_TFCTeam();
+	virtual ~C_TFCTeam();
 };
-
 
 #endif // C_TFC_TEAM_H

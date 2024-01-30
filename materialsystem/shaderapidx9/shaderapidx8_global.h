@@ -19,7 +19,6 @@
 #include "tier2/tier2.h"
 #include "shaderdevicedx8.h"
 
-
 //-----------------------------------------------------------------------------
 // Use this to fill in structures with the current board state
 //-----------------------------------------------------------------------------
@@ -28,17 +27,15 @@
 #define DEBUG_BOARD_STATE 0
 #endif
 
-#if !defined( _X360 )
+#if !defined(_X360)
 IDirect3DDevice9 *Dx9Device();
 IDirect3D9 *D3D();
 #endif
-
 
 //-----------------------------------------------------------------------------
 // Measures driver allocations
 //-----------------------------------------------------------------------------
 //#define MEASURE_DRIVER_ALLOCATIONS 1
-
 
 //-----------------------------------------------------------------------------
 // Forward declarations
@@ -50,7 +47,6 @@ class IMeshMgr;
 class IShaderAPIDX8;
 class IFileSystem;
 class IShaderManager;
-
 
 //-----------------------------------------------------------------------------
 // A new shader draw flag we need to workaround dx8
@@ -64,7 +60,7 @@ enum
 // The main shader API
 //-----------------------------------------------------------------------------
 extern IShaderAPIDX8 *g_pShaderAPIDX8;
-inline IShaderAPIDX8* ShaderAPI()
+inline IShaderAPIDX8 *ShaderAPI()
 {
 	return g_pShaderAPIDX8;
 }
@@ -72,7 +68,7 @@ inline IShaderAPIDX8* ShaderAPI()
 //-----------------------------------------------------------------------------
 // The shader shadow
 //-----------------------------------------------------------------------------
-IShaderShadowDX8* ShaderShadow();
+IShaderShadowDX8 *ShaderShadow();
 
 //-----------------------------------------------------------------------------
 // Manager of all vertex + pixel shaders
@@ -86,15 +82,14 @@ inline IShaderManager *ShaderManager()
 //-----------------------------------------------------------------------------
 // The mesh manager
 //-----------------------------------------------------------------------------
-IMeshMgr* MeshMgr();
+IMeshMgr *MeshMgr();
 
 //-----------------------------------------------------------------------------
 // The main hardware config interface
 //-----------------------------------------------------------------------------
-inline IMaterialSystemHardwareConfig* HardwareConfig()
+inline IMaterialSystemHardwareConfig *HardwareConfig()
 {
 	return g_pMaterialSystemHardwareConfig;
 }
-
 
 #endif // SHADERAPIDX8_GLOBAL_H

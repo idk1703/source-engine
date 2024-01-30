@@ -20,13 +20,13 @@
  *
  */
 
- /*
-	*   FILE     re_cls.h
-	*   VERSION  2.12
-	*   This is an internal header file, do not include directly.
-	*   character class lookup, for regular
-	*   expression library.
-	*/
+/*
+ *   FILE     re_cls.h
+ *   VERSION  2.12
+ *   This is an internal header file, do not include directly.
+ *   character class lookup, for regular
+ *   expression library.
+ */
 
 #ifndef RE_CLS_H
 #define RE_CLS_H
@@ -46,22 +46,22 @@ JM_NAMESPACE(__JM)
 void RE_CALL re_init_classes();
 void RE_CALL re_free_classes();
 void RE_CALL re_update_classes();
-JM_IX_DECL jm_uintfast32_t RE_CALL __re_lookup_class(const char* p);
+JM_IX_DECL jm_uintfast32_t RE_CALL __re_lookup_class(const char *p);
 
-inline jm_uintfast32_t RE_CALL re_lookup_class(const char* first, const char* last)
+inline jm_uintfast32_t RE_CALL re_lookup_class(const char *first, const char *last)
 {
 	re_str<char> s(first, last);
 	return __re_lookup_class(s.c_str());
 }
 
 #ifndef JM_NO_WCSTRING
-inline jm_uintfast32_t RE_CALL re_lookup_class(const wchar_t* first, const wchar_t* last)
+inline jm_uintfast32_t RE_CALL re_lookup_class(const wchar_t *first, const wchar_t *last)
 {
 	re_str<wchar_t> s(first, last);
-	unsigned int len = re_strnarrow((char*)NULL, 0, s.c_str());
+	unsigned int len = re_strnarrow((char *)NULL, 0, s.c_str());
 	auto_array<char> buf(new char[len]);
-	re_strnarrow((char*)buf, len, s.c_str());
-	len =  __re_lookup_class((char*)buf);
+	re_strnarrow((char *)buf, len, s.c_str());
+	len = __re_lookup_class((char *)buf);
 	return len;
 }
 #endif
@@ -69,7 +69,7 @@ inline jm_uintfast32_t RE_CALL re_lookup_class(const wchar_t* first, const wchar
 #ifdef RE_LOCALE_CPP
 
 extern jm_uintfast32_t re_char_class_id[];
-extern const char* re_char_class_names[];
+extern const char *re_char_class_names[];
 
 #endif
 

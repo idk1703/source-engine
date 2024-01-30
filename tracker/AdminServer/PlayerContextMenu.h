@@ -24,9 +24,9 @@ public:
 
 	// call this to activate the menu
 	void ShowMenu(vgui::Panel *target, unsigned int serverID);
+
 private:
 	vgui::Panel *parent; // so we can send it messages
 };
-
 
 #endif // PLAYERCONTEXTMENU_H

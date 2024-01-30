@@ -28,9 +28,10 @@ class COptionsSubMultiplayer;
 
 class CrosshairImagePanelBase : public vgui::ImagePanel
 {
-	DECLARE_CLASS_SIMPLE( CrosshairImagePanelBase, vgui::ImagePanel );
+	DECLARE_CLASS_SIMPLE(CrosshairImagePanelBase, vgui::ImagePanel);
+
 public:
-	CrosshairImagePanelBase( Panel *parent, const char *name ) : BaseClass(parent, name) {}
+	CrosshairImagePanelBase(Panel *parent, const char *name) : BaseClass(parent, name) {}
 	virtual void ResetData() {}
 	virtual void ApplyChanges() {}
 	virtual void UpdateVisibility() {}
@@ -41,7 +42,7 @@ public:
 //-----------------------------------------------------------------------------
 class COptionsSubMultiplayer : public vgui::PropertyPage
 {
-	DECLARE_CLASS_SIMPLE( COptionsSubMultiplayer, vgui::PropertyPage );
+	DECLARE_CLASS_SIMPLE(COptionsSubMultiplayer, vgui::PropertyPage);
 
 public:
 	COptionsSubMultiplayer(vgui::Panel *parent);
@@ -49,7 +50,7 @@ public:
 
 	virtual vgui::Panel *CreateControlByName(const char *controlName);
 
-	MESSAGE_FUNC( OnControlModified, "ControlModified" );
+	MESSAGE_FUNC(OnControlModified, "ControlModified");
 
 protected:
 	// Called when page is loaded.  Data should be reloaded from document into controls.
@@ -57,7 +58,7 @@ protected:
 	// Called when the OK / Apply button is pressed.  Changed data should be written into document.
 	virtual void OnApplyChanges();
 
-	virtual void OnCommand( const char *command );
+	virtual void OnCommand(const char *command);
 
 private:
 	void InitModelList(CLabeledCommandComboBox *cb);
@@ -66,10 +67,10 @@ private:
 	void RemapModel();
 	void RemapLogo();
 
-	void ConversionError( ConversionErrorType nError );
+	void ConversionError(ConversionErrorType nError);
 
-	MESSAGE_FUNC_PTR( OnTextChanged, "TextChanged", panel );
-	MESSAGE_FUNC_CHARPTR( OnFileSelected, "FileSelected", fullpath );
+	MESSAGE_FUNC_PTR(OnTextChanged, "TextChanged", panel);
+	MESSAGE_FUNC_CHARPTR(OnFileSelected, "FileSelected", fullpath);
 
 	void ColorForName(char const *pszColorName, int &r, int &g, int &b);
 
@@ -86,23 +87,23 @@ private:
 	CCvarToggleCheckButton *m_pHighQualityModelCheckBox;
 
 	// Mod specific general checkboxes
-	vgui::Dar< CCvarToggleCheckButton * > m_cvarToggleCheckButtons;
+	vgui::Dar<CCvarToggleCheckButton *> m_cvarToggleCheckButtons;
 
 	CCvarToggleCheckButton *m_pLockRadarRotationCheckbox;
 
 	CrosshairImagePanelBase *m_pCrosshairImage;
 
 	// --- client download filter
-	vgui::ComboBox	*m_pDownloadFilterCombo;
+	vgui::ComboBox *m_pDownloadFilterCombo;
 
 	// Begin Spray Import Functions
 	ConversionErrorType WriteSprayVMT(const char *vtfPath);
 	void SelectLogo(const char *logoName);
 	// End Spray Import Functions
 
-	int	m_nLogoR;
-	int	m_nLogoG;
-	int	m_nLogoB;
+	int m_nLogoR;
+	int m_nLogoG;
+	int m_nLogoB;
 
 #ifndef _XBOX
 	vgui::DHANDLE<CMultiplayerAdvancedDialog> m_hMultiplayerAdvancedDialog;

@@ -10,40 +10,41 @@
 #pragma once
 #endif // _MSC_VER >= 1000
 
-
 /////////////////////////////////////////////////////////////////////////////
 // COPTBuild dialog
 
 class COPTBuild : public CPropertyPage
 {
-// Construction
+	// Construction
 public:
-	COPTBuild();   // standard constructor
+	COPTBuild(); // standard constructor
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(COPTBuild)
-	enum { IDD = IDD_OPTIONS_BUILD };
-	CEdit	m_cBSPDir;
-	CEdit	m_cVIS;
-	CEdit	m_cLIGHT;
-	CEdit	m_cGame;
-	CEdit	m_cBSP;
-	CComboBox	m_cConfigs;
+	enum
+	{
+		IDD = IDD_OPTIONS_BUILD
+	};
+	CEdit m_cBSPDir;
+	CEdit m_cVIS;
+	CEdit m_cLIGHT;
+	CEdit m_cGame;
+	CEdit m_cBSP;
+	CComboBox m_cConfigs;
 	//}}AFX_DATA
 
-
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(COPTBuild)
-	public:
+public:
 	virtual BOOL OnApply();
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
 
-// Implementation
 protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
+													 //}}AFX_VIRTUAL
 
+	// Implementation
+protected:
 	// Generated message map functions
 	//{{AFX_MSG(COPTBuild)
 	afx_msg void OnBrowseBsp();

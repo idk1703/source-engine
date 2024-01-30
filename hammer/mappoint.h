@@ -15,27 +15,22 @@
 #define MAPPOINT_H
 #pragma once
 
-
 #include "MapAtom.h"
-
 
 class CMapPoint : public CMapAtom
 {
 	typedef CMapAtom BaseClass;
 
-	public:
+public:
+	CMapPoint(void);
 
-		CMapPoint(void);
+	virtual void GetOrigin(Vector &pfOrigin);
+	virtual void SetOrigin(Vector &pfOrigin);
 
-		virtual void GetOrigin(Vector& pfOrigin);
-		virtual void SetOrigin(Vector& pfOrigin);
+protected:
+	void DoTransform(const VMatrix &matrix);
 
-	protected:
-
-		void DoTransform(const VMatrix &matrix);
-
-		Vector m_Origin;
+	Vector m_Origin;
 };
-
 
 #endif // MAPPOINT_H

@@ -14,12 +14,9 @@
 #ifndef INCLUDED_MXBMP
 #define INCLUDED_MXBMP
 
-
-
 #ifndef INCLUDED_MXIMAGE
 #include "mxtk/mxImage.h"
 #endif
-
 
 #ifdef WIN32
 #include <pshpack2.h>
@@ -61,19 +58,16 @@ typedef struct
 #include <poppack.h>
 #endif
 
-
-
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-mxImage *mxBmpRead (const char *filename);
-bool mxBmpWrite (const char *filename, mxImage *image);
+	mxImage *mxBmpRead(const char *filename);
+	bool mxBmpWrite(const char *filename, mxImage *image);
 
 #ifdef __cplusplus
 }
 #endif
-
-
 
 #endif // INCLUDED_MXBMP

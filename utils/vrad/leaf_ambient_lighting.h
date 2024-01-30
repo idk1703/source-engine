@@ -10,8 +10,6 @@
 #pragma once
 #endif
 
-
 void ComputePerLeafAmbientLighting();
-
 
 #endif // LEAF_AMBIENT_LIGHTING_H

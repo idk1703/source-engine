@@ -23,7 +23,8 @@
 //-----------------------------------------------------------------------------
 class CChatPanel : public vgui::PropertyPage
 {
-	DECLARE_CLASS_SIMPLE( CChatPanel, vgui::PropertyPage );
+	DECLARE_CLASS_SIMPLE(CChatPanel, vgui::PropertyPage);
+
 public:
 	CChatPanel(vgui::Panel *parent, const char *name);
 	~CChatPanel();
@@ -34,7 +35,7 @@ public:
 	void DoInsertString(const char *str);
 
 private:
-	MESSAGE_FUNC( OnSendChat, "SendChat" );
+	MESSAGE_FUNC(OnSendChat, "SendChat");
 
 	vgui::RichText *m_pServerChatPanel;
 	vgui::TextEntry *m_pEnterChatPanel;

@@ -14,17 +14,11 @@
 #ifndef INCLUDED_MXRADIOBUTTON
 #define INCLUDED_MXRADIOBUTTON
 
-
-
 #ifndef INCLUDED_MXWIDGET
 #include "mxtk/mxWidget.h"
 #endif
 
-
-
 class mxWindow;
-
-
 
 class mxRadioButton_i;
 class mxRadioButton : public mxWidget
@@ -33,21 +27,19 @@ class mxRadioButton : public mxWidget
 
 public:
 	// CREATORS
-	mxRadioButton (mxWindow *parent, int x, int y, int w, int h, const char *label = 0, int id = 0, bool newGroup = 0);
-	virtual ~mxRadioButton ();
+	mxRadioButton(mxWindow *parent, int x, int y, int w, int h, const char *label = 0, int id = 0, bool newGroup = 0);
+	virtual ~mxRadioButton();
 
 	// MANIPULATORS
-	void setChecked (bool b);
+	void setChecked(bool b);
 
 	// ACCESSORS
-	bool isChecked () const;
+	bool isChecked() const;
 
 private:
 	// NOT IMPLEMENTED
-	mxRadioButton (const mxRadioButton&);
-	mxRadioButton& operator= (const mxRadioButton&);
+	mxRadioButton(const mxRadioButton &);
+	mxRadioButton &operator=(const mxRadioButton &);
 };
-
-
 
 #endif // INCLUDED_MXRADIOBUTTON

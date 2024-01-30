@@ -28,7 +28,7 @@ namespace vgui
 	class ListPanel;
 	class CheckButton;
 	class RadioButton;
-}
+} // namespace vgui
 
 #define MAX_GAME_EVENT_PARAMS 20
 
@@ -39,19 +39,19 @@ extern IGameEventManager2 *gameeventmanager;
 //-----------------------------------------------------------------------------
 class CGameEventEditPanel : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CGameEventEditPanel, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CGameEventEditPanel, vgui::EditablePanel);
 
 public:
-	CGameEventEditPanel( CGameEventEditDoc *pDoc, vgui::Panel* pParent );   // standard constructor
+	CGameEventEditPanel(CGameEventEditDoc *pDoc, vgui::Panel *pParent); // standard constructor
 	~CGameEventEditPanel();
 
 	// Inherited from Panel
-	virtual void OnCommand( const char *pCommand );
+	virtual void OnCommand(const char *pCommand);
 
 private:
 	// Text to attribute...
-	//void TextEntryToAttribute( vgui::TextEntry *pEntry, const char *pAttributeName );
-	//void TextEntriesToVector( vgui::TextEntry *pEntry[3], const char *pAttributeName );
+	// void TextEntryToAttribute( vgui::TextEntry *pEntry, const char *pAttributeName );
+	// void TextEntriesToVector( vgui::TextEntry *pEntry[3], const char *pAttributeName );
 
 	// Messages handled
 	/*
@@ -61,11 +61,11 @@ private:
 	MESSAGE_FUNC_PARAMS( OnFileSelected, "FileSelected", kv );
 	MESSAGE_FUNC_PARAMS( OnSoundRecorded, "SoundRecorded", kv );*/
 
-	//MESSAGE_FUNC( OnEventSend, "SendEvent" );
+	// MESSAGE_FUNC( OnEventSend, "SendEvent" );
 
-	MESSAGE_FUNC_PARAMS( OnTextChanged, "TextChanged", kv );
+	MESSAGE_FUNC_PARAMS(OnTextChanged, "TextChanged", kv);
 
-	void LoadEventsFromFile( const char *filename );
+	void LoadEventsFromFile(const char *filename);
 
 	CGameEventEditDoc *m_pDoc;
 
@@ -78,13 +78,12 @@ private:
 
 	vgui::Button *m_pSendEventButton;
 
-	CUtlSymbolTable	m_EventFiles;	// list of all loaded event files
-	CUtlVector<CUtlSymbol>	m_EventFileNames;
+	CUtlSymbolTable m_EventFiles; // list of all loaded event files
+	CUtlVector<CUtlSymbol> m_EventFileNames;
 
 	KeyValues *m_pEvents;
 
 	vgui::TextEntry *m_pFilterBox;
 };
-
 
 #endif // GAMEEVENTEDITPANEL_H

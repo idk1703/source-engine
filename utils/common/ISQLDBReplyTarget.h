@@ -22,8 +22,6 @@ public:
 
 	// called from a seperate thread; tells the reply target that a message is waiting for it
 	virtual void WakeUp() = 0;
-
 };
-
 
 #endif // ISQLDLREPLYTARGET_H

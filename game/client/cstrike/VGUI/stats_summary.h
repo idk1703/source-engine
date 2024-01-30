@@ -30,16 +30,16 @@ class CCSBaseAchievement;
 
 class CStatsSummary : public vgui::PropertyPage, public CGameEventListener
 {
-	DECLARE_CLASS_SIMPLE ( CStatsSummary, vgui::PropertyPage );
+	DECLARE_CLASS_SIMPLE(CStatsSummary, vgui::PropertyPage);
 
 public:
-	CStatsSummary( vgui::Panel *parent, const char *name );
+	CStatsSummary(vgui::Panel *parent, const char *name);
 	~CStatsSummary();
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void ApplySettings( KeyValues *pResourceData );
-	virtual void OnSizeChanged( int newWide, int newTall );
-	virtual void FireGameEvent( IGameEvent *event );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void ApplySettings(KeyValues *pResourceData);
+	virtual void OnSizeChanged(int newWide, int newTall);
+	virtual void FireGameEvent(IGameEvent *event);
 
 	virtual void OnThink();
 	virtual void OnPageShow();
@@ -55,29 +55,29 @@ public:
 	void UpdateLastMatchFavoriteWeaponStats();
 
 private:
-
-	static int AchivementDateSortPredicate( CCSBaseAchievement* const* pLeft, CCSBaseAchievement* const* pRight);
-	void DisplayCompressedLocalizedStat(CSStatType_t stat, const char* dialogVariable, const char* localizationToken = NULL);
-	void DisplayFormattedLabel(const char* localizationToken, const wchar_t* valueText, const char* dialogVariable);
+	static int AchivementDateSortPredicate(CCSBaseAchievement *const *pLeft, CCSBaseAchievement *const *pRight);
+	void DisplayCompressedLocalizedStat(CSStatType_t stat, const char *dialogVariable,
+										const char *localizationToken = NULL);
+	void DisplayFormattedLabel(const char *localizationToken, const wchar_t *valueText, const char *dialogVariable);
 
 	int m_iFixedWidth;
 	int m_iDefaultWeaponImage;
 	int m_iDefaultMapImage;
 
-	vgui::Label*		m_pLabelRoundsPlayed;
-	vgui::Label*		m_pLabelRoundsWon;
-	vgui::ImagePanel*	m_pImagePanelFavWeapon;
-	vgui::ImagePanel*	m_pImagePanelLastMapFavWeapon;
-	vgui::ImagePanel*	m_pImagePanelFavMap;
+	vgui::Label *m_pLabelRoundsPlayed;
+	vgui::Label *m_pLabelRoundsWon;
+	vgui::ImagePanel *m_pImagePanelFavWeapon;
+	vgui::ImagePanel *m_pImagePanelLastMapFavWeapon;
+	vgui::ImagePanel *m_pImagePanelFavMap;
 
-	vgui::ImageList		*m_pImageList;
+	vgui::ImageList *m_pImageList;
 
-	vgui::PanelListPanel	*m_pRecentAchievementsList;
+	vgui::PanelListPanel *m_pRecentAchievementsList;
 
-	StatCard*			m_pStatCard;
+	StatCard *m_pStatCard;
 
-	bool				m_bRecentAchievementsDirty;
-	bool				m_bStatsDirty;
+	bool m_bRecentAchievementsDirty;
+	bool m_bStatsDirty;
 
 	CUtlMap<CSStatType_t, int> m_StatImageMap;
 };

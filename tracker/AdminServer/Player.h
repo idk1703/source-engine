@@ -29,5 +29,4 @@ typedef struct
 	char addr[4];
 } Players_t;
 
-
 #endif // PLAYER_H

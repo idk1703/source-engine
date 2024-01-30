@@ -10,24 +10,20 @@
 #pragma once
 #endif
 
-
 #include "weapon_csbase.h"
 
-
 // This is the base class for pistols and rifles.
-#if defined( CLIENT_DLL )
+#if defined(CLIENT_DLL)
 
-	#define CWeaponCSBaseGun C_WeaponCSBaseGun
+#define CWeaponCSBaseGun C_WeaponCSBaseGun
 
 #else
 #endif
 
-
 class CWeaponCSBaseGun : public CWeaponCSBase
 {
 public:
-
-	DECLARE_CLASS( CWeaponCSBaseGun, CWeaponCSBase );
+	DECLARE_CLASS(CWeaponCSBaseGun, CWeaponCSBase);
 	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
@@ -40,7 +36,7 @@ public:
 	virtual void WeaponIdle();
 
 	// Derived classes call this to fire a bullet.
-	bool CSBaseGunFire( float flCycleTime, CSWeaponMode weaponMode );
+	bool CSBaseGunFire(float flCycleTime, CSWeaponMode weaponMode);
 
 	// Usually plays the shot sound. Guns with silencers can play different sounds.
 	virtual void DoFireEffects();
@@ -50,9 +46,7 @@ protected:
 	float m_zoomFullyActiveTime;
 
 private:
-
-	CWeaponCSBaseGun( const CWeaponCSBaseGun & );
+	CWeaponCSBaseGun(const CWeaponCSBaseGun &);
 };
-
 
 #endif // WEAPON_CSBASE_GUN_H

@@ -22,14 +22,17 @@ class CServerRecordingSessionBlockManager : public CBaseRecordingSessionBlockMan
 	typedef CBaseRecordingSessionBlockManager BaseClass;
 
 public:
-	CServerRecordingSessionBlockManager( IReplayContext *pContext );
+	CServerRecordingSessionBlockManager(IReplayContext *pContext);
 
-	virtual CBaseRecordingSessionBlock	*Create();
-	virtual IReplayContext				*GetReplayContext() const;
+	virtual CBaseRecordingSessionBlock *Create();
+	virtual IReplayContext *GetReplayContext() const;
 
 private:
-	virtual bool						ShouldLoadBlocks() const	{ return false; }
-	virtual void						PreLoad();
+	virtual bool ShouldLoadBlocks() const
+	{
+		return false;
+	}
+	virtual void PreLoad();
 };
 
 //----------------------------------------------------------------------------------------

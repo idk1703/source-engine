@@ -15,19 +15,18 @@
 // ------------------------------------------------------------------------ //
 class CObjectSandbagBunker : public CBaseObject
 {
-	DECLARE_CLASS( CObjectSandbagBunker, CBaseObject );
+	DECLARE_CLASS(CObjectSandbagBunker, CBaseObject);
 
 public:
 	DECLARE_SERVERCLASS();
 
-	CObjectSandbagBunker( void );
+	CObjectSandbagBunker(void);
 
-	virtual void	Spawn( void );
-	virtual void	Precache( void );
-	virtual void	GetControlPanelInfo( int nPanelIndex, const char *&pPanelName );
+	virtual void Spawn(void);
+	virtual void Precache(void);
+	virtual void GetControlPanelInfo(int nPanelIndex, const char *&pPanelName);
 
 private:
 };
-
 
 #endif // TF_OBJ_TOWER_H

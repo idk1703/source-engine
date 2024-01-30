@@ -13,11 +13,11 @@
 
 class CProcessWnd : public CWnd
 {
-// Construction
+	// Construction
 public:
 	CProcessWnd();
 
-// Attributes
+	// Attributes
 public:
 	// pipes:
 	char *pEditBuf;
@@ -26,7 +26,7 @@ public:
 	CEdit Edit;
 	CFont Font;
 
-// Operations
+	// Operations
 public:
 	int Execute(LPCTSTR pszCmd, LPCTSTR pszCmdLine);
 	int Execute(PRINTF_FORMAT_STRING LPCTSTR pszCmd, ...);
@@ -35,19 +35,18 @@ public:
 	void Append(CString str);
 	void GetReady();
 
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CProcessWnd)
 	//}}AFX_VIRTUAL
 
-// Implementation
+	// Implementation
 public:
 	virtual ~CProcessWnd();
 
 	// Generated message map functions
 protected:
-
-	BOOL PreTranslateMessage(MSG* pMsg);
+	BOOL PreTranslateMessage(MSG *pMsg);
 
 	CString m_EditText;
 	CButton m_btnCopyAll;

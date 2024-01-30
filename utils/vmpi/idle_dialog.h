@@ -11,9 +11,7 @@
 #pragma once
 #endif
 
-
 #include "win_idle.h"
-
 
 //
 // This is a base class that provides in-thread idle processing.
@@ -28,14 +26,12 @@
 class CIdleDialog : public CDialog
 {
 public:
-
-					CIdleDialog( int id, CWnd *pParent );
+	CIdleDialog(int id, CWnd *pParent);
 
 	// Call this to start the idle processing.
-	void			StartIdleProcessing( DWORD msInterval );
+	void StartIdleProcessing(DWORD msInterval);
 
-	virtual void	OnIdle() = 0;
-
+	virtual void OnIdle() = 0;
 
 private:
 	DECLARE_MESSAGE_MAP()
@@ -43,6 +39,5 @@ private:
 
 	CWinIdle m_cWinIdle;
 };
-
 
 #endif // IDLE_DIALOG_H

@@ -16,32 +16,28 @@
 #include "dme_controls/AttributeBasePickerPanel.h"
 #include "matsys_controls/Picker.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
 class CPickerFrame;
-
 
 //-----------------------------------------------------------------------------
 // CAttributeDetailTypePickerPanel
 //-----------------------------------------------------------------------------
 class CAttributeDetailTypePickerPanel : public CAttributeBasePickerPanel
 {
-	DECLARE_CLASS_SIMPLE( CAttributeDetailTypePickerPanel, CAttributeBasePickerPanel );
+	DECLARE_CLASS_SIMPLE(CAttributeDetailTypePickerPanel, CAttributeBasePickerPanel);
 
 public:
-	CAttributeDetailTypePickerPanel( vgui::Panel *parent, const AttributeWidgetInfo_t &info );
+	CAttributeDetailTypePickerPanel(vgui::Panel *parent, const AttributeWidgetInfo_t &info);
 	~CAttributeDetailTypePickerPanel();
 
 private:
 	// Reads the detail types
-	void AddDetailTypesToList( PickerList_t &list );
+	void AddDetailTypesToList(PickerList_t &list);
 
-	MESSAGE_FUNC_PARAMS( OnPicked, "Picked", kv );
+	MESSAGE_FUNC_PARAMS(OnPicked, "Picked", kv);
 	virtual void ShowPickerDialog();
 };
-
-
 
 #endif // ATTRIBUTEDETAILTYPEPICKERPANEL_H

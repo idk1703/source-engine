@@ -13,7 +13,6 @@
 
 #include "tier0/platform.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
@@ -28,8 +27,7 @@ namespace vgui
 {
 	class EditablePanel;
 	class Panel;
-}
-
+} // namespace vgui
 
 //-----------------------------------------------------------------------------
 // Info about the attribute being edited, and how the editor should look
@@ -52,16 +50,14 @@ struct AttributeWidgetInfo_t
 	bool m_bShowMemoryUsage;
 };
 
-
 //-----------------------------------------------------------------------------
 // Interface used to create an attribute widget
 //-----------------------------------------------------------------------------
 class IAttributeWidgetFactory
 {
 public:
-	virtual vgui::Panel *Create( vgui::Panel *pParent, const AttributeWidgetInfo_t &info ) = 0;
+	virtual vgui::Panel *Create(vgui::Panel *pParent, const AttributeWidgetInfo_t &info) = 0;
 };
-
 
 //-----------------------------------------------------------------------------
 // Templatized class used to create widget factories
@@ -70,22 +66,23 @@ class IAttributeWidgetFactoryList
 {
 public:
 	// Returns a named widget factory
-	virtual IAttributeWidgetFactory *GetWidgetFactory( const char *pWidgetName ) = 0;
+	virtual IAttributeWidgetFactory *GetWidgetFactory(const char *pWidgetName) = 0;
 
 	// Returns a factory used to create widget for the attribute passed in
-	virtual IAttributeWidgetFactory *GetWidgetFactory( CDmElement *object, CDmAttribute *pAttribute, CDmeEditorTypeDictionary *pTypeDictionary	) = 0;
+	virtual IAttributeWidgetFactory *GetWidgetFactory(CDmElement *object, CDmAttribute *pAttribute,
+													  CDmeEditorTypeDictionary *pTypeDictionary) = 0;
 
 	// Returns a factory used to create widgets for entries in an attribute array
-	virtual IAttributeWidgetFactory *GetArrayWidgetFactory( CDmElement *object, CDmAttribute *pAttribute, CDmeEditorTypeDictionary *pTypeDictionary ) = 0;
+	virtual IAttributeWidgetFactory *GetArrayWidgetFactory(CDmElement *object, CDmAttribute *pAttribute,
+														   CDmeEditorTypeDictionary *pTypeDictionary) = 0;
 
 	// Applies changes to a widget
-	virtual void ApplyChanges( vgui::Panel *pWidget, vgui::Panel *pSender = NULL ) = 0;
+	virtual void ApplyChanges(vgui::Panel *pWidget, vgui::Panel *pSender = NULL) = 0;
 
 	// Refreshes a widget when attributes change
-	virtual void Refresh( vgui::Panel *pWidget, vgui::Panel *pSender = NULL ) = 0;
+	virtual void Refresh(vgui::Panel *pWidget, vgui::Panel *pSender = NULL) = 0;
 };
 
 extern IAttributeWidgetFactoryList *attributewidgetfactorylist;
-
 
 #endif // ATTRIBUTEWIDGETFACTORY_H

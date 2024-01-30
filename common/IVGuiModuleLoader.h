@@ -29,5 +29,4 @@ public:
 
 #define VGUIMODULELOADER_INTERFACE_VERSION "VGuiModuleLoader003"
 
-
 #endif // IVGUIMODULELOADER_H

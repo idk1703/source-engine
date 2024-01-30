@@ -16,14 +16,14 @@
 #include "materialsystem/MaterialSystemUtil.h"
 #endif
 
-#if defined( CLIENT_DLL )
-	#define CWeaponIFMBaseCamera C_WeaponIFMBaseCamera
+#if defined(CLIENT_DLL)
+#define CWeaponIFMBaseCamera C_WeaponIFMBaseCamera
 #endif
 
 class CWeaponIFMBaseCamera : public CWeaponIFMBase
 {
 public:
-	DECLARE_CLASS( CWeaponIFMBaseCamera, CWeaponIFMBase );
+	DECLARE_CLASS(CWeaponIFMBaseCamera, CWeaponIFMBase);
 	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
@@ -38,20 +38,20 @@ public:
 #ifdef CLIENT_DLL
 	// Client code
 public:
-	virtual void	ViewModelDrawn( CBaseViewModel *pBaseViewModel );
-	virtual void	DrawCrosshair( );
-	virtual int		DrawModel( int flags );
-	virtual void	OnDataChanged( DataUpdateType_t updateType );
+	virtual void ViewModelDrawn(CBaseViewModel *pBaseViewModel);
+	virtual void DrawCrosshair();
+	virtual int DrawModel(int flags);
+	virtual void OnDataChanged(DataUpdateType_t updateType);
 
 protected:
 	// Gets the abs orientation of the camera
-	virtual void ComputeAbsCameraTransform( Vector &vecAbsOrigin, QAngle &angAbsRotation );
+	virtual void ComputeAbsCameraTransform(Vector &vecAbsOrigin, QAngle &angAbsRotation);
 
 	// Gets the bounds of the overlay to draw
-	void GetOverlayBounds( int &x, int &y, int &w, int &h );
+	void GetOverlayBounds(int &x, int &y, int &w, int &h);
 
 	// Gets the size of the overlay to draw
-	void GetViewportSize( int &w, int &h );
+	void GetViewportSize(int &w, int &h);
 
 	void TransmitRenderInfo();
 
@@ -69,18 +69,18 @@ protected:
 #ifdef GAME_DLL
 	// Server code
 public:
-	void SetRenderInfo( float flAspectRatio, float flFOV, float flArmLength, const Vector &vecPosition, const QAngle &angles );
+	void SetRenderInfo(float flAspectRatio, float flFOV, float flArmLength, const Vector &vecPosition,
+					   const QAngle &angles);
 #endif
 
 private:
-	CNetworkVar( float, m_flRenderAspectRatio );
-	CNetworkVar( float, m_flRenderFOV );
-	CNetworkVar( float, m_flRenderArmLength );
-	CNetworkVector( m_vecRenderPosition );
-	CNetworkQAngle( m_angRenderAngles );
+	CNetworkVar(float, m_flRenderAspectRatio);
+	CNetworkVar(float, m_flRenderFOV);
+	CNetworkVar(float, m_flRenderArmLength);
+	CNetworkVector(m_vecRenderPosition);
+	CNetworkQAngle(m_angRenderAngles);
 
-	CWeaponIFMBaseCamera( const CWeaponIFMBaseCamera & );
+	CWeaponIFMBaseCamera(const CWeaponIFMBaseCamera &);
 };
-
 
 #endif // WEAPON_IFMBASECAMERA_H

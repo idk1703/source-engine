@@ -51,7 +51,6 @@ enum
 	// 226		ClipPlane0				|------ OpenGL will jam clip planes into these two
 	// 227		ClipPlane1				|
 
-
 	VERTEX_SHADER_FLEX_WEIGHTS = 1024,
 	VERTEX_SHADER_MAX_FLEX_WEIGHT_COUNT = 512,
 };
@@ -65,7 +64,6 @@ class IShaderDynamicAPI;
 class IShaderInit;
 class CBasePerMaterialContextData;
 
-
 //-----------------------------------------------------------------------------
 // Shader flags
 //-----------------------------------------------------------------------------
@@ -74,7 +72,6 @@ enum ShaderFlags_t
 	SHADER_NOT_EDITABLE = 0x1
 };
 
-
 //-----------------------------------------------------------------------------
 // Shader parameter flags
 //-----------------------------------------------------------------------------
@@ -82,8 +79,6 @@ enum ShaderParamFlags_t
 {
 	SHADER_PARAM_NOT_EDITABLE = 0x1
 };
-
-
 
 //-----------------------------------------------------------------------------
 // Standard vertex shader constants
@@ -104,7 +99,6 @@ enum
 	VERTEX_SHADER_SHADER_SPECIFIC_BOOL_CONST_7 = 11,
 };
 
-
 //-----------------------------------------------------------------------------
 // Shader dictionaries defined in DLLs
 //-----------------------------------------------------------------------------
@@ -116,7 +110,6 @@ enum PrecompiledShaderType_t
 	PRECOMPILED_SHADER_TYPE_COUNT,
 };
 
-
 //-----------------------------------------------------------------------------
 // Flags field of PrecompiledShader_t
 //-----------------------------------------------------------------------------
@@ -126,6 +119,5 @@ enum
 	SHADER_IS_ASM = 0x1,
 	SHADER_FAILED_LOAD = 0x2,
 };
-
 
 #endif

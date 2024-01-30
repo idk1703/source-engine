@@ -26,9 +26,9 @@ typedef unsigned char byte;
 //
 extern bool con_initialized;
 
-void Con_Init (void);
-void Con_Shutdown (void);   // Free overlay line buffer.
-void Con_ClearNotify (void);
+void Con_Init(void);
+void Con_Shutdown(void); // Free overlay line buffer.
+void Con_ClearNotify(void);
 
 bool Con_IsVisible();
 
@@ -38,9 +38,8 @@ in as an empty TEXT_BUFFER CUtlBuffer.
 Returns true if the log file is successfully read.
 */
 class CUtlBuffer;
-bool GetConsoleLogFileData( CUtlBuffer& buf );
+bool GetConsoleLogFileData(CUtlBuffer &buf);
 
-vgui::Panel* Con_GetConsolePanel();
+vgui::Panel *Con_GetConsolePanel();
 
-
-#endif			// CONSOLE_H
+#endif // CONSOLE_H

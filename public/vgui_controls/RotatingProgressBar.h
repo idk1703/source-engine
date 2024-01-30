@@ -24,7 +24,7 @@ namespace vgui
 	//-----------------------------------------------------------------------------
 	class RotatingProgressBar : public ProgressBar
 	{
-		DECLARE_CLASS_SIMPLE( RotatingProgressBar, ProgressBar );
+		DECLARE_CLASS_SIMPLE(RotatingProgressBar, ProgressBar);
 
 	public:
 		RotatingProgressBar(Panel *parent, const char *panelName);
@@ -33,7 +33,7 @@ namespace vgui
 		virtual void ApplySettings(KeyValues *inResourceData);
 		virtual void ApplySchemeSettings(IScheme *pScheme);
 
-		void SetImage( const char *imageName );
+		void SetImage(const char *imageName);
 
 	protected:
 		virtual void Paint();
@@ -59,7 +59,6 @@ namespace vgui
 		float m_flRotatingY;
 		float m_flRotatingWide;
 		float m_flRotatingTall;
-
 	};
 
 } // namespace vgui

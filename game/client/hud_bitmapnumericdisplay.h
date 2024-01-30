@@ -14,7 +14,7 @@
 
 class CHudBitmapNumericDisplay : public vgui::Panel
 {
-	DECLARE_CLASS_SIMPLE( CHudBitmapNumericDisplay, vgui::Panel );
+	DECLARE_CLASS_SIMPLE(CHudBitmapNumericDisplay, vgui::Panel);
 
 public:
 	CHudBitmapNumericDisplay(vgui::Panel *parent, const char *name);
@@ -24,7 +24,7 @@ public:
 
 protected:
 	// vgui overrides
-	virtual void PaintBackground( void );
+	virtual void PaintBackground(void);
 	virtual void Paint();
 	void PaintNumbers(int xpos, int ypos, int value, Color col, int numSigDigits);
 	virtual void PaintNumbers(int xpos, int ypos, int value, Color col)
@@ -32,20 +32,19 @@ protected:
 		PaintNumbers(xpos, ypos, value, col, 1);
 	}
 
-	CPanelAnimationVar( float, m_flAlphaOverride, "Alpha", "255" );
-	CPanelAnimationVar( Color, m_TextColor, "TextColor", "FgColor" );
-	CPanelAnimationVar( float, m_flBlur, "Blur", "0" );
+	CPanelAnimationVar(float, m_flAlphaOverride, "Alpha", "255");
+	CPanelAnimationVar(Color, m_TextColor, "TextColor", "FgColor");
+	CPanelAnimationVar(float, m_flBlur, "Blur", "0");
 
-	CPanelAnimationVarAliasType( float, digit_xpos, "digit_xpos", "0", "proportional_float" );
-	CPanelAnimationVarAliasType( float, digit_ypos, "digit_ypos", "0", "proportional_float" );
-	CPanelAnimationVarAliasType( float, digit_height, "digit_height", "16", "proportional_float" );
+	CPanelAnimationVarAliasType(float, digit_xpos, "digit_xpos", "0", "proportional_float");
+	CPanelAnimationVarAliasType(float, digit_ypos, "digit_ypos", "0", "proportional_float");
+	CPanelAnimationVarAliasType(float, digit_height, "digit_height", "16", "proportional_float");
 
 private:
-
 	CHudTexture *m_pNumbers[10];
 
 	int m_iValue;
 	bool m_bDisplayValue;
 };
 
-#endif //HUD_BITMAPNUMERICDISPLAY_H
+#endif // HUD_BITMAPNUMERICDISPLAY_H

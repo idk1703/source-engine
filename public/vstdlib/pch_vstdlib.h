@@ -11,8 +11,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-
-#pragma warning(disable: 4514)
+#pragma warning(disable : 4514)
 
 // First include standard libraries
 #include <stdio.h>

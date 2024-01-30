@@ -24,7 +24,6 @@
 #include <KeychainHI.h>
 #endif
 
-
 /* this file has been split into KeychainCore.h and KeychainHI.h */
 
 #endif /* __KEYCHAIN__ */

@@ -12,7 +12,7 @@
 #endif
 
 // Shared header file for players
-#if defined( CLIENT_DLL )
+#if defined(CLIENT_DLL)
 #define CBaseTFPlayer C_BaseTFPlayer
 #include "c_basetfplayer.h"
 #else

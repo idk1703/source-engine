@@ -25,42 +25,41 @@ class mxListView : public mxWidget
 
 public:
 	// CREATORS
-	mxListView (mxWindow *parent, int x, int y, int w, int h, int id = 0);
-	virtual ~mxListView ();
+	mxListView(mxWindow *parent, int x, int y, int w, int h, int id = 0);
+	virtual ~mxListView();
 
 	// MANIPULATORS
-	int add( const char *label );
-	void remove ( int item );
-	void removeAll ();
-	void setLabel ( int item, int column, const char *label);
-	void setLabel( int item, int column, const wchar_t *label );
+	int add(const char *label);
+	void remove(int item);
+	void removeAll();
+	void setLabel(int item, int column, const char *label);
+	void setLabel(int item, int column, const wchar_t *label);
 
-	void setUserData (int item, int column, void *userData);
-	void setSelected ( int item, bool b);
+	void setUserData(int item, int column, void *userData);
+	void setSelected(int item, bool b);
 	void deselectAll();
-	void setImageList( void *himagelist );
-	void setImage( int item, int column, int imagenormal );
+	void setImageList(void *himagelist);
+	void setImage(int item, int column, int imagenormal);
 
-	void insertTextColumn( int column, int width, char const *label );
-	void insertImageColumn( int column, int width, int imageindex );
+	void insertTextColumn(int column, int width, char const *label);
+	void insertImageColumn(int column, int width, int imageindex);
 
-	void scrollToItem( int item );
+	void scrollToItem(int item);
 
 	// ACCESSORS
-	int	getItemCount() const;
+	int getItemCount() const;
 	int getNumSelected() const;
-	int getNextSelectedItem ( int startitem = 0 ) const;
-	const char *getLabel ( int oitem, int column ) const;
-	void *getUserData (int item, int column ) const;
-	bool isSelected ( int index ) const;
+	int getNextSelectedItem(int startitem = 0) const;
+	const char *getLabel(int oitem, int column) const;
+	void *getUserData(int item, int column) const;
+	bool isSelected(int index) const;
 
-	void setDrawingEnabled( bool draw );
-
+	void setDrawingEnabled(bool draw);
 
 private:
 	// NOT IMPLEMENTED
-	mxListView (const mxListView&);
-	mxListView& operator= (const mxListView&);
+	mxListView(const mxListView &);
+	mxListView &operator=(const mxListView &);
 };
 
 #endif // MXLISTVIEW_H

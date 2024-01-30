@@ -15,51 +15,58 @@
 
 class CTFPumpkinBombShim : public CBaseAnimating
 {
-	virtual void PumpkinTouch( CBaseEntity *pOther ) = 0;
+	virtual void PumpkinTouch(CBaseEntity *pOther) = 0;
+
 public:
-	void	Touch( CBaseEntity *pOther ) { return PumpkinTouch( pOther ) ; }
+	void Touch(CBaseEntity *pOther)
+	{
+		return PumpkinTouch(pOther);
+	}
 };
 
-DECLARE_AUTO_LIST( ITFPumpkinBomb );
+DECLARE_AUTO_LIST(ITFPumpkinBomb);
 
 class CTFPumpkinBomb : public CTFPumpkinBombShim, public ITFPumpkinBomb
 {
-	DECLARE_CLASS( CTFPumpkinBomb, CBaseAnimating );
+	DECLARE_CLASS(CTFPumpkinBomb, CBaseAnimating);
 	DECLARE_NETWORKCLASS();
 
 public:
 	CTFPumpkinBomb();
 	~CTFPumpkinBomb() {}
 
-	virtual void	Precache( void );
-	virtual void	Spawn( void );
-	void			Break( void );
-	virtual void	PumpkinTouch( CBaseEntity *pOther ) OVERRIDE;
+	virtual void Precache(void);
+	virtual void Spawn(void);
+	void Break(void);
+	virtual void PumpkinTouch(CBaseEntity *pOther) OVERRIDE;
 
-	void			SetInitParams( float scale, float damage, float radius, int iTeam, float flLifeTime );
+	void SetInitParams(float scale, float damage, float radius, int iTeam, float flLifeTime);
 
-	void			RemovePumpkin();
+	void RemovePumpkin();
 
 #ifdef GAME_DLL
-	virtual void	Event_Killed( const CTakeDamageInfo &info );
-	virtual int		OnTakeDamage( const CTakeDamageInfo &info );
+	virtual void Event_Killed(const CTakeDamageInfo &info);
+	virtual int OnTakeDamage(const CTakeDamageInfo &info);
 
-	void			SetSpell( bool bSpell ) { m_bIsSpell = bSpell; }
+	void SetSpell(bool bSpell)
+	{
+		m_bIsSpell = bSpell;
+	}
 #endif
 
 private:
 #ifdef GAME_DLL
-	bool			m_bIsSpell;
+	bool m_bIsSpell;
 #endif
 
-	bool			m_bDead;
-	bool			m_bPrecached;
+	bool m_bDead;
+	bool m_bPrecached;
 
-	int				m_iTeam;
-	float			m_flDamage;
-	float			m_flScale;
-	float			m_flRadius;
-	float			m_flLifeTime;
+	int m_iTeam;
+	float m_flDamage;
+	float m_flScale;
+	float m_flRadius;
+	float m_flLifeTime;
 };
 
-#endif	//TF_PUMPKIN_BOMB_H
+#endif // TF_PUMPKIN_BOMB_H

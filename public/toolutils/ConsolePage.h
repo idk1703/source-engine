@@ -13,22 +13,21 @@
 
 #include "vgui_controls/consoledialog.h"
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Game/dev console dialog
 //-----------------------------------------------------------------------------
 class CConsolePage : public vgui::CConsolePanel
 {
-	DECLARE_CLASS_SIMPLE( CConsolePage, vgui::CConsolePanel );
+	DECLARE_CLASS_SIMPLE(CConsolePage, vgui::CConsolePanel);
 
 public:
-	CConsolePage( Panel *parent, bool bStatusVersion );
+	CConsolePage(Panel *parent, bool bStatusVersion);
 
 private:
-	MESSAGE_FUNC_CHARPTR( OnCommandSubmitted, "CommandSubmitted", command );
+	MESSAGE_FUNC_CHARPTR(OnCommandSubmitted, "CommandSubmitted", command);
 
 	// vgui overrides
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 };
 
 #endif // CONSOLEPAGE_H

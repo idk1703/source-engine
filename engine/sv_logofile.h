@@ -10,12 +10,10 @@
 #pragma once
 #endif
 
-
 #include "checksum_crc.h"
 
-
 class CGameClient;
-class CPerClientLogoInfo;	// (private to this module)
+class CPerClientLogoInfo; // (private to this module)
 class CServerLogoInfo;
 
 // Create per-client logo info.
@@ -31,6 +29,5 @@ class CServerLogoInfo;
 // Called when the client connects. The client sends its logo file CRC to the server. If the server
 // already has it, then it's fine.
 // void SV_LogoFile_OnConnect( CGameClient *pClient, bool bValid, CRC32_t crcValue );
-
 
 #endif // SV_LOGOFILE_H

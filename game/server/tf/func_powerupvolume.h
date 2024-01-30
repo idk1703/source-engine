@@ -12,7 +12,7 @@
 
 #include "triggers.h"
 
-DECLARE_AUTO_LIST( IFuncPowerupVolumeAutoList );
+DECLARE_AUTO_LIST(IFuncPowerupVolumeAutoList);
 
 //=============================================================================
 //
@@ -21,22 +21,28 @@ DECLARE_AUTO_LIST( IFuncPowerupVolumeAutoList );
 class CPowerupVolume : public CTriggerMultiple, public IFuncPowerupVolumeAutoList
 {
 public:
-	DECLARE_CLASS( CPowerupVolume, CTriggerMultiple );
+	DECLARE_CLASS(CPowerupVolume, CTriggerMultiple);
 
 	CPowerupVolume();
 
-	void	Spawn( void );
-	void	Precache( void );
-	void	Touch( CBaseEntity *pOther );
+	void Spawn(void);
+	void Precache(void);
+	void Touch(CBaseEntity *pOther);
 
- 	bool	IsDisabled( void );
- 	void	SetDisabled( bool bDisabled );
-	int		GetNumTimesUsed( void ) { return m_nNumberOfTimesUsed; }
-	void	SetNumTimesUsed( int NumberOfTimesUsed ) { m_nNumberOfTimesUsed = NumberOfTimesUsed; }
+	bool IsDisabled(void);
+	void SetDisabled(bool bDisabled);
+	int GetNumTimesUsed(void)
+	{
+		return m_nNumberOfTimesUsed;
+	}
+	void SetNumTimesUsed(int NumberOfTimesUsed)
+	{
+		m_nNumberOfTimesUsed = NumberOfTimesUsed;
+	}
 
-	int		m_nNumberOfTimesUsed;
+	int m_nNumberOfTimesUsed;
 
 private:
-	bool	m_bDisabled;
+	bool m_bDisabled;
 };
 #endif // FUNC_POWERUP_VOLUME_H

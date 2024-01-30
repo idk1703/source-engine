@@ -25,17 +25,11 @@
 #ifndef INCLUDED_PAKVIEWER
 #define INCLUDED_PAKVIEWER
 
-
-
 #ifndef INCLUDED_MXWINDOW
 #include "mxWindow.h"
 #endif
 
-
-
-#define IDC_PAKVIEWER		1001
-
-
+#define IDC_PAKVIEWER 1001
 
 typedef struct
 {
@@ -44,26 +38,21 @@ typedef struct
 	int filelen;
 } lump_t;
 
-
-
 #ifdef __cpluspus
-extern "C" {
+extern "C"
+{
 #endif
 
-int pak_ExtractFile (const char *pakFile, const char *lumpName, char *outFile);
+	int pak_ExtractFile(const char *pakFile, const char *lumpName, char *outFile);
 
 #ifdef __cpluspus
 }
 #endif
 
-
-
 class mxTreeView;
 class mxButton;
 class mxPopupMenu;
 // class GlWindow;
-
-
 
 class PAKViewer : public mxWindow
 {
@@ -75,25 +64,29 @@ class PAKViewer : public mxWindow
 
 public:
 	// CREATORS
-	PAKViewer (mxWindow *window);
-	~PAKViewer ();
+	PAKViewer(mxWindow *window);
+	~PAKViewer();
 
 	// MANIPULATORS
-	virtual int handleEvent (mxEvent *event);
-	int OnPAKViewer ();
-	int OnLoadModel ();
-	int OnLoadTexture (int pos);
-	int OnPlaySound ();
-	int OnExtract ();
+	virtual int handleEvent(mxEvent *event);
+	int OnPAKViewer();
+	int OnLoadModel();
+	int OnLoadTexture(int pos);
+	int OnPlaySound();
+	int OnExtract();
 
-	bool openPAKFile (const char *pakFile);
-	void closePAKFile ();
-	void setLoadEntirePAK (bool b) { d_loadEntirePAK = b; }
+	bool openPAKFile(const char *pakFile);
+	void closePAKFile();
+	void setLoadEntirePAK(bool b)
+	{
+		d_loadEntirePAK = b;
+	}
 
 	// ACCESSORS
-	bool getLoadEntirePAK () const { return d_loadEntirePAK; }
+	bool getLoadEntirePAK() const
+	{
+		return d_loadEntirePAK;
+	}
 };
-
-
 
 #endif // INCLUDED_PAKVIEWER

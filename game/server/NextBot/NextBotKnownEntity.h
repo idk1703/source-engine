@@ -19,7 +19,7 @@ class CKnownEntity
 {
 public:
 	// constructing assumes we currently know about this entity
-	CKnownEntity( CBaseEntity *who )
+	CKnownEntity(CBaseEntity *who)
 	{
 		m_who = who;
 		m_whenLastSeen = -1.0f;
@@ -30,66 +30,68 @@ public:
 		UpdatePosition();
 	}
 
-	virtual ~CKnownEntity() { }
+	virtual ~CKnownEntity() {}
 
-	virtual void Destroy( void )
+	virtual void Destroy(void)
 	{
 		m_who = NULL;
 		m_isVisible = false;
 	}
 
-	virtual void UpdatePosition( void )		// could be seen or heard, but now the entity's position is known
+	virtual void UpdatePosition(void) // could be seen or heard, but now the entity's position is known
 	{
-		if ( m_who.Get() )
+		if(m_who.Get())
 		{
 			m_lastKnownPostion = m_who->GetAbsOrigin();
-			m_lastKnownArea = m_who->MyCombatCharacterPointer() ? m_who->MyCombatCharacterPointer()->GetLastKnownArea() : NULL;
+			m_lastKnownArea =
+				m_who->MyCombatCharacterPointer() ? m_who->MyCombatCharacterPointer()->GetLastKnownArea() : NULL;
 			m_whenLastKnown = gpGlobals->curtime;
 		}
 	}
 
-	virtual CBaseEntity *GetEntity( void ) const
+	virtual CBaseEntity *GetEntity(void) const
 	{
 		return m_who;
 	}
 
-	virtual const Vector &GetLastKnownPosition( void ) const
+	virtual const Vector &GetLastKnownPosition(void) const
 	{
 		return m_lastKnownPostion;
 	}
 
 	// Have we had a clear view of the last known position of this entity?
-	// This encapsulates the idea of "I just saw a guy right over *there* a few seconds ago, but I don't know where he is now"
-	virtual bool HasLastKnownPositionBeenSeen( void ) const
+	// This encapsulates the idea of "I just saw a guy right over *there* a few seconds ago, but I don't know where he
+	// is now"
+	virtual bool HasLastKnownPositionBeenSeen(void) const
 	{
 		return m_hasLastKnownPositionBeenSeen;
 	}
 
-	virtual void MarkLastKnownPositionAsSeen( void )
+	virtual void MarkLastKnownPositionAsSeen(void)
 	{
 		m_hasLastKnownPositionBeenSeen = true;
 	}
 
-	virtual const CNavArea *GetLastKnownArea( void ) const
+	virtual const CNavArea *GetLastKnownArea(void) const
 	{
 		return m_lastKnownArea;
 	}
 
-	virtual float GetTimeSinceLastKnown( void ) const
+	virtual float GetTimeSinceLastKnown(void) const
 	{
 		return gpGlobals->curtime - m_whenLastKnown;
 	}
 
-	virtual float GetTimeSinceBecameKnown( void ) const
+	virtual float GetTimeSinceBecameKnown(void) const
 	{
 		return gpGlobals->curtime - m_whenBecameKnown;
 	}
 
-	virtual void UpdateVisibilityStatus( bool visible )
+	virtual void UpdateVisibilityStatus(bool visible)
 	{
-		if ( visible )
+		if(visible)
 		{
-			if ( !m_isVisible )
+			if(!m_isVisible)
 			{
 				// just became visible
 				m_whenLastBecameVisible = gpGlobals->curtime;
@@ -101,75 +103,75 @@ public:
 		m_isVisible = visible;
 	}
 
-	virtual bool IsVisibleInFOVNow( void ) const	// return true if this entity is currently visible and in my field of view
+	virtual bool IsVisibleInFOVNow(
+		void) const // return true if this entity is currently visible and in my field of view
 	{
 		return m_isVisible;
 	}
 
-	virtual bool IsVisibleRecently( void ) const	// return true if this entity is visible or was very recently visible
+	virtual bool IsVisibleRecently(void) const // return true if this entity is visible or was very recently visible
 	{
-		if ( m_isVisible )
+		if(m_isVisible)
 			return true;
 
-		if ( WasEverVisible() && GetTimeSinceLastSeen() < 3.0f )
+		if(WasEverVisible() && GetTimeSinceLastSeen() < 3.0f)
 			return true;
 
 		return false;
 	}
 
-	virtual float GetTimeSinceBecameVisible( void ) const
+	virtual float GetTimeSinceBecameVisible(void) const
 	{
 		return gpGlobals->curtime - m_whenLastBecameVisible;
 	}
 
-	virtual float GetTimeWhenBecameVisible( void ) const
+	virtual float GetTimeWhenBecameVisible(void) const
 	{
 		return m_whenLastBecameVisible;
 	}
 
-	virtual float GetTimeSinceLastSeen( void ) const
+	virtual float GetTimeSinceLastSeen(void) const
 	{
 		return gpGlobals->curtime - m_whenLastSeen;
 	}
 
-	virtual bool WasEverVisible( void ) const
+	virtual bool WasEverVisible(void) const
 	{
 		return m_whenLastSeen > 0.0f;
 	}
 
 	// has our knowledge of this entity become obsolete?
-	virtual bool IsObsolete( void ) const
+	virtual bool IsObsolete(void) const
 	{
 		return GetEntity() == NULL || !m_who->IsAlive() || GetTimeSinceLastKnown() > 10.0f;
 	}
 
-	virtual bool operator==( const CKnownEntity &other ) const
+	virtual bool operator==(const CKnownEntity &other) const
 	{
-		if ( GetEntity() == NULL || other.GetEntity() == NULL )
+		if(GetEntity() == NULL || other.GetEntity() == NULL)
 			return false;
 
-		return ( GetEntity() == other.GetEntity() );
+		return (GetEntity() == other.GetEntity());
 	}
 
-	virtual bool Is( CBaseEntity *who ) const
+	virtual bool Is(CBaseEntity *who) const
 	{
-		if ( GetEntity() == NULL || who == NULL )
+		if(GetEntity() == NULL || who == NULL)
 			return false;
 
-		return ( GetEntity() == who );
+		return (GetEntity() == who);
 	}
 
 private:
-	CHandle< CBaseEntity > m_who;
+	CHandle<CBaseEntity> m_who;
 	Vector m_lastKnownPostion;
 	bool m_hasLastKnownPositionBeenSeen;
 	CNavArea *m_lastKnownArea;
 	float m_whenLastSeen;
 	float m_whenLastBecameVisible;
-	float m_whenLastKnown;			// last seen or heard, confirming its existance
+	float m_whenLastKnown; // last seen or heard, confirming its existance
 	float m_whenBecameKnown;
-	bool m_isVisible;				// flagged by IVision update as visible or not
+	bool m_isVisible; // flagged by IVision update as visible or not
 };
-
 
 #endif // NEXT_BOT_KNOWN_ENTITY_H

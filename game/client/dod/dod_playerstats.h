@@ -31,12 +31,13 @@ public:
 
 	void UploadStats();
 
-	void UpdateStats( int iPlayerClass, int iTeam, dod_stat_accumulator_t *playerStats, CUtlVector<weapon_stat_t> *vecWeaponStats );
+	void UpdateStats(int iPlayerClass, int iTeam, dod_stat_accumulator_t *playerStats,
+					 CUtlVector<weapon_stat_t> *vecWeaponStats);
 
-	void MsgFunc_DODPlayerStatsUpdate( bf_read &msg );
+	void MsgFunc_DODPlayerStatsUpdate(bf_read &msg);
 
 private:
-	void FireGameEvent( IGameEvent *event );
+	void FireGameEvent(IGameEvent *event);
 
 	void SetNextForceUploadTime();
 	float m_flTimeNextForceUpload;
@@ -50,4 +51,4 @@ private:
 
 extern CDODPlayerStats g_DODPlayerStats;
 
-#endif //DOD_PLAYERSTATS_H
+#endif // DOD_PLAYERSTATS_H

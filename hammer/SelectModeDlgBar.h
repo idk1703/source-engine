@@ -11,11 +11,9 @@
 #pragma once
 #endif
 
-
 #include "resource.h"
 #include "GroupList.h"
 #include "HammerBar.h"
-
 
 class CSelectModeDlgBar : public CHammerBar
 {
@@ -24,7 +22,10 @@ public:
 
 private:
 	//{{AFX_DATA(CFilterControl)
-	enum { IDD = IDD_SELECT_MODE_BAR };
+	enum
+	{
+		IDD = IDD_SELECT_MODE_BAR
+	};
 	//}}AFX_DATA
 
 protected:

@@ -14,18 +14,14 @@
 //-----------------------------------------------------------------------------
 class CPointCamera;
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CBaseEntity *CreateInfoCameraLink( CBaseEntity *pTarget, CPointCamera *pCamera );
-
+CBaseEntity *CreateInfoCameraLink(CBaseEntity *pTarget, CPointCamera *pCamera);
 
 //-----------------------------------------------------------------------------
 // Sets up visibility
 //-----------------------------------------------------------------------------
-void PointCameraSetupVisibility( CBaseEntity *pPlayer, int area, unsigned char *pvs, int pvssize );
-
-
+void PointCameraSetupVisibility(CBaseEntity *pPlayer, int area, unsigned char *pvs, int pvssize);
 
 #endif // INFO_CAMERA_LINK_H

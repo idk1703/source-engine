@@ -17,15 +17,15 @@
 //
 class CWeaponCitizenPackage : public CBaseHLCombatWeapon
 {
-	DECLARE_CLASS( CWeaponCitizenPackage, CBaseHLCombatWeapon );
-public:
+	DECLARE_CLASS(CWeaponCitizenPackage, CBaseHLCombatWeapon);
 
+public:
 	DECLARE_SERVERCLASS();
 	DECLARE_DATADESC();
 	DECLARE_ACTTABLE();
 
-	void ItemPostFrame( void );
-	void Drop( const Vector &vecVelocity );
+	void ItemPostFrame(void);
+	void Drop(const Vector &vecVelocity);
 };
 
 #endif // WEAPON_CITIZENPACKAGE_H

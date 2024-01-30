@@ -17,22 +17,23 @@
 class C_PlayerClassMedic : public C_PlayerClass
 {
 
-	DECLARE_CLASS( C_PlayerClassMedic, C_PlayerClass );
+	DECLARE_CLASS(C_PlayerClassMedic, C_PlayerClass);
 
 public:
-
-	C_PlayerClassMedic( C_BaseTFPlayer *pPlayer );
+	C_PlayerClassMedic(C_BaseTFPlayer *pPlayer);
 	virtual ~C_PlayerClassMedic();
 
 	DECLARE_PREDICTABLE();
 
-	PlayerClassMedicData_t *GetClassData( void ) { return &m_ClassData; }
+	PlayerClassMedicData_t *GetClassData(void)
+	{
+		return &m_ClassData;
+	}
 
 protected:
-
-	PlayerClassMedicData_t	m_ClassData;
+	PlayerClassMedicData_t m_ClassData;
 };
 
-EXTERN_RECV_TABLE( DT_PlayerClassMedicData )
+EXTERN_RECV_TABLE(DT_PlayerClassMedicData)
 
 #endif // C_TF_CLASS_MEDIC_H

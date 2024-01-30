@@ -10,8 +10,6 @@
 #pragma once
 #endif
 
-
 #define IDM_POPUP_POINT_HANDLE 7
-
 
 #endif // POPUPMENUS_H

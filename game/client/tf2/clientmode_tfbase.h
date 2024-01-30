@@ -21,47 +21,46 @@ namespace vgui
 	typedef unsigned long HScheme;
 }
 
-
 // This class defines the base clientmode behavior in TF. Classes that derive from
 // it and override functions should forward them to the base class.
 class ClientModeTFBase : public ClientModeShared
 {
-	DECLARE_CLASS( ClientModeTFBase, ClientModeShared );
+	DECLARE_CLASS(ClientModeTFBase, ClientModeShared);
+
 public:
-					ClientModeTFBase( void );
-	virtual			~ClientModeTFBase( void );
+	ClientModeTFBase(void);
+	virtual ~ClientModeTFBase(void);
 
-	virtual void	Init();
-	virtual void	Shutdown();
+	virtual void Init();
+	virtual void Shutdown();
 
-	virtual void	Enable();
+	virtual void Enable();
 
-	virtual void	PreRender( CViewSetup *pSetup );
-	virtual void	PostRender();
-	virtual	void	Update();
+	virtual void PreRender(CViewSetup *pSetup);
+	virtual void PostRender();
+	virtual void Update();
 
-	virtual void	LevelInit( const char *newmap );
-	virtual void	LevelShutdown( void );
+	virtual void LevelInit(const char *newmap);
+	virtual void LevelShutdown(void);
 
 	// Input
-	virtual int		KeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
+	virtual int KeyInput(int down, ButtonCode_t keynum, const char *pszCurrentBinding);
 
-	virtual CMinimapPanel	*GetMinimap( void );
+	virtual CMinimapPanel *GetMinimap(void);
 
-	virtual vgui::Panel *GetMinimapParent( void ) = 0;
+	virtual vgui::Panel *GetMinimapParent(void) = 0;
 
 private:
-	void			Initialize( void );
+	void Initialize(void);
 
-	bool			m_bInitialized;
+	bool m_bInitialized;
 
-	ConVar			*m_pCVDrawFullSkybox;
+	ConVar *m_pCVDrawFullSkybox;
 
-	float			m_flOldDrawFullSkybox;
+	float m_flOldDrawFullSkybox;
 
-	static CMinimapPanel	*m_pMinimap;
+	static CMinimapPanel *m_pMinimap;
 };
-
 
 extern vgui::HScheme g_hVGuiObjectScheme;
 

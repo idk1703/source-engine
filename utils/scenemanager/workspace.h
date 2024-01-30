@@ -18,55 +18,74 @@ class mxTreeView;
 class CWorkspace : public ITreeItem
 {
 public:
-	CWorkspace( char const *filename );
+	CWorkspace(char const *filename);
 	~CWorkspace();
 
-	char const	*GetName() const;
-	char const	*GetFileName() const { return m_szFile; }
+	char const *GetName() const;
+	char const *GetFileName() const
+	{
+		return m_szFile;
+	}
 
-	bool		IsDirty( void ) const;
-	void		SetDirty( bool dirty );
+	bool IsDirty(void) const;
+	void SetDirty(bool dirty);
 
-	int			GetProjectCount() const;
-	CProject	*GetProject( int index ) const;
-	void		AddProject( CProject *project );
-	CProject	*FindProjectFile( char const *filename ) const;
-	void		RemoveProject( CProject *project );
+	int GetProjectCount() const;
+	CProject *GetProject(int index) const;
+	void AddProject(CProject *project);
+	CProject *FindProjectFile(char const *filename) const;
+	void RemoveProject(CProject *project);
 
-	void		ValidateTree( mxTreeView *tree, mxTreeViewItem *parent );
+	void ValidateTree(mxTreeView *tree, mxTreeViewItem *parent);
 
-	bool		CanClose( void );
+	bool CanClose(void);
 
-	void		SaveChanges();
+	void SaveChanges();
 
-	virtual CWorkspace	*GetWorkspace() { return this; }
-	virtual CProject	*GetProject() { return NULL; }
-	virtual CScene		*GetScene() { return NULL; }
-	virtual CVCDFile	*GetVCDFile() { return NULL; }
-	virtual CSoundEntry	*GetSoundEntry() { return NULL; }
-	virtual CWaveFile	*GetWaveFile() { return NULL; }
+	virtual CWorkspace *GetWorkspace()
+	{
+		return this;
+	}
+	virtual CProject *GetProject()
+	{
+		return NULL;
+	}
+	virtual CScene *GetScene()
+	{
+		return NULL;
+	}
+	virtual CVCDFile *GetVCDFile()
+	{
+		return NULL;
+	}
+	virtual CSoundEntry *GetSoundEntry()
+	{
+		return NULL;
+	}
+	virtual CWaveFile *GetWaveFile()
+	{
+		return NULL;
+	}
 
+	char const *GetVSSUserName() const;
+	char const *GetVSSProject() const;
 
-	char const	*GetVSSUserName() const;
-	char const	*GetVSSProject() const;
+	void SetVSSUserName(char const *username);
+	void SetVSSProject(char const *projectname);
 
-	void		SetVSSUserName( char const *username );
-	void		SetVSSProject( char const *projectname );
+	virtual void Checkout(bool updatestateicons = true);
+	virtual void Checkin(bool updatestateicons = true);
 
-	virtual void Checkout( bool updatestateicons = true );
-	virtual void Checkin( bool updatestateicons = true );
+	bool IsCheckedOut() const;
+	int GetIconIndex() const;
 
-	bool		IsCheckedOut() const;
-	int			GetIconIndex() const;
+	virtual void MoveChildUp(ITreeItem *item);
+	virtual void MoveChildDown(ITreeItem *item);
 
-	virtual void MoveChildUp( ITreeItem *item );
-	virtual void MoveChildDown( ITreeItem *item );
-
-	virtual bool		IsChildFirst( ITreeItem *child );
-	virtual bool		IsChildLast( ITreeItem *child );
+	virtual bool IsChildFirst(ITreeItem *child);
+	virtual bool IsChildLast(ITreeItem *child);
 
 private:
-
 	void LoadFromFile();
 	void SaveToFile();
 
@@ -76,15 +95,15 @@ private:
 		MAX_WORKSPACE_FILENAME = 256
 	};
 
-	char		m_szName[ MAX_WORKSPACE_NAME ];
-	char		m_szFile[ MAX_WORKSPACE_FILENAME ];
+	char m_szName[MAX_WORKSPACE_NAME];
+	char m_szFile[MAX_WORKSPACE_FILENAME];
 
-	char		m_szVSSUserName[ MAX_WORKSPACE_NAME ];
-	char		m_szVSSProject[ MAX_WORKSPACE_NAME ];
+	char m_szVSSUserName[MAX_WORKSPACE_NAME];
+	char m_szVSSProject[MAX_WORKSPACE_NAME];
 
-	bool		m_bDirty;
+	bool m_bDirty;
 
-	CUtlVector< CProject * >	m_Projects;
+	CUtlVector<CProject *> m_Projects;
 };
 
 #endif // WORKSPACE_H

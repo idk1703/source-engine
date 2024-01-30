@@ -19,39 +19,41 @@ class CExButton;
 
 class CBaseAdPanel : public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CBaseAdPanel, EditablePanel );
+	DECLARE_CLASS_SIMPLE(CBaseAdPanel, EditablePanel);
 
 public:
-	CBaseAdPanel( Panel *parent, const char *panelName );
+	CBaseAdPanel(Panel *parent, const char *panelName);
 	virtual ~CBaseAdPanel() {}
 
-	virtual void ApplySettings( KeyValues *inResourceData ) OVERRIDE;
+	virtual void ApplySettings(KeyValues *inResourceData) OVERRIDE;
 
-	float GetPresentTime() const { return m_flPresentTime; }
+	float GetPresentTime() const
+	{
+		return m_flPresentTime;
+	}
 
-	static bool CheckForRequiredSteamComponents( const char* pszSteamRequried, const char* pszOverlayRequired );
+	static bool CheckForRequiredSteamComponents(const char *pszSteamRequried, const char *pszOverlayRequired);
 
 private:
-
 	float m_flPresentTime;
 };
 
 class CItemAdPanel : public CBaseAdPanel
 {
-	DECLARE_CLASS_SIMPLE( CItemAdPanel, CBaseAdPanel );
+	DECLARE_CLASS_SIMPLE(CItemAdPanel, CBaseAdPanel);
+
 public:
-	CItemAdPanel( Panel *parent, const char *panelName, item_definition_index_t itemDefIndex );
+	CItemAdPanel(Panel *parent, const char *panelName, item_definition_index_t itemDefIndex);
 	virtual ~CItemAdPanel() {}
 
-	virtual void ApplySchemeSettings( IScheme *pScheme ) OVERRIDE;
-	virtual void ApplySettings( KeyValues *inResourceData ) OVERRIDE;
+	virtual void ApplySchemeSettings(IScheme *pScheme) OVERRIDE;
+	virtual void ApplySettings(KeyValues *inResourceData) OVERRIDE;
 	virtual void PerformLayout() OVERRIDE;
 	virtual void OnTick() OVERRIDE;
-	virtual void OnCommand( const char *command ) OVERRIDE;
+	virtual void OnCommand(const char *command) OVERRIDE;
 
 private:
-
-	const CTFItemDefinition* GetItemDef() const;
+	const CTFItemDefinition *GetItemDef() const;
 	bool m_bShowMarketButton;
 
 	item_definition_index_t m_ItemDefIndex;
@@ -59,31 +61,31 @@ private:
 
 class CCyclingAdContainerPanel : public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CCyclingAdContainerPanel, EditablePanel );
+	DECLARE_CLASS_SIMPLE(CCyclingAdContainerPanel, EditablePanel);
+
 public:
-	CCyclingAdContainerPanel( Panel *parent, const char *panelName );
+	CCyclingAdContainerPanel(Panel *parent, const char *panelName);
 	virtual ~CCyclingAdContainerPanel();
 
-	virtual void ApplySchemeSettings( IScheme *pScheme ) OVERRIDE;
-	virtual void ApplySettings( KeyValues *inResourceData ) OVERRIDE;
+	virtual void ApplySchemeSettings(IScheme *pScheme) OVERRIDE;
+	virtual void ApplySettings(KeyValues *inResourceData) OVERRIDE;
 	virtual void PerformLayout() OVERRIDE;
-	virtual void OnCommand( const char *command ) OVERRIDE;
+	virtual void OnCommand(const char *command) OVERRIDE;
 	virtual void OnThink() OVERRIDE;
 
-	void SetItemKVs( KeyValues* pKVItems );
+	void SetItemKVs(KeyValues *pKVItems);
 
 private:
-
 	void CreatePanels();
-	void PresentIndex( int nIndex );
+	void PresentIndex(int nIndex);
 	void UpdateAdPanelPositions();
 	float GetTransitionProgress() const;
 	bool IsTransitioningOut() const;
 
-	EditablePanel* m_pAdsContainer;
-	EditablePanel* m_pFadePanel;
-	CExButton* m_pPrevButton;
-	CExButton* m_pNextButton;
+	EditablePanel *m_pAdsContainer;
+	EditablePanel *m_pFadePanel;
+	CExButton *m_pPrevButton;
+	CExButton *m_pNextButton;
 	bool m_bNeedsToCreatePanels;
 	bool m_bSettingsApplied;
 
@@ -93,13 +95,13 @@ private:
 		{
 			delete m_pAdPanel;
 		}
-		CBaseAdPanel* m_pAdPanel;
-		KeyValues* m_pSettingsKVs;
+		CBaseAdPanel *m_pAdPanel;
+		KeyValues *m_pSettingsKVs;
 	};
 
 	KeyValues *m_pKVItems;
 
-	CUtlVector< AdData_t > m_vecPossibleAds;
+	CUtlVector<AdData_t> m_vecPossibleAds;
 	int m_nTargetIndex;
 	int m_nCurrentIndex;
 	int m_nTransitionStartOffsetX;

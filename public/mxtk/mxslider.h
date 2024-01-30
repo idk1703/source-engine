@@ -14,54 +14,50 @@
 #ifndef INCLUDED_MXSLIDER
 #define INCLUDED_MXSLIDER
 
-
-
 #ifndef INCLUDED_MXWIDGET
 #include "mxtk/mxWidget.h"
 #endif
 
-
-
 class mxWindow;
-
-
 
 class mxSlider_i;
 class mxSlider : public mxWidget
 {
 	mxSlider_i *d_this;
 
-	float		m_min;
-	float		m_max;
-	int			m_ticks;
+	float m_min;
+	float m_max;
+	int m_ticks;
 
 public:
 	// ENUMS
-	enum { Horizontal, Vertical };
+	enum
+	{
+		Horizontal,
+		Vertical
+	};
 
 	// CREATORS
-	mxSlider (mxWindow *parent, int x, int y, int w, int h, int id = 0, int style = 0);
-	virtual ~mxSlider ();
+	mxSlider(mxWindow *parent, int x, int y, int w, int h, int id = 0, int style = 0);
+	virtual ~mxSlider();
 
 	// MANIPULATORS
-	void setValue (float value);
-	void setRange (float min, float max, int ticks = 100);
-	void setSteps (int line, int page);
+	void setValue(float value);
+	void setRange(float min, float max, int ticks = 100);
+	void setSteps(int line, int page);
 
 	// ACCESSORS
-	float getValue () const;
-	float getTrackValue ( int ivalue ) const;
-	float getMinValue () const;
-	float getMaxValue () const;
-	int getLineStep () const;
-	int getPageStep () const;
+	float getValue() const;
+	float getTrackValue(int ivalue) const;
+	float getMinValue() const;
+	float getMaxValue() const;
+	int getLineStep() const;
+	int getPageStep() const;
 
 private:
 	// NOT IMPLEMENTED
-	mxSlider (const mxSlider&);
-	mxSlider& operator= (const mxSlider&);
+	mxSlider(const mxSlider &);
+	mxSlider &operator=(const mxSlider &);
 };
-
-
 
 #endif // INCLUDED_MXSLIDER

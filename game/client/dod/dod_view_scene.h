@@ -24,24 +24,24 @@ class CDODViewRender : public CViewRender
 public:
 	CDODViewRender();
 
-	void Init( );
-	void Shutdown( );
+	void Init();
+	void Shutdown();
 
-	void RenderView( const CViewSetup &view, int nClearFlags, int whatToDraw );
+	void RenderView(const CViewSetup &view, int nClearFlags, int whatToDraw);
 	void RenderPlayerSprites();
 
-	void PerformStunEffect( const CViewSetup &view );
+	void PerformStunEffect(const CViewSetup &view);
 
-	void InitColorCorrection( );
-	void ShutdownColorCorrection( );
-	void SetupColorCorrection( );
+	void InitColorCorrection();
+	void ShutdownColorCorrection();
+	void SetupColorCorrection();
 
 private:
 	ITexture *m_pStunTexture;
 
-	ClientCCHandle_t		m_SpectatorLookupHandle;
-	ClientCCHandle_t		m_DeathLookupHandle;
-	bool					m_bLookupActive;
+	ClientCCHandle_t m_SpectatorLookupHandle;
+	ClientCCHandle_t m_DeathLookupHandle;
+	bool m_bLookupActive;
 };
 
-#endif //DOD_VIEW_SCENE_H
+#endif // DOD_VIEW_SCENE_H

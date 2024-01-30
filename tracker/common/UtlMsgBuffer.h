@@ -12,7 +12,7 @@
 
 #include "UtlMemory.h"
 
-#pragma warning(disable: 4244) // warning C4244: '=' : conversion from 'int' to 'short', possible loss of data
+#pragma warning(disable : 4244) // warning C4244: '=' : conversion from 'int' to 'short', possible loss of data
 
 //-----------------------------------------------------------------------------
 // Purpose: Generic named data buffer
@@ -24,8 +24,14 @@ public:
 	CUtlMsgBuffer(unsigned short msgID, void const *data, int dataSize);
 	~CUtlMsgBuffer();
 
-	unsigned short GetMsgID() const				{ return m_iMsgID; }
-	void SetMsgID(unsigned short msgID)			{ m_iMsgID = msgID; }
+	unsigned short GetMsgID() const
+	{
+		return m_iMsgID;
+	}
+	void SetMsgID(unsigned short msgID)
+	{
+		m_iMsgID = msgID;
+	}
 
 	// read functions
 	bool ReadInt(const char *name, int &data);
@@ -68,7 +74,7 @@ public:
 	// advances the write pointer - used when you write directly into the buffer
 	void SetWritePos(int size);
 
-	CUtlMsgBuffer& Copy(const CUtlMsgBuffer &rhs);
+	CUtlMsgBuffer &Copy(const CUtlMsgBuffer &rhs);
 
 	// copy constructor
 	CUtlMsgBuffer(const CUtlMsgBuffer &rhs)
@@ -79,14 +85,13 @@ public:
 		m_iNextVarPos = rhs.m_iNextVarPos;
 
 		m_Memory.EnsureCapacity(rhs.m_Memory.NumAllocated());
-		if ( rhs.m_Memory.NumAllocated() > 0 )
+		if(rhs.m_Memory.NumAllocated() > 0)
 		{
 			memcpy(Base(), rhs.Base(), rhs.m_Memory.NumAllocated());
 		}
 	}
 
 private:
-
 	bool Read(void *buffer, int readAmount);
 	bool ReadUntilNull(void *buffer, int bufferSize);
 	void Write(void const *data, int size);
@@ -94,9 +99,9 @@ private:
 	CUtlMemory<char> m_Memory;
 
 	unsigned short m_iMsgID;
-	short m_iWritePos;		// position in buffer we are currently writing to
-	short m_iReadPos;			// current reading position
-	short m_iNextVarPos;		// a guess at which variable is most likely to be read next
+	short m_iWritePos;	 // position in buffer we are currently writing to
+	short m_iReadPos;	 // current reading position
+	short m_iNextVarPos; // a guess at which variable is most likely to be read next
 };
 
 //-----------------------------------------------------------------------------
@@ -105,7 +110,7 @@ private:
 inline int CUtlMsgBuffer::DataSize() const
 {
 	// return the highest read/write mark
-	if (m_iWritePos > m_iReadPos)
+	if(m_iWritePos > m_iReadPos)
 		return m_iWritePos;
 
 	return m_iReadPos;
@@ -193,6 +198,5 @@ inline void CUtlMsgBuffer::SetWritePos(int size)
 {
 	m_iWritePos = size;
 }
-
 
 #endif // UTLMSGBUFFER_H

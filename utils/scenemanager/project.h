@@ -19,53 +19,69 @@ class CWorkspace;
 class CProject : public ITreeItem
 {
 public:
-	CProject( CWorkspace *ws, char const *filename );
+	CProject(CWorkspace *ws, char const *filename);
 	~CProject();
 
-	CWorkspace	*GetOwnerWorkspace();
+	CWorkspace *GetOwnerWorkspace();
 
-	char const	*GetName() const;
-	char const	*GetFileName() const;
+	char const *GetName() const;
+	char const *GetFileName() const;
 
+	bool IsDirty(void) const;
+	void SetDirty(bool dirty);
 
-	bool		IsDirty( void ) const;
-	void		SetDirty( bool dirty );
+	void SetComments(char const *comments);
+	char const *GetComments(void) const;
 
-	void		SetComments( char const *comments );
-	char const	*GetComments( void ) const;
+	int GetSceneCount() const;
+	CScene *GetScene(int index) const;
+	void AddScene(CScene *scene);
+	void RemoveScene(CScene *scene);
 
-	int			GetSceneCount() const;
-	CScene		*GetScene( int index ) const;
-	void		AddScene( CScene *scene );
-	void		RemoveScene( CScene *scene );
+	void ValidateTree(mxTreeView *tree, mxTreeViewItem *parent);
 
-	void		ValidateTree( mxTreeView *tree, mxTreeViewItem* parent );
+	void SaveChanges();
 
-	void		SaveChanges();
+	virtual CWorkspace *GetWorkspace()
+	{
+		return NULL;
+	}
+	virtual CProject *GetProject()
+	{
+		return this;
+	}
+	virtual CScene *GetScene()
+	{
+		return NULL;
+	}
+	virtual CVCDFile *GetVCDFile()
+	{
+		return NULL;
+	}
+	virtual CSoundEntry *GetSoundEntry()
+	{
+		return NULL;
+	}
+	virtual CWaveFile *GetWaveFile()
+	{
+		return NULL;
+	}
 
-	virtual CWorkspace	*GetWorkspace() { return NULL; }
-	virtual CProject	*GetProject() { return this; }
-	virtual CScene		*GetScene() { return NULL; }
-	virtual CVCDFile	*GetVCDFile() { return NULL; }
-	virtual CSoundEntry	*GetSoundEntry() { return NULL; }
-	virtual CWaveFile	*GetWaveFile() { return NULL; }
+	virtual void Checkout(bool updatestateicons = true);
+	virtual void Checkin(bool updatestateicons = true);
 
-	virtual void Checkout( bool updatestateicons = true );
-	virtual void Checkin( bool updatestateicons = true );
+	bool IsCheckedOut() const;
+	int GetIconIndex() const;
 
-	bool		IsCheckedOut() const;
-	int			GetIconIndex() const;
+	virtual void MoveChildUp(ITreeItem *child);
+	virtual void MoveChildDown(ITreeItem *child);
 
-	virtual void MoveChildUp( ITreeItem *child );
-	virtual void MoveChildDown( ITreeItem *child );
-
-	virtual bool		IsChildFirst( ITreeItem *child );
-	virtual bool		IsChildLast( ITreeItem *child );
+	virtual bool IsChildFirst(ITreeItem *child);
+	virtual bool IsChildLast(ITreeItem *child);
 
 private:
-
-	void		LoadFromFile();
-	void		SaveToFile();
+	void LoadFromFile();
+	void SaveToFile();
 
 	enum
 	{
@@ -73,16 +89,16 @@ private:
 		MAX_PROJECT_FILENAME = 256
 	};
 
-	char		m_szName[ MAX_PROJECT_NAME ];
-	char		m_szFile[ MAX_PROJECT_FILENAME ];
+	char m_szName[MAX_PROJECT_NAME];
+	char m_szFile[MAX_PROJECT_FILENAME];
 
-	char		*m_pszComments;
+	char *m_pszComments;
 
-	bool		m_bDirty;
+	bool m_bDirty;
 
-	CUtlVector< CScene * >	m_Scenes;
+	CUtlVector<CScene *> m_Scenes;
 
-	CWorkspace	*m_pOwner;
+	CWorkspace *m_pOwner;
 };
 
 #endif // PROJECT_H

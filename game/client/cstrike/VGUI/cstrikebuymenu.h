@@ -23,7 +23,7 @@ namespace vgui
 	class Panel;
 	class Button;
 	class Label;
-}
+} // namespace vgui
 
 enum
 {
@@ -41,14 +41,15 @@ private:
 public:
 	CCSBaseBuyMenu(IViewPort *pViewPort, const char *subPanelName);
 
-	virtual void ShowPanel( bool bShow );
-	virtual void Paint( void );
-	virtual void SetVisible( bool state );
+	virtual void ShowPanel(bool bShow);
+	virtual void Paint(void);
+	virtual void SetVisible(bool state);
 
-	void HandleBlackMarket( void );
+	void HandleBlackMarket(void);
 
 private:
-	void UpdateBuyPresets( bool showDefaultPanel = false );	///< Update the Buy Preset buttons and their info panels on the main buy menu
+	void UpdateBuyPresets(
+		bool showDefaultPanel = false); ///< Update the Buy Preset buttons and their info panels on the main buy menu
 	vgui::Panel *m_pMainBackground;
 	BuyPresetButton *m_pBuyPresetButtons[NUM_BUY_PRESET_BUTTONS];
 	BuyPresetEditPanel *m_pLoadout;
@@ -63,7 +64,7 @@ private:
 public:
 	virtual void PaintBackground();
 	virtual void PerformLayout();
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 
 	bool m_backgroundLayoutFinished;
 
@@ -81,9 +82,11 @@ private:
 public:
 	CCSBuyMenu_CT(IViewPort *pViewPort);
 
-	virtual const char *GetName( void ) { return PANEL_BUY_CT; }
+	virtual const char *GetName(void)
+	{
+		return PANEL_BUY_CT;
+	}
 };
-
 
 //============================
 // Terrorist main buy Menu
@@ -96,7 +99,10 @@ private:
 public:
 	CCSBuyMenu_TER(IViewPort *pViewPort);
 
-	virtual const char *GetName( void ) { return PANEL_BUY_TER; }
+	virtual const char *GetName(void)
+	{
+		return PANEL_BUY_TER;
+	}
 };
 
 #endif // CSTRIKEBUYMENU_H

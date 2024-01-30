@@ -105,6 +105,4 @@
 #include <CFXMLParser.h>
 #endif
 
-
-
 #endif /* __COREFOUNDATION__ */

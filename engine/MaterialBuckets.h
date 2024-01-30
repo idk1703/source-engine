@@ -14,7 +14,7 @@
 
 // FLASHLIGHTFIXME: Make all of the buckets share the same m_Elements (ie. make m_Elements static)
 
-template <class Element_t>
+template<class Element_t>
 class CMaterialsBuckets
 {
 public:
@@ -27,17 +27,17 @@ public:
 
 	// Set the number of buckets that are needed.  This should get called every time
 	// a level is loaded.
-	void SetNumMaterialSortIDs( int n )
+	void SetNumMaterialSortIDs(int n)
 	{
 		m_MaterialSortInfoArray.Purge();
-		m_MaterialSortInfoArray.SetCount( n );
+		m_MaterialSortInfoArray.SetCount(n);
 		m_Elements.Purge();
 
 		m_UsedSortIDs.Purge();
 	}
 
 	// Clear out all buckets.  This should get called once a frame.
-	void Flush( void )
+	void Flush(void)
 	{
 		m_FlushCount++;
 		m_Elements.RemoveAll();
@@ -52,12 +52,12 @@ public:
 		return m_UsedSortIDs.Head();
 	}
 
-	SortIDHandle_t GetNextUsedSortID( SortIDHandle_t prevSortID )
+	SortIDHandle_t GetNextUsedSortID(SortIDHandle_t prevSortID)
 	{
-		return m_UsedSortIDs.Next( prevSortID );
+		return m_UsedSortIDs.Next(prevSortID);
 	}
 
-	int GetSortID( SortIDHandle_t handle )
+	int GetSortID(SortIDHandle_t handle)
 	{
 		return m_UsedSortIDs[handle];
 	}
@@ -67,21 +67,20 @@ public:
 		return m_UsedSortIDs.InvalidIndex();
 	}
 
-
 	//
 	// These functions are used to get at the list of elements for each sortID.
 	//
-	ElementHandle_t GetElementListHead( int sortID )
+	ElementHandle_t GetElementListHead(int sortID)
 	{
 		return m_MaterialSortInfoArray[sortID].m_Head;
 	}
 
-	ElementHandle_t GetElementListNext( ElementHandle_t h )
+	ElementHandle_t GetElementListNext(ElementHandle_t h)
 	{
-		return m_Elements.Next( h );
+		return m_Elements.Next(h);
 	}
 
-	Element_t GetElement( ElementHandle_t h )
+	Element_t GetElement(ElementHandle_t h)
 	{
 		return m_Elements[h];
 	}
@@ -91,15 +90,14 @@ public:
 		return m_Elements.InvalidIndex();
 	}
 
-
 	// Add an element to the the bucket specified by sortID
-	void AddElement( int sortID, Element_t elem )
+	void AddElement(int sortID, Element_t elem)
 	{
 		// Allocate an element to stick this in.
-		unsigned short elemID = m_Elements.Alloc( true );
+		unsigned short elemID = m_Elements.Alloc(true);
 		m_Elements[elemID] = elem;
 
-		if( m_MaterialSortInfoArray[sortID].m_FlushCount != m_FlushCount )
+		if(m_MaterialSortInfoArray[sortID].m_FlushCount != m_FlushCount)
 		{
 			// This is the first element that has used this sort id since flush.
 			// FLASHLIGHTFIXME: need to sort these by vertex format when shoving
@@ -109,7 +107,7 @@ public:
 			m_MaterialSortInfoArray[sortID].m_FlushCount = m_FlushCount;
 
 			// Add this sortID to the list of sortIDs used since flush.
-			m_UsedSortIDs.AddToTail( sortID );
+			m_UsedSortIDs.AddToTail(sortID);
 
 			// Set the head pointer for this sort id to this element.
 			m_MaterialSortInfoArray[sortID].m_Head = elemID;
@@ -118,18 +116,15 @@ public:
 		{
 			// We already have an element in this sort id since flush, so chain
 			// into thelist of elements for this sort id.
-			m_Elements.LinkBefore( m_MaterialSortInfoArray[sortID].m_Head, elemID );
+			m_Elements.LinkBefore(m_MaterialSortInfoArray[sortID].m_Head, elemID);
 			m_MaterialSortInfoArray[sortID].m_Head = elemID;
 		}
 	}
 
 private:
-
 	struct MaterialSortInfo_t
 	{
-		MaterialSortInfo_t() :
-			m_FlushCount( -1 ),
-			m_Head( (unsigned short)-1 )  // i.e., InvalidIndex()
+		MaterialSortInfo_t() : m_FlushCount(-1), m_Head((unsigned short)-1) // i.e., InvalidIndex()
 		{
 		}
 
@@ -147,7 +142,6 @@ private:
 	CUtlLinkedList<Element_t, unsigned short, true> m_Elements;
 
 	int m_FlushCount;
-
 };
 
 #endif // MATERIALBUCKETS_H

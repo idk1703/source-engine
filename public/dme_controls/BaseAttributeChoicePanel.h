@@ -15,7 +15,6 @@
 
 #include "dme_controls/BaseAttributePanel.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
@@ -28,38 +27,36 @@ namespace vgui
 	class Panel;
 	class Label;
 	class ComboBox;
-}
-
+} // namespace vgui
 
 //-----------------------------------------------------------------------------
 // CBaseAttributeChoicePanel
 //-----------------------------------------------------------------------------
 class CBaseAttributeChoicePanel : public CBaseAttributePanel
 {
-	DECLARE_CLASS_SIMPLE( CBaseAttributeChoicePanel, CBaseAttributePanel );
+	DECLARE_CLASS_SIMPLE(CBaseAttributeChoicePanel, CBaseAttributePanel);
 
 public:
-	CBaseAttributeChoicePanel( vgui::Panel *parent,	const AttributeWidgetInfo_t &info );
+	CBaseAttributeChoicePanel(vgui::Panel *parent, const AttributeWidgetInfo_t &info);
 
 	virtual void PostConstructor();
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 
 protected:
 	virtual void Refresh();
 
 private:
 	// Derived classes can re-implement this to fill the combo box however they like
-	virtual void PopulateComboBox( vgui::ComboBox *pComboBox ) = 0;
-	virtual void SetAttributeFromComboBox( vgui::ComboBox *pComboBox, KeyValues *pKeyValues ) = 0;
-	virtual void SetComboBoxFromAttribute( vgui::ComboBox *pComboBox ) = 0;
+	virtual void PopulateComboBox(vgui::ComboBox *pComboBox) = 0;
+	virtual void SetAttributeFromComboBox(vgui::ComboBox *pComboBox, KeyValues *pKeyValues) = 0;
+	virtual void SetComboBoxFromAttribute(vgui::ComboBox *pComboBox) = 0;
 
-	MESSAGE_FUNC_PTR( OnTextChanged, "TextChanged", panel );
+	MESSAGE_FUNC_PTR(OnTextChanged, "TextChanged", panel);
 
 	virtual void Apply();
 	virtual vgui::Panel *GetDataPanel();
 
-	vgui::ComboBox	*m_pData;
+	vgui::ComboBox *m_pData;
 };
-
 
 #endif // BASEATTRIBUTECHOICEPANEL_h

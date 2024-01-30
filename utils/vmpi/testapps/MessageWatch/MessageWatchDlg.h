@@ -15,13 +15,11 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-
 #include "iphelpers.h"
 #include "tcpsocket.h"
 #include "threadhelpers.h"
 #include "consolewnd.h"
 #include "win_idle.h"
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CMessageWatchDlg dialog
@@ -29,56 +27,55 @@
 class CSender
 {
 public:
-				CSender();
-				~CSender();
+	CSender();
+	~CSender();
 
 public:
-
-	CIPAddr		m_Addr;
-	ITCPSocket	*m_pSocket;
-	IConsoleWnd	*m_pConsoleWnd;
-	char		m_Name[128];
+	CIPAddr m_Addr;
+	ITCPSocket *m_pSocket;
+	IConsoleWnd *m_pConsoleWnd;
+	char m_Name[128];
 };
 
 class CMessageWatchDlg : public CDialog
 {
-// Construction
+	// Construction
 public:
-	CMessageWatchDlg(CWnd* pParent = NULL);	// standard constructor
+	CMessageWatchDlg(CWnd *pParent = NULL); // standard constructor
 	~CMessageWatchDlg();
 
-
 	// Listen for broadcasts on this socket.
-	ISocket							*m_pListenSocket;
+	ISocket *m_pListenSocket;
 
 	// Connections we've made.
-	CUtlLinkedList<CSender*,int>	m_Senders;
+	CUtlLinkedList<CSender *, int> m_Senders;
 
-	CCriticalSection				m_SocketsCS;
-	CWinIdle						m_cWinIdle;
+	CCriticalSection m_SocketsCS;
+	CWinIdle m_cWinIdle;
 
+	CSender *FindSenderByAddr(const unsigned char ip[4]);
+	CSender *FindSenderByName(const char *pName);
 
-	CSender*						FindSenderByAddr( const unsigned char ip[4] );
-	CSender*						FindSenderByName( const char *pName );
-
-
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CMessageWatchDlg)
-	enum { IDD = IDD_MESSAGEWATCH_DIALOG };
-	CListBox	m_Machines;
+	enum
+	{
+		IDD = IDD_MESSAGEWATCH_DIALOG
+	};
+	CListBox m_Machines;
 	//}}AFX_DATA
 
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CMessageWatchDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
-	//}}AFX_VIRTUAL
+protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
+													 //}}AFX_VIRTUAL
 
-// Implementation
+	// Implementation
 protected:
 	HICON m_hIcon;
 
-	void			OnIdle();
+	void OnIdle();
 
 	// Generated message map functions
 	//{{AFX_MSG(CMessageWatchDlg)

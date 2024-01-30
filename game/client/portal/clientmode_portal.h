@@ -23,29 +23,22 @@ namespace vgui
 
 class ClientModePortalNormal : public ClientModeShared
 {
-DECLARE_CLASS( ClientModePortalNormal, ClientModeShared );
+	DECLARE_CLASS(ClientModePortalNormal, ClientModeShared);
 
 private:
-
-// IClientMode overrides.
+	// IClientMode overrides.
 public:
+	ClientModePortalNormal();
+	virtual ~ClientModePortalNormal();
 
-					ClientModePortalNormal();
-	virtual			~ClientModePortalNormal();
-
-	virtual void	Init();
-	virtual void	InitViewport();
-
+	virtual void Init();
+	virtual void InitViewport();
 
 private:
-
 	//	void	UpdateSpectatorMode( void );
-
 };
 
-
 extern IClientMode *GetClientModeNormal();
-extern ClientModePortalNormal* GetClientModePortalNormal();
-
+extern ClientModePortalNormal *GetClientModePortalNormal();
 
 #endif // PORTAL_CLIENTMODE_H

@@ -26,20 +26,18 @@ public:
 
 public:
 	// Call from the HUD_CreateEntities function so it can add sprites above player heads.
-	void	DrawHeadIcons();
+	void DrawHeadIcons();
 
 	// Call from player render calls to indicate a head icon should be drawn for this player this frame
-	void	PlayerDrawn( C_BasePlayer *pPlayer );
+	void PlayerDrawn(C_BasePlayer *pPlayer);
 
 private:
-	IMaterial	*m_pAlliesIconMaterial;		// For labels above players' heads.
-	IMaterial	*m_pAxisIconMaterial;		// For labels above players' heads.
-	CBitVec<MAX_PLAYERS> m_PlayerDrawn;		// Was the player drawn this frame?
+	IMaterial *m_pAlliesIconMaterial;	// For labels above players' heads.
+	IMaterial *m_pAxisIconMaterial;		// For labels above players' heads.
+	CBitVec<MAX_PLAYERS> m_PlayerDrawn; // Was the player drawn this frame?
 };
 
-
 // Get the (global) head icon manager.
-CHeadIconManager* HeadIconManager();
-
+CHeadIconManager *HeadIconManager();
 
 #endif // DOD_HEADICONMANAGER_H

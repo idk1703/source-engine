@@ -16,7 +16,7 @@
 
 //----------------------------------------------------------------------------------------
 
-#define SESSION_INFO_VERSION	1
+#define SESSION_INFO_VERSION 1
 
 //----------------------------------------------------------------------------------------
 
@@ -24,7 +24,7 @@ struct SessionInfoHeader_t
 {
 	inline SessionInfoHeader_t()
 	{
-		V_memset( this, 0, sizeof( SessionInfoHeader_t ) );
+		V_memset(this, 0, sizeof(SessionInfoHeader_t));
 		m_nCompressorType = COMPRESSORTYPE_INVALID;
 		m_uVersion = SESSION_INFO_VERSION;
 	}
@@ -35,22 +35,22 @@ struct SessionInfoHeader_t
 	//
 	// Therefore, any changes to data here should be reflected in the size of m_aUnused.
 	//
-	uint8				m_uVersion;
-	char				m_szSessionName[MAX_SESSIONNAME_LENGTH];	// Name of session
-	bool				m_bRecording;		// Is this session currenty recording?
-	int32				m_nNumBlocks;		// # blocks in the session so far if recording, or total if not recording
-	CompressorType_t	m_nCompressorType;	// COMPRESSORTYPE_INVALID if header is not compressed
-	uint8				m_aHash[16];		// MD5 digest on payload
-	uint32				m_uPayloadSize;		// Size of the payload - the compressed payload if it's compressed
-	uint32				m_uPayloadSizeUC;	// Size of the uncompressed payload, if its compressed, otherwise 0
+	uint8 m_uVersion;
+	char m_szSessionName[MAX_SESSIONNAME_LENGTH]; // Name of session
+	bool m_bRecording;							  // Is this session currenty recording?
+	int32 m_nNumBlocks;					// # blocks in the session so far if recording, or total if not recording
+	CompressorType_t m_nCompressorType; // COMPRESSORTYPE_INVALID if header is not compressed
+	uint8 m_aHash[16];					// MD5 digest on payload
+	uint32 m_uPayloadSize;				// Size of the payload - the compressed payload if it's compressed
+	uint32 m_uPayloadSizeUC;			// Size of the uncompressed payload, if its compressed, otherwise 0
 
-	uint8				m_aUnused[128];
+	uint8 m_aUnused[128];
 };
 
 //----------------------------------------------------------------------------------------
 
-bool ReadSessionInfoHeader( const void *pBuf, int nBufSize, SessionInfoHeader_t &outHeader );
+bool ReadSessionInfoHeader(const void *pBuf, int nBufSize, SessionInfoHeader_t &outHeader);
 
 //----------------------------------------------------------------------------------------
 
-#endif	// SESSIONINFOHEADER_H
+#endif // SESSIONINFOHEADER_H

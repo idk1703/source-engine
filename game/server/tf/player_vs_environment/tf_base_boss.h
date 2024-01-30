@@ -8,70 +8,92 @@
 
 class CTFPlayer;
 
-#define TF_BASE_BOSS_CURRENCY	125
-
+#define TF_BASE_BOSS_CURRENCY 125
 
 //----------------------------------------------------------------------------
 class CTFBaseBossLocomotion : public NextBotGroundLocomotion
 {
 public:
-	CTFBaseBossLocomotion( INextBot *bot ) : NextBotGroundLocomotion( bot ) { }
-	virtual ~CTFBaseBossLocomotion() { }
+	CTFBaseBossLocomotion(INextBot *bot) : NextBotGroundLocomotion(bot) {}
+	virtual ~CTFBaseBossLocomotion() {}
 
-	virtual float GetRunSpeed( void ) const;							// get maximum running speed
-	virtual float GetStepHeight( void ) const		{ return 100.0f; }	// if delta Z is greater than this, we have to jump to get up
-	virtual float GetMaxJumpHeight( void ) const	{ return 100.0f; }	// return maximum height of a jump
+	virtual float GetRunSpeed(void) const; // get maximum running speed
+	virtual float GetStepHeight(void) const
+	{
+		return 100.0f;
+	} // if delta Z is greater than this, we have to jump to get up
+	virtual float GetMaxJumpHeight(void) const
+	{
+		return 100.0f;
+	} // return maximum height of a jump
 
-	virtual void FaceTowards( const Vector &target );	// rotate body to face towards "target"
+	virtual void FaceTowards(const Vector &target); // rotate body to face towards "target"
 };
-
 
 //----------------------------------------------------------------------------
 class CTFBaseBoss : public NextBotCombatCharacter
 {
 public:
-	DECLARE_CLASS( CTFBaseBoss, NextBotCombatCharacter );
+	DECLARE_CLASS(CTFBaseBoss, NextBotCombatCharacter);
 	DECLARE_SERVERCLASS();
 	DECLARE_DATADESC();
 
 	CTFBaseBoss();
 	virtual ~CTFBaseBoss();
 
-	virtual void Precache( void );
-	virtual void Spawn( void );
-	int UpdateTransmitState( void );
+	virtual void Precache(void);
+	virtual void Spawn(void);
+	int UpdateTransmitState(void);
 
-	virtual void UpdateCollisionBounds( void ) {}
+	virtual void UpdateCollisionBounds(void) {}
 
-	virtual int OnTakeDamage( const CTakeDamageInfo &info );
-	virtual int OnTakeDamage_Alive( const CTakeDamageInfo &info );
-	virtual void Event_Killed( const CTakeDamageInfo &info );
+	virtual int OnTakeDamage(const CTakeDamageInfo &info);
+	virtual int OnTakeDamage_Alive(const CTakeDamageInfo &info);
+	virtual void Event_Killed(const CTakeDamageInfo &info);
 	virtual void UpdateOnRemove();
 
-	virtual bool IsRemovedOnReset( void ) const { return false; }	// remove this bot when the NextBot manager calls Reset
+	virtual bool IsRemovedOnReset(void) const
+	{
+		return false;
+	} // remove this bot when the NextBot manager calls Reset
 
-	virtual CTFBaseBossLocomotion *GetLocomotionInterface( void ) const	{ return m_locomotor; }
+	virtual CTFBaseBossLocomotion *GetLocomotionInterface(void) const
+	{
+		return m_locomotor;
+	}
 
-	virtual void Touch( CBaseEntity *pOther );
+	virtual void Touch(CBaseEntity *pOther);
 
-	virtual int GetCurrencyValue( void ){ return TF_BASE_BOSS_CURRENCY; }
+	virtual int GetCurrencyValue(void)
+	{
+		return TF_BASE_BOSS_CURRENCY;
+	}
 
-	void BossThink( void );
+	void BossThink(void);
 
-	void SetResolvePlayerCollisions( bool bResolve ) { m_bResolvePlayerCollisions = bResolve; }
+	void SetResolvePlayerCollisions(bool bResolve)
+	{
+		m_bResolvePlayerCollisions = bResolve;
+	}
 
-	void SetMaxSpeed( float value ) { m_speed = value; }
-	float GetMaxSpeed( void ) const { return m_speed; }
-	void InputEnable( inputdata_t &inputdata );
-	void InputDisable( inputdata_t &inputdata );
-	void InputSetSpeed( inputdata_t &inputdata );
-	void InputSetHealth( inputdata_t &inputdata );
-	void InputSetMaxHealth( inputdata_t &inputdata );
-	void InputAddHealth( inputdata_t &inputdata );
-	void InputRemoveHealth( inputdata_t &inputdata );
+	void SetMaxSpeed(float value)
+	{
+		m_speed = value;
+	}
+	float GetMaxSpeed(void) const
+	{
+		return m_speed;
+	}
+	void InputEnable(inputdata_t &inputdata);
+	void InputDisable(inputdata_t &inputdata);
+	void InputSetSpeed(inputdata_t &inputdata);
+	void InputSetHealth(inputdata_t &inputdata);
+	void InputSetMaxHealth(inputdata_t &inputdata);
+	void InputAddHealth(inputdata_t &inputdata);
+	void InputRemoveHealth(inputdata_t &inputdata);
 
-	void SetInitialHealth( int value );
-	void SetCurrencyValue( int value );				// how much cash do we drop when we die?
+	void SetInitialHealth(int value);
+	void SetCurrencyValue(int value); // how much cash do we drop when we die?
 
 	COutputEvent m_outputOnHealthBelow90Percent;
 	COutputEvent m_outputOnHealthBelow80Percent;
@@ -86,12 +108,15 @@ public:
 	COutputEvent m_outputOnKilled;
 
 protected:
-	virtual void ModifyDamage( CTakeDamageInfo *info ) const { }
-	int GetInitialHealth( ) const { return m_initialHealth; }
+	virtual void ModifyDamage(CTakeDamageInfo *info) const {}
+	int GetInitialHealth() const
+	{
+		return m_initialHealth;
+	}
 
 private:
 	int m_initialHealth;
-	CNetworkVar( float, m_lastHealthPercentage );
+	CNetworkVar(float, m_lastHealthPercentage);
 	string_t m_modelString;
 	float m_speed;
 	int m_startDisabled;
@@ -103,19 +128,17 @@ private:
 
 	CTFBaseBossLocomotion *m_locomotor;
 
-	void ResolvePlayerCollision( CTFPlayer *player );
+	void ResolvePlayerCollision(CTFPlayer *player);
 };
 
-
-inline void CTFBaseBoss::SetInitialHealth( int value )
+inline void CTFBaseBoss::SetInitialHealth(int value)
 {
 	m_initialHealth = value;
 }
 
-inline void CTFBaseBoss::SetCurrencyValue( int value )
+inline void CTFBaseBoss::SetCurrencyValue(int value)
 {
 	m_currencyValue = value;
 }
-
 
 #endif // TF_BASE_BOSS_H

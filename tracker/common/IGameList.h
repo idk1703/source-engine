@@ -22,7 +22,6 @@ struct serveritem_t;
 class IGameList
 {
 public:
-
 	enum InterfaceItem_e
 	{
 		FILTERS,
@@ -64,6 +63,5 @@ public:
 	// invalid server index
 	virtual int GetInvalidServerListID() = 0;
 };
-
 
 #endif // IGAMELIST_H

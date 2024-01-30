@@ -40,11 +40,11 @@ public:
 	// activates the console after a delay
 	void ActivateDelayed(float time);
 
-	void SetParent( int parent );
+	void SetParent(int parent);
 
 	static void OnCmdCondump();
-private:
 
+private:
 	bool m_bInitialized;
 	CGameConsoleDialog *m_pConsole;
 };

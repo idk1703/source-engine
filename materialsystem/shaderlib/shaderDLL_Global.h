@@ -13,21 +13,18 @@
 #pragma once
 #endif
 
-
 //-----------------------------------------------------------------------------
 // forward declarations
 //-----------------------------------------------------------------------------
 class IShaderSystem;
-
 
 //-----------------------------------------------------------------------------
 // forward declarations
 //-----------------------------------------------------------------------------
 inline IShaderSystem *GetShaderSystem()
 {
-	extern IShaderSystem* g_pSLShaderSystem;
+	extern IShaderSystem *g_pSLShaderSystem;
 	return g_pSLShaderSystem;
 }
 
-
-#endif	// SHADERDLL_GLOBAL_H
+#endif // SHADERDLL_GLOBAL_H

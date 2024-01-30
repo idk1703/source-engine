@@ -10,36 +10,51 @@
 #ifndef CRAGDOLLMAGNET_H
 #define CRAGDOLLMAGNET_H
 
-#define SF_RAGDOLLMAGNET_BAR	0x00000002	// this is a bar magnet.
+#define SF_RAGDOLLMAGNET_BAR 0x00000002 // this is a bar magnet.
 
 class CRagdollMagnet : public CPointEntity
 {
 public:
-	DECLARE_CLASS( CRagdollMagnet, CPointEntity );
+	DECLARE_CLASS(CRagdollMagnet, CPointEntity);
 	DECLARE_DATADESC();
 
-	Vector GetForceVector( CBaseEntity *pNPC );
-	float GetRadius( void ) { return m_radius; }
-	Vector GetAxisVector( void ) { return m_axis - GetAbsOrigin(); }
-	float DistToPoint( const Vector &vecPoint );
+	Vector GetForceVector(CBaseEntity *pNPC);
+	float GetRadius(void)
+	{
+		return m_radius;
+	}
+	Vector GetAxisVector(void)
+	{
+		return m_axis - GetAbsOrigin();
+	}
+	float DistToPoint(const Vector &vecPoint);
 
-	bool IsEnabled( void ) { return !m_bDisabled; }
+	bool IsEnabled(void)
+	{
+		return !m_bDisabled;
+	}
 
-	int IsBarMagnet( void ) { return (m_spawnflags & SF_RAGDOLLMAGNET_BAR); }
+	int IsBarMagnet(void)
+	{
+		return (m_spawnflags & SF_RAGDOLLMAGNET_BAR);
+	}
 
-	static CRagdollMagnet *FindBestMagnet( CBaseEntity *pNPC );
+	static CRagdollMagnet *FindBestMagnet(CBaseEntity *pNPC);
 
-	void Enable( bool bEnable ) { m_bDisabled = !bEnable; }
+	void Enable(bool bEnable)
+	{
+		m_bDisabled = !bEnable;
+	}
 
 	// Inputs
-	void InputEnable( inputdata_t &inputdata );
-	void InputDisable( inputdata_t &inputdata );
+	void InputEnable(inputdata_t &inputdata);
+	void InputDisable(inputdata_t &inputdata);
 
 private:
-	bool	m_bDisabled;
-	float	m_radius;
-	float	m_force;
-	Vector	m_axis;
+	bool m_bDisabled;
+	float m_radius;
+	float m_force;
+	Vector m_axis;
 };
 
-#endif //CRAGDOLLMAGNET_H
+#endif // CRAGDOLLMAGNET_H

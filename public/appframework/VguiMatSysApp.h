@@ -18,9 +18,7 @@
 #pragma once
 #endif
 
-
 #include "appframework/tier3app.h"
-
 
 //-----------------------------------------------------------------------------
 // The application object
@@ -39,7 +37,7 @@ public:
 	virtual void Destroy();
 
 	// Returns the window handle (HWND in Win32)
-	void* GetAppWindow();
+	void *GetAppWindow();
 
 	// Gets the window size
 	int GetWindowWidth() const;
@@ -49,23 +47,25 @@ protected:
 	void AppPumpMessages();
 
 	// Sets the video mode
-	bool SetVideoMode( );
+	bool SetVideoMode();
 
 	// Sets up the game path
-	bool SetupSearchPaths( const char *pStartingDir, bool bOnlyUseStartingDir, bool bIsTool );
+	bool SetupSearchPaths(const char *pStartingDir, bool bOnlyUseStartingDir, bool bIsTool);
 
 private:
 	// Returns the app name
 	virtual const char *GetAppName() = 0;
-	virtual bool AppUsesReadPixels() { return false; }
+	virtual bool AppUsesReadPixels()
+	{
+		return false;
+	}
 
 	// Creates the app window
-	virtual void *CreateAppWindow( char const *pTitle, bool bWindowed, int w, int h );
+	virtual void *CreateAppWindow(char const *pTitle, bool bWindowed, int w, int h);
 
 	void *m_HWnd;
 	int m_nWidth;
 	int m_nHeight;
 };
-
 
 #endif // VGUIMATSYSAPP_H

@@ -21,10 +21,10 @@ class IThinker;
 class IThinkManager : public IBaseInterface
 {
 public:
-	virtual void		AddThinker( IThinker *pThinker ) = 0;
-	virtual void		RemoveThinker( IThinker *pThinker ) = 0;
+	virtual void AddThinker(IThinker *pThinker) = 0;
+	virtual void RemoveThinker(IThinker *pThinker) = 0;
 
-	virtual void		Think() = 0;
+	virtual void Think() = 0;
 };
 
 //----------------------------------------------------------------------------------------

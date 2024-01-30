@@ -28,27 +28,27 @@ typedef unsigned int EFFECT_HANDLE;
 class C_CSRootPanel : public vgui::Panel
 {
 	typedef vgui::Panel BaseClass;
+
 public:
-						C_CSRootPanel( vgui::VPANEL parent );
-	virtual				~C_CSRootPanel( void );
+	C_CSRootPanel(vgui::VPANEL parent);
+	virtual ~C_CSRootPanel(void);
 
 	// Draw Panel effects here
-	virtual void		PostChildPaint();
+	virtual void PostChildPaint();
 
 	// Clear list of Panel Effects
-	virtual void		LevelInit( void );
-	virtual void		LevelShutdown( void );
+	virtual void LevelInit(void);
+	virtual void LevelShutdown(void);
 
 	// Run effects and let them decide whether to remove themselves
-	void				OnTick( void );
+	void OnTick(void);
 
 private:
-
 	// Render all panel effects
-	void		RenderPanelEffects( void );
+	void RenderPanelEffects(void);
 
 	// List of current panel effects
-	CUtlVector< CPanelEffect *> m_Effects;
+	CUtlVector<CPanelEffect *> m_Effects;
 };
 
 extern C_CSRootPanel *g_pTF2RootPanel;

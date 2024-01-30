@@ -10,11 +10,6 @@
 #pragma once
 #endif
 
-
-void FX_CS_BloodSpray(
-	const Vector &origin,
-	const Vector &normal,
-	float flDamage );
-
+void FX_CS_BloodSpray(const Vector &origin, const Vector &normal, float flDamage);
 
 #endif // FX_CS_BLOOD_H

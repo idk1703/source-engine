@@ -13,7 +13,8 @@
 #include "mathlib/vector.h"
 #include "pluginvariant.h"
 
-//Tony; prefixing everything in this so that i can make IGameInfo an extension of CGameRules and not stomp on anything, since gamerules isn't an entity.
+// Tony; prefixing everything in this so that i can make IGameInfo an extension of CGameRules and not stomp on anything,
+// since gamerules isn't an entity.
 abstract_class IGameInfo
 {
 public:
@@ -30,13 +31,11 @@ public:
 
 	// accessor to hook mod specific information about the rules. for TF2, fields such as
 	virtual bool GetInfo_Custom(int valueType, pluginvariant &outValue, pluginvariant options) = 0;
-
 };
 
-
-//Interface is very simple, there's not much really needed for the manager, this stuff is just in it's own interface so it's not mixed up with the entity
-//or player managers.
-#define INTERFACEVERSION_GAMEINFOMANAGER			"GameInfoManager001"
+// Interface is very simple, there's not much really needed for the manager, this stuff is just in it's own interface so
+// it's not mixed up with the entity or player managers.
+#define INTERFACEVERSION_GAMEINFOMANAGER "GameInfoManager001"
 abstract_class IGameInfoManager
 {
 public:

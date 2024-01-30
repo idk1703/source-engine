@@ -18,27 +18,34 @@
 //-----------------------------------------------------------------------------
 class CInfoVehicleBay : public CBaseEntity, public IHasBuildPoints
 {
-	DECLARE_CLASS( CInfoVehicleBay, CBaseEntity );
+	DECLARE_CLASS(CInfoVehicleBay, CBaseEntity);
+
 public:
 	DECLARE_DATADESC();
 
-	void Spawn( void );
+	void Spawn(void);
 
-// IHasBuildPoints
+	// IHasBuildPoints
 public:
-	virtual	int		GetNumBuildPoints( void ) const;
-	virtual bool	CanBuildObjectOnBuildPoint( int iPoint, int iObjectType );
-	virtual bool	GetBuildPoint( int iPoint, Vector &vecOrigin, QAngle &vecAngles );
-	virtual int		GetBuildPointAttachmentIndex( int iPoint ) const;
-	virtual void	SetObjectOnBuildPoint( int iPoint, CBaseObject *pObject );
-	virtual int		GetNumObjectsOnMe( void );
-	virtual CBaseEntity	*GetFirstObjectOnMe( void );
-	virtual CBaseObject *GetObjectOfTypeOnMe( int iObjectType );
-	virtual int		FindObjectOnBuildPoint( CBaseObject *pObject );
-	virtual void	GetExitPoint( CBaseEntity *pPlayer, int iPoint, Vector *pAbsOrigin, QAngle *pAbsAngles );
-	virtual void	RemoveAllObjects( void );
-	virtual float	GetMaxSnapDistance( int iPoint ) { return 128; }
-	virtual bool	ShouldCheckForMovement( void ) { return false; }
+	virtual int GetNumBuildPoints(void) const;
+	virtual bool CanBuildObjectOnBuildPoint(int iPoint, int iObjectType);
+	virtual bool GetBuildPoint(int iPoint, Vector &vecOrigin, QAngle &vecAngles);
+	virtual int GetBuildPointAttachmentIndex(int iPoint) const;
+	virtual void SetObjectOnBuildPoint(int iPoint, CBaseObject *pObject);
+	virtual int GetNumObjectsOnMe(void);
+	virtual CBaseEntity *GetFirstObjectOnMe(void);
+	virtual CBaseObject *GetObjectOfTypeOnMe(int iObjectType);
+	virtual int FindObjectOnBuildPoint(CBaseObject *pObject);
+	virtual void GetExitPoint(CBaseEntity *pPlayer, int iPoint, Vector *pAbsOrigin, QAngle *pAbsAngles);
+	virtual void RemoveAllObjects(void);
+	virtual float GetMaxSnapDistance(int iPoint)
+	{
+		return 128;
+	}
+	virtual bool ShouldCheckForMovement(void)
+	{
+		return false;
+	}
 };
 
 //-----------------------------------------------------------------------------
@@ -46,27 +53,28 @@ public:
 //-----------------------------------------------------------------------------
 class CVGuiScreenVehicleBay : public CVGuiScreen
 {
-	DECLARE_CLASS( CVGuiScreenVehicleBay, CVGuiScreen );
+	DECLARE_CLASS(CVGuiScreenVehicleBay, CVGuiScreen);
+
 public:
 	DECLARE_DATADESC();
 
-	virtual void Activate( void );
+	virtual void Activate(void);
 
-	void	BuildVehicle( CBaseTFPlayer *pPlayer, int iObjectType );
-	void	FinishedBuildVehicle( CBaseObject *pObject );
-	void	SetBuildPoint( Vector &vecOrigin, QAngle &vecAngles );
+	void BuildVehicle(CBaseTFPlayer *pPlayer, int iObjectType);
+	void FinishedBuildVehicle(CBaseObject *pObject);
+	void SetBuildPoint(Vector &vecOrigin, QAngle &vecAngles);
 
-	void	BayThink( void );
+	void BayThink(void);
 
 private:
-	bool		m_bBayIsClear;
-	Vector		m_vecBuildPointOrigin;
-	QAngle		m_vecBuildPointAngles;
+	bool m_bBayIsClear;
+	Vector m_vecBuildPointOrigin;
+	QAngle m_vecBuildPointAngles;
 
 	// Outputs
-	COutputEvent	m_OnStartedBuild;
-	COutputEvent	m_OnFinishedBuild;
-	COutputEvent	m_OnReadyToBuildAgain;
+	COutputEvent m_OnStartedBuild;
+	COutputEvent m_OnFinishedBuild;
+	COutputEvent m_OnReadyToBuildAgain;
 };
 
 #endif // INFO_VEHICLE_BAY_H

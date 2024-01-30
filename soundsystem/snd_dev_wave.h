@@ -11,17 +11,14 @@
 #pragma once
 #endif
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
 class IAudioDevice;
 
-
 //-----------------------------------------------------------------------------
 // Creates a device that mixes WAVs using windows
 //-----------------------------------------------------------------------------
-IAudioDevice *Audio_CreateWaveDevice( void );
-
+IAudioDevice *Audio_CreateWaveDevice(void);
 
 #endif // SND_DEV_WAVE_H

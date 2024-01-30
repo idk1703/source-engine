@@ -15,7 +15,6 @@
 #include "HammerBar.h"
 #include "FilteredComboBox.h"
 
-
 class CMapView;
 class BoundBox;
 class CMapClass;
@@ -24,17 +23,15 @@ class CPrefab;
 
 #define MAX_PREV_SEL 12
 
-
 class CObjectBar : public CHammerBar, public CFilteredComboBox::ICallbacks
 {
 public:
-
 	CObjectBar();
 	BOOL Create(CWnd *pParentWnd);
 
 	static LPCTSTR GetDefaultEntityClass(void);
 
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	virtual BOOL PreTranslateMessage(MSG *pMsg);
 
 	void UpdateListForTool(int iTool);
 	void SetupForBlockTool();
@@ -47,18 +44,15 @@ public:
 
 	void DoDataExchange(CDataExchange *pDX);
 
-	bool IsEntityToolCreatingPrefab( void );
-	bool IsEntityToolCreatingEntity( void );
-	CMapClass *BuildPrefabObjectAtPoint( Vector const &HitPos );
+	bool IsEntityToolCreatingPrefab(void);
+	bool IsEntityToolCreatingEntity(void);
+	CMapClass *BuildPrefabObjectAtPoint(Vector const &HitPos);
 
+	// CFilteredComboBox::ICallbacks implementation.
 
-// CFilteredComboBox::ICallbacks implementation.
-
-	virtual void OnTextChanged( const char *pText );
-
+	virtual void OnTextChanged(const char *pText);
 
 private:
-
 	enum
 	{
 		listPrimitives,
@@ -67,25 +61,28 @@ private:
 	} ListType;
 
 	//{{AFX_DATA(CMapViewBar)
-	enum { IDD = IDD_OBJECTBAR };
+	enum
+	{
+		IDD = IDD_OBJECTBAR
+	};
 	//}}AFX_DATA
 
-	CFilteredComboBox	m_CreateList;				// this should really be m_ItemList
-	CComboBox			m_CategoryList;
-	CEdit				m_Faces;
-	CSpinButtonCtrl		m_FacesSpin;
+	CFilteredComboBox m_CreateList; // this should really be m_ItemList
+	CComboBox m_CategoryList;
+	CEdit m_Faces;
+	CSpinButtonCtrl m_FacesSpin;
 
-	CPrefab* FindPrefabByName( const char *pName );
+	CPrefab *FindPrefabByName(const char *pName);
 
-	void LoadBlockCategories( void );
-	void LoadEntityCategories( void );
-	void LoadPrefabCategories( void );
+	void LoadBlockCategories(void);
+	void LoadEntityCategories(void);
+	void LoadPrefabCategories(void);
 
-	void LoadBlockItems( void );
-	void LoadEntityItems( void );
-	void LoadPrefabItems( void );
+	void LoadBlockItems(void);
+	void LoadEntityItems(void);
+	void LoadPrefabItems(void);
 
-	int UpdatePreviousSelection( int iTool );
+	int UpdatePreviousSelection(int iTool);
 
 	int GetPrevSelIndex(DWORD dwGameID, int *piNewIndex = NULL);
 	BOOL EnableFaceControl(CWnd *pWnd, BOOL bModifyWnd);
@@ -112,9 +109,8 @@ private:
 	int m_iLastTool;
 
 protected:
-
-	afx_msg void UpdateControl(CCmdUI*);
-	afx_msg void UpdateFaceControl(CCmdUI*);
+	afx_msg void UpdateControl(CCmdUI *);
+	afx_msg void UpdateFaceControl(CCmdUI *);
 	afx_msg void OnCategorylistSelchange();
 	afx_msg void OnChangeCategory();
 

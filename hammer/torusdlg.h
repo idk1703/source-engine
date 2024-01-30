@@ -21,52 +21,58 @@
 
 class CTorusDlg : public CDialog
 {
-// Construction
+	// Construction
 public:
-	CTorusDlg(Vector& bmins, Vector& bmaxs, CWnd* pParent = NULL);   // standard constructor
-	~CTorusDlg();   // standard constructor
+	CTorusDlg(Vector &bmins, Vector &bmaxs, CWnd *pParent = NULL); // standard constructor
+	~CTorusDlg();												   // standard constructor
 
-	void DrawTorusTopView( CDC *pDC );
-	void DrawTorusCrossSection( CDC *pDC );
+	void DrawTorusTopView(CDC *pDC);
+	void DrawTorusCrossSection(CDC *pDC);
 	float GetTorusCrossSectionRadius() const;
 
 	BOOL bInitialized;
 	Vector bmins, bmaxs;
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CTorusDlg)
-	enum { IDD = IDD_TORUS };
-	CSpinButtonCtrl	m_cStartAngleSpin;
-	CSpinButtonCtrl	m_cWallWidthSpin;
-	CEdit	m_cWallWidth;
-	CSpinButtonCtrl	m_cSidesSpin;
-	CEdit	m_cSides;
-	CSpinButtonCtrl	m_cArcSpin;
-	CEdit	m_cArc;
-	CStatic	m_cPreview;
-	CStatic	m_cTopViewPreview;
-	int		m_iSides;
-	int		m_iWallWidth;
-	float	m_fArc;
-	float	m_fAngle;
-	float	m_fRotationArc;
-	float	m_fRotationAngle;
-	int		m_iRotationSides;
-	int		m_iAddHeight;
-	float	m_fCrossSectionRadius;
+	enum
+	{
+		IDD = IDD_TORUS
+	};
+	CSpinButtonCtrl m_cStartAngleSpin;
+	CSpinButtonCtrl m_cWallWidthSpin;
+	CEdit m_cWallWidth;
+	CSpinButtonCtrl m_cSidesSpin;
+	CEdit m_cSides;
+	CSpinButtonCtrl m_cArcSpin;
+	CEdit m_cArc;
+	CStatic m_cPreview;
+	CStatic m_cTopViewPreview;
+	int m_iSides;
+	int m_iWallWidth;
+	float m_fArc;
+	float m_fAngle;
+	float m_fRotationArc;
+	float m_fRotationAngle;
+	int m_iRotationSides;
+	int m_iAddHeight;
+	float m_fCrossSectionRadius;
 	//}}AFX_DATA
 
-	void SetMaxWallWidth(int iMaxWallWidth) { m_iMaxWallWidth = iMaxWallWidth; }
+	void SetMaxWallWidth(int iMaxWallWidth)
+	{
+		m_iMaxWallWidth = iMaxWallWidth;
+	}
 	void SaveValues();
 
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CTorusDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
+protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
+													 //}}AFX_VIRTUAL
 
-// Implementation
+	// Implementation
 protected:
 	float MaxTorusCrossSectionRadius() const;
 

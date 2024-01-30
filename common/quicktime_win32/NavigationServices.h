@@ -20,10 +20,8 @@
 #include <HIToolbox.h>
 #endif
 
-
 #ifndef __NAVIGATION__
 #include <Navigation.h>
 #endif
-
 
 #endif /* __NAVIGATIONSERVICES__ */

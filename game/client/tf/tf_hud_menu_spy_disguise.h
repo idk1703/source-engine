@@ -19,34 +19,40 @@
 
 using namespace vgui;
 
-#define ALL_BUILDINGS	-1
+#define ALL_BUILDINGS -1
 
 class CHudMenuSpyDisguise : public CHudBaseBuildMenu
 {
-	DECLARE_CLASS_SIMPLE( CHudMenuSpyDisguise, EditablePanel );
+	DECLARE_CLASS_SIMPLE(CHudMenuSpyDisguise, EditablePanel);
 
 public:
-	CHudMenuSpyDisguise( const char *pElementName );
+	CHudMenuSpyDisguise(const char *pElementName);
 
-	virtual void	ApplySchemeSettings( IScheme *scheme );
-	virtual bool	ShouldDraw( void ) OVERRIDE;
+	virtual void ApplySchemeSettings(IScheme *scheme);
+	virtual bool ShouldDraw(void) OVERRIDE;
 
-	virtual void	FireGameEvent( IGameEvent *event );
+	virtual void FireGameEvent(IGameEvent *event);
 
-	virtual void	SetVisible( bool state );
+	virtual void SetVisible(bool state);
 
-	int	HudElementKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
+	int HudElementKeyInput(int down, ButtonCode_t keynum, const char *pszCurrentBinding);
 
-	virtual int GetRenderGroupPriority( void ) { return 50; }
-	void SelectDisguise( int iClass, int iTeam );
+	virtual int GetRenderGroupPriority(void)
+	{
+		return 50;
+	}
+	void SelectDisguise(int iClass, int iTeam);
 
-	virtual GameActionSet_t GetPreferredActionSet() { return GAME_ACTION_SET_IN_GAME_HUD; }
+	virtual GameActionSet_t GetPreferredActionSet()
+	{
+		return GAME_ACTION_SET_IN_GAME_HUD;
+	}
 
 private:
-	void SetSelectedItem( int iSlot );
-	void ToggleDisguiseTeam( void );
-	void ToggleSelectionIcons( bool bGroup );
-	void FindToggleBinding( void );
+	void SetSelectedItem(int iSlot);
+	void ToggleDisguiseTeam(void);
+	void ToggleSelectionIcons(bool bGroup);
+	void FindToggleBinding(void);
 
 private:
 	EditablePanel *m_pClassItems_Red[9];
@@ -73,4 +79,4 @@ private:
 	bool m_bInConsoleMode;
 };
 
-#endif	// TF_HUD_MENU_SPY_DISGUISE_H
+#endif // TF_HUD_MENU_SPY_DISGUISE_H

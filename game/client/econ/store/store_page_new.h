@@ -27,16 +27,16 @@
 class CStorePricePanel_New : public CStorePricePanel
 {
 public:
-	DECLARE_CLASS_SIMPLE( CStorePricePanel_New, CStorePricePanel );
+	DECLARE_CLASS_SIMPLE(CStorePricePanel_New, CStorePricePanel);
 
-	CStorePricePanel_New( vgui::Panel *pParent, const char *pPanelName );
+	CStorePricePanel_New(vgui::Panel *pParent, const char *pPanelName);
 
-	virtual const char	*GetPanelResFile()
+	virtual const char *GetPanelResFile()
 	{
 		return "Resource/UI/econ/store/v1/StorePrice_New.res";
 	}
 
-	virtual void SetItem( const econ_store_entry_t *pEntry );
+	virtual void SetItem(const econ_store_entry_t *pEntry);
 };
 
 //-----------------------------------------------------------------------------
@@ -45,22 +45,22 @@ public:
 class CStorePricePanel_Bundles : public CStorePricePanel
 {
 public:
-	DECLARE_CLASS_SIMPLE( CStorePricePanel_Bundles, CStorePricePanel );
+	DECLARE_CLASS_SIMPLE(CStorePricePanel_Bundles, CStorePricePanel);
 
-	CStorePricePanel_Bundles( vgui::Panel *pParent, const char *pPanelName );
+	CStorePricePanel_Bundles(vgui::Panel *pParent, const char *pPanelName);
 
-	virtual const char	*GetPanelResFile()
+	virtual const char *GetPanelResFile()
 	{
 		return "Resource/UI/econ/store/v1/StorePrice_Bundles.res";
 	}
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 	virtual void PerformLayout();
 
-	virtual void SetItem( const econ_store_entry_t *pEntry );
+	virtual void SetItem(const econ_store_entry_t *pEntry);
 
 private:
-	vgui::ImagePanel	*m_pLimitedLarge;
+	vgui::ImagePanel *m_pLimitedLarge;
 };
 
 //-----------------------------------------------------------------------------
@@ -69,11 +69,11 @@ private:
 class CStorePricePanel_Jumbo : public CStorePricePanel
 {
 public:
-	DECLARE_CLASS_SIMPLE( CStorePricePanel_Jumbo, CStorePricePanel );
+	DECLARE_CLASS_SIMPLE(CStorePricePanel_Jumbo, CStorePricePanel);
 
-	CStorePricePanel_Jumbo( vgui::Panel *pParent, const char *pPanelName );
+	CStorePricePanel_Jumbo(vgui::Panel *pParent, const char *pPanelName);
 
-	virtual const char	*GetPanelResFile()
+	virtual const char *GetPanelResFile()
 	{
 		return "Resource/UI/econ/store/v1/StorePrice_Jumbo.res";
 	}
@@ -85,19 +85,19 @@ public:
 class CStorePricePanel_Popular : public CStorePricePanel
 {
 public:
-	DECLARE_CLASS_SIMPLE( CStorePricePanel_Popular, CStorePricePanel );
+	DECLARE_CLASS_SIMPLE(CStorePricePanel_Popular, CStorePricePanel);
 
-	CStorePricePanel_Popular( vgui::Panel *pParent, const char *pPanelName, int iPopularityRank );
+	CStorePricePanel_Popular(vgui::Panel *pParent, const char *pPanelName, int iPopularityRank);
 
-	virtual const char	*GetPanelResFile()
+	virtual const char *GetPanelResFile()
 	{
 		return "Resource/UI/econ/store/v1/StorePrice_Popular.res";
 	}
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 	virtual void PerformLayout();
 
-	virtual void SetItem( const econ_store_entry_t *pEntry );
+	virtual void SetItem(const econ_store_entry_t *pEntry);
 
 private:
 	int m_iPopularityRank;

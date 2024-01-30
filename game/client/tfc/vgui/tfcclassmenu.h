@@ -20,7 +20,6 @@
 #include "tfc_gamerules.h"
 #include "vgui_controls/ImagePanel.h"
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Draws the Terrorist class menu
 //-----------------------------------------------------------------------------
@@ -28,15 +27,14 @@
 class CTFCClassMenu : public CClassMenu
 {
 private:
-	DECLARE_CLASS_SIMPLE( CTFCClassMenu, CClassMenu );
+	DECLARE_CLASS_SIMPLE(CTFCClassMenu, CClassMenu);
 
 public:
 	CTFCClassMenu::CTFCClassMenu(IViewPort *pViewPort);
 
-	const char *GetName( void );
+	const char *GetName(void);
 	void ShowPanel(bool bShow);
 	void Update();
 };
-
 
 #endif // TFCCLASSMENU_H

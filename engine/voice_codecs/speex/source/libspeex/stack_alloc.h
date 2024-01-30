@@ -37,25 +37,26 @@
 #if 0
 
 /*Aligns the stack to a 'size' boundary */
-#define ALIGN(stack, size) (stack=(void*)((((int)stack)+((size)-1)) & (-(size))))
+#define ALIGN(stack, size)		(stack = (void *)((((int)stack) + ((size)-1)) & (-(size))))
 /*Aligns the stack to a 'size' boundary minus k */
-#define ALIGN_1(stack, size, k) (stack=(void*)(((((int)stack)+((size)-1+(k))) & (-(size)))-(k)))
+#define ALIGN_1(stack, size, k) (stack = (void *)(((((int)stack) + ((size)-1 + (k))) & (-(size))) - (k)))
 
 /* Allocates 'size' elements of type 'type' on the stack */
-#define PUSH(stack, size, type) (ALIGN(stack,sizeof(type)),stack=(void*)(((int)stack)+((size)*sizeof(type))),(type*)(((int)stack)-((size)*sizeof(type))))
-
+#define PUSH(stack, size, type)                                                            \
+	(ALIGN(stack, sizeof(type)), stack = (void *)(((int)stack) + ((size) * sizeof(type))), \
+	 (type *)(((int)stack) - ((size) * sizeof(type))))
 
 #else
 
 /*Aligns the stack to a 'size' boundary */
-#define ALIGN(stack, size) ((stack) += ((size) - (int)(stack)) & ((size) - 1))
+#define ALIGN(stack, size) ((stack) += ((size) - (int)(stack)) & ((size)-1))
 
 /* Allocates 'size' elements of type 'type' on the stack */
-#define PUSH(stack, size, type) (ALIGN((stack),sizeof(type)),(stack)+=((size)*sizeof(type)),(type*)((stack)-((size)*sizeof(type))))
+#define PUSH(stack, size, type) \
+	(ALIGN((stack), sizeof(type)), (stack) += ((size) * sizeof(type)), (type *)((stack) - ((size) * sizeof(type))))
 
 /* Allocates a struct stack */
-#define PUSHS(stack, type) (ALIGN((stack),sizeof(long)),(stack)+=(sizeof(type)),(type*)((stack)-(sizeof(type))))
-
+#define PUSHS(stack, type) (ALIGN((stack), sizeof(long)), (stack) += (sizeof(type)), (type *)((stack) - (sizeof(type))))
 
 #endif
 

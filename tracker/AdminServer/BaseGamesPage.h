@@ -19,15 +19,15 @@
 
 namespace vgui
 {
-class ListPanel;
-class ImagePanel;
-class ComboBox;
-class ToggleButton;
-class CheckButton;
-class TextEntry;
-class MenuButton;
-class Menu;
-};
+	class ListPanel;
+	class ImagePanel;
+	class ComboBox;
+	class ToggleButton;
+	class CheckButton;
+	class TextEntry;
+	class MenuButton;
+	class Menu;
+}; // namespace vgui
 
 //-----------------------------------------------------------------------------
 // Purpose: Base property page for all the games lists (internet/favorites/lan/etc.)
@@ -49,23 +49,26 @@ public:
 protected:
 	virtual void OnTick();
 	virtual void OnCommand(const char *command);
-//	virtual void OnOnMouseDoublePressed(enum vgui::MouseCode code);
+	//	virtual void OnOnMouseDoublePressed(enum vgui::MouseCode code);
 
 	// an inner class
-	class OurListPanel: public vgui::ListPanel
+	class OurListPanel : public vgui::ListPanel
 	{
 	public:
-		OurListPanel(vgui::Panel *parent, const char *panelName): vgui::ListPanel(parent,panelName) { m_pParent=parent;};
+		OurListPanel(vgui::Panel *parent, const char *panelName) : vgui::ListPanel(parent, panelName)
+		{
+			m_pParent = parent;
+		};
 
-		virtual void	OnMouseDoublePressed( vgui::MouseCode code );
+		virtual void OnMouseDoublePressed(vgui::MouseCode code);
+
 	private:
 		vgui::Panel *m_pParent;
-
 	};
 
 	// a list panel we grab the double click event from :)
 	OurListPanel *m_pGameList;
-	CServerList	m_Servers;
+	CServerList m_Servers;
 	vgui::ImagePanel *m_pPasswordIcon; // password icon
 
 private:
@@ -81,12 +84,11 @@ private:
 
 	vgui::Panel *m_pParent;
 
-//	vgui::Menu *m_pRefreshMenu;
+	//	vgui::Menu *m_pRefreshMenu;
 
 	typedef vgui::Frame BaseClass;
 
 	DECLARE_PANELMAP();
 };
-
 
 #endif // BASEGAMESPAGE_H

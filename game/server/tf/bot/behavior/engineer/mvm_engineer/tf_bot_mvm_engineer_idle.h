@@ -11,17 +11,20 @@ class CTFBotHintSentrygun;
 class CTFBotHintTeleporterExit;
 class CTFBotHintEngineerNest;
 
-class CTFBotMvMEngineerIdle : public Action< CTFBot >
+class CTFBotMvMEngineerIdle : public Action<CTFBot>
 {
 public:
-	virtual ActionResult< CTFBot >	OnStart( CTFBot *me, Action< CTFBot > *priorAction );
-	virtual ActionResult< CTFBot >	Update( CTFBot *me, float interval );
+	virtual ActionResult<CTFBot> OnStart(CTFBot *me, Action<CTFBot> *priorAction);
+	virtual ActionResult<CTFBot> Update(CTFBot *me, float interval);
 
-	virtual QueryResultType ShouldAttack( const INextBot *me, const CKnownEntity *them ) const;
-	virtual QueryResultType	ShouldRetreat( const INextBot *me ) const;							// is it time to retreat?
-	virtual QueryResultType	ShouldHurry( const INextBot *me ) const;							// are we in a hurry?
+	virtual QueryResultType ShouldAttack(const INextBot *me, const CKnownEntity *them) const;
+	virtual QueryResultType ShouldRetreat(const INextBot *me) const; // is it time to retreat?
+	virtual QueryResultType ShouldHurry(const INextBot *me) const;	 // are we in a hurry?
 
-	virtual const char *GetName( void ) const	{ return "MvMEngineerIdle"; };
+	virtual const char *GetName(void) const
+	{
+		return "MvMEngineerIdle";
+	};
 
 private:
 	PathFollower m_path;
@@ -34,12 +37,12 @@ private:
 
 	int m_nTeleportedCount;
 	bool m_bTeleportedToHint;
-	CHandle< CTFBotHintTeleporterExit > m_teleporterHint;
-	CHandle< CTFBotHintSentrygun > m_sentryHint;
-	CHandle< CTFBotHintEngineerNest > m_nestHint;
+	CHandle<CTFBotHintTeleporterExit> m_teleporterHint;
+	CHandle<CTFBotHintSentrygun> m_sentryHint;
+	CHandle<CTFBotHintEngineerNest> m_nestHint;
 
-	void TakeOverStaleNest( CBaseTFBotHintEntity* pHint, CTFBot *me );
-	bool ShouldAdvanceNestSpot( CTFBot *me );
+	void TakeOverStaleNest(CBaseTFBotHintEntity *pHint, CTFBot *me);
+	bool ShouldAdvanceNestSpot(CTFBot *me);
 
 	void TryToDetonateStaleNest();
 	bool m_bTriedToDetonateStaleNest;
@@ -48,8 +51,8 @@ private:
 class CTFBotMvMEngineerHintFinder
 {
 public:
-	static bool FindHint( bool bShouldCheckForBlockingObjects, bool bAllowOutOfRangeNest, CHandle< CTFBotHintEngineerNest >* pFoundNest = NULL );
+	static bool FindHint(bool bShouldCheckForBlockingObjects, bool bAllowOutOfRangeNest,
+						 CHandle<CTFBotHintEngineerNest> *pFoundNest = NULL);
 };
-
 
 #endif // TF_BOT_MVM_ENGINEER_IDLE_H

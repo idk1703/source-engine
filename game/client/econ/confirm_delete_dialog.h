@@ -18,11 +18,12 @@
 //-----------------------------------------------------------------------------
 class CConfirmDeleteDialog : public CConfirmDialog
 {
-	DECLARE_CLASS_SIMPLE( CConfirmDeleteDialog,CConfirmDialog );
-public:
-	CConfirmDeleteDialog( vgui::Panel *parent );
+	DECLARE_CLASS_SIMPLE(CConfirmDeleteDialog, CConfirmDialog);
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+public:
+	CConfirmDeleteDialog(vgui::Panel *parent);
+
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 };
 
 #endif // CONFIRM_DELETE_DIALOG_H

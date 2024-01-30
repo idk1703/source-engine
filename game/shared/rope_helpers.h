@@ -11,9 +11,7 @@
 #pragma once
 #endif
 
-
 #include "mathlib/vector.h"
-
 
 //
 // This function can help you choose starting conditions for your rope. It is fairly
@@ -29,14 +27,7 @@
 //	  - pOutputLength = length of the rope
 //    - pOutputSlack  = slack you should set to produce the desired hang
 //
-void CalcRopeStartingConditions(
-	const Vector &vStartPos,
-	const Vector &vEndPos,
-	int const nNodes,
-	float const desiredHang,
-	float *pOutputLength,
-	float *pOutputSlack
-	);
-
+void CalcRopeStartingConditions(const Vector &vStartPos, const Vector &vEndPos, int const nNodes,
+								float const desiredHang, float *pOutputLength, float *pOutputSlack);
 
 #endif // ROPE_HELPERS_H

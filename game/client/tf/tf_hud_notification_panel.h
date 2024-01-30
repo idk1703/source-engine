@@ -21,10 +21,9 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 class CHudNotificationPanel : public CHudElement, public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CHudNotificationPanel, EditablePanel );
+	DECLARE_CLASS_SIMPLE(CHudNotificationPanel, EditablePanel);
 
 public:
-
 	typedef enum
 	{
 		kBackground_Blue,
@@ -32,26 +31,29 @@ public:
 		kBackground_Black,
 	} BackgroundType_t;
 
-	CHudNotificationPanel( const char *pElementName );
+	CHudNotificationPanel(const char *pElementName);
 
-	virtual void	Init( void );
-	virtual void	ApplySchemeSettings( IScheme *scheme );
-	virtual bool	ShouldDraw( void );
-	virtual void	OnTick( void );
-	virtual void	PerformLayout( void );
+	virtual void Init(void);
+	virtual void ApplySchemeSettings(IScheme *scheme);
+	virtual bool ShouldDraw(void);
+	virtual void OnTick(void);
+	virtual void PerformLayout(void);
 
-	const char *GetNotificationByType( int iType, float& flDuration );
+	const char *GetNotificationByType(int iType, float &flDuration);
 
-	void	MsgFunc_HudNotify( bf_read &msg );
-	void	MsgFunc_HudNotifyCustom( bf_read &msg );
+	void MsgFunc_HudNotify(bf_read &msg);
+	void MsgFunc_HudNotifyCustom(bf_read &msg);
 
-	void	SetupNotifyCustom( const char *pszText, const char *pszIcon, int iBackgroundTeam );
-	void	SetupNotifyCustom( const wchar_t *pszText, const char *pszIcon, int iBackgroundTeam );
-	void	SetupNotifyCustom( const wchar_t *pszText, HudNotification_t type, float overrideDuration = 0.0f );
+	void SetupNotifyCustom(const char *pszText, const char *pszIcon, int iBackgroundTeam);
+	void SetupNotifyCustom(const wchar_t *pszText, const char *pszIcon, int iBackgroundTeam);
+	void SetupNotifyCustom(const wchar_t *pszText, HudNotification_t type, float overrideDuration = 0.0f);
 
-	virtual void LevelInit( void ) { m_flFadeTime = 0; };
+	virtual void LevelInit(void)
+	{
+		m_flFadeTime = 0;
+	};
 
-	bool		LoadManifest( void );
+	bool LoadManifest(void);
 
 private:
 	float m_flFadeTime;
@@ -64,18 +66,16 @@ private:
 	{
 		ShowCount_t() {}
 
-		ShowCount_t( int nMaxShowCount, float flCooldown, ConVar* pConVar )
-			: m_nMaxShowCount( nMaxShowCount )
-			, m_flCooldown( flCooldown )
-			, m_pConVar( pConVar )
-			, m_flNextAllowedTime( 0.f )
-		{}
+		ShowCount_t(int nMaxShowCount, float flCooldown, ConVar *pConVar)
+			: m_nMaxShowCount(nMaxShowCount), m_flCooldown(flCooldown), m_pConVar(pConVar), m_flNextAllowedTime(0.f)
+		{
+		}
 		int m_nMaxShowCount;
-		ConVar* m_pConVar;
+		ConVar *m_pConVar;
 		float m_flCooldown;
 		float m_flNextAllowedTime;
 	};
-	CUtlMap< int, ShowCount_t > m_mapShowCounts;
+	CUtlMap<int, ShowCount_t> m_mapShowCounts;
 };
 
 #endif // TF_HUD_NOTIFICATION_PANEL_H

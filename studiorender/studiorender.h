@@ -22,11 +22,10 @@
 #include "flexrenderdata.h"
 #include "mathlib/compressed_vector.h"
 #include "r_studiolight.h"
-#if defined( _WIN32 ) && !defined( _X360 )
+#if defined(_WIN32) && !defined(_X360)
 #include <xmmintrin.h>
 #endif
 #include "tier0/dbg.h"
-
 
 //-----------------------------------------------------------------------------
 // Forward declarations
@@ -51,8 +50,7 @@ namespace OptimizedModel
 	struct StripGroupHeader_t;
 	struct Vertex_t;
 	struct ModelLODHeader_t;
-}
-
+} // namespace OptimizedModel
 
 //-----------------------------------------------------------------------------
 // FIXME: Remove
@@ -60,17 +58,15 @@ namespace OptimizedModel
 class IStudioDataCache;
 extern IStudioDataCache *g_pStudioDataCache;
 
-
 //-----------------------------------------------------------------------------
 // Singleton
 //-----------------------------------------------------------------------------
 extern CStudioRender g_StudioRender;
 
-
 //-----------------------------------------------------------------------------
 // Defines + structs
 //-----------------------------------------------------------------------------
-#define MAXLOCALLIGHTS 4
+#define MAXLOCALLIGHTS	4
 #define MAXLIGHTCOMPUTE 16
 
 enum StudioModelLighting_t
@@ -82,37 +78,36 @@ enum StudioModelLighting_t
 
 struct lightpos_t
 {
-	Vector	delta;		// unit vector from vertex to light
-	float	falloff;	// light distance falloff
-	float	dot;		// light direction * delta;
+	Vector delta;  // unit vector from vertex to light
+	float falloff; // light distance falloff
+	float dot;	   // light direction * delta;
 
 	lightpos_t() {}
 
 private:
 	// Copy constructors are not allowed
-	lightpos_t( const lightpos_t& src );
+	lightpos_t(const lightpos_t &src);
 };
 
 struct eyeballstate_t
 {
 	const mstudioeyeball_t *peyeball;
 
-	matrix3x4_t	mat;
+	matrix3x4_t mat;
 
-	Vector	org;		// world center of eyeball
-	Vector	forward;
-	Vector	right;
-	Vector	up;
+	Vector org; // world center of eyeball
+	Vector forward;
+	Vector right;
+	Vector up;
 
-	Vector	cornea;		// world center of cornea
+	Vector cornea; // world center of cornea
 
 	eyeballstate_t() {}
 
 private:
 	// Copy constructors are not allowed
-	eyeballstate_t( const eyeballstate_t& src );
+	eyeballstate_t(const eyeballstate_t &src);
 };
-
 
 //-----------------------------------------------------------------------------
 // Store decal vertex data here
@@ -120,26 +115,26 @@ private:
 #pragma pack(1)
 struct DecalVertex_t
 {
-	mstudiomesh_t *GetMesh( studiohdr_t *pHdr )
+	mstudiomesh_t *GetMesh(studiohdr_t *pHdr)
 	{
-		if ((m_Body == 0xFFFF) || (m_Model == 0xFFFF) || (m_Mesh == 0xFFFF))
+		if((m_Body == 0xFFFF) || (m_Model == 0xFFFF) || (m_Mesh == 0xFFFF))
 			return NULL;
 
-		mstudiobodyparts_t *pBody = pHdr->pBodypart( m_Body );
-		mstudiomodel_t *pModel = pBody->pModel( m_Model );
-		return pModel->pMesh( m_Mesh );
+		mstudiobodyparts_t *pBody = pHdr->pBodypart(m_Body);
+		mstudiomodel_t *pModel = pBody->pModel(m_Model);
+		return pModel->pMesh(m_Mesh);
 	}
 
-	IMorph *GetMorph( studiohdr_t *pHdr, studiomeshdata_t *pStudioMeshes )
+	IMorph *GetMorph(studiohdr_t *pHdr, studiomeshdata_t *pStudioMeshes)
 	{
-		if ( (m_Body == 0xFFFF) || (m_Model == 0xFFFF) || (m_Mesh == 0xFFFF) || (m_Group == 0xFFFF) )
+		if((m_Body == 0xFFFF) || (m_Model == 0xFFFF) || (m_Mesh == 0xFFFF) || (m_Group == 0xFFFF))
 			return NULL;
 
-		mstudiobodyparts_t *pBody = pHdr->pBodypart( m_Body );
-		mstudiomodel_t *pModel = pBody->pModel( m_Model );
-		mstudiomesh_t *pMesh = pModel->pMesh( m_Mesh );
-		studiomeshdata_t* pMeshData = &pStudioMeshes[pMesh->meshid];
-		studiomeshgroup_t* pGroup = &pMeshData->m_pMeshGroup[m_Group];
+		mstudiobodyparts_t *pBody = pHdr->pBodypart(m_Body);
+		mstudiomodel_t *pModel = pBody->pModel(m_Model);
+		mstudiomesh_t *pMesh = pModel->pMesh(m_Mesh);
+		studiomeshdata_t *pMeshData = &pStudioMeshes[pMesh->meshid];
+		studiomeshgroup_t *pGroup = &pMeshData->m_pMeshGroup[m_Group];
 		return pGroup->m_pMorph;
 	}
 
@@ -147,31 +142,31 @@ struct DecalVertex_t
 	// hardware morphs. If COMPACT_DECAL_VERT is for console, we
 	// could remove group index + group
 #ifdef COMPACT_DECAL_VERT
-	Vector			m_Position;			// 12
-	Vector2d32		m_TexCoord;			// 16
-	Vector48		m_Normal;			// 22 (packed to m_Body)
+	Vector m_Position;	   // 12
+	Vector2d32 m_TexCoord; // 16
+	Vector48 m_Normal;	   // 22 (packed to m_Body)
 
-	byte			m_Body;				// 24
-	byte			m_Model;
-	unsigned short	m_MeshVertexIndex;	// index into the mesh's vertex list
-	unsigned short	m_Mesh;
-	unsigned short	m_GroupIndex;		// index into the mesh's vertex list
-	unsigned short	m_Group;
+	byte m_Body; // 24
+	byte m_Model;
+	unsigned short m_MeshVertexIndex; // index into the mesh's vertex list
+	unsigned short m_Mesh;
+	unsigned short m_GroupIndex; // index into the mesh's vertex list
+	unsigned short m_Group;
 #else
 	Vector m_Position;
 	Vector m_Normal;
 	Vector2D m_TexCoord;
 
-	unsigned short	m_MeshVertexIndex;	// index into the mesh's vertex list
-	unsigned short	m_Body;
-	unsigned short	m_Model;
-	unsigned short	m_Mesh;
-	unsigned short	m_GroupIndex;		// index into the group's index list
-	unsigned short	m_Group;
+	unsigned short m_MeshVertexIndex; // index into the mesh's vertex list
+	unsigned short m_Body;
+	unsigned short m_Model;
+	unsigned short m_Mesh;
+	unsigned short m_GroupIndex; // index into the group's index list
+	unsigned short m_Group;
 #endif
 
 	DecalVertex_t() {}
-	DecalVertex_t( const DecalVertex_t& src )
+	DecalVertex_t(const DecalVertex_t &src)
 	{
 		m_Position = src.m_Position;
 		m_Normal = src.m_Normal;
@@ -186,7 +181,6 @@ struct DecalVertex_t
 };
 #pragma pack()
 
-
 //-----------------------------------------------------------------------------
 // Temporary meshes
 //-----------------------------------------------------------------------------
@@ -196,7 +190,6 @@ struct MeshVertexInfo_t
 	int m_nIndex;
 };
 
-
 //-----------------------------------------------------------------------------
 // Vertex prefetch count for software skinning
 //-----------------------------------------------------------------------------
@@ -204,7 +197,6 @@ enum
 {
 	PREFETCH_VERT_COUNT = 4
 };
-
 
 //-----------------------------------------------------------------------------
 // Class that actually renders stuff
@@ -217,32 +209,40 @@ public:
 
 	// Init, shutdown
 	InitReturnVal_t Init();
-	void Shutdown( void );
+	void Shutdown(void);
 
-	void EnableScissor( FlashlightState_t *state );
+	void EnableScissor(FlashlightState_t *state);
 	void DisableScissor();
 
-	void DrawModel( const DrawModelInfo_t& info, const StudioRenderContext_t& rc, matrix3x4_t *pBoneToWorld, const FlexWeights_t& flex, int flags = STUDIORENDER_DRAW_ENTIRE_MODEL );
-	void DrawModelArray( const DrawModelInfo_t &drawInfo, const StudioRenderContext_t &rc, int arrayCount, model_array_instance_t *pInstanceData, int instanceStride, int flags = STUDIORENDER_DRAW_ENTIRE_MODEL );
+	void DrawModel(const DrawModelInfo_t &info, const StudioRenderContext_t &rc, matrix3x4_t *pBoneToWorld,
+				   const FlexWeights_t &flex, int flags = STUDIORENDER_DRAW_ENTIRE_MODEL);
+	void DrawModelArray(const DrawModelInfo_t &drawInfo, const StudioRenderContext_t &rc, int arrayCount,
+						model_array_instance_t *pInstanceData, int instanceStride,
+						int flags = STUDIORENDER_DRAW_ENTIRE_MODEL);
 
 	// Static-prop related draw methods
-	void DrawModelStaticProp( const DrawModelInfo_t& info, const StudioRenderContext_t &rc, const matrix3x4_t &modelToWorld, int flags = STUDIORENDER_DRAW_ENTIRE_MODEL );
-	void DrawStaticPropShadows( const DrawModelInfo_t &drawInfo, const StudioRenderContext_t &rc, const matrix3x4_t &modelToWorld, int flags );
-	void DrawStaticPropDecals( const DrawModelInfo_t &drawInfo, const StudioRenderContext_t &rc, const matrix3x4_t &modelToWorld );
+	void DrawModelStaticProp(const DrawModelInfo_t &info, const StudioRenderContext_t &rc,
+							 const matrix3x4_t &modelToWorld, int flags = STUDIORENDER_DRAW_ENTIRE_MODEL);
+	void DrawStaticPropShadows(const DrawModelInfo_t &drawInfo, const StudioRenderContext_t &rc,
+							   const matrix3x4_t &modelToWorld, int flags);
+	void DrawStaticPropDecals(const DrawModelInfo_t &drawInfo, const StudioRenderContext_t &rc,
+							  const matrix3x4_t &modelToWorld);
 
-	void ModelStats( const DrawModelInfo_t& info, const StudioRenderContext_t &rc, matrix3x4_t *pBoneToWorld, const FlexWeights_t &flex, int flags );
+	void ModelStats(const DrawModelInfo_t &info, const StudioRenderContext_t &rc, matrix3x4_t *pBoneToWorld,
+					const FlexWeights_t &flex, int flags);
 
 	// Create, destroy list of decals for a particular model
-	StudioDecalHandle_t CreateDecalList( studiohwdata_t *pHardwareData );
-	void DestroyDecalList( StudioDecalHandle_t handle );
+	StudioDecalHandle_t CreateDecalList(studiohwdata_t *pHardwareData);
+	void DestroyDecalList(StudioDecalHandle_t handle);
 
 	// Add decals to a decal list by doing a planar projection along the ray
-	void AddDecal( StudioDecalHandle_t handle, const StudioRenderContext_t& rc, matrix3x4_t *pBoneToWorld, studiohdr_t *pStudioHdr,
-			const Ray_t & ray, const Vector& decalUp, IMaterial* pDecalMaterial,
-			float radius, int body, bool noPokethru, int maxLODToDecal = ADDDECAL_TO_ALL_LODS );
+	void AddDecal(StudioDecalHandle_t handle, const StudioRenderContext_t &rc, matrix3x4_t *pBoneToWorld,
+				  studiohdr_t *pStudioHdr, const Ray_t &ray, const Vector &decalUp, IMaterial *pDecalMaterial,
+				  float radius, int body, bool noPokethru, int maxLODToDecal = ADDDECAL_TO_ALL_LODS);
 
 	// Shadow state (affects the models as they are rendered)
-	void AddShadow( IMaterial* pMaterial, void* pProxyData, FlashlightState_t *pFlashlightState, VMatrix *pWorldToTexture, ITexture *pFlashlightDepthTexture );
+	void AddShadow(IMaterial *pMaterial, void *pProxyData, FlashlightState_t *pFlashlightState,
+				   VMatrix *pWorldToTexture, ITexture *pFlashlightDepthTexture);
 	void ClearAllShadows();
 
 	// Release/restore material system objects
@@ -250,16 +250,16 @@ public:
 	void UncacheGlint();
 
 	// Get the config
-	void R_MouthComputeLightingValues( float& fIllum, Vector& forward );
-	void R_MouthLighting( float fIllum, const Vector& normal, const Vector& forward, Vector& light );
+	void R_MouthComputeLightingValues(float &fIllum, Vector &forward);
+	void R_MouthLighting(float fIllum, const Vector &normal, const Vector &forward, Vector &light);
 
 	// Performs the lighting computation
-	inline void R_ComputeLightAtPoint3( const Vector &pos, const Vector &norm, Vector &color );
+	inline void R_ComputeLightAtPoint3(const Vector &pos, const Vector &norm, Vector &color);
 
-#if defined( _WIN32 ) && !defined( _X360 )
+#if defined(_WIN32) && !defined(_X360)
 	// sse-ized lighting pipeline. lights 4 vertices at once
-	inline void R_ComputeLightAtPoints3( const FourVectors &pos, const FourVectors &norm, FourVectors &color );
-	void R_MouthLighting( __m128 fIllum, const FourVectors& normal, const FourVectors& forward, FourVectors& light );
+	inline void R_ComputeLightAtPoints3(const FourVectors &pos, const FourVectors &norm, FourVectors &color);
+	void R_MouthLighting(__m128 fIllum, const FourVectors &normal, const FourVectors &forward, FourVectors &light);
 #endif
 
 private:
@@ -277,7 +277,7 @@ private:
 		int m_VertexCount;
 		float m_FadeStartTime;
 		float m_FadeDuration;
-		int	m_Flags;
+		int m_Flags;
 	};
 
 	struct DecalHistory_t
@@ -296,22 +296,22 @@ private:
 
 	struct DecalMaterial_t
 	{
-		IMaterial*			m_pMaterial;
-		DecalIndexList_t	m_Indices;
-		DecalVertexList_t	m_Vertices;
-		DecalList_t			m_Decals;
+		IMaterial *m_pMaterial;
+		DecalIndexList_t m_Indices;
+		DecalVertexList_t m_Vertices;
+		DecalList_t m_Decals;
 	};
 
 	struct DecalLod_t
 	{
 		unsigned short m_FirstMaterial;
-		DecalHistoryList_t	m_DecalHistory;
+		DecalHistoryList_t m_DecalHistory;
 	};
 
 	struct DecalModelList_t
 	{
-		studiohwdata_t* m_pHardwareData;
-		DecalLod_t* m_pLod;
+		studiohwdata_t *m_pHardwareData;
+		DecalLod_t *m_pLod;
 		int m_nLods; // need to retain because hardware data could be flushed
 	};
 
@@ -321,50 +321,50 @@ private:
 		enum
 		{
 			FRONT_FACING = 0x1,
-			VALID_AREA = 0x2,		// If you change this, change ProjectDecalOntoMesh
+			VALID_AREA = 0x2, // If you change this, change ProjectDecalOntoMesh
 		};
 
-		Vector2D		m_UV;
-		unsigned short	m_VertexIndex;	// index into the DecalVertex_t list
-		unsigned char	m_UniqueID;
-		unsigned char	m_Flags;
+		Vector2D m_UV;
+		unsigned short m_VertexIndex; // index into the DecalVertex_t list
+		unsigned char m_UniqueID;
+		unsigned char m_Flags;
 
 	private:
 		// No copy constructors
-		DecalBuildVertexInfo_t( const DecalBuildVertexInfo_t &src );
+		DecalBuildVertexInfo_t(const DecalBuildVertexInfo_t &src);
 	};
 
 	struct DecalBuildInfo_t
 	{
-		IMaterial						**m_ppMaterials;
-		studiohdr_t						*m_pStudioHdr;
-		mstudiomesh_t					*m_pMesh;
-		studiomeshdata_t				*m_pMeshData;
-		DecalMaterial_t					*m_pDecalMaterial;
-		MeshVertexInfo_t				*m_pMeshVertices;
-		const mstudio_meshvertexdata_t	*m_pMeshVertexData;
-		const thinModelVertices_t		*m_pMeshThinVertexData;
-		int								m_nGlobalMeshIndex;
-		DecalBuildVertexInfo_t			*m_pVertexBuffer;
-		float							m_Radius;
-		DecalBuildVertexInfo_t			*m_pVertexInfo;
-		int								m_Body;
-		int								m_Model;
-		int								m_Mesh;
-		int								m_Group;
-		DecalVertexList_t::IndexType_t	m_FirstVertex;
-		unsigned short					m_VertexCount;
-		bool							m_UseClipVert;
-		bool							m_NoPokeThru;
+		IMaterial **m_ppMaterials;
+		studiohdr_t *m_pStudioHdr;
+		mstudiomesh_t *m_pMesh;
+		studiomeshdata_t *m_pMeshData;
+		DecalMaterial_t *m_pDecalMaterial;
+		MeshVertexInfo_t *m_pMeshVertices;
+		const mstudio_meshvertexdata_t *m_pMeshVertexData;
+		const thinModelVertices_t *m_pMeshThinVertexData;
+		int m_nGlobalMeshIndex;
+		DecalBuildVertexInfo_t *m_pVertexBuffer;
+		float m_Radius;
+		DecalBuildVertexInfo_t *m_pVertexInfo;
+		int m_Body;
+		int m_Model;
+		int m_Mesh;
+		int m_Group;
+		DecalVertexList_t::IndexType_t m_FirstVertex;
+		unsigned short m_VertexCount;
+		bool m_UseClipVert;
+		bool m_NoPokeThru;
 	};
 
 	struct ShadowState_t
 	{
-		IMaterial*			m_pMaterial;
-		void*				m_pProxyData;
-		FlashlightState_t * m_pFlashlightState;
-		VMatrix *			m_pWorldToTexture;
-		ITexture *			m_pFlashlightDepthTexture;
+		IMaterial *m_pMaterial;
+		void *m_pProxyData;
+		FlashlightState_t *m_pFlashlightState;
+		VMatrix *m_pWorldToTexture;
+		ITexture *m_pFlashlightDepthTexture;
 	};
 
 	struct BodyPartInfo_t
@@ -386,86 +386,93 @@ private:
 		DecalId_t m_nDecalId;
 	};
 
-	typedef CUtlFixedLinkedList< DecalLRU_t >::IndexType_t DecalLRUListIndex_t;
+	typedef CUtlFixedLinkedList<DecalLRU_t>::IndexType_t DecalLRUListIndex_t;
 
 private:
 	void SetLightingRenderState();
 
-	int R_StudioRenderModel( IMatRenderContext *pRenderContext, int skin, int body, int hitboxset, void /*IClientEntity*/ *pEntity,
-		IMaterial **ppMaterials, int *pMaterialFlags, int flags, int boneMask, int lod, ColorMeshInfo_t *pColorMeshes = NULL );
-	IMaterial* R_StudioSetupSkinAndLighting( IMatRenderContext *pRenderContext, int index, IMaterial **ppMaterials, int materialFlags,
-		void /*IClientEntity*/ *pClientEntity, ColorMeshInfo_t *pColorMeshes, StudioModelLighting_t &lighting );
-	int R_StudioDrawEyeball( IMatRenderContext *pRenderContext, mstudiomesh_t* pmesh,  studiomeshdata_t* pMeshData,
-		StudioModelLighting_t lighting, IMaterial *pMaterial, int lod );
-	int R_StudioDrawPoints( IMatRenderContext *pRenderContext, int skin, void /*IClientEntity*/ *pClientEntity,
-		IMaterial **ppMaterials, int *pMaterialFlags, int boneMask, int lod, ColorMeshInfo_t *pColorMeshes );
-	int R_StudioDrawMesh( IMatRenderContext *pRenderContext, mstudiomesh_t* pmesh, studiomeshdata_t* pMeshData,
-								StudioModelLighting_t lighting, IMaterial *pMaterial, ColorMeshInfo_t *pColorMeshes, int lod );
-	int R_StudioRenderFinal( IMatRenderContext *pRenderContext,
-		int skin, int nBodyPartCount, BodyPartInfo_t *pBodyPartInfo, void /*IClientEntity*/ *pClientEntity,
-		IMaterial **ppMaterials, int *pMaterialFlags, int boneMask, int lod, ColorMeshInfo_t *pColorMeshes = NULL );
-	int R_StudioDrawStaticMesh( IMatRenderContext *pRenderContext, mstudiomesh_t* pmesh,
-		studiomeshgroup_t* pGroup, StudioModelLighting_t lighting, float r_blend, IMaterial* pMaterial,
-		int lod, ColorMeshInfo_t *pColorMeshes );
-	int R_StudioDrawDynamicMesh( IMatRenderContext *pRenderContext, mstudiomesh_t* pmesh,
-				studiomeshgroup_t* pGroup, StudioModelLighting_t lighting,
-				float r_blend, IMaterial* pMaterial, int lod );
-	int R_StudioDrawGroupHWSkin( IMatRenderContext *pRenderContext, studiomeshgroup_t* pGroup, IMesh* pMesh, ColorMeshInfo_t *pColorMeshInfo = NULL );
-	int R_StudioDrawGroupSWSkin( studiomeshgroup_t* pGroup, IMesh* pMesh );
-	void R_StudioDrawHulls( int hitboxset, bool translucent );
-	void R_StudioDrawBones (void);
-	void R_StudioVertBuffer( void );
-	void DrawNormal( const Vector& pos, float scale, const Vector& normal, const Vector& color );
-	void BoneMatToMaterialMat( matrix3x4_t& boneMat, float materialMat[4][4] );
+	int R_StudioRenderModel(IMatRenderContext *pRenderContext, int skin, int body, int hitboxset,
+							void /*IClientEntity*/ *pEntity, IMaterial **ppMaterials, int *pMaterialFlags, int flags,
+							int boneMask, int lod, ColorMeshInfo_t *pColorMeshes = NULL);
+	IMaterial *R_StudioSetupSkinAndLighting(IMatRenderContext *pRenderContext, int index, IMaterial **ppMaterials,
+											int materialFlags, void /*IClientEntity*/ *pClientEntity,
+											ColorMeshInfo_t *pColorMeshes, StudioModelLighting_t &lighting);
+	int R_StudioDrawEyeball(IMatRenderContext *pRenderContext, mstudiomesh_t *pmesh, studiomeshdata_t *pMeshData,
+							StudioModelLighting_t lighting, IMaterial *pMaterial, int lod);
+	int R_StudioDrawPoints(IMatRenderContext *pRenderContext, int skin, void /*IClientEntity*/ *pClientEntity,
+						   IMaterial **ppMaterials, int *pMaterialFlags, int boneMask, int lod,
+						   ColorMeshInfo_t *pColorMeshes);
+	int R_StudioDrawMesh(IMatRenderContext *pRenderContext, mstudiomesh_t *pmesh, studiomeshdata_t *pMeshData,
+						 StudioModelLighting_t lighting, IMaterial *pMaterial, ColorMeshInfo_t *pColorMeshes, int lod);
+	int R_StudioRenderFinal(IMatRenderContext *pRenderContext, int skin, int nBodyPartCount,
+							BodyPartInfo_t *pBodyPartInfo, void /*IClientEntity*/ *pClientEntity,
+							IMaterial **ppMaterials, int *pMaterialFlags, int boneMask, int lod,
+							ColorMeshInfo_t *pColorMeshes = NULL);
+	int R_StudioDrawStaticMesh(IMatRenderContext *pRenderContext, mstudiomesh_t *pmesh, studiomeshgroup_t *pGroup,
+							   StudioModelLighting_t lighting, float r_blend, IMaterial *pMaterial, int lod,
+							   ColorMeshInfo_t *pColorMeshes);
+	int R_StudioDrawDynamicMesh(IMatRenderContext *pRenderContext, mstudiomesh_t *pmesh, studiomeshgroup_t *pGroup,
+								StudioModelLighting_t lighting, float r_blend, IMaterial *pMaterial, int lod);
+	int R_StudioDrawGroupHWSkin(IMatRenderContext *pRenderContext, studiomeshgroup_t *pGroup, IMesh *pMesh,
+								ColorMeshInfo_t *pColorMeshInfo = NULL);
+	int R_StudioDrawGroupSWSkin(studiomeshgroup_t *pGroup, IMesh *pMesh);
+	void R_StudioDrawHulls(int hitboxset, bool translucent);
+	void R_StudioDrawBones(void);
+	void R_StudioVertBuffer(void);
+	void DrawNormal(const Vector &pos, float scale, const Vector &normal, const Vector &color);
+	void BoneMatToMaterialMat(matrix3x4_t &boneMat, float materialMat[4][4]);
 
 	// Various inner-loop methods
-	void R_StudioSoftwareProcessMesh( mstudiomesh_t* pmesh, CMeshBuilder& meshBuilder,
-			int numVertices, unsigned short* pGroupToMesh, StudioModelLighting_t lighting, bool doFlex, float r_blend,
-			bool bNeedsTangentSpace, bool bDX8Vertex, IMaterial *pMaterial );
+	void R_StudioSoftwareProcessMesh(mstudiomesh_t *pmesh, CMeshBuilder &meshBuilder, int numVertices,
+									 unsigned short *pGroupToMesh, StudioModelLighting_t lighting, bool doFlex,
+									 float r_blend, bool bNeedsTangentSpace, bool bDX8Vertex, IMaterial *pMaterial);
 
-	void R_StudioSoftwareProcessMesh_Normals( mstudiomesh_t* pmesh, CMeshBuilder& meshBuilder,
-			int numVertices, unsigned short* pGroupToMesh, StudioModelLighting_t lighting, bool doFlex, float r_blend,
-			bool bShowNormals, bool bShowTangentFrame );
+	void R_StudioSoftwareProcessMesh_Normals(mstudiomesh_t *pmesh, CMeshBuilder &meshBuilder, int numVertices,
+											 unsigned short *pGroupToMesh, StudioModelLighting_t lighting, bool doFlex,
+											 float r_blend, bool bShowNormals, bool bShowTangentFrame);
 
-	template< class T >
-	void ComputeFlexedVertex_StreamOffset( mstudioflex_t *pflex, T *pvanim, int vertCount, float w1, float w2, float w3, float w4 );
+	template<class T>
+	void ComputeFlexedVertex_StreamOffset(mstudioflex_t *pflex, T *pvanim, int vertCount, float w1, float w2, float w3,
+										  float w4);
 
-	void R_StudioProcessFlexedMesh_StreamOffset( mstudiomesh_t* pmesh, int lod );
+	void R_StudioProcessFlexedMesh_StreamOffset(mstudiomesh_t *pmesh, int lod);
 
-	template <VertexCompressionType_t T> void FillFlexMeshGroupVB( CMeshBuilder & meshBuilder, studiomeshgroup_t *pGroup );
-	void R_StudioFlexMeshGroup( studiomeshgroup_t *pGroup );
+	template<VertexCompressionType_t T>
+	void FillFlexMeshGroupVB(CMeshBuilder &meshBuilder, studiomeshgroup_t *pGroup);
+	void R_StudioFlexMeshGroup(studiomeshgroup_t *pGroup);
 
-	template<VertexCompressionType_t T> void R_StudioRestoreMesh( mstudiomesh_t* pmesh, studiomeshgroup_t* pMeshData );
-	void R_StudioProcessFlexedMesh( mstudiomesh_t* pmesh, CMeshBuilder& meshBuilder,
-		int numVertices, unsigned short* pGroupToMesh );
+	template<VertexCompressionType_t T>
+	void R_StudioRestoreMesh(mstudiomesh_t *pmesh, studiomeshgroup_t *pMeshData);
+	void R_StudioProcessFlexedMesh(mstudiomesh_t *pmesh, CMeshBuilder &meshBuilder, int numVertices,
+								   unsigned short *pGroupToMesh);
 
 	// Eye rendering using vertex shaders
-	void SetEyeMaterialVars( IMaterial* pMaterial, mstudioeyeball_t* peyeball,
-		const Vector& eyeOrigin, const matrix3x4_t& irisTransform, const matrix3x4_t& glintTransform );
+	void SetEyeMaterialVars(IMaterial *pMaterial, mstudioeyeball_t *peyeball, const Vector &eyeOrigin,
+							const matrix3x4_t &irisTransform, const matrix3x4_t &glintTransform);
 
-	void ComputeEyelidStateFACS( mstudiomodel_t *pSubModel );
+	void ComputeEyelidStateFACS(mstudiomodel_t *pSubModel);
 
-	void R_StudioEyelidFACS( const mstudioeyeball_t *peyeball, const eyeballstate_t *pstate );
+	void R_StudioEyelidFACS(const mstudioeyeball_t *peyeball, const eyeballstate_t *pstate);
 
-	void R_StudioEyeballPosition( const mstudioeyeball_t *peyeball, eyeballstate_t *pstate );
+	void R_StudioEyeballPosition(const mstudioeyeball_t *peyeball, eyeballstate_t *pstate);
 
 	// Computes the texture projection matrix for the glint texture
-	void ComputeGlintTextureProjection( eyeballstate_t const* pState,
-		const Vector& vright, const Vector& vup, matrix3x4_t& mat );
+	void ComputeGlintTextureProjection(eyeballstate_t const *pState, const Vector &vright, const Vector &vup,
+									   matrix3x4_t &mat);
 
-	void R_StudioEyeballGlint( const eyeballstate_t *pstate, IMaterialVar *pGlintTextureVar,
-								const Vector& vright, const Vector& vup, const Vector& r_origin );
-	ITexture* RenderGlintTexture( const eyeballstate_t *pstate,
-		const Vector& vright, const Vector& vup, const Vector& r_origin );
+	void R_StudioEyeballGlint(const eyeballstate_t *pstate, IMaterialVar *pGlintTextureVar, const Vector &vright,
+							  const Vector &vup, const Vector &r_origin);
+	ITexture *RenderGlintTexture(const eyeballstate_t *pstate, const Vector &vright, const Vector &vup,
+								 const Vector &r_origin);
 
-	int BuildGlintRenderData( GlintRenderData_t *pData, int nMaxGlints,
-		const eyeballstate_t *pstate, const Vector& vright, const Vector& vup, const Vector& r_origin );
-	void R_MouthSetupVertexShader( IMaterial* pMaterial );
+	int BuildGlintRenderData(GlintRenderData_t *pData, int nMaxGlints, const eyeballstate_t *pstate,
+							 const Vector &vright, const Vector &vup, const Vector &r_origin);
+	void R_MouthSetupVertexShader(IMaterial *pMaterial);
 
 	// Computes a vertex format to use
-	VertexFormat_t ComputeSWSkinVertexFormat( IMaterial *pMaterial ) const;
+	VertexFormat_t ComputeSWSkinVertexFormat(IMaterial *pMaterial) const;
 
-	inline bool R_TeethAreVisible( void )
+	inline bool R_TeethAreVisible(void)
 	{
 		return true;
 		/*
@@ -476,104 +483,113 @@ private:
 		*/
 	}
 
-	inline StudioModelLighting_t R_StudioComputeLighting( IMaterial *pMaterial, int materialFlags, ColorMeshInfo_t *pColorMeshes );
-	inline void R_StudioTransform( Vector& in1, mstudioboneweight_t *pboneweight, Vector& out1 );
-	inline void R_StudioRotate( Vector& in1, mstudioboneweight_t *pboneweight, Vector& out1 );
-	inline void R_StudioRotate( Vector4D& in1, mstudioboneweight_t *pboneweight, Vector4D& out1 );
-	inline void R_StudioEyeballNormal( mstudioeyeball_t const* peyeball, Vector& org,
-									Vector& pos, Vector& normal );
-	void MaterialPlanerProjection( const matrix3x4_t& mat, int count, const Vector *psrcverts, Vector2D *pdesttexcoords );
-	void AddGlint( CPixelWriter &pixelWriter, float x, float y, const Vector& color );
+	inline StudioModelLighting_t R_StudioComputeLighting(IMaterial *pMaterial, int materialFlags,
+														 ColorMeshInfo_t *pColorMeshes);
+	inline void R_StudioTransform(Vector &in1, mstudioboneweight_t *pboneweight, Vector &out1);
+	inline void R_StudioRotate(Vector &in1, mstudioboneweight_t *pboneweight, Vector &out1);
+	inline void R_StudioRotate(Vector4D &in1, mstudioboneweight_t *pboneweight, Vector4D &out1);
+	inline void R_StudioEyeballNormal(mstudioeyeball_t const *peyeball, Vector &org, Vector &pos, Vector &normal);
+	void MaterialPlanerProjection(const matrix3x4_t &mat, int count, const Vector *psrcverts, Vector2D *pdesttexcoords);
+	void AddGlint(CPixelWriter &pixelWriter, float x, float y, const Vector &color);
 
 	// Methods associated with lighting
-	int R_LightGlintPosition( int index, const Vector& org, Vector& delta, Vector& intensity );
-	void R_LightEffectsWorld( const lightpos_t *light, const Vector& normal, const Vector &src, Vector &dest );
+	int R_LightGlintPosition(int index, const Vector &org, Vector &delta, Vector &intensity);
+	void R_LightEffectsWorld(const lightpos_t *light, const Vector &normal, const Vector &src, Vector &dest);
 
-	void R_GatherStats( studiomeshgroup_t *pGroup, CMeshBuilder &MeshBuilder, IMesh *pMesh, IMaterial *pMaterial );
+	void R_GatherStats(studiomeshgroup_t *pGroup, CMeshBuilder &MeshBuilder, IMesh *pMesh, IMaterial *pMaterial);
 
 public:
 	// NJS: Messy, but needed for an externally optimized routine to set up the lighting.
 	void R_InitLightEffectsWorld3();
-	void (FASTCALL *R_LightEffectsWorld3)( const LightDesc_t *pLightDesc, const lightpos_t *light, const Vector& normal, Vector &dest );
+	void(FASTCALL *R_LightEffectsWorld3)(const LightDesc_t *pLightDesc, const lightpos_t *light, const Vector &normal,
+										 Vector &dest);
 
 private:
-	inline float R_WorldLightAngle( const LightDesc_t *wl, const Vector& lnormal, const Vector& snormal, const Vector& delta );
+	inline float R_WorldLightAngle(const LightDesc_t *wl, const Vector &lnormal, const Vector &snormal,
+								   const Vector &delta);
 
-	void InitDebugMaterials( void );
-	void ShutdownDebugMaterials( void );
-	int SortMeshes( int* pIndices, IMaterial **ppMaterials, short* pskinref, const Vector& vforward, const Vector& r_origin );
+	void InitDebugMaterials(void);
+	void ShutdownDebugMaterials(void);
+	int SortMeshes(int *pIndices, IMaterial **ppMaterials, short *pskinref, const Vector &vforward,
+				   const Vector &r_origin);
 
 	// Computes pose to decal space transforms for decal creation
 	// returns false if it can't for some reason.
-	bool ComputePoseToDecal( Ray_t const& ray, const Vector& up );
+	bool ComputePoseToDecal(Ray_t const &ray, const Vector &up);
 
-	bool AddDecalToModel( DecalBuildInfo_t& buildInfo );
+	bool AddDecalToModel(DecalBuildInfo_t &buildInfo);
 
 	// Helper methods for decal projection, projects pose space vertex data
-	bool			TransformToDecalSpace( DecalBuildInfo_t& build, const Vector& pos, mstudioboneweight_t *pboneweight, Vector2D& uv );
-	bool			ProjectDecalOntoMesh( DecalBuildInfo_t& build, DecalBuildVertexInfo_t* pVertexInfo, mstudiomesh_t *pMesh );
-	bool			IsFrontFacing( const Vector * norm, const mstudioboneweight_t *pboneweight );
-	int				ComputeClipFlags( DecalBuildVertexInfo_t* pVertexInfo, int i );
-	void			ConvertMeshVertexToDecalVertex( DecalBuildInfo_t& build, int meshIndex, DecalVertex_t& decalVertex, int nGroupIndex = 0xFFFF );
-	unsigned short	AddVertexToDecal( DecalBuildInfo_t& build, int meshIndex, int nGroupIndex = 0xFFFF );
-	unsigned short	AddVertexToDecal( DecalBuildInfo_t& build, DecalVertex_t& vert );
-	void			AddClippedDecalToTriangle( DecalBuildInfo_t& build, DecalClipState_t& clipState );
-	bool			ClipDecal( DecalBuildInfo_t& build, int i1, int i2, int i3, int *pClipFlags );
-	void			AddTriangleToDecal( DecalBuildInfo_t& build, int i1, int i2, int i3, int gi1, int gi2, int gi3 );
-	void			AddDecalToMesh( DecalBuildInfo_t& build );
-	int				GetDecalMaterial( DecalLod_t& decalLod, IMaterial* pDecalMaterial );
-	int				AddDecalToMaterialList( DecalMaterial_t* pMaterial );
+	bool TransformToDecalSpace(DecalBuildInfo_t &build, const Vector &pos, mstudioboneweight_t *pboneweight,
+							   Vector2D &uv);
+	bool ProjectDecalOntoMesh(DecalBuildInfo_t &build, DecalBuildVertexInfo_t *pVertexInfo, mstudiomesh_t *pMesh);
+	bool IsFrontFacing(const Vector *norm, const mstudioboneweight_t *pboneweight);
+	int ComputeClipFlags(DecalBuildVertexInfo_t *pVertexInfo, int i);
+	void ConvertMeshVertexToDecalVertex(DecalBuildInfo_t &build, int meshIndex, DecalVertex_t &decalVertex,
+										int nGroupIndex = 0xFFFF);
+	unsigned short AddVertexToDecal(DecalBuildInfo_t &build, int meshIndex, int nGroupIndex = 0xFFFF);
+	unsigned short AddVertexToDecal(DecalBuildInfo_t &build, DecalVertex_t &vert);
+	void AddClippedDecalToTriangle(DecalBuildInfo_t &build, DecalClipState_t &clipState);
+	bool ClipDecal(DecalBuildInfo_t &build, int i1, int i2, int i3, int *pClipFlags);
+	void AddTriangleToDecal(DecalBuildInfo_t &build, int i1, int i2, int i3, int gi1, int gi2, int gi3);
+	void AddDecalToMesh(DecalBuildInfo_t &build);
+	int GetDecalMaterial(DecalLod_t &decalLod, IMaterial *pDecalMaterial);
+	int AddDecalToMaterialList(DecalMaterial_t *pMaterial);
 
 	// Total number of meshes we have to deal with
-	int ComputeTotalMeshCount( int iRootLOD, int iMaxLOD, int body ) const;
+	int ComputeTotalMeshCount(int iRootLOD, int iMaxLOD, int body) const;
 
 	// Project decals onto all meshes
-	void ProjectDecalsOntoMeshes( DecalBuildInfo_t& build, int nMeshCount );
+	void ProjectDecalsOntoMeshes(DecalBuildInfo_t &build, int nMeshCount);
 
 	// Set up the locations for vertices to use
-	int ComputeVertexAllocation( int iMaxLOD, int body, studiohwdata_t *pHardwareData, MeshVertexInfo_t *pVertexInfo );
+	int ComputeVertexAllocation(int iMaxLOD, int body, studiohwdata_t *pHardwareData, MeshVertexInfo_t *pVertexInfo);
 
 	// Removes a decal and associated vertices + indices from the history list
-	void RetireDecal( DecalModelList_t &list, DecalId_t nDecalID, int iLOD, int iMaxLOD );
+	void RetireDecal(DecalModelList_t &list, DecalId_t nDecalID, int iLOD, int iMaxLOD);
 
 	// Helper methods related to drawing decals
-	void DrawSingleBoneDecals( CMeshBuilder& meshBuilder, DecalMaterial_t& decalMaterial );
-	bool DrawMultiBoneDecals( CMeshBuilder& meshBuilder, DecalMaterial_t& decalMaterial, studiohdr_t *pStudioHdr );
-	void DrawSingleBoneFlexedDecals( IMatRenderContext *pRenderContext, CMeshBuilder& meshBuilder, DecalMaterial_t& decalMaterial );
-	bool DrawMultiBoneFlexedDecals( IMatRenderContext *pRenderContext, CMeshBuilder& meshBuilder, DecalMaterial_t& decalMaterial, studiohdr_t *pStudioHdr, studioloddata_t *pStudioLOD );
-	void DrawDecalMaterial( IMatRenderContext *pRenderContext, DecalMaterial_t& decalMaterial, studiohdr_t *pStudioHdr, studioloddata_t *pStudioLOD );
-	void DrawDecal( const DrawModelInfo_t &drawInfo, int lod, int body );
-	bool PreDrawDecal( IMatRenderContext *pRenderContext, const DrawModelInfo_t &drawInfo );
+	void DrawSingleBoneDecals(CMeshBuilder &meshBuilder, DecalMaterial_t &decalMaterial);
+	bool DrawMultiBoneDecals(CMeshBuilder &meshBuilder, DecalMaterial_t &decalMaterial, studiohdr_t *pStudioHdr);
+	void DrawSingleBoneFlexedDecals(IMatRenderContext *pRenderContext, CMeshBuilder &meshBuilder,
+									DecalMaterial_t &decalMaterial);
+	bool DrawMultiBoneFlexedDecals(IMatRenderContext *pRenderContext, CMeshBuilder &meshBuilder,
+								   DecalMaterial_t &decalMaterial, studiohdr_t *pStudioHdr,
+								   studioloddata_t *pStudioLOD);
+	void DrawDecalMaterial(IMatRenderContext *pRenderContext, DecalMaterial_t &decalMaterial, studiohdr_t *pStudioHdr,
+						   studioloddata_t *pStudioLOD);
+	void DrawDecal(const DrawModelInfo_t &drawInfo, int lod, int body);
+	bool PreDrawDecal(IMatRenderContext *pRenderContext, const DrawModelInfo_t &drawInfo);
 
 	// Draw shadows
-	void DrawShadows( const DrawModelInfo_t& info, int flags, int boneMask );
+	void DrawShadows(const DrawModelInfo_t &info, int flags, int boneMask);
 
 	// Draw flashlight lighting on decals.
-	void DrawFlashlightDecals( const DrawModelInfo_t& info, int lod );
+	void DrawFlashlightDecals(const DrawModelInfo_t &info, int lod);
 
 	// Helper methods related to extracting and balancing
-	float RampFlexWeight( mstudioflex_t &flex, float w );
+	float RampFlexWeight(mstudioflex_t &flex, float w);
 
 	// Remove decal from LRU
-	void RemoveDecalListFromLRU( StudioDecalHandle_t h );
+	void RemoveDecalListFromLRU(StudioDecalHandle_t h);
 
 	// Helper methods related to flexing vertices
-	void R_StudioFlexVerts( mstudiomesh_t *pmesh, int lod );
+	void R_StudioFlexVerts(mstudiomesh_t *pmesh, int lod);
 
 	// Flex stats
-	void GetFlexStats( );
+	void GetFlexStats();
 
 	// Sets up the hw flex mesh
-	void ComputeFlexWeights( int nFlexCount, mstudioflex_t *pFlex, MorphWeight_t *pWeights );
+	void ComputeFlexWeights(int nFlexCount, mstudioflex_t *pFlex, MorphWeight_t *pWeights);
 
 	// Generate morph accumulator
-	void GenerateMorphAccumulator( mstudiomodel_t *pSubModel );
+	void GenerateMorphAccumulator(mstudiomodel_t *pSubModel);
 
 	// Computes eyeball state
-	void ComputeEyeballState( mstudiomodel_t *pSubModel );
+	void ComputeEyeballState(mstudiomodel_t *pSubModel);
 
 	// Avoid some warnings...
-	CStudioRender( CStudioRender const& );
+	CStudioRender(CStudioRender const &);
 
 public:
 	// Render context (comes from queue)
@@ -581,20 +597,20 @@ public:
 
 private:
 	// Stores all decals for a particular material and lod
-	CUtlLinkedList< DecalMaterial_t, unsigned short, true >	m_DecalMaterial;
+	CUtlLinkedList<DecalMaterial_t, unsigned short, true> m_DecalMaterial;
 
 	// Stores all decal lists that have been made
-	CUtlFixedLinkedList< DecalModelList_t >	m_DecalList;
+	CUtlFixedLinkedList<DecalModelList_t> m_DecalList;
 	CThreadFastMutex m_DecalMutex;
 
 	// Stores all shadows to be cast on the current object
-	CUtlVector<ShadowState_t>	m_ShadowState;
+	CUtlVector<ShadowState_t> m_ShadowState;
 
 	matrix3x4_t m_StaticPropRootToWorld;
-	matrix3x4_t	*m_pBoneToWorld;	// bone transformation matrix( comes from queue )
+	matrix3x4_t *m_pBoneToWorld; // bone transformation matrix( comes from queue )
 
-	matrix3x4_t *m_PoseToWorld;	// bone transformation matrix
-	matrix3x4_t *m_PoseToDecal;	// bone transformation matrix
+	matrix3x4_t *m_PoseToWorld; // bone transformation matrix
+	matrix3x4_t *m_PoseToDecal; // bone transformation matrix
 
 	// Flex state, comes from queue
 	float *m_pFlexWeights;
@@ -607,43 +623,42 @@ private:
 	eyeballstate_t m_pEyeballState[16]; // MAXSTUDIOEYEBALLS
 
 	// debug materials
-	IMaterial		*m_pMaterialMRMWireframe;
-	IMaterial		*m_pMaterialMRMWireframeZBuffer;
-	IMaterial		*m_pMaterialMRMNormals;
-	IMaterial		*m_pMaterialTangentFrame;
-	IMaterial		*m_pMaterialTranslucentModelHulls;
-	IMaterial		*m_pMaterialSolidModelHulls;
-	IMaterial		*m_pMaterialAdditiveVertexColorVertexAlpha;
-	IMaterial		*m_pMaterialModelBones;
-	IMaterial		*m_pMaterialWorldWireframe;
-	IMaterial		*m_pMaterialModelEnvCubemap;
+	IMaterial *m_pMaterialMRMWireframe;
+	IMaterial *m_pMaterialMRMWireframeZBuffer;
+	IMaterial *m_pMaterialMRMNormals;
+	IMaterial *m_pMaterialTangentFrame;
+	IMaterial *m_pMaterialTranslucentModelHulls;
+	IMaterial *m_pMaterialSolidModelHulls;
+	IMaterial *m_pMaterialAdditiveVertexColorVertexAlpha;
+	IMaterial *m_pMaterialModelBones;
+	IMaterial *m_pMaterialWorldWireframe;
+	IMaterial *m_pMaterialModelEnvCubemap;
 
 	// Depth override material
-	IMaterial		*m_pDepthWrite[2][2];
-	IMaterial		*m_pSSAODepthWrite[2][2];
+	IMaterial *m_pDepthWrite[2][2];
+	IMaterial *m_pSSAODepthWrite[2][2];
 
 	// GLINT data
-	ITexture* m_pGlintTexture;
-	ITexture* m_pGlintLODTexture;
+	ITexture *m_pGlintTexture;
+	ITexture *m_pGlintLODTexture;
 	IMaterial *m_pGlintBuildMaterial;
-	short	m_GlintWidth;
-	short	m_GlintHeight;
+	short m_GlintWidth;
+	short m_GlintHeight;
 
 	// Flex data
-	CCachedRenderData	m_VertexCache;
+	CCachedRenderData m_VertexCache;
 
 	// Cached variables:
 	bool m_bSkippedMeshes : 1;
 	bool m_bDrawTranslucentSubModels : 1;
 
-	DecalId_t	m_nDecalId;
-	CUtlFixedLinkedList< DecalLRU_t > m_DecalLRU;
+	DecalId_t m_nDecalId;
+	CUtlFixedLinkedList<DecalLRU_t> m_DecalLRU;
 
 	friend class CGlintTextureRegenerator;
 	friend struct mstudiomodel_t;
 	friend class CStudioRenderContext;
 };
-
 
 //-----------------------------------------------------------------------------
 // Converts matrices to a format material system wants
@@ -654,100 +669,98 @@ private:
 R_StudioTransform
 ================
 */
-inline void CStudioRender::R_StudioTransform( Vector& in1, mstudioboneweight_t *pboneweight, Vector& out1 )
+inline void CStudioRender::R_StudioTransform(Vector &in1, mstudioboneweight_t *pboneweight, Vector &out1)
 {
-//	MEASURECODE( "R_StudioTransform" );
+	//	MEASURECODE( "R_StudioTransform" );
 
 	Vector out2;
-	switch( pboneweight->numbones )
+	switch(pboneweight->numbones)
 	{
-	case 1:
-		VectorTransform( in1, m_PoseToWorld[(unsigned)pboneweight->bone[0]], out1 );
-		break;
-/*
-	case 2:
-		VectorTransform( in1, m_PoseToWorld[pboneweight->bone[0]], out1 );
-		out1 *= pboneweight->weight[0];
-		VectorTransform( in1, m_PoseToWorld[pboneweight->bone[1]], out2 );
-		VectorMA( out1, pboneweight->weight[1], out2, out1 );
-		break;
+		case 1:
+			VectorTransform(in1, m_PoseToWorld[(unsigned)pboneweight->bone[0]], out1);
+			break;
+			/*
+				case 2:
+					VectorTransform( in1, m_PoseToWorld[pboneweight->bone[0]], out1 );
+					out1 *= pboneweight->weight[0];
+					VectorTransform( in1, m_PoseToWorld[pboneweight->bone[1]], out2 );
+					VectorMA( out1, pboneweight->weight[1], out2, out1 );
+					break;
 
-	case 3:
-		VectorTransform( in1, m_PoseToWorld[pboneweight->bone[0]], out1 );
-		out1 *= pboneweight->weight[0];
-		VectorTransform( in1, m_PoseToWorld[pboneweight->bone[1]], out2 );
-		VectorMA( out1, pboneweight->weight[1], out2, out1 );
-		VectorTransform( in1, m_PoseToWorld[pboneweight->bone[2]], out2 );
-		VectorMA( out1, pboneweight->weight[2], out2, out1 );
-		break;
-*/
-	default:
-		VectorFill( out1, 0 );
-		for (int i = 0; i < pboneweight->numbones; i++)
-		{
-			VectorTransform( in1, m_PoseToWorld[(unsigned)pboneweight->bone[i]], out2 );
-			VectorMA( out1, pboneweight->weight[i], out2, out1 );
-		}
-		break;
+				case 3:
+					VectorTransform( in1, m_PoseToWorld[pboneweight->bone[0]], out1 );
+					out1 *= pboneweight->weight[0];
+					VectorTransform( in1, m_PoseToWorld[pboneweight->bone[1]], out2 );
+					VectorMA( out1, pboneweight->weight[1], out2, out1 );
+					VectorTransform( in1, m_PoseToWorld[pboneweight->bone[2]], out2 );
+					VectorMA( out1, pboneweight->weight[2], out2, out1 );
+					break;
+			*/
+		default:
+			VectorFill(out1, 0);
+			for(int i = 0; i < pboneweight->numbones; i++)
+			{
+				VectorTransform(in1, m_PoseToWorld[(unsigned)pboneweight->bone[i]], out2);
+				VectorMA(out1, pboneweight->weight[i], out2, out1);
+			}
+			break;
 	}
 }
-
 
 /*
 ================
 R_StudioRotate
 ================
 */
-inline void CStudioRender::R_StudioRotate( Vector& in1, mstudioboneweight_t *pboneweight, Vector& out1 )
+inline void CStudioRender::R_StudioRotate(Vector &in1, mstudioboneweight_t *pboneweight, Vector &out1)
 {
 	// NOTE: This only works to rotate normals if there's no scale in the
 	// pose to world transforms. If we ever add scale, we'll need to
 	// multiply by the inverse transpose of the pose to world
 
-	if (pboneweight->numbones == 1)
+	if(pboneweight->numbones == 1)
 	{
-		VectorRotate( in1, m_PoseToWorld[(unsigned)pboneweight->bone[0]], out1 );
+		VectorRotate(in1, m_PoseToWorld[(unsigned)pboneweight->bone[0]], out1);
 	}
 	else
 	{
 		Vector out2;
 
-		VectorFill( out1, 0 );
+		VectorFill(out1, 0);
 
-		for (int i = 0; i < pboneweight->numbones; i++)
+		for(int i = 0; i < pboneweight->numbones; i++)
 		{
-			VectorRotate( in1, m_PoseToWorld[(unsigned)pboneweight->bone[i]], out2 );
-			VectorMA( out1, pboneweight->weight[i], out2, out1 );
+			VectorRotate(in1, m_PoseToWorld[(unsigned)pboneweight->bone[i]], out2);
+			VectorMA(out1, pboneweight->weight[i], out2, out1);
 		}
-		VectorNormalize( out1 );
+		VectorNormalize(out1);
 	}
 }
 
-inline void CStudioRender::R_StudioRotate( Vector4D& realIn1, mstudioboneweight_t *pboneweight, Vector4D& realOut1 )
+inline void CStudioRender::R_StudioRotate(Vector4D &realIn1, mstudioboneweight_t *pboneweight, Vector4D &realOut1)
 {
 	// garymcthack - god this sucks.
-	Vector in1( realIn1[0], realIn1[1], realIn1[2] );
+	Vector in1(realIn1[0], realIn1[1], realIn1[2]);
 	Vector out1;
-	if (pboneweight->numbones == 1)
+	if(pboneweight->numbones == 1)
 	{
-		VectorRotate( in1, m_PoseToWorld[(unsigned)pboneweight->bone[0]], out1 );
+		VectorRotate(in1, m_PoseToWorld[(unsigned)pboneweight->bone[0]], out1);
 	}
 	else
 	{
 		Vector out2;
 
-		VectorFill( out1, 0 );
+		VectorFill(out1, 0);
 
-		for (int i = 0; i < pboneweight->numbones; i++)
+		for(int i = 0; i < pboneweight->numbones; i++)
 		{
-			VectorRotate( in1, m_PoseToWorld[(unsigned)pboneweight->bone[i]], out2 );
-			VectorMA( out1, pboneweight->weight[i], out2, out1 );
+			VectorRotate(in1, m_PoseToWorld[(unsigned)pboneweight->bone[i]], out2);
+			VectorMA(out1, pboneweight->weight[i], out2, out1);
 		}
-		VectorNormalize( out1 );
+		VectorNormalize(out1);
 	}
-	realOut1.Init( out1[0], out1[1], out1[2], realIn1[3] );
+	realOut1.Init(out1[0], out1[1], out1[2], realIn1[3]);
 }
-
 
 //-----------------------------------------------------------------------------
 // Compute the contribution of a light depending on it's angle
@@ -758,24 +771,25 @@ inline void CStudioRender::R_StudioRotate( Vector4D& realIn1, mstudioboneweight_
 	light_direction_normal | (light_pos - vertex_pos) |
 */
 
-template< int nLightType >
+template<int nLightType>
 class CWorldLightAngleWrapper
 {
 public:
-	FORCEINLINE static float WorldLightAngle( const LightDesc_t *wl, const Vector& lnormal, const Vector& snormal, const Vector& delta )
+	FORCEINLINE static float WorldLightAngle(const LightDesc_t *wl, const Vector &lnormal, const Vector &snormal,
+											 const Vector &delta)
 	{
 		float dot, dot2, ratio;
 
-		switch (nLightType)
+		switch(nLightType)
 		{
 			case MATERIAL_LIGHT_POINT:
 #if 1
 				// half-lambert
-				dot = DotProduct( snormal, delta );
-				if (dot < 0.f)
+				dot = DotProduct(snormal, delta);
+				if(dot < 0.f)
 					return 0.f;
 #else
-				dot = DotProduct( snormal, delta ) * 0.5 + 0.5;
+				dot = DotProduct(snormal, delta) * 0.5 + 0.5;
 				dot = dot * dot;
 #endif
 				return dot;
@@ -783,40 +797,40 @@ public:
 			case MATERIAL_LIGHT_SPOT:
 #if 1
 				// half-lambert
-				dot = DotProduct( snormal, delta );
-				if (dot < 0.)
+				dot = DotProduct(snormal, delta);
+				if(dot < 0.)
 					return 0.f;
 #else
-				dot = DotProduct( snormal, delta ) * 0.5 + 0.5;
+				dot = DotProduct(snormal, delta) * 0.5 + 0.5;
 				dot = dot * dot;
 #endif
 
-				dot2 = -DotProduct (delta, lnormal);
-				if (dot2 <= wl->m_PhiDot)
+				dot2 = -DotProduct(delta, lnormal);
+				if(dot2 <= wl->m_PhiDot)
 					return 0.f; // outside light cone
 
 				ratio = dot;
-				if (dot2 >= wl->m_ThetaDot)
-					return ratio;	// inside inner cone
+				if(dot2 >= wl->m_ThetaDot)
+					return ratio; // inside inner cone
 
-				if ((wl->m_Falloff == 1.f) || (wl->m_Falloff == 0.f))
+				if((wl->m_Falloff == 1.f) || (wl->m_Falloff == 0.f))
 				{
 					ratio *= (dot2 - wl->m_PhiDot) / (wl->m_ThetaDot - wl->m_PhiDot);
 				}
 				else
 				{
-					ratio *= pow((dot2 - wl->m_PhiDot) / (wl->m_ThetaDot - wl->m_PhiDot), wl->m_Falloff );
+					ratio *= pow((dot2 - wl->m_PhiDot) / (wl->m_ThetaDot - wl->m_PhiDot), wl->m_Falloff);
 				}
 				return ratio;
 
 			case MATERIAL_LIGHT_DIRECTIONAL:
 #if 1
 				// half-lambert
-				dot2 = -DotProduct( snormal, lnormal );
-				if (dot2 < 0.f)
+				dot2 = -DotProduct(snormal, lnormal);
+				if(dot2 < 0.f)
 					return 0.f;
 #else
-				dot2 = -DotProduct( snormal, lnormal ) * 0.5 + 0.5;
+				dot2 = -DotProduct(snormal, lnormal) * 0.5 + 0.5;
 				dot2 = dot2 * dot2;
 #endif
 				return dot2;
@@ -824,83 +838,87 @@ public:
 			case MATERIAL_LIGHT_DISABLE:
 				return 0.f;
 
-			NO_DEFAULT;
+				NO_DEFAULT;
 		}
 	}
 };
 
-template< int nLightType >
+template<int nLightType>
 class CWorldLightAngleWrapperConstDirectional
 {
 public:
-	FORCEINLINE static float WorldLightAngle( const LightDesc_t *wl, const Vector& lnormal, const Vector& snormal, const Vector& delta, float directionalamount )
+	FORCEINLINE static float WorldLightAngle(const LightDesc_t *wl, const Vector &lnormal, const Vector &snormal,
+											 const Vector &delta, float directionalamount)
 	{
 		float dot, dot2, ratio;
 
 		// directional amount is constant
 		dot = directionalamount;
-		if (dot < 0.f)
+		if(dot < 0.f)
 			return 0.f;
 
-		switch (nLightType)
+		switch(nLightType)
 		{
-		case MATERIAL_LIGHT_POINT:
-		case MATERIAL_LIGHT_DIRECTIONAL:
-			return dot;
+			case MATERIAL_LIGHT_POINT:
+			case MATERIAL_LIGHT_DIRECTIONAL:
+				return dot;
 
-		case MATERIAL_LIGHT_SPOT:
-			dot2 = -DotProduct (delta, lnormal);
-			if (dot2 <= wl->m_PhiDot)
-				return 0.f; // outside light cone
+			case MATERIAL_LIGHT_SPOT:
+				dot2 = -DotProduct(delta, lnormal);
+				if(dot2 <= wl->m_PhiDot)
+					return 0.f; // outside light cone
 
-			ratio = dot;
-			if (dot2 >= wl->m_ThetaDot)
-				return ratio;	// inside inner cone
+				ratio = dot;
+				if(dot2 >= wl->m_ThetaDot)
+					return ratio; // inside inner cone
 
-			if ((wl->m_Falloff == 1.f) || (wl->m_Falloff == 0.f))
-			{
-				ratio *= (dot2 - wl->m_PhiDot) / (wl->m_ThetaDot - wl->m_PhiDot);
-			}
-			else
-			{
-				ratio *= pow((dot2 - wl->m_PhiDot) / (wl->m_ThetaDot - wl->m_PhiDot), wl->m_Falloff );
-			}
-			return ratio;
+				if((wl->m_Falloff == 1.f) || (wl->m_Falloff == 0.f))
+				{
+					ratio *= (dot2 - wl->m_PhiDot) / (wl->m_ThetaDot - wl->m_PhiDot);
+				}
+				else
+				{
+					ratio *= pow((dot2 - wl->m_PhiDot) / (wl->m_ThetaDot - wl->m_PhiDot), wl->m_Falloff);
+				}
+				return ratio;
 
-		case MATERIAL_LIGHT_DISABLE:
-			return 0.f;
+			case MATERIAL_LIGHT_DISABLE:
+				return 0.f;
 
-			NO_DEFAULT;
+				NO_DEFAULT;
 		}
 	}
 };
 
-inline float CStudioRender::R_WorldLightAngle( const LightDesc_t *wl, const Vector& lnormal, const Vector& snormal, const Vector& delta )
+inline float CStudioRender::R_WorldLightAngle(const LightDesc_t *wl, const Vector &lnormal, const Vector &snormal,
+											  const Vector &delta)
 {
-	switch (wl->m_Type)
+	switch(wl->m_Type)
 	{
-		case MATERIAL_LIGHT_DISABLE:		return CWorldLightAngleWrapper<MATERIAL_LIGHT_DISABLE>::WorldLightAngle( wl, lnormal, snormal, delta );
-		case MATERIAL_LIGHT_POINT:			return CWorldLightAngleWrapper<MATERIAL_LIGHT_POINT>::WorldLightAngle( wl, lnormal, snormal, delta );
-		case MATERIAL_LIGHT_DIRECTIONAL:	return CWorldLightAngleWrapper<MATERIAL_LIGHT_DIRECTIONAL>::WorldLightAngle( wl, lnormal, snormal, delta );
-		case MATERIAL_LIGHT_SPOT:			return CWorldLightAngleWrapper<MATERIAL_LIGHT_SPOT>::WorldLightAngle( wl, lnormal, snormal, delta );
-		NO_DEFAULT;
+		case MATERIAL_LIGHT_DISABLE:
+			return CWorldLightAngleWrapper<MATERIAL_LIGHT_DISABLE>::WorldLightAngle(wl, lnormal, snormal, delta);
+		case MATERIAL_LIGHT_POINT:
+			return CWorldLightAngleWrapper<MATERIAL_LIGHT_POINT>::WorldLightAngle(wl, lnormal, snormal, delta);
+		case MATERIAL_LIGHT_DIRECTIONAL:
+			return CWorldLightAngleWrapper<MATERIAL_LIGHT_DIRECTIONAL>::WorldLightAngle(wl, lnormal, snormal, delta);
+		case MATERIAL_LIGHT_SPOT:
+			return CWorldLightAngleWrapper<MATERIAL_LIGHT_SPOT>::WorldLightAngle(wl, lnormal, snormal, delta);
+			NO_DEFAULT;
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Draws eyeballs
 //-----------------------------------------------------------------------------
-inline void CStudioRender::R_StudioEyeballNormal( mstudioeyeball_t const* peyeball, Vector& org,
-									Vector& pos, Vector& normal )
+inline void CStudioRender::R_StudioEyeballNormal(mstudioeyeball_t const *peyeball, Vector &org, Vector &pos,
+												 Vector &normal)
 {
 	// inside of a flattened torus
-	VectorSubtract( pos, org, normal );
-	float flUpAmount =  DotProduct( normal, peyeball->up );
-	VectorMA( normal, -0.5 * flUpAmount, peyeball->up, normal );
-	VectorNormalize( normal );
+	VectorSubtract(pos, org, normal);
+	float flUpAmount = DotProduct(normal, peyeball->up);
+	VectorMA(normal, -0.5 * flUpAmount, peyeball->up, normal);
+	VectorNormalize(normal);
 }
-
 
 //-----------------------------------------------------------------------------
 //
@@ -909,23 +927,22 @@ inline void CStudioRender::R_StudioEyeballNormal( mstudioeyeball_t const* peyeba
 //-----------------------------------------------------------------------------
 
 // Computes the submodel for a specified body + bodypart
-int R_StudioSetupModel( int nBodyPart, int nBody, mstudiomodel_t **pSubModel, const studiohdr_t *pStudioHdr );
+int R_StudioSetupModel(int nBodyPart, int nBody, mstudiomodel_t **pSubModel, const studiohdr_t *pStudioHdr);
 
 // Computes PoseToWorld from BoneToWorld
-void ComputePoseToWorld( matrix3x4_t *pPoseToWorld, studiohdr_t *pStudioHdr, int boneMask, const Vector& vecViewOrigin, const matrix3x4_t *pBoneToWorld );
+void ComputePoseToWorld(matrix3x4_t *pPoseToWorld, studiohdr_t *pStudioHdr, int boneMask, const Vector &vecViewOrigin,
+						const matrix3x4_t *pBoneToWorld);
 
 // Computes the model LOD
-inline int ComputeModelLODAndMetric( studiohwdata_t *pHardwareData, float flUnitSphereSize, float *pMetric )
+inline int ComputeModelLODAndMetric(studiohwdata_t *pHardwareData, float flUnitSphereSize, float *pMetric)
 {
 	// NOTE: This function was split off since CStudioRender needs it also.
-	float flMetric = pHardwareData->LODMetric( flUnitSphereSize );
-	if ( pMetric )
+	float flMetric = pHardwareData->LODMetric(flUnitSphereSize);
+	if(pMetric)
 	{
 		*pMetric = flMetric;
 	}
-	return pHardwareData->GetLODForMetric( flMetric );
+	return pHardwareData->GetLODForMetric(flMetric);
 }
-
-
 
 #endif // CSTUDIORENDER_H

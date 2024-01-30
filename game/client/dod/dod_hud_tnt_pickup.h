@@ -20,22 +20,22 @@
 class CDODHudTNTPickupPanel : public CHudElement, public vgui::EditablePanel
 {
 public:
-	DECLARE_CLASS_SIMPLE( CDODHudTNTPickupPanel, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CDODHudTNTPickupPanel, vgui::EditablePanel);
 
-	CDODHudTNTPickupPanel( const char *pElementName );
+	CDODHudTNTPickupPanel(const char *pElementName);
 
 	virtual void Init();
 	virtual void VidInit();
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void OnScreenSizeChanged( int iOldWide, int iOldTall );
-	virtual void FireGameEvent( IGameEvent *event );
-	virtual void OnThink( void );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void OnScreenSizeChanged(int iOldWide, int iOldTall);
+	virtual void FireGameEvent(IGameEvent *event);
+	virtual void OnThink(void);
 
 private:
 	bool m_bInitLayout;
 
-	CIconPanel	*m_pTNTImage;
-	vgui::Panel	*m_pBackground;
+	CIconPanel *m_pTNTImage;
+	vgui::Panel *m_pBackground;
 
 	vgui::Label *m_pPickupLabel;
 

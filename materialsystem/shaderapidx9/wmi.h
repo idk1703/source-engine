@@ -10,8 +10,6 @@
 #pragma once
 #endif
 
-
-uint64 GetVidMemBytes( void );
-
+uint64 GetVidMemBytes(void);
 
 #endif // WMI_H

@@ -16,14 +16,11 @@
 #include "tier0/platform.h"
 #include "tier0/basetypes.h"
 
-template<uint32 TBufferSize> class CUtlMovingAverage
+template<uint32 TBufferSize>
+class CUtlMovingAverage
 {
 public:
-	CUtlMovingAverage() :
-		m_nValuesPushed( 0 ),
-		m_flTotal( 0.0f )
-	{
-	}
+	CUtlMovingAverage() : m_nValuesPushed(0), m_flTotal(0.0f) {}
 
 	void Reset()
 	{
@@ -36,15 +33,15 @@ public:
 		return m_nValuesPushed;
 	}
 
-	float GetAverage( )
+	float GetAverage()
 	{
-		uint n = MIN( TBufferSize, m_nValuesPushed );
-		return n ? ( m_flTotal / static_cast<double>( n ) ) : 0.0f;
+		uint n = MIN(TBufferSize, m_nValuesPushed);
+		return n ? (m_flTotal / static_cast<double>(n)) : 0.0f;
 	}
 
-	void GetAverageAndAbsRange( float *pflOutAverage, float *pflOutAbsRange, float *pflMinTime, float *pflMaxTime )
+	void GetAverageAndAbsRange(float *pflOutAverage, float *pflOutAbsRange, float *pflMinTime, float *pflMaxTime)
 	{
-		if ( m_nValuesPushed == 0 )
+		if(m_nValuesPushed == 0)
 		{
 			*pflOutAverage = 0;
 			*pflOutAbsRange = 0;
@@ -55,18 +52,18 @@ public:
 
 		*pflOutAverage = GetAverage();
 
-		const int nNumValues = MIN( m_nValuesPushed, TBufferSize );
+		const int nNumValues = MIN(m_nValuesPushed, TBufferSize);
 
 		float flAbsRange = 0;
 		float flMinTime = 9e+9;
 		float flMaxTime = 0;
 
-		for ( int i = 0; i < nNumValues; ++i )
+		for(int i = 0; i < nNumValues; ++i)
 		{
-			float flDif = ( m_Buffer[i] - *pflOutAverage );
-			flAbsRange = MAX( flAbsRange, abs( flDif ) );
-			flMinTime = MIN( flMinTime, m_Buffer[i] );
-			flMaxTime = MAX( flMaxTime, m_Buffer[i] );
+			float flDif = (m_Buffer[i] - *pflOutAverage);
+			flAbsRange = MAX(flAbsRange, abs(flDif));
+			flMinTime = MIN(flMinTime, m_Buffer[i]);
+			flMaxTime = MAX(flMaxTime, m_Buffer[i]);
 		}
 
 		*pflOutAbsRange = flAbsRange;
@@ -74,20 +71,20 @@ public:
 		*pflMaxTime = flMaxTime;
 	}
 
-	void PushValue( float v )
+	void PushValue(float v)
 	{
 		uint nIndex = m_nValuesPushed % TBufferSize;
 
-		if ( m_nValuesPushed >= TBufferSize )
+		if(m_nValuesPushed >= TBufferSize)
 		{
-			m_flTotal = MAX( m_flTotal - m_Buffer[nIndex], 0.0f );
+			m_flTotal = MAX(m_flTotal - m_Buffer[nIndex], 0.0f);
 		}
 		m_flTotal += v;
 
 		m_Buffer[nIndex] = v;
 		m_nValuesPushed++;
 
-		if ( UINT_MAX == m_nValuesPushed )
+		if(UINT_MAX == m_nValuesPushed)
 		{
 			Reset();
 		}

@@ -22,18 +22,18 @@
 // the cvars that were in effect while the match was running.  Cvars that contain
 // various passwords are omitted from the listing.
 //------------------------------------------------------------------------------------------------------
-class CCVarList :public CReport
+class CCVarList : public CReport
 {
 private:
 	enum Consts
 	{
-		HTML_TABLE_WIDTH=500,
-		HTML_TABLE_NUM_COLS=2,
+		HTML_TABLE_WIDTH = 500,
+		HTML_TABLE_NUM_COLS = 2,
 	};
+
 public:
-	explicit CCVarList(){}
+	explicit CCVarList() {}
 
-	void writeHTML(CHTMLFile& html);
-
+	void writeHTML(CHTMLFile &html);
 };
 #endif // CVARS_H

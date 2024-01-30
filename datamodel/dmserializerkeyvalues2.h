@@ -11,17 +11,14 @@
 #pragma once
 #endif
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
 class IDataModel;
 
-
 //-----------------------------------------------------------------------------
 // Installation methods for standard serializers
 //-----------------------------------------------------------------------------
-void InstallKeyValues2Serializer( IDataModel *pFactory );
-
+void InstallKeyValues2Serializer(IDataModel *pFactory);
 
 #endif // DMSERIALIZERKEYVALUES2_H

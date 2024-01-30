@@ -25,7 +25,6 @@ public:
 	CHL1MPClientScoreBoardDialog(IViewPort *pViewPort);
 	~CHL1MPClientScoreBoardDialog();
 
-
 protected:
 	// scoreboard overrides
 	virtual void InitScoreboardSections();
@@ -38,13 +37,13 @@ protected:
 	// vgui overrides for rounded corner background
 	virtual void PaintBackground();
 	virtual void PaintBorder();
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 
 private:
-	virtual void AddHeader(); // add the start header of the scoreboard
+	virtual void AddHeader();							   // add the start header of the scoreboard
 	virtual void AddSection(int teamType, int teamNumber); // add a new section header for a team
 
-	int GetSectionFromTeamNumber( int teamNumber );
+	int GetSectionFromTeamNumber(int teamNumber);
 	enum
 	{
 		CSTRIKE_NAME_WIDTH = 220,
@@ -52,14 +51,13 @@ private:
 		CSTRIKE_SCORE_WIDTH = 40,
 		CSTRIKE_DEATH_WIDTH = 46,
 		CSTRIKE_PING_WIDTH = 46,
-//		CSTRIKE_VOICE_WIDTH = 40,
-//		CSTRIKE_FRIENDS_WIDTH = 24,
+		//		CSTRIKE_VOICE_WIDTH = 40,
+		//		CSTRIKE_FRIENDS_WIDTH = 24,
 	};
 
 	// rounded corners
-	Color					 m_bgColor;
-	Color					 m_borderColor;
+	Color m_bgColor;
+	Color m_borderColor;
 };
-
 
 #endif // CHL1MPClientScoreBoardDialog_H

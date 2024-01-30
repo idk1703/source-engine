@@ -23,7 +23,8 @@
 //-----------------------------------------------------------------------------
 class CVarListPropertyPage : public vgui::PropertyPage, public IServerDataResponse
 {
-	DECLARE_CLASS_SIMPLE( CVarListPropertyPage, vgui::PropertyPage );
+	DECLARE_CLASS_SIMPLE(CVarListPropertyPage, vgui::PropertyPage);
+
 public:
 	CVarListPropertyPage(vgui::Panel *parent, const char *name);
 	~CVarListPropertyPage();
@@ -53,15 +54,14 @@ protected:
 	// vgui overrides
 	virtual void PerformLayout();
 	virtual void OnKeyCodeTyped(vgui::KeyCode code);
-	MESSAGE_FUNC_CHARPTR( OnVarChanged, "VarChanged", var );
+	MESSAGE_FUNC_CHARPTR(OnVarChanged, "VarChanged", var);
 
 private:
-	MESSAGE_FUNC( EditVariable, "EditVariable" );
-	MESSAGE_FUNC( OnItemSelected, "ItemSelected" );
+	MESSAGE_FUNC(EditVariable, "EditVariable");
+	MESSAGE_FUNC(OnItemSelected, "ItemSelected");
 
 	vgui::ListPanel *m_pRulesList;
 	vgui::Button *m_pEditButton;
 };
-
 
 #endif // VARLISTPROPERTYPAGE_H

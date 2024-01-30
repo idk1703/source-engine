@@ -19,50 +19,45 @@
 
 #include "utlvector.h"
 
-#define RIGHT_JUSTIFY	0x01
-#define BOTTOM_JUSTIFY	0x02
-#define GROUP_BOX		0x04
+#define RIGHT_JUSTIFY  0x01
+#define BOTTOM_JUSTIFY 0x02
+#define GROUP_BOX	   0x04
 
 struct ControlInfo_t
 {
-	int		m_nIDDialogItem;
-	DWORD	m_dwPlacementFlag;
-	int		m_nWidthBuffer;
-	int		m_nHeightBuffer;
-	int		m_nPosX;
-	int		m_nPosY;
+	int m_nIDDialogItem;
+	DWORD m_dwPlacementFlag;
+	int m_nWidthBuffer;
+	int m_nHeightBuffer;
+	int m_nPosX;
+	int m_nPosY;
 };
 
 class CHammerBar : public CDialogBar
 {
-	public:
+public:
+	CHammerBar(void) {}
 
-		CHammerBar(void)
-		{
-		}
+	~CHammerBar(void);
 
-		~CHammerBar(void);
+	BOOL Create(CWnd *pParentWnd, UINT nIDTemplate, UINT nStyle, UINT nID);
+	BOOL Create(CWnd *pParentWnd, UINT nIDTemplate, UINT nStyle, UINT nID, char *pszName);
 
-		BOOL Create( CWnd* pParentWnd, UINT nIDTemplate, UINT nStyle, UINT nID );
-		BOOL Create( CWnd* pParentWnd, UINT nIDTemplate, UINT nStyle, UINT nID, char *pszName );
-
-		CSize m_sizeDocked;
+	CSize m_sizeDocked;
 	CSize m_sizeFloating;
 
-		virtual CSize CalcDynamicLayout(int nLength, DWORD dwMode);
-		virtual void OnSize( UINT nType, int cx, int cy );
+	virtual CSize CalcDynamicLayout(int nLength, DWORD dwMode);
+	virtual void OnSize(UINT nType, int cx, int cy);
 
-		void AddControl( int nIDTemplate, DWORD dwPlacementFlag );
-		void AdjustControls( void );
+	void AddControl(int nIDTemplate, DWORD dwPlacementFlag);
+	void AdjustControls(void);
 
-		CUtlVector< ControlInfo_t > m_ControlList;
+	CUtlVector<ControlInfo_t> m_ControlList;
 
-	protected:
+protected:
+	afx_msg BOOL OnSetCursor(CWnd *pWnd, UINT nHitTest, UINT message);
 
-		afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
-
-		DECLARE_MESSAGE_MAP()
+	DECLARE_MESSAGE_MAP()
 };
-
 
 #endif // HAMMERBAR_H

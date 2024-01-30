@@ -42,5 +42,4 @@ private:
 	int m_iServerID;
 };
 
-
 #endif // DIALOGSERVERPASSWORD_H

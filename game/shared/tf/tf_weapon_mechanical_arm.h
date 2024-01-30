@@ -18,7 +18,6 @@
 #define CTFMechanicalArm C_TFMechanicalArm
 #endif
 
-
 //=============================================================================
 //
 // Mechanical Arm class.
@@ -26,40 +25,45 @@
 class CTFMechanicalArm : public CTFWeaponBaseGun
 {
 public:
-	DECLARE_CLASS( CTFMechanicalArm, CTFWeaponBaseGun );
+	DECLARE_CLASS(CTFMechanicalArm, CTFWeaponBaseGun);
 	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CTFMechanicalArm();
 	~CTFMechanicalArm();
 
-	virtual void	Precache();
+	virtual void Precache();
 
-	virtual void	PrimaryAttack();
-	virtual void	SecondaryAttack( void );
-	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_MECHANICAL_ARM; }
-	virtual int		GetCustomDamageType( ) const		{ return TF_DMG_CUSTOM_PLASMA; }
+	virtual void PrimaryAttack();
+	virtual void SecondaryAttack(void);
+	virtual int GetWeaponID(void) const
+	{
+		return TF_WEAPON_MECHANICAL_ARM;
+	}
+	virtual int GetCustomDamageType() const
+	{
+		return TF_DMG_CUSTOM_PLASMA;
+	}
 
-	virtual int		GetAmmoPerShot( void );
+	virtual int GetAmmoPerShot(void);
 
-	virtual bool	UpdateBodygroups( CBaseCombatCharacter* pOwner, int iState );
+	virtual bool UpdateBodygroups(CBaseCombatCharacter *pOwner, int iState);
 
 #ifdef CLIENT_DLL
-	virtual void	OnDataChanged( DataUpdateType_t updateType );
+	virtual void OnDataChanged(DataUpdateType_t updateType);
 #endif // CLIENT_DLL
 
 private:
-
-	bool ShockAttack( void );
+	bool ShockAttack(void);
 #ifdef GAME_DLL
-	bool IsValidVictim( CTFPlayer *pOwner, CBaseEntity *pTarget );
-	void ShockVictim( CTFPlayer *pOwner, CBaseEntity *pTarget );
+	bool IsValidVictim(CTFPlayer *pOwner, CBaseEntity *pTarget);
+	void ShockVictim(CTFPlayer *pOwner, CBaseEntity *pTarget);
 #else
-	void StopParticleBeam( );
+	void StopParticleBeam();
 	void UpdateParticleBeam();
 	HPARTICLEFFECT m_pParticleBeamEffect;
 	HPARTICLEFFECT m_pParticleBeamSpark;
-	C_BaseEntity  *m_pEffectOwner;
+	C_BaseEntity *m_pEffectOwner;
 #endif // CLIENT_DLL
 };
 

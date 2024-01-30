@@ -22,27 +22,36 @@ class CPlasmaProjectileShared
 public:
 	DECLARE_PREDICTABLE();
 	DECLARE_NETWORKCLASS_NOBASE();
-	DECLARE_CLASS_NOBASE( CPlasmaProjectileShared );
+	DECLARE_CLASS_NOBASE(CPlasmaProjectileShared);
 	DECLARE_EMBEDDED_NETWORKVAR();
 
 public:
-	void Init( const Vector &vecStart, const Vector &vecDir, float flSpawnSpeed );
-	float GetSpawnTime() const { return m_flSpawnTime; }
-	void SetSpawnTime( float flSpawnTime );
-	void SetDeathTime( float flDeathTime );
-	float GetDeathTime() const { return m_flDeathTime; }
+	void Init(const Vector &vecStart, const Vector &vecDir, float flSpawnSpeed);
+	float GetSpawnTime() const
+	{
+		return m_flSpawnTime;
+	}
+	void SetSpawnTime(float flSpawnTime);
+	void SetDeathTime(float flDeathTime);
+	float GetDeathTime() const
+	{
+		return m_flDeathTime;
+	}
 
-	void ComputePosition( float flTime, Vector *pNewPosition, Vector *pNewVelocity, QAngle *pNewAngles, QAngle *pNewAngVelocity );
+	void ComputePosition(float flTime, Vector *pNewPosition, Vector *pNewVelocity, QAngle *pNewAngles,
+						 QAngle *pNewAngVelocity);
 
-	const Vector &TracerDir() { return m_vTracerDir.Get(); }
+	const Vector &TracerDir()
+	{
+		return m_vTracerDir.Get();
+	}
 
 private:
-	CNetworkVector( m_vTracerDir );
-	CNetworkVector( m_vecSpawnPosition );
-	CNetworkVar( float, m_flSpawnTime );
-	CNetworkVar( float, m_flSpawnSpeed );
-	CNetworkVar( float, m_flDeathTime );
+	CNetworkVector(m_vTracerDir);
+	CNetworkVector(m_vecSpawnPosition);
+	CNetworkVar(float, m_flSpawnTime);
+	CNetworkVar(float, m_flSpawnSpeed);
+	CNetworkVar(float, m_flDeathTime);
 };
-
 
 #endif // PLASMAPROJECTILE_SHARED_H

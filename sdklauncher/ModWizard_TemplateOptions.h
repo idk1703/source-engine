@@ -10,7 +10,6 @@
 #pragma once
 #endif
 
-
 #include <vgui_controls/WizardSubPanel.h>
 #include <vgui_controls/TextEntry.h>
 #include <vgui_controls/Label.h>
@@ -29,10 +28,10 @@ enum numOptions_e
 	TPOPTIONS_TOTAL,
 };
 
-// --------------------------------------------------------------------------------------------------------------------- //
-// CreateModWizard sub panel 2b (only when scratch / template sdk is chosen!)
-// This panel asks for options
-// --------------------------------------------------------------------------------------------------------------------- //
+// ---------------------------------------------------------------------------------------------------------------------
+// // CreateModWizard sub panel 2b (only when scratch / template sdk is chosen!) This panel asks for options
+// ---------------------------------------------------------------------------------------------------------------------
+// //
 
 namespace vgui
 {
@@ -40,19 +39,19 @@ namespace vgui
 	class CModWizardSubPanel_TemplateOptions : public WizardSubPanel
 	{
 	public:
-		DECLARE_CLASS_SIMPLE( CModWizardSubPanel_TemplateOptions, vgui::WizardSubPanel );
+		DECLARE_CLASS_SIMPLE(CModWizardSubPanel_TemplateOptions, vgui::WizardSubPanel);
 
 	public:
-		CModWizardSubPanel_TemplateOptions( Panel *parent, const char *panelName );
+		CModWizardSubPanel_TemplateOptions(Panel *parent, const char *panelName);
 
-		virtual WizardSubPanel* GetNextSubPanel();
+		virtual WizardSubPanel *GetNextSubPanel();
 		virtual void OnDisplayAsNext();
 		virtual void PerformLayout();
-		virtual void OnCommand( const char *command );
+		virtual void OnCommand(const char *command);
 		virtual bool OnNextButton();
 		virtual void SetDefaultOptions();
 		virtual void UpdateOptions(); // Must be called before GetOption is used!!!
-		virtual char *GetOption( int optionType );
+		virtual char *GetOption(int optionType);
 
 	public:
 		CheckButton *m_pOptionTeams;
@@ -65,10 +64,8 @@ namespace vgui
 		CheckButton *m_pOptionShootJumping;
 
 		bool m_bOptions[TPOPTIONS_TOTAL];
-
 	};
 
-}
-
+} // namespace vgui
 
 #endif // MODWIZARD_TEMPLATEOPTIONS_H

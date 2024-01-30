@@ -23,20 +23,21 @@ class IMaterialSystemHardwareConfig;
 class CTFRenderTargets : public CBaseClientRenderTargets
 {
 	// no networked vars
-	DECLARE_CLASS_GAMEROOT( CTFRenderTargets, CBaseClientRenderTargets );
+	DECLARE_CLASS_GAMEROOT(CTFRenderTargets, CBaseClientRenderTargets);
+
 public:
-	virtual void InitClientRenderTargets( IMaterialSystem* pMaterialSystem, IMaterialSystemHardwareConfig* pHardwareConfig );
+	virtual void InitClientRenderTargets(IMaterialSystem *pMaterialSystem,
+										 IMaterialSystemHardwareConfig *pHardwareConfig);
 	virtual void ShutdownClientRenderTargets();
 
 private:
-	ITexture *CreateItemModelPanelTexture( const char *pszName, IMaterialSystem* pMaterialSystem, int iSize );
+	ITexture *CreateItemModelPanelTexture(const char *pszName, IMaterialSystem *pMaterialSystem, int iSize);
 
 private:
 	// Used for rendering item model panels.
-	CUtlVector< CTextureReference >		m_tfRenderTargets;
+	CUtlVector<CTextureReference> m_tfRenderTargets;
 };
 
-extern CTFRenderTargets* g_pTFRenderTargets;
-
+extern CTFRenderTargets *g_pTFRenderTargets;
 
 #endif // TF_RENDERTARGETS_H

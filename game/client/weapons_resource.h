@@ -24,19 +24,19 @@ class CHudTexture;
 class WeaponsResource
 {
 public:
-	WeaponsResource( void );
-	~WeaponsResource( void );
+	WeaponsResource(void);
+	~WeaponsResource(void);
 
-	void Init( void );
-	void Reset( void );
+	void Init(void);
+	void Reset(void);
 
 	// Sprite handling
-	void LoadWeaponSprites( WEAPON_FILE_INFO_HANDLE hWeaponFileInfo );
-	void LoadAllWeaponSprites( void );
+	void LoadWeaponSprites(WEAPON_FILE_INFO_HANDLE hWeaponFileInfo);
+	void LoadAllWeaponSprites(void);
 
 	// Ammo Handling
-	CHudTexture					*GetAmmoIconFromWeapon( int iAmmoId );
-	const FileWeaponInfo_t		*GetWeaponFromAmmo( int iAmmoId );
+	CHudTexture *GetAmmoIconFromWeapon(int iAmmoId);
+	const FileWeaponInfo_t *GetWeaponFromAmmo(int iAmmoId);
 };
 
 extern WeaponsResource gWR;

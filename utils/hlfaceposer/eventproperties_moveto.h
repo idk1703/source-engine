@@ -13,6 +13,6 @@
 
 class CEventParams;
 
-int EventProperties_MoveTo( CEventParams *params );
+int EventProperties_MoveTo(CEventParams *params);
 
 #endif // EVENTPROPERTIES_MOVETO_H

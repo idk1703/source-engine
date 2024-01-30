@@ -14,7 +14,6 @@
 
 #include "matsys_controls/potterywheelpanel.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
@@ -26,41 +25,40 @@ namespace vgui
 {
 	class ScrollBar;
 	class IScheme;
-}
-
+} // namespace vgui
 
 //-----------------------------------------------------------------------------
 // Material Viewer Panel
 //-----------------------------------------------------------------------------
 class CVMTPanel : public CPotteryWheelPanel
 {
-	DECLARE_CLASS_SIMPLE( CVMTPanel, CPotteryWheelPanel );
+	DECLARE_CLASS_SIMPLE(CVMTPanel, CPotteryWheelPanel);
 
 public:
 	// constructor, destructor
-	CVMTPanel( vgui::Panel *pParent, const char *pName );
+	CVMTPanel(vgui::Panel *pParent, const char *pName);
 	virtual ~CVMTPanel();
 
 	// Set the material to draw
-	void SetMaterial( IMaterial *pMaterial );
+	void SetMaterial(IMaterial *pMaterial);
 
 	// Set rendering mode (stretch to full screen, or use actual size)
-	void RenderUsingActualSize( bool bEnable );
+	void RenderUsingActualSize(bool bEnable);
 
 	// performs the layout
 	virtual void PerformLayout();
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 
 private:
 	// paint it stretched to the window size
-	void DrawStretchedToPanel( CMeshBuilder &meshBuilder );
+	void DrawStretchedToPanel(CMeshBuilder &meshBuilder);
 
 	// paint it actual size
-	void DrawActualSize( CMeshBuilder &meshBuilder );
+	void DrawActualSize(CMeshBuilder &meshBuilder);
 
 	// Draw it on a sphere
-	void RenderSphere( const Vector &vCenter, float flRadius, int nTheta, int nPhi );
+	void RenderSphere(const Vector &vCenter, float flRadius, int nTheta, int nPhi);
 
 	// paint it!
 	virtual void OnPaint3D();
@@ -83,7 +81,7 @@ private:
 	vgui::ScrollBar *m_pVerticalBar;
 
 	// The viewable size
-	int	m_iViewableWidth;
+	int m_iViewableWidth;
 	int m_iViewableHeight;
 };
 

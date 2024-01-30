@@ -38,7 +38,7 @@ public:
 	char m_ExpressionsFilename[1024];
 	char m_ModelFilename[1024];
 
-	char m_EyeballPrefix[1024];	// eyeball_ or dark_eyeball_
+	char m_EyeballPrefix[1024]; // eyeball_ or dark_eyeball_
 	char m_PupilPrefix[1024];	// pupil_ or grn_pupil_ or bl_pupil_
 };
 
@@ -47,36 +47,38 @@ public:
 
 class CQC_EyesDlg : public CDialog
 {
-// Construction
+	// Construction
 public:
-	CQC_EyesDlg(CWnd* pParent = NULL);	// standard constructor
+	CQC_EyesDlg(CWnd *pParent = NULL); // standard constructor
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CQC_EyesDlg)
-	enum { IDD = IDD_QC_EYES_DIALOG };
-	CButton	m_IndependentLeftLidControl;
-	CStatic	m_PictureControl;
+	enum
+	{
+		IDD = IDD_QC_EYES_DIALOG
+	};
+	CButton m_IndependentLeftLidControl;
+	CStatic m_PictureControl;
 	//}}AFX_DATA
 
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CQC_EyesDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
-	//}}AFX_VIRTUAL
+protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
+													 //}}AFX_VIRTUAL
 
-// Implementation
+	// Implementation
 protected:
 	HICON m_hIcon;
 
 	void GenerateQCText();
-	void AddText( const char *pFormat, ... );
-	bool IsOptionChecked( UINT option );
-	float GetDlgItemFloat( UINT id );
-	void GetDialogParams( CDialogParams &p );
-	void SetupBitmapLabel( UINT iBitmapResourceID, const char *pString, ... );
+	void AddText(const char *pFormat, ...);
+	bool IsOptionChecked(UINT option);
+	float GetDlgItemFloat(UINT id);
+	void GetDialogParams(CDialogParams &p);
+	void SetupBitmapLabel(UINT iBitmapResourceID, const char *pString, ...);
 
 	HWND m_hOutputText;
-
 
 	// Cached list of bitmaps.
 	class CBitmapRef
@@ -87,15 +89,13 @@ protected:
 		CBitmapRef *m_pNext;
 	};
 	CBitmapRef *m_pBitmapHead;
-	HBITMAP GetCachedBitmap( UINT id );
-
+	HBITMAP GetCachedBitmap(UINT id);
 
 	size_t m_BufSize;
 	char *m_Buf;
 	bool IsIndependentLeftLidControlEnabled();
 
 	bool CheckNumericInputs();
-
 
 	// Generated message map functions
 	//{{AFX_MSG(CQC_EyesDlg)

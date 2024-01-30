@@ -35,39 +35,58 @@ private:
 	char peekBuf[BUF_SIZE];
 	bool fWordPushed;
 	bool noComments;
-	FILE* theFile;
+	FILE *theFile;
 
-	char* delims;
-	char* stringDelims;
-	char* normalDelims;
-	char* blockDelims;
+	char *delims;
+	char *stringDelims;
+	char *normalDelims;
+	char *blockDelims;
 
 	char getNextNonWSChar();
 	bool isDelim(char c);
 
-	const char* getToken(char* outputBuf);
+	const char *getToken(char *outputBuf);
+
 public:
-	explicit CTextFile(const char* filename,bool eliminateComments=true){init(filename,eliminateComments);}
-	explicit CTextFile(const string& filename,bool eliminateComments=true){init(filename.c_str(),eliminateComments);}
-	void init(const char* filename,bool eliminateComments=true);
-	std::string& fileName(){return filename;}
+	explicit CTextFile(const char *filename, bool eliminateComments = true)
+	{
+		init(filename, eliminateComments);
+	}
+	explicit CTextFile(const string &filename, bool eliminateComments = true)
+	{
+		init(filename.c_str(), eliminateComments);
+	}
+	void init(const char *filename, bool eliminateComments = true);
+	std::string &fileName()
+	{
+		return filename;
+	}
 
 	void discardBlock();
-	const char* readString();
-	const char* readString(char* buf);
+	const char *readString();
+	const char *readString(char *buf);
 	int readInt();
 	unsigned long readULong();
-	const char* getToken();
-	const char* getLine();
-	bool isValid(){return theFile!=NULL;}
-	char* currWord(){return wordBuf;}
-	void  pushBack(const char* pushTok);
-	char* peekNext();
-	char* peekNextString();
+	const char *getToken();
+	const char *getLine();
+	bool isValid()
+	{
+		return theFile != NULL;
+	}
+	char *currWord()
+	{
+		return wordBuf;
+	}
+	void pushBack(const char *pushTok);
+	char *peekNext();
+	char *peekNextString();
 	bool eof();
 	void reset();
-	bool discard(char* test);
-	void discard(){getToken();}
+	bool discard(char *test);
+	void discard()
+	{
+		getToken();
+	}
 
 	~CTextFile();
 };

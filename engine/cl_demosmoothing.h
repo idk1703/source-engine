@@ -15,10 +15,10 @@
 #include "quakedef.h"
 #include "tier0/platform.h"
 
-#define FDEMO_NORMAL		0
-#define FDEMO_USE_ORIGIN2	(1<<0)
-#define FDEMO_USE_ANGLES2	(1<<1)
-#define FDEMO_NOINTERP		(1<<2)	// don't interpolate between this an last view
+#define FDEMO_NORMAL	  0
+#define FDEMO_USE_ORIGIN2 (1 << 0)
+#define FDEMO_USE_ANGLES2 (1 << 1)
+#define FDEMO_NOINTERP	  (1 << 2) // don't interpolate between this an last view
 
 struct democmdinfo_t
 {
@@ -38,9 +38,9 @@ struct democmdinfo_t
 
 	// Copy constructor
 	// Assignment
-	democmdinfo_t&	operator=(const democmdinfo_t& src )
+	democmdinfo_t &operator=(const democmdinfo_t &src)
 	{
-		if ( this == &src )
+		if(this == &src)
 			return *this;
 
 		flags = src.flags;
@@ -54,33 +54,33 @@ struct democmdinfo_t
 		return *this;
 	}
 
-	const Vector& GetViewOrigin()
+	const Vector &GetViewOrigin()
 	{
-		if ( flags & FDEMO_USE_ORIGIN2 )
+		if(flags & FDEMO_USE_ORIGIN2)
 		{
 			return viewOrigin2;
 		}
 		return viewOrigin;
 	}
 
-	const QAngle& GetViewAngles()
+	const QAngle &GetViewAngles()
 	{
-		if ( flags & FDEMO_USE_ANGLES2 )
+		if(flags & FDEMO_USE_ANGLES2)
 		{
 			return viewAngles2;
 		}
 		return viewAngles;
 	}
-	const QAngle& GetLocalViewAngles()
+	const QAngle &GetLocalViewAngles()
 	{
-		if ( flags & FDEMO_USE_ANGLES2 )
+		if(flags & FDEMO_USE_ANGLES2)
 		{
 			return localViewAngles2;
 		}
 		return localViewAngles;
 	}
 
-	void Reset( void )
+	void Reset(void)
 	{
 		flags = 0;
 		viewOrigin2 = viewOrigin;
@@ -88,17 +88,17 @@ struct democmdinfo_t
 		localViewAngles2 = localViewAngles;
 	}
 
-	int			flags;
+	int flags;
 
 	// original origin/viewangles
-	Vector		viewOrigin;
-	QAngle		viewAngles;
-	QAngle		localViewAngles;
+	Vector viewOrigin;
+	QAngle viewAngles;
+	QAngle localViewAngles;
 
 	// Resampled origin/viewangles
-	Vector		viewOrigin2;
-	QAngle		viewAngles2;
-	QAngle		localViewAngles2;
+	Vector viewOrigin2;
+	QAngle viewAngles2;
+	QAngle localViewAngles2;
 };
 
 struct demosmoothing_t
@@ -117,9 +117,9 @@ struct demosmoothing_t
 		vectarget.Init();
 	}
 
-	demosmoothing_t&	operator=(const demosmoothing_t& src )
+	demosmoothing_t &operator=(const demosmoothing_t &src)
 	{
-		if ( this == &src )
+		if(this == &src)
 			return *this;
 
 		file_offset = src.file_offset;
@@ -137,21 +137,21 @@ struct demosmoothing_t
 		return *this;
 	}
 
-	int					file_offset;
+	int file_offset;
 
-	int					frametick;
+	int frametick;
 
-	bool				selected;
+	bool selected;
 
 	// For moved sample points
-	bool				samplepoint;
-	Vector				vecmoved;
-	QAngle				angmoved;
+	bool samplepoint;
+	Vector vecmoved;
+	QAngle angmoved;
 
-	bool				targetpoint;
-	Vector				vectarget;
+	bool targetpoint;
+	Vector vectarget;
 
-	democmdinfo_t		info;
+	democmdinfo_t info;
 };
 
 struct CSmoothingContext
@@ -159,33 +159,33 @@ struct CSmoothingContext
 	CSmoothingContext()
 	{
 		active = false;
-		filename[ 0 ] = 0;
+		filename[0] = 0;
 	}
 
-	CSmoothingContext&	operator=(const CSmoothingContext& src )
+	CSmoothingContext &operator=(const CSmoothingContext &src)
 	{
-		if ( this == &src )
+		if(this == &src)
 			return *this;
 
 		active = src.active;
-		Q_strncpy( filename, src.filename, sizeof( filename ) );
+		Q_strncpy(filename, src.filename, sizeof(filename));
 
 		smooth.RemoveAll();
 		int c = src.smooth.Count();
 		int i;
-		for ( i = 0; i < c; i++ )
+		for(i = 0; i < c; i++)
 		{
 			demosmoothing_t newitem;
-			newitem = src.smooth[ i ];
-			smooth.AddToTail( newitem );
+			newitem = src.smooth[i];
+			smooth.AddToTail(newitem);
 		}
 
 		return *this;
 	}
 
-	bool							active;
-	char							filename[ MAX_OSPATH ];
-	CUtlVector< demosmoothing_t >	smooth;
+	bool active;
+	char filename[MAX_OSPATH];
+	CUtlVector<demosmoothing_t> smooth;
 };
 
 #endif // CL_DEMOSMOOTHING_H

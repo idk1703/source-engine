@@ -37,7 +37,7 @@
 //===============================================================================
 
 #ifndef INTELGLMALLOCWORKAROUND_H
-#define	INTELGLMALLOCWORKAROUND_H
+#define INTELGLMALLOCWORKAROUND_H
 
 #include <stdlib.h>
 
@@ -48,13 +48,13 @@ public:
 	bool Enable();
 
 protected:
-	IntelGLMallocWorkaround() :m_pfnMallocReentry(NULL) {}
+	IntelGLMallocWorkaround() : m_pfnMallocReentry(NULL) {}
 	~IntelGLMallocWorkaround() {}
 
 	static IntelGLMallocWorkaround *s_pWorkaround;
-	static void* ZeroingAlloc(size_t);
+	static void *ZeroingAlloc(size_t);
 
-	typedef void* (*pfnMalloc_t)(size_t);
+	typedef void *(*pfnMalloc_t)(size_t);
 	pfnMalloc_t m_pfnMallocReentry;
 };
 

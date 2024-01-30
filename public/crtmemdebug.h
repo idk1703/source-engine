@@ -19,7 +19,7 @@
 
 #include <crtdbg.h>
 #define MEMCHECK CheckHeap()
-void CheckHeap( void );
+void CheckHeap(void);
 
 #else
 
@@ -27,7 +27,6 @@ void CheckHeap( void );
 
 #endif
 
-void InitCRTMemDebug( void );
-
+void InitCRTMemDebug(void);
 
 #endif // CRTMEMDEBUG_H

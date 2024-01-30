@@ -17,7 +17,6 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-
 //-----------------------------------------------------------------------------
 // Purpose: encapsulates a OSX font
 //-----------------------------------------------------------------------------
@@ -28,10 +27,11 @@ public:
 	~CLinuxFont();
 
 	// creates the font from windows.  returns false if font does not exist in the OS.
-	virtual bool CreateFromMemory(const char *windowsFontName, void *data, int size, int tall, int weight, int blur, int scanlines, int flags);
+	virtual bool CreateFromMemory(const char *windowsFontName, void *data, int size, int tall, int weight, int blur,
+								  int scanlines, int flags);
 
 	// writes the char into the specified 32bpp texture
-	virtual void GetCharRGBA( wchar_t ch, int rgbaWide, int rgbaTall, unsigned char *rgba);
+	virtual void GetCharRGBA(wchar_t ch, int rgbaWide, int rgbaTall, unsigned char *rgba);
 
 	// returns true if the font is equivalent to that specified
 	virtual bool IsEqualTo(const char *windowsFontName, int tall, int weight, int blur, int scanlines, int flags);
@@ -46,7 +46,7 @@ public:
 	virtual void GetCharABCWidths(int ch, int &a, int &b, int &c);
 
 	// set the font to be the one to currently draw with in the gdi
-	void *SetAsActiveFont( void *glContext );
+	void *SetAsActiveFont(void *glContext);
 
 	// returns the height of the font, in pixels
 	virtual int GetHeight();
@@ -64,27 +64,39 @@ public:
 	virtual int GetFlags();
 
 	// returns true if this font is underlined
-	virtual bool GetUnderlined() { return m_bUnderlined; }
+	virtual bool GetUnderlined()
+	{
+		return m_bUnderlined;
+	}
 
 	// gets the name of this font
-	const char *GetName() { return m_szName.String(); }
-	const char *GetFamilyName() { return m_face ? m_face->family_name : NULL; }
+	const char *GetName()
+	{
+		return m_szName.String();
+	}
+	const char *GetFamilyName()
+	{
+		return m_face ? m_face->family_name : NULL;
+	}
 
 	// gets the weight of the font
-	virtual int GetWeight() { return m_iWeight; }
+	virtual int GetWeight()
+	{
+		return m_iWeight;
+	}
 
 	bool HasChar(wchar_t wch);
 
 	// gets the width of ch given its position around before and after chars
-	virtual void GetKernedCharWidth( wchar_t ch, wchar_t chBefore, wchar_t chAfter, float &wide, float &abcA, float &abcC );
+	virtual void GetKernedCharWidth(wchar_t ch, wchar_t chBefore, wchar_t chAfter, float &wide, float &abcA,
+									float &abcC);
 
 #ifdef DBGFLAG_VALIDATE
-	void Validate( CValidator &validator, char *pchName );
+	void Validate(CValidator &validator, char *pchName);
 #endif
 
 	// Given a font name from windows, match it to the filename and return that.
 	static char *GetFontFileName(const char *windowsFontName, int flags);
-
 
 protected:
 	CUtlString m_szName;
@@ -123,7 +135,6 @@ private:
 		abc_t abc;
 	};
 
-
 	CUtlRBTree<abc_cache_t, unsigned short> m_ExtendedABCWidthsCache;
 	static bool ExtendedABCWidthsCacheLessFunc(const abc_cache_t &lhs, const abc_cache_t &rhs);
 
@@ -157,12 +168,12 @@ private:
 
 		char *m_pchFile;
 		char *m_pchFriendlyName;
-		bool operator<( const font_name_entry &rhs ) const
+		bool operator<(const font_name_entry &rhs) const
 		{
-			return V_stricmp( rhs.m_pchFriendlyName, m_pchFriendlyName ) > 0;
+			return V_stricmp(rhs.m_pchFriendlyName, m_pchFriendlyName) > 0;
 		}
 	};
-	static CUtlRBTree< font_name_entry > m_FriendlyNameCache;
+	static CUtlRBTree<font_name_entry> m_FriendlyNameCache;
 	static bool ms_bSetFriendlyNameCacheLessFunc;
 };
 

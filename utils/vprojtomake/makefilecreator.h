@@ -10,7 +10,6 @@
 #pragma once
 #endif
 
-
 #include "utlvector.h"
 #include "utlsymbol.h"
 #include "utldict.h"
@@ -21,29 +20,27 @@
 class CMakefileCreator
 {
 public:
-
 	CMakefileCreator();
 	~CMakefileCreator();
 
-	void CreateMakefiles( CVCProjConvert & proj );
+	void CreateMakefiles(CVCProjConvert &proj);
 
 private:
-	void CleanupFileName( char *name );
-	void OutputDirs( FileHandle_t f );
-	void OutputBuildTarget( FileHandle_t f );
-	void OutputObjLists( CVCProjConvert::CConfiguration & config, FileHandle_t f );
-	void OutputIncludes( CVCProjConvert::CConfiguration & config, FileHandle_t f );
-	void OutputMainBuilder( FileHandle_t f );
+	void CleanupFileName(char *name);
+	void OutputDirs(FileHandle_t f);
+	void OutputBuildTarget(FileHandle_t f);
+	void OutputObjLists(CVCProjConvert::CConfiguration &config, FileHandle_t f);
+	void OutputIncludes(CVCProjConvert::CConfiguration &config, FileHandle_t f);
+	void OutputMainBuilder(FileHandle_t f);
 
-	void CreateBaseDirs( CVCProjConvert::CConfiguration & config );
-	void CreateMakefileName( const char *projectName, CVCProjConvert::CConfiguration & config );
-	void CreateDirectoryFriendlyName( const char *dirName, char *friendlyDirName, int friendlyDirNameSize );
-	void CreateObjDirectoryFriendlyName ( char *name );
-	void FileWrite( FileHandle_t f, PRINTF_FORMAT_STRING const char *fmt, ... );
-
+	void CreateBaseDirs(CVCProjConvert::CConfiguration &config);
+	void CreateMakefileName(const char *projectName, CVCProjConvert::CConfiguration &config);
+	void CreateDirectoryFriendlyName(const char *dirName, char *friendlyDirName, int friendlyDirNameSize);
+	void CreateObjDirectoryFriendlyName(char *name);
+	void FileWrite(FileHandle_t f, PRINTF_FORMAT_STRING const char *fmt, ...);
 
 	CUtlDict<CUtlSymbol, int> m_BaseDirs;
-	CUtlMap<int, int>	m_FileToBaseDirMapping;
+	CUtlMap<int, int> m_FileToBaseDirMapping;
 
 	struct OutputDirMapping_t
 	{
@@ -55,9 +52,9 @@ private:
 	};
 
 	CUtlVector<struct OutputDirMapping_t> m_BuildDirectories;
-	CUtlSymbol		m_MakefileName;
-	CUtlSymbol		m_ProjName;
-	CUtlSymbol		m_BaseDir;
+	CUtlSymbol m_MakefileName;
+	CUtlSymbol m_ProjName;
+	CUtlSymbol m_BaseDir;
 };
 
 #endif // MAKEFILECREATOR_H

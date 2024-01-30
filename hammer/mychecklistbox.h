@@ -16,8 +16,9 @@ class CMyCheckListBox : public CCheckListBox
 {
 public:
 	BOOL CompareItem(LPCOMPAREITEMSTRUCT lpcis)
-	{ return 0; }
+	{
+		return 0;
+	}
 };
-
 
 #endif // _MYCHECKLISTBOX_H

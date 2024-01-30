@@ -15,39 +15,33 @@
 #define TITLEWND_H
 #pragma once
 
-
 class CTitleWnd : public CWnd
 {
-	public:
+public:
+	static CTitleWnd *CreateTitleWnd(CWnd *pwndParent, UINT uID);
 
-		static CTitleWnd *CreateTitleWnd(CWnd *pwndParent, UINT uID);
+	void SetTitle(LPCTSTR pszTitle);
 
-		void SetTitle(LPCTSTR pszTitle);
+private:
+	char m_szTitle[256];
+	static CFont m_FontNormal;
+	static CFont m_FontActive;
 
-	private:
+protected:
+	CTitleWnd(void);
 
-		char m_szTitle[256];
-		static CFont m_FontNormal;
-		static CFont m_FontActive;
+	void OnMouseButton(void);
 
-	protected:
+	bool m_bMouseOver;
+	bool m_bMenuOpen;
 
-		CTitleWnd(void);
+	afx_msg void OnPaint();
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
+	afx_msg LRESULT OnMouseLeave(WPARAM wParam, LPARAM lParam);
 
-		void OnMouseButton(void);
-
-		bool m_bMouseOver;
-		bool m_bMenuOpen;
-
-		afx_msg void OnPaint();
-		afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
-		afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
-		afx_msg void OnMouseMove(UINT nFlags, CPoint point);
-		afx_msg LRESULT OnMouseLeave(WPARAM wParam, LPARAM lParam);
-
-		DECLARE_MESSAGE_MAP()
+	DECLARE_MESSAGE_MAP()
 };
-
-
 
 #endif // TITLEWND_H

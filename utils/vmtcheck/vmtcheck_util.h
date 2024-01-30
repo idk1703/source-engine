@@ -10,11 +10,10 @@
 #pragma once
 #endif
 
+void vprint(int depth, const char *fmt, ...);
 
-void vprint( int depth, const char *fmt, ... );
-
-unsigned char *COM_LoadFile( const char *name, int *len);
-void COM_FreeFile( unsigned char *buffer );
-bool COM_DirectoryExists( const char *dir );
+unsigned char *COM_LoadFile(const char *name, int *len);
+void COM_FreeFile(unsigned char *buffer);
+bool COM_DirectoryExists(const char *dir);
 
 #endif // CLASSCHECK_UTIL_H

@@ -21,18 +21,17 @@
 
 #define MAX_MAX_LIGHTMAP_WIDTH 2048
 
-
 //-----------------------------------------------------------------------------
 // This packs a single lightmap
 //-----------------------------------------------------------------------------
 class CImagePacker
 {
 public:
-	bool Reset( int maxLightmapWidth, int maxLightmapHeight );
-	bool AddBlock( int width, int height, int *returnX, int *returnY );
+	bool Reset(int maxLightmapWidth, int maxLightmapHeight);
+	bool AddBlock(int width, int height, int *returnX, int *returnY);
 
 protected:
-	int GetMaxYIndex( int firstX, int width );
+	int GetMaxYIndex(int firstX, int width);
 
 	int m_MaxLightmapWidth;
 	int m_MaxLightmapHeight;
@@ -46,6 +45,5 @@ protected:
 	int m_MaxBlockWidth;
 	int m_MaxBlockHeight;
 };
-
 
 #endif // IMAGEPACKER_H

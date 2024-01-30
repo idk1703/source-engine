@@ -25,26 +25,23 @@ enum MovementStyle_t
 
 struct MannedPlasmagunData_t : public VehicleBaseMoveData_t
 {
-	float	m_flGunYaw;
-	float	m_flGunPitch;
-	float	m_flBarrelPitch;
-	float	m_flBarrelHeight;
-	int		m_nBarrelPivotAttachment;
-	int		m_nBarrelAttachment;
-	int		m_nStandAttachment;
-	MovementStyle_t	m_nMoveStyle;
+	float m_flGunYaw;
+	float m_flGunPitch;
+	float m_flBarrelPitch;
+	float m_flBarrelHeight;
+	int m_nBarrelPivotAttachment;
+	int m_nBarrelAttachment;
+	int m_nStandAttachment;
+	MovementStyle_t m_nMoveStyle;
 };
-
 
 class CObjectMannedPlasmagunMovement
 {
 public:
-	void ProcessMovement( CBasePlayer *pPlayer, CMoveData *pMove );
+	void ProcessMovement(CBasePlayer *pPlayer, CMoveData *pMove);
 	float GetMaxYaw() const;
 	float GetMinYaw() const;
 	float GetMaxPitch() const;
 };
-
-
 
 #endif // TF_OBJ_MANNED_PLASMAGUN_SHARED_H

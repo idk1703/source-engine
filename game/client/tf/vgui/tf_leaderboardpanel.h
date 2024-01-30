@@ -14,23 +14,24 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 class CTFLeaderboardPanel : public CBaseASyncPanel
 {
-	DECLARE_CLASS_SIMPLE( CTFLeaderboardPanel, CBaseASyncPanel );
+	DECLARE_CLASS_SIMPLE(CTFLeaderboardPanel, CBaseASyncPanel);
+
 public:
-	CTFLeaderboardPanel( Panel *pParent, const char *pszPanelName );
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
-	virtual void ApplySettings( KeyValues *inResourceData );
+	CTFLeaderboardPanel(Panel *pParent, const char *pszPanelName);
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme) OVERRIDE;
+	virtual void ApplySettings(KeyValues *inResourceData);
 
 protected:
-	virtual bool GetLeaderboardData( CUtlVector< LeaderboardEntry_t* >& scores ) = 0;
+	virtual bool GetLeaderboardData(CUtlVector<LeaderboardEntry_t *> &scores) = 0;
 	virtual bool UpdateLeaderboards();
 	virtual bool CheckForData_Internal() OVERRIDE;
 
-	CUtlVector< EditablePanel* > m_vecLeaderboardEntries;
+	CUtlVector<EditablePanel *> m_vecLeaderboardEntries;
 
-	CPanelAnimationVarAliasType( int, m_yEntryStep, "entry_step", "5", "proportional_int");
+	CPanelAnimationVarAliasType(int, m_yEntryStep, "entry_step", "5", "proportional_int");
 	Color m_EvenTextColor;
 	Color m_OddTextColor;
 	Color m_LocalPlayerTextColor;
 };
 
-#endif //TF_LEADERBOARDPANEL_H
+#endif // TF_LEADERBOARDPANEL_H

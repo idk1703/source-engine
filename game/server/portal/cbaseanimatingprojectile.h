@@ -14,29 +14,22 @@
 enum MoveType_t;
 enum MoveCollide_t;
 
-
 //=============================================================================
 //=============================================================================
 class CBaseAnimatingProjectile : public CBaseAnimating
 {
 	DECLARE_DATADESC();
-	DECLARE_CLASS( CBaseAnimatingProjectile, CBaseAnimating );
+	DECLARE_CLASS(CBaseAnimatingProjectile, CBaseAnimating);
 
 public:
-	void Touch( CBaseEntity *pOther );
+	void Touch(CBaseEntity *pOther);
 
-	void Spawn(	char *pszModel,
-											const Vector &vecOrigin,
-											const Vector &vecVelocity,
-											edict_t *pOwner,
-											MoveType_t	iMovetype,
-											MoveCollide_t nMoveCollide,
-											int	iDamage,
-											int iDamageType );
+	void Spawn(char *pszModel, const Vector &vecOrigin, const Vector &vecVelocity, edict_t *pOwner,
+			   MoveType_t iMovetype, MoveCollide_t nMoveCollide, int iDamage, int iDamageType);
 
-	virtual void Precache( void ) {};
+	virtual void Precache(void) {};
 
-	int	m_iDmg;
+	int m_iDmg;
 	int m_iDmgType;
 };
 

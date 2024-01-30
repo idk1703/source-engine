@@ -19,26 +19,29 @@ class CClientRecordingSessionBlockManager : public CBaseRecordingSessionBlockMan
 	typedef CBaseRecordingSessionBlockManager BaseClass;
 
 public:
-	CClientRecordingSessionBlockManager( IReplayContext *pContext );
+	CClientRecordingSessionBlockManager(IReplayContext *pContext);
 
 	//
 	// CGenericPersistentManager
 	//
-	virtual CBaseRecordingSessionBlock	*Create();
+	virtual CBaseRecordingSessionBlock *Create();
 
 private:
 	//
 	// CGenericPersistentManager
 	//
-	virtual IReplayContext	*GetReplayContext() const;
+	virtual IReplayContext *GetReplayContext() const;
 
 	//
 	// CBaseThinker
 	//
-	virtual float		GetNextThinkTime() const;
-	virtual void		Think();
+	virtual float GetNextThinkTime() const;
+	virtual void Think();
 
-	virtual bool		ShouldLoadBlocks() const	{ return false; }
+	virtual bool ShouldLoadBlocks() const
+	{
+		return false;
+	}
 };
 
 //----------------------------------------------------------------------------------------

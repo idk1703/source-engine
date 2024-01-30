@@ -21,16 +21,14 @@ extern IGameEventManager2 *gameeventmanager;
 class CGameEventListener : public IGameEventListener2
 {
 public:
-	CGameEventListener() : m_bRegisteredForEvents(false)
-	{
-	}
+	CGameEventListener() : m_bRegisteredForEvents(false) {}
 
 	~CGameEventListener()
 	{
 		StopListeningForAllEvents();
 	}
 
-	void ListenForGameEvent( const char *name )
+	void ListenForGameEvent(const char *name)
 	{
 		m_bRegisteredForEvents = true;
 
@@ -39,30 +37,29 @@ public:
 #else
 		bool bServerSide = true;
 #endif
-		if ( gameeventmanager )
+		if(gameeventmanager)
 		{
-			gameeventmanager->AddListener( this, name, bServerSide );
+			gameeventmanager->AddListener(this, name, bServerSide);
 		}
 
-		AssertMsg1( gameeventmanager, "Failed to subscribe to event %s!", name );
+		AssertMsg1(gameeventmanager, "Failed to subscribe to event %s!", name);
 	}
 
 	void StopListeningForAllEvents()
 	{
 		// remove me from list
-		if ( m_bRegisteredForEvents )
+		if(m_bRegisteredForEvents)
 		{
-			if ( gameeventmanager )
-				gameeventmanager->RemoveListener( this );
+			if(gameeventmanager)
+				gameeventmanager->RemoveListener(this);
 			m_bRegisteredForEvents = false;
 		}
 	}
 
 	// Intentionally abstract
-	virtual void FireGameEvent( IGameEvent *event ) = 0;
+	virtual void FireGameEvent(IGameEvent *event) = 0;
 
 private:
-
 	// Have we registered for any events?
 	bool m_bRegisteredForEvents;
 };

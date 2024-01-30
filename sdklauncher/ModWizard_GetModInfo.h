@@ -10,17 +10,15 @@
 #pragma once
 #endif
 
-
 #include <vgui_controls/WizardSubPanel.h>
 #include <vgui_controls/TextEntry.h>
 #include <vgui_controls/Label.h>
 #include "configs.h"
 
-
-// --------------------------------------------------------------------------------------------------------------------- //
-// CreateModWizard sub panel 2.
-// This panel asks for the directory to install in and the mod name.
-// --------------------------------------------------------------------------------------------------------------------- //
+// ---------------------------------------------------------------------------------------------------------------------
+// // CreateModWizard sub panel 2. This panel asks for the directory to install in and the mod name.
+// ---------------------------------------------------------------------------------------------------------------------
+// //
 
 namespace vgui
 {
@@ -28,17 +26,17 @@ namespace vgui
 	class CModWizardSubPanel_GetModInfo : public WizardSubPanel
 	{
 	public:
-		DECLARE_CLASS_SIMPLE( CModWizardSubPanel_GetModInfo, vgui::WizardSubPanel );
+		DECLARE_CLASS_SIMPLE(CModWizardSubPanel_GetModInfo, vgui::WizardSubPanel);
 
 	public:
-		CModWizardSubPanel_GetModInfo( Panel *parent, const char *panelName );
+		CModWizardSubPanel_GetModInfo(Panel *parent, const char *panelName);
 
-		virtual WizardSubPanel* GetNextSubPanel();
+		virtual WizardSubPanel *GetNextSubPanel();
 		virtual void OnDisplayAsNext();
 		virtual void PerformLayout();
-		virtual void OnCommand( const char *command );
+		virtual void OnCommand(const char *command);
 		virtual bool OnNextButton();
-		MESSAGE_FUNC_CHARPTR( OnChooseDirectory, "DirectorySelected", dir );
+		MESSAGE_FUNC_CHARPTR(OnChooseDirectory, "DirectorySelected", dir);
 
 	public:
 		TextEntry *m_pModPath;
@@ -47,7 +45,6 @@ namespace vgui
 		ModType_t m_ModType;
 	};
 
-}
-
+} // namespace vgui
 
 #endif // MODWIZARD_GETMODINFO_H

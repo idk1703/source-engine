@@ -16,21 +16,20 @@
 #pragma once
 #endif
 
-
 #include "MapClass.h"
-
 
 class CMapHelper : public CMapClass
 {
 public:
-
 	//
 	// Serialization.
 	//
-	virtual bool ShouldSerialize(void) { return(false); }
+	virtual bool ShouldSerialize(void)
+	{
+		return (false);
+	}
 
 	virtual CMapClass *PrepareSelection(SelectMode_t eSelectMode);
 };
-
 
 #endif // MAPHELPER_H

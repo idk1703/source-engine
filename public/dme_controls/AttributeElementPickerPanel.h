@@ -15,7 +15,6 @@
 #include "dme_controls/BaseAttributeChoicePanel.h"
 #include "vgui_controls/PHandle.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
@@ -27,18 +26,17 @@ namespace vgui
 	class Label;
 }
 
-
 //-----------------------------------------------------------------------------
 // CAttributeElementPickerPanel
 //-----------------------------------------------------------------------------
 class CAttributeElementPickerPanel : public CBaseAttributePanel
 {
-	DECLARE_CLASS_SIMPLE( CAttributeElementPickerPanel, CBaseAttributePanel );
+	DECLARE_CLASS_SIMPLE(CAttributeElementPickerPanel, CBaseAttributePanel);
 
 public:
-	CAttributeElementPickerPanel( vgui::Panel *parent, const AttributeWidgetInfo_t &info );
+	CAttributeElementPickerPanel(vgui::Panel *parent, const AttributeWidgetInfo_t &info);
 
-	virtual void OnCommand( const char *cmd );
+	virtual void OnCommand(const char *cmd);
 	virtual void PerformLayout();
 
 	virtual void PostConstructor();
@@ -46,16 +44,15 @@ public:
 
 private:
 	// Inherited classes must implement this
-	virtual	Panel *GetDataPanel();
+	virtual Panel *GetDataPanel();
 	virtual void Refresh();
 
-	MESSAGE_FUNC_PARAMS( OnDmeSelected, "DmeSelected", kv );
+	MESSAGE_FUNC_PARAMS(OnDmeSelected, "DmeSelected", kv);
 	virtual void ShowPickerDialog();
 
-	vgui::DHANDLE< vgui::Button	>	m_hEdit;
-	CAttributeTextEntry				*m_pData;
-	bool							m_bShowMemoryUsage;
+	vgui::DHANDLE<vgui::Button> m_hEdit;
+	CAttributeTextEntry *m_pData;
+	bool m_bShowMemoryUsage;
 };
-
 
 #endif // ATTRIBUTEELEMENTPICKERPANEL_H

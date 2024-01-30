@@ -10,5 +10,4 @@
 #pragma once
 #endif
 
-
 #endif // CS_GAMEINTERFACE_H

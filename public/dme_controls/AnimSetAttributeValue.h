@@ -12,12 +12,10 @@
 
 #include "tier1/utldict.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
 class CDmAttribute;
-
 
 //-----------------------------------------------------------------------------
 // AnimationControlType
@@ -32,7 +30,6 @@ enum AnimationControlType_t
 
 	ANIM_CONTROL_COUNT,
 };
-
 
 struct AttributeValue_t
 {
@@ -57,9 +54,9 @@ struct AnimationControlAttributes_t : public AttributeValue_t
 		m_pAttribute[ANIM_CONTROL_MULTILEVEL] = 0;
 	}
 
-	CDmAttribute* m_pAttribute[ANIM_CONTROL_COUNT];
+	CDmAttribute *m_pAttribute[ANIM_CONTROL_COUNT];
 };
 
-typedef CUtlDict< AnimationControlAttributes_t, unsigned short > AttributeDict_t;
+typedef CUtlDict<AnimationControlAttributes_t, unsigned short> AttributeDict_t;
 
 #endif // ANIMSETATTRIBUTEVALUE_H

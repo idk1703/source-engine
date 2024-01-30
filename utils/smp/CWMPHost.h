@@ -2,7 +2,7 @@
 // CWMPHost.h : Declaration of the CWMPHost
 //
 
-#include "resource.h"       // main symbols
+#include "resource.h" // main symbols
 #include <oledlg.h>
 
 // if this file isn't found, set your path to include the wmp sdk include directory
@@ -10,11 +10,13 @@
 #include "wmp.h"
 #include "CWMPEventDispatch.h"
 
-
 /////////////////////////////////////////////////////////////////////////////
 // CWMPHost
 
-class CWMPHost : public CWindowImpl< CWMPHost, CWindow, CWinTraits< WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, WS_EX_APPWINDOW | WS_EX_WINDOWEDGE > >
+class CWMPHost
+	: public CWindowImpl<
+		  CWMPHost, CWindow,
+		  CWinTraits<WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, WS_EX_APPWINDOW | WS_EX_WINDOWEDGE>>
 {
 public:
 	DECLARE_WND_CLASS_EX(NULL, 0, 0)
@@ -40,26 +42,25 @@ public:
 		COMMAND_ID_HANDLER(ID_STRETCH_TO_FIT, OnVideoScale)
 	END_MSG_MAP()
 
-	LRESULT OnClose(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-	LRESULT OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-	LRESULT OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-	LRESULT OnErase(UINT /* uMsg */, WPARAM /* wParam */, LPARAM /* lParam */, BOOL& bHandled);
-	LRESULT OnSize(UINT /* uMsg */, WPARAM /* wParam */, LPARAM /* lParam */, BOOL& /* lResult */);
-	LRESULT OnContextMenu(UINT /* uMsg */, WPARAM /* wParam */, LPARAM /* lParam */, BOOL& /* lResult */);
-	LRESULT OnClick(UINT /* uMsg */, WPARAM /* wParam */, LPARAM /* lParam */, BOOL& /* lResult */);
-	LRESULT OnLeftDoubleClick(UINT /* uMsg */, WPARAM /* wParam */, LPARAM /* lParam */, BOOL& /* lResult */);
-	LRESULT OnSysKeyDown(UINT /* uMsg */, WPARAM wParam, LPARAM /* lParam */, BOOL& /* lResult */);
-	LRESULT OnKeyDown(UINT /* uMsg */, WPARAM wParam, LPARAM /* lParam */, BOOL& /* lResult */);
-	LRESULT OnNCActivate(UINT /* uMsg */, WPARAM wParam, LPARAM /* lParam */, BOOL& /* lResult */);
+	LRESULT OnClose(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL &bHandled);
+	LRESULT OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL &bHandled);
+	LRESULT OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL &bHandled);
+	LRESULT OnErase(UINT /* uMsg */, WPARAM /* wParam */, LPARAM /* lParam */, BOOL &bHandled);
+	LRESULT OnSize(UINT /* uMsg */, WPARAM /* wParam */, LPARAM /* lParam */, BOOL & /* lResult */);
+	LRESULT OnContextMenu(UINT /* uMsg */, WPARAM /* wParam */, LPARAM /* lParam */, BOOL & /* lResult */);
+	LRESULT OnClick(UINT /* uMsg */, WPARAM /* wParam */, LPARAM /* lParam */, BOOL & /* lResult */);
+	LRESULT OnLeftDoubleClick(UINT /* uMsg */, WPARAM /* wParam */, LPARAM /* lParam */, BOOL & /* lResult */);
+	LRESULT OnSysKeyDown(UINT /* uMsg */, WPARAM wParam, LPARAM /* lParam */, BOOL & /* lResult */);
+	LRESULT OnKeyDown(UINT /* uMsg */, WPARAM wParam, LPARAM /* lParam */, BOOL & /* lResult */);
+	LRESULT OnNCActivate(UINT /* uMsg */, WPARAM wParam, LPARAM /* lParam */, BOOL & /* lResult */);
 
-	LRESULT OnVideoScale(WORD wNotifyCode, WORD wID, HWND hWndCtl, BOOL& bHandled);
+	LRESULT OnVideoScale(WORD wNotifyCode, WORD wID, HWND hWndCtl, BOOL &bHandled);
 
-	CAxWindow                   m_wndView;
-	CComPtr<IConnectionPoint>   m_spConnectionPoint;
-	DWORD                       m_dwAdviseCookie;
-	HMENU						m_hPopupMenu;
+	CAxWindow m_wndView;
+	CComPtr<IConnectionPoint> m_spConnectionPoint;
+	DWORD m_dwAdviseCookie;
+	HMENU m_hPopupMenu;
 };
-
 
 /////////////////////////////////////////////////////////////////////////////
 // event logging - this should really be in its own smp.h or something...

@@ -20,38 +20,38 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 class CHudTeamGoalTournament : public CHudElement, public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CHudTeamGoalTournament, EditablePanel );
+	DECLARE_CLASS_SIMPLE(CHudTeamGoalTournament, EditablePanel);
 
 public:
-	CHudTeamGoalTournament( const char *pElementName );
+	CHudTeamGoalTournament(const char *pElementName);
 
-	virtual void	LevelInit( void ) OVERRIDE;
-	virtual void	ApplySchemeSettings( IScheme *scheme ) OVERRIDE;
-	virtual bool	ShouldDraw( void ) OVERRIDE;
-	virtual void	SetVisible( bool bState ) OVERRIDE;
-	int				HudElementKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
+	virtual void LevelInit(void) OVERRIDE;
+	virtual void ApplySchemeSettings(IScheme *scheme) OVERRIDE;
+	virtual bool ShouldDraw(void) OVERRIDE;
+	virtual void SetVisible(bool bState) OVERRIDE;
+	int HudElementKeyInput(int down, ButtonCode_t keynum, const char *pszCurrentBinding);
 
-	void			SetupStopWatchLabel( void );
-	void			PrepareStopWatchString( wchar_t *pszString, CExRichText	*pText );
-	void			FireGameEvent( IGameEvent * event );
+	void SetupStopWatchLabel(void);
+	void PrepareStopWatchString(wchar_t *pszString, CExRichText *pText);
+	void FireGameEvent(IGameEvent *event);
 
 private:
-	float			m_flShowAt;
+	float m_flShowAt;
 
-	EditablePanel	*m_pStopWatchGoal;
-	CExRichText		*m_pStopWatchGoalText;
-	CExRichText		*m_pStopWatchGoalText2;
+	EditablePanel *m_pStopWatchGoal;
+	CExRichText *m_pStopWatchGoalText;
+	CExRichText *m_pStopWatchGoalText2;
 
-	Panel			*m_pStopWatchGoalBGLarge;
-	Panel			*m_pStopWatchGoalBGSmall;
-	Panel			*m_pStopWatchGoalDivider;
-	Panel			*m_pStopWatchGoalArrow;
+	Panel *m_pStopWatchGoalBGLarge;
+	Panel *m_pStopWatchGoalBGSmall;
+	Panel *m_pStopWatchGoalDivider;
+	Panel *m_pStopWatchGoalArrow;
 
-	CUtlVector< TextRange > m_textRanges;
-	wchar_t					*m_text;
+	CUtlVector<TextRange> m_textRanges;
+	wchar_t *m_text;
 
-	Color			m_cRegularColor;
-	Color			m_cHighlightColor;
+	Color m_cRegularColor;
+	Color m_cHighlightColor;
 };
 
 #endif // TF_HUD_TEAMGOAL_TOURNAMENT_H

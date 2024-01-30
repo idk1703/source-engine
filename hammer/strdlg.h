@@ -13,9 +13,9 @@
 
 class CStrDlg : public CDialog
 {
-// Construction
+	// Construction
 public:
-	CStrDlg(DWORD, LPCTSTR, LPCTSTR, LPCTSTR);   // standard constructor
+	CStrDlg(DWORD, LPCTSTR, LPCTSTR, LPCTSTR); // standard constructor
 
 	enum
 	{
@@ -24,31 +24,32 @@ public:
 
 	int iRangeLow, iRangeHigh, iIncrement;
 	DWORD dwFlags;
-	CString	m_string;
+	CString m_string;
 	CString m_strPrompt;
 	CString m_strTitle;
-	CSpinButtonCtrl	m_cSpin;
-	CStatic	m_cPrompt;
-	CEdit	m_cEdit;
+	CSpinButtonCtrl m_cSpin;
+	CStatic m_cPrompt;
+	CEdit m_cEdit;
 
 	void SetRange(int iLow, int iHigh, int iIncrement = 1);
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CStrDlg)
-	enum { IDD = IDD_STRINPUT };
+	enum
+	{
+		IDD = IDD_STRINPUT
+	};
 	//}}AFX_DATA
 
-
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CStrDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
 protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
+													 //}}AFX_VIRTUAL
 
+	// Implementation
+protected:
 	// Generated message map functions
 	//{{AFX_MSG(CStrDlg)
 	virtual BOOL OnInitDialog();

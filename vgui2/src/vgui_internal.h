@@ -20,31 +20,28 @@
 namespace vgui
 {
 
-bool VGui_InternalLoadInterfaces( CreateInterfaceFn *factoryList, int numFactories );
+	bool VGui_InternalLoadInterfaces(CreateInterfaceFn *factoryList, int numFactories);
 
-// <vgui/IInputInternal.h> header
-extern class IInputInternal *g_pInput;
+	// <vgui/IInputInternal.h> header
+	extern class IInputInternal *g_pInput;
 
-// <vgui/IScheme.h> header
-extern class ISchemeManager *g_pScheme;
+	// <vgui/IScheme.h> header
+	extern class ISchemeManager *g_pScheme;
 
-// <vgui/ISurface.h> header
-extern class ISurface *g_pSurface;
+	// <vgui/ISurface.h> header
+	extern class ISurface *g_pSurface;
 
-// <vgui/ISystem.h> header
-extern class ISystem *g_pSystem;
+	// <vgui/ISystem.h> header
+	extern class ISystem *g_pSystem;
 
-// <vgui/IVGui.h> header
-extern class IVGui *g_pIVgui;
+	// <vgui/IVGui.h> header
+	extern class IVGui *g_pIVgui;
 
-// <vgui/IPanel.h> header
-extern class IPanel *g_pIPanel;
+	// <vgui/IPanel.h> header
+	extern class IPanel *g_pIPanel;
 
-// methods
-void vgui_strcpy(char *dst, int dstLen, const char *src);
+	// methods
+	void vgui_strcpy(char *dst, int dstLen, const char *src);
 } // namespace vgui
-
-
-
 
 #endif // VGUI_INTERNAL_H

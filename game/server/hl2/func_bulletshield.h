@@ -12,8 +12,8 @@
 #endif
 
 //!! replace this with generic start enabled/disabled
-#define SF_WALL_START_OFF		0x0001
-#define SF_IGNORE_PLAYERUSE		0x0002
+#define SF_WALL_START_OFF	0x0001
+#define SF_IGNORE_PLAYERUSE 0x0002
 
 #include "modelentities.h"
 
@@ -25,16 +25,17 @@
 class CFuncBulletShield : public CFuncBrush
 {
 public:
-	DECLARE_CLASS( CFuncBulletShield, CFuncBrush );
+	DECLARE_CLASS(CFuncBulletShield, CFuncBrush);
 	DECLARE_DATADESC();
 
-	virtual void Spawn( void );
+	virtual void Spawn(void);
 
-	bool TestCollision( const Ray_t &ray, unsigned int mask, trace_t& trace );
+	bool TestCollision(const Ray_t &ray, unsigned int mask, trace_t &trace);
 	/*
 	bool CreateVPhysics( void );
 
-	virtual int	ObjectCaps( void ) { return HasSpawnFlags(SF_IGNORE_PLAYERUSE) ? BaseClass::ObjectCaps() : BaseClass::ObjectCaps() | FCAP_IMPULSE_USE; }
+	virtual int	ObjectCaps( void ) { return HasSpawnFlags(SF_IGNORE_PLAYERUSE) ? BaseClass::ObjectCaps() :
+	BaseClass::ObjectCaps() | FCAP_IMPULSE_USE; }
 
 	virtual int DrawDebugTextOverlays( void );
 
@@ -63,6 +64,5 @@ public:
 	virtual bool IsOn( void );
 	*/
 };
-
 
 #endif // MODELENTITIES_H

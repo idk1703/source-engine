@@ -8,19 +8,21 @@
 
 class CTFBotHintSentrygun;
 
-
-class CTFBotEngineerBuildSentryGun : public Action< CTFBot >
+class CTFBotEngineerBuildSentryGun : public Action<CTFBot>
 {
 public:
-	CTFBotEngineerBuildSentryGun( void );
-	CTFBotEngineerBuildSentryGun( CTFBotHintSentrygun *sentryBuildHint );
+	CTFBotEngineerBuildSentryGun(void);
+	CTFBotEngineerBuildSentryGun(CTFBotHintSentrygun *sentryBuildHint);
 
-	virtual ActionResult< CTFBot >	OnStart( CTFBot *me, Action< CTFBot > *priorAction );
-	virtual ActionResult< CTFBot >	Update( CTFBot *me, float interval );
+	virtual ActionResult<CTFBot> OnStart(CTFBot *me, Action<CTFBot> *priorAction);
+	virtual ActionResult<CTFBot> Update(CTFBot *me, float interval);
 
-	virtual ActionResult< CTFBot >	OnResume( CTFBot *me, Action< CTFBot > *interruptingAction );
+	virtual ActionResult<CTFBot> OnResume(CTFBot *me, Action<CTFBot> *interruptingAction);
 
-	virtual const char *GetName( void ) const	{ return "EngineerBuildSentryGun"; };
+	virtual const char *GetName(void) const
+	{
+		return "EngineerBuildSentryGun";
+	};
 
 private:
 	CountdownTimer m_searchTimer;
@@ -39,6 +41,5 @@ private:
 	bool m_needToAimSentry;
 	Vector m_sentryBuildAimTarget;
 };
-
 
 #endif // TF_BOT_ENGINEER_BUILD_SENTRYGUN_H

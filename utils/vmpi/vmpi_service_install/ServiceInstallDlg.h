@@ -14,45 +14,43 @@
 // JobWatchDlg.h : header file
 //
 
-
 #include "resource.h"
 #include "tier1/utlvector.h"
-
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CJobWatchDlg dialog
 
 class CServiceInstallDlg : public CDialog
 {
-// Construction
+	// Construction
 public:
-	CServiceInstallDlg( CWnd* pParent = NULL);   // standard constructor
+	CServiceInstallDlg(CWnd *pParent = NULL); // standard constructor
 	virtual ~CServiceInstallDlg();
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CJobWatchDlg)
-	enum { IDD = IDD_SERVICE_INSTALL_DIALOG};
+	enum
+	{
+		IDD = IDD_SERVICE_INSTALL_DIALOG
+	};
 	//}}AFX_DATA
 
-
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CJobWatchDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
 protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
+													 //}}AFX_VIRTUAL
 
+	// Implementation
+protected:
 	SC_HANDLE m_hSCManager;
 
 	void VerifyInstallFiles();
 
 	bool DoStartExisting();
-	bool NukeDirectory( const char *pDir, char errorFile[MAX_PATH] );
-	bool DoUninstall( bool bShowMessage );
+	bool NukeDirectory(const char *pDir, char errorFile[MAX_PATH]);
+	bool DoUninstall(bool bShowMessage);
 
 	// Generated message map functions
 	//{{AFX_MSG(CJobWatchDlg)

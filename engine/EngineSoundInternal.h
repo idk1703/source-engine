@@ -8,7 +8,7 @@
 #ifndef ENGINESOUNDINTERNAL_H
 #define ENGINESOUNDINTERNAL_H
 
-#if defined( _WIN32 )
+#if defined(_WIN32)
 #pragma once
 #endif
 
@@ -17,7 +17,7 @@
 //-----------------------------------------------------------------------------
 // Method to get at the singleton implementations of the engine sound interfaces
 //-----------------------------------------------------------------------------
-IEngineSound* EngineSoundClient();
-IEngineSound* EngineSoundServer();
+IEngineSound *EngineSoundClient();
+IEngineSound *EngineSoundServer();
 
 #endif // SOUNDENGINEINTERNAL_H

@@ -20,9 +20,8 @@ public:
 	// copy the data to pBuffer and return the number of bytes copied
 	// you may return less than bytesRequested if the end of the stream
 	// is encountered.
-	virtual int StreamRequestData( void *pBuffer, int bytesRequested, int offset ) = 0;
+	virtual int StreamRequestData(void *pBuffer, int bytesRequested, int offset) = 0;
 };
-
 
 class IAudioStream
 {
@@ -31,7 +30,7 @@ public:
 
 	// Decode another bufferSize output bytes from the stream
 	// returns number of bytes decoded
-	virtual int	Decode( void *pBuffer, unsigned int bufferSize ) = 0;
+	virtual int Decode(void *pBuffer, unsigned int bufferSize) = 0;
 
 	// output sampling bits (8/16)
 	virtual int GetOutputBits() = 0;
@@ -44,21 +43,19 @@ public:
 	virtual unsigned int GetPosition() = 0;
 
 	// NOTE: BUGBUG: Only supports seeking forward currently!
-	virtual void SetPosition( unsigned int position ) = 0;
+	virtual void SetPosition(unsigned int position) = 0;
 
 	// reset?
 };
 
-
-#define VAUDIO_INTERFACE_VERSION		"VAudio002"
+#define VAUDIO_INTERFACE_VERSION "VAudio002"
 class IVAudio
 {
 public:
 	virtual ~IVAudio() {}
 
-	virtual IAudioStream	*CreateMP3StreamDecoder( IAudioStreamEvent *pEventHandler ) = 0;
-	virtual void			DestroyMP3StreamDecoder( IAudioStream *pDecoder ) = 0;
+	virtual IAudioStream *CreateMP3StreamDecoder(IAudioStreamEvent *pEventHandler) = 0;
+	virtual void DestroyMP3StreamDecoder(IAudioStream *pDecoder) = 0;
 };
-
 
 #endif // IVAUDIO_H

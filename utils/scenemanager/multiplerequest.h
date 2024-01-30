@@ -26,14 +26,13 @@ struct CMultipleParams : public CBaseDialogParams
 		CANCEL,
 	};
 
-	char		m_szPrompt[ 256 ];
+	char m_szPrompt[256];
 };
 
 // Display/create dialog
-int MultipleRequest( char const *prompt );
-int _MultipleRequest( CMultipleParams *params );
+int MultipleRequest(char const *prompt);
+int _MultipleRequest(CMultipleParams *params);
 
 void MultipleRequestChangeContext();
-
 
 #endif // MULTIPLEREQUEST_H

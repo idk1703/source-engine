@@ -17,9 +17,8 @@
 class CViewSetup;
 class CViewSetupV1;
 
-
-void V_Init (void);
-void V_Shutdown( void );
-void ConvertViewSetup( const CViewSetup &setup, CViewSetupV1 &setupV1, int nFlags );
+void V_Init(void);
+void V_Shutdown(void);
+void ConvertViewSetup(const CViewSetup &setup, CViewSetupV1 &setupV1, int nFlags);
 
 #endif // VIEW_H

@@ -10,8 +10,6 @@
 #pragma once
 #endif
 
-
 extern ConVar bot_mimic;
-
 
 #endif // CS_BOT_TEMP_H

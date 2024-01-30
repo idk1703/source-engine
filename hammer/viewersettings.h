@@ -25,8 +25,6 @@
 #ifndef INCLUDED_VIEWERSETTINGS
 #define INCLUDED_VIEWERSETTINGS
 
-
-
 enum // render modes
 {
 	RM_WIREFRAME,
@@ -34,8 +32,6 @@ enum // render modes
 	RM_SMOOTHSHADED,
 	RM_TEXTURED
 };
-
-
 
 typedef struct
 {
@@ -56,7 +52,7 @@ typedef struct
 	float textureScale;
 	int skin;
 	bool mirror;
-	bool useStencil;	// if 3dfx fullscreen set false
+	bool useStencil; // if 3dfx fullscreen set false
 
 	// animation
 	int sequence;
@@ -86,24 +82,19 @@ typedef struct
 	char groundTexFile[256];
 } ViewerSettings;
 
-
-
 extern ViewerSettings g_viewerSettings;
 
-
-
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-void InitViewerSettings (void);
-int LoadViewerSettings (const char *filename);
-int SaveViewerSettings (const char *filename);
+	void InitViewerSettings(void);
+	int LoadViewerSettings(const char *filename);
+	int SaveViewerSettings(const char *filename);
 
 #ifdef __cplusplus
 }
 #endif
-
-
 
 #endif // INCLUDED_VIEWERSETTINGS

@@ -2,7 +2,6 @@
 //
 //=============================================================================
 
-
 #ifndef ITEMTESTAPP_H
 #define ITEMTESTAPP_H
 
@@ -10,16 +9,13 @@
 #pragma once
 #endif
 
-
 // Valve includes
 #include "appframework/tier3app.h"
-
 
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
 class CAsset;
-
 
 //=============================================================================
 //
@@ -37,7 +33,7 @@ public:
 	static void PrintHelp();
 
 protected:
-	enum Flags_t	// Should match up to s_pszFlags
+	enum Flags_t // Should match up to s_pszFlags
 	{
 		kHelp,
 		kSteamId,
@@ -57,14 +53,14 @@ protected:
 		kView,
 		kExplore,
 		kOutput,
-		kFlagsCount	// For compile time assert
+		kFlagsCount // For compile time assert
 	};
 
 	static void DoDevMode();
-	static bool ProcessCommandLine( CAsset *pAsset, bool bDoListMats );
-	static int FindParam( Flags_t nFlag );
-	static const char *ParmValue( Flags_t nFlag );
-	static const char *GetParm( int nIndex );
+	static bool ProcessCommandLine(CAsset *pAsset, bool bDoListMats);
+	static int FindParam(Flags_t nFlag);
+	static const char *ParmValue(Flags_t nFlag);
+	static const char *GetParm(int nIndex);
 
 private:
 	enum FlagData_t
@@ -79,8 +75,6 @@ private:
 	static char s_szDesc[];
 	static char s_szExample[];
 	static char *s_pszFlags[][4];
-
 };
-
 
 #endif // ITEMTESTAPP_H

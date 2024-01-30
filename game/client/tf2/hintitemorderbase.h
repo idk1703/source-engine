@@ -19,19 +19,20 @@
 //-----------------------------------------------------------------------------
 class CHintItemOrderBase : public CHintItemBase
 {
-	DECLARE_CLASS( CHintItemOrderBase, CHintItemBase );
+	DECLARE_CLASS(CHintItemOrderBase, CHintItemBase);
+
 public:
-	CHintItemOrderBase( vgui::Panel *parent, const char *panelName );
+	CHintItemOrderBase(vgui::Panel *parent, const char *panelName);
 
-	virtual void		DrawAxialLineToOrder( void );
+	virtual void DrawAxialLineToOrder(void);
 
-	virtual void		SetHintTarget( vgui::Panel *panel );
+	virtual void SetHintTarget(vgui::Panel *panel);
 
 protected:
-	bool				m_bEffects;
+	bool m_bEffects;
 
-	EFFECT_HANDLE		m_LineEffect;
-	EFFECT_HANDLE		m_FlashEffect;
+	EFFECT_HANDLE m_LineEffect;
+	EFFECT_HANDLE m_FlashEffect;
 };
 
 #endif // HINTITEMORDERBASE_H

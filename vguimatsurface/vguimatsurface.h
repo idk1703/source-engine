@@ -13,7 +13,6 @@
 #include <vgui/VGUI.h>
 #include "tier3/tier3.h"
 
-
 namespace vgui
 {
 	class IInputInternal;
@@ -23,6 +22,5 @@ namespace vgui
 // Globals...
 //-----------------------------------------------------------------------------
 extern vgui::IInputInternal *g_pIInput;
-
 
 #endif // VGUIMATSURFACE_H

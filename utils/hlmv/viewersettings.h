@@ -30,7 +30,7 @@
 enum // render modes
 {
 	RM_WIREFRAME = 0,
-//	RM_FLATSHADED,
+	//	RM_FLATSHADED,
 	RM_SMOOTHSHADED,
 	RM_TEXTURED,
 	RM_BONEWEIGHTS,
@@ -42,8 +42,8 @@ enum // render modes
 
 struct ViewerSettings
 {
-	char	registrysubkey[ 64 ];
-	int		application_mode;	// 0 expression, 1 choreo
+	char registrysubkey[64];
+	int application_mode; // 0 expression, 1 choreo
 
 	bool showHitBoxes;
 	bool showBones;
@@ -65,17 +65,17 @@ struct ViewerSettings
 	// Current attachment we're editing. -1 if none.
 	int m_iEditAttachment;
 	bool showLightingCenter;
-	int  highlightPhysicsBone;
-	int  highlightHitbox;
-	int  highlightBone;
-	QAngle lightrot;	// light rotation
-	float lColor[4];	// directional color
-	float aColor[4];	// ambient color
+	int highlightPhysicsBone;
+	int highlightHitbox;
+	int highlightBone;
+	QAngle lightrot; // light rotation
+	float lColor[4]; // directional color
+	float aColor[4]; // ambient color
 
 	// external
 
 	// model
-	float  fov;		// horizontal field of view
+	float fov; // horizontal field of view
 
 	// render
 	int renderMode;
@@ -96,8 +96,8 @@ struct ViewerSettings
 	bool animateWeapons;
 
 	// bodyparts and bonecontrollers
-	//int submodels[32];
-	//float controllers[8];
+	// int submodels[32];
+	// float controllers[8];
 
 	// fullscreen
 	int xpos, ypos;
@@ -105,7 +105,7 @@ struct ViewerSettings
 	bool cds;
 
 	// colors
-	float bgColor[4];	// background color
+	float bgColor[4]; // background color
 	float gColor[4];
 
 	// misc
@@ -115,18 +115,18 @@ struct ViewerSettings
 
 	// only used for fullscreen mode
 	// char modelFile[256];
-	//char backgroundTexFile[256];
-	//char groundTexFile[256];
+	// char backgroundTexFile[256];
+	// char groundTexFile[256];
 
 	int lod;
 	bool autoLOD;
 	bool softwareSkin;
 	bool overbright;
 
-	int	thumbnailsize;
+	int thumbnailsize;
 	int thumbnailsizeanim;
 
-	int	speechapiindex;
+	int speechapiindex;
 	int cclanguageid; // Close captioning language id (see sentence.h enum)
 
 	bool showHidden;
@@ -137,21 +137,19 @@ struct ViewerSettings
 	char mergeModelFile[HLMV_MAX_MERGED_MODELS][256];
 
 	ViewerSettings();
-
 };
 
 extern ViewerSettings g_viewerSettings;
 class StudioModel;
 
-void InitViewerSettings ( const char *subkey );
-bool LoadViewerSettings (const char *filename, StudioModel *pModel );
-bool SaveViewerSettings (const char *filename, StudioModel *pModel );
-bool LoadViewerRootSettings( void );
-bool SaveViewerRootSettings( void );
+void InitViewerSettings(const char *subkey);
+bool LoadViewerSettings(const char *filename, StudioModel *pModel);
+bool SaveViewerSettings(const char *filename, StudioModel *pModel);
+bool LoadViewerRootSettings(void);
+bool SaveViewerRootSettings(void);
 
 // For saving/loading "global" settings
-bool LoadViewerSettingsInt( char const *keyname, int *value );
-bool SaveViewerSettingsInt ( const char *keyname, int value );
-
+bool LoadViewerSettingsInt(char const *keyname, int *value);
+bool SaveViewerSettingsInt(const char *keyname, int value);
 
 #endif // INCLUDED_VIEWERSETTINGS

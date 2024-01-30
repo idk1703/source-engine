@@ -1,11 +1,11 @@
 /*******************************************************************************
-* SPEventQ.h *
-*------------*
-*   Description:
-*       This is the header file for the SAPI5 event queue implementation.
-*-------------------------------------------------------------------------------
-*   Copyright (c) Microsoft Corporation. All rights reserved.
-*******************************************************************************/
+ * SPEventQ.h *
+ *------------*
+ *   Description:
+ *       This is the header file for the SAPI5 event queue implementation.
+ *-------------------------------------------------------------------------------
+ *   Copyright (c) Microsoft Corporation. All rights reserved.
+ *******************************************************************************/
 #ifndef SPEventQ_h
 #define SPEventQ_h
 
@@ -19,29 +19,28 @@
 
 //=== Inline helpers for copying and deleting events ============================
 
-
 //=== Class definition ==========================================================
 
 class CSpEventNode : public CSpEvent
 {
 public:
-	CSpEventNode    * m_pNext;
-	static LONG Compare(const CSpEventNode * p1, const CSpEventNode *p2)
+	CSpEventNode *m_pNext;
+	static LONG Compare(const CSpEventNode *p1, const CSpEventNode *p2)
 	{
 		// Assumes offsets DO or DO NOT reset when stream number changes
-		if (p1->ulStreamNum < p2->ulStreamNum)
+		if(p1->ulStreamNum < p2->ulStreamNum)
 		{
 			return -1;
 		}
-		else if (p1->ulStreamNum > p2->ulStreamNum)
+		else if(p1->ulStreamNum > p2->ulStreamNum)
 		{
 			return 1;
 		}
-		else if (p1->ullAudioStreamOffset < p2->ullAudioStreamOffset)
+		else if(p1->ullAudioStreamOffset < p2->ullAudioStreamOffset)
 		{
 			return -1;
 		}
-		else if (p1->ullAudioStreamOffset > p2->ullAudioStreamOffset)
+		else if(p1->ullAudioStreamOffset > p2->ullAudioStreamOffset)
 		{
 			return 1;
 		}
@@ -49,82 +48,97 @@ public:
 	}
 };
 
-
 typedef CSpBasicQueue<CSpEventNode, TRUE, TRUE> CSpEventList;
 
-#define DECLARE_SPNOTIFYSOURCE_METHODS(T) \
-STDMETHODIMP SetNotifySink(ISpNotifySink * pNotifySink) \
-{ return T._SetNotifySink(pNotifySink); } \
-STDMETHODIMP SetNotifyWindowMessage(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam) \
-{ return T._SetNotifyWindowMessage(hWnd, Msg, wParam, lParam); } \
-STDMETHODIMP SetNotifyCallbackFunction(SPNOTIFYCALLBACK * pfnCallback, WPARAM wParam, LPARAM lParam) \
-{ return T._SetNotifyCallbackFunction(pfnCallback, wParam, lParam); } \
-STDMETHODIMP SetNotifyCallbackInterface(ISpNotifyCallback * pSpCallback, WPARAM wParam, LPARAM lParam) \
-{ return T._SetNotifyCallbackInterface(pSpCallback, wParam, lParam); } \
-STDMETHODIMP SetNotifyWin32Event() \
-{ return T._SetNotifyWin32Event(); } \
-STDMETHODIMP WaitForNotifyEvent(DWORD dwMilliseconds) \
-{ return T._WaitForNotifyEvent(dwMilliseconds); } \
-STDMETHODIMP_(HANDLE) GetNotifyEventHandle() \
-{ return T._GetNotifyEventHandle(); }
+#define DECLARE_SPNOTIFYSOURCE_METHODS(T)                                                                 \
+	STDMETHODIMP SetNotifySink(ISpNotifySink *pNotifySink)                                                \
+	{                                                                                                     \
+		return T._SetNotifySink(pNotifySink);                                                             \
+	}                                                                                                     \
+	STDMETHODIMP SetNotifyWindowMessage(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)                \
+	{                                                                                                     \
+		return T._SetNotifyWindowMessage(hWnd, Msg, wParam, lParam);                                      \
+	}                                                                                                     \
+	STDMETHODIMP SetNotifyCallbackFunction(SPNOTIFYCALLBACK *pfnCallback, WPARAM wParam, LPARAM lParam)   \
+	{                                                                                                     \
+		return T._SetNotifyCallbackFunction(pfnCallback, wParam, lParam);                                 \
+	}                                                                                                     \
+	STDMETHODIMP SetNotifyCallbackInterface(ISpNotifyCallback *pSpCallback, WPARAM wParam, LPARAM lParam) \
+	{                                                                                                     \
+		return T._SetNotifyCallbackInterface(pSpCallback, wParam, lParam);                                \
+	}                                                                                                     \
+	STDMETHODIMP SetNotifyWin32Event()                                                                    \
+	{                                                                                                     \
+		return T._SetNotifyWin32Event();                                                                  \
+	}                                                                                                     \
+	STDMETHODIMP WaitForNotifyEvent(DWORD dwMilliseconds)                                                 \
+	{                                                                                                     \
+		return T._WaitForNotifyEvent(dwMilliseconds);                                                     \
+	}                                                                                                     \
+	STDMETHODIMP_(HANDLE) GetNotifyEventHandle()                                                          \
+	{                                                                                                     \
+		return T._GetNotifyEventHandle();                                                                 \
+	}
 
-#define DECLARE_SPEVENTSOURCE_METHODS(T) \
-DECLARE_SPNOTIFYSOURCE_METHODS(T) \
-STDMETHODIMP SetInterest(ULONGLONG ullEventInterest, ULONGLONG ullQueuedInterest) \
-{ return T._SetInterest(ullEventInterest, ullQueuedInterest); } \
-STDMETHODIMP GetEvents(ULONG ulCount, SPEVENT* pEventArray, ULONG * pulFetched) \
-{ return T._GetEvents(ulCount, pEventArray, pulFetched); } \
-STDMETHODIMP GetInfo(SPEVENTSOURCEINFO *pInfo) \
-{ return T._GetInfo(pInfo); }
-
-
+#define DECLARE_SPEVENTSOURCE_METHODS(T)                                              \
+	DECLARE_SPNOTIFYSOURCE_METHODS(T)                                                 \
+	STDMETHODIMP SetInterest(ULONGLONG ullEventInterest, ULONGLONG ullQueuedInterest) \
+	{                                                                                 \
+		return T._SetInterest(ullEventInterest, ullQueuedInterest);                   \
+	}                                                                                 \
+	STDMETHODIMP GetEvents(ULONG ulCount, SPEVENT *pEventArray, ULONG *pulFetched)    \
+	{                                                                                 \
+		return T._GetEvents(ulCount, pEventArray, pulFetched);                        \
+	}                                                                                 \
+	STDMETHODIMP GetInfo(SPEVENTSOURCEINFO *pInfo)                                    \
+	{                                                                                 \
+		return T._GetInfo(pInfo);                                                     \
+	}
 
 class CSpEventSource
 {
-	public:
-	CSpEventSource(CComObjectRootEx<CComMultiThreadModel> * pParent) :
-		m_pParent(pParent)
+public:
+	CSpEventSource(CComObjectRootEx<CComMultiThreadModel> *pParent) : m_pParent(pParent)
 	{
-		m_ullEventInterest = 0; m_ullQueuedInterest = 0;
+		m_ullEventInterest = 0;
+		m_ullQueuedInterest = 0;
 		m_ulStreamNum = 0;
 	}
-	HRESULT _SetNotifySink(ISpNotifySink * pNotifySink);
+	HRESULT _SetNotifySink(ISpNotifySink *pNotifySink);
 	HRESULT _SetNotifyWindowMessage(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
-	HRESULT _SetNotifyCallbackFunction(SPNOTIFYCALLBACK * pfnCallback, WPARAM wParam, LPARAM lParam);
-	HRESULT _SetNotifyCallbackInterface(ISpNotifyCallback * pSpCallback, WPARAM wParam, LPARAM lParam);
+	HRESULT _SetNotifyCallbackFunction(SPNOTIFYCALLBACK *pfnCallback, WPARAM wParam, LPARAM lParam);
+	HRESULT _SetNotifyCallbackInterface(ISpNotifyCallback *pSpCallback, WPARAM wParam, LPARAM lParam);
 	HRESULT _SetNotifyWin32Event();
 	HRESULT _WaitForNotifyEvent(DWORD dwMilliseconds);
-	HANDLE  _GetNotifyEventHandle();
+	HANDLE _GetNotifyEventHandle();
 
-	HRESULT _SetInterest(ULONGLONG ullEventInterest , ULONGLONG ullQueuedInterest);
-	HRESULT _GetEvents( ULONG ulCount, SPEVENT* pEventArray, ULONG * pulFetched );
-	HRESULT _GetInfo(SPEVENTSOURCEINFO *pInfo );
+	HRESULT _SetInterest(ULONGLONG ullEventInterest, ULONGLONG ullQueuedInterest);
+	HRESULT _GetEvents(ULONG ulCount, SPEVENT *pEventArray, ULONG *pulFetched);
+	HRESULT _GetInfo(SPEVENTSOURCEINFO *pInfo);
 
 	/*--- Non interface methods ---*/
-	HRESULT _CompleteEvents( ULONGLONG ullPos = 0xFFFFFFFFFFFFFFFF );
-	inline void _MoveAllToFreeList(CSpEventList * pList);
+	HRESULT _CompleteEvents(ULONGLONG ullPos = 0xFFFFFFFFFFFFFFFF);
+	inline void _MoveAllToFreeList(CSpEventList *pList);
 	inline void _RemoveAllEvents();
-	inline HRESULT _AddEvent(const SPEVENT & Event);
-	inline HRESULT _AddEvents(const SPEVENT* pEventArray, ULONG ulCount);
-	inline HRESULT _DeserializeAndAddEvent(const BYTE * pBuffer, ULONG * pcbUsed);
+	inline HRESULT _AddEvent(const SPEVENT &Event);
+	inline HRESULT _AddEvents(const SPEVENT *pEventArray, ULONG ulCount);
+	inline HRESULT _DeserializeAndAddEvent(const BYTE *pBuffer, ULONG *pcbUsed);
 	inline HRESULT _GetStreamNumber(const ULONGLONG ullAudioOffset, ULONG *pulStreamNum);
 	//=== Data members ==============================
-	public:
-	ULONGLONG                   m_ullEventInterest;
-	ULONGLONG                   m_ullQueuedInterest;
-	ULONG                       m_ulStreamNum;
-	CSpEventList                m_PendingList;
-	CSpEventList                m_CompletedList;
-	CSpEventList                m_FreeList;
-	CComPtr<ISpNotifySink>      m_cpNotifySink;
-	CComPtr<ISpNotifyTranslator> m_cpEventTranslator;   // If non-NULL then Win32 events being used
-	CComObjectRootEx<CComMultiThreadModel> * m_pParent;
-	CComAutoCriticalSection     m_NotifyObjChangeCrit;  // Critical section used to make sure that
-														// the notify object (m_cpNotifySink) not changed
-														// while waiting on it.
-
+public:
+	ULONGLONG m_ullEventInterest;
+	ULONGLONG m_ullQueuedInterest;
+	ULONG m_ulStreamNum;
+	CSpEventList m_PendingList;
+	CSpEventList m_CompletedList;
+	CSpEventList m_FreeList;
+	CComPtr<ISpNotifySink> m_cpNotifySink;
+	CComPtr<ISpNotifyTranslator> m_cpEventTranslator; // If non-NULL then Win32 events being used
+	CComObjectRootEx<CComMultiThreadModel> *m_pParent;
+	CComAutoCriticalSection m_NotifyObjChangeCrit; // Critical section used to make sure that
+												   // the notify object (m_cpNotifySink) not changed
+												   // while waiting on it.
 };
-
 
 //
 //=== Inlines =========================================================
@@ -133,9 +147,9 @@ class CSpEventSource
 //
 //  WARNING:  If this logic changes, you will need to change the logic in SetNotifyWin32Event also.
 //
-inline HRESULT CSpEventSource::_SetNotifySink(ISpNotifySink * pNotifySink)
+inline HRESULT CSpEventSource::_SetNotifySink(ISpNotifySink *pNotifySink)
 {
-	if (SP_IS_BAD_OPTIONAL_INTERFACE_PTR(pNotifySink))
+	if(SP_IS_BAD_OPTIONAL_INTERFACE_PTR(pNotifySink))
 	{
 		return E_INVALIDARG;
 	}
@@ -145,7 +159,7 @@ inline HRESULT CSpEventSource::_SetNotifySink(ISpNotifySink * pNotifySink)
 		m_NotifyObjChangeCrit.Lock();
 		m_cpEventTranslator.Release();
 		m_cpNotifySink = pNotifySink;
-		if (m_cpNotifySink && m_CompletedList.GetHead())
+		if(m_cpNotifySink && m_CompletedList.GetHead())
 		{
 			m_cpNotifySink->Notify();
 		}
@@ -156,13 +170,13 @@ inline HRESULT CSpEventSource::_SetNotifySink(ISpNotifySink * pNotifySink)
 }
 
 /****************************************************************************
-* CSpEventSource::_SetNotifyWindowMessage *
-*-----------------------------------------*
-*   Description:
-*
-*   Returns:
-*
-********************************************************************* RAL ***/
+ * CSpEventSource::_SetNotifyWindowMessage *
+ *-----------------------------------------*
+ *   Description:
+ *
+ *   Returns:
+ *
+ ********************************************************************* RAL ***/
 
 inline HRESULT CSpEventSource::_SetNotifyWindowMessage(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
@@ -170,74 +184,74 @@ inline HRESULT CSpEventSource::_SetNotifyWindowMessage(HWND hWnd, UINT Msg, WPAR
 	HRESULT hr = S_OK;
 	CComPtr<ISpNotifyTranslator> cpTranslator;
 	hr = cpTranslator.CoCreateInstance(CLSID_SpNotifyTranslator);
-	if (SUCCEEDED(hr))
+	if(SUCCEEDED(hr))
 	{
 		hr = cpTranslator->InitWindowMessage(hWnd, Msg, wParam, lParam);
 	}
-	if (SUCCEEDED(hr))
+	if(SUCCEEDED(hr))
 	{
 		hr = _SetNotifySink(cpTranslator);
 	}
 	return hr;
 }
 /****************************************************************************
-* CSpEventSource::_SetNotifyCallbackFunction *
-*--------------------------------------------*
-*   Description:
-*
-*   Returns:
-*
-********************************************************************* RAL ***/
+ * CSpEventSource::_SetNotifyCallbackFunction *
+ *--------------------------------------------*
+ *   Description:
+ *
+ *   Returns:
+ *
+ ********************************************************************* RAL ***/
 
-inline HRESULT CSpEventSource::_SetNotifyCallbackFunction(SPNOTIFYCALLBACK * pfnCallback, WPARAM wParam, LPARAM lParam)
+inline HRESULT CSpEventSource::_SetNotifyCallbackFunction(SPNOTIFYCALLBACK *pfnCallback, WPARAM wParam, LPARAM lParam)
 {
 	SPDBG_FUNC("CSpEventSource::_SetNotifyCallbackFunction");
 	HRESULT hr = S_OK;
 	CComPtr<ISpNotifyTranslator> cpTranslator;
 	hr = cpTranslator.CoCreateInstance(CLSID_SpNotifyTranslator);
-	if (SUCCEEDED(hr))
+	if(SUCCEEDED(hr))
 	{
 		hr = cpTranslator->InitCallback(pfnCallback, wParam, lParam);
 	}
-	if (SUCCEEDED(hr))
+	if(SUCCEEDED(hr))
 	{
 		hr = _SetNotifySink(cpTranslator);
 	}
 	return hr;
 }
 /****************************************************************************
-* CSpEventSource::_SetNotifyCallbackInterface *
-*---------------------------------------------*
-*   Description:
-*
-*   Returns:
-*
-********************************************************************* RAL ***/
+ * CSpEventSource::_SetNotifyCallbackInterface *
+ *---------------------------------------------*
+ *   Description:
+ *
+ *   Returns:
+ *
+ ********************************************************************* RAL ***/
 
-inline HRESULT CSpEventSource::_SetNotifyCallbackInterface(ISpNotifyCallback * pSpCallback, WPARAM wParam, LPARAM lParam)
+inline HRESULT CSpEventSource::_SetNotifyCallbackInterface(ISpNotifyCallback *pSpCallback, WPARAM wParam, LPARAM lParam)
 {
 	SPDBG_FUNC("CSpEventSource::_SetNotifyCallbackInterface");
 	HRESULT hr = S_OK;
 	CComPtr<ISpNotifyTranslator> cpTranslator;
 	hr = cpTranslator.CoCreateInstance(CLSID_SpNotifyTranslator);
-	if (SUCCEEDED(hr))
+	if(SUCCEEDED(hr))
 	{
 		hr = cpTranslator->InitSpNotifyCallback(pSpCallback, wParam, lParam);
 	}
-	if (SUCCEEDED(hr))
+	if(SUCCEEDED(hr))
 	{
 		hr = _SetNotifySink(cpTranslator);
 	}
 	return hr;
 }
 /****************************************************************************
-* CSpEventSource::_SetNotifyWin32Event *
-*--------------------------------------*
-*   Description:
-*
-*   Returns:
-*
-********************************************************************* RAL ***/
+ * CSpEventSource::_SetNotifyWin32Event *
+ *--------------------------------------*
+ *   Description:
+ *
+ *   Returns:
+ *
+ ********************************************************************* RAL ***/
 
 inline HRESULT CSpEventSource::_SetNotifyWin32Event(void)
 {
@@ -245,11 +259,11 @@ inline HRESULT CSpEventSource::_SetNotifyWin32Event(void)
 	HRESULT hr = S_OK;
 	CComPtr<ISpNotifyTranslator> cpTranslator;
 	hr = cpTranslator.CoCreateInstance(CLSID_SpNotifyTranslator);
-	if (SUCCEEDED(hr))
+	if(SUCCEEDED(hr))
 	{
 		hr = cpTranslator->InitWin32Event(NULL, TRUE);
 	}
-	if (SUCCEEDED(hr))
+	if(SUCCEEDED(hr))
 	{
 		//
 		//  In this case we do NOT call _SetNotify sink since we want to set the cpEventTranslator
@@ -258,7 +272,7 @@ inline HRESULT CSpEventSource::_SetNotifyWin32Event(void)
 		m_NotifyObjChangeCrit.Lock();
 		m_cpEventTranslator = cpTranslator;
 		m_cpNotifySink = cpTranslator;
-		if (m_cpNotifySink && m_CompletedList.GetHead())
+		if(m_cpNotifySink && m_CompletedList.GetHead())
 		{
 			m_cpNotifySink->Notify();
 		}
@@ -268,33 +282,33 @@ inline HRESULT CSpEventSource::_SetNotifyWin32Event(void)
 	return hr;
 }
 /****************************************************************************
-* CSpEventSource::_WaitForNotifyEvent *
-*-------------------------------------*
-*   Description:
-*
-*   Returns:
-*
-********************************************************************* RAL ***/
+ * CSpEventSource::_WaitForNotifyEvent *
+ *-------------------------------------*
+ *   Description:
+ *
+ *   Returns:
+ *
+ ********************************************************************* RAL ***/
 
 inline HRESULT CSpEventSource::_WaitForNotifyEvent(DWORD dwMilliseconds)
 {
 	SPDBG_FUNC("CSpEventSource::_WaitForNotifyEvent");
 	HRESULT hr = S_OK;
 	m_NotifyObjChangeCrit.Lock();
-	if (m_cpEventTranslator)
+	if(m_cpEventTranslator)
 	{
 		hr = m_cpEventTranslator->Wait(dwMilliseconds);
 	}
 	else
 	{
-		if (m_cpNotifySink)
+		if(m_cpNotifySink)
 		{
 			hr = SPERR_ALREADY_INITIALIZED;
 		}
 		else
 		{
 			hr = _SetNotifyWin32Event();
-			if (SUCCEEDED(hr))
+			if(SUCCEEDED(hr))
 			{
 				hr = m_cpEventTranslator->Wait(dwMilliseconds);
 			}
@@ -304,24 +318,24 @@ inline HRESULT CSpEventSource::_WaitForNotifyEvent(DWORD dwMilliseconds)
 	return hr;
 }
 /****************************************************************************
-* CSpEventSource::_GetNotifyEventHandle *
-*---------------------------------------*
-*   Description:
-*
-*   Returns:
-*
-********************************************************************* RAL ***/
+ * CSpEventSource::_GetNotifyEventHandle *
+ *---------------------------------------*
+ *   Description:
+ *
+ *   Returns:
+ *
+ ********************************************************************* RAL ***/
 
 inline HANDLE CSpEventSource::_GetNotifyEventHandle()
 {
 	HANDLE h = NULL;
 	SPDBG_FUNC("CSpEventSource::_GetNotifyEventHandle");
 	m_NotifyObjChangeCrit.Lock();
-	if (!m_cpNotifySink)
+	if(!m_cpNotifySink)
 	{
 		_SetNotifyWin32Event();
 	}
-	if (m_cpEventTranslator)
+	if(m_cpEventTranslator)
 	{
 		h = m_cpEventTranslator->GetEventHandle();
 	}
@@ -329,8 +343,7 @@ inline HANDLE CSpEventSource::_GetNotifyEventHandle()
 	return h;
 }
 
-
-inline HRESULT CSpEventSource::_SetInterest( ULONGLONG ullEventInterest, ULONGLONG ullQueuedInterest )
+inline HRESULT CSpEventSource::_SetInterest(ULONGLONG ullEventInterest, ULONGLONG ullQueuedInterest)
 {
 	HRESULT hr = S_OK;
 	m_pParent->Lock();
@@ -343,7 +356,7 @@ inline HRESULT CSpEventSource::_SetInterest( ULONGLONG ullEventInterest, ULONGLO
 	{
 		hr = E_INVALIDARG;
 	}
-	else if ((ullQueuedInterest | ullEventInterest) != ullEventInterest)
+	else if((ullQueuedInterest | ullEventInterest) != ullEventInterest)
 	{
 		hr = E_INVALIDARG;
 	}
@@ -356,48 +369,48 @@ inline HRESULT CSpEventSource::_SetInterest( ULONGLONG ullEventInterest, ULONGLO
 	return hr;
 }
 
-
 //
 //  Same as AddEvents except:  No param validation, and caller must take the critical section
 //  prior to calling.
 //
-inline HRESULT CSpEventSource::_AddEvents( const SPEVENT* pEventArray, ULONG ulCount )
+inline HRESULT CSpEventSource::_AddEvents(const SPEVENT *pEventArray, ULONG ulCount)
 {
 	HRESULT hr = S_OK;
-	for( ULONG i = 0; i < ulCount && SUCCEEDED(hr = _AddEvent(pEventArray[i])); ++i ) {}
+	for(ULONG i = 0; i < ulCount && SUCCEEDED(hr = _AddEvent(pEventArray[i])); ++i)
+	{
+	}
 	return hr;
 }
 
-inline HRESULT CSpEventSource::_AddEvent(const SPEVENT & Event)
+inline HRESULT CSpEventSource::_AddEvent(const SPEVENT &Event)
 {
 	SPDBG_ASSERT(Event.eEventId < 64);
-	SPDBG_ASSERT(Event.elParamType == SPET_LPARAM_IS_UNDEFINED ||
-				Event.elParamType == SPET_LPARAM_IS_TOKEN ||
-				Event.elParamType == SPET_LPARAM_IS_OBJECT ||
-				Event.elParamType == SPET_LPARAM_IS_POINTER ||
-				Event.elParamType == SPET_LPARAM_IS_STRING);
+	SPDBG_ASSERT(Event.elParamType == SPET_LPARAM_IS_UNDEFINED || Event.elParamType == SPET_LPARAM_IS_TOKEN ||
+				 Event.elParamType == SPET_LPARAM_IS_OBJECT || Event.elParamType == SPET_LPARAM_IS_POINTER ||
+				 Event.elParamType == SPET_LPARAM_IS_STRING);
 #ifdef _DEBUG
-	if (Event.eEventId == SPEI_VOICE_CHANGE)
+	if(Event.eEventId == SPEI_VOICE_CHANGE)
 	{
 		SPDBG_ASSERT(Event.elParamType == SPET_LPARAM_IS_TOKEN);
 	}
-	else if (Event.eEventId == SPEI_RECOGNITION || Event.eEventId == SPEI_FALSE_RECOGNITION || Event.eEventId == SPEI_HYPOTHESIS)
+	else if(Event.eEventId == SPEI_RECOGNITION || Event.eEventId == SPEI_FALSE_RECOGNITION ||
+			Event.eEventId == SPEI_HYPOTHESIS)
 	{
 		SPDBG_ASSERT(Event.elParamType == SPET_LPARAM_IS_OBJECT);
 	}
-	else if (Event.eEventId ==SPEI_REQUEST_UI || Event.eEventId == SPEI_TTS_BOOKMARK)
+	else if(Event.eEventId == SPEI_REQUEST_UI || Event.eEventId == SPEI_TTS_BOOKMARK)
 	{
 		SPDBG_ASSERT(Event.elParamType == SPET_LPARAM_IS_STRING);
 	}
 #endif
 
-	if ( (1i64 << Event.eEventId) & m_ullEventInterest )
+	if((1i64 << Event.eEventId) & m_ullEventInterest)
 	{
 		CSpEventNode *pNode = m_FreeList.RemoveHead();
-		if (pNode == NULL)
+		if(pNode == NULL)
 		{
 			pNode = new CSpEventNode();
-			if (pNode == NULL)
+			if(pNode == NULL)
 			{
 				return E_OUTOFMEMORY;
 			}
@@ -408,27 +421,26 @@ inline HRESULT CSpEventSource::_AddEvent(const SPEVENT & Event)
 	return S_OK;
 }
 
-inline HRESULT CSpEventSource::
-	_DeserializeAndAddEvent(const BYTE *pBuffer, ULONG * pcbUsed)
+inline HRESULT CSpEventSource::_DeserializeAndAddEvent(const BYTE *pBuffer, ULONG *pcbUsed)
 {
 	HRESULT hr = S_OK;
-	const SPEVENT * pSrcEvent = (const SPEVENT *)pBuffer;
+	const SPEVENT *pSrcEvent = (const SPEVENT *)pBuffer;
 	SPDBG_ASSERT(pSrcEvent->eEventId < 64);
-	if ( (1i64 << pSrcEvent->eEventId) & m_ullEventInterest )
+	if((1i64 << pSrcEvent->eEventId) & m_ullEventInterest)
 	{
 		CSpEventNode *pNode = m_FreeList.RemoveHead();
-		if (pNode == NULL)
+		if(pNode == NULL)
 		{
 			pNode = new CSpEventNode();
-			if (pNode == NULL)
+			if(pNode == NULL)
 			{
 				hr = E_OUTOFMEMORY;
 			}
 		}
-		if (SUCCEEDED(hr))
+		if(SUCCEEDED(hr))
 		{
 			hr = pNode->Deserialize(((const SPSERIALIZEDEVENT64 *)(pBuffer)), pcbUsed);
-			if (SUCCEEDED(hr))
+			if(SUCCEEDED(hr))
 			{
 				m_PendingList.InsertSorted(pNode);
 			}
@@ -450,12 +462,11 @@ inline HRESULT CSpEventSource::
 	return hr;
 }
 
-inline HRESULT CSpEventSource::_GetEvents( ULONG ulCount, SPEVENT* pEventArray, ULONG *pulFetched )
+inline HRESULT CSpEventSource::_GetEvents(ULONG ulCount, SPEVENT *pEventArray, ULONG *pulFetched)
 {
 	HRESULT hr = S_OK;
 	m_pParent->Lock();
-	if( SPIsBadWritePtr( pEventArray, sizeof( SPEVENT ) * ulCount ) ||
-		SP_IS_BAD_OPTIONAL_WRITE_PTR(pulFetched) )
+	if(SPIsBadWritePtr(pEventArray, sizeof(SPEVENT) * ulCount) || SP_IS_BAD_OPTIONAL_WRITE_PTR(pulFetched))
 	{
 		hr = E_INVALIDARG;
 	}
@@ -463,9 +474,9 @@ inline HRESULT CSpEventSource::_GetEvents( ULONG ulCount, SPEVENT* pEventArray, 
 	{
 		ULONG ulCopied = 0;
 		ULONG ulRemaining = ulCount;
-		CSpEventNode * pCur = m_CompletedList.m_pHead;
-		CSpEventNode * pLastCopied = NULL;
-		while (ulRemaining && pCur)
+		CSpEventNode *pCur = m_CompletedList.m_pHead;
+		CSpEventNode *pLastCopied = NULL;
+		while(ulRemaining && pCur)
 		{
 			pCur->Detach(pEventArray + ulCopied);
 			pLastCopied = pCur;
@@ -473,9 +484,9 @@ inline HRESULT CSpEventSource::_GetEvents( ULONG ulCount, SPEVENT* pEventArray, 
 			pCur = pCur->m_pNext;
 			ulRemaining--;
 		}
-		if (ulCopied)
+		if(ulCopied)
 		{
-			if (m_FreeList.m_pHead == NULL)
+			if(m_FreeList.m_pHead == NULL)
 			{
 				m_FreeList.m_pTail = pLastCopied;
 			}
@@ -485,11 +496,11 @@ inline HRESULT CSpEventSource::_GetEvents( ULONG ulCount, SPEVENT* pEventArray, 
 			m_CompletedList.m_cElements -= ulCopied;
 			m_FreeList.m_cElements += ulCopied;
 		}
-		if (ulCopied < ulCount)
+		if(ulCopied < ulCount)
 		{
 			hr = S_FALSE;
 		}
-		if (pulFetched)
+		if(pulFetched)
 		{
 			*pulFetched = ulCopied;
 		}
@@ -498,12 +509,11 @@ inline HRESULT CSpEventSource::_GetEvents( ULONG ulCount, SPEVENT* pEventArray, 
 	return hr;
 }
 
-
-inline HRESULT CSpEventSource::_GetInfo( SPEVENTSOURCEINFO * pInfo )
+inline HRESULT CSpEventSource::_GetInfo(SPEVENTSOURCEINFO *pInfo)
 {
 	HRESULT hr = S_OK;
 	m_pParent->Lock();
-	if( SP_IS_BAD_WRITE_PTR( pInfo ) )
+	if(SP_IS_BAD_WRITE_PTR(pInfo))
 	{
 		hr = E_POINTER;
 	}
@@ -511,33 +521,30 @@ inline HRESULT CSpEventSource::_GetInfo( SPEVENTSOURCEINFO * pInfo )
 	{
 		pInfo->ulCount = m_CompletedList.GetCount();
 		pInfo->ullEventInterest = m_ullEventInterest;
-		pInfo->ullQueuedInterest= m_ullQueuedInterest;
+		pInfo->ullQueuedInterest = m_ullQueuedInterest;
 	}
 	m_pParent->Unlock();
 	return hr;
 }
 
-
-
 //
 //  The caller must call this function with the critical section owned
 //
-inline HRESULT CSpEventSource::_CompleteEvents( ULONGLONG ullPos )
+inline HRESULT CSpEventSource::_CompleteEvents(ULONGLONG ullPos)
 {
 	HRESULT hr = S_OK;
 
-	if (m_PendingList.m_pHead && m_PendingList.m_pHead->ullAudioStreamOffset <= ullPos)
+	if(m_PendingList.m_pHead && m_PendingList.m_pHead->ullAudioStreamOffset <= ullPos)
 	{
 		BOOL bNotify = FALSE;
-		while (m_PendingList.m_pHead &&
-				m_PendingList.m_pHead->ullAudioStreamOffset <= ullPos)
+		while(m_PendingList.m_pHead && m_PendingList.m_pHead->ullAudioStreamOffset <= ullPos)
 		{
 			CSpEventNode *pNode = m_PendingList.RemoveHead();
 			if(pNode->ulStreamNum != m_ulStreamNum)
 			{
 				m_ulStreamNum = pNode->ulStreamNum;
 			}
-			if ( (1i64 << pNode->eEventId) & m_ullEventInterest )
+			if((1i64 << pNode->eEventId) & m_ullEventInterest)
 			{
 				bNotify = TRUE;
 				//
@@ -546,7 +553,7 @@ inline HRESULT CSpEventSource::_CompleteEvents( ULONGLONG ullPos )
 				//  we'll only queue completed events that the user has explicitly asked
 				//  us to store as completed events.
 				//
-				if ( (1i64 << pNode->eEventId) & m_ullQueuedInterest )
+				if((1i64 << pNode->eEventId) & m_ullQueuedInterest)
 				{
 					m_CompletedList.InsertSorted(pNode);
 				}
@@ -562,7 +569,7 @@ inline HRESULT CSpEventSource::_CompleteEvents( ULONGLONG ullPos )
 				m_FreeList.InsertHead(pNode);
 			}
 		}
-		if (bNotify && m_cpNotifySink)
+		if(bNotify && m_cpNotifySink)
 		{
 			hr = m_cpNotifySink->Notify();
 		}
@@ -570,17 +577,16 @@ inline HRESULT CSpEventSource::_CompleteEvents( ULONGLONG ullPos )
 	return hr;
 };
 
-
-inline void CSpEventSource::_MoveAllToFreeList(CSpEventList * pList)
+inline void CSpEventSource::_MoveAllToFreeList(CSpEventList *pList)
 {
-	CSpEventNode * pNode;
-	while ((pNode = pList->RemoveHead()) != NULL)
+	CSpEventNode *pNode;
+	while((pNode = pList->RemoveHead()) != NULL)
 	{
 		pNode->Clear();
 		m_FreeList.InsertHead(pNode);
 	}
 }
-inline void CSpEventSource::_RemoveAllEvents( )
+inline void CSpEventSource::_RemoveAllEvents()
 {
 	m_pParent->Lock();
 
@@ -593,13 +599,11 @@ inline HRESULT CSpEventSource::_GetStreamNumber(const ULONGLONG ullAudioOffset, 
 {
 	CSpEventNode *pNode = m_PendingList.m_pHead;
 	*pulStreamNum = m_ulStreamNum;
-	for(;pNode && pNode->ullAudioStreamOffset <= ullAudioOffset; pNode = pNode->m_pNext)
+	for(; pNode && pNode->ullAudioStreamOffset <= ullAudioOffset; pNode = pNode->m_pNext)
 	{
 		*pulStreamNum = pNode->ulStreamNum;
 	}
 	return S_OK;
 }
-
-
 
 #endif //--- This must be the last line in this file

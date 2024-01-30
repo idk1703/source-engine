@@ -24,9 +24,6 @@
 #include <CGContext.h>
 #endif
 
-
-
-
 /* Create a bitmap context.  The context draws into a bitmap which is
  * `width' pixels wide and `height' pixels high.  The number of components
  * for each pixel is specified by `colorspace', which also may specify a
@@ -38,38 +35,30 @@
  * `alphaInfo' specifies whether the bitmap should contain an alpha
  * channel, and how it's to be generated. */
 
-
 #if PRAGMA_ONCE
 #pragma once
 #endif
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 #if PRAGMA_IMPORT
 #pragma import on
 #endif
 
-/*
- *  CGBitmapContextCreate()
- *
- *  Availability:
- *    Non-Carbon CFM:   not available
- *    CarbonLib:        not available
- *    Mac OS X:         in version 10.0 and later
- */
-EXTERN_API_C( CGContextRef )
-CGBitmapContextCreate(
-	void *             data,
-	size_t             width,
-	size_t             height,
-	size_t             bitsPerComponent,
-	size_t             bytesPerRow,
-	CGColorSpaceRef    colorspace,
-	CGImageAlphaInfo   alphaInfo);
-
-
+	/*
+	 *  CGBitmapContextCreate()
+	 *
+	 *  Availability:
+	 *    Non-Carbon CFM:   not available
+	 *    CarbonLib:        not available
+	 *    Mac OS X:         in version 10.0 and later
+	 */
+	EXTERN_API_C(CGContextRef)
+	CGBitmapContextCreate(void *data, size_t width, size_t height, size_t bitsPerComponent, size_t bytesPerRow,
+						  CGColorSpaceRef colorspace, CGImageAlphaInfo alphaInfo);
 
 #ifdef PRAGMA_IMPORT_OFF
 #pragma import off

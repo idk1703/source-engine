@@ -10,19 +10,16 @@
 #pragma once
 #endif
 
-
-
 //=============================================================================
 // Achievement ID Definitions
 //=============================================================================
-
 
 typedef enum
 {
 	CSInvalidAchievement = -1,
 
 	// Bomb-related Achievements
-	CSBombAchievementsStart = 1000,        // First bomb-related achievement
+	CSBombAchievementsStart = 1000, // First bomb-related achievement
 
 	CSWinBombPlant,
 	CSWinBombDefuse,
@@ -38,11 +35,10 @@ typedef enum
 	CSPlantBombsLow,
 	CSDefuseBombsLow,
 
-	CSBombAchievementsEnd,                  // Must be after last bomb-related achievement
-
+	CSBombAchievementsEnd, // Must be after last bomb-related achievement
 
 	// Hostage-related Achievements
-	CSHostageAchievementsStart = 2000,      // First hostage-related achievement
+	CSHostageAchievementsStart = 2000, // First hostage-related achievement
 
 	CSRescueAllHostagesInARound,
 	CSKilledRescuer,
@@ -50,10 +46,10 @@ typedef enum
 	CSRescueHostagesLow,
 	CSRescueHostagesMid,
 
-	CSHostageAchievmentEnd,                 // Must be after last hostage-related achievement
+	CSHostageAchievmentEnd, // Must be after last hostage-related achievement
 
 	// General Kill Achievements
-	CSKillAchievementsStart = 3000,         // First kill-related achievement
+	CSKillAchievementsStart = 3000, // First kill-related achievement
 
 	CSEnemyKillsLow,
 	CSEnemyKillsMed,
@@ -97,10 +93,10 @@ typedef enum
 	CSKillTwoWithOneShot,
 	CSSnipeTwoFromSameSpot,
 
-	CSKillAchievementEnd,                   // Must be after last kill-related achievement
+	CSKillAchievementEnd, // Must be after last kill-related achievement
 
 	// Weapon-related Achievements
-	CSWeaponAchievementsStart = 4000,       // First weapon-related achievement
+	CSWeaponAchievementsStart = 4000, // First weapon-related achievement
 
 	CSEnemyKillsDeagle,
 	CSEnemyKillsUSP,
@@ -134,10 +130,10 @@ typedef enum
 	CSMetaShotgun,
 	CSMetaWeaponMaster,
 
-	CSWeaponAchievementsEnd,                // Must be after last weapon-related achievement
+	CSWeaponAchievementsEnd, // Must be after last weapon-related achievement
 
 	// General Achievements
-	CSGeneralAchievementsStart = 5000,      // First general achievement
+	CSGeneralAchievementsStart = 5000, // First general achievement
 
 	CSWinRoundsLow,
 	CSWinRoundsMed,
@@ -179,7 +175,7 @@ typedef enum
 	CSWinClanMatch,
 	CSCollectHolidayGifts,
 
-	CSGeneralAchievementsEnd,               // Must be after last general achievement
+	CSGeneralAchievementsEnd, // Must be after last general achievement
 
 	CSWinMapAchievementsStart = 6000,
 
@@ -202,9 +198,8 @@ typedef enum
 	CSWinMapDE_TIDES,
 	CSWinMapDE_TRAIN,
 
-	CSWinMapAchievementsEnd                 //Must be after last map-based achievement
+	CSWinMapAchievementsEnd // Must be after last map-based achievement
 
 } eCSAchievementType;
-
 
 #endif // CS_ACHIEVEMENTDEFS_H

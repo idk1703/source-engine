@@ -14,35 +14,35 @@
 
 class CDODMapOverview : public CMapOverview
 {
-	DECLARE_CLASS_SIMPLE( CDODMapOverview, CMapOverview );
+	DECLARE_CLASS_SIMPLE(CDODMapOverview, CMapOverview);
 
-	CDODMapOverview( const char *pElementName );
+	CDODMapOverview(const char *pElementName);
 
-	int		m_CameraIcons[MAX_TEAMS];
-	int		m_CapturePoints[MAX_CONTROL_POINTS];
+	int m_CameraIcons[MAX_TEAMS];
+	int m_CapturePoints[MAX_CONTROL_POINTS];
 
-	void ShowLargeMap( void );
-	void HideLargeMap( void );
-	void ToggleZoom( void );
+	void ShowLargeMap(void);
+	void HideLargeMap(void);
+	void ToggleZoom(void);
 
-	void AddGrenade( C_DODBaseGrenade *pGrenade );
-	void RemoveGrenade( C_DODBaseGrenade *pGrenade );
+	void AddGrenade(C_DODBaseGrenade *pGrenade);
+	void RemoveGrenade(C_DODBaseGrenade *pGrenade);
 
-	void PlayerChat( int index );
+	void PlayerChat(int index);
 
-	void DrawQuad( Vector pos, int scale, float angle, int textureID, int alpha );
-	void DrawBombTimerSwipeIcon( Vector pos, int scale, int textureID, float flPercentRemaining );
-	void DrawHorizontalSwipe( Vector pos, int scale, int textureID, float flCapPercentage, bool bSwipeLeft );
-	bool DrawCapturePoint( int iCP, MapObject_t *obj );
+	void DrawQuad(Vector pos, int scale, float angle, int textureID, int alpha);
+	void DrawBombTimerSwipeIcon(Vector pos, int scale, int textureID, float flPercentRemaining);
+	void DrawHorizontalSwipe(Vector pos, int scale, int textureID, float flCapPercentage, bool bSwipeLeft);
+	bool DrawCapturePoint(int iCP, MapObject_t *obj);
 
-	virtual void VidInit( void );
+	virtual void VidInit(void);
 
-	virtual bool IsVisible( void );
+	virtual bool IsVisible(void);
 
 protected:
 	virtual void SetMode(int mode);
 	virtual void InitTeamColorsAndIcons();
-	virtual void FireGameEvent( IGameEvent *event );
+	virtual void FireGameEvent(IGameEvent *event);
 	virtual void DrawCamera();
 	virtual void DrawMapPlayers();
 	virtual void Update();
@@ -51,9 +51,9 @@ protected:
 	// rules that define if you can see a player on the overview or not
 	virtual bool CanPlayerBeSeen(MapPlayer_t *player);
 
-	void DrawVoiceIconForPlayer( int playerIndex );
+	void DrawVoiceIconForPlayer(int playerIndex);
 
-	virtual bool DrawIcon( MapObject_t *obj );
+	virtual bool DrawIcon(MapObject_t *obj);
 
 protected:
 	void UpdateCapturePoints();
@@ -61,7 +61,7 @@ protected:
 private:
 	int m_iLastMode;
 
-	CUtlVector<MapObject_t>	m_Grenades;
+	CUtlVector<MapObject_t> m_Grenades;
 
 	int m_iVoiceIcon;
 	int m_iChatIcon;
@@ -73,9 +73,9 @@ private:
 	CHudTexture *m_pC4PlantedBG;
 	CHudTexture *m_pIconDefended;
 
-#define DOD_MAP_ZOOM_LEVELS	2
+#define DOD_MAP_ZOOM_LEVELS 2
 };
 
-extern CDODMapOverview *GetDODOverview( void );
+extern CDODMapOverview *GetDODOverview(void);
 
 #endif // DODOVERVIEW_H

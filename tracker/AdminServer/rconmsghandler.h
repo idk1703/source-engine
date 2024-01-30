@@ -30,7 +30,4 @@ private:
 	CRcon *m_pRcon;
 };
 
-
-
-
 #endif // RCONMSGHANDLERDETAILS_H

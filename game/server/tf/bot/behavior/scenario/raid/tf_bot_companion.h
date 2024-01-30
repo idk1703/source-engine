@@ -14,38 +14,43 @@
 //
 // Friendly teammate bots
 //
-class CTFBotCompanion : public Action< CTFBot >
+class CTFBotCompanion : public Action<CTFBot>
 {
 public:
-	virtual ActionResult< CTFBot >	OnStart( CTFBot *me, Action< CTFBot > *priorAction );
-	virtual ActionResult< CTFBot >	Update( CTFBot *me, float interval );
+	virtual ActionResult<CTFBot> OnStart(CTFBot *me, Action<CTFBot> *priorAction);
+	virtual ActionResult<CTFBot> Update(CTFBot *me, float interval);
 
-	virtual ActionResult< CTFBot >	OnResume( CTFBot *me, Action< CTFBot > *interruptingAction );
+	virtual ActionResult<CTFBot> OnResume(CTFBot *me, Action<CTFBot> *interruptingAction);
 
-	virtual const char *GetName( void ) const	{ return "Companion"; };
+	virtual const char *GetName(void) const
+	{
+		return "Companion";
+	};
 
 private:
 	ChasePath m_path;
-	CTFPlayer *GetLeader( void );
+	CTFPlayer *GetLeader(void);
 };
-
 
 //
 // Friendly defenders of the base
 //
-class CTFBotGuardian : public Action< CTFBot >
+class CTFBotGuardian : public Action<CTFBot>
 {
 public:
-	virtual ActionResult< CTFBot >	OnStart( CTFBot *me, Action< CTFBot > *priorAction );
-	virtual ActionResult< CTFBot >	Update( CTFBot *me, float interval );
+	virtual ActionResult<CTFBot> OnStart(CTFBot *me, Action<CTFBot> *priorAction);
+	virtual ActionResult<CTFBot> Update(CTFBot *me, float interval);
 
-	virtual ActionResult< CTFBot >	OnResume( CTFBot *me, Action< CTFBot > *interruptingAction );
+	virtual ActionResult<CTFBot> OnResume(CTFBot *me, Action<CTFBot> *interruptingAction);
 
-	virtual EventDesiredResult< CTFBot > OnStuck( CTFBot *me );
-	virtual EventDesiredResult< CTFBot > OnMoveToSuccess( CTFBot *me, const Path *path );
-	virtual EventDesiredResult< CTFBot > OnMoveToFailure( CTFBot *me, const Path *path, MoveToFailureType reason );
+	virtual EventDesiredResult<CTFBot> OnStuck(CTFBot *me);
+	virtual EventDesiredResult<CTFBot> OnMoveToSuccess(CTFBot *me, const Path *path);
+	virtual EventDesiredResult<CTFBot> OnMoveToFailure(CTFBot *me, const Path *path, MoveToFailureType reason);
 
-	virtual const char *GetName( void ) const	{ return "Guardian"; };
+	virtual const char *GetName(void) const
+	{
+		return "Guardian";
+	};
 
 private:
 	PathFollower m_path;

@@ -26,7 +26,7 @@ class CDialogueReadout : public CReport
 {
 private:
 public:
-	explicit CDialogueReadout(){}
-	void writeHTML(CHTMLFile& html);
+	explicit CDialogueReadout() {}
+	void writeHTML(CHTMLFile &html);
 };
 #endif // DIALOGUEREADOUT_H

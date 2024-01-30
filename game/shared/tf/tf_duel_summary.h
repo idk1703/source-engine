@@ -14,7 +14,6 @@
 #include "gcsdk/protobufsharedobject.h"
 #include "tf_gcmessages.h"
 
-
 // do not re-order, stored in DB
 enum eDuelStatus
 {
@@ -37,28 +36,28 @@ enum eDuelEndReason
 	kDuelEndReason_Cancelled
 };
 
-const char *PchNameFromeDuelEndReason( eDuelEndReason eReason );
+const char *PchNameFromeDuelEndReason(eDuelEndReason eReason);
 
 const uint32 kWinsPerLevel = 10;
 
 //---------------------------------------------------------------------------------
 // Purpose:
 //---------------------------------------------------------------------------------
-class CTFDuelSummary : public GCSDK::CProtoBufSharedObject< CSOTFDuelSummary, k_EEconTypeDuelSummary >
+class CTFDuelSummary : public GCSDK::CProtoBufSharedObject<CSOTFDuelSummary, k_EEconTypeDuelSummary>
 {
 #ifdef GC
-	DECLARE_CLASS_MEMPOOL( CTFDuelSummary );
+	DECLARE_CLASS_MEMPOOL(CTFDuelSummary);
 #endif
 
 public:
 #ifdef GC
-	virtual bool BYieldingAddInsertToTransaction( GCSDK::CSQLAccess & sqlAccess );
-	virtual bool BYieldingAddWriteToTransaction( GCSDK::CSQLAccess & sqlAccess, const CUtlVector< int > &fields );
-	virtual bool BYieldingAddRemoveToTransaction( GCSDK::CSQLAccess & sqlAccess );
+	virtual bool BYieldingAddInsertToTransaction(GCSDK::CSQLAccess &sqlAccess);
+	virtual bool BYieldingAddWriteToTransaction(GCSDK::CSQLAccess &sqlAccess, const CUtlVector<int> &fields);
+	virtual bool BYieldingAddRemoveToTransaction(GCSDK::CSQLAccess &sqlAccess);
 
-	void WriteToRecord( CSchDuelSummary *pDuelSummary ) const;
-	void ReadFromRecord( const CSchDuelSummary & duelSummary );
+	void WriteToRecord(CSchDuelSummary *pDuelSummary) const;
+	void ReadFromRecord(const CSchDuelSummary &duelSummary);
 #endif
 };
 
-#endif //TFDUELSUMMARY_H
+#endif // TFDUELSUMMARY_H

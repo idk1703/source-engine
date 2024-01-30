@@ -15,7 +15,6 @@
 #include "datamodel/dmehandle.h"
 #include "tier1/utlstring.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
@@ -23,8 +22,7 @@ namespace vgui
 {
 	class Panel;
 	class TextEntry;
-}
-
+} // namespace vgui
 
 //-----------------------------------------------------------------------------
 // Forward declarations
@@ -35,31 +33,30 @@ struct DmePickerInfo_t
 	const char *m_pChoiceString;
 };
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Main app window
 //-----------------------------------------------------------------------------
 class CDmePicker : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CDmePicker, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CDmePicker, vgui::EditablePanel);
 
 public:
-	CDmePicker( vgui::Panel *pParent );
+	CDmePicker(vgui::Panel *pParent);
 	~CDmePicker();
 
 	// overridden frame functions
-	virtual void Activate( const CUtlVector< DmePickerInfo_t >& vec );
+	virtual void Activate(const CUtlVector<DmePickerInfo_t> &vec);
 
 	// Forward arrow keys to the list
-	virtual void OnKeyCodePressed( vgui::KeyCode code );
+	virtual void OnKeyCodePressed(vgui::KeyCode code);
 
 	// Returns the selceted DmElement
-	CDmElement *GetSelectedDme( );
+	CDmElement *GetSelectedDme();
 
 private:
 	void RefreshDmeList();
 
-	MESSAGE_FUNC( OnTextChanged, "TextChanged" );
+	MESSAGE_FUNC(OnTextChanged, "TextChanged");
 
 	vgui::TextEntry *m_pFilterList;
 	vgui::ListPanel *m_pDmeBrowser;
@@ -68,25 +65,24 @@ private:
 	friend class CDmePickerFrame;
 };
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Main app window
 //-----------------------------------------------------------------------------
 class CDmePickerFrame : public vgui::Frame
 {
-	DECLARE_CLASS_SIMPLE( CDmePickerFrame, vgui::Frame );
+	DECLARE_CLASS_SIMPLE(CDmePickerFrame, vgui::Frame);
 
 public:
-	CDmePickerFrame( vgui::Panel *pParent, const char *pTitle );
+	CDmePickerFrame(vgui::Panel *pParent, const char *pTitle);
 	~CDmePickerFrame();
 
 	// Inherited from Frame
-	virtual void OnCommand( const char *pCommand );
+	virtual void OnCommand(const char *pCommand);
 
 	// Purpose: Activate the dialog
 	// the message "DmeSelected" will be sent if one was picked
 	// Pass in a message to add as a subkey to the DmeSelected message
-	void DoModal( const CUtlVector< DmePickerInfo_t >& vec, KeyValues *pContextKeyValues = NULL );
+	void DoModal(const CUtlVector<DmePickerInfo_t> &vec, KeyValues *pContextKeyValues = NULL);
 
 private:
 	void CleanUpMessage();
@@ -96,6 +92,5 @@ private:
 	vgui::Button *m_pCancelButton;
 	KeyValues *m_pContextKeyValues;
 };
-
 
 #endif // DMEPICKER_H

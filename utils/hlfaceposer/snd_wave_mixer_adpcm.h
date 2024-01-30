@@ -15,10 +15,9 @@
 #define SND_WAVE_MIXER_ADPCM_H
 #pragma once
 
-
 class CAudioMixer;
 class CWaveData;
 
-CAudioMixer *CreateADPCMMixer( CWaveData *data );
+CAudioMixer *CreateADPCMMixer(CWaveData *data);
 
 #endif // SND_WAVE_MIXER_ADPCM_H

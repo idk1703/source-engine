@@ -20,23 +20,21 @@ class CBaseTFPlayer;
 //-----------------------------------------------------------------------------
 class CTFHintManager : public CBaseEntity
 {
-	DECLARE_CLASS( CTFHintManager, CBaseEntity );
+	DECLARE_CLASS(CTFHintManager, CBaseEntity);
 
 public:
-
 	DECLARE_SERVERCLASS();
 
-						CTFHintManager( void );
+	CTFHintManager(void);
 
-	virtual void		Spawn( void );
+	virtual void Spawn(void);
 
-	virtual void		Think( void );
+	virtual void Think(void);
 
-	virtual int			UpdateTransmitState();
+	virtual int UpdateTransmitState();
 
 private:
-
-	void				AddHint( CBaseTFPlayer *player, int hintID, int priority, int entityIndex = 0 );
+	void AddHint(CBaseTFPlayer *player, int hintID, int priority, int entityIndex = 0);
 };
 
 #endif // TF_HINTMANAGER_H

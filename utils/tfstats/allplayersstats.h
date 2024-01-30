@@ -15,7 +15,7 @@
 #ifdef WIN32
 #pragma once
 #endif
-#pragma warning (disable:  4786)
+#pragma warning(disable : 4786)
 
 #include "report.h"
 #include <map>
@@ -28,18 +28,19 @@ using namespace std;
 // data about each player that has played on the server.  Data such as favourite
 // weapon, rank, classes played, favourite class, and kills vs deaths.
 //------------------------------------------------------------------------------------------------------
-class CAllPlayersStats :public CReport
+class CAllPlayersStats : public CReport
 {
 private:
-
 	void init();
 
+public:
+	explicit CAllPlayersStats()
+	{
+		init();
+	}
 
-	public:
-		explicit CAllPlayersStats(){init();}
-
-		void generate();
-		void writeHTML(CHTMLFile& html);
+	void generate();
+	void writeHTML(CHTMLFile &html);
 };
 
 #endif // ALLPLAYERSSTATS_H

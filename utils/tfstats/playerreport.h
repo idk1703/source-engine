@@ -22,24 +22,31 @@
 //------------------------------------------------------------------------------------------------------
 // Purpose:  Reports a specific player's stats.
 //------------------------------------------------------------------------------------------------------
-class CPlayerReport: public CReport
+class CPlayerReport : public CReport
 {
 private:
-	CPlayer* pPlayer;
-	CPlrPersist* pPersist;
+	CPlayer *pPlayer;
+	CPlrPersist *pPersist;
 	int iWhichTeam;
 
-	static map<unsigned long,bool> alreadyPersisted;
-	static map<unsigned long,bool> alreadyWroteCombStats;
+	static map<unsigned long, bool> alreadyPersisted;
+	static map<unsigned long, bool> alreadyWroteCombStats;
 	bool reportingPersistedPlayer;
 
-	void writePersistHTML(CHTMLFile& html);
+	void writePersistHTML(CHTMLFile &html);
+
 public:
-	CPlayerReport(CPlayer* pP,int t):pPlayer(pP),iWhichTeam(t){reportingPersistedPlayer=false;}
-	CPlayerReport(CPlrPersist* pPP):pPersist(pPP) {iWhichTeam=-1;reportingPersistedPlayer=true;}
+	CPlayerReport(CPlayer *pP, int t) : pPlayer(pP), iWhichTeam(t)
+	{
+		reportingPersistedPlayer = false;
+	}
+	CPlayerReport(CPlrPersist *pPP) : pPersist(pPP)
+	{
+		iWhichTeam = -1;
+		reportingPersistedPlayer = true;
+	}
 
-	virtual void writeHTML(CHTMLFile& html);
+	virtual void writeHTML(CHTMLFile &html);
 };
-
 
 #endif // PLAYERREPORT_H

@@ -25,46 +25,55 @@ class CBaseTechnology;
 //-----------------------------------------------------------------------------
 class C_DODTeam : public C_Team
 {
-	DECLARE_CLASS( C_DODTeam, C_Team );
+	DECLARE_CLASS(C_DODTeam, C_Team);
+
 public:
 	DECLARE_CLIENTCLASS();
 
-					C_DODTeam();
-	virtual			~C_DODTeam();
+	C_DODTeam();
+	virtual ~C_DODTeam();
 
-	CDODPlayerClassInfo const &GetPlayerClassInfo( int iPlayerClass ) const;
-	const unsigned char *GetEncryptionKey( void ) { return g_pGameRules->GetEncryptionKey(); }
+	CDODPlayerClassInfo const &GetPlayerClassInfo(int iPlayerClass) const;
+	const unsigned char *GetEncryptionKey(void)
+	{
+		return g_pGameRules->GetEncryptionKey();
+	}
 
-	virtual void AddPlayerClass( const char *pszClassName );
+	virtual void AddPlayerClass(const char *pszClassName);
 
-	bool IsClassOnTeam( const char *pszClassName, int &iClassNum ) const;
-	bool IsClassOnTeam( int iClassNum ) const;
-	int GetNumPlayerClasses( void ) { return m_hPlayerClassInfoHandles.Count(); }
+	bool IsClassOnTeam(const char *pszClassName, int &iClassNum) const;
+	bool IsClassOnTeam(int iClassNum) const;
+	int GetNumPlayerClasses(void)
+	{
+		return m_hPlayerClassInfoHandles.Count();
+	}
 
-	int CountPlayersOfThisClass( int iPlayerClass );
+	int CountPlayersOfThisClass(int iPlayerClass);
 
 private:
-	CUtlVector < PLAYERCLASS_FILE_INFO_HANDLE >		m_hPlayerClassInfoHandles;
+	CUtlVector<PLAYERCLASS_FILE_INFO_HANDLE> m_hPlayerClassInfoHandles;
 };
 
 class C_DODTeam_Allies : public C_DODTeam
 {
-	DECLARE_CLASS( C_DODTeam_Allies, C_DODTeam );
+	DECLARE_CLASS(C_DODTeam_Allies, C_DODTeam);
+
 public:
 	DECLARE_CLIENTCLASS();
 
-				     C_DODTeam_Allies();
-	 virtual		~C_DODTeam_Allies() {}
+	C_DODTeam_Allies();
+	virtual ~C_DODTeam_Allies() {}
 };
 
 class C_DODTeam_Axis : public C_DODTeam
 {
-	DECLARE_CLASS( C_DODTeam_Axis, C_DODTeam );
+	DECLARE_CLASS(C_DODTeam_Axis, C_DODTeam);
+
 public:
 	DECLARE_CLIENTCLASS();
 
-					 C_DODTeam_Axis();
-	virtual			~C_DODTeam_Axis() {}
+	C_DODTeam_Axis();
+	virtual ~C_DODTeam_Axis() {}
 };
 
 #endif // C_DOD_TEAM_H

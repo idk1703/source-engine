@@ -10,6 +10,6 @@
 #define DISPSEW_H
 #pragma once
 
-void FaceListSewEdges( void );
+void FaceListSewEdges(void);
 
 #endif // DISPSEW_H

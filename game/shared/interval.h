@@ -13,8 +13,7 @@
 
 #include "basetypes.h"
 
-
-interval_t ReadInterval( const char *pString );
-float RandomInterval( const interval_t &interval );
+interval_t ReadInterval(const char *pString);
+float RandomInterval(const interval_t &interval);
 
 #endif // INTERVAL_H

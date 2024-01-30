@@ -13,13 +13,12 @@
 
 #include <VGUI_Frame.h>
 
-
 namespace vgui
 {
-class TextEntry;
-class Label;
-class Button;
-};
+	class TextEntry;
+	class Label;
+	class Button;
+}; // namespace vgui
 
 //-----------------------------------------------------------------------------
 // Purpose: Prompt for user to enter a password to be able to connect to the server
@@ -53,6 +52,5 @@ private:
 
 	int m_iServerID;
 };
-
 
 #endif // DIALOGSERVERPASSWORD_H

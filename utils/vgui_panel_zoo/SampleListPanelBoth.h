@@ -11,21 +11,18 @@
 #include <Keyvalues.h>
 #include <vgui_controls/SectionedListPanel.h>
 
-
 using namespace vgui;
 
-
-class SampleListPanelBoth: public DemoPage
+class SampleListPanelBoth : public DemoPage
 {
-	public:
-		SampleListPanelBoth(Panel *parent, const char *name);
-		~SampleListPanelBoth();
+public:
+	SampleListPanelBoth(Panel *parent, const char *name);
+	~SampleListPanelBoth();
 
-		void onButtonClicked();
+	void onButtonClicked();
 
-	private:
-		SectionedListPanel *m_pSectionedListPanel;
-
+private:
+	SectionedListPanel *m_pSectionedListPanel;
 };
 
 //-----------------------------------------------------------------------------
@@ -41,7 +38,7 @@ SampleListPanelBoth::SampleListPanelBoth(Panel *parent, const char *name) : Demo
 	m_pSectionedListPanel->addColumnToSection(0, "items", SectionedListPanel::COLUMN_TEXT);
 
 	// Add items to the list
-	KeyValues *data = new KeyValues ("items");
+	KeyValues *data = new KeyValues("items");
 	data->SetString("items", "Many actions");
 	m_pSectionedListPanel->addItem(0, 0, data);
 
@@ -77,7 +74,6 @@ SampleListPanelBoth::SampleListPanelBoth(Panel *parent, const char *name) : Demo
 	data->SetString("items", "Commands");
 	m_pSectionedListPanel->addItem(13, 1, data);
 
-
 	// Add a new section
 	m_pSectionedListPanel->addSection(2, "RIGHT CLICK");
 	m_pSectionedListPanel->addColumnToSection(2, "items", SectionedListPanel::COLUMN_TEXT);
@@ -95,24 +91,17 @@ SampleListPanelBoth::SampleListPanelBoth(Panel *parent, const char *name) : Demo
 	data->SetString("items", "Commands");
 	m_pSectionedListPanel->addItem(13, 2, data);
 
-
 	// Set its position.
 	m_pSectionedListPanel->setPos(90, 25);
 	m_pSectionedListPanel->setSize(200, 150);
-
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-SampleListPanelBoth::~SampleListPanelBoth()
-{
-}
+SampleListPanelBoth::~SampleListPanelBoth() {}
 
-
-
-
-Panel* SampleListPanelBoth_Create(Panel *parent)
+Panel *SampleListPanelBoth_Create(Panel *parent)
 {
 	return new SampleListPanelBoth(parent, "List Panel - categories");
 }

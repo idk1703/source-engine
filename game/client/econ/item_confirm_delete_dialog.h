@@ -23,15 +23,19 @@
 //-----------------------------------------------------------------------------
 class CConfirmDeleteItemDialog : public CConfirmDeleteDialog
 {
-	DECLARE_CLASS_SIMPLE( CConfirmDeleteItemDialog, CConfirmDeleteDialog );
-public:
-	CConfirmDeleteItemDialog( vgui::Panel *parent, bool bMultiItem = false );
+	DECLARE_CLASS_SIMPLE(CConfirmDeleteItemDialog, CConfirmDeleteDialog);
 
-	void	SetMultiItem( bool bMultiItem ) { m_bMultiItem = bMultiItem; }
+public:
+	CConfirmDeleteItemDialog(vgui::Panel *parent, bool bMultiItem = false);
+
+	void SetMultiItem(bool bMultiItem)
+	{
+		m_bMultiItem = bMultiItem;
+	}
 	virtual const wchar_t *GetText();
 
 private:
-	bool	m_bMultiItem;
+	bool m_bMultiItem;
 };
 
 #endif // ITEM_CONFIRM_DELETE_DIALOG_H

@@ -19,7 +19,7 @@
 //-----------------------------------------------------------------------------
 class CPlayerListDialog : public vgui::Frame
 {
-	DECLARE_CLASS_SIMPLE( CPlayerListDialog, vgui::Frame );
+	DECLARE_CLASS_SIMPLE(CPlayerListDialog, vgui::Frame);
 
 public:
 	CPlayerListDialog(vgui::Panel *parent);
@@ -28,15 +28,15 @@ public:
 	virtual void Activate();
 
 private:
-  	MESSAGE_FUNC( OnItemSelected, "ItemSelected" );
+	MESSAGE_FUNC(OnItemSelected, "ItemSelected");
 	virtual void OnCommand(const char *command);
 
 	void ToggleMuteStateOfSelectedUser();
 	void RefreshPlayerProperties();
 
-	void OnKeyCodePressed( vgui::KeyCode code )
+	void OnKeyCodePressed(vgui::KeyCode code)
 	{
-		if ( code == KEY_XBUTTON_B )
+		if(code == KEY_XBUTTON_B)
 		{
 			Close();
 		}

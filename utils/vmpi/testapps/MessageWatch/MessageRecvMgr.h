@@ -11,12 +11,9 @@
 #pragma once
 #endif
 
-
 class IMessageRecvMgr
 {
 public:
-
 };
-
 
 #endif // MESSAGERECVMGR_H

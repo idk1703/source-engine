@@ -23,6 +23,4 @@ class CUtlBuffer;
 void WriteUnicodeString(CUtlBuffer &buffer, const wchar_t *string, bool addQuotes = false);
 void WriteAsciiStringAsUnicode(CUtlBuffer &buffer, const char *string, bool addQuotes = false);
 
-
-
 #endif // UNICODEFILEHELPERS_H

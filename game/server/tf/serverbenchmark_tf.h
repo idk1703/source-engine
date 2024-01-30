@@ -10,8 +10,6 @@
 #pragma once
 #endif
 
-
 #include "serverbenchmark_base.h"
-
 
 #endif // SERVERBENCHMARK_TF_H

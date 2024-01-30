@@ -28,108 +28,105 @@ struct RoundStatsDirectAverage_t;
 
 class CBaseStatsPage : public vgui::PropertyPage, public CGameEventListener
 {
-	DECLARE_CLASS_SIMPLE ( CBaseStatsPage, vgui::PropertyPage );
+	DECLARE_CLASS_SIMPLE(CBaseStatsPage, vgui::PropertyPage);
 
 public:
-	CBaseStatsPage( vgui::Panel *parent, const char *name );
+	CBaseStatsPage(vgui::Panel *parent, const char *name);
 
 	~CBaseStatsPage();
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 	virtual void MoveToFront();
 	virtual void OnSizeChanged(int wide, int tall);
 	virtual void OnThink();
 
 	void UpdateStatsData();
-	void SetActiveStatGroup (CBaseStatGroupPanel* groupPanel);
+	void SetActiveStatGroup(CBaseStatGroupPanel *groupPanel);
 
-	virtual void FireGameEvent( IGameEvent * event );
+	virtual void FireGameEvent(IGameEvent *event);
 
 protected:
-
 	void UpdateGroupPanels();
-	CBaseStatGroupPanel* AddGroup( const wchar_t* name, const char* title_tag, const wchar_t* def = NULL );
-	const wchar_t* TranslateWeaponKillIDToAlias( int statKillID );
-	const wchar_t* LocalizeTagOrUseDefault( const char* tag, const wchar_t* def = NULL );
+	CBaseStatGroupPanel *AddGroup(const wchar_t *name, const char *title_tag, const wchar_t *def = NULL);
+	const wchar_t *TranslateWeaponKillIDToAlias(int statKillID);
+	const wchar_t *LocalizeTagOrUseDefault(const char *tag, const wchar_t *def = NULL);
 
 	virtual void RepopulateStats() = 0;
 
-	vgui::SectionedListPanel	*m_statsList;
-	vgui::HFont					m_listItemFont;
+	vgui::SectionedListPanel *m_statsList;
+	vgui::HFont m_listItemFont;
 
 private:
-
-	vgui::PanelListPanel		*m_pGroupsList;
-	vgui::ImagePanel* m_bottomBar;
-	StatCard*	m_pStatCard;
-	bool		m_bStatsDirty;
+	vgui::PanelListPanel *m_pGroupsList;
+	vgui::ImagePanel *m_bottomBar;
+	StatCard *m_pStatCard;
+	bool m_bStatsDirty;
 };
-
-
-
 
 class CBaseStatGroupButton : public vgui::Button
 {
-	DECLARE_CLASS_SIMPLE( CBaseStatGroupButton, vgui::Button );
+	DECLARE_CLASS_SIMPLE(CBaseStatGroupButton, vgui::Button);
 
 public:
+	CBaseStatGroupButton(vgui::Panel *pParent, const char *pName, const char *pText);
 
-	CBaseStatGroupButton(  vgui::Panel *pParent, const char *pName, const char *pText );
-
-	virtual void DoClick( void );
+	virtual void DoClick(void);
 };
-
-
-
-
 
 class CBaseStatGroupPanel : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CBaseStatGroupPanel, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CBaseStatGroupPanel, vgui::EditablePanel);
 
 public:
-	CBaseStatGroupPanel( vgui::PanelListPanel *parent, CBaseStatsPage *owner, const char* name, int iListItemID );
+	CBaseStatGroupPanel(vgui::PanelListPanel *parent, CBaseStatsPage *owner, const char *name, int iListItemID);
 	~CBaseStatGroupPanel();
 
-	void SetGroupInfo ( const wchar_t* name, const wchar_t* title);
+	void SetGroupInfo(const wchar_t *name, const wchar_t *title);
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 
-	void Update( vgui::IScheme* pScheme );
+	void Update(vgui::IScheme *pScheme);
 
-	vgui::PanelListPanel* GetParent() { return m_pParent; }
-	CBaseStatsPage* GetOwner() { return m_pOwner; }
+	vgui::PanelListPanel *GetParent()
+	{
+		return m_pParent;
+	}
+	CBaseStatsPage *GetOwner()
+	{
+		return m_pOwner;
+	}
 
-	void SetGroupActive(bool active) { m_bActiveButton = active; }
-	bool IsGroupActive() { return m_bActiveButton; }
+	void SetGroupActive(bool active)
+	{
+		m_bActiveButton = active;
+	}
+	bool IsGroupActive()
+	{
+		return m_bActiveButton;
+	}
 
 protected:
-
 	// Loads an icon into a specified image panel, or turns the panel off if no icon was found.
-	bool LoadIcon( const char* pFilename);
+	bool LoadIcon(const char *pFilename);
 
 private:
-	void PreloadResourceFile( void );
+	void PreloadResourceFile(void);
 
-	vgui::PanelListPanel    *m_pParent;
-	CBaseStatsPage       *m_pOwner;
+	vgui::PanelListPanel *m_pParent;
+	CBaseStatsPage *m_pOwner;
 
-	vgui::Label             *m_pBaseStatGroupLabel;
+	vgui::Label *m_pBaseStatGroupLabel;
 
-	CBaseStatGroupButton            *m_pGroupButton;
+	CBaseStatGroupButton *m_pGroupButton;
 
-	vgui::ImagePanel        *m_pGroupIcon;
+	vgui::ImagePanel *m_pGroupIcon;
 
-	vgui::IScheme           *m_pSchemeSettings;
+	vgui::IScheme *m_pSchemeSettings;
 
-	bool                    m_bActiveButton;
+	bool m_bActiveButton;
 
-	wchar_t                 *m_pGroupName;
-	wchar_t                 *m_pGroupTitle;
+	wchar_t *m_pGroupName;
+	wchar_t *m_pGroupTitle;
 };
-
-
-
-
 
 #endif // CSBASESTATSPAGE_H

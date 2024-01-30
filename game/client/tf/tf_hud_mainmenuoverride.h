@@ -50,9 +50,12 @@ enum mm_button_styles
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-class CHudMainMenuOverride : public vgui::EditablePanel, public IViewPortPanel, public CGameEventListener, public CLocalSteamSharedObjectListener
+class CHudMainMenuOverride : public vgui::EditablePanel,
+							 public IViewPortPanel,
+							 public CGameEventListener,
+							 public CLocalSteamSharedObjectListener
 {
-	DECLARE_CLASS_SIMPLE( CHudMainMenuOverride, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CHudMainMenuOverride, vgui::EditablePanel);
 
 	enum mm_highlight_anims
 	{
@@ -68,208 +71,260 @@ class CHudMainMenuOverride : public vgui::EditablePanel, public IViewPortPanel, 
 	};
 
 public:
-	CHudMainMenuOverride( IViewPort *pViewPort );
-	~CHudMainMenuOverride( void );
+	CHudMainMenuOverride(IViewPort *pViewPort);
+	~CHudMainMenuOverride(void);
 
-	void		 AttachToGameUI( void );
-	virtual const char *GetName( void ){ return PANEL_MAINMENUOVERRIDE; }
-	virtual void SetData( KeyValues *data ){}
-	virtual void Reset(){ Update(); SetVisible( true ); }
-	virtual void Update() { return; }
-	virtual bool NeedsUpdate( void ){ return false; }
-	virtual bool HasInputElements( void ){ return true; }
-	virtual void ShowPanel( bool bShow ) { SetVisible( true ); }	// Refuses to hide
+	void AttachToGameUI(void);
+	virtual const char *GetName(void)
+	{
+		return PANEL_MAINMENUOVERRIDE;
+	}
+	virtual void SetData(KeyValues *data) {}
+	virtual void Reset()
+	{
+		Update();
+		SetVisible(true);
+	}
+	virtual void Update()
+	{
+		return;
+	}
+	virtual bool NeedsUpdate(void)
+	{
+		return false;
+	}
+	virtual bool HasInputElements(void)
+	{
+		return true;
+	}
+	virtual void ShowPanel(bool bShow)
+	{
+		SetVisible(true);
+	} // Refuses to hide
 
 	// both vgui::Frame and IViewPortPanel define these, so explicitly define them here as passthroughs to vgui
-	vgui::VPANEL GetVPanel( void ){ return BaseClass::GetVPanel(); }
+	vgui::VPANEL GetVPanel(void)
+	{
+		return BaseClass::GetVPanel();
+	}
 	virtual bool IsVisible();
-	virtual void SetParent( vgui::VPANEL parent ){ BaseClass::SetParent( parent ); }
+	virtual void SetParent(vgui::VPANEL parent)
+	{
+		BaseClass::SetParent(parent);
+	}
 
-	virtual void ApplySettings( KeyValues *inResourceData );
-	virtual void ApplySchemeSettings( IScheme *scheme );
-	virtual void PerformLayout( void );
+	virtual void ApplySettings(KeyValues *inResourceData);
+	virtual void ApplySchemeSettings(IScheme *scheme);
+	virtual void PerformLayout(void);
 
-	void OnCommand( const char *command );
+	void OnCommand(const char *command);
 
-	void OnKeyCodePressed( KeyCode code );
+	void OnKeyCodePressed(KeyCode code);
 
-	void		 LoadMenuEntries( void );
-	void		 RemoveAllMenuEntries( void );
-	virtual void FireGameEvent( IGameEvent *event );
+	void LoadMenuEntries(void);
+	void RemoveAllMenuEntries(void);
+	virtual void FireGameEvent(IGameEvent *event);
 
-	void		 LoadCharacterImageFile( void );
+	void LoadCharacterImageFile(void);
 
-	void		 UpdateNotifications();
-	void		 SetNotificationsButtonVisible( bool bVisible );
-	void		 SetNotificationsPanelVisible( bool bVisible );
-	void		 AdjustNotificationsPanelHeight();
+	void UpdateNotifications();
+	void SetNotificationsButtonVisible(bool bVisible);
+	void SetNotificationsPanelVisible(bool bVisible);
+	void AdjustNotificationsPanelHeight();
 
-	void		 SetMOTDButtonVisible( bool bVisible );
-	void		 SetMOTDVisible( bool bVisible );
-	void		 SetQuestLogVisible( bool bVisible );
-	void		 SetWatchStreamVisible( bool bVisible );
-	void		 OpenMvMMMPanel();
-	void		 OpenCompMMPanel();
-	void		 OpenCasualMMPanel();
-	void		 ReloadMMPanels();
-	void		 UpdateMOTD( bool bNewMOTDs );
-	bool		 ReloadedAllMOTDs( void ) { return m_bReloadedAllMOTDs; }
-	CMOTDManager & GetMOTDManager() { return m_MOTDManager; }
-	RTime32		 GetLastMOTDRequestTime( void ) { return m_nLastMOTDRequestAt; }
-	ELanguage	 GetLastMOTDRequestLanguage( void ) { return m_nLastMOTDRequestLanguage; }
+	void SetMOTDButtonVisible(bool bVisible);
+	void SetMOTDVisible(bool bVisible);
+	void SetQuestLogVisible(bool bVisible);
+	void SetWatchStreamVisible(bool bVisible);
+	void OpenMvMMMPanel();
+	void OpenCompMMPanel();
+	void OpenCasualMMPanel();
+	void ReloadMMPanels();
+	void UpdateMOTD(bool bNewMOTDs);
+	bool ReloadedAllMOTDs(void)
+	{
+		return m_bReloadedAllMOTDs;
+	}
+	CMOTDManager &GetMOTDManager()
+	{
+		return m_MOTDManager;
+	}
+	RTime32 GetLastMOTDRequestTime(void)
+	{
+		return m_nLastMOTDRequestAt;
+	}
+	ELanguage GetLastMOTDRequestLanguage(void)
+	{
+		return m_nLastMOTDRequestLanguage;
+	}
 
-	void		 UpdatePromotionalCodes( void );
+	void UpdatePromotionalCodes(void);
 
-	void		 CheckTrainingStatus( void );
-	void		 StartHighlightAnimation( mm_highlight_anims iAnim );
-	void		 HideHighlight( mm_highlight_anims iAnim );
+	void CheckTrainingStatus(void);
+	void StartHighlightAnimation(mm_highlight_anims iAnim);
+	void HideHighlight(mm_highlight_anims iAnim);
 
-	MESSAGE_FUNC( OnUpdateMenu, "UpdateMenu" );
-	MESSAGE_FUNC_PARAMS( OnConfirm, "ConfirmDlgResult", data );
+	MESSAGE_FUNC(OnUpdateMenu, "UpdateMenu");
+	MESSAGE_FUNC_PARAMS(OnConfirm, "ConfirmDlgResult", data);
 
-	void		ScheduleTrainingCheck( bool bWasInTraining ) { m_flCheckTrainingAt = (engine->Time() + 1.5); m_bWasInTraining = bWasInTraining; }
-	void		ScheduleItemCheck( void ) { m_flCheckUnclaimedItems = (engine->Time() + 1.5); }
+	void ScheduleTrainingCheck(bool bWasInTraining)
+	{
+		m_flCheckTrainingAt = (engine->Time() + 1.5);
+		m_bWasInTraining = bWasInTraining;
+	}
+	void ScheduleItemCheck(void)
+	{
+		m_flCheckUnclaimedItems = (engine->Time() + 1.5);
+	}
 
-	void		CheckUnclaimedItems();
+	void CheckUnclaimedItems();
 
-	void		OnTick();
+	void OnTick();
 
-	virtual GameActionSet_t GetPreferredActionSet() { return GAME_ACTION_SET_NONE; } // Seems like this should be GAME_ACTION_SET_MENU, but it's not because it's apparently visible *all* *the* *damn* *time*
+	virtual GameActionSet_t GetPreferredActionSet()
+	{
+		return GAME_ACTION_SET_NONE;
+	} // Seems like this should be GAME_ACTION_SET_MENU, but it's not because it's apparently visible *all* *the* *damn*
+	  // *time*
 
 #ifdef _DEBUG
-	void		Refresh();
+	void Refresh();
 #endif
-	void		CheckForNewQuests( void );
-	void		UpdatePlaylistEntries( void );
+	void CheckForNewQuests(void);
+	void UpdatePlaylistEntries(void);
 
-	virtual void SOCreated( const CSteamID & steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent ) OVERRIDE { SOEvent( pObject ); }
-	virtual void SOUpdated( const CSteamID & steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent ) OVERRIDE { SOEvent( pObject ); }
+	virtual void SOCreated(const CSteamID &steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent) OVERRIDE
+	{
+		SOEvent(pObject);
+	}
+	virtual void SOUpdated(const CSteamID &steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent) OVERRIDE
+	{
+		SOEvent(pObject);
+	}
 
-	CLobbyContainerFrame_Comp* GetCompLobbyPanel();
-	CLobbyContainerFrame_MvM* GetMvMLobbyPanel();
-	CLobbyContainerFrame_Casual* GetCasualLobbyPanel();
+	CLobbyContainerFrame_Comp *GetCompLobbyPanel();
+	CLobbyContainerFrame_MvM *GetMvMLobbyPanel();
+	CLobbyContainerFrame_Casual *GetCasualLobbyPanel();
 
 #ifdef STAGING_ONLY
-	void		GenerateIconsThink( void );
-	void		GenerateIcons( bool bLarge, int min = -1, int max = -1 );
+	void GenerateIconsThink(void);
+	void GenerateIcons(bool bLarge, int min = -1, int max = -1);
 
-	bool		m_bGeneratingIcons;
-	bool		m_bGeneratingLargeTestIcons;
+	bool m_bGeneratingIcons;
+	bool m_bGeneratingLargeTestIcons;
 	CEconItemView *m_pIconData;
-	CUtlVector< item_definition_index_t > m_vecIconDefs;
+	CUtlVector<item_definition_index_t> m_vecIconDefs;
 #endif
 
 protected:
-	virtual void PaintTraverse( bool Repaint, bool allowForce = true ) OVERRIDE;
+	virtual void PaintTraverse(bool Repaint, bool allowForce = true) OVERRIDE;
 
 private:
+	void SOEvent(const CSharedObject *pObject);
 
-	void SOEvent( const CSharedObject* pObject );
+	void PerformKeyRebindings(void);
+	void TogglePlayListMenu(void);
 
-	void		PerformKeyRebindings( void );
-	void		TogglePlayListMenu( void );
-
-	bool		CheckAndWarnForPREC( void );
-	void		StopUpdateGlow();
+	bool CheckAndWarnForPREC(void);
+	void StopUpdateGlow();
 
 private:
-
 	// Store
-	CItemModelPanel			*m_pFeaturedItemPanel;
-	CItemModelPanel			*m_pFeaturedItemMouseOverPanel;
+	CItemModelPanel *m_pFeaturedItemPanel;
+	CItemModelPanel *m_pFeaturedItemMouseOverPanel;
 
-	CItemModelPanel			*m_pMouseOverItemPanel;
-	CItemModelPanelToolTip	*m_pMouseOverTooltip;
+	CItemModelPanel *m_pMouseOverItemPanel;
+	CItemModelPanelToolTip *m_pMouseOverTooltip;
 
 	// Notifications
-	vgui::EditablePanel				*m_pNotificationsShowPanel;
-	vgui::EditablePanel				*m_pNotificationsPanel;
-	vgui::EditablePanel				*m_pNotificationsControl;
-	vgui::ScrollableEditablePanel	*m_pNotificationsScroller;
-	int								m_iNumNotifications;
-	int								m_iNotiPanelWide;
+	vgui::EditablePanel *m_pNotificationsShowPanel;
+	vgui::EditablePanel *m_pNotificationsPanel;
+	vgui::EditablePanel *m_pNotificationsControl;
+	vgui::ScrollableEditablePanel *m_pNotificationsScroller;
+	int m_iNumNotifications;
+	int m_iNotiPanelWide;
 
 	// MOTDs
-	vgui::EditablePanel				*m_pMOTDShowPanel;
-	vgui::EditablePanel				*m_pMOTDPanel;
-	vgui::Label						*m_pMOTDHeaderLabel;
-	vgui::ImagePanel				*m_pMOTDHeaderIcon;
-	vgui::ScrollableEditablePanel	*m_pMOTDTextScroller;
-	vgui::EditablePanel				*m_pMOTDTextPanel;
-	vgui::Label						*m_pMOTDTextLabel;
-	vgui::Label						*m_pMOTDTitleLabel;
-	vgui::EditablePanel				*m_pMOTDTitleImageContainer;
-	vgui::ImagePanel				*m_pMOTDTitleImage;
+	vgui::EditablePanel *m_pMOTDShowPanel;
+	vgui::EditablePanel *m_pMOTDPanel;
+	vgui::Label *m_pMOTDHeaderLabel;
+	vgui::ImagePanel *m_pMOTDHeaderIcon;
+	vgui::ScrollableEditablePanel *m_pMOTDTextScroller;
+	vgui::EditablePanel *m_pMOTDTextPanel;
+	vgui::Label *m_pMOTDTextLabel;
+	vgui::Label *m_pMOTDTitleLabel;
+	vgui::EditablePanel *m_pMOTDTitleImageContainer;
+	vgui::ImagePanel *m_pMOTDTitleImage;
 
-	int								m_hTitleLabelFont;
-	bool							m_bInitMOTD;
+	int m_hTitleLabelFont;
+	bool m_bInitMOTD;
 
-	CExImageButton					*m_pMOTDNextButton;
-	CExImageButton					*m_pMOTDPrevButton;
-	CExButton						*m_pMOTDURLButton;
+	CExImageButton *m_pMOTDNextButton;
+	CExImageButton *m_pMOTDPrevButton;
+	CExButton *m_pMOTDURLButton;
 
 	// MOTD handling
-	CMOTDManager			m_MOTDManager;
-	bool					m_bHaveNewMOTDs;
-	RTime32					m_nLastMOTDRequestAt;
-	ELanguage				m_nLastMOTDRequestLanguage;
-	bool					m_bReloadedAllMOTDs;
-	int						m_iCurrentMOTD;
-	bool					m_bMOTDShownAtStartup;
+	CMOTDManager m_MOTDManager;
+	bool m_bHaveNewMOTDs;
+	RTime32 m_nLastMOTDRequestAt;
+	ELanguage m_nLastMOTDRequestLanguage;
+	bool m_bReloadedAllMOTDs;
+	int m_iCurrentMOTD;
+	bool m_bMOTDShownAtStartup;
 
-	class CWarLandingPanel			*m_pWarLandingPage;
+	class CWarLandingPanel *m_pWarLandingPage;
 
-	vgui::ImagePanel		*m_pCharacterImagePanel;
-	int						 m_iCharacterImageIdx;
+	vgui::ImagePanel *m_pCharacterImagePanel;
+	int m_iCharacterImageIdx;
 
-	CExButton				*m_pQuitButton;
-	CExButton				*m_pDisconnectButton;
-	bool					m_bIsDisconnectText;
+	CExButton *m_pQuitButton;
+	CExButton *m_pDisconnectButton;
+	bool m_bIsDisconnectText;
 
-	CExButton				*m_pBackToReplaysButton;
-	ImagePanel				*m_pStoreHasNewItemsImage;
+	CExButton *m_pBackToReplaysButton;
+	ImagePanel *m_pStoreHasNewItemsImage;
 
-	CExButton				*m_pVRModeButton;
-	vgui::Panel				*m_pVRModeBackground;
+	CExButton *m_pVRModeButton;
+	vgui::Panel *m_pVRModeBackground;
 
-	KeyValues				*m_pButtonKV;
-	bool					m_bReapplyButtonKVs;
+	KeyValues *m_pButtonKV;
+	bool m_bReapplyButtonKVs;
 
-	DHANDLE< CExplanationPopup >	m_pHighlightAnims[ NUM_ANIMS ];
+	DHANDLE<CExplanationPopup> m_pHighlightAnims[NUM_ANIMS];
 
-	float					m_flCheckTrainingAt;
-	bool					m_bWasInTraining;
+	float m_flCheckTrainingAt;
+	bool m_bWasInTraining;
 
-	float					m_flCheckUnclaimedItems;
+	float m_flCheckUnclaimedItems;
 
-	vgui::ImagePanel		*m_pBackground;
+	vgui::ImagePanel *m_pBackground;
 
 	struct mainmenu_entry_t
 	{
 		vgui::EditablePanel *pPanel;
-		bool		bOnlyInGame;
-		bool		bOnlyInReplay;
-		bool		bOnlyAtMenu;
-		bool		bIsVisible;
-		bool		bOnlyVREnabled;
-		int			iStyle;
-		const char	*pszImage;
-		const char	*pszTooltip;
+		bool bOnlyInGame;
+		bool bOnlyInReplay;
+		bool bOnlyAtMenu;
+		bool bIsVisible;
+		bool bOnlyVREnabled;
+		int iStyle;
+		const char *pszImage;
+		const char *pszTooltip;
 	};
-	CUtlVector<mainmenu_entry_t>	m_pMMButtonEntries;
+	CUtlVector<mainmenu_entry_t> m_pMMButtonEntries;
 
-	CMainMenuToolTip		*m_pToolTip;
-	vgui::EditablePanel		*m_pToolTipEmbeddedPanel;
+	CMainMenuToolTip *m_pToolTip;
+	vgui::EditablePanel *m_pToolTipEmbeddedPanel;
 
-	CSimplePanelToolTip		*m_pFeaturedItemToolTip;
+	CSimplePanelToolTip *m_pFeaturedItemToolTip;
 
-	EditablePanel	*m_pQuestLogButton;
-	EditablePanel	*m_pEventPromoContainer;
-	EditablePanel	*m_pSafeModeContainer;
+	EditablePanel *m_pQuestLogButton;
+	EditablePanel *m_pEventPromoContainer;
+	EditablePanel *m_pSafeModeContainer;
 
 	vgui::DHANDLE<vgui::Frame> m_hReportPlayerDialog;
 
-	CTFStreamListPanel	*m_pWatchStreamsPanel;
+	CTFStreamListPanel *m_pWatchStreamsPanel;
 
 	bool m_bPlayListExpanded;
 	bool m_bStabilizedInitialLayout;
@@ -278,13 +333,13 @@ private:
 
 	EditablePanel *m_pCompetitiveAccessInfo;
 #ifdef SAXXYMAINMENU_ENABLED
-	CSaxxyAwardsPanel		*m_pSaxxyAwardsPanel;
-	KeyValues				*m_pSaxxySettings;
+	CSaxxyAwardsPanel *m_pSaxxyAwardsPanel;
+	KeyValues *m_pSaxxySettings;
 #endif
 
-	CPanelAnimationVarAliasType( int, m_iButtonXOffset, "button_x_offset", "0", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iButtonY, "button_y", "0", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iButtonYDelta, "button_y_delta", "0", "proportional_int" );
+	CPanelAnimationVarAliasType(int, m_iButtonXOffset, "button_x_offset", "0", "proportional_int");
+	CPanelAnimationVarAliasType(int, m_iButtonY, "button_y", "0", "proportional_int");
+	CPanelAnimationVarAliasType(int, m_iButtonYDelta, "button_y_delta", "0", "proportional_int");
 };
 
-#endif //TF_HUD_MAINMENUOVERRIDE_H
+#endif // TF_HUD_MAINMENUOVERRIDE_H

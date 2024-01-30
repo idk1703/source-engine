@@ -20,7 +20,6 @@
 #include <CoreServices.h>
 #endif
 
-
 #ifndef __COLORSYNC__
 #include <ColorSync.h>
 #endif
@@ -29,7 +28,6 @@
 #include <QD.h>
 #endif
 
-
 #ifndef __PMCORE__
 #include <PMCore.h>
 #endif
@@ -37,7 +35,5 @@
 #ifndef __PMDEFINITIONS__
 #include <PMDefinitions.h>
 #endif
-
-
 
 #endif /* __PRINTCORE__ */

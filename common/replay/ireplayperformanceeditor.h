@@ -25,7 +25,7 @@ class IReplayPerformanceEditor : public IBaseInterface
 {
 public:
 	virtual CReplay *GetReplay() = 0;
-	virtual void	OnRewindComplete() = 0;
+	virtual void OnRewindComplete() = 0;
 };
 
 //----------------------------------------------------------------------------------------

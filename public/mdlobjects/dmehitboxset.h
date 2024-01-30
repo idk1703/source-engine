@@ -15,19 +15,17 @@
 #include "datamodel/dmattributevar.h"
 #include "mdlobjects/dmehitbox.h"
 
-
 //-----------------------------------------------------------------------------
 // A class representing an attachment point
 //-----------------------------------------------------------------------------
 class CDmeHitboxSet : public CDmElement
 {
-	DEFINE_ELEMENT( CDmeHitboxSet, CDmElement );
+	DEFINE_ELEMENT(CDmeHitboxSet, CDmElement);
 
 public:
-	CDmaElementArray< CDmeHitbox > m_Hitboxes;
+	CDmaElementArray<CDmeHitbox> m_Hitboxes;
 
 private:
 };
-
 
 #endif // DMEHITBOXSET_H

@@ -5,7 +5,7 @@
 // $NoKeywords: $
 //
 //=============================================================================//
-#if !defined ( DLIGHTH )
+#if !defined(DLIGHTH)
 #define DLIGHTH
 #ifdef _WIN32
 #pragma once
@@ -42,26 +42,26 @@ enum
 
 struct dlight_t
 {
-	int		flags;
-	Vector	origin;
-	float	radius;
-	ColorRGBExp32	color;		// Light color with exponent
-	float	die;				// stop lighting after this time
-	float	decay;				// drop this each second
-	float	minlight;			// don't add when contributing less
-	int		key;
-	int		style;				// lightstyle
+	int flags;
+	Vector origin;
+	float radius;
+	ColorRGBExp32 color; // Light color with exponent
+	float die;			 // stop lighting after this time
+	float decay;		 // drop this each second
+	float minlight;		 // don't add when contributing less
+	int key;
+	int style; // lightstyle
 
 	// For spotlights. Use m_OuterAngle == 0 for point lights
-	Vector	m_Direction;		// center of the light cone
-	float	m_InnerAngle;
-	float	m_OuterAngle;
+	Vector m_Direction; // center of the light cone
+	float m_InnerAngle;
+	float m_OuterAngle;
 
 	// see comments above about HL2_BROKEN_MIN_LIGHTING_VALUE and MIN_LIGHTING_VALUE
 	// THIS SHOULD ONLY GET CALLED FROM THE ENGINE
 	float GetRadius() const
 	{
-//		return FastSqrt( radius * radius * ( HL2_BROKEN_MIN_LIGHTING_VALUE / MIN_LIGHTING_VALUE ) );
+		//		return FastSqrt( radius * radius * ( HL2_BROKEN_MIN_LIGHTING_VALUE / MIN_LIGHTING_VALUE ) );
 		return radius;
 	}
 
@@ -69,7 +69,7 @@ struct dlight_t
 	// THIS SHOULD ONLY GET CALLED FROM THE ENGINE
 	float GetRadiusSquared() const
 	{
-//		return radius * radius * ( HL2_BROKEN_MIN_LIGHTING_VALUE / MIN_LIGHTING_VALUE );
+		//		return radius * radius * ( HL2_BROKEN_MIN_LIGHTING_VALUE / MIN_LIGHTING_VALUE );
 		return radius * radius;
 	}
 

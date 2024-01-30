@@ -20,13 +20,13 @@
  *
  */
 
- /*
-	*   FILE     re_mss.h
-	*   VERSION  2.12
-	*   This is an internal header file, do not include directly.
-	*   Message helper functions, for regular
-	*   expression library.
-	*/
+/*
+ *   FILE     re_mss.h
+ *   VERSION  2.12
+ *   This is an internal header file, do not include directly.
+ *   Message helper functions, for regular
+ *   expression library.
+ */
 
 #ifndef RE_MSS_H
 #define RE_MSS_H
@@ -43,27 +43,26 @@ JM_NAMESPACE(__JM)
 // otherwise fills in buf.
 //
 
-JM_IX_DECL unsigned int RE_CALL re_get_default_message(char* buf, unsigned int len, unsigned int id);
+JM_IX_DECL unsigned int RE_CALL re_get_default_message(char *buf, unsigned int len, unsigned int id);
 
-JM_IX_DECL unsigned int RE_CALL __re_get_message(char* buf, unsigned int len, unsigned int id);
+JM_IX_DECL unsigned int RE_CALL __re_get_message(char *buf, unsigned int len, unsigned int id);
 
-template <class charT>
-unsigned int RE_CALL re_get_message(charT* buf, unsigned int len, unsigned int id)
+template<class charT>
+unsigned int RE_CALL re_get_message(charT *buf, unsigned int len, unsigned int id)
 {
-	unsigned int size = __re_get_message((char*)0, 0, id);
+	unsigned int size = __re_get_message((char *)0, 0, id);
 	if(len < size)
 		return size;
 	auto_array<char> cb(new char[size]);
-	__re_get_message((char*)cb, size, id);
-	size = re_strwiden(buf, len, (char*)cb);
+	__re_get_message((char *)cb, size, id);
+	size = re_strwiden(buf, len, (char *)cb);
 	return size;
 }
 
-inline unsigned int RE_CALL re_get_message(char* buf, unsigned int len, unsigned int id)
+inline unsigned int RE_CALL re_get_message(char *buf, unsigned int len, unsigned int id)
 {
 	return __re_get_message(buf, len, id);
 }
-
 
 //
 // declare message initialisers:
@@ -82,8 +81,6 @@ extern const char *re_default_error_messages[];
 
 #endif
 
-
 JM_END_NAMESPACE
-
 
 #endif

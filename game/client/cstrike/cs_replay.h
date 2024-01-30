@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //=======================================================================================//
 
-#if defined( REPLAY_ENABLED )
+#if defined(REPLAY_ENABLED)
 
 #ifndef CS_REPLAY_H
 #define CS_REPLAY_H
@@ -18,6 +18,7 @@
 class CCSReplay : public CGenericClassBasedReplay
 {
 	typedef CGenericClassBasedReplay BaseClass;
+
 public:
 	CCSReplay();
 	~CCSReplay();
@@ -25,47 +26,53 @@ public:
 	virtual void OnBeginRecording();
 	virtual void OnEndRecording();
 	virtual void OnComplete();
-	virtual void FireGameEvent( IGameEvent *pEvent );
+	virtual void FireGameEvent(IGameEvent *pEvent);
 
-	virtual bool Read( KeyValues *pIn );
-	virtual void Write( KeyValues *pOut );
+	virtual bool Read(KeyValues *pIn);
+	virtual void Write(KeyValues *pOut);
 
 	virtual void DumpGameSpecificData() const;
 
-	virtual const char *GetPlayerClass() const { return GetCSClassInfo( m_nPlayerClass )->m_pClassName; }
-	virtual const char *GetPlayerTeam() const { return m_nPlayerTeam == TEAM_TERRORIST ? "terrorists" : "counterterrorists"; }
+	virtual const char *GetPlayerClass() const
+	{
+		return GetCSClassInfo(m_nPlayerClass)->m_pClassName;
+	}
+	virtual const char *GetPlayerTeam() const
+	{
+		return m_nPlayerTeam == TEAM_TERRORIST ? "terrorists" : "counterterrorists";
+	}
 	virtual const char *GetMaterialFriendlyPlayerClass() const;
 
 private:
 	virtual void Update();
 	float GetSentryKillScreenshotDelay();
 
-	virtual bool IsValidClass( int nClass ) const;
-	virtual bool IsValidTeam( int iTeam ) const;
-	virtual bool GetCurrentStats( RoundStats_t &out );
-	virtual const char *GetStatString( int iStat ) const;
-	virtual const char *GetPlayerClass( int iClass ) const;
+	virtual bool IsValidClass(int nClass) const;
+	virtual bool IsValidTeam(int iTeam) const;
+	virtual bool GetCurrentStats(RoundStats_t &out);
+	virtual const char *GetStatString(int iStat) const;
+	virtual const char *GetPlayerClass(int iClass) const;
 };
 
 //----------------------------------------------------------------------------------------
 
-inline CCSReplay *ToCSReplay( CReplay *pClientReplay )
+inline CCSReplay *ToCSReplay(CReplay *pClientReplay)
 {
-	return static_cast< CCSReplay * >( pClientReplay );
+	return static_cast<CCSReplay *>(pClientReplay);
 }
 
-inline const CCSReplay *ToCSReplay( const CReplay *pClientReplay )
+inline const CCSReplay *ToCSReplay(const CReplay *pClientReplay)
 {
-	return static_cast< const CCSReplay * >( pClientReplay );
+	return static_cast<const CCSReplay *>(pClientReplay);
 }
 
-inline CCSReplay *GetCSReplay( ReplayHandle_t hReplay )
+inline CCSReplay *GetCSReplay(ReplayHandle_t hReplay)
 {
-	return ToCSReplay( g_pClientReplayContext->GetReplay( hReplay ) );
+	return ToCSReplay(g_pClientReplayContext->GetReplay(hReplay));
 }
 
 //----------------------------------------------------------------------------------------
 
-#endif	// CS_REPLAY_H
+#endif // CS_REPLAY_H
 
 #endif

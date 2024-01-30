@@ -35,36 +35,35 @@ class BorderedPanel;
 class CCSFreezePanel : public EditablePanel, public CHudElement
 {
 private:
-	DECLARE_CLASS_SIMPLE( CCSFreezePanel, EditablePanel );
+	DECLARE_CLASS_SIMPLE(CCSFreezePanel, EditablePanel);
 
 public:
-	CCSFreezePanel( const char *pElementName );
+	CCSFreezePanel(const char *pElementName);
 
 	virtual void Reset();
 	virtual void Init();
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void FireGameEvent( IGameEvent * event );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void FireGameEvent(IGameEvent *event);
 	virtual bool ShouldDraw();
 	virtual void OnScreenSizeChanged(int nOldWide, int nOldTall);
 
-	virtual void SetActive( bool bActive );
+	virtual void SetActive(bool bActive);
 
 	void InitLayout();
 	void Show();
 	void Hide();
 
-	int	HudElementKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
+	int HudElementKeyInput(int down, ButtonCode_t keynum, const char *pszCurrentBinding);
 
 protected:
-
 private:
-	BorderedPanel*			m_pBackgroundPanel;
-	HorizontalGauge*		m_pKillerHealth;
-	CAvatarImagePanel*		m_pAvatar;
-	ImagePanel*				m_pDominationIcon;
+	BorderedPanel *m_pBackgroundPanel;
+	HorizontalGauge *m_pKillerHealth;
+	CAvatarImagePanel *m_pAvatar;
+	ImagePanel *m_pDominationIcon;
 
-	bool					m_bShouldBeVisible;
+	bool m_bShouldBeVisible;
 };
 
-#endif //CS_HUD_FREEZEPANEL_H
+#endif // CS_HUD_FREEZEPANEL_H

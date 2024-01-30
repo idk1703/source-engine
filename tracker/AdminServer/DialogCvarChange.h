@@ -51,8 +51,6 @@ private:
 
 	typedef vgui::Frame BaseClass;
 	const char *m_cType;
-
 };
-
 
 #endif // DIALOGCVARCHANGE_H

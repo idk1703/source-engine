@@ -10,6 +10,6 @@
 #pragma once
 #endif
 
-char	*VarArgs( char *format, ... );
+char *VarArgs(char *format, ...);
 
 #endif // GAMEUI_UTIL_H

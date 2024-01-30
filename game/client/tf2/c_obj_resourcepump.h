@@ -18,27 +18,32 @@ class C_ResourceZone;
 
 class C_ObjectResourcePump : public C_BaseObject
 {
-	DECLARE_CLASS( C_ObjectResourcePump, C_BaseObject );
+	DECLARE_CLASS(C_ObjectResourcePump, C_BaseObject);
+
 public:
 	DECLARE_CLIENTCLASS();
 	DECLARE_ENTITY_PANEL();
 
 	C_ObjectResourcePump();
 
-	virtual void	SetDormant( bool bDormant );
-	int				GetLevel( void ) { return m_iPumpLevel; }
+	virtual void SetDormant(bool bDormant);
+	int GetLevel(void)
+	{
+		return m_iPumpLevel;
+	}
 
-	C_ResourceZone*	GetResourceZone() { return m_hResourceZone.Get(); }
+	C_ResourceZone *GetResourceZone()
+	{
+		return m_hResourceZone.Get();
+	}
 
 private:
-	CHealthBarPanel	*m_pResourceBar;
-	int				m_iPumpLevel;
-	CHandle<C_ResourceZone>	m_hResourceZone;
+	CHealthBarPanel *m_pResourceBar;
+	int m_iPumpLevel;
+	CHandle<C_ResourceZone> m_hResourceZone;
 
 private:
-	C_ObjectResourcePump( const C_ObjectResourcePump & ); // not defined, not accessible
+	C_ObjectResourcePump(const C_ObjectResourcePump &); // not defined, not accessible
 };
-
-
 
 #endif // C_OBJ_RESOURCEPUMP_H

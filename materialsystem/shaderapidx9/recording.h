@@ -22,7 +22,7 @@
 //-----------------------------------------------------------------------------
 
 //#define RECORD_KEYFRAMES 1
-#define KEYFRAME_INTERVAL 100	// number of actual frames between each keyframe
+#define KEYFRAME_INTERVAL 100 // number of actual frames between each keyframe
 
 //-----------------------------------------------------------------------------
 // Use this to allow us to record crashes (write every command immediately)
@@ -96,7 +96,7 @@ enum RecordingCommands_t
 	DX8_LOCK_TEXTURE,
 	DX8_UNLOCK_TEXTURE,
 
-	DX8_KEYFRAME,	// isn't actually a dx8 command, used to help find particular frames
+	DX8_KEYFRAME, // isn't actually a dx8 command, used to help find particular frames
 
 	DX8_SET_TEXTURE_DATA,
 	DX8_BLIT_TEXTURE_BITS,
@@ -114,7 +114,8 @@ enum RecordingCommands_t
 
 	DX8_TEST_COOPERATIVE_LEVEL,
 
-	DX8_SET_VERTEX_BUFFER_FORMAT, // isn't actually a dx8 command. . let's playback know what format a buffer is for listing info
+	DX8_SET_VERTEX_BUFFER_FORMAT, // isn't actually a dx8 command. . let's playback know what format a buffer is for
+								  // listing info
 
 	DX8_SET_SAMPLER_STATE,
 	DX8_SET_VERTEX_DECLARATION,
@@ -134,64 +135,64 @@ enum RecordingCommands_t
 
 #ifdef RECORDING
 
-void RecordCommand( RecordingCommands_t cmd, int numargs );
-void RecordArgument( void const* pMemory, int size );
-void FinishRecording( void );
+void RecordCommand(RecordingCommands_t cmd, int numargs);
+void RecordArgument(void const *pMemory, int size);
+void FinishRecording(void);
 
-inline void RecordInt( int i )
+inline void RecordInt(int i)
 {
-	RecordArgument( &i, sizeof(int) );
+	RecordArgument(&i, sizeof(int));
 }
 
-inline void RecordFloat( float f )
+inline void RecordFloat(float f)
 {
-	RecordArgument( &f, sizeof(float) );
+	RecordArgument(&f, sizeof(float));
 }
 
-#	define RECORD_COMMAND( _cmd, _numargs )		RecordCommand( _cmd, _numargs )
-#	define RECORD_INT( _int )					RecordInt( _int )
-#	define RECORD_FLOAT( _float )				RecordFloat( _float )
-#	define RECORD_STRING( _string )				RecordArgument( _string, strlen(_string) + 1 )
-#	define RECORD_STRUCT( _struct, _size )		RecordArgument( _struct, _size )
+#define RECORD_COMMAND(_cmd, _numargs) RecordCommand(_cmd, _numargs)
+#define RECORD_INT(_int)			   RecordInt(_int)
+#define RECORD_FLOAT(_float)		   RecordFloat(_float)
+#define RECORD_STRING(_string)		   RecordArgument(_string, strlen(_string) + 1)
+#define RECORD_STRUCT(_struct, _size)  RecordArgument(_struct, _size)
 
-#	define RECORD_RENDER_STATE( _state, _val )		\
-		RECORD_COMMAND( DX8_SET_RENDER_STATE, 2 );	\
-		RECORD_INT( _state );						\
-		RECORD_INT( _val )
+#define RECORD_RENDER_STATE(_state, _val)    \
+	RECORD_COMMAND(DX8_SET_RENDER_STATE, 2); \
+	RECORD_INT(_state);                      \
+	RECORD_INT(_val)
 
-#	define RECORD_TEXTURE_STAGE_STATE( _stage, _state, _val )	\
-		RECORD_COMMAND( DX8_SET_TEXTURE_STAGE_STATE, 3 );		\
-		RECORD_INT( _stage );									\
-		RECORD_INT( _state );									\
-		RECORD_INT( _val )
+#define RECORD_TEXTURE_STAGE_STATE(_stage, _state, _val) \
+	RECORD_COMMAND(DX8_SET_TEXTURE_STAGE_STATE, 3);      \
+	RECORD_INT(_stage);                                  \
+	RECORD_INT(_state);                                  \
+	RECORD_INT(_val)
 
-#	define RECORD_SAMPLER_STATE( _stage, _state, _val )	\
-		RECORD_COMMAND( DX8_SET_SAMPLER_STATE, 3 );		\
-		RECORD_INT( _stage );									\
-		RECORD_INT( _state );									\
-		RECORD_INT( _val )
+#define RECORD_SAMPLER_STATE(_stage, _state, _val) \
+	RECORD_COMMAND(DX8_SET_SAMPLER_STATE, 3);      \
+	RECORD_INT(_stage);                            \
+	RECORD_INT(_state);                            \
+	RECORD_INT(_val)
 
-#	ifdef RECORD_DEBUG_STRINGS
-#		define RECORD_DEBUG_STRING( _str )			\
-			RECORD_COMMAND( DX8_DEBUG_STRING, 1 );	\
-			RECORD_STRING( _str )
-#	else
-#		define RECORD_DEBUG_STRING( _str )			0
-#	endif
+#ifdef RECORD_DEBUG_STRINGS
+#define RECORD_DEBUG_STRING(_str)        \
+	RECORD_COMMAND(DX8_DEBUG_STRING, 1); \
+	RECORD_STRING(_str)
+#else
+#define RECORD_DEBUG_STRING(_str) 0
+#endif
 
 #else // not RECORDING
 
-#	undef RECORD_TEXTURES
+#undef RECORD_TEXTURES
 
-#	define RECORD_COMMAND( _cmd, _numargs )		0
-#	define RECORD_INT( _int )					0
-#	define RECORD_FLOAT( _float )				0
-#	define RECORD_STRING( _string )				0
-#	define RECORD_STRUCT( _struct, _size )		0
-#	define RECORD_RENDER_STATE( _state, _val )	0
-#	define RECORD_TEXTURE_STAGE_STATE( _stage, _state, _val )	0
-#	define RECORD_SAMPLER_STATE( _stage, _state, _val )	0
-#	define RECORD_DEBUG_STRING( _str )			0
+#define RECORD_COMMAND(_cmd, _numargs)					 0
+#define RECORD_INT(_int)								 0
+#define RECORD_FLOAT(_float)							 0
+#define RECORD_STRING(_string)							 0
+#define RECORD_STRUCT(_struct, _size)					 0
+#define RECORD_RENDER_STATE(_state, _val)				 0
+#define RECORD_TEXTURE_STAGE_STATE(_stage, _state, _val) 0
+#define RECORD_SAMPLER_STATE(_stage, _state, _val)		 0
+#define RECORD_DEBUG_STRING(_str)						 0
 
 #endif // RECORDING
 

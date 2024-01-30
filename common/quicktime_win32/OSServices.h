@@ -20,7 +20,6 @@
 #include <CarbonCore.h>
 #endif
 
-
 #ifndef __APPLEDISKPARTITIONS__
 #include <AppleDiskPartitions.h>
 #endif
@@ -40,7 +39,6 @@
 #ifndef __ICONSTORAGE__
 #include <IconStorage.h>
 #endif
-
 
 #include <OSServices/OpenTransport.h>
 #include <OSServices/OpenTransportProviders.h>

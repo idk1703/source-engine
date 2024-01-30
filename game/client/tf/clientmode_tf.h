@@ -28,65 +28,67 @@ class CHudUpgradePanel;
 #ifdef STAGING_ONLY
 class CHudMenuSpyBuild;
 #endif // STAGING_ONLY
-#if defined( _X360 )
+#if defined(_X360)
 class CTFClientScoreBoardDialog;
 #endif
 
 class ClientModeTFNormal : public ClientModeShared
 {
-DECLARE_CLASS( ClientModeTFNormal, ClientModeShared );
+	DECLARE_CLASS(ClientModeTFNormal, ClientModeShared);
 
 private:
-
-// IClientMode overrides.
+	// IClientMode overrides.
 public:
+	ClientModeTFNormal();
+	virtual ~ClientModeTFNormal();
 
-					ClientModeTFNormal();
-	virtual			~ClientModeTFNormal();
+	virtual void Init();
+	virtual void InitViewport();
+	virtual void Shutdown();
 
-	virtual void	Init();
-	virtual void	InitViewport();
-	virtual void	Shutdown();
+	virtual void LevelInit(const char *newmap) OVERRIDE;
 
-	virtual void	LevelInit( const char *newmap ) OVERRIDE;
+	//	virtual int		KeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
 
-//	virtual int		KeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
-
-	virtual float	GetViewModelFOV( void );
-	virtual bool	ShouldDrawViewModel();
-	virtual bool	ShouldDrawCrosshair( void );
-	virtual bool	ShouldBlackoutAroundHUD() OVERRIDE;
+	virtual float GetViewModelFOV(void);
+	virtual bool ShouldDrawViewModel();
+	virtual bool ShouldDrawCrosshair(void);
+	virtual bool ShouldBlackoutAroundHUD() OVERRIDE;
 	virtual HeadtrackMovementMode_t ShouldOverrideHeadtrackControl() OVERRIDE;
 
-	int				GetDeathMessageStartHeight( void );
+	int GetDeathMessageStartHeight(void);
 
-	virtual void	FireGameEvent( IGameEvent *event );
-	virtual void	PostRenderVGui();
+	virtual void FireGameEvent(IGameEvent *event);
+	virtual void PostRenderVGui();
 
-	virtual bool	CreateMove( float flInputSampleTime, CUserCmd *cmd );
+	virtual bool CreateMove(float flInputSampleTime, CUserCmd *cmd);
 
-	virtual int		HudElementKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
-	virtual int		HandleSpectatorKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
+	virtual int HudElementKeyInput(int down, ButtonCode_t keynum, const char *pszCurrentBinding);
+	virtual int HandleSpectatorKeyInput(int down, ButtonCode_t keynum, const char *pszCurrentBinding);
 
-	virtual bool	DoPostScreenSpaceEffects( const CViewSetup *pSetup );
-	virtual void	Update();
-	virtual void	ComputeVguiResConditions( KeyValues *pkvConditions ) OVERRIDE;
+	virtual bool DoPostScreenSpaceEffects(const CViewSetup *pSetup);
+	virtual void Update();
+	virtual void ComputeVguiResConditions(KeyValues *pkvConditions) OVERRIDE;
 
-	virtual bool	IsInfoPanelAllowed() OVERRIDE;
-	virtual void	InfoPanelDisplayed() OVERRIDE;
-	virtual bool	IsHTMLInfoPanelAllowed() OVERRIDE;
+	virtual bool IsInfoPanelAllowed() OVERRIDE;
+	virtual void InfoPanelDisplayed() OVERRIDE;
+	virtual bool IsHTMLInfoPanelAllowed() OVERRIDE;
 
-	IGameUI			*GameUI( void ) { return m_pGameUI; }
+	IGameUI *GameUI(void)
+	{
+		return m_pGameUI;
+	}
 
-	const char		*GetLastConnectedServerName( void ) const;		// return the name of the last server we have connected to
-	uint32			GetLastConnectedServerIP( void ) const;			// return the IP of the last server we have connected to
-	int				GetLastConnectedServerPort( void ) const;		// return the port of the last server we have connected to
+	const char *GetLastConnectedServerName(void) const; // return the name of the last server we have connected to
+	uint32 GetLastConnectedServerIP(void) const;		// return the IP of the last server we have connected to
+	int GetLastConnectedServerPort(void) const;			// return the port of the last server we have connected to
 
-	void			PrintTextToChat( const char *pText, KeyValues *pKeyValues = NULL );
-	void			PrintTextToChatPlayer( int iPlayerIndex, const char *pText, KeyValues *pKeyValues = NULL );
+	void PrintTextToChat(const char *pText, KeyValues *pKeyValues = NULL);
+	void PrintTextToChatPlayer(int iPlayerIndex, const char *pText, KeyValues *pKeyValues = NULL);
 
 #if !defined(NO_STEAM)
-	STEAM_CALLBACK_MANUAL( ClientModeTFNormal, OnScreenshotRequested, ScreenshotRequested_t, m_CallbackScreenshotRequested );
+	STEAM_CALLBACK_MANUAL(ClientModeTFNormal, OnScreenshotRequested, ScreenshotRequested_t,
+						  m_CallbackScreenshotRequested);
 #endif
 
 	bool IsEngyBuildVisible() const;
@@ -96,66 +98,66 @@ public:
 	bool IsUpgradePanelVisible() const;
 	bool IsTauntSelectPanelVisible() const;
 
-	virtual void OnDemoRecordStart( char const* pDemoBaseName ) OVERRIDE;
+	virtual void OnDemoRecordStart(char const *pDemoBaseName) OVERRIDE;
 	virtual void OnDemoRecordStop() OVERRIDE;
 
 private:
 	//	void	UpdateSpectatorMode( void );
 
 private:
-	CHudMenuEngyBuild		*m_pMenuEngyBuild;
-	CHudMenuEngyDestroy 	*m_pMenuEngyDestroy;
-	CHudMenuSpyDisguise 	*m_pMenuSpyDisguise;
-	CHudMenuTauntSelection	*m_pMenuTauntSelection;
-	CHudUpgradePanel		*m_pMenuUpgradePanel;
+	CHudMenuEngyBuild *m_pMenuEngyBuild;
+	CHudMenuEngyDestroy *m_pMenuEngyDestroy;
+	CHudMenuSpyDisguise *m_pMenuSpyDisguise;
+	CHudMenuTauntSelection *m_pMenuTauntSelection;
+	CHudUpgradePanel *m_pMenuUpgradePanel;
 #ifdef STAGING_ONLY
-	CHudMenuSpyBuild		*m_pMenuSpyBuild;
+	CHudMenuSpyBuild *m_pMenuSpyBuild;
 #endif // STAGING_ONLY
-	CHudSpellMenu			*m_pMenuSpell;
+	CHudSpellMenu *m_pMenuSpell;
 	CHudEurekaEffectTeleportMenu *m_pEurekaTeleportMenu;
-	CHudTeamGoalTournament	*m_pTeamGoalTournament;
+	CHudTeamGoalTournament *m_pTeamGoalTournament;
 
-	CTFFreezePanel			*m_pFreezePanel;
-	CItemQuickSwitchPanel	*m_pQuickSwitch;
-	CHudInspectPanel		*m_pInspectPanel;
-	IGameUI					*m_pGameUI;
-	bool					m_wasConnectedLastUpdate;
+	CTFFreezePanel *m_pFreezePanel;
+	CItemQuickSwitchPanel *m_pQuickSwitch;
+	CHudInspectPanel *m_pInspectPanel;
+	IGameUI *m_pGameUI;
+	bool m_wasConnectedLastUpdate;
 
-	char					*m_lastServerName;
-	uint32					m_lastServerIP;
-	int						m_lastServerPort;
-	uint32					m_lastServerConnectTime;
+	char *m_lastServerName;
+	uint32 m_lastServerIP;
+	int m_lastServerPort;
+	uint32 m_lastServerConnectTime;
 
-	float					m_flNextAllowedHighFiveHintTime;
+	float m_flNextAllowedHighFiveHintTime;
 
-	bool					m_bInfoPanelShown;
-	bool					m_bRestrictInfoPanel;
+	bool m_bInfoPanelShown;
+	bool m_bRestrictInfoPanel;
 
-	void					AskFavoriteOrBlacklist() const;
+	void AskFavoriteOrBlacklist() const;
 
-#if defined( _X360 )
-	CTFClientScoreBoardDialog	*m_pScoreboard;
+#if defined(_X360)
+	CTFClientScoreBoardDialog *m_pScoreboard;
 #endif
 };
 
-inline const char *ClientModeTFNormal::GetLastConnectedServerName( void ) const
+inline const char *ClientModeTFNormal::GetLastConnectedServerName(void) const
 {
 	return m_lastServerName;
 }
 
-inline uint32 ClientModeTFNormal::GetLastConnectedServerIP( void ) const
+inline uint32 ClientModeTFNormal::GetLastConnectedServerIP(void) const
 {
 	return m_lastServerIP;
 }
 
-inline int ClientModeTFNormal::GetLastConnectedServerPort( void ) const
+inline int ClientModeTFNormal::GetLastConnectedServerPort(void) const
 {
 	return m_lastServerPort;
 }
 
 extern IClientMode *GetClientModeNormal();
-extern ClientModeTFNormal* GetClientModeTFNormal();
+extern ClientModeTFNormal *GetClientModeTFNormal();
 
-void PlayOutOfGameSound( const char *pszSound );
-float PlaySoundEntry( const char* pszSoundEntryName ); // Returns the duration of the sound
-#endif // TF_CLIENTMODE_H
+void PlayOutOfGameSound(const char *pszSound);
+float PlaySoundEntry(const char *pszSoundEntryName); // Returns the duration of the sound
+#endif												 // TF_CLIENTMODE_H

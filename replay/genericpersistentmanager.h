@@ -36,101 +36,121 @@ extern IEngineReplay *g_pEngine;
 
 //----------------------------------------------------------------------------------------
 
-template< class T >
-class CGenericPersistentManager	: public CBaseThinker
+template<class T>
+class CGenericPersistentManager : public CBaseThinker
 {
 public:
-						CGenericPersistentManager();
-	virtual				~CGenericPersistentManager();
+	CGenericPersistentManager();
+	virtual ~CGenericPersistentManager();
 
-	virtual bool		Init( bool bLoad = true );
-	virtual void		Shutdown();
+	virtual bool Init(bool bLoad = true);
+	virtual void Shutdown();
 
-	virtual T			*Create() = 0;	// Create an object
-	T					*CreateAndGenerateHandle();	// Creates a new object and generates a unique handle
+	virtual T *Create() = 0;	  // Create an object
+	T *CreateAndGenerateHandle(); // Creates a new object and generates a unique handle
 
-	void				Add( T *pNewObj );	// Commit the object - NOTE: The Create*() functions don't call Add() for you
-	void				Remove( ReplayHandle_t hObj );	// Remove() will remove the object, remove any .dmx associated with the object on disk, and usually delete attached files (like .dems or movies, etc, depending on what the manager implementation is)
-	void				Remove( T *pObj );
-	void				RemoveFromIndex( int it );
-	void				Clear();	// Remove all objects - NOTE: Doesn't save right away
+	void Add(T *pNewObj);			  // Commit the object - NOTE: The Create*() functions don't call Add() for you
+	void Remove(ReplayHandle_t hObj); // Remove() will remove the object, remove any .dmx associated with the object on
+									  // disk, and usually delete attached files (like .dems or movies, etc, depending
+									  // on what the manager implementation is)
+	void Remove(T *pObj);
+	void RemoveFromIndex(int it);
+	void Clear(); // Remove all objects - NOTE: Doesn't save right away
 
-	bool				WriteObjToFile( T *pObj, const char *pFilename );	// Write object data to an arbitrary file
-	bool				Save();	// Saves any unsaved data immediately
+	bool WriteObjToFile(T *pObj, const char *pFilename); // Write object data to an arbitrary file
+	bool Save();										 // Saves any unsaved data immediately
 
-	void				FlagIndexForFlush();	// Mark index as dirty
-	void				FlagForFlush( T *pObj, bool bForceImmediate );	// Mark an object as dirty
-	void				FlagForUnload( T *pObj );	// Unload as soon as possible
+	void FlagIndexForFlush();						  // Mark index as dirty
+	void FlagForFlush(T *pObj, bool bForceImmediate); // Mark an object as dirty
+	void FlagForUnload(T *pObj);					  // Unload as soon as possible
 
-	T					*Find( ReplayHandle_t hHandle );
-	int					FindIteratorFromHandle( ReplayHandle_t hHandle );
+	T *Find(ReplayHandle_t hHandle);
+	int FindIteratorFromHandle(ReplayHandle_t hHandle);
 
-	int					Count() const;
-	bool				IsDirty( T *pNewObj );
+	int Count() const;
+	bool IsDirty(T *pNewObj);
 
-	virtual void		Think();	// IReplayThinker implementation - NOTE: not meant to be called directly - called from think manager
-	virtual const char	*GetIndexPath() const;	// Should return path where index file lives
+	virtual void Think(); // IReplayThinker implementation - NOTE: not meant to be called directly - called from think
+						  // manager
+	virtual const char *GetIndexPath() const; // Should return path where index file lives
 
 private:
 	class CLessFunctor
 	{
 	public:
-		bool Less( const T *pSrc1, const T *pSrc2, void *pContext )
+		bool Less(const T *pSrc1, const T *pSrc2, void *pContext)
 		{
 			return pSrc1->GetHandle() < pSrc2->GetHandle();
 		}
 	};
 
 public:
-	typedef CUtlSortVector< T *, CLessFunctor >	ObjContainer_t;
-	ObjContainer_t		m_vecObjs;
+	typedef CUtlSortVector<T *, CLessFunctor> ObjContainer_t;
+	ObjContainer_t m_vecObjs;
 
 protected:
 	// For derived classes to implement:
-	virtual IReplayContext	*GetReplayContext() const = 0;
-	virtual const char	*GetRelativeIndexPath() const = 0;	// Should return relative (to replay/client or replay/server) path where index file lives - NOTE: Last char should be a slash
-	virtual const char	*GetIndexFilename() const = 0;	// Should return just the name of the file, e.g. "replays.dmx"
-	virtual const char	*GetDebugName() const = 0;
-	virtual bool		ShouldDeleteObjects() const { return true; }	// TODO: Used by Clear() - I'm not convinced this is needed yet though.
-	virtual int			GetVersion() const = 0;
-	virtual bool		ShouldSerializeToIndividualFiles() const { return true; }
-	virtual bool		ShouldSerializeIndexWithFullPath()  const { return false; }
-	virtual bool		ShouldLoadObj( const T *pObj ) const { return true; }
-	virtual void		OnObjLoaded( T *pObj ) {}
+	virtual IReplayContext *GetReplayContext() const = 0;
+	virtual const char *GetRelativeIndexPath()
+		const = 0; // Should return relative (to replay/client or replay/server) path where index file lives - NOTE:
+				   // Last char should be a slash
+	virtual const char *GetIndexFilename() const = 0; // Should return just the name of the file, e.g. "replays.dmx"
+	virtual const char *GetDebugName() const = 0;
+	virtual bool ShouldDeleteObjects() const
+	{
+		return true;
+	} // TODO: Used by Clear() - I'm not convinced this is needed yet though.
+	virtual int GetVersion() const = 0;
+	virtual bool ShouldSerializeToIndividualFiles() const
+	{
+		return true;
+	}
+	virtual bool ShouldSerializeIndexWithFullPath() const
+	{
+		return false;
+	}
+	virtual bool ShouldLoadObj(const T *pObj) const
+	{
+		return true;
+	}
+	virtual void OnObjLoaded(T *pObj) {}
 
-	virtual int			GetHandleBase() const	{ return 0; }	// Subclass can implement this to provide a base/minimum for handles
-	virtual void		PreLoad() {}
+	virtual int GetHandleBase() const
+	{
+		return 0;
+	} // Subclass can implement this to provide a base/minimum for handles
+	virtual void PreLoad() {}
 
-	const char			*GetIndexFullFilename() const;		// Should return the full path to the main .dmx file
-	bool				HaveDirtyObjects() const;
-	bool				HaveObjsToUnload() const;
-	bool				ReadObjFromFile( const char *pFile, T *&pOut, bool bForceLoad );
-	bool				Load();
+	const char *GetIndexFullFilename() const; // Should return the full path to the main .dmx file
+	bool HaveDirtyObjects() const;
+	bool HaveObjsToUnload() const;
+	bool ReadObjFromFile(const char *pFile, T *&pOut, bool bForceLoad);
+	bool Load();
 
-	virtual float		GetNextThinkTime() const;	// IReplayThinker implementation
-	void				FlushThink();
-	void				UnloadThink();
-	void				CreateIndexDir();
-	void				ReadObjFromKeyValues( KeyValues *pObjData );
-	T*					ReadObjFromKeyValues( KeyValues *pObjData, bool bForceLoad );
-	bool				ReadObjFromFile( const char *pFile );
-	void				UpdateHandleSeed( ReplayHandle_t hNewHandle );
+	virtual float GetNextThinkTime() const; // IReplayThinker implementation
+	void FlushThink();
+	void UnloadThink();
+	void CreateIndexDir();
+	void ReadObjFromKeyValues(KeyValues *pObjData);
+	T *ReadObjFromKeyValues(KeyValues *pObjData, bool bForceLoad);
+	bool ReadObjFromFile(const char *pFile);
+	void UpdateHandleSeed(ReplayHandle_t hNewHandle);
 
-	typedef CUtlLinkedList< T *, int > ListContainer_t;
+	typedef CUtlLinkedList<T *, int> ListContainer_t;
 
-	ReplayHandle_t		m_nHandleSeed;
-	int					m_nVersion;
-	bool				m_bIndexDirty;
-	ListContainer_t		m_lstDirtyObjs;
-	ListContainer_t		m_lstObjsToUnload;
-	float				m_flNextFlushTime;
-	float				m_flNextUnloadTime;
+	ReplayHandle_t m_nHandleSeed;
+	int m_nVersion;
+	bool m_bIndexDirty;
+	ListContainer_t m_lstDirtyObjs;
+	ListContainer_t m_lstObjsToUnload;
+	float m_flNextFlushTime;
+	float m_flNextUnloadTime;
 };
 
 //----------------------------------------------------------------------------------------
 
-template< class T >
-bool CGenericPersistentManager< T >::Init( bool bLoad/*=true*/ )
+template<class T>
+bool CGenericPersistentManager<T>::Init(bool bLoad /*=true*/)
 {
 	// Make directory structure is in place
 	CreateIndexDir();
@@ -141,32 +161,28 @@ bool CGenericPersistentManager< T >::Init( bool bLoad/*=true*/ )
 	return bLoad ? Load() : true;
 }
 
-template< class T >
-void CGenericPersistentManager< T >::Shutdown()
+template<class T>
+void CGenericPersistentManager<T>::Shutdown()
 {
 	Save();
 }
 
-template< class T >
-CGenericPersistentManager< T >::CGenericPersistentManager()
-:	m_nHandleSeed( 0 ),
-	m_nVersion( -1 ),
-	m_bIndexDirty( false ),
-	m_flNextFlushTime( 0.0f ),
-	m_flNextUnloadTime( 0.0f )
+template<class T>
+CGenericPersistentManager<T>::CGenericPersistentManager()
+	: m_nHandleSeed(0), m_nVersion(-1), m_bIndexDirty(false), m_flNextFlushTime(0.0f), m_flNextUnloadTime(0.0f)
 {
 }
 
-template< class T >
-CGenericPersistentManager< T >::~CGenericPersistentManager()
+template<class T>
+CGenericPersistentManager<T>::~CGenericPersistentManager()
 {
 	Clear();
 }
 
-template< class T >
-void CGenericPersistentManager< T >::Clear()
+template<class T>
+void CGenericPersistentManager<T>::Clear()
 {
-	if ( ShouldDeleteObjects() )
+	if(ShouldDeleteObjects())
 	{
 		m_vecObjs.PurgeAndDeleteElements();
 	}
@@ -180,114 +196,115 @@ void CGenericPersistentManager< T >::Clear()
 	m_lstObjsToUnload.RemoveAll();
 }
 
-template< class T >
-int CGenericPersistentManager< T >::Count() const
+template<class T>
+int CGenericPersistentManager<T>::Count() const
 {
 	return m_vecObjs.Count();
 }
 
-template< class T >
-void CGenericPersistentManager< T >::FlagIndexForFlush()
+template<class T>
+void CGenericPersistentManager<T>::FlagIndexForFlush()
 {
 	m_bIndexDirty = true;
 
-	IF_REPLAY_DBG2( Warning( "%f %s: Index flagged\n", g_pEngine->GetHostTime(), GetDebugName() ) );
+	IF_REPLAY_DBG2(Warning("%f %s: Index flagged\n", g_pEngine->GetHostTime(), GetDebugName()));
 }
 
-template< class T >
-void CGenericPersistentManager< T >::FlagForFlush( T *pObj, bool bForceImmediate )
+template<class T>
+void CGenericPersistentManager<T>::FlagForFlush(T *pObj, bool bForceImmediate)
 {
-	if ( !pObj )
+	if(!pObj)
 	{
-		AssertMsg( 0, "Trying to flag a NULL object for flush." );
+		AssertMsg(0, "Trying to flag a NULL object for flush.");
 		return;
 	}
 
 	// Add to dirty list if it's not already there
-	if ( m_lstDirtyObjs.Find( pObj ) == m_lstDirtyObjs.InvalidIndex() )
+	if(m_lstDirtyObjs.Find(pObj) == m_lstDirtyObjs.InvalidIndex())
 	{
-		m_lstDirtyObjs.AddToTail( pObj );
+		m_lstDirtyObjs.AddToTail(pObj);
 	}
 
-	IF_REPLAY_DBG2( Warning( "%f %s: Obj %s flagged for flush\n", g_pEngine->GetHostTime(), GetDebugName(), pObj->GetDebugName() ) );
+	IF_REPLAY_DBG2(
+		Warning("%f %s: Obj %s flagged for flush\n", g_pEngine->GetHostTime(), GetDebugName(), pObj->GetDebugName()));
 
 	// Force write now?
-	if ( bForceImmediate )
+	if(bForceImmediate)
 	{
 		Save();
 	}
 }
 
-template< class T >
-void CGenericPersistentManager< T >::FlagForUnload( T *pObj )
+template<class T>
+void CGenericPersistentManager<T>::FlagForUnload(T *pObj)
 {
-	AssertMsg(
-		ShouldSerializeToIndividualFiles(),
-		"This functionality should only be used for managers that write to individual files, i.e. NOT managers that maintain one monolithic index."
-	);
+	AssertMsg(ShouldSerializeToIndividualFiles(),
+			  "This functionality should only be used for managers that write to individual files, i.e. NOT managers "
+			  "that maintain one monolithic index.");
 
-	if ( !pObj )
+	if(!pObj)
 	{
-		AssertMsg( 0, "Trying to flag a NULL object for unload." );
+		AssertMsg(0, "Trying to flag a NULL object for unload.");
 		return;
 	}
 
-	if ( m_lstObjsToUnload.Find( pObj ) == m_lstObjsToUnload.InvalidIndex() )
+	if(m_lstObjsToUnload.Find(pObj) == m_lstObjsToUnload.InvalidIndex())
 	{
-		m_lstObjsToUnload.AddToTail( pObj );
+		m_lstObjsToUnload.AddToTail(pObj);
 	}
 
-	IF_REPLAY_DBG2( Warning( "%f %s: Obj %s flagged for unload\n", g_pEngine->GetHostTime(), GetDebugName(), pObj->GetDebugName() ) );
+	IF_REPLAY_DBG2(
+		Warning("%f %s: Obj %s flagged for unload\n", g_pEngine->GetHostTime(), GetDebugName(), pObj->GetDebugName()));
 }
 
-template< class T >
-bool CGenericPersistentManager< T >::IsDirty( T *pNewObj )
+template<class T>
+bool CGenericPersistentManager<T>::IsDirty(T *pNewObj)
 {
-	return m_lstDirtyObjs.Find( pNewObj ) != m_lstDirtyObjs.InvalidIndex();
+	return m_lstDirtyObjs.Find(pNewObj) != m_lstDirtyObjs.InvalidIndex();
 }
 
-template< class T >
-void CGenericPersistentManager< T >::Add( T *pNewObj )
+template<class T>
+void CGenericPersistentManager<T>::Add(T *pNewObj)
 {
-	IF_REPLAY_DBG2( Warning( "Adding object with handle %i\n", pNewObj->GetHandle() ) );
-	Assert( m_vecObjs.Find( pNewObj ) == m_vecObjs.InvalidIndex() );
-	m_vecObjs.Insert( pNewObj );
+	IF_REPLAY_DBG2(Warning("Adding object with handle %i\n", pNewObj->GetHandle()));
+	Assert(m_vecObjs.Find(pNewObj) == m_vecObjs.InvalidIndex());
+	m_vecObjs.Insert(pNewObj);
 	FlagIndexForFlush();
-	FlagForFlush( pNewObj, false );
+	FlagForFlush(pNewObj, false);
 }
 
-template< class T >
-void CGenericPersistentManager< T >::Remove( ReplayHandle_t hObj )
+template<class T>
+void CGenericPersistentManager<T>::Remove(ReplayHandle_t hObj)
 {
-	int itObj = FindIteratorFromHandle( hObj );
-	if ( itObj == m_vecObjs.InvalidIndex() )
+	int itObj = FindIteratorFromHandle(hObj);
+	if(itObj == m_vecObjs.InvalidIndex())
 	{
-		AssertMsg( 0, "Attemting to remove an object which does not exist." );
+		AssertMsg(0, "Attemting to remove an object which does not exist.");
 		return;
 	}
 
-	RemoveFromIndex( itObj );
+	RemoveFromIndex(itObj);
 }
 
-template< class T >
-void CGenericPersistentManager< T >::Remove( T *pObj )
+template<class T>
+void CGenericPersistentManager<T>::Remove(T *pObj)
 {
-	const int it = m_vecObjs.Find( pObj );
+	const int it = m_vecObjs.Find(pObj);
 
-	if ( it != m_vecObjs.InvalidIndex() )
+	if(it != m_vecObjs.InvalidIndex())
 	{
-		RemoveFromIndex( it );
+		RemoveFromIndex(it);
 	}
 }
 
-template< class T >
-void CGenericPersistentManager< T >::RemoveFromIndex( int it )
+template<class T>
+void CGenericPersistentManager<T>::RemoveFromIndex(int it)
 {
-	T *pObj = m_vecObjs[ it ];	// NOTE: Constant speed since the implementation of
-								// CUtlLinkedList indexes into an array
+	T *pObj = m_vecObjs[it]; // NOTE: Constant speed since the implementation of
+							 // CUtlLinkedList indexes into an array
 
 	// Remove file associated w/ this object if necessary
-	if ( ShouldSerializeToIndividualFiles() )
+	if(ShouldSerializeToIndividualFiles())
 	{
 		CUtlString strFullFilename = pObj->GetFullFilename();
 		bool bSimulateDelete = false;
@@ -295,25 +312,27 @@ void CGenericPersistentManager< T >::RemoveFromIndex( int it )
 		extern ConVar replay_fileserver_simulate_delete;
 		bSimulateDelete = replay_fileserver_simulate_delete.GetBool();
 #endif
-		if ( g_pFullFileSystem->FileExists( strFullFilename.Get() ) && !bSimulateDelete )
+		if(g_pFullFileSystem->FileExists(strFullFilename.Get()) && !bSimulateDelete)
 		{
-			g_pFullFileSystem->RemoveFile( strFullFilename.Get() );
+			g_pFullFileSystem->RemoveFile(strFullFilename.Get());
 		}
 	}
 
-	Assert( !pObj->IsLocked() );
+	Assert(!pObj->IsLocked());
 
 	// Let the object do stuff before it gets deleted
 	pObj->OnDelete();
 
 	// If the object is in the dirty list, remove it - NOTE: this is safe
-	m_lstDirtyObjs.FindAndRemove( pObj );
+	m_lstDirtyObjs.FindAndRemove(pObj);
 
 	// The object should not be in the 'objects-to-unload' list
-	AssertMsg( m_lstObjsToUnload.Find( pObj ) == m_lstObjsToUnload.InvalidIndex(), "The object being removed was also in the unload list - is this OK?  If so, code should be added to remove from that list as well." );
+	AssertMsg(m_lstObjsToUnload.Find(pObj) == m_lstObjsToUnload.InvalidIndex(),
+			  "The object being removed was also in the unload list - is this OK?  If so, code should be added to "
+			  "remove from that list as well.");
 
 	// Remove the object
-	m_vecObjs.Remove( it );
+	m_vecObjs.Remove(it);
 
 	// Free the object
 	delete pObj;
@@ -321,13 +340,13 @@ void CGenericPersistentManager< T >::RemoveFromIndex( int it )
 	FlagIndexForFlush();
 }
 
-template< class T >
-T *CGenericPersistentManager< T >::Find( ReplayHandle_t hHandle )
+template<class T>
+T *CGenericPersistentManager<T>::Find(ReplayHandle_t hHandle)
 {
-	FOR_EACH_VEC( m_vecObjs, i )
+	FOR_EACH_VEC(m_vecObjs, i)
 	{
-		T *pCurObj = m_vecObjs[ i ];
-		if ( hHandle == pCurObj->GetHandle() )
+		T *pCurObj = m_vecObjs[i];
+		if(hHandle == pCurObj->GetHandle())
 		{
 			return pCurObj;
 		}
@@ -336,13 +355,13 @@ T *CGenericPersistentManager< T >::Find( ReplayHandle_t hHandle )
 	return NULL;
 }
 
-template< class T >
-int CGenericPersistentManager< T >::FindIteratorFromHandle( ReplayHandle_t hHandle )
+template<class T>
+int CGenericPersistentManager<T>::FindIteratorFromHandle(ReplayHandle_t hHandle)
 {
-	FOR_EACH_VEC( m_vecObjs, i )
+	FOR_EACH_VEC(m_vecObjs, i)
 	{
-		T *pCurObj = m_vecObjs[ i ];
-		if ( hHandle == pCurObj->GetHandle() )
+		T *pCurObj = m_vecObjs[i];
+		if(hHandle == pCurObj->GetHandle())
 		{
 			return i;
 		}
@@ -351,8 +370,8 @@ int CGenericPersistentManager< T >::FindIteratorFromHandle( ReplayHandle_t hHand
 	return m_vecObjs.InvalidIndex();
 }
 
-template< class T >
-bool CGenericPersistentManager< T >::Load()
+template<class T>
+bool CGenericPersistentManager<T>::Load()
 {
 	bool bResult = true;
 
@@ -362,131 +381,131 @@ bool CGenericPersistentManager< T >::Load()
 	const char *pFullFilename = GetIndexFullFilename();
 
 	// Attempt to load from disk
-	KeyValuesAD pRoot( pFullFilename );
-	if ( pRoot->LoadFromFile( g_pFullFileSystem, pFullFilename ) )
+	KeyValuesAD pRoot(pFullFilename);
+	if(pRoot->LoadFromFile(g_pFullFileSystem, pFullFilename))
 	{
 		// Get file format version
-		m_nVersion = pRoot->GetInt( "version", -1 );
-		if ( m_nVersion != GetVersion() )
+		m_nVersion = pRoot->GetInt("version", -1);
+		if(m_nVersion != GetVersion())
 		{
-			Warning( "File (%s) has old format (%i).\n", pFullFilename, m_nVersion );
+			Warning("File (%s) has old format (%i).\n", pFullFilename, m_nVersion);
 		}
 
 		// Read from individual files?
-		if ( ShouldSerializeToIndividualFiles() )
+		if(ShouldSerializeToIndividualFiles())
 		{
-			KeyValues *pFileIndex = pRoot->FindKey( "files" );
-			if ( pFileIndex )
+			KeyValues *pFileIndex = pRoot->FindKey("files");
+			if(pFileIndex)
 			{
-				FOR_EACH_VALUE( pFileIndex, pValue )
+				FOR_EACH_VALUE(pFileIndex, pValue)
 				{
 					const char *pName = pValue->GetName();
-					if ( !ReadObjFromFile( pName ) )
+					if(!ReadObjFromFile(pName))
 					{
-						Warning( "Failed to load data from file, \"%s\"\n", pName );
+						Warning("Failed to load data from file, \"%s\"\n", pName);
 					}
 				}
 			}
 			else
 			{
 				// Peek in directory and load files based on what's there
-				CFmtStr fmtPath( "%s*.%s", GetIndexPath(), GENERIC_FILE_EXTENSION );
+				CFmtStr fmtPath("%s*.%s", GetIndexPath(), GENERIC_FILE_EXTENSION);
 				FileFindHandle_t hFind;
-				const char *pFilename = g_pFullFileSystem->FindFirst( fmtPath.Access(), &hFind );
-				while ( pFilename )
+				const char *pFilename = g_pFullFileSystem->FindFirst(fmtPath.Access(), &hFind);
+				while(pFilename)
 				{
 					// Ignore index file
-					if ( V_stricmp( pFilename, GetIndexFilename() ) )
+					if(V_stricmp(pFilename, GetIndexFilename()))
 					{
-						if ( !ReadObjFromFile( pFilename ) )
+						if(!ReadObjFromFile(pFilename))
 						{
-							Warning( "Failed to load data from file, \"%s\"\n", pFilename );
+							Warning("Failed to load data from file, \"%s\"\n", pFilename);
 						}
 					}
 
-					pFilename = g_pFullFileSystem->FindNext( hFind );
+					pFilename = g_pFullFileSystem->FindNext(hFind);
 				}
 			}
 		}
 		else
 		{
-			FOR_EACH_TRUE_SUBKEY( pRoot, pObjSubKey )
+			FOR_EACH_TRUE_SUBKEY(pRoot, pObjSubKey)
 			{
 				// Read data
-				m_vecObjs.Insert( ReadObjFromKeyValues( pObjSubKey, false ) );
+				m_vecObjs.Insert(ReadObjFromKeyValues(pObjSubKey, false));
 			}
 		}
 
 		// Let derived class do any per-object processing.
-		FOR_EACH_VEC( m_vecObjs, i )
+		FOR_EACH_VEC(m_vecObjs, i)
 		{
-			OnObjLoaded( m_vecObjs[ i ] );
+			OnObjLoaded(m_vecObjs[i]);
 		}
 	}
 
 	return bResult;
 }
 
-template< class T >
-bool CGenericPersistentManager< T >::WriteObjToFile( T *pObj, const char *pFilename )
+template<class T>
+bool CGenericPersistentManager<T>::WriteObjToFile(T *pObj, const char *pFilename)
 {
 	// Create a keyvalues for the object
-	KeyValuesAD pObjData( pObj->GetSubKeyTitle() );
+	KeyValuesAD pObjData(pObj->GetSubKeyTitle());
 
 	// Fill the keyvalues w/ data
-	pObj->Write( pObjData );
+	pObj->Write(pObjData);
 
 	// Attempt to save the current object data to a separate file
-	if ( !pObjData->SaveToFile( g_pFullFileSystem, pFilename ) )
+	if(!pObjData->SaveToFile(g_pFullFileSystem, pFilename))
 	{
-		Warning( "Failed to write file %s\n", pFilename );
+		Warning("Failed to write file %s\n", pFilename);
 		return false;
 	}
 
 	return true;
 }
 
-template< class T >
-bool CGenericPersistentManager< T >::Save()
+template<class T>
+bool CGenericPersistentManager<T>::Save()
 {
-	IF_REPLAY_DBG2( Warning( "%f %s: Saving now...\n", g_pEngine->GetHostTime(), GetDebugName() ) );
+	IF_REPLAY_DBG2(Warning("%f %s: Saving now...\n", g_pEngine->GetHostTime(), GetDebugName()));
 
 	bool bResult = true;
 
 	// Add subkey for movies
-	KeyValuesAD pRoot( "root" );
+	KeyValuesAD pRoot("root");
 
 	// Write format version
-	pRoot->SetInt( "version", GetVersion() );
+	pRoot->SetInt("version", GetVersion());
 
 	// Write a file index instead of adding subkeys to the root?
-	if ( ShouldSerializeToIndividualFiles() )
+	if(ShouldSerializeToIndividualFiles())
 	{
 		// Go through each object in the dirty list and write to a separate file
-		FOR_EACH_LL( m_lstDirtyObjs, i )
+		FOR_EACH_LL(m_lstDirtyObjs, i)
 		{
-			T *pCurObj = m_lstDirtyObjs[ i ];
+			T *pCurObj = m_lstDirtyObjs[i];
 
 			// Write to the file
-			bResult = bResult && WriteObjToFile( pCurObj, pCurObj->GetFullFilename() );
+			bResult = bResult && WriteObjToFile(pCurObj, pCurObj->GetFullFilename());
 		}
 	}
 
 	// Write all objects to one monolithic file - writes all objects (ignores "dirtyness")
 	else
 	{
-		FOR_EACH_VEC( m_vecObjs, i )
+		FOR_EACH_VEC(m_vecObjs, i)
 		{
-			T *pCurObj = m_vecObjs[ i ];
+			T *pCurObj = m_vecObjs[i];
 
 			// Create a keyvalues for the object
-			KeyValues *pCurObjData = new KeyValues( pCurObj->GetSubKeyTitle() );
+			KeyValues *pCurObjData = new KeyValues(pCurObj->GetSubKeyTitle());
 
 			// Fill the keyvalues w/ data
-			pCurObj->Write( pCurObjData );
+			pCurObj->Write(pCurObjData);
 
 			// Add as a subkey to the root keyvalues
-			pRoot->AddSubKey( pCurObjData );
+			pRoot->AddSubKey(pCurObjData);
 		}
 	}
 
@@ -494,34 +513,35 @@ bool CGenericPersistentManager< T >::Save()
 	m_lstDirtyObjs.RemoveAll();
 
 	// Write the index file if dirty
-	if ( m_bIndexDirty )
+	if(m_bIndexDirty)
 	{
-		return bResult && pRoot->SaveToFile( g_pFullFileSystem, GetIndexFullFilename() );
+		return bResult && pRoot->SaveToFile(g_pFullFileSystem, GetIndexFullFilename());
 	}
 
 	return bResult;
 }
 
-template< class T >
-T *CGenericPersistentManager< T >::CreateAndGenerateHandle()
+template<class T>
+T *CGenericPersistentManager<T>::CreateAndGenerateHandle()
 {
 	T *pNewObj = Create();
-	pNewObj->SetHandle( m_nHandleSeed++ );		Assert( Find( pNewObj->GetHandle() ) == NULL );
+	pNewObj->SetHandle(m_nHandleSeed++);
+	Assert(Find(pNewObj->GetHandle()) == NULL);
 	FlagIndexForFlush();
 	return pNewObj;
 }
 
-template< class T >
-float CGenericPersistentManager< T >::GetNextThinkTime() const
+template<class T>
+float CGenericPersistentManager<T>::GetNextThinkTime() const
 {
 	// Always think
 	return 0.0f;
 }
 
-template< class T >
-void CGenericPersistentManager< T >::Think()
+template<class T>
+void CGenericPersistentManager<T>::Think()
 {
-	VPROF_BUDGET( "CGenericPersistentManager::Think", VPROF_BUDGETGROUP_REPLAY );
+	VPROF_BUDGET("CGenericPersistentManager::Think", VPROF_BUDGETGROUP_REPLAY);
 
 	CBaseThinker::Think();
 
@@ -529,12 +549,12 @@ void CGenericPersistentManager< T >::Think()
 	UnloadThink();
 }
 
-template< class T >
-void CGenericPersistentManager< T >::FlushThink()
+template<class T>
+void CGenericPersistentManager<T>::FlushThink()
 {
 	const float flHostTime = g_pEngine->GetHostTime();
 	bool bTimeToFlush = flHostTime >= m_flNextFlushTime;
-	if ( !bTimeToFlush || ( !m_bIndexDirty && !HaveDirtyObjects() ) )
+	if(!bTimeToFlush || (!m_bIndexDirty && !HaveDirtyObjects()))
 		return;
 
 	// Flush now and clear dirty objects
@@ -548,34 +568,34 @@ void CGenericPersistentManager< T >::FlushThink()
 	m_flNextFlushTime = flHostTime + replay_flushinterval.GetInt();
 }
 
-template< class T >
-void CGenericPersistentManager< T >::UnloadThink()
+template<class T>
+void CGenericPersistentManager<T>::UnloadThink()
 {
 	const float flHostTime = g_pEngine->GetHostTime();
 	bool bTimeToUnload = flHostTime >= m_flNextUnloadTime;
-	if ( !bTimeToUnload || !HaveObjsToUnload() )
+	if(!bTimeToUnload || !HaveObjsToUnload())
 		return;
 
 	// Unload objects now
-	FOR_EACH_LL( m_lstObjsToUnload, i )
+	FOR_EACH_LL(m_lstObjsToUnload, i)
 	{
-		T *pObj = m_lstObjsToUnload[ i ];
+		T *pObj = m_lstObjsToUnload[i];
 
 		// If the object has been marked as locked, don't unload it.
-		if ( pObj->IsLocked() )
+		if(pObj->IsLocked())
 			continue;
 
 		// If we're waiting to flush the file, don't unload it yet
-		if ( IsDirty( pObj ) )
+		if(IsDirty(pObj))
 			continue;
 
 		// Let the object do stuff before it gets deleted
 		pObj->OnUnload();
 
 		// Remove the object
-		m_vecObjs.FindAndRemove( pObj );
+		m_vecObjs.FindAndRemove(pObj);
 
-		IF_REPLAY_DBG( Warning( "Unloading object %s\n", pObj->GetDebugName() ) );
+		IF_REPLAY_DBG(Warning("Unloading object %s\n", pObj->GetDebugName()));
 
 		// Free the object
 		delete pObj;
@@ -588,125 +608,127 @@ void CGenericPersistentManager< T >::UnloadThink()
 	m_flNextUnloadTime = flHostTime + 1.0f;
 }
 
-template< class T >
-const char	*CGenericPersistentManager< T >::GetIndexPath() const
+template<class T>
+const char *CGenericPersistentManager<T>::GetIndexPath() const
 {
-	return Replay_va( "%s%s", GetReplayContext()->GetBaseDir(), GetRelativeIndexPath() );
+	return Replay_va("%s%s", GetReplayContext()->GetBaseDir(), GetRelativeIndexPath());
 }
 
-template< class T >
-const char *CGenericPersistentManager< T >::GetIndexFullFilename() const		// Should return the full path to the main .dmx file
+template<class T>
+const char *CGenericPersistentManager<T>::GetIndexFullFilename()
+	const // Should return the full path to the main .dmx file
 {
-	return Replay_va( "%s%s", GetIndexPath(), GetIndexFilename() );
+	return Replay_va("%s%s", GetIndexPath(), GetIndexFilename());
 }
 
-template< class T >
-bool CGenericPersistentManager< T >::HaveDirtyObjects() const
+template<class T>
+bool CGenericPersistentManager<T>::HaveDirtyObjects() const
 {
 	return m_lstDirtyObjs.Count() > 0;
 }
 
-template< class T >
-bool CGenericPersistentManager< T >::HaveObjsToUnload() const
+template<class T>
+bool CGenericPersistentManager<T>::HaveObjsToUnload() const
 {
 	return m_lstObjsToUnload.Count() > 0;
 }
 
-template< class T >
-void CGenericPersistentManager< T >::CreateIndexDir()
+template<class T>
+void CGenericPersistentManager<T>::CreateIndexDir()
 {
-	g_pFullFileSystem->CreateDirHierarchy( GetIndexPath(), "DEFAULT_WRITE_PATH" );
+	g_pFullFileSystem->CreateDirHierarchy(GetIndexPath(), "DEFAULT_WRITE_PATH");
 }
 
-template< class T >
-bool CGenericPersistentManager< T >::ReadObjFromFile( const char *pFile, T *&pOut, bool bForceLoad )
+template<class T>
+bool CGenericPersistentManager<T>::ReadObjFromFile(const char *pFile, T *&pOut, bool bForceLoad)
 {
 	// Use the full path and filename specified, or construct it if necessary
 	CUtlString strFullFilename;
-	if ( ShouldSerializeIndexWithFullPath() )
+	if(ShouldSerializeIndexWithFullPath())
 	{
 		strFullFilename = pFile;
 	}
 	else
 	{
-		strFullFilename.Format( "%s%s", GetIndexPath(), pFile );
+		strFullFilename.Format("%s%s", GetIndexPath(), pFile);
 	}
 
 	// Attempt to load the file
-	KeyValuesAD pObjData( pFile );
-	if ( !pObjData->LoadFromFile( g_pFullFileSystem, strFullFilename.Get() ) )
+	KeyValuesAD pObjData(pFile);
+	if(!pObjData->LoadFromFile(g_pFullFileSystem, strFullFilename.Get()))
 	{
-		Warning( "Failed to load from file %s\n", strFullFilename.Get() );
-		AssertMsg( 0, "Manager failed to load something..." );
+		Warning("Failed to load from file %s\n", strFullFilename.Get());
+		AssertMsg(0, "Manager failed to load something...");
 		return false;
 	}
 
 	// Create and read a new object
-	pOut = ReadObjFromKeyValues( pObjData, bForceLoad );
-	if ( !pOut )
+	pOut = ReadObjFromKeyValues(pObjData, bForceLoad);
+	if(!pOut)
 		return NULL;
 
 	// Add the object to the manager
-	m_vecObjs.Insert( pOut );
+	m_vecObjs.Insert(pOut);
 
 	return true;
 }
 
-template< class T >
-bool CGenericPersistentManager< T >::ReadObjFromFile( const char *pFile )
+template<class T>
+bool CGenericPersistentManager<T>::ReadObjFromFile(const char *pFile)
 {
 	T *pNewObj;
-	if ( !ReadObjFromFile( pFile, pNewObj, false ) )
+	if(!ReadObjFromFile(pFile, pNewObj, false))
 		return false;
 
 	return true;
 }
 
-template< class T >
-T* CGenericPersistentManager< T >::ReadObjFromKeyValues( KeyValues *pObjData, bool bForceLoad )
+template<class T>
+T *CGenericPersistentManager<T>::ReadObjFromKeyValues(KeyValues *pObjData, bool bForceLoad)
 {
-	T *pNewObj = Create();			Assert( pNewObj );
-	if ( !pNewObj )
+	T *pNewObj = Create();
+	Assert(pNewObj);
+	if(!pNewObj)
 		return NULL;
 
 	// Attempt to read data for the object, and fail to load this particular object if the reader
 	// says we should.
-	if ( !pNewObj->Read( pObjData ) )
+	if(!pNewObj->Read(pObjData))
 	{
 		delete pNewObj;
 		return NULL;
 	}
 
 	// This object OK to load?  Only check if bForceLoad is false.
-	if ( !bForceLoad && !ShouldLoadObj( pNewObj ) )
+	if(!bForceLoad && !ShouldLoadObj(pNewObj))
 	{
 		delete pNewObj;
 		return NULL;
 	}
 
 	// Sync up handle seed
-	UpdateHandleSeed( pNewObj->GetHandle() );
+	UpdateHandleSeed(pNewObj->GetHandle());
 
 	return pNewObj;
 }
 
-template< class T >
-void CGenericPersistentManager< T >::UpdateHandleSeed( ReplayHandle_t hNewHandle )
+template<class T>
+void CGenericPersistentManager<T>::UpdateHandleSeed(ReplayHandle_t hNewHandle)
 {
-	m_nHandleSeed = (ReplayHandle_t)( GetHandleBase() + MAX( (uint32)m_nHandleSeed, (uint32)hNewHandle ) + 1 );
+	m_nHandleSeed = (ReplayHandle_t)(GetHandleBase() + MAX((uint32)m_nHandleSeed, (uint32)hNewHandle) + 1);
 
 #ifdef _DEBUG
-	FOR_EACH_VEC( m_vecObjs, i )
+	FOR_EACH_VEC(m_vecObjs, i)
 	{
-		AssertMsg( m_nHandleSeed != m_vecObjs[ i ]->GetHandle(), "Handle seed collision!" );
+		AssertMsg(m_nHandleSeed != m_vecObjs[i]->GetHandle(), "Handle seed collision!");
 	}
 #endif
 }
 
 //----------------------------------------------------------------------------------------
 
-#define FOR_EACH_OBJ( _manager, _i )	FOR_EACH_VEC( _manager->m_vecObjs, _i )
+#define FOR_EACH_OBJ(_manager, _i) FOR_EACH_VEC(_manager->m_vecObjs, _i)
 
 //----------------------------------------------------------------------------------------
 
-#endif	// GENERICPERSISTENTMANAGER_H
+#endif // GENERICPERSISTENTMANAGER_H

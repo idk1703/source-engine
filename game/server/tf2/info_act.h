@@ -18,7 +18,8 @@ class CBaseTFPlayer;
 //-----------------------------------------------------------------------------
 class CInfoAct : public CBaseEntity
 {
-	DECLARE_CLASS( CInfoAct, CBaseEntity );
+	DECLARE_CLASS(CInfoAct, CBaseEntity);
+
 public:
 	CInfoAct();
 
@@ -27,27 +28,30 @@ public:
 
 	int UpdateTransmitState();
 
-	void Spawn( void );
-	void StartAct( void );
-	void UpdateClient( CBaseTFPlayer *pPlayer );
-	void FinishAct( void );
-	void ActThink( void );
+	void Spawn(void);
+	void StartAct(void);
+	void UpdateClient(CBaseTFPlayer *pPlayer);
+	void FinishAct(void);
+	void ActThink(void);
 	int ActNumber() const;
 
-	void CleanupOnActStart( void );
+	void CleanupOnActStart(void);
 
-	bool IsAWaitingAct( void );
+	bool IsAWaitingAct(void);
 
 	// Act player locking
-	void StartActOverlayTime( CBaseTFPlayer *pPlayer );
-	void EndActOverlayTime( CBaseTFPlayer *pPlayer );
-	void ActThinkEndActOverlayTime( void );
+	void StartActOverlayTime(CBaseTFPlayer *pPlayer);
+	void EndActOverlayTime(CBaseTFPlayer *pPlayer);
+	void ActThinkEndActOverlayTime(void);
 
 	// Intermissions
-	void StartIntermission( CBaseTFPlayer *pPlayer );
-	void EndIntermission( CBaseTFPlayer *pPlayer );
+	void StartIntermission(CBaseTFPlayer *pPlayer);
+	void EndIntermission(CBaseTFPlayer *pPlayer);
 
-	int GetMCVTimer( void ) { return m_nRespawn2Team2Time; }
+	int GetMCVTimer(void)
+	{
+		return m_nRespawn2Team2Time;
+	}
 
 private:
 	enum
@@ -66,11 +70,11 @@ private:
 	void ShutdownRespawnTimers();
 
 	// Inputs
-	void InputStart( inputdata_t &inputdata );
-	void InputFinishWinNone( inputdata_t &inputdata );
-	void InputFinishWin1( inputdata_t &inputdata );
-	void InputFinishWin2( inputdata_t &inputdata );
-	void InputAddTime( inputdata_t &inputdata );
+	void InputStart(inputdata_t &inputdata);
+	void InputFinishWinNone(inputdata_t &inputdata);
+	void InputFinishWin1(inputdata_t &inputdata);
+	void InputFinishWin2(inputdata_t &inputdata);
+	void InputAddTime(inputdata_t &inputdata);
 
 	// Respawn timers
 	void RespawnTimerThink();
@@ -80,50 +84,50 @@ private:
 	void Team2RespawnDelayThink();
 
 	// Computes the time remaining
-	int ComputeTimeRemaining( int nPeriod, int nDelay );
+	int ComputeTimeRemaining(int nPeriod, int nDelay);
 
 	// Fires respawn events
-	void FireRespawnEvents( int nTimeRemaining, COutputEvent *pRespawnEvents, COutputInt &respawnTime );
+	void FireRespawnEvents(int nTimeRemaining, COutputEvent *pRespawnEvents, COutputInt &respawnTime);
 
 	// Outputs
-	COutputEvent	m_OnStarted;
-	COutputEvent	m_OnFinishedTeamNone;
-	COutputEvent	m_OnFinishedTeam1;
-	COutputEvent	m_OnFinishedTeam2;
-	COutputEvent	m_OnTimerExpired;
+	COutputEvent m_OnStarted;
+	COutputEvent m_OnFinishedTeamNone;
+	COutputEvent m_OnFinishedTeam1;
+	COutputEvent m_OnFinishedTeam2;
+	COutputEvent m_OnTimerExpired;
 
-	COutputEvent	m_Team1RespawnDelayDone;
-	COutputEvent	m_Team2RespawnDelayDone;
+	COutputEvent m_Team1RespawnDelayDone;
+	COutputEvent m_Team2RespawnDelayDone;
 
-	COutputInt		m_Respawn1Team1TimeRemaining;
-	COutputInt		m_Respawn2Team1TimeRemaining;
-	COutputInt		m_Respawn1Team2TimeRemaining;
-	COutputInt		m_Respawn2Team2TimeRemaining;
+	COutputInt m_Respawn1Team1TimeRemaining;
+	COutputInt m_Respawn2Team1TimeRemaining;
+	COutputInt m_Respawn1Team2TimeRemaining;
+	COutputInt m_Respawn2Team2TimeRemaining;
 
 	// A whole buncha respawn timer events
-	COutputEvent	m_Respawn1Team1Events[RESPAWN_TIMER_EVENT_COUNT];
-	COutputEvent	m_Respawn2Team1Events[RESPAWN_TIMER_EVENT_COUNT];
-	COutputEvent	m_Respawn1Team2Events[RESPAWN_TIMER_EVENT_COUNT];
-	COutputEvent	m_Respawn2Team2Events[RESPAWN_TIMER_EVENT_COUNT];
+	COutputEvent m_Respawn1Team1Events[RESPAWN_TIMER_EVENT_COUNT];
+	COutputEvent m_Respawn2Team1Events[RESPAWN_TIMER_EVENT_COUNT];
+	COutputEvent m_Respawn1Team2Events[RESPAWN_TIMER_EVENT_COUNT];
+	COutputEvent m_Respawn2Team2Events[RESPAWN_TIMER_EVENT_COUNT];
 
 	// Respawn timer periods
-	CNetworkVar( int, m_nRespawn1Team1Time );
-	CNetworkVar( int, m_nRespawn1Team2Time );
-	CNetworkVar( int, m_nRespawn2Team1Time );
-	CNetworkVar( int, m_nRespawn2Team2Time );
-	CNetworkVar( int, m_nRespawnTeam1Delay );
-	CNetworkVar( int, m_nRespawnTeam2Delay );
+	CNetworkVar(int, m_nRespawn1Team1Time);
+	CNetworkVar(int, m_nRespawn1Team2Time);
+	CNetworkVar(int, m_nRespawn2Team1Time);
+	CNetworkVar(int, m_nRespawn2Team2Time);
+	CNetworkVar(int, m_nRespawnTeam1Delay);
+	CNetworkVar(int, m_nRespawnTeam2Delay);
 
 	// Data
-	CNetworkVar( int, m_iActNumber );
-	CNetworkVar( float, m_flActTimeLimit );
-	int				m_iWinners;
+	CNetworkVar(int, m_iActNumber);
+	CNetworkVar(float, m_flActTimeLimit);
+	int m_iWinners;
 
 	// Acts
-	float			m_flActStartedAt;
+	float m_flActStartedAt;
 
 	// Intermissions
-	string_t		m_iszIntermissionCamera;
+	string_t m_iszIntermissionCamera;
 };
 
 inline int CInfoAct::ActNumber() const
@@ -131,8 +135,8 @@ inline int CInfoAct::ActNumber() const
 	return m_iActNumber;
 }
 
-extern CHandle<CInfoAct>	g_hCurrentAct;
+extern CHandle<CInfoAct> g_hCurrentAct;
 
-bool CurrentActIsAWaitingAct( void );
+bool CurrentActIsAWaitingAct(void);
 
 #endif // INFO_ACT_H

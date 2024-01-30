@@ -20,11 +20,9 @@
 #include <ApplicationServices.h>
 #endif
 
-
 #ifndef __HITOOLBOX__
 #include <HIToolbox.h>
 #endif
-
 
 /*
 Color Picker
@@ -41,14 +39,11 @@ Color Picker
 #include <NSL.h>
 #endif
 
-
 /*
 Font Panel
 */
 #ifndef __FONTPANEL__
 #include <FontPanel.h>
 #endif
-
-
 
 #endif /* __COMMONPANELS__ */

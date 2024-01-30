@@ -24,7 +24,6 @@
 #include <ApplicationServices.h>
 #endif
 
-
 #ifndef __APPLICATIONSERVICES__
 #include <ApplicationServices.h>
 #endif
@@ -272,9 +271,5 @@
 #ifndef __ICACAMERA__
 #include <ICACamera.h>
 #endif
-
-
-
-
 
 #endif /* __CARBON__ */

@@ -38,12 +38,13 @@ class CSlideshowPanel;
 
 class CReplayPreviewPanelBase : public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CReplayPreviewPanelBase, EditablePanel );
+	DECLARE_CLASS_SIMPLE(CReplayPreviewPanelBase, EditablePanel);
+
 public:
-	CReplayPreviewPanelBase( Panel *pParent, QueryableReplayItemHandle_t hItem, IReplayItemManager *pItemManager );
+	CReplayPreviewPanelBase(Panel *pParent, QueryableReplayItemHandle_t hItem, IReplayItemManager *pItemManager);
 	~CReplayPreviewPanelBase();
 
-	virtual void ApplySchemeSettings( IScheme *pScheme );
+	virtual void ApplySchemeSettings(IScheme *pScheme);
 	virtual void PerformLayout();
 
 	ReplayHandle_t GetReplayHandle();
@@ -51,19 +52,22 @@ public:
 protected:
 	CGenericClassBasedReplay *GetReplay();
 
-	virtual bool ShoudlUseLargeClassImage() { return false; }
-	virtual void LayoutView( int &nWide, int &nTall, int &nCurY );
+	virtual bool ShoudlUseLargeClassImage()
+	{
+		return false;
+	}
+	virtual void LayoutView(int &nWide, int &nTall, int &nCurY);
 
 protected:
-	IReplayItemManager	*m_pItemManager;
-	QueryableReplayItemHandle_t	m_hItem;
+	IReplayItemManager *m_pItemManager;
+	QueryableReplayItemHandle_t m_hItem;
 
 private:
-	ImagePanel			*m_pClassImage;
-	vgui::EditablePanel	*m_pInfoPanel;
+	ImagePanel *m_pClassImage;
+	vgui::EditablePanel *m_pInfoPanel;
 
-	CExLabel			*m_pMapLabel;
-	CExLabel			*m_pDateTimeLabel;
+	CExLabel *m_pMapLabel;
+	CExLabel *m_pDateTimeLabel;
 
 	enum ELabels
 	{
@@ -72,7 +76,7 @@ private:
 		LABEL_LIFE_LENGTH,
 		NUM_INFO_LABELS
 	};
-	CExLabel			*m_pReplayInfoLabels[NUM_INFO_LABELS][2];
+	CExLabel *m_pReplayInfoLabels[NUM_INFO_LABELS][2];
 };
 
 //-----------------------------------------------------------------------------
@@ -80,16 +84,17 @@ private:
 //-----------------------------------------------------------------------------
 class CReplayPreviewPanelSlideshow : public CReplayPreviewPanelBase
 {
-	DECLARE_CLASS_SIMPLE( CReplayPreviewPanelSlideshow, CReplayPreviewPanelBase );
+	DECLARE_CLASS_SIMPLE(CReplayPreviewPanelSlideshow, CReplayPreviewPanelBase);
+
 public:
-	CReplayPreviewPanelSlideshow( Panel *pParent, QueryableReplayItemHandle_t hItem, IReplayItemManager *pItemManager );
+	CReplayPreviewPanelSlideshow(Panel *pParent, QueryableReplayItemHandle_t hItem, IReplayItemManager *pItemManager);
 
 private:
 	virtual void PerformLayout();
-	virtual void LayoutView( int &nWide, int &nTall, int &nCurY );
+	virtual void LayoutView(int &nWide, int &nTall, int &nCurY);
 
-	CReplayScreenshotSlideshowPanel		*m_pScreenshotPanel;
-	CExLabel							*m_pNoScreenshotLabel;
+	CReplayScreenshotSlideshowPanel *m_pScreenshotPanel;
+	CExLabel *m_pNoScreenshotLabel;
 };
 
 //-----------------------------------------------------------------------------
@@ -100,21 +105,20 @@ class IReplayMovie;
 
 class CReplayPreviewPanelMovie : public CReplayPreviewPanelBase
 {
-	DECLARE_CLASS_SIMPLE( CReplayPreviewPanelMovie, CReplayPreviewPanelBase );
+	DECLARE_CLASS_SIMPLE(CReplayPreviewPanelMovie, CReplayPreviewPanelBase);
+
 public:
-	CReplayPreviewPanelMovie( Panel *pParent, QueryableReplayItemHandle_t hItem, IReplayItemManager *pItemManager );
+	CReplayPreviewPanelMovie(Panel *pParent, QueryableReplayItemHandle_t hItem, IReplayItemManager *pItemManager);
 	~CReplayPreviewPanelMovie();
 
 private:
 	virtual void OnTick();
-	virtual void LayoutView( int &nWide, int &nTall, int &nCurY );
+	virtual void LayoutView(int &nWide, int &nTall, int &nCurY);
 
 	virtual IReplayMovie *GetReplayMovie();
 
-	CMoviePlayerPanel	*m_pMoviePlayerPanel;
-	float				m_flCreateTime;
+	CMoviePlayerPanel *m_pMoviePlayerPanel;
+	float m_flCreateTime;
 };
-
-
 
 #endif // REPLAYBROWSER_PREVIEWPANEL_H

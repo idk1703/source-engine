@@ -14,21 +14,27 @@
 
 class CTFVideoPanel : public VideoPanel
 {
-	DECLARE_CLASS_SIMPLE( CTFVideoPanel, VideoPanel );
-public:
+	DECLARE_CLASS_SIMPLE(CTFVideoPanel, VideoPanel);
 
-	CTFVideoPanel( vgui::Panel *parent, const char *panelName );
+public:
+	CTFVideoPanel(vgui::Panel *parent, const char *panelName);
 	~CTFVideoPanel();
 
 	virtual void OnClose();
-	virtual void OnKeyCodePressed( vgui::KeyCode code ){}
-	virtual void ApplySettings( KeyValues *inResourceData );
+	virtual void OnKeyCodePressed(vgui::KeyCode code) {}
+	virtual void ApplySettings(KeyValues *inResourceData);
 
-	virtual void GetPanelPos( int &xpos, int &ypos );
+	virtual void GetPanelPos(int &xpos, int &ypos);
 	virtual void Shutdown();
 
-	float GetStartDelay(){ return m_flStartAnimDelay; }
-	float GetEndDelay(){ return m_flEndAnimDelay; }
+	float GetStartDelay()
+	{
+		return m_flStartAnimDelay;
+	}
+	float GetEndDelay()
+	{
+		return m_flEndAnimDelay;
+	}
 
 protected:
 	virtual void ReleaseVideo();

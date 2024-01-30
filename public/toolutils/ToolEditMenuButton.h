@@ -4,7 +4,6 @@
 //
 //=============================================================================
 
-
 #ifndef TOOLEDITMENUBUTTON_H
 #define TOOLEDITMENUBUTTON_H
 
@@ -12,23 +11,20 @@
 #pragma once
 #endif
 
-
 //-----------------------------------------------------------------------------
 // forward declarations
 //-----------------------------------------------------------------------------
 namespace vgui
 {
-class Panel;
+	class Panel;
 }
 
 class CToolMenuButton;
 
-
 //-----------------------------------------------------------------------------
 // Global function to create the switch menu
 //-----------------------------------------------------------------------------
-CToolMenuButton* CreateToolEditMenuButton( vgui::Panel *parent, const char *panelName,
-	const char *text, vgui::Panel *pActionTarget );
-
+CToolMenuButton *CreateToolEditMenuButton(vgui::Panel *parent, const char *panelName, const char *text,
+										  vgui::Panel *pActionTarget);
 
 #endif // TOOLEDITMENUBUTTON_H

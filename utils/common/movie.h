@@ -21,14 +21,11 @@ typedef struct
 	unsigned long size;
 } movieblockheader_t;
 
-
 typedef struct
 {
 	short width;
 	short height;
 	short depth;
 } movieframe_t;
-
-
 
 #endif _MOVIE_H_

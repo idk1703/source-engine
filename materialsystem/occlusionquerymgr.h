@@ -14,14 +14,12 @@
 #error "This file is private to the implementation of IMaterialSystem/IMaterialSystemInternal"
 #endif
 
-#if defined( _WIN32 )
+#if defined(_WIN32)
 #pragma once
 #endif
 
-
 #include "tier1/utllinkedlist.h"
 #include "shaderapi/ishaderapi.h"
-
 
 class IMatRenderContextInternal;
 
@@ -39,25 +37,25 @@ public:
 	COcclusionQueryMgr();
 
 	// Allocate and delete query objects.
-	OcclusionQueryObjectHandle_t CreateOcclusionQueryObject( );
-	void OnCreateOcclusionQueryObject( OcclusionQueryObjectHandle_t h );
-	void DestroyOcclusionQueryObject( OcclusionQueryObjectHandle_t h );
+	OcclusionQueryObjectHandle_t CreateOcclusionQueryObject();
+	void OnCreateOcclusionQueryObject(OcclusionQueryObjectHandle_t h);
+	void DestroyOcclusionQueryObject(OcclusionQueryObjectHandle_t h);
 
 	// Bracket drawing with begin and end so that we can get counts next frame.
-	void BeginOcclusionQueryDrawing( OcclusionQueryObjectHandle_t h );
-	void EndOcclusionQueryDrawing( OcclusionQueryObjectHandle_t h );
+	void BeginOcclusionQueryDrawing(OcclusionQueryObjectHandle_t h);
+	void EndOcclusionQueryDrawing(OcclusionQueryObjectHandle_t h);
 
 	// Used to make the handle think it's never had a successful query before
-	void ResetOcclusionQueryObject( OcclusionQueryObjectHandle_t );
+	void ResetOcclusionQueryObject(OcclusionQueryObjectHandle_t);
 
 	// Get the number of pixels rendered between begin and end on an earlier frame.
 	// Calling this in the same frame is a huge perf hit!
-	int OcclusionQuery_GetNumPixelsRendered( OcclusionQueryObjectHandle_t h, bool bDoQuery );
-	void OcclusionQuery_IssueNumPixelsRenderedQuery( OcclusionQueryObjectHandle_t h );
+	int OcclusionQuery_GetNumPixelsRendered(OcclusionQueryObjectHandle_t h, bool bDoQuery);
+	void OcclusionQuery_IssueNumPixelsRenderedQuery(OcclusionQueryObjectHandle_t h);
 
 	// Internal stuff for occlusion query
-	void AllocOcclusionQueryObjects( void );
-	void FreeOcclusionQueryObjects( void );
+	void AllocOcclusionQueryObjects(void);
+	void FreeOcclusionQueryObjects(void);
 
 	// Advance frame
 	void AdvanceFrame();
@@ -76,7 +74,7 @@ private:
 
 		OcclusionQueryObject_t(void)
 		{
-			for ( int i = 0; i < COUNT_OCCLUSION_QUERY_STACK; i++ )
+			for(int i = 0; i < COUNT_OCCLUSION_QUERY_STACK; i++)
 			{
 				m_QueryHandle[i] = INVALID_SHADERAPI_OCCLUSION_QUERY_HANDLE;
 				m_bHasBeenIssued[i] = false;
@@ -88,19 +86,17 @@ private:
 	};
 
 	// Flushes an outstanding query
-	void FlushQuery( OcclusionQueryObjectHandle_t hOcclusionQuery, int nIndex );
+	void FlushQuery(OcclusionQueryObjectHandle_t hOcclusionQuery, int nIndex);
 
 	// Occlusion query objects
-	CUtlFixedLinkedList<OcclusionQueryObject_t>	m_OcclusionQueryObjects;
+	CUtlFixedLinkedList<OcclusionQueryObject_t> m_OcclusionQueryObjects;
 	CThreadFastMutex m_Mutex;
 	int m_nFrameCount;
 };
-
 
 //-----------------------------------------------------------------------------
 // Singleton
 //-----------------------------------------------------------------------------
 extern COcclusionQueryMgr *g_pOcclusionQueryMgr;
-
 
 #endif // OCCLUSIONQUERY_H

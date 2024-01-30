@@ -17,22 +17,23 @@
 class C_PlayerClassDefender : public C_PlayerClass
 {
 
-	DECLARE_CLASS( C_PlayerClassDefender, C_PlayerClass );
+	DECLARE_CLASS(C_PlayerClassDefender, C_PlayerClass);
 
 public:
-
 	DECLARE_PREDICTABLE();
 
-	C_PlayerClassDefender( C_BaseTFPlayer *pPlayer );
+	C_PlayerClassDefender(C_BaseTFPlayer *pPlayer);
 	virtual ~C_PlayerClassDefender();
 
-	PlayerClassDefenderData_t *GetClassData( void ) { return &m_ClassData; }
+	PlayerClassDefenderData_t *GetClassData(void)
+	{
+		return &m_ClassData;
+	}
 
 protected:
-
-	PlayerClassDefenderData_t	m_ClassData;
+	PlayerClassDefenderData_t m_ClassData;
 };
 
-EXTERN_RECV_TABLE( DT_PlayerClassDefenderData )
+EXTERN_RECV_TABLE(DT_PlayerClassDefenderData)
 
 #endif // C_TF_CLASS_DEFENDER_H

@@ -22,22 +22,22 @@ class CloseCaptionTool : public mxWindow, public IFacePoserToolWindow, public IC
 {
 public:
 	// Construction
-						CloseCaptionTool( mxWindow *parent );
-						~CloseCaptionTool( void );
+	CloseCaptionTool(mxWindow *parent);
+	~CloseCaptionTool(void);
 
 	// ICloseCaptionManager
-	virtual void Reset( void );
-	virtual void Process( char const *tokenname, float duration, int languageid );
-	virtual bool LookupUnicodeText( int languageId, char const *token, wchar_t *outbuf, size_t count );
-	virtual bool LookupStrippedUnicodeText( int languageId, char const *token, wchar_t *outbuf, size_t count );
+	virtual void Reset(void);
+	virtual void Process(char const *tokenname, float duration, int languageid);
+	virtual bool LookupUnicodeText(int languageId, char const *token, wchar_t *outbuf, size_t count);
+	virtual bool LookupStrippedUnicodeText(int languageId, char const *token, wchar_t *outbuf, size_t count);
 
 	// End ICloseCaptionManager
 
-	virtual void		Think( float dt );
+	virtual void Think(float dt);
 
-	virtual int			handleEvent( mxEvent *event );
-	virtual void		redraw( void );
-	virtual bool		PaintBackground();
+	virtual int handleEvent(mxEvent *event);
+	virtual void redraw(void);
+	virtual bool PaintBackground();
 
 	enum
 	{
@@ -47,28 +47,26 @@ public:
 		CCFONT_ITALICBOLD
 	};
 
-	static int GetFontNumber( bool bold, bool italic );
+	static int GetFontNumber(bool bold, bool italic);
 
 private:
-	void	ComputeStreamWork( CChoreoWidgetDrawHelper &helper, int available_width, CCloseCaptionItem *item );
-	void	DrawStream( CChoreoWidgetDrawHelper &helper, RECT &rcText, CCloseCaptionItem *item );
-	bool	SplitCommand( const wchar_t **in, wchar_t *cmd, wchar_t *args ) const;
+	void ComputeStreamWork(CChoreoWidgetDrawHelper &helper, int available_width, CCloseCaptionItem *item);
+	void DrawStream(CChoreoWidgetDrawHelper &helper, RECT &rcText, CCloseCaptionItem *item);
+	bool SplitCommand(const wchar_t **in, wchar_t *cmd, wchar_t *args) const;
 
-	void	ParseCloseCaptionStream( const wchar_t *in, int available_width );
+	void ParseCloseCaptionStream(const wchar_t *in, int available_width);
 
-	void	DumpWork( CCloseCaptionItem *item );
+	void DumpWork(CCloseCaptionItem *item);
 
-	void AddWorkUnit(
-		CCloseCaptionItem *item,
-		WorkUnitParams& params );
+	void AddWorkUnit(CCloseCaptionItem *item, WorkUnitParams &params);
 
-	CUtlVector< CCloseCaptionItem * > m_Items;
+	CUtlVector<CCloseCaptionItem *> m_Items;
 
-	HFONT m_hFonts[ 4 ];  // normal, italic, bold, bold + italic
+	HFONT m_hFonts[4]; // normal, italic, bold, bold + italic
 
-	int									m_nLastItemCount;
+	int m_nLastItemCount;
 };
 
-extern CloseCaptionTool	*g_pCloseCaptionTool;
+extern CloseCaptionTool *g_pCloseCaptionTool;
 
 #endif // CLOSECAPTIONTOOL_H

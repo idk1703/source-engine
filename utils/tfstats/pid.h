@@ -14,9 +14,9 @@
 #define PID_H
 #ifdef WIN32
 #pragma once
-#pragma warning(disable:4786)
+#pragma warning(disable : 4786)
 #endif
 typedef unsigned long PID;
 #include <map>
-extern std::map<int,PID> pidMap;
+extern std::map<int, PID> pidMap;
 #endif // PID_H

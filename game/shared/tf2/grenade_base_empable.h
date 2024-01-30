@@ -13,7 +13,7 @@
 
 #include "basegrenade_shared.h"
 
-#if defined( CLIENT_DLL )
+#if defined(CLIENT_DLL)
 #define CBaseEMPableGrenade C_BaseEMPableGrenade
 #endif
 
@@ -22,29 +22,31 @@
 //-----------------------------------------------------------------------------
 class CBaseEMPableGrenade : public CBaseGrenade
 {
-	DECLARE_CLASS( CBaseEMPableGrenade, CBaseGrenade );
+	DECLARE_CLASS(CBaseEMPableGrenade, CBaseGrenade);
+
 public:
 	DECLARE_PREDICTABLE();
 	DECLARE_NETWORKCLASS();
 
-#if !defined( CLIENT_DLL )
+#if !defined(CLIENT_DLL)
 	DECLARE_DATADESC();
 #endif
 
 	CBaseEMPableGrenade();
 
-	virtual bool	CanTakeEMPDamage( void ) { return true; }
-	virtual bool	TakeEMPDamage( float duration );
+	virtual bool CanTakeEMPDamage(void)
+	{
+		return true;
+	}
+	virtual bool TakeEMPDamage(float duration);
 
-	void	FizzleThink( void );
+	void FizzleThink(void);
 
 private:
-	CNetworkVar( float, m_flFizzleDuration );
+	CNetworkVar(float, m_flFizzleDuration);
 
 private:
-	CBaseEMPableGrenade( const CBaseEMPableGrenade & ); // not defined, not accessible
-
+	CBaseEMPableGrenade(const CBaseEMPableGrenade &); // not defined, not accessible
 };
-
 
 #endif // GRENADE_BASE_EMPABLE_H

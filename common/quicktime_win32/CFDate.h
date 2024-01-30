@@ -16,8 +16,6 @@
 #ifndef __CFDATE__
 #define __CFDATE__
 
-
-
 #if PRAGMA_ONCE
 #pragma once
 #endif
@@ -28,15 +26,14 @@
 
 #include <CFBase.h>
 
-typedef double                          CFTimeInterval;
-typedef CFTimeInterval                  CFAbsoluteTime;
-typedef const struct __CFDate*          CFDateRef;
+typedef double CFTimeInterval;
+typedef CFTimeInterval CFAbsoluteTime;
+typedef const struct __CFDate *CFDateRef;
 
 #ifdef PRAGMA_IMPORT_OFF
 #pragma import off
 #elif PRAGMA_IMPORT
 #pragma import reset
 #endif
-
 
 #endif /* __CFDATE__ */

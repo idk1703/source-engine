@@ -11,8 +11,6 @@
 #pragma once
 #endif
 
-
 void InstallBitBufErrorHandler();
-
 
 #endif // BITBUF_ERRORHANDLER_H

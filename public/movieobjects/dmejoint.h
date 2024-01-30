@@ -21,12 +21,12 @@ class CDmeDrawSettings;
 //-----------------------------------------------------------------------------
 class CDmeJoint : public CDmeDag
 {
-	DEFINE_ELEMENT( CDmeJoint, CDmeDag );
+	DEFINE_ELEMENT(CDmeJoint, CDmeDag);
 
 public:
-	virtual void Draw( CDmeDrawSettings *pDrawSettings = NULL );
+	virtual void Draw(CDmeDrawSettings *pDrawSettings = NULL);
 
-	static void DrawJointHierarchy( bool bDrawJoints );
+	static void DrawJointHierarchy(bool bDrawJoints);
 
 private:
 	void DrawJoints();
@@ -34,6 +34,5 @@ private:
 	CMaterialReference m_JointMaterial;
 	static bool s_bDrawJoints;
 };
-
 
 #endif // DMEJOINT_H

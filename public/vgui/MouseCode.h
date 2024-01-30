@@ -17,7 +17,7 @@
 
 namespace vgui
 {
-typedef ButtonCode_t MouseCode;
+	typedef ButtonCode_t MouseCode;
 }
 
 #endif // MOUSECODE_H

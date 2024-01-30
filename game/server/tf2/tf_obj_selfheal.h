@@ -17,7 +17,7 @@
 // ------------------------------------------------------------------------ //
 class CObjectSelfHeal : public CBaseObjectUpgrade
 {
-DECLARE_CLASS( CObjectSelfHeal, CBaseObjectUpgrade );
+	DECLARE_CLASS(CObjectSelfHeal, CBaseObjectUpgrade);
 
 public:
 	DECLARE_DATADESC();
@@ -25,13 +25,16 @@ public:
 
 	CObjectSelfHeal();
 
-	virtual void	Spawn();
-	virtual void	Precache();
-	virtual bool	CanTakeEMPDamage( void ) { return true; }
-	virtual void	FinishedBuilding( void );
+	virtual void Spawn();
+	virtual void Precache();
+	virtual bool CanTakeEMPDamage(void)
+	{
+		return true;
+	}
+	virtual void FinishedBuilding(void);
 
 	// Repairing
-	virtual void	SelfHealThink( void );
+	virtual void SelfHealThink(void);
 };
 
 #endif // TF_OBJ_SELFHEAL_H

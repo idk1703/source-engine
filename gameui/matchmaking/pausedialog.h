@@ -17,14 +17,13 @@
 //-----------------------------------------------------------------------------
 class CPauseDialog : public CBaseDialog
 {
-	DECLARE_CLASS_SIMPLE( CPauseDialog, CBaseDialog );
+	DECLARE_CLASS_SIMPLE(CPauseDialog, CBaseDialog);
 
 public:
-	CPauseDialog( vgui::Panel *parent );
+	CPauseDialog(vgui::Panel *parent);
 
-	virtual void Activate( void );
-	virtual void OnKeyCodePressed( vgui::KeyCode code );
+	virtual void Activate(void);
+	virtual void OnKeyCodePressed(vgui::KeyCode code);
 };
-
 
 #endif // PAUSEDIALOG_H

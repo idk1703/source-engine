@@ -8,15 +8,19 @@
 
 #include "Path/NextBotPathFollow.h"
 
-class CTFBotSpyBackstab : public Action< CTFBot >
+class CTFBotSpyBackstab : public Action<CTFBot>
 {
 public:
-	virtual ActionResult< CTFBot >	OnStart( CTFBot *me, Action< CTFBot > *priorAction );
-	virtual ActionResult< CTFBot >	Update( CTFBot *me, float interval );
+	virtual ActionResult<CTFBot> OnStart(CTFBot *me, Action<CTFBot> *priorAction);
+	virtual ActionResult<CTFBot> Update(CTFBot *me, float interval);
 
-	virtual QueryResultType ShouldAttack( const INextBot *me, const CKnownEntity *them ) const;	// should we attack "them"?
+	virtual QueryResultType ShouldAttack(const INextBot *me,
+										 const CKnownEntity *them) const; // should we attack "them"?
 
-	virtual const char *GetName( void ) const	{ return "SpyBackstab"; };
+	virtual const char *GetName(void) const
+	{
+		return "SpyBackstab";
+	};
 
 private:
 };

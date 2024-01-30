@@ -10,32 +10,36 @@
 #pragma once
 #endif
 
-#define PROPERTYNAME( X, Y ) X##_##Y,
+#define PROPERTYNAME(X, Y) X##_##Y,
 enum Win32Properties_e
 {
-	#include "projectgenerator_win32.inc"
+#include "projectgenerator_win32.inc"
 };
 
 class CProjectGenerator_Win32 : public IVCProjWriter
 {
 public:
 	CProjectGenerator_Win32();
-	IBaseProjectGenerator *GetProjectGenerator() { return m_pVCProjGenerator; }
+	IBaseProjectGenerator *GetProjectGenerator()
+	{
+		return m_pVCProjGenerator;
+	}
 
-	virtual bool Save( const char *pOutputFilename );
+	virtual bool Save(const char *pOutputFilename);
 
 private:
-	bool		WriteToXML();
+	bool WriteToXML();
 
-	bool		WriteFolder( CProjectFolder *pFolder );
-	bool		WriteFile( CProjectFile *pFile );
-	bool		WriteConfiguration( CProjectConfiguration *pConfig );
-	bool		WriteProperty( const PropertyState_t *pPropertyState, const char *pOutputName = NULL, const char *pValue = NULL );
-	bool		WriteTool( const char *pToolName, const CProjectTool *pProjectTool );
-	bool		WriteNULLTool( const char *pToolName, const CProjectConfiguration *pConfig );
+	bool WriteFolder(CProjectFolder *pFolder);
+	bool WriteFile(CProjectFile *pFile);
+	bool WriteConfiguration(CProjectConfiguration *pConfig);
+	bool WriteProperty(const PropertyState_t *pPropertyState, const char *pOutputName = NULL,
+					   const char *pValue = NULL);
+	bool WriteTool(const char *pToolName, const CProjectTool *pProjectTool);
+	bool WriteNULLTool(const char *pToolName, const CProjectConfiguration *pConfig);
 
-	CXMLWriter			m_XMLWriter;
-	CVCProjGenerator	*m_pVCProjGenerator;
+	CXMLWriter m_XMLWriter;
+	CVCProjGenerator *m_pVCProjGenerator;
 };
 
 #endif // PROJECTGENERATOR_WIN32_H

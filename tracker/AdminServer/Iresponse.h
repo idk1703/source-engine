@@ -11,7 +11,6 @@
 #pragma once
 #endif
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Callback interface for server updates
 //-----------------------------------------------------------------------------
@@ -23,8 +22,6 @@ public:
 
 	// called when a server response has timed out
 	virtual void ServerFailedToRespond() = 0;
-
 };
-
 
 #endif // IRESPONSE_H

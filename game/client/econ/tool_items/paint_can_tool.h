@@ -11,5 +11,4 @@
 #pragma once
 #endif
 
-
 #endif // PAINT_CAN_TOOL_H

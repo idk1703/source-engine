@@ -15,8 +15,8 @@
 
 // Client specific.
 #ifdef CLIENT_DLL
-#define CTFParachute C_TFParachute
-#define CTFParachute_Primary C_TFParachute_Primary
+#define CTFParachute		   C_TFParachute
+#define CTFParachute_Primary   C_TFParachute_Primary
 #define CTFParachute_Secondary C_TFParachute_Secondary
 #endif
 
@@ -27,29 +27,40 @@
 class CTFParachute : public CTFBuffItem
 {
 public:
-
-	DECLARE_CLASS( CTFParachute, CTFBuffItem );
+	DECLARE_CLASS(CTFParachute, CTFBuffItem);
 	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CTFParachute();
 
-	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_PARACHUTE; }
+	virtual int GetWeaponID(void) const
+	{
+		return TF_WEAPON_PARACHUTE;
+	}
 
-	virtual bool	VisibleInWeaponSelection( void )				{ return false; }
-	virtual bool	CanBeSelected( void )							{ return false; }
-	virtual bool	CanDeploy( void )								{ return false; }
-	virtual void	CreateBanner();
+	virtual bool VisibleInWeaponSelection(void)
+	{
+		return false;
+	}
+	virtual bool CanBeSelected(void)
+	{
+		return false;
+	}
+	virtual bool CanDeploy(void)
+	{
+		return false;
+	}
+	virtual void CreateBanner();
 
 #ifdef CLIENT_DLL
-	virtual void	ClientThink( void );
-	void			ParachuteAnimThink( void );
+	virtual void ClientThink(void);
+	void ParachuteAnimThink(void);
 #endif // CLIENT_DLL
 
 private:
 #ifdef CLIENT_DLL
-	int							m_iParachuteAnimState;
-	float						m_flParachuteToIdleTime;
+	int m_iParachuteAnimState;
+	float m_flParachuteToIdleTime;
 #endif // CLIENT_DLL
 };
 
@@ -58,7 +69,7 @@ private:
 class CTFParachute_Primary : public CTFParachute
 {
 public:
-	DECLARE_CLASS( CTFParachute_Primary, CTFParachute );
+	DECLARE_CLASS(CTFParachute_Primary, CTFParachute);
 	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 };
@@ -67,7 +78,7 @@ public:
 class CTFParachute_Secondary : public CTFParachute
 {
 public:
-	DECLARE_CLASS( CTFParachute_Secondary, CTFParachute );
+	DECLARE_CLASS(CTFParachute_Secondary, CTFParachute);
 	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 };

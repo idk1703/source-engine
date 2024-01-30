@@ -22,37 +22,38 @@
 using std::list;
 class CLogSelectProps : public CPropertyPage
 {
-// Construction
+	// Construction
 public:
 	virtual BOOL OnSetActive();
 	virtual BOOL OnKillActive();
-	list<CUIApp::CTFStatsExec>* getList();
-	CLogSelectProps(CWnd* pParent = NULL);   // standard constructor
+	list<CUIApp::CTFStatsExec> *getList();
+	CLogSelectProps(CWnd *pParent = NULL); // standard constructor
 
 	CPersistentString m_persistLastDirectory;
 
 	void UpdateAppList();
 	bool alreadyAcknowledged;
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CLogSelectProps)
-	enum { IDD = IDD_LOGSELS };
-	CButton	m_SelectButton;
-	CButton	m_RemoveButton;
-	CListBox	m_Logs2Do;
+	enum
+	{
+		IDD = IDD_LOGSELS
+	};
+	CButton m_SelectButton;
+	CButton m_RemoveButton;
+	CListBox m_Logs2Do;
 	//}}AFX_DATA
 
-
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CLogSelectProps)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
 protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
+													 //}}AFX_VIRTUAL
 
+	// Implementation
+protected:
 	// Generated message map functions
 	//{{AFX_MSG(CLogSelectProps)
 	afx_msg void OnSelect();

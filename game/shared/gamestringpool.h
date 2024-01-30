@@ -10,18 +10,18 @@
 #ifndef GAMESTRINGPOOL_H
 #define GAMESTRINGPOOL_H
 
-#if defined( _WIN32 )
+#if defined(_WIN32)
 #pragma once
 #endif
 
 //-----------------------------------------------------------------------------
 // String allocation
 //-----------------------------------------------------------------------------
-string_t AllocPooledString( const char *pszValue );
-string_t AllocPooledString_StaticConstantStringPointer( const char *pszGlobalConstValue );
-string_t FindPooledString( const char *pszValue );
+string_t AllocPooledString(const char *pszValue);
+string_t AllocPooledString_StaticConstantStringPointer(const char *pszGlobalConstValue);
+string_t FindPooledString(const char *pszValue);
 
-#define AssertIsValidString( s )	AssertMsg( s == NULL_STRING || s == FindPooledString( STRING(s) ), "Invalid string " #s );
+#define AssertIsValidString(s) AssertMsg(s == NULL_STRING || s == FindPooledString(STRING(s)), "Invalid string " #s);
 
 #ifndef GC
 //-----------------------------------------------------------------------------

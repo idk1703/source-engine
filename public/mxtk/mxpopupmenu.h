@@ -14,13 +14,9 @@
 #ifndef INCLUDED_MXPOPUPMENU
 #define INCLUDED_MXPOPUPMENU
 
-
-
 #ifndef INCLUDED_MXWIDGET
 #include "mxtk/mxWidget.h"
 #endif
-
-
 
 class mxPopupMenu_i;
 class mxPopupMenu : public mxWidget
@@ -29,27 +25,25 @@ class mxPopupMenu : public mxWidget
 
 public:
 	// CREATORS
-	mxPopupMenu ();
-	virtual ~mxPopupMenu ();
+	mxPopupMenu();
+	virtual ~mxPopupMenu();
 
 	// MANIPULATORS
-	int popup (mxWidget *widget, int x, int y);
-	void add (const char *item, int id);
-	void addMenu (const char *item, mxPopupMenu *menu);
-	void addSeparator ();
-	void setEnabled (int id, bool b);
-	void setChecked (int id, bool b);
+	int popup(mxWidget *widget, int x, int y);
+	void add(const char *item, int id);
+	void addMenu(const char *item, mxPopupMenu *menu);
+	void addSeparator();
+	void setEnabled(int id, bool b);
+	void setChecked(int id, bool b);
 
 	// ACCESSORS
-	bool isEnabled (int id) const;
-	bool isChecked (int id) const;
+	bool isEnabled(int id) const;
+	bool isChecked(int id) const;
 
 private:
 	// NOT IMPLEMENTED
-	mxPopupMenu (const mxPopupMenu&);
-	mxPopupMenu& operator= (const mxPopupMenu&);
+	mxPopupMenu(const mxPopupMenu &);
+	mxPopupMenu &operator=(const mxPopupMenu &);
 };
-
-
 
 #endif // INCLUDED_MXPOPUPMENU

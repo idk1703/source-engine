@@ -10,16 +10,13 @@
 #pragma once
 #endif
 
-
 #include "c_walker_base.h"
 #include "c_rope.h"
 
-
-#define STRIDER_BEAM_LIFETIME	1.0
-#define STRIDER_BEAM_MATERIAL	"sprites/physbeam"
-#define STRIDER_BEAM_WIDTH		25
-#define STRIDER_NUM_ROPES		6
-
+#define STRIDER_BEAM_LIFETIME 1.0
+#define STRIDER_BEAM_MATERIAL "sprites/physbeam"
+#define STRIDER_BEAM_WIDTH	  25
+#define STRIDER_NUM_ROPES	  6
 
 class CStriderBeamEffect
 {
@@ -28,36 +25,31 @@ public:
 	float m_flStartTime;
 };
 
-
 class C_WalkerMiniStrider : public C_WalkerBase
 {
 public:
 	DECLARE_CLIENTCLASS();
-	DECLARE_CLASS( C_WalkerMiniStrider, C_WalkerBase );
+	DECLARE_CLASS(C_WalkerMiniStrider, C_WalkerBase);
 
 	C_WalkerMiniStrider();
 	virtual ~C_WalkerMiniStrider();
 
-
-// IClientThinkable.
+	// IClientThinkable.
 public:
 	virtual void ClientThink();
 
-
-// C_BaseEntity.
+	// C_BaseEntity.
 public:
+	virtual bool ShouldPredict()
+	{
+		return false;
+	}
+	virtual void SetupMove(CBasePlayer *pPlayer, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move);
 
-	virtual bool ShouldPredict() { return false; }
-	virtual void SetupMove( CBasePlayer *pPlayer, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move );
-
-
-// C_BaseAnimating.
+	// C_BaseAnimating.
 public:
-
-
 private:
-	C_WalkerMiniStrider( const C_WalkerMiniStrider &other ) {}
+	C_WalkerMiniStrider(const C_WalkerMiniStrider &other) {}
 };
-
 
 #endif // C_WALKER_MINISTRIDER_H

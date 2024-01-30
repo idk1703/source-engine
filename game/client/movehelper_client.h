@@ -12,7 +12,6 @@
 #pragma once
 #endif
 
-
 #include "imovehelper.h"
 
 #endif // MOVEHELPER_CLIENT_H

@@ -14,25 +14,22 @@
 #include "MapHelper.h"
 #include "ToolInterface.h"
 
-
 class CHelperInfo;
 class CRender2D;
 class CRender3D;
 class CMapPointHandle;
 
-
-#define MAX_KEYNAME_SIZE	32
+#define MAX_KEYNAME_SIZE 32
 
 class CMapPointHandle : public CMapHelper
 {
 
-friend class CToolPointHandle;
-friend class CMapAxisHandle;
-friend class CMapSweptPlayerHull;
+	friend class CToolPointHandle;
+	friend class CMapAxisHandle;
+	friend class CMapSweptPlayerHull;
 
 public:
-
-	DECLARE_MAPCLASS(CMapPointHandle,CMapHelper)
+	DECLARE_MAPCLASS(CMapPointHandle, CMapHelper)
 
 	//
 	// Factory for building from a list of string parameters.
@@ -65,11 +62,23 @@ public:
 
 	virtual bool HitTest2D(CMapView2D *pView, const Vector2D &point, HitInfo_t &HitData);
 
-	virtual bool IsVisualElement(void) { return(false); } // Only visible if our parent is selected.
-	virtual bool IsClutter(void) { return true; }
-	virtual bool IsCulledByCordon(const Vector &vecMins, const Vector &vecMaxs) { return false; } // We don't hide unless our parent hides.
+	virtual bool IsVisualElement(void)
+	{
+		return (false);
+	} // Only visible if our parent is selected.
+	virtual bool IsClutter(void)
+	{
+		return true;
+	}
+	virtual bool IsCulledByCordon(const Vector &vecMins, const Vector &vecMaxs)
+	{
+		return false;
+	} // We don't hide unless our parent hides.
 
-	virtual const char* GetDescription() { return("Point helper"); }
+	virtual const char *GetDescription()
+	{
+		return ("Point helper");
+	}
 
 	virtual void OnAddToWorld(CMapWorld *pWorld);
 	virtual void OnParentKeyChanged(const char *key, const char *value);
@@ -80,7 +89,6 @@ public:
 	virtual CBaseTool *GetToolObject(int nHitData, bool bAttachObject);
 
 protected:
-
 	// Called by the point handle tool while dragging.
 	void UpdateOrigin(const Vector &vecOrigin);
 
@@ -88,14 +96,12 @@ protected:
 	virtual void DoTransform(const VMatrix &matrix);
 
 private:
-
 	void Initialize(void);
 	void UpdateParentKey(void);
 
 	char m_szKeyName[MAX_KEYNAME_SIZE];
 	bool m_bDrawLineToParent;
 };
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -104,6 +110,5 @@ int CMapPointHandle::GetRadius(void)
 {
 	return HANDLE_RADIUS;
 }
-
 
 #endif // MAPPOINTHANDLE_H

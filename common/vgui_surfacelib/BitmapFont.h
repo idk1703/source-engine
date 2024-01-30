@@ -32,24 +32,25 @@ public:
 
 	// writes the char into the specified 32bpp texture. We're overloading this because
 	// we derive off font_t, and the implementation there doesn't work for bitmap fonts.
-	virtual void GetCharRGBA( wchar_t ch, int rgbaWide, int rgbaTall, unsigned char *prgba );
+	virtual void GetCharRGBA(wchar_t ch, int rgbaWide, int rgbaTall, unsigned char *prgba);
 
 	// gets the width of ch given its position around before and after chars
-	virtual void GetKernedCharWidth( wchar_t ch, wchar_t chBefore, wchar_t chAfter, float &wide, float &abcA, float &abcC );
+	virtual void GetKernedCharWidth(wchar_t ch, wchar_t chBefore, wchar_t chAfter, float &wide, float &abcA,
+									float &abcC);
 
 	// gets the texture coords in the compiled texture page
-	void GetCharCoords( int ch, float *left, float *top, float *right, float *bottom );
+	void GetCharCoords(int ch, float *left, float *top, float *right, float *bottom);
 
 	// sets the scale of the font.
-	void SetScale( float sx, float sy );
+	void SetScale(float sx, float sy);
 
 	// gets the compiled texture page
 	ITexture *GetTexturePage();
 
 private:
-	int				m_bitmapFontHandle;
-	float			m_scalex;
-	float			m_scaley;
+	int m_bitmapFontHandle;
+	float m_scalex;
+	float m_scaley;
 };
 
-#endif	// _BITMAPFONT_H
+#endif // _BITMAPFONT_H

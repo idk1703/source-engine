@@ -23,10 +23,10 @@ class CCvarToggleCheckButton;
 //-----------------------------------------------------------------------------
 class CCreateMultiplayerGameBotPage : public vgui::PropertyPage
 {
-	DECLARE_CLASS_SIMPLE( CCreateMultiplayerGameBotPage, vgui::PropertyPage );
+	DECLARE_CLASS_SIMPLE(CCreateMultiplayerGameBotPage, vgui::PropertyPage);
 
 public:
-	CCreateMultiplayerGameBotPage( vgui::Panel *parent, const char *name, KeyValues *botKeys );
+	CCreateMultiplayerGameBotPage(vgui::Panel *parent, const char *name, KeyValues *botKeys);
 	~CCreateMultiplayerGameBotPage();
 
 protected:
@@ -52,15 +52,14 @@ private:
 	CCvarToggleCheckButton *m_deferToHuman;
 
 	vgui::ComboBox *m_joinTeamCombo;
-	void SetJoinTeamCombo( const char *team );
+	void SetJoinTeamCombo(const char *team);
 
 	vgui::ComboBox *m_chatterCombo;
-	void SetChatterCombo( const char *team );
+	void SetChatterCombo(const char *team);
 
 	vgui::TextEntry *m_prefixEntry;
 
 	KeyValues *m_pSavedData;
 };
-
 
 #endif // CREATEMULTIPLAYERGAMEBOTPAGE_H

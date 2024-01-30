@@ -22,19 +22,20 @@ class ICpuTopology;
 class CpuTopology
 {
 public:
-	CpuTopology( BOOL bForceCpuid = FALSE );
+	CpuTopology(BOOL bForceCpuid = FALSE);
 	~CpuTopology();
 
-	BOOL        IsDefaultImpl() const;
-	DWORD       NumberOfProcessCores() const;
-	DWORD       NumberOfSystemCores() const;
-	DWORD_PTR   CoreAffinityMask( DWORD coreIdx ) const;
+	BOOL IsDefaultImpl() const;
+	DWORD NumberOfProcessCores() const;
+	DWORD NumberOfSystemCores() const;
+	DWORD_PTR CoreAffinityMask(DWORD coreIdx) const;
 
-	void        ForceCpuid( BOOL bForce );
+	void ForceCpuid(BOOL bForce);
+
 private:
-	void        Destroy_();
+	void Destroy_();
 
-	ICpuTopology* m_pImpl;
+	ICpuTopology *m_pImpl;
 };
 
-#endif  // CPU_TOPOLOGY_H
+#endif // CPU_TOPOLOGY_H

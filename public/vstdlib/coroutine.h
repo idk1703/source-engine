@@ -20,28 +20,28 @@
 //-----------------------------------------------------------------------------
 
 // coroutine callback
-typedef void (__cdecl *CoroutineFunc_t )(void *);
+typedef void(__cdecl *CoroutineFunc_t)(void *);
 
 // handle to a coroutine
 typedef int32 HCoroutine;
 
 // creates a new coroutine
 // no coroutine code is executed until Coroutine_Continue() is called
-VSTDLIB_INTERFACE HCoroutine Coroutine_Create( CoroutineFunc_t pFunc, void *pvParam );
+VSTDLIB_INTERFACE HCoroutine Coroutine_Create(CoroutineFunc_t pFunc, void *pvParam);
 
 // continues the specified coroutine
 // returns true if the coroutine is still running, false otherwise
-VSTDLIB_INTERFACE bool Coroutine_Continue( HCoroutine hCoroutine, const char *pchName = NULL );
+VSTDLIB_INTERFACE bool Coroutine_Continue(HCoroutine hCoroutine, const char *pchName = NULL);
 
 // cancels a currently running coroutine
-VSTDLIB_INTERFACE void Coroutine_Cancel( HCoroutine hCoroutine );
+VSTDLIB_INTERFACE void Coroutine_Cancel(HCoroutine hCoroutine);
 
 // 'load' a coroutine only to debug it - immediately breaks into debugger
 // when continued, pops back to the prior coroutine
-VSTDLIB_INTERFACE void Coroutine_DebugBreak( HCoroutine hCoroutine );
+VSTDLIB_INTERFACE void Coroutine_DebugBreak(HCoroutine hCoroutine);
 
 // Load a coroutine and generate an assert.  Used to get a minidump of a job
-VSTDLIB_INTERFACE void Coroutine_DebugAssert( HCoroutine hCoroutine, const char *pchMsg );
+VSTDLIB_INTERFACE void Coroutine_DebugAssert(HCoroutine hCoroutine, const char *pchMsg);
 
 // called from the coroutine to return control to the main thread
 VSTDLIB_INTERFACE void Coroutine_YieldToMain();
@@ -59,11 +59,9 @@ VSTDLIB_INTERFACE void Coroutine_ReleaseThreadMemory();
 VSTDLIB_INTERFACE bool Coroutine_Test();
 
 // memory validation
-VSTDLIB_INTERFACE void Coroutine_ValidateGlobals( class CValidator &validator );
+VSTDLIB_INTERFACE void Coroutine_ValidateGlobals(class CValidator &validator);
 
 // for debugging purposes - returns stack depth of current coroutine
 VSTDLIB_INTERFACE size_t Coroutine_GetStackDepth();
-
-
 
 #endif // COROUTINE_H

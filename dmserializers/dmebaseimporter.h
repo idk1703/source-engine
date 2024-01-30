@@ -17,15 +17,18 @@ class CDmeBaseImporter : public IDmLegacyUpdater
 	typedef IDmLegacyUpdater BaseClass;
 
 public:
-	CDmeBaseImporter( char const *formatName, char const *nextFormatName );
+	CDmeBaseImporter(char const *formatName, char const *nextFormatName);
 
-	virtual const char *GetName() const { return m_pFormatName; }
+	virtual const char *GetName() const
+	{
+		return m_pFormatName;
+	}
 	virtual bool IsLatestVersion() const;
 
-	virtual bool Update( CDmElement **ppRoot );
+	virtual bool Update(CDmElement **ppRoot);
 
 private:
-	virtual bool DoFixup( CDmElement *pRoot ) = 0;
+	virtual bool DoFixup(CDmElement *pRoot) = 0;
 
 protected:
 	char const *m_pFormatName;
@@ -37,7 +40,7 @@ class CSFMBaseImporter : public CDmeBaseImporter
 	typedef CDmeBaseImporter BaseClass;
 
 public:
-	CSFMBaseImporter( char const *formatName, char const *nextFormatName );
+	CSFMBaseImporter(char const *formatName, char const *nextFormatName);
 };
 
 #endif // DMEBASEIMPORTER_H

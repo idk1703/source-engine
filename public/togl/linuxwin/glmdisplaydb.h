@@ -22,7 +22,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #ifndef GLMDISPLAYDB_H
-#define	GLMDISPLAYDB_H
+#define GLMDISPLAYDB_H
 
 #include "tier1/utlvector.h"
 
@@ -35,14 +35,14 @@
 class GLMDisplayMode
 {
 public:
-	GLMDisplayModeInfoFields	m_info;
+	GLMDisplayModeInfoFields m_info;
 
-	GLMDisplayMode( uint width, uint height, uint refreshHz );
-	GLMDisplayMode() { };
-	~GLMDisplayMode( void );
+	GLMDisplayMode(uint width, uint height, uint refreshHz);
+	GLMDisplayMode() {};
+	~GLMDisplayMode(void);
 
-	void	Init( uint width, uint height, uint refreshHz );
-	void	Dump( int which );
+	void Init(uint width, uint height, uint refreshHz);
+	void Dump(int which);
 };
 
 //===============================================================================
@@ -52,21 +52,21 @@ public:
 class GLMDisplayInfo
 {
 public:
-	GLMDisplayInfoFields			m_info;
-	CUtlVector< GLMDisplayMode* >	*m_modes;				// starts out NULL, set by PopulateModes
-	GLMDisplayMode					m_DesktopMode;
+	GLMDisplayInfoFields m_info;
+	CUtlVector<GLMDisplayMode *> *m_modes; // starts out NULL, set by PopulateModes
+	GLMDisplayMode m_DesktopMode;
 
 #ifdef OSX
-	GLMDisplayInfo( CGDirectDisplayID displayID, CGOpenGLDisplayMask displayMask );
+	GLMDisplayInfo(CGDirectDisplayID displayID, CGOpenGLDisplayMask displayMask);
 #else
-	GLMDisplayInfo( void );
+	GLMDisplayInfo(void);
 #endif
 
-	~GLMDisplayInfo( void );
+	~GLMDisplayInfo(void);
 
-	void	PopulateModes( void );
+	void PopulateModes(void);
 
-	void	Dump( int which );
+	void Dump(int which);
 
 #ifdef OSX
 private:
@@ -81,25 +81,25 @@ private:
 class GLMRendererInfo
 {
 public:
-	GLMRendererInfoFields			m_info;
+	GLMRendererInfoFields m_info;
 #ifdef OSX
-	CUtlVector< GLMDisplayInfo* >	*m_displays;			// starts out NULL, set by PopulateDisplays
+	CUtlVector<GLMDisplayInfo *> *m_displays; // starts out NULL, set by PopulateDisplays
 #else
-	GLMDisplayInfo					*m_display;
+	GLMDisplayInfo *m_display;
 #endif
 
 #ifdef OSX
-	GLMRendererInfo			( GLMRendererInfoFields *info );
+	GLMRendererInfo(GLMRendererInfoFields *info);
 #else
-	GLMRendererInfo			();
+	GLMRendererInfo();
 #endif
-	~GLMRendererInfo		( void );
+	~GLMRendererInfo(void);
 
 #ifndef OSX
-	void	Init( GLMRendererInfoFields *info );
+	void Init(GLMRendererInfoFields *info);
 #endif
-	void	PopulateDisplays();
-	void	Dump( int which );
+	void PopulateDisplays();
+	void Dump(int which);
 };
 
 //===============================================================================
@@ -116,8 +116,8 @@ public:
 
 struct GLMFakeAdapter
 {
-	int		m_rendererIndex;
-	int		m_displayIndex;
+	int m_rendererIndex;
+	int m_displayIndex;
 };
 #endif
 
@@ -125,33 +125,35 @@ class GLMDisplayDB
 {
 public:
 #ifdef OSX
-	CUtlVector< GLMRendererInfo* >		*m_renderers;			// starts out NULL, set by PopulateRenderers
-	CUtlVector< GLMFakeAdapter >		m_fakeAdapters;
+	CUtlVector<GLMRendererInfo *> *m_renderers; // starts out NULL, set by PopulateRenderers
+	CUtlVector<GLMFakeAdapter> m_fakeAdapters;
 #else
-	GLMRendererInfo	m_renderer;
+	GLMRendererInfo m_renderer;
 #endif
 
-	GLMDisplayDB	( void );
-	~GLMDisplayDB	( void );
+	GLMDisplayDB(void);
+	~GLMDisplayDB(void);
 
-	virtual void	PopulateRenderers( void );
-	virtual void	PopulateFakeAdapters( uint realRendererIndex );		// fake adapters = one real adapter times however many displays are on it
-	virtual void	Populate( void );
+	virtual void PopulateRenderers(void);
+	virtual void PopulateFakeAdapters(
+		uint realRendererIndex); // fake adapters = one real adapter times however many displays are on it
+	virtual void Populate(void);
 
 	// The info-get functions return false on success.
-	virtual	int		GetFakeAdapterCount( void );
-	virtual	bool	GetFakeAdapterInfo( int fakeAdapterIndex, int *rendererOut, int *displayOut, GLMRendererInfoFields *rendererInfoOut, GLMDisplayInfoFields *displayInfoOut );
+	virtual int GetFakeAdapterCount(void);
+	virtual bool GetFakeAdapterInfo(int fakeAdapterIndex, int *rendererOut, int *displayOut,
+									GLMRendererInfoFields *rendererInfoOut, GLMDisplayInfoFields *displayInfoOut);
 
-	virtual	int		GetRendererCount( void );
-	virtual	bool	GetRendererInfo( int rendererIndex, GLMRendererInfoFields *infoOut );
+	virtual int GetRendererCount(void);
+	virtual bool GetRendererInfo(int rendererIndex, GLMRendererInfoFields *infoOut);
 
-	virtual	int		GetDisplayCount( int rendererIndex );
-	virtual	bool	GetDisplayInfo( int rendererIndex, int displayIndex, GLMDisplayInfoFields *infoOut );
+	virtual int GetDisplayCount(int rendererIndex);
+	virtual bool GetDisplayInfo(int rendererIndex, int displayIndex, GLMDisplayInfoFields *infoOut);
 
-	virtual	int		GetModeCount( int rendererIndex, int displayIndex );
-	virtual	bool	GetModeInfo( int rendererIndex, int displayIndex, int modeIndex, GLMDisplayModeInfoFields *infoOut );
+	virtual int GetModeCount(int rendererIndex, int displayIndex);
+	virtual bool GetModeInfo(int rendererIndex, int displayIndex, int modeIndex, GLMDisplayModeInfoFields *infoOut);
 
-	virtual	void	Dump( void );
+	virtual void Dump(void);
 };
 
 #endif // GLMDISPLAYDB_H

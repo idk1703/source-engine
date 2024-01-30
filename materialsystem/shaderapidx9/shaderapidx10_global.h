@@ -15,5 +15,4 @@
 
 #include "shaderapi_global.h"
 
-
 #endif // SHADERAPIDX10_GLOBAL_H

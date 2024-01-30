@@ -7,7 +7,6 @@ class VertexCache
 {
 
 public:
-
 	VertexCache(int size)
 	{
 		numEntries = size;
@@ -18,8 +17,15 @@ public:
 			entries[i] = -1;
 	}
 
-	VertexCache() { VertexCache(16); }
-	~VertexCache() { delete[] entries; entries = 0; }
+	VertexCache()
+	{
+		VertexCache(16);
+	}
+	~VertexCache()
+	{
+		delete[] entries;
+		entries = 0;
+	}
 
 	bool InCache(int entry)
 	{
@@ -42,7 +48,7 @@ public:
 
 		removed = entries[numEntries - 1];
 
-		//push everything right one
+		// push everything right one
 		for(int i = numEntries - 2; i >= 0; i--)
 		{
 			entries[i + 1] = entries[i];
@@ -58,7 +64,7 @@ public:
 		memset(entries, -1, sizeof(int) * numEntries);
 	}
 
-	void Copy(VertexCache* inVcache)
+	void Copy(VertexCache *inVcache)
 	{
 		for(int i = 0; i < numEntries; i++)
 		{
@@ -66,14 +72,18 @@ public:
 		}
 	}
 
-	int At(int index) { return entries[index]; }
-	void Set(int index, int value) { entries[index] = value; }
+	int At(int index)
+	{
+		return entries[index];
+	}
+	void Set(int index, int value)
+	{
+		entries[index] = value;
+	}
 
 private:
-
 	int *entries;
 	int numEntries;
-
 };
 
 #endif

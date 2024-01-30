@@ -15,21 +15,21 @@
 
 class CCvarTextEntry : public vgui::TextEntry
 {
-	DECLARE_CLASS_SIMPLE( CCvarTextEntry, vgui::TextEntry );
+	DECLARE_CLASS_SIMPLE(CCvarTextEntry, vgui::TextEntry);
 
 public:
-	CCvarTextEntry( vgui::Panel *parent, const char *panelName, char const *cvarname );
+	CCvarTextEntry(vgui::Panel *parent, const char *panelName, char const *cvarname);
 	~CCvarTextEntry();
 
-	MESSAGE_FUNC( OnTextChanged, "TextChanged" );
-	void			ApplyChanges(  bool immediate = false );
-	virtual void	ApplySchemeSettings(vgui::IScheme *pScheme);
-	void            Reset();
-	bool            HasBeenModified();
+	MESSAGE_FUNC(OnTextChanged, "TextChanged");
+	void ApplyChanges(bool immediate = false);
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	void Reset();
+	bool HasBeenModified();
 
 private:
-	char			*m_pszCvarName;
-	char			m_pszStartValue[64];
+	char *m_pszCvarName;
+	char m_pszStartValue[64];
 };
 
 #endif // CVARTEXTENTRY_H

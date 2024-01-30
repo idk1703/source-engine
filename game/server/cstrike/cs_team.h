@@ -12,49 +12,45 @@
 #pragma once
 #endif
 
-
 #include "utlvector.h"
 #include "team.h"
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Team Manager
 //-----------------------------------------------------------------------------
 class CCSTeam : public CTeam
 {
-	DECLARE_CLASS( CCSTeam, CTeam );
+	DECLARE_CLASS(CCSTeam, CTeam);
+
 public:
-	virtual ~CCSTeam( void );
+	virtual ~CCSTeam(void);
 
 	DECLARE_SERVERCLASS();
 
 	// Initialization
-	virtual void Init( const char *pName, int iNumber );
+	virtual void Init(const char *pName, int iNumber);
 
-	virtual void Precache( void );
-	virtual void Think( void );
+	virtual void Precache(void);
+	virtual void Think(void);
 
 	//-----------------------------------------------------------------------------
 	// Players
 	//-----------------------------------------------------------------------------
-	virtual void AddPlayer( CBasePlayer *pPlayer );
-	virtual void RemovePlayer( CBasePlayer *pPlayer );
+	virtual void AddPlayer(CBasePlayer *pPlayer);
+	virtual void RemovePlayer(CBasePlayer *pPlayer);
 
 	//-----------------------------------------------------------------------------
 	// Utility funcs
 	//-----------------------------------------------------------------------------
-	CCSTeam*		GetEnemyTeam();
+	CCSTeam *GetEnemyTeam();
 
 private:
-
 	// Used to distribute resources to a team
-	float	m_flNextResourceTime;
+	float m_flNextResourceTime;
 
-	int		m_iLastUpdateSentAt;
+	int m_iLastUpdateSentAt;
 };
 
-
-extern CCSTeam *GetGlobalTFTeam( int iIndex );
-
+extern CCSTeam *GetGlobalTFTeam(int iIndex);
 
 #endif // TF_TEAM_H

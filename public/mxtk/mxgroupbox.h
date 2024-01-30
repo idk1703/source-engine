@@ -14,17 +14,11 @@
 #ifndef INCLUDED_MXGROUPBOX
 #define INCLUDED_MXGROUPBOX
 
-
-
 #ifndef INCLUDED_MXWIDGET
 #include "mxtk/mxWidget.h"
 #endif
 
-
-
 class mxWindow;
-
-
 
 class mxGroupBox_i;
 class mxGroupBox : public mxWidget
@@ -33,15 +27,13 @@ class mxGroupBox : public mxWidget
 
 public:
 	// CREATORS
-	mxGroupBox (mxWindow *parent, int x, int y, int w, int h, const char *label = 0);
-	virtual ~mxGroupBox ();
+	mxGroupBox(mxWindow *parent, int x, int y, int w, int h, const char *label = 0);
+	virtual ~mxGroupBox();
 
 private:
 	// NOT IMPLEMENTED
-	mxGroupBox (const mxGroupBox&);
-	mxGroupBox& operator= (const mxGroupBox&);
+	mxGroupBox(const mxGroupBox &);
+	mxGroupBox &operator=(const mxGroupBox &);
 };
-
-
 
 #endif // INCLUDED_MXGROUPBOX

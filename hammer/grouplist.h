@@ -12,21 +12,18 @@
 
 #include "utlvector.h"
 
-
-#define GROUPLIST_MSG_TOGGLE_STATE			"GroupList_ToggleState"
-#define GROUPLIST_MSG_LEFT_DRAG_DROP		"GroupList_LeftDragDrop"
-#define GROUPLIST_MSG_RIGHT_DRAG_DROP		"GroupList_RightDragDrop"
-#define GROUPLIST_MSG_SEL_CHANGE			"GroupList_SelChange"
-
+#define GROUPLIST_MSG_TOGGLE_STATE	  "GroupList_ToggleState"
+#define GROUPLIST_MSG_LEFT_DRAG_DROP  "GroupList_LeftDragDrop"
+#define GROUPLIST_MSG_RIGHT_DRAG_DROP "GroupList_RightDragDrop"
+#define GROUPLIST_MSG_SEL_CHANGE	  "GroupList_SelChange"
 
 class CVisGroup;
-
 
 //
 // A structure that maps visgroups to HTREEITEMs so that callers don't have
 // to deal with the hierarchical data.
 //
-//struct VisGroupTreeItem_t
+// struct VisGroupTreeItem_t
 //{
 //	CVisGroup *pVisGroup;
 //	HTREEITEM hItem;
@@ -35,13 +32,12 @@ class CVisGroup;
 struct GroupListPair
 {
 	CVisGroup *pVisGroup;
-	bool	  bExpanded;
+	bool bExpanded;
 };
 
 class CGroupList : public CTreeCtrl
 {
 public:
-
 	CGroupList();
 	virtual ~CGroupList();
 
@@ -76,11 +72,10 @@ public:
 	//}}AFX_VIRTUAL
 
 protected:
-
 	// Generated message map functions
 	//{{AFX_MSG(CGroupList)
-	afx_msg void OnBegindrag(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnEndlabeledit(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnBegindrag(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnEndlabeledit(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
@@ -95,7 +90,6 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 private:
-
 	enum DropType_t
 	{
 		DROP_LEFT = 0,
@@ -130,7 +124,6 @@ private:
 	CUtlVector<GroupListPair> m_GroupPairs;
 };
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
@@ -138,7 +131,6 @@ void CGroupList::Invalidate(bool bErase)
 {
 	CTreeCtrl::Invalidate(bErase ? TRUE : FALSE);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Enables or disables updates. Useful for populating the groups list
@@ -148,7 +140,6 @@ void CGroupList::SetRedraw(bool bRedraw)
 {
 	CTreeCtrl::SetRedraw(bRedraw ? TRUE : FALSE);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -160,6 +151,5 @@ bool CGroupList::SubclassDlgItem(int nCtrlID, CWnd *pwndParent)
 {
 	return (CTreeCtrl::SubclassDlgItem(nCtrlID, pwndParent) == TRUE);
 }
-
 
 #endif // GROUPLIST_H

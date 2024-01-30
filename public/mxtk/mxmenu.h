@@ -14,13 +14,9 @@
 #ifndef INCLUDED_MXMENU
 #define INCLUDED_MXMENU
 
-
-
 #ifndef INCLUDED_MXWIDGET
 #include "mxtk/mxWidget.h"
 #endif
-
-
 
 class mxMenu_i;
 class mxMenu : public mxWidget
@@ -29,26 +25,24 @@ class mxMenu : public mxWidget
 
 public:
 	// CREATORS
-	mxMenu ();
-	virtual ~mxMenu ();
+	mxMenu();
+	virtual ~mxMenu();
 
 	// MANIPULATORS
-	void add (const char *item, int id);
-	void addMenu (const char *item, mxMenu *menu);
-	void addSeparator ();
-	void setEnabled (int id, bool b);
-	void setChecked (int id, bool b);
+	void add(const char *item, int id);
+	void addMenu(const char *item, mxMenu *menu);
+	void addSeparator();
+	void setEnabled(int id, bool b);
+	void setChecked(int id, bool b);
 
 	// ACCESSORS
-	bool isEnabled (int id) const;
-	bool isChecked (int id) const;
+	bool isEnabled(int id) const;
+	bool isChecked(int id) const;
 
 private:
 	// NOT IMPLEMENTED
-	mxMenu (const mxMenu&);
-	mxMenu& operator= (const mxMenu&);
+	mxMenu(const mxMenu &);
+	mxMenu &operator=(const mxMenu &);
 };
-
-
 
 #endif // INCLUDED_MXMENU

@@ -15,34 +15,27 @@
 class CDODHandGrenade : public CDODBaseGrenade
 {
 public:
-	DECLARE_CLASS( CDODHandGrenade, CDODBaseGrenade );
+	DECLARE_CLASS(CDODHandGrenade, CDODBaseGrenade);
 
-// Overrides.
+	// Overrides.
 public:
 	CDODHandGrenade() {}
 	virtual void Spawn();
 	virtual void Precache();
-	virtual void BounceSound( void );
+	virtual void BounceSound(void);
 
-// Grenade stuff.
+	// Grenade stuff.
 public:
+	static CDODHandGrenade *Create(const Vector &position, const QAngle &angles, const Vector &velocity,
+								   const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, float timer,
+								   DODWeaponID weaponID);
 
-	static CDODHandGrenade* Create(
-		const Vector &position,
-		const QAngle &angles,
-		const Vector &velocity,
-		const AngularImpulse &angVelocity,
-		CBaseCombatCharacter *pOwner,
-		float timer,
-		DODWeaponID weaponID );
-
-	void SetTimer( float timer );
+	void SetTimer(float timer);
 
 	virtual char *GetExplodingClassname();
 
 private:
 	float m_flDetonateTime;
 };
-
 
 #endif // DOD_HANDGRENADE_H

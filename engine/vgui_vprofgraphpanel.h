@@ -15,12 +15,10 @@ namespace vgui
 	class Panel;
 }
 
-
 //-----------------------------------------------------------------------------
 // Creates/destroys the vprof graph panel
 //-----------------------------------------------------------------------------
-void CreateVProfGraphPanel( vgui::Panel *pParent );
+void CreateVProfGraphPanel(vgui::Panel *pParent);
 void DestroyVProfGraphPanel();
-
 
 #endif // VGUI_VPROFGRAPHPANEL_H

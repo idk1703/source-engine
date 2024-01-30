@@ -13,18 +13,17 @@
 class IVProfExport;
 class CVProfile;
 
-
-void PreUpdateProfile( float filteredtime );
+void PreUpdateProfile(float filteredtime);
 void PostUpdateProfile();
 void UpdateVXConsoleProfile();
 
-void RegisterVProfDataListener( ra_listener_id listenerID ); // remote data clients
-void RemoveVProfDataListener( ra_listener_id listenerID ); // remote data clients
+void RegisterVProfDataListener(ra_listener_id listenerID); // remote data clients
+void RemoveVProfDataListener(ra_listener_id listenerID);   // remote data clients
 void WriteRemoteVProfData();
 
 // Used to point the budget panel at remote data
-void OverrideVProfExport( IVProfExport *pExport );
-void ResetVProfExport( IVProfExport *pExport );
+void OverrideVProfExport(IVProfExport *pExport);
+void ResetVProfExport(IVProfExport *pExport);
 
 // Take a snapshot of vprof data so we can send it to the dedicated server.
 void VProfExport_SnapshotVProfHistory();
@@ -40,6 +39,5 @@ extern IVProfExport *g_pVProfExport; // used by engine's budget panel
 
 // The budget panel and vprof panels use this for display.
 extern CVProfile *g_pVProfileForDisplay;
-
 
 #endif

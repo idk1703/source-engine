@@ -17,7 +17,7 @@
 #endif
 #ifndef __TFSTATSREPORT_H
 #define __TFSTATSREPORT_H
-#pragma warning(disable:4786)
+#pragma warning(disable : 4786)
 #include <time.h>
 #include "BinaryResource.h"
 #include "MatchInfo.h"
@@ -41,18 +41,16 @@ private:
 	bool valid;
 	void init();
 
-/*
-	const char* makeDurationString();
-	char DurationString[300];
-*/
-
+	/*
+		const char* makeDurationString();
+		char DurationString[300];
+	*/
 
 	void generate();
 
-	static char* javaScriptSource;
-	static char* styleSheetSource;
-	//CMatchInfo* pMatchInfo;
-
+	static char *javaScriptSource;
+	static char *styleSheetSource;
+	// CMatchInfo* pMatchInfo;
 
 	static CBinaryResource gifAwards;
 	static CBinaryResource jpgBgLeft;
@@ -71,10 +69,7 @@ private:
 	static CBinaryResource gifPlayerStatsServerOff;
 	static CBinaryResource gifPlayerStatsServerOn;
 
-
-
 public:
-
 	explicit CTFStatsReport();
 
 	void genImages();
@@ -86,7 +81,6 @@ public:
 	void genNavFrame();
 
 	virtual ~CTFStatsReport();
-
 };
 
 #endif

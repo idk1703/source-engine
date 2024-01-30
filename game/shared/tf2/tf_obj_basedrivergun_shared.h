@@ -10,7 +10,7 @@
 #pragma once
 #endif
 
-#if defined( CLIENT_DLL )
+#if defined(CLIENT_DLL)
 #define CBaseObjectDriverGun C_BaseObjectDriverGun
 #endif
 
@@ -21,7 +21,7 @@
 // ------------------------------------------------------------------------
 class CBaseObjectDriverGun : public CBaseObjectUpgrade
 {
-DECLARE_CLASS( CBaseObjectDriverGun, CBaseObjectUpgrade );
+	DECLARE_CLASS(CBaseObjectDriverGun, CBaseObjectUpgrade);
 
 public:
 	DECLARE_NETWORKCLASS();
@@ -29,36 +29,45 @@ public:
 
 	CBaseObjectDriverGun();
 
-	virtual void	Spawn( void );
-	virtual void	FinishedBuilding( void );
+	virtual void Spawn(void);
+	virtual void FinishedBuilding(void);
 
 	// Firing
-	virtual bool	CanFireNow( void ) { return false; }
-	virtual void	Fire( CBaseTFPlayer *pDriver ) { return; }
+	virtual bool CanFireNow(void)
+	{
+		return false;
+	}
+	virtual void Fire(CBaseTFPlayer *pDriver)
+	{
+		return;
+	}
 
 	// Turning
-	virtual void			SetTargetAngles( const QAngle &vecAngles );
-	virtual const QAngle	&GetCurrentAngles( void );
-	virtual Vector			GetFireOrigin( void );
+	virtual void SetTargetAngles(const QAngle &vecAngles);
+	virtual const QAngle &GetCurrentAngles(void);
+	virtual Vector GetFireOrigin(void);
 
 	// HUD
-	virtual void			DrawHudElements( void ) { return; }
+	virtual void DrawHudElements(void)
+	{
+		return;
+	}
 
 #ifdef CLIENT_DLL
 	// All predicted weapons need to implement and return true
-	virtual bool	IsPredicted( void ) const
+	virtual bool IsPredicted(void) const
 	{
 		return true;
 	}
 
-	virtual bool	ShouldPredict( void );
+	virtual bool ShouldPredict(void);
 #endif
 
 protected:
-	CNetworkQAngle( m_vecGunAngles );
+	CNetworkQAngle(m_vecGunAngles);
 
 private:
-	CBaseObjectDriverGun( const CBaseObjectDriverGun & ); // not defined, not accessible
+	CBaseObjectDriverGun(const CBaseObjectDriverGun &); // not defined, not accessible
 };
 
 #endif // TF_OBJ_BASEDRIVERGUN_H

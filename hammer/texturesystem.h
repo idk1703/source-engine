@@ -17,10 +17,8 @@
 #include "utldict.h"
 #include "FileChangeWatcher.h"
 
-
 class CGameConfig;
 class CTextureSystem;
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Defines the interface to a set of textures of a given texture format.
@@ -33,7 +31,7 @@ public:
 
 	inline const char *GetName()
 	{
-		return(m_szName);
+		return (m_szName);
 	}
 
 	inline int GetCount(void)
@@ -43,7 +41,7 @@ public:
 
 	inline TEXTUREFORMAT GetTextureFormat(void)
 	{
-		return(m_eTextureFormat);
+		return (m_eTextureFormat);
 	}
 
 	inline void SetTextureFormat(TEXTUREFORMAT eTextureFormat)
@@ -55,28 +53,26 @@ public:
 	void Sort(void);
 
 	IEditorTexture *GetTexture(int nIndex);
-	IEditorTexture* GetTexture( char const* pName );
+	IEditorTexture *GetTexture(char const *pName);
 
 	// Fast find texture..
-	IEditorTexture* FindTextureByName( const char *pName, int *piIndex, TEXTUREFORMAT eDesiredFormat );
+	IEditorTexture *FindTextureByName(const char *pName, int *piIndex, TEXTUREFORMAT eDesiredFormat);
 
 	// Used to lazily load in all the textures
 	void LazyLoadTextures();
 
 protected:
-
 	char m_szName[MAX_PATH];
 	TEXTUREFORMAT m_eTextureFormat;
 	CUtlVector<IEditorTexture *> m_Textures;
-	CUtlDict<int,int> m_TextureNameMap;	// Maps the texture name to an index into m_Textures (the key is IEditorTexture::GetName).
+	CUtlDict<int, int>
+		m_TextureNameMap; // Maps the texture name to an index into m_Textures (the key is IEditorTexture::GetName).
 
 	// Used to lazily load the textures in the group
-	int	m_nTextureToLoad;
+	int m_nTextureToLoad;
 };
 
-
 typedef CUtlVector<CTextureGroup *> TextureGroupList_t;
-
 
 typedef struct tagGF
 {
@@ -88,37 +84,35 @@ typedef struct tagGF
 
 } GRAPHICSFILESTRUCT;
 
-
 //
 // When the user switches game configs, all the textures and materials are switched.
 // This structure holds all the context necessary to accomplish this.
 //
 struct TextureContext_t
 {
-	CGameConfig *pConfig;			// The game config that this texture context corresponds to.
+	CGameConfig *pConfig; // The game config that this texture context corresponds to.
 	CTextureGroup *pAllGroup;
 	TextureGroupList_t Groups;
-	EditorTextureList_t MRU;		// List of Most Recently Used textures, first is the most recent.
-	EditorTextureList_t Dummies;	// List of Dummy textures - textures that were created to hold the place of missing textures.
+	EditorTextureList_t MRU; // List of Most Recently Used textures, first is the most recent.
+	EditorTextureList_t
+		Dummies; // List of Dummy textures - textures that were created to hold the place of missing textures.
 };
-
 
 class CMaterialFileChangeWatcher : private CFileChangeWatcher::ICallbacks
 {
 public:
-	void Init( CTextureSystem *pSystem, int context );
-	void Update();	// Call this periodically to update.
+	void Init(CTextureSystem *pSystem, int context);
+	void Update(); // Call this periodically to update.
 
 private:
 	// CFileChangeWatcher::ICallbacks..
-	virtual void OnFileChange( const char *pRelativeFilename, const char *pFullFilename );
+	virtual void OnFileChange(const char *pRelativeFilename, const char *pFullFilename);
 
 private:
 	CFileChangeWatcher m_Watcher;
 	CTextureSystem *m_pTextureSystem;
 	int m_Context;
 };
-
 
 class CTextureSystem : public IMaterialEnumerator
 {
@@ -181,19 +175,19 @@ public:
 	void InformPaletteChanged(void);
 
 	// IMaterialEnumerator interface, Used to add all the world materials into the material list.
-	bool EnumMaterial( const char *pMaterialName, int nContext );
+	bool EnumMaterial(const char *pMaterialName, int nContext);
 
 	// Used to lazily load in all the textures during app idle.
 	void LazyLoadTextures();
 
 	// Registers the keywords as existing in a particular material.
-	void RegisterTextureKeywords( IEditorTexture *pTexture );
+	void RegisterTextureKeywords(IEditorTexture *pTexture);
 
 	// Opens the source file associated with a material.
-	void OpenSource( const char *pMaterialName );
+	void OpenSource(const char *pMaterialName);
 
 	// Reload individual textures.
-	void ReloadTextures( const char *pFilterName );
+	void ReloadTextures(const char *pFilterName);
 
 	// bind local cubemap again
 	void RebindDefaultCubeMap();
@@ -201,27 +195,29 @@ public:
 	void UpdateFileChangeWatchers();
 
 	// Gets tools/toolsnodraw
-	IEditorTexture* GetNoDrawTexture() { return m_pNoDrawTexture; }
+	IEditorTexture *GetNoDrawTexture()
+	{
+		return m_pNoDrawTexture;
+	}
 
-	int AddTexture( IEditorTexture *pTexture );
+	int AddTexture(IEditorTexture *pTexture);
 
 protected:
-
-// CMaterialFileChangeWatcher stuff - watches for changes to VMTs or VTFs and handles them.
+	// CMaterialFileChangeWatcher stuff - watches for changes to VMTs or VTFs and handles them.
 
 	enum EFileType
 	{
 		k_eFileTypeVMT,
 		k_eFileTypeVTF
 	};
-	void OnFileChange( const char *pFilename, int context, EFileType eFileType );
-	void ReloadMaterialsUsingTexture( ITexture *pTestTexture );
+	void OnFileChange(const char *pFilename, int context, EFileType eFileType);
+	void ReloadMaterialsUsingTexture(ITexture *pTestTexture);
 
-	static bool GetFileTypeFromFilename( const char *pFilename, CTextureSystem::EFileType *pFileType );
+	static bool GetFileTypeFromFilename(const char *pFilename, CTextureSystem::EFileType *pFileType);
 
-	CUtlVector<CMaterialFileChangeWatcher*> m_ChangeWatchers;
+	CUtlVector<CMaterialFileChangeWatcher *> m_ChangeWatchers;
 
-// Internal stuff.
+	// Internal stuff.
 
 	void FreeAllTextures();
 
@@ -230,7 +226,6 @@ protected:
 
 	void LoadMaterials(CGameConfig *pConfig);
 	void LoadWADFiles(CGameConfig *pConfig);
-
 
 	DWORD LoadGraphicsFile(const char *pFilename);
 	void LoadGraphicsFileWAD3(GRAPHICSFILESTRUCT *pFile, int fd, CTextureGroup *pGroup);
@@ -252,9 +247,9 @@ protected:
 	// List of groups (sets of textures of a given texture format). Only one
 	// group can be active at a time, based on the game configuration.
 	//
-	CUtlVector<TextureContext_t> m_TextureContexts;		// One per game config.
-	TextureContext_t *m_pActiveContext;					// Points to the active entry in m_TextureContexts.
-	CTextureGroup *m_pActiveGroup;						// Points to the active entry in m_TextureContexts.
+	CUtlVector<TextureContext_t> m_TextureContexts; // One per game config.
+	TextureContext_t *m_pActiveContext;				// Points to the active entry in m_TextureContexts.
+	CTextureGroup *m_pActiveGroup;					// Points to the active entry in m_TextureContexts.
 
 	//
 	// List of keywords found in all textures.
@@ -265,18 +260,16 @@ protected:
 	ITexture *m_pCubemapTexture;
 
 	// tools/toolsnodraw
-	IEditorTexture* m_pNoDrawTexture;
+	IEditorTexture *m_pNoDrawTexture;
 };
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 int CTextureSystem::FilesGetCount(void) const
 {
-	return(m_GraphicsFiles.Count());
+	return (m_GraphicsFiles.Count());
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -285,30 +278,28 @@ int CTextureSystem::FilesGetCount(void) const
 //-----------------------------------------------------------------------------
 void CTextureSystem::FilesGetInfo(GRAPHICSFILESTRUCT *pFileInfo, int nIndex) const
 {
-	if (pFileInfo != NULL)
+	if(pFileInfo != NULL)
 	{
 		*pFileInfo = m_GraphicsFiles[nIndex];
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns the number of textures in the active group.
 //-----------------------------------------------------------------------------
 int CTextureSystem::GetActiveTextureCount(void) const
 {
-	if (m_pActiveGroup != NULL)
+	if(m_pActiveGroup != NULL)
 	{
 		return m_pActiveGroup->GetCount();
 	}
 
-	return(0);
+	return (0);
 }
-
 
 IEditorTexture *CTextureSystem::GetActiveTexture(int nIndex) const
 {
-	if (m_pActiveGroup != NULL)
+	if(m_pActiveGroup != NULL)
 	{
 		return m_pActiveGroup->GetTexture(nIndex);
 	}
@@ -316,43 +307,38 @@ IEditorTexture *CTextureSystem::GetActiveTexture(int nIndex) const
 	return NULL;
 }
 
-
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 int CTextureSystem::GroupsGetCount() const
 {
-	if (!m_pActiveContext)
+	if(!m_pActiveContext)
 		return 0;
 
 	return m_pActiveContext->Groups.Count();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 CTextureGroup *CTextureSystem::GroupsGet(int nIndex) const
 {
-	if (!m_pActiveContext)
+	if(!m_pActiveContext)
 		return NULL;
 
 	return m_pActiveContext->Groups.Element(nIndex);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Initiates an iteration of the MRU list.
 //-----------------------------------------------------------------------------
 int CTextureSystem::MRUGetCount() const
 {
-	if (!m_pActiveContext)
+	if(!m_pActiveContext)
 		return NULL;
 
 	return m_pActiveContext->MRU.Count();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns the next texture in the MRU of the given format.
@@ -362,14 +348,12 @@ int CTextureSystem::MRUGetCount() const
 //-----------------------------------------------------------------------------
 IEditorTexture *CTextureSystem::MRUGet(int nIndex) const
 {
-	if (!m_pActiveContext)
+	if(!m_pActiveContext)
 		return NULL;
 
 	return m_pActiveContext->MRU.Element(nIndex);
 }
 
-
 extern CTextureSystem g_Textures;
-
 
 #endif // TEXTURESYSTEM_H

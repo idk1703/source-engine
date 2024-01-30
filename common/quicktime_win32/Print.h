@@ -20,16 +20,12 @@
 #include <ApplicationServices.h>
 #endif
 
-
 #ifndef __HITOOLBOX__
 #include <HIToolbox.h>
 #endif
 
-
 #ifndef __PMAPPLICATION__
 #include <PMApplication.h>
 #endif
-
-
 
 #endif /* __PRINT__ */

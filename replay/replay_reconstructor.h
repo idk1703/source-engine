@@ -14,7 +14,7 @@ class CReplay;
 
 //----------------------------------------------------------------------------------------
 
-bool Replay_Reconstruct( CReplay *pReplay, bool bDeleteBlocks = true );
+bool Replay_Reconstruct(CReplay *pReplay, bool bDeleteBlocks = true);
 
 //----------------------------------------------------------------------------------------
 

@@ -11,13 +11,10 @@
 #pragma once
 #endif
 
-
 #include "effect_dispatch_data.h"
 #include "recipientfilter.h"
 
-
-void DispatchEffect( const char *pName, const CEffectData &data );
-void DispatchEffect( const char *pName, const CEffectData &data, CRecipientFilter &filter );
-
+void DispatchEffect(const char *pName, const CEffectData &data);
+void DispatchEffect(const char *pName, const CEffectData &data, CRecipientFilter &filter);
 
 #endif // TE_EFFECT_DISPATCH_H

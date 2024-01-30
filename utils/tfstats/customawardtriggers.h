@@ -16,7 +16,7 @@
 #ifdef WIN32
 #pragma once
 #endif
-#pragma warning(disable :4786)
+#pragma warning(disable : 4786)
 #include "TextFile.h"
 #include "LogEvent.h"
 #include <vector>
@@ -37,76 +37,88 @@ using std::string;
 class CCustomAwardTrigger
 {
 public:
-	static CCustomAwardTrigger* readTrigger(CTextFile& f);
+	static CCustomAwardTrigger *readTrigger(CTextFile &f);
 	int plrValue;
 	int teamValue;
 
-	map<string,string> extraProps;
+	map<string, string> extraProps;
 
-	virtual bool matches(const CLogEvent* le)=0;
+	virtual bool matches(const CLogEvent *le) = 0;
 
-	virtual PID  plrIDFromEvent(const CLogEvent* ple){return -1;}
-	virtual string getTrackString(const CLogEvent* ple){return "";}
-	CCustomAwardTrigger(int value, int tmVal, map<string,string> extras){plrValue=value;teamValue=tmVal;extraProps=extras;}
+	virtual PID plrIDFromEvent(const CLogEvent *ple)
+	{
+		return -1;
+	}
+	virtual string getTrackString(const CLogEvent *ple)
+	{
+		return "";
+	}
+	CCustomAwardTrigger(int value, int tmVal, map<string, string> extras)
+	{
+		plrValue = value;
+		teamValue = tmVal;
+		extraProps = extras;
+	}
 };
-
 
 //------------------------------------------------------------------------------------------------------
 // Purpose: CBroadcastTrigger scans broadcast events for matching data
 //------------------------------------------------------------------------------------------------------
-class CBroadcastTrigger: public CCustomAwardTrigger
+class CBroadcastTrigger : public CCustomAwardTrigger
 {
 public:
-	CBroadcastTrigger(int value, int teamValue, vector<string>& keys,map<string,string> extras);
+	CBroadcastTrigger(int value, int teamValue, vector<string> &keys, map<string, string> extras);
 	vector<string> broadcastStrings;
-	virtual bool matches(const CLogEvent* le);
-	virtual PID  plrIDFromEvent(const CLogEvent* ple){return ple->getArgument(1)->asPlayerGetPID();}
+	virtual bool matches(const CLogEvent *le);
+	virtual PID plrIDFromEvent(const CLogEvent *ple)
+	{
+		return ple->getArgument(1)->asPlayerGetPID();
+	}
 
-	//this class doesn't need this function
-	//virtual string getTrackString(const CLogEvent* ple){return "";}
+	// this class doesn't need this function
+	// virtual string getTrackString(const CLogEvent* ple){return "";}
 };
-
 
 //------------------------------------------------------------------------------------------------------
 // Purpose: CGoalTrigger scans goal activations for matching data
 //------------------------------------------------------------------------------------------------------
-class CGoalTrigger: public CCustomAwardTrigger
+class CGoalTrigger : public CCustomAwardTrigger
 {
 public:
-	CGoalTrigger(int value, int teamValue, vector<string>& keys,map<string,string> extras);
+	CGoalTrigger(int value, int teamValue, vector<string> &keys, map<string, string> extras);
 	vector<string> goalNames;
-	virtual bool matches(const CLogEvent* le);
-	virtual PID  plrIDFromEvent(const CLogEvent* ple){return ple->getArgument(0)->asPlayerGetPID();}
+	virtual bool matches(const CLogEvent *le);
+	virtual PID plrIDFromEvent(const CLogEvent *ple)
+	{
+		return ple->getArgument(0)->asPlayerGetPID();
+	}
 
-	//this class doesn't need this function
-	//virtual string getTrackString(const CLogEvent* ple){return "";}
+	// this class doesn't need this function
+	// virtual string getTrackString(const CLogEvent* ple){return "";}
 };
-
 
 //------------------------------------------------------------------------------------------------------
 // Purpose: CFullSearchTrigger scans FullSearch activations for matching data
 //------------------------------------------------------------------------------------------------------
-class CFullSearchTrigger: public CCustomAwardTrigger
+class CFullSearchTrigger : public CCustomAwardTrigger
 {
 public:
-	int regExpCompare(string exp,string cmp);
+	int regExpCompare(string exp, string cmp);
 
-	map<string,string> varexpressions;
+	map<string, string> varexpressions;
 
-	CFullSearchTrigger(int value, int teamValue, vector<string>& ks,map<string,string> extras);
+	CFullSearchTrigger(int value, int teamValue, vector<string> &ks, map<string, string> extras);
 
 	vector<string> keys;
 
 	string winnerVar;
 
-	bool compare(string str_msg,string str_key,map<string,string>& varmatches);
-	virtual bool matches(const CLogEvent* le);
-	virtual PID  plrIDFromEvent(const CLogEvent* ple);
+	bool compare(string str_msg, string str_key, map<string, string> &varmatches);
+	virtual bool matches(const CLogEvent *le);
+	virtual PID plrIDFromEvent(const CLogEvent *ple);
 
-	//this class does
-	virtual string getTrackString(const CLogEvent* ple);
+	// this class does
+	virtual string getTrackString(const CLogEvent *ple);
 };
-
-
 
 #endif // CUSTOMAWARDTRIGGERS_H

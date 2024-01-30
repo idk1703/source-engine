@@ -13,82 +13,79 @@
 
 class CNPC_HGrunt : public CHL1BaseNPC
 {
-	DECLARE_CLASS( CNPC_HGrunt, CHL1BaseNPC );
+	DECLARE_CLASS(CNPC_HGrunt, CHL1BaseNPC);
+
 public:
+	void Precache(void);
+	void Spawn(void);
 
-	void	Precache( void );
-	void	Spawn( void );
+	void JustSpoke(void);
+	void SpeakSentence(void);
+	void PrescheduleThink(void);
 
-	void	JustSpoke( void );
-	void	SpeakSentence( void );
-	void	PrescheduleThink ( void );
+	bool FOkToSpeak(void);
 
-	bool	FOkToSpeak( void );
+	Class_T Classify(void);
+	int RangeAttack1Conditions(float flDot, float flDist);
+	int MeleeAttack1Conditions(float flDot, float flDist);
+	int RangeAttack2Conditions(float flDot, float flDist);
 
-	Class_T	Classify ( void );
-	int     RangeAttack1Conditions ( float flDot, float flDist );
-	int		MeleeAttack1Conditions ( float flDot, float flDist );
-	int     RangeAttack2Conditions ( float flDot, float flDist );
+	Activity NPC_TranslateActivity(Activity eNewActivity);
 
-	Activity NPC_TranslateActivity( Activity eNewActivity );
+	void ClearAttackConditions(void);
 
-	void	ClearAttackConditions( void );
+	int IRelationPriority(CBaseEntity *pTarget);
 
-	int		IRelationPriority( CBaseEntity *pTarget );
+	int GetGrenadeConditions(float flDot, float flDist);
 
-	int     GetGrenadeConditions ( float flDot, float flDist );
+	bool FCanCheckAttacks(void);
 
-	bool	FCanCheckAttacks( void );
+	int GetSoundInterests(void);
 
-	int     GetSoundInterests ( void );
+	void TraceAttack(const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr, CDmgAccumulator *pAccumulator);
+	int OnTakeDamage_Alive(const CTakeDamageInfo &inputInfo);
 
-	void    TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr, CDmgAccumulator *pAccumulator );
-	int		OnTakeDamage_Alive( const CTakeDamageInfo &inputInfo );
+	float MaxYawSpeed(void);
 
-	float	MaxYawSpeed( void );
+	void IdleSound(void);
 
-	void    IdleSound( void );
+	void CheckAmmo(void);
 
-	void	CheckAmmo ( void );
+	CBaseEntity *Kick(void);
 
-	CBaseEntity *Kick( void );
+	Vector Weapon_ShootPosition(void);
+	void HandleAnimEvent(animevent_t *pEvent);
 
-	Vector	Weapon_ShootPosition( void );
-	void	HandleAnimEvent( animevent_t *pEvent );
+	void Shoot(void);
+	void Shotgun(void);
 
-	void	Shoot ( void );
-	void	Shotgun( void );
+	void StartTask(const Task_t *pTask);
+	void RunTask(const Task_t *pTask);
 
-	void	StartTask ( const Task_t *pTask );
-	void	RunTask ( const Task_t *pTask );
+	int SelectSchedule(void);
+	int TranslateSchedule(int scheduleType);
 
-	int		SelectSchedule( void );
-	int		TranslateSchedule( int scheduleType );
+	void PainSound(const CTakeDamageInfo &info);
+	void DeathSound(const CTakeDamageInfo &info);
+	void SetAim(const Vector &aimDir);
 
+	bool HandleInteraction(int interactionType, void *data, CBaseCombatCharacter *sourceEnt);
 
-	void	PainSound( const CTakeDamageInfo &info );
-	void	DeathSound( const CTakeDamageInfo &info );
-	void	SetAim( const Vector &aimDir );
+	void StartNPC(void);
 
-	bool	HandleInteraction(int interactionType, void *data, CBaseCombatCharacter* sourceEnt);
+	int SquadRecruit(int searchRadius, int maxMembers);
 
-	void	StartNPC ( void );
-
-	int		SquadRecruit( int searchRadius, int maxMembers );
-
-	void	Event_Killed( const CTakeDamageInfo &info );
-
+	void Event_Killed(const CTakeDamageInfo &info);
 
 	static const char *pGruntSentences[];
 
-	bool	m_bInBarnacleMouth;
+	bool m_bInBarnacleMouth;
 
 public:
 	DECLARE_DATADESC();
 	DEFINE_CUSTOM_AI;
 
 private:
-
 	// checking the feasibility of a grenade toss is kind of costly, so we do it every couple of seconds,
 	// not every server frame.
 	float m_flNextGrenadeCheck;
@@ -96,22 +93,22 @@ private:
 	float m_flLastEnemySightTime;
 	float m_flTalkWaitTime;
 
-	Vector	m_vecTossVelocity;
+	Vector m_vecTossVelocity;
 
-	int		m_iLastGrenadeCondition;
-	bool	m_fStanding;
-	bool	m_fFirstEncounter;// only put on the handsign show in the squad's first encounter.
-	int		m_iClipSize;
+	int m_iLastGrenadeCondition;
+	bool m_fStanding;
+	bool m_fFirstEncounter; // only put on the handsign show in the squad's first encounter.
+	int m_iClipSize;
 
-	int		m_voicePitch;
+	int m_voicePitch;
 
-	int		m_iSentence;
+	int m_iSentence;
 
-	float	m_flCheckAttackTime;
+	float m_flCheckAttackTime;
 
-	int		m_iAmmoType;
+	int m_iAmmoType;
 
-	int		m_iWeapons;
+	int m_iWeapons;
 };
 
 #endif

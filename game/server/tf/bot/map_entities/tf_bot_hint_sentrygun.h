@@ -13,33 +13,36 @@ class CTFPlayer;
 class CTFBotHintSentrygun : public CBaseTFBotHintEntity
 {
 public:
-	DECLARE_CLASS( CTFBotHintSentrygun, CBaseTFBotHintEntity );
+	DECLARE_CLASS(CTFBotHintSentrygun, CBaseTFBotHintEntity);
 	DECLARE_DATADESC();
 
-	CTFBotHintSentrygun( void );
-	virtual ~CTFBotHintSentrygun() { }
+	CTFBotHintSentrygun(void);
+	virtual ~CTFBotHintSentrygun() {}
 
 	bool IsSticky() const;
 	bool IsInUse() const;
 
 	CTFPlayer *GetPlayerOwner() const;
-	void SetPlayerOwner( CTFPlayer *pPlayerOwner );
+	void SetPlayerOwner(CTFPlayer *pPlayerOwner);
 
 	void IncrementUseCount();
 	void DecrementUseCount();
 
-	void OnSentryGunDestroyed( CBaseEntity *pBaseEntity );
+	void OnSentryGunDestroyed(CBaseEntity *pBaseEntity);
 
-	bool IsAvailableForSelection( CTFPlayer *pRequestingPlayer ) const;
+	bool IsAvailableForSelection(CTFPlayer *pRequestingPlayer) const;
 
-	virtual HintType GetHintType() const OVERRIDE { return HINT_SENTRYGUN; }
+	virtual HintType GetHintType() const OVERRIDE
+	{
+		return HINT_SENTRYGUN;
+	}
 
 private:
 	bool m_isSticky;
 	int m_iUseCount;
 	COutputEvent m_outputOnSentryGunDestroyed;
 
-	CHandle< CTFPlayer > m_playerOwner;
+	CHandle<CTFPlayer> m_playerOwner;
 };
 
 inline bool CTFBotHintSentrygun::IsSticky() const
@@ -57,7 +60,7 @@ inline CTFPlayer *CTFBotHintSentrygun::GetPlayerOwner() const
 	return m_playerOwner;
 }
 
-inline void CTFBotHintSentrygun::SetPlayerOwner( CTFPlayer *pPlayerOwner )
+inline void CTFBotHintSentrygun::SetPlayerOwner(CTFPlayer *pPlayerOwner)
 {
 	m_playerOwner = pPlayerOwner;
 }

@@ -23,21 +23,25 @@
 class CTFFlag : public CTFWeaponBaseMelee
 {
 public:
-
-	DECLARE_CLASS( CTFFlag, CTFWeaponBaseMelee );
+	DECLARE_CLASS(CTFFlag, CTFWeaponBaseMelee);
 	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CTFFlag();
-	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_FLAG; }
-	virtual void		SecondaryAttack();
-	bool				Deploy( void );
+	virtual int GetWeaponID(void) const
+	{
+		return TF_WEAPON_FLAG;
+	}
+	virtual void SecondaryAttack();
+	bool Deploy(void);
 
-	virtual bool		CanDrop( void ) { return true; }
+	virtual bool CanDrop(void)
+	{
+		return true;
+	}
 
 private:
-
-	CTFFlag( const CTFFlag & ) {}
+	CTFFlag(const CTFFlag &) {}
 };
 
 #endif // TF_WEAPON_FLAG_H

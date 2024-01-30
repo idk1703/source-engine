@@ -11,16 +11,17 @@
 #pragma once
 #endif
 
-
 #include "ToolInterface.h"
-
 
 class CToolMaterial : public CBaseTool
 {
 	//
 	// CBaseTool implementation.
 	//
-	virtual ToolID_t GetToolID(void) { return TOOL_FACEEDIT_MATERIAL; }
+	virtual ToolID_t GetToolID(void)
+	{
+		return TOOL_FACEEDIT_MATERIAL;
+	}
 
 	virtual bool OnLMouseDown2D(CMapView2D *pView, UINT nFlags, const Vector2D &vPoint);
 	virtual bool OnKeyDown3D(CMapView3D *pView, UINT nChar, UINT nRepCnt, UINT nFlags);
@@ -32,6 +33,5 @@ class CToolMaterial : public CBaseTool
 
 	virtual void OnDeactivate();
 };
-
 
 #endif // TOOLMATERIAL_H

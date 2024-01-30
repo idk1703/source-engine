@@ -38,5 +38,4 @@ private:
 	typedef vgui::Frame BaseClass;
 };
 
-
 #endif // DIALOGADDSERVER_H

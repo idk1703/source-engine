@@ -10,5 +10,4 @@
 #pragma once
 #endif
 
-
 #endif // C_VEHICLE_TANK_H

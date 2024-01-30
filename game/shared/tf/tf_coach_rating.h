@@ -17,15 +17,15 @@
 //---------------------------------------------------------------------------------
 // Purpose:
 //---------------------------------------------------------------------------------
-class CTFCoachRating : public GCSDK::CSchemaSharedObject< CSchCoachRating, k_EEconTypeCoachRating >
+class CTFCoachRating : public GCSDK::CSchemaSharedObject<CSchCoachRating, k_EEconTypeCoachRating>
 {
 #ifdef GC_DLL
-	DECLARE_CLASS_MEMPOOL( CTFCoachRating );
+	DECLARE_CLASS_MEMPOOL(CTFCoachRating);
 #endif
 
 public:
 	CTFCoachRating() {}
-	CTFCoachRating( uint32 unAccountID )
+	CTFCoachRating(uint32 unAccountID)
 	{
 		Obj().m_unAccountIDCoach = unAccountID;
 	}

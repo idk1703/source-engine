@@ -3,8 +3,7 @@
 
 *****************************************************************************/
 #ifndef CDBGOUTPUT_H
-#	define CDBGOUTPUT_H
-
+#define CDBGOUTPUT_H
 
 class CDbgOutput : public IDebugOutputCallbacks
 {
@@ -14,21 +13,19 @@ public:
 	~CDbgOutput();
 
 	// IUnknown.
-	STDMETHOD( QueryInterface )( THIS_ IN REFIID InterfaceId,
-								OUT PVOID* Interface );
-	STDMETHOD_( ULONG, AddRef )( THIS );
-	STDMETHOD_( ULONG, Release )( THIS );
+	STDMETHOD(QueryInterface)(THIS_ IN REFIID InterfaceId, OUT PVOID *Interface);
+	STDMETHOD_(ULONG, AddRef)(THIS);
+	STDMETHOD_(ULONG, Release)(THIS);
 
 	// IDebugOutputCallbacks.
-	STDMETHOD( Output )( THIS_ IN ULONG Mask, IN PCSTR Text );
+	STDMETHOD(Output)(THIS_ IN ULONG Mask, IN PCSTR Text);
 
-	void SetOutputPanel( vgui::VPANEL Target );
+	void SetOutputPanel(vgui::VPANEL Target);
 
 private:
-	int				m_iRefCount;
-	vgui::VPANEL	m_Target;
+	int m_iRefCount;
+	vgui::VPANEL m_Target;
 };
-
 
 #endif /* CDBGOUTPUT_H */
 

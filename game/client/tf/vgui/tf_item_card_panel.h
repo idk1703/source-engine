@@ -22,11 +22,10 @@ namespace vgui
 {
 	class ScrollBar;
 	class ImagePanel;
-}
+} // namespace vgui
 class CIconPanel;
 
 using namespace vgui;
-
 
 //-----------------------------------------------------------------------------
 // Purpose: A simple container that contains repeating elements with common
@@ -34,26 +33,30 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 class CRepeatingContainer : public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CRepeatingContainer, EditablePanel );
+	DECLARE_CLASS_SIMPLE(CRepeatingContainer, EditablePanel);
+
 public:
-	CRepeatingContainer( Panel *pParent, const char *pszName );
+	CRepeatingContainer(Panel *pParent, const char *pszName);
 	virtual ~CRepeatingContainer();
 
-	virtual void ApplySettings( KeyValues *inResourceData ) OVERRIDE;
+	virtual void ApplySettings(KeyValues *inResourceData) OVERRIDE;
 	virtual void PerformLayout() OVERRIDE;
 
-	Panel* GetRepeatingChild( int nIndex ) const { return m_vecChildren[ nIndex ]; }
-private:
+	Panel *GetRepeatingChild(int nIndex) const
+	{
+		return m_vecChildren[nIndex];
+	}
 
+private:
 	enum ELayoutMethod_t
 	{
 		METHOD_EVEN,
 		METHOD_STEP,
 	};
 
-	CUtlVector< Panel* > m_vecChildren;
+	CUtlVector<Panel *> m_vecChildren;
 	ELayoutMethod_t m_eLayoutMethod;
-	CPanelAnimationVarAliasType( int, m_iXStep, "x_step", "0", "proportional_xpos" );
+	CPanelAnimationVarAliasType(int, m_iXStep, "x_step", "0", "proportional_xpos");
 };
 
 //-----------------------------------------------------------------------------
@@ -61,33 +64,39 @@ private:
 //-----------------------------------------------------------------------------
 class CTFItemCardPanel : public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CTFItemCardPanel, EditablePanel );
+	DECLARE_CLASS_SIMPLE(CTFItemCardPanel, EditablePanel);
+
 public:
-	CTFItemCardPanel( Panel *parent, const char *name );
-	virtual ~CTFItemCardPanel( void );
+	CTFItemCardPanel(Panel *parent, const char *name);
+	virtual ~CTFItemCardPanel(void);
 
-	virtual void ApplySchemeSettings( IScheme *pScheme ) OVERRIDE;
-	virtual void ApplySettings( KeyValues *inResourceData ) OVERRIDE;
-	virtual void PerformLayout( void ) OVERRIDE;
-	virtual void SetVisible( bool bVisible ) OVERRIDE;
-	virtual void SetMouseInputEnabled( bool state ) OVERRIDE;
+	virtual void ApplySchemeSettings(IScheme *pScheme) OVERRIDE;
+	virtual void ApplySettings(KeyValues *inResourceData) OVERRIDE;
+	virtual void PerformLayout(void) OVERRIDE;
+	virtual void SetVisible(bool bVisible) OVERRIDE;
+	virtual void SetMouseInputEnabled(bool state) OVERRIDE;
 
-	void SetItem( CEconItemView* pItem );
-	CEconItemView* GetItem() { return m_pItem; }
+	void SetItem(CEconItemView *pItem);
+	CEconItemView *GetItem()
+	{
+		return m_pItem;
+	}
 
-	void PinCard( bool bPin );
-	bool IsPinned() const { return m_bPinned; }
+	void PinCard(bool bPin);
+	bool IsPinned() const
+	{
+		return m_bPinned;
+	}
+
 private:
-
 	void UpdateDescription();
 	void UpdateModelOrIcon();
 	void LoadResFileForCurrentItem();
 
-	template < class T >
-	T* FindAndVerifyControl( Panel* pParent, const char* pszPanelName );
+	template<class T>
+	T *FindAndVerifyControl(Panel *pParent, const char *pszPanelName);
 
-
-	CEconItemView*		m_pItem;
+	CEconItemView *m_pItem;
 
 	ImagePanel *m_pDropShadow;
 	CExImageButton *m_pCloseButton;
@@ -120,7 +129,7 @@ private:
 	bool m_bAllControlsValid;
 	bool m_bPinned;
 
-	CPanelAnimationVarAliasType( int, m_iShadowOffset, "shadowoffset", "5", "proportional_int" );
+	CPanelAnimationVarAliasType(int, m_iShadowOffset, "shadowoffset", "5", "proportional_int");
 };
 
 //-----------------------------------------------------------------------------
@@ -129,31 +138,46 @@ private:
 //-----------------------------------------------------------------------------
 class CItemCardPanelToolTip : public vgui::BaseTooltip
 {
-	DECLARE_CLASS_SIMPLE( CItemCardPanelToolTip, vgui::BaseTooltip );
+	DECLARE_CLASS_SIMPLE(CItemCardPanelToolTip, vgui::BaseTooltip);
+
 public:
 	CItemCardPanelToolTip(vgui::Panel *parent, const char *text = NULL);
 
-	void SetText(const char *text) { return; }
-	const char *GetText() { return NULL; }
+	void SetText(const char *text)
+	{
+		return;
+	}
+	const char *GetText()
+	{
+		return NULL;
+	}
 
 	virtual void PerformLayout();
-	virtual void ShowTooltip( vgui::Panel *currentPanel );
+	virtual void ShowTooltip(vgui::Panel *currentPanel);
 	virtual void HideTooltip();
 
-	void SetupPanels( vgui::Panel *pParentPanel, CTFItemCardPanel *pMouseOverItemPanel ) { m_pParentPanel = pParentPanel; m_pMouseOverItemPanel = pMouseOverItemPanel; }
-	void SetPositioningStrategy( itempanel_tooltip_strategies_t iStrat ) { m_iPositioningStrategy = iStrat; }
+	void SetupPanels(vgui::Panel *pParentPanel, CTFItemCardPanel *pMouseOverItemPanel)
+	{
+		m_pParentPanel = pParentPanel;
+		m_pMouseOverItemPanel = pMouseOverItemPanel;
+	}
+	void SetPositioningStrategy(itempanel_tooltip_strategies_t iStrat)
+	{
+		m_iPositioningStrategy = iStrat;
+	}
 
 private:
-	void GetPosition( itempanel_tooltippos_t iTooltipPosition, CItemModelPanel *pItemPanel, int iItemX, int iItemY, int *iXPos, int *iYPos );
-	bool ValidatePosition( CItemModelPanel *pItemPanel, int iItemX, int iItemY, int *iXPos, int *iYPos );
+	void GetPosition(itempanel_tooltippos_t iTooltipPosition, CItemModelPanel *pItemPanel, int iItemX, int iItemY,
+					 int *iXPos, int *iYPos);
+	bool ValidatePosition(CItemModelPanel *pItemPanel, int iItemX, int iItemY, int *iXPos, int *iYPos);
 
 private:
-	CTFItemCardPanel				*m_pMouseOverItemPanel;	// This is the tooltip panel we make visible. Must be a CItemModelPanel.
-	vgui::Panel						*m_pParentPanel;		// This is the panel that we send item entered/exited messages to
+	CTFItemCardPanel *m_pMouseOverItemPanel; // This is the tooltip panel we make visible. Must be a CItemModelPanel.
+	vgui::Panel *m_pParentPanel;			 // This is the panel that we send item entered/exited messages to
 	vgui::DHANDLE<CItemModelPanel> m_hCurrentPanel;
 
-	itempanel_tooltip_strategies_t	m_iPositioningStrategy;
-	bool							m_bHorizontalPreferLeft;
+	itempanel_tooltip_strategies_t m_iPositioningStrategy;
+	bool m_bHorizontalPreferLeft;
 };
 
 #endif // TF_ITEM_CARD_PANEL_H

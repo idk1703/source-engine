@@ -11,5 +11,4 @@
 #pragma once
 #endif
 
-
 #endif // VMPI_DISPATCH_H

@@ -13,8 +13,8 @@
 
 typedef struct
 {
-	int		abcA, abcB, abcC;
-	int		total;
+	int abcA, abcB, abcC;
+	int total;
 } FONTABC;
 
 #endif // FONTABC_H

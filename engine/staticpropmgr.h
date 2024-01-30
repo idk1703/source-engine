@@ -18,14 +18,12 @@
 // FIXME: Remove! Only here for the test against old code
 #include "enginetrace.h"
 
-
 //-----------------------------------------------------------------------------
 // foward declarations
 //-----------------------------------------------------------------------------
 class ICollideable;
-FORWARD_DECLARE_HANDLE( LightCacheHandle_t );
+FORWARD_DECLARE_HANDLE(LightCacheHandle_t);
 class IPooledVBAllocator;
-
 
 //-----------------------------------------------------------------------------
 // The engine's static prop manager
@@ -53,29 +51,27 @@ public:
 	virtual void RecomputeStaticLighting() = 0;
 
 	// Check if a static prop is in a particular PVS.
-	virtual bool IsPropInPVS( IHandleEntity *pHandleEntity, const byte *pVis ) const = 0;
+	virtual bool IsPropInPVS(IHandleEntity * pHandleEntity, const byte *pVis) const = 0;
 
 	// returns a collideable interface to static props
-	virtual ICollideable *GetStaticProp( IHandleEntity *pHandleEntity ) = 0;
+	virtual ICollideable *GetStaticProp(IHandleEntity * pHandleEntity) = 0;
 
 	// returns the lightcache handle associated with a static prop
-	virtual LightCacheHandle_t GetLightCacheHandleForStaticProp( IHandleEntity *pHandleEntity ) = 0;
+	virtual LightCacheHandle_t GetLightCacheHandleForStaticProp(IHandleEntity * pHandleEntity) = 0;
 
 	// Is a base handle a static prop?
-	virtual bool IsStaticProp( IHandleEntity *pHandleEntity ) const = 0;
-	virtual bool IsStaticProp( CBaseHandle handle ) const = 0;
+	virtual bool IsStaticProp(IHandleEntity * pHandleEntity) const = 0;
+	virtual bool IsStaticProp(CBaseHandle handle) const = 0;
 
 	// Returns the static prop index (useful for networking)
-	virtual int GetStaticPropIndex( IHandleEntity *pHandleEntity ) const = 0;
+	virtual int GetStaticPropIndex(IHandleEntity * pHandleEntity) const = 0;
 
-	virtual bool PropHasBakedLightingDisabled( IHandleEntity *pHandleEntity) const = 0;
+	virtual bool PropHasBakedLightingDisabled(IHandleEntity * pHandleEntity) const = 0;
 };
-
 
 //-----------------------------------------------------------------------------
 // Singleton access
 //-----------------------------------------------------------------------------
-IStaticPropMgrEngine* StaticPropMgr();
+IStaticPropMgrEngine *StaticPropMgr();
 
-
-#endif	// STATICPROPMGR_H
+#endif // STATICPROPMGR_H

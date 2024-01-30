@@ -60,7 +60,7 @@ enum TFPlayerStatId_t
 	TF_PLAYER_STAT_RESOURCES_ACQUIRED = TF_PLAYER_STAT_FIRST_AVERAGE_STAT,
 	TF_PLAYER_STAT_RESOURCES_ACQUIRED_FROM_CHUNKS,
 	TF_PLAYER_STAT_RESOURCES_CARRIED,
- 	TF_PLAYER_STAT_RESOURCES_SPENT,
+	TF_PLAYER_STAT_RESOURCES_SPENT,
 	TF_PLAYER_STAT_CURRENT_OBJECT_VALUE,
 	TF_PLAYER_STAT_OBJECT_COUNT,
 
@@ -80,27 +80,24 @@ enum TFPlayerStatId_t
 	TF_PLAYER_STAT_COUNT,
 };
 
-
 class ITFStats
 {
 public:
 	// Clear out the stats + their history
 	virtual void ResetStats() = 0;
 
-	virtual void IncrementStat( TFStatId_t stat, int nIncrement ) = 0;
-	virtual void SetStat( TFStatId_t stat, int nAmount ) = 0;
+	virtual void IncrementStat(TFStatId_t stat, int nIncrement) = 0;
+	virtual void SetStat(TFStatId_t stat, int nAmount) = 0;
 
-	virtual void IncrementTeamStat( int nTeam, TFTeamStatId_t stat, int nIncrement ) = 0;
-	virtual void SetTeamStat( int nTeam, TFTeamStatId_t stat, int nAmount ) = 0;
+	virtual void IncrementTeamStat(int nTeam, TFTeamStatId_t stat, int nIncrement) = 0;
+	virtual void SetTeamStat(int nTeam, TFTeamStatId_t stat, int nAmount) = 0;
 
-	virtual void IncrementPlayerStat( CBaseEntity *pPlayer, TFPlayerStatId_t stat, int nIncrement ) = 0;
+	virtual void IncrementPlayerStat(CBaseEntity *pPlayer, TFPlayerStatId_t stat, int nIncrement) = 0;
 };
-
 
 //-----------------------------------------------------------------------------
 // Accessor method
 //-----------------------------------------------------------------------------
 ITFStats *TFStats();
-
 
 #endif // TF_STATS_H

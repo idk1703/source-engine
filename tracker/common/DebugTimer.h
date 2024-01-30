@@ -17,6 +17,4 @@ void Timer_Start();
 // returns the time since Timer_Start() was called, in seconds
 double Timer_End();
 
-
-
 #endif // DEBUGTIMER_H

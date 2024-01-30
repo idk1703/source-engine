@@ -18,6 +18,6 @@ typedef enum
 	PREDICTION_NORMAL,
 } PREDICTION_REASON;
 
-void CL_RunPrediction( PREDICTION_REASON reason );
+void CL_RunPrediction(PREDICTION_REASON reason);
 
 #endif // CL_PRED_H

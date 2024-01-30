@@ -10,6 +10,6 @@
 #pragma once
 
 // sky
-extern void			R_DrawSkyBox (float zFar, int nDrawFlags = 0x3F );
+extern void R_DrawSkyBox(float zFar, int nDrawFlags = 0x3F);
 
-#endif		// GL_WATER_H
+#endif // GL_WATER_H

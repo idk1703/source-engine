@@ -23,20 +23,21 @@
 class CTestObj : public CBaseReplaySerializeable
 {
 	typedef CBaseReplaySerializeable BaseClass;
+
 public:
 	CTestObj();
 	~CTestObj();
 
-	virtual const char	*GetSubKeyTitle() const;
-	virtual const char	*GetPath() const;
-	virtual void		OnDelete();
-	virtual bool		Read( KeyValues *pIn );
-	virtual void		Write( KeyValues *pOut );
+	virtual const char *GetSubKeyTitle() const;
+	virtual const char *GetPath() const;
+	virtual void OnDelete();
+	virtual bool Read(KeyValues *pIn);
+	virtual void Write(KeyValues *pOut);
 
-	CUtlString		m_strTest;
-	int				m_nTest;
+	CUtlString m_strTest;
+	int m_nTest;
 
-	int				*m_pTest;
+	int *m_pTest;
 };
 
 //----------------------------------------------------------------------------------------
@@ -44,15 +45,14 @@ public:
 class ITestManager : public IBaseInterface
 {
 public:
-	virtual void	SomeTest() = 0;
+	virtual void SomeTest() = 0;
 };
 
 //----------------------------------------------------------------------------------------
 
-class CTestManager : public CGenericPersistentManager< CTestObj >,
-					 public ITestManager
+class CTestManager : public CGenericPersistentManager<CTestObj>, public ITestManager
 {
-	typedef CGenericPersistentManager< CTestObj > BaseClass;
+	typedef CGenericPersistentManager<CTestObj> BaseClass;
 
 public:
 	CTestManager();
@@ -62,18 +62,26 @@ public:
 	//
 	// CGenericPersistentManager
 	//
-	virtual CTestObj	*Create();
-	virtual bool		ShouldSerializeToIndividualFiles() const { return true; }
-	virtual const char	*GetIndexPath() const;
-	virtual const char	*GetDebugName() const			{ return "test manager"; }
-	virtual int			GetVersion() const;
-	virtual const char	*GetIndexFilename() const	{ return "test_index." GENERIC_FILE_EXTENSION; }
+	virtual CTestObj *Create();
+	virtual bool ShouldSerializeToIndividualFiles() const
+	{
+		return true;
+	}
+	virtual const char *GetIndexPath() const;
+	virtual const char *GetDebugName() const
+	{
+		return "test manager";
+	}
+	virtual int GetVersion() const;
+	virtual const char *GetIndexFilename() const
+	{
+		return "test_index." GENERIC_FILE_EXTENSION;
+	}
 
 	//
 	// ITestManager
 	//
-	virtual void		SomeTest() {}
-
+	virtual void SomeTest() {}
 };
 
 //----------------------------------------------------------------------------------------

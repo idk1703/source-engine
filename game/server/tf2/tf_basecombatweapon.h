@@ -24,15 +24,17 @@ class CBaseTFPlayer;
 //-----------------------------------------------------------------------------
 class CTFMachineGun : public CBaseTFCombatWeapon
 {
-	DECLARE_CLASS( CTFMachineGun, CBaseTFCombatWeapon );
-public:
+	DECLARE_CLASS(CTFMachineGun, CBaseTFCombatWeapon);
 
+public:
 	DECLARE_SERVERCLASS();
 
-	virtual void	PrimaryAttack( void );
-	virtual void	FireBullets( CBaseTFCombatWeapon *pWeapon, int cShots, const Vector &vecSrc, const Vector &vecDirShooting, const Vector &vecSpread, float flDistance, int iBulletType, int iTracerFreq);
-	virtual const	Vector& GetBulletSpread( void );
-	virtual float	GetFireRate( void );
+	virtual void PrimaryAttack(void);
+	virtual void FireBullets(CBaseTFCombatWeapon *pWeapon, int cShots, const Vector &vecSrc,
+							 const Vector &vecDirShooting, const Vector &vecSpread, float flDistance, int iBulletType,
+							 int iTracerFreq);
+	virtual const Vector &GetBulletSpread(void);
+	virtual float GetFireRate(void);
 };
 
 #endif // TF_BASECOMBATWEAPON_H

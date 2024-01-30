@@ -12,7 +12,7 @@
 #endif
 
 #ifndef GC_CLIENTSYSTEM_H
-	#include "gc_clientsystem.h"
+#include "gc_clientsystem.h"
 #endif
 
 class IGameSystem;
@@ -21,7 +21,7 @@ class CEconItemView;
 
 /// Given a UGC cloud ID of a custom image, return a VGUI texture handle
 /// that can be used for drawing.  Returns 0 on failure
-int GetCustomTextureGuiHandle( uint64 hCloudId );
+int GetCustomTextureGuiHandle(uint64 hCloudId);
 
 //-----------------------------------------------------------------------------
 // Purpose: Job to do the async work of uploading the file to the CDN (if
@@ -30,11 +30,10 @@ int GetCustomTextureGuiHandle( uint64 hCloudId );
 class CApplyCustomTextureJob : public GCSDK::CGCClientJob
 {
 public:
-
-	CApplyCustomTextureJob( itemid_t nToolItemID, itemid_t nSubjectItemID, const void *pPNGData, int nPNGDataBytes );
+	CApplyCustomTextureJob(itemid_t nToolItemID, itemid_t nSubjectItemID, const void *pPNGData, int nPNGDataBytes);
 
 protected:
-	char	m_chRemoteStorageName[ MAX_PATH ];
+	char m_chRemoteStorageName[MAX_PATH];
 
 	virtual bool BYieldingRunGCJob();
 	virtual EResult YieldingRunJob();
@@ -64,20 +63,20 @@ IGameSystem *CustomTextureToolCacheGameSystem();
 namespace CustomTextureSystem
 {
 
-/// If we're auditioning (while selecting a file to apply on a model),
-/// what texture should we display?
-extern ITexture *g_pPreviewCustomTexture;
+	/// If we're auditioning (while selecting a file to apply on a model),
+	/// what texture should we display?
+	extern ITexture *g_pPreviewCustomTexture;
 
-/// What is the econ item that is being auditioned and so should
-/// use the preview texture
-extern CEconItemView *g_pPreviewEconItem;
+	/// What is the econ item that is being auditioned and so should
+	/// use the preview texture
+	extern CEconItemView *g_pPreviewEconItem;
 
-/// Do we need to update the bits in the rendering system?
-extern bool g_pPreviewCustomTextureDirty;
+	/// Do we need to update the bits in the rendering system?
+	extern bool g_pPreviewCustomTextureDirty;
 
-extern const char k_rchCustomTextureFilterPreviewImageName[];
-extern const char k_rchCustomTextureFilterPreviewTextureName[];
+	extern const char k_rchCustomTextureFilterPreviewImageName[];
+	extern const char k_rchCustomTextureFilterPreviewTextureName[];
 
-}
+} // namespace CustomTextureSystem
 
 #endif // CUSTOM_TEXTURE_CACHE_H

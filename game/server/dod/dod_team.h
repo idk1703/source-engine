@@ -12,7 +12,6 @@
 #pragma once
 #endif
 
-
 #include "utlvector.h"
 #include "team.h"
 #include "playerclass_info_parse.h"
@@ -20,41 +19,50 @@
 #include "dod_shareddefs.h"
 #include "dod_player.h"
 
-typedef CUtlLinkedList< PLAYERCLASS_FILE_INFO_HANDLE, int > PlayerClassInfoList;
+typedef CUtlLinkedList<PLAYERCLASS_FILE_INFO_HANDLE, int> PlayerClassInfoList;
 
 //-----------------------------------------------------------------------------
 // Purpose: Team Manager
 //-----------------------------------------------------------------------------
 class CDODTeam : public CTeam
 {
-	DECLARE_CLASS( CDODTeam, CTeam );
+	DECLARE_CLASS(CDODTeam, CTeam);
 	DECLARE_SERVERCLASS();
 
 public:
-
 	// Initialization
-	virtual void Init( const char *pName, int iNumber );
+	virtual void Init(const char *pName, int iNumber);
 
-	CDODPlayerClassInfo const &GetPlayerClassInfo( int iPlayerClass ) const;
-	const unsigned char *GetEncryptionKey( void ) { return g_pGameRules->GetEncryptionKey(); }
+	CDODPlayerClassInfo const &GetPlayerClassInfo(int iPlayerClass) const;
+	const unsigned char *GetEncryptionKey(void)
+	{
+		return g_pGameRules->GetEncryptionKey();
+	}
 
-	virtual void AddPlayerClass( const char *pszClassName );
+	virtual void AddPlayerClass(const char *pszClassName);
 
-	bool IsClassOnTeam( const char *pszClassName, int &iClassNum ) const;
-	int GetNumPlayerClasses( void ) { return m_hPlayerClassInfoHandles.Count(); }
+	bool IsClassOnTeam(const char *pszClassName, int &iClassNum) const;
+	int GetNumPlayerClasses(void)
+	{
+		return m_hPlayerClassInfoHandles.Count();
+	}
 
-	void ResetScores( void );
+	void ResetScores(void);
 
-	virtual const char *GetTeamName( void ) { return "#Teamname_Spectators"; }
+	virtual const char *GetTeamName(void)
+	{
+		return "#Teamname_Spectators";
+	}
 
-	virtual CDODPlayer *GetDODPlayer( int iIndex ) { return ToDODPlayer(GetPlayer(iIndex)); }
+	virtual CDODPlayer *GetDODPlayer(int iIndex)
+	{
+		return ToDODPlayer(GetPlayer(iIndex));
+	}
 
 private:
-	CUtlVector < PLAYERCLASS_FILE_INFO_HANDLE >		m_hPlayerClassInfoHandles;
+	CUtlVector<PLAYERCLASS_FILE_INFO_HANDLE> m_hPlayerClassInfoHandles;
 };
 
-
-extern CDODTeam *GetGlobalDODTeam( int iIndex );
-
+extern CDODTeam *GetGlobalDODTeam(int iIndex);
 
 #endif // TF_TEAM_H

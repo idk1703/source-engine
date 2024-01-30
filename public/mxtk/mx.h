@@ -20,8 +20,6 @@
 #include <windows.h>
 #endif
 
-
-
 #ifndef INCLUDED_MXBUTTON
 #include "mxtk/mxButton.h"
 #endif
@@ -137,7 +135,5 @@
 #ifndef INCLUDED_MXSTRING
 #include "mxtk/mxstring.h"
 #endif
-
-
 
 #endif // INCLUDED_MX

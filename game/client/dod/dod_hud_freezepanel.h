@@ -21,7 +21,7 @@
 
 using namespace vgui;
 
-bool IsTakingAFreezecamScreenshot( void );
+bool IsTakingAFreezecamScreenshot(void);
 
 /*
 //-----------------------------------------------------------------------------
@@ -47,11 +47,12 @@ public:
 //-----------------------------------------------------------------------------
 class CDODFreezePanelCallout : public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CDODFreezePanelCallout, EditablePanel );
-public:
-	CDODFreezePanelCallout( Panel *parent, const char *name );
+	DECLARE_CLASS_SIMPLE(CDODFreezePanelCallout, EditablePanel);
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+public:
+	CDODFreezePanelCallout(Panel *parent, const char *name);
+
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 };
 
 //-----------------------------------------------------------------------------
@@ -60,56 +61,61 @@ public:
 class CDODFreezePanel : public EditablePanel, public CHudElement
 {
 private:
-	DECLARE_CLASS_SIMPLE( CDODFreezePanel, EditablePanel );
+	DECLARE_CLASS_SIMPLE(CDODFreezePanel, EditablePanel);
 
 public:
-	CDODFreezePanel( const char *pElementName );
+	CDODFreezePanel(const char *pElementName);
 
 	virtual void Reset();
 	virtual void Init();
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void FireGameEvent( IGameEvent * event );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void FireGameEvent(IGameEvent *event);
 
-	void ShowSnapshotPanel( bool bShow );
-	void UpdateCallout( void );
-	void ShowCalloutsIn( float flTime );
-	void ShowSnapshotPanelIn( float flTime );
+	void ShowSnapshotPanel(bool bShow);
+	void UpdateCallout(void);
+	void ShowCalloutsIn(float flTime);
+	void ShowSnapshotPanelIn(float flTime);
 	void Show();
 	void Hide();
-	virtual bool ShouldDraw( void );
-	void OnThink( void );
+	virtual bool ShouldDraw(void);
+	void OnThink(void);
 
-	int	HudElementKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
+	int HudElementKeyInput(int down, ButtonCode_t keynum, const char *pszCurrentBinding);
 
-	bool IsHoldingAfterScreenShot( void ) { return m_bHoldingAfterScreenshot; }
+	bool IsHoldingAfterScreenShot(void)
+	{
+		return m_bHoldingAfterScreenshot;
+	}
 
 protected:
-	CDODFreezePanelCallout *TestAndAddCallout( Vector &origin, Vector &vMins, Vector &vMaxs, CUtlVector<Vector> *vecCalloutsTL,
-		CUtlVector<Vector> *vecCalloutsBR, Vector &vecFreezeTL, Vector &vecFreezeBR, Vector &vecStatTL, Vector &vecStatBR, int *iX, int *iY );
+	CDODFreezePanelCallout *TestAndAddCallout(Vector &origin, Vector &vMins, Vector &vMaxs,
+											  CUtlVector<Vector> *vecCalloutsTL, CUtlVector<Vector> *vecCalloutsBR,
+											  Vector &vecFreezeTL, Vector &vecFreezeBR, Vector &vecStatTL,
+											  Vector &vecStatBR, int *iX, int *iY);
 
 private:
-	void ShowNemesisPanel( bool bShow );
+	void ShowNemesisPanel(bool bShow);
 
-	int						m_iYBase;
-	int						m_iKillerIndex;
-	//CTFHudPlayerHealth		*m_pKillerHealth;
-	int						m_iShowNemesisPanel;
-	CUtlVector<CDODFreezePanelCallout*>	m_pCalloutPanels;
-	float					m_flShowCalloutsAt;
-	float					m_flShowSnapshotReminderAt;
-	EditablePanel			*m_pNemesisSubPanel;
-	vgui::Label				*m_pFreezeLabel;
-	vgui::Panel				*m_pFreezePanelBG;
-	CAvatarImagePanel		*m_pAvatar;
-	vgui::EditablePanel		*m_pScreenshotPanel;
-	vgui::EditablePanel		*m_pBasePanel;
+	int m_iYBase;
+	int m_iKillerIndex;
+	// CTFHudPlayerHealth		*m_pKillerHealth;
+	int m_iShowNemesisPanel;
+	CUtlVector<CDODFreezePanelCallout *> m_pCalloutPanels;
+	float m_flShowCalloutsAt;
+	float m_flShowSnapshotReminderAt;
+	EditablePanel *m_pNemesisSubPanel;
+	vgui::Label *m_pFreezeLabel;
+	vgui::Panel *m_pFreezePanelBG;
+	CAvatarImagePanel *m_pAvatar;
+	vgui::EditablePanel *m_pScreenshotPanel;
+	vgui::EditablePanel *m_pBasePanel;
 
-	int 					m_iBasePanelOriginalX;
-	int 					m_iBasePanelOriginalY;
+	int m_iBasePanelOriginalX;
+	int m_iBasePanelOriginalY;
 
-	bool					m_bHoldingAfterScreenshot;
+	bool m_bHoldingAfterScreenshot;
 
-	CDoDHudHealth	*m_pHealthStatus;
+	CDoDHudHealth *m_pHealthStatus;
 
 	enum
 	{

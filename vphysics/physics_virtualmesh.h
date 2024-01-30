@@ -10,9 +10,8 @@
 #pragma once
 #endif
 
-
-CPhysCollide *CreateVirtualMesh( const virtualmeshparams_t &params );
-void DestroyVirtualMesh( CPhysCollide *pSurf );
+CPhysCollide *CreateVirtualMesh(const virtualmeshparams_t &params);
+void DestroyVirtualMesh(CPhysCollide *pSurf);
 void DumpVirtualMeshStats();
 void VirtualMeshPSI();
 

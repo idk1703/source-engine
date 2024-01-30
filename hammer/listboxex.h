@@ -32,19 +32,19 @@ enum
 
 typedef struct
 {
-	char szCaption[128];	// field named
-	char *pszSaveCaption;	// save caption to this, if supported
-	int iDataType;			// how to display	(lbdxxx)
-	int iEditType;			// how to edit		(lbexxx)
+	char szCaption[128];  // field named
+	char *pszSaveCaption; // save caption to this, if supported
+	int iDataType;		  // how to display	(lbdxxx)
+	int iEditType;		  // how to edit		(lbexxx)
 
 	int iDataValue;			// int value for integer/bool fields
-	char szDataString[128];	// str value for string fields
+	char szDataString[128]; // str value for string fields
 
 	PVOID pSaveTo;
-	const char * pszHelp;	// help text		(ptr or NULL)
+	const char *pszHelp;	// help text		(ptr or NULL)
 	int iRangeMin;			// ranged value min	(-1 if no range)
 	int iRangeMax;			// ranged value max	(-1 if no range)
-	CStringArray* pChoices;	// choices, if lbdChoices
+	CStringArray *pChoices; // choices, if lbdChoices
 
 } LBEXTITEMSTRUCT;
 
@@ -59,11 +59,11 @@ enum
 
 class CListBoxEx : public CListBox
 {
-// Construction
+	// Construction
 public:
 	CListBoxEx();
 
-// Attributes
+	// Attributes
 public:
 	int iCaptionWidthUnits;
 	int iCaptionWidthPixels;
@@ -77,32 +77,31 @@ public:
 
 	void SetStyle(DWORD dwStyle);
 
-	void AddItem(char * pszCaption, int iEditType, PVOID pData,
-		int iRangeMin = -1, int iRangeMax = -1, const char * pszHelp = NULL);
-	void SetItemChoices(int iItem, CStringArray * pChoices,
-		int iDefaultChoice = 0);
+	void AddItem(char *pszCaption, int iEditType, PVOID pData, int iRangeMin = -1, int iRangeMax = -1,
+				 const char *pszHelp = NULL);
+	void SetItemChoices(int iItem, CStringArray *pChoices, int iDefaultChoice = 0);
 	void GetItemText(int iItem, char *pszText);
 	void CreateEditControl();
 	void CreateComboControl();
 	void DestroyControls();
 
-	CArray<LBEXTITEMSTRUCT, LBEXTITEMSTRUCT&> Items;
+	CArray<LBEXTITEMSTRUCT, LBEXTITEMSTRUCT &> Items;
 	unsigned nItems;
 
-// Operations
+	// Operations
 public:
 	BOOL bActivateOnRelease;
 
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CListBoxEx)
-	public:
+public:
 	virtual void MeasureItem(LPMEASUREITEMSTRUCT lpMeasureItemStruct);
 	virtual void DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct);
 	virtual int CompareItem(LPCOMPAREITEMSTRUCT lpCompareItemStruct);
 	//}}AFX_VIRTUAL
 
-// Implementation
+	// Implementation
 public:
 	virtual ~CListBoxEx();
 

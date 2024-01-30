@@ -11,7 +11,13 @@
 #pragma once
 #endif
 
-enum Bans { ID, WONID,AUTHID,IP };
+enum Bans
+{
+	ID,
+	WONID,
+	AUTHID,
+	IP
+};
 
 //-----------------------------------------------------------------------------
 // Purpose: Data describing a single player
@@ -23,6 +29,5 @@ typedef struct
 	float time;
 	Bans type;
 } Bans_t;
-
 
 #endif // BAN_H

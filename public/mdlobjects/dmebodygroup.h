@@ -16,13 +16,11 @@
 #include "datamodel/dmelement.h"
 #include "datamodel/dmattributevar.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward Declarations
 //-----------------------------------------------------------------------------
 class CDmeBodyPart;
 class CDmeLODList;
-
 
 //-----------------------------------------------------------------------------
 // A class representing a body group. Each element of the body parts array
@@ -30,14 +28,13 @@ class CDmeLODList;
 //-----------------------------------------------------------------------------
 class CDmeBodyGroup : public CDmElement
 {
-	DEFINE_ELEMENT( CDmeBodyGroup, CDmElement );
+	DEFINE_ELEMENT(CDmeBodyGroup, CDmElement);
 
 public:
 	// Finds a body part by name
-	CDmeLODList *FindBodyPart( const char *pName );
+	CDmeLODList *FindBodyPart(const char *pName);
 
-	CDmaElementArray< CDmeBodyPart > m_BodyParts;
+	CDmaElementArray<CDmeBodyPart> m_BodyParts;
 };
-
 
 #endif // DMEBODYGROUP_H

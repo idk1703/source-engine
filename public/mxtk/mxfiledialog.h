@@ -14,23 +14,18 @@
 #ifndef INCLUDED_MXFILEDIALOG
 #define INCLUDED_MXFILEDIALOG
 
-
-
 class mxWindow;
 
-
-
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-const char *mxGetOpenFileName (mxWindow *parent, const char *path, const char *filter);
-const char *mxGetSaveFileName (mxWindow *parent, const char *path, const char *filter);
+	const char *mxGetOpenFileName(mxWindow *parent, const char *path, const char *filter);
+	const char *mxGetSaveFileName(mxWindow *parent, const char *path, const char *filter);
 
 #ifdef __cplusplus
 }
 #endif
-
-
 
 #endif // INCLUDED_MXFILEDIALOG

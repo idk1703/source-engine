@@ -6,20 +6,23 @@
 
 class CTFBotHintSentrygun;
 
-class CTFBotMvMEngineerBuildSentryGun : public Action< CTFBot >
+class CTFBotMvMEngineerBuildSentryGun : public Action<CTFBot>
 {
 public:
-	CTFBotMvMEngineerBuildSentryGun( CTFBotHintSentrygun* pSentryHint );
+	CTFBotMvMEngineerBuildSentryGun(CTFBotHintSentrygun *pSentryHint);
 
-	virtual ActionResult< CTFBot >	OnStart( CTFBot *me, Action< CTFBot > *priorAction );
-	virtual ActionResult< CTFBot >	Update( CTFBot *me, float interval );
-	virtual void					OnEnd( CTFBot *me, Action< CTFBot > *nextAction );
+	virtual ActionResult<CTFBot> OnStart(CTFBot *me, Action<CTFBot> *priorAction);
+	virtual ActionResult<CTFBot> Update(CTFBot *me, float interval);
+	virtual void OnEnd(CTFBot *me, Action<CTFBot> *nextAction);
 
-	virtual const char *GetName( void ) const	{ return "MvMEngineerBuildSentryGun"; };
+	virtual const char *GetName(void) const
+	{
+		return "MvMEngineerBuildSentryGun";
+	};
 
 private:
-	CHandle< CTFBotHintSentrygun > m_sentryBuildHint;
-	CHandle< CObjectSentrygun > m_sentry;
+	CHandle<CTFBotHintSentrygun> m_sentryBuildHint;
+	CHandle<CObjectSentrygun> m_sentry;
 
 	CountdownTimer m_delayBuildTime;
 	CountdownTimer m_repathTimer;

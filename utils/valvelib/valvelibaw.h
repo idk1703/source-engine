@@ -21,15 +21,15 @@ class IBuildProject;
 class CValvelibAppWiz : public CCustomAppWiz
 {
 public:
-	virtual CAppWizStepDlg* Next(CAppWizStepDlg* pDlg);
-	virtual CAppWizStepDlg* Back(CAppWizStepDlg* pDlg);
+	virtual CAppWizStepDlg *Next(CAppWizStepDlg *pDlg);
+	virtual CAppWizStepDlg *Back(CAppWizStepDlg *pDlg);
 
 	virtual void InitCustomAppWiz();
 	virtual void ExitCustomAppWiz();
-	virtual void CustomizeProject(IBuildProject* pProject);
+	virtual void CustomizeProject(IBuildProject *pProject);
 
 protected:
-	CDialogChooser* m_pChooser;
+	CDialogChooser *m_pChooser;
 };
 
 // This declares the one instance of the CValvelibAppWiz class.  You can access

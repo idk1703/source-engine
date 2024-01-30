@@ -15,7 +15,7 @@
 //
 // $NoKeywords: $
 //=============================================================================
-#if !defined( VINTERNETDLG_H )
+#if !defined(VINTERNETDLG_H)
 #define VINTERNETDLG_H
 #ifdef _WIN32
 #pragma once
@@ -33,7 +33,7 @@
 
 //#include "ITrackerUser.h"
 #include "../TrackerNET/TrackerNET_Interface.h"
-#include "../TrackerNET/NetAddress.h" // for CNetAddress
+#include "../TrackerNET/NetAddress.h"	// for CNetAddress
 #include "../TrackerNET/BinaryBuffer.h" // for IBinaryBuffer
 
 #include "IGameList.h"
@@ -43,17 +43,17 @@
 class CServerContextMenu;
 namespace vgui
 {
-class Label;
-class Font;
-class ListPanel;
-class Button;
-class ComboBox;
-class QueryBox;
-class ToggleButton;
-class TextEntry;
-class CheckButton;
-class PropertySheet;
-}
+	class Label;
+	class Font;
+	class ListPanel;
+	class Button;
+	class ComboBox;
+	class QueryBox;
+	class ToggleButton;
+	class TextEntry;
+	class CheckButton;
+	class PropertySheet;
+} // namespace vgui
 
 extern class IRunGameEngine *g_pRunGameEngine;
 extern void v_strncpy(char *dest, const char *src, int bufsize);
@@ -70,22 +70,22 @@ class VInternetDlg : public vgui::Frame
 
 public:
 	// Construction/destruction
-						VInternetDlg( unsigned int userid );
-	virtual				~VInternetDlg( void );
+	VInternetDlg(unsigned int userid);
+	virtual ~VInternetDlg(void);
 
-	virtual void		Initialize( void );
+	virtual void Initialize(void);
 
 	// displays the dialog, moves it into focus, updates if it has to
-	virtual void		Open( void );
+	virtual void Open(void);
 
 	// gets server info
 	serveritem_t &VInternetDlg::GetServer(unsigned int serverID);
 
 	// setup
-	virtual void		PerformLayout();
+	virtual void PerformLayout();
 
 	// updates status text at bottom of window
-	virtual void		UpdateStatusText(PRINTF_FORMAT_STRING const char *format, ...);
+	virtual void UpdateStatusText(PRINTF_FORMAT_STRING const char *format, ...);
 
 	// context menu access
 	virtual CServerContextMenu *GetContextMenu();
@@ -110,7 +110,8 @@ public:
 	virtual vgui::PropertySheet *GetTabPanel();
 
 	// called by the config panel to setup some global config values
-	virtual void SetConfig(bool autorefresh,bool savercon,int refreshtime,bool graphs,int graphrefreshtime,bool getlogs);
+	virtual void SetConfig(bool autorefresh, bool savercon, int refreshtime, bool graphs, int graphrefreshtime,
+						   bool getlogs);
 
 	// passes the server info to the favorites panel to update the rconPassword
 	virtual void UpdateServer(serveritem_t &server);
@@ -120,50 +121,45 @@ public:
 
 	virtual void OnTick();
 
-	void SearchForFriend(unsigned int uid, const char *email, const char *username, const char *firstname, const char *lastname);
+	void SearchForFriend(unsigned int uid, const char *email, const char *username, const char *firstname,
+						 const char *lastname);
 	ISendMessage *VInternetDlg::CreateServerMessage(int msgID);
 	CNetAddress GetServerAddress();
 	void SendInitialLogin();
 	bool CheckMessageValidity(IReceiveMessage *dataBlock);
 
-
-
 private:
-
 	// menu handler for tabs
 	void OnOpenContextMenu();
 	// current game list change
-	//virtual void		OnGameListChanged();
-
+	// virtual void		OnGameListChanged();
 
 	// password entry dialog for new servers
 	void OnPlayerDialog(vgui::KeyValues *data);
 	void OnDeleteServer(int chosenPanel);
 
 	// load/saves filter settings from disk
-	virtual void		LoadFilters();
-	virtual void		SaveFilters();
+	virtual void LoadFilters();
+	virtual void SaveFilters();
 
 	// Load/saves position and window size of a dialog from disk
-	virtual void		LoadDialogState(vgui::Panel *dialog, const char *dialogName);
-	virtual void		SaveDialogState(vgui::Panel *dialog, const char *dialogName);
+	virtual void LoadDialogState(vgui::Panel *dialog, const char *dialogName);
+	virtual void SaveDialogState(vgui::Panel *dialog, const char *dialogName);
 
 	// called when dialog is shut down
-	virtual void		OnClose();
+	virtual void OnClose();
 
 	// catches the "manage server" menu option
 	void OnManageServer(int serverID);
 
 	// actually creates the new tab
-	void ManageServer(int serverID,const char *pass);
-
-
+	void ManageServer(int serverID, const char *pass);
 
 	// pointer to current game list
 	IGameList *m_pGameList;
 
 	// Status text
-	vgui::Label	*m_pStatusLabel;
+	vgui::Label *m_pStatusLabel;
 
 	// property sheet
 	vgui::PropertySheet *m_pTabPanel;

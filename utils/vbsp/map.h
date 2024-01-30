@@ -10,9 +10,7 @@
 #pragma once
 #endif
 
-
 // All the brush sides referenced by info_no_dynamic_shadow entities.
 extern CUtlVector<int> g_NoDynamicShadowSides;
-
 
 #endif // MAP_H

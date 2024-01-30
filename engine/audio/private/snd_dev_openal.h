@@ -9,6 +9,6 @@
 #pragma once
 
 class IAudioDevice;
-IAudioDevice *Audio_CreateOpenALDevice( void );
+IAudioDevice *Audio_CreateOpenALDevice(void);
 
 #endif // SND_DEV_OPENAL_H

@@ -21,7 +21,10 @@ class IShaderShadow;
 //-----------------------------------------------------------------------------
 struct PortalRefractVars_t
 {
-	PortalRefractVars_t() { memset( this, 0xFF, sizeof(PortalRefractVars_t) ); }
+	PortalRefractVars_t()
+	{
+		memset(this, 0xFF, sizeof(PortalRefractVars_t));
+	}
 
 	int m_nStage;
 	int m_nPortalOpenAmount;
@@ -38,9 +41,10 @@ static const float kDefaultPortalStatic = 0.0f;
 static const float kDefaultPortalOpenAmount = 0.0f;
 static const float kDefaultPortalColorScale = 1.0f;
 
-void InitParamsPortalRefract( CBaseVSShader *pShader, IMaterialVar** params, const char *pMaterialName, PortalRefractVars_t &info );
-void InitPortalRefract( CBaseVSShader *pShader, IMaterialVar** params, PortalRefractVars_t &info );
-void DrawPortalRefract( CBaseVSShader *pShader, IMaterialVar** params, IShaderDynamicAPI *pShaderAPI,
-						   IShaderShadow* pShaderShadow, PortalRefractVars_t &info );
+void InitParamsPortalRefract(CBaseVSShader *pShader, IMaterialVar **params, const char *pMaterialName,
+							 PortalRefractVars_t &info);
+void InitPortalRefract(CBaseVSShader *pShader, IMaterialVar **params, PortalRefractVars_t &info);
+void DrawPortalRefract(CBaseVSShader *pShader, IMaterialVar **params, IShaderDynamicAPI *pShaderAPI,
+					   IShaderShadow *pShaderShadow, PortalRefractVars_t &info);
 
 #endif // PortalRefract_HELPER_H

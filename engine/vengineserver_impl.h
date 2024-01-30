@@ -15,9 +15,8 @@
 extern IVEngineServer *g_pVEngineServer;
 
 // Used to seed the random # stream
-void SeedRandomNumberGenerator( bool random_invariant );
+void SeedRandomNumberGenerator(bool random_invariant);
 
 void InvalidateSharedEdictChangeInfos();
-
 
 #endif // VENGINESERVER_IMPL_H

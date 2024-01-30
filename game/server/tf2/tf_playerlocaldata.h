@@ -22,47 +22,48 @@ class CTFPlayerLocalData
 {
 public:
 	DECLARE_PREDICTABLE();
-	DECLARE_CLASS_NOBASE( CTFPlayerLocalData );
+	DECLARE_CLASS_NOBASE(CTFPlayerLocalData);
 	DECLARE_EMBEDDED_NETWORKVAR();
 
 	CTFPlayerLocalData();
 
-	CBaseTFPlayer	*m_pPlayer;
+	CBaseTFPlayer *m_pPlayer;
 
-	CNetworkVar( bool, m_nInTacticalView );
+	CNetworkVar(bool, m_nInTacticalView);
 
 	// Player has been knocked down
-	CNetworkVar( bool, m_bKnockedDown );
-	CNetworkQAngle( m_vecKnockDownDir );
+	CNetworkVar(bool, m_bKnockedDown);
+	CNetworkQAngle(m_vecKnockDownDir);
 
 	// Player is using thermal vision
-	CNetworkVar( bool, m_bThermalVision );
+	CNetworkVar(bool, m_bThermalVision);
 
 	// ID
-	CNetworkVar( int, m_iIDEntIndex );
+	CNetworkVar(int, m_iIDEntIndex);
 
 	// Resource chunk carrying counts
-	CNetworkArray( int, m_iResourceAmmo, RESOURCE_TYPES );	// 0 = Normal resources, 1 = Processed resources
+	CNetworkArray(int, m_iResourceAmmo, RESOURCE_TYPES); // 0 = Normal resources, 1 = Processed resources
 
 	// Resource manipulation
-	void		AddResources( int iAmount );
-	void		RemoveResources( int iAmount );
-	int			ResourceCount( void ) const;
-	void		SetResources( int iAmount );
+	void AddResources(int iAmount);
+	void RemoveResources(int iAmount);
+	int ResourceCount(void) const;
+	void SetResources(int iAmount);
 
 	// Resource bank
-	CNetworkVar( int, m_iBankResources );					// Current amounts of resources in my bank
+	CNetworkVar(int, m_iBankResources); // Current amounts of resources in my bank
 
 	// Objects
-	CUtlVector< CHandle<CBaseObject> > m_aObjects;
+	CUtlVector<CHandle<CBaseObject>> m_aObjects;
 
 	// Object sapper placement handling
-	CNetworkVar( bool,	m_bAttachingSapper );
-	CNetworkVar( float,	m_flSapperAttachmentFrac );
+	CNetworkVar(bool, m_bAttachingSapper);
+	CNetworkVar(float, m_flSapperAttachmentFrac);
 
-	CNetworkVar( bool, m_bForceMapOverview );
+	CNetworkVar(bool, m_bForceMapOverview);
 };
 
-EXTERN_SEND_TABLE(DT_TFLocal);
+EXTERN_SEND_TABLE
+(DT_TFLocal);
 
 #endif // TF_PLAYERLOCALDATA_H

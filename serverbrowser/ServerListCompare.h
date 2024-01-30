@@ -14,7 +14,6 @@
 using vgui::ListPanel;
 using vgui::ListPanelItem;
 
-
 // these functions are common to most server lists in sorts
 int __cdecl PasswordCompare(ListPanel *pPanel, const ListPanelItem &p1, const ListPanelItem &p2);
 int __cdecl BotsCompare(ListPanel *pPanel, const ListPanelItem &p1, const ListPanelItem &p2);

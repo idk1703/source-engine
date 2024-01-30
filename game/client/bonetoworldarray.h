@@ -9,7 +9,7 @@
 
 #include "tier0/tslist.h"
 
-#if defined( _WIN32 )
+#if defined(_WIN32)
 #pragma once
 #endif
 
@@ -17,7 +17,7 @@
 //-----------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------
-template <int NUM_ARRAYS>
+template<int NUM_ARRAYS>
 class CBoneToWorldArrays
 {
 public:
@@ -28,19 +28,19 @@ public:
 
 	CBoneToWorldArrays()
 	{
-		const int SIZE_ARRAY = AlignValue( sizeof(matrix3x4_t) * MAXSTUDIOBONES, ALIGNMENT );
-		m_pBase = (matrix3x4_t *)_aligned_malloc( SIZE_ARRAY * NUM_ARRAYS, ALIGNMENT );
-		for ( int i = 0; i < NUM_ARRAYS; i++ )
+		const int SIZE_ARRAY = AlignValue(sizeof(matrix3x4_t) * MAXSTUDIOBONES, ALIGNMENT);
+		m_pBase = (matrix3x4_t *)_aligned_malloc(SIZE_ARRAY * NUM_ARRAYS, ALIGNMENT);
+		for(int i = 0; i < NUM_ARRAYS; i++)
 		{
 			matrix3x4_t *pArray = (matrix3x4_t *)((byte *)m_pBase + SIZE_ARRAY * i);
-			Assert( (size_t)pArray % ALIGNMENT == 0 );
-			Free( pArray );
+			Assert((size_t)pArray % ALIGNMENT == 0);
+			Free(pArray);
 		}
 	}
 
 	~CBoneToWorldArrays()
 	{
-		_aligned_free( m_pBase );
+		_aligned_free(m_pBase);
 	}
 
 	int NumArrays()
@@ -48,19 +48,19 @@ public:
 		return NUM_ARRAYS;
 	}
 
-	matrix3x4_t *Alloc( bool bBlock = true )
+	matrix3x4_t *Alloc(bool bBlock = true)
 	{
 		TSLNodeBase_t *p;
-		while ( ( p = m_Free.Pop() ) == NULL && bBlock )
+		while((p = m_Free.Pop()) == NULL && bBlock)
 		{
 			ThreadPause();
 		}
 		return (matrix3x4_t *)p;
 	}
 
-	void Free( matrix3x4_t *p )
+	void Free(matrix3x4_t *p)
 	{
-		m_Free.Push( (TSLNodeBase_t *) p );
+		m_Free.Push((TSLNodeBase_t *)p);
 	}
 
 private:

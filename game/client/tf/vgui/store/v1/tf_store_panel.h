@@ -20,19 +20,20 @@ class CStorePage;
 //-----------------------------------------------------------------------------
 class CTFStorePanel1 : public CTFBaseStorePanel
 {
-	DECLARE_CLASS_SIMPLE( CTFStorePanel1, CTFBaseStorePanel );
+	DECLARE_CLASS_SIMPLE(CTFStorePanel1, CTFBaseStorePanel);
+
 public:
-	CTFStorePanel1( vgui::Panel *parent );
+	CTFStorePanel1(vgui::Panel *parent);
 
 	// UI Layout
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 	virtual void OnThink();
 
 	// GC Management
-	virtual void	PostTransactionCompleted( void );
+	virtual void PostTransactionCompleted(void);
 
 private:
-	virtual CStorePage	*CreateStorePage( const CEconStoreCategoryManager::StoreCategory_t *pPageData );
+	virtual CStorePage *CreateStorePage(const CEconStoreCategoryManager::StoreCategory_t *pPageData);
 };
 
 #endif // TF_STORE_PANEL1_H

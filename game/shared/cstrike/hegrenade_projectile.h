@@ -15,32 +15,24 @@
 class CHEGrenadeProjectile : public CBaseCSGrenadeProjectile
 {
 public:
-	DECLARE_CLASS( CHEGrenadeProjectile, CBaseCSGrenadeProjectile );
+	DECLARE_CLASS(CHEGrenadeProjectile, CBaseCSGrenadeProjectile);
 
-
-// Overrides.
+	// Overrides.
 public:
 	virtual void Spawn();
 	virtual void Precache();
-	virtual void BounceSound( void );
+	virtual void BounceSound(void);
 	virtual void Detonate();
 
-// Grenade stuff.
+	// Grenade stuff.
 public:
+	static CHEGrenadeProjectile *Create(const Vector &position, const QAngle &angles, const Vector &velocity,
+										const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, float timer);
 
-	static CHEGrenadeProjectile* Create(
-		const Vector &position,
-		const QAngle &angles,
-		const Vector &velocity,
-		const AngularImpulse &angVelocity,
-		CBaseCombatCharacter *pOwner,
-		float timer );
-
-	void SetTimer( float timer );
+	void SetTimer(float timer);
 
 private:
 	float m_flDetonateTime;
 };
-
 
 #endif // HEGRENADE_PROJECTILE_H

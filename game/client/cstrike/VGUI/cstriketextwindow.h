@@ -20,7 +20,7 @@
 class CCSTextWindow : public CTextWindow
 {
 private:
-	DECLARE_CLASS_SIMPLE( CCSTextWindow, CTextWindow );
+	DECLARE_CLASS_SIMPLE(CCSTextWindow, CTextWindow);
 
 public:
 	CCSTextWindow(IViewPort *pViewPort);
@@ -28,7 +28,7 @@ public:
 
 	virtual void Update();
 	virtual void SetVisible(bool state);
-	virtual void ShowPanel( bool bShow );
+	virtual void ShowPanel(bool bShow);
 	virtual void OnKeyCodePressed(vgui::KeyCode code);
 
 protected:
@@ -39,11 +39,10 @@ protected:
 public:
 	virtual void PaintBackground();
 	virtual void PerformLayout();
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 	bool m_backgroundLayoutFinished;
 
 	// End background panel ---------------------------------------------------
 };
-
 
 #endif // CSTEXTWINDOW_H

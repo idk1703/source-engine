@@ -6,7 +6,6 @@
 // $NoKeywords: $
 //=============================================================================//
 
-
 #if defined(_WIN32) && !defined(_X360)
 #define WIN32_LEAN_AND_MEAN
 // 0x0601 gives us access to Windows 7 features. We have to be careful not to
@@ -36,9 +35,9 @@
 #include <limits.h>
 #include <assert.h>
 
-#include "tier0/valve_minmax_off.h"	// GCC 4.2.2 headers screw up our min/max defs.
+#include "tier0/valve_minmax_off.h" // GCC 4.2.2 headers screw up our min/max defs.
 #include <map>
-#include "tier0/valve_minmax_on.h"	// GCC 4.2.2 headers screw up our min/max defs.
+#include "tier0/valve_minmax_on.h" // GCC 4.2.2 headers screw up our min/max defs.
 
 #include <stddef.h>
 #ifdef POSIX

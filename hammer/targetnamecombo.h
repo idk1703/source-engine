@@ -27,41 +27,38 @@ class CTargetNameComboBox : public CFilteredComboBox, protected CFilteredComboBo
 {
 	typedef CFilteredComboBox BaseClass;
 
-	public:
+public:
+	CTargetNameComboBox(CFilteredComboBox::ICallbacks *pCallbacks);
+	~CTargetNameComboBox(void);
 
-		CTargetNameComboBox( CFilteredComboBox::ICallbacks *pCallbacks );
-		~CTargetNameComboBox(void);
+	// For dynamic creation.
+	static CTargetNameComboBox *Create(CFilteredComboBox::ICallbacks *pCallbacks, DWORD dwStyle, RECT rect,
+									   CWnd *pParentWnd, UINT nID);
 
-		// For dynamic creation.
-		static CTargetNameComboBox* Create( CFilteredComboBox::ICallbacks *pCallbacks, DWORD dwStyle, RECT rect, CWnd *pParentWnd, UINT nID );
+	// Initialize the control with the entity list you want it to represent.
+	void SetEntityList(const CMapEntityList *pEntityList);
 
-		// Initialize the control with the entity list you want it to represent.
-		void SetEntityList(const CMapEntityList *pEntityList);
+	// Gets the list of entities with this name. The data is valid until the next SetEntityList call.
+	CMapEntityList *GetSubEntityList(const char *pName);
 
-		// Gets the list of entities with this name. The data is valid until the next SetEntityList call.
-		CMapEntityList* GetSubEntityList( const char *pName );
+protected:
+	// CFilteredComboBox::ICallbacks
+	virtual void OnTextChanged(const char *pText);
 
-	protected:
+	void FreeSubLists(void);
+	void CreateFonts();
 
-		// CFilteredComboBox::ICallbacks
-		virtual void OnTextChanged( const char *pText );
+protected:
+	CUtlDict<CMapEntityList *, int> m_EntityLists;
 
-		void FreeSubLists(void);
-		void CreateFonts();
+	const CMapEntityList *m_pEntityList;
+	CTypedPtrList<CPtrList, CMapEntityList *> m_SubLists;
 
-	protected:
+	CFilteredComboBox::ICallbacks *m_pPassThru;
 
-		CUtlDict<CMapEntityList*,int> m_EntityLists;
+	CFont m_BoldFont; // Bold font used when there are multiple matches.
 
-		const CMapEntityList *m_pEntityList;
-		CTypedPtrList<CPtrList, CMapEntityList *> m_SubLists;
-
-		CFilteredComboBox::ICallbacks *m_pPassThru;
-
-		CFont m_BoldFont;						// Bold font used when there are multiple matches.
-
-		DECLARE_MESSAGE_MAP()
+	DECLARE_MESSAGE_MAP()
 };
-
 
 #endif // TARGETNAMECOMBO_H

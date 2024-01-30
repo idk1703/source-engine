@@ -15,20 +15,17 @@
 #include "ToolInterface.h"
 #include "MapEntity.h"
 
-
 class CHelperInfo;
 class CRender2D;
 class CRender3D;
 class CToolSweptPlayerHull;
 class CMapPlayerHullHandle;
 
-
 class CMapSweptPlayerHull : public CMapHelper
 {
 	friend CToolSweptPlayerHull;
 
 public:
-
 	DECLARE_MAPCLASS(CMapSweptPlayerHull, CMapHelper)
 
 	//
@@ -69,12 +66,21 @@ public:
 	virtual void SetRenderColor(color32 rgbColor);
 
 	virtual bool HitTest2D(CMapView2D *pView, const Vector2D &point, HitInfo_t &HitData);
-	virtual CBaseTool *GetToolObject(int nHitData, bool bAttachObject );
+	virtual CBaseTool *GetToolObject(int nHitData, bool bAttachObject);
 
-	virtual bool IsVisualElement(void) { return true; }
-	virtual bool IsClutter(void) { return false; }
+	virtual bool IsVisualElement(void)
+	{
+		return true;
+	}
+	virtual bool IsClutter(void)
+	{
+		return false;
+	}
 
-	virtual const char* GetDescription() { return("Swept player hull helper"); }
+	virtual const char *GetDescription()
+	{
+		return ("Swept player hull helper");
+	}
 
 	virtual void OnAddToWorld(CMapWorld *pWorld);
 	virtual void OnParentKeyChanged(const char *key, const char *value);
@@ -84,7 +90,6 @@ public:
 	virtual void Render3D(CRender3D *pRender);
 
 protected:
-
 	SelectionState_t SetSelectionState(SelectionState_t eSelectionState, int nHandle);
 
 	void UpdateParentKey(void);
@@ -94,14 +99,12 @@ protected:
 
 	void Initialize(void);
 
-	CMapPlayerHullHandle *m_Point[2];				// The two endpoints of the axis.
+	CMapPlayerHullHandle *m_Point[2]; // The two endpoints of the axis.
 };
-
 
 inline bool IsSweptHullClass(CMapEntity *pEntity)
 {
 	return (pEntity->GetChildOfType((CMapSweptPlayerHull *)NULL) != NULL);
 }
-
 
 #endif // MAPSWEPTPLAYERHULL_H

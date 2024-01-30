@@ -37,6 +37,6 @@ void NotifyNeedsToChooseMostHelpfulFriend();
  * @param pParent
  * @return CSelectPlayerDialog
  */
-CSelectPlayerDialog *OpenSelectMostHelpfulFriendDialog( vgui::Panel *pParent );
+CSelectPlayerDialog *OpenSelectMostHelpfulFriendDialog(vgui::Panel *pParent);
 
 #endif // C_TF_FREEACCOUNT_H

@@ -10,73 +10,73 @@
 #pragma once
 #endif
 
-
 #include "weapon_csbase.h"
-
 
 #ifdef CLIENT_DLL
 
-	#define CBaseCSGrenade C_BaseCSGrenade
+#define CBaseCSGrenade C_BaseCSGrenade
 
 #endif
-
 
 class CBaseCSGrenade : public CWeaponCSBase
 {
 public:
-	DECLARE_CLASS( CBaseCSGrenade, CWeaponCSBase );
+	DECLARE_CLASS(CBaseCSGrenade, CWeaponCSBase);
 	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CBaseCSGrenade();
 
-	virtual void	Precache();
+	virtual void Precache();
 
-	bool			Deploy();
-	bool			Holster( CBaseCombatWeapon *pSwitchingTo );
+	bool Deploy();
+	bool Holster(CBaseCombatWeapon *pSwitchingTo);
 
-	void			PrimaryAttack();
-	void			SecondaryAttack();
+	void PrimaryAttack();
+	void SecondaryAttack();
 
-// 	virtual float GetSpread() const;
+	// 	virtual float GetSpread() const;
 
-	bool			Reload();
+	bool Reload();
 
-	virtual void	ItemPostFrame();
+	virtual void ItemPostFrame();
 
-	void			DecrementAmmo( CBaseCombatCharacter *pOwner );
-	virtual void	StartGrenadeThrow();
-	virtual void	ThrowGrenade();
-	virtual void	DropGrenade();
+	void DecrementAmmo(CBaseCombatCharacter *pOwner);
+	virtual void StartGrenadeThrow();
+	virtual void ThrowGrenade();
+	virtual void DropGrenade();
 
 	bool IsPinPulled() const;
-	bool IsBeingThrown() const { return m_fThrowTime > 0; }
+	bool IsBeingThrown() const
+	{
+		return m_fThrowTime > 0;
+	}
 
 #ifndef CLIENT_DLL
 	DECLARE_DATADESC();
 
-	virtual bool AllowsAutoSwitchFrom( void ) const;
+	virtual bool AllowsAutoSwitchFrom(void) const;
 
-	int		CapabilitiesGet();
+	int CapabilitiesGet();
 
 	// Each derived grenade class implements this.
-	virtual void EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, AngularImpulse angImpulse, CBasePlayer *pPlayer );
+	virtual void EmitGrenade(Vector vecSrc, QAngle vecAngles, Vector vecVel, AngularImpulse angImpulse,
+							 CBasePlayer *pPlayer);
 #endif
 
 protected:
-	CNetworkVar( bool, m_bRedraw );	// Draw the weapon again after throwing a grenade
-	CNetworkVar( bool, m_bPinPulled );	// Set to true when the pin has been pulled but the grenade hasn't been thrown yet.
-	CNetworkVar( float, m_fThrowTime ); // the time at which the grenade will be thrown.  If this value is 0 then the time hasn't been set yet.
+	CNetworkVar(bool, m_bRedraw);	 // Draw the weapon again after throwing a grenade
+	CNetworkVar(bool, m_bPinPulled); // Set to true when the pin has been pulled but the grenade hasn't been thrown yet.
+	CNetworkVar(float, m_fThrowTime); // the time at which the grenade will be thrown.  If this value is 0 then the time
+									  // hasn't been set yet.
 
 private:
-	CBaseCSGrenade( const CBaseCSGrenade & ) {}
+	CBaseCSGrenade(const CBaseCSGrenade &) {}
 };
-
 
 inline bool CBaseCSGrenade::IsPinPulled() const
 {
 	return m_bPinPulled;
 }
-
 
 #endif // WEAPON_BASECSGRENADE_H

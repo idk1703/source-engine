@@ -35,5 +35,4 @@ private:
 	typedef vgui::Button BaseClass;
 };
 
-
 #endif // BACKGROUNDMENUBUTTON_H

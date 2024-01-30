@@ -23,14 +23,15 @@ public:
 	CClipboardManager();
 	~CClipboardManager();
 
-	void			EmptyClipboard( bool bClearWindowsClipboard );
-	void			SetClipboardData( CUtlVector< KeyValues * >& data, IClipboardCleanup *pfnOptionalCleanuFunction );
-	void			AddToClipboardData( KeyValues *add );
-	void			GetClipboardData( CUtlVector< KeyValues * >& data );
-	bool			HasClipboardData() const;
+	void EmptyClipboard(bool bClearWindowsClipboard);
+	void SetClipboardData(CUtlVector<KeyValues *> &data, IClipboardCleanup *pfnOptionalCleanuFunction);
+	void AddToClipboardData(KeyValues *add);
+	void GetClipboardData(CUtlVector<KeyValues *> &data);
+	bool HasClipboardData() const;
+
 private:
-	CUtlVector< KeyValues * >	m_Data;
-	IClipboardCleanup			*m_pfnCleanup;
+	CUtlVector<KeyValues *> m_Data;
+	IClipboardCleanup *m_pfnCleanup;
 };
 
 #endif // CLIPBOARDMANAGER_H

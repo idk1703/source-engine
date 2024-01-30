@@ -11,13 +11,13 @@
 #include "commanderoverlay.h"
 #include "hud_minimap.h"
 
-
 //-----------------------------------------------------------------------------
 // Purpose: A resource zone
 //-----------------------------------------------------------------------------
 class C_ResourceZone : public C_BaseEntity
 {
-	DECLARE_CLASS( C_ResourceZone, C_BaseEntity );
+	DECLARE_CLASS(C_ResourceZone, C_BaseEntity);
+
 public:
 	DECLARE_PREDICTABLE();
 	DECLARE_CLIENTCLASS();
@@ -25,13 +25,13 @@ public:
 	DECLARE_MINIMAP_PANEL();
 
 	C_ResourceZone();
-	virtual void	SetDormant( bool bDormant );
-	virtual void	OnDataChanged( DataUpdateType_t updateType );
-	const char	*GetTargetDescription( void ) const;
+	virtual void SetDormant(bool bDormant);
+	virtual void OnDataChanged(DataUpdateType_t updateType);
+	const char *GetTargetDescription(void) const;
 
 public:
-	float	m_flClientResources;	// Amount of resources left
-	int		m_nResourcesLeft;
+	float m_flClientResources; // Amount of resources left
+	int m_nResourcesLeft;
 };
 
 //-----------------------------------------------------------------------------
@@ -39,18 +39,19 @@ public:
 //-----------------------------------------------------------------------------
 class C_ResourceSpawner : public C_BaseAnimating
 {
-	DECLARE_CLASS( C_ResourceSpawner, C_BaseAnimating );
+	DECLARE_CLASS(C_ResourceSpawner, C_BaseAnimating);
+
 public:
 	DECLARE_CLIENTCLASS();
 
 	C_ResourceSpawner();
-	virtual void OnDataChanged( DataUpdateType_t updateType );
-	virtual void ReceiveMessage( int classID,  bf_read &msg );
-	virtual void SpawnEffect( bool bSpawningChunk );
-	virtual void ClientThink( void );
+	virtual void OnDataChanged(DataUpdateType_t updateType);
+	virtual void ReceiveMessage(int classID, bf_read &msg);
+	virtual void SpawnEffect(bool bSpawningChunk);
+	virtual void ClientThink(void);
 
 public:
-	bool	m_bActive;
+	bool m_bActive;
 };
 
 #endif // C_FUNC_RESOURCE_H

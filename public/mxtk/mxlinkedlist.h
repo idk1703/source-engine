@@ -14,16 +14,12 @@
 #ifndef INCLUDED_MXLINKEDLIST
 #define INCLUDED_MXLINKEDLIST
 
-
-
 typedef struct mxListNode_s
 {
 	void *d_data;
 	struct mxListNode_s *d_next;
 	struct mxListNode_s *d_prev;
 } mxListNode;
-
-
 
 class mxLinkedList
 {
@@ -32,12 +28,12 @@ class mxLinkedList
 	int d_nodeCount;
 
 	// NOT IMPLEMENTED
-	mxLinkedList (const mxLinkedList&);
-	mxLinkedList& operator= (const mxLinkedList&);
+	mxLinkedList(const mxLinkedList &);
+	mxLinkedList &operator=(const mxLinkedList &);
 
 public:
-	//CREATORS
-	mxLinkedList ()
+	// CREATORS
+	mxLinkedList()
 	{
 		d_head = new mxListNode;
 		d_tail = new mxListNode;
@@ -50,15 +46,15 @@ public:
 		d_nodeCount = 0;
 	}
 
-	~mxLinkedList ()
+	~mxLinkedList()
 	{
-		removeAll ();
+		removeAll();
 		delete d_tail;
 		delete d_head;
 	}
 
 	// MANIPULATORS
-	void add (void *data)
+	void add(void *data)
 	{
 		mxListNode *node = new mxListNode;
 		node->d_data = data;
@@ -69,13 +65,13 @@ public:
 		++d_nodeCount;
 	}
 
-	void remove (void *data)
+	void remove(void *data)
 	{
 		mxListNode *node = d_head->d_next;
-		while (node != d_tail)
+		while(node != d_tail)
 		{
 			mxListNode *next = node->d_next;
-			if (node->d_data == data)
+			if(node->d_data == data)
 			{
 				node->d_prev->d_next = node->d_next;
 				node->d_next->d_prev = node->d_prev;
@@ -87,11 +83,11 @@ public:
 		--d_nodeCount;
 	}
 
-	void removeAll ()
+	void removeAll()
 	{
 		mxListNode *node = d_head->d_next;
 
-		while (node != d_tail)
+		while(node != d_tail)
 		{
 			mxListNode *next = node->d_next;
 			delete node;
@@ -103,34 +99,34 @@ public:
 		d_nodeCount = 0;
 	}
 
-	void setData (mxListNode *node, void *data)
+	void setData(mxListNode *node, void *data)
 	{
-		if (node)
+		if(node)
 			node->d_data = data;
 	}
 
 	// ACCESSORS
-	void *getData (mxListNode *node) const
+	void *getData(mxListNode *node) const
 	{
-		if (node)
+		if(node)
 			return node->d_data;
 
 		return 0;
 	}
 
-	mxListNode *getFirst () const
+	mxListNode *getFirst() const
 	{
-		if (d_head->d_next != d_tail)
+		if(d_head->d_next != d_tail)
 			return d_head->d_next;
 
 		return 0;
 	}
 
-	mxListNode *getNext (mxListNode *node) const
+	mxListNode *getNext(mxListNode *node) const
 	{
-		if (node)
+		if(node)
 		{
-			if (node->d_next != d_tail)
+			if(node->d_next != d_tail)
 				return node->d_next;
 
 			return 0;
@@ -139,19 +135,19 @@ public:
 		return 0;
 	}
 
-	mxListNode *getLast () const
+	mxListNode *getLast() const
 	{
-		if (d_tail->d_prev != d_head)
+		if(d_tail->d_prev != d_head)
 			return d_tail->d_prev;
 
 		return 0;
 	}
 
-	mxListNode *getPrev (mxListNode *node) const
+	mxListNode *getPrev(mxListNode *node) const
 	{
-		if (node)
+		if(node)
 		{
-			if (node->d_prev != d_head)
+			if(node->d_prev != d_head)
 				return node->d_prev;
 
 			return 0;
@@ -160,32 +156,30 @@ public:
 		return 0;
 	}
 
-	mxListNode *at (int pos) const
+	mxListNode *at(int pos) const
 	{
 		mxListNode *node = d_head->d_next;
-		while (pos > 0 && node != d_tail)
+		while(pos > 0 && node != d_tail)
 		{
 			pos--;
 			node = node->d_next;
 		}
 
-		if (node != d_tail)
+		if(node != d_tail)
 			return node;
 
 		return 0;
 	}
 
-	bool isEmpty () const
+	bool isEmpty() const
 	{
 		return (d_head->d_next == d_tail);
 	}
 
-	int getNodeCount () const
+	int getNodeCount() const
 	{
 		return d_nodeCount;
 	}
 };
-
-
 
 #endif // INCLUDED_MXLINKEDLIST

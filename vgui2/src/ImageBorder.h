@@ -41,17 +41,20 @@ public:
 	virtual void SetName(const char *name);
 	virtual backgroundtype_e GetBackgroundType();
 
-	virtual bool PaintFirst( void ) { return m_bPaintFirst; }
+	virtual bool PaintFirst(void)
+	{
+		return m_bPaintFirst;
+	}
 
 protected:
-	void		 SetImage(const char *imageName);
+	void SetImage(const char *imageName);
 
 protected:
 	int _inset[4];
 
 private:
 	// protected copy constructor to prevent use
-	ImageBorder(ImageBorder&);
+	ImageBorder(ImageBorder &);
 
 	char *_name;
 

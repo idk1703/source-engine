@@ -18,29 +18,29 @@ class C_BaseEntity;
 class CFloatInput
 {
 public:
-	bool  Init( IMaterial *pMaterial, KeyValues *pKeyValues, const char *pKeyName, float flDefault = 0.0f );
+	bool Init(IMaterial *pMaterial, KeyValues *pKeyValues, const char *pKeyName, float flDefault = 0.0f);
 	float GetFloat() const;
 
 private:
 	float m_flValue;
 	IMaterialVar *m_pFloatVar;
-	int	m_FloatVecComp;
+	int m_FloatVecComp;
 };
 
-bool CFloatInput::Init( IMaterial *pMaterial, KeyValues *pKeyValues, const char *pKeyName, float flDefault )
+bool CFloatInput::Init(IMaterial *pMaterial, KeyValues *pKeyValues, const char *pKeyName, float flDefault)
 {
 	m_pFloatVar = NULL;
-	KeyValues *pSection = pKeyValues->FindKey( pKeyName );
-	if (pSection)
+	KeyValues *pSection = pKeyValues->FindKey(pKeyName);
+	if(pSection)
 	{
-		if (pSection->GetDataType() == KeyValues::TYPE_STRING)
+		if(pSection->GetDataType() == KeyValues::TYPE_STRING)
 		{
 			const char *pVarName = pSection->GetString();
 
 			// Look for numbers...
 			float flValue;
-			int nCount = sscanf( pVarName, "%f", &flValue );
-			if (nCount == 1)
+			int nCount = sscanf(pVarName, "%f", &flValue);
+			if(nCount == 1)
 			{
 				m_flValue = flValue;
 				return true;
@@ -48,15 +48,15 @@ bool CFloatInput::Init( IMaterial *pMaterial, KeyValues *pKeyValues, const char 
 
 			// Look for array specification...
 			char pTemp[256];
-			if (strchr(pVarName, '['))
+			if(strchr(pVarName, '['))
 			{
 				// strip off the array...
-				Q_strncpy( pTemp, pVarName, 256 );
-				char *pArray = strchr( pTemp, '[' );
+				Q_strncpy(pTemp, pVarName, 256);
+				char *pArray = strchr(pTemp, '[');
 				*pArray++ = 0;
 
-				char* pIEnd;
-				m_FloatVecComp = strtol( pArray, &pIEnd, 10 );
+				char *pIEnd;
+				m_FloatVecComp = strtol(pArray, &pIEnd, 10);
 
 				// Use the version without the array...
 				pVarName = pTemp;
@@ -67,8 +67,8 @@ bool CFloatInput::Init( IMaterial *pMaterial, KeyValues *pKeyValues, const char 
 			}
 
 			bool bFoundVar;
-			m_pFloatVar = pMaterial->FindVar( pVarName, &bFoundVar, true );
-			if (!bFoundVar)
+			m_pFloatVar = pMaterial->FindVar(pVarName, &bFoundVar, true);
+			if(!bFoundVar)
 				return false;
 		}
 		else
@@ -85,22 +85,20 @@ bool CFloatInput::Init( IMaterial *pMaterial, KeyValues *pKeyValues, const char 
 
 float CFloatInput::GetFloat() const
 {
-	if (!m_pFloatVar)
+	if(!m_pFloatVar)
 		return m_flValue;
 
-	if( m_FloatVecComp < 0 )
+	if(m_FloatVecComp < 0)
 		return m_pFloatVar->GetFloatValue();
 
 	int iVecSize = m_pFloatVar->VectorSize();
-	if ( m_FloatVecComp >= iVecSize )
+	if(m_FloatVecComp >= iVecSize)
 		return 0;
 
 	float v[4];
-	m_pFloatVar->GetVecValue( v, iVecSize );
+	m_pFloatVar->GetVecValue(v, iVecSize);
 	return v[m_FloatVecComp];
 }
-
-
 
 //-----------------------------------------------------------------------------
 //
@@ -112,44 +110,42 @@ class CResultProxy : public IMaterialProxy
 public:
 	CResultProxy();
 	virtual ~CResultProxy();
-	virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
-	virtual void Release( void ) { delete this; }
+	virtual bool Init(IMaterial *pMaterial, KeyValues *pKeyValues);
+	virtual void Release(void)
+	{
+		delete this;
+	}
 	virtual IMaterial *GetMaterial();
 
 protected:
-	C_BaseEntity *BindArgToEntity( void *pArg );
-	void SetFloatResult( float result );
+	C_BaseEntity *BindArgToEntity(void *pArg);
+	void SetFloatResult(float result);
 
-	IMaterialVar* m_pResult;
+	IMaterialVar *m_pResult;
 	int m_ResultVecComp;
 };
 
-CResultProxy::CResultProxy() : m_pResult(0)
-{
-}
+CResultProxy::CResultProxy() : m_pResult(0) {}
 
-CResultProxy::~CResultProxy()
-{
-}
+CResultProxy::~CResultProxy() {}
 
-
-bool CResultProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
+bool CResultProxy::Init(IMaterial *pMaterial, KeyValues *pKeyValues)
 {
-	char const* pResult = pKeyValues->GetString( "resultVar" );
-	if( !pResult )
+	char const *pResult = pKeyValues->GetString("resultVar");
+	if(!pResult)
 		return false;
 
 	// Look for array specification...
 	char pTemp[256];
-	if (strchr(pResult, '['))
+	if(strchr(pResult, '['))
 	{
 		// strip off the array...
-		Q_strncpy( pTemp, pResult, 256 );
-		char *pArray = strchr( pTemp, '[' );
+		Q_strncpy(pTemp, pResult, 256);
+		char *pArray = strchr(pTemp, '[');
 		*pArray++ = 0;
 
-		char* pIEnd;
-		m_ResultVecComp = strtol( pArray, &pIEnd, 10 );
+		char *pIEnd;
+		m_ResultVecComp = strtol(pArray, &pIEnd, 10);
 
 		// Use the version without the array...
 		pResult = pTemp;
@@ -160,43 +156,42 @@ bool CResultProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
 	}
 
 	bool foundVar;
-	m_pResult = pMaterial->FindVar( pResult, &foundVar, true );
-	if( !foundVar )
+	m_pResult = pMaterial->FindVar(pResult, &foundVar, true);
+	if(!foundVar)
 		return false;
 
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // A little code to allow us to set single components of vectors
 //-----------------------------------------------------------------------------
-void CResultProxy::SetFloatResult( float result )
+void CResultProxy::SetFloatResult(float result)
 {
-	if (m_pResult->GetType() == MATERIAL_VAR_TYPE_VECTOR)
+	if(m_pResult->GetType() == MATERIAL_VAR_TYPE_VECTOR)
 	{
-		if ( m_ResultVecComp >= 0 )
+		if(m_ResultVecComp >= 0)
 		{
-			m_pResult->SetVecComponentValue( result, m_ResultVecComp );
+			m_pResult->SetVecComponentValue(result, m_ResultVecComp);
 		}
 		else
 		{
 			float v[4];
 			int vecSize = m_pResult->VectorSize();
 
-			for (int i = 0; i < vecSize; ++i)
+			for(int i = 0; i < vecSize; ++i)
 				v[i] = result;
 
-			m_pResult->SetVecValue( v, vecSize );
+			m_pResult->SetVecValue(v, vecSize);
 		}
 	}
 	else
 	{
-		m_pResult->SetFloatValue( result );
+		m_pResult->SetFloatValue(result);
 	}
 }
 
-C_BaseEntity *CResultProxy::BindArgToEntity( void *pArg )
+C_BaseEntity *CResultProxy::BindArgToEntity(void *pArg)
 {
 	return NULL;
 	/*
@@ -210,7 +205,6 @@ IMaterial *CResultProxy::GetMaterial()
 	return m_pResult->GetOwningMaterial();
 }
 
-
 //-----------------------------------------------------------------------------
 //
 // Base functional proxy; two sources (one is optional) and a result
@@ -221,44 +215,39 @@ class CFunctionProxy : public CResultProxy
 public:
 	CFunctionProxy();
 	virtual ~CFunctionProxy();
-	virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
+	virtual bool Init(IMaterial *pMaterial, KeyValues *pKeyValues);
 
 protected:
-	void ComputeResultType( MaterialVarType_t& resultType, int& vecSize );
+	void ComputeResultType(MaterialVarType_t &resultType, int &vecSize);
 
-	IMaterialVar* m_pSrc1;
-	IMaterialVar* m_pSrc2;
+	IMaterialVar *m_pSrc1;
+	IMaterialVar *m_pSrc2;
 };
 
-CFunctionProxy::CFunctionProxy() : m_pSrc1(0), m_pSrc2(0)
-{
-}
+CFunctionProxy::CFunctionProxy() : m_pSrc1(0), m_pSrc2(0) {}
 
-CFunctionProxy::~CFunctionProxy()
-{
-}
+CFunctionProxy::~CFunctionProxy() {}
 
-
-bool CFunctionProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
+bool CFunctionProxy::Init(IMaterial *pMaterial, KeyValues *pKeyValues)
 {
-	if (!CResultProxy::Init( pMaterial, pKeyValues ))
+	if(!CResultProxy::Init(pMaterial, pKeyValues))
 		return false;
 
-	char const* pSrcVar1 = pKeyValues->GetString( "srcVar1" );
-	if( !pSrcVar1 )
+	char const *pSrcVar1 = pKeyValues->GetString("srcVar1");
+	if(!pSrcVar1)
 		return false;
 
 	bool foundVar;
-	m_pSrc1 = pMaterial->FindVar( pSrcVar1, &foundVar, true );
-	if( !foundVar )
+	m_pSrc1 = pMaterial->FindVar(pSrcVar1, &foundVar, true);
+	if(!foundVar)
 		return false;
 
 	// Source 2 is optional, some math ops may be single-input
-	char const* pSrcVar2 = pKeyValues->GetString( "srcVar2" );
-	if( pSrcVar2 && (*pSrcVar2) )
+	char const *pSrcVar2 = pKeyValues->GetString("srcVar2");
+	if(pSrcVar2 && (*pSrcVar2))
 	{
-		m_pSrc2 = pMaterial->FindVar( pSrcVar2, &foundVar, true );
-		if( !foundVar )
+		m_pSrc2 = pMaterial->FindVar(pSrcVar2, &foundVar, true);
+		if(!foundVar)
 			return false;
 	}
 	else
@@ -269,29 +258,28 @@ bool CFunctionProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
 	return true;
 }
 
-
-void CFunctionProxy::ComputeResultType( MaterialVarType_t& resultType, int& vecSize )
+void CFunctionProxy::ComputeResultType(MaterialVarType_t &resultType, int &vecSize)
 {
 	// Feh, this is ugly. Basically, don't change the result type
 	// unless it's undefined.
 	resultType = m_pResult->GetType();
-	if (resultType == MATERIAL_VAR_TYPE_VECTOR)
+	if(resultType == MATERIAL_VAR_TYPE_VECTOR)
 	{
-		if (m_ResultVecComp >= 0)
+		if(m_ResultVecComp >= 0)
 			resultType = MATERIAL_VAR_TYPE_FLOAT;
 		vecSize = m_pResult->VectorSize();
 	}
-	else if (resultType == MATERIAL_VAR_TYPE_UNDEFINED)
+	else if(resultType == MATERIAL_VAR_TYPE_UNDEFINED)
 	{
 		resultType = m_pSrc1->GetType();
-		if (resultType == MATERIAL_VAR_TYPE_VECTOR)
+		if(resultType == MATERIAL_VAR_TYPE_VECTOR)
 		{
 			vecSize = m_pSrc1->VectorSize();
 		}
-		else if ((resultType == MATERIAL_VAR_TYPE_UNDEFINED) && m_pSrc2)
+		else if((resultType == MATERIAL_VAR_TYPE_UNDEFINED) && m_pSrc2)
 		{
 			resultType = m_pSrc2->GetType();
-			if (resultType == MATERIAL_VAR_TYPE_VECTOR)
+			if(resultType == MATERIAL_VAR_TYPE_VECTOR)
 			{
 				vecSize = m_pSrc2->VectorSize();
 			}
@@ -299,21 +287,19 @@ void CFunctionProxy::ComputeResultType( MaterialVarType_t& resultType, int& vecS
 	}
 }
 
-
 class CFakeBurnLevelProxy : public CResultProxy
 {
 public:
-	virtual void OnBind( void *pC_BaseEntity )
+	virtual void OnBind(void *pC_BaseEntity)
 	{
 		// Slam burn level to 0 to avoid the burn detail texture showing through in modelbrowser.
-		Assert( m_pResult );
-		if ( m_pResult )
+		Assert(m_pResult);
+		if(m_pResult)
 		{
-			m_pResult->SetFloatValue( 0.0f );
+			m_pResult->SetFloatValue(0.0f);
 		}
 	}
 };
-
 
 //-----------------------------------------------------------------------------
 // Selects the first var value if it's non-zero, otherwise goes with the second
@@ -322,89 +308,88 @@ public:
 class CSelectFirstIfNonZeroProxy : public CFunctionProxy
 {
 public:
-	virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
-	virtual void OnBind( void *pC_BaseEntity );
+	virtual bool Init(IMaterial *pMaterial, KeyValues *pKeyValues);
+	virtual void OnBind(void *pC_BaseEntity);
 };
 
-bool CSelectFirstIfNonZeroProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
+bool CSelectFirstIfNonZeroProxy::Init(IMaterial *pMaterial, KeyValues *pKeyValues)
 {
 	// Requires 2 args..
-	bool ok = CFunctionProxy::Init( pMaterial, pKeyValues );
+	bool ok = CFunctionProxy::Init(pMaterial, pKeyValues);
 	ok = ok && m_pSrc2;
 	return ok;
 }
 
-void CSelectFirstIfNonZeroProxy::OnBind( void *pC_BaseEntity )
+void CSelectFirstIfNonZeroProxy::OnBind(void *pC_BaseEntity)
 {
-	Assert( m_pSrc1 && m_pSrc2 && m_pResult );
+	Assert(m_pSrc1 && m_pSrc2 && m_pResult);
 
 	MaterialVarType_t resultType;
 	int vecSize;
-	ComputeResultType( resultType, vecSize );
+	ComputeResultType(resultType, vecSize);
 
-	switch( resultType )
+	switch(resultType)
 	{
-	case MATERIAL_VAR_TYPE_VECTOR:
+		case MATERIAL_VAR_TYPE_VECTOR:
 		{
 			Vector a, b;
-			m_pSrc1->GetVecValue( a.Base(), vecSize );
-			m_pSrc2->GetVecValue( b.Base(), vecSize );
+			m_pSrc1->GetVecValue(a.Base(), vecSize);
+			m_pSrc2->GetVecValue(b.Base(), vecSize);
 
-			if ( !a.IsZero() )
+			if(!a.IsZero())
 			{
-				m_pResult->SetVecValue( a.Base(), vecSize );
+				m_pResult->SetVecValue(a.Base(), vecSize);
 			}
 			else
 			{
-				m_pResult->SetVecValue( b.Base(), vecSize );
+				m_pResult->SetVecValue(b.Base(), vecSize);
 			}
 		}
 		break;
 
-	case MATERIAL_VAR_TYPE_FLOAT:
-		if ( m_pSrc1->GetFloatValue() )
-		{
-			SetFloatResult( m_pSrc1->GetFloatValue() );
-		}
-		else
-		{
-			SetFloatResult( m_pSrc2->GetFloatValue() );
-		}
-		break;
+		case MATERIAL_VAR_TYPE_FLOAT:
+			if(m_pSrc1->GetFloatValue())
+			{
+				SetFloatResult(m_pSrc1->GetFloatValue());
+			}
+			else
+			{
+				SetFloatResult(m_pSrc2->GetFloatValue());
+			}
+			break;
 
-	case MATERIAL_VAR_TYPE_INT:
-		if ( m_pSrc1->GetIntValue() )
-		{
-			m_pResult->SetFloatValue( m_pSrc1->GetIntValue() );
-		}
-		else
-		{
-			m_pResult->SetFloatValue( m_pSrc2->GetIntValue() );
-		}
-		break;
+		case MATERIAL_VAR_TYPE_INT:
+			if(m_pSrc1->GetIntValue())
+			{
+				m_pResult->SetFloatValue(m_pSrc1->GetIntValue());
+			}
+			else
+			{
+				m_pResult->SetFloatValue(m_pSrc2->GetIntValue());
+			}
+			break;
 	}
 }
-
 
 class CModelBrowserMaterialProxyFactory : public IMaterialProxyFactory
 {
 public:
-	virtual IMaterialProxy *CreateProxy( const char *proxyName )
+	virtual IMaterialProxy *CreateProxy(const char *proxyName)
 	{
-		if ( V_stricmp( proxyName, "SelectFirstIfNonZero" ) == 0 )
+		if(V_stricmp(proxyName, "SelectFirstIfNonZero") == 0)
 		{
 			return new CSelectFirstIfNonZeroProxy;
 		}
-		else if ( V_stricmp( proxyName, "BurnLevel" ) == 0 )
+		else if(V_stricmp(proxyName, "BurnLevel") == 0)
 		{
 			return new CFakeBurnLevelProxy;
 		}
 		return NULL;
 	}
 
-	virtual void DeleteProxy( IMaterialProxy *pProxy )
+	virtual void DeleteProxy(IMaterialProxy *pProxy)
 	{
-		if ( pProxy )
+		if(pProxy)
 		{
 			pProxy->Release();
 		}

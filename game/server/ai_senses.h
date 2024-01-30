@@ -14,7 +14,7 @@
 #include "ai_component.h"
 #include "soundent.h"
 
-#if defined( _WIN32 )
+#if defined(_WIN32)
 #pragma once
 #endif
 
@@ -23,22 +23,22 @@ class CSound;
 
 //-------------------------------------
 
-DECLARE_POINTER_HANDLE( AISightIter_t );
-DECLARE_POINTER_HANDLE( AISoundIter_t );
+DECLARE_POINTER_HANDLE(AISightIter_t);
+DECLARE_POINTER_HANDLE(AISoundIter_t);
 
 // GetFirstSeenEntity can take these as optional parameters to search for
 // a specific type of entity.
 enum seentype_t
 {
-	SEEN_ALL = -1,	// Default
+	SEEN_ALL = -1, // Default
 	SEEN_HIGH_PRIORITY = 0,
 	SEEN_NPCS,
 	SEEN_MISC
 };
 
-#define SENSING_FLAGS_NONE			0x00000000
-#define SENSING_FLAGS_DONT_LOOK		0x00000001 // Effectively makes the NPC blind
-#define SENSING_FLAGS_DONT_LISTEN	0x00000002 // Effectively makes the NPC deaf
+#define SENSING_FLAGS_NONE		  0x00000000
+#define SENSING_FLAGS_DONT_LOOK	  0x00000001 // Effectively makes the NPC blind
+#define SENSING_FLAGS_DONT_LISTEN 0x00000002 // Effectively makes the NPC deaf
 
 //-----------------------------------------------------------------------------
 // class CAI_ScriptConditions
@@ -50,13 +50,13 @@ class CAI_Senses : public CAI_Component
 {
 public:
 	CAI_Senses()
-	 : 	m_LookDist(2048),
-		m_LastLookDist(-1),
-		m_TimeLastLook(-1),
-		m_iAudibleList(0),
-		m_TimeLastLookHighPriority( -1 ),
-		m_TimeLastLookNPCs( -1 ),
-		m_TimeLastLookMisc( -1 )
+		: m_LookDist(2048),
+		  m_LastLookDist(-1),
+		  m_TimeLastLook(-1),
+		  m_iAudibleList(0),
+		  m_TimeLastLookHighPriority(-1),
+		  m_TimeLastLookNPCs(-1),
+		  m_TimeLastLookMisc(-1)
 	{
 		m_SeenArrays[0] = &m_SeenHighPriority;
 		m_SeenArrays[1] = &m_SeenNPCs;
@@ -64,68 +64,88 @@ public:
 		m_iSensingFlags = SENSING_FLAGS_NONE;
 	}
 
-	float			GetDistLook() const				{ return m_LookDist; }
-	void			SetDistLook( float flDistLook ) { m_LookDist = flDistLook; }
+	float GetDistLook() const
+	{
+		return m_LookDist;
+	}
+	void SetDistLook(float flDistLook)
+	{
+		m_LookDist = flDistLook;
+	}
 
-	void			PerformSensing();
+	void PerformSensing();
 
-	void			Listen( void );
-	void			Look( int iDistance );// basic sight function for npcs
+	void Listen(void);
+	void Look(int iDistance); // basic sight function for npcs
 
-	bool			ShouldSeeEntity( CBaseEntity *pEntity ); // logical query
-	bool			CanSeeEntity( CBaseEntity *pSightEnt ); // more expensive cone & raycast test
+	bool ShouldSeeEntity(CBaseEntity *pEntity); // logical query
+	bool CanSeeEntity(CBaseEntity *pSightEnt);	// more expensive cone & raycast test
 #ifdef PORTAL
-	bool			CanSeeEntityThroughPortal( const CProp_Portal *pPortal, CBaseEntity *pSightEnt ); // more expensive cone & raycast test
+	bool CanSeeEntityThroughPortal(const CProp_Portal *pPortal,
+								   CBaseEntity *pSightEnt); // more expensive cone & raycast test
 #endif
 
-	bool			DidSeeEntity( CBaseEntity *pSightEnt ) const; //  a less expensive query that looks at cached results from recent conditionsa gathering
+	bool DidSeeEntity(CBaseEntity *pSightEnt)
+		const; //  a less expensive query that looks at cached results from recent conditionsa gathering
 
-	CBaseEntity *	GetFirstSeenEntity( AISightIter_t *pIter, seentype_t iSeenType = SEEN_ALL ) const;
-	CBaseEntity *	GetNextSeenEntity( AISightIter_t *pIter ) const;
+	CBaseEntity *GetFirstSeenEntity(AISightIter_t *pIter, seentype_t iSeenType = SEEN_ALL) const;
+	CBaseEntity *GetNextSeenEntity(AISightIter_t *pIter) const;
 
-	CSound *		GetFirstHeardSound( AISoundIter_t *pIter );
-	CSound *		GetNextHeardSound( AISoundIter_t *pIter );
-	CSound *		GetClosestSound( bool fScent = false, int validTypes = ALL_SOUNDS | ALL_SCENTS, bool bUsePriority = true );
+	CSound *GetFirstHeardSound(AISoundIter_t *pIter);
+	CSound *GetNextHeardSound(AISoundIter_t *pIter);
+	CSound *GetClosestSound(bool fScent = false, int validTypes = ALL_SOUNDS | ALL_SCENTS, bool bUsePriority = true);
 
-	bool 			CanHearSound( CSound *pSound );
-
-	//---------------------------------
-
-	float			GetTimeLastUpdate( CBaseEntity *pEntity );
+	bool CanHearSound(CSound *pSound);
 
 	//---------------------------------
 
-	void			AddSensingFlags( int iFlags )		{ m_iSensingFlags |= iFlags; }
-	void			RemoveSensingFlags( int iFlags )	{ m_iSensingFlags &= ~iFlags; }
-	bool			HasSensingFlags( int iFlags )		{ return (m_iSensingFlags & iFlags) == iFlags; }
+	float GetTimeLastUpdate(CBaseEntity *pEntity);
+
+	//---------------------------------
+
+	void AddSensingFlags(int iFlags)
+	{
+		m_iSensingFlags |= iFlags;
+	}
+	void RemoveSensingFlags(int iFlags)
+	{
+		m_iSensingFlags &= ~iFlags;
+	}
+	bool HasSensingFlags(int iFlags)
+	{
+		return (m_iSensingFlags & iFlags) == iFlags;
+	}
 
 	DECLARE_SIMPLE_DATADESC();
 
 private:
-	int				GetAudibleList() const { return m_iAudibleList; }
+	int GetAudibleList() const
+	{
+		return m_iAudibleList;
+	}
 
-	bool			WaitingUntilSeen( CBaseEntity *pSightEnt );
+	bool WaitingUntilSeen(CBaseEntity *pSightEnt);
 
-	void			BeginGather();
-	void 			NoteSeenEntity( CBaseEntity *pSightEnt );
-	void			EndGather( int nSeen, CUtlVector<EHANDLE> *pResult );
+	void BeginGather();
+	void NoteSeenEntity(CBaseEntity *pSightEnt);
+	void EndGather(int nSeen, CUtlVector<EHANDLE> *pResult);
 
-	bool 			Look( CBaseEntity *pSightEnt );
+	bool Look(CBaseEntity *pSightEnt);
 #ifdef PORTAL
-	bool 			LookThroughPortal( const CProp_Portal *pPortal, CBaseEntity *pSightEnt );
+	bool LookThroughPortal(const CProp_Portal *pPortal, CBaseEntity *pSightEnt);
 #endif
 
-	int 			LookForHighPriorityEntities( int iDistance );
-	int 			LookForNPCs( int iDistance );
-	int 			LookForObjects( int iDistance );
+	int LookForHighPriorityEntities(int iDistance);
+	int LookForNPCs(int iDistance);
+	int LookForObjects(int iDistance);
 
-	bool			SeeEntity( CBaseEntity *pEntity );
+	bool SeeEntity(CBaseEntity *pEntity);
 
-	float			m_LookDist;				// distance npc sees (Default 2048)
-	float			m_LastLookDist;
-	float			m_TimeLastLook;
+	float m_LookDist; // distance npc sees (Default 2048)
+	float m_LastLookDist;
+	float m_TimeLastLook;
 
-	int				m_iAudibleList;				// first index of a linked list of sounds that the npc can hear.
+	int m_iAudibleList; // first index of a linked list of sounds that the npc can hear.
 
 	CUtlVector<EHANDLE> m_SeenHighPriority;
 	CUtlVector<EHANDLE> m_SeenNPCs;
@@ -133,11 +153,11 @@ private:
 
 	CUtlVector<EHANDLE> *m_SeenArrays[3];
 
-	float			m_TimeLastLookHighPriority;
-	float			m_TimeLastLookNPCs;
-	float			m_TimeLastLookMisc;
+	float m_TimeLastLookHighPriority;
+	float m_TimeLastLookNPCs;
+	float m_TimeLastLookMisc;
 
-	int				m_iSensingFlags;
+	int m_iSensingFlags;
 };
 
 //-----------------------------------------------------------------------------
@@ -148,14 +168,14 @@ public:
 	void Init();
 	void Term();
 
-	CBaseEntity *	GetFirst( int *pIter );
-	CBaseEntity *	GetNext( int *pIter );
+	CBaseEntity *GetFirst(int *pIter);
+	CBaseEntity *GetNext(int *pIter);
 
-	virtual void 	AddEntity( CBaseEntity *pEntity );
+	virtual void AddEntity(CBaseEntity *pEntity);
 
 private:
-	virtual void 	OnEntitySpawned( CBaseEntity *pEntity );
-	virtual void 	OnEntityDeleted( CBaseEntity *pEntity );
+	virtual void OnEntitySpawned(CBaseEntity *pEntity);
+	virtual void OnEntityDeleted(CBaseEntity *pEntity);
 
 	CUtlVector<EHANDLE> m_SensedObjects;
 };
@@ -163,7 +183,5 @@ private:
 extern CAI_SensedObjectsManager g_AI_SensedObjectsManager;
 
 //-----------------------------------------------------------------------------
-
-
 
 #endif // AI_SENSES_H

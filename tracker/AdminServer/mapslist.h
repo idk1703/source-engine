@@ -21,12 +21,10 @@
 class CSocket;
 class IResponse;
 
-
-class CMapsList: public IResponse
+class CMapsList : public IResponse
 {
 public:
-
-	CMapsList(IResponse *target,serveritem_t &server, const char *rconPassword,const char *mod);
+	CMapsList(IResponse *target, serveritem_t &server, const char *rconPassword, const char *mod);
 	~CMapsList();
 
 	// send an rcon command to a server
@@ -49,9 +47,7 @@ public:
 
 	void SetPassword(const char *newPass);
 
-
 private:
-
 	serveritem_t m_Server;
 	CUtlVector<Maps_t> m_MapsList;
 
@@ -63,8 +59,6 @@ private:
 	bool m_bNewMapsList;
 	bool m_bRconFailed;
 	char m_szRconPassword[100];
-
 };
-
 
 #endif // MAPSLIST_H

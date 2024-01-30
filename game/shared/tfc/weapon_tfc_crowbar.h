@@ -10,16 +10,13 @@
 #pragma once
 #endif
 
-
 #include "weapon_tfcbase.h"
 
+#if defined(CLIENT_DLL)
 
-#if defined( CLIENT_DLL )
-
-	#define CTFCCrowbar C_TFCCrowbar
+#define CTFCCrowbar C_TFCCrowbar
 
 #endif
-
 
 // ----------------------------------------------------------------------------- //
 // CTFCCrowbar class definition.
@@ -28,14 +25,13 @@
 class CTFCCrowbar : public CWeaponTFCBase
 {
 public:
-	DECLARE_CLASS( CTFCCrowbar, CWeaponTFCBase );
+	DECLARE_CLASS(CTFCCrowbar, CWeaponTFCBase);
 	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
-	#ifndef CLIENT_DLL
-		DECLARE_DATADESC();
-	#endif
-
+#ifndef CLIENT_DLL
+	DECLARE_DATADESC();
+#endif
 
 	CTFCCrowbar();
 
@@ -50,39 +46,27 @@ public:
 	void PrimaryAttack();
 
 	bool Deploy();
-	void Holster( int skiplocal = 0 );
+	void Holster(int skiplocal = 0);
 	bool CanDrop();
 
 	void WeaponIdle();
 
-	virtual TFCWeaponID GetWeaponID( void ) const;
+	virtual TFCWeaponID GetWeaponID(void) const;
 
-
-// Overrideables.
+	// Overrideables.
 public:
-
 #ifdef GAME_DLL
 	// This is called first to determine if the axe should apply damage to the entity.
-	virtual void AxeHit(
-		CBaseEntity *pHit,
-		bool bFirstSwing,
-		trace_t &tr,
-		float *flDamage,
-		bool *bDoEffects
-		);
+	virtual void AxeHit(CBaseEntity *pHit, bool bFirstSwing, trace_t &tr, float *flDamage, bool *bDoEffects);
 #endif
 
-
 public:
-
 	trace_t m_trHit;
 	EHANDLE m_pTraceHitEnt;
 	float m_flStoredPrimaryAttack;
 
-
 private:
-	CTFCCrowbar( const CTFCCrowbar & ) {}
+	CTFCCrowbar(const CTFCCrowbar &) {}
 };
-
 
 #endif // WEAPON_TFC_CROWBAR_H

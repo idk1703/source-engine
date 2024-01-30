@@ -17,21 +17,27 @@
 class CFuncPortalDetector : public CBaseEntity
 {
 public:
-	DECLARE_CLASS( CFuncPortalDetector, CBaseEntity );
+	DECLARE_CLASS(CFuncPortalDetector, CBaseEntity);
 
 	// Overloads from base entity
-	virtual void	Spawn( void );
+	virtual void Spawn(void);
 
-	void OnActivate( void );
+	void OnActivate(void);
 
 	// Inputs to flip functionality on and off
-	void InputDisable( inputdata_t &inputdata );
-	void InputEnable( inputdata_t &inputdata );
-	void InputToggle( inputdata_t &inputdata );
+	void InputDisable(inputdata_t &inputdata);
+	void InputEnable(inputdata_t &inputdata);
+	void InputToggle(inputdata_t &inputdata);
 
 	// misc public methods
-	bool IsActive( void ) { return m_bActive; }	// is this area currently detecting portals
-	int GetLinkageGroupID( void ) { return m_iLinkageGroupID; }
+	bool IsActive(void)
+	{
+		return m_bActive;
+	} // is this area currently detecting portals
+	int GetLinkageGroupID(void)
+	{
+		return m_iLinkageGroupID;
+	}
 
 	COutputEvent m_OnStartTouchPortal1;
 	COutputEvent m_OnStartTouchPortal2;
@@ -41,9 +47,8 @@ public:
 	DECLARE_DATADESC();
 
 private:
-	bool	m_bActive;			// are we currently detecting portals
-	int		m_iLinkageGroupID;	// what set of portals are we testing for?
-
+	bool m_bActive;		   // are we currently detecting portals
+	int m_iLinkageGroupID; // what set of portals are we testing for?
 };
 
 #endif

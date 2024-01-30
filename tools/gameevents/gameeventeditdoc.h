@@ -13,7 +13,6 @@
 #pragma once
 #endif
 
-
 #include "dme_controls/inotifyui.h"
 #include "datamodel/dmehandle.h"
 #include "datamodel/dmelement.h"
@@ -27,7 +26,6 @@ class CDmeCommentaryNodeEntity;
 
 typedef CDmrElementArray<CDmeCommentaryNodeEntity> CDmrCommentaryNodeEntityList;
 
-
 //-----------------------------------------------------------------------------
 // Contains all editable state
 //-----------------------------------------------------------------------------
@@ -38,19 +36,19 @@ public:
 	~CGameEventEditDoc();
 
 	// Inherited from INotifyUI
-	virtual void NotifyDataChanged( const char *pReason, int nNotifySource, int nNotifyFlags );
+	virtual void NotifyDataChanged(const char *pReason, int nNotifySource, int nNotifyFlags);
 
 	// Sets/Gets the file name
 	const char *GetTXTFileName();
-	void SetTXTFileName( const char *pFileName );
+	void SetTXTFileName(const char *pFileName);
 
 	// Dirty bits (has it changed since the last time it was saved?)
-	void	SetDirty( bool bDirty );
-	bool	IsDirty() const;
+	void SetDirty(bool bDirty);
+	bool IsDirty() const;
 
 	// Saves/loads from file
-	bool	LoadFromFile( const char *pFileName );
-	void	SaveToFile( );
+	bool LoadFromFile(const char *pFileName);
+	void SaveToFile();
 
 	/*
 	// Returns the root object
@@ -82,13 +80,11 @@ public:
 	virtual bool GetElementChoiceList( const char *pChoiceListType, CDmElement *pElement,
 		const char *pAttributeName, bool bArrayElement, ElementChoiceList_t &list );*/
 
-
 private:
-	//ICommEditDocCallback *m_pCallback;
-	CDmeHandle< CDmElement > m_hRoot;
+	// ICommEditDocCallback *m_pCallback;
+	CDmeHandle<CDmElement> m_hRoot;
 	char m_pTXTFileName[512];
 	bool m_bDirty;
 };
-
 
 #endif // GAMEEVENTEDITDOC_H

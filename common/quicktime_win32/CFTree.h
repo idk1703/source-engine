@@ -16,8 +16,6 @@
 #ifndef __CFTREE__
 #define __CFTREE__
 
-
-
 #if PRAGMA_ONCE
 #pragma once
 #endif
@@ -28,13 +26,12 @@
 
 #include <CFBase.h>
 
-typedef struct __CFTree*                CFTreeRef;
+typedef struct __CFTree *CFTreeRef;
 
 #ifdef PRAGMA_IMPORT_OFF
 #pragma import off
 #elif PRAGMA_IMPORT
 #pragma import reset
 #endif
-
 
 #endif /* __CFTREE__ */

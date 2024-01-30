@@ -11,17 +11,17 @@
 #pragma once
 #endif
 
-#define ACTIVITY_NOT_AVAILABLE		-1
+#define ACTIVITY_NOT_AVAILABLE -1
 
 typedef enum
 {
-	ACT_INVALID = -1,			// So we have something more succint to check for than '-1'
-	ACT_RESET = 0,				// Set m_Activity to this invalid value to force a reset to m_IdealActivity
+	ACT_INVALID = -1, // So we have something more succint to check for than '-1'
+	ACT_RESET = 0,	  // Set m_Activity to this invalid value to force a reset to m_IdealActivity
 	ACT_IDLE,
 	ACT_TRANSITION,
-	ACT_COVER,					// FIXME: obsolete? redundant with ACT_COVER_LOW?
-	ACT_COVER_MED,				// FIXME: unsupported?
-	ACT_COVER_LOW,				// FIXME: rename ACT_IDLE_CROUCH?
+	ACT_COVER,	   // FIXME: obsolete? redundant with ACT_COVER_LOW?
+	ACT_COVER_MED, // FIXME: unsupported?
+	ACT_COVER_LOW, // FIXME: rename ACT_IDLE_CROUCH?
 	ACT_WALK,
 	ACT_WALK_AIM,
 	ACT_WALK_CROUCH,
@@ -34,20 +34,20 @@ typedef enum
 	ACT_SCRIPT_CUSTOM_MOVE,
 	ACT_RANGE_ATTACK1,
 	ACT_RANGE_ATTACK2,
-	ACT_RANGE_ATTACK1_LOW,		// FIXME: not used yet, crouched versions of the range attack
-	ACT_RANGE_ATTACK2_LOW,		// FIXME: not used yet, crouched versions of the range attack
+	ACT_RANGE_ATTACK1_LOW, // FIXME: not used yet, crouched versions of the range attack
+	ACT_RANGE_ATTACK2_LOW, // FIXME: not used yet, crouched versions of the range attack
 	ACT_DIESIMPLE,
 	ACT_DIEBACKWARD,
 	ACT_DIEFORWARD,
 	ACT_DIEVIOLENT,
 	ACT_DIERAGDOLL,
-	ACT_FLY,				// Fly (and flap if appropriate)
+	ACT_FLY, // Fly (and flap if appropriate)
 	ACT_HOVER,
 	ACT_GLIDE,
 	ACT_SWIM,
 	ACT_JUMP,
-	ACT_HOP,				// vertical jump
-	ACT_LEAP,				// long forward jump
+	ACT_HOP,  // vertical jump
+	ACT_LEAP, // long forward jump
 	ACT_LAND,
 	ACT_CLIMB_UP,
 	ACT_CLIMB_DOWN,
@@ -56,19 +56,19 @@ typedef enum
 	ACT_SHIPLADDER_DOWN,
 	ACT_STRAFE_LEFT,
 	ACT_STRAFE_RIGHT,
-	ACT_ROLL_LEFT,			// tuck and roll, left
-	ACT_ROLL_RIGHT,			// tuck and roll, right
-	ACT_TURN_LEFT,			// turn quickly left (stationary)
-	ACT_TURN_RIGHT,			// turn quickly right (stationary)
-	ACT_CROUCH,				// FIXME: obsolete? only used be soldier (the act of crouching down from a standing position)
-	ACT_CROUCHIDLE,			// FIXME: obsolete? only used be soldier (holding body in crouched position (loops))
-	ACT_STAND,				// FIXME: obsolete? should be transition (the act of standing from a crouched position)
+	ACT_ROLL_LEFT,	// tuck and roll, left
+	ACT_ROLL_RIGHT, // tuck and roll, right
+	ACT_TURN_LEFT,	// turn quickly left (stationary)
+	ACT_TURN_RIGHT, // turn quickly right (stationary)
+	ACT_CROUCH,		// FIXME: obsolete? only used be soldier (the act of crouching down from a standing position)
+	ACT_CROUCHIDLE, // FIXME: obsolete? only used be soldier (holding body in crouched position (loops))
+	ACT_STAND,		// FIXME: obsolete? should be transition (the act of standing from a crouched position)
 	ACT_USE,
 	ACT_SIGNAL1,
 	ACT_SIGNAL2,
 	ACT_SIGNAL3,
 
-	ACT_SIGNAL_ADVANCE,		// Squad handsignals, specific.
+	ACT_SIGNAL_ADVANCE, // Squad handsignals, specific.
 	ACT_SIGNAL_FORWARD,
 	ACT_SIGNAL_GROUP,
 	ACT_SIGNAL_HALT,
@@ -76,10 +76,10 @@ typedef enum
 	ACT_SIGNAL_RIGHT,
 	ACT_SIGNAL_TAKECOVER,
 
-	ACT_LOOKBACK_RIGHT,		// look back over shoulder without turning around.
+	ACT_LOOKBACK_RIGHT, // look back over shoulder without turning around.
 	ACT_LOOKBACK_LEFT,
-	ACT_COWER,				// FIXME: unused, should be more extreme version of crouching
-	ACT_SMALL_FLINCH,		// FIXME: needed? shouldn't flinching be down with overlays?
+	ACT_COWER,		  // FIXME: unused, should be more extreme version of crouching
+	ACT_SMALL_FLINCH, // FIXME: needed? shouldn't flinching be down with overlays?
 	ACT_BIG_FLINCH,
 	ACT_MELEE_ATTACK1,
 	ACT_MELEE_ATTACK2,
@@ -87,13 +87,14 @@ typedef enum
 	ACT_RELOAD_START,
 	ACT_RELOAD_FINISH,
 	ACT_RELOAD_LOW,
-	ACT_ARM,				// pull out gun, for instance
-	ACT_DISARM,				// reholster gun
+	ACT_ARM,	// pull out gun, for instance
+	ACT_DISARM, // reholster gun
 	ACT_DROP_WEAPON,
 	ACT_DROP_WEAPON_SHOTGUN,
-	ACT_PICKUP_GROUND,		// pick up something in front of you on the ground
-	ACT_PICKUP_RACK,		// pick up something from a rack or shelf in front of you.
-	ACT_IDLE_ANGRY,			// FIXME: being used as an combat ready idle?  alternate idle animation in which the monster is clearly agitated. (loop)
+	ACT_PICKUP_GROUND, // pick up something in front of you on the ground
+	ACT_PICKUP_RACK,   // pick up something from a rack or shelf in front of you.
+	ACT_IDLE_ANGRY,	   // FIXME: being used as an combat ready idle?  alternate idle animation in which the monster is
+					   // clearly agitated. (loop)
 
 	ACT_IDLE_RELAXED,
 	ACT_IDLE_STIMULATED,
@@ -130,18 +131,18 @@ typedef enum
 	ACT_CROUCHIDLE_AIM_STIMULATED,
 	ACT_CROUCHIDLE_AGITATED,
 
-	ACT_WALK_HURT,			// limp  (loop)
-	ACT_RUN_HURT,			// limp  (loop)
-	ACT_SPECIAL_ATTACK1,	// very monster specific special attacks.
+	ACT_WALK_HURT,		 // limp  (loop)
+	ACT_RUN_HURT,		 // limp  (loop)
+	ACT_SPECIAL_ATTACK1, // very monster specific special attacks.
 	ACT_SPECIAL_ATTACK2,
-	ACT_COMBAT_IDLE,		// FIXME: unused?  agitated idle.
+	ACT_COMBAT_IDLE, // FIXME: unused?  agitated idle.
 	ACT_WALK_SCARED,
 	ACT_RUN_SCARED,
-	ACT_VICTORY_DANCE,		// killed a player, do a victory dance.
-	ACT_DIE_HEADSHOT,		// die, hit in head.
-	ACT_DIE_CHESTSHOT,		// die, hit in chest
-	ACT_DIE_GUTSHOT,		// die, hit in gut
-	ACT_DIE_BACKSHOT,		// die, hit in back
+	ACT_VICTORY_DANCE, // killed a player, do a victory dance.
+	ACT_DIE_HEADSHOT,  // die, hit in head.
+	ACT_DIE_CHESTSHOT, // die, hit in chest
+	ACT_DIE_GUTSHOT,   // die, hit in gut
+	ACT_DIE_BACKSHOT,  // die, hit in back
 	ACT_FLINCH_HEAD,
 	ACT_FLINCH_CHEST,
 	ACT_FLINCH_STOMACH,
@@ -151,19 +152,19 @@ typedef enum
 	ACT_FLINCH_RIGHTLEG,
 	ACT_FLINCH_PHYSICS,
 
-	ACT_IDLE_ON_FIRE,		// ON FIRE animations
+	ACT_IDLE_ON_FIRE, // ON FIRE animations
 	ACT_WALK_ON_FIRE,
 	ACT_RUN_ON_FIRE,
 
-	ACT_RAPPEL_LOOP,		// Rappel down a rope!
+	ACT_RAPPEL_LOOP, // Rappel down a rope!
 
-	ACT_180_LEFT,			// 180 degree left turn
+	ACT_180_LEFT, // 180 degree left turn
 	ACT_180_RIGHT,
 
-	ACT_90_LEFT,			// 90 degree turns
+	ACT_90_LEFT, // 90 degree turns
 	ACT_90_RIGHT,
 
-	ACT_STEP_LEFT,			// Single steps
+	ACT_STEP_LEFT, // Single steps
 	ACT_STEP_RIGHT,
 	ACT_STEP_BACK,
 	ACT_STEP_FORE,
@@ -172,16 +173,16 @@ typedef enum
 	ACT_GESTURE_RANGE_ATTACK2,
 	ACT_GESTURE_MELEE_ATTACK1,
 	ACT_GESTURE_MELEE_ATTACK2,
-	ACT_GESTURE_RANGE_ATTACK1_LOW,	// FIXME: not used yet, crouched versions of the range attack
-	ACT_GESTURE_RANGE_ATTACK2_LOW,	// FIXME: not used yet, crouched versions of the range attack
+	ACT_GESTURE_RANGE_ATTACK1_LOW, // FIXME: not used yet, crouched versions of the range attack
+	ACT_GESTURE_RANGE_ATTACK2_LOW, // FIXME: not used yet, crouched versions of the range attack
 
 	ACT_MELEE_ATTACK_SWING_GESTURE,
 
 	ACT_GESTURE_SMALL_FLINCH,
 	ACT_GESTURE_BIG_FLINCH,
-	ACT_GESTURE_FLINCH_BLAST,			// Startled by an explosion
+	ACT_GESTURE_FLINCH_BLAST, // Startled by an explosion
 	ACT_GESTURE_FLINCH_BLAST_SHOTGUN,
-	ACT_GESTURE_FLINCH_BLAST_DAMAGED,	// Damaged by an explosion
+	ACT_GESTURE_FLINCH_BLAST_DAMAGED, // Damaged by an explosion
 	ACT_GESTURE_FLINCH_BLAST_DAMAGED_SHOTGUN,
 	ACT_GESTURE_FLINCH_HEAD,
 	ACT_GESTURE_FLINCH_CHEST,
@@ -203,10 +204,10 @@ typedef enum
 	ACT_GESTURE_TURN_RIGHT90_FLAT,
 
 	// HALF-LIFE 1 compatability stuff goes here. Temporary!
-	ACT_BARNACLE_HIT,		// barnacle tongue hits a monster
-	ACT_BARNACLE_PULL,		// barnacle is lifting the monster ( loop )
-	ACT_BARNACLE_CHOMP,		// barnacle latches on to the monster
-	ACT_BARNACLE_CHEW,		// barnacle is holding the monster in its mouth ( loop )
+	ACT_BARNACLE_HIT,	// barnacle tongue hits a monster
+	ACT_BARNACLE_PULL,	// barnacle is lifting the monster ( loop )
+	ACT_BARNACLE_CHOMP, // barnacle latches on to the monster
+	ACT_BARNACLE_CHEW,	// barnacle is holding the monster in its mouth ( loop )
 
 	// Sometimes, you just want to set an NPC's sequence to a sequence that doesn't actually
 	// have an activity. The AI will reset the NPC's sequence to whatever its IDEAL activity
@@ -225,26 +226,26 @@ typedef enum
 	ACT_VM_PULLBACK_LOW,
 	ACT_VM_THROW,
 	ACT_VM_PULLPIN,
-	ACT_VM_PRIMARYATTACK,		// fire
-	ACT_VM_SECONDARYATTACK,		// alt. fire
+	ACT_VM_PRIMARYATTACK,	// fire
+	ACT_VM_SECONDARYATTACK, // alt. fire
 	ACT_VM_RELOAD,
 	ACT_VM_RELOAD_START,
 	ACT_VM_RELOAD_FINISH,
-	ACT_VM_DRYFIRE,				// fire with no ammo loaded.
-	ACT_VM_HITLEFT,				// bludgeon, swing to left - hit (primary attk)
-	ACT_VM_HITLEFT2,			// bludgeon, swing to left - hit (secondary attk)
-	ACT_VM_HITRIGHT,			// bludgeon, swing to right - hit (primary attk)
-	ACT_VM_HITRIGHT2,			// bludgeon, swing to right - hit (secondary attk)
-	ACT_VM_HITCENTER,			// bludgeon, swing center - hit (primary attk)
-	ACT_VM_HITCENTER2,			// bludgeon, swing center - hit (secondary attk)
-	ACT_VM_MISSLEFT,			// bludgeon, swing to left - miss (primary attk)
-	ACT_VM_MISSLEFT2,			// bludgeon, swing to left - miss (secondary attk)
-	ACT_VM_MISSRIGHT,			// bludgeon, swing to right - miss (primary attk)
-	ACT_VM_MISSRIGHT2,			// bludgeon, swing to right - miss (secondary attk)
-	ACT_VM_MISSCENTER,			// bludgeon, swing center - miss (primary attk)
-	ACT_VM_MISSCENTER2,			// bludgeon, swing center - miss (secondary attk)
-	ACT_VM_HAULBACK,			// bludgeon, haul the weapon back for a hard strike (secondary attk)
-	ACT_VM_SWINGHARD,			// bludgeon, release the hard strike (secondary attk)
+	ACT_VM_DRYFIRE,		// fire with no ammo loaded.
+	ACT_VM_HITLEFT,		// bludgeon, swing to left - hit (primary attk)
+	ACT_VM_HITLEFT2,	// bludgeon, swing to left - hit (secondary attk)
+	ACT_VM_HITRIGHT,	// bludgeon, swing to right - hit (primary attk)
+	ACT_VM_HITRIGHT2,	// bludgeon, swing to right - hit (secondary attk)
+	ACT_VM_HITCENTER,	// bludgeon, swing center - hit (primary attk)
+	ACT_VM_HITCENTER2,	// bludgeon, swing center - hit (secondary attk)
+	ACT_VM_MISSLEFT,	// bludgeon, swing to left - miss (primary attk)
+	ACT_VM_MISSLEFT2,	// bludgeon, swing to left - miss (secondary attk)
+	ACT_VM_MISSRIGHT,	// bludgeon, swing to right - miss (primary attk)
+	ACT_VM_MISSRIGHT2,	// bludgeon, swing to right - miss (secondary attk)
+	ACT_VM_MISSCENTER,	// bludgeon, swing center - miss (primary attk)
+	ACT_VM_MISSCENTER2, // bludgeon, swing center - miss (secondary attk)
+	ACT_VM_HAULBACK,	// bludgeon, haul the weapon back for a hard strike (secondary attk)
+	ACT_VM_SWINGHARD,	// bludgeon, release the hard strike (secondary attk)
 	ACT_VM_SWINGMISS,
 	ACT_VM_SWINGHIT,
 	ACT_VM_IDLE_TO_LOWERED,
@@ -278,9 +279,9 @@ typedef enum
 	ACT_FISTS_VM_IDLE,
 	ACT_FISTS_VM_DRAW,
 
-//===========================
-// HL2 Specific Activities
-//===========================
+	//===========================
+	// HL2 Specific Activities
+	//===========================
 	// SLAM	Specialty Activities
 	ACT_SLAM_STICKWALL_IDLE,
 	ACT_SLAM_STICKWALL_ND_IDLE,
@@ -305,8 +306,8 @@ typedef enum
 	ACT_SLAM_THROW_ND_DRAW,
 	ACT_SLAM_THROW_TO_STICKWALL,
 	ACT_SLAM_THROW_TO_STICKWALL_ND,
-  	ACT_SLAM_THROW_DETONATE,
-  	ACT_SLAM_THROW_DETONATOR_HOLSTER,
+	ACT_SLAM_THROW_DETONATE,
+	ACT_SLAM_THROW_DETONATOR_HOLSTER,
 	ACT_SLAM_THROW_TO_TRIPMINE_ND,
 	ACT_SLAM_TRIPMINE_IDLE,
 	ACT_SLAM_TRIPMINE_DRAW,
@@ -493,13 +494,16 @@ typedef enum
 	// For NPCs being lifted/eaten by barnacles:
 	// being swallowed by a barnacle
 	ACT_DIE_BARNACLE_SWALLOW,
-	 // being lifted by a barnacle
+	// being lifted by a barnacle
 	ACT_GESTURE_BARNACLE_STRANGLE,
 
-	ACT_PHYSCANNON_DETACH,	// An activity to be played if we're picking this up with the physcannon
-	ACT_PHYSCANNON_ANIMATE, // An activity to be played by an object being picked up with the physcannon, but has different behavior to DETACH
-	ACT_PHYSCANNON_ANIMATE_PRE,	// An activity to be played by an object being picked up with the physcannon, before playing the ACT_PHYSCANNON_ANIMATE
-	ACT_PHYSCANNON_ANIMATE_POST,// An activity to be played by an object being picked up with the physcannon, after playing the ACT_PHYSCANNON_ANIMATE
+	ACT_PHYSCANNON_DETACH,		 // An activity to be played if we're picking this up with the physcannon
+	ACT_PHYSCANNON_ANIMATE,		 // An activity to be played by an object being picked up with the physcannon, but has
+								 // different behavior to DETACH
+	ACT_PHYSCANNON_ANIMATE_PRE,	 // An activity to be played by an object being picked up with the physcannon, before
+								 // playing the ACT_PHYSCANNON_ANIMATE
+	ACT_PHYSCANNON_ANIMATE_POST, // An activity to be played by an object being picked up with the physcannon, after
+								 // playing the ACT_PHYSCANNON_ANIMATE
 
 	ACT_DIE_FRONTSIDE,
 	ACT_DIE_RIGHTSIDE,
@@ -530,9 +534,9 @@ typedef enum
 	ACT_IDLE_CARRY,
 	ACT_WALK_CARRY,
 
-//===========================
-// TF2 Specific Activities
-//===========================
+	//===========================
+	// TF2 Specific Activities
+	//===========================
 	ACT_STARTDYING,
 	ACT_DYINGLOOP,
 	ACT_DYINGTODEAD,
@@ -591,9 +595,9 @@ typedef enum
 	ACT_DEPLOY_IDLE,
 	ACT_UNDEPLOY,
 
-//===========================
-// HL1 Specific Activities
-//===========================
+	//===========================
+	// HL1 Specific Activities
+	//===========================
 	// Grenades
 	ACT_GRENADE_ROLL,
 	ACT_GRENADE_TOSS,
@@ -630,13 +634,13 @@ typedef enum
 	ACT_TRIPMINE_GROUND,
 	ACT_TRIPMINE_WORLD,
 
-//===========================
-// CSPort Specific Activities
-//===========================
+	//===========================
+	// CSPort Specific Activities
+	//===========================
 
-	ACT_VM_PRIMARYATTACK_SILENCED,		// fire
+	ACT_VM_PRIMARYATTACK_SILENCED, // fire
 	ACT_VM_RELOAD_SILENCED,
-	ACT_VM_DRYFIRE_SILENCED,				// fire with no ammo loaded.
+	ACT_VM_DRYFIRE_SILENCED, // fire with no ammo loaded.
 	ACT_VM_IDLE_SILENCED,
 	ACT_VM_DRAW_SILENCED,
 	ACT_VM_IDLE_EMPTY_LEFT,
@@ -651,10 +655,9 @@ typedef enum
 	ACT_IDLETORUN,
 	ACT_RUNTOIDLE,
 
-
-//===========================
-// DoD Specific Activities
-//===========================
+	//===========================
+	// DoD Specific Activities
+	//===========================
 	ACT_SPRINT,
 
 	ACT_GET_DOWN_STAND,
@@ -674,7 +677,7 @@ typedef enum
 
 	ACT_VM_DRAW_DEPLOYED,
 
-	//Weapon is empty activities
+	// Weapon is empty activities
 	ACT_VM_DRAW_EMPTY,
 	ACT_VM_PRIMARYATTACK_EMPTY,
 	ACT_VM_RELOAD_EMPTY,
@@ -1028,7 +1031,7 @@ typedef enum
 	ACT_DOD_DEPLOY_30CAL,
 
 	// Prone Deployed Aim
-	ACT_DOD_PRONE_DEPLOY_RIFLE ,
+	ACT_DOD_PRONE_DEPLOY_RIFLE,
 	ACT_DOD_PRONE_DEPLOY_TOMMY,
 	ACT_DOD_PRONE_DEPLOY_MG,
 	ACT_DOD_PRONE_DEPLOY_30CAL,
@@ -1046,8 +1049,8 @@ typedef enum
 	// Bolt
 	ACT_DOD_PRIMARYATTACK_BOLT,
 	ACT_DOD_SECONDARYATTACK_BOLT,
-	ACT_DOD_PRIMARYATTACK_PRONE_BOLT ,
-	ACT_DOD_SECONDARYATTACK_PRONE_BOLT ,
+	ACT_DOD_PRIMARYATTACK_PRONE_BOLT,
+	ACT_DOD_SECONDARYATTACK_PRONE_BOLT,
 
 	// Tommy
 	ACT_DOD_PRIMARYATTACK_TOMMY,
@@ -1057,35 +1060,35 @@ typedef enum
 
 	// MP40
 	ACT_DOD_PRIMARYATTACK_MP40,
-	ACT_DOD_PRIMARYATTACK_PRONE_MP40 ,
+	ACT_DOD_PRIMARYATTACK_PRONE_MP40,
 	ACT_DOD_SECONDARYATTACK_MP40,
-	ACT_DOD_SECONDARYATTACK_PRONE_MP40 ,
+	ACT_DOD_SECONDARYATTACK_PRONE_MP40,
 
 	// MP44
 	ACT_DOD_PRIMARYATTACK_MP44,
-	ACT_DOD_PRIMARYATTACK_PRONE_MP44 ,
+	ACT_DOD_PRIMARYATTACK_PRONE_MP44,
 
 	// Greasegun
 	ACT_DOD_PRIMARYATTACK_GREASE,
-	ACT_DOD_PRIMARYATTACK_PRONE_GREASE ,
+	ACT_DOD_PRIMARYATTACK_PRONE_GREASE,
 
 	// Pistols (Colt, Luger)
 	ACT_DOD_PRIMARYATTACK_PISTOL,
-	ACT_DOD_PRIMARYATTACK_PRONE_PISTOL ,
+	ACT_DOD_PRIMARYATTACK_PRONE_PISTOL,
 	ACT_DOD_PRIMARYATTACK_C96,
 	ACT_DOD_PRIMARYATTACK_PRONE_C96,
 
 	// Mgs (mg42, mg34)
 	ACT_DOD_PRIMARYATTACK_MG,
-	ACT_DOD_PRIMARYATTACK_PRONE_MG ,
-	ACT_DOD_PRIMARYATTACK_PRONE_DEPLOYED_MG ,
-	ACT_DOD_PRIMARYATTACK_DEPLOYED_MG ,
+	ACT_DOD_PRIMARYATTACK_PRONE_MG,
+	ACT_DOD_PRIMARYATTACK_PRONE_DEPLOYED_MG,
+	ACT_DOD_PRIMARYATTACK_DEPLOYED_MG,
 
 	// 30cal
 	ACT_DOD_PRIMARYATTACK_30CAL,
 	ACT_DOD_PRIMARYATTACK_PRONE_30CAL,
 	ACT_DOD_PRIMARYATTACK_DEPLOYED_30CAL,
-	ACT_DOD_PRIMARYATTACK_PRONE_DEPLOYED_30CAL ,
+	ACT_DOD_PRIMARYATTACK_PRONE_DEPLOYED_30CAL,
 
 	// Grenades
 	ACT_DOD_PRIMARYATTACK_GREN_FRAG,
@@ -1107,7 +1110,7 @@ typedef enum
 
 	// Pschreck
 	ACT_DOD_PRIMARYATTACK_PSCHRECK,
-	ACT_DOD_PRIMARYATTACK_PRONE_PSCHRECK ,
+	ACT_DOD_PRIMARYATTACK_PRONE_PSCHRECK,
 
 	// Bar
 	ACT_DOD_PRIMARYATTACK_BAR,
@@ -1236,7 +1239,7 @@ typedef enum
 	ACT_DOD_PLANT_TNT,
 	ACT_DOD_DEFUSE_TNT,
 
-// HL2MP
+	// HL2MP
 	ACT_HL2MP_IDLE,
 	ACT_HL2MP_RUN,
 	ACT_HL2MP_IDLE_CROUCH,
@@ -1261,7 +1264,7 @@ typedef enum
 	ACT_HL2MP_GESTURE_RELOAD_SMG1,
 	ACT_HL2MP_JUMP_SMG1,
 
-  	ACT_HL2MP_IDLE_AR2,
+	ACT_HL2MP_IDLE_AR2,
 	ACT_HL2MP_RUN_AR2,
 	ACT_HL2MP_IDLE_CROUCH_AR2,
 	ACT_HL2MP_WALK_CROUCH_AR2,
@@ -1269,7 +1272,7 @@ typedef enum
 	ACT_HL2MP_GESTURE_RELOAD_AR2,
 	ACT_HL2MP_JUMP_AR2,
 
-  	ACT_HL2MP_IDLE_SHOTGUN,
+	ACT_HL2MP_IDLE_SHOTGUN,
 	ACT_HL2MP_RUN_SHOTGUN,
 	ACT_HL2MP_IDLE_CROUCH_SHOTGUN,
 	ACT_HL2MP_WALK_CROUCH_SHOTGUN,
@@ -1277,7 +1280,7 @@ typedef enum
 	ACT_HL2MP_GESTURE_RELOAD_SHOTGUN,
 	ACT_HL2MP_JUMP_SHOTGUN,
 
-  	ACT_HL2MP_IDLE_RPG,
+	ACT_HL2MP_IDLE_RPG,
 	ACT_HL2MP_RUN_RPG,
 	ACT_HL2MP_IDLE_CROUCH_RPG,
 	ACT_HL2MP_WALK_CROUCH_RPG,
@@ -1285,7 +1288,7 @@ typedef enum
 	ACT_HL2MP_GESTURE_RELOAD_RPG,
 	ACT_HL2MP_JUMP_RPG,
 
-  	ACT_HL2MP_IDLE_GRENADE,
+	ACT_HL2MP_IDLE_GRENADE,
 	ACT_HL2MP_RUN_GRENADE,
 	ACT_HL2MP_IDLE_CROUCH_GRENADE,
 	ACT_HL2MP_WALK_CROUCH_GRENADE,
@@ -1293,7 +1296,7 @@ typedef enum
 	ACT_HL2MP_GESTURE_RELOAD_GRENADE,
 	ACT_HL2MP_JUMP_GRENADE,
 
-  	ACT_HL2MP_IDLE_PHYSGUN,
+	ACT_HL2MP_IDLE_PHYSGUN,
 	ACT_HL2MP_RUN_PHYSGUN,
 	ACT_HL2MP_IDLE_CROUCH_PHYSGUN,
 	ACT_HL2MP_WALK_CROUCH_PHYSGUN,
@@ -1301,7 +1304,7 @@ typedef enum
 	ACT_HL2MP_GESTURE_RELOAD_PHYSGUN,
 	ACT_HL2MP_JUMP_PHYSGUN,
 
-  	ACT_HL2MP_IDLE_CROSSBOW,
+	ACT_HL2MP_IDLE_CROSSBOW,
 	ACT_HL2MP_RUN_CROSSBOW,
 	ACT_HL2MP_IDLE_CROUCH_CROSSBOW,
 	ACT_HL2MP_WALK_CROUCH_CROSSBOW,
@@ -1309,7 +1312,7 @@ typedef enum
 	ACT_HL2MP_GESTURE_RELOAD_CROSSBOW,
 	ACT_HL2MP_JUMP_CROSSBOW,
 
-  	ACT_HL2MP_IDLE_MELEE,
+	ACT_HL2MP_IDLE_MELEE,
 	ACT_HL2MP_RUN_MELEE,
 	ACT_HL2MP_IDLE_CROUCH_MELEE,
 	ACT_HL2MP_WALK_CROUCH_MELEE,
@@ -1325,7 +1328,7 @@ typedef enum
 	ACT_HL2MP_GESTURE_RELOAD_SLAM,
 	ACT_HL2MP_JUMP_SLAM,
 
-// Portal!
+	// Portal!
 	ACT_VM_FIZZLE,
 
 	// Multiplayer
@@ -1401,17 +1404,17 @@ typedef enum
 	ACT_MP_CROUCHWALK_DEPLOYED_PRIMARY,
 	ACT_MP_CROUCH_DEPLOYED_IDLE_PRIMARY,
 
-	ACT_MP_ATTACK_STAND_PRIMARY,		// RUN, WALK
+	ACT_MP_ATTACK_STAND_PRIMARY, // RUN, WALK
 	ACT_MP_ATTACK_STAND_PRIMARY_DEPLOYED,
-	ACT_MP_ATTACK_CROUCH_PRIMARY,		// CROUCHWALK
+	ACT_MP_ATTACK_CROUCH_PRIMARY, // CROUCHWALK
 	ACT_MP_ATTACK_CROUCH_PRIMARY_DEPLOYED,
 	ACT_MP_ATTACK_SWIM_PRIMARY,
 	ACT_MP_ATTACK_AIRWALK_PRIMARY,
 
-	ACT_MP_RELOAD_STAND_PRIMARY,		// RUN, WALK
+	ACT_MP_RELOAD_STAND_PRIMARY, // RUN, WALK
 	ACT_MP_RELOAD_STAND_PRIMARY_LOOP,
 	ACT_MP_RELOAD_STAND_PRIMARY_END,
-	ACT_MP_RELOAD_CROUCH_PRIMARY,		// CROUCHWALK
+	ACT_MP_RELOAD_CROUCH_PRIMARY, // CROUCHWALK
 	ACT_MP_RELOAD_CROUCH_PRIMARY_LOOP,
 	ACT_MP_RELOAD_CROUCH_PRIMARY_END,
 	ACT_MP_RELOAD_SWIM_PRIMARY,
@@ -1452,8 +1455,8 @@ typedef enum
 	ACT_MP_ATTACK_CROUCH_PRIMARY_SUPER,
 	ACT_MP_ATTACK_SWIM_PRIMARY_SUPER,
 
-	ACT_MP_ATTACK_STAND_GRENADE_PRIMARY,		// RUN, WALK
-	ACT_MP_ATTACK_CROUCH_GRENADE_PRIMARY,		// CROUCHWALK
+	ACT_MP_ATTACK_STAND_GRENADE_PRIMARY,  // RUN, WALK
+	ACT_MP_ATTACK_CROUCH_GRENADE_PRIMARY, // CROUCHWALK
 	ACT_MP_ATTACK_SWIM_GRENADE_PRIMARY,
 	ACT_MP_ATTACK_AIRWALK_GRENADE_PRIMARY,
 
@@ -1470,15 +1473,15 @@ typedef enum
 	ACT_MP_JUMP_LAND_SECONDARY,
 	ACT_MP_SWIM_SECONDARY,
 
-	ACT_MP_ATTACK_STAND_SECONDARY,		// RUN, WALK
-	ACT_MP_ATTACK_CROUCH_SECONDARY,		// CROUCHWALK
+	ACT_MP_ATTACK_STAND_SECONDARY,	// RUN, WALK
+	ACT_MP_ATTACK_CROUCH_SECONDARY, // CROUCHWALK
 	ACT_MP_ATTACK_SWIM_SECONDARY,
 	ACT_MP_ATTACK_AIRWALK_SECONDARY,
 
-	ACT_MP_RELOAD_STAND_SECONDARY,		// RUN, WALK
+	ACT_MP_RELOAD_STAND_SECONDARY, // RUN, WALK
 	ACT_MP_RELOAD_STAND_SECONDARY_LOOP,
 	ACT_MP_RELOAD_STAND_SECONDARY_END,
-	ACT_MP_RELOAD_CROUCH_SECONDARY,		// CROUCHWALK
+	ACT_MP_RELOAD_CROUCH_SECONDARY, // CROUCHWALK
 	ACT_MP_RELOAD_CROUCH_SECONDARY_LOOP,
 	ACT_MP_RELOAD_CROUCH_SECONDARY_END,
 	ACT_MP_RELOAD_SWIM_SECONDARY,
@@ -1493,8 +1496,8 @@ typedef enum
 	ACT_MP_RELOAD_SWIM_SECONDARY_2,
 	ACT_MP_RELOAD_AIRWALK_SECONDARY_2,
 
-	ACT_MP_ATTACK_STAND_GRENADE_SECONDARY,		// RUN, WALK
-	ACT_MP_ATTACK_CROUCH_GRENADE_SECONDARY,		// CROUCHWALK
+	ACT_MP_ATTACK_STAND_GRENADE_SECONDARY,	// RUN, WALK
+	ACT_MP_ATTACK_CROUCH_GRENADE_SECONDARY, // CROUCHWALK
 	ACT_MP_ATTACK_SWIM_GRENADE_SECONDARY,
 	ACT_MP_ATTACK_AIRWALK_GRENADE_SECONDARY,
 
@@ -1511,15 +1514,15 @@ typedef enum
 	ACT_MP_JUMP_LAND_SECONDARY2,
 	ACT_MP_SWIM_SECONDARY2,
 
-	ACT_MP_ATTACK_STAND_SECONDARY2,		// RUN, WALK
-	ACT_MP_ATTACK_CROUCH_SECONDARY2,		// CROUCHWALK
+	ACT_MP_ATTACK_STAND_SECONDARY2,	 // RUN, WALK
+	ACT_MP_ATTACK_CROUCH_SECONDARY2, // CROUCHWALK
 	ACT_MP_ATTACK_SWIM_SECONDARY2,
 	ACT_MP_ATTACK_AIRWALK_SECONDARY2,
 
-	ACT_MP_RELOAD_STAND_SECONDARY2,		// RUN, WALK
+	ACT_MP_RELOAD_STAND_SECONDARY2, // RUN, WALK
 	ACT_MP_RELOAD_STAND_SECONDARY2_LOOP,
 	ACT_MP_RELOAD_STAND_SECONDARY2_END,
-	ACT_MP_RELOAD_CROUCH_SECONDARY2,		// CROUCHWALK
+	ACT_MP_RELOAD_CROUCH_SECONDARY2, // CROUCHWALK
 	ACT_MP_RELOAD_CROUCH_SECONDARY2_LOOP,
 	ACT_MP_RELOAD_CROUCH_SECONDARY2_END,
 	ACT_MP_RELOAD_SWIM_SECONDARY2,
@@ -1542,15 +1545,15 @@ typedef enum
 	ACT_MP_JUMP_LAND_MELEE,
 	ACT_MP_SWIM_MELEE,
 
-	ACT_MP_ATTACK_STAND_MELEE,		// RUN, WALK
+	ACT_MP_ATTACK_STAND_MELEE, // RUN, WALK
 	ACT_MP_ATTACK_STAND_MELEE_SECONDARY,
-	ACT_MP_ATTACK_CROUCH_MELEE,		// CROUCHWALK
+	ACT_MP_ATTACK_CROUCH_MELEE, // CROUCHWALK
 	ACT_MP_ATTACK_CROUCH_MELEE_SECONDARY,
 	ACT_MP_ATTACK_SWIM_MELEE,
 	ACT_MP_ATTACK_AIRWALK_MELEE,
 
-	ACT_MP_ATTACK_STAND_GRENADE_MELEE,		// RUN, WALK
-	ACT_MP_ATTACK_CROUCH_GRENADE_MELEE,		// CROUCHWALK
+	ACT_MP_ATTACK_STAND_GRENADE_MELEE,	// RUN, WALK
+	ACT_MP_ATTACK_CROUCH_GRENADE_MELEE, // CROUCHWALK
 	ACT_MP_ATTACK_SWIM_GRENADE_MELEE,
 	ACT_MP_ATTACK_AIRWALK_GRENADE_MELEE,
 
@@ -1567,9 +1570,9 @@ typedef enum
 	ACT_MP_JUMP_LAND_ITEM1,
 	ACT_MP_SWIM_ITEM1,
 
-	ACT_MP_ATTACK_STAND_ITEM1,		// RUN, WALK
+	ACT_MP_ATTACK_STAND_ITEM1, // RUN, WALK
 	ACT_MP_ATTACK_STAND_ITEM1_SECONDARY,
-	ACT_MP_ATTACK_CROUCH_ITEM1,		// CROUCHWALK
+	ACT_MP_ATTACK_CROUCH_ITEM1, // CROUCHWALK
 	ACT_MP_ATTACK_CROUCH_ITEM1_SECONDARY,
 	ACT_MP_ATTACK_SWIM_ITEM1,
 	ACT_MP_ATTACK_AIRWALK_ITEM1,
@@ -1594,9 +1597,9 @@ typedef enum
 	ACT_MP_JUMP_LAND_ITEM2,
 	ACT_MP_SWIM_ITEM2,
 
-	ACT_MP_ATTACK_STAND_ITEM2,		// RUN, WALK
+	ACT_MP_ATTACK_STAND_ITEM2, // RUN, WALK
 	ACT_MP_ATTACK_STAND_ITEM2_SECONDARY,
-	ACT_MP_ATTACK_CROUCH_ITEM2,		// CROUCHWALK
+	ACT_MP_ATTACK_CROUCH_ITEM2, // CROUCHWALK
 	ACT_MP_ATTACK_CROUCH_ITEM2_SECONDARY,
 	ACT_MP_ATTACK_SWIM_ITEM2,
 	ACT_MP_ATTACK_AIRWALK_ITEM2,
@@ -1612,10 +1615,10 @@ typedef enum
 	ACT_MP_ATTACK_STAND_PRIMARY_DEPLOYED_ITEM2,
 	ACT_MP_ATTACK_CROUCH_PRIMARY_DEPLOYED_ITEM2,
 
-	ACT_MP_RELOAD_STAND_ITEM2,		// RUN, WALK
+	ACT_MP_RELOAD_STAND_ITEM2, // RUN, WALK
 	ACT_MP_RELOAD_STAND_ITEM2_LOOP,
 	ACT_MP_RELOAD_STAND_ITEM2_END,
-	ACT_MP_RELOAD_CROUCH_ITEM2,		// CROUCHWALK
+	ACT_MP_RELOAD_CROUCH_ITEM2, // CROUCHWALK
 	ACT_MP_RELOAD_CROUCH_ITEM2_LOOP,
 	ACT_MP_RELOAD_CROUCH_ITEM2_END,
 	ACT_MP_RELOAD_SWIM_ITEM2,
@@ -1626,8 +1629,8 @@ typedef enum
 	ACT_MP_RELOAD_AIRWALK_ITEM2_END,
 	ACT_MP_RELOAD_NO_AMMO_ITEM2,
 
-	ACT_MP_ATTACK_STAND_GRENADE_ITEM2,		// RUN, WALK
-	ACT_MP_ATTACK_CROUCH_GRENADE_ITEM2,		// CROUCHWALK
+	ACT_MP_ATTACK_STAND_GRENADE_ITEM2,	// RUN, WALK
+	ACT_MP_ATTACK_CROUCH_GRENADE_ITEM2, // CROUCHWALK
 	ACT_MP_ATTACK_SWIM_GRENADE_ITEM2,
 	ACT_MP_ATTACK_AIRWALK_GRENADE_ITEM2,
 
@@ -1652,7 +1655,7 @@ typedef enum
 	ACT_MP_GESTURE_FLINCH_LEFTLEG,
 	ACT_MP_GESTURE_FLINCH_RIGHTLEG,
 
-// Team Fortress specific - medic heal, medic infect, etc.....
+	// Team Fortress specific - medic heal, medic infect, etc.....
 	ACT_MP_GRENADE1_DRAW,
 	ACT_MP_GRENADE1_IDLE,
 	ACT_MP_GRENADE1_ATTACK,
@@ -1708,13 +1711,13 @@ typedef enum
 	ACT_MP_JUMP_LAND_BUILDING,
 	ACT_MP_SWIM_BUILDING,
 
-	ACT_MP_ATTACK_STAND_BUILDING,		// RUN, WALK
-	ACT_MP_ATTACK_CROUCH_BUILDING,		// CROUCHWALK
+	ACT_MP_ATTACK_STAND_BUILDING,  // RUN, WALK
+	ACT_MP_ATTACK_CROUCH_BUILDING, // CROUCHWALK
 	ACT_MP_ATTACK_SWIM_BUILDING,
 	ACT_MP_ATTACK_AIRWALK_BUILDING,
 
-	ACT_MP_ATTACK_STAND_GRENADE_BUILDING,		// RUN, WALK
-	ACT_MP_ATTACK_CROUCH_GRENADE_BUILDING,		// CROUCHWALK
+	ACT_MP_ATTACK_STAND_GRENADE_BUILDING,  // RUN, WALK
+	ACT_MP_ATTACK_CROUCH_GRENADE_BUILDING, // CROUCHWALK
 	ACT_MP_ATTACK_SWIM_GRENADE_BUILDING,
 	ACT_MP_ATTACK_AIRWALK_GRENADE_BUILDING,
 
@@ -1731,13 +1734,13 @@ typedef enum
 	ACT_MP_JUMP_LAND_BUILDING_DEPLOYED,
 	ACT_MP_SWIM_BUILDING_DEPLOYED,
 
-	ACT_MP_ATTACK_STAND_BUILDING_DEPLOYED,		// RUN, WALK
-	ACT_MP_ATTACK_CROUCH_BUILDING_DEPLOYED,		// CROUCHWALK
+	ACT_MP_ATTACK_STAND_BUILDING_DEPLOYED,	// RUN, WALK
+	ACT_MP_ATTACK_CROUCH_BUILDING_DEPLOYED, // CROUCHWALK
 	ACT_MP_ATTACK_SWIM_BUILDING_DEPLOYED,
 	ACT_MP_ATTACK_AIRWALK_BUILDING_DEPLOYED,
 
-	ACT_MP_ATTACK_STAND_GRENADE_BUILDING_DEPLOYED,		// RUN, WALK
-	ACT_MP_ATTACK_CROUCH_GRENADE_BUILDING_DEPLOYED,		// CROUCHWALK
+	ACT_MP_ATTACK_STAND_GRENADE_BUILDING_DEPLOYED,	// RUN, WALK
+	ACT_MP_ATTACK_CROUCH_GRENADE_BUILDING_DEPLOYED, // CROUCHWALK
 	ACT_MP_ATTACK_SWIM_GRENADE_BUILDING_DEPLOYED,
 	ACT_MP_ATTACK_AIRWALK_GRENADE_BUILDING_DEPLOYED,
 
@@ -2055,9 +2058,9 @@ typedef enum
 	ACT_MP_JUMP_LAND_MELEE_ALLCLASS,
 	ACT_MP_SWIM_MELEE_ALLCLASS,
 
-	ACT_MP_ATTACK_STAND_MELEE_ALLCLASS,		// RUN, WALK
+	ACT_MP_ATTACK_STAND_MELEE_ALLCLASS, // RUN, WALK
 	ACT_MP_ATTACK_STAND_MELEE_SECONDARY_ALLCLASS,
-	ACT_MP_ATTACK_CROUCH_MELEE_ALLCLASS,		// CROUCHWALK
+	ACT_MP_ATTACK_CROUCH_MELEE_ALLCLASS, // CROUCHWALK
 	ACT_MP_ATTACK_CROUCH_MELEE_SECONDARY_ALLCLASS,
 	ACT_MP_ATTACK_SWIM_MELEE_ALLCLASS,
 	ACT_MP_ATTACK_AIRWALK_MELEE_ALLCLASS,
@@ -2209,6 +2212,5 @@ typedef enum
 	// this is the end of the global activities, private per-monster activities start here.
 	LAST_SHARED_ACTIVITY,
 } Activity;
-
 
 #endif // AI_ACTIVITY_H

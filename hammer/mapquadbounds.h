@@ -22,46 +22,55 @@
 
 #include "MapHelper.h"
 
-
 class CHelperInfo;
 class CRender3D;
 
-
 class CMapQuadBounds : public CMapHelper
 {
-	public:
+public:
+	DECLARE_MAPCLASS(CMapQuadBounds, CMapHelper)
 
-		DECLARE_MAPCLASS(CMapQuadBounds,CMapHelper)
+	//
+	// Factory for building from a list of string parameters.
+	//
+	static CMapClass *CreateQuadBounds(CHelperInfo *pInfo, CMapEntity *pParent);
 
-		//
-		// Factory for building from a list of string parameters.
-		//
-		static CMapClass *CreateQuadBounds(CHelperInfo *pInfo, CMapEntity *pParent);
+	//
+	// Construction/destruction:
+	//
+	CMapQuadBounds(void);
+	~CMapQuadBounds(void);
 
-		//
-		// Construction/destruction:
-		//
-		CMapQuadBounds(void);
-		~CMapQuadBounds(void);
+	void PresaveWorld(void);
 
-		void PresaveWorld(void);
+	virtual CMapClass *Copy(bool bUpdateDependencies);
+	virtual CMapClass *CopyFrom(CMapClass *pFrom, bool bUpdateDependencies);
 
-		virtual CMapClass *Copy(bool bUpdateDependencies);
-		virtual CMapClass *CopyFrom(CMapClass *pFrom, bool bUpdateDependencies);
+	int SerializeRMF(std::fstream &File, BOOL bRMF)
+	{
+		return (0);
+	}
+	int SerializeMAP(std::fstream &File, BOOL bRMF)
+	{
+		return (0);
+	}
 
-		int SerializeRMF(std::fstream &File, BOOL bRMF) { return(0); }
-		int SerializeMAP(std::fstream &File, BOOL bRMF) { return(0); }
+	bool IsVisualElement(void)
+	{
+		return (false);
+	} // Only visible when the parent entity is selected.
 
-		bool IsVisualElement(void) { return(false); } // Only visible when the parent entity is selected.
+	const char *GetDescription()
+	{
+		return ("Quad bounds helper");
+	}
 
-		const char* GetDescription() { return("Quad bounds helper"); }
-
-	protected:
-		Vector			m_vLowerLeft;
-		Vector			m_vUpperLeft;
-		Vector			m_vLowerRight;
-		Vector			m_vUpperRight;
-		int				m_nError;
+protected:
+	Vector m_vLowerLeft;
+	Vector m_vUpperLeft;
+	Vector m_vLowerRight;
+	Vector m_vUpperRight;
+	int m_nError;
 };
 
 #endif // MAPQUADBOUNDS_H

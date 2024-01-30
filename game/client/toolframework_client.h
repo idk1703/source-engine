@@ -13,25 +13,21 @@
 
 #include "toolframework/itoolentity.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
 class KeyValues;
 struct AudioState_t;
 
-
 //-----------------------------------------------------------------------------
 // Posts a message to all tools
 //-----------------------------------------------------------------------------
-void ToolFramework_PostToolMessage( HTOOLHANDLE hEntity, KeyValues *msg );
-
+void ToolFramework_PostToolMessage(HTOOLHANDLE hEntity, KeyValues *msg);
 
 //-----------------------------------------------------------------------------
 // Should we render with a 3rd person camera?
 //-----------------------------------------------------------------------------
-bool ToolFramework_IsThirdPersonCamera( );
-
+bool ToolFramework_IsThirdPersonCamera();
 
 //-----------------------------------------------------------------------------
 // Are tools enabled?
@@ -42,18 +38,17 @@ bool ToolsEnabled();
 #define ToolsEnabled() 0
 #endif
 
-
 //-----------------------------------------------------------------------------
 // View manipulation
 //-----------------------------------------------------------------------------
-void ToolFramework_AdjustEngineViewport( int& x, int& y, int& width, int& height );
-bool ToolFramework_SetupEngineView( Vector &origin, QAngle &angles, float &fov );
-bool ToolFramework_SetupAudioState( AudioState_t &audioState );
+void ToolFramework_AdjustEngineViewport(int &x, int &y, int &width, int &height);
+bool ToolFramework_SetupEngineView(Vector &origin, QAngle &angles, float &fov);
+bool ToolFramework_SetupAudioState(AudioState_t &audioState);
 
 //-----------------------------------------------------------------------------
 // material recording - primarily for proxy materials
 //-----------------------------------------------------------------------------
-void ToolFramework_RecordMaterialParams( IMaterial *pMaterial );
+void ToolFramework_RecordMaterialParams(IMaterial *pMaterial);
 
 //-----------------------------------------------------------------------------
 // Recorded temp entity structures
@@ -84,14 +79,13 @@ enum TERecordingType_t
 	TE_RECORDING_TYPE_COUNT,
 };
 
-
 //-----------------------------------------------------------------------------
 // Helper class to indicate ownership of effects
 //-----------------------------------------------------------------------------
 class CRecordEffectOwner
 {
 public:
-	CRecordEffectOwner( C_BaseEntity *pEntity, bool bIsViewModel = false );
+	CRecordEffectOwner(C_BaseEntity *pEntity, bool bIsViewModel = false);
 	~CRecordEffectOwner();
 
 private:

@@ -20,34 +20,34 @@ class CDemoEditorPanel;
 //-----------------------------------------------------------------------------
 class CBaseActionEditDialog : public vgui::Frame
 {
-	DECLARE_CLASS_SIMPLE( CBaseActionEditDialog, vgui::Frame );
+	DECLARE_CLASS_SIMPLE(CBaseActionEditDialog, vgui::Frame);
 
 public:
-	CBaseActionEditDialog( CDemoEditorPanel *parent, CBaseDemoAction *action, bool newaction );
+	CBaseActionEditDialog(CDemoEditorPanel *parent, CBaseDemoAction *action, bool newaction);
 
-	virtual void	Init( void );
+	virtual void Init(void);
 
-	virtual void	OnClose();
-	virtual void	OnCancel();
+	virtual void OnClose();
+	virtual void OnCancel();
 
-	virtual void	OnCommand( char const *commands );
+	virtual void OnCommand(char const *commands);
 
 	// Returns true if changes were effected
-	virtual bool	OnSaveChanges( void );
+	virtual bool OnSaveChanges(void);
 
 private:
-	vgui::Button	*m_pOK;
-	vgui::Button	*m_pCancel;
+	vgui::Button *m_pOK;
+	vgui::Button *m_pCancel;
 
-	vgui::TextEntry	*m_pActionName;
+	vgui::TextEntry *m_pActionName;
 
-	vgui::ComboBox	*m_pStartType;
-	vgui::TextEntry	*m_pStart;
+	vgui::ComboBox *m_pStartType;
+	vgui::TextEntry *m_pStart;
 
 protected:
-	CDemoEditorPanel	*m_pEditor;
-	CBaseDemoAction		*m_pAction;
-	bool				m_bNewAction;
+	CDemoEditorPanel *m_pEditor;
+	CBaseDemoAction *m_pAction;
+	bool m_bNewAction;
 };
 
 //-----------------------------------------------------------------------------
@@ -55,21 +55,19 @@ protected:
 //-----------------------------------------------------------------------------
 class CBaseActionWithTargetDialog : public CBaseActionEditDialog
 {
-	DECLARE_CLASS_SIMPLE( CBaseActionWithTargetDialog, CBaseActionEditDialog );
+	DECLARE_CLASS_SIMPLE(CBaseActionWithTargetDialog, CBaseActionEditDialog);
 
 public:
-	CBaseActionWithTargetDialog( CDemoEditorPanel *parent, CBaseDemoAction *action, bool newaction );
+	CBaseActionWithTargetDialog(CDemoEditorPanel *parent, CBaseDemoAction *action, bool newaction);
 
 	// Also a pure baseclass
-	virtual void	Init( void );
+	virtual void Init(void);
 
 	// Returns true if changes were effected
-	virtual bool	OnSaveChanges( void );
+	virtual bool OnSaveChanges(void);
 
 private:
-
-	vgui::TextEntry	*m_pActionTarget;
+	vgui::TextEntry *m_pActionTarget;
 };
-
 
 #endif // CL_DEMOACTIONEDITORS_H

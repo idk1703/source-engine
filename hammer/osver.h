@@ -13,5 +13,5 @@ typedef enum eOSVersion
 	eWinNT,
 };
 
-extern void       initOSVersion();
+extern void initOSVersion();
 extern eOSVersion getOSVersion();

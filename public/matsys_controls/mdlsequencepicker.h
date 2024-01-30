@@ -15,7 +15,6 @@
 #include "datacache/imdlcache.h"
 #include "matsys_controls/mdlpanel.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
@@ -23,19 +22,19 @@ namespace vgui
 {
 	class Splitter;
 	class Button;
-}
+} // namespace vgui
 
 class CGameFileTreeView;
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Main app window
 //-----------------------------------------------------------------------------
 class CMDLSequencePicker : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CMDLSequencePicker, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CMDLSequencePicker, vgui::EditablePanel);
+
 public:
-	CMDLSequencePicker( vgui::Panel *pParent );
+	CMDLSequencePicker(vgui::Panel *pParent);
 	virtual ~CMDLSequencePicker();
 
 	// overridden frame functions
@@ -46,35 +45,35 @@ public:
 
 	char const *GetModelName();
 	char const *GetSequenceName();
-	int	GetSequenceNumber();
+	int GetSequenceNumber();
 
 private:
-	void SelectMDL( const char *pMDLName );
+	void SelectMDL(const char *pMDLName);
 	void RefreshFileList();
 	void RefreshActivitiesAndSequencesList();
 
 	// Plays the selected activity
-	void PlaySelectedActivity( );
+	void PlaySelectedActivity();
 
 	// Plays the selected sequence
-	void PlaySelectedSequence( );
+	void PlaySelectedSequence();
 
-	MESSAGE_FUNC( OnFileSelected, "TreeViewItemSelected" );
-	MESSAGE_FUNC_PTR_CHARPTR( OnTextChanged, "TextChanged", Panel, text );
-	MESSAGE_FUNC_PARAMS( OnItemSelected, "ItemSelected", kv );
-	MESSAGE_FUNC( OnPageChanged, "PageChanged" );
+	MESSAGE_FUNC(OnFileSelected, "TreeViewItemSelected");
+	MESSAGE_FUNC_PTR_CHARPTR(OnTextChanged, "TextChanged", Panel, text);
+	MESSAGE_FUNC_PARAMS(OnItemSelected, "ItemSelected", kv);
+	MESSAGE_FUNC(OnPageChanged, "PageChanged");
 
 	// changes
-//	MESSAGE_FUNC_INT( CloakFolder, "CloakFolder", item );
-//	MESSAGE_FUNC_INT( OpenFileForEdit, "EditFile", item );
-//	MESSAGE_FUNC_INT( OpenFileForDelete, "DeleteFile", item );
+	//	MESSAGE_FUNC_INT( CloakFolder, "CloakFolder", item );
+	//	MESSAGE_FUNC_INT( OpenFileForEdit, "EditFile", item );
+	//	MESSAGE_FUNC_INT( OpenFileForDelete, "DeleteFile", item );
 
 	CMDLPanel *m_pMDLPreview;
 	vgui::ComboBox *m_pFilterList;
 	CGameFileTreeView *m_pFileTree;
 	vgui::ImageList m_Images;
-	vgui::Splitter* m_pMDLSplitter;
-	vgui::Splitter* m_pSequenceSplitter;
+	vgui::Splitter *m_pMDLSplitter;
+	vgui::Splitter *m_pSequenceSplitter;
 	vgui::PropertySheet *m_pViewsSheet;
 	vgui::PropertyPage *m_pSequencesPage;
 	vgui::PropertyPage *m_pActivitiesPage;
@@ -92,25 +91,25 @@ private:
 //-----------------------------------------------------------------------------
 class CMDLSequencePickerFrame : public vgui::Frame
 {
-	DECLARE_CLASS_SIMPLE( CMDLSequencePickerFrame, vgui::Frame );
+	DECLARE_CLASS_SIMPLE(CMDLSequencePickerFrame, vgui::Frame);
+
 public:
-	CMDLSequencePickerFrame( vgui::Panel *parent, char const *title );
+	CMDLSequencePickerFrame(vgui::Panel *parent, char const *title);
 	virtual ~CMDLSequencePickerFrame();
 
 	virtual void PerformLayout();
 
 protected:
-
 	virtual void OnTick();
 
-	MESSAGE_FUNC( OnOK, "OnOK" );
-	MESSAGE_FUNC( OnCancel, "OnCancel" );
+	MESSAGE_FUNC(OnOK, "OnOK");
+	MESSAGE_FUNC(OnCancel, "OnCancel");
 
 private:
 	CMDLSequencePicker *m_pMDLSequencePicker;
 
-	vgui::Button		*m_pOK;
-	vgui::Button		*m_pCancel;
+	vgui::Button *m_pOK;
+	vgui::Button *m_pCancel;
 };
 
 #endif // MDLSEQUENCEPICKER_H

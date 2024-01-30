@@ -30,66 +30,65 @@
 	SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 static float inner_prod(float *a, float *b, int len)
 {
 	float sum;
-	__asm__ __volatile__ (
-	"\tpush %%eax\n"
-	"\tpush %%edi\n"
-	"\tpush %%ecx\n"
-	"\txorps %%xmm3, %%xmm3\n"
-	"\txorps %%xmm4, %%xmm4\n"
+	__asm__ __volatile__("\tpush %%eax\n"
+						 "\tpush %%edi\n"
+						 "\tpush %%ecx\n"
+						 "\txorps %%xmm3, %%xmm3\n"
+						 "\txorps %%xmm4, %%xmm4\n"
 
-	"\tsub $20, %%ecx\n"
+						 "\tsub $20, %%ecx\n"
 
-".mul20_loop%=:\n"
+						 ".mul20_loop%=:\n"
 
-	"\tmovups (%%eax), %%xmm0\n"
-	"\tmovups (%%edi), %%xmm1\n"
-	"\tmulps %%xmm0, %%xmm1\n"
+						 "\tmovups (%%eax), %%xmm0\n"
+						 "\tmovups (%%edi), %%xmm1\n"
+						 "\tmulps %%xmm0, %%xmm1\n"
 
-	"\tmovups 16(%%eax), %%xmm5\n"
-	"\tmovups 16(%%edi), %%xmm6\n"
-	"\tmulps %%xmm5, %%xmm6\n"
-	"\taddps %%xmm1, %%xmm3\n"
+						 "\tmovups 16(%%eax), %%xmm5\n"
+						 "\tmovups 16(%%edi), %%xmm6\n"
+						 "\tmulps %%xmm5, %%xmm6\n"
+						 "\taddps %%xmm1, %%xmm3\n"
 
-	"\tmovups 32(%%eax), %%xmm0\n"
-	"\tmovups 32(%%edi), %%xmm1\n"
-	"\tmulps %%xmm0, %%xmm1\n"
-	"\taddps %%xmm6, %%xmm4\n"
+						 "\tmovups 32(%%eax), %%xmm0\n"
+						 "\tmovups 32(%%edi), %%xmm1\n"
+						 "\tmulps %%xmm0, %%xmm1\n"
+						 "\taddps %%xmm6, %%xmm4\n"
 
-	"\tmovups 48(%%eax), %%xmm5\n"
-	"\tmovups 48(%%edi), %%xmm6\n"
-	"\tmulps %%xmm5, %%xmm6\n"
-	"\taddps %%xmm1, %%xmm3\n"
+						 "\tmovups 48(%%eax), %%xmm5\n"
+						 "\tmovups 48(%%edi), %%xmm6\n"
+						 "\tmulps %%xmm5, %%xmm6\n"
+						 "\taddps %%xmm1, %%xmm3\n"
 
-	"\tmovups 64(%%eax), %%xmm0\n"
-	"\tmovups 64(%%edi), %%xmm1\n"
-	"\tmulps %%xmm0, %%xmm1\n"
-	"\taddps %%xmm6, %%xmm4\n"
-	"\taddps %%xmm1, %%xmm3\n"
+						 "\tmovups 64(%%eax), %%xmm0\n"
+						 "\tmovups 64(%%edi), %%xmm1\n"
+						 "\tmulps %%xmm0, %%xmm1\n"
+						 "\taddps %%xmm6, %%xmm4\n"
+						 "\taddps %%xmm1, %%xmm3\n"
 
+						 "\tadd $80, %%eax\n"
+						 "\tadd $80, %%edi\n"
 
-	"\tadd $80, %%eax\n"
-	"\tadd $80, %%edi\n"
+						 "\tsub $20,  %%ecx\n"
 
-	"\tsub $20,  %%ecx\n"
+						 "\tjae .mul20_loop%=\n"
 
-	"\tjae .mul20_loop%=\n"
+						 "\taddps %%xmm4, %%xmm3\n"
 
-	"\taddps %%xmm4, %%xmm3\n"
+						 "\tmovhlps %%xmm3, %%xmm4\n"
+						 "\taddps %%xmm4, %%xmm3\n"
+						 "\tmovaps %%xmm3, %%xmm4\n"
+						 "\tshufps $0x55, %%xmm4, %%xmm4\n"
+						 "\taddss %%xmm4, %%xmm3\n"
+						 "\tmovss %%xmm3, (%%edx)\n"
 
-	"\tmovhlps %%xmm3, %%xmm4\n"
-	"\taddps %%xmm4, %%xmm3\n"
-	"\tmovaps %%xmm3, %%xmm4\n"
-	"\tshufps $0x55, %%xmm4, %%xmm4\n"
-	"\taddss %%xmm4, %%xmm3\n"
-	"\tmovss %%xmm3, (%%edx)\n"
-
-	"\tpop %%ecx\n"
-	"\tpop %%edi\n"
-	"\tpop %%eax\n"
-	: : "a" (a), "D" (b), "c" (len), "d" (&sum) : "memory");
+						 "\tpop %%ecx\n"
+						 "\tpop %%edi\n"
+						 "\tpop %%eax\n"
+						 :
+						 : "a"(a), "D"(b), "c"(len), "d"(&sum)
+						 : "memory");
 	return sum;
 }

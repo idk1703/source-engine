@@ -16,25 +16,23 @@
 
 using namespace vgui;
 
-
-class MenuDemo: public DemoPage
+class MenuDemo : public DemoPage
 {
-	public:
-		MenuDemo(Panel *parent, const char *name);
-		~MenuDemo();
-		void InitMenus();
+public:
+	MenuDemo(Panel *parent, const char *name);
+	~MenuDemo();
+	void InitMenus();
 
-		void OnMaggie();
+	void OnMaggie();
 
-	protected:
-		// Menu that opens when button is pressed
-		Menu *m_pMenu;
+protected:
+	// Menu that opens when button is pressed
+	Menu *m_pMenu;
 
-		// Button to trigger the menu
-		MenuButton *m_pMenuButton;
+	// Button to trigger the menu
+	MenuButton *m_pMenuButton;
 
-	private:
-		// explain this
-		DECLARE_PANELMAP();
-
+private:
+	// explain this
+	DECLARE_PANELMAP();
 };

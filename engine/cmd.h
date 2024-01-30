@@ -20,7 +20,6 @@
 #pragma once
 #endif
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
@@ -31,20 +30,18 @@ class ConCommandBase;
 
 typedef enum
 {
-	eCmdExecutionMarker_Enable_FCVAR_SERVER_CAN_EXECUTE='a',
-	eCmdExecutionMarker_Disable_FCVAR_SERVER_CAN_EXECUTE='b',
+	eCmdExecutionMarker_Enable_FCVAR_SERVER_CAN_EXECUTE = 'a',
+	eCmdExecutionMarker_Disable_FCVAR_SERVER_CAN_EXECUTE = 'b',
 
-	eCmdExecutionMarker_Enable_FCVAR_CLIENTCMD_CAN_EXECUTE='c',
-	eCmdExecutionMarker_Disable_FCVAR_CLIENTCMD_CAN_EXECUTE='d'
+	eCmdExecutionMarker_Enable_FCVAR_CLIENTCMD_CAN_EXECUTE = 'c',
+	eCmdExecutionMarker_Disable_FCVAR_CLIENTCMD_CAN_EXECUTE = 'd'
 } ECmdExecutionMarker;
-
 
 //-----------------------------------------------------------------------------
 // Initialization, shutdown of the command buffer
 //-----------------------------------------------------------------------------
-void Cbuf_Init (void);
-void Cbuf_Shutdown( void );
-
+void Cbuf_Init(void);
+void Cbuf_Shutdown(void);
 
 //-----------------------------------------------------------------------------
 // Clears the command buffer
@@ -55,22 +52,20 @@ void Cbuf_Clear(void);
 // Escape an argument for a command. This *can* fail as many characters cannot
 // actually be passed through the old command syntax...
 //-----------------------------------------------------------------------------
-bool Cbuf_EscapeCommandArg( const char *pText, char *pOut, unsigned int nOut );
+bool Cbuf_EscapeCommandArg(const char *pText, char *pOut, unsigned int nOut);
 
 //-----------------------------------------------------------------------------
 // as new commands are generated from the console or keybindings,
 // the text is added to the end of the command buffer.
 //-----------------------------------------------------------------------------
-void Cbuf_AddText (const char *text);
-
+void Cbuf_AddText(const char *text);
 
 //-----------------------------------------------------------------------------
 // when a command wants to issue other commands immediately, the text is
 // inserted at the beginning of the buffer, before any remaining unexecuted
 // commands.
 //-----------------------------------------------------------------------------
-void Cbuf_InsertText( const char *text );
-
+void Cbuf_InsertText(const char *text);
 
 //-----------------------------------------------------------------------------
 // Surround a command with two execution markers. The operation is performed atomically.
@@ -84,12 +79,10 @@ void Cbuf_InsertText( const char *text );
 // then removes the execution marker. That way, ANYTIME Cbuf_Execute() is called,
 // it will apply the cl_restrict_server_commands rules correctly.
 //-----------------------------------------------------------------------------
-bool Cbuf_AddTextWithMarkers( ECmdExecutionMarker markerLeft, const char *text, ECmdExecutionMarker markerRight );
-
+bool Cbuf_AddTextWithMarkers(ECmdExecutionMarker markerLeft, const char *text, ECmdExecutionMarker markerRight);
 
 // Returns whether or not the execution marker stack has room for N more.
-bool Cbuf_HasRoomForExecutionMarkers( int cExecutionMarkers );
-
+bool Cbuf_HasRoomForExecutionMarkers(int cExecutionMarkers);
 
 // Pulls off \n terminated lines of text from the command buffer and sends
 // them through Cmd_ExecuteString.  Stops when the buffer is empty.
@@ -97,7 +90,6 @@ bool Cbuf_HasRoomForExecutionMarkers( int cExecutionMarkers );
 // Do not call inside a command function!
 //-----------------------------------------------------------------------------
 void Cbuf_Execute();
-
 
 //===========================================================================
 
@@ -114,35 +106,30 @@ not apropriate.
 
 enum cmd_source_t
 {
-	src_client,		// came in over a net connection as a clc_stringcmd
-					// host_client will be valid during this state.
-	src_command		// from the command buffer
+	src_client, // came in over a net connection as a clc_stringcmd
+				// host_client will be valid during this state.
+	src_command // from the command buffer
 };
-
 
 // FIXME: Move these into a field of CCommand?
 extern cmd_source_t cmd_source;
-extern int			cmd_clientslot;
-
+extern int cmd_clientslot;
 
 //-----------------------------------------------------------------------------
 // Initialization, shutdown
 //-----------------------------------------------------------------------------
-void Cmd_Init (void);
-void Cmd_Shutdown( void );
-
+void Cmd_Init(void);
+void Cmd_Shutdown(void);
 
 //-----------------------------------------------------------------------------
 // Executes a command given a CCommand argument structure
 //-----------------------------------------------------------------------------
-const ConCommandBase *Cmd_ExecuteCommand( const CCommand &command, cmd_source_t src, int nClientSlot = -1 );
-
+const ConCommandBase *Cmd_ExecuteCommand(const CCommand &command, cmd_source_t src, int nClientSlot = -1);
 
 //-----------------------------------------------------------------------------
 // Dispatches a command with the requested arguments
 //-----------------------------------------------------------------------------
-void Cmd_Dispatch( const ConCommandBase *pCommand, const CCommand &args );
-
+void Cmd_Dispatch(const ConCommandBase *pCommand, const CCommand &args);
 
 //-----------------------------------------------------------------------------
 // adds the current command line as a clc_stringcmd to the client message.
@@ -151,18 +138,15 @@ void Cmd_Dispatch( const ConCommandBase *pCommand, const CCommand &args );
 // If bReliable is true, it goes into cls.netchan.message.
 // If bReliable is false, it goes into cls.datagram.
 //-----------------------------------------------------------------------------
-void Cmd_ForwardToServer( const CCommand &args, bool bReliable = true );
-
-
+void Cmd_ForwardToServer(const CCommand &args, bool bReliable = true);
 
 // This is a list of cvars that are in the client DLL that we want FCVAR_CLIENTCMD_CAN_EXECUTE set on.
 // In order to avoid patching the client DLL, we setup this list. Whenever the client DLL has gone out with the
 // FCVAR_CLIENTCMD_CAN_EXECUTE flag set, we can get rid of this list.
-void Cmd_AddClientCmdCanExecuteVar( const char *pName );
+void Cmd_AddClientCmdCanExecuteVar(const char *pName);
 
 // Used to allow cheats even if cheats aren't theoretically allowed
-void Cmd_SetRptActive( bool bActive );
+void Cmd_SetRptActive(bool bActive);
 bool Cmd_IsRptActive();
-
 
 #endif // CMD_H

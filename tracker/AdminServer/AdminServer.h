@@ -43,7 +43,8 @@ public:
 	virtual ManageServerUIHandle_t OpenManageServerDialog(const char *serverName, const char *gameDir);
 
 	// opens a manage server dialog to a remote server
-	virtual ManageServerUIHandle_t OpenManageServerDialog(unsigned int gameIP, unsigned int gamePort, const char *password);
+	virtual ManageServerUIHandle_t OpenManageServerDialog(unsigned int gameIP, unsigned int gamePort,
+														  const char *password);
 
 	// forces the game info dialog closed
 	virtual void CloseManageServerDialog(ManageServerUIHandle_t gameDialog);
@@ -61,9 +62,7 @@ private:
 	vgui::VPANEL m_hParent;
 };
 
-
 class IVProfExport;
 extern IVProfExport *g_pVProfExport;
-
 
 #endif // AdminServer_H

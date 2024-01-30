@@ -23,28 +23,28 @@ class CTFPlayerLocalData
 public:
 	DECLARE_PREDICTABLE();
 
-	int			m_nInTacticalView;
+	int m_nInTacticalView;
 
-	bool		m_bKnockedDown;
-	QAngle		m_vecKnockDownDir;
+	bool m_bKnockedDown;
+	QAngle m_vecKnockDownDir;
 
-	bool		m_bThermalVision;
+	bool m_bThermalVision;
 
-	int			m_iIDEntIndex;
+	int m_iIDEntIndex;
 
 	// Resource chunk carrying counts
-	int			m_iResourceAmmo[ RESOURCE_TYPES ];	// 0 = Normal resources, 1 = Processed resources
+	int m_iResourceAmmo[RESOURCE_TYPES]; // 0 = Normal resources, 1 = Processed resources
 
 	// Resource bank
-	int			m_iBankResources;		// Current amounts of resource in my bank
+	int m_iBankResources; // Current amounts of resource in my bank
 
 	// Objects
-	CUtlVector< CHandle<C_BaseObject> > m_aObjects;
+	CUtlVector<CHandle<C_BaseObject>> m_aObjects;
 
 	// Object sapper placement handling
-	bool		m_bAttachingSapper;
-	float		m_flSapperAttachmentFrac;
-	bool		m_bForceMapOverview;
+	bool m_bAttachingSapper;
+	float m_flSapperAttachmentFrac;
+	bool m_bForceMapOverview;
 };
 
 #endif // C_TFPLAYERLOCALDATA_H

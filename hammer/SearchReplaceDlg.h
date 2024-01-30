@@ -15,11 +15,9 @@
 #include "utlvector.h"
 #include "MapClass.h"
 
-
 class CMapEntity;
 
 struct FindObject_t;
-
 
 enum FindReplaceIn_t
 {
@@ -27,17 +25,19 @@ enum FindReplaceIn_t
 	FindInWorld,
 };
 
-
 class CSearchReplaceDlg : public CDialog
 {
-// Construction
+	// Construction
 public:
-	CSearchReplaceDlg(CWnd* pParent = NULL);   // standard constructor
+	CSearchReplaceDlg(CWnd *pParent = NULL); // standard constructor
 	int Create(CWnd *pwndParent = NULL);
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CSearchReplaceDlg)
-	enum { IDD = IDD_SEARCH_REPLACE };
+	enum
+	{
+		IDD = IDD_SEARCH_REPLACE
+	};
 	CString m_strFindText;
 	CString m_strReplaceText;
 	BOOL m_bVisiblesOnly;
@@ -46,17 +46,15 @@ public:
 	int m_nFindIn;
 	//}}AFX_DATA
 
-
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CSearchReplaceDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
 protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
+													 //}}AFX_VIRTUAL
 
+	// Implementation
+protected:
 	// Generated message map functions
 	//{{AFX_MSG(CSearchReplaceDlg)
 	afx_msg BOOL OnFindReplace(UINT uCmd);
@@ -68,14 +66,12 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 private:
-
 	void GetFindCriteria(FindObject_t &FindObject, CMapDoc *pDoc);
 
 	void FindFirst();
 	bool FindNext(bool bReplace);
 
-	bool m_bNewSearch;								// Set to true every time the dialog is brought up.
+	bool m_bNewSearch; // Set to true every time the dialog is brought up.
 };
-
 
 #endif // SEARCHREPLACEDLG_H

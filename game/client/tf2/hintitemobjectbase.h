@@ -20,16 +20,16 @@ class C_BaseEntity;
 //-----------------------------------------------------------------------------
 class CHintItemObjectBase : public CHintItemOrderBase
 {
-	DECLARE_CLASS( CHintItemObjectBase, CHintItemOrderBase );
+	DECLARE_CLASS(CHintItemObjectBase, CHintItemOrderBase);
 
 public:
-	CHintItemObjectBase( vgui::Panel *parent, const char *panelName );
+	CHintItemObjectBase(vgui::Panel *parent, const char *panelName);
 
-	virtual void		ParseItem( KeyValues *pKeyValues );
+	virtual void ParseItem(KeyValues *pKeyValues);
 	// Is the object of type m_szObjectType
-	virtual bool		IsObjectOfType( C_BaseEntity *object );
-	virtual void		SetObjectType( const char *type );
-	virtual char const	*GetObjectType( void );
+	virtual bool IsObjectOfType(C_BaseEntity *object);
+	virtual void SetObjectType(const char *type);
+	virtual char const *GetObjectType(void);
 
 private:
 	enum
@@ -37,7 +37,7 @@ private:
 		MAX_OBJECT_TYPE = 128,
 	};
 
-	char				m_szObjectType[ MAX_OBJECT_TYPE ];
+	char m_szObjectType[MAX_OBJECT_TYPE];
 };
 
 #endif // HINTITEMOBJECTBASE_H

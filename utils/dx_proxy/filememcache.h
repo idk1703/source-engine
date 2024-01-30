@@ -16,7 +16,7 @@
 #include "tier1/generichash.h"
 #include <unordered_map>
 
-#pragma warning ( disable : 4200 )
+#pragma warning(disable : 4200)
 
 class CachedFileData
 {
@@ -24,22 +24,28 @@ class CachedFileData
 
 protected: // Constructed by FileCache
 	CachedFileData() {}
-	static CachedFileData *Create( char const *szFilename );
-	void Free( void );
+	static CachedFileData *Create(char const *szFilename);
+	void Free(void);
 
 public:
-	static CachedFileData *GetByDataPtr( void const *pvDataPtr );
+	static CachedFileData *GetByDataPtr(void const *pvDataPtr);
 
-	char const * GetFileName() const;
-	void const * GetDataPtr() const;
+	char const *GetFileName() const;
+	void const *GetDataPtr() const;
 	int GetDataLen() const;
 
-	int UpdateRefCount( int iDeltaRefCount ) { return m_numRefs += iDeltaRefCount; }
+	int UpdateRefCount(int iDeltaRefCount)
+	{
+		return m_numRefs += iDeltaRefCount;
+	}
 
 	bool IsValid() const;
 
 protected:
-	enum { eHeaderSize = 256 };
+	enum
+	{
+		eHeaderSize = 256
+	};
 	char m_chFilename[256 - 12];
 	int m_numRefs;
 	int m_numDataBytes;
@@ -51,25 +57,31 @@ class FileCache
 {
 public:
 	FileCache();
-	~FileCache() { Clear(); }
+	~FileCache()
+	{
+		Clear();
+	}
 
 public:
-	CachedFileData *Get( char const *szFilename );
-	void Clear( void );
+	CachedFileData *Get(char const *szFilename);
+	void Clear(void);
 
 protected:
-	struct eqstr {
-		inline size_t operator()( const char *s ) const {
-			if ( !s )
+	struct eqstr
+	{
+		inline size_t operator()(const char *s) const
+		{
+			if(!s)
 				return 0;
-			return HashString( s );
+			return HashString(s);
 		}
-		inline bool operator()( const char *s1, const char *s2 ) const {
-			return _stricmp( s1, s2 ) < 0;
+		inline bool operator()(const char *s1, const char *s2) const
+		{
+			return _stricmp(s1, s2) < 0;
 		}
 	};
 
-	typedef std::unordered_map< const char *, CachedFileData *, eqstr, eqstr > Mapping;
+	typedef std::unordered_map<const char *, CachedFileData *, eqstr, eqstr> Mapping;
 	Mapping m_map;
 };
 

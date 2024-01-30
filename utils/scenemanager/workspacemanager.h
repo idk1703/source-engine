@@ -23,7 +23,7 @@ class CWaveBrowser;
 class CWaveFile;
 
 struct _IMAGELIST;
-typedef struct _IMAGELIST NEAR* HIMAGELIST;
+typedef struct _IMAGELIST NEAR *HIMAGELIST;
 
 enum
 {
@@ -32,7 +32,7 @@ enum
 	IMAGE_PROJECT,
 	IMAGE_PROJECT_CHECKEDOUT,
 	IMAGE_SCENE,
-//	IMAGE_SCENE_CHECKEDOUT,
+	//	IMAGE_SCENE_CHECKEDOUT,
 	IMAGE_VCD,
 	IMAGE_VCD_CHECKEDOUT,
 	IMAGE_WAV,
@@ -49,134 +49,132 @@ public:
 	CWorkspaceManager();
 	~CWorkspaceManager();
 
-	virtual int handleEvent( mxEvent *event );
+	virtual int handleEvent(mxEvent *event);
 
-	CWorkspaceBrowser	*GetBrowser();
-	CSoundBrowser	*GetSoundBrowser();
-	CWaveBrowser	*GetWaveBrowser();
-	void			LoadWorkspace( char const *filename );
+	CWorkspaceBrowser *GetBrowser();
+	CSoundBrowser *GetSoundBrowser();
+	CWaveBrowser *GetWaveBrowser();
+	void LoadWorkspace(char const *filename);
 
-	void			AutoLoad( char const *workspace );
+	void AutoLoad(char const *workspace);
 
-	void			ShowContextMenu( int x, int y, ITreeItem *item );
-	void			OnDoubleClicked( ITreeItem *item );
+	void ShowContextMenu(int x, int y, ITreeItem *item);
+	void OnDoubleClicked(ITreeItem *item);
 
-	void			UpdateMenus();
+	void UpdateMenus();
 
-	virtual bool	Closing();
+	virtual bool Closing();
 
-	HIMAGELIST		CreateImageList();
+	HIMAGELIST CreateImageList();
 
-	void			RefreshBrowsers();
+	void RefreshBrowsers();
 
-	void			OnSoundShowInBrowsers();
+	void OnSoundShowInBrowsers();
 
-	void			SetWorkspaceDirty();
+	void SetWorkspaceDirty();
 
-	int				GetLanguageId() const;
+	int GetLanguageId() const;
 
 private:
+	void PerformLayout(bool movebrowsers);
 
-	void			PerformLayout( bool movebrowsers );
+	void Think(float dt);
+	void Frame(void);
 
-	void			Think( float dt );
-	void			Frame( void );
+	virtual void OnDelete();
 
-	virtual void	OnDelete();
+	void SetWorkspace(CWorkspace *ws);
+	void OnUpdateTitle(void);
 
-	void			SetWorkspace( CWorkspace *ws );
-	void			OnUpdateTitle( void );
+	void CreateFileMenu(mxMenu *m);
+	void CreateProjectMenu(mxMenu *m);
 
-	void			CreateFileMenu( mxMenu *m );
-	void			CreateProjectMenu( mxMenu *m );
+	int GetMaxRecentFiles(void) const;
 
-	int				GetMaxRecentFiles( void ) const;
+	// Workspace message handlers
+	void OnNewWorkspace();
+	void OnOpenWorkspace();
+	void OnCloseWorkspace();
+	void OnSaveWorkspace();
 
-// Workspace message handlers
-	void			OnNewWorkspace();
-	void			OnOpenWorkspace();
-	void			OnCloseWorkspace();
-	void			OnSaveWorkspace();
+	void OnChangeVSSProperites();
 
-	void			OnChangeVSSProperites();
+	void OnCheckoutWorkspace();
+	void OnCheckinWorkspace();
 
-	void			OnCheckoutWorkspace();
-	void			OnCheckinWorkspace();
+	// Project message handlers
+	void OnNewProject();
+	void OnInsertProject();
+	void OnRemoveProject();
+	void OnModifyProjectComments();
 
-// Project message handlers
-	void			OnNewProject();
-	void			OnInsertProject();
-	void			OnRemoveProject();
-	void			OnModifyProjectComments();
+	// Scene message handlers
+	void OnNewScene();
+	void OnModifySceneComments();
+	void OnRemoveScene();
 
-// Scene message handlers
-	void			OnNewScene();
-	void			OnModifySceneComments();
-	void			OnRemoveScene();
+	// Sound entry handlers
+	void OnSoundPlay();
+	void OnSoundToggleVoiceDuck();
+	void OnSoundEditText();
 
-// Sound entry handlers
-	void			OnSoundPlay();
-	void			OnSoundToggleVoiceDuck();
-	void			OnSoundEditText();
+	void OnSoundProperties();
+	void OnWaveProperties();
 
-	void			OnSoundProperties();
-	void			OnWaveProperties();
+	void OnCheckout();
+	void OnCheckin();
 
-	void			OnCheckout();
-	void			OnCheckin();
+	void OnMoveUp();
+	void OnMoveDown();
 
-	void			OnMoveUp();
-	void			OnMoveDown();
+	// void			OnSoundCheckOut();
+	// void			OnSoundCheckIn();
 
-	//void			OnSoundCheckOut();
-	//void			OnSoundCheckIn();
+	// Scene entries
+	void OnSceneAddVCD();
+	void OnSceneRemoveVCD();
+	void OnModifyVCDComments();
 
-// Scene entries
-	void			OnSceneAddVCD();
-	void			OnSceneRemoveVCD();
-	void			OnModifyVCDComments();
+	void OnRecentWorkspace(int index);
+	void OnChangeLanguage(int lang_index, bool force = false);
+	void AddFileToRecentWorkspaceList(char const *filename);
+	void UpdateRecentFilesMenu();
 
-	void			OnRecentWorkspace( int index );
-	void			OnChangeLanguage( int lang_index, bool force = false );
-	void			AddFileToRecentWorkspaceList( char const *filename );
-	void			UpdateRecentFilesMenu();
+	void LoadRecentFilesMenuFromDisk();
+	void SaveRecentFilesMenuToDisk();
 
-	void			LoadRecentFilesMenuFromDisk();
-	void			SaveRecentFilesMenuToDisk();
+	bool CloseWorkspace();
 
+	void ShowContextMenu_Workspace(int x, int y, CWorkspace *ws);
+	void ShowContextMenu_Project(int x, int y, CProject *project);
+	void ShowContextMenu_Scene(int x, int y, CScene *scene);
+	void ShowContextMenu_VCD(int x, int y, CVCDFile *vcd);
+	void ShowContextMenu_SoundEntry(int x, int y, CSoundEntry *entry);
+	void ShowContextMenu_WaveFile(int x, int y, CWaveFile *entry);
 
-	bool			CloseWorkspace();
+	mxMenuBar *m_pMenuBar;
 
-	void		ShowContextMenu_Workspace( int x, int y, CWorkspace *ws );
-	void		ShowContextMenu_Project( int x, int y, CProject *project );
-	void		ShowContextMenu_Scene( int x, int y, CScene *scene );
-	void		ShowContextMenu_VCD( int x, int y, CVCDFile *vcd );
-	void		ShowContextMenu_SoundEntry( int x, int y, CSoundEntry *entry );
-	void		ShowContextMenu_WaveFile( int x, int y, CWaveFile *entry );
+	mxMenu *m_pFileMenu;
+	mxMenu *m_pRecentFileMenu;
+	int m_nRecentMenuItems;
+	mxMenu *m_pProjectMenu;
+	mxMenu *m_pOptionsMenu;
+	mxMenu *m_pMenuCloseCaptionLanguages;
 
-	mxMenuBar		*m_pMenuBar;
+	CWorkspaceWorkArea *m_pWorkArea;
 
-	mxMenu			*m_pFileMenu;
-	mxMenu			*m_pRecentFileMenu;
-	int				m_nRecentMenuItems;
-	mxMenu			*m_pProjectMenu;
-	mxMenu			*m_pOptionsMenu;
-	mxMenu			*m_pMenuCloseCaptionLanguages;
-
-	CWorkspaceWorkArea	*m_pWorkArea;
-
-	CWorkspaceBrowser	*m_pBrowser;
-	CSoundBrowser		*m_pSoundBrowser;
-	CWaveBrowser		*m_pWaveBrowser;
+	CWorkspaceBrowser *m_pBrowser;
+	CSoundBrowser *m_pSoundBrowser;
+	CWaveBrowser *m_pWaveBrowser;
 
 	struct RecentFile
 	{
-		char filename[ 256 ];
+		char filename[256];
 	};
 
-	CUtlVector< RecentFile > m_RecentFiles;
-	int				m_nLanguageId;
-	long			m_lEnglishCaptionsFileChangeTime;
+	CUtlVector<RecentFile> m_RecentFiles;
+	int m_nLanguageId;
+	long m_lEnglishCaptionsFileChangeTime;
 };
 
 CWorkspaceManager *GetWorkspaceManager();

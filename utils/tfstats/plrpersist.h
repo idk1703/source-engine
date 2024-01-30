@@ -5,7 +5,7 @@
 // $NoKeywords: $
 //
 //=============================================================================//
-#pragma warning (disable:4786)
+#pragma warning(disable : 4786)
 //=========== (C) Copyright 1999 Valve, L.L.C. All rights reserved. ===========
 //
 // The copyright to the contents herein is the property of Valve, L.L.C.
@@ -52,15 +52,15 @@ public:
 
 	bool valid;
 
-	string faveString(map<string,int>& theMap);
+	string faveString(map<string, int> &theMap);
 
-	map<string,int> nickmap;
+	map<string, int> nickmap;
 	string faveName();
-	map<string,int> weapmap;
+	map<string, int> weapmap;
 	string faveWeap();
-	map<string,int> classmap;
+	map<string, int> classmap;
 	string faveClass();
-	list<pair<time_t,time_t> > playtimes;
+	list<pair<time_t, time_t>> playtimes;
 
 	time_t lastplayed;
 
@@ -69,23 +69,19 @@ public:
 	int faveweapkills;
 	double rank();
 
-
 	CPlrPersist()
 	{
-		kills=deaths=suicides=faveweapkills=matches=0;WONID=-1;
+		kills = deaths = suicides = faveweapkills = matches = 0;
+		WONID = -1;
 	}
 
-
-
 	void read(unsigned long WONID);
-	void read(CTextFile& f);
-	void merge(CPlrPersist& cpp,bool mergeOverlaps=false);
-	void generate(CPlayer& cp);
+	void read(CTextFile &f);
+	void merge(CPlrPersist &cpp, bool mergeOverlaps = false);
+	void generate(CPlayer &cp);
 	void write();
 
-	list<pair<time_t,time_t> >::iterator timesOverlap(time_t start, time_t end,bool testself=true);
+	list<pair<time_t, time_t>>::iterator timesOverlap(time_t start, time_t end, bool testself = true);
 };
-
-
 
 #endif // PLRPERSIST_H

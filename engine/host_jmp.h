@@ -13,7 +13,7 @@
 #include <setjmp.h>
 #endif
 
-extern jmp_buf 		host_abortserver;
-extern jmp_buf     host_enddemo;
+extern jmp_buf host_abortserver;
+extern jmp_buf host_enddemo;
 
 #endif

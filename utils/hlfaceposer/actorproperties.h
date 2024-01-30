@@ -19,10 +19,10 @@
 struct CActorParams : public CBaseDialogParams
 {
 	// i/o actor name
-	char		m_szName[ 256 ];
+	char m_szName[256];
 };
 
 // Display/create actor info
-int ActorProperties( CActorParams *params );
+int ActorProperties(CActorParams *params);
 
 #endif // ACTORPROPERTIES_H

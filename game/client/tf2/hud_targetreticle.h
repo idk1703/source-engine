@@ -23,31 +23,30 @@ class IMaterial;
 class CTargetReticle : public vgui::Panel
 {
 	typedef vgui::Panel BaseClass;
+
 public:
-	CTargetReticle( void );
+	CTargetReticle(void);
 	~CTargetReticle();
 
-	void			Update();
+	void Update();
 
 	// vgui::Panel overrides.
-	virtual void	Paint( void );
+	virtual void Paint(void);
 
-	void			Init( C_BaseEntity *pEntity, const char *sName );
-	C_BaseEntity*	GetTarget( void );
-
+	void Init(C_BaseEntity *pEntity, const char *sName);
+	C_BaseEntity *GetTarget(void);
 
 protected:
+	EHANDLE m_hTargetEntity;
+	vgui::Label *m_pTargetLabel;
 
-	EHANDLE			m_hTargetEntity;
-	vgui::Label		*m_pTargetLabel;
+	int m_iReticleId;
+	int m_iReticleLeftId; // When it's hanging off the edge of the screen.
+	int m_iReticleRightId;
 
-	int				m_iReticleId;
-	int				m_iReticleLeftId;	// When it's hanging off the edge of the screen.
-	int				m_iReticleRightId;
+	int m_iRenderTextureId;
 
-	int				m_iRenderTextureId;
-
-	vgui::HCursor				m_CursorNone;
+	vgui::HCursor m_CursorNone;
 };
 
 #endif // TARGETRETICLE_H

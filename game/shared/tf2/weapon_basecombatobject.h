@@ -15,7 +15,7 @@
 
 class CBaseTFPlayer;
 
-#if defined( CLIENT_DLL )
+#if defined(CLIENT_DLL)
 
 #define CWeaponBaseCombatObject C_WeaponBaseCombatObject
 
@@ -26,22 +26,23 @@ class CBaseTFPlayer;
 //-----------------------------------------------------------------------------
 class CWeaponBaseCombatObject : public CBaseTFCombatWeapon
 {
-	DECLARE_CLASS( CWeaponBaseCombatObject, CBaseTFCombatWeapon );
+	DECLARE_CLASS(CWeaponBaseCombatObject, CBaseTFCombatWeapon);
+
 public:
 	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CWeaponBaseCombatObject();
 
-	virtual void	PrimaryAttack( void );
-	virtual bool	GetPlacePosition( CBaseTFPlayer *pBuilder, Vector *vecPlaceOrigin, QAngle *angPlaceAngles );
-	virtual void	PlaceCombatObject( CBaseTFPlayer *pBuilder, Vector vecOrigin, QAngle angles );
-	virtual float	GetFireRate( void );
+	virtual void PrimaryAttack(void);
+	virtual bool GetPlacePosition(CBaseTFPlayer *pBuilder, Vector *vecPlaceOrigin, QAngle *angPlaceAngles);
+	virtual void PlaceCombatObject(CBaseTFPlayer *pBuilder, Vector vecOrigin, QAngle angles);
+	virtual float GetFireRate(void);
 
 protected:
-	char	*m_szObjectName;
-	Vector	m_vecBuildMins;
-	Vector	m_vecBuildMaxs;
+	char *m_szObjectName;
+	Vector m_vecBuildMins;
+	Vector m_vecBuildMaxs;
 
 	/*
 	// All predicted weapons need to implement and return true
@@ -62,7 +63,7 @@ protected:
 	*/
 
 private:
-	CWeaponBaseCombatObject( const CWeaponBaseCombatObject & );
+	CWeaponBaseCombatObject(const CWeaponBaseCombatObject &);
 };
 
 #endif // WEAPON_BASECOMBATOBJECT_H

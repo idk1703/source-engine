@@ -7,11 +7,12 @@
 //=============================================================================//
 #include "typedefs.h"
 
-#define MIN(x,y)     (((x) < (y)) ? (x) : (y))
-#define MAX(x,y)     (((x) > (y)) ? (x) : (y))
+#define MIN(x, y) (((x) < (y)) ? (x) : (y))
+#define MAX(x, y) (((x) > (y)) ? (x) : (y))
 
-typedef struct {
-	int32 w,h;
+typedef struct
+{
+	int32 w, h;
 	uint8 *data;
 	uint32 *data32;
 } t_i_image;

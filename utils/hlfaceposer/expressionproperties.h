@@ -18,10 +18,10 @@
 //-----------------------------------------------------------------------------
 struct CExpressionParams : public CBaseDialogParams
 {
-	char			m_szName[ 256 ];
-	char			m_szDescription[ 256 ];
+	char m_szName[256];
+	char m_szDescription[256];
 };
 
-int ExpressionProperties( CExpressionParams *params );
+int ExpressionProperties(CExpressionParams *params);
 
 #endif // EXPRESSIONPROPERTIES_H

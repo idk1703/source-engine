@@ -13,7 +13,7 @@
 #include "tier0/dbg.h"
 
 // test callback
-typedef void (STDCALL *TestFunc)(void *pv);
+typedef void(STDCALL *TestFunc)(void *pv);
 
 // runs the test function
 DBG_INTERFACE void Test_RunTest(TestFunc func, void *pvArg);
@@ -46,15 +46,33 @@ DBG_INTERFACE void Test_TerminateThread();
 DBG_INTERFACE void TestThread_Yield();
 
 // utility functions to pause the test frame until the selected condition is true
-#define YIELD_UNTIL(x) { int iYieldCount = 0; while (!(x)) { TestThread_Yield(); iYieldCount++; if ( iYieldCount >= 100 ) { AssertMsg( false, #x ); break; } } }
+#define YIELD_UNTIL(x)                \
+	{                                 \
+		int iYieldCount = 0;          \
+		while(!(x))                   \
+		{                             \
+			TestThread_Yield();       \
+			iYieldCount++;            \
+			if(iYieldCount >= 100)    \
+			{                         \
+				AssertMsg(false, #x); \
+				break;                \
+			}                         \
+		}                             \
+	}
 
 // use this like a while(1) loop, with break; to stop yielding
-#define YIELD_UNTIL_BREAK() for (; true; TestThread_Yield())
+#define YIELD_UNTIL_BREAK() for(; true; TestThread_Yield())
 
 // yields for a single frame
-#define YIELD_FRAME() { TestThread_Yield(); }
-#define YIELD_TWO_FRAMES() { TestThread_Yield(); TestThread_Yield(); }
-
-
+#define YIELD_FRAME()       \
+	{                       \
+		TestThread_Yield(); \
+	}
+#define YIELD_TWO_FRAMES()  \
+	{                       \
+		TestThread_Yield(); \
+		TestThread_Yield(); \
+	}
 
 #endif // TESTTHREAD_H

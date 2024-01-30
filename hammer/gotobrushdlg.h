@@ -10,30 +10,30 @@
 #pragma once
 #endif
 
-
 class CGotoBrushDlg : public CDialog
 {
-// Construction
+	// Construction
 public:
-	CGotoBrushDlg(CWnd* pParent = NULL);   // standard constructor
+	CGotoBrushDlg(CWnd *pParent = NULL); // standard constructor
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CGotoBrushDlg)
-	enum { IDD = IDD_GOTO_BRUSH };
-	int		m_nBrushID;
+	enum
+	{
+		IDD = IDD_GOTO_BRUSH
+	};
+	int m_nBrushID;
 	//}}AFX_DATA
 
-
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CGotoBrushDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
 protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
+													 //}}AFX_VIRTUAL
 
+	// Implementation
+protected:
 	// Generated message map functions
 	//{{AFX_MSG(CGotoBrushDlg)
 	virtual void OnOK();

@@ -18,7 +18,6 @@
 #pragma once
 #endif
 
-
 #include <mxtk/mxMatSysWindow.h>
 #include "materialsystem/imaterialsystem.h"
 #include "interface.h"
@@ -27,24 +26,21 @@ class ITexture;
 class MatSysWindow : public mxMatSysWindow
 {
 public:
-
 	// CREATORS
-	MatSysWindow( mxWindow *parent, int x, int y, int w, int h, const char *label, int style );
-	~MatSysWindow( );
+	MatSysWindow(mxWindow *parent, int x, int y, int w, int h, const char *label, int style);
+	~MatSysWindow();
 
 	// MANIPULATORS
-	void dumpViewport (const char *filename);
-	virtual int handleEvent( mxEvent *event );
-	virtual void draw( );
+	void dumpViewport(const char *filename);
+	virtual int handleEvent(mxEvent *event);
+	virtual void draw();
 
-	void			*m_hWnd;
+	void *m_hWnd;
 	// void			*m_hDC;
 
 	CSysModule *m_hMaterialSystemInst;
 	ITexture *m_pCubemapTexture;
-
 };
-
 
 extern MatSysWindow *g_MatSysWindow;
 extern IMaterial *g_materialBackground;
@@ -172,7 +168,6 @@ extern MaterialSystemApp	g_MaterialSystemApp;
 
 
 extern unsigned int g_Time;
-
 
 #endif
 

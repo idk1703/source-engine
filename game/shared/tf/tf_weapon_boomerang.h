@@ -23,17 +23,18 @@
 class CTFBoomerang : public CTFWeaponBaseMelee
 {
 public:
-
-	DECLARE_CLASS( CTFBoomerang, CTFWeaponBaseMelee );
+	DECLARE_CLASS(CTFBoomerang, CTFWeaponBaseMelee);
 	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CTFBoomerang();
-	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_BOOMERANG; }
+	virtual int GetWeaponID(void) const
+	{
+		return TF_WEAPON_BOOMERANG;
+	}
 
 private:
-
-	CTFBoomerang( const CTFBoomerang & ) {}
+	CTFBoomerang(const CTFBoomerang &) {}
 };
 
 #endif // TF_WEAPON_BOOMERANG_H

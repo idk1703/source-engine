@@ -15,37 +15,30 @@
 
 class ClientModeTFCNormal : public ClientModeShared
 {
-DECLARE_CLASS( ClientModeTFCNormal, ClientModeShared );
+	DECLARE_CLASS(ClientModeTFCNormal, ClientModeShared);
 
 private:
-
-// IClientMode overrides.
+	// IClientMode overrides.
 public:
+	ClientModeTFCNormal();
+	virtual ~ClientModeTFCNormal();
 
-					ClientModeTFCNormal();
-	virtual			~ClientModeTFCNormal();
+	virtual void InitViewport();
 
-	virtual void	InitViewport();
+	virtual int KeyInput(int down, ButtonCode_t keynum, const char *pszCurrentBinding);
 
-	virtual int		KeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
+	virtual float GetViewModelFOV(void);
 
-	virtual float	GetViewModelFOV( void );
+	int GetDeathMessageStartHeight(void);
 
-	int				GetDeathMessageStartHeight( void );
-
-	virtual void	FireGameEvent( KeyValues * event);
-	virtual void	PostRenderVGui();
-
+	virtual void FireGameEvent(KeyValues *event);
+	virtual void PostRenderVGui();
 
 private:
-
 	//	void	UpdateSpectatorMode( void );
-
 };
 
-
 extern IClientMode *GetClientModeNormal();
-extern ClientModeTFCNormal* GetClientModeTFCNormal();
-
+extern ClientModeTFCNormal *GetClientModeTFCNormal();
 
 #endif // TFC_CLIENTMODE_H

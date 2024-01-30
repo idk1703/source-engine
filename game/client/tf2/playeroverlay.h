@@ -5,7 +5,7 @@
 // $Workfile:     $
 // $NoKeywords: $
 //=============================================================================//
-#if !defined( PLAYEROVERLAY_H )
+#if !defined(PLAYEROVERLAY_H)
 #define PLAYEROVERLAY_H
 #ifdef _WIN32
 #pragma once
@@ -29,40 +29,39 @@ class C_BaseTFPlayer;
 class CHudPlayerOverlay : public CEntityPanel
 {
 public:
-	DECLARE_CLASS( CHudPlayerOverlay, CEntityPanel );
+	DECLARE_CLASS(CHudPlayerOverlay, CEntityPanel);
 
-					CHudPlayerOverlay( vgui::Panel *parent, const char *panelName );
-	virtual			~CHudPlayerOverlay( void );
+	CHudPlayerOverlay(vgui::Panel *parent, const char *panelName);
+	virtual ~CHudPlayerOverlay(void);
 
-	virtual void	Clear( void );
+	virtual void Clear(void);
 
-	virtual bool	Init( KeyValues* pInitData, C_BaseEntity* pEntity );
-	virtual void	OnTick( );
+	virtual bool Init(KeyValues *pInitData, C_BaseEntity *pEntity);
+	virtual void OnTick();
 
-	virtual void	Hide( void );
+	virtual void Hide(void);
 
-	virtual void	Paint();
+	virtual void Paint();
 
 	// Global fade amount
-	float			GetAlphaFrac( void );
-	void			SetColorLevel( vgui::Panel *panel, Color& fg, Color& bg );
+	float GetAlphaFrac(void);
+	void SetColorLevel(vgui::Panel *panel, Color &fg, Color &bg);
 
 private:
-	CHudPlayerOverlayName		*m_pName;
-	CHudPlayerOverlayHealth		*m_pHealth;
-	CHudPlayerOverlayClass		*m_pClass;
-	CHudPlayerOverlaySquad		*m_pSquad;
-	CHudPlayerOverlaySelected	*m_pSelected;
+	CHudPlayerOverlayName *m_pName;
+	CHudPlayerOverlayHealth *m_pHealth;
+	CHudPlayerOverlayClass *m_pClass;
+	CHudPlayerOverlaySquad *m_pSquad;
+	CHudPlayerOverlaySelected *m_pSelected;
 
 	int m_OffsetX, m_OffsetY;
 	int m_PlayerNum;
 
-	Color				m_fgColor;
-	Color				m_bgColor;
+	Color m_fgColor;
+	Color m_bgColor;
 
 	// These are only associated with tf players
-	CHandle<C_BaseTFPlayer>	m_hPlayer;
+	CHandle<C_BaseTFPlayer> m_hPlayer;
 };
-
 
 #endif // PLAYEROVERLAY_H

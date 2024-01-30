@@ -11,5 +11,4 @@
 
 #include "render3dms.h"
 
-
 #endif // RENDER3D_H

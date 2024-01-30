@@ -25,45 +25,42 @@ class CWorkspaceManager;
 class CSoundFilterTab;
 class COptionsWindow;
 
-
 class CSoundBrowser : public mxWindow
 {
 	typedef mxWindow BaseClass;
+
 public:
+	CSoundBrowser(mxWindow *parent, CWorkspaceManager *manager, int id);
 
-	CSoundBrowser( mxWindow *parent, CWorkspaceManager *manager, int id );
-
-	virtual		int handleEvent( mxEvent *event );
-	virtual		void OnDelete();
+	virtual int handleEvent(mxEvent *event);
+	virtual void OnDelete();
 
 	CWorkspaceManager *GetManager();
 
-	void		RepopulateTree();
+	void RepopulateTree();
 
-	void		BuildSelectionList( CUtlVector< CSoundEntry * >& selected );
+	void BuildSelectionList(CUtlVector<CSoundEntry *> &selected);
 
-	void		OnPlay();
+	void OnPlay();
 
-	void		JumpToItem( CSoundEntry *se );
+	void JumpToItem(CSoundEntry *se);
 
-	void		OnSearch();
+	void OnSearch();
 
 private:
+	char const *GetSearchString();
 
-	char const	*GetSearchString();
+	void OnShowInWaveBrowser();
+	void OnSoundProperties();
+	void OnAddSound();
+	void OnRemoveSound();
+	void OnGetSentence();
+	void PopulateTree(bool voiceonly, char const *scriptonly);
 
-	void		OnShowInWaveBrowser();
-	void		OnSoundProperties();
-	void		OnAddSound();
-	void		OnRemoveSound();
-	void		OnGetSentence();
-	void		PopulateTree( bool voiceonly, char const *scriptonly );
+	void ShowContextMenu(void);
 
-	void		ShowContextMenu( void );
-
-	void		LoadAllSounds();
-	void		RemoveAllSounds();
-
+	void LoadAllSounds();
+	void RemoveAllSounds();
 
 	CSoundList *m_pListView;
 
@@ -74,16 +71,15 @@ private:
 
 	CWorkspaceManager *m_pManager;
 
-	CUtlVector< CSoundEntry * > m_AllSounds;
-	CUtlSymbolTable			m_ScriptTable;
+	CUtlVector<CSoundEntry *> m_AllSounds;
+	CUtlSymbolTable m_ScriptTable;
 
-	CUtlVector< CUtlSymbol >	m_Scripts;
+	CUtlVector<CUtlSymbol> m_Scripts;
 
-	CSoundFilterTab		*m_pFilter;
-	COptionsWindow		*m_pOptions;
+	CSoundFilterTab *m_pFilter;
+	COptionsWindow *m_pOptions;
 
-	CUtlVector< CSoundEntry * > m_CurrentSelection;
+	CUtlVector<CSoundEntry *> m_CurrentSelection;
 };
-
 
 #endif // SOUNDBROWSER_H

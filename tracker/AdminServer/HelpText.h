@@ -13,7 +13,6 @@
 
 #include <VGUI_KeyValues.h>
 
-
 //-----------------------------------------------------------------------------
 // Purpose: parses in a text file and returns help strings about key words
 //-----------------------------------------------------------------------------
@@ -27,9 +26,7 @@ public:
 	const char *GetHelp(const char *keyname);
 
 private:
-
 	vgui::KeyValues *m_pHelpData;
-
 };
 
 #endif // HELPTEXT_H

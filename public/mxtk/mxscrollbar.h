@@ -14,17 +14,11 @@
 #ifndef INCLUDED_MXSCROLLBAR
 #define INCLUDED_MXSCROLLBAR
 
-
-
 #ifndef INCLUDED_MXWIDGET
 #include "mxtk/mxWidget.h"
 #endif
 
-
-
 class mxWindow;
-
-
 
 class mxScrollbar_i;
 class mxScrollbar : public mxWidget
@@ -33,29 +27,31 @@ class mxScrollbar : public mxWidget
 
 public:
 	// ENUMS
-	enum { Horizontal, Vertical };
+	enum
+	{
+		Horizontal,
+		Vertical
+	};
 
 	// CREATORS
-	mxScrollbar (mxWindow *parent, int x, int y, int w, int h, int id = 0, int style = 0);
-	virtual ~mxScrollbar ();
+	mxScrollbar(mxWindow *parent, int x, int y, int w, int h, int id = 0, int style = 0);
+	virtual ~mxScrollbar();
 
 	// MANIPULATORS
-	void setValue (int ivalue);
-	void setRange (int min, int max);
-	void setPagesize (int size);
+	void setValue(int ivalue);
+	void setRange(int min, int max);
+	void setPagesize(int size);
 
 	// ACCESSORS
-	int getValue () const;
-	int getMinValue () const;
-	int getMaxValue () const;
-	int getPagesize () const;
+	int getValue() const;
+	int getMinValue() const;
+	int getMaxValue() const;
+	int getPagesize() const;
 
 private:
 	// NOT IMPLEMENTED
-	mxScrollbar (const mxScrollbar&);
-	mxScrollbar& operator= (const mxScrollbar&);
+	mxScrollbar(const mxScrollbar &);
+	mxScrollbar &operator=(const mxScrollbar &);
 };
-
-
 
 #endif // INCLUDED_MXSCROLLBAR

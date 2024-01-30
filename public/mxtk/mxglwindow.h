@@ -14,48 +14,46 @@
 #ifndef INCLUDED_MXGLWINDOW
 #define INCLUDED_MXGLWINDOW
 
-
-
 #ifndef INCLUDED_MXWINDOW
 #include "mxtk/mxWindow.h"
 #endif
-
-
 
 class mxGlWindow_i;
 class mxGlWindow : public mxWindow
 {
 	mxGlWindow_i *d_this;
-	void (*d_drawFunc) (void);
+	void (*d_drawFunc)(void);
 
 public:
 	// ENUMS
-	enum { FormatDouble, FormatSingle };
+	enum
+	{
+		FormatDouble,
+		FormatSingle
+	};
 
 	// CREATORS
-	mxGlWindow (mxWindow *parent, int x, int y, int w, int h, const char *label = 0, int style = 0);
-	virtual ~mxGlWindow ();
+	mxGlWindow(mxWindow *parent, int x, int y, int w, int h, const char *label = 0, int style = 0);
+	virtual ~mxGlWindow();
 
 	// MANIPULATORS
-	virtual int handleEvent (mxEvent *event);
-	virtual void redraw ();
-	virtual void draw ();
+	virtual int handleEvent(mxEvent *event);
+	virtual void redraw();
+	virtual void draw();
 
-	int makeCurrent ();
-	int swapBuffers ();
+	int makeCurrent();
+	int swapBuffers();
 
 	// MANIPULATORS
-	void setDrawFunc (void (*func) (void));
+	void setDrawFunc(void (*func)(void));
 
 	// STATIC MANIPULATORS
-	static void setFormat (int mode, int colorBits, int depthBits);
+	static void setFormat(int mode, int colorBits, int depthBits);
 
 private:
 	// NOT IMPLEMENTED
-	mxGlWindow (const mxGlWindow&);
-	mxGlWindow& operator= (const mxGlWindow&);
+	mxGlWindow(const mxGlWindow &);
+	mxGlWindow &operator=(const mxGlWindow &);
 };
-
-
 
 #endif // INCLUDED_MXGLWINDOW

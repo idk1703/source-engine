@@ -15,17 +15,20 @@
 class CDODSmokeGrenade : public CDODBaseGrenade
 {
 public:
-	DECLARE_CLASS( CDODSmokeGrenade, CDODBaseGrenade );
+	DECLARE_CLASS(CDODSmokeGrenade, CDODBaseGrenade);
 	DECLARE_DATADESC();
 
 	DECLARE_SERVERCLASS();
 
 	virtual void Spawn();
 	virtual void Precache();
-	virtual void BounceSound( void );
+	virtual void BounceSound(void);
 	virtual void Detonate();
 
-	virtual bool CanBePickedUp( void ) { return false; }
+	virtual bool CanBePickedUp(void)
+	{
+		return false;
+	}
 
 	void Think_Emit();
 	void Think_Fade();
@@ -36,7 +39,7 @@ private:
 	bool m_bInitialSmoke;
 	float m_flRemoveTime;
 
-	CNetworkVar( float, m_flSmokeSpawnTime );
+	CNetworkVar(float, m_flSmokeSpawnTime);
 };
 
 #endif // DOD_SMOKEGRENADE_H

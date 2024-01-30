@@ -41,11 +41,14 @@ $model eyeball
 
 (X) (Y) (Z) World location of the center of the ball of the eye.
 
-(material name) Material name to use when searching for vertices to consider as the �white� of the eye (used in dynamically texture mapping the iris and cornea onto the eye).
+(material name) Material name to use when searching for vertices to consider as the �white� of the eye (used in
+dynamically texture mapping the iris and cornea onto the eye).
 
 (diameter) Diameter of the ball of the eye
 
-(angle) Default yaw offset from �forward� for iris. Humans are typically 2-4 degrees walleyed. Not setting this correctly will result in your either characters appearing cross-eyed, or if you�ve compensated by misplacing the ball of the eye, them not tracking side to side.
+(angle) Default yaw offset from �forward� for iris. Humans are typically 2-4 degrees walleyed. Not setting this
+correctly will result in your either characters appearing cross-eyed, or if you�ve compensated by misplacing the ball of
+the eye, them not tracking side to side.
 
 (iris material) no longer used but still in the option list.
 
@@ -62,15 +65,14 @@ eyeball (name) (bone name) (X) (Y) (Z) (material name) (diameter) (angle) (iris 
 //-----------------------------------------------------------------------------
 class CDmeEyeball : public CDmeDag
 {
-	DEFINE_ELEMENT( CDmeEyeball, CDmeDag );
+	DEFINE_ELEMENT(CDmeEyeball, CDmeDag);
 
 public:
-	void GetWorldPosition( Vector &worldPosition );
+	void GetWorldPosition(Vector &worldPosition);
 
-	CDmaVar< float > m_flDiameter;		// Diameter of the ball of the eye
-	CDmaVar< float > m_flYawAngle;		// Yaw offset from "forward" for iris.  Humans are typically 2-4 degrees walleyed.
-	CDmaVar< float > m_flPupilScale;	// Scale of the iris texture
+	CDmaVar<float> m_flDiameter;   // Diameter of the ball of the eye
+	CDmaVar<float> m_flYawAngle;   // Yaw offset from "forward" for iris.  Humans are typically 2-4 degrees walleyed.
+	CDmaVar<float> m_flPupilScale; // Scale of the iris texture
 };
-
 
 #endif // DMEEYEBALL_H

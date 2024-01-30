@@ -28,51 +28,57 @@ class CServerRecordingSession;
 
 //----------------------------------------------------------------------------------------
 
-class CSessionRecorder : public CBaseThinker,
-						 public IReplaySessionRecorder
+class CSessionRecorder : public CBaseThinker, public IReplaySessionRecorder
 {
 public:
 	CSessionRecorder();
 	~CSessionRecorder();
 
-	bool				Init();
-	void				AbortCurrentSessionRecording();
+	bool Init();
+	void AbortCurrentSessionRecording();
 
-	int					GetCurrentRecordingStartTick() const	{ return m_nCurrentRecordingStartTick; }
+	int GetCurrentRecordingStartTick() const
+	{
+		return m_nCurrentRecordingStartTick;
+	}
 
-	void				UpdateSessionLocks();	// Looks at publish managers and unlocks sessions as needed
+	void UpdateSessionLocks(); // Looks at publish managers and unlocks sessions as needed
 
 	//
 	// IReplaySessionRecorder
 	//
-	virtual void		StartRecording();	// Will waiting for recording to stop, then will begin recording
-	virtual void		StopRecording( bool bAborting );
-	virtual void		SetCurrentRecordingStartTick( int nStartTick );
+	virtual void StartRecording(); // Will waiting for recording to stop, then will begin recording
+	virtual void StopRecording(bool bAborting);
+	virtual void SetCurrentRecordingStartTick(int nStartTick);
 
 	// Finish any publish jobs synchronously
-	void				PublishAllSynchronous();
+	void PublishAllSynchronous();
 
-	bool				RecordingAborted() const	{ return m_bRecordingAborted; }
+	bool RecordingAborted() const
+	{
+		return m_bRecordingAborted;
+	}
 
 private:
 	//
 	// CBaseThinker
 	//
-	float				GetNextThinkTime() const;
-	void				Think();
+	float GetNextThinkTime() const;
+	void Think();
 
-	void				PublishThink();
+	void PublishThink();
 
-	CSessionPublishManager	*GetCurrentPublishManager() const;	// Get the publish manager for the currently recording session
-	void				CreateAndAddNewPublishManager( CServerRecordingSession *pSession );
+	CSessionPublishManager *GetCurrentPublishManager()
+		const; // Get the publish manager for the currently recording session
+	void CreateAndAddNewPublishManager(CServerRecordingSession *pSession);
 
-	int					m_nCurrentRecordingStartTick;
-	bool				m_bRecordingAborted;
+	int m_nCurrentRecordingStartTick;
+	bool m_bRecordingAborted;
 
-	typedef CUtlLinkedList< CSessionPublishManager *, int > PublishManagerContainer_t;
-	PublishManagerContainer_t	m_lstPublishManagers;
+	typedef CUtlLinkedList<CSessionPublishManager *, int> PublishManagerContainer_t;
+	PublishManagerContainer_t m_lstPublishManagers;
 };
 
 //----------------------------------------------------------------------------------------
 
-#endif	// SV_SESSIONRECORDER_H
+#endif // SV_SESSIONRECORDER_H

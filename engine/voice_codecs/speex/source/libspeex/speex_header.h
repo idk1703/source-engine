@@ -33,50 +33,50 @@
 
 */
 
-
 #ifndef SPEEX_HEADER_H
 #define SPEEX_HEADER_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-struct SpeexMode;
+	struct SpeexMode;
 
 /** Maximum number of characters for encoding the Speex version number in the header */
 #define SPEEX_HEADER_VERSION_LENGTH 20
 
-/** Speex header info for file-based formats */
-typedef struct SpeexHeader {
-	char speex_string[8];       /**< Identifies a Speex bit-stream, always set to "Speex   " */
-	char speex_version[SPEEX_HEADER_VERSION_LENGTH]; /**< Speex version */
-	int speex_version_id;       /**< Version for Speex (for checking compatibility) */
-	int header_size;            /**< Total size of the header ( sizeof(SpeexHeader) ) */
-	int rate;                   /**< Sampling rate used */
-	int mode;                   /**< Mode used (0 for narrowband, 1 for wideband) */
-	int mode_bitstream_version; /**< Version ID of the bit-stream */
-	int nb_channels;            /**< Number of channels encoded */
-	int bitrate;                /**< Bit-rate used */
-	int frame_size;             /**< Size of frames */
-	int vbr;                    /**< 1 for a VBR encoding, 0 otherwise */
-	int frames_per_packet;      /**< Number of frames stored per Ogg packet */
-	int extra_headers;          /**< Number of additional headers after the comments */
-	int reserved1;              /**< Reserved for future use, must be zero */
-	int reserved2;              /**< Reserved for future use, must be zero */
-} SpeexHeader;
+	/** Speex header info for file-based formats */
+	typedef struct SpeexHeader
+	{
+		char speex_string[8];							 /**< Identifies a Speex bit-stream, always set to "Speex   " */
+		char speex_version[SPEEX_HEADER_VERSION_LENGTH]; /**< Speex version */
+		int speex_version_id;							 /**< Version for Speex (for checking compatibility) */
+		int header_size;								 /**< Total size of the header ( sizeof(SpeexHeader) ) */
+		int rate;										 /**< Sampling rate used */
+		int mode;										 /**< Mode used (0 for narrowband, 1 for wideband) */
+		int mode_bitstream_version;						 /**< Version ID of the bit-stream */
+		int nb_channels;								 /**< Number of channels encoded */
+		int bitrate;									 /**< Bit-rate used */
+		int frame_size;									 /**< Size of frames */
+		int vbr;										 /**< 1 for a VBR encoding, 0 otherwise */
+		int frames_per_packet;							 /**< Number of frames stored per Ogg packet */
+		int extra_headers;								 /**< Number of additional headers after the comments */
+		int reserved1;									 /**< Reserved for future use, must be zero */
+		int reserved2;									 /**< Reserved for future use, must be zero */
+	} SpeexHeader;
 
-/** Initializes a SpeexHeader using basic information */
-void speex_init_header(SpeexHeader *header, int rate, int nb_channels, struct SpeexMode *m);
+	/** Initializes a SpeexHeader using basic information */
+	void speex_init_header(SpeexHeader *header, int rate, int nb_channels, struct SpeexMode *m);
 
-/** Creates the header packet from the header itself (mostly involves endianness conversion) */
-char *speex_header_to_packet(SpeexHeader *header, int *size);
+	/** Creates the header packet from the header itself (mostly involves endianness conversion) */
+	char *speex_header_to_packet(SpeexHeader *header, int *size);
 
-/** Creates a SpeexHeader from a packet */
-SpeexHeader *speex_packet_to_header(char *packet, int size);
+	/** Creates a SpeexHeader from a packet */
+	SpeexHeader *speex_packet_to_header(char *packet, int size);
 
 #ifdef __cplusplus
 }
 #endif
-
 
 #endif

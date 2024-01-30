@@ -10,7 +10,6 @@
 
 #include <string.h>
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
@@ -19,13 +18,15 @@ class IMaterialVar;
 class IShaderDynamicAPI;
 class IShaderShadow;
 
-
 //-----------------------------------------------------------------------------
 // Init params/ init/ draw methods
 //-----------------------------------------------------------------------------
 struct VertexLitGeneric_DX95_Vars_t
 {
-	VertexLitGeneric_DX95_Vars_t() { memset( this, 0xFF, sizeof(VertexLitGeneric_DX95_Vars_t) ); }
+	VertexLitGeneric_DX95_Vars_t()
+	{
+		memset(this, 0xFF, sizeof(VertexLitGeneric_DX95_Vars_t));
+	}
 
 	int m_nBaseTexture;
 	int m_nBaseTextureFrame;
@@ -59,13 +60,14 @@ struct VertexLitGeneric_DX95_Vars_t
 	int m_nFlashlightTexture;
 	int m_nFlashlightTextureFrame;
 	int m_nSelfIllumEnvMapMask_Alpha;
-
 };
 
-void InitParamsVertexLitGeneric_DX95( CBaseVSShader *pShader, IMaterialVar** params, const char *pMaterialName, bool bVertexLitGeneric, VertexLitGeneric_DX95_Vars_t &info );
-void InitVertexLitGeneric_DX95( CBaseVSShader *pShader, IMaterialVar** params, bool bVertexLitGeneric, VertexLitGeneric_DX95_Vars_t &info );
-void DrawVertexLitGeneric_DX95( CBaseVSShader *pShader, IMaterialVar** params,
-	IShaderDynamicAPI *pShaderAPI, IShaderShadow* pShaderShadow, bool bVertexLitGeneric, VertexLitGeneric_DX95_Vars_t &info );
-
+void InitParamsVertexLitGeneric_DX95(CBaseVSShader *pShader, IMaterialVar **params, const char *pMaterialName,
+									 bool bVertexLitGeneric, VertexLitGeneric_DX95_Vars_t &info);
+void InitVertexLitGeneric_DX95(CBaseVSShader *pShader, IMaterialVar **params, bool bVertexLitGeneric,
+							   VertexLitGeneric_DX95_Vars_t &info);
+void DrawVertexLitGeneric_DX95(CBaseVSShader *pShader, IMaterialVar **params, IShaderDynamicAPI *pShaderAPI,
+							   IShaderShadow *pShaderShadow, bool bVertexLitGeneric,
+							   VertexLitGeneric_DX95_Vars_t &info);
 
 #endif // VERTEXLITGENERIC_DX95_HELPER_H

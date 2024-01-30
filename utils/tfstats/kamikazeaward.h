@@ -23,14 +23,15 @@ using namespace std;
 // Purpose: CKamikazeAward is an award given to the player who kills him/herself
 // the most often.
 //------------------------------------------------------------------------------------------------------
-class CKamikazeAward: public CAward
+class CKamikazeAward : public CAward
 {
 protected:
-	map<PID,int> numdeaths;
-	void noWinner(CHTMLFile& html);
-	void extendedinfo(CHTMLFile& html);
+	map<PID, int> numdeaths;
+	void noWinner(CHTMLFile &html);
+	void extendedinfo(CHTMLFile &html);
+
 public:
-	explicit CKamikazeAward():CAward("Kamikaze"){}
+	explicit CKamikazeAward() : CAward("Kamikaze") {}
 	void getWinner();
 };
 #endif // KAMIKAZEAWARD_H

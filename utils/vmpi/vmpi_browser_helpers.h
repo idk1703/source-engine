@@ -11,8 +11,6 @@
 #pragma once
 #endif
 
-
-void FormatTimeString( unsigned long nSeconds, char *pOut, int outLen );
-
+void FormatTimeString(unsigned long nSeconds, char *pOut, int outLen);
 
 #endif // VMPI_BROWSER_HELPERS_H

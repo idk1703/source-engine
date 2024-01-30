@@ -18,7 +18,7 @@ class CBaseEntity;
 class IHasOwner
 {
 public:
-	virtual CBaseEntity			*GetOwnerViaInterface( void ) = 0;
+	virtual CBaseEntity *GetOwnerViaInterface(void) = 0;
 };
 
 #endif // IHASOWNER_H

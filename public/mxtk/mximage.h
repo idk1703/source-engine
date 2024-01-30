@@ -14,8 +14,6 @@
 #ifndef INCLUDED_MXIMAGE
 #define INCLUDED_MXIMAGE
 
-
-
 #ifndef byte
 typedef unsigned char byte;
 #endif // byte
@@ -23,8 +21,6 @@ typedef unsigned char byte;
 #ifndef word
 typedef unsigned short word;
 #endif // word
-
-
 
 class mxImage
 {
@@ -36,38 +32,36 @@ public:
 	void *palette;
 
 	// CREATORS
-	mxImage () : width (0), height (0), bpp (0), data (0), palette (0)
+	mxImage() : width(0), height(0), bpp(0), data(0), palette(0) {}
+
+	mxImage(int w, int h, int bpp)
 	{
+		create(w, h, bpp);
 	}
 
-	mxImage (int w, int h, int bpp)
+	virtual ~mxImage()
 	{
-		create (w, h, bpp);
-	}
-
-	virtual ~mxImage ()
-	{
-		destroy ();
+		destroy();
 	}
 
 	// MANIPULATORS
-	bool create (int w, int h, int pixelSize)
+	bool create(int w, int h, int pixelSize)
 	{
-		if (data)
+		if(data)
 			delete[] data;
 
-		if (palette)
+		if(palette)
 			delete[] palette;
 
 		data = new byte[w * h * pixelSize / 8];
-		if (!data)
+		if(!data)
 			return false;
 
 		// allocate a palette for 8-bit images
-		if (pixelSize == 8)
+		if(pixelSize == 8)
 		{
 			palette = new byte[768];
-			if (!palette)
+			if(!palette)
 			{
 				delete[] data;
 				return false;
@@ -83,12 +77,12 @@ public:
 		return true;
 	}
 
-	void destroy ()
+	void destroy()
 	{
-		if (data)
+		if(data)
 			delete[] data;
 
-		if (palette)
+		if(palette)
 			delete[] palette;
 
 		data = palette = 0;
@@ -97,10 +91,8 @@ public:
 
 private:
 	// NOT IMPLEMENTED
-	mxImage (const mxImage&);
-	mxImage& operator= (const mxImage&);
+	mxImage(const mxImage &);
+	mxImage &operator=(const mxImage &);
 };
-
-
 
 #endif // INCLUDED_MXIMAGE

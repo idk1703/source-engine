@@ -15,13 +15,11 @@
 
 #include "econ_gcmessages.pb.h"
 
-#pragma pack( push, 1 )
-
+#pragma pack(push, 1)
 
 // generic zero-length message struct
 struct MsgGCEmpty_t
 {
-
 };
 
 // k_EMsgGCSetItemPosition
@@ -34,8 +32,8 @@ struct MsgGCSetItemPosition_t
 // k_EMsgGCCraft
 struct MsgGCCraft_t
 {
-	int16	m_nRecipeDefIndex;
-	uint16	m_nItemCount;
+	int16 m_nRecipeDefIndex;
+	uint16 m_nItemCount;
 	// list of m_nItemCount uint64 item IDs
 };
 
@@ -48,8 +46,8 @@ struct MsgGCDelete_t
 // k_EMsgGCCraftResponse
 struct MsgGCStandardResponse_t
 {
-	int16			m_nResponseIndex;
-	uint32	m_eResponse;
+	int16 m_nResponseIndex;
+	uint32 m_eResponse;
 };
 
 // k_EMsgGCVerifyCacheSubscription
@@ -61,8 +59,8 @@ struct MsgGCVerifyCacheSubscription_t
 // k_EMsgGCNameItem
 struct MsgGCNameItem_t
 {
-	uint64 m_unToolItemID;		// the Nametag item
-	uint64 m_unSubjectItemID;	// the item to be renamed
+	uint64 m_unToolItemID;	  // the Nametag item
+	uint64 m_unSubjectItemID; // the item to be renamed
 	bool m_bDescription;
 	// Varchar: Item name
 };
@@ -70,8 +68,8 @@ struct MsgGCNameItem_t
 // k_EMsgGCNameBaseItem
 struct MsgGCNameBaseItem_t
 {
-	uint64 m_unToolItemID;				// the Nametag item
-	uint32 m_unBaseItemDefinitionID;	// the base item definition to be renamed
+	uint64 m_unToolItemID;			 // the Nametag item
+	uint32 m_unBaseItemDefinitionID; // the base item definition to be renamed
 	bool m_bDescription;
 	// Varchar: Item name
 };
@@ -79,22 +77,22 @@ struct MsgGCNameBaseItem_t
 // k_EMsgGCUnlockCrate
 struct MsgGCUnlockCrate_t
 {
-	uint64 m_unToolItemID;		// the crate key
-	uint64 m_unSubjectItemID;	// the crate to be decoded
+	uint64 m_unToolItemID;	  // the crate key
+	uint64 m_unSubjectItemID; // the crate to be decoded
 };
 
 // k_EMsgGCPaintItem
 struct MsgGCPaintItem_t
 {
-	uint64 m_unToolItemID;		// the Paint Can item
-	uint64 m_unSubjectItemID;	// the item to be painted
+	uint64 m_unToolItemID;	  // the Paint Can item
+	uint64 m_unSubjectItemID; // the item to be painted
 };
 
 // k_EMsgGCGiftWrapItem
 struct MsgGCGiftWrapItem_t
 {
-	uint64 m_unToolItemID;		// the Gift Wrap item
-	uint64 m_unSubjectItemID;	// the item to be wrapped
+	uint64 m_unToolItemID;	  // the Gift Wrap item
+	uint64 m_unSubjectItemID; // the item to be wrapped
 };
 
 // k_EMsgGCDeliverGift
@@ -114,22 +112,23 @@ struct MsgGCUnwrapGiftRequest_t
 // k_EMsgGCMOTDRequest
 struct MsgGCMOTDRequest_t
 {
-	RTime32		m_nLastMOTDRequest;	// Time at which the client last asked for MOTDs. GC will send back all MOTDs posted since.
-	int16	m_eLanguage;
+	RTime32
+		m_nLastMOTDRequest; // Time at which the client last asked for MOTDs. GC will send back all MOTDs posted since.
+	int16 m_eLanguage;
 };
 
 // k_EMsgGCMOTDRequestResponse
 struct MsgGCMOTDRequestResponse_t
 {
-	int16		m_nEntries;
+	int16 m_nEntries;
 };
 
 // k_EMsgGCCustomizeItemTexture
 struct MsgGCCustomizeItemTexture_t
 {
-	uint64 m_unToolItemID;		// the tool
-	uint64 m_unSubjectItemID;	// the item wants the texture
-	uint64 m_unImageUGCHandle;	// cloud ID of image file (UGCHandle_t)
+	uint64 m_unToolItemID;	   // the tool
+	uint64 m_unSubjectItemID;  // the item wants the texture
+	uint64 m_unImageUGCHandle; // cloud ID of image file (UGCHandle_t)
 };
 
 // k_EMsgGCSetItemStyle
@@ -163,13 +162,12 @@ struct MsgGCItemPreviewRequest_t
 struct MsgGCItemPreviewRequestResponse_t
 {
 	uint32 m_unItemDefIndex;
-	uint32	m_eResponse;
+	uint32 m_eResponse;
 };
 
 // k_EMsgGCItemPreviewExpire
 struct MsgGCItemPreviewExpire_t
 {
-
 };
 
 // k_EMsgGCItemPreviewExpireNotification
@@ -183,13 +181,13 @@ struct MsgGCItemPreviewExpireNotification_t
 // k_EMsgGCUseItemResponse
 enum EGCMsgUseItemResponse
 {
-	k_EGCMsgUseItemResponse_ItemUsed				 = 0,
-	k_EGCMsgUseItemResponse_GiftNoOtherPlayers		 = 1,
-	k_EGCMsgUseItemResponse_ServerError				 = 2,
-	k_EGCMsgUseItemResponse_MiniGameAlreadyStarted	 = 3,
-	k_EGCMsgUseItemResponse_ItemUsed_ItemsGranted	 = 4,
-	k_EGCMsgUseItemResponse_CannotBeUsedByAccount	 = 5,
-	k_EGCMsgUseItemResponse_ForceSizeInt			 = 0x7FFFFFFF
+	k_EGCMsgUseItemResponse_ItemUsed = 0,
+	k_EGCMsgUseItemResponse_GiftNoOtherPlayers = 1,
+	k_EGCMsgUseItemResponse_ServerError = 2,
+	k_EGCMsgUseItemResponse_MiniGameAlreadyStarted = 3,
+	k_EGCMsgUseItemResponse_ItemUsed_ItemsGranted = 4,
+	k_EGCMsgUseItemResponse_CannotBeUsedByAccount = 5,
+	k_EGCMsgUseItemResponse_ForceSizeInt = 0x7FFFFFFF
 };
 
 // k_EMsgGCUseItemResponse
@@ -233,38 +231,38 @@ struct MsgGCTrading_InitiateTradeRequest_t
 
 enum EGCMsgInitiateTradeResponse
 {
-	k_EGCMsgInitiateTradeResponse_Accepted				  = 0,
-	k_EGCMsgInitiateTradeResponse_Declined				  = 1,
-	k_EGCMsgInitiateTradeResponse_VAC_Banned_Initiator	  = 2,
-	k_EGCMsgInitiateTradeResponse_VAC_Banned_Target		  = 3,
-	k_EGCMsgInitiateTradeResponse_Target_Already_Trading  = 4,
-	k_EGCMsgInitiateTradeResponse_Disabled				  = 5,
-	k_EGCMsgInitiateTradeResponse_NotLoggedIn			  = 6,
-	k_EGCMsgInitiateTradeResponse_Cancel				  = 7,
-	k_EGCMsgInitiateTradeResponse_TooSoon				  = 8,
-	k_EGCMsgInitiateTradeResponse_TooSoonPenalty		  = 9,
-	k_EGCMsgInitiateTradeResponse_Trade_Banned_Initiator  = 10,
-	k_EGCMsgInitiateTradeResponse_Trade_Banned_Target	  = 11,
-	k_EGCMsgInitiateTradeResponse_Free_Account_Initiator_DEPRECATED  = 12,			// free accounts can initiate trades now
-	k_EGCMsgInitiateTradeResponse_Shared_Account_Initiator= 13,
-	k_EGCMsgInitiateTradeResponse_Service_Unavailable	  = 14,
-	k_EGCMsgInitiateTradeResponse_Target_Blocked		  = 15,
-	k_EGCMsgInitiateTradeResponse_NeedVerifiedEmail		  = 16,
-	k_EGCMsgInitiateTradeResponse_NeedSteamGuard		  = 17,
-	k_EGCMsgInitiateTradeResponse_SteamGuardDuration	  = 18,
-	k_EGCMsgInitiateTradeResponse_TheyCannotTrade		  = 19,
-	k_EGCMsgInitiateTradeResponse_Recent_Password_Reset	  = 20,
-	k_EGCMsgInitiateTradeResponse_Using_New_Device		  = 21,
-	k_EGCMsgInitiateTradeResponse_Sent_Invalid_Cookie	  = 22,
+	k_EGCMsgInitiateTradeResponse_Accepted = 0,
+	k_EGCMsgInitiateTradeResponse_Declined = 1,
+	k_EGCMsgInitiateTradeResponse_VAC_Banned_Initiator = 2,
+	k_EGCMsgInitiateTradeResponse_VAC_Banned_Target = 3,
+	k_EGCMsgInitiateTradeResponse_Target_Already_Trading = 4,
+	k_EGCMsgInitiateTradeResponse_Disabled = 5,
+	k_EGCMsgInitiateTradeResponse_NotLoggedIn = 6,
+	k_EGCMsgInitiateTradeResponse_Cancel = 7,
+	k_EGCMsgInitiateTradeResponse_TooSoon = 8,
+	k_EGCMsgInitiateTradeResponse_TooSoonPenalty = 9,
+	k_EGCMsgInitiateTradeResponse_Trade_Banned_Initiator = 10,
+	k_EGCMsgInitiateTradeResponse_Trade_Banned_Target = 11,
+	k_EGCMsgInitiateTradeResponse_Free_Account_Initiator_DEPRECATED = 12, // free accounts can initiate trades now
+	k_EGCMsgInitiateTradeResponse_Shared_Account_Initiator = 13,
+	k_EGCMsgInitiateTradeResponse_Service_Unavailable = 14,
+	k_EGCMsgInitiateTradeResponse_Target_Blocked = 15,
+	k_EGCMsgInitiateTradeResponse_NeedVerifiedEmail = 16,
+	k_EGCMsgInitiateTradeResponse_NeedSteamGuard = 17,
+	k_EGCMsgInitiateTradeResponse_SteamGuardDuration = 18,
+	k_EGCMsgInitiateTradeResponse_TheyCannotTrade = 19,
+	k_EGCMsgInitiateTradeResponse_Recent_Password_Reset = 20,
+	k_EGCMsgInitiateTradeResponse_Using_New_Device = 21,
+	k_EGCMsgInitiateTradeResponse_Sent_Invalid_Cookie = 22,
 
 	k_EGCMsgInitiateTradeResponse_Count,
-	k_EGCMsgInitiateTradeResponse_ForceSizeInt			  = 0x7FFFFFFF
+	k_EGCMsgInitiateTradeResponse_ForceSizeInt = 0x7FFFFFFF
 };
 
 // k_EMsgGCTrading_InitiateTradeResponse
 struct MsgGCTrading_InitiateTradeResponse_t
 {
-	uint32	m_eResponse;
+	uint32 m_eResponse;
 	uint32 m_unTradeRequestID;
 };
 
@@ -303,7 +301,7 @@ struct MsgGCServerBrowser_Server_t
 {
 	uint32 m_unIP;
 	int m_usPort;
-	uint8 m_ubSource;		// 0=serverbrowser, 1=auto-ask dialog
+	uint8 m_ubSource; // 0=serverbrowser, 1=auto-ask dialog
 };
 
 //-----------------------------------------------------------------------------
@@ -312,16 +310,15 @@ struct MsgGCServerBrowser_Server_t
 // k_EMsgGC_RevolvingLootList
 struct MsgGC_RevolvingLootList_t
 {
-	uint8		m_usListID; // Id of this list.
-	// Var Data:
-	// Serialized Lootlist KV
+	uint8 m_usListID; // Id of this list.
+					  // Var Data:
+					  // Serialized Lootlist KV
 };
-
 
 // k_EMsgGCLookupAccount
 struct MsgGCLookupAccount_t
 {
-	uint16	m_uiFindType;
+	uint16 m_uiFindType;
 
 	// Var Data
 	// string containing Persona / URL / etc
@@ -340,6 +337,6 @@ struct MsgGCLookupAccountNameResponse_t
 	// string containing persona name
 };
 
-#pragma pack( pop )
+#pragma pack(pop)
 
 #endif

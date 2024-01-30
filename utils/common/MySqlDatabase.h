@@ -48,7 +48,6 @@ public:
 	void AddCommandToQueue(ISQLDBCommand *cmd, ISQLDBReplyTarget *replyTarget, int returnState = 0);
 
 private:
-
 	// threading data
 	bool m_bRunThread;
 	CRITICAL_SECTION m_csThread;
@@ -84,13 +83,22 @@ public:
 	virtual int RunCommand() = 0;
 
 	// return data
-	virtual void *GetReturnData() { return NULL; }
+	virtual void *GetReturnData()
+	{
+		return NULL;
+	}
 
 	// returns the command ID
-	virtual int GetID() { return 0; }
+	virtual int GetID()
+	{
+		return 0;
+	}
 
 	// gets information about the command for if it failed
-	virtual void GetDebugInfo(char *buf, int bufSize) { buf[0] = 0; }
+	virtual void GetDebugInfo(char *buf, int bufSize)
+	{
+		buf[0] = 0;
+	}
 
 	// use to delete
 	virtual void deleteThis() = 0;
@@ -99,6 +107,5 @@ protected:
 	// protected destructor, so that it has to be deleted through deleteThis()
 	virtual ~ISQLDBCommand() {}
 };
-
 
 #endif // MYSQLDATABASE_H

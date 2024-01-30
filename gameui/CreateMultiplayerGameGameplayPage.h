@@ -44,5 +44,4 @@ private:
 	CPanelListPanel *m_pOptionsList;
 };
 
-
 #endif // CREATEMULTIPLAYERGAMEGAMEPLAYPAGE_H

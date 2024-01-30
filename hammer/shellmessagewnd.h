@@ -16,27 +16,22 @@
 #define SHELLMESSAGEWND_H
 #pragma once
 
-
 class CShell;
-
 
 class CShellMessageWnd : public CWnd
 {
-	public:
+public:
+	bool Create(void);
+	void SetShell(CShell *pShell);
 
-		bool Create(void);
-		void SetShell(CShell *pShell);
+protected:
+	CShell *m_pShell;
 
-	protected:
+	//{{AFX_MSG_MAP(CShellMessageWnd)
+	afx_msg BOOL OnCopyData(CWnd *pWnd, COPYDATASTRUCT *pCopyData);
+	//}}AFX_MSG
 
-		CShell *m_pShell;
-
-		//{{AFX_MSG_MAP(CShellMessageWnd)
-		afx_msg BOOL OnCopyData(CWnd *pWnd, COPYDATASTRUCT *pCopyData);
-		//}}AFX_MSG
-
-		DECLARE_MESSAGE_MAP()
+	DECLARE_MESSAGE_MAP()
 };
-
 
 #endif // SHELLMESSAGEWND_H

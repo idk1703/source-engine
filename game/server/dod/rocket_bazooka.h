@@ -11,26 +11,29 @@
 #pragma once
 #endif
 
-#define BAZOOKA_ROCKET_MODEL	"models/weapons/w_bazooka_rocket.mdl"
+#define BAZOOKA_ROCKET_MODEL "models/weapons/w_bazooka_rocket.mdl"
 
 #include "dod_baserocket.h"
 
 class CBazookaRocket : public CDODBaseRocket
 {
 public:
-	DECLARE_CLASS( CBazookaRocket, CDODBaseRocket );
+	DECLARE_CLASS(CBazookaRocket, CDODBaseRocket);
 
 	CBazookaRocket() {}
 
 	virtual void Spawn();
 	virtual void Precache();
 
-	static CBazookaRocket *Create( const Vector &vecOrigin, const QAngle &vecAngles, CBaseEntity *pOwner );
+	static CBazookaRocket *Create(const Vector &vecOrigin, const QAngle &vecAngles, CBaseEntity *pOwner);
 
-	virtual DODWeaponID GetEmitterWeaponID() { return WEAPON_BAZOOKA; }
+	virtual DODWeaponID GetEmitterWeaponID()
+	{
+		return WEAPON_BAZOOKA;
+	}
 
 private:
-	CBazookaRocket( const CBazookaRocket & );
+	CBazookaRocket(const CBazookaRocket &);
 };
 
-#endif //ROCKET_BAZOOKA_H
+#endif // ROCKET_BAZOOKA_H

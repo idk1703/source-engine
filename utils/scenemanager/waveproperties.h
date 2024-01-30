@@ -19,23 +19,20 @@ class CWaveFile;
 //-----------------------------------------------------------------------------
 struct CWaveParams : public CBaseDialogParams
 {
-	CWaveParams()
-	{
-	}
+	CWaveParams() {}
 
-	CWaveParams( const CWaveParams& src )
+	CWaveParams(const CWaveParams &src)
 	{
 		int c = src.items.Count();
-		for ( int i = 0; i < c; i++ )
+		for(int i = 0; i < c; i++)
 		{
-			items.AddToTail( src.items[ i ] );
+			items.AddToTail(src.items[i]);
 		}
 	}
 
-	CUtlVector< CWaveFile * >	items;
+	CUtlVector<CWaveFile *> items;
 };
 
-int WaveProperties( CWaveParams *params );
-
+int WaveProperties(CWaveParams *params);
 
 #endif // WAVEPROPERTIES_H

@@ -15,14 +15,13 @@
 #ifdef WIN32
 #pragma once
 #endif
-#pragma warning (disable:  4786)
+#pragma warning(disable : 4786)
 
 #include "report.h"
 #include <map>
 #include <vector>
 #include <string>
 using namespace std;
-
 
 //------------------------------------------------------------------------------------------------------
 // Purpose: CScoreboard is a report element that outputs a scoreboard that tallies
@@ -33,18 +32,16 @@ using namespace std;
 class CScoreboard : public CReport
 {
 private:
-
 	void init();
 
-	public:
-		explicit CScoreboard(){init();}
+public:
+	explicit CScoreboard()
+	{
+		init();
+	}
 
-		void generate();
-		void writeHTML(CHTMLFile& html);
+	void generate();
+	void writeHTML(CHTMLFile &html);
 };
-
-
-
-
 
 #endif // SCOREBOARD_H

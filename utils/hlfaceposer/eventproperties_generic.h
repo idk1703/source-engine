@@ -13,6 +13,6 @@
 
 class CEventParams;
 
-int EventProperties_Generic( CEventParams *params );
+int EventProperties_Generic(CEventParams *params);
 
 #endif // EVENTPROPERTIES_GENERIC_H

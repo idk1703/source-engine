@@ -19,76 +19,92 @@ class CPaintSculptDlg;
 class CSculptTool
 {
 public:
-					CSculptTool();
-					~CSculptTool();
+	CSculptTool();
+	~CSculptTool();
 
-			void	SetPaintOwner( CPaintSculptDlg *pOwner ) { m_PaintOwner = pOwner; }
+	void SetPaintOwner(CPaintSculptDlg *pOwner)
+	{
+		m_PaintOwner = pOwner;
+	}
 
-	virtual bool	BeginPaint( CMapView3D *pView, const Vector2D &vPoint );
-	virtual	bool	Paint( CMapView3D *pView, const Vector2D &vPoint, SpatialPaintData_t &SpatialData );
-	virtual void	RenderTool3D(CRender3D *pRender) = 0;
-	virtual bool	OnLMouseUp3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint );
-	virtual bool	OnLMouseDown3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint );
-	virtual bool	OnRMouseUp3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint );
-	virtual bool	OnRMouseDown3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint );
-	virtual bool	OnMouseMove3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint );
-	virtual bool	OnLButtonUpDialog(UINT nFlags, CPoint point) { return false; }
-	virtual bool	OnLButtonDownDialog(UINT nFlags, CPoint point) { return false; }
-	virtual bool	OnMouseMoveDialog(UINT nFlags, CPoint point) { return false; }
+	virtual bool BeginPaint(CMapView3D *pView, const Vector2D &vPoint);
+	virtual bool Paint(CMapView3D *pView, const Vector2D &vPoint, SpatialPaintData_t &SpatialData);
+	virtual void RenderTool3D(CRender3D *pRender) = 0;
+	virtual bool OnLMouseUp3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint);
+	virtual bool OnLMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint);
+	virtual bool OnRMouseUp3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint);
+	virtual bool OnRMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint);
+	virtual bool OnMouseMove3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint);
+	virtual bool OnLButtonUpDialog(UINT nFlags, CPoint point)
+	{
+		return false;
+	}
+	virtual bool OnLButtonDownDialog(UINT nFlags, CPoint point)
+	{
+		return false;
+	}
+	virtual bool OnMouseMoveDialog(UINT nFlags, CPoint point)
+	{
+		return false;
+	}
 
 protected:
-
 	// Painting.
-	virtual bool	PrePaint( CMapView3D *pView, const Vector2D &vPoint );
-	virtual bool	PostPaint( bool bAutoSew );
-	virtual bool	DoPaint( CMapView3D *pView, const Vector2D &vPoint );
-	virtual void	DoPaintOperation( CMapView3D *pView, const Vector2D &vPoint, CMapDisp *pDisp, CMapDisp *pOrigDisp ) = 0;
+	virtual bool PrePaint(CMapView3D *pView, const Vector2D &vPoint);
+	virtual bool PostPaint(bool bAutoSew);
+	virtual bool DoPaint(CMapView3D *pView, const Vector2D &vPoint);
+	virtual void DoPaintOperation(CMapView3D *pView, const Vector2D &vPoint, CMapDisp *pDisp, CMapDisp *pOrigDisp) = 0;
 
-	bool	GetStartingSpot( CMapView3D *pView, const Vector2D &vPoint );
+	bool GetStartingSpot(CMapView3D *pView, const Vector2D &vPoint);
 
-	bool	IsPointInScreenCircle( CMapView3D *pView, CMapDisp *pDisp, CMapDisp *pOrigDisp, int nVertIndex, bool bUseOrigDisplacement = true, bool bUseCurrentPosition = false, float *pflLengthPercent = NULL );
+	bool IsPointInScreenCircle(CMapView3D *pView, CMapDisp *pDisp, CMapDisp *pOrigDisp, int nVertIndex,
+							   bool bUseOrigDisplacement = true, bool bUseCurrentPosition = false,
+							   float *pflLengthPercent = NULL);
 
-	void	DoPaintSmooth( CMapView3D *pView, const Vector2D &vPoint, CMapDisp *pDisp, CMapDisp *pOrigDisp );
-	bool	PaintSphereDispBBoxOverlap( const Vector &vCenter, float flRadius, const Vector &vBBoxMin, const Vector &vBBoxMax );
-	bool	IsInSphereRadius( const Vector &vCenter, float flRadius2, const Vector &vPos, float &flDistance2 );
-	float	CalcSmoothRadius2( const Vector &vPoint );
-	bool	DoPaintSmoothOneOverExp( const Vector &vNewCenter, Vector &vPaintPos );
+	void DoPaintSmooth(CMapView3D *pView, const Vector2D &vPoint, CMapDisp *pDisp, CMapDisp *pOrigDisp);
+	bool PaintSphereDispBBoxOverlap(const Vector &vCenter, float flRadius, const Vector &vBBoxMin,
+									const Vector &vBBoxMax);
+	bool IsInSphereRadius(const Vector &vCenter, float flRadius2, const Vector &vPos, float &flDistance2);
+	float CalcSmoothRadius2(const Vector &vPoint);
+	bool DoPaintSmoothOneOverExp(const Vector &vNewCenter, Vector &vPaintPos);
 
-	void	AddToUndo( CMapDisp **pDisp );
+	void AddToUndo(CMapDisp **pDisp);
 
-	void	DrawDirection( CRender3D *pRender, Vector vDirection, Color Towards, Color Away );
-	void	DuplicateSelectedDisp( );
-	void	PrepareDispForPainting( );
-	bool	FindCollisionIntercept( CCamera *pCamera, const Vector2D &vPoint, bool bUseOrigPosition, Vector &vCollisionPoint, Vector &vCollisionNormal, float &vCollisionIntercept );
+	void DrawDirection(CRender3D *pRender, Vector vDirection, Color Towards, Color Away);
+	void DuplicateSelectedDisp();
+	void PrepareDispForPainting();
+	bool FindCollisionIntercept(CCamera *pCamera, const Vector2D &vPoint, bool bUseOrigPosition,
+								Vector &vCollisionPoint, Vector &vCollisionNormal, float &vCollisionIntercept);
 
 private:
-	void	DetermineKeysDown();
+	void DetermineKeysDown();
 
 protected:
-	static bool MapDispLessFunc( EditDispHandle_t const &a, EditDispHandle_t const &b )
+	static bool MapDispLessFunc(EditDispHandle_t const &a, EditDispHandle_t const &b)
 	{
 		return a < b;
 	}
 
-	static CUtlMap<EditDispHandle_t, CMapDisp *>		m_OrigMapDisp;
+	static CUtlMap<EditDispHandle_t, CMapDisp *> m_OrigMapDisp;
 
-	Vector						m_StartingCollisionPoint, m_StartingCollisionNormal, m_OriginalCollisionPoint, m_OriginalCollisionNormal, m_CurrentCollisionPoint, m_CurrentCollisionNormal;
-	float						m_StartingCollisionIntercept, m_OriginalCollisionIntercept, m_CurrentCollisionIntercept;
-	float						m_StartingProjectedRadius, m_OriginalProjectedRadius, m_CurrentProjectedRadius;
-	bool						m_OriginalCollisionValid, m_CurrentCollisionValid;
+	Vector m_StartingCollisionPoint, m_StartingCollisionNormal, m_OriginalCollisionPoint, m_OriginalCollisionNormal,
+		m_CurrentCollisionPoint, m_CurrentCollisionNormal;
+	float m_StartingCollisionIntercept, m_OriginalCollisionIntercept, m_CurrentCollisionIntercept;
+	float m_StartingProjectedRadius, m_OriginalProjectedRadius, m_CurrentProjectedRadius;
+	bool m_OriginalCollisionValid, m_CurrentCollisionValid;
 
-	Vector2D					m_MousePoint;
-	bool						m_bLMBDown;				// left mouse button state
-	bool						m_bRMBDown;				// right mouse button state
-	bool						m_bAltDown, m_bCtrlDown, m_bShiftDown;
+	Vector2D m_MousePoint;
+	bool m_bLMBDown; // left mouse button state
+	bool m_bRMBDown; // right mouse button state
+	bool m_bAltDown, m_bCtrlDown, m_bShiftDown;
 
-	bool						m_ValidPaintingSpot;
+	bool m_ValidPaintingSpot;
 
-	float						m_BrushSize;
+	float m_BrushSize;
 
-	CPaintSculptDlg				*m_PaintOwner;
+	CPaintSculptDlg *m_PaintOwner;
 
-	SpatialPaintData_t			m_SpatialData;
+	SpatialPaintData_t m_SpatialData;
 };
 
 class CSculptPainter : public CSculptTool
@@ -97,21 +113,21 @@ public:
 	CSculptPainter();
 	~CSculptPainter();
 
-	virtual bool	BeginPaint( CMapView3D *pView, const Vector2D &vPoint );
-	virtual	bool	Paint( CMapView3D *pView, const Vector2D &vPoint, SpatialPaintData_t &spatialData );
-	virtual bool	OnLMouseUp3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint );
-	virtual bool	OnLMouseDown3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint );
-	virtual bool	OnRMouseUp3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint );
-	virtual bool	OnRMouseDown3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint );
-	virtual bool	OnMouseMove3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint );
+	virtual bool BeginPaint(CMapView3D *pView, const Vector2D &vPoint);
+	virtual bool Paint(CMapView3D *pView, const Vector2D &vPoint, SpatialPaintData_t &spatialData);
+	virtual bool OnLMouseUp3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint);
+	virtual bool OnLMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint);
+	virtual bool OnRMouseUp3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint);
+	virtual bool OnRMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint);
+	virtual bool OnMouseMove3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint);
 
 protected:
-	virtual bool	DoSizing( const Vector2D &vPoint );
+	virtual bool DoSizing(const Vector2D &vPoint);
 
-	bool						m_InPaintingMode;
-	bool						m_InSizingMode;
-	Vector2D					m_StartSizingPoint;
-	float						m_OrigBrushSize;
+	bool m_InPaintingMode;
+	bool m_InSizingMode;
+	Vector2D m_StartSizingPoint;
+	float m_OrigBrushSize;
 };
 
 class CSculptPushOptions : public CDialog, public CSculptPainter
@@ -119,15 +135,18 @@ class CSculptPushOptions : public CDialog, public CSculptPainter
 	DECLARE_DYNAMIC(CSculptPushOptions)
 
 public:
-	CSculptPushOptions(CWnd* pParent = NULL);   // standard constructor
+	CSculptPushOptions(CWnd *pParent = NULL); // standard constructor
 	virtual ~CSculptPushOptions();
 
-	virtual BOOL OnInitDialog( void );
+	virtual BOOL OnInitDialog(void);
 	virtual void OnOK();
 	virtual void OnCancel();
 
-// Dialog Data
-	enum { IDD = IDD_DISP_SCULPT_PUSH_OPTIONS };
+	// Dialog Data
+	enum
+	{
+		IDD = IDD_DISP_SCULPT_PUSH_OPTIONS
+	};
 
 	typedef enum
 	{
@@ -153,43 +172,43 @@ public:
 	} DensityMode;
 
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
 
 	DECLARE_MESSAGE_MAP()
 
 public:
 	afx_msg void OnCbnSelchangeIdcSculptPushOptionNormalMode();
-	CComboBox	m_OffsetModeControl;
-	CEdit		m_OffsetDistanceControl;
-	CEdit		m_OffsetAmountControl;
-	CEdit		m_SmoothAmountControl;
-	CEdit		m_FalloffPositionControl;
-	CEdit		m_FalloffFinalControl;
-	CComboBox	m_DensityModeControl;
-	CComboBox	m_NormalModeControl;
+	CComboBox m_OffsetModeControl;
+	CEdit m_OffsetDistanceControl;
+	CEdit m_OffsetAmountControl;
+	CEdit m_SmoothAmountControl;
+	CEdit m_FalloffPositionControl;
+	CEdit m_FalloffFinalControl;
+	CComboBox m_DensityModeControl;
+	CComboBox m_NormalModeControl;
 	afx_msg void OnCbnSelchangeSculptPushOptionOffsetMode();
 
 private:
-	OffsetMode	m_OffsetMode;
-	float		m_OffsetDistance, m_OffsetAmount;
-	NormalMode	m_NormalMode;
-	DensityMode	m_DensityMode;
-	float		m_Direction;
-	float		m_SmoothAmount;
-	Vector		m_SelectedNormal;
-	float		m_flFalloffSpot;
-	float		m_flFalloffEndingValue;
+	OffsetMode m_OffsetMode;
+	float m_OffsetDistance, m_OffsetAmount;
+	NormalMode m_NormalMode;
+	DensityMode m_DensityMode;
+	float m_Direction;
+	float m_SmoothAmount;
+	Vector m_SelectedNormal;
+	float m_flFalloffSpot;
+	float m_flFalloffEndingValue;
 
-	void		GetPaintAxis( CCamera *pCamera, const Vector2D &vPoint, Vector &vPaintAxis );
+	void GetPaintAxis(CCamera *pCamera, const Vector2D &vPoint, Vector &vPaintAxis);
 
 public:
-	virtual bool BeginPaint( CMapView3D *pView, const Vector2D &vPoint );
+	virtual bool BeginPaint(CMapView3D *pView, const Vector2D &vPoint);
 	virtual void RenderTool3D(CRender3D *pRender);
-	virtual bool OnRMouseDown3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint );
+	virtual bool OnRMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint);
 
 protected:
-	virtual void DoPaintOperation( CMapView3D *pView, const Vector2D &vPoint, CMapDisp *pDisp, CMapDisp *pOrigDisp );
-			void DoSmoothOperation( CMapView3D *pView, const Vector2D &vPoint, CMapDisp *pDisp, CMapDisp *pOrigDisp );
+	virtual void DoPaintOperation(CMapView3D *pView, const Vector2D &vPoint, CMapDisp *pDisp, CMapDisp *pOrigDisp);
+	void DoSmoothOperation(CMapView3D *pView, const Vector2D &vPoint, CMapDisp *pDisp, CMapDisp *pOrigDisp);
 
 public:
 	afx_msg void OnEnChangeSculptPushOptionOffsetDistance();
@@ -200,21 +219,23 @@ public:
 	afx_msg void OnEnKillfocusSculptPushOptionFalloffFinal();
 };
 
-
 class CSculptCarveOptions : public CDialog, public CSculptPainter
 {
 	DECLARE_DYNAMIC(CSculptCarveOptions)
 
 public:
-	CSculptCarveOptions(CWnd* pParent = NULL);   // standard constructor
+	CSculptCarveOptions(CWnd *pParent = NULL); // standard constructor
 	virtual ~CSculptCarveOptions();
 
-	virtual BOOL OnInitDialog( void );
+	virtual BOOL OnInitDialog(void);
 	virtual void OnOK();
 	virtual void OnCancel();
 
-// Dialog Data
-	enum { IDD = IDD_DISP_SCULPT_CARVE_OPTIONS };
+	// Dialog Data
+	enum
+	{
+		IDD = IDD_DISP_SCULPT_CARVE_OPTIONS
+	};
 
 	typedef enum
 	{
@@ -240,58 +261,58 @@ public:
 	} DensityMode;
 
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
 
 	DECLARE_MESSAGE_MAP()
 
 public:
-	CComboBox	m_OffsetModeControl;
-	CEdit		m_OffsetDistanceControl;
-	CEdit		m_OffsetAmountControl;
-	CEdit		m_SmoothAmountControl;
-	CComboBox	m_DensityModeControl;
-	CComboBox	m_NormalModeControl;
+	CComboBox m_OffsetModeControl;
+	CEdit m_OffsetDistanceControl;
+	CEdit m_OffsetAmountControl;
+	CEdit m_SmoothAmountControl;
+	CComboBox m_DensityModeControl;
+	CComboBox m_NormalModeControl;
 	CStatic m_CarveBrushControl;
 
 private:
-	const static int	MAX_SCULPT_SIZE = 100;
-	const static int	MAX_QUEUE_SIZE = 20;
+	const static int MAX_SCULPT_SIZE = 100;
+	const static int MAX_QUEUE_SIZE = 20;
 
-	OffsetMode	m_OffsetMode;
-	float		m_OffsetDistance, m_OffsetAmount;
-	NormalMode	m_NormalMode;
-	DensityMode	m_DensityMode;
-	float		m_Direction;
-	float		m_SmoothAmount;
-	Vector		m_SelectedNormal;
-	float		m_BrushPoints[ MAX_SCULPT_SIZE ];
-	int			m_BrushLocation;
-	Vector2D	m_StartLine, m_EndLine;
-	CUtlVector< Vector2D >  m_DrawPoints;
-	CUtlVector< Vector2D >  m_DrawNormal;
+	OffsetMode m_OffsetMode;
+	float m_OffsetDistance, m_OffsetAmount;
+	NormalMode m_NormalMode;
+	DensityMode m_DensityMode;
+	float m_Direction;
+	float m_SmoothAmount;
+	Vector m_SelectedNormal;
+	float m_BrushPoints[MAX_SCULPT_SIZE];
+	int m_BrushLocation;
+	Vector2D m_StartLine, m_EndLine;
+	CUtlVector<Vector2D> m_DrawPoints;
+	CUtlVector<Vector2D> m_DrawNormal;
 
-	CUtlVector< Vector2D >  m_PointQueue;
+	CUtlVector<Vector2D> m_PointQueue;
 
-
-	void		GetPaintAxis( CCamera *pCamera, const Vector2D &vPoint, Vector &vPaintAxis );
-	void		AdjustBrush( int x, int y );
-	void		AdjustBrushCursor( int x, int y );
-	bool		CalculatePointNormal( int PointIndex, Vector2D &vNormal );
-	bool		CalculateQueuePoint( Vector2D &vPoint, Vector2D &vNormal );
-	void		AddQueuePoint( const Vector2D &vPoint, bool bDrawIt );
+	void GetPaintAxis(CCamera *pCamera, const Vector2D &vPoint, Vector &vPaintAxis);
+	void AdjustBrush(int x, int y);
+	void AdjustBrushCursor(int x, int y);
+	bool CalculatePointNormal(int PointIndex, Vector2D &vNormal);
+	bool CalculateQueuePoint(Vector2D &vPoint, Vector2D &vNormal);
+	void AddQueuePoint(const Vector2D &vPoint, bool bDrawIt);
 
 public:
-	virtual bool	BeginPaint( CMapView3D *pView, const Vector2D &vPoint );
-//	virtual	bool	Paint( CMapView3D *pView, const Vector2D &vPoint, SpatialPaintData_t &spatialData );
-	virtual void	RenderTool3D(CRender3D *pRender);
-	virtual bool	OnLMouseUp3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint );
-	virtual bool	OnLMouseDown3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint );
-	virtual bool	OnRMouseDown3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint );
-	virtual bool	OnMouseMove3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint );
+	virtual bool BeginPaint(CMapView3D *pView, const Vector2D &vPoint);
+	//	virtual	bool	Paint( CMapView3D *pView, const Vector2D &vPoint, SpatialPaintData_t &spatialData );
+	virtual void RenderTool3D(CRender3D *pRender);
+	virtual bool OnLMouseUp3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint);
+	virtual bool OnLMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint);
+	virtual bool OnRMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint);
+	virtual bool OnMouseMove3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint);
 
 protected:
-	bool	IsPointAffected( CMapView3D *pView, CMapDisp *pDisp, CMapDisp *pOrigDisp, int nVertIndex, int nBrushPoint, Vector2D &vViewVert, bool bUseOrigDisplacement = true, bool bUseCurrentPosition = false );
-	virtual void DoPaintOperation( CMapView3D *pView, const Vector2D &vPoint, CMapDisp *pDisp, CMapDisp *pOrigDisp );
+	bool IsPointAffected(CMapView3D *pView, CMapDisp *pDisp, CMapDisp *pOrigDisp, int nVertIndex, int nBrushPoint,
+						 Vector2D &vViewVert, bool bUseOrigDisplacement = true, bool bUseCurrentPosition = false);
+	virtual void DoPaintOperation(CMapView3D *pView, const Vector2D &vPoint, CMapDisp *pDisp, CMapDisp *pOrigDisp);
 
 public:
 	afx_msg void OnPaint();
@@ -304,7 +325,7 @@ public:
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
-	virtual BOOL PreTranslateMessage( MSG* pMsg );
+	virtual BOOL PreTranslateMessage(MSG *pMsg);
 };
 
 #if 0

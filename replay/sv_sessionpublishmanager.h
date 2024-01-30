@@ -35,42 +35,42 @@ class CSessionInfoPublisher;
 class CSessionPublishManager
 {
 public:
-	CSessionPublishManager( CServerRecordingSession *pSession );
+	CSessionPublishManager(CServerRecordingSession *pSession);
 	~CSessionPublishManager();
 
-	void				Think();	// Called explicitly
+	void Think(); // Called explicitly
 
 	// Finish any publish jobs synchronously
-	void				PublishAllSynchronous();
+	void PublishAllSynchronous();
 
 	// Have all publish job completed?
-	bool				IsDone() const;
+	bool IsDone() const;
 
 	// This will flag this publish manager as recording
-	void				OnStartRecording();
+	void OnStartRecording();
 
 	// This will write out and publish any final session block
-	void				OnStopRecord( bool bAborting );
+	void OnStopRecord(bool bAborting);
 
 	// Get the handle for the associated session
-	ReplayHandle_t		GetSessionHandle() const;
+	ReplayHandle_t GetSessionHandle() const;
 
 	// Unlock the associated session - this should only be called if IsDone() returns true.
-	void				UnlockSession();
+	void UnlockSession();
 
 	// Abort publishing
-	void				AbortPublish();
+	void AbortPublish();
 
 #ifdef _DEBUG
-	void				Validate();
+	void Validate();
 #endif
 
 private:
-	CServerRecordingSession	*m_pSession;
-	CSessionBlockPublisher	*m_pBlockPublisher;
-	CSessionInfoPublisher	*m_pSessionInfoPublisher;
+	CServerRecordingSession *m_pSession;
+	CSessionBlockPublisher *m_pBlockPublisher;
+	CSessionInfoPublisher *m_pSessionInfoPublisher;
 };
 
 //----------------------------------------------------------------------------------------
 
-#endif	// SV_SESSIONPUBLISHMANAGER_H
+#endif // SV_SESSIONPUBLISHMANAGER_H

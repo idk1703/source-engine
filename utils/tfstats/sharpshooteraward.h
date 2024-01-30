@@ -18,27 +18,26 @@
 #include "Award.h"
 #include <map>
 
-
 using namespace std;
 //------------------------------------------------------------------------------------------------------
 // Purpose: CSharpshooterAward is the award for best sniper.
 // It is calculated by finding all of a sniper's kills with his rifle, then totaling them
 // up, with headshots being worth three regular shots.
 //------------------------------------------------------------------------------------------------------
-class CSharpshooterAward: public CAward
+class CSharpshooterAward : public CAward
 {
 protected:
 	static double HS_VALUE;
 	static double SHOT_VALUE;
 
+	map<PID, int> numhs;
+	map<PID, int> numshots;
+	map<PID, int> sharpshooterscore;
+	void noWinner(CHTMLFile &html);
+	void extendedinfo(CHTMLFile &html);
 
-	map<PID,int> numhs;
-	map<PID,int> numshots;
-	map<PID,int> sharpshooterscore;
-	void noWinner(CHTMLFile& html);
-	void extendedinfo(CHTMLFile& html);
 public:
-	explicit CSharpshooterAward():CAward("Sharpshooter"){}
+	explicit CSharpshooterAward() : CAward("Sharpshooter") {}
 	void getWinner();
 };
 #endif // SHARPSHOOTERAWARD_H

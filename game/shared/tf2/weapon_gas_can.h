@@ -14,7 +14,7 @@
 #include "weapon_combat_usedwithshieldbase.h"
 #include "weapon_flame_thrower.h"
 
-#if defined( CLIENT_DLL )
+#if defined(CLIENT_DLL)
 #define CWeaponGasCan C_WeaponGasCan
 #endif
 
@@ -23,17 +23,16 @@
 //=========================================================
 class CWeaponGasCan : public CWeaponFlameThrower
 {
-	DECLARE_CLASS( CWeaponGasCan, CWeaponFlameThrower );
+	DECLARE_CLASS(CWeaponGasCan, CWeaponFlameThrower);
+
 public:
 	CWeaponGasCan();
 
 	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
-
 private:
-
-	CWeaponGasCan( const CWeaponGasCan & );
+	CWeaponGasCan(const CWeaponGasCan &);
 };
 
 #endif // WEAPON_GAS_CAN_H

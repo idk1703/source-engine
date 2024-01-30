@@ -14,17 +14,14 @@
 #ifndef INCLUDED_MXEVENT
 #define INCLUDED_MXEVENT
 
-
-
 class mxWidget;
-
-
 
 class mxEvent
 {
 public:
 	// ENUMS
-	enum {
+	enum
+	{
 		Action,
 		Size,
 		Timer,
@@ -50,9 +47,22 @@ public:
 		ParentNotify
 	};
 
-	enum { MouseLeftButton = 1, MouseRightButton = 2, MouseMiddleButton = 4};
-	enum { KeyCtrl = 1, KeyShift = 2 };
-	enum { RightClicked = 1, DoubleClicked = 2 };
+	enum
+	{
+		MouseLeftButton = 1,
+		MouseRightButton = 2,
+		MouseMiddleButton = 4
+	};
+	enum
+	{
+		KeyCtrl = 1,
+		KeyShift = 2
+	};
+	enum
+	{
+		RightClicked = 1,
+		DoubleClicked = 2
+	};
 
 	// DATA
 	int event;
@@ -65,15 +75,16 @@ public:
 	int flags;
 
 	// NO CREATORS
-	mxEvent () : event (0), widget (0), action (0), width (0), height (0), x (0), y (0), buttons (0), key (0), modifiers (0), flags (0) {}
-	virtual ~mxEvent () {}
+	mxEvent()
+		: event(0), widget(0), action(0), width(0), height(0), x(0), y(0), buttons(0), key(0), modifiers(0), flags(0)
+	{
+	}
+	virtual ~mxEvent() {}
 
 private:
 	// NOT IMPLEMENTED
-	mxEvent (const mxEvent&);
-	mxEvent& operator= (const mxEvent&);
+	mxEvent(const mxEvent &);
+	mxEvent &operator=(const mxEvent &);
 };
-
-
 
 #endif // INCLUDED_MXEVENT

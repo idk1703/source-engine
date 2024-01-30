@@ -15,6 +15,6 @@ class IPhysicsMotionController;
 class CPhysicsEnvironment;
 class IMotionEvent;
 
-IPhysicsMotionController *CreateMotionController( CPhysicsEnvironment *pEnv, IMotionEvent *pHandler );
+IPhysicsMotionController *CreateMotionController(CPhysicsEnvironment *pEnv, IMotionEvent *pHandler);
 
 #endif // PHYSICS_MOTIONCONTROLLER_H

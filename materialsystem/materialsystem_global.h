@@ -18,7 +18,6 @@
 #include "tier0/dbg.h"
 #include "tier2/tier2.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
@@ -34,7 +33,6 @@ class IMaterialInternal;
 class IColorCorrectionSystem;
 class IMaterialVar;
 
-
 //-----------------------------------------------------------------------------
 // Constants used by the system
 //-----------------------------------------------------------------------------
@@ -45,8 +43,8 @@ class IMaterialVar;
 #define MAX_BLUR_IMAGE_WIDTH  256
 #define MAX_BLUR_IMAGE_HEIGHT 192
 
-#define CLAMP_BLUR_IMAGE_WIDTH( _w ) ( ( _w < MAX_BLUR_IMAGE_WIDTH ) ? _w : MAX_BLUR_IMAGE_WIDTH )
-#define CLAMP_BLUR_IMAGE_HEIGHT( _h ) ( ( _h < MAX_BLUR_IMAGE_HEIGHT ) ? _h : MAX_BLUR_IMAGE_HEIGHT )
+#define CLAMP_BLUR_IMAGE_WIDTH(_w)	((_w < MAX_BLUR_IMAGE_WIDTH) ? _w : MAX_BLUR_IMAGE_WIDTH)
+#define CLAMP_BLUR_IMAGE_HEIGHT(_h) ((_h < MAX_BLUR_IMAGE_HEIGHT) ? _h : MAX_BLUR_IMAGE_HEIGHT)
 
 //-----------------------------------------------------------------------------
 // Global structures
@@ -54,20 +52,20 @@ class IMaterialVar;
 extern MaterialSystem_Config_t g_config;
 extern uint32 g_nDebugVarsSignature;
 
-//extern MaterialSystem_ErrorFunc_t	Error;
-//extern MaterialSystem_WarningFunc_t Warning;
+// extern MaterialSystem_ErrorFunc_t	Error;
+// extern MaterialSystem_WarningFunc_t Warning;
 
-extern int				g_FrameNum;
+extern int g_FrameNum;
 
-extern IShaderAPI*	g_pShaderAPI;
-extern IShaderDeviceMgr* g_pShaderDeviceMgr;
-extern IShaderDevice*	g_pShaderDevice;
-extern IShaderShadow* g_pShaderShadow;
+extern IShaderAPI *g_pShaderAPI;
+extern IShaderDeviceMgr *g_pShaderDeviceMgr;
+extern IShaderDevice *g_pShaderDevice;
+extern IShaderShadow *g_pShaderShadow;
 
 extern IMaterialInternal *g_pErrorMaterial;
 
-IShaderSystemInternal* ShaderSystem();
-inline IShaderSystemInternal* ShaderSystem()
+IShaderSystemInternal *ShaderSystem();
+inline IShaderSystemInternal *ShaderSystem()
 {
 	extern IShaderSystemInternal *g_pShaderSystem;
 	return g_pShaderSystem;
@@ -75,20 +73,20 @@ inline IShaderSystemInternal* ShaderSystem()
 
 inline IHardwareConfigInternal *HardwareConfig()
 {
-	extern IHardwareConfigInternal* g_pHWConfig;
+	extern IHardwareConfigInternal *g_pHWConfig;
 	return g_pHWConfig;
 }
 
 //-----------------------------------------------------------------------------
 // Accessor to get at the material system
 //-----------------------------------------------------------------------------
-inline IMaterialSystemInternal* MaterialSystem()
+inline IMaterialSystemInternal *MaterialSystem()
 {
 	extern IMaterialSystemInternal *g_pInternalMaterialSystem;
 	return g_pInternalMaterialSystem;
 }
 
-inline IShaderUtil* ShaderUtil()
+inline IShaderUtil *ShaderUtil()
 {
 	extern IShaderUtil *g_pShaderUtil;
 	return g_pShaderUtil;
@@ -100,11 +98,9 @@ inline IColorCorrectionSystem *ColorCorrectionSystem()
 	return g_pColorCorrectionSystem;
 }
 
-
 //-----------------------------------------------------------------------------
 // Global methods related to material vars
 //-----------------------------------------------------------------------------
-void EnableThreadedMaterialVarAccess( bool bEnable, IMaterialVar **ppParams, int nVarCount );
-
+void EnableThreadedMaterialVarAccess(bool bEnable, IMaterialVar **ppParams, int nVarCount);
 
 #endif // MATERIALSYSTEM_GLOBAL_H

@@ -17,41 +17,39 @@ class IUsesMortarPanel
 {
 public:
 	// Get the data from this mortar needed by the panel
-	virtual void	GetMortarData( float *flClientMortarYaw, bool *bAllowedToFire, float *flPower, float *flFiringPower, float *flFiringAccuracy, int *iFiringState ) = 0;
+	virtual void GetMortarData(float *flClientMortarYaw, bool *bAllowedToFire, float *flPower, float *flFiringPower,
+							   float *flFiringAccuracy, int *iFiringState) = 0;
 
 	// Tell the server the mortar's been rotated
-	virtual void	SendYawCommand( void ) = 0;
+	virtual void SendYawCommand(void) = 0;
 
 	// Panel's overriding client yaw
-	virtual void	ForceClientYawCountdown( float flTime ) = 0;
+	virtual void ForceClientYawCountdown(float flTime) = 0;
 
 	// Start firing
-	virtual void	ClickFire( void ) = 0;
+	virtual void ClickFire(void) = 0;
 };
 
 // Mortar firing panel
 class CMortarMinimapPanel : public CMinimapPanel
 {
 public:
+	DECLARE_CLASS(CMortarMinimapPanel, CMinimapPanel);
 
-	DECLARE_CLASS( CMortarMinimapPanel, CMinimapPanel );
-
-	CMortarMinimapPanel( vgui::Panel *pParent, const char *pElementName );
+	CMortarMinimapPanel(vgui::Panel *pParent, const char *pElementName);
 	virtual ~CMortarMinimapPanel();
 
-	void InitMortarMinimap( C_BaseEntity *pMortar );
+	void InitMortarMinimap(C_BaseEntity *pMortar);
 	C_BaseEntity *GetMortar() const;
 
 	virtual void Paint();
 
-	void OnMousePressed( vgui::MouseCode code );
-	void OnCursorMoved( int x, int y );
-	void OnMouseReleased( vgui::MouseCode code );
-
+	void OnMousePressed(vgui::MouseCode code);
+	void OnCursorMoved(int x, int y);
+	void OnMouseReleased(vgui::MouseCode code);
 
 public:
-
-	EHANDLE		m_hMortar;
+	EHANDLE m_hMortar;
 	BitmapImage m_MortarButtonUp;
 	BitmapImage m_MortarButtonDown;
 	BitmapImage m_MortarButtonCantFire;

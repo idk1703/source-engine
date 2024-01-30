@@ -19,9 +19,9 @@
 #define NOSERVICE
 #define NOMCX
 #define NOIME
-#if !defined( _X360 )
+#if !defined(_X360)
 #pragma warning(push, 1)
-#pragma warning(disable: 4005)
+#pragma warning(disable : 4005)
 #include <windows.h>
 #pragma warning(pop)
 #endif

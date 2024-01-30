@@ -20,15 +20,15 @@ class CAbuseReportScreenShotPanel;
 
 class CAbuseReportDlg : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CAbuseReportDlg, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CAbuseReportDlg, vgui::EditablePanel);
 
 public:
-	CAbuseReportDlg( vgui::Panel *parent, AbuseIncidentData_t *pIncidentData );
+	CAbuseReportDlg(vgui::Panel *parent, AbuseIncidentData_t *pIncidentData);
 	~CAbuseReportDlg();
 
 	virtual void OnCommand(const char *command);
 	virtual void Close();
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 	virtual void PerformLayout();
 
 	virtual void MakeModal();
@@ -44,8 +44,7 @@ public:
 	bool GetAttachScreenShot();
 
 protected:
-
-	MESSAGE_FUNC_PTR( OnRadioButtonChecked, "RadioButtonChecked", panel );
+	MESSAGE_FUNC_PTR(OnRadioButtonChecked, "RadioButtonChecked", panel);
 
 	virtual const char *GetResFilename();
 
@@ -58,33 +57,33 @@ protected:
 	vgui::Button *m_pCustomTexturePrevButton;
 	vgui::Button *m_pOffensiveImage;
 
-	vgui::TextEntry		*m_pDescriptionTextEntry;
-	vgui::Panel			*m_pPlayerLabel;
-	vgui::RadioButton	*m_pPlayerRadio;
-	vgui::RadioButton	*m_pGameServerRadio;
-	vgui::ComboBox		*m_pPlayerCombo;
-	vgui::Panel			*m_pAbuseContentLabel;
-	vgui::ComboBox		*m_pAbuseContentCombo;
-	vgui::Panel			*m_pAbuseTypeLabel;
-	vgui::ComboBox		*m_pAbuseTypeCombo;
+	vgui::TextEntry *m_pDescriptionTextEntry;
+	vgui::Panel *m_pPlayerLabel;
+	vgui::RadioButton *m_pPlayerRadio;
+	vgui::RadioButton *m_pGameServerRadio;
+	vgui::ComboBox *m_pPlayerCombo;
+	vgui::Panel *m_pAbuseContentLabel;
+	vgui::ComboBox *m_pAbuseContentCombo;
+	vgui::Panel *m_pAbuseTypeLabel;
+	vgui::ComboBox *m_pAbuseTypeCombo;
 
-	CAbuseReportScreenShotPanel	*m_pScreenShotBitmap;
+	CAbuseReportScreenShotPanel *m_pScreenShotBitmap;
 
-	CAvatarImagePanel	*m_pAvatarImage;
-	vgui::Panel		*m_pNoAvatarLabel;
+	CAvatarImagePanel *m_pAvatarImage;
+	vgui::Panel *m_pNoAvatarLabel;
 
 	CCustomTextureImagePanel *m_pCustomTextureImagePanel;
-	vgui::Panel		*m_pNoCustomTexturesLabel;
+	vgui::Panel *m_pNoCustomTexturesLabel;
 
 	AbuseIncidentData_t *m_pIncidentData;
 
 	int m_iUserImageIndex;
 
-	MESSAGE_FUNC_PTR( OnTextChanged, "TextChanged", panel ); // send by combo box when it changes
+	MESSAGE_FUNC_PTR(OnTextChanged, "TextChanged", panel); // send by combo box when it changes
 
 	void PopulatePlayerList();
 	void UpdateSubmitButton();
-	void SetIsAccusingGameServer( bool bAccuseGameServer );
+	void SetIsAccusingGameServer(bool bAccuseGameServer);
 	void PlayerChanged();
 	void ContentTypeChanged();
 	void UpdateAvatarImage();
@@ -97,4 +96,4 @@ protected:
 /// NULL if it's not displayed
 extern vgui::DHANDLE<CAbuseReportDlg> g_AbuseReportDlg;
 
-#endif	// ABUSE_REPORT_UI_H
+#endif // ABUSE_REPORT_UI_H

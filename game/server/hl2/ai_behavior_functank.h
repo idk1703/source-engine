@@ -14,7 +14,7 @@
 #include "ai_behavior.h"
 #include "func_tank.h"
 
-#define AI_FUNCTANK_BEHAVIOR_BUSYTIME		10.0f
+#define AI_FUNCTANK_BEHAVIOR_BUSYTIME 10.0f
 
 enum
 {
@@ -24,13 +24,12 @@ enum
 	FUNCTANK_SENTENCE_DISMOUNTING,
 };
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 class CAI_FuncTankBehavior : public CAI_SimpleBehavior
 {
-	DECLARE_CLASS( CAI_FuncTankBehavior, CAI_SimpleBehavior );
+	DECLARE_CLASS(CAI_FuncTankBehavior, CAI_SimpleBehavior);
 	DEFINE_CUSTOM_SCHEDULE_PROVIDER;
 	DECLARE_DATADESC();
 
@@ -42,15 +41,18 @@ public:
 	void UpdateOnRemove();
 
 	// Identifier
-	const char *GetName() {	return "FuncTank"; }
+	const char *GetName()
+	{
+		return "FuncTank";
+	}
 
 	// Schedule
-	bool 		CanSelectSchedule();
-	void		BeginScheduleSelection();
-	void		EndScheduleSelection();
-	void		PrescheduleThink();
+	bool CanSelectSchedule();
+	void BeginScheduleSelection();
+	void EndScheduleSelection();
+	void PrescheduleThink();
 
-	Activity	NPC_TranslateActivity( Activity activity );
+	Activity NPC_TranslateActivity(Activity activity);
 
 	// Conditions:
 	virtual void GatherConditions();
@@ -64,8 +66,8 @@ public:
 	};
 
 	// Tasks
-	void		StartTask( const Task_t *pTask );
-	void		RunTask( const Task_t *pTask );
+	void StartTask(const Task_t *pTask);
+	void RunTask(const Task_t *pTask);
 
 	enum
 	{
@@ -86,35 +88,48 @@ public:
 	};
 
 	// Combat.
-	CBaseEntity *BestEnemy( void );
-	void Event_Killed( const CTakeDamageInfo &info );
+	CBaseEntity *BestEnemy(void);
+	void Event_Killed(const CTakeDamageInfo &info);
 
-	bool HasFuncTank( void )							{ return ( m_hFuncTank != NULL ); }
-	void SetFuncTank( CHandle<CFuncTank> hFuncTank );
-	CFuncTank *GetFuncTank() { return m_hFuncTank; }
-	void AimGun( void );
+	bool HasFuncTank(void)
+	{
+		return (m_hFuncTank != NULL);
+	}
+	void SetFuncTank(CHandle<CFuncTank> hFuncTank);
+	CFuncTank *GetFuncTank()
+	{
+		return m_hFuncTank;
+	}
+	void AimGun(void);
 
-	void Dismount( void );
+	void Dismount(void);
 
-	int	 OnTakeDamage_Alive( const CTakeDamageInfo &info );
+	int OnTakeDamage_Alive(const CTakeDamageInfo &info);
 
 	// Time.
-	void SetBusy( float flTime )		{ m_flBusyTime = flTime; }
-	bool IsBusy( void )					{ return ( gpGlobals->curtime < m_flBusyTime ); }
+	void SetBusy(float flTime)
+	{
+		m_flBusyTime = flTime;
+	}
+	bool IsBusy(void)
+	{
+		return (gpGlobals->curtime < m_flBusyTime);
+	}
 
-	bool IsMounted( void )				{ return m_bMounted; }
+	bool IsMounted(void)
+	{
+		return m_bMounted;
+	}
 
 private:
-
 	// Schedule
-	int			SelectSchedule();
+	int SelectSchedule();
 
 private:
-
-	CHandle<CFuncTank>	m_hFuncTank;
-	bool				m_bMounted;
-	float				m_flBusyTime;
-	bool				m_bSpottedPlayerOutOfCover;
+	CHandle<CFuncTank> m_hFuncTank;
+	bool m_bMounted;
+	float m_flBusyTime;
+	bool m_bSpottedPlayerOutOfCover;
 };
 
 #endif // AI_BEHAVIOR_FUNCTANK_H

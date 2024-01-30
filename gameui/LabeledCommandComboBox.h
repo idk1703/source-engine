@@ -18,7 +18,7 @@
 
 class CLabeledCommandComboBox : public vgui::ComboBox
 {
-	DECLARE_CLASS_SIMPLE( CLabeledCommandComboBox, vgui::ComboBox );
+	DECLARE_CLASS_SIMPLE(CLabeledCommandComboBox, vgui::ComboBox);
 
 public:
 	CLabeledCommandComboBox(vgui::Panel *parent, const char *panelName);
@@ -31,9 +31,9 @@ public:
 
 	void SetInitialItem(int itemIndex);
 
-	void			ApplyChanges();
-	void			Reset();
-	bool			HasBeenModified();
+	void ApplyChanges();
+	void Reset();
+	bool HasBeenModified();
 
 	enum
 	{
@@ -42,18 +42,18 @@ public:
 	};
 
 private:
-	MESSAGE_FUNC_CHARPTR( OnTextChanged, "TextChanged", text );
+	MESSAGE_FUNC_CHARPTR(OnTextChanged, "TextChanged", text);
 
 	struct COMMANDITEM
 	{
-		char			name[ MAX_NAME_LEN ];
-		char			command[ MAX_COMMAND_LEN ];
-		int				comboBoxID;
+		char name[MAX_NAME_LEN];
+		char command[MAX_COMMAND_LEN];
+		int comboBoxID;
 	};
 
-	CUtlVector< COMMANDITEM >	m_Items;
-	int		m_iCurrentSelection;
-	int		m_iStartSelection;
+	CUtlVector<COMMANDITEM> m_Items;
+	int m_iCurrentSelection;
+	int m_iStartSelection;
 };
 
 #endif // LABELEDCOMMANDCOMBOBOX_H

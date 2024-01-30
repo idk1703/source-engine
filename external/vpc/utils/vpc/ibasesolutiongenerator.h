@@ -10,15 +10,12 @@
 #pragma once
 #endif
 
-
 #include "dependencies.h"
-
 
 class IBaseSolutionGenerator
 {
 public:
-	virtual void GenerateSolutionFile( const char *pSolutionFilename, CUtlVector<CDependency_Project*> &projects ) = 0;
+	virtual void GenerateSolutionFile(const char *pSolutionFilename, CUtlVector<CDependency_Project *> &projects) = 0;
 };
-
 
 #endif // IBASESOLUTIONGENERATOR_H

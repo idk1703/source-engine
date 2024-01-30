@@ -12,7 +12,7 @@
 
 #include "tf_obj_basedrivergun_shared.h"
 
-#if defined( CLIENT_DLL )
+#if defined(CLIENT_DLL)
 #define CObjectDriverMachinegun C_ObjectDriverMachinegun
 #endif
 
@@ -21,7 +21,7 @@
 // ------------------------------------------------------------------------ //
 class CObjectDriverMachinegun : public CBaseObjectDriverGun
 {
-DECLARE_CLASS( CObjectDriverMachinegun, CBaseObjectDriverGun );
+	DECLARE_CLASS(CObjectDriverMachinegun, CBaseObjectDriverGun);
 
 public:
 	DECLARE_NETWORKCLASS();
@@ -29,34 +29,34 @@ public:
 
 	CObjectDriverMachinegun();
 
-	virtual void	Spawn();
-	virtual void	Precache();
+	virtual void Spawn();
+	virtual void Precache();
 
 	// Firing
-	virtual bool	CanFireNow( void );
-	virtual void	Fire( CBaseTFPlayer *pDriver );
+	virtual bool CanFireNow(void);
+	virtual void Fire(CBaseTFPlayer *pDriver);
 
 	// Turning
-	virtual Vector	GetFireOrigin( void );
-	virtual void	SetTargetAngles( const QAngle &vecAngles );
+	virtual Vector GetFireOrigin(void);
+	virtual void SetTargetAngles(const QAngle &vecAngles);
 
-#if defined( CLIENT_DLL )
-	void			GetBoneControllers( float controllers[MAXSTUDIOBONECTRLS] );
-	virtual void	DrawHudElements( void );
+#if defined(CLIENT_DLL)
+	void GetBoneControllers(float controllers[MAXSTUDIOBONECTRLS]);
+	virtual void DrawHudElements(void);
 #endif
 
 	// Ammo
-	void			RechargeThink( void );
+	void RechargeThink(void);
 
 private:
-	float	m_flNextAttack;
-	int		m_nBarrelAttachment;
-	int		m_nAmmoType;
-	CNetworkVar( int, m_nAmmoCount );
-	int		m_nMaxAmmoCount;
+	float m_flNextAttack;
+	int m_nBarrelAttachment;
+	int m_nAmmoType;
+	CNetworkVar(int, m_nAmmoCount);
+	int m_nMaxAmmoCount;
 
 private:
-	CObjectDriverMachinegun( const CObjectDriverMachinegun & ); // not defined, not accessible
+	CObjectDriverMachinegun(const CObjectDriverMachinegun &); // not defined, not accessible
 };
 
 #endif // TF_OBJ_DRIVER_MACHINEGUN_H

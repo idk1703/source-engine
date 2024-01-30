@@ -33,13 +33,13 @@ class CMainPanel : public vgui::Panel
 {
 public:
 	// Construction/destruction
-						CMainPanel( );
-	virtual				~CMainPanel();
+	CMainPanel();
+	virtual ~CMainPanel();
 
-	virtual void		Initialize( );
+	virtual void Initialize();
 
 	// displays the dialog, moves it into focus, updates if it has to
-	virtual void		Open( void );
+	virtual void Open(void);
 
 	// returns a pointer to a static instance of this dialog
 	// valid for use only in sort functions
@@ -48,16 +48,24 @@ public:
 
 	void ActivateBuildMode();
 
-	void *GetShutdownHandle() { return m_hShutdown; }
+	void *GetShutdownHandle()
+	{
+		return m_hShutdown;
+	}
 
 	void AddConsoleText(const char *msg);
 
-	bool Stopping() { return m_bClosing; }
+	bool Stopping()
+	{
+		return m_bClosing;
+	}
 
-	bool IsInConfig() { return m_bIsInConfig; }
+	bool IsInConfig()
+	{
+		return m_bIsInConfig;
+	}
 
 private:
-
 	// called when dialog is shut down
 	virtual void OnClose();
 	virtual void OnTick();
@@ -74,8 +82,8 @@ private:
 	void *m_hShutdown;
 
 	bool m_bStarting; // whether the server is currently starting
-	bool m_bStarted; // whether the server has been started or not
-	bool m_bClosing; // whether we are shutting down
+	bool m_bStarted;  // whether the server has been started or not
+	bool m_bClosing;  // whether we are shutting down
 	bool m_bIsInConfig;
 	serveritem_t s1;
 	int m_hResourceWaitHandle;
@@ -83,7 +91,6 @@ private:
 
 	typedef vgui::Panel BaseClass;
 	DECLARE_PANELMAP();
-
 };
 
 #endif // CMAINPANEL_H

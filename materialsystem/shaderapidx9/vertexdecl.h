@@ -16,16 +16,15 @@
 #include "locald3dtypes.h"
 #include "materialsystem/imaterial.h"
 
-
 //-----------------------------------------------------------------------------
 // Gets the declspec associated with a vertex format
 //-----------------------------------------------------------------------------
-IDirect3DVertexDeclaration9 *FindOrCreateVertexDecl( VertexFormat_t fmt, bool bStaticLit, bool bUsingFlex, bool bUsingMorph );
+IDirect3DVertexDeclaration9 *FindOrCreateVertexDecl(VertexFormat_t fmt, bool bStaticLit, bool bUsingFlex,
+													bool bUsingMorph);
 
 //-----------------------------------------------------------------------------
 // Clears out all declspecs
 //-----------------------------------------------------------------------------
-void ReleaseAllVertexDecl( );
-
+void ReleaseAllVertexDecl();
 
 #endif // VERTEXDECL_H

@@ -37,9 +37,9 @@
 
 #define MAX_LSP_SIZE 20
 
-#define NB_CDBK_SIZE 64
-#define NB_CDBK_SIZE_LOW1 64
-#define NB_CDBK_SIZE_LOW2 64
+#define NB_CDBK_SIZE	   64
+#define NB_CDBK_SIZE_LOW1  64
+#define NB_CDBK_SIZE_LOW2  64
 #define NB_CDBK_SIZE_HIGH1 64
 #define NB_CDBK_SIZE_HIGH2 64
 

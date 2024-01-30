@@ -18,11 +18,9 @@
 #pragma once
 #endif
 
-
 #include "appframework/AppFramework.h"
 #include "tier2/tier2dm.h"
 #include "tier1/convar.h"
-
 
 //-----------------------------------------------------------------------------
 // The application object for apps that use tier2
@@ -36,9 +34,9 @@ public:
 	virtual bool PreInit()
 	{
 		CreateInterfaceFn factory = GetFactory();
-		ConnectTier1Libraries( &factory, 1 );
-		ConVar_Register( 0 );
-		ConnectTier2Libraries( &factory, 1 );
+		ConnectTier1Libraries(&factory, 1);
+		ConVar_Register(0);
+		ConnectTier2Libraries(&factory, 1);
 		return true;
 	}
 
@@ -49,7 +47,6 @@ public:
 		DisconnectTier1Libraries();
 	}
 };
-
 
 //-----------------------------------------------------------------------------
 // The application object for apps that use tier2 and datamodel
@@ -62,15 +59,15 @@ public:
 	// Methods of IApplication
 	virtual bool PreInit()
 	{
-		if ( !BaseClass::PreInit() )
+		if(!BaseClass::PreInit())
 			return false;
 
 		CreateInterfaceFn factory = GetFactory();
-		if ( !ConnectDataModel( factory ) )
+		if(!ConnectDataModel(factory))
 			return false;
 
 		InitReturnVal_t nRetVal = InitDataModel();
-		return ( nRetVal == INIT_OK );
+		return (nRetVal == INIT_OK);
 	}
 
 	virtual void PostShutdown()
@@ -80,6 +77,5 @@ public:
 		BaseClass::PostShutdown();
 	}
 };
-
 
 #endif // TIER2APP_H

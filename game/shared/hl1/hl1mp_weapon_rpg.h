@@ -4,13 +4,11 @@
 //
 //=============================================================================//
 
-
 #ifndef WEAPON_RPG_H
 #define WEAPON_RPG_H
 #ifdef _WIN32
 #pragma once
 #endif
-
 
 #include "hl1mp_basecombatweapon_shared.h"
 
@@ -33,31 +31,33 @@ class CWeaponRPG;
 //###########################################################################
 class CRpgRocket : public CHL1BaseGrenade
 {
-	DECLARE_CLASS( CRpgRocket, CHL1BaseGrenade );
+	DECLARE_CLASS(CRpgRocket, CHL1BaseGrenade);
 	DECLARE_SERVERCLASS();
 
 public:
 	CRpgRocket();
 
-	Class_T Classify( void ) { return CLASS_NONE; }
+	Class_T Classify(void)
+	{
+		return CLASS_NONE;
+	}
 
-	void Spawn( void );
-	void Precache( void );
-	void RocketTouch( CBaseEntity *pOther );
-	void IgniteThink( void );
-	void SeekThink( void );
+	void Spawn(void);
+	void Precache(void);
+	void RocketTouch(CBaseEntity *pOther);
+	void IgniteThink(void);
+	void SeekThink(void);
 
-	virtual void Detonate( void );
+	virtual void Detonate(void);
 
-	static CRpgRocket *Create( const Vector &vecOrigin, const QAngle &angAngles, CBasePlayer *pentOwner = NULL );
+	static CRpgRocket *Create(const Vector &vecOrigin, const QAngle &angAngles, CBasePlayer *pentOwner = NULL);
 
-	CHandle<CWeaponRPG>		m_hOwner;
-	float					m_flIgniteTime;
-	int						m_iTrail;
+	CHandle<CWeaponRPG> m_hOwner;
+	float m_flIgniteTime;
+	int m_iTrail;
 
 	DECLARE_DATADESC();
 };
-
 
 #endif
 
@@ -76,60 +76,59 @@ class CLaserDot;
 //-----------------------------------------------------------------------------
 class CWeaponRPG : public CBaseHL1MPCombatWeapon
 {
-	DECLARE_CLASS( CWeaponRPG, CBaseHL1MPCombatWeapon );
-public:
+	DECLARE_CLASS(CWeaponRPG, CBaseHL1MPCombatWeapon);
 
-	CWeaponRPG( void );
+public:
+	CWeaponRPG(void);
 	~CWeaponRPG();
 
-	void	ItemPostFrame( void );
-	void	Precache( void );
-	bool	Deploy( void );
-	void	PrimaryAttack( void );
-	void	WeaponIdle( void );
-	bool	Holster( CBaseCombatWeapon *pSwitchingTo = NULL );
-	void	NotifyRocketDied( void );
-	bool	Reload( void );
+	void ItemPostFrame(void);
+	void Precache(void);
+	bool Deploy(void);
+	void PrimaryAttack(void);
+	void WeaponIdle(void);
+	bool Holster(CBaseCombatWeapon *pSwitchingTo = NULL);
+	void NotifyRocketDied(void);
+	bool Reload(void);
 
-	void	Drop( const Vector &vecVelocity );
+	void Drop(const Vector &vecVelocity);
 
-	virtual int	GetDefaultClip1( void ) const;
+	virtual int GetDefaultClip1(void) const;
 
-//	DECLARE_SERVERCLASS();
+	//	DECLARE_SERVERCLASS();
 	DECLARE_DATADESC();
 	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 private:
-	void	CreateLaserPointer( void );
-	void	UpdateSpot( void );
-	bool	IsGuiding( void );
-	void	StartGuiding( void );
-	void	StopGuiding( void );
+	void CreateLaserPointer(void);
+	void UpdateSpot(void);
+	bool IsGuiding(void);
+	void StartGuiding(void);
+	void StopGuiding(void);
 
 #ifndef CLIENT_DLL
 //	DECLARE_ACTTABLE();
 #endif
 
 private:
-//	bool				m_bGuiding;
-//	CHandle<CLaserDot>	m_hLaserDot;
-//	CHandle<CRpgRocket>	m_hMissile;
-//	bool				m_bIntialStateUpdate;
-//	bool				m_bLaserDotSuspended;
-//	float				m_flLaserDotReviveTime;
+	//	bool				m_bGuiding;
+	//	CHandle<CLaserDot>	m_hLaserDot;
+	//	CHandle<CRpgRocket>	m_hMissile;
+	//	bool				m_bIntialStateUpdate;
+	//	bool				m_bLaserDotSuspended;
+	//	float				m_flLaserDotReviveTime;
 
-	CNetworkVar( bool, m_bGuiding );
-	CNetworkVar( bool, m_bIntialStateUpdate );
-	CNetworkVar( bool, m_bLaserDotSuspended );
-	CNetworkVar( float, m_flLaserDotReviveTime );
+	CNetworkVar(bool, m_bGuiding);
+	CNetworkVar(bool, m_bIntialStateUpdate);
+	CNetworkVar(bool, m_bLaserDotSuspended);
+	CNetworkVar(float, m_flLaserDotReviveTime);
 
-	CNetworkHandle( CBaseEntity, m_hMissile );
+	CNetworkHandle(CBaseEntity, m_hMissile);
 
 #ifndef CLIENT_DLL
-	CHandle<CLaserDot>	m_hLaserDot;
+	CHandle<CLaserDot> m_hLaserDot;
 #endif
 };
 
-
-#endif	// WEAPON_RPG_H
+#endif // WEAPON_RPG_H

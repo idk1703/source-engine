@@ -20,18 +20,20 @@
 //-----------------------------------------------------------------------------
 class CMapCycleEditDialog : public vgui::Frame
 {
-	DECLARE_CLASS_SIMPLE( CMapCycleEditDialog, vgui::Frame );
+	DECLARE_CLASS_SIMPLE(CMapCycleEditDialog, vgui::Frame);
+
 public:
 	CMapCycleEditDialog(vgui::Panel *parent, const char *name);
 	~CMapCycleEditDialog();
-	virtual void Activate(vgui::Panel *updateTarget, CUtlVector<CUtlSymbol> &availableMaps, CUtlVector<CUtlSymbol> &mapCycle);
+	virtual void Activate(vgui::Panel *updateTarget, CUtlVector<CUtlSymbol> &availableMaps,
+						  CUtlVector<CUtlSymbol> &mapCycle);
 
 protected:
 	virtual void OnCommand(const char *command);
 	virtual void PerformLayout();
 
 private:
-	MESSAGE_FUNC_PTR( OnItemSelected, "ItemSelected", panel );
+	MESSAGE_FUNC_PTR(OnItemSelected, "ItemSelected", panel);
 
 	vgui::ListPanel *m_pAvailableMapList;
 	vgui::ListPanel *m_pMapCycleList;
@@ -40,6 +42,5 @@ private:
 	vgui::Button *m_UpArrow;
 	vgui::Button *m_DownArrow;
 };
-
 
 #endif // MAPCYCLEEDITDIALOG_H

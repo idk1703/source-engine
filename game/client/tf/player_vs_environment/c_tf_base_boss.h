@@ -8,18 +8,20 @@
 class C_TFBaseBoss : public C_NextBotCombatCharacter, public C_TFMvMBossProgressUser
 {
 public:
-	DECLARE_CLASS( C_TFBaseBoss, C_NextBotCombatCharacter );
+	DECLARE_CLASS(C_TFBaseBoss, C_NextBotCombatCharacter);
 	DECLARE_CLIENTCLASS();
 
 	virtual ~C_TFBaseBoss() {}
 
-	ShadowType_t ShadowCastType( void );
+	ShadowType_t ShadowCastType(void);
 
 	// ITFMvMBossProgressUser
-	virtual float GetBossStatusProgress() const OVERRIDE { return m_lastHealthPercentage; }
+	virtual float GetBossStatusProgress() const OVERRIDE
+	{
+		return m_lastHealthPercentage;
+	}
 
 private:
-
 	float m_lastHealthPercentage;
 };
 

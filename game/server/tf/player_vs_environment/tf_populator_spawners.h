@@ -6,7 +6,6 @@
 #ifndef TF_POPULATOR_SPAWNERS_H
 #define TF_POPULATOR_SPAWNERS_H
 
-
 #include "bot/tf_bot.h"
 #include "tf_mann_vs_machine_stats.h"
 
@@ -37,8 +36,8 @@ enum SpawnLocationResult
 	SPAWN_LOCATION_TELEPORTER
 };
 
-typedef CUtlVector< CHandle< CBaseEntity > > EntityHandleVector_t;
-typedef CUtlVector< CHandle< CTFTeamSpawn > > TFTeamSpawnVector_t;
+typedef CUtlVector<CHandle<CBaseEntity>> EntityHandleVector_t;
+typedef CUtlVector<CHandle<CTFTeamSpawn>> TFTeamSpawnVector_t;
 
 //--------------------------------------------------------------------------------------------------------
 //
@@ -48,10 +47,10 @@ typedef CUtlVector< CHandle< CTFTeamSpawn > > TFTeamSpawnVector_t;
 //  |/
 //  /----
 //  0   1
-inline float SkewedRandomValue( void )
+inline float SkewedRandomValue(void)
 {
-	float x = RandomFloat( 0, 1.0f );
-	float y = RandomFloat( 0, 1.0f );
+	float x = RandomFloat(0, 1.0f);
+	float y = RandomFloat(0, 1.0f);
 	return x < y ? y : x;
 }
 
@@ -59,22 +58,22 @@ inline float SkewedRandomValue( void )
 class CMvMBotUpgrade
 {
 public:
-	char	szAttrib[ MAX_ATTRIBUTE_DESCRIPTION_LENGTH ];	// Debug
-	int		iAttribIndex;
-	float	flValue;
-	float	flMax;
-	int		nCost;
-	bool    bIsBotAttr;
-	bool	bIsSkillAttr;		// Probably want to make these an enum or flag later
+	char szAttrib[MAX_ATTRIBUTE_DESCRIPTION_LENGTH]; // Debug
+	int iAttribIndex;
+	float flValue;
+	float flMax;
+	int nCost;
+	bool bIsBotAttr;
+	bool bIsSkillAttr; // Probably want to make these an enum or flag later
 };
 
 //-----------------------------------------------------------------------
 class CTFNavAreaIncursionLess
 {
 public:
-	bool Less( const CTFNavArea *a, const CTFNavArea *b, void *pCtx )
+	bool Less(const CTFNavArea *a, const CTFNavArea *b, void *pCtx)
 	{
-		return a->GetIncursionDistance( TF_TEAM_BLUE ) < b->GetIncursionDistance( TF_TEAM_BLUE );
+		return a->GetIncursionDistance(TF_TEAM_BLUE) < b->GetIncursionDistance(TF_TEAM_BLUE);
 	}
 };
 
@@ -87,41 +86,56 @@ class IPopulationSpawner
 public:
 	// We need a virtual destructor or else the derived-class destructors won't be called,
 	// leading to memory leaks. Found via clang warning.
-	virtual ~IPopulationSpawner()
-	{
-	}
+	virtual ~IPopulationSpawner() {}
 
-	IPopulationSpawner( IPopulator *populator )
+	IPopulationSpawner(IPopulator *populator)
 	{
 		m_populator = populator;
 	}
 
-	IPopulator *GetPopulator( void ) const
+	IPopulator *GetPopulator(void) const
 	{
 		return m_populator;
 	}
 
-	virtual bool Parse( KeyValues *data ) = 0;
-	virtual bool Spawn( const Vector &here, EntityHandleVector_t *result = NULL ) = 0;
-	virtual bool IsWhereRequired( void ) const		// does this spawner need a valid Where parameter?
+	virtual bool Parse(KeyValues *data) = 0;
+	virtual bool Spawn(const Vector &here, EntityHandleVector_t *result = NULL) = 0;
+	virtual bool IsWhereRequired(void) const // does this spawner need a valid Where parameter?
 	{
 		return true;
 	}
 
-	virtual bool IsVarious( void ) { return false; }
-	virtual int GetClass( int nSpawnNum = -1 ) { return TF_CLASS_UNDEFINED; }
-	virtual string_t GetClassIcon( int nSpawnNum = -1 ) { return NULL_STRING; }
-	virtual int GetHealth( int nSpawnNum = -1  ){ return 0; }
-	virtual bool IsMiniBoss( int nSpawnNum = -1 ) { return false; }
-	virtual bool HasAttribute( CTFBot::AttributeType type, int nSpawnNum = -1 ) { return false; }
-	virtual bool HasEventChangeAttributes( const char* pszEventName ) const = 0;
+	virtual bool IsVarious(void)
+	{
+		return false;
+	}
+	virtual int GetClass(int nSpawnNum = -1)
+	{
+		return TF_CLASS_UNDEFINED;
+	}
+	virtual string_t GetClassIcon(int nSpawnNum = -1)
+	{
+		return NULL_STRING;
+	}
+	virtual int GetHealth(int nSpawnNum = -1)
+	{
+		return 0;
+	}
+	virtual bool IsMiniBoss(int nSpawnNum = -1)
+	{
+		return false;
+	}
+	virtual bool HasAttribute(CTFBot::AttributeType type, int nSpawnNum = -1)
+	{
+		return false;
+	}
+	virtual bool HasEventChangeAttributes(const char *pszEventName) const = 0;
 
-	static IPopulationSpawner *ParseSpawner( IPopulator *populator, KeyValues *data );
+	static IPopulationSpawner *ParseSpawner(IPopulator *populator, KeyValues *data);
 
 protected:
 	IPopulator *m_populator;
 };
-
 
 //-----------------------------------------------------------------------
 // A RandomChoice spawner picks one of the Spawners in its
@@ -129,46 +143,48 @@ protected:
 class CRandomChoiceSpawner : public IPopulationSpawner
 {
 public:
-	CRandomChoiceSpawner( IPopulator *populator );
+	CRandomChoiceSpawner(IPopulator *populator);
 	virtual ~CRandomChoiceSpawner();
 
-	virtual bool Parse( KeyValues *data );
-	virtual bool Spawn( const Vector &here, CUtlVector< CHandle< CBaseEntity > > *result = NULL );
+	virtual bool Parse(KeyValues *data);
+	virtual bool Spawn(const Vector &here, CUtlVector<CHandle<CBaseEntity>> *result = NULL);
 
-	virtual bool IsVarious( void ) { return true; }
-	virtual int GetClass( int nSpawnNum = -1 );
-	virtual string_t GetClassIcon( int nSpawnNum = -1 );
-	virtual int GetHealth( int nSpawnNum = -1  );
-	virtual bool IsMiniBoss( int nSpawnNum = -1 ) OVERRIDE;
-	virtual bool HasAttribute( CTFBot::AttributeType type, int nSpawnNum = -1 );
+	virtual bool IsVarious(void)
+	{
+		return true;
+	}
+	virtual int GetClass(int nSpawnNum = -1);
+	virtual string_t GetClassIcon(int nSpawnNum = -1);
+	virtual int GetHealth(int nSpawnNum = -1);
+	virtual bool IsMiniBoss(int nSpawnNum = -1) OVERRIDE;
+	virtual bool HasAttribute(CTFBot::AttributeType type, int nSpawnNum = -1);
 
-	virtual bool HasEventChangeAttributes( const char* pszEventName ) const OVERRIDE;
+	virtual bool HasEventChangeAttributes(const char *pszEventName) const OVERRIDE;
 
-	CUtlVector< IPopulationSpawner * > m_spawnerVector;
-	CUtlVector< int > m_nRandomPickDecision;
+	CUtlVector<IPopulationSpawner *> m_spawnerVector;
+	CUtlVector<int> m_nRandomPickDecision;
 
 	int m_nNumSpawned;
 };
-
 
 //-----------------------------------------------------------------------
 class CTFBotSpawner : public IPopulationSpawner
 {
 public:
-	CTFBotSpawner( IPopulator *populator );
-	virtual ~CTFBotSpawner() { }
+	CTFBotSpawner(IPopulator *populator);
+	virtual ~CTFBotSpawner() {}
 
-	virtual bool Parse( KeyValues *data );
-	bool ParseEventChangeAttributes( KeyValues *data );
-	virtual bool Spawn( const Vector &here, EntityHandleVector_t *result = NULL );
+	virtual bool Parse(KeyValues *data);
+	bool ParseEventChangeAttributes(KeyValues *data);
+	virtual bool Spawn(const Vector &here, EntityHandleVector_t *result = NULL);
 
-	virtual int GetClass( int nSpawnNum = -1 );
-	virtual string_t GetClassIcon( int nSpawnNum = -1 );
-	virtual int GetHealth( int nSpawnNum = -1  );
-	virtual bool IsMiniBoss( int nSpawnNum = -1 ) OVERRIDE;
-	virtual bool HasAttribute( CTFBot::AttributeType type, int nSpawnNum = -1 );
+	virtual int GetClass(int nSpawnNum = -1);
+	virtual string_t GetClassIcon(int nSpawnNum = -1);
+	virtual int GetHealth(int nSpawnNum = -1);
+	virtual bool IsMiniBoss(int nSpawnNum = -1) OVERRIDE;
+	virtual bool HasAttribute(CTFBot::AttributeType type, int nSpawnNum = -1);
 
-	virtual bool HasEventChangeAttributes( const char* pszEventName ) const OVERRIDE;
+	virtual bool HasEventChangeAttributes(const char *pszEventName) const OVERRIDE;
 
 	int m_class;
 	string_t m_iszClassIcon;
@@ -182,35 +198,47 @@ public:
 	CUtlStringList m_teleportWhereName;
 
 	CTFBot::EventChangeAttributes_t m_defaultAttributes;
-	CUtlVector< CTFBot::EventChangeAttributes_t > m_eventChangeAttributes;
+	CUtlVector<CTFBot::EventChangeAttributes_t> m_eventChangeAttributes;
 };
 
 //-----------------------------------------------------------------------
 class CTankSpawner : public IPopulationSpawner
 {
 public:
-	CTankSpawner( IPopulator *populator );
+	CTankSpawner(IPopulator *populator);
 
-	virtual string_t GetClassIcon( int nSpawnNum = -1 ) { return MAKE_STRING( "tank" ); }
-	virtual int GetHealth( int nSpawnNum = -1  ){ return m_health; }
+	virtual string_t GetClassIcon(int nSpawnNum = -1)
+	{
+		return MAKE_STRING("tank");
+	}
+	virtual int GetHealth(int nSpawnNum = -1)
+	{
+		return m_health;
+	}
 
-	virtual bool Parse( KeyValues *data );
-	virtual bool Spawn( const Vector &here, EntityHandleVector_t *result = NULL );
+	virtual bool Parse(KeyValues *data);
+	virtual bool Spawn(const Vector &here, EntityHandleVector_t *result = NULL);
 
-	virtual bool IsWhereRequired( void ) const		// does this spawner need a valid Where parameter?
+	virtual bool IsWhereRequired(void) const // does this spawner need a valid Where parameter?
 	{
 		// the Tank spawns at a given path node
 		return false;
 	}
 
-	virtual bool IsMiniBoss( int nSpawnNum = -1 ) OVERRIDE { return true; }
+	virtual bool IsMiniBoss(int nSpawnNum = -1) OVERRIDE
+	{
+		return true;
+	}
 
-	virtual bool HasEventChangeAttributes( const char* pszEventName ) const OVERRIDE { return false; }
+	virtual bool HasEventChangeAttributes(const char *pszEventName) const OVERRIDE
+	{
+		return false;
+	}
 
 	int m_health;
 	float m_speed;
 	CUtlString m_name;
-	CUtlString m_startingPathTrackNodeName;		// which path_track we start at
+	CUtlString m_startingPathTrackNodeName; // which path_track we start at
 	int m_skin;
 	EventInfo *m_onKilledOutput;
 	EventInfo *m_onBombDroppedOutput;
@@ -220,53 +248,57 @@ public:
 class CSentryGunSpawner : public IPopulationSpawner
 {
 public:
-	CSentryGunSpawner( IPopulator *populator );
+	CSentryGunSpawner(IPopulator *populator);
 
-	virtual bool Parse( KeyValues *data );
-	virtual bool Spawn( const Vector &here, EntityHandleVector_t *result = NULL );
+	virtual bool Parse(KeyValues *data);
+	virtual bool Spawn(const Vector &here, EntityHandleVector_t *result = NULL);
 
-	virtual bool HasEventChangeAttributes( const char* pszEventName ) const OVERRIDE { return false; }
+	virtual bool HasEventChangeAttributes(const char *pszEventName) const OVERRIDE
+	{
+		return false;
+	}
 
 	int m_level;
 };
-
 
 //-----------------------------------------------------------------------
 class CSquadSpawner : public IPopulationSpawner
 {
 public:
-	CSquadSpawner( IPopulator *populator );
+	CSquadSpawner(IPopulator *populator);
 	virtual ~CSquadSpawner();
 
-	virtual bool Parse( KeyValues *data );
-	virtual bool Spawn( const Vector &here, EntityHandleVector_t *result = NULL );
+	virtual bool Parse(KeyValues *data);
+	virtual bool Spawn(const Vector &here, EntityHandleVector_t *result = NULL);
 
-	virtual bool IsVarious( void ) { return true; }
-	virtual int GetClass( int nSpawnNum = -1 );
-	virtual string_t GetClassIcon( int nSpawnNum = -1 );
-	virtual int GetHealth( int nSpawnNum = -1  );
-	virtual bool IsMiniBoss( int nSpawnNum = -1 ) OVERRIDE;
-	virtual bool HasAttribute( CTFBot::AttributeType type, int nSpawnNum = -1 );
+	virtual bool IsVarious(void)
+	{
+		return true;
+	}
+	virtual int GetClass(int nSpawnNum = -1);
+	virtual string_t GetClassIcon(int nSpawnNum = -1);
+	virtual int GetHealth(int nSpawnNum = -1);
+	virtual bool IsMiniBoss(int nSpawnNum = -1) OVERRIDE;
+	virtual bool HasAttribute(CTFBot::AttributeType type, int nSpawnNum = -1);
 
-	virtual bool HasEventChangeAttributes( const char* pszEventName ) const OVERRIDE;
+	virtual bool HasEventChangeAttributes(const char *pszEventName) const OVERRIDE;
 
-	CUtlVector< IPopulationSpawner * > m_memberSpawnerVector;	// all of these are invoked to instantiate the squad
+	CUtlVector<IPopulationSpawner *> m_memberSpawnerVector; // all of these are invoked to instantiate the squad
 
 	float m_formationSize;
 	bool m_bShouldPreserveSquad;
 };
 
-
 //-----------------------------------------------------------------------
 class CMobSpawner : public IPopulationSpawner
 {
 public:
-	CMobSpawner( IPopulator *populator );
+	CMobSpawner(IPopulator *populator);
 	virtual ~CMobSpawner();
 
-	virtual bool Parse( KeyValues *data );
-	virtual bool Spawn( const Vector &here, EntityHandleVector_t *result = NULL );
-	virtual bool HasEventChangeAttributes( const char* pszEventName ) const OVERRIDE;
+	virtual bool Parse(KeyValues *data);
+	virtual bool Spawn(const Vector &here, EntityHandleVector_t *result = NULL);
+	virtual bool HasEventChangeAttributes(const char *pszEventName) const OVERRIDE;
 
 	int m_count;
 	IPopulationSpawner *m_spawner;
@@ -278,6 +310,5 @@ private:
 	CTFNavArea *m_mobArea;
 	int m_mobCountRemaining;
 };
-
 
 #endif // TF_POPULATOR_SPAWNERS_H

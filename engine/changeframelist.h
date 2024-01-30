@@ -11,9 +11,7 @@
 #pragma once
 #endif
 
-
 #include "bitbuf.h"
-
 
 // This class holds the last tick (from host_tickcount) that each property in
 // a datatable changed at.
@@ -26,31 +24,27 @@
 abstract_class IChangeFrameList
 {
 public:
-
 	// Call this to delete the object.
-	virtual void	Release() = 0;
+	virtual void Release() = 0;
 
 	// This just returns the value you passed into AllocChangeFrameList().
-	virtual int		GetNumProps() = 0;
+	virtual int GetNumProps() = 0;
 
 	// Sets the change frames for the specified properties to iFrame.
-	virtual void	SetChangeTick( const int *pPropIndices, int nPropIndices, const int iTick ) = 0;
+	virtual void SetChangeTick(const int *pPropIndices, int nPropIndices, const int iTick) = 0;
 
 	// Get a list of all properties with a change frame > iFrame.
-	virtual int		GetPropsChangedAfterTick( int iTick, int *iOutProps, int nMaxOutProps ) = 0;
+	virtual int GetPropsChangedAfterTick(int iTick, int *iOutProps, int nMaxOutProps) = 0;
 
-	virtual IChangeFrameList* Copy() = 0; // return a copy of itself
-
+	virtual IChangeFrameList *Copy() = 0; // return a copy of itself
 
 protected:
 	// Use Release to delete these.
-	virtual			~IChangeFrameList() {}
+	virtual ~IChangeFrameList() {}
 };
-
 
 // Call to initialize. Pass in the number of properties this CChangeFrameList will hold.
 // All properties will be initialized to iCurFrame.
-IChangeFrameList* AllocChangeFrameList( int nProperties, int iCurFrame );
-
+IChangeFrameList *AllocChangeFrameList(int nProperties, int iCurFrame);
 
 #endif // CHANGEFRAMELIST_H

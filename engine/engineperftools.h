@@ -18,11 +18,11 @@ namespace vgui
 abstract_class IEnginePerfTools
 {
 public:
-	virtual void		Init( void ) = 0;
-	virtual void		Shutdown( void ) = 0;
+	virtual void Init(void) = 0;
+	virtual void Shutdown(void) = 0;
 
-	virtual void		InstallPerformanceToolsUI( vgui::Panel *parent ) = 0;
-	virtual bool		ShouldPause() const = 0;
+	virtual void InstallPerformanceToolsUI(vgui::Panel * parent) = 0;
+	virtual bool ShouldPause() const = 0;
 };
 
 extern IEnginePerfTools *perftools;

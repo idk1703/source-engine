@@ -30,7 +30,6 @@ enum ECombineOperation
 	ECO_Error,
 
 	ECO_COUNT
-
 };
 
 #endif /* COMBINEOPERATIONS_H */

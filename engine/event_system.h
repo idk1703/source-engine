@@ -10,7 +10,7 @@
 //
 // $NoKeywords: $
 //=============================================================================//
-#if !defined( EVENT_SYSTEM_H )
+#if !defined(EVENT_SYSTEM_H)
 #define EVENT_SYSTEM_H
 #ifdef _WIN32
 #pragma once
@@ -19,7 +19,6 @@
 #include "event_flags.h"
 #include "common.h"
 #include "enginesingleuserfilter.h"
-
 
 class SendTable;
 class ClientClass;
@@ -34,7 +33,7 @@ public:
 	{
 		EVENT_INDEX_BITS = 8,
 		EVENT_DATA_LEN_BITS = 11,
-		MAX_EVENT_DATA = 192,  // ( 1<<8 bits == 256, but only using 192 below )
+		MAX_EVENT_DATA = 192, // ( 1<<8 bits == 256, but only using 192 below )
 	};
 
 	inline CEventInfo()
@@ -50,13 +49,13 @@ public:
 
 	~CEventInfo()
 	{
-		if ( pData )
+		if(pData)
 		{
 			delete pData;
 		}
 	}
 
-	CEventInfo( const CEventInfo& src )
+	CEventInfo(const CEventInfo &src)
 	{
 		classID = src.classID;
 		fire_delay = src.fire_delay;
@@ -64,19 +63,18 @@ public:
 		flags = src.flags;
 		pSendTable = src.pSendTable;
 		pClientClass = src.pClientClass;
-		filter.AddPlayersFromFilter( &src.filter );
+		filter.AddPlayersFromFilter(&src.filter);
 
-		if ( src.pData )
+		if(src.pData)
 		{
-			int size = Bits2Bytes( src.bits );
+			int size = Bits2Bytes(src.bits);
 			pData = new byte[size];
-			Q_memcpy( pData, src.pData, size );
+			Q_memcpy(pData, src.pData, size);
 		}
 		else
 		{
 			pData = NULL;
 		}
-
 	}
 
 	// 0 implies not in use
@@ -90,15 +88,14 @@ public:
 	const ClientClass *pClientClass;
 
 	// Length of data bits
-	int		bits;
+	int bits;
 	// Raw event data
-	byte	*pData;
+	byte *pData;
 	// CLIENT ONLY Reliable or not, etc.
-	int		flags;
+	int flags;
 
 	// clients that see that event
 	CEngineRecipientFilter filter;
 };
-
 
 #endif // EVENT_SYSTEM_H

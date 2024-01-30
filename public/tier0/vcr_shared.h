@@ -11,16 +11,14 @@
 #pragma once
 #endif
 
-
-#define VCRFILE_VERSION		2
-
+#define VCRFILE_VERSION 2
 
 // Identifiers for the things we record. When playing back, these things should
 // be asked for in the exact same order (otherwise, the engine isn't making all
 // the calls in the same order).
 typedef enum
 {
-	VCREvent_Sys_FloatTime=0,
+	VCREvent_Sys_FloatTime = 0,
 	VCREvent_recvfrom,
 	VCREvent_SyncToken,
 	VCREvent_GetCursorPos,
@@ -49,6 +47,5 @@ typedef enum
 	VCREvent_GenericString,
 	VCREvent_NUMEVENTS
 } VCREvent;
-
 
 #endif // VCR_SHARED_H

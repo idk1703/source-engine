@@ -9,11 +9,11 @@
 #ifndef FILEIO_H
 #define FILEIO_H
 
-#if defined (_WIN32)
+#if defined(_WIN32)
 #else
 #include <sys/types.h>
 #include <sys/stat.h>
-#if !defined( _PS3 )
+#if !defined(_PS3)
 #include <signal.h>
 #endif // _PS3
 #endif
@@ -31,25 +31,23 @@ const int64 k_nGigabyte = k_nMegabyte * k_nKiloByte;
 class CPathString
 {
 public:
-
 	// Constructors: Automatically fixes slashes and removes double slashes when the object is
 	// constructed, and then knows how to append magic \\?\ on Windows for unicode paths
-	CPathString( const char *pchUTF8Path );
+	CPathString(const char *pchUTF8Path);
 	~CPathString();
 
 	// Gets the path in UTF8
 	const char *GetUTF8Path();
 
-	// Gets wchar_t based path, with \\?\ pre-pended (allowing long paths on Win32, should only be used with unicode aware filesystem calls)
+	// Gets wchar_t based path, with \\?\ pre-pended (allowing long paths on Win32, should only be used with unicode
+	// aware filesystem calls)
 	const wchar_t *GetWCharPathPrePended();
 
 private:
-
 	void PopulateWCharPath();
 
 	char *m_pchUTF8Path;
 	wchar_t *m_pwchWideCharPathPrepended;
-
 };
 
 #if !defined(_PS3)
@@ -63,13 +61,13 @@ public:
 	~CDirWatcher();
 
 	// only one directory can be watched at a time
-	void SetDirToWatch( const char *pchDir );
+	void SetDirToWatch(const char *pchDir);
 
 	// retrieve any changes
-	bool GetChangedFile( CUtlString *psFile );
+	bool GetChangedFile(CUtlString *psFile);
 
 #ifdef DBGFLAG_VALIDATE
-	void Validate( CValidator &validator, const char *pchName );
+	void Validate(CValidator &validator, const char *pchName);
 #endif
 
 private:
@@ -80,19 +78,20 @@ private:
 #ifdef OSX
 public:
 	struct timespec m_modTime;
-	void AddFileToChangeList( const char *pchFile );
+	void AddFileToChangeList(const char *pchFile);
 	CUtlString m_BaseDir;
+
 private:
 	void *m_WatcherStream;
 #endif
 	friend class CDirWatcherFriend;
 
 #ifdef LINUX
-	void AddFileToChangeList( const char *pchFile );
+	void AddFileToChangeList(const char *pchFile);
 #endif
 #ifdef WIN32
 	// used by callback functions to push a file onto the list
-	void AddFileToChangeList( const char *pchFile );
+	void AddFileToChangeList(const char *pchFile);
 	void PostDirWatch();
 #endif
 };

@@ -26,9 +26,9 @@
 #endif
 
 #ifdef _MDEBUG
-	#define TRACKED (__FILE__, __LINE__)
+#define TRACKED (__FILE__, __LINE__)
 #else
-	#define TRACKED
+#define TRACKED
 #endif
 
 #ifdef _MDEBUG
@@ -37,16 +37,15 @@ void *operator new[](size_t size, const char *file, const int line);
 void operator delete(void *ptr, const char *file, const int line);
 void operator delete[](void *ptr, const char *file, const int line);
 
-
-//replacing global new for debugging purposes.
-//these were written by me, wes cumberland, not paul andre leblanc
-void* operator new(size_t size);
-void* operator new[](size_t size);
-void operator delete(void* v);
-void operator delete[](void* v);
+// replacing global new for debugging purposes.
+// these were written by me, wes cumberland, not paul andre leblanc
+void *operator new(size_t size);
+void *operator new[](size_t size);
+void operator delete(void *v);
+void operator delete[](void *v);
 #endif
 
-//leave this in, even for release build
+// leave this in, even for release build
 int TFStats_win32_new_handler(size_t sz);
 void TFStats_linux_new_handler(void);
 

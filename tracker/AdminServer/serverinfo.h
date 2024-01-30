@@ -17,13 +17,11 @@
 class CSocket;
 class IResponse;
 
-
 class CServerInfo
 {
 
 public:
-
-	CServerInfo(IResponse *target,serveritem_t &server);
+	CServerInfo(IResponse *target, serveritem_t &server);
 	~CServerInfo();
 
 	// send an rcon command to a server
@@ -36,25 +34,21 @@ public:
 	void RunFrame();
 	bool Refreshed();
 
-	void UpdateServer(netadr_t *adr, bool proxy, const char *serverName, const char *map,
-						 const char *gamedir, const char *gameDescription, int players,
-						 int maxPlayers, float recvTime, bool password);
+	void UpdateServer(netadr_t *adr, bool proxy, const char *serverName, const char *map, const char *gamedir,
+					  const char *gameDescription, int players, int maxPlayers, float recvTime, bool password);
 
 	int serverID;
 	int received;
 
 private:
-
 	serveritem_t m_Server;
-	CSocket	*m_pQuery;	// Game server query socket
+	CSocket *m_pQuery; // Game server query socket
 
 	IResponse *m_pResponseTarget;
 
 	bool m_bIsRefreshing;
 	float m_fSendTime;
 	bool m_bRefreshed;
-
 };
-
 
 #endif // SERVERINFO_H

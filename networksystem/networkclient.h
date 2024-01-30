@@ -18,24 +18,24 @@ public:
 	CNetworkClient();
 	virtual ~CNetworkClient();
 
-	bool	Init( int nListenPort );
-	void	Shutdown();
+	bool Init(int nListenPort);
+	void Shutdown();
 
-	bool	Connect( const char *server, int port );
-	void	Disconnect();
+	bool Connect(const char *server, int port);
+	void Disconnect();
 
 	// IConnectionlessPacketHandler
-	virtual bool ProcessConnectionlessPacket( CNetPacket *packet );	// process a connectionless packet
+	virtual bool ProcessConnectionlessPacket(CNetPacket *packet); // process a connectionless packet
 
 	// INetworkMessageHandler
-	virtual void	OnConnectionClosing( INetChannel *channel, char const *reason );
-	virtual void	OnConnectionStarted( INetChannel *channel );
+	virtual void OnConnectionClosing(INetChannel *channel, char const *reason);
+	virtual void OnConnectionStarted(INetChannel *channel);
 
-	virtual void	OnPacketStarted( int inseq, int outseq );
-	virtual void	OnPacketFinished();
+	virtual void OnPacketStarted(int inseq, int outseq);
+	virtual void OnPacketFinished();
 
 	// ILookupChannel
-	virtual INetChannel *FindNetChannel( const netadr_t& from ) ;
+	virtual INetChannel *FindNetChannel(const netadr_t &from);
 
 	INetChannel *GetNetChannel()
 	{
@@ -47,8 +47,8 @@ public:
 
 	CUDPSocket *m_pSocket;
 
-	CNetChannel		m_NetChan;
-	bool			m_bConnected;
+	CNetChannel m_NetChan;
+	bool m_bConnected;
 };
 
 #endif // CLIENT_H

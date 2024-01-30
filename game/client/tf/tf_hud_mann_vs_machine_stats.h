@@ -20,24 +20,23 @@
 //=========================================================
 class CCreditDisplayPanel : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CCreditDisplayPanel, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CCreditDisplayPanel, vgui::EditablePanel);
+
 public:
-	CCreditDisplayPanel( Panel *parent, const char *pName );
+	CCreditDisplayPanel(Panel *parent, const char *pName);
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 };
 
 //=========================================================
 class CCreditSpendPanel : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CCreditSpendPanel, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CCreditSpendPanel, vgui::EditablePanel);
+
 public:
-	CCreditSpendPanel( Panel *parent, const char *pName );
+	CCreditSpendPanel(Panel *parent, const char *pName);
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 };
-
 
 #endif // TF_HUD_MANN_VS_MACHINE_STATS_H

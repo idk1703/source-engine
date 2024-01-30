@@ -10,9 +10,7 @@
 #pragma once
 #endif
 
-
 #include "utlvector.h"
-
 
 class CNetViewThread
 {
@@ -25,21 +23,19 @@ public:
 	void Init();
 	void Term();
 
-	void GetComputerNames( CUtlVector<char*> &computerNames );
+	void GetComputerNames(CUtlVector<char *> &computerNames);
 
 private:
-
 	void UpdateServicesFromNetView();
-	void ParseComputerNames( const char *pNetViewOutput );
+	void ParseComputerNames(const char *pNetViewOutput);
 
 	DWORD ThreadFn();
-	static DWORD WINAPI StaticThreadFn( LPVOID lpParameter );
+	static DWORD WINAPI StaticThreadFn(LPVOID lpParameter);
 
-	CUtlVector<char*> m_ComputerNames;
+	CUtlVector<char *> m_ComputerNames;
 	HANDLE m_hThread;
 	HANDLE m_hThreadExitEvent;
 	CRITICAL_SECTION m_ComputerNamesCS;
 };
-
 
 #endif // NET_VIEW_THREAD_H

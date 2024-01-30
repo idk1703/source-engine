@@ -14,32 +14,31 @@
 
 class CDmeBalanceToStereoCalculatorOperator : public CDmeOperator
 {
-	DEFINE_ELEMENT( CDmeBalanceToStereoCalculatorOperator, CDmeOperator );
+	DEFINE_ELEMENT(CDmeBalanceToStereoCalculatorOperator, CDmeOperator);
 
 public:
 	virtual void Operate();
 
-	virtual void GetInputAttributes ( CUtlVector< CDmAttribute * > &attrs );
-	virtual void GetOutputAttributes( CUtlVector< CDmAttribute * > &attrs );
+	virtual void GetInputAttributes(CUtlVector<CDmAttribute *> &attrs);
+	virtual void GetOutputAttributes(CUtlVector<CDmAttribute *> &attrs);
 
-	void		SetSpewResult( bool state );
+	void SetSpewResult(bool state);
 
 protected:
 	float ComputeDefaultValue();
 
-	CDmaVar< float > m_result_left;
-	CDmaVar< float > m_result_right;
-	CDmaVar< float > m_result_multi;
+	CDmaVar<float> m_result_left;
+	CDmaVar<float> m_result_right;
+	CDmaVar<float> m_result_multi;
 
-	CDmaVar< float > m_value;		// input value
-	CDmaVar< float > m_balance;		// balance value
-	CDmaVar< float > m_multilevel;	// multilevel value
+	CDmaVar<float> m_value;		 // input value
+	CDmaVar<float> m_balance;	 // balance value
+	CDmaVar<float> m_multilevel; // multilevel value
 
 	// Debuggin
-	CDmaVar< bool >  m_bSpewResult;
+	CDmaVar<bool> m_bSpewResult;
 
 	float m_flDefaultValue;
 };
-
 
 #endif // DMEBALANCETOSTEREOCALCULATOROPERATOR_H

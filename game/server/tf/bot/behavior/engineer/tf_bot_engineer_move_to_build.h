@@ -10,33 +10,35 @@
 
 class CTFBotHintSentrygun;
 
-
-class CTFBotEngineerMoveToBuild : public Action< CTFBot >
+class CTFBotEngineerMoveToBuild : public Action<CTFBot>
 {
 public:
-	virtual ActionResult< CTFBot >	OnStart( CTFBot *me, Action< CTFBot > *priorAction );
-	virtual ActionResult< CTFBot >	Update( CTFBot *me, float interval );
+	virtual ActionResult<CTFBot> OnStart(CTFBot *me, Action<CTFBot> *priorAction);
+	virtual ActionResult<CTFBot> Update(CTFBot *me, float interval);
 
-	virtual EventDesiredResult< CTFBot > OnStuck( CTFBot *me );
-	virtual EventDesiredResult< CTFBot > OnMoveToSuccess( CTFBot *me, const Path *path );
-	virtual EventDesiredResult< CTFBot > OnMoveToFailure( CTFBot *me, const Path *path, MoveToFailureType reason );
+	virtual EventDesiredResult<CTFBot> OnStuck(CTFBot *me);
+	virtual EventDesiredResult<CTFBot> OnMoveToSuccess(CTFBot *me, const Path *path);
+	virtual EventDesiredResult<CTFBot> OnMoveToFailure(CTFBot *me, const Path *path, MoveToFailureType reason);
 
-	virtual EventDesiredResult< CTFBot > OnTerritoryLost( CTFBot *me, int territoryID );
+	virtual EventDesiredResult<CTFBot> OnTerritoryLost(CTFBot *me, int territoryID);
 
-	virtual const char *GetName( void ) const	{ return "EngineerMoveToBuild"; };
+	virtual const char *GetName(void) const
+	{
+		return "EngineerMoveToBuild";
+	};
 
 private:
-	CHandle< CTFBotHintSentrygun > m_sentryBuildHint;
+	CHandle<CTFBotHintSentrygun> m_sentryBuildHint;
 	Vector m_sentryBuildLocation;
 
 	PathFollower m_path;
 	CountdownTimer m_repathTimer;
 
-	CUtlVector< CTFNavArea * > m_sentryAreaVector;
+	CUtlVector<CTFNavArea *> m_sentryAreaVector;
 	float m_totalSurfaceArea;
-	void CollectBuildAreas( CTFBot *me );
+	void CollectBuildAreas(CTFBot *me);
 
-	void SelectBuildLocation( CTFBot *me );
+	void SelectBuildLocation(CTFBot *me);
 	CountdownTimer m_fallBackTimer;
 };
 

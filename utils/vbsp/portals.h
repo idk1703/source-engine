@@ -11,9 +11,7 @@
 #pragma once
 #endif
 
-
 // Sets up the g_ClipPortalIndices array.
 void TranslateClipPortalIndices();
-
 
 #endif // PORTALS_H

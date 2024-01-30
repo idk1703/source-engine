@@ -10,12 +10,10 @@
 #include "networksystem/inetworksystem.h"
 #include "netchannel.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
 class CPlayer;
-
 
 //-----------------------------------------------------------------------------
 // Server class
@@ -23,37 +21,36 @@ class CPlayer;
 class CNetworkServer : public IConnectionlessPacketHandler, public INetworkMessageHandler, public ILookupChannel
 {
 public:
-	CNetworkServer( );
+	CNetworkServer();
 	virtual ~CNetworkServer();
 
-	bool Init( int nServerPort );
+	bool Init(int nServerPort);
 	void Shutdown();
 
 	// IConnectionlessPacketHandler
-	virtual bool	ProcessConnectionlessPacket( CNetPacket *packet );	// process a connectionless packet
+	virtual bool ProcessConnectionlessPacket(CNetPacket *packet); // process a connectionless packet
 
 	// INetworkMessageHandler
-	virtual void	OnConnectionClosing( INetChannel *channel, char const *reason );
-	virtual void	OnConnectionStarted( INetChannel *channel );
+	virtual void OnConnectionClosing(INetChannel *channel, char const *reason);
+	virtual void OnConnectionStarted(INetChannel *channel);
 
-	virtual void	OnPacketStarted( int inseq, int outseq );
-	virtual void	OnPacketFinished();
+	virtual void OnPacketStarted(int inseq, int outseq);
+	virtual void OnPacketFinished();
 
 	// ILookupChannel
-	virtual CNetChannel *FindNetChannel( const netadr_t& from ) ;
+	virtual CNetChannel *FindNetChannel(const netadr_t &from);
 
 	void ReadPackets();
 	void SendUpdates();
-	void AcceptConnection( const netadr_t& remote );
+	void AcceptConnection(const netadr_t &remote);
 
-	CPlayer *FindPlayerByAddress( const netadr_t& adr );
-	CPlayer *FindPlayerByNetChannel( INetChannel *chan );
+	CPlayer *FindPlayerByAddress(const netadr_t &adr);
+	CPlayer *FindPlayerByNetChannel(INetChannel *chan);
 
 	CUDPSocket *m_pSocket;
 
-	CUtlVector< CPlayer * >	m_Players;
+	CUtlVector<CPlayer *> m_Players;
 };
-
 
 //-----------------------------------------------------------------------------
 // Represents a connected player to the server
@@ -61,11 +58,11 @@ public:
 class CPlayer
 {
 public:
-	CPlayer( CNetworkServer *server, netadr_t& remote );
+	CPlayer(CNetworkServer *server, netadr_t &remote);
 
-	void			SendUpdate();
+	void SendUpdate();
 
-	const netadr_t		&GetRemoteAddress()
+	const netadr_t &GetRemoteAddress()
 	{
 		return m_NetChan.GetRemoteAddress();
 	}
@@ -75,11 +72,10 @@ public:
 		return "Foozle";
 	}
 
-	void			Shutdown();
+	void Shutdown();
 
-	CNetChannel		m_NetChan;
-	bool			m_bMarkedForDeletion;
+	CNetChannel m_NetChan;
+	bool m_bMarkedForDeletion;
 };
-
 
 #endif // NETWORKSERVER_H

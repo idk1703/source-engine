@@ -20,8 +20,6 @@
 #include <CoreServices.h>
 #endif
 
-
-
 #ifndef __CORESERVICES__
 #include <CoreServices.h>
 #endif
@@ -293,6 +291,5 @@
 #ifndef __LAUNCHSERVICES__
 #include <LaunchServices.h>
 #endif
-
 
 #endif /* __APPLICATIONSERVICES__ */

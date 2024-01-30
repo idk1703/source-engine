@@ -10,5 +10,4 @@
 #pragma once
 #endif
 
-
 #endif // VMPI_TRANSFER_H

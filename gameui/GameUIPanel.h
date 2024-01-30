@@ -14,9 +14,9 @@
 // Retrieve the root panel for the GameUI subsystem
 namespace vgui
 {
-class Panel;
+	class Panel;
 };
 
-vgui::Panel *GetGameUIRootPanel( void );
+vgui::Panel *GetGameUIRootPanel(void);
 
 #endif // GAMEUIPANEL_H

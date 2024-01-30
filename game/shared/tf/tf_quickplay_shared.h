@@ -18,9 +18,9 @@ const int kTFQuickPlayIdealMaxNumberOfPlayers = 24;
 const int kTFQuickPlayMinMaxNumberOfPlayers = 18; // don't auto match to servers with max players set too low
 const int kTFQuickPlayMaxPlayers = 33;
 
-const struct SchemaMap_t *GetQuickplayMapInfoByName( const char *pMapName );
+const struct SchemaMap_t *GetQuickplayMapInfoByName(const char *pMapName);
 
-extern float QuickplayCalculateServerScore( int numHumans, int numBots, int maxPlayers, int nNumInSearchParty );
+extern float QuickplayCalculateServerScore(int numHumans, int numBots, int maxPlayers, int nNumInSearchParty);
 
 extern const char k_szQuickplayFAQ_URL[];
 

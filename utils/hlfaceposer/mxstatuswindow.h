@@ -19,23 +19,22 @@ class mxScrollbar;
 class mxStatusWindow : public mxWindow, public IFacePoserToolWindow
 {
 public:
-	mxStatusWindow (mxWindow *parent, int x, int y, int w, int h, const char *label = 0 );
+	mxStatusWindow(mxWindow *parent, int x, int y, int w, int h, const char *label = 0);
 	~mxStatusWindow();
 
-	void StatusPrint( COLORREF clr, bool overwrite, const char *text );
+	void StatusPrint(COLORREF clr, bool overwrite, const char *text);
 
-	virtual void	DrawActiveTool();
+	virtual void DrawActiveTool();
 
 	virtual void redraw();
-	virtual bool PaintBackground( void );
+	virtual bool PaintBackground(void);
 
-	virtual int handleEvent( mxEvent *event );
+	virtual int handleEvent(mxEvent *event);
 
-	virtual void Think( float dt );
+	virtual void Think(float dt);
 
 private:
-
-	void PositionSliders( int sboffset );
+	void PositionSliders(int sboffset);
 
 	enum
 	{
@@ -45,15 +44,15 @@ private:
 
 	struct TextLine
 	{
-		char		m_szText[ 512 ];
-		COLORREF	rgb;
-		float		curtime;
+		char m_szText[512];
+		COLORREF rgb;
+		float curtime;
 	};
 
-	TextLine		m_rgTextLines[ MAX_TEXT_LINES ];
-	int				m_nCurrentLine;
+	TextLine m_rgTextLines[MAX_TEXT_LINES];
+	int m_nCurrentLine;
 
-	mxScrollbar		*m_pScrollbar;
+	mxScrollbar *m_pScrollbar;
 };
 
 extern mxStatusWindow *g_pStatusWindow;

@@ -16,47 +16,44 @@ namespace vgui
 	class AnimationController;
 }
 
-
 class ClientModeTFNormal : public ClientModeTFBase
 {
-DECLARE_CLASS( ClientModeTFNormal, ClientModeTFBase );
+	DECLARE_CLASS(ClientModeTFNormal, ClientModeTFBase);
 
 private:
-
 	class Viewport : public CBaseViewport
 	{
-	typedef CBaseViewport BaseClass;
-	// Panel overrides.
+		typedef CBaseViewport BaseClass;
+		// Panel overrides.
 	public:
 		Viewport();
 		virtual ~Viewport() {}
 
-		virtual void	OnThink();
-		void			ReloadScheme();
+		virtual void OnThink();
+		void ReloadScheme();
 
-		virtual void ApplySchemeSettings( vgui::IScheme *pScheme )
+		virtual void ApplySchemeSettings(vgui::IScheme *pScheme)
 		{
-			BaseClass::ApplySchemeSettings( pScheme );
+			BaseClass::ApplySchemeSettings(pScheme);
 
-			gHUD.InitColors( pScheme );
+			gHUD.InitColors(pScheme);
 
-			SetPaintBackgroundEnabled( false );
+			SetPaintBackgroundEnabled(false);
 		}
 
-		virtual void CreateDefaultPanels( void ) { /* don't create any panels yet*/ };
+		virtual void CreateDefaultPanels(void) {/* don't create any panels yet*/};
 
 	private:
-		bool			m_bHumanScheme;
+		bool m_bHumanScheme;
 	};
 
-// IClientMode overrides.
+	// IClientMode overrides.
 public:
+	virtual void Update();
+	virtual void CreateMove(float flInputSampleTime, CUserCmd *cmd);
+	virtual bool ShouldDrawViewModel(void);
 
-	virtual void	Update();
-	virtual void	CreateMove( float flInputSampleTime, CUserCmd *cmd );
-	virtual bool	ShouldDrawViewModel( void );
-
-	virtual vgui::Panel *GetMinimapParent( void );
+	virtual vgui::Panel *GetMinimapParent(void);
 
 	ClientModeTFNormal();
 };

@@ -24,8 +24,7 @@ public:
 	virtual bool CreateAndPopulateIncident();
 
 protected:
-
-	//virtual bool CreateAndPopulateIncident();
+	// virtual bool CreateAndPopulateIncident();
 };
 
-#endif	// TF_ABUSE_REPORT_H
+#endif // TF_ABUSE_REPORT_H

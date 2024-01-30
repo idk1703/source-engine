@@ -16,7 +16,7 @@
 class ObjectSmokeParticle : public SimpleParticle
 {
 public:
-	Vector		m_vecAcceleration;
+	Vector m_vecAcceleration;
 };
 
 //-----------------------------------------------------------------------------
@@ -25,20 +25,23 @@ public:
 class CObjectSmokeParticles : public CSimpleEmitter
 {
 public:
+	CObjectSmokeParticles(const char *pDebugName) : CSimpleEmitter(pDebugName) {}
+	static CSmartPtr<CObjectSmokeParticles> Create(const char *pDebugName)
+	{
+		return new CObjectSmokeParticles(pDebugName);
+	}
 
-	CObjectSmokeParticles( const char *pDebugName ) : CSimpleEmitter( pDebugName ) {}
-	static CSmartPtr<CObjectSmokeParticles> Create( const char *pDebugName )	{return new CObjectSmokeParticles( pDebugName );}
+	virtual void SimulateParticles(CParticleSimulateIterator *pIterator);
+	virtual void RenderParticles(CParticleRenderIterator *pIterator);
 
-	virtual void SimulateParticles( CParticleSimulateIterator *pIterator );
-	virtual void RenderParticles( CParticleRenderIterator *pIterator );
-
-	//Setup for point emission
-	virtual void		Setup( const Vector &origin, const Vector *direction, float angularSpread, float minSpeed, float maxSpeed, float gravity, float dampen, int flags = 0 );
+	// Setup for point emission
+	virtual void Setup(const Vector &origin, const Vector *direction, float angularSpread, float minSpeed,
+					   float maxSpeed, float gravity, float dampen, int flags = 0);
 
 	CParticleCollision m_ParticleCollision;
 
 private:
-	CObjectSmokeParticles( const CObjectSmokeParticles & ); // not defined, not accessible
+	CObjectSmokeParticles(const CObjectSmokeParticles &); // not defined, not accessible
 };
 
 //-----------------------------------------------------------------------------
@@ -47,8 +50,8 @@ private:
 class ObjectFireParticle : public SimpleParticle
 {
 public:
-	EHANDLE		m_hParent;
-	int			m_iAttachmentPoint;
+	EHANDLE m_hParent;
+	int m_iAttachmentPoint;
 };
 
 //-----------------------------------------------------------------------------
@@ -57,17 +60,21 @@ public:
 class CObjectFireParticles : public CSimpleEmitter
 {
 public:
-	CObjectFireParticles( const char *pDebugName ) : CSimpleEmitter( pDebugName ) {}
-	static CSmartPtr<CObjectFireParticles> Create( const char *pDebugName )	{return new CObjectFireParticles( pDebugName );}
+	CObjectFireParticles(const char *pDebugName) : CSimpleEmitter(pDebugName) {}
+	static CSmartPtr<CObjectFireParticles> Create(const char *pDebugName)
+	{
+		return new CObjectFireParticles(pDebugName);
+	}
 
-	virtual void SimulateParticles( CParticleSimulateIterator *pIterator );
-	virtual void RenderParticles( CParticleRenderIterator *pIterator );
+	virtual void SimulateParticles(CParticleSimulateIterator *pIterator);
+	virtual void RenderParticles(CParticleRenderIterator *pIterator);
 
-	//Setup for point emission
-	virtual void		Setup( const Vector &origin, const Vector *direction, float angularSpread, float minSpeed, float maxSpeed, float gravity, float dampen, int flags = 0 );
+	// Setup for point emission
+	virtual void Setup(const Vector &origin, const Vector *direction, float angularSpread, float minSpeed,
+					   float maxSpeed, float gravity, float dampen, int flags = 0);
 
 private:
-	CObjectFireParticles( const CObjectFireParticles & ); // not defined, not accessible
+	CObjectFireParticles(const CObjectFireParticles &); // not defined, not accessible
 };
 
 #endif // ENV_OBJECTEFFECTS_H

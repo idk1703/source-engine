@@ -24,26 +24,28 @@ namespace vgui
 //-----------------------------------------------------------------------------
 class CHudSpecCrosshair : public CHudElement, public vgui::Panel
 {
-	DECLARE_CLASS_SIMPLE( CHudSpecCrosshair, vgui::Panel );
-public:
-	CHudSpecCrosshair( const char *pElementName );
+	DECLARE_CLASS_SIMPLE(CHudSpecCrosshair, vgui::Panel);
 
-	void				DrawCrosshair( void );
-  	bool				HasCrosshair( void )		{ return ( m_pCrosshair != NULL ); }
+public:
+	CHudSpecCrosshair(const char *pElementName);
+
+	void DrawCrosshair(void);
+	bool HasCrosshair(void)
+	{
+		return (m_pCrosshair != NULL);
+	}
 
 protected:
-	virtual void	ApplySchemeSettings( vgui::IScheme *scheme );
-	virtual void	Paint();
+	virtual void ApplySchemeSettings(vgui::IScheme *scheme);
+	virtual void Paint();
 
 private:
 	// Crosshair sprite and colors
-	CHudTexture			*m_pCrosshair;
-	Color				m_clrCrosshair;
+	CHudTexture *m_pCrosshair;
+	Color m_clrCrosshair;
 };
-
 
 // Enable/disable crosshair rendering.
 extern ConVar crosshair;
-
 
 #endif // HUD_SPEC_CROSSHAIR_H

@@ -18,10 +18,10 @@
 //-----------------------------------------------------------------------------
 struct CCloseCaptionLookupParams : public CBaseDialogParams
 {
-	char				m_szCCToken[ 1024 ];
+	char m_szCCToken[1024];
 };
 
 // Display/create dialog
-int CloseCaptionLookup( CCloseCaptionLookupParams *params );
+int CloseCaptionLookup(CCloseCaptionLookupParams *params);
 
 #endif // CCLOOKUP_H

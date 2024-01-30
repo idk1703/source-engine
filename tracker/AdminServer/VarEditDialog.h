@@ -41,5 +41,4 @@ private:
 	typedef vgui::Frame BaseClass;
 };
 
-
 #endif // VAREDITDIALOG_H

@@ -26,7 +26,6 @@
 #include "toolutils/savewindowpositions.h"
 #include "toolutils/toolwindowfactory.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
@@ -41,7 +40,6 @@ namespace vgui
 	class Panel;
 }
 
-
 //-----------------------------------------------------------------------------
 // Allows the doc to call back into the CommEdit editor tool
 //-----------------------------------------------------------------------------
@@ -49,9 +47,8 @@ abstract_class ICommEditDocCallback
 {
 public:
 	// Called by the doc when the data changes
-	virtual void OnDocChanged( const char *pReason, int nNotifySource, int nNotifyFlags ) = 0;
+	virtual void OnDocChanged(const char *pReason, int nNotifySource, int nNotifyFlags) = 0;
 };
-
 
 //-----------------------------------------------------------------------------
 // Global methods of the commedit tool
@@ -66,94 +63,113 @@ public:
 	virtual const char *GetRegistryName() = 0;
 
 	// Shows a particular entity in the entity properties dialog
-	virtual void ShowEntityInEntityProperties( CDmeCommentaryNodeEntity *pEntity ) = 0;
+	virtual void ShowEntityInEntityProperties(CDmeCommentaryNodeEntity * pEntity) = 0;
 };
 
 //-----------------------------------------------------------------------------
 // Implementation of the CommEdit tool
 //-----------------------------------------------------------------------------
-class CCommEditTool : public CBaseToolSystem, public IFileMenuCallbacks, public ICommEditDocCallback, public ICommEditTool
+class CCommEditTool : public CBaseToolSystem,
+					  public IFileMenuCallbacks,
+					  public ICommEditDocCallback,
+					  public ICommEditTool
 {
-	DECLARE_CLASS_SIMPLE( CCommEditTool, CBaseToolSystem );
+	DECLARE_CLASS_SIMPLE(CCommEditTool, CBaseToolSystem);
 
 public:
 	CCommEditTool();
 
 	// Inherited from IToolSystem
-	virtual const char *GetToolName() { return "Commentary Editor"; }
-	virtual bool	Init( );
-	virtual void	Shutdown();
-	virtual bool	CanQuit();
-	virtual void	OnToolActivate();
-	virtual void	OnToolDeactivate();
-	virtual const char* GetEntityData( const char *pActualEntityData );
-	virtual void	DrawCommentaryNodeEntitiesInEngine( bool bDrawInEngine );
-	virtual void	ClientLevelInitPostEntity();
-	virtual void	ClientLevelShutdownPreEntity();
-	virtual bool	TrapKey( ButtonCode_t key, bool down );
- 	virtual void	ClientPreRender();
+	virtual const char *GetToolName()
+	{
+		return "Commentary Editor";
+	}
+	virtual bool Init();
+	virtual void Shutdown();
+	virtual bool CanQuit();
+	virtual void OnToolActivate();
+	virtual void OnToolDeactivate();
+	virtual const char *GetEntityData(const char *pActualEntityData);
+	virtual void DrawCommentaryNodeEntitiesInEngine(bool bDrawInEngine);
+	virtual void ClientLevelInitPostEntity();
+	virtual void ClientLevelShutdownPreEntity();
+	virtual bool TrapKey(ButtonCode_t key, bool down);
+	virtual void ClientPreRender();
 
 	// Inherited from IFileMenuCallbacks
-	virtual int		GetFileMenuItemsEnabled( );
-	virtual void	AddRecentFilesToMenu( vgui::Menu *menu );
-	virtual bool	GetPerforceFileName( char *pFileName, int nMaxLen );
+	virtual int GetFileMenuItemsEnabled();
+	virtual void AddRecentFilesToMenu(vgui::Menu *menu);
+	virtual bool GetPerforceFileName(char *pFileName, int nMaxLen);
 
 	// Inherited from ICommEditDocCallback
-	virtual void	OnDocChanged( const char *pReason, int nNotifySource, int nNotifyFlags );
-	virtual vgui::Panel *GetRootPanel() { return this; }
-	virtual void ShowEntityInEntityProperties( CDmeCommentaryNodeEntity *pEntity );
+	virtual void OnDocChanged(const char *pReason, int nNotifySource, int nNotifyFlags);
+	virtual vgui::Panel *GetRootPanel()
+	{
+		return this;
+	}
+	virtual void ShowEntityInEntityProperties(CDmeCommentaryNodeEntity *pEntity);
 
 	// Inherited from CBaseToolSystem
 	virtual vgui::HScheme GetToolScheme();
-	virtual vgui::Menu *CreateActionMenu( vgui::Panel *pParent );
-	virtual void OnCommand( const char *cmd );
-	virtual const char *GetRegistryName() { return "CommEditTool"; }
-	virtual const char *GetBindingsContextFile() { return "cfg/CommEdit.kb"; }
-	virtual vgui::MenuBar *CreateMenuBar( CBaseToolSystem *pParent );
+	virtual vgui::Menu *CreateActionMenu(vgui::Panel *pParent);
+	virtual void OnCommand(const char *cmd);
+	virtual const char *GetRegistryName()
+	{
+		return "CommEditTool";
+	}
+	virtual const char *GetBindingsContextFile()
+	{
+		return "cfg/CommEdit.kb";
+	}
+	virtual vgui::MenuBar *CreateMenuBar(CBaseToolSystem *pParent);
 
-	MESSAGE_FUNC( Save, "OnSave" );
+	MESSAGE_FUNC(Save, "OnSave");
 	void SaveAndTest();
-	void CenterView( CDmeCommentaryNodeEntity* pEntity );
+	void CenterView(CDmeCommentaryNodeEntity *pEntity);
 
 	// Enter mode where we preview dropping nodes
 	void EnterNodeDropMode();
 	void LeaveNodeDropMode();
 
 public:
-	MESSAGE_FUNC( OnRestartLevel, "RestartLevel" );
-	MESSAGE_FUNC( OnNew, "OnNew" );
-	MESSAGE_FUNC( OnOpen, "OnOpen" );
-	MESSAGE_FUNC( OnSaveAs, "OnSaveAs" );
-	MESSAGE_FUNC( OnClose, "OnClose" );
-	MESSAGE_FUNC( OnCloseNoSave, "OnCloseNoSave" );
-	MESSAGE_FUNC( OnMarkNotDirty, "OnMarkNotDirty" );
-	MESSAGE_FUNC( OnExit, "OnExit" );
+	MESSAGE_FUNC(OnRestartLevel, "RestartLevel");
+	MESSAGE_FUNC(OnNew, "OnNew");
+	MESSAGE_FUNC(OnOpen, "OnOpen");
+	MESSAGE_FUNC(OnSaveAs, "OnSaveAs");
+	MESSAGE_FUNC(OnClose, "OnClose");
+	MESSAGE_FUNC(OnCloseNoSave, "OnCloseNoSave");
+	MESSAGE_FUNC(OnMarkNotDirty, "OnMarkNotDirty");
+	MESSAGE_FUNC(OnExit, "OnExit");
 
 	// Commands related to the edit menu
-	void		OnDescribeUndo();
+	void OnDescribeUndo();
 
 	// Methods related to the CommEdit menu
-	MESSAGE_FUNC( OnAddNewNodes, "AddNewNodes" );
+	MESSAGE_FUNC(OnAddNewNodes, "AddNewNodes");
 
 	// Methods related to the view menu
-	MESSAGE_FUNC( OnToggleProperties, "OnToggleProperties" );
-	MESSAGE_FUNC( OnToggleEntityReport, "OnToggleEntityReport" );
-	MESSAGE_FUNC( OnToggleConsole, "ToggleConsole" );
+	MESSAGE_FUNC(OnToggleProperties, "OnToggleProperties");
+	MESSAGE_FUNC(OnToggleEntityReport, "OnToggleEntityReport");
+	MESSAGE_FUNC(OnToggleConsole, "ToggleConsole");
 
-	MESSAGE_FUNC( OnDefaultLayout, "OnDefaultLayout" );
+	MESSAGE_FUNC(OnDefaultLayout, "OnDefaultLayout");
 
 	// Keybindings
-	KEYBINDING_FUNC( undo, KEY_Z, vgui::MODIFIER_CONTROL, OnUndo, "#undo_help", 0 );
-	KEYBINDING_FUNC( redo, KEY_Z, vgui::MODIFIER_CONTROL | vgui::MODIFIER_SHIFT, OnRedo, "#redo_help", 0 );
-	KEYBINDING_FUNC_NODECLARE( CommEditAddNewNodes, KEY_A, vgui::MODIFIER_CONTROL, OnAddNewNodes, "#CommEditAddNewNodesHelp", 0 );
+	KEYBINDING_FUNC(undo, KEY_Z, vgui::MODIFIER_CONTROL, OnUndo, "#undo_help", 0);
+	KEYBINDING_FUNC(redo, KEY_Z, vgui::MODIFIER_CONTROL | vgui::MODIFIER_SHIFT, OnRedo, "#redo_help", 0);
+	KEYBINDING_FUNC_NODECLARE(CommEditAddNewNodes, KEY_A, vgui::MODIFIER_CONTROL, OnAddNewNodes,
+							  "#CommEditAddNewNodesHelp", 0);
 
-	void		PerformNew();
-	void		OpenFileFromHistory( int slot );
-	void		OpenSpecificFile( const char *pFileName );
-	virtual void SetupFileOpenDialog( vgui::FileOpenDialog *pDialog, bool bOpenFile, const char *pFileFormat, KeyValues *pContextKeyValues );
-	virtual bool OnReadFileFromDisk( const char *pFileName, const char *pFileFormat, KeyValues *pContextKeyValues );
-	virtual bool OnWriteFileToDisk( const char *pFileName, const char *pFileFormat, KeyValues *pContextKeyValues );
-	virtual void OnFileOperationCompleted( const char *pFileType, bool bWroteFile, vgui::FileOpenStateMachine::CompletionState_t state, KeyValues *pContextKeyValues );
+	void PerformNew();
+	void OpenFileFromHistory(int slot);
+	void OpenSpecificFile(const char *pFileName);
+	virtual void SetupFileOpenDialog(vgui::FileOpenDialog *pDialog, bool bOpenFile, const char *pFileFormat,
+									 KeyValues *pContextKeyValues);
+	virtual bool OnReadFileFromDisk(const char *pFileName, const char *pFileFormat, KeyValues *pContextKeyValues);
+	virtual bool OnWriteFileToDisk(const char *pFileName, const char *pFileFormat, KeyValues *pContextKeyValues);
+	virtual void OnFileOperationCompleted(const char *pFileType, bool bWroteFile,
+										  vgui::FileOpenStateMachine::CompletionState_t state,
+										  KeyValues *pContextKeyValues);
 
 	void AttachAllEngineEntities();
 
@@ -165,36 +181,39 @@ public:
 	CCommentaryNodeBrowserPanel *GetCommentaryNodeBrowser();
 	CConsolePage *GetConsole();
 
-	CDmeHandle< CDmeCommentaryNodeEntity > GetCurrentEntity( void ) { return m_hCurrentEntity; }
+	CDmeHandle<CDmeCommentaryNodeEntity> GetCurrentEntity(void)
+	{
+		return m_hCurrentEntity;
+	}
 
 private:
 	// Loads up a new document
-	bool LoadDocument( const char *pDocName );
+	bool LoadDocument(const char *pDocName);
 
 	// Updates the menu bar based on the current file
-	void UpdateMenuBar( );
+	void UpdateMenuBar();
 
 	// Shows element properties
-	void ShowElementProperties( );
+	void ShowElementProperties();
 
 	virtual const char *GetLogoTextureName();
 
 	// Creates, destroys tools
-	void CreateTools( CCommEditDoc *doc );
+	void CreateTools(CCommEditDoc *doc);
 	void DestroyTools();
 
 	// Initializes the tools
 	void InitTools();
 
 	// Shows, toggles tool windows
-	void ToggleToolWindow( Panel *tool, char const *toolName );
-	void ShowToolWindow( Panel *tool, char const *toolName, bool visible );
+	void ToggleToolWindow(Panel *tool, char const *toolName);
+	void ShowToolWindow(Panel *tool, char const *toolName, bool visible);
 
 	// Kills all tool windows
 	void DestroyToolContainers();
 
 	// Gets the position of the preview object
-	void GetPlacementInfo( Vector &vecOrigin, QAngle &angles );
+	void GetPlacementInfo(Vector &vecOrigin, QAngle &angles);
 
 	// Brings the console to front
 	void BringConsoleToFront();
@@ -207,23 +226,23 @@ private:
 	CToolFileMenuBar *m_pMenuBar;
 
 	// Element properties for editing material
-	vgui::DHANDLE< CCommentaryPropertiesPanel >	m_hProperties;
+	vgui::DHANDLE<CCommentaryPropertiesPanel> m_hProperties;
 
 	// The entity report
-	vgui::DHANDLE< CCommentaryNodeBrowserPanel > m_hCommentaryNodeBrowser;
+	vgui::DHANDLE<CCommentaryNodeBrowserPanel> m_hCommentaryNodeBrowser;
 
 	// The console
-	vgui::DHANDLE< CConsolePage >				m_hConsole;
+	vgui::DHANDLE<CConsolePage> m_hConsole;
 
 	// The currently viewed entity
-	CDmeHandle< CDmeCommentaryNodeEntity > m_hCurrentEntity;
+	CDmeHandle<CDmeCommentaryNodeEntity> m_hCurrentEntity;
 
 	// Separate undo context for the act busy tool
 	bool m_bInNodeDropMode;
 	bool m_bDroppingCommentaryNodes;
-	CDmeHandle< CDmeCommentaryNodeEntity > m_hPreviewNode;
-	CDmeHandle< CDmeCommentaryNodeEntity > m_hPreviewTarget;
-	CToolWindowFactory< ToolWindow > m_ToolWindowFactory;
+	CDmeHandle<CDmeCommentaryNodeEntity> m_hPreviewNode;
+	CDmeHandle<CDmeCommentaryNodeEntity> m_hPreviewTarget;
+	CToolWindowFactory<ToolWindow> m_ToolWindowFactory;
 };
 
 extern CCommEditTool *g_pCommEditTool;

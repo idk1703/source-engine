@@ -15,15 +15,14 @@
 #include "materialsystem/imaterialproxyfactory.h"
 #include "tier1/interface.h"
 
-
 class CMaterialProxyFactory : public IMaterialProxyFactory
 {
 public:
-	IMaterialProxy *CreateProxy( const char *proxyName );
-	void DeleteProxy( IMaterialProxy *pProxy );
+	IMaterialProxy *CreateProxy(const char *proxyName);
+	void DeleteProxy(IMaterialProxy *pProxy);
 
 private:
-	IMaterialProxy *LookupProxy( const char *proxyName, CreateInterfaceFn factory );
+	IMaterialProxy *LookupProxy(const char *proxyName, CreateInterfaceFn factory);
 };
 
 #endif // MATERIALPROXYFACTORY_H

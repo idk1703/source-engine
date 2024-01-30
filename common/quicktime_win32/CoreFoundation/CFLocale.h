@@ -10,12 +10,11 @@
 #include <CoreFoundation/CFBase.h>
 
 #if defined(__cplusplus)
-extern "C" {
+extern "C"
+{
 #endif
 
-typedef const struct __CFLocale *CFLocaleRef;
-
-
+	typedef const struct __CFLocale *CFLocaleRef;
 
 #if defined(__cplusplus)
 }

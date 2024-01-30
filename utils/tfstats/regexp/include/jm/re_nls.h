@@ -20,11 +20,11 @@
  *
  */
 
- /*
-	*   FILE     re_nls.h
-	*   VERSION  2.12
-	*   This is an internal header file, do not include directly
-	*/
+/*
+ *   FILE     re_nls.h
+ *   VERSION  2.12
+ *   This is an internal header file, do not include directly
+ */
 
 #ifndef RE_NLS_H
 #define RE_NLS_H
@@ -56,14 +56,13 @@ enum char_class_type
 	char_class_space = __JM_STD::ctype_base::space,
 	char_class_upper = __JM_STD::ctype_base::upper,
 	char_class_xdigit = __JM_STD::ctype_base::xdigit,
-	char_class_blank = 1<<12,
-	char_class_underscore = 1<<13,
+	char_class_blank = 1 << 12,
+	char_class_underscore = 1 << 13,
 	char_class_word = __JM_STD::ctype_base::alnum | char_class_underscore,
-	char_class_unicode = 1<<14,
-	char_class_all_base = char_class_alnum | char_class_alpha | char_class_cntrl
-							| char_class_digit | char_class_graph | char_class_lower
-							| char_class_print | char_class_punct | char_class_space
-							| char_class_upper | char_class_xdigit
+	char_class_unicode = 1 << 14,
+	char_class_all_base = char_class_alnum | char_class_alpha | char_class_cntrl | char_class_digit | char_class_graph |
+						  char_class_lower | char_class_print | char_class_punct | char_class_space | char_class_upper |
+						  char_class_xdigit
 
 #elif defined(RE_LOCALE_W32)
 	char_class_none = 0,
@@ -98,7 +97,8 @@ enum char_class_type
 
 	char_class_alnum = char_class_alpha | char_class_digit,
 	char_class_graph = char_class_alpha | char_class_digit | char_class_punct | char_class_underscore,
-	char_class_print = char_class_alpha | char_class_digit | char_class_punct | char_class_underscore | char_class_blank,
+	char_class_print =
+		char_class_alpha | char_class_digit | char_class_punct | char_class_underscore | char_class_blank,
 	char_class_word = char_class_alpha | char_class_digit | char_class_underscore
 #endif
 };
@@ -107,7 +107,7 @@ enum char_class_type
 // declare our initialise class and functions:
 //
 
-template <class charT>
+template<class charT>
 class re_initialiser
 {
 public:
@@ -125,9 +125,18 @@ JM_TEMPLATE_SPECIALISE
 class re_initialiser<char>
 {
 public:
-	re_initialiser() { re_init(); }
-	~re_initialiser() { re_free(); }
-	void RE_CALL update() { re_update(); }
+	re_initialiser()
+	{
+		re_init();
+	}
+	~re_initialiser()
+	{
+		re_free();
+	}
+	void RE_CALL update()
+	{
+		re_update();
+	}
 };
 
 #ifndef JM_NO_WCSTRING
@@ -135,9 +144,18 @@ JM_TEMPLATE_SPECIALISE
 class re_initialiser<wchar_t>
 {
 public:
-	re_initialiser() { re_init_w(); }
-	~re_initialiser() { re_free_w(); }
-	void RE_CALL update() { re_update_w(); }
+	re_initialiser()
+	{
+		re_init_w();
+	}
+	~re_initialiser()
+	{
+		re_free_w();
+	}
+	void RE_CALL update()
+	{
+		re_update_w();
+	}
 };
 #endif
 
@@ -154,7 +172,7 @@ JM_IX_DECL extern char re_ten;
 
 #ifndef JM_NO_WCSTRING
 JM_IX_DECL extern unsigned short re_unicode_classes[];
-JM_IX_DECL extern const wchar_t* re_lower_case_map_w;
+JM_IX_DECL extern const wchar_t *re_lower_case_map_w;
 JM_IX_DECL extern wchar_t re_zero_w;
 JM_IX_DECL extern wchar_t re_ten_w;
 
@@ -162,11 +180,11 @@ JM_IX_DECL wchar_t RE_CALL re_wtolower(wchar_t c);
 JM_IX_DECL bool RE_CALL re_iswclass(wchar_t c, jm_uintfast32_t f);
 #endif
 
-JM_IX_DECL const char* RE_CALL re_get_error_str(unsigned int id);
+JM_IX_DECL const char *RE_CALL re_get_error_str(unsigned int id);
 JM_IX_DECL unsigned int RE_CALL re_get_syntax_type(wchar_t c);
 
 #ifdef RE_LOCALE_CPP
-__JM_STD::string RE_CALL re_get_error_str(unsigned int id, const __JM_STD::locale&);
+__JM_STD::string RE_CALL re_get_error_str(unsigned int id, const __JM_STD::locale &);
 #endif
 
 //
@@ -174,7 +192,8 @@ __JM_STD::string RE_CALL re_get_error_str(unsigned int id, const __JM_STD::local
 //
 inline char RE_CALL re_tolower(char c
 #ifdef RE_LOCALE_CPP
-, const __JM_STD::locale& l
+							   ,
+							   const __JM_STD::locale &l
 #endif
 )
 {
@@ -188,7 +207,8 @@ inline char RE_CALL re_tolower(char c
 #ifndef JM_NO_WCSTRING
 inline wchar_t RE_CALL re_tolower(wchar_t c
 #ifdef RE_LOCALE_CPP
-, const __JM_STD::locale& l
+								  ,
+								  const __JM_STD::locale &l
 #endif
 )
 {
@@ -202,7 +222,8 @@ inline wchar_t RE_CALL re_tolower(wchar_t c
 
 inline bool RE_CALL re_istype(char c, jm_uintfast32_t f
 #ifdef RE_LOCALE_CPP
-, const __JM_STD::locale& l
+							  ,
+							  const __JM_STD::locale &l
 #endif
 )
 {
@@ -222,7 +243,8 @@ inline bool RE_CALL re_istype(char c, jm_uintfast32_t f
 #ifndef JM_NO_WCSTRING
 inline bool RE_CALL re_istype(wchar_t c, jm_uintfast32_t f
 #ifdef RE_LOCALE_CPP
-, const __JM_STD::locale& l
+							  ,
+							  const __JM_STD::locale &l
 #endif
 )
 {
@@ -242,7 +264,8 @@ inline bool RE_CALL re_istype(wchar_t c, jm_uintfast32_t f
 
 inline char RE_CALL re_get_zero(char
 #ifdef RE_LOCALE_CPP
-, const __JM_STD::locale& l
+								,
+								const __JM_STD::locale &l
 #endif
 )
 {
@@ -256,7 +279,8 @@ inline char RE_CALL re_get_zero(char
 #ifndef JM_NO_WCSTRING
 inline wchar_t RE_CALL re_get_zero(wchar_t
 #ifdef RE_LOCALE_CPP
-, const __JM_STD::locale& l
+								   ,
+								   const __JM_STD::locale &l
 #endif
 )
 {
@@ -270,7 +294,8 @@ inline wchar_t RE_CALL re_get_zero(wchar_t
 
 inline char RE_CALL re_get_ten(char
 #ifdef RE_LOCALE_CPP
-, const __JM_STD::locale& l
+							   ,
+							   const __JM_STD::locale &l
 #endif
 )
 {
@@ -284,7 +309,8 @@ inline char RE_CALL re_get_ten(char
 #ifndef JM_NO_WCSTRING
 inline wchar_t RE_CALL re_get_ten(wchar_t
 #ifdef RE_LOCALE_CPP
-, const __JM_STD::locale& l
+								  ,
+								  const __JM_STD::locale &l
 #endif
 )
 {
@@ -300,17 +326,19 @@ inline wchar_t RE_CALL re_get_ten(wchar_t
 // re_toi:
 // convert a single character to the int it represents:
 //
-template <class charT>
+template<class charT>
 unsigned int RE_CALL re_toi(charT c
 #ifdef RE_LOCALE_CPP
-, const __JM_STD::locale& l
+							,
+							const __JM_STD::locale &l
 #endif
 )
 {
 	if(re_istype(c, char_class_digit MAYBE_PASS_LOCALE(l)))
 		return c - re_get_zero(c MAYBE_PASS_LOCALE(l));
 	if(re_istype(c, char_class_xdigit MAYBE_PASS_LOCALE(l)))
-		return 10 + re_tolower(c MAYBE_PASS_LOCALE(l)) - re_tolower(re_get_ten(c MAYBE_PASS_LOCALE(l)) MAYBE_PASS_LOCALE(l));
+		return 10 + re_tolower(c MAYBE_PASS_LOCALE(l)) -
+			   re_tolower(re_get_ten(c MAYBE_PASS_LOCALE(l)) MAYBE_PASS_LOCALE(l));
 	return -1; // error!!
 }
 
@@ -320,10 +348,11 @@ unsigned int RE_CALL re_toi(charT c
 // update first to point to end of int
 // on exit.
 //
-template <class charT>
-unsigned int RE_CALL re_toi(const charT*& first, const charT*const last, int radix
+template<class charT>
+unsigned int RE_CALL re_toi(const charT *&first, const charT *const last, int radix
 #ifdef RE_LOCALE_CPP
-, const __JM_STD::locale& l
+							,
+							const __JM_STD::locale &l
 #endif
 )
 {
@@ -355,15 +384,13 @@ unsigned int RE_CALL re_toi(const charT*& first, const charT*const last, int rad
 	return result;
 }
 
-
 #ifndef JM_NO_WCSTRING
 JM_IX_DECL bool RE_CALL re_is_combining(wchar_t c);
 #endif
 
-extern const char* regex_message_catalogue;
+extern const char *regex_message_catalogue;
 
-JM_IX_DECL const char* RE_CALL get_global_locale_name(int);
-
+JM_IX_DECL const char *RE_CALL get_global_locale_name(int);
 
 JM_END_NAMESPACE
 

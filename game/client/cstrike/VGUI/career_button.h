@@ -25,7 +25,8 @@
 class CCareerButton : public vgui::Button
 {
 public:
-	CCareerButton(vgui::Panel *parent, const char *buttonName, const char *buttonText, const char *image, bool textFirst );
+	CCareerButton(vgui::Panel *parent, const char *buttonName, const char *buttonText, const char *image,
+				  bool textFirst);
 
 	// Set armed button border attributes.  Added in CCareerButton.
 	virtual void SetArmedBorder(vgui::IBorder *border);
@@ -33,10 +34,9 @@ public:
 	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 	virtual void Paint();
 
-	void SetImage( const char *image );
+	void SetImage(const char *image);
 
 protected:
-
 	// Get button border attributes.
 	virtual vgui::IBorder *GetBorder(bool depressed, bool armed, bool selected, bool keyfocus);
 

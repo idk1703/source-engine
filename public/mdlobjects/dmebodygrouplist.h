@@ -15,29 +15,26 @@
 #include "datamodel/dmelement.h"
 #include "datamodel/dmattributevar.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward Declarations
 //-----------------------------------------------------------------------------
 class CDmeBodyGroup;
 class CDmeLODList;
 
-
 //-----------------------------------------------------------------------------
 // A class representing a list of body groups
 //-----------------------------------------------------------------------------
 class CDmeBodyGroupList : public CDmElement
 {
-	DEFINE_ELEMENT( CDmeBodyGroupList, CDmElement );
+	DEFINE_ELEMENT(CDmeBodyGroupList, CDmElement);
 
 public:
-	CDmeBodyGroup *FindBodyGroup( const char *pName );
+	CDmeBodyGroup *FindBodyGroup(const char *pName);
 
 	// Gets the 'main' body part (used for compilation)
 	CDmeLODList *GetMainBodyPart();
 
-	CDmaElementArray< CDmeBodyGroup >	m_BodyGroups;
+	CDmaElementArray<CDmeBodyGroup> m_BodyGroups;
 };
-
 
 #endif // DMEBODYGROUPLIST_H

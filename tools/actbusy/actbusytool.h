@@ -11,18 +11,15 @@
 #pragma once
 #endif
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
 class CDmeEditorTypeDictionary;
 
-
 //-----------------------------------------------------------------------------
 // Singleton interfaces
 //-----------------------------------------------------------------------------
 extern CDmeEditorTypeDictionary *g_pEditorTypeDict;
-
 
 //-----------------------------------------------------------------------------
 // Allows the doc to call back into the act busy tool
@@ -31,8 +28,7 @@ class IActBusyDocCallback
 {
 public:
 	// Called by the doc when the data changes
-	virtual void OnDocChanged( const char *pReason, int nNotifySource, int nNotifyFlags ) = 0;
+	virtual void OnDocChanged(const char *pReason, int nNotifySource, int nNotifyFlags) = 0;
 };
-
 
 #endif // ACTBUSYTOOL_H

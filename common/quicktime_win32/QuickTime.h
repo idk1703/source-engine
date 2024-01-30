@@ -20,8 +20,6 @@
 #include <Carbon.h>
 #endif
 
-
-
 /* QuickTime is not available to 64-bit clients */
 
 #if !__LP64__
@@ -86,9 +84,6 @@
 #include <HIMovieView.h>
 #endif
 
-
-
 #endif // !__LP64__
-
 
 #endif /* __QUICKTIME__ */

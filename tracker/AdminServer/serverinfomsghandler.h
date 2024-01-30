@@ -30,7 +30,4 @@ private:
 	CServerInfo *m_pServerInfo;
 };
 
-
-
-
 #endif // SERVERINFOMSGHANDLERDETAILS_H

@@ -9,14 +9,13 @@
 #include "NavUI.h"
 #include "nav.h"
 
-
 //--------------------------------------------------------------------------------------------------------
 class MeshToolPanel : public CNavUIToolPanel
 {
-	DECLARE_CLASS_SIMPLE( MeshToolPanel, CNavUIToolPanel );
+	DECLARE_CLASS_SIMPLE(MeshToolPanel, CNavUIToolPanel);
 
 public:
-	MeshToolPanel( vgui::Panel *parent, const char *toolName );
+	MeshToolPanel(vgui::Panel *parent, const char *toolName);
 };
 
 #endif // SERVER_USES_VGUI

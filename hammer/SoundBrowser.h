@@ -21,36 +21,38 @@
 
 class CSoundBrowser : public CDialog
 {
-// Construction
+	// Construction
 public:
-	CSoundBrowser( const char *pCurrentSoundName, CWnd* pParent = NULL);   // standard constructor
+	CSoundBrowser(const char *pCurrentSoundName, CWnd *pParent = NULL); // standard constructor
 	const char *GetSelectedSound();
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CSoundBrowser)
-	enum { IDD = IDD_SOUNDBROWSER };
-	CListBox	m_SoundList;
-	CString	m_SoundNameSelected;
-	int		m_SoundType;
-	BOOL	m_Autoplay;
-	CString	m_SoundFile;
-	CString	m_SoundSource;
+	enum
+	{
+		IDD = IDD_SOUNDBROWSER
+	};
+	CListBox m_SoundList;
+	CString m_SoundNameSelected;
+	int m_SoundType;
+	BOOL m_Autoplay;
+	CString m_SoundFile;
+	CString m_SoundSource;
 	//}}AFX_DATA
 
-
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CSoundBrowser)
-	public:
+public:
 	virtual int DoModal();
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+
+protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
 	//}}AFX_VIRTUAL
 	void SaveValues();
 
-// Implementation
+	// Implementation
 protected:
-
 	// Generated message map functions
 	//{{AFX_MSG(CSoundBrowser)
 	virtual BOOL OnInitDialog();
@@ -75,21 +77,21 @@ private:
 	void PopulateSoundList();
 	void CopySoundNameToSelected();
 	SoundType_t GetSoundType() const;
-	bool ShowSoundInList( const char *pSoundName );
-	void OnFilterChanged( const char *pFilter );
+	bool ShowSoundInList(const char *pSoundName);
+	void OnFilterChanged(const char *pFilter);
 
 	DWORD m_uLastFilterChange;
 	BOOL m_bFilterChanged;
 
-	BOOL m_bSoundPlayed;			// used so we can do a timer query to keep disable the stop sound button
+	BOOL m_bSoundPlayed; // used so we can do a timer query to keep disable the stop sound button
 	DWORD m_uSoundPlayTime;
 
 	int m_nSelectedSoundIndex;
 
 	CAutoSelComboBox m_cFilter;
-	char m_szFilter[256];			// Name filter, space, comma, or semicolon delimited.
-	int m_nFilters;					// The number of names that were parsed out of the name filter.
-	char *m_Filters[64];			// The individual name filters.
+	char m_szFilter[256]; // Name filter, space, comma, or semicolon delimited.
+	int m_nFilters;		  // The number of names that were parsed out of the name filter.
+	char *m_Filters[64];  // The individual name filters.
 
 	static CStringArray m_FilterHistory;
 	static int m_nFilterHistory;

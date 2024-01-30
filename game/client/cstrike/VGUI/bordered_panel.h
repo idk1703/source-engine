@@ -21,15 +21,11 @@ using namespace vgui;
 class BorderedPanel : public EditablePanel
 {
 public:
-	DECLARE_CLASS_SIMPLE( BorderedPanel, EditablePanel );
+	DECLARE_CLASS_SIMPLE(BorderedPanel, EditablePanel);
 
-	BorderedPanel( Panel *parent, const char *name ) :
-	EditablePanel( parent, name )
-	{
-	}
+	BorderedPanel(Panel *parent, const char *name) : EditablePanel(parent, name) {}
 
 	void PaintBackground();
 };
-
 
 #endif // INCLUDED_BorderedPanel

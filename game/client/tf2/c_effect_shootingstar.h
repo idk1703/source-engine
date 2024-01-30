@@ -20,22 +20,19 @@ class C_ShootingStar;
 //
 class C_ShootingStarSpawner : public C_BaseEntity
 {
-	DECLARE_CLASS( C_ShootingStarSpawner, C_BaseEntity );
+	DECLARE_CLASS(C_ShootingStarSpawner, C_BaseEntity);
 
 public:
-
 	DECLARE_CLIENTCLASS();
 
 	C_ShootingStarSpawner();
 
-	void ClientThink( void );
-	void SpawnShootingStars( void );
+	void ClientThink(void);
+	void SpawnShootingStars(void);
 
 public:
-
-	float						m_flSpawnInterval;		// How often do I spawn meteors?
+	float m_flSpawnInterval; // How often do I spawn meteors?
 };
-
 
 //=============================================================================
 //
@@ -43,30 +40,27 @@ public:
 //
 class C_ShootingStar : public C_BaseAnimating, CSimpleEmitter
 {
-	DECLARE_CLASS( C_ShootingStar, C_BaseAnimating );
+	DECLARE_CLASS(C_ShootingStar, C_BaseAnimating);
 
 public:
+	C_ShootingStar();
+	~C_ShootingStar(void);
 
-	C_ShootingStar( );
-	~C_ShootingStar( void );
+	void Init(const Vector vecOrigin, const Vector vecVelocity, int nSize, float flLifeTime);
+	void Destroy(void);
 
-	void	Init( const Vector vecOrigin, const Vector vecVelocity, int nSize, float flLifeTime );
-	void	Destroy( void );
-
-	void	Update( float timeDelta );
+	void Update(float timeDelta);
 
 public:
-
-	float	m_flScale;
-
-private:
-
-	void SetSortOrigin( const Vector &vSortOrigin );
+	float m_flScale;
 
 private:
-	C_ShootingStar( const C_ShootingStar & );
+	void SetSortOrigin(const Vector &vSortOrigin);
 
-	CUtlVector<SimpleParticle*>		m_aParticles;
+private:
+	C_ShootingStar(const C_ShootingStar &);
+
+	CUtlVector<SimpleParticle *> m_aParticles;
 };
 
 #endif // C_EFFECT_SHOOTINGSTAR_H

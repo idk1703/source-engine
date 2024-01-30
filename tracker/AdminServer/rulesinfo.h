@@ -22,13 +22,11 @@ class IResponse;
 #include <VGUI_ListPanel.h>
 #include <VGUI_KeyValues.h>
 
-
 class CRulesInfo
 {
 
 public:
-
-	CRulesInfo(IResponse *target,serveritem_t &server);
+	CRulesInfo(IResponse *target, serveritem_t &server);
 	~CRulesInfo();
 
 	// send an rcon command to a server
@@ -49,9 +47,8 @@ public:
 	int received;
 
 private:
-
 	serveritem_t m_Server;
-	CSocket	*m_pQuery;	// Game server query socket
+	CSocket *m_pQuery; // Game server query socket
 
 	IResponse *m_pResponseTarget;
 
@@ -60,8 +57,6 @@ private:
 	bool m_bRefreshed;
 
 	CUtlVector<vgui::KeyValues *> *m_vRules;
-
 };
-
 
 #endif // RULESINFO_H

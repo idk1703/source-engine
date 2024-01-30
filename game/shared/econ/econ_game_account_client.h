@@ -17,13 +17,18 @@
 //---------------------------------------------------------------------------------
 // Purpose: All the account-level information that the GC tracks
 //---------------------------------------------------------------------------------
-class CEconGameAccountClient : public GCSDK::CProtoBufSharedObject< CSOEconGameAccountClient, k_EEconTypeGameAccountClient >
+class CEconGameAccountClient
+	: public GCSDK::CProtoBufSharedObject<CSOEconGameAccountClient, k_EEconTypeGameAccountClient>
 {
 #ifdef GC
-	DECLARE_CLASS_MEMPOOL( CEconGameAccountClient );
+	DECLARE_CLASS_MEMPOOL(CEconGameAccountClient);
+
 public:
-	virtual bool BIsDatabaseBacked() const { return false; }
+	virtual bool BIsDatabaseBacked() const
+	{
+		return false;
+	}
 #endif
 };
 
-#endif //ECON_GAME_ACCOUNT_CLIENT_H
+#endif // ECON_GAME_ACCOUNT_CLIENT_H

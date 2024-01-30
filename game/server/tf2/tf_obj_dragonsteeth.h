@@ -17,21 +17,24 @@
 // ------------------------------------------------------------------------ //
 class CObjectDragonsTeeth : public CBaseObject
 {
-DECLARE_CLASS( CObjectDragonsTeeth, CBaseObject );
+	DECLARE_CLASS(CObjectDragonsTeeth, CBaseObject);
 
 public:
 	DECLARE_SERVERCLASS();
 
 	CObjectDragonsTeeth();
 
-	virtual void	Spawn();
-	virtual void	Precache();
-	virtual float	GetNearbyObjectCheckRadius( void ) { return 10.0; }
-	virtual bool	StartBuilding( CBaseEntity *pBuilder );
-	virtual void	OnActivityChanged( Activity act );
+	virtual void Spawn();
+	virtual void Precache();
+	virtual float GetNearbyObjectCheckRadius(void)
+	{
+		return 10.0;
+	}
+	virtual bool StartBuilding(CBaseEntity *pBuilder);
+	virtual void OnActivityChanged(Activity act);
 
 public:
-	CHandle< CBaseObject >	m_hOwningObject;		// Object I was created for
+	CHandle<CBaseObject> m_hOwningObject; // Object I was created for
 };
 
 #endif // TF_OBJ_DRAGONSTEETH_H

@@ -13,27 +13,28 @@
 
 class CMapErrorsDlg : public CDialog
 {
-// Construction
+	// Construction
 public:
-	CMapErrorsDlg(CWnd* pParent = NULL);   // standard constructor
+	CMapErrorsDlg(CWnd *pParent = NULL); // standard constructor
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CMapErrorsDlg)
-	enum { IDD = IDD_MAPERRORS };
-	CListBox	m_cErrors;
+	enum
+	{
+		IDD = IDD_MAPERRORS
+	};
+	CListBox m_cErrors;
 	//}}AFX_DATA
 
-
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CMapErrorsDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
 protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
+													 //}}AFX_VIRTUAL
 
+	// Implementation
+protected:
 	// Generated message map functions
 	//{{AFX_MSG(CMapErrorsDlg)
 	afx_msg void OnClear();

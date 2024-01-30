@@ -23,24 +23,24 @@
 enum EAbuseReportContentType
 {
 	k_EAbuseReportContentNoSelection = -1, // dummy ilegal value: the user has not made a selection
-	k_EAbuseReportContentUnspecified = 0, // we use this to mean "other"
-	//k_EAbuseReportContentAll = 1,			// reset all community content
-	k_EAbuseReportContentAvatarImage = 2,  // clear avatar image
-	//k_EAbuseReportContentProfileText = 3,  // reset profile text
-	//k_EAbuseReportContentWebLinks = 4,		// delete web links
-	//k_EAbuseReportContentAnnouncement = 5,
-	//k_EAbuseReportContentEventText = 6,
-	//k_EAbuseReportContentCustomCSS = 7,
-	//k_EAbuseReportContentProfileURL = 8,	// delete community URL ID
-	k_EAbuseReportContentComments = 9,		// just comments this guy has written
-	k_EAbuseReportContentPersonaName = 10,	// persona name
-	//k_EAbuseReportContentScreenshot = 11,  // screenshot
-	//k_EAbuseReportContentVideo = 12,		// videos
-	k_EAbuseReportContentCheating = 13,	// cheating
-	k_EAbuseReportContentUGCImage = 14,	// Image stored in UGC --- the report is accusing the image of being offensive
-	k_EAbuseReportContentActorUGCImage = 15,	// Abuse report actor has uploaded a UGC image to server as supporting documentation of their claim
+	k_EAbuseReportContentUnspecified = 0,  // we use this to mean "other"
+	// k_EAbuseReportContentAll = 1,			// reset all community content
+	k_EAbuseReportContentAvatarImage = 2, // clear avatar image
+	// k_EAbuseReportContentProfileText = 3,  // reset profile text
+	// k_EAbuseReportContentWebLinks = 4,		// delete web links
+	// k_EAbuseReportContentAnnouncement = 5,
+	// k_EAbuseReportContentEventText = 6,
+	// k_EAbuseReportContentCustomCSS = 7,
+	// k_EAbuseReportContentProfileURL = 8,	// delete community URL ID
+	k_EAbuseReportContentComments = 9,	   // just comments this guy has written
+	k_EAbuseReportContentPersonaName = 10, // persona name
+	// k_EAbuseReportContentScreenshot = 11,  // screenshot
+	// k_EAbuseReportContentVideo = 12,		// videos
+	k_EAbuseReportContentCheating = 13, // cheating
+	k_EAbuseReportContentUGCImage = 14, // Image stored in UGC --- the report is accusing the image of being offensive
+	k_EAbuseReportContentActorUGCImage =
+		15, // Abuse report actor has uploaded a UGC image to server as supporting documentation of their claim
 };
-
 
 /// Types of reasons why a violation report was issued
 ///
@@ -50,16 +50,16 @@ enum EAbuseReportType
 {
 	k_EAbuseReportTypeNoSelection = -1, // dummy ilegal value: the user has not made a selection
 	k_EAbuseReportTypeUnspecified = 0,
-	k_EAbuseReportTypeInappropriate = 1,	// just not ok to post
-	k_EAbuseReportTypeProhibited = 2,		// prohibited by EULA or general law
-	k_EAbuseReportTypeSpamming = 3,		// excessive spamming
-	k_EAbuseReportTypeAdvertisement = 4,	// unwanted advertisement
-	//k_EAbuseReportTypeExploit = 5,		// content data attempts to exploit code issue
+	k_EAbuseReportTypeInappropriate = 1, // just not ok to post
+	k_EAbuseReportTypeProhibited = 2,	 // prohibited by EULA or general law
+	k_EAbuseReportTypeSpamming = 3,		 // excessive spamming
+	k_EAbuseReportTypeAdvertisement = 4, // unwanted advertisement
+	// k_EAbuseReportTypeExploit = 5,		// content data attempts to exploit code issue
 	k_EAbuseReportTypeSpoofing = 6,		// user/group is impersonating an official contact
 	k_EAbuseReportTypeLanguage = 7,		// bad language
-	k_EAbuseReportTypeAdultContent = 8,	// any kind of adult material, references etc
-	k_EAbuseReportTypeHarassment = 9,		// harassment, discrimination, racism etc
-	k_EAbuseReportTypeCheating = 10,		// cheating
+	k_EAbuseReportTypeAdultContent = 8, // any kind of adult material, references etc
+	k_EAbuseReportTypeHarassment = 9,	// harassment, discrimination, racism etc
+	k_EAbuseReportTypeCheating = 10,	// cheating
 };
 
 /// Container class that has everything we need to know in order to file
@@ -187,16 +187,16 @@ public:
 	//
 	// CGameEventListener overrides
 	//
-	virtual void FireGameEvent( IGameEvent *event );
+	virtual void FireGameEvent(IGameEvent *event);
 
 // CAutoGameSystemPerFrame defines different stuff depending on which DLL we're building
 #ifdef CLIENT_DLL
 
 	// Do our frame-time processing
-	virtual void Update( float frametime );
+	virtual void Update(float frametime);
 
 #else
-	#error "Why is this being included?"
+#error "Why is this being included?"
 #endif
 
 	/// Called when the console command is executed to capture data for a report
@@ -209,7 +209,10 @@ public:
 	virtual void ActivateSubmitReportUI() = 0;
 
 	/// Fetch the incident that's queued to be reported
-	AbuseIncidentData_t *GetIncidentData() const { return m_pIncidentData; }
+	AbuseIncidentData_t *GetIncidentData() const
+	{
+		return m_pIncidentData;
+	}
 
 	/// Delete any current report incident.  Also should clean
 	/// out any temporary files used by the incident system.
@@ -220,7 +223,7 @@ public:
 	virtual void ShowNoSteamErrorMessage();
 
 	/// Insert a a notification into the queue indicating that an unfiled report is ready
-	virtual void CreateReportReadyNotification( bool bInGame, float flLifetime );
+	virtual void CreateReportReadyNotification(bool bInGame, float flLifetime);
 
 	/// Test harness.  Set this to true, to generate fake data
 	bool m_bTestReport;
@@ -229,7 +232,6 @@ public:
 	static const char k_rchScreenShotFilename[];
 
 protected:
-
 	/// Your app will probably define its own abuse report types.
 	/// if so, you will need to override this function.
 	/// The base class just calls new to create an object, then calls
@@ -256,7 +258,7 @@ protected:
 	/// Do we want to show the report UI as soon as the report is ready?
 	bool m_bReportUIPending;
 
-	void CheckCreateReportReadyNotification( float flMinSecondsSinceLastNotification, bool bInGame, float flLifetime );
+	void CheckCreateReportReadyNotification(float flMinSecondsSinceLastNotification, bool bInGame, float flLifetime);
 
 	/// Time when we last pestered them about filing their report
 	double m_timeLastReportReadyNotification;
@@ -264,11 +266,10 @@ protected:
 	/// Address of the lasts server we connected to
 	netadr_t m_adrCurrentServer;
 	CSteamID m_steamIDCurrentServer;
-
 };
 
 /// Pointer to the app-specific instance.  This pointer mght be NULL!  Your
 /// app should define set this pointer if it uses the system
 extern CAbuseReportManager *g_AbuseReportMgr;
 
-#endif	// ABUSE_REPORT_H
+#endif // ABUSE_REPORT_H

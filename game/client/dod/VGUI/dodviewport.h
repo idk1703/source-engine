@@ -24,26 +24,26 @@ class CDODSpectatorGUI;
 class CDODClientScoreBoardDialog;
 class CDODMenuBackground;
 
-
 //==============================================================================
 class DODViewport : public CBaseViewport
 {
 
 private:
-	DECLARE_CLASS_SIMPLE( DODViewport, CBaseViewport );
+	DECLARE_CLASS_SIMPLE(DODViewport, CBaseViewport);
 
 public:
+	IViewPortPanel *CreatePanelByName(const char *szPanelName);
+	void CreateDefaultPanels(void);
 
-	IViewPortPanel* CreatePanelByName(const char *szPanelName);
-	void CreateDefaultPanels( void );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-
-	int GetDeathMessageStartHeight( void );
+	int GetDeathMessageStartHeight(void);
 
 	// Never show the background
-	virtual void ShowBackGround(bool bShow) { NULL; }
+	virtual void ShowBackGround(bool bShow)
+	{
+		NULL;
+	}
 };
-
 
 #endif // DODVIEWPORT_H

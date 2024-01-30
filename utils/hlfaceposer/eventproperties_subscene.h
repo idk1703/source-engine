@@ -13,6 +13,6 @@
 
 class CEventParams;
 
-int EventProperties_SubScene( CEventParams *params );
+int EventProperties_SubScene(CEventParams *params);
 
 #endif // EVENTPROPERTIES_SUBSCENE_H

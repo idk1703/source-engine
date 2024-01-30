@@ -19,14 +19,15 @@ public:
 	CReplayGameStatsHelper();
 
 	// Adding "Time" before uploading.
-	void UploadError( KeyValues *pData, bool bIncludeTimeField );
+	void UploadError(KeyValues *pData, bool bIncludeTimeField);
 
-#if defined( CLIENT_DLL )
-	void SW_ReplayStats_WriteRenderDataStart( const RenderMovieParams_t& RenderParams, const CReplayRenderDialog *pDlg );
-	void SW_ReplayStats_WriteRenderDataEnd( const RenderMovieParams_t& RenderParams, const char *pEndReason );
+#if defined(CLIENT_DLL)
+	void SW_ReplayStats_WriteRenderDataStart(const RenderMovieParams_t &RenderParams, const CReplayRenderDialog *pDlg);
+	void SW_ReplayStats_WriteRenderDataEnd(const RenderMovieParams_t &RenderParams, const char *pEndReason);
 
 private:
-	void SW_ReplayStats_WriteRenderData( bool bStarting, const RenderMovieParams_t& RenderParams, const CReplayRenderDialog *pDlg, const char *pEndReason = NULL );
+	void SW_ReplayStats_WriteRenderData(bool bStarting, const RenderMovieParams_t &RenderParams,
+										const CReplayRenderDialog *pDlg, const char *pEndReason = NULL);
 #endif
 };
 

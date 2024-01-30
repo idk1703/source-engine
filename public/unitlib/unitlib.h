@@ -17,7 +17,6 @@
 #include "tier1/interface.h"
 #include "appframework/IAppSystem.h"
 
-
 //-----------------------------------------------------------------------------
 // Usage model for the UnitTest library
 //
@@ -76,29 +75,25 @@
 //
 //-----------------------------------------------------------------------------
 
-
-
 //-----------------------------------------------------------------------------
 // dll export stuff
 //-----------------------------------------------------------------------------
 
 #ifdef UNITLIB_DLL_EXPORT
-#define UNITLIB_INTERFACE DLL_EXPORT
-#define UNITLIB_CLASS_INTERFACE DLL_CLASS_EXPORT
+#define UNITLIB_INTERFACE		 DLL_EXPORT
+#define UNITLIB_CLASS_INTERFACE	 DLL_CLASS_EXPORT
 #define UNITLIB_GLOBAL_INTERFACE DLL_GLOBAL_EXPORT
 #else
-#define UNITLIB_INTERFACE DLL_IMPORT
-#define UNITLIB_CLASS_INTERFACE DLL_CLASS_IMPORT
+#define UNITLIB_INTERFACE		 DLL_IMPORT
+#define UNITLIB_CLASS_INTERFACE	 DLL_CLASS_IMPORT
 #define UNITLIB_GLOBAL_INTERFACE DLL_GLOBAL_IMPORT
 #endif
-
 
 //-----------------------------------------------------------------------------
 // All unit test libraries can be asked for a unit test
 // AppSystem to perform connection
 //-----------------------------------------------------------------------------
-#define UNITTEST_INTERFACE_VERSION		"UnitTestV001"
-
+#define UNITTEST_INTERFACE_VERSION "UnitTestV001"
 
 //-----------------------------------------------------------------------------
 //
@@ -114,7 +109,7 @@ class ITestCase
 {
 public:
 	// This returns the	test name
-	virtual char const* GetName() = 0;
+	virtual char const *GetName() = 0;
 
 	// This runs the test
 	virtual void RunTest() = 0;
@@ -124,32 +119,27 @@ class ITestSuite : public ITestCase
 {
 public:
 	// Add a test to the suite...
-	virtual void AddTest( ITestCase* pTest ) = 0;
+	virtual void AddTest(ITestCase *pTest) = 0;
 };
-
-
 
 //-----------------------------------------------------------------------------
 // This is the main function exported by the unit test library used by
 // unit test DLLs to install their test cases into a list to be run
 //-----------------------------------------------------------------------------
-UNITLIB_INTERFACE	void UnitTestInstallTestCase( ITestCase* pTest );
-
+UNITLIB_INTERFACE void UnitTestInstallTestCase(ITestCase *pTest);
 
 //-----------------------------------------------------------------------------
 // These are the methods used by the unit test running program to run all tests
 //-----------------------------------------------------------------------------
-UNITLIB_INTERFACE	int UnitTestCount();
-UNITLIB_INTERFACE	ITestCase* GetUnitTest( int i );
-
+UNITLIB_INTERFACE int UnitTestCount();
+UNITLIB_INTERFACE ITestCase *GetUnitTest(int i);
 
 //-----------------------------------------------------------------------------
 // Helper for unit test DLLs to expose IAppSystems
 //-----------------------------------------------------------------------------
-#define USE_UNITTEST_APPSYSTEM( _className )	\
-	static _className s_UnitTest ## _className;	\
-	EXPOSE_SINGLE_INTERFACE_GLOBALVAR( _className, IAppSystem, UNITTEST_INTERFACE_VERSION, s_UnitTest ## _className );
-
+#define USE_UNITTEST_APPSYSTEM(_className)    \
+	static _className s_UnitTest##_className; \
+	EXPOSE_SINGLE_INTERFACE_GLOBALVAR(_className, IAppSystem, UNITTEST_INTERFACE_VERSION, s_UnitTest##_className);
 
 //-----------------------------------------------------------------------------
 // Base class for test cases
@@ -157,16 +147,15 @@ UNITLIB_INTERFACE	ITestCase* GetUnitTest( int i );
 class UNITLIB_CLASS_INTERFACE CTestCase : public ITestCase
 {
 public:
-	CTestCase( char const* pName, ITestSuite* pParent = 0 );
+	CTestCase(char const *pName, ITestSuite *pParent = 0);
 	~CTestCase();
 
 	// Returns the test name
-	char const* GetName();
+	char const *GetName();
 
 private:
-	char* m_pName;
+	char *m_pName;
 };
-
 
 //-----------------------------------------------------------------------------
 // Test suite class
@@ -174,97 +163,96 @@ private:
 class UNITLIB_CLASS_INTERFACE CTestSuite : public ITestSuite
 {
 public:
-	CTestSuite( char const* pName, ITestSuite* pParent = 0 );
+	CTestSuite(char const *pName, ITestSuite *pParent = 0);
 	~CTestSuite();
 
 	// This runs the test
 	void RunTest();
 
 	// Add a test to the suite...
-	void AddTest( ITestCase* pTest );
+	void AddTest(ITestCase *pTest);
 
 	// Returns the test name
-	char const* GetName();
+	char const *GetName();
 
 protected:
-	int	m_TestCount;
-	ITestCase** m_ppTestCases;
-	char* m_pName;
+	int m_TestCount;
+	ITestCase **m_ppTestCases;
+	char *m_pName;
 };
 
-#define TESTSUITE_CLASS( _suite )			\
-	class CTS ## _suite : public CTestSuite \
-	{										\
-	public:									\
-		CTS ## _suite();					\
+#define TESTSUITE_CLASS(_suite)           \
+	class CTS##_suite : public CTestSuite \
+	{                                     \
+	public:                               \
+		CTS##_suite();                    \
 	};
 
-#define TESTSUITE_ACCESSOR( _suite ) 		\
-	CTS ## _suite* GetTS ## _suite()		\
-	{										\
-		static CTS ## _suite s_TS ## _suite;	\
-		return &s_TS ## _suite;				\
+#define TESTSUITE_ACCESSOR(_suite)       \
+	CTS##_suite *GetTS##_suite()         \
+	{                                    \
+		static CTS##_suite s_TS##_suite; \
+		return &s_TS##_suite;            \
 	}
 
-#define FWD_DECLARE_TESTSUITE( _suite ) 	\
-	class CTS ## _suite;					\
-	CTS ## _suite* GetTS ## _suite();
+#define FWD_DECLARE_TESTSUITE(_suite) \
+	class CTS##_suite;                \
+	CTS##_suite *GetTS##_suite();
 
-#define DEFINE_TESTSUITE( _suite )			\
-	TESTSUITE_CLASS( _suite )				\
-	TESTSUITE_ACCESSOR( _suite )			\
-	CTS ## _suite::CTS ## _suite() : CTestSuite( #_suite ) {}
+#define DEFINE_TESTSUITE(_suite) \
+	TESTSUITE_CLASS(_suite)      \
+	TESTSUITE_ACCESSOR(_suite)   \
+	CTS##_suite::CTS##_suite() : CTestSuite(#_suite) {}
 
-#define DEFINE_SUBSUITE( _suite, _parent )	\
-	TESTSUITE_CLASS( _suite )				\
-	TESTSUITE_ACCESSOR( _suite )			\
-	FWD_DECLARE_TESTSUITE( _parent )		\
-	CTS ## _suite::CTS ## _suite() : CTestSuite( #_suite, GetTS ## _parent() ) {}
+#define DEFINE_SUBSUITE(_suite, _parent) \
+	TESTSUITE_CLASS(_suite)              \
+	TESTSUITE_ACCESSOR(_suite)           \
+	FWD_DECLARE_TESTSUITE(_parent)       \
+	CTS##_suite::CTS##_suite() : CTestSuite(#_suite, GetTS##_parent()) {}
 
-#define TESTCASE_CLASS( _case )				\
-	class CTC ## _case  : public CTestCase	\
-	{										\
-	public:									\
-		CTC ## _case ();					\
-		void RunTest();						\
+#define TESTCASE_CLASS(_case)           \
+	class CTC##_case : public CTestCase \
+	{                                   \
+	public:                             \
+		CTC##_case();                   \
+		void RunTest();                 \
 	};
 
-#define DEFINE_TESTCASE_NOSUITE( _case )	\
-	TESTCASE_CLASS( _case )					\
-	CTC ## _case::CTC ## _case () : CTestCase( #_case ) {} \
-											\
-	CTC ## _case s_TC ## _case;				\
-											\
-	void CTC ## _case ::RunTest()
+#define DEFINE_TESTCASE_NOSUITE(_case)              \
+	TESTCASE_CLASS(_case)                           \
+	CTC##_case::CTC##_case() : CTestCase(#_case) {} \
+                                                    \
+	CTC##_case s_TC##_case;                         \
+                                                    \
+	void CTC##_case ::RunTest()
 
-#define DEFINE_TESTCASE( _case, _suite )	\
-	TESTCASE_CLASS( _case )					\
-	FWD_DECLARE_TESTSUITE( _suite )			\
-	CTC ## _case::CTC ## _case () : CTestCase( #_case, GetTS ## _suite() ) {}	\
-											\
-	CTC ## _case s_TC ## _case;				\
-											\
-	void CTC ## _case ::RunTest()
+#define DEFINE_TESTCASE(_case, _suite)                               \
+	TESTCASE_CLASS(_case)                                            \
+	FWD_DECLARE_TESTSUITE(_suite)                                    \
+	CTC##_case::CTC##_case() : CTestCase(#_case, GetTS##_suite()) {} \
+                                                                     \
+	CTC##_case s_TC##_case;                                          \
+                                                                     \
+	void CTC##_case ::RunTest()
 
+#define _Shipping_AssertMsg(_exp, _msg, _executeExp, _bFatal)                                   \
+	do                                                                                          \
+	{                                                                                           \
+		if(!(_exp))                                                                             \
+		{                                                                                       \
+			_SpewInfo(SPEW_ASSERT, __TFILE__, __LINE__);                                        \
+			SpewRetval_t ret = _SpewMessage(_msg);                                              \
+			_executeExp;                                                                        \
+			if(ret == SPEW_DEBUGGER)                                                            \
+			{                                                                                   \
+				if(!ShouldUseNewAssertDialog() || DoNewAssertDialog(__TFILE__, __LINE__, _msg)) \
+					DebuggerBreak();                                                            \
+				if(_bFatal)                                                                     \
+					_ExitOnFatalAssert(__TFILE__, __LINE__);                                    \
+			}                                                                                   \
+		}                                                                                       \
+	} while(0)
 
-#define  _Shipping_AssertMsg( _exp, _msg, _executeExp, _bFatal )	\
-	do {																\
-		if (!(_exp)) 													\
-		{ 																\
-			_SpewInfo( SPEW_ASSERT, __TFILE__, __LINE__ );				\
-			SpewRetval_t ret = _SpewMessage(_msg);						\
-			_executeExp; 												\
-			if ( ret == SPEW_DEBUGGER)									\
-			{															\
-				if ( !ShouldUseNewAssertDialog() || DoNewAssertDialog( __TFILE__, __LINE__, _msg ) ) \
-					DebuggerBreak();									\
-				if ( _bFatal )											\
-					_ExitOnFatalAssert( __TFILE__, __LINE__ );			\
-			}															\
-		}																\
-	} while (0)
+#define Shipping_Assert(_exp) _Shipping_AssertMsg(_exp, _T("Assertion Failed: ") _T(#_exp), ((void)0), false)
 
-#define  Shipping_Assert( _exp )           							_Shipping_AssertMsg( _exp, _T("Assertion Failed: ") _T(#_exp), ((void)0), false )
-
-
-#endif	// UNITLIB_H
+#endif // UNITLIB_H

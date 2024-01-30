@@ -7,7 +7,6 @@
 #ifndef TF_LOBBY_CONTAINER_FRAME_CASUAL_H
 #define TF_LOBBY_CONTAINER_FRAME_CASUAL_H
 
-
 #include "cbase.h"
 //#include "tf_pvelobbypanel.h"
 #include "game/client/iviewport.h"
@@ -52,7 +51,8 @@ class CBaseLobbyPanel;
 // This is a big fat kludge so I can use the PropertyPage
 class CLobbyContainerFrame_Casual : public CBaseLobbyContainerFrame
 {
-	DECLARE_CLASS_SIMPLE( CLobbyContainerFrame_Casual, CBaseLobbyContainerFrame );
+	DECLARE_CLASS_SIMPLE(CLobbyContainerFrame_Casual, CBaseLobbyContainerFrame);
+
 public:
 	CLobbyContainerFrame_Casual();
 	~CLobbyContainerFrame_Casual();
@@ -60,23 +60,30 @@ public:
 	//
 	// PropertyDialog overrides
 	//
-	virtual void ShowPanel( bool bShow ) OVERRIDE;
-	virtual void OnCommand( const char *command ) OVERRIDE;
+	virtual void ShowPanel(bool bShow) OVERRIDE;
+	virtual void OnCommand(const char *command) OVERRIDE;
 
-	CMainMenuToolTip *GetTooltipPanel(){ return m_pToolTip; }
+	CMainMenuToolTip *GetTooltipPanel()
+	{
+		return m_pToolTip;
+	}
 
 protected:
-
 	virtual void WriteControls();
 
 private:
-	virtual const char* GetResFile() const OVERRIDE { return "Resource/UI/LobbyContainerFrame_Casual.res"; }
-	virtual TF_MatchmakingMode GetHandledMode() const { return TF_Matchmaking_CASUAL; }
+	virtual const char *GetResFile() const OVERRIDE
+	{
+		return "Resource/UI/LobbyContainerFrame_Casual.res";
+	}
+	virtual TF_MatchmakingMode GetHandledMode() const
+	{
+		return TF_Matchmaking_CASUAL;
+	}
 	virtual bool VerifyPartyAuthorization() const;
 	virtual void HandleBackPressed() OVERRIDE;
-
 
 	CMainMenuToolTip *m_pToolTip;
 };
 
-#endif //TF_LOBBY_CONTAINER_FRAME_CASUAL_H
+#endif // TF_LOBBY_CONTAINER_FRAME_CASUAL_H

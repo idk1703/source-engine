@@ -36,136 +36,110 @@
 #include <ControlDefinitions.h>
 #endif
 
-
-
-
-
 #if PRAGMA_ONCE
 #pragma once
 #endif
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 #if PRAGMA_IMPORT
 #pragma import on
 #endif
 
-enum {
-	kIBCarbonRuntimeCantFindNibFile = -10960,
-	kIBCarbonRuntimeObjectNotOfRequestedType = -10961,
-	kIBCarbonRuntimeCantFindObject = -10962
-};
+	enum
+	{
+		kIBCarbonRuntimeCantFindNibFile = -10960,
+		kIBCarbonRuntimeObjectNotOfRequestedType = -10961,
+		kIBCarbonRuntimeCantFindObject = -10962
+	};
 
-/* ----- typedef ------ */
-typedef struct OpaqueIBNibRef*          IBNibRef;
-/* ----- Create & Dispose NIB References ------ */
-/*
- *  CreateNibReference()
- *
- *  Availability:
- *    Non-Carbon CFM:   not available
- *    CarbonLib:        in CarbonLib 1.1 and later
- *    Mac OS X:         in version 10.0 and later
- */
-EXTERN_API_C( OSStatus )
-CreateNibReference(
-	CFStringRef   inNibName,
-	IBNibRef *    outNibRef);
+	/* ----- typedef ------ */
+	typedef struct OpaqueIBNibRef *IBNibRef;
+	/* ----- Create & Dispose NIB References ------ */
+	/*
+	 *  CreateNibReference()
+	 *
+	 *  Availability:
+	 *    Non-Carbon CFM:   not available
+	 *    CarbonLib:        in CarbonLib 1.1 and later
+	 *    Mac OS X:         in version 10.0 and later
+	 */
+	EXTERN_API_C(OSStatus)
+	CreateNibReference(CFStringRef inNibName, IBNibRef *outNibRef);
 
+	/*
+	 *  CreateNibReferenceWithCFBundle()
+	 *
+	 *  Availability:
+	 *    Non-Carbon CFM:   not available
+	 *    CarbonLib:        in CarbonLib 1.1 and later
+	 *    Mac OS X:         in version 10.0 and later
+	 */
+	EXTERN_API_C(OSStatus)
+	CreateNibReferenceWithCFBundle(CFBundleRef inBundle, CFStringRef inNibName, IBNibRef *outNibRef);
 
-/*
- *  CreateNibReferenceWithCFBundle()
- *
- *  Availability:
- *    Non-Carbon CFM:   not available
- *    CarbonLib:        in CarbonLib 1.1 and later
- *    Mac OS X:         in version 10.0 and later
- */
-EXTERN_API_C( OSStatus )
-CreateNibReferenceWithCFBundle(
-	CFBundleRef   inBundle,
-	CFStringRef   inNibName,
-	IBNibRef *    outNibRef);
+	/*
+	 *  DisposeNibReference()
+	 *
+	 *  Availability:
+	 *    Non-Carbon CFM:   not available
+	 *    CarbonLib:        in CarbonLib 1.1 and later
+	 *    Mac OS X:         in version 10.0 and later
+	 */
+	EXTERN_API_C(void)
+	DisposeNibReference(IBNibRef inNibRef);
 
+	/* ----- Window ------ */
+	/*
+	 *  CreateWindowFromNib()
+	 *
+	 *  Availability:
+	 *    Non-Carbon CFM:   not available
+	 *    CarbonLib:        in CarbonLib 1.1 and later
+	 *    Mac OS X:         in version 10.0 and later
+	 */
+	EXTERN_API_C(OSStatus)
+	CreateWindowFromNib(IBNibRef inNibRef, CFStringRef inName, WindowRef *outWindow);
 
-/*
- *  DisposeNibReference()
- *
- *  Availability:
- *    Non-Carbon CFM:   not available
- *    CarbonLib:        in CarbonLib 1.1 and later
- *    Mac OS X:         in version 10.0 and later
- */
-EXTERN_API_C( void )
-DisposeNibReference(IBNibRef inNibRef);
+	/* ----- Menu -----*/
 
+	/*
+	 *  CreateMenuFromNib()
+	 *
+	 *  Availability:
+	 *    Non-Carbon CFM:   not available
+	 *    CarbonLib:        in CarbonLib 1.1 and later
+	 *    Mac OS X:         in version 10.0 and later
+	 */
+	EXTERN_API_C(OSStatus)
+	CreateMenuFromNib(IBNibRef inNibRef, CFStringRef inName, MenuRef *outMenuRef);
 
-/* ----- Window ------ */
-/*
- *  CreateWindowFromNib()
- *
- *  Availability:
- *    Non-Carbon CFM:   not available
- *    CarbonLib:        in CarbonLib 1.1 and later
- *    Mac OS X:         in version 10.0 and later
- */
-EXTERN_API_C( OSStatus )
-CreateWindowFromNib(
-	IBNibRef      inNibRef,
-	CFStringRef   inName,
-	WindowRef *   outWindow);
+	/* ----- MenuBar ------*/
 
+	/*
+	 *  CreateMenuBarFromNib()
+	 *
+	 *  Availability:
+	 *    Non-Carbon CFM:   not available
+	 *    CarbonLib:        in CarbonLib 1.1 and later
+	 *    Mac OS X:         in version 10.0 and later
+	 */
+	EXTERN_API_C(OSStatus)
+	CreateMenuBarFromNib(IBNibRef inNibRef, CFStringRef inName, Handle *outMenuBar);
 
-/* ----- Menu -----*/
-
-/*
- *  CreateMenuFromNib()
- *
- *  Availability:
- *    Non-Carbon CFM:   not available
- *    CarbonLib:        in CarbonLib 1.1 and later
- *    Mac OS X:         in version 10.0 and later
- */
-EXTERN_API_C( OSStatus )
-CreateMenuFromNib(
-	IBNibRef      inNibRef,
-	CFStringRef   inName,
-	MenuRef *     outMenuRef);
-
-
-/* ----- MenuBar ------*/
-
-/*
- *  CreateMenuBarFromNib()
- *
- *  Availability:
- *    Non-Carbon CFM:   not available
- *    CarbonLib:        in CarbonLib 1.1 and later
- *    Mac OS X:         in version 10.0 and later
- */
-EXTERN_API_C( OSStatus )
-CreateMenuBarFromNib(
-	IBNibRef      inNibRef,
-	CFStringRef   inName,
-	Handle *      outMenuBar);
-
-
-/*
- *  SetMenuBarFromNib()
- *
- *  Availability:
- *    Non-Carbon CFM:   not available
- *    CarbonLib:        in CarbonLib 1.1 and later
- *    Mac OS X:         in version 10.0 and later
- */
-EXTERN_API_C( OSStatus )
-SetMenuBarFromNib(
-	IBNibRef      inNibRef,
-	CFStringRef   inName);
-
-
+	/*
+	 *  SetMenuBarFromNib()
+	 *
+	 *  Availability:
+	 *    Non-Carbon CFM:   not available
+	 *    CarbonLib:        in CarbonLib 1.1 and later
+	 *    Mac OS X:         in version 10.0 and later
+	 */
+	EXTERN_API_C(OSStatus)
+	SetMenuBarFromNib(IBNibRef inNibRef, CFStringRef inName);
 
 #ifdef PRAGMA_IMPORT_OFF
 #pragma import off

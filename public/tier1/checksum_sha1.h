@@ -7,7 +7,7 @@
 #ifndef CHECKSUM_SHA1_H
 #define CHECKSUM_SHA1_H
 
-#if defined( _WIN32 )
+#if defined(_WIN32)
 #pragma once
 #endif
 
@@ -29,8 +29,8 @@
 */
 
 #if !defined(_MINIMUM_BUILD_)
-#include <stdio.h>  // Needed for file access
-#if defined( _PS3 )
+#include <stdio.h> // Needed for file access
+#if defined(_PS3)
 #include <sys/memory.h>
 #else
 #include <memory.h>
@@ -50,9 +50,9 @@ typedef union
 // SHA1 hash
 const unsigned int k_cubHash = 20;
 const unsigned int k_cchHash = 41; // k_cubHash * 2, plus 1 for terminator
-#pragma pack( push, 1 )
-typedef	unsigned char SHADigest_t[ k_cubHash ];
-#pragma pack( pop )
+#pragma pack(push, 1)
+typedef unsigned char SHADigest_t[k_cubHash];
+#pragma pack(pop)
 
 #if !defined(_MINIMUM_BUILD_)
 class CSHA1
@@ -71,10 +71,10 @@ public:
 	// Constructor and Destructor
 #if !defined(_MINIMUM_BUILD_)
 	CSHA1();
-	virtual ~CSHA1() ;
+	virtual ~CSHA1();
 #else
-	Minimum_CSHA1() ;
-	~Minimum_CSHA1() ;	// no virtual destructor's in the minimal builds !
+	Minimum_CSHA1();
+	~Minimum_CSHA1(); // no virtual destructor's in the minimal builds !
 #endif
 
 	unsigned long m_state[5];
@@ -106,11 +106,17 @@ private:
 	SHA1_WORKSPACE_BLOCK *m_block; // SHA1 pointer to the byte array above
 };
 
-#define GenerateHash( hash, pubData, cubData ) { CSHA1 sha1; sha1.Update( (byte *)pubData, cubData ); sha1.Final(); sha1.GetHash( hash ); }
+#define GenerateHash(hash, pubData, cubData)   \
+	{                                          \
+		CSHA1 sha1;                            \
+		sha1.Update((byte *)pubData, cubData); \
+		sha1.Final();                          \
+		sha1.GetHash(hash);                    \
+	}
 
 #if !defined(_MINIMUM_BUILD_)
 // hash comparison function, for use with CUtlMap/CUtlRBTree
-bool HashLessFunc( SHADigest_t const &lhs, SHADigest_t const &rhs );
+bool HashLessFunc(SHADigest_t const &lhs, SHADigest_t const &rhs);
 
 // utility class for manipulating SHA1 hashes in their compact form
 struct CSHA
@@ -120,12 +126,12 @@ public:
 
 	CSHA()
 	{
-		memset( m_shaDigest, 0, k_cubHash );
+		memset(m_shaDigest, 0, k_cubHash);
 	}
 
-	explicit CSHA( const SHADigest_t rhs )
+	explicit CSHA(const SHADigest_t rhs)
 	{
-		memcpy( m_shaDigest, rhs, k_cubHash );
+		memcpy(m_shaDigest, rhs, k_cubHash);
 	}
 
 	SHADigest_t &SHADigest()
@@ -133,40 +139,40 @@ public:
 		return m_shaDigest;
 	}
 
-	bool operator<( const CSHA &rhs ) const
+	bool operator<(const CSHA &rhs) const
 	{
-		return memcmp( m_shaDigest, rhs.m_shaDigest, k_cubHash ) < 0;
+		return memcmp(m_shaDigest, rhs.m_shaDigest, k_cubHash) < 0;
 	}
 
-	bool operator==( const CSHA &rhs ) const
+	bool operator==(const CSHA &rhs) const
 	{
-		return memcmp( m_shaDigest, rhs.m_shaDigest, k_cubHash ) == 0;
+		return memcmp(m_shaDigest, rhs.m_shaDigest, k_cubHash) == 0;
 	}
 
-	bool operator!=( const CSHA &rhs ) const
+	bool operator!=(const CSHA &rhs) const
 	{
 		return !(*this == rhs);
 	}
 
-	bool operator==( const SHADigest_t &rhs ) const
+	bool operator==(const SHADigest_t &rhs) const
 	{
-		return memcmp( m_shaDigest, rhs, k_cubHash ) == 0;
+		return memcmp(m_shaDigest, rhs, k_cubHash) == 0;
 	}
 
-	bool operator!=( const SHADigest_t &rhs ) const
+	bool operator!=(const SHADigest_t &rhs) const
 	{
 		return !(*this == rhs);
 	}
 
-	CSHA &operator=( const SHADigest_t rhs )
+	CSHA &operator=(const SHADigest_t rhs)
 	{
-		memcpy( m_shaDigest, rhs, k_cubHash );
+		memcpy(m_shaDigest, rhs, k_cubHash);
 		return *this;
 	}
 
-	void AssignTo( SHADigest_t rhs ) const
+	void AssignTo(SHADigest_t rhs) const
 	{
-		memcpy( rhs, m_shaDigest, k_cubHash );
+		memcpy(rhs, m_shaDigest, k_cubHash);
 	}
 };
 #endif // _MINIMUM_BUILD_

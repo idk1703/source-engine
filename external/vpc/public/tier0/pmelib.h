@@ -13,8 +13,8 @@
 #include "tier0/platform.h"
 
 // Get rid of a bunch of STL warnings!
-#pragma warning( push, 3 )
-#pragma warning( disable : 4018 )
+#pragma warning(push, 3)
+#pragma warning(disable : 4018)
 
 #define VERSION "1.0.2"
 
@@ -31,42 +31,27 @@ using namespace std;
 #ifdef COMPILER_MSVC64
 #define RDTSC(var) (var = __rdtsc())
 #else
-#define RDTSC(var) \
-_asm RDTSC \
-_asm mov DWORD PTR var,eax \
-_asm mov DWORD PTR var+4,edx
+#define RDTSC(var) _asm RDTSC _asm mov DWORD PTR var, eax _asm mov DWORD PTR var + 4, edx
 #endif
 
 // RDPMC Instruction macro
 #ifdef COMPILER_MSVC64
 #define RDPMC(counter, var) (var = __readpmc(counter))
 #else
-#define RDPMC(counter, var) \
-_asm mov ecx, counter \
-_asm RDPMC \
-_asm mov DWORD PTR var,eax \
-_asm mov DWORD PTR var+4,edx
+#define RDPMC(counter, var) _asm mov ecx, counter _asm RDPMC _asm mov DWORD PTR var, eax _asm mov DWORD PTR var + 4, edx
 #endif
 
 // RDPMC Instruction macro, for performance counter 1 (ecx = 1)
 #ifdef COMPILER_MSVC64
 #define RDPMC0(var) (var = __readpmc(0))
 #else
-#define RDPMC0(var) \
-_asm mov ecx, 0 \
-_asm RDPMC \
-_asm mov DWORD PTR var,eax \
-_asm mov DWORD PTR var+4,edx
+#define RDPMC0(var) _asm mov ecx, 0 _asm RDPMC _asm mov DWORD PTR var, eax _asm mov DWORD PTR var + 4, edx
 #endif
 
 #ifdef COMPILER_MSVC64
 #define RDPMC1(var) (var = __readpmc(1))
 #else
-#define RDPMC1(var) \
-_asm mov ecx, 1 \
-_asm RDPMC \
-_asm mov DWORD PTR var,eax \
-_asm mov DWORD PTR var+4,edx
+#define RDPMC1(var) _asm mov ecx, 1 _asm RDPMC _asm mov DWORD PTR var, eax _asm mov DWORD PTR var + 4, edx
 #endif
 
 #define EVENT_TYPE(mode) EventType##mode
@@ -82,47 +67,46 @@ enum ProcessPriority
 
 enum PrivilegeCapture
 {
-	OS_Only,  // ring 0, kernel level
-	USR_Only, // app level
+	OS_Only,	// ring 0, kernel level
+	USR_Only,	// app level
 	OS_and_USR, // all levels
 };
 
 enum CompareMethod
 {
-	CompareGreater,  //
+	CompareGreater,	  //
 	CompareLessEqual, //
 };
 
 enum EdgeState
 {
 	RisingEdgeDisabled, //
-	RisingEdgeEnabled,  //
+	RisingEdgeEnabled,	//
 };
 
 enum CompareState
 {
 	CompareDisable, //
-	CompareEnable,  //
+	CompareEnable,	//
 };
 
 // Singletion Class
 class PME : public ia32detect
 {
 public:
-//private:
+	// private:
 
-	static PME*		_singleton;
+	static PME *_singleton;
 
-	HANDLE			hFile;
-	bool			bDriverOpen;
-	double			m_CPUClockSpeed;
+	HANDLE hFile;
+	bool bDriverOpen;
+	double m_CPUClockSpeed;
 
-	//ia32detect detect;
+	// ia32detect detect;
 	HRESULT Init();
 	HRESULT Close();
 
 protected:
-
 	PME()
 	{
 		hFile = NULL;
@@ -132,39 +116,38 @@ protected:
 	}
 
 public:
-
-	static PME* Instance();  // gives back a real object
+	static PME *Instance(); // gives back a real object
 
 	~PME()
 	{
 		Close();
 	}
 
-	double GetCPUClockSpeedSlow( void );
-	double GetCPUClockSpeedFast( void );
+	double GetCPUClockSpeedSlow(void);
+	double GetCPUClockSpeedFast(void);
 
-	HRESULT SelectP5P6PerformanceEvent( uint32 dw_event, uint32 dw_counter, bool b_user, bool b_kernel );
+	HRESULT SelectP5P6PerformanceEvent(uint32 dw_event, uint32 dw_counter, bool b_user, bool b_kernel);
 
-	HRESULT ReadMSR( uint32 dw_reg, int64 * pi64_value );
-	HRESULT ReadMSR( uint32 dw_reg, uint64 * pi64_value );
+	HRESULT ReadMSR(uint32 dw_reg, int64 *pi64_value);
+	HRESULT ReadMSR(uint32 dw_reg, uint64 *pi64_value);
 
-	HRESULT WriteMSR( uint32 dw_reg, const int64 & i64_value );
-	HRESULT WriteMSR( uint32 dw_reg, const uint64 & i64_value );
+	HRESULT WriteMSR(uint32 dw_reg, const int64 &i64_value);
+	HRESULT WriteMSR(uint32 dw_reg, const uint64 &i64_value);
 
-	void SetProcessPriority( ProcessPriority priority )
+	void SetProcessPriority(ProcessPriority priority)
 	{
-		switch( priority )
+		switch(priority)
 		{
-		case ProcessPriorityNormal:
+			case ProcessPriorityNormal:
 			{
-				SetPriorityClass (GetCurrentProcess(),NORMAL_PRIORITY_CLASS);
-				SetThreadPriority (GetCurrentThread(),THREAD_PRIORITY_NORMAL);
+				SetPriorityClass(GetCurrentProcess(), NORMAL_PRIORITY_CLASS);
+				SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_NORMAL);
 				break;
 			}
-		case ProcessPriorityHigh:
+			case ProcessPriorityHigh:
 			{
-				SetPriorityClass (GetCurrentProcess(),REALTIME_PRIORITY_CLASS);
-				SetThreadPriority (GetCurrentThread(),THREAD_PRIORITY_HIGHEST);
+				SetPriorityClass(GetCurrentProcess(), REALTIME_PRIORITY_CLASS);
+				SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
 				break;
 			}
 		}
@@ -184,9 +167,8 @@ public:
 	}
 
 #ifdef DBGFLAG_VALIDATE
-	void Validate( CValidator &validator, tchar *pchName );		// Validate our internal structures
-#endif // DBGFLAG_VALIDATE
-
+	void Validate(CValidator &validator, tchar *pchName); // Validate our internal structures
+#endif													  // DBGFLAG_VALIDATE
 };
 
 #include "p5p6performancecounters.h"
@@ -195,18 +177,18 @@ public:
 
 enum PerfErrors
 {
-	E_UNKNOWN_CPU_VENDOR	= -1,
-	E_BAD_COUNTER			= -2,
-	E_UNKNOWN_CPU			= -3,
-	E_CANT_OPEN_DRIVER		= -4,
-	E_DRIVER_ALREADY_OPEN	= -5,
-	E_DRIVER_NOT_OPEN		= -6,
-	E_DISABLED				= -7,
-	E_BAD_DATA				= -8,
-	E_CANT_CLOSE			= -9,
-	E_ILLEGAL_OPERATION		= -10,
+	E_UNKNOWN_CPU_VENDOR = -1,
+	E_BAD_COUNTER = -2,
+	E_UNKNOWN_CPU = -3,
+	E_CANT_OPEN_DRIVER = -4,
+	E_DRIVER_ALREADY_OPEN = -5,
+	E_DRIVER_NOT_OPEN = -6,
+	E_DISABLED = -7,
+	E_BAD_DATA = -8,
+	E_CANT_CLOSE = -9,
+	E_ILLEGAL_OPERATION = -10,
 };
 
-#pragma warning( pop )
+#pragma warning(pop)
 
 #endif // PMELIB_H

@@ -25,7 +25,10 @@ class IShaderShadow;
 //-----------------------------------------------------------------------------
 struct Cloak_DX9_Vars_t
 {
-	Cloak_DX9_Vars_t() { memset( this, 0xFF, sizeof( *this ) ); }
+	Cloak_DX9_Vars_t()
+	{
+		memset(this, 0xFF, sizeof(*this));
+	}
 
 	int m_nBaseTexture;
 	int m_nRefractAmount;
@@ -54,10 +57,10 @@ struct Cloak_DX9_Vars_t
 	int m_nRimMask;
 };
 
-void InitParamsCloak_DX9( CBaseVSShader *pShader, IMaterialVar** params, const char *pMaterialName,
-						   Cloak_DX9_Vars_t &info );
-void InitCloak_DX9( CBaseVSShader *pShader, IMaterialVar** params, Cloak_DX9_Vars_t &info );
-void DrawCloak_DX9( CBaseVSShader *pShader, IMaterialVar** params, IShaderDynamicAPI *pShaderAPI,
-				   IShaderShadow* pShaderShadow, Cloak_DX9_Vars_t &info, VertexCompressionType_t vertexCompression );
+void InitParamsCloak_DX9(CBaseVSShader *pShader, IMaterialVar **params, const char *pMaterialName,
+						 Cloak_DX9_Vars_t &info);
+void InitCloak_DX9(CBaseVSShader *pShader, IMaterialVar **params, Cloak_DX9_Vars_t &info);
+void DrawCloak_DX9(CBaseVSShader *pShader, IMaterialVar **params, IShaderDynamicAPI *pShaderAPI,
+				   IShaderShadow *pShaderShadow, Cloak_DX9_Vars_t &info, VertexCompressionType_t vertexCompression);
 
 #endif // CLOAK_DX9_HELPER_H

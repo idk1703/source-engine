@@ -19,10 +19,10 @@
 #include "mathlib/ssemath.h"
 #include "lightmap.h"
 
-#define RADIALDIST2	2 // (1.25*1.25+1.25*1.25)
+#define RADIALDIST2 2	 // (1.25*1.25+1.25*1.25)
 #define RADIALDIST	1.42 // 1.77 // sqrt( RADIALDIST2 )
 
-#define WEIGHT_EPS	0.00001f
+#define WEIGHT_EPS 0.00001f
 
 //-----------------------------------------------------------------------------
 // The radial_t data structure is used to accumulate irregularly spaced and irregularly
@@ -36,41 +36,34 @@
 //-----------------------------------------------------------------------------
 typedef struct radial_s
 {
-	int	facenum;
+	int facenum;
 	lightinfo_t l;
 	int w, h;
 	float weight[SINGLEMAP];
 	LightingValue_t light[NUM_BUMP_VECTS + 1][SINGLEMAP];
 } radial_t;
 
+void WorldToLuxelSpace(lightinfo_t const *l, Vector const &world, Vector2D &coord);
+void LuxelSpaceToWorld(lightinfo_t const *l, float s, float t, Vector &world);
 
-void WorldToLuxelSpace( lightinfo_t const *l, Vector const &world, Vector2D &coord );
-void LuxelSpaceToWorld( lightinfo_t const *l, float s, float t, Vector &world );
+void WorldToLuxelSpace(lightinfo_t const *l, FourVectors const &world, FourVectors &coord);
+void LuxelSpaceToWorld(lightinfo_t const *l, fltx4 s, fltx4 t, FourVectors &world);
 
-void WorldToLuxelSpace( lightinfo_t const *l, FourVectors const &world, FourVectors &coord );
-void LuxelSpaceToWorld( lightinfo_t const *l, fltx4 s, fltx4 t, FourVectors &world );
+void AddDirectToRadial(radial_t *rad, Vector const &pnt, Vector2D const &coordmins, Vector2D const &coordmaxs,
+					   Vector const light[NUM_BUMP_VECTS + 1], bool hasBumpmap, bool neighborHasBumpmap);
 
-void AddDirectToRadial( radial_t *rad,
-				  Vector const &pnt,
-				  Vector2D const &coordmins, Vector2D const &coordmaxs,
-				  Vector const light[NUM_BUMP_VECTS+1],
-				  bool hasBumpmap, bool neighborHasBumpmap );
+void AddBounceToRadial(radial_t *rad, Vector const &pnt, Vector2D const &coordmins, Vector2D const &coordmaxs,
+					   Vector const light[NUM_BUMP_VECTS + 1], bool hasBumpmap, bool neighborHasBumpmap);
 
-void AddBounceToRadial( radial_t *rad,
-				  Vector const &pnt,
-				  Vector2D const &coordmins, Vector2D const &coordmaxs,
-				  Vector const light[NUM_BUMP_VECTS+1],
-				  bool hasBumpmap, bool neighborHasBumpmap );
+bool SampleRadial(radial_t *rad, Vector &pnt, Vector light[NUM_BUMP_VECTS + 1], int bumpSampleCount);
 
-bool SampleRadial( radial_t *rad, Vector& pnt, Vector light[NUM_BUMP_VECTS+1], int bumpSampleCount );
+radial_t *AllocateRadial(int facenum);
+void FreeRadial(radial_t *rad);
 
-radial_t *AllocateRadial( int facenum );
-void FreeRadial( radial_t *rad );
-
-bool SampleRadial( radial_t *rad, Vector& pnt, Vector light[NUM_BUMP_VECTS + 1], int bumpSampleCount );
-radial_t *BuildPatchRadial( int facenum );
+bool SampleRadial(radial_t *rad, Vector &pnt, Vector light[NUM_BUMP_VECTS + 1], int bumpSampleCount);
+radial_t *BuildPatchRadial(int facenum);
 
 // utilities
-bool FloatLess( float const& src1, float const& src2 );
+bool FloatLess(float const &src1, float const &src2);
 
 #endif

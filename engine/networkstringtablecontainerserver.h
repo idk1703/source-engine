@@ -26,43 +26,43 @@ class CNetworkStringTableContainerServer : public INetworkStringTableServer
 {
 public:
 	// Contstruction
-							CNetworkStringTableContainerServer( void );
-							~CNetworkStringTableContainerServer( void );
+	CNetworkStringTableContainerServer(void);
+	~CNetworkStringTableContainerServer(void);
 
 	// Implement INetworkStringTableServer
-	virtual TABLEID			CreateStringTable( const char *tableName, int maxentries );
-	virtual int				GetNumStrings( TABLEID stringTable );
-	virtual int				GetMaxStrings( TABLEID stringTable );
+	virtual TABLEID CreateStringTable(const char *tableName, int maxentries);
+	virtual int GetNumStrings(TABLEID stringTable);
+	virtual int GetMaxStrings(TABLEID stringTable);
 
-	virtual int				AddString( TABLEID stringTable, const char *value, int length = 0, const void *userdata = 0 );
-	virtual void			SetString( TABLEID stringTable, int stringNumber, const char *value );
-	virtual void			SetStringUserData( TABLEID stringTable, int stringNumber, int length = 0, const void *userdata = 0 );
-	virtual const char		*GetString( TABLEID stringTable, int stringNumber );
-	virtual const void		*GetStringUserData( TABLEID stringTable, int stringNumber, int *length = 0 );
+	virtual int AddString(TABLEID stringTable, const char *value, int length = 0, const void *userdata = 0);
+	virtual void SetString(TABLEID stringTable, int stringNumber, const char *value);
+	virtual void SetStringUserData(TABLEID stringTable, int stringNumber, int length = 0, const void *userdata = 0);
+	virtual const char *GetString(TABLEID stringTable, int stringNumber);
+	virtual const void *GetStringUserData(TABLEID stringTable, int stringNumber, int *length = 0);
 
-	virtual int				FindStringIndex( TABLEID stringTable, char const *string );
+	virtual int FindStringIndex(TABLEID stringTable, char const *string);
 
-	virtual const char		*GetTableName( TABLEID stringTable );
+	virtual const char *GetTableName(TABLEID stringTable);
 
 	// Table accessors
-	TABLEID					FindTable( const char *tableName );
-	CNetworkStringTableServer *GetTable( TABLEID stringTable );
+	TABLEID FindTable(const char *tableName);
+	CNetworkStringTableServer *GetTable(TABLEID stringTable);
 
 	// Delete all tables
-	void					RemoveAllTables( void );
+	void RemoveAllTables(void);
 
 	// Guards so game .dll can't create tables at the wrong time
-	void					AllowCreation( void );
-	void					DisallowCreation( void );
+	void AllowCreation(void);
+	void DisallowCreation(void);
 
 	// Print table data to console
-	void					Dump( void );
+	void Dump(void);
 
 private:
 	// Guard
-	bool					m_bAllowCreation;
+	bool m_bAllowCreation;
 
-	CUtlVector < CNetworkStringTableServer * > m_Tables;
+	CUtlVector<CNetworkStringTableServer *> m_Tables;
 };
 
 extern CNetworkStringTableContainerServer *networkStringTableContainerServer;

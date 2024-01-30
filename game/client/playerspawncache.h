@@ -50,13 +50,14 @@ public:
 	struct Data_t
 	{
 		int m_nDisplayedConnectedRecording;
-		int	m_nDisplaySaveReplay;	// Don't display the "Press [f6] to save this life" the first time the spectator GUI is shown
+		int m_nDisplaySaveReplay; // Don't display the "Press [f6] to save this life" the first time the spectator GUI
+								  // is shown
 	} m_Data;
 
 private:
 	CPlayerSpawnCache();
 
-	virtual void FireGameEvent( IGameEvent *pEvent );
+	virtual void FireGameEvent(IGameEvent *pEvent);
 
 	void Reset();
 };

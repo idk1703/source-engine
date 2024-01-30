@@ -19,23 +19,21 @@
 //-----------------------------------------------------------------------------
 class C_TFProjectile_Flare : public C_TFBaseRocket
 {
-	DECLARE_CLASS( C_TFProjectile_Flare, C_TFBaseRocket );
+	DECLARE_CLASS(C_TFProjectile_Flare, C_TFBaseRocket);
 
 public:
-
 	DECLARE_NETWORKCLASS();
 
 	C_TFProjectile_Flare();
 	~C_TFProjectile_Flare();
 
-	virtual void	OnDataChanged( DataUpdateType_t updateType );
+	virtual void OnDataChanged(DataUpdateType_t updateType);
 
-	void			CreateTrails( void );
+	void CreateTrails(void);
 
 private:
-
-	bool	m_bCritical;
-	CNewParticleEffect	*pEffect;
+	bool m_bCritical;
+	CNewParticleEffect *pEffect;
 };
 
 #endif // C_TF_PROJECTILE_FLARE_H

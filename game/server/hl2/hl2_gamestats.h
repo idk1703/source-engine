@@ -17,7 +17,7 @@ class CHL2GameStats : public CBaseGameStats
 	typedef CBaseGameStats BaseClass;
 
 public:
-	CHL2GameStats( void );
+	CHL2GameStats(void);
 };
 
 #endif // EP1_GAMESTATS_H

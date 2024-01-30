@@ -13,19 +13,17 @@
 
 #include "mdlobjects/dmebodypart.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward Declarations
 //-----------------------------------------------------------------------------
 class CDmeLOD;
-
 
 //-----------------------------------------------------------------------------
 // A class representing a list of LODs
 //-----------------------------------------------------------------------------
 class CDmeLODList : public CDmeBodyPart
 {
-	DEFINE_ELEMENT( CDmeLODList, CDmeBodyPart );
+	DEFINE_ELEMENT(CDmeLODList, CDmeBodyPart);
 
 public:
 	// Returns the number of LODs in this body part, can be 0
@@ -39,9 +37,7 @@ public:
 
 	// NOTE: It may be possible to eliminate the skeleton here
 	// and assume the LOD always uses the root skeleton.
-	CDmaElementArray< CDmeLOD > m_LODs;
-
+	CDmaElementArray<CDmeLOD> m_LODs;
 };
-
 
 #endif // DMELODLIST_H

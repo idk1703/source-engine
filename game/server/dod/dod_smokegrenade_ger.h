@@ -15,7 +15,7 @@
 class CDODSmokeGrenadeGER : public CDODSmokeGrenade
 {
 public:
-	DECLARE_CLASS( CDODSmokeGrenadeGER, CDODSmokeGrenade );
+	DECLARE_CLASS(CDODSmokeGrenadeGER, CDODSmokeGrenade);
 
 	// Overrides.
 public:
@@ -25,14 +25,13 @@ public:
 
 	// Grenade stuff.
 public:
-	static CDODSmokeGrenadeGER* Create(
-		const Vector &position,
-		const QAngle &angles,
-		const Vector &velocity,
-		const AngularImpulse &angVelocity,
-		CBaseCombatCharacter *pOwner );
+	static CDODSmokeGrenadeGER *Create(const Vector &position, const QAngle &angles, const Vector &velocity,
+									   const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner);
 
-	virtual DODWeaponID GetEmitterWeaponID() { return WEAPON_SMOKE_GER; }
+	virtual DODWeaponID GetEmitterWeaponID()
+	{
+		return WEAPON_SMOKE_GER;
+	}
 };
 
 #endif // DOD_SMOKEGRENADE_GER_H

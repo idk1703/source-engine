@@ -11,10 +11,10 @@
 #pragma once
 #endif
 
-void ApplyScanlineEffectToTexture( int rgbaWide, int rgbaTall, unsigned char *rgba, int iScanLines );
-void ApplyGaussianBlurToTexture(int rgbaWide, int rgbaTall, unsigned char *rgba, int iBlur );
-void ApplyDropShadowToTexture( int rgbaWide, int rgbaTall, unsigned char *rgba, int iDropShadowOffset );
-void ApplyOutlineToTexture( int rgbaWide, int rgbaTall, unsigned char *rgba, int iOutlineSize );
-void ApplyRotaryEffectToTexture( int rgbaWide, int rgbaTall, unsigned char *rgba, bool bRotary );
+void ApplyScanlineEffectToTexture(int rgbaWide, int rgbaTall, unsigned char *rgba, int iScanLines);
+void ApplyGaussianBlurToTexture(int rgbaWide, int rgbaTall, unsigned char *rgba, int iBlur);
+void ApplyDropShadowToTexture(int rgbaWide, int rgbaTall, unsigned char *rgba, int iDropShadowOffset);
+void ApplyOutlineToTexture(int rgbaWide, int rgbaTall, unsigned char *rgba, int iOutlineSize);
+void ApplyRotaryEffectToTexture(int rgbaWide, int rgbaTall, unsigned char *rgba, bool bRotary);
 
 #endif

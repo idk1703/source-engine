@@ -11,7 +11,6 @@
 #pragma once
 #endif
 
-
 #include "hudelement.h"
 #include "tf_controls.h"
 #include "hud.h"
@@ -21,29 +20,28 @@
 #include "tf_gamerules.h"
 #include "tf_tips.h"
 //=========================================================
-class CMvMWaveLossPanel :  public vgui::EditablePanel
+class CMvMWaveLossPanel : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CMvMWaveLossPanel, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CMvMWaveLossPanel, vgui::EditablePanel);
 
 public:
-	CMvMWaveLossPanel( Panel *parent, const char *pName );
+	CMvMWaveLossPanel(Panel *parent, const char *pName);
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void FireGameEvent( IGameEvent *event );
-	virtual void OnTick( void );
-	virtual void OnCommand( const char *command );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void FireGameEvent(IGameEvent *event);
+	virtual void OnTick(void);
+	virtual void OnCommand(const char *command);
 
 	void ShowPanel();
 
 private:
-
-	void SetCaptainCanteenImage( vgui::ImagePanel *panel, const char *pchImage, int nNewX );
-	void SetHintImage( vgui::ImagePanel *panel, int iClassUsed, bool bAllowCaptainCanteen );
+	void SetCaptainCanteenImage(vgui::ImagePanel *panel, const char *pchImage, int nNewX);
+	void SetHintImage(vgui::ImagePanel *panel, int iClassUsed, bool bAllowCaptainCanteen);
 
 	void ClearContents();
 
-	CExImageButton * m_pVoteButton;
-	CExImageButton * m_pCloseButton;
+	CExImageButton *m_pVoteButton;
+	CExImageButton *m_pCloseButton;
 
 	vgui::EditablePanel *m_pHintContainer;
 	vgui::EditablePanel *m_pCollectionContainer;

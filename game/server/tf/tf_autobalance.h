@@ -30,7 +30,7 @@ enum volunteer_state_t
 typedef struct
 {
 	CHandle<CTFPlayer> hPlayer;
-	volunteer_state_t  eState;
+	volunteer_state_t eState;
 	float flQueryExpireTime;
 } volunteer_info_s;
 
@@ -38,11 +38,13 @@ typedef struct
 class CTFAutobalance : public CAutoGameSystemPerFrame
 {
 public:
-
 	CTFAutobalance();
 	~CTFAutobalance();
 
-	virtual char const *Name() { return "CTFAutobalance"; }
+	virtual char const *Name()
+	{
+		return "CTFAutobalance";
+	}
 
 	virtual void Shutdown();
 	virtual void LevelShutdownPostEntity();
@@ -50,16 +52,16 @@ public:
 	// called after entities think
 	virtual void FrameUpdatePostEntityThink();
 
-	void ReplyReceived( CTFPlayer *pTFPlayer, bool bResponse );
+	void ReplyReceived(CTFPlayer *pTFPlayer, bool bResponse);
 
 private:
 	void Reset();
 	bool ShouldBeActive() const;
 	bool AreTeamsUnbalanced();
 	void MonitorTeams();
-	bool HaveAlreadyAskedPlayer( CTFPlayer *pTFPlayer ) const;
-	int GetTeamAutoBalanceScore( int nTeam ) const;
-	int GetPlayerAutoBalanceScore( CTFPlayer *pTFPlayer ) const;
+	bool HaveAlreadyAskedPlayer(CTFPlayer *pTFPlayer) const;
+	int GetTeamAutoBalanceScore(int nTeam) const;
+	int GetPlayerAutoBalanceScore(CTFPlayer *pTFPlayer) const;
 	CTFPlayer *FindPlayerToAsk();
 	void FindVolunteers();
 	void SwitchVolunteers();
@@ -72,7 +74,7 @@ private:
 	int m_nNeeded;
 	float m_flBalanceTeamsTime;
 
-	CUtlVector< volunteer_info_s > m_vecPlayersAsked;
+	CUtlVector<volunteer_info_s> m_vecPlayersAsked;
 };
 
 CTFAutobalance *TFAutoBalance();

@@ -11,22 +11,17 @@
 #pragma once
 #endif
 
-
 #include "c_order.h"
-
 
 class C_OrderRepair : public C_Order
 {
 public:
-	DECLARE_CLASS( C_OrderRepair, C_Order );
+	DECLARE_CLASS(C_OrderRepair, C_Order);
 	DECLARE_CLIENTCLASS();
 
-
-// C_Order overrides.
+	// C_Order overrides.
 public:
-
-	virtual void	GetDescription( char *pDest, int bufferSize );
+	virtual void GetDescription(char *pDest, int bufferSize);
 };
-
 
 #endif // C_ORDER_REPAIR_H

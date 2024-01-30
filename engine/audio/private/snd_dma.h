@@ -11,9 +11,8 @@
 #pragma once
 #endif
 
-
 extern bool snd_initialized;
 
-bool SND_IsInGame( void );
+bool SND_IsInGame(void);
 
 #endif // SND_DMA_H
