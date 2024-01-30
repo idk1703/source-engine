@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,21 +15,21 @@
 #include "mxBitmapTools.h"
 #include "hlfaceposer.h"
 
-#define GLOBAL_STUDIO_FLEX_CONTROL_COUNT ( MAXSTUDIOFLEXCTRL * 4 )
+#define GLOBAL_STUDIO_FLEX_CONTROL_COUNT (MAXSTUDIOFLEXCTRL * 4)
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CExpUndoInfo
 {
 public:
-	float				setting[ GLOBAL_STUDIO_FLEX_CONTROL_COUNT ];
-	float				weight[ GLOBAL_STUDIO_FLEX_CONTROL_COUNT ];
+	float setting[GLOBAL_STUDIO_FLEX_CONTROL_COUNT];
+	float weight[GLOBAL_STUDIO_FLEX_CONTROL_COUNT];
 
-	float				redosetting[ GLOBAL_STUDIO_FLEX_CONTROL_COUNT ];
-	float				redoweight[ GLOBAL_STUDIO_FLEX_CONTROL_COUNT ];
+	float redosetting[GLOBAL_STUDIO_FLEX_CONTROL_COUNT];
+	float redoweight[GLOBAL_STUDIO_FLEX_CONTROL_COUNT];
 
-	int					counter;
+	int counter;
 };
 
 class CExpression;
@@ -38,77 +38,77 @@ class CExpClass;
 typedef unsigned int CRC32_t;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CExpression
 {
 public:
-						CExpression	( void );
-						~CExpression ( void );
+	CExpression(void);
+	~CExpression(void);
 
-						CExpression( const CExpression& from );
+	CExpression(const CExpression &from);
 
-	void				SetModified( bool mod );
-	bool				GetModified( void );
-						
-	void				ResetUndo( void );
+	void SetModified(bool mod);
+	bool GetModified(void);
 
-	bool				CanUndo( void );
-	bool				CanRedo( void );
+	void ResetUndo(void);
 
-	int					UndoLevels( void );
-	int					UndoCurrent( void );
+	bool CanUndo(void);
+	bool CanRedo(void);
 
-	const char 			*GetBitmapFilename( int modelindex );
-	const char			*GetBitmapCheckSum();
-	CRC32_t				GetBitmapCRC();
-	void				CreateNewBitmap( int modelindex );
+	int UndoLevels(void);
+	int UndoCurrent(void);
 
-	void				PushUndoInformation( void );
-	void				PushRedoInformation( void );
+	const char *GetBitmapFilename(int modelindex);
+	const char *GetBitmapCheckSum();
+	CRC32_t GetBitmapCRC();
+	void CreateNewBitmap(int modelindex);
 
-	void				Undo( void );
-	void				Redo( void );
+	void PushUndoInformation(void);
+	void PushRedoInformation(void);
 
-	void				SetSelected( bool selected );
-	bool				GetSelected( void );
+	void Undo(void);
+	void Redo(void);
 
-	float				*GetSettings( void );
-	float				*GetWeights( void );
+	void SetSelected(bool selected);
+	bool GetSelected(void);
 
-	bool				GetDirty( void );
-	void				SetDirty( bool dirty );
+	float *GetSettings(void);
+	float *GetWeights(void);
 
-	void				Revert( void );
+	bool GetDirty(void);
+	void SetDirty(bool dirty);
 
-	CExpClass			*GetExpressionClass( void );
-	void				SetExpressionClass( char const *classname );
+	void Revert(void);
+
+	CExpClass *GetExpressionClass(void);
+	void SetExpressionClass(char const *classname);
 
 	// name of expression
-	char				name[32];			
-	int					index;
-	char				description[128];
+	char name[32];
+	int index;
+	char description[128];
 
-	mxbitmapdata_t		m_Bitmap[ MAX_FP_MODELS ];
+	mxbitmapdata_t m_Bitmap[MAX_FP_MODELS];
 
-	bool				m_bModified;
+	bool m_bModified;
 
 	// Undo information
-	CUtlVector< CExpUndoInfo * >		undo;
-	int								m_nUndoCurrent;
+	CUtlVector<CExpUndoInfo *> undo;
+	int m_nUndoCurrent;
 
-	bool				m_bSelected;
+	bool m_bSelected;
 
-	bool				m_bDirty;
+	bool m_bDirty;
 
 private:
 	// settings of fields
-	float				setting[ GLOBAL_STUDIO_FLEX_CONTROL_COUNT ];		
-	float				weight[ GLOBAL_STUDIO_FLEX_CONTROL_COUNT ];		
+	float setting[GLOBAL_STUDIO_FLEX_CONTROL_COUNT];
+	float weight[GLOBAL_STUDIO_FLEX_CONTROL_COUNT];
 
-	char				expressionclass[ 128 ];
+	char expressionclass[128];
 
-	void WipeRedoInformation(  void );
+	void WipeRedoInformation(void);
 };
 
 #endif // EXPRESSION_H

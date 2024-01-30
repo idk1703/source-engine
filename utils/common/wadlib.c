@@ -1,6 +1,6 @@
-//========= Copyright © 1996-2005, Valve LLC, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve LLC, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -50,16 +50,16 @@ void W_OpenWad (char *filename)
 	lumpinfo_t		*lump_p;
 	unsigned		i;
 	int				length;
-	
+
 //
 // open the file and add to directory
-//	
+//
 	wadhandle = SafeOpenRead (filename);
 	SafeRead (wadhandle, &header, sizeof(header));
 
 	if (!STRING_MATCHES_ID(header.identification,WAD_ID))
 		Error ("Wad file %s doesn't have %s identifier\n",filename, WAD_IDNAME);
-		
+
 	header.numlumps = LittleLong(header.numlumps);
 	header.infotableofs = LittleLong(header.infotableofs);
 
@@ -68,14 +68,14 @@ void W_OpenWad (char *filename)
 	length = numlumps*sizeof(lumpinfo_t);
 	lumpinfo = malloc (length);
 	lump_p = lumpinfo;
-	
+
 	fseek (wadhandle, header.infotableofs, SEEK_SET);
 	SafeRead (wadhandle, lumpinfo, length);
 
 //
 // Fill in lumpinfo
 //
-	
+
 	for (i=0 ; i<numlumps ; i++,lump_p++)
 	{
 		lump_p->filepos = LittleLong(lump_p->filepos);
@@ -88,15 +88,15 @@ void W_OpenWad (char *filename)
 void CleanupName (char *in, char *out)
 {
 	int		i;
-	
+
 	for (i=0 ; i<sizeof( ((lumpinfo_t *)0)->name ) ; i++ )
 	{
 		if (!in[i])
 			break;
-			
+
 		out[i] = toupper(in[i]);
 	}
-	
+
 	for ( ; i<sizeof( ((lumpinfo_t *)0)->name ); i++ )
 		out[i] = 0;
 }
@@ -115,9 +115,9 @@ int	W_CheckNumForName (char *name)
 	int		v1,v2, v3, v4;
 	int		i;
 	lumpinfo_t	*lump_p;
-	
+
 	CleanupName (name, cleanname);
-	
+
 // make the name into four integers for easy compares
 
 	v1 = *(int *)cleanname;
@@ -187,11 +187,11 @@ Loads the lump into the given buffer, which must be >= W_LumpLength()
 void W_ReadLumpNum (int lump, void *dest)
 {
 	lumpinfo_t	*l;
-	
+
 	if (lump >= numlumps)
 		Error ("W_ReadLump: %i >= numlumps",lump);
 	l = lumpinfo+lump;
-	
+
 	fseek (wadhandle, l->filepos, SEEK_SET);
 	SafeRead (wadhandle, dest, l->size);
 }
@@ -206,13 +206,13 @@ W_LoadLumpNum
 void	*W_LoadLumpNum (int lump)
 {
 	void	*buf;
-	
+
 	if ((unsigned)lump >= numlumps)
 		Error ("W_CacheLumpNum: %i >= numlumps",lump);
-		
+
 	buf = malloc (W_LumpLength (lump));
 	W_ReadLumpNum (lump, buf);
-	
+
 	return buf;
 }
 
@@ -255,7 +255,7 @@ void NewWad (char *pathname, qboolean bigendien)
 	outwad = SafeOpenWrite (pathname);
 	fseek (outwad, sizeof(wadinfo_t), SEEK_SET);
 	memset (outinfo, 0, sizeof(outinfo));
-	
+
 	if (bigendien)
 	{
 		wadshort = BigShort;
@@ -266,7 +266,7 @@ void NewWad (char *pathname, qboolean bigendien)
 		wadshort = LittleShort;
 		wadlong = LittleLong;
 	}
-	
+
 	outlumps = 0;
 }
 
@@ -281,21 +281,21 @@ void	AddLump (char *name, void *buffer, int length, int type, int compress)
 {
 	lumpinfo_t	*info;
 	int			ofs;
-	
+
 	info = &outinfo[outlumps];
 	outlumps++;
 
 	memset (info,0,sizeof(info));
-	
+
 	strcpy (info->name, name);
 	Q_strupr (info->name);
-	
+
 	ofs = ftell(outwad);
 	info->filepos = wadlong(ofs);
 	info->size = info->disksize = wadlong(length);
 	info->type = type;
 	info->compression = compress;
-	
+
 // FIXME: do compression
 
 	SafeWrite (outwad, buffer, length);
@@ -312,23 +312,21 @@ void WriteWad (int wad3)
 {
 	wadinfo_t	header;
 	int			ofs;
-	
+
 // write the lumpingo
 	ofs = ftell(outwad);
 
 	SafeWrite (outwad, outinfo, outlumps*sizeof(lumpinfo_t) );
-		
+
 // write the header
 
 // a program will be able to tell the ednieness of a wad by the id
 	ID_TO_STRING( WAD_ID, header.identification );
-	
+
 	header.numlumps = wadlong(outlumps);
 	header.infotableofs = wadlong(ofs);
-		
+
 	fseek (outwad, 0, SEEK_SET);
 	SafeWrite (outwad, &header, sizeof(header));
 	fclose (outwad);
 }
-
-

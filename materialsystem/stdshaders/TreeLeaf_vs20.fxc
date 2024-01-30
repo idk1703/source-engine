@@ -24,7 +24,7 @@ struct VS_INPUT
 
 struct VS_OUTPUT
 {
-    float4 projPos		: POSITION;	
+	float4 projPos		: POSITION;
 	float2 texCoord		: TEXCOORD0;
 	float3 color		: COLOR;
 };
@@ -68,5 +68,3 @@ VS_OUTPUT main( const VS_INPUT v )
 
 	return o;
 }
-
-

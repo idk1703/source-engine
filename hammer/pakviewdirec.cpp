@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -24,27 +24,22 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNCREATE(CPakViewDirec, CTreeView)
 
-CPakViewDirec::CPakViewDirec()
-{
-}
+CPakViewDirec::CPakViewDirec() {}
 
-CPakViewDirec::~CPakViewDirec()
-{
-}
-
+CPakViewDirec::~CPakViewDirec() {}
 
 BEGIN_MESSAGE_MAP(CPakViewDirec, CTreeView)
 	//{{AFX_MSG_MAP(CPakViewDirec)
-		// NOTE - the ClassWizard will add and remove mapping macros here.
+	// NOTE - the ClassWizard will add and remove mapping macros here.
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CPakViewDirec drawing
 
-void CPakViewDirec::OnDraw(CDC* pDC)
+void CPakViewDirec::OnDraw(CDC *pDC)
 {
-	CPakDoc* pDoc = GetDocument();
+	CPakDoc *pDoc = GetDocument();
 	// TODO: add draw code here
 }
 
@@ -57,7 +52,7 @@ void CPakViewDirec::AssertValid() const
 	CTreeView::AssertValid();
 }
 
-void CPakViewDirec::Dump(CDumpContext& dc) const
+void CPakViewDirec::Dump(CDumpContext &dc) const
 {
 	CTreeView::Dump(dc);
 }
@@ -66,7 +61,7 @@ void CPakViewDirec::Dump(CDumpContext& dc) const
 /////////////////////////////////////////////////////////////////////////////
 // CPakViewDirec message handlers
 
-void CPakViewDirec::OnInitialUpdate() 
+void CPakViewDirec::OnInitialUpdate()
 {
 	CTreeView::OnInitialUpdate();
 	CTreeCtrl &tc = GetTreeCtrl();
@@ -76,5 +71,4 @@ void CPakViewDirec::OnInitialUpdate()
 	SetWindowLong(tc.m_hWnd, GWL_STYLE, dwStyle | TVS_HASLINES);
 
 	// set the image list
-	
 }

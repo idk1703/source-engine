@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -37,6 +37,5 @@ private:
 
 	typedef vgui::Frame BaseClass;
 };
-
 
 #endif // DIALOGADDSERVER_H

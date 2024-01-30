@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -28,103 +28,103 @@
 class CDoDHudPlayerStatusPanel : public CHudElement, public vgui::EditablePanel
 {
 public:
-	DECLARE_CLASS_SIMPLE( CDoDHudPlayerStatusPanel, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CDoDHudPlayerStatusPanel, vgui::EditablePanel);
 
-	CDoDHudPlayerStatusPanel( const char *pElementName );
+	CDoDHudPlayerStatusPanel(const char *pElementName);
 
 	virtual void Init();
 	virtual void OnThink();
 	virtual void PerformLayout();
-	virtual void ApplySchemeSettings( IScheme *pScheme );
+	virtual void ApplySchemeSettings(IScheme *pScheme);
 
 private:
-
-	CDoDCutEditablePanel	*m_pMainBar;
-	ImagePanel				*m_pAlliesIcon;
-	ImagePanel				*m_pAxisIcon;
-	CDoDHudAmmo				*m_pAmmoStatus;
-	CDoDHudHealth			*m_pHealthStatus;	
-	CDoDHudCurrentWeapon	*m_pCurrentWeapon;
-	CDoDHudStamina			*m_pStamina;
-	CDoDHudMGHeat			*m_pMGHeat;
-	CDoDHudFireSelect		*m_pFireSelect;
-	CDoDHudTNT				*m_pTNT;
+	CDoDCutEditablePanel *m_pMainBar;
+	ImagePanel *m_pAlliesIcon;
+	ImagePanel *m_pAxisIcon;
+	CDoDHudAmmo *m_pAmmoStatus;
+	CDoDHudHealth *m_pHealthStatus;
+	CDoDHudCurrentWeapon *m_pCurrentWeapon;
+	CDoDHudStamina *m_pStamina;
+	CDoDHudMGHeat *m_pMGHeat;
+	CDoDHudFireSelect *m_pFireSelect;
+	CDoDHudTNT *m_pTNT;
 };
 
-DECLARE_HUDELEMENT( CDoDHudPlayerStatusPanel );
+DECLARE_HUDELEMENT(CDoDHudPlayerStatusPanel);
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CDoDHudPlayerStatusPanel::CDoDHudPlayerStatusPanel( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudPlayerStatusPanel" ) 
+CDoDHudPlayerStatusPanel::CDoDHudPlayerStatusPanel(const char *pElementName)
+	: CHudElement(pElementName), BaseClass(NULL, "HudPlayerStatusPanel")
 {
-	SetParent( g_pClientMode->GetViewport() );
+	SetParent(g_pClientMode->GetViewport());
 
-	m_pMainBar = new CDoDCutEditablePanel( this, "PlayerStatusMainBackground" );
-	m_pAlliesIcon = new ImagePanel( this, "PlayerStatusAlliesIcon" );
-	m_pAxisIcon = new ImagePanel( this, "PlayerStatusAxisIcon" );
-	m_pAmmoStatus = new CDoDHudAmmo( this, "PlayerStatusAmmo" );
-	m_pCurrentWeapon = new CDoDHudCurrentWeapon( this, "PlayerStatusCurrentWeapon" );
-	m_pHealthStatus = new CDoDHudHealth( this, "PlayerStatusHealth" );
-	m_pStamina = new CDoDHudStamina( this, "PlayerStatusStamina" );
-	m_pMGHeat = new CDoDHudMGHeat( this, "PlayerStatusMGHeat" );
-	m_pFireSelect = new CDoDHudFireSelect( this, "PlayerStatusFireSelect" );
-	m_pTNT = new CDoDHudTNT( this, "PlayerStatusTNT" );
+	m_pMainBar = new CDoDCutEditablePanel(this, "PlayerStatusMainBackground");
+	m_pAlliesIcon = new ImagePanel(this, "PlayerStatusAlliesIcon");
+	m_pAxisIcon = new ImagePanel(this, "PlayerStatusAxisIcon");
+	m_pAmmoStatus = new CDoDHudAmmo(this, "PlayerStatusAmmo");
+	m_pCurrentWeapon = new CDoDHudCurrentWeapon(this, "PlayerStatusCurrentWeapon");
+	m_pHealthStatus = new CDoDHudHealth(this, "PlayerStatusHealth");
+	m_pStamina = new CDoDHudStamina(this, "PlayerStatusStamina");
+	m_pMGHeat = new CDoDHudMGHeat(this, "PlayerStatusMGHeat");
+	m_pFireSelect = new CDoDHudFireSelect(this, "PlayerStatusFireSelect");
+	m_pTNT = new CDoDHudTNT(this, "PlayerStatusTNT");
 }
 
-void CDoDHudPlayerStatusPanel::ApplySchemeSettings( IScheme *pScheme )
+void CDoDHudPlayerStatusPanel::ApplySchemeSettings(IScheme *pScheme)
 {
 	// load control settings...
-	LoadControlSettings( "resource/UI/HudPlayerStatusPanel.res" );
+	LoadControlSettings("resource/UI/HudPlayerStatusPanel.res");
 
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudPlayerStatusPanel::Init()
 {
-	if ( m_pMainBar )
+	if(m_pMainBar)
 	{
-		m_pMainBar->SetVisible( true );
+		m_pMainBar->SetVisible(true);
 	}
 
-	if ( m_pStamina )
+	if(m_pStamina)
 	{
-		m_pStamina->SetVisible( true );	
+		m_pStamina->SetVisible(true);
 	}
 
-	if ( m_pAlliesIcon )
+	if(m_pAlliesIcon)
 	{
-		m_pAlliesIcon->SetVisible( false );
+		m_pAlliesIcon->SetVisible(false);
 	}
 
-	if ( m_pAxisIcon )
+	if(m_pAxisIcon)
 	{
-		m_pAxisIcon->SetVisible( false );
+		m_pAxisIcon->SetVisible(false);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudPlayerStatusPanel::PerformLayout()
 {
 	BaseClass::PerformLayout();
 
 	int x, y, w, t;
-	GetBounds( x, y, w, t );
+	GetBounds(x, y, w, t);
 
-	if ( w != ScreenWidth() )
+	if(w != ScreenWidth())
 	{
 		// doing this because of the 16:9 and 16:10 resolutions (VGUI doesn't scale properly for them)
-		SetBounds( x, y, ScreenWidth(), t ); 
+		SetBounds(x, y, ScreenWidth(), t);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudPlayerStatusPanel::OnThink()
 {
@@ -132,53 +132,51 @@ void CDoDHudPlayerStatusPanel::OnThink()
 
 	C_DODPlayer *pPlayer = C_DODPlayer::GetLocalDODPlayer();
 
-	if ( pPlayer )
+	if(pPlayer)
 	{
 		// turn off the panel and children if the player is dead
-		if ( !pPlayer->IsAlive() )
+		if(!pPlayer->IsAlive())
 		{
-			if ( IsVisible() )
+			if(IsVisible())
 			{
-				SetVisible( false );
+				SetVisible(false);
 			}
 			return;
 		}
 		else
 		{
-			if ( !IsVisible() )
+			if(!IsVisible())
 			{
-				SetVisible( true );
+				SetVisible(true);
 			}
 		}
 
 		// set our team icon
 		int nTeam = pPlayer->GetTeamNumber();
 
-		switch( nTeam )
+		switch(nTeam)
 		{
-		case TEAM_AXIS:
-			if ( m_pAlliesIcon && m_pAlliesIcon->IsVisible() )
-			{
-				m_pAlliesIcon->SetVisible( false );
-			}
-			if ( m_pAxisIcon && !m_pAxisIcon->IsVisible() )
-			{
-				m_pAxisIcon->SetVisible( true );
-			}
-			break;
-		case TEAM_ALLIES:
-		default:
-			if ( m_pAlliesIcon && !m_pAlliesIcon->IsVisible() )
-			{
-				m_pAlliesIcon->SetVisible( true );
-			}
-			if ( m_pAxisIcon && m_pAxisIcon->IsVisible() )
-			{
-				m_pAxisIcon->SetVisible( false );
-			}
-			break;
+			case TEAM_AXIS:
+				if(m_pAlliesIcon && m_pAlliesIcon->IsVisible())
+				{
+					m_pAlliesIcon->SetVisible(false);
+				}
+				if(m_pAxisIcon && !m_pAxisIcon->IsVisible())
+				{
+					m_pAxisIcon->SetVisible(true);
+				}
+				break;
+			case TEAM_ALLIES:
+			default:
+				if(m_pAlliesIcon && !m_pAlliesIcon->IsVisible())
+				{
+					m_pAlliesIcon->SetVisible(true);
+				}
+				if(m_pAxisIcon && m_pAxisIcon->IsVisible())
+				{
+					m_pAxisIcon->SetVisible(false);
+				}
+				break;
 		}
 	}
 }
-
-

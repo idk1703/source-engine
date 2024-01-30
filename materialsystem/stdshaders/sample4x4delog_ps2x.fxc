@@ -29,7 +29,6 @@ float4 main( PS_INPUT i ) : COLOR
 	s3 = tex2D( TexSampler, i.coordTap3);
 	float avglum=0.25*(s0.x+s1.x+s2.x+s3.x);
 	float elum=exp(avglum);
-	
+
 	return FinalOutput( float4(elum,elum,elum,1), 0, PIXEL_FOG_TYPE_NONE, TONEMAP_SCALE_NONE );
 }
-

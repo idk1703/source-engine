@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -16,27 +16,27 @@
 #include "baseplayer_shared.h"
 #include "shared_classnames.h"
 
-#if defined( CLIENT_DLL )
+#if defined(CLIENT_DLL)
 #define CDODViewModel C_DODViewModel
 #endif
 
 class CDODViewModel : public CBaseViewModel
 {
-	DECLARE_CLASS( CDODViewModel, CBaseViewModel );
-public:
+	DECLARE_CLASS(CDODViewModel, CBaseViewModel);
 
+public:
 	DECLARE_NETWORKCLASS();
 
-	CDODViewModel( void );
-	~CDODViewModel( void );
+	CDODViewModel(void);
+	~CDODViewModel(void);
 
-	virtual void CalcViewModelLag( Vector& origin, QAngle& angles, QAngle& original_angles );
-	virtual void CalcViewModelView( CBasePlayer *owner, const Vector& eyePosition, const QAngle& eyeAngles );
+	virtual void CalcViewModelLag(Vector &origin, QAngle &angles, QAngle &original_angles);
+	virtual void CalcViewModelView(CBasePlayer *owner, const Vector &eyePosition, const QAngle &eyeAngles);
 
-#if defined( CLIENT_DLL )
-	virtual bool ShouldPredict( void )
+#if defined(CLIENT_DLL)
+	virtual bool ShouldPredict(void)
 	{
-		if ( GetOwner() && GetOwner() == C_BasePlayer::GetLocalPlayer() )
+		if(GetOwner() && GetOwner() == C_BasePlayer::GetLocalPlayer())
 			return true;
 
 		return BaseClass::ShouldPredict();
@@ -44,14 +44,13 @@ public:
 #endif
 
 private:
-
-#if defined( CLIENT_DLL )
+#if defined(CLIENT_DLL)
 
 	// This is used to lag the angles.
 	CInterpolatedVar<QAngle> m_LagAnglesHistory;
 	QAngle m_vLagAngles;
 
-	CDODViewModel( const CDODViewModel & ); // not defined, not accessible
+	CDODViewModel(const CDODViewModel &); // not defined, not accessible
 
 	QAngle m_vLoweredWeaponOffset;
 #endif

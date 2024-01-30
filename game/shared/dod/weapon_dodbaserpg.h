@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,11 +13,10 @@
 #endif
 
 #include "weapon_dodbase.h"
- 
 
-#if defined( CLIENT_DLL )
+#if defined(CLIENT_DLL)
 
-	#define CDODBaseRocketWeapon C_DODBaseRocketWeapon
+#define CDODBaseRocketWeapon C_DODBaseRocketWeapon
 
 #endif
 
@@ -27,10 +26,10 @@
 class CDODBaseRocketWeapon : public CWeaponDODBase
 {
 public:
-	DECLARE_CLASS( CDODBaseRocketWeapon, CWeaponDODBase );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_CLASS(CDODBaseRocketWeapon, CWeaponDODBase);
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
+
 	CDODBaseRocketWeapon();
 
 	virtual void Spawn();
@@ -38,48 +37,63 @@ public:
 	virtual void SecondaryAttack();
 	virtual bool Deploy();
 	virtual bool CanHolster();
-	virtual bool Holster( CBaseCombatWeapon *pSwitchingTo = NULL );
+	virtual bool Holster(CBaseCombatWeapon *pSwitchingTo = NULL);
 	virtual bool Reload();
 	virtual void WeaponIdle();
-	virtual void Drop( const Vector &vecVelocity );
+	virtual void Drop(const Vector &vecVelocity);
 
-	virtual bool CanDrop( void ) { return ( IsDeployed() == false ); }
+	virtual bool CanDrop(void)
+	{
+		return (IsDeployed() == false);
+	}
 
-	void		DoFireEffects();
+	void DoFireEffects();
 
-	void		Precache( void );
+	void Precache(void);
 
-	void		Raise();
-	bool		Lower();
+	void Raise();
+	bool Lower();
 
-	virtual Activity GetDrawActivity( void );
-	virtual Activity GetIdleActivity( void );
-	virtual Activity GetLowerActivity( void );
-	virtual Activity GetRaiseActivity( void );
+	virtual Activity GetDrawActivity(void);
+	virtual Activity GetIdleActivity(void);
+	virtual Activity GetLowerActivity(void);
+	virtual Activity GetRaiseActivity(void);
 
-	virtual	void FireRocket( void );
+	virtual void FireRocket(void);
 
-	inline bool IsDeployed() { return m_bDeployed; }
-	inline void SetDeployed( bool bDeployed ) { m_bDeployed = bDeployed; }
-	
-	bool		ShouldPlayerBeSlow( void );
+	inline bool IsDeployed()
+	{
+		return m_bDeployed;
+	}
+	inline void SetDeployed(bool bDeployed)
+	{
+		m_bDeployed = bDeployed;
+	}
 
-	virtual bool ShouldAutoEjectBrass( void ) { return false; }
+	bool ShouldPlayerBeSlow(void);
+
+	virtual bool ShouldAutoEjectBrass(void)
+	{
+		return false;
+	}
 
 #ifdef CLIENT_DLL
-	virtual void OverrideMouseInput( float *x, float *y );
+	virtual void OverrideMouseInput(float *x, float *y);
 #endif
 
-	virtual float GetRecoil( void ) { return 10.0f; }
+	virtual float GetRecoil(void)
+	{
+		return 10.0f;
+	}
 
 protected:
-	CNetworkVar( bool, m_bDeployed );
+	CNetworkVar(bool, m_bDeployed);
 
 	CDODWeaponInfo *m_pWeaponInfo;
 
 private:
-	CDODBaseRocketWeapon( const CDODBaseRocketWeapon & );
-	
+	CDODBaseRocketWeapon(const CDODBaseRocketWeapon &);
+
 #ifndef CLIENT_DLL
 	DECLARE_DATADESC();
 #endif

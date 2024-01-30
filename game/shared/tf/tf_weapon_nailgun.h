@@ -22,9 +22,8 @@
 class CTFNailgun : public CTFWeaponBaseGun
 {
 public:
-
-	DECLARE_CLASS( CTFNailgun, CTFWeaponBaseGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_CLASS(CTFNailgun, CTFWeaponBaseGun);
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	// Server specific.
@@ -35,11 +34,13 @@ public:
 	CTFNailgun() {}
 	~CTFNailgun() {}
 
-	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_NAILGUN; }
+	virtual int GetWeaponID(void) const
+	{
+		return TF_WEAPON_NAILGUN;
+	}
 
 private:
-
-	CTFNailgun( const CTFNailgun & ) {}
+	CTFNailgun(const CTFNailgun &) {}
 };
 
 #endif // TF_WEAPON_NAILGUN_H

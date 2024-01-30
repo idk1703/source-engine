@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -16,7 +16,7 @@
 //-----------------------------------------------------------------------------
 class CFriendsGames : public CBaseGamesPage
 {
-	DECLARE_CLASS_SIMPLE( CFriendsGames, CBaseGamesPage );
+	DECLARE_CLASS_SIMPLE(CFriendsGames, CBaseGamesPage);
 
 public:
 	CFriendsGames(vgui::Panel *parent);
@@ -27,13 +27,13 @@ public:
 	virtual bool SupportsItem(InterfaceItem_e item);
 
 	// called when the current refresh list is complete
-	virtual void RefreshComplete( HServerListRequest hReq, EMatchMakingServerResponse response );
+	virtual void RefreshComplete(HServerListRequest hReq, EMatchMakingServerResponse response);
 
 private:
 	// context menu message handlers
-	MESSAGE_FUNC_INT( OnOpenContextMenu, "OpenContextMenu", itemID );
+	MESSAGE_FUNC_INT(OnOpenContextMenu, "OpenContextMenu", itemID);
 
-	int m_iServerRefreshCount;	// number of servers refreshed
+	int m_iServerRefreshCount; // number of servers refreshed
 };
 
 #endif // FRIENDSGAMES_H

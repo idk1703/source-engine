@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -15,7 +15,6 @@
 
 #include "dme_controls/BaseAttributePanel.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
@@ -27,35 +26,33 @@ namespace vgui
 	class Label;
 }
 
-
 //-----------------------------------------------------------------------------
 // CAttributeElementPanel
 //-----------------------------------------------------------------------------
 class CAttributeElementPanel : public CBaseAttributePanel
 {
-	DECLARE_CLASS_SIMPLE( CAttributeElementPanel, CBaseAttributePanel );
+	DECLARE_CLASS_SIMPLE(CAttributeElementPanel, CBaseAttributePanel);
 
 public:
-	CAttributeElementPanel( vgui::Panel *parent, const AttributeWidgetInfo_t &info );
+	CAttributeElementPanel(vgui::Panel *parent, const AttributeWidgetInfo_t &info);
 
 	virtual void PostConstructor();
 	virtual void Apply();
 
 protected:
 	virtual vgui::Panel *GetDataPanel();
-	virtual void OnCreateDragData( KeyValues *msg );
+	virtual void OnCreateDragData(KeyValues *msg);
 
 	MESSAGE_FUNC(OnTextChanged, "TextChanged")
 	{
-		SetDirty( true );
+		SetDirty(true);
 	}
 
 private:
 	virtual void Refresh();
 
-	CAttributeTextEntry		*m_pData;
-	bool					m_bShowMemoryUsage;
+	CAttributeTextEntry *m_pData;
+	bool m_bShowMemoryUsage;
 };
-
 
 #endif // ATTRIBUTEELEMENTPANEL_H

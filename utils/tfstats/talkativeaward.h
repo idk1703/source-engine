@@ -21,18 +21,19 @@ using namespace std;
 
 //------------------------------------------------------------------------------------------------------
 // Purpose: CTalkativeAward is an award given to the player who speaks the most
-// words. 
+// words.
 //------------------------------------------------------------------------------------------------------
-class CTalkativeAward: public CAward
+class CTalkativeAward : public CAward
 {
 protected:
-	map<PID,int> numtalks;
-	void noWinner(CHTMLFile& html);
-	void extendedinfo(CHTMLFile& html);
-	
-	map<int,string> fulltalktext;
+	map<PID, int> numtalks;
+	void noWinner(CHTMLFile &html);
+	void extendedinfo(CHTMLFile &html);
+
+	map<int, string> fulltalktext;
+
 public:
-	explicit CTalkativeAward():CAward("Bigmouth"){}
+	explicit CTalkativeAward() : CAward("Bigmouth") {}
 	void getWinner();
 };
 #endif // TALKATIVEAWARD_H

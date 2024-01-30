@@ -23,7 +23,6 @@
 #include "SoundEmitterSystem/isoundemittersystembase.h"
 #include "ivtex.h"
 
-
 //-----------------------------------------------------------------------------
 // These tier3 libraries must be set by any users of this library.
 // They can be set by calling ConnectTier3Libraries.
@@ -36,7 +35,7 @@ IMatSystemSurface *g_pMatSystemSurface = 0;
 vgui::IInput *g_pVGuiInput = 0;
 vgui::ISurface *g_pVGuiSurface = 0;
 vgui::IPanel *g_pVGuiPanel = 0;
-vgui::IVGui	*g_pVGui = 0;
+vgui::IVGui *g_pVGui = 0;
 vgui::ILocalize *g_pVGuiLocalize = 0;
 vgui::ISchemeManager *g_pVGuiSchemeManager = 0;
 vgui::ISystem *g_pVGuiSystem = 0;
@@ -49,84 +48,84 @@ IPhysicsCollision *g_pPhysicsCollision = 0;
 ISoundEmitterSystemBase *g_pSoundEmitterSystem = 0;
 IVTex *g_pVTex = 0;
 
-
 //-----------------------------------------------------------------------------
 // Call this to connect to all tier 3 libraries.
 // It's up to the caller to check the globals it cares about to see if ones are missing
 //-----------------------------------------------------------------------------
-void ConnectTier3Libraries( CreateInterfaceFn *pFactoryList, int nFactoryCount )
+void ConnectTier3Libraries(CreateInterfaceFn *pFactoryList, int nFactoryCount)
 {
 	// Don't connect twice..
-	Assert( !g_pStudioRender && !studiorender && !g_pMatSystemSurface && !g_pVGui && !g_pVGuiPanel && !g_pVGuiInput &&
-		!g_pVGuiSurface && !g_pDataCache && !g_pMDLCache && !mdlcache && !g_pVideo &&
-		!g_pDmeMakefileUtils && !g_pPhysicsCollision && !g_pVGuiLocalize && !g_pSoundEmitterSystem &&
-		!g_pVGuiSchemeManager && !g_pVGuiSystem );
+	Assert(!g_pStudioRender && !studiorender && !g_pMatSystemSurface && !g_pVGui && !g_pVGuiPanel && !g_pVGuiInput &&
+		   !g_pVGuiSurface && !g_pDataCache && !g_pMDLCache && !mdlcache && !g_pVideo && !g_pDmeMakefileUtils &&
+		   !g_pPhysicsCollision && !g_pVGuiLocalize && !g_pSoundEmitterSystem && !g_pVGuiSchemeManager &&
+		   !g_pVGuiSystem);
 
-	for ( int i = 0; i < nFactoryCount; ++i )
+	for(int i = 0; i < nFactoryCount; ++i)
 	{
-		if ( !g_pStudioRender )
+		if(!g_pStudioRender)
 		{
-			g_pStudioRender = studiorender = ( IStudioRender * )pFactoryList[i]( STUDIO_RENDER_INTERFACE_VERSION, NULL );
+			g_pStudioRender = studiorender = (IStudioRender *)pFactoryList[i](STUDIO_RENDER_INTERFACE_VERSION, NULL);
 		}
-		if ( !g_pVGui )
+		if(!g_pVGui)
 		{
-			g_pVGui = (vgui::IVGui*)pFactoryList[i]( VGUI_IVGUI_INTERFACE_VERSION, NULL );
+			g_pVGui = (vgui::IVGui *)pFactoryList[i](VGUI_IVGUI_INTERFACE_VERSION, NULL);
 		}
-		if ( !g_pVGuiInput )
+		if(!g_pVGuiInput)
 		{
-			g_pVGuiInput = (vgui::IInput*)pFactoryList[i]( VGUI_INPUT_INTERFACE_VERSION, NULL );
+			g_pVGuiInput = (vgui::IInput *)pFactoryList[i](VGUI_INPUT_INTERFACE_VERSION, NULL);
 		}
-		if ( !g_pVGuiPanel )
+		if(!g_pVGuiPanel)
 		{
-			g_pVGuiPanel = (vgui::IPanel*)pFactoryList[i]( VGUI_PANEL_INTERFACE_VERSION, NULL );
+			g_pVGuiPanel = (vgui::IPanel *)pFactoryList[i](VGUI_PANEL_INTERFACE_VERSION, NULL);
 		}
-		if ( !g_pVGuiSurface )
+		if(!g_pVGuiSurface)
 		{
-			g_pVGuiSurface = (vgui::ISurface*)pFactoryList[i]( VGUI_SURFACE_INTERFACE_VERSION, NULL );
+			g_pVGuiSurface = (vgui::ISurface *)pFactoryList[i](VGUI_SURFACE_INTERFACE_VERSION, NULL);
 		}
-		if ( !g_pVGuiSchemeManager )
+		if(!g_pVGuiSchemeManager)
 		{
-			g_pVGuiSchemeManager = (vgui::ISchemeManager*)pFactoryList[i]( VGUI_SCHEME_INTERFACE_VERSION, NULL );
+			g_pVGuiSchemeManager = (vgui::ISchemeManager *)pFactoryList[i](VGUI_SCHEME_INTERFACE_VERSION, NULL);
 		}
-		if ( !g_pVGuiSystem )
+		if(!g_pVGuiSystem)
 		{
-			g_pVGuiSystem = (vgui::ISystem*)pFactoryList[i]( VGUI_SYSTEM_INTERFACE_VERSION, NULL );
+			g_pVGuiSystem = (vgui::ISystem *)pFactoryList[i](VGUI_SYSTEM_INTERFACE_VERSION, NULL);
 		}
-		if ( !g_pVGuiLocalize )
+		if(!g_pVGuiLocalize)
 		{
-			g_pVGuiLocalize = (vgui::ILocalize*)pFactoryList[i]( VGUI_LOCALIZE_INTERFACE_VERSION, NULL );
+			g_pVGuiLocalize = (vgui::ILocalize *)pFactoryList[i](VGUI_LOCALIZE_INTERFACE_VERSION, NULL);
 		}
-		if ( !g_pMatSystemSurface )
+		if(!g_pMatSystemSurface)
 		{
-			g_pMatSystemSurface = ( IMatSystemSurface * )pFactoryList[i]( MAT_SYSTEM_SURFACE_INTERFACE_VERSION, NULL );
+			g_pMatSystemSurface = (IMatSystemSurface *)pFactoryList[i](MAT_SYSTEM_SURFACE_INTERFACE_VERSION, NULL);
 		}
-		if ( !g_pDataCache )
+		if(!g_pDataCache)
 		{
-			g_pDataCache = (IDataCache*)pFactoryList[i]( DATACACHE_INTERFACE_VERSION, NULL );
+			g_pDataCache = (IDataCache *)pFactoryList[i](DATACACHE_INTERFACE_VERSION, NULL);
 		}
-		if ( !g_pMDLCache )
+		if(!g_pMDLCache)
 		{
-			g_pMDLCache = mdlcache = (IMDLCache*)pFactoryList[i]( MDLCACHE_INTERFACE_VERSION, NULL );
+			g_pMDLCache = mdlcache = (IMDLCache *)pFactoryList[i](MDLCACHE_INTERFACE_VERSION, NULL);
 		}
-		if ( !g_pVideo )
+		if(!g_pVideo)
 		{
 			g_pVideo = (IVideoServices *)pFactoryList[i](VIDEO_SERVICES_INTERFACE_VERSION, NULL);
 		}
-		if ( !g_pDmeMakefileUtils )
+		if(!g_pDmeMakefileUtils)
 		{
-			g_pDmeMakefileUtils = (IDmeMakefileUtils*)pFactoryList[i]( DMEMAKEFILE_UTILS_INTERFACE_VERSION, NULL );
+			g_pDmeMakefileUtils = (IDmeMakefileUtils *)pFactoryList[i](DMEMAKEFILE_UTILS_INTERFACE_VERSION, NULL);
 		}
-		if ( !g_pPhysicsCollision )
+		if(!g_pPhysicsCollision)
 		{
-			g_pPhysicsCollision = ( IPhysicsCollision* )pFactoryList[i]( VPHYSICS_COLLISION_INTERFACE_VERSION, NULL );
+			g_pPhysicsCollision = (IPhysicsCollision *)pFactoryList[i](VPHYSICS_COLLISION_INTERFACE_VERSION, NULL);
 		}
-		if ( !g_pSoundEmitterSystem )
+		if(!g_pSoundEmitterSystem)
 		{
-			g_pSoundEmitterSystem = ( ISoundEmitterSystemBase* )pFactoryList[i]( SOUNDEMITTERSYSTEM_INTERFACE_VERSION, NULL );
+			g_pSoundEmitterSystem =
+				(ISoundEmitterSystemBase *)pFactoryList[i](SOUNDEMITTERSYSTEM_INTERFACE_VERSION, NULL);
 		}
-		if ( !g_pVTex )
+		if(!g_pVTex)
 		{
-			g_pVTex = ( IVTex * )pFactoryList[i]( IVTEX_VERSION_STRING, NULL );
+			g_pVTex = (IVTex *)pFactoryList[i](IVTEX_VERSION_STRING, NULL);
 		}
 	}
 }

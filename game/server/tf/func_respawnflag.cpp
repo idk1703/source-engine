@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -12,50 +12,48 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-LINK_ENTITY_TO_CLASS( func_respawnflag, CFuncRespawnFlagZone );
+LINK_ENTITY_TO_CLASS(func_respawnflag, CFuncRespawnFlagZone);
 
-BEGIN_DATADESC( CFuncRespawnFlagZone )
+BEGIN_DATADESC(CFuncRespawnFlagZone)
 	// Functions.
-	DEFINE_FUNCTION( Touch ),
+	DEFINE_FUNCTION(Touch),
 END_DATADESC();
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CFuncRespawnFlagZone::CFuncRespawnFlagZone()
-{
-}
+CFuncRespawnFlagZone::CFuncRespawnFlagZone() {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CFuncRespawnFlagZone::Spawn( void )
+void CFuncRespawnFlagZone::Spawn(void)
 {
-	AddSpawnFlags( SF_TRIGGER_ALLOW_ALL );
+	AddSpawnFlags(SF_TRIGGER_ALLOW_ALL);
 
 	BaseClass::Spawn();
 	InitTrigger();
 
-	SetTouch( &CFuncRespawnFlagZone::Touch );
+	SetTouch(&CFuncRespawnFlagZone::Touch);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CFuncRespawnFlagZone::Touch( CBaseEntity *pOther )
+void CFuncRespawnFlagZone::Touch(CBaseEntity *pOther)
 {
-	if ( !m_bDisabled )
+	if(!m_bDisabled)
 	{
-		if ( pOther->IsPlayer() )
+		if(pOther->IsPlayer())
 		{
-			CTFPlayer *pPlayer = ToTFPlayer( pOther );
-			if ( pPlayer && pPlayer->HasTheFlag() )
+			CTFPlayer *pPlayer = ToTFPlayer(pOther);
+			if(pPlayer && pPlayer->HasTheFlag())
 			{
-				CCaptureFlag *pFlag = dynamic_cast<CCaptureFlag*>( pPlayer->GetItem() );
-				
+				CCaptureFlag *pFlag = dynamic_cast<CCaptureFlag *>(pPlayer->GetItem());
+
 				pPlayer->DropFlag();
 
-				if ( pFlag )
+				if(pFlag)
 				{
 					pFlag->ResetFlag();
 				}
@@ -64,18 +62,17 @@ void CFuncRespawnFlagZone::Touch( CBaseEntity *pOther )
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Return true if the specified entity is in a RespawnFlag zone
 //-----------------------------------------------------------------------------
-bool PointInRespawnFlagZone( const Vector &vecPoint )
+bool PointInRespawnFlagZone(const Vector &vecPoint)
 {
 	CBaseEntity *pTempEnt = NULL;
-	while ( ( pTempEnt = gEntList.FindEntityByClassname( pTempEnt, "func_respawnflag" ) ) != NULL )
+	while((pTempEnt = gEntList.FindEntityByClassname(pTempEnt, "func_respawnflag")) != NULL)
 	{
 		CFuncRespawnFlagZone *pZone = dynamic_cast<CFuncRespawnFlagZone *>(pTempEnt);
 
-		if ( pZone && !pZone->m_bDisabled && pZone->PointIsWithin( vecPoint ) )
+		if(pZone && !pZone->m_bDisabled && pZone->PointIsWithin(vecPoint))
 		{
 			return true;
 		}

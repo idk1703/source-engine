@@ -8,30 +8,28 @@
 #include <windows.h>
 #include "tier1/strtools.h"
 
-
-void Sys_CopyStringToClipboard( const char *pOut )
+void Sys_CopyStringToClipboard(const char *pOut)
 {
-	if ( !pOut || !OpenClipboard( NULL ) )
+	if(!pOut || !OpenClipboard(NULL))
 	{
 		return;
 	}
 	// Remove the current Clipboard contents
-	if( !EmptyClipboard() )
+	if(!EmptyClipboard())
 	{
 		return;
 	}
 	HGLOBAL clipbuffer;
 	char *buffer;
 	EmptyClipboard();
-	
-	int len = Q_strlen(pOut)+1;
-	clipbuffer = GlobalAlloc(GMEM_DDESHARE, len );
-	buffer = (char*)GlobalLock( clipbuffer );
-	Q_strncpy( buffer, pOut, len );
-	GlobalUnlock( clipbuffer );
 
-	SetClipboardData( CF_TEXT,clipbuffer );
+	int len = Q_strlen(pOut) + 1;
+	clipbuffer = GlobalAlloc(GMEM_DDESHARE, len);
+	buffer = (char *)GlobalLock(clipbuffer);
+	Q_strncpy(buffer, pOut, len);
+	GlobalUnlock(clipbuffer);
+
+	SetClipboardData(CF_TEXT, clipbuffer);
 
 	CloseClipboard();
 }
-

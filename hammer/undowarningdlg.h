@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -13,30 +13,31 @@
 
 class CUndoWarningDlg : public CDialog
 {
-// Construction
+	// Construction
 public:
-	CUndoWarningDlg(CWnd* pParent = NULL);   // standard constructor
+	CUndoWarningDlg(CWnd *pParent = NULL); // standard constructor
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CUndoWarningDlg)
-	enum { IDD = IDD_UNDOWARNING };
-	BOOL	m_bNoShow;
+	enum
+	{
+		IDD = IDD_UNDOWARNING
+	};
+	BOOL m_bNoShow;
 	//}}AFX_DATA
 
-
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CUndoWarningDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
 protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
+													 //}}AFX_VIRTUAL
 
+	// Implementation
+protected:
 	// Generated message map functions
 	//{{AFX_MSG(CUndoWarningDlg)
-		// NOTE: the ClassWizard will add member functions here
+	// NOTE: the ClassWizard will add member functions here
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,9 +11,7 @@
 #pragma once
 #endif
 
-
 // If iTeam or iClass is -1, then a team or class is randomly chosen.
-CBasePlayer *BotPutInServer( bool bFrozen, int iTeam, int iClass );
-
+CBasePlayer *BotPutInServer(bool bFrozen, int iTeam, int iClass);
 
 #endif // BOT_BASE_H

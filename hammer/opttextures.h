@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -8,13 +8,11 @@
 #define OPTTEXTURES_H
 #pragma once
 
-
 class COPTTextures : public CPropertyPage
 {
-	DECLARE_DYNCREATE( COPTTextures )
+	DECLARE_DYNCREATE(COPTTextures)
 
 public:
-
 	//=========================================================================
 	//
 	// Construction/Deconstruction
@@ -27,10 +25,13 @@ public:
 	// Dialog Data
 	//
 	//{{AFX_DATA(COPTTextures)
-	enum { IDD = IDD_OPTIONS_TEXTURES };
-	CListBox	m_TextureFiles;
-	CSliderCtrl	m_cBrightness;
-	CListBox    m_MaterialExcludeList;
+	enum
+	{
+		IDD = IDD_OPTIONS_TEXTURES
+	};
+	CListBox m_TextureFiles;
+	CSliderCtrl m_cBrightness;
+	CListBox m_MaterialExcludeList;
 	//}}AFX_DATA
 
 	//=========================================================================
@@ -39,21 +40,21 @@ public:
 	// ClassWizard generate virtual function overrides
 	//
 	//{{AFX_VIRTUAL(COPTTextures)
-	public:
+public:
 	virtual BOOL OnApply();
-	BOOL OnSetActive( void );
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
+	BOOL OnSetActive(void);
 
-// Implementation
 protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
+													 //}}AFX_VIRTUAL
 
-	BOOL			m_bDeleted;
-	CGameConfig		*m_pMaterialConfig;				// copy of the current gaming config
+	// Implementation
+protected:
+	BOOL m_bDeleted;
+	CGameConfig *m_pMaterialConfig; // copy of the current gaming config
 
-	BOOL BrowseForFolder( char *pszTitle, char *pszDirectory );
-	void MaterialExcludeUpdate( void );
+	BOOL BrowseForFolder(char *pszTitle, char *pszDirectory);
+	void MaterialExcludeUpdate(void);
 
 	//=========================================================================
 	//
@@ -64,11 +65,11 @@ protected:
 	afx_msg void OnExtract();
 	afx_msg void OnAddtexfile();
 	afx_msg void OnRemovetexfile();
-	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar *pScrollBar);
 	afx_msg void OnAddtexfile2();
-	afx_msg void OnMaterialExcludeAdd( void );
-	afx_msg void OnMaterialExcludeRemove( void );
-	afx_msg void OnMaterialExcludeListSel( void );
+	afx_msg void OnMaterialExcludeAdd(void);
+	afx_msg void OnMaterialExcludeRemove(void);
+	afx_msg void OnMaterialExcludeListSel(void);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

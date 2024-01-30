@@ -8,23 +8,20 @@
 #ifndef SIMTIMER_H
 #define SIMTIMER_H
 
-#if defined( _WIN32 )
+#if defined(_WIN32)
 #pragma once
 #endif
 
 #define ST_EPS 0.001
 
-#define DEFINE_SIMTIMER( type, name ) 	DEFINE_EMBEDDED( type, name )
+#define DEFINE_SIMTIMER(type, name) DEFINE_EMBEDDED(type, name)
 
 //-----------------------------------------------------------------------------
 
 class CSimpleSimTimer
 {
 public:
-	CSimpleSimTimer()
-	 : m_next( -1 )
-	{ 
-	}
+	CSimpleSimTimer() : m_next(-1) {}
 
 	void Force()
 	{
@@ -33,28 +30,28 @@ public:
 
 	bool Expired() const
 	{
-		return ( gpGlobals->curtime - m_next > -ST_EPS );
+		return (gpGlobals->curtime - m_next > -ST_EPS);
 	}
 
-	float Delay( float delayTime )
+	float Delay(float delayTime)
 	{
 		return (m_next += delayTime);
 	}
-	
+
 	float GetNext() const
 	{
 		return m_next;
 	}
 
-	void Set( float interval )
+	void Set(float interval)
 	{
 		m_next = gpGlobals->curtime + interval;
 	}
 
-	void Set( float minInterval, float maxInterval )
-	{ 
-		if ( maxInterval > 0.0 )
-			m_next = gpGlobals->curtime + random->RandomFloat( minInterval, maxInterval );
+	void Set(float minInterval, float maxInterval)
+	{
+		if(maxInterval > 0.0)
+			m_next = gpGlobals->curtime + random->RandomFloat(minInterval, maxInterval);
 		else
 			m_next = gpGlobals->curtime + minInterval;
 	}
@@ -62,13 +59,13 @@ public:
 	float GetRemaining() const
 	{
 		float result = m_next - gpGlobals->curtime;
-		if (result < 0 )
+		if(result < 0)
 			return 0;
 		return result;
 	}
 
 	DECLARE_SIMPLE_DATADESC();
-	
+
 protected:
 	float m_next;
 };
@@ -78,20 +75,20 @@ protected:
 class CSimTimer : public CSimpleSimTimer
 {
 public:
-	CSimTimer( float interval = 0.0, bool startExpired = true )	
-	{ 
-		Set( interval, startExpired );
+	CSimTimer(float interval = 0.0, bool startExpired = true)
+	{
+		Set(interval, startExpired);
 	}
-	
-	void Set( float interval, bool startExpired = true )
-	{ 
+
+	void Set(float interval, bool startExpired = true)
+	{
 		m_interval = interval;
 		m_next = (startExpired) ? -1.0 : gpGlobals->curtime + m_interval;
 	}
 
-	void Reset( float interval = -1.0 )
+	void Reset(float interval = -1.0)
 	{
-		if ( interval == -1.0 )
+		if(interval == -1.0)
 		{
 			m_next = gpGlobals->curtime + m_interval;
 		}
@@ -107,11 +104,10 @@ public:
 	}
 
 	DECLARE_SIMPLE_DATADESC();
-	
+
 private:
 	float m_interval;
 };
-
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -119,35 +115,35 @@ private:
 class CRandSimTimer : public CSimpleSimTimer
 {
 public:
-	CRandSimTimer( float minInterval = 0.0, float maxInterval = 0.0, bool startExpired = true )	
-	{ 
-		Set( minInterval, maxInterval, startExpired );
+	CRandSimTimer(float minInterval = 0.0, float maxInterval = 0.0, bool startExpired = true)
+	{
+		Set(minInterval, maxInterval, startExpired);
 	}
-	
-	void Set( float minInterval, float maxInterval = 0.0, bool startExpired = true )
-	{ 
+
+	void Set(float minInterval, float maxInterval = 0.0, bool startExpired = true)
+	{
 		m_minInterval = minInterval;
 		m_maxInterval = maxInterval;
-		
-		if (startExpired)
+
+		if(startExpired)
 		{
 			m_next = -1;
 		}
 		else
 		{
-			if ( m_maxInterval == 0 )
+			if(m_maxInterval == 0)
 				m_next = gpGlobals->curtime + m_minInterval;
 			else
-				m_next = gpGlobals->curtime + random->RandomFloat( m_minInterval, m_maxInterval );
+				m_next = gpGlobals->curtime + random->RandomFloat(m_minInterval, m_maxInterval);
 		}
 	}
 
 	void Reset()
 	{
-		if ( m_maxInterval == 0 )
+		if(m_maxInterval == 0)
 			m_next = gpGlobals->curtime + m_minInterval;
 		else
-			m_next = gpGlobals->curtime + random->RandomFloat( m_minInterval, m_maxInterval );
+			m_next = gpGlobals->curtime + random->RandomFloat(m_minInterval, m_maxInterval);
 	}
 
 	float GetMinInterval() const
@@ -161,7 +157,7 @@ public:
 	}
 
 	DECLARE_SIMPLE_DATADESC();
-	
+
 private:
 	float m_minInterval;
 	float m_maxInterval;
@@ -169,11 +165,11 @@ private:
 
 //-----------------------------------------------------------------------------
 
-class CStopwatchBase  : public CSimpleSimTimer
+class CStopwatchBase : public CSimpleSimTimer
 {
 public:
-	CStopwatchBase()	
-	{ 
+	CStopwatchBase()
+	{
 		m_fIsRunning = false;
 	}
 
@@ -181,7 +177,7 @@ public:
 	{
 		return m_fIsRunning;
 	}
-	
+
 	void Stop()
 	{
 		m_fIsRunning = false;
@@ -189,24 +185,23 @@ public:
 
 	bool Expired() const
 	{
-		return ( m_fIsRunning && CSimpleSimTimer::Expired() );
+		return (m_fIsRunning && CSimpleSimTimer::Expired());
 	}
-	
+
 	DECLARE_SIMPLE_DATADESC();
-	
+
 protected:
 	bool m_fIsRunning;
-	
 };
 
 //-------------------------------------
-class CSimpleStopwatch  : public CStopwatchBase
+class CSimpleStopwatch : public CStopwatchBase
 {
 public:
-	void Start( float minCountdown, float maxCountdown = 0.0 )
-	{ 
+	void Start(float minCountdown, float maxCountdown = 0.0)
+	{
 		m_fIsRunning = true;
-		CSimpleSimTimer::Set( minCountdown, maxCountdown );
+		CSimpleSimTimer::Set(minCountdown, maxCountdown);
 	}
 
 	void Stop()
@@ -216,7 +211,7 @@ public:
 
 	bool Expired() const
 	{
-		return ( m_fIsRunning && CSimpleSimTimer::Expired() );
+		return (m_fIsRunning && CSimpleSimTimer::Expired());
 	}
 };
 //-------------------------------------
@@ -224,34 +219,34 @@ public:
 class CStopwatch : public CStopwatchBase
 {
 public:
-	CStopwatch ( float interval = 0.0 )
-	{ 
-		Set( interval );
+	CStopwatch(float interval = 0.0)
+	{
+		Set(interval);
 	}
-	
-	void Set( float interval )
-	{ 
+
+	void Set(float interval)
+	{
 		m_interval = interval;
 	}
 
-	void Start( float intervalOverride )
-	{ 
+	void Start(float intervalOverride)
+	{
 		m_fIsRunning = true;
 		m_next = gpGlobals->curtime + intervalOverride;
 	}
 
 	void Start()
 	{
-		Start( m_interval );
+		Start(m_interval);
 	}
-	
+
 	float GetInterval() const
 	{
 		return m_interval;
 	}
 
 	DECLARE_SIMPLE_DATADESC();
-	
+
 private:
 	float m_interval;
 };
@@ -261,31 +256,31 @@ private:
 class CRandStopwatch : public CStopwatchBase
 {
 public:
-	CRandStopwatch( float minInterval = 0.0, float maxInterval = 0.0 )	
-	{ 
-		Set( minInterval, maxInterval );
+	CRandStopwatch(float minInterval = 0.0, float maxInterval = 0.0)
+	{
+		Set(minInterval, maxInterval);
 	}
-	
-	void Set( float minInterval, float maxInterval = 0.0 )
-	{ 
+
+	void Set(float minInterval, float maxInterval = 0.0)
+	{
 		m_minInterval = minInterval;
 		m_maxInterval = maxInterval;
 	}
 
-	void Start( float minOverride, float maxOverride = 0.0 )
-	{ 
+	void Start(float minOverride, float maxOverride = 0.0)
+	{
 		m_fIsRunning = true;
-		if ( maxOverride == 0 )
+		if(maxOverride == 0)
 			m_next = gpGlobals->curtime + minOverride;
 		else
-			m_next = gpGlobals->curtime + random->RandomFloat( minOverride, maxOverride );
+			m_next = gpGlobals->curtime + random->RandomFloat(minOverride, maxOverride);
 	}
 
 	void Start()
 	{
-		Start( m_minInterval, m_maxInterval );
+		Start(m_minInterval, m_maxInterval);
 	}
-	
+
 	float GetInterval() const
 	{
 		return m_minInterval;
@@ -302,7 +297,7 @@ public:
 	}
 
 	DECLARE_SIMPLE_DATADESC();
-	
+
 private:
 	float m_minInterval;
 	float m_maxInterval;
@@ -313,14 +308,11 @@ private:
 class CThinkOnceSemaphore
 {
 public:
-	CThinkOnceSemaphore()
-	 :	m_lastTime( -1 )
-	{
-	}
+	CThinkOnceSemaphore() : m_lastTime(-1) {}
 
 	bool EnterThink()
 	{
-		if ( m_lastTime == gpGlobals->curtime )
+		if(m_lastTime == gpGlobals->curtime)
 			return false;
 		m_lastTime = gpGlobals->curtime;
 		return true;
@@ -328,8 +320,7 @@ public:
 
 	bool DidThink() const
 	{
-		return ( gpGlobals->curtime == m_lastTime );
-
+		return (gpGlobals->curtime == m_lastTime);
 	}
 
 	void SetDidThink()

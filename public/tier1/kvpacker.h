@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,8 +24,8 @@
 class KVPacker
 {
 public:
-	bool WriteAsBinary( KeyValues *pNode, CUtlBuffer &buffer );
-	bool ReadAsBinary( KeyValues *pNode, CUtlBuffer &buffer );
+	bool WriteAsBinary(KeyValues *pNode, CUtlBuffer &buffer);
+	bool ReadAsBinary(KeyValues *pNode, CUtlBuffer &buffer);
 
 private:
 	// These types are used for serialization of KeyValues nodes.
@@ -41,9 +41,8 @@ private:
 		PACKTYPE_WSTRING,
 		PACKTYPE_COLOR,
 		PACKTYPE_UINT64,
-		PACKTYPE_NULLMARKER,				// used to mark the end of a block in the binary format
+		PACKTYPE_NULLMARKER, // used to mark the end of a block in the binary format
 	};
 };
-
 
 #endif // KVPACKER_H

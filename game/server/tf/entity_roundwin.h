@@ -15,25 +15,23 @@
 // CTeamplayRoundWin Entity.
 //
 
-class CTeamplayRoundWin : public CPointEntity 
+class CTeamplayRoundWin : public CPointEntity
 {
 public:
-	DECLARE_CLASS( CTeamplayRoundWin, CPointEntity );
+	DECLARE_CLASS(CTeamplayRoundWin, CPointEntity);
 
 	CTeamplayRoundWin();
 
 	// Input
-	void InputRoundWin( inputdata_t &inputdata );
+	void InputRoundWin(inputdata_t &inputdata);
 
 private:
-
-	void RoundWin( void );
+	void RoundWin(void);
 
 private:
-
 	bool m_bForceMapReset;
 	bool m_bSwitchTeamsOnWin;
-	int	 m_iWinReason;
+	int m_iWinReason;
 
 	COutputEvent m_outputOnRoundWin; // Fired when the entity tells the game rules a team has won the round
 
@@ -41,5 +39,3 @@ private:
 };
 
 #endif // ENTITY_ROUND_WIN_H
-
-

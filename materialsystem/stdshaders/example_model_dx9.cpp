@@ -9,18 +9,18 @@
 #include "example_model_dx9_helper.h"
 
 #ifdef GAME_SHADER_DLL
-DEFINE_FALLBACK_SHADER( Mod_Example_Model, Mod_Example_Model_DX9 )
-BEGIN_VS_SHADER( Mod_Example_Model_DX9, "Help for Example Model Shader" )
+DEFINE_FALLBACK_SHADER(Mod_Example_Model, Mod_Example_Model_DX9)
+BEGIN_VS_SHADER(Mod_Example_Model_DX9, "Help for Example Model Shader")
 #else
-DEFINE_FALLBACK_SHADER( Example_Model, Example_Model_DX9 )
-BEGIN_VS_SHADER( Example_Model_DX9, "Help for Example Model Shader" )
+DEFINE_FALLBACK_SHADER(Example_Model, Example_Model_DX9)
+BEGIN_VS_SHADER(Example_Model_DX9, "Help for Example Model Shader")
 #endif
 
 	BEGIN_SHADER_PARAMS
-		SHADER_PARAM( ALPHATESTREFERENCE, SHADER_PARAM_TYPE_FLOAT, "0.0", "" )	
+		SHADER_PARAM(ALPHATESTREFERENCE, SHADER_PARAM_TYPE_FLOAT, "0.0", "")
 	END_SHADER_PARAMS
 
-	void SetupVars( ExampleModel_DX9_Vars_t& info )
+	void SetupVars(ExampleModel_DX9_Vars_t & info)
 	{
 		info.m_nBaseTexture = BASETEXTURE;
 		info.m_nBaseTextureFrame = FRAME;
@@ -33,8 +33,8 @@ BEGIN_VS_SHADER( Example_Model_DX9, "Help for Example Model Shader" )
 	SHADER_INIT_PARAMS()
 	{
 		ExampleModel_DX9_Vars_t info;
-		SetupVars( info );
-		InitParamsExampleModel_DX9( this, params, pMaterialName, info );
+		SetupVars(info);
+		InitParamsExampleModel_DX9(this, params, pMaterialName, info);
 	}
 
 	SHADER_FALLBACK
@@ -45,16 +45,15 @@ BEGIN_VS_SHADER( Example_Model_DX9, "Help for Example Model Shader" )
 	SHADER_INIT
 	{
 		ExampleModel_DX9_Vars_t info;
-		SetupVars( info );
-		InitExampleModel_DX9( this, params, info );
+		SetupVars(info);
+		InitExampleModel_DX9(this, params, info);
 	}
 
 	SHADER_DRAW
 	{
 		ExampleModel_DX9_Vars_t info;
-		SetupVars( info );
-		DrawExampleModel_DX9( this, params, pShaderAPI, pShaderShadow, info, vertexCompression, pContextDataPtr );
+		SetupVars(info);
+		DrawExampleModel_DX9(this, params, pShaderAPI, pShaderShadow, info, vertexCompression, pContextDataPtr);
 	}
 
 END_SHADER
-

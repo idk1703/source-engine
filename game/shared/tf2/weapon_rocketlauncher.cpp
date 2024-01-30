@@ -13,7 +13,7 @@
 #include "plasmaprojectile.h"
 #include "weapon_grenade_rocket.h"
 
-#if !defined( CLIENT_DLL )
+#if !defined(CLIENT_DLL)
 // Server Only
 #include "grenade_rocket.h"
 #else
@@ -23,49 +23,44 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
- 
-PRECACHE_WEAPON_REGISTER( weapon_rocket_launcher );
-LINK_ENTITY_TO_CLASS( weapon_rocket_launcher, CWeaponRocketLauncher );
+PRECACHE_WEAPON_REGISTER(weapon_rocket_launcher);
+LINK_ENTITY_TO_CLASS(weapon_rocket_launcher, CWeaponRocketLauncher);
 
-BEGIN_PREDICTION_DATA( CWeaponRocketLauncher )
+BEGIN_PREDICTION_DATA(CWeaponRocketLauncher)
 END_PREDICTION_DATA()
 
-IMPLEMENT_NETWORKCLASS_ALIASED( WeaponRocketLauncher, DT_WeaponRocketLauncher )
-BEGIN_NETWORK_TABLE( CWeaponRocketLauncher, DT_WeaponRocketLauncher )
+IMPLEMENT_NETWORKCLASS_ALIASED(WeaponRocketLauncher, DT_WeaponRocketLauncher)
+BEGIN_NETWORK_TABLE(CWeaponRocketLauncher, DT_WeaponRocketLauncher)
 //#if !defined( CLIENT_DLL )
 //#else
 //#endif
 END_NETWORK_TABLE()
 
-#if !defined( CLIENT_DLL )
+#if !defined(CLIENT_DLL)
 // Server Only
-ConVar weapon_rocket_launcher_damage( "weapon_rocket_launcher_damage","300", FCVAR_NONE, "Rocker launcher damage" );
-ConVar weapon_rocket_launcher_range( "weapon_rocket_launcher_range", "768", FCVAR_NONE, "Rocket launcher range" );
+ConVar weapon_rocket_launcher_damage("weapon_rocket_launcher_damage", "300", FCVAR_NONE, "Rocker launcher damage");
+ConVar weapon_rocket_launcher_range("weapon_rocket_launcher_range", "768", FCVAR_NONE, "Rocket launcher range");
 #endif
 
-#define WEAPON_ROCKET_LAUNCHER_FIRERATE		1.0f
-#define WEAPON_ROCKET_LAUNCHER_START_AMMO	1
+#define WEAPON_ROCKET_LAUNCHER_FIRERATE	  1.0f
+#define WEAPON_ROCKET_LAUNCHER_START_AMMO 1
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CWeaponRocketLauncher::CWeaponRocketLauncher()
-{
-}
+CWeaponRocketLauncher::CWeaponRocketLauncher() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Deconstructor
 //-----------------------------------------------------------------------------
-CWeaponRocketLauncher::~CWeaponRocketLauncher()
-{
-}
+CWeaponRocketLauncher::~CWeaponRocketLauncher() {}
 
 //-----------------------------------------------------------------------------/
 // Purpose: Don't fire when EMPed
 //-----------------------------------------------------------------------------
-bool CWeaponRocketLauncher::ComputeEMPFireState( void )
+bool CWeaponRocketLauncher::ComputeEMPFireState(void)
 {
-	if ( IsOwnerEMPed() )
+	if(IsOwnerEMPed())
 		return false;
 
 	return true;
@@ -74,7 +69,7 @@ bool CWeaponRocketLauncher::ComputeEMPFireState( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CWeaponRocketLauncher::Spawn( void )
+void CWeaponRocketLauncher::Spawn(void)
 {
 	BaseClass::Spawn();
 }
@@ -83,32 +78,32 @@ void CWeaponRocketLauncher::Spawn( void )
 // Purpose: Handle deploying, undeploying, firing, etc.
 // TODO: Add a deploy to the firing!  Currently no reloading!
 //-----------------------------------------------------------------------------
-void CWeaponRocketLauncher::ItemPostFrame( void )
+void CWeaponRocketLauncher::ItemPostFrame(void)
 {
 	// Get the player.
-	CBaseTFPlayer *pPlayer = ToBaseTFPlayer( GetOwner() );
-	if ( !pPlayer )
+	CBaseTFPlayer *pPlayer = ToBaseTFPlayer(GetOwner());
+	if(!pPlayer)
 		return;
 
-	if ( UsesClipsForAmmo1() )
+	if(UsesClipsForAmmo1())
 	{
 		CheckReload();
 	}
 
-#if !defined( CLIENT_DLL )
-	if ( !HasPrimaryAmmo() && ( m_flNextPrimaryAttack <= gpGlobals->curtime ) )
+#if !defined(CLIENT_DLL)
+	if(!HasPrimaryAmmo() && (m_flNextPrimaryAttack <= gpGlobals->curtime))
 	{
-		pPlayer->SwitchToNextBestWeapon( NULL );
+		pPlayer->SwitchToNextBestWeapon(NULL);
 	}
 #endif
 
 	// Handle Firing
-	if ( GetShieldState() == SS_DOWN && !m_bInReload )
+	if(GetShieldState() == SS_DOWN && !m_bInReload)
 	{
 		// Attempting to fire.
-		if ( ( pPlayer->m_nButtons & IN_ATTACK ) && ( m_flNextPrimaryAttack <= gpGlobals->curtime ) )
+		if((pPlayer->m_nButtons & IN_ATTACK) && (m_flNextPrimaryAttack <= gpGlobals->curtime))
 		{
-			if ( m_iClip1 > 0 )
+			if(m_iClip1 > 0)
 			{
 				PrimaryAttack();
 			}
@@ -119,15 +114,16 @@ void CWeaponRocketLauncher::ItemPostFrame( void )
 		}
 
 		// Reload button (or fire button when we're out of ammo)
-		if ( m_flNextPrimaryAttack <= gpGlobals->curtime ) 
+		if(m_flNextPrimaryAttack <= gpGlobals->curtime)
 		{
-			if ( pPlayer->m_nButtons & IN_RELOAD ) 
+			if(pPlayer->m_nButtons & IN_RELOAD)
 			{
 				Reload();
 			}
-			else if ( !((pPlayer->m_nButtons & IN_ATTACK) || (pPlayer->m_nButtons & IN_ATTACK2) || (pPlayer->m_nButtons & IN_RELOAD)) )
+			else if(!((pPlayer->m_nButtons & IN_ATTACK) || (pPlayer->m_nButtons & IN_ATTACK2) ||
+					  (pPlayer->m_nButtons & IN_RELOAD)))
 			{
-				if ( !m_iClip1 && HasPrimaryAmmo() )
+				if(!m_iClip1 && HasPrimaryAmmo())
 				{
 					Reload();
 				}
@@ -136,48 +132,49 @@ void CWeaponRocketLauncher::ItemPostFrame( void )
 	}
 
 	// Prevent shield post frame if we're not ready to attack, or we're charging
-	AllowShieldPostFrame( m_flNextPrimaryAttack <= gpGlobals->curtime || m_bInReload );
+	AllowShieldPostFrame(m_flNextPrimaryAttack <= gpGlobals->curtime || m_bInReload);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Firing
 //-----------------------------------------------------------------------------
-void CWeaponRocketLauncher::PrimaryAttack( void )
+void CWeaponRocketLauncher::PrimaryAttack(void)
 {
-	CBaseTFPlayer *pPlayer = ( CBaseTFPlayer* )GetOwner();
-	if ( !pPlayer )
+	CBaseTFPlayer *pPlayer = (CBaseTFPlayer *)GetOwner();
+	if(!pPlayer)
 		return;
 
-	if ( !ComputeEMPFireState() )
+	if(!ComputeEMPFireState())
 		return;
 
 	// Weapon "Fire" sound.
-	WeaponSound( SINGLE );
+	WeaponSound(SINGLE);
 
 	// Play the attack animation (need one for rocket launcher - deploy?)
-	PlayAttackAnimation( GetPrimaryAttackActivity() );
+	PlayAttackAnimation(GetPrimaryAttackActivity());
 
 	// Fire the rocket (Get the position and angles).
 	Vector vecFirePos = pPlayer->Weapon_ShootPosition();
 	Vector vecFireAng;
-	pPlayer->EyeVectors( &vecFireAng );
+	pPlayer->EyeVectors(&vecFireAng);
 
 	// Shift it down a bit so the firer can see it
 	Vector vecRight;
-	AngleVectors( pPlayer->EyeAngles() + pPlayer->m_Local.m_vecPunchAngle, NULL, &vecRight, NULL );
-	vecFirePos += Vector( 0, 0, -8 ) + vecRight * 12;
+	AngleVectors(pPlayer->EyeAngles() + pPlayer->m_Local.m_vecPunchAngle, NULL, &vecRight, NULL);
+	vecFirePos += Vector(0, 0, -8) + vecRight * 12;
 
 	// Create the rocket.
-#if !defined( CLIENT_DLL )
-	CWeaponGrenadeRocket *pRocket = CWeaponGrenadeRocket::Create( vecFirePos, vecFireAng, weapon_rocket_launcher_range.GetFloat(), pPlayer );
+#if !defined(CLIENT_DLL)
+	CWeaponGrenadeRocket *pRocket =
+		CWeaponGrenadeRocket::Create(vecFirePos, vecFireAng, weapon_rocket_launcher_range.GetFloat(), pPlayer);
 #else
-	CWeaponGrenadeRocket *pRocket = CWeaponGrenadeRocket::Create( vecFirePos, vecFireAng, 0, pPlayer );
+	CWeaponGrenadeRocket *pRocket = CWeaponGrenadeRocket::Create(vecFirePos, vecFireAng, 0, pPlayer);
 #endif
-	if ( pRocket )
+	if(pRocket)
 	{
-		pRocket->SetRealOwner( pPlayer );
-#if !defined( CLIENT_DLL )
-		pRocket->SetDamage( weapon_rocket_launcher_damage.GetFloat() );
+		pRocket->SetRealOwner(pPlayer);
+#if !defined(CLIENT_DLL)
+		pRocket->SetDamage(weapon_rocket_launcher_damage.GetFloat());
 #endif
 	}
 
@@ -189,22 +186,22 @@ void CWeaponRocketLauncher::PrimaryAttack( void )
 //-----------------------------------------------------------------------------
 // Purpose: Set the rocket launcher firing rate.
 //-----------------------------------------------------------------------------
-float CWeaponRocketLauncher::GetFireRate( void )
+float CWeaponRocketLauncher::GetFireRate(void)
 {
 	return WEAPON_ROCKET_LAUNCHER_FIRERATE;
 }
 
-#if defined( CLIENT_DLL )
+#if defined(CLIENT_DLL)
 // Client Only
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CWeaponRocketLauncher::ShouldPredict( void )
+bool CWeaponRocketLauncher::ShouldPredict(void)
 {
-	if ( GetOwner() == C_BasePlayer::GetLocalPlayer() )
+	if(GetOwner() == C_BasePlayer::GetLocalPlayer())
 		return true;
-	
+
 	return BaseClass::ShouldPredict();
 }
 

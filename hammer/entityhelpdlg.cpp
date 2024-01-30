@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -12,9 +12,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 static CEntityHelpDlg *g_pHelpDlg = NULL;
-
 
 BEGIN_MESSAGE_MAP(CEntityHelpDlg, CDialog)
 	//{{AFX_MSG_MAP(CEntityHelpDlg)
@@ -24,46 +22,41 @@ BEGIN_MESSAGE_MAP(CEntityHelpDlg, CDialog)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEntityHelpDlg::ShowEntityHelpDialog(void)
 {
-	if (g_pHelpDlg == NULL)
+	if(g_pHelpDlg == NULL)
 	{
 		g_pHelpDlg = new CEntityHelpDlg;
 		g_pHelpDlg->Create(IDD_ENTITY_HELP);
 	}
 
-	if (g_pHelpDlg != NULL)
+	if(g_pHelpDlg != NULL)
 	{
 		g_pHelpDlg->ShowWindow(SW_SHOW);
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEntityHelpDlg::SetEditGameClass(GDclass *pClass)
 {
-	if (g_pHelpDlg != NULL)
+	if(g_pHelpDlg != NULL)
 	{
 		g_pHelpDlg->UpdateClass(pClass);
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Constructor.
 //-----------------------------------------------------------------------------
-CEntityHelpDlg::CEntityHelpDlg(CWnd *pwndParent)
-	: CDialog(CEntityHelpDlg::IDD, pwndParent)
+CEntityHelpDlg::CEntityHelpDlg(CWnd *pwndParent) : CDialog(CEntityHelpDlg::IDD, pwndParent)
 {
 	m_pHelpText = NULL;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor.
@@ -73,10 +66,9 @@ CEntityHelpDlg::~CEntityHelpDlg(void)
 	g_pHelpDlg = NULL;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pDX - 
+// Purpose:
+// Input  : pDX -
 //-----------------------------------------------------------------------------
 void CEntityHelpDlg::DoDataExchange(CDataExchange *pDX)
 {
@@ -86,19 +78,18 @@ void CEntityHelpDlg::DoDataExchange(CDataExchange *pDX)
 	//}}AFX_DATA_MAP
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pszText - 
-// Output : 
+// Purpose:
+// Input  : pszText -
+// Output :
 //-----------------------------------------------------------------------------
 int CEntityHelpDlg::GetTextWidth(const char *pszText, CDC *pDC)
 {
-	if (pszText != NULL)
+	if(pszText != NULL)
 	{
 		bool bRelease = false;
 
-		if (pDC == NULL)
+		if(pDC == NULL)
 		{
 			bRelease = true;
 			pDC = m_pHelpText->GetDC();
@@ -108,22 +99,21 @@ int CEntityHelpDlg::GetTextWidth(const char *pszText, CDC *pDC)
 		CSize Size = pDC->GetTabbedTextExtent(pszText, strlen(pszText), 0, NULL);
 		pDC->SelectObject(pOldFont);
 
-		if (bRelease)
+		if(bRelease)
 		{
 			m_pHelpText->ReleaseDC(pDC);
 		}
 
-		return(Size.cx);
+		return (Size.cx);
 	}
 
-	return(0);
+	return (0);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pClass - 
-// Output : 
+// Purpose:
+// Input  : pClass -
+// Output :
 //-----------------------------------------------------------------------------
 int CEntityHelpDlg::GetMaxVariableWidth(GDclass *pClass)
 {
@@ -132,12 +122,12 @@ int CEntityHelpDlg::GetMaxVariableWidth(GDclass *pClass)
 	int nWidthMax = 0;
 
 	int nCount = m_pClass->GetVariableCount();
-	for (int i = 0; i < nCount; i++)
+	for(int i = 0; i < nCount; i++)
 	{
 		GDinputvariable *pVar = m_pClass->GetVariableAt(i);
 		int nWidth = GetTextWidth(pVar->GetName(), pDC);
 
-		if (nWidth > nWidthMax)
+		if(nWidth > nWidthMax)
 		{
 			nWidthMax = nWidth;
 		}
@@ -145,18 +135,16 @@ int CEntityHelpDlg::GetMaxVariableWidth(GDclass *pClass)
 
 	m_pHelpText->ReleaseDC(pDC);
 
-	return(nWidthMax);
+	return (nWidthMax);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEntityHelpDlg::OnClose(void)
 {
 	DestroyWindow();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Called when our window is being destroyed.
@@ -166,9 +154,8 @@ void CEntityHelpDlg::OnDestroy(void)
 	delete this;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 BOOL CEntityHelpDlg::OnInitDialog(void)
 {
@@ -176,13 +163,12 @@ BOOL CEntityHelpDlg::OnInitDialog(void)
 	m_pHelpText = new CRichEditCtrlEx;
 	m_pHelpText->SubclassDlgItem(IDC_HELP_TEXT, this);
 	m_pHelpText->enable();
-	return(TRUE);
+	return (TRUE);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pClass - 
+// Purpose:
+// Input  : pClass -
 //-----------------------------------------------------------------------------
 void CEntityHelpDlg::UpdateClass(GDclass *pClass)
 {
@@ -191,13 +177,12 @@ void CEntityHelpDlg::UpdateClass(GDclass *pClass)
 	m_pHelpText->LineScroll(-64000, -64000);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEntityHelpDlg::UpdateHelp(void)
 {
-	if (m_pClass != NULL)
+	if(m_pClass != NULL)
 	{
 		m_pHelpText->SetWindowText("");
 
@@ -220,7 +205,7 @@ void CEntityHelpDlg::UpdateHelp(void)
 		// Keys section.
 		//
 		int nCount = m_pClass->GetVariableCount();
-		if (nCount > 0)
+		if(nCount > 0)
 		{
 			//
 			// Keys header.
@@ -238,7 +223,7 @@ void CEntityHelpDlg::UpdateHelp(void)
 			b << size(20);
 			b << bold(false);
 
-			for (int i = 0; i < nCount; i++)
+			for(int i = 0; i < nCount; i++)
 			{
 				GDinputvariable *pVar = m_pClass->GetVariableAt(i);
 
@@ -265,7 +250,7 @@ void CEntityHelpDlg::UpdateHelp(void)
 		// Inputs section.
 		//
 		int nInputCount = m_pClass->GetInputCount();
-		if (nInputCount > 0)
+		if(nInputCount > 0)
 		{
 			//
 			// Inputs header.
@@ -283,7 +268,7 @@ void CEntityHelpDlg::UpdateHelp(void)
 			//
 			b << size(20);
 
-			for (int i = 0; i < nInputCount; i++)
+			for(int i = 0; i < nInputCount; i++)
 			{
 				CClassInput *pInput = m_pClass->GetInput(i);
 
@@ -292,7 +277,7 @@ void CEntityHelpDlg::UpdateHelp(void)
 				b << bold(false);
 				b << " ";
 
-				if (pInput->GetType() != iotVoid)
+				if(pInput->GetType() != iotVoid)
 				{
 					b << "<";
 					b << pInput->GetTypeText();
@@ -304,12 +289,12 @@ void CEntityHelpDlg::UpdateHelp(void)
 				b << write(*m_pHelpText);
 			}
 		}
-		
+
 		//
 		// Outputs section.
 		//
 		int nOutputCount = m_pClass->GetOutputCount();
-		if (nOutputCount > 0)
+		if(nOutputCount > 0)
 		{
 			//
 			// Outputs header.
@@ -327,7 +312,7 @@ void CEntityHelpDlg::UpdateHelp(void)
 			//
 			b << size(20);
 
-			for (int i = 0; i < nOutputCount; i++)
+			for(int i = 0; i < nOutputCount; i++)
 			{
 				CClassOutput *pOutput = m_pClass->GetOutput(i);
 
@@ -336,7 +321,7 @@ void CEntityHelpDlg::UpdateHelp(void)
 				b << bold(false);
 				b << " ";
 
-				if (pOutput->GetType() != iotVoid)
+				if(pOutput->GetType() != iotVoid)
 				{
 					b << "<";
 					b << pOutput->GetTypeText();
@@ -351,21 +336,19 @@ void CEntityHelpDlg::UpdateHelp(void)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nType - 
-//			cx - 
-//			cy - 
+// Purpose:
+// Input  : nType -
+//			cx -
+//			cy -
 // Output : afx_msg void
 //-----------------------------------------------------------------------------
-void CEntityHelpDlg::OnSize( UINT nType, int cx, int cy )
+void CEntityHelpDlg::OnSize(UINT nType, int cx, int cy)
 {
 	CDialog::OnSize(nType, cx, cy);
 
-	if (m_pHelpText != NULL)
+	if(m_pHelpText != NULL)
 	{
 		m_pHelpText->SetWindowPos(NULL, 0, 0, cx - 22, cy - 22, SWP_NOMOVE | SWP_NOZORDER);
 	}
 }
-

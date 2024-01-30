@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -12,7 +12,7 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CDamageModifier::CDamageModifier()
 {
@@ -21,38 +21,38 @@ CDamageModifier::CDamageModifier()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CDamageModifier::AddModifierToEntity( CBaseEntity *pEntity )
+void CDamageModifier::AddModifierToEntity(CBaseEntity *pEntity)
 {
 	RemoveModifier();
 
-	pEntity->m_DamageModifiers.AddToTail( this );
+	pEntity->m_DamageModifiers.AddToTail(this);
 	m_hEnt = pEntity;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDamageModifier::RemoveModifier()
 {
-	if ( m_hEnt.Get() )
+	if(m_hEnt.Get())
 	{
-		m_hEnt->m_DamageModifiers.FindAndRemove( this );
+		m_hEnt->m_DamageModifiers.FindAndRemove(this);
 		m_hEnt = 0;
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CDamageModifier::SetModifier( float flScale )
+void CDamageModifier::SetModifier(float flScale)
 {
 	m_flModifier = flScale;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CDamageModifier::GetModifier() const
 {
@@ -60,26 +60,25 @@ float CDamageModifier::GetModifier() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CBaseEntity* CDamageModifier::GetCharacter() const
+CBaseEntity *CDamageModifier::GetCharacter() const
 {
 	return m_hEnt.Get();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CDamageModifier::SetDoneToMe( bool bDoneToMe )
+void CDamageModifier::SetDoneToMe(bool bDoneToMe)
 {
 	m_bDoneToMe = bDoneToMe;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CDamageModifier::IsDamageDoneToMe() const
 {
 	return m_bDoneToMe;
 }
-

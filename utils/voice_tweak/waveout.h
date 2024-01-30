@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -9,11 +9,8 @@
 #define WAVEOUT_H
 #pragma once
 
-
 #include "iwaveout.h"
 
-
-IWaveOut* CreateWaveOut(int sampleRate);
-
+IWaveOut *CreateWaveOut(int sampleRate);
 
 #endif // WAVEOUT_H

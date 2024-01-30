@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,5 +11,6 @@
 #pragma once
 #endif
 
-void DoSpark( CBaseEntity *ent, const Vector &location, int nMagnitude, int nTrailLength, bool bPlaySound, const Vector &vecDir );
+void DoSpark(CBaseEntity *ent, const Vector &location, int nMagnitude, int nTrailLength, bool bPlaySound,
+			 const Vector &vecDir);
 #endif // SPARK_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -19,34 +19,33 @@ class CHudAmmo
 {
 public:
 	// Accessor methods to set various state associated with the ammo display
-	void SetPrimaryAmmo( int nAmmoType, int nTotalAmmo, int nClipCount = -1, int nMaxClipCount = -1 );
-	void SetSecondaryAmmo( int nAmmoType, int nTotalAmmo, int nClipCount = -1, int nMaxClipCount = -1 );
+	void SetPrimaryAmmo(int nAmmoType, int nTotalAmmo, int nClipCount = -1, int nMaxClipCount = -1);
+	void SetSecondaryAmmo(int nAmmoType, int nTotalAmmo, int nClipCount = -1, int nMaxClipCount = -1);
 
-	bool	ShouldShowPrimaryClip() const;
-	bool	ShouldShowSecondary() const;
+	bool ShouldShowPrimaryClip() const;
+	bool ShouldShowSecondary() const;
 
-	void	ShowHideHudControls();
+	void ShowHideHudControls();
 
 private:
-	int		m_nClip1;
-	int		m_nMaxClip1;
-	int		m_nTotalAmmo1;
-	int		m_nAmmoType1;
+	int m_nClip1;
+	int m_nMaxClip1;
+	int m_nTotalAmmo1;
+	int m_nAmmoType1;
 
-	int		m_nClip2;
-	int		m_nMaxClip2;
-	int		m_nTotalAmmo2;
- 	int		m_nAmmoType2;
+	int m_nClip2;
+	int m_nMaxClip2;
+	int m_nTotalAmmo2;
+	int m_nAmmoType2;
 
-friend class CHudAmmoPrimary;
-friend class CHudAmmoPrimaryClip;
-friend class CHudAmmoSecondary;
+	friend class CHudAmmoPrimary;
+	friend class CHudAmmoPrimaryClip;
+	friend class CHudAmmoSecondary;
 };
 
 //-----------------------------------------------------------------------------
 // Singleton...
 //-----------------------------------------------------------------------------
-CHudAmmo* GetHudAmmo();
+CHudAmmo *GetHudAmmo();
 
 #endif // HUD_AMMO_H
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -18,20 +18,20 @@ using namespace vgui;
 class CAvatarImagePanel;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudArenaVsPanel : public CHudElement, public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CHudArenaVsPanel, EditablePanel );
+	DECLARE_CLASS_SIMPLE(CHudArenaVsPanel, EditablePanel);
 
 public:
-	CHudArenaVsPanel( const char *pElementName );
+	CHudArenaVsPanel(const char *pElementName);
 
-	virtual void	Init( void );
-	virtual void	ApplySchemeSettings( IScheme *scheme );
-	virtual bool	ShouldDraw( void );
-	virtual void	OnTick( void );
-	virtual void	FireGameEvent( IGameEvent * event );
+	virtual void Init(void);
+	virtual void ApplySchemeSettings(IScheme *scheme);
+	virtual bool ShouldDraw(void);
+	virtual void OnTick(void);
+	virtual void FireGameEvent(IGameEvent *event);
 
 private:
 	bool m_bVisible;

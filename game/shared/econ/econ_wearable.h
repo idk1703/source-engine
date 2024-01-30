@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -15,16 +15,17 @@
 enum
 {
 	MAX_WEARABLES_SENT_FROM_SERVER =
-#ifdef LOADOUT_MAX_WEARABLES_COUNT // we actually do want to just check for macro definition here -- undefined means "fall back to whatever default"
-									 LOADOUT_MAX_WEARABLES_COUNT
+#ifdef LOADOUT_MAX_WEARABLES_COUNT // we actually do want to just check for macro definition here -- undefined means
+								   // "fall back to whatever default"
+		LOADOUT_MAX_WEARABLES_COUNT
 #else
-									 8 // hard-coded constant to match old behavior
+		8 // hard-coded constant to match old behavior
 #endif
 };
 
-#if defined( CLIENT_DLL )
+#if defined(CLIENT_DLL)
 #define CEconWearable	C_EconWearable
-#define CTFWearableItem	C_TFWearableItem
+#define CTFWearableItem C_TFWearableItem
 #endif
 
 enum
@@ -37,56 +38,76 @@ enum
 
 class CEconWearable : public CEconEntity
 {
-	DECLARE_CLASS( CEconWearable, CEconEntity );
+	DECLARE_CLASS(CEconWearable, CEconEntity);
+
 public:
 	DECLARE_NETWORKCLASS();
 	DECLARE_DATADESC();
 
 	CEconWearable();
 
-	virtual bool IsWearable( void ) const					{ return true; }
+	virtual bool IsWearable(void) const
+	{
+		return true;
+	}
 
 	// Shared
-	virtual void			Spawn( void );
-	virtual void			GiveTo( CBaseEntity *pOther );
-	virtual void			RemoveFrom( CBaseEntity *pOther );
-	virtual bool			CanEquip( CBaseEntity *pOther ) { return true; }
-	virtual void			Equip( CBasePlayer *pOwner );
-	virtual void			UnEquip( CBasePlayer* pOwner );
-	virtual void			OnWearerDeath( void );
-	virtual int				GetDropType( void );
-//	virtual bool			UpdateBodygroups( CBasePlayer* pOwner, int iState );
+	virtual void Spawn(void);
+	virtual void GiveTo(CBaseEntity *pOther);
+	virtual void RemoveFrom(CBaseEntity *pOther);
+	virtual bool CanEquip(CBaseEntity *pOther)
+	{
+		return true;
+	}
+	virtual void Equip(CBasePlayer *pOwner);
+	virtual void UnEquip(CBasePlayer *pOwner);
+	virtual void OnWearerDeath(void);
+	virtual int GetDropType(void);
+	//	virtual bool			UpdateBodygroups( CBasePlayer* pOwner, int iState );
 
-	void					SetAlwaysAllow( bool bVal ) { m_bAlwaysAllow = bVal; }
-	bool					AlwaysAllow( void ) { return m_bAlwaysAllow; }
+	void SetAlwaysAllow(bool bVal)
+	{
+		m_bAlwaysAllow = bVal;
+	}
+	bool AlwaysAllow(void)
+	{
+		return m_bAlwaysAllow;
+	}
 
-	virtual bool			IsViewModelWearable( void ) { return false; }
+	virtual bool IsViewModelWearable(void)
+	{
+		return false;
+	}
 
 	// Server
-#if defined( GAME_DLL )
+#if defined(GAME_DLL)
 #endif
 
 	// Client
-#if defined( CLIENT_DLL )
-	virtual ShadowType_t	ShadowCastType() OVERRIDE;
-	virtual bool			ShouldDraw();
-	virtual bool			ShouldDrawWhenPlayerIsDead() { return true; }
-	virtual void			OnDataChanged( DataUpdateType_t updateType );
-	virtual void			ClientThink( void );
-	virtual bool			ShouldDrawParticleSystems( void );
-	virtual RenderGroup_t	GetRenderGroup();
+#if defined(CLIENT_DLL)
+	virtual ShadowType_t ShadowCastType() OVERRIDE;
+	virtual bool ShouldDraw();
+	virtual bool ShouldDrawWhenPlayerIsDead()
+	{
+		return true;
+	}
+	virtual void OnDataChanged(DataUpdateType_t updateType);
+	virtual void ClientThink(void);
+	virtual bool ShouldDrawParticleSystems(void);
+	virtual RenderGroup_t GetRenderGroup();
 #endif
 
-	virtual int				GetSkin( void );
+	virtual int GetSkin(void);
 
 	// Static
-	static void				UpdateWearableBodyGroups( CBasePlayer *pPlayer );
+	static void UpdateWearableBodyGroups(CBasePlayer *pPlayer);
 
 protected:
-	virtual void			InternalSetPlayerDisplayModel( void );
+	virtual void InternalSetPlayerDisplayModel(void);
 
 private:
-	bool					m_bAlwaysAllow;		// Wearable will not be removed by ManageRegularWeapons. Only use this for wearables managed by other items!
+	bool m_bAlwaysAllow; // Wearable will not be removed by ManageRegularWeapons. Only use this for wearables managed by
+						 // other items!
 };
 
 //-----------------------------------------------------------------------------
@@ -94,7 +115,8 @@ private:
 //-----------------------------------------------------------------------------
 class CTFWearableItem : public CEconWearable
 {
-	DECLARE_CLASS( CTFWearableItem, CEconWearable );
+	DECLARE_CLASS(CTFWearableItem, CEconWearable);
+
 public:
 	DECLARE_NETWORKCLASS();
 	DECLARE_DATADESC();
@@ -104,34 +126,38 @@ public:
 
 #ifdef CLIENT_DLL
 // Clientside wearable physics props. Used to have wearables fall off dying players.
-class C_EconWearableGib	: public CEconEntity
+class C_EconWearableGib : public CEconEntity
 {
-	DECLARE_CLASS( C_EconWearableGib, CEconEntity );
+	DECLARE_CLASS(C_EconWearableGib, CEconEntity);
+
 public:
 	C_EconWearableGib();
 	~C_EconWearableGib();
 
-	bool			Initialize( bool bWillBeParented );
-	bool			FinishModelInitialization( void );
+	bool Initialize(bool bWillBeParented);
+	bool FinishModelInitialization(void);
 
-	virtual CStudioHdr *OnNewModel( void );
+	virtual CStudioHdr *OnNewModel(void);
 
-	virtual bool	ValidateEntityAttachedToPlayer( bool &bShouldRetry );
+	virtual bool ValidateEntityAttachedToPlayer(bool &bShouldRetry);
 
-	virtual void	SpawnClientEntity();
-	virtual void	Spawn();
-	virtual void	ClientThink( void );
-	void			StartFadeOut( float fDelay );
-	virtual void	ImpactTrace( trace_t *pTrace, int iDamageType, const char *pCustomImpactName );
-	virtual CollideType_t	GetCollideType( void ) { return ENTITY_SHOULD_RESPOND; }
+	virtual void SpawnClientEntity();
+	virtual void Spawn();
+	virtual void ClientThink(void);
+	void StartFadeOut(float fDelay);
+	virtual void ImpactTrace(trace_t *pTrace, int iDamageType, const char *pCustomImpactName);
+	virtual CollideType_t GetCollideType(void)
+	{
+		return ENTITY_SHOULD_RESPOND;
+	}
 
-	bool			UpdateThinkState( void );
+	bool UpdateThinkState(void);
 
 private:
-	bool	m_bParented;
-	bool	m_bDelayedInit;
-	float 	m_fDeathTime;		// Point at which this object self destructs.  
-								// The default of -1 indicates the object shouldn't destruct.
+	bool m_bParented;
+	bool m_bDelayedInit;
+	float m_fDeathTime; // Point at which this object self destructs.
+						// The default of -1 indicates the object shouldn't destruct.
 };
 #endif
 

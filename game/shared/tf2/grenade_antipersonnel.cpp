@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,23 +15,26 @@
 #include "grenade_antipersonnel.h"
 
 // Damage CVars
-ConVar	weapon_antipersonnel_grenade_damage( "weapon_antipersonnel_grenade_damage","0", FCVAR_NONE, "Anti-personnel grenade maximum damage" );
-ConVar	weapon_antipersonnel_grenade_radius( "weapon_antipersonnel_grenade_radius","0", FCVAR_NONE, "Anti-personnel grenade splash radius" );
+ConVar weapon_antipersonnel_grenade_damage("weapon_antipersonnel_grenade_damage", "0", FCVAR_NONE,
+										   "Anti-personnel grenade maximum damage");
+ConVar weapon_antipersonnel_grenade_radius("weapon_antipersonnel_grenade_radius", "0", FCVAR_NONE,
+										   "Anti-personnel grenade splash radius");
 
-#if !defined( CLIENT_DLL )
+#if !defined(CLIENT_DLL)
 // Server Only
-ConVar weapon_antipersonnel_grenade_force( "weapon_antipersonnel_grenade_force","225.0", FCVAR_NONE, "Grenade explosive force modifier." );
+ConVar weapon_antipersonnel_grenade_force("weapon_antipersonnel_grenade_force", "225.0", FCVAR_NONE,
+										  "Grenade explosive force modifier.");
 #endif
 
-
 IMPLEMENT_SERVERCLASS_ST(CGrenadeAntiPersonnel, DT_GrenadeAntiPersonnel)
-END_SEND_TABLE()
+END_SEND_TABLE
+()
 
-LINK_ENTITY_TO_CLASS( grenade_antipersonnel, CGrenadeAntiPersonnel );
+	LINK_ENTITY_TO_CLASS(grenade_antipersonnel, CGrenadeAntiPersonnel);
 PRECACHE_WEAPON_REGISTER(grenade_antipersonnel);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CGrenadeAntiPersonnel::CGrenadeAntiPersonnel()
 {
@@ -41,56 +44,56 @@ CGrenadeAntiPersonnel::CGrenadeAntiPersonnel()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CGrenadeAntiPersonnel::Precache( void )
+void CGrenadeAntiPersonnel::Precache(void)
 {
-	BaseClass::Precache( );
+	BaseClass::Precache();
 
-	PrecacheModel( "models/weapons/w_grenade.mdl" );
-	PrecacheModel( "sprites/redglow1.vmt" );
+	PrecacheModel("models/weapons/w_grenade.mdl");
+	PrecacheModel("sprites/redglow1.vmt");
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CGrenadeAntiPersonnel::Spawn( void )
+void CGrenadeAntiPersonnel::Spawn(void)
 {
 	Precache();
 
-	SetMoveType( MOVETYPE_FLYGRAVITY, MOVECOLLIDE_FLY_BOUNCE );
-	SetSolid( SOLID_BBOX );
-	SetGravity( 1.0 );
-	SetFriction( 0.9 );
-	SetElasticity( 2.0f );
-	SetModel( "models/weapons/w_grenade.mdl" );
+	SetMoveType(MOVETYPE_FLYGRAVITY, MOVECOLLIDE_FLY_BOUNCE);
+	SetSolid(SOLID_BBOX);
+	SetGravity(1.0);
+	SetFriction(0.9);
+	SetElasticity(2.0f);
+	SetModel("models/weapons/w_grenade.mdl");
 	UTIL_SetSize(this, vec3_origin, vec3_origin);
-	SetTouch( BounceTouch );
-	SetCollisionGroup( TFCOLLISION_GROUP_GRENADE );
+	SetTouch(BounceTouch);
+	SetCollisionGroup(TFCOLLISION_GROUP_GRENADE);
 
 	m_flDetonateTime = gpGlobals->curtime + 3.0;
-	SetThink( TumbleThink );
-	SetNextThink( gpGlobals->curtime + 0.1f );
+	SetThink(TumbleThink);
+	SetNextThink(gpGlobals->curtime + 0.1f);
 
 	// Set my damages to the cvar values
-	SetDamage( weapon_antipersonnel_grenade_damage.GetFloat() );
-	SetDamageRadius( weapon_antipersonnel_grenade_radius.GetFloat() );
+	SetDamage(weapon_antipersonnel_grenade_damage.GetFloat());
+	SetDamageRadius(weapon_antipersonnel_grenade_radius.GetFloat());
 
 	// Create a green light
-	m_pLiveSprite = CSprite::SpriteCreate( "sprites/redglow1.vmt", GetLocalOrigin() + Vector(0,0,1), false );
-	m_pLiveSprite->SetTransparency( kRenderGlow, 0, 255, 0, 128, kRenderFxNoDissipation );
-	m_pLiveSprite->SetBrightness( 255 );
-	m_pLiveSprite->SetScale( 1 );
-	m_pLiveSprite->SetAttachment( this, 0 );
+	m_pLiveSprite = CSprite::SpriteCreate("sprites/redglow1.vmt", GetLocalOrigin() + Vector(0, 0, 1), false);
+	m_pLiveSprite->SetTransparency(kRenderGlow, 0, 255, 0, 128, kRenderFxNoDissipation);
+	m_pLiveSprite->SetBrightness(255);
+	m_pLiveSprite->SetScale(1);
+	m_pLiveSprite->SetAttachment(this, 0);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CGrenadeAntiPersonnel::UpdateOnRemove( void )
+void CGrenadeAntiPersonnel::UpdateOnRemove(void)
 {
 	// Remove our live sprite
-	if ( m_pLiveSprite )
+	if(m_pLiveSprite)
 	{
-		UTIL_Remove( m_pLiveSprite );
+		UTIL_Remove(m_pLiveSprite);
 		m_pLiveSprite = NULL;
 	}
 
@@ -101,44 +104,44 @@ void CGrenadeAntiPersonnel::UpdateOnRemove( void )
 //-----------------------------------------------------------------------------
 // Purpose: Allow shield parry's
 //-----------------------------------------------------------------------------
-void CGrenadeAntiPersonnel::BounceTouch( CBaseEntity *pOther )
+void CGrenadeAntiPersonnel::BounceTouch(CBaseEntity *pOther)
 {
 	// Don't blow up on trigger brushes
-	Assert( pOther );
-	if ( !pOther->IsSolid() )
+	Assert(pOther);
+	if(!pOther->IsSolid())
 		return;
 
-	if ( pOther->GetCollisionGroup() == TFCOLLISION_GROUP_SHIELD )
+	if(pOther->GetCollisionGroup() == TFCOLLISION_GROUP_SHIELD)
 	{
 		// Move away from the shield...
 		// Fling it out a little extra along the plane normal
 		Vector vecCenter;
-		AngleVectors( pOther->GetAbsAngles(), &vecCenter );
+		AngleVectors(pOther->GetAbsAngles(), &vecCenter);
 
 		// Bounce off the ground if it's on the ground...
 		Vector vecNewVelocity = GetAbsVelocity();
-		VectorMultiply( vecCenter, 400.0f, vecNewVelocity );
-		if ((GetFlags() & FL_ONGROUND) && vecNewVelocity.z <= 100.0f)
+		VectorMultiply(vecCenter, 400.0f, vecNewVelocity);
+		if((GetFlags() & FL_ONGROUND) && vecNewVelocity.z <= 100.0f)
 		{
 			vecNewVelocity.z = 100.0f;
 		}
-		SetAbsVelocity( vecNewVelocity );
+		SetAbsVelocity(vecNewVelocity);
 	}
 
 	// If we're set to explode on contact, and we just hit an enemy, go kaboom
-	if ( m_bExplodeOnContact && !InSameTeam(pOther) && pOther->m_takedamage != DAMAGE_NO )
+	if(m_bExplodeOnContact && !InSameTeam(pOther) && pOther->m_takedamage != DAMAGE_NO)
 	{
 		Detonate();
 		return;
 	}
 
-	BaseClass::BounceTouch( pOther );
+	BaseClass::BounceTouch(pOther);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Return the radius for the screenshake
 //-----------------------------------------------------------------------------
-float CGrenadeAntiPersonnel::GetShakeRadius( void )
+float CGrenadeAntiPersonnel::GetShakeRadius(void)
 {
 	return (m_DmgRadius * 2);
 }
@@ -146,42 +149,43 @@ float CGrenadeAntiPersonnel::GetShakeRadius( void )
 //-----------------------------------------------------------------------------
 // Purpose: Create a missile
 //-----------------------------------------------------------------------------
-void CGrenadeAntiPersonnel::Detonate( void )
+void CGrenadeAntiPersonnel::Detonate(void)
 {
 	BaseClass::Detonate();
 
 	// iterate on all entities in the vicinity and find vehicles
 	CBaseEntity *pEntity = NULL;
-	for ( CEntitySphereQuery sphere( GetAbsOrigin(), m_DmgRadius ); ( pEntity = sphere.GetCurrentEntity() ) != NULL; sphere.NextEntity() )
+	for(CEntitySphereQuery sphere(GetAbsOrigin(), m_DmgRadius); (pEntity = sphere.GetCurrentEntity()) != NULL;
+		sphere.NextEntity())
 	{
 		// Check team.
-		if ( pEntity->GetTeam() == GetTeam() )
+		if(pEntity->GetTeam() == GetTeam())
 			continue;
 
-		if ( pEntity->GetServerVehicle() ) 
+		if(pEntity->GetServerVehicle())
 		{
 			IPhysicsObject *pPhysObject = pEntity->VPhysicsGetObject();
-			if ( pPhysObject )
+			if(pPhysObject)
 			{
 				// Rocket the vehicle in the direction of the incoming rocket.
 				Vector vecForceDir = pEntity->GetAbsOrigin() - GetAbsOrigin();
-				float flDistance = VectorNormalize( vecForceDir );
+				float flDistance = VectorNormalize(vecForceDir);
 
-				if ( flDistance >= 0.0f && flDistance < m_DmgRadius )
+				if(flDistance >= 0.0f && flDistance < m_DmgRadius)
 				{
 					vecForceDir.z = 1.0f;
-					VectorNormalize( vecForceDir );
-					
+					VectorNormalize(vecForceDir);
+
 					float flForce = pPhysObject->GetMass();
-					flForce += ( 4 * 500.0f );				// Wheels
+					flForce += (4 * 500.0f); // Wheels
 					flForce *= weapon_antipersonnel_grenade_force.GetFloat();
-					flForce *= ( 1.0f - ( flDistance / m_DmgRadius ) );
-					
+					flForce *= (1.0f - (flDistance / m_DmgRadius));
+
 					vecForceDir *= flForce;
-					
-					pPhysObject->ApplyForceOffset( vecForceDir, GetAbsOrigin() );
+
+					pPhysObject->ApplyForceOffset(vecForceDir, GetAbsOrigin());
 				}
-			}		
+			}
 		}
 	}
 }
@@ -189,23 +193,21 @@ void CGrenadeAntiPersonnel::Detonate( void )
 //-----------------------------------------------------------------------------
 // Purpose: Create a missile
 //-----------------------------------------------------------------------------
-CGrenadeAntiPersonnel *CGrenadeAntiPersonnel::Create( const Vector &vecOrigin, const Vector &vecForward, CBasePlayer *pOwner )
+CGrenadeAntiPersonnel *CGrenadeAntiPersonnel::Create(const Vector &vecOrigin, const Vector &vecForward,
+													 CBasePlayer *pOwner)
 {
-	CGrenadeAntiPersonnel *pGrenade = (CGrenadeAntiPersonnel*)CreateEntityByName("grenade_antipersonnel");
+	CGrenadeAntiPersonnel *pGrenade = (CGrenadeAntiPersonnel *)CreateEntityByName("grenade_antipersonnel");
 
-	UTIL_SetOrigin( pGrenade, vecOrigin );
+	UTIL_SetOrigin(pGrenade, vecOrigin);
 	pGrenade->Spawn();
-	pGrenade->ChangeTeam( pOwner->GetTeamNumber() );
-	pGrenade->SetOwnerEntity( pOwner );
-	pGrenade->SetThrower( pOwner );
-	pGrenade->SetAbsVelocity( vecForward );
+	pGrenade->ChangeTeam(pOwner->GetTeamNumber());
+	pGrenade->SetOwnerEntity(pOwner);
+	pGrenade->SetThrower(pOwner);
+	pGrenade->SetAbsVelocity(vecForward);
 	QAngle angles;
-	VectorAngles( vecForward, angles );
-	pGrenade->SetLocalAngles( angles );
-	pGrenade->SetLocalAngularVelocity( RandomAngle(-500,500) );
+	VectorAngles(vecForward, angles);
+	pGrenade->SetLocalAngles(angles);
+	pGrenade->SetLocalAngularVelocity(RandomAngle(-500, 500));
 
 	return pGrenade;
 }
-
-
-

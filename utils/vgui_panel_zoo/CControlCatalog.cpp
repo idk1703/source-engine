@@ -1,11 +1,10 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
 //=============================================================================//
-
 
 #include "CControlCatalog.h"
 #include "stdio.h"
@@ -21,25 +20,24 @@
 
 #include "filesystem.h"
 
-
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CControlCatalog::CControlCatalog(): Frame(NULL, "PanelZoo")
+CControlCatalog::CControlCatalog() : Frame(NULL, "PanelZoo")
 {
 	SetTitle("VGUI SDK Sample Application", true);
 	// calculate defaults
 	int x, y, wide, tall;
 	vgui::surface()->GetScreenSize(wide, tall);
-	
+
 	int dwide, dtall;
 	dwide = 535;
 	dtall = 405;
 	x = (int)((wide - dwide) * 0.5);
 	y = (int)((tall - dtall) * 0.5);
-	SetBounds (x, y, dwide, dtall);
+	SetBounds(x, y, dwide, dtall);
 
 	// Add all demos to the panel list
 
@@ -98,7 +96,6 @@ CControlCatalog::CControlCatalog(): Frame(NULL, "PanelZoo")
 	m_PanelList.AddToTail(HTMLDemo2_Create(this));
 	m_PanelList.AddToTail(MenuBarDemo_Create(this));
 
-
 	m_pSelectControl = new ComboBox(this, "ControlSelect", 10, false);
 
 	// Position the box.
@@ -107,38 +104,35 @@ CControlCatalog::CControlCatalog(): Frame(NULL, "PanelZoo")
 	// Set the width of the Combo box so any element selected will display nicely.
 	m_pSelectControl->SetWide(180);
 
-	CUtlRBTree< char const *, int > sorted( 0, 0, CaselessStringLessThan );
+	CUtlRBTree<char const *, int> sorted(0, 0, CaselessStringLessThan);
 
 	int i;
-	for ( i = 0; i < m_PanelList.Size(); i++)
+	for(i = 0; i < m_PanelList.Size(); i++)
 	{
-		sorted.Insert( m_PanelList[i]->GetName() );
+		sorted.Insert(m_PanelList[i]->GetName());
 	}
 
 	// Add text selections to the menu list
 	// These are the names of the panels in the panel list
-	for ( i = sorted.FirstInorder() ; i != sorted.InvalidIndex(); i = sorted.NextInorder( i ) )
+	for(i = sorted.FirstInorder(); i != sorted.InvalidIndex(); i = sorted.NextInorder(i))
 	{
-		m_pSelectControl->AddItem( sorted[ i ], NULL);
+		m_pSelectControl->AddItem(sorted[i], NULL);
 	}
 
 	m_pSelectControl->ActivateItem(0);
 	m_pPrevPanel = m_PanelList[0];
 
-	m_pCategoryLabel = new Label (this, "CategoryLabel", "Category");
+	m_pCategoryLabel = new Label(this, "CategoryLabel", "Category");
 	m_pCategoryLabel->GetContentSize(wide, tall);
-	m_pCategoryLabel->SetSize(wide + Label::Content/2, tall + Label::Content/2);
+	m_pCategoryLabel->SetSize(wide + Label::Content / 2, tall + Label::Content / 2);
 	m_pCategoryLabel->SetPos(27, 50);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CControlCatalog::~CControlCatalog()
-{ 
-}
- 
+CControlCatalog::~CControlCatalog() {}
+
 //-----------------------------------------------------------------------------
 // Purpose: Handles closing of the dialog - shuts down the whole app
 //-----------------------------------------------------------------------------
@@ -150,20 +144,19 @@ void CControlCatalog::OnClose()
 	vgui::ivgui()->Stop();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Checks to see if any text in the combobox has changed
 //-----------------------------------------------------------------------------
 void CControlCatalog::OnTextChanged()
 {
 	char buf[40];
-	m_pSelectControl->GetText(buf, sizeof( buf ));
+	m_pSelectControl->GetText(buf, sizeof(buf));
 
 	m_pPrevPanel->SetVisible(false);
 
-	for (int i = 0; i < m_PanelList.Size(); i++)
+	for(int i = 0; i < m_PanelList.Size(); i++)
 	{
-		if (!strcmp(buf, m_PanelList[i]->GetName()))
+		if(!strcmp(buf, m_PanelList[i]->GetName()))
 		{
 			m_PanelList[i]->SetVisible(true);
 			m_pPrevPanel = m_PanelList[i];
@@ -175,13 +168,8 @@ void CControlCatalog::OnTextChanged()
 //-----------------------------------------------------------------------------
 // Purpose: Message map
 //-----------------------------------------------------------------------------
-MessageMapItem_t CControlCatalog::m_MessageMap[] =
-{
-	MAP_MESSAGE( CControlCatalog, "TextChanged", OnTextChanged ),	// message from the text entry
+MessageMapItem_t CControlCatalog::m_MessageMap[] = {
+	MAP_MESSAGE(CControlCatalog, "TextChanged", OnTextChanged), // message from the text entry
 };
 
 IMPLEMENT_PANELMAP(CControlCatalog, Frame);
-
-
-
-

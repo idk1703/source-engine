@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -21,20 +21,19 @@ class CCSViewRender : public CViewRender
 public:
 	CCSViewRender();
 
-	virtual void Init( void );
+	virtual void Init(void);
 
-	virtual void GetScreenFadeDistances( float *min, float *max );
+	virtual void GetScreenFadeDistances(float *min, float *max);
 
-	virtual void Render2DEffectsPreHUD( const CViewSetup &view );
-	virtual void Render2DEffectsPostHUD( const CViewSetup &view );
-	virtual void RenderPlayerSprites( void );
+	virtual void Render2DEffectsPreHUD(const CViewSetup &view);
+	virtual void Render2DEffectsPostHUD(const CViewSetup &view);
+	virtual void RenderPlayerSprites(void);
 
 private:
+	void PerformFlashbangEffect(const CViewSetup &view);
+	void PerformNightVisionEffect(const CViewSetup &view);
 
-	void PerformFlashbangEffect( const CViewSetup &view );
-	void PerformNightVisionEffect( const CViewSetup &view );
-	
 	ITexture *m_pFlashTexture;
 };
 
-#endif //CS_VIEW_SCENE_H
+#endif // CS_VIEW_SCENE_H

@@ -20,20 +20,23 @@
 class CSCHintIcon : public vgui::Label
 {
 public:
-	DECLARE_CLASS_SIMPLE( CSCHintIcon, vgui::Label );
+	DECLARE_CLASS_SIMPLE(CSCHintIcon, vgui::Label);
 
-	CSCHintIcon( vgui::Panel *parent, const char *panelName );
+	CSCHintIcon(vgui::Panel *parent, const char *panelName);
 
-	virtual void ApplySettings( KeyValues *inResourceData );
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual void ApplySettings(KeyValues *inResourceData);
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 
-	bool IsActionMapped() const { return m_bIsActionMapped; }
+	bool IsActionMapped() const
+	{
+		return m_bIsActionMapped;
+	}
 
 private:
 	bool m_bIsActionMapped;
 	static const int nMaxActionNameLength = 63;
-	char m_szActionName[nMaxActionNameLength+1];
+	char m_szActionName[nMaxActionNameLength + 1];
 	ControllerActionSetHandle_t m_actionSetHandle;
 };
 
-#endif  // SC_HINTICON_H
+#endif // SC_HINTICON_H

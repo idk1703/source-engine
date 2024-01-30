@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -12,29 +12,27 @@
 class CSmoothingGroupMgr : public ISmoothingGroupMgr
 {
 public:
-
 	CSmoothingGroupMgr();
 	~CSmoothingGroupMgr();
 
-	SmoothingGroupHandle_t		CreateGroup( void );
-	void						DestroyGroup( SmoothingGroupHandle_t hGroup ); 
+	SmoothingGroupHandle_t CreateGroup(void);
+	void DestroyGroup(SmoothingGroupHandle_t hGroup);
 
-	bool						IsGroup( SmoothingGroupHandle_t hGroup );
+	bool IsGroup(SmoothingGroupHandle_t hGroup);
 
-	void						AddFaceToGroup( SmoothingGroupHandle_t hGroup, CMapFace *pFace );
-	void						RemoveFaceFromGroup( SmoothingGroupHandle_t hGroup, CMapFace *pFace );
+	void AddFaceToGroup(SmoothingGroupHandle_t hGroup, CMapFace *pFace);
+	void RemoveFaceFromGroup(SmoothingGroupHandle_t hGroup, CMapFace *pFace);
 
-	void						SetGroupSmoothingAngle( SmoothingGroupHandle_t hGroup, float flAngle );
-	float						GetGroupSmoothingAngle( SmoothingGroupHandle_t hGroup );
+	void SetGroupSmoothingAngle(SmoothingGroupHandle_t hGroup, float flAngle);
+	float GetGroupSmoothingAngle(SmoothingGroupHandle_t hGroup);
 
-	int							GetFaceCountInGroup( SmoothingGroupHandle_t hGroup );
-	CMapFace				   *GetFaceFromGroup( SmoothingGroupHandle_t hGroup, int iFace );
+	int GetFaceCountInGroup(SmoothingGroupHandle_t hGroup);
+	CMapFace *GetFaceFromGroup(SmoothingGroupHandle_t hGroup, int iFace);
 
-	ChunkFileResult_t			SaveVMF( CChunkFile *pFile, CSaveInfo *pSaveInfo );
-	ChunkFileResult_t			LoadVMF( CChunkFile *pFile );
+	ChunkFileResult_t SaveVMF(CChunkFile *pFile, CSaveInfo *pSaveInfo);
+	ChunkFileResult_t LoadVMF(CChunkFile *pFile);
 
 private:
-
 #if 0
 	static ChunkFileResult_t LoadSmoothingGroupMgrCallback( const char *szKey, const char *szValue, CSmoothingGroupMgr *pSmoothingGroupMgr );
 	static ChunkFileResult_t LoadSmoothingGroupMgrKeyCallback( const char *szKey, const char *szValue, CSmoothingGroupMgr *pSmoothingGroupMgr );
@@ -44,21 +42,20 @@ private:
 #endif
 
 private:
-
 	struct SmoothingGroup_t
 	{
-		int						m_nID;
-		CUtlVector<CMapFace*>	m_aFaces;
-		float					m_flSmoothingAngle;
+		int m_nID;
+		CUtlVector<CMapFace *> m_aFaces;
+		float m_flSmoothingAngle;
 	};
 
-	CUtlVector<SmoothingGroup_t>	m_aSmoothingGroups;
+	CUtlVector<SmoothingGroup_t> m_aSmoothingGroups;
 };
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-ISmoothingGroupMgr *SmoothingGroupMgr( void )
+ISmoothingGroupMgr *SmoothingGroupMgr(void)
 {
 	static CSmoothingGroupMgr s_SmoothingGroupMgr;
 	return &s_SmoothingGroupMgr;
@@ -69,7 +66,7 @@ ISmoothingGroupMgr *SmoothingGroupMgr( void )
 //-----------------------------------------------------------------------------
 CSmoothingGroupMgr::CSmoothingGroupMgr()
 {
-	m_aSmoothingGroups.SetSize( MAX_SMOOTHING_GROUP_COUNT );
+	m_aSmoothingGroups.SetSize(MAX_SMOOTHING_GROUP_COUNT);
 }
 
 //-----------------------------------------------------------------------------
@@ -83,60 +80,60 @@ CSmoothingGroupMgr::~CSmoothingGroupMgr()
 //-----------------------------------------------------------------------------
 // Purpose: Add a face to the smoothing group.
 //-----------------------------------------------------------------------------
-void CSmoothingGroupMgr::AddFaceToGroup( SmoothingGroupHandle_t hGroup, CMapFace *pFace )
+void CSmoothingGroupMgr::AddFaceToGroup(SmoothingGroupHandle_t hGroup, CMapFace *pFace)
 {
 	// Validate data.
-	Assert( hGroup != INVALID_SMOOTHING_GROUP );
-	Assert( hGroup >= 0 );
-	Assert( hGroup < MAX_SMOOTHING_GROUP_COUNT );
+	Assert(hGroup != INVALID_SMOOTHING_GROUP);
+	Assert(hGroup >= 0);
+	Assert(hGroup < MAX_SMOOTHING_GROUP_COUNT);
 
-	int iGroup = static_cast<int>( hGroup );
+	int iGroup = static_cast<int>(hGroup);
 	SmoothingGroup_t *pGroup = &m_aSmoothingGroups[iGroup];
-	if ( pGroup )
+	if(pGroup)
 	{
 		// Check to see if we already have this face in this group.
-		if ( pGroup->m_aFaces.Find( pFace ) == -1 )
+		if(pGroup->m_aFaces.Find(pFace) == -1)
 		{
-			pFace->AddSmoothingGroupHandle( hGroup );
-			pGroup->m_aFaces.AddToTail( pFace );
+			pFace->AddSmoothingGroupHandle(hGroup);
+			pGroup->m_aFaces.AddToTail(pFace);
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CSmoothingGroupMgr::RemoveFaceFromGroup( SmoothingGroupHandle_t hGroup, CMapFace *pFace )
+void CSmoothingGroupMgr::RemoveFaceFromGroup(SmoothingGroupHandle_t hGroup, CMapFace *pFace)
 {
 	// Validate data.
-	Assert( hGroup != INVALID_SMOOTHING_GROUP );
-	Assert( hGroup >= 0 );
-	Assert( hGroup < MAX_SMOOTHING_GROUP_COUNT );
+	Assert(hGroup != INVALID_SMOOTHING_GROUP);
+	Assert(hGroup >= 0);
+	Assert(hGroup < MAX_SMOOTHING_GROUP_COUNT);
 
-	int iGroup = static_cast<int>( hGroup );
+	int iGroup = static_cast<int>(hGroup);
 	SmoothingGroup_t *pGroup = &m_aSmoothingGroups[iGroup];
-	if ( pGroup )
+	if(pGroup)
 	{
-		int iFace = pGroup->m_aFaces.Find( pFace );
-		if ( iFace != -1 )
+		int iFace = pGroup->m_aFaces.Find(pFace);
+		if(iFace != -1)
 		{
-			pFace->RemoveSmoothingGroupHandle( hGroup );
-			pGroup->m_aFaces.Remove( iFace );
+			pFace->RemoveSmoothingGroupHandle(hGroup);
+			pGroup->m_aFaces.Remove(iFace);
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CSmoothingGroupMgr::SetGroupSmoothingAngle( SmoothingGroupHandle_t hGroup, float flAngle )
+void CSmoothingGroupMgr::SetGroupSmoothingAngle(SmoothingGroupHandle_t hGroup, float flAngle)
 {
 	// Validate data.
-	Assert( hGroup != INVALID_SMOOTHING_GROUP );
-	Assert( hGroup >= 0 );
-	Assert( hGroup < MAX_SMOOTHING_GROUP_COUNT );
+	Assert(hGroup != INVALID_SMOOTHING_GROUP);
+	Assert(hGroup >= 0);
+	Assert(hGroup < MAX_SMOOTHING_GROUP_COUNT);
 
-	int iGroup = static_cast<int>( hGroup );
+	int iGroup = static_cast<int>(hGroup);
 	SmoothingGroup_t *pGroup = &m_aSmoothingGroups[iGroup];
-	if ( pGroup )
+	if(pGroup)
 	{
 		pGroup->m_flSmoothingAngle = flAngle;
 	}
@@ -144,16 +141,16 @@ void CSmoothingGroupMgr::SetGroupSmoothingAngle( SmoothingGroupHandle_t hGroup, 
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-float CSmoothingGroupMgr::GetGroupSmoothingAngle( SmoothingGroupHandle_t hGroup )
+float CSmoothingGroupMgr::GetGroupSmoothingAngle(SmoothingGroupHandle_t hGroup)
 {
 	// Validate data.
-	Assert( hGroup != INVALID_SMOOTHING_GROUP );
-	Assert( hGroup >= 0 );
-	Assert( hGroup < MAX_SMOOTHING_GROUP_COUNT );
+	Assert(hGroup != INVALID_SMOOTHING_GROUP);
+	Assert(hGroup >= 0);
+	Assert(hGroup < MAX_SMOOTHING_GROUP_COUNT);
 
-	int iGroup = static_cast<int>( hGroup );
+	int iGroup = static_cast<int>(hGroup);
 	SmoothingGroup_t *pGroup = &m_aSmoothingGroups[iGroup];
-	if ( pGroup )
+	if(pGroup)
 	{
 		return pGroup->m_flSmoothingAngle;
 	}
@@ -163,16 +160,16 @@ float CSmoothingGroupMgr::GetGroupSmoothingAngle( SmoothingGroupHandle_t hGroup 
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-int CSmoothingGroupMgr::GetFaceCountInGroup( SmoothingGroupHandle_t hGroup )
+int CSmoothingGroupMgr::GetFaceCountInGroup(SmoothingGroupHandle_t hGroup)
 {
 	// Validate data.
-	Assert( hGroup != INVALID_SMOOTHING_GROUP );
-	Assert( hGroup >= 0 );
-	Assert( hGroup < MAX_SMOOTHING_GROUP_COUNT );
+	Assert(hGroup != INVALID_SMOOTHING_GROUP);
+	Assert(hGroup >= 0);
+	Assert(hGroup < MAX_SMOOTHING_GROUP_COUNT);
 
-	int iGroup = static_cast<int>( hGroup );
+	int iGroup = static_cast<int>(hGroup);
 	SmoothingGroup_t *pGroup = &m_aSmoothingGroups[iGroup];
-	if ( pGroup )
+	if(pGroup)
 	{
 		return pGroup->m_aFaces.Count();
 	}
@@ -182,16 +179,16 @@ int CSmoothingGroupMgr::GetFaceCountInGroup( SmoothingGroupHandle_t hGroup )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-CMapFace *CSmoothingGroupMgr::GetFaceFromGroup( SmoothingGroupHandle_t hGroup, int iFace )
+CMapFace *CSmoothingGroupMgr::GetFaceFromGroup(SmoothingGroupHandle_t hGroup, int iFace)
 {
 	// Validate data.
-	Assert( hGroup != INVALID_SMOOTHING_GROUP );
-	Assert( hGroup >= 0 );
-	Assert( hGroup < MAX_SMOOTHING_GROUP_COUNT );
+	Assert(hGroup != INVALID_SMOOTHING_GROUP);
+	Assert(hGroup >= 0);
+	Assert(hGroup < MAX_SMOOTHING_GROUP_COUNT);
 
-	int iGroup = static_cast<int>( hGroup );
+	int iGroup = static_cast<int>(hGroup);
 	SmoothingGroup_t *pGroup = &m_aSmoothingGroups[iGroup];
-	if ( pGroup )
+	if(pGroup)
 	{
 		return pGroup->m_aFaces[iFace];
 	}
@@ -202,95 +199,95 @@ CMapFace *CSmoothingGroupMgr::GetFaceFromGroup( SmoothingGroupHandle_t hGroup, i
 //-----------------------------------------------------------------------------
 // Purpose: Save the smoothing group data.
 //-----------------------------------------------------------------------------
-ChunkFileResult_t CSmoothingGroupMgr::SaveVMF( CChunkFile *pFile, CSaveInfo *pSaveInfo )
+ChunkFileResult_t CSmoothingGroupMgr::SaveVMF(CChunkFile *pFile, CSaveInfo *pSaveInfo)
 {
 	int nGroupCount = 0;
-	for ( int iGroup = 0; iGroup < MAX_SMOOTHING_GROUP_COUNT; ++iGroup )
+	for(int iGroup = 0; iGroup < MAX_SMOOTHING_GROUP_COUNT; ++iGroup)
 	{
-		if ( m_aSmoothingGroups[iGroup].m_aFaces.Count() != 0 )
+		if(m_aSmoothingGroups[iGroup].m_aFaces.Count() != 0)
 		{
 			nGroupCount++;
 		}
 	}
 
-	if ( nGroupCount == 0 )
+	if(nGroupCount == 0)
 		return ChunkFile_Ok;
 
-	ChunkFileResult_t eResult = pFile->BeginChunk( "smoothing_groups" );
+	ChunkFileResult_t eResult = pFile->BeginChunk("smoothing_groups");
 
-	for ( iGroup = 0; iGroup < MAX_SMOOTHING_GROUP_COUNT; ++iGroup )
+	for(iGroup = 0; iGroup < MAX_SMOOTHING_GROUP_COUNT; ++iGroup)
 	{
 		SmoothingGroup_t *pGroup = &m_aSmoothingGroups[iGroup];
 		int nFaceCount = pGroup->m_aFaces.Count();
-		if ( nFaceCount == 0 )
+		if(nFaceCount == 0)
 			continue;
 
 		char szBuf[MAX_KEYVALUE_LEN];
 		char szTemp[80];
 
 		// Save the smoothing group.
-		if ( eResult == ChunkFile_Ok )
+		if(eResult == ChunkFile_Ok)
 		{
-			eResult = pFile->BeginChunk( "group" );
-			if ( eResult == ChunkFile_Ok )
+			eResult = pFile->BeginChunk("group");
+			if(eResult == ChunkFile_Ok)
 			{
-				eResult = pFile->WriteKeyValueInt( "id", iGroup );
+				eResult = pFile->WriteKeyValueInt("id", iGroup);
 
-				if ( eResult == ChunkFile_Ok )
+				if(eResult == ChunkFile_Ok)
 				{
-					eResult = pFile->WriteKeyValueFloat( "angle", pGroup->m_flSmoothingAngle );
+					eResult = pFile->WriteKeyValueFloat("angle", pGroup->m_flSmoothingAngle);
 				}
 
-				if ( eResult == ChunkFile_Ok )
+				if(eResult == ChunkFile_Ok)
 				{
-					eResult = pFile->WriteKeyValueInt( "number_faces", nFaceCount );
+					eResult = pFile->WriteKeyValueInt("number_faces", nFaceCount);
 				}
-				
-				if ( eResult == ChunkFile_Ok )
+
+				if(eResult == ChunkFile_Ok)
 				{
 					int nColCount = 20;
-					int nRowCount = ( nFaceCount / nColCount ) + 1;
-					
-					for ( int iRow = 0; iRow < nRowCount; ++iRow )
+					int nRowCount = (nFaceCount / nColCount) + 1;
+
+					for(int iRow = 0; iRow < nRowCount; ++iRow)
 					{
 						bool bFirst = true;
 						szBuf[0] = '\0';
-						
-						for ( int iCol = 0; iCol < nColCount; ++iCol )
+
+						for(int iCol = 0; iCol < nColCount; ++iCol)
 						{
-							int iFace = ( iRow * 20 ) + iCol;
-							if ( iFace >= nFaceCount )
+							int iFace = (iRow * 20) + iCol;
+							if(iFace >= nFaceCount)
 								continue;
-							
-							if (!bFirst)
+
+							if(!bFirst)
 							{
 								strcat(szBuf, " ");
 							}
 
 							CMapFace *pFace = pGroup->m_aFaces[iFace];
-							if ( pFace )
+							if(pFace)
 							{
 								bFirst = false;
-								sprintf( szTemp, "%d", pFace->GetFaceID() );
-								strcat( szBuf, szTemp );
+								sprintf(szTemp, "%d", pFace->GetFaceID());
+								strcat(szBuf, szTemp);
 							}
 						}
-						
+
 						char szKey[10];
-						sprintf( szKey, "row%d", iRow );
-						eResult = pFile->WriteKeyValue( szKey, szBuf );
+						sprintf(szKey, "row%d", iRow);
+						eResult = pFile->WriteKeyValue(szKey, szBuf);
 					}
 				}
 			}
 
-			if ( eResult == ChunkFile_Ok )
+			if(eResult == ChunkFile_Ok)
 			{
 				eResult = pFile->EndChunk();
 			}
 		}
 	}
 
-	if ( eResult == ChunkFile_Ok )
+	if(eResult == ChunkFile_Ok)
 	{
 		eResult = pFile->EndChunk();
 	}
@@ -301,10 +298,10 @@ ChunkFileResult_t CSmoothingGroupMgr::SaveVMF( CChunkFile *pFile, CSaveInfo *pSa
 //-----------------------------------------------------------------------------
 // Purpose: Load smoothing group data.
 //-----------------------------------------------------------------------------
-ChunkFileResult_t CSmoothingGroupMgr::LoadVMF( CChunkFile *pFile )
+ChunkFileResult_t CSmoothingGroupMgr::LoadVMF(CChunkFile *pFile)
 {
-//	ChunkFileResult_t eResult = pFile->ReadChunk( ( KeyHandler_t )LoadSmoothingGroupMgrCallback, this );
-//	return eResult;
+	//	ChunkFileResult_t eResult = pFile->ReadChunk( ( KeyHandler_t )LoadSmoothingGroupMgrCallback, this );
+	//	return eResult;
 
 	return ChunkFile_Ok;
 }
@@ -313,10 +310,10 @@ ChunkFileResult_t CSmoothingGroupMgr::LoadVMF( CChunkFile *pFile )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ChunkFileResult_t CSmoothingGroupMgr::LoadSmoothingGroupMgrCallback( const char *szKey, const char *szValue, 
-																	 CSmoothingGroupMgr *pSmoothingGroupMgr )
+ChunkFileResult_t CSmoothingGroupMgr::LoadSmoothingGroupMgrCallback( const char *szKey, const char *szValue,
+																	CSmoothingGroupMgr *pSmoothingGroupMgr )
 {
-    // Get a pointer to the next available smoothing group slot.
+	// Get a pointer to the next available smoothing group slot.
 	SmoothingGroup_t *pGroup = new SmoothingGroup_t;
 	if ( !pGroup )
 		return;
@@ -347,8 +344,8 @@ ChunkFileResult_t CSmoothingGroupMgr::LoadSmoothingGroupMgrCallback( const char 
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ChunkFileResult_t CSmoothingGroupMgr::LoadSmoothingGroupMgrKeyCallback( const char *szKey, const char *szValue, 
-																	    CSmoothingGroupMgr *pSmoothingGroupMgr )
+ChunkFileResult_t CSmoothingGroupMgr::LoadSmoothingGroupMgrKeyCallback( const char *szKey, const char *szValue,
+																		CSmoothingGroupMgr *pSmoothingGroupMgr )
 {
 	return;
 }
@@ -398,8 +395,8 @@ ChunkFileResult_t CSmoothingGroupMgr::LoadSmoothingGroupKeyCallback( const char 
 		while ( pszNext != NULL )
 		{
 			nFaceID = ( float )atof( pszNext );
-			CMapFace *pFace = 
-			
+			CMapFace *pFace =
+
 
 
 CMapFace *CMapWorld::FaceID_FaceForID(int nFaceID)
@@ -413,4 +410,3 @@ CMapFace *CMapWorld::FaceID_FaceForID(int nFaceID)
 	return ChunkFile_Ok ;
 }
 #endif
-

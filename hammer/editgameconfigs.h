@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -18,34 +18,36 @@
 #include "Options.h"
 #include "Resource.h"
 
-
 class CEditGameConfigs : public CDialog
 {
-// Construction
+	// Construction
 public:
 	CEditGameConfigs(BOOL bSelectOnly = FALSE,
-		CWnd* pParent = NULL);   // standard constructor
+					 CWnd *pParent = NULL); // standard constructor
 
 	CGameConfig *GetSelectedGame()
-	{ return m_pSelectedGame; }	// get selected game config after dialog is run
+	{
+		return m_pSelectedGame;
+	} // get selected game config after dialog is run
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CEditGameConfigs)
-	enum { IDD = IDD_EDITGAMECONFIGS };
-	CListBox	m_cConfigs;
+	enum
+	{
+		IDD = IDD_EDITGAMECONFIGS
+	};
+	CListBox m_cConfigs;
 	//}}AFX_DATA
 
-
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CEditGameConfigs)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
 protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
+													 //}}AFX_VIRTUAL
 
+	// Implementation
+protected:
 	// Generated message map functions
 	//{{AFX_MSG(CEditGameConfigs)
 	afx_msg void OnAdd();
@@ -57,11 +59,10 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 
-	BOOL m_bSelectOnly;	// just select a game config
-	CGameConfig *m_pSelectedGame;	// last selected game
+	BOOL m_bSelectOnly;			  // just select a game config
+	CGameConfig *m_pSelectedGame; // last selected game
 
 	void FillConfigList(DWORD dwSelectID = 0xffffffff);
 };
-
 
 #endif // EDITGAMECONFIGS_H

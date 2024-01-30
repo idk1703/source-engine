@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -19,82 +19,80 @@
 namespace vgui
 {
 
-IMaterialSystem *g_pMaterialSystem = NULL;
-IMaterialSystem *MaterialSystem()
-{
-	return g_pMaterialSystem;
-}
-
-IMaterialSystemHardwareConfig *g_pMaterialSystemHardwareConfig = NULL;
-IMaterialSystemHardwareConfig *MaterialSystemHardwareConfig()
-{
-	return g_pMaterialSystemHardwareConfig;
-}
-
-IMDLCache *g_pMDLCache = NULL;
-IMDLCache *MDLCache()
-{
-	return g_pMDLCache;
-}
-
-IMatSystemSurface *g_pMatSystemSurface = NULL;
-IMatSystemSurface *MatSystemSurface()
-{
-	return g_pMatSystemSurface;
-}
-
-IStudioRender *g_pStudioRender = NULL;
-IStudioRender *StudioRender()
-{
-	return g_pStudioRender;
-}
-
-
-//-----------------------------------------------------------------------------
-// Purpose: finds a particular interface in the factory set
-//-----------------------------------------------------------------------------
-static void *InitializeInterface( char const *interfaceName, CreateInterfaceFn *factoryList, int numFactories )
-{
-	void *retval;
-
-	for ( int i = 0; i < numFactories; i++ )
+	IMaterialSystem *g_pMaterialSystem = NULL;
+	IMaterialSystem *MaterialSystem()
 	{
-		CreateInterfaceFn factory = factoryList[ i ];
-		if ( !factory )
-			continue;
-
-		retval = factory( interfaceName, NULL );
-		if ( retval )
-			return retval;
+		return g_pMaterialSystem;
 	}
 
-	// No provider for requested interface!!!
-	// Assert( !"No provider for requested interface!!!" );
+	IMaterialSystemHardwareConfig *g_pMaterialSystemHardwareConfig = NULL;
+	IMaterialSystemHardwareConfig *MaterialSystemHardwareConfig()
+	{
+		return g_pMaterialSystemHardwareConfig;
+	}
 
-	return NULL;
-}
+	IMDLCache *g_pMDLCache = NULL;
+	IMDLCache *MDLCache()
+	{
+		return g_pMDLCache;
+	}
 
+	IMatSystemSurface *g_pMatSystemSurface = NULL;
+	IMatSystemSurface *MatSystemSurface()
+	{
+		return g_pMatSystemSurface;
+	}
 
-//-----------------------------------------------------------------------------
-// Purpose: Initializes the controls
-//-----------------------------------------------------------------------------
-bool VGui_InitMatSysInterfacesList( const char *moduleName, CreateInterfaceFn *factoryList, int numFactories )
-{
-	if ( !vgui::VGui_InitInterfacesList( moduleName, factoryList, numFactories ) )
-		return false;
+	IStudioRender *g_pStudioRender = NULL;
+	IStudioRender *StudioRender()
+	{
+		return g_pStudioRender;
+	}
 
-	g_pMaterialSystem = (IMaterialSystem *)InitializeInterface( MATERIAL_SYSTEM_INTERFACE_VERSION, factoryList, numFactories );
-	g_pMatSystemSurface = (IMatSystemSurface *)InitializeInterface( MAT_SYSTEM_SURFACE_INTERFACE_VERSION, factoryList, numFactories );
-	g_pMDLCache = (IMDLCache *)InitializeInterface( MDLCACHE_INTERFACE_VERSION, factoryList, numFactories );
-	g_pStudioRender = (IStudioRender *)InitializeInterface( STUDIO_RENDER_INTERFACE_VERSION, factoryList, numFactories );
-	g_pMaterialSystemHardwareConfig = (IMaterialSystemHardwareConfig *)InitializeInterface( MATERIALSYSTEM_HARDWARECONFIG_INTERFACE_VERSION, factoryList, numFactories );
+	//-----------------------------------------------------------------------------
+	// Purpose: finds a particular interface in the factory set
+	//-----------------------------------------------------------------------------
+	static void *InitializeInterface(char const *interfaceName, CreateInterfaceFn *factoryList, int numFactories)
+	{
+		void *retval;
 
-	// MDL cache + studiorender are optional
-	return ( g_pMaterialSystem && g_pMatSystemSurface && g_pMaterialSystemHardwareConfig );
-}
+		for(int i = 0; i < numFactories; i++)
+		{
+			CreateInterfaceFn factory = factoryList[i];
+			if(!factory)
+				continue;
 
+			retval = factory(interfaceName, NULL);
+			if(retval)
+				return retval;
+		}
+
+		// No provider for requested interface!!!
+		// Assert( !"No provider for requested interface!!!" );
+
+		return NULL;
+	}
+
+	//-----------------------------------------------------------------------------
+	// Purpose: Initializes the controls
+	//-----------------------------------------------------------------------------
+	bool VGui_InitMatSysInterfacesList(const char *moduleName, CreateInterfaceFn *factoryList, int numFactories)
+	{
+		if(!vgui::VGui_InitInterfacesList(moduleName, factoryList, numFactories))
+			return false;
+
+		g_pMaterialSystem =
+			(IMaterialSystem *)InitializeInterface(MATERIAL_SYSTEM_INTERFACE_VERSION, factoryList, numFactories);
+		g_pMatSystemSurface =
+			(IMatSystemSurface *)InitializeInterface(MAT_SYSTEM_SURFACE_INTERFACE_VERSION, factoryList, numFactories);
+		g_pMDLCache = (IMDLCache *)InitializeInterface(MDLCACHE_INTERFACE_VERSION, factoryList, numFactories);
+		g_pStudioRender =
+			(IStudioRender *)InitializeInterface(STUDIO_RENDER_INTERFACE_VERSION, factoryList, numFactories);
+		g_pMaterialSystemHardwareConfig = (IMaterialSystemHardwareConfig *)InitializeInterface(
+			MATERIALSYSTEM_HARDWARECONFIG_INTERFACE_VERSION, factoryList, numFactories);
+
+		// MDL cache + studiorender are optional
+		return (g_pMaterialSystem && g_pMatSystemSurface && g_pMaterialSystemHardwareConfig);
+	}
 
 } // namespace vgui
-
-
-

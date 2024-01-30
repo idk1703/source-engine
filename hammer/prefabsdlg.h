@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -15,38 +15,42 @@
 
 class CPrefabsDlg : public CDialog
 {
-// Construction
+	// Construction
 public:
-	CPrefabsDlg(CWnd* pParent = NULL);   // standard constructor
+	CPrefabsDlg(CWnd *pParent = NULL); // standard constructor
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CPrefabsDlg)
-	enum { IDD = IDD_PREFABS };
-	CListCtrl	m_Objects;
-	CEdit	m_ObjectNotes;
-	CStatic	m_LibraryNotes;
-	CComboBox	m_Libraries;
+	enum
+	{
+		IDD = IDD_PREFABS
+	};
+	CListCtrl m_Objects;
+	CEdit m_ObjectNotes;
+	CStatic m_LibraryNotes;
+	CComboBox m_Libraries;
 	//}}AFX_DATA
 
-
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CPrefabsDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
+protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
+													 //}}AFX_VIRTUAL
 
-// Implementation
+	// Implementation
 protected:
 	int iCurObject;
 	int iCurLibrary;
 	BOOL bCurLibraryModified;
 	void SetCurObject(int);
-	int GetCurObject() { return iCurObject; }
-	CPrefabLibrary * GetCurrentLibrary(int *piSel = NULL);
-	CPrefab * GetCurrentObject(int *piSel = NULL);
-	void AddToObjectList(CPrefab *pPrefab, int iItem = -1, 
-		BOOL bReplace = FALSE);
+	int GetCurObject()
+	{
+		return iCurObject;
+	}
+	CPrefabLibrary *GetCurrentLibrary(int *piSel = NULL);
+	CPrefab *GetCurrentObject(int *piSel = NULL);
+	void AddToObjectList(CPrefab *pPrefab, int iItem = -1, BOOL bReplace = FALSE);
 	CImageList PrefabImages;
 	void EditObjectInfo();
 	void EditObjectData();
@@ -64,8 +68,8 @@ protected:
 	afx_msg void OnRemovelibrary();
 	afx_msg void OnRemoveobject();
 	virtual BOOL OnInitDialog();
-	afx_msg void OnItemchangedObjects(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnEndlabeleditObjects(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnItemchangedObjects(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnEndlabeleditObjects(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnClose();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()

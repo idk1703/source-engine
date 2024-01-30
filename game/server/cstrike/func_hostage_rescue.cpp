@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,36 +10,32 @@
 class CHostageRescueZone : public CBaseTrigger
 {
 public:
-	DECLARE_CLASS( CHostageRescueZone, CBaseTrigger );
+	DECLARE_CLASS(CHostageRescueZone, CBaseTrigger);
 	DECLARE_DATADESC();
 
 	void CHostageRescue();
 	void Spawn();
 
-	void HostageRescueTouch( CBaseEntity* pOther );
+	void HostageRescueTouch(CBaseEntity *pOther);
 };
 
+LINK_ENTITY_TO_CLASS(func_hostage_rescue, CHostageRescueZone);
 
-LINK_ENTITY_TO_CLASS( func_hostage_rescue, CHostageRescueZone );
+BEGIN_DATADESC(CHostageRescueZone)
 
-
-BEGIN_DATADESC( CHostageRescueZone )
-
-	//Functions
-	DEFINE_FUNCTION( HostageRescueTouch ),
+	// Functions
+	DEFINE_FUNCTION(HostageRescueTouch),
 
 END_DATADESC()
-
 
 void CHostageRescueZone::Spawn()
 {
 	InitTrigger();
-	SetTouch( &CHostageRescueZone::HostageRescueTouch );
+	SetTouch(&CHostageRescueZone::HostageRescueTouch);
 }
 
-void CHostageRescueZone::HostageRescueTouch( CBaseEntity *pOther )
+void CHostageRescueZone::HostageRescueTouch(CBaseEntity *pOther)
 {
 	variant_t emptyVariant;
-	pOther->AcceptInput( "OnRescueZoneTouch", NULL, NULL, emptyVariant, 0 );
+	pOther->AcceptInput("OnRescueZoneTouch", NULL, NULL, emptyVariant, 0);
 }
-

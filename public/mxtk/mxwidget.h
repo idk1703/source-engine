@@ -14,7 +14,6 @@
 #ifndef INCLUDED_MXWIDGET
 #define INCLUDED_MXWIDGET
 
-
 #include "tier0/platform.h"
 
 enum
@@ -42,11 +41,7 @@ enum
 	MX_LISTVIEW,
 };
 
-
-
 class mxWindow;
-
-
 
 class mxWidget_i;
 class mxWidget
@@ -54,59 +49,57 @@ class mxWidget
 	mxWidget_i *d_this;
 
 protected:
-	void setHandle (void *handle);
-	void setType (int type);
-	void setParent (mxWindow *parentWindow);
+	void setHandle(void *handle);
+	void setType(int type);
+	void setParent(mxWindow *parentWindow);
 
 public:
 	// CREATORS
-	mxWidget (mxWindow *parent, int x, int y, int w, int h, const char *label = 0);
-	virtual ~mxWidget ();
+	mxWidget(mxWindow *parent, int x, int y, int w, int h, const char *label = 0);
+	virtual ~mxWidget();
 
 	// Called just before deletion during shutdown
 	// Closing of application aborted if any control returns false
-	virtual bool	CanClose();
-	virtual void	OnDelete();
+	virtual bool CanClose();
+	virtual void OnDelete();
 
 	// MANIPULATORS
 
 	// void setBounds (int x, int y, int w, int h);
 	//
 	//
-	void setBounds (int x, int y, int w, int h);
+	void setBounds(int x, int y, int w, int h);
 
 	// void setLabel (const char *label);
 	//
 	//
-	void setLabel (PRINTF_FORMAT_STRING const char *format, ... );
+	void setLabel(PRINTF_FORMAT_STRING const char *format, ...);
 
-	void setVisible (bool b);
-	void setEnabled (bool b);
-	void setId (int id);
-	void setUserData (void *userData);
+	void setVisible(bool b);
+	void setEnabled(bool b);
+	void setId(int id);
+	void setUserData(void *userData);
 
 	// ACCESSORS
-	void *getHandle () const;
-	int getType () const;
-	mxWindow *getParent () const;
-	int x () const;
-	int y () const;
-	int w () const;
-	int h () const;
-	int w2 () const;
-	int h2 () const;
-	const char *getLabel () const;
-	bool isVisible () const;
-	bool isEnabled () const;
-	int getId () const;
-	void *getUserData () const;
+	void *getHandle() const;
+	int getType() const;
+	mxWindow *getParent() const;
+	int x() const;
+	int y() const;
+	int w() const;
+	int h() const;
+	int w2() const;
+	int h2() const;
+	const char *getLabel() const;
+	bool isVisible() const;
+	bool isEnabled() const;
+	int getId() const;
+	void *getUserData() const;
 
 private:
 	// NOT IMPLEMENTED
-	mxWidget (const mxWidget&);
-	mxWidget& operator= (const mxWidget&);
+	mxWidget(const mxWidget &);
+	mxWidget &operator=(const mxWidget &);
 };
-
-
 
 #endif // INCLUDED_MXWIDGET

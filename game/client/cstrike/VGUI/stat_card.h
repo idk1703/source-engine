@@ -22,28 +22,25 @@ using namespace vgui;
 class StatCard : public EditablePanel
 {
 private:
-	DECLARE_CLASS_SIMPLE( StatCard, EditablePanel );
+	DECLARE_CLASS_SIMPLE(StatCard, EditablePanel);
 
 public:
 	StatCard(vgui::Panel *parent, const char *name);
-    ~StatCard();
-	
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );	
+	~StatCard();
+
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 	void UpdateInfo();
 
 protected:
-	
+	ImagePanel *m_pAvatarDefault;
+	// ImagePanel*			m_pBackgroundArt;
+	CAvatarImagePanel *m_pAvatar;
 
-	ImagePanel*			m_pAvatarDefault;
-	//ImagePanel*			m_pBackgroundArt;
-	CAvatarImagePanel*	m_pAvatar;
-
-	Label* m_pName;
-	Label* m_pKillToDeathRatio;
-	Label* m_pStars;
-	
+	Label *m_pName;
+	Label *m_pKillToDeathRatio;
+	Label *m_pStars;
 
 private:
 };
 
-#endif //STATCARD_H
+#endif // STATCARD_H

@@ -26,9 +26,9 @@ $Configuration	"Release"
 
 	$Linker
 	{
-		$AdditionalDependencies				"$BASE unicows.lib" 
-		
-		$SystemLibraries			"iconv;z" [$OSXALL]		
+		$AdditionalDependencies				"$BASE unicows.lib"
+
+		$SystemLibraries			"iconv;z" [$OSXALL]
 
 		$SystemLibraries			"rt"	[$LINUXALL]
 	}

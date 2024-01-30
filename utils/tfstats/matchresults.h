@@ -1,22 +1,23 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
 //=============================================================================//
 #include "report.h"
 
-class CMatchResults: public CReport
+class CMatchResults : public CReport
 {
 public:
 	enum Consts
 	{
-		WINNER=1,
-		LOSER=0,
+		WINNER = 1,
+		LOSER = 0,
 
-		STRLEN=200,
+		STRLEN = 200,
 	};
+
 private:
 	struct team
 	{
@@ -41,17 +42,19 @@ private:
 
 	void calcRealWinners();
 
-	char* getWinnerTeamsString();
+	char *getWinnerTeamsString();
 	int getWinnerTeamScore();
 	bool Outnumbered(int WinnerOrLoser);
-	char* getLoserTeamsString();
+	char *getLoserTeamsString();
 	int getLoserTeamScore();
 	int numWinningTeams();
 
 public:
-
-	explicit CMatchResults(){init();}
+	explicit CMatchResults()
+	{
+		init();
+	}
 
 	void generate();
-	void writeHTML(CHTMLFile& html);
+	void writeHTML(CHTMLFile &html);
 };

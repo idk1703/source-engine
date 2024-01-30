@@ -20,11 +20,11 @@ $Configuration
 $Project "Sceneviewer"
 {
 	$Folder	"Source Files"
-	{		
+	{
 		$File	"clipviewpanel.cpp"
 		$File	"sceneviewer.cpp"
 		$File	"sceneviewerpanel.cpp"
-		
+
 		$Folder	"external"
 		{
 			$File	"$SRCDIR\public\interpolatortypes.cpp"

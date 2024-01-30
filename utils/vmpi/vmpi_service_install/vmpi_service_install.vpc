@@ -19,7 +19,7 @@ $Configuration "Debug"
 		$Create/UsePrecompiledHeader		"Use Precompiled Header (/Yu)"
 		$Create/UsePCHThroughFile			"stdafx.h"
 	}
-	
+
 	$Linker
 	{
 		$AdditionalDependencies				"nafxcwd.lib"
@@ -36,7 +36,7 @@ $Configuration "Release"
 		$Create/UsePrecompiledHeader		"Use Precompiled Header (/Yu)"
 		$Create/UsePCHThroughFile			"stdafx.h"
 	}
-	
+
 	$Linker
 	{
 		$AdditionalDependencies				"nafxcw.lib libcmt.lib"

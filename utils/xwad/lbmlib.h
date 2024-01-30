@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -8,14 +8,14 @@
 
 // lbmlib.h
 
-typedef unsigned char	UBYTE;
+typedef unsigned char UBYTE;
 
 #ifndef _WINDOWS_
-typedef short			WORD;
+typedef short WORD;
 #endif
 
-typedef unsigned short	UWORD;
-typedef long			LONG;
+typedef unsigned short UWORD;
+typedef long LONG;
 
 typedef enum
 {
@@ -33,23 +33,20 @@ typedef enum
 
 typedef struct
 {
-	UWORD		w,h;
-	WORD		x,y;
-	UBYTE		nPlanes;
-	UBYTE		masking;
-	UBYTE		compression;
-	UBYTE		pad1;
-	UWORD		transparentColor;
-	UBYTE		xAspect,yAspect;
-	WORD		pageWidth,pageHeight;
+	UWORD w, h;
+	WORD x, y;
+	UBYTE nPlanes;
+	UBYTE masking;
+	UBYTE compression;
+	UBYTE pad1;
+	UWORD transparentColor;
+	UBYTE xAspect, yAspect;
+	WORD pageWidth, pageHeight;
 } bmhd_t;
 
-extern	bmhd_t	bmhd;						// will be in native byte order
+extern bmhd_t bmhd; // will be in native byte order
 
-
-void LoadLBM (char *filename, byte **picture, byte **palette);
-int	LoadBMP (const char* szFile, byte** ppbBits, byte** ppbPalette);
-void WriteLBMfile (char *filename, byte *data, int width, int height
-	, byte *palette);
-int WriteBMPfile (char *szFile, byte *pbBits, int width, int height, byte *pbPalette);
-
+void LoadLBM(char *filename, byte **picture, byte **palette);
+int LoadBMP(const char *szFile, byte **ppbBits, byte **ppbPalette);
+void WriteLBMfile(char *filename, byte *data, int width, int height, byte *palette);
+int WriteBMPfile(char *szFile, byte *pbBits, int width, int height, byte *pbPalette);

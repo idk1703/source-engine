@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,23 +16,24 @@
 
 class C_PlayerClassSupport : public C_PlayerClass
 {
-	
-	DECLARE_CLASS( C_PlayerClassSupport, C_PlayerClass );
+
+	DECLARE_CLASS(C_PlayerClassSupport, C_PlayerClass);
 
 public:
-
-	C_PlayerClassSupport( C_BaseTFPlayer *pPlayer );
+	C_PlayerClassSupport(C_BaseTFPlayer *pPlayer);
 	virtual ~C_PlayerClassSupport();
 
 	DECLARE_PREDICTABLE();
 
-	PlayerClassSupportData_t *GetClassData( void ) { return &m_ClassData; } 
+	PlayerClassSupportData_t *GetClassData(void)
+	{
+		return &m_ClassData;
+	}
 
 protected:
-
-	PlayerClassSupportData_t	m_ClassData;
+	PlayerClassSupportData_t m_ClassData;
 };
 
-EXTERN_RECV_TABLE( DT_PlayerClassSupportData )
+EXTERN_RECV_TABLE(DT_PlayerClassSupportData)
 
 #endif // C_TF_CLASS_SUPPORT_H

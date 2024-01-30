@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,15 +14,15 @@
 #include "basedialogparams.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 struct CActorParams : public CBaseDialogParams
 {
 	// i/o actor name
-	char		m_szName[ 256 ];
+	char m_szName[256];
 };
 
 // Display/create actor info
-int ActorProperties( CActorParams *params );
+int ActorProperties(CActorParams *params);
 
 #endif // ACTORPROPERTIES_H

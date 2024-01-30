@@ -12,19 +12,17 @@
 
 #include "datamodel/dmelement.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
 enum ImageFormat;
-
 
 //-----------------------------------------------------------------------------
 // A class representing an image (2d or 3d bitmap)
 //-----------------------------------------------------------------------------
 class CDmeImage : public CDmElement
 {
-	DEFINE_ELEMENT( CDmeImage, CDmElement );
+	DEFINE_ELEMENT(CDmeImage, CDmElement);
 
 public:
 	// Methods related to image format
@@ -44,7 +42,6 @@ private:
 	CDmAttributeVarBinaryBlock m_Bits;
 };
 
-
 //-----------------------------------------------------------------------------
 // returns a pointer to the image bits buffer
 //-----------------------------------------------------------------------------
@@ -52,6 +49,5 @@ inline const void *CDmeImage::ImageBits() const
 {
 	return m_Bits.Get();
 }
-
 
 #endif // DMEIMAGE_H

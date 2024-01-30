@@ -1,13 +1,12 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
 
 #ifndef IVGUIMATINFOVAR_H
 #define IVGUIMATINFOVAR_H
-
 
 // wrapper for IMaterialVar
 class IVguiMatInfoVar
@@ -18,10 +17,10 @@ public:
 	// doesn't have a destructor.
 	virtual ~IVguiMatInfoVar() {}
 
-	virtual int GetIntValue ( void ) const = 0;
-	virtual void SetIntValue ( int val ) = 0;
+	virtual int GetIntValue(void) const = 0;
+	virtual void SetIntValue(int val) = 0;
 
 	// todo: if you need to add more IMaterialVar functions add them here
 };
 
-#endif //IVGUIMATINFOVAR_H
+#endif // IVGUIMATINFOVAR_H

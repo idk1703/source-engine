@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -25,209 +25,206 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudBowChargeMeter : public CHudElement, public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CHudBowChargeMeter, EditablePanel );
+	DECLARE_CLASS_SIMPLE(CHudBowChargeMeter, EditablePanel);
 
 public:
-	CHudBowChargeMeter( const char *pElementName );
+	CHudBowChargeMeter(const char *pElementName);
 
-	virtual void	ApplySchemeSettings( IScheme *scheme );
-	virtual bool	ShouldDraw( void );
-	virtual void	OnTick( void );
-	virtual void	Init( void );
-	virtual void	FireGameEvent( IGameEvent *event );
+	virtual void ApplySchemeSettings(IScheme *scheme);
+	virtual bool ShouldDraw(void);
+	virtual void OnTick(void);
+	virtual void Init(void);
+	virtual void FireGameEvent(IGameEvent *event);
 
 private:
 	vgui::ContinuousProgressBar *m_pChargeMeter;
 };
 
-DECLARE_HUDELEMENT( CHudBowChargeMeter );
+DECLARE_HUDELEMENT(CHudBowChargeMeter);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CHudBowChargeMeter::CHudBowChargeMeter( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudBowCharge" )
+CHudBowChargeMeter::CHudBowChargeMeter(const char *pElementName)
+	: CHudElement(pElementName), BaseClass(NULL, "HudBowCharge")
 {
 	Panel *pParent = g_pClientMode->GetViewport();
-	SetParent( pParent );
+	SetParent(pParent);
 
-	m_pChargeMeter = new ContinuousProgressBar( this, "ChargeMeter" );
+	m_pChargeMeter = new ContinuousProgressBar(this, "ChargeMeter");
 
-	SetHiddenBits( HIDEHUD_MISCSTATUS );
+	SetHiddenBits(HIDEHUD_MISCSTATUS);
 
-	vgui::ivgui()->AddTickSignal( GetVPanel() );
+	vgui::ivgui()->AddTickSignal(GetVPanel());
 
-	RegisterForRenderGroup( "inspect_panel" );
+	RegisterForRenderGroup("inspect_panel");
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CHudBowChargeMeter::ApplySchemeSettings( IScheme *pScheme )
+void CHudBowChargeMeter::ApplySchemeSettings(IScheme *pScheme)
 {
 	// load control settings...
-	LoadControlSettings( "resource/UI/HudBowCharge.res" );
+	LoadControlSettings("resource/UI/HudBowCharge.res");
 
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CHudBowChargeMeter::Init( void )
+void CHudBowChargeMeter::Init(void)
 {
-	ListenForGameEvent( "arrow_impact" );
+	ListenForGameEvent("arrow_impact");
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CHudBowChargeMeter::FireGameEvent( IGameEvent *event )
+void CHudBowChargeMeter::FireGameEvent(IGameEvent *event)
 {
-	if ( !event )
+	if(!event)
 		return;
 
 	const char *pszEventName = event->GetName();
 
-	if ( FStrEq( pszEventName, "arrow_impact" ) )
+	if(FStrEq(pszEventName, "arrow_impact"))
 	{
-		int attachedEntity = event->GetInt( "attachedEntity" );
-		C_BaseFlex *pFlex = dynamic_cast<C_BaseFlex*>( ClientEntityList().GetEnt( attachedEntity ) );
-		if ( !pFlex )
+		int attachedEntity = event->GetInt("attachedEntity");
+		C_BaseFlex *pFlex = dynamic_cast<C_BaseFlex *>(ClientEntityList().GetEnt(attachedEntity));
+		if(!pFlex)
 			return;
 
 		// Create a client side arrow and have it attach itself.
 		C_TFProjectile_Arrow *pArrow = new C_TFProjectile_Arrow;
-		if ( !pArrow )
+		if(!pArrow)
 			return;
 
-		int boneIndexAttached = event->GetInt( "boneIndexAttached" );
-		Vector bonePosition( 
-			event->GetFloat( "bonePositionX"),
-			event->GetFloat( "bonePositionY"),
-			event->GetFloat( "bonePositionZ") );
-		QAngle boneAngles( 
-			event->GetFloat( "boneAnglesX"),
-			event->GetFloat( "boneAnglesY"),
-			event->GetFloat( "boneAnglesZ") );
+		int boneIndexAttached = event->GetInt("boneIndexAttached");
+		Vector bonePosition(event->GetFloat("bonePositionX"), event->GetFloat("bonePositionY"),
+							event->GetFloat("bonePositionZ"));
+		QAngle boneAngles(event->GetFloat("boneAnglesX"), event->GetFloat("boneAnglesY"),
+						  event->GetFloat("boneAnglesZ"));
 
-		const char* pszModelName = NULL;
-		int type = event->GetInt( "projectileType" );
+		const char *pszModelName = NULL;
+		int type = event->GetInt("projectileType");
 		float flScale = 1.0f;
 
-		switch ( type )
+		switch(type)
 		{
-		case TF_PROJECTILE_STICKY_BALL:
-			pszModelName = g_pszArrowModels[MODEL_SNOWBALL];
-			break;
-		case TF_PROJECTILE_ARROW:
-			pszModelName = g_pszArrowModels[MODEL_ARROW_REGULAR];
-			break;
-		case TF_PROJECTILE_BUILDING_REPAIR_BOLT:
-			pszModelName = g_pszArrowModels[MODEL_ARROW_BUILDING_REPAIR];
-			break;
-		case TF_PROJECTILE_FESTIVE_ARROW:
-			pszModelName = g_pszArrowModels[MODEL_FESTIVE_ARROW_REGULAR];
-			break;
-		case TF_PROJECTILE_HEALING_BOLT:
+			case TF_PROJECTILE_STICKY_BALL:
+				pszModelName = g_pszArrowModels[MODEL_SNOWBALL];
+				break;
+			case TF_PROJECTILE_ARROW:
+				pszModelName = g_pszArrowModels[MODEL_ARROW_REGULAR];
+				break;
+			case TF_PROJECTILE_BUILDING_REPAIR_BOLT:
+				pszModelName = g_pszArrowModels[MODEL_ARROW_BUILDING_REPAIR];
+				break;
+			case TF_PROJECTILE_FESTIVE_ARROW:
+				pszModelName = g_pszArrowModels[MODEL_FESTIVE_ARROW_REGULAR];
+				break;
+			case TF_PROJECTILE_HEALING_BOLT:
 #ifdef STAGING_ONLY
-		case TF_PROJECTILE_MILK_BOLT:
+			case TF_PROJECTILE_MILK_BOLT:
 #endif
 			{
 				pszModelName = g_pszArrowModels[MODEL_SYRINGE];
 				// pull the syringe back slightly
 				Vector vForward;
-				AngleVectors( boneAngles, &vForward );
+				AngleVectors(boneAngles, &vForward);
 				bonePosition = bonePosition - (vForward * 6.0f);
 				flScale = 1.6f;
 			}
 			break;
-		case TF_PROJECTILE_FESTIVE_HEALING_BOLT:
+			case TF_PROJECTILE_FESTIVE_HEALING_BOLT:
 			{
 				pszModelName = g_pszArrowModels[MODEL_FESTIVE_HEALING_BOLT];
 				// pull the syringe back slightly
 				Vector vForward;
-				AngleVectors( boneAngles, &vForward );
-				bonePosition = bonePosition - ( vForward * 1.0f );
+				AngleVectors(boneAngles, &vForward);
+				bonePosition = bonePosition - (vForward * 1.0f);
 				flScale = 1.4f;
 			}
 			break;
-		case TF_PROJECTILE_BREAD_MONSTER:
-		case TF_PROJECTILE_BREADMONSTER_JARATE:
-		case TF_PROJECTILE_BREADMONSTER_MADMILK:
+			case TF_PROJECTILE_BREAD_MONSTER:
+			case TF_PROJECTILE_BREADMONSTER_JARATE:
+			case TF_PROJECTILE_BREADMONSTER_MADMILK:
 			{
 				pszModelName = g_pszArrowModels[MODEL_BREAD_MONSTER];
 				// pull the syringe back slightly
 				Vector vForward;
-				AngleVectors( boneAngles, &vForward );
-				bonePosition = bonePosition - ( vForward * 1.0f );
+				AngleVectors(boneAngles, &vForward);
+				bonePosition = bonePosition - (vForward * 1.0f);
 				flScale = 2.5f;
-				pArrow->SetLifeTime( 10.0f );
-				if ( event->GetBool( "isCrit" ) )
+				pArrow->SetLifeTime(10.0f);
+				if(event->GetBool("isCrit"))
 				{
-					flScale = RandomFloat( 3.0f, 5.0f );
+					flScale = RandomFloat(3.0f, 5.0f);
 				}
 				break;
 			}
 #ifdef STAGING_ONLY
-		case TF_PROJECTILE_THROWING_KNIFE:
+			case TF_PROJECTILE_THROWING_KNIFE:
 			{
 				pszModelName = g_pszArrowModels[MODEL_THROWING_KNIFE];
 				// pull the syringe back slightly
 				Vector vForward;
-				AngleVectors( boneAngles, &vForward );
-				//bonePosition = bonePosition + ( vForward * 5.0f );
-				//bonePosition = ( vForward * -7.0f ) + Vector(0, 0, 2);
-				//flScale = 5.0f;
+				AngleVectors(boneAngles, &vForward);
+				// bonePosition = bonePosition + ( vForward * 5.0f );
+				// bonePosition = ( vForward * -7.0f ) + Vector(0, 0, 2);
+				// flScale = 5.0f;
 				break;
 			}
-		case TF_PROJECTILE_SNIPERBULLET:
-			pszModelName = g_pszArrowModels[MODEL_SYRINGE];
-			break;
+			case TF_PROJECTILE_SNIPERBULLET:
+				pszModelName = g_pszArrowModels[MODEL_SYRINGE];
+				break;
 #endif // STAGING_ONLY
-		default:
-			Warning( " Unsupported Projectile type on event arrow_impact - %d", type );
-			return;
+			default:
+				Warning(" Unsupported Projectile type on event arrow_impact - %d", type);
+				return;
 		}
-		
-		pArrow->InitializeAsClientEntity( pszModelName, RENDER_GROUP_OPAQUE_ENTITY );
-		pArrow->SetModelScale( flScale );
 
-		CTFPlayer *pPlayer = ToTFPlayer( ClientEntityList().GetEnt( event->GetInt( "shooter" ) ) );
-		if ( pPlayer )
+		pArrow->InitializeAsClientEntity(pszModelName, RENDER_GROUP_OPAQUE_ENTITY);
+		pArrow->SetModelScale(flScale);
+
+		CTFPlayer *pPlayer = ToTFPlayer(ClientEntityList().GetEnt(event->GetInt("shooter")));
+		if(pPlayer)
 		{
-			pArrow->m_nSkin = ( pPlayer->GetTeamNumber() == TF_TEAM_BLUE ) ? 1 : 0;
+			pArrow->m_nSkin = (pPlayer->GetTeamNumber() == TF_TEAM_BLUE) ? 1 : 0;
 		}
 
-		pArrow->AttachEntityToBone( pFlex, boneIndexAttached, bonePosition, boneAngles );
+		pArrow->AttachEntityToBone(pFlex, boneIndexAttached, bonePosition, boneAngles);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CHudBowChargeMeter::ShouldDraw( void )
+bool CHudBowChargeMeter::ShouldDraw(void)
 {
 	C_TFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
 
-	if ( !pPlayer || !pPlayer->IsPlayerClass( TF_CLASS_SNIPER ) || !pPlayer->IsAlive() )
+	if(!pPlayer || !pPlayer->IsPlayerClass(TF_CLASS_SNIPER) || !pPlayer->IsAlive())
 	{
 		return false;
 	}
 
 	CTFWeaponBase *pWpn = pPlayer->GetActiveTFWeapon();
 
-	if ( !pWpn )
+	if(!pWpn)
 	{
 		return false;
 	}
 
 	int iWeaponID = pWpn->GetWeaponID();
 
-	if ( iWeaponID != TF_WEAPON_COMPOUND_BOW )
+	if(iWeaponID != TF_WEAPON_COMPOUND_BOW)
 	{
 		return false;
 	}
@@ -236,40 +233,40 @@ bool CHudBowChargeMeter::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CHudBowChargeMeter::OnTick( void )
+void CHudBowChargeMeter::OnTick(void)
 {
 	C_TFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
 
-	if ( !pPlayer )
+	if(!pPlayer)
 		return;
 
 	CTFWeaponBase *pWpn = pPlayer->GetActiveTFWeapon();
-	ITFChargeUpWeapon *pChargeupWeapon = dynamic_cast< ITFChargeUpWeapon *>( pWpn );
+	ITFChargeUpWeapon *pChargeupWeapon = dynamic_cast<ITFChargeUpWeapon *>(pWpn);
 
-	if ( !pWpn || !pChargeupWeapon )
+	if(!pWpn || !pChargeupWeapon)
 		return;
 
-	if ( m_pChargeMeter )
+	if(m_pChargeMeter)
 	{
 		float flChargeMaxTime = pChargeupWeapon->GetChargeMaxTime();
 
-		if ( flChargeMaxTime != 0 )
+		if(flChargeMaxTime != 0)
 		{
 			float flChargeBeginTime = pChargeupWeapon->GetChargeBeginTime();
 
-			if ( flChargeBeginTime > 0 )
+			if(flChargeBeginTime > 0)
 			{
-				float flTimeCharged = MAX( 0, gpGlobals->curtime - flChargeBeginTime );
-				flTimeCharged = MIN( flTimeCharged, 1.f );
-				float flPercentCharged = MIN( 1.0, flTimeCharged / flChargeMaxTime );
+				float flTimeCharged = MAX(0, gpGlobals->curtime - flChargeBeginTime);
+				flTimeCharged = MIN(flTimeCharged, 1.f);
+				float flPercentCharged = MIN(1.0, flTimeCharged / flChargeMaxTime);
 
-				m_pChargeMeter->SetProgress( flPercentCharged );
+				m_pChargeMeter->SetProgress(flPercentCharged);
 			}
 			else
 			{
-				m_pChargeMeter->SetProgress( 0.0f );
+				m_pChargeMeter->SetProgress(0.0f);
 			}
 		}
 	}

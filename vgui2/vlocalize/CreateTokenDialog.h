@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,9 +15,9 @@
 
 namespace vgui
 {
-class Button;
-class TextEntry;
-};
+	class Button;
+	class TextEntry;
+}; // namespace vgui
 
 class CLocalizationDialog;
 //-----------------------------------------------------------------------------
@@ -26,7 +26,7 @@ class CLocalizationDialog;
 class CCreateTokenDialog : public vgui::Frame
 {
 public:
-	CCreateTokenDialog( CLocalizationDialog *pLocalizationDialog );
+	CCreateTokenDialog(CLocalizationDialog *pLocalizationDialog);
 	~CCreateTokenDialog();
 
 	// prompts user to create a single token
@@ -51,6 +51,5 @@ private:
 
 	typedef vgui::Frame BaseClass;
 };
-
 
 #endif // CREATETOKENDIALOG_H

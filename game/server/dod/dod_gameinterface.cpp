@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -13,9 +13,9 @@
 // Mod-specific CServerGameClients implementation.
 // -------------------------------------------------------------------------------------------- //
 
-void CServerGameClients::GetPlayerLimits( int& minplayers, int& maxplayers, int &defaultMaxPlayers ) const
+void CServerGameClients::GetPlayerLimits(int &minplayers, int &maxplayers, int &defaultMaxPlayers) const
 {
-	minplayers = 2;  // Force multiplayer.
+	minplayers = 2; // Force multiplayer.
 	maxplayers = MAX_PLAYERS;
 	defaultMaxPlayers = 32;
 }
@@ -24,7 +24,4 @@ void CServerGameClients::GetPlayerLimits( int& minplayers, int& maxplayers, int 
 // Mod-specific CServerGameDLL implementation.
 // -------------------------------------------------------------------------------------------- //
 
-void CServerGameDLL::LevelInit_ParseAllEntities( const char *pMapEntities )
-{
-}
-
+void CServerGameDLL::LevelInit_ParseAllEntities(const char *pMapEntities) {}

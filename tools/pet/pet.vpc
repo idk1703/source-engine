@@ -35,7 +35,7 @@ $Project "Pet"
 		$File	"$SRCDIR\public\registry.cpp"
 		$File	"$SRCDIR\public\vgui_controls\vgui_controls.cpp"
 	}
-	
+
 	$Folder	"Header Files"
 	{
 		$File	"$SRCDIR\public\mathlib\mathlib.h"

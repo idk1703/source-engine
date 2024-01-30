@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -10,9 +10,8 @@
 #pragma once
 #endif
 
-
 #ifdef _WIN32
-#if !defined( _X360 )
+#if !defined(_X360)
 #include "winlite.h"
 #endif
 #endif
@@ -35,7 +34,7 @@
 
 #if defined(_WIN32)
 
-#if !defined( _X360 )
+#if !defined(_X360)
 #include <winsock.h>
 #else
 #include "winsockx.h"
@@ -59,14 +58,14 @@ typedef int socklen_t;
 #include <string.h>
 #include <stdlib.h>
 
-#define WSAEWOULDBLOCK		EWOULDBLOCK
-#define WSAEMSGSIZE			EMSGSIZE
-#define WSAEADDRNOTAVAIL	EADDRNOTAVAIL
-#define WSAEAFNOSUPPORT		EAFNOSUPPORT
-#define WSAECONNRESET		ECONNRESET
-#define WSAECONNREFUSED     ECONNREFUSED
-#define WSAEADDRINUSE		EADDRINUSE
-#define WSAENOTCONN			ENOTCONN
+#define WSAEWOULDBLOCK	 EWOULDBLOCK
+#define WSAEMSGSIZE		 EMSGSIZE
+#define WSAEADDRNOTAVAIL EADDRNOTAVAIL
+#define WSAEAFNOSUPPORT	 EAFNOSUPPORT
+#define WSAECONNRESET	 ECONNRESET
+#define WSAECONNREFUSED	 ECONNREFUSED
+#define WSAEADDRINUSE	 EADDRINUSE
+#define WSAENOTCONN		 ENOTCONN
 
 #define ioctlsocket ioctl
 #define closesocket close
@@ -82,7 +81,7 @@ typedef int SOCKET;
 #include "cl_rcon.h"
 #endif
 
-#if defined( _X360 )
+#if defined(_X360)
 #include "xbox/xbox_win32stubs.h"
 #endif
 

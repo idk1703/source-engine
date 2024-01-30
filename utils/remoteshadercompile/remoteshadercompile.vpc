@@ -44,7 +44,7 @@ $Project "remoteshadercompile"
 		-$File	"$SRCDIR\public\tier0\memoverride.cpp"
 		$File	"remoteshadercompile.cpp"
 	}
-	
+
 	$Folder	"Link Libraries"
 	{
 		$Lib mathlib

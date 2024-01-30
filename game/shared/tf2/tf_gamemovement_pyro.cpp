@@ -27,28 +27,28 @@ CTFGameMovementPyro::CTFGameMovementPyro()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFGameMovementPyro::ProcessClassMovement( CBaseTFPlayer *pPlayer, CTFMoveData *pTFMoveData )
+void CTFGameMovementPyro::ProcessClassMovement(CBaseTFPlayer *pPlayer, CTFMoveData *pTFMoveData)
 {
 	// Get the class specific data from the TFMoveData structure
-	Assert( PlayerClassPyroData_t::PLAYERCLASS_ID == pTFMoveData->m_nClassID );
+	Assert(PlayerClassPyroData_t::PLAYERCLASS_ID == pTFMoveData->m_nClassID);
 	m_pPyroData = &pTFMoveData->PyroData();
 
 	// to test pass it through!!
-	BaseClass::ProcessMovement( (CBasePlayer *)pPlayer, static_cast<CMoveData*>( pTFMoveData ) );
+	BaseClass::ProcessMovement((CBasePlayer *)pPlayer, static_cast<CMoveData *>(pTFMoveData));
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-const Vector &CTFGameMovementPyro::GetPlayerMins( bool bDucked ) const
+const Vector &CTFGameMovementPyro::GetPlayerMins(bool bDucked) const
 {
-	return bDucked ? m_vDuckMins : m_vStandMins; 
+	return bDucked ? m_vDuckMins : m_vStandMins;
 }
-	
+
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-const Vector &CTFGameMovementPyro::GetPlayerMaxs( bool bDucked ) const
+const Vector &CTFGameMovementPyro::GetPlayerMaxs(bool bDucked) const
 {
 	return bDucked ? m_vDuckMaxs : m_vStandMaxs;
 }
@@ -56,8 +56,7 @@ const Vector &CTFGameMovementPyro::GetPlayerMaxs( bool bDucked ) const
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-const Vector &CTFGameMovementPyro::GetPlayerViewOffset( bool bDucked ) const
+const Vector &CTFGameMovementPyro::GetPlayerViewOffset(bool bDucked) const
 {
 	return bDucked ? m_vDuckViewOffset : m_vStandViewOffset;
 }
-

@@ -7,7 +7,7 @@
 #ifndef CMATNULLRENDERCONTEXT_H
 #define CMATNULLRENDERCONTEXT_H
 
-#if defined( _WIN32 )
+#if defined(_WIN32)
 #pragma once
 #endif
 

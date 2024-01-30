@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -14,15 +14,13 @@
 #include "mdllib/mdllib.h"
 
 #include "platform.h"
-#pragma warning( disable : 4018 )
-#pragma warning( disable : 4389 )
-
-
+#pragma warning(disable : 4018)
+#pragma warning(disable : 4389)
 
 //-----------------------------------------------------------------------------
 // Purpose: Interface to accessing P4 commands
 //-----------------------------------------------------------------------------
-class CMdlLib : public CBaseAppSystem< IMdlLib >
+class CMdlLib : public CBaseAppSystem<IMdlLib>
 {
 public:
 	// Destructor
@@ -34,12 +32,11 @@ public:
 	//
 	//////////////////////////////////////////////////////////////////////////
 public:
-	virtual bool Connect( CreateInterfaceFn factory );
+	virtual bool Connect(CreateInterfaceFn factory);
 	virtual InitReturnVal_t Init();
-	virtual void *QueryInterface( const char *pInterfaceName );
+	virtual void *QueryInterface(const char *pInterfaceName);
 	virtual void Shutdown();
 	virtual void Disconnect();
-
 
 	//////////////////////////////////////////////////////////////////////////
 	//
@@ -55,13 +52,14 @@ public:
 	//		vtxBuffer			- vtx buffer, updated, size reduced
 	//		ppStripInfo			- if nonzero on return will be filled with the stripping info
 	//
-	virtual bool StripModelBuffers( CUtlBuffer &mdlBuffer, CUtlBuffer &vvdBuffer, CUtlBuffer &vtxBuffer, IMdlStripInfo **ppStripInfo );
+	virtual bool StripModelBuffers(CUtlBuffer &mdlBuffer, CUtlBuffer &vvdBuffer, CUtlBuffer &vtxBuffer,
+								   IMdlStripInfo **ppStripInfo);
 
 	//
 	// CreateNewStripInfo
 	//	Creates an empty strip info so that it can be reused.
 	//
-	virtual bool CreateNewStripInfo( IMdlStripInfo **ppStripInfo );
+	virtual bool CreateNewStripInfo(IMdlStripInfo **ppStripInfo);
 };
 
 #endif // #ifndef MDLLIB_COMMON_H

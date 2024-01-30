@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -37,17 +37,17 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CDODTextWindow::CDODTextWindow(IViewPort *pViewPort) : CTextWindow( pViewPort )
+CDODTextWindow::CDODTextWindow(IViewPort *pViewPort) : CTextWindow(pViewPort)
 {
-	SetProportional( true );
+	SetProportional(true);
 
 	m_iScoreBoardKey = BUTTON_CODE_INVALID;
 
-	m_pBackground = SETUP_PANEL( new CDODMenuBackground( this ) );
+	m_pBackground = SETUP_PANEL(new CDODMenuBackground(this));
 
 	// Do this again ( base class already does it )
 	// If we don't, custom controls that we catch in our CreateControlByName
-	// will not go to the CDODTextWindow version as we haven't instantiated 
+	// will not go to the CDODTextWindow version as we haven't instantiated
 	// ourselves as a CDODTextWindow yet.
 	LoadControlSettings("Resource/UI/TextWindow.res");
 }
@@ -55,35 +55,33 @@ CDODTextWindow::CDODTextWindow(IViewPort *pViewPort) : CTextWindow( pViewPort )
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CDODTextWindow::~CDODTextWindow()
-{
-}
+CDODTextWindow::~CDODTextWindow() {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODTextWindow::Update()
 {
 	BaseClass::Update();
 
 	Panel *ok = FindChildByName("okbutton");
-	if (ok)
+	if(ok)
 	{
 		ok->RequestFocus();
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODTextWindow::SetVisible(bool state)
 {
 	BaseClass::SetVisible(state);
 
-	if ( state )
+	if(state)
 	{
 		Panel *ok = FindChildByName("okbutton");
-		if (ok)
+		if(ok)
 		{
 			ok->RequestFocus();
 		}
@@ -95,68 +93,66 @@ void CDODTextWindow::SetVisible(bool state)
 //-----------------------------------------------------------------------------
 void CDODTextWindow::ShowPanel(bool bShow)
 {
-	if ( bShow )
+	if(bShow)
 	{
 		// get key binding if shown
-		if ( m_iScoreBoardKey == BUTTON_CODE_INVALID ) // you need to lookup the jump key AFTER the engine has loaded
+		if(m_iScoreBoardKey == BUTTON_CODE_INVALID) // you need to lookup the jump key AFTER the engine has loaded
 		{
-			m_iScoreBoardKey = gameuifuncs->GetButtonCodeForBind( "showscores" );
+			m_iScoreBoardKey = gameuifuncs->GetButtonCodeForBind("showscores");
 		}
 	}
 
-	BaseClass::ShowPanel( bShow );
+	BaseClass::ShowPanel(bShow);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODTextWindow::OnKeyCodePressed(KeyCode code)
 {
-	if ( m_iScoreBoardKey != BUTTON_CODE_INVALID && m_iScoreBoardKey == code )
+	if(m_iScoreBoardKey != BUTTON_CODE_INVALID && m_iScoreBoardKey == code)
 	{
-		gViewPortInterface->ShowPanel( PANEL_SCOREBOARD, true );
-		gViewPortInterface->PostMessageToPanel( PANEL_SCOREBOARD, new KeyValues( "PollHideCode", "code", code ) );
+		gViewPortInterface->ShowPanel(PANEL_SCOREBOARD, true);
+		gViewPortInterface->PostMessageToPanel(PANEL_SCOREBOARD, new KeyValues("PollHideCode", "code", code));
 	}
 	else
 	{
-		BaseClass::OnKeyCodePressed( code );
+		BaseClass::OnKeyCodePressed(code);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: The background is painted elsewhere, so we should do nothing
 //-----------------------------------------------------------------------------
-void CDODTextWindow::PaintBackground()
-{
-}
+void CDODTextWindow::PaintBackground() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Scale / center the window
 //-----------------------------------------------------------------------------
 void CDODTextWindow::PerformLayout()
 {
-	BaseClass::PerformLayout();	
+	BaseClass::PerformLayout();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CDODTextWindow::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CDODTextWindow::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-Panel *CDODTextWindow::CreateControlByName( const char *controlName )
+Panel *CDODTextWindow::CreateControlByName(const char *controlName)
 {
-	if( !Q_stricmp( "DODButton", controlName ) )
+	if(!Q_stricmp("DODButton", controlName))
 	{
 		return new CDODButton(this);
 	}
 	else
 	{
-		return BaseClass::CreateControlByName( controlName );
+		return BaseClass::CreateControlByName(controlName);
 	}
 }

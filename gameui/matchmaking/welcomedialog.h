@@ -17,18 +17,17 @@
 //-----------------------------------------------------------------------------
 class CWelcomeDialog : public CBaseDialog
 {
-	DECLARE_CLASS_SIMPLE( CWelcomeDialog, CBaseDialog ); 
+	DECLARE_CLASS_SIMPLE(CWelcomeDialog, CBaseDialog);
 
 public:
 	CWelcomeDialog(vgui::Panel *parent);
 
-	virtual void	PerformLayout( void );
-	virtual void	OnCommand( const char *pCommand );
-	virtual void	OnKeyCodePressed( vgui::KeyCode code );
+	virtual void PerformLayout(void);
+	virtual void OnCommand(const char *pCommand);
+	virtual void OnKeyCodePressed(vgui::KeyCode code);
 
 private:
-	bool	m_bOnlineEnabled;
+	bool m_bOnlineEnabled;
 };
-
 
 #endif // WELCOMEDIALOG_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -19,12 +19,12 @@ class KeyValues;
 
 namespace vgui
 {
-class Button;
-class ToggleButton;
-class RadioButton;
-class Label;
-class TextEntry;
-}
+	class Button;
+	class ToggleButton;
+	class RadioButton;
+	class Label;
+	class TextEntry;
+} // namespace vgui
 
 //-----------------------------------------------------------------------------
 // Purpose: Dialog for displaying information about a game server
@@ -69,7 +69,7 @@ protected:
 	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 
 private:
-	long m_iRequestRetry;	// time at which to retry the request
+	long m_iRequestRetry; // time at which to retry the request
 
 	// methods
 	void RequestInfo();
@@ -90,7 +90,7 @@ private:
 	unsigned int m_iServerID;
 
 	// server refreshing object
-	CServerList	m_Servers;
+	CServerList m_Servers;
 
 	// true if we should try connect to the server when it refreshes
 	bool m_bConnecting;

@@ -179,7 +179,7 @@ $Configuration "Release"
 
 	$BrowseInformation
 	{
-		$SuppressStartupBanner				"Yes (/nologo)"	
+		$SuppressStartupBanner				"Yes (/nologo)"
 		$OutputFile							"$(OutDir)/$OUTLIBNAME.bsc"
 		$AdditionalOptions
 	}
@@ -193,7 +193,7 @@ $Configuration "Release"
 
 	$PreLinkEvent
 	{
-		$CommandLine						
+		$CommandLine
 		$Description
 		$ExcludedFromBuild					"No"
 	}

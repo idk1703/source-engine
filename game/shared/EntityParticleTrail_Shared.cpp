@@ -22,16 +22,16 @@ EntityParticleTrailInfo_t::EntityParticleTrailInfo_t()
 }
 
 //-----------------------------------------------------------------------------
-// Save/load 
+// Save/load
 //-----------------------------------------------------------------------------
 #ifndef CLIENT_DLL
 
-BEGIN_SIMPLE_DATADESC( EntityParticleTrailInfo_t )
+BEGIN_SIMPLE_DATADESC(EntityParticleTrailInfo_t)
 
-	DEFINE_KEYFIELD( m_strMaterialName,	FIELD_STRING,	"ParticleTrailMaterial" ),
-	DEFINE_KEYFIELD( m_flLifetime,		FIELD_FLOAT,	"ParticleTrailLifetime" ),
-	DEFINE_KEYFIELD( m_flStartSize,		FIELD_FLOAT,	"ParticleTrailStartSize" ),
-	DEFINE_KEYFIELD( m_flEndSize,		FIELD_FLOAT,	"ParticleTrailEndSize" ),
+	DEFINE_KEYFIELD(m_strMaterialName, FIELD_STRING, "ParticleTrailMaterial"),
+		DEFINE_KEYFIELD(m_flLifetime, FIELD_FLOAT, "ParticleTrailLifetime"),
+		DEFINE_KEYFIELD(m_flStartSize, FIELD_FLOAT, "ParticleTrailStartSize"),
+		DEFINE_KEYFIELD(m_flEndSize, FIELD_FLOAT, "ParticleTrailEndSize"),
 
 END_DATADESC()
 
@@ -40,19 +40,13 @@ END_DATADESC()
 //-----------------------------------------------------------------------------
 // Networking
 //-----------------------------------------------------------------------------
-BEGIN_NETWORK_TABLE_NOBASE( EntityParticleTrailInfo_t, DT_EntityParticleTrailInfo )
+BEGIN_NETWORK_TABLE_NOBASE(EntityParticleTrailInfo_t, DT_EntityParticleTrailInfo)
 
 #ifdef CLIENT_DLL
-	RecvPropFloat( RECVINFO( m_flLifetime ) ),
-	RecvPropFloat( RECVINFO( m_flStartSize ) ),
-	RecvPropFloat( RECVINFO( m_flEndSize ) ),
+	RecvPropFloat(RECVINFO(m_flLifetime)), RecvPropFloat(RECVINFO(m_flStartSize)), RecvPropFloat(RECVINFO(m_flEndSize)),
 #else
-	SendPropFloat( SENDINFO( m_flLifetime ), 0, SPROP_NOSCALE ),
-	SendPropFloat( SENDINFO( m_flStartSize ), 0, SPROP_NOSCALE ),
-	SendPropFloat( SENDINFO( m_flEndSize ), 0, SPROP_NOSCALE ),
+	SendPropFloat(SENDINFO(m_flLifetime), 0, SPROP_NOSCALE), SendPropFloat(SENDINFO(m_flStartSize), 0, SPROP_NOSCALE),
+		SendPropFloat(SENDINFO(m_flEndSize), 0, SPROP_NOSCALE),
 #endif
 
 END_NETWORK_TABLE()
-
-
-

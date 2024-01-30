@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,26 +14,25 @@
 
 using namespace vgui;
 
-
-class SampleButtons: public DemoPage
+class SampleButtons : public DemoPage
 {
-	public:
-		SampleButtons(Panel *parent, const char *name);
-		~SampleButtons();
+public:
+	SampleButtons(Panel *parent, const char *name);
+	~SampleButtons();
 
-		void onButtonClicked();
-	
-	private:
-		Button *m_pEnabledButton;
-		Button *m_pDepressedButton;
-		Button *m_pDefaultButton;
-		Button *m_pDisabledButton;
-		Button *m_pDisActiveButton;
-		Button *m_pMoreInfoButton;
-		Button *m_pExpandButton;
-		MenuButton *m_pMenuButton;
-		
-		DECLARE_PANELMAP();
+	void onButtonClicked();
+
+private:
+	Button *m_pEnabledButton;
+	Button *m_pDepressedButton;
+	Button *m_pDefaultButton;
+	Button *m_pDisabledButton;
+	Button *m_pDisActiveButton;
+	Button *m_pMoreInfoButton;
+	Button *m_pExpandButton;
+	MenuButton *m_pMenuButton;
+
+	DECLARE_PANELMAP();
 };
 
 //-----------------------------------------------------------------------------
@@ -51,10 +50,9 @@ SampleButtons::SampleButtons(Panel *parent, const char *name) : DemoPage(parent,
 	// Install a command that will be executed when the button is pressed
 	// Here we use a KeyValues command, this is mapped using the Message map
 	// below to a function.
-	m_pEnabledButton->SetCommand(new KeyValues ("ButtonClicked"));
+	m_pEnabledButton->SetCommand(new KeyValues("ButtonClicked"));
 
 	m_pEnabledButton->SetEnabled(true);
-
 
 	m_pDepressedButton = new Button(this, "ActiveButton", "Active");
 	m_pDepressedButton->SetPos(192, 15);
@@ -67,7 +65,6 @@ SampleButtons::SampleButtons(Panel *parent, const char *name) : DemoPage(parent,
 	m_pDefaultButton->SetAsDefaultButton(true);
 	m_pDefaultButton->SetPos(292, 15);
 	m_pDefaultButton->SetSize(90, 25);
-
 
 	m_pDisabledButton = new Button(this, "DisabledButton", "Disabled");
 	m_pDisabledButton->SetPos(90, 55);
@@ -82,8 +79,6 @@ SampleButtons::SampleButtons(Panel *parent, const char *name) : DemoPage(parent,
 	m_pDisActiveButton->ForceDepressed(true);
 	// Set it disabled
 	m_pDisActiveButton->SetEnabled(false);
-	
-
 
 	m_pMoreInfoButton = new Button(this, "MoreInfoButton", "More info required...");
 	m_pMoreInfoButton->SetPos(90, 105);
@@ -96,15 +91,12 @@ SampleButtons::SampleButtons(Panel *parent, const char *name) : DemoPage(parent,
 	m_pMenuButton = new MenuButton(this, "MenuButton", "Open a menu");
 	m_pMenuButton->SetPos(90, 205);
 	m_pMenuButton->SetSize(125, 25);
-
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-SampleButtons::~SampleButtons()
-{
-}
+SampleButtons::~SampleButtons() {}
 
 //-----------------------------------------------------------------------------
 // Purpose:	 Respond to a message based action signal
@@ -114,20 +106,13 @@ void SampleButtons::onButtonClicked()
 	ivgui()->DPrintf("Button was clicked.\n");
 }
 
-
-
-MessageMapItem_t SampleButtons::m_MessageMap[] =
-{
-	MAP_MESSAGE( SampleButtons, "ButtonClicked", onButtonClicked ),   
+MessageMapItem_t SampleButtons::m_MessageMap[] = {
+	MAP_MESSAGE(SampleButtons, "ButtonClicked", onButtonClicked),
 };
 
 IMPLEMENT_PANELMAP(SampleButtons, DemoPage);
 
-
-
-Panel* SampleButtons_Create(Panel *parent)
+Panel *SampleButtons_Create(Panel *parent)
 {
 	return new SampleButtons(parent, "Buttons");
 }
-
-

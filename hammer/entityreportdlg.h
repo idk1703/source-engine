@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -14,42 +14,41 @@
 #include "resource.h"
 #include "MapDoc.h"
 
-
 class CEntityReportDlg : public CDialog
 {
 public:
-
-	static void ShowEntityReport(CMapDoc *pDoc, CWnd* pParent = NULL);
+	static void ShowEntityReport(CMapDoc *pDoc, CWnd *pParent = NULL);
 
 private:
-
-	CEntityReportDlg(CMapDoc *pDoc, CWnd* pParent = NULL);   // standard constructor
+	CEntityReportDlg(CMapDoc *pDoc, CWnd *pParent = NULL); // standard constructor
 	void GenerateReport();
 
 	void SaveToIni();
 
 	//{{AFX_DATA(CEntityReportDlg)
-	enum { IDD = IDD_ENTITYREPORT };
-	CButton	m_cExact;
-	CComboBox	m_cFilterClass;
-	CButton	m_cFilterByClass;
-	CListBox	m_cEntities;
-	CEdit	m_cFilterValue;
-	CEdit	m_cFilterKey;
-	CButton	m_cFilterByType;
-	CButton	m_cFilterByKeyvalue;
-	CButton	m_cFilterByHidden;
+	enum
+	{
+		IDD = IDD_ENTITYREPORT
+	};
+	CButton m_cExact;
+	CComboBox m_cFilterClass;
+	CButton m_cFilterByClass;
+	CListBox m_cEntities;
+	CEdit m_cFilterValue;
+	CEdit m_cFilterKey;
+	CButton m_cFilterByType;
+	CButton m_cFilterByKeyvalue;
+	CButton m_cFilterByHidden;
 	//}}AFX_DATA
 
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CEntityReportDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
 	virtual void OnOK();
 	//}}AFX_VIRTUAL
 
 protected:
-
 	CMapDoc *m_pDoc;
 	void UpdateEntityList();
 
@@ -89,11 +88,9 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 private:
-
-	CMapDoc *MarkSelectedEntities( void );
+	CMapDoc *MarkSelectedEntities(void);
 
 	friend BOOL AddEntityToList(CMapEntity *pEntity, CEntityReportDlg *pDlg);
 };
-
 
 #endif // ENTITYREPORTDLG_H

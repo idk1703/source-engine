@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=====================================================================================//
 
@@ -9,6 +9,6 @@
 #pragma once
 
 class IAudioDevice;
-IAudioDevice *Audio_CreateWaveDevice( void );
+IAudioDevice *Audio_CreateWaveDevice(void);
 
 #endif // SND_DEV_WAVE_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -13,40 +13,36 @@
 #pragma once
 #endif
 
-
 #include "materialsystem/imaterialsystemhardwareconfig.h"
 #include "IHardwareConfigInternal.h"
 #include "bitmap/imageformat.h"
 #include "materialsystem/imaterialsystem.h"
-
 
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
 struct ShaderDeviceInfo_t;
 
-
 //-----------------------------------------------------------------------------
 // Vendor IDs sometimes needed for vendor-specific code
 //-----------------------------------------------------------------------------
-#define VENDORID_NVIDIA	0x10DE
+#define VENDORID_NVIDIA 0x10DE
 #define VENDORID_ATI	0x1002
-#define VENDORID_INTEL  0x8086
+#define VENDORID_INTEL	0x8086
 
 //-----------------------------------------------------------------------------
 // ShaderAPI constants
 //-----------------------------------------------------------------------------
 enum
 {
-#if defined( DX_TO_GL_ABSTRACTION )
+#if defined(DX_TO_GL_ABSTRACTION)
 	MAXUSERCLIPPLANES = 2,
 #else
 	MAXUSERCLIPPLANES = 6,
-#endif	
+#endif
 	MAX_NUM_LIGHTS = 4,
 	MAX_OUTPUTS = 3,
 };
-
 
 //-----------------------------------------------------------------------------
 // Hardware caps structures
@@ -61,13 +57,14 @@ enum CompressedTextureState_t
 struct HardwareCaps_t : public MaterialAdapterInfo_t
 {
 	// *****************************NOTE*********************************************
-	// If you change any members, make sure and reflect the changes in CHardwareConfig::ForceCapsToDXLevel for every dxlevel!!!!!
-	// If you change any members, make sure and reflect the changes in CHardwareConfig::ForceCapsToDXLevel for every dxlevel!!!!!
-	// If you change any members, make sure and reflect the changes in CHardwareConfig::ForceCapsToDXLevel for every dxlevel!!!!!
-	// If you change any members, make sure and reflect the changes in CHardwareConfig::ForceCapsToDXLevel for every dxlevel!!!!!
-	// If you change any members, make sure and reflect the changes in CHardwareConfig::ForceCapsToDXLevel for every dxlevel!!!!!
+	// If you change any members, make sure and reflect the changes in CHardwareConfig::ForceCapsToDXLevel for every
+	// dxlevel!!!!! If you change any members, make sure and reflect the changes in CHardwareConfig::ForceCapsToDXLevel
+	// for every dxlevel!!!!! If you change any members, make sure and reflect the changes in
+	// CHardwareConfig::ForceCapsToDXLevel for every dxlevel!!!!! If you change any members, make sure and reflect the
+	// changes in CHardwareConfig::ForceCapsToDXLevel for every dxlevel!!!!! If you change any members, make sure and
+	// reflect the changes in CHardwareConfig::ForceCapsToDXLevel for every dxlevel!!!!!
 	// *****************************NOTE*********************************************
-	// 
+	//
 	// NOTE: Texture stages are an obsolete concept; used by fixed-function hardware
 	// Samplers are dx9+, indicating how many textures we can simultaneously bind
 	// In Dx8, samplers didn't exist and texture stages were used to indicate the
@@ -75,36 +72,38 @@ struct HardwareCaps_t : public MaterialAdapterInfo_t
 	// the number of samplers to == the number of texture stages.
 	CompressedTextureState_t m_SupportsCompressedTextures;
 	VertexCompressionType_t m_SupportsCompressedVertices;
-	int  m_NumSamplers;
-	int  m_NumTextureStages;
-	int	 m_nMaxAnisotropy;
-	int  m_MaxTextureWidth;
-	int  m_MaxTextureHeight;
-	int  m_MaxTextureDepth;
-	int	 m_MaxTextureAspectRatio;
-	int  m_MaxPrimitiveCount;
-	int  m_NumPixelShaderConstants;
-	int  m_NumBooleanPixelShaderConstants;
-	int  m_NumIntegerPixelShaderConstants;
-	int  m_NumVertexShaderConstants;
-	int  m_NumBooleanVertexShaderConstants;
-	int  m_NumIntegerVertexShaderConstants;
-	int  m_TextureMemorySize;
-	int  m_MaxNumLights;
-	int  m_MaxBlendMatrices;
-	int  m_MaxBlendMatrixIndices;
-	int	 m_MaxVertexShaderBlendMatrices;
-	int  m_MaxUserClipPlanes;
+	int m_NumSamplers;
+	int m_NumTextureStages;
+	int m_nMaxAnisotropy;
+	int m_MaxTextureWidth;
+	int m_MaxTextureHeight;
+	int m_MaxTextureDepth;
+	int m_MaxTextureAspectRatio;
+	int m_MaxPrimitiveCount;
+	int m_NumPixelShaderConstants;
+	int m_NumBooleanPixelShaderConstants;
+	int m_NumIntegerPixelShaderConstants;
+	int m_NumVertexShaderConstants;
+	int m_NumBooleanVertexShaderConstants;
+	int m_NumIntegerVertexShaderConstants;
+	int m_TextureMemorySize;
+	int m_MaxNumLights;
+	int m_MaxBlendMatrices;
+	int m_MaxBlendMatrixIndices;
+	int m_MaxVertexShaderBlendMatrices;
+	int m_MaxUserClipPlanes;
 	HDRType_t m_HDRType;
 	char m_pShaderDLL[32];
 	ImageFormat m_ShadowDepthTextureFormat;
 	ImageFormat m_NullTextureFormat;
-	int  m_nVertexTextureCount;
-	int  m_nMaxVertexTextureDimension;
-	unsigned long m_AlphaToCoverageState;					// State to ping to toggle Alpha To Coverage              (vendor-dependent)
-	unsigned long m_AlphaToCoverageEnableValue;				// Value to set above state to turn on Alpha To Coverage  (vendor-dependent)
-	unsigned long m_AlphaToCoverageDisableValue;			// Value to set above state to turn off Alpha To Coverage (vendor-dependent)
-	int	 m_nMaxViewports;
+	int m_nVertexTextureCount;
+	int m_nMaxVertexTextureDimension;
+	unsigned long m_AlphaToCoverageState; // State to ping to toggle Alpha To Coverage              (vendor-dependent)
+	unsigned long
+		m_AlphaToCoverageEnableValue; // Value to set above state to turn on Alpha To Coverage  (vendor-dependent)
+	unsigned long
+		m_AlphaToCoverageDisableValue; // Value to set above state to turn off Alpha To Coverage (vendor-dependent)
+	int m_nMaxViewports;
 	float m_flMinGammaControlPoint;
 	float m_flMaxGammaControlPoint;
 	int m_nGammaControlPointCount;
@@ -149,17 +148,19 @@ struct HardwareCaps_t : public MaterialAdapterInfo_t
 	bool m_bScissorSupported : 1;
 	bool m_bSupportsFloat32RenderTargets : 1;
 	bool m_bSupportsBorderColor : 1;
-	bool m_bDX10Card : 1;							// Indicates DX10 part with performant vertex textures running DX9 path
-	bool m_bDX10Blending : 1;						// Indicates DX10 part that does DX10 blending (but may not have performant vertex textures, such as Intel parts)
-	bool m_bSupportsStaticControlFlow : 1;			// Useful on OpenGL, where we have a mix of support...
-	bool m_FakeSRGBWrite : 1;						// Gotta do this on OpenGL.  Mostly hidden, but some high level code needs to know
-	bool m_CanDoSRGBReadFromRTs : 1;				// Gotta do this on OpenGL.  Mostly hidden, but some high level code needs to know
-	bool m_bSupportsGLMixedSizeTargets : 1;			// on OpenGL, are mixed size depth buffers supported - aka ARB_framebuffer_object
-	bool m_bCanStretchRectFromTextures : 1;			// Does the device expose D3DDEVCAPS2_CAN_STRETCHRECT_FROM_TEXTURES (or is it >DX9?)
+	bool m_bDX10Card : 1;	  // Indicates DX10 part with performant vertex textures running DX9 path
+	bool m_bDX10Blending : 1; // Indicates DX10 part that does DX10 blending (but may not have performant vertex
+							  // textures, such as Intel parts)
+	bool m_bSupportsStaticControlFlow : 1; // Useful on OpenGL, where we have a mix of support...
+	bool m_FakeSRGBWrite : 1;		 // Gotta do this on OpenGL.  Mostly hidden, but some high level code needs to know
+	bool m_CanDoSRGBReadFromRTs : 1; // Gotta do this on OpenGL.  Mostly hidden, but some high level code needs to know
+	bool m_bSupportsGLMixedSizeTargets : 1; // on OpenGL, are mixed size depth buffers supported - aka
+											// ARB_framebuffer_object
+	bool m_bCanStretchRectFromTextures : 1; // Does the device expose D3DDEVCAPS2_CAN_STRETCHRECT_FROM_TEXTURES (or is
+											// it >DX9?)
 
 	HDRType_t m_MaxHDRType;
 };
-
 
 //-----------------------------------------------------------------------------
 // Contains the hardware configuration for the current device
@@ -170,18 +171,24 @@ public:
 	CHardwareConfig();
 
 	// Sets up the hardware caps given the specified DX level
-	void SetupHardwareCaps( const ShaderDeviceInfo_t& mode, const HardwareCaps_t &actualCaps );
+	void SetupHardwareCaps(const ShaderDeviceInfo_t &mode, const HardwareCaps_t &actualCaps);
 
 	// FIXME: This is for backward compat only.. don't use these
-	void SetupHardwareCaps( int nDXLevel, const HardwareCaps_t &actualCaps );
-	HardwareCaps_t& ActualCapsForEdit() { return m_ActualCaps; }
-	HardwareCaps_t& CapsForEdit() { return m_Caps; }
+	void SetupHardwareCaps(int nDXLevel, const HardwareCaps_t &actualCaps);
+	HardwareCaps_t &ActualCapsForEdit()
+	{
+		return m_ActualCaps;
+	}
+	HardwareCaps_t &CapsForEdit()
+	{
+		return m_Caps;
+	}
 
 	// Members of IMaterialSystemHardwareConfig
 	virtual bool HasDestAlphaBuffer() const;
 	virtual bool HasStencilBuffer() const;
-	virtual int	 GetFrameBufferColorDepth() const;
-	virtual int  GetSamplerCount() const;
+	virtual int GetFrameBufferColorDepth() const;
+	virtual int GetSamplerCount() const;
 	virtual bool HasSetDeviceGammaRamp() const;
 	virtual bool SupportsCompressedTextures() const;
 	virtual VertexCompressionType_t SupportsCompressedVertices() const;
@@ -193,30 +200,30 @@ public:
 	virtual bool SupportsPixelShaders_2_0() const;
 	virtual bool SupportsStaticControlFlow() const;
 	virtual bool SupportsVertexShaders_2_0() const;
-	virtual int  MaximumAnisotropicLevel() const;
-	virtual int  MaxTextureWidth() const;
-	virtual int  MaxTextureHeight() const;
-	virtual int	 TextureMemorySize() const;
+	virtual int MaximumAnisotropicLevel() const;
+	virtual int MaxTextureWidth() const;
+	virtual int MaxTextureHeight() const;
+	virtual int TextureMemorySize() const;
 	virtual bool SupportsOverbright() const;
 	virtual bool SupportsCubeMaps() const;
 	virtual bool SupportsMipmappedCubemaps() const;
 	virtual bool SupportsNonPow2Textures() const;
-	virtual int  GetTextureStageCount() const;
-	virtual int	 NumVertexShaderConstants() const;
-	virtual int	 NumBooleanVertexShaderConstants() const;
-	virtual int	 NumIntegerVertexShaderConstants() const;
-	virtual int	 NumPixelShaderConstants() const;
-	virtual int	 NumBooleanPixelShaderConstants() const;
-	virtual int	 NumIntegerPixelShaderConstants() const;
-	virtual int	 MaxNumLights() const;
+	virtual int GetTextureStageCount() const;
+	virtual int NumVertexShaderConstants() const;
+	virtual int NumBooleanVertexShaderConstants() const;
+	virtual int NumIntegerVertexShaderConstants() const;
+	virtual int NumPixelShaderConstants() const;
+	virtual int NumBooleanPixelShaderConstants() const;
+	virtual int NumIntegerPixelShaderConstants() const;
+	virtual int MaxNumLights() const;
 	virtual bool SupportsHardwareLighting() const;
-	virtual int	 MaxBlendMatrices() const;
-	virtual int	 MaxBlendMatrixIndices() const;
-	virtual int  MaxTextureAspectRatio() const;
-	virtual int	 MaxVertexShaderBlendMatrices() const;
-	virtual int	 MaxUserClipPlanes() const;
+	virtual int MaxBlendMatrices() const;
+	virtual int MaxBlendMatrixIndices() const;
+	virtual int MaxTextureAspectRatio() const;
+	virtual int MaxVertexShaderBlendMatrices() const;
+	virtual int MaxUserClipPlanes() const;
 	virtual bool UseFastClipping() const;
-	virtual int  GetDXSupportLevel() const;
+	virtual int GetDXSupportLevel() const;
 	virtual const char *GetShaderDLLName() const;
 	virtual bool ReadPixelsFromFrontBuffer() const;
 	virtual bool PreferDynamicTextures() const;
@@ -228,25 +235,25 @@ public:
 	virtual bool SupportsColorOnSecondStream() const;
 	virtual bool SupportsStaticPlusDynamicLighting() const;
 	virtual bool PreferReducedFillrate() const;
-	virtual int	 GetMaxDXSupportLevel() const;
+	virtual int GetMaxDXSupportLevel() const;
 	virtual bool SpecifiesFogColorInLinearSpace() const;
 	virtual bool SupportsSRGB() const;
 	virtual bool FakeSRGBWrite() const;
 	virtual bool CanDoSRGBReadFromRTs() const;
 	virtual bool SupportsGLMixedSizeTargets() const;
 	virtual bool IsAAEnabled() const;
-	virtual int  GetVertexTextureCount() const;
-	virtual int  GetMaxVertexTextureDimension() const;
-	virtual int  MaxTextureDepth() const;
+	virtual int GetVertexTextureCount() const;
+	virtual int GetMaxVertexTextureDimension() const;
+	virtual int MaxTextureDepth() const;
 	virtual HDRType_t GetHDRType() const;
 	virtual HDRType_t GetHardwareHDRType() const;
 	virtual bool SupportsPixelShaders_2_b() const;
 	virtual bool SupportsShaderModel_3_0() const;
 	virtual bool SupportsStreamOffset() const;
-	virtual int  StencilBufferBits() const;
-	virtual int  MaxViewports() const;
-	virtual void OverrideStreamOffsetSupport( bool bOverrideEnabled, bool bEnableSupport );
-	virtual int  GetShadowFilterMode() const;
+	virtual int StencilBufferBits() const;
+	virtual int MaxViewports() const;
+	virtual void OverrideStreamOffsetSupport(bool bOverrideEnabled, bool bEnableSupport);
+	virtual int GetShadowFilterMode() const;
 	virtual int NeedsShaderSRGBConversion() const;
 	virtual bool UsesSRGBCorrectBlending() const;
 	virtual bool HasFastVertexTextures() const;
@@ -258,16 +265,22 @@ public:
 	bool SupportsMipmapping() const;
 	virtual bool ActuallySupportsPixelShaders_2_b() const;
 
-	virtual bool SupportsHDRMode( HDRType_t nHDRMode ) const;
+	virtual bool SupportsHDRMode(HDRType_t nHDRMode) const;
 
-	const HardwareCaps_t& ActualCaps() const { return m_ActualCaps; }
-	const HardwareCaps_t& Caps() const { return m_Caps; }
-	virtual bool GetHDREnabled( void ) const;
-	virtual void SetHDREnabled( bool bEnable );
+	const HardwareCaps_t &ActualCaps() const
+	{
+		return m_ActualCaps;
+	}
+	const HardwareCaps_t &Caps() const
+	{
+		return m_Caps;
+	}
+	virtual bool GetHDREnabled(void) const;
+	virtual void SetHDREnabled(bool bEnable);
 
 protected:
 	// Gets the recommended configuration associated with a particular dx level
-	void ForceCapsToDXLevel( HardwareCaps_t *pCaps, int nDxLevel, const HardwareCaps_t &actualCaps );
+	void ForceCapsToDXLevel(HardwareCaps_t *pCaps, int nDxLevel, const HardwareCaps_t &actualCaps);
 
 	// Members related to capabilities
 	HardwareCaps_t m_ActualCaps;
@@ -276,11 +289,9 @@ protected:
 	bool m_bHDREnabled;
 };
 
-
 //-----------------------------------------------------------------------------
 // Singleton hardware config
 //-----------------------------------------------------------------------------
 extern CHardwareConfig *g_pHardwareConfig;
-
 
 #endif // HARDWARECONFIG_H

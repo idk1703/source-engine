@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,19 +18,20 @@
 //-----------------------------------------------------------------------------
 class CWeaponInfiltrator : public CBaseTFCombatWeapon
 {
-	DECLARE_CLASS( CWeaponInfiltrator, CBaseTFCombatWeapon );
+	DECLARE_CLASS(CWeaponInfiltrator, CBaseTFCombatWeapon);
+
 public:
 	DECLARE_SERVERCLASS();
 
 	CWeaponInfiltrator();
 
-	virtual void	Precache( void );
-	virtual void	PrimaryAttack( void );
-	virtual bool	ComputeEMPFireState( void );
-	virtual bool	Deploy( void );
-	virtual void	ItemPostFrame( void );
+	virtual void Precache(void);
+	virtual void PrimaryAttack(void);
+	virtual bool ComputeEMPFireState(void);
+	virtual bool Deploy(void);
+	virtual void ItemPostFrame(void);
 
-	CBaseTFPlayer	*GetAssassinationTarget( void );
+	CBaseTFPlayer *GetAssassinationTarget(void);
 };
 
 #endif // WEAPON_INFILTRATOR_H

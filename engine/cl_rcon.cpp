@@ -12,7 +12,7 @@
 #include "net_ws_headers.h"
 #define WSAGetLastError() errno
 #else
-#if !defined( _X360 )
+#if !defined(_X360)
 #include <winsock.h>
 #else
 #include "winsockx.h"
@@ -29,8 +29,7 @@
 #include "tier2/fileutils.h"
 #include "zip/XUnzip.h"
 
-
-#if defined( _X360 )
+#if defined(_X360)
 #include "xbox/xbox_win32stubs.h"
 #endif
 
@@ -38,7 +37,7 @@
 #include "tier0/memdbgon.h"
 
 static CRConClient g_RCONClient;
-CRConClient & RCONClient()
+CRConClient &RCONClient()
 {
 	return g_RCONClient;
 }
@@ -49,92 +48,84 @@ class CRPTClient : public CRConClient
 	typedef CRConClient BaseClass;
 
 public:
-	virtual void OnSocketAccepted( SocketHandle_t hSocket, const netadr_t & netAdr, void** ppData )
+	virtual void OnSocketAccepted(SocketHandle_t hSocket, const netadr_t &netAdr, void **ppData)
 	{
-		BaseClass::OnSocketAccepted( hSocket, netAdr, ppData );
+		BaseClass::OnSocketAccepted(hSocket, netAdr, ppData);
 
 		// Immediately try to start vprofiling
 		// Also, enable cheats on this client only
-		Cmd_SetRptActive( true );
+		Cmd_SetRptActive(true);
 		StartVProfData();
 	}
 
-	virtual void OnSocketClosed( SocketHandle_t hSocket, const netadr_t & netAdr, void* pData )
+	virtual void OnSocketClosed(SocketHandle_t hSocket, const netadr_t &netAdr, void *pData)
 	{
 		StopVProfData();
-		Cmd_SetRptActive( false );
-		BaseClass::OnSocketClosed( hSocket, netAdr, pData );
+		Cmd_SetRptActive(false);
+		BaseClass::OnSocketClosed(hSocket, netAdr, pData);
 	}
 };
 
 static CRPTClient g_RPTClient;
-CRConClient & RPTClient()
+CRConClient &RPTClient()
 {
 	return g_RPTClient;
 }
 #endif // ENABLE_RPT
 
-static void RconAddressChanged_f( IConVar *pConVar, const char *pOldString, float flOldValue )
+static void RconAddressChanged_f(IConVar *pConVar, const char *pOldString, float flOldValue)
 {
 #ifndef SWDS
-	ConVarRef var( pConVar );
+	ConVarRef var(pConVar);
 	netadr_t to;
 
-	const char *cmdargs = var.GetString(); 
-	if ( ( !cmdargs || !cmdargs[ 0 ] ) && cl.m_NetChannel )
+	const char *cmdargs = var.GetString();
+	if((!cmdargs || !cmdargs[0]) && cl.m_NetChannel)
 	{
 		to = cl.m_NetChannel->GetRemoteAddress();
 	}
-	else if ( !NET_StringToAdr( cmdargs, &to ) )
+	else if(!NET_StringToAdr(cmdargs, &to))
 	{
-		Msg( "Unable to resolve rcon address %s\n", var.GetString() );
+		Msg("Unable to resolve rcon address %s\n", var.GetString());
 		return;
 	}
 
-	Msg( "Setting rcon_address: %s:%d\n", to.ToString( true ), to.GetPort() );
-	RCONClient().SetAddress( to );
+	Msg("Setting rcon_address: %s:%d\n", to.ToString(true), to.GetPort());
+	RCONClient().SetAddress(to);
 #endif
 }
 
-static ConVar	rcon_address( "rcon_address", "", FCVAR_SERVER_CANNOT_QUERY|FCVAR_DONTRECORD, "Address of remote server if sending unconnected rcon commands (format x.x.x.x:p) ", RconAddressChanged_f );
-
-
+static ConVar rcon_address("rcon_address", "", FCVAR_SERVER_CANNOT_QUERY | FCVAR_DONTRECORD,
+						   "Address of remote server if sending unconnected rcon commands (format x.x.x.x:p) ",
+						   RconAddressChanged_f);
 
 //-----------------------------------------------------------------------------
 // Implementation of remote vprof
 //-----------------------------------------------------------------------------
-CRConVProfExport::CRConVProfExport()
-{
-}
+CRConVProfExport::CRConVProfExport() {}
 
-void CRConVProfExport::AddListener()
-{
-}
+void CRConVProfExport::AddListener() {}
 
-void CRConVProfExport::RemoveListener()
-{
-}
+void CRConVProfExport::RemoveListener() {}
 
-void CRConVProfExport::SetBudgetFlagsFilter( int filter )
-{
-}
+void CRConVProfExport::SetBudgetFlagsFilter(int filter) {}
 
 int CRConVProfExport::GetNumBudgetGroups()
 {
 	return m_Info.Count();
 }
 
-void CRConVProfExport::GetBudgetGroupInfos( CExportedBudgetGroupInfo *pInfos )
+void CRConVProfExport::GetBudgetGroupInfos(CExportedBudgetGroupInfo *pInfos)
 {
-	memcpy( pInfos, m_Info.Base(), GetNumBudgetGroups() * sizeof(CExportedBudgetGroupInfo) );
+	memcpy(pInfos, m_Info.Base(), GetNumBudgetGroups() * sizeof(CExportedBudgetGroupInfo));
 }
 
-void CRConVProfExport::GetBudgetGroupTimes( float times[IVProfExport::MAX_BUDGETGROUP_TIMES] )
+void CRConVProfExport::GetBudgetGroupTimes(float times[IVProfExport::MAX_BUDGETGROUP_TIMES])
 {
-	int nGroups = min( m_Times.Count(), (int)IVProfExport::MAX_BUDGETGROUP_TIMES );
-	memset( times, 0, nGroups * sizeof(float) );
-	nGroups = min( GetNumBudgetGroups(), nGroups );
-	memcpy( times, m_Times.Base(), nGroups * sizeof(float) );
+	int nGroups = min(m_Times.Count(), (int)IVProfExport::MAX_BUDGETGROUP_TIMES);
+	memset(times, 0, nGroups * sizeof(float));
+	nGroups = min(GetNumBudgetGroups(), nGroups);
+	memcpy(times, m_Times.Base(), nGroups * sizeof(float));
 }
 
 void CRConVProfExport::PauseProfile()
@@ -150,12 +141,12 @@ void CRConVProfExport::ResumeProfile()
 	// NOTE: This only has effect when testing on a listen server
 	// it shouldn't do anything in the wild
 	VProfExport_Resume();
-}		
+}
 
 void CRConVProfExport::CleanupGroupData()
 {
 	int nCount = m_Info.Count();
-	for ( int i = 0; i < nCount; ++i )
+	for(int i = 0; i < nCount; ++i)
 	{
 		delete m_Info[i].m_pName;
 	}
@@ -163,77 +154,76 @@ void CRConVProfExport::CleanupGroupData()
 	m_Info.RemoveAll();
 }
 
-void CRConVProfExport::OnRemoteGroupData( const void *data, int len )
+void CRConVProfExport::OnRemoteGroupData(const void *data, int len)
 {
-	CUtlBuffer buf( data, len, CUtlBuffer::READ_ONLY );
+	CUtlBuffer buf(data, len, CUtlBuffer::READ_ONLY);
 	int nFirstGroup = buf.GetInt();
 
-	if ( nFirstGroup == 0 )
+	if(nFirstGroup == 0)
 	{
 		CleanupGroupData();
 	}
 	else
 	{
-		Assert( nFirstGroup == m_Info.Count() );
+		Assert(nFirstGroup == m_Info.Count());
 	}
 
 	// NOTE: See WriteRemoteVProfGroupData in vprof_engine.cpp
 	// to see the encoding of this data
 	int nGroupCount = buf.GetInt();
-	int nBase = m_Info.AddMultipleToTail( nGroupCount );
+	int nBase = m_Info.AddMultipleToTail(nGroupCount);
 	char temp[1024];
-	for ( int i = 0; i < nGroupCount; ++i )
+	for(int i = 0; i < nGroupCount; ++i)
 	{
 		CExportedBudgetGroupInfo *pInfo = &m_Info[nBase + i];
 
 		unsigned char red, green, blue, alpha;
-		red = buf.GetUnsignedChar( );
-		green = buf.GetUnsignedChar( );
-		blue = buf.GetUnsignedChar( );
-		alpha = buf.GetUnsignedChar( );
-		buf.GetString( temp );
-		int nLen = Q_strlen( temp );
+		red = buf.GetUnsignedChar();
+		green = buf.GetUnsignedChar();
+		blue = buf.GetUnsignedChar();
+		alpha = buf.GetUnsignedChar();
+		buf.GetString(temp);
+		int nLen = Q_strlen(temp);
 
-		pInfo->m_Color.SetColor( red, green, blue, alpha );
-		char *pBuf = new char[ nLen + 1 ];
+		pInfo->m_Color.SetColor(red, green, blue, alpha);
+		char *pBuf = new char[nLen + 1];
 		pInfo->m_pName = pBuf;
-		memcpy( pBuf, temp, nLen+1 );
+		memcpy(pBuf, temp, nLen + 1);
 		pInfo->m_BudgetFlags = 0;
 	}
 }
 
-void CRConVProfExport::OnRemoteData( const void *data, int len )
+void CRConVProfExport::OnRemoteData(const void *data, int len)
 {
 	// NOTE: See WriteRemoteVProfData in vprof_engine.cpp
 	// to see the encoding of this data
 	int nCount = len / sizeof(float);
-	Assert( nCount == m_Info.Count() );
+	Assert(nCount == m_Info.Count());
 
-	CUtlBuffer buf( data, len, CUtlBuffer::READ_ONLY );
-	m_Times.SetCount( nCount );
-	memcpy( m_Times.Base(), data, nCount * sizeof(float) );
+	CUtlBuffer buf(data, len, CUtlBuffer::READ_ONLY);
+	m_Times.SetCount(nCount);
+	memcpy(m_Times.Base(), data, nCount * sizeof(float));
 }
 
-
-CON_COMMAND( vprof_remote_start, "Request a VProf data stream from the remote server (requires authentication)" )
+CON_COMMAND(vprof_remote_start, "Request a VProf data stream from the remote server (requires authentication)")
 {
 	// TODO: Make this work (it might already!)
-//	RCONClient().StartVProfData();
+	//	RCONClient().StartVProfData();
 }
 
-CON_COMMAND( vprof_remote_stop, "Stop an existing remote VProf data request" )
+CON_COMMAND(vprof_remote_stop, "Stop an existing remote VProf data request")
 {
 	// TODO: Make this work (it might already!)
-//	RCONClient().StopVProfData();
+	//	RCONClient().StopVProfData();
 }
 
 #ifdef ENABLE_RPT
-CON_COMMAND_F( rpt_screenshot, "", FCVAR_HIDDEN | FCVAR_DONTRECORD )
+CON_COMMAND_F(rpt_screenshot, "", FCVAR_HIDDEN | FCVAR_DONTRECORD)
 {
 	RPTClient().TakeScreenshot();
 }
 
-CON_COMMAND_F( rpt_download_log, "", FCVAR_HIDDEN | FCVAR_DONTRECORD )
+CON_COMMAND_F(rpt_download_log, "", FCVAR_HIDDEN | FCVAR_DONTRECORD)
 {
 	RPTClient().GrabConsoleLog();
 }
@@ -242,9 +232,9 @@ CON_COMMAND_F( rpt_download_log, "", FCVAR_HIDDEN | FCVAR_DONTRECORD )
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-#pragma warning ( disable : 4355 )
+#pragma warning(disable : 4355)
 
-CRConClient::CRConClient() : m_Socket( this )
+CRConClient::CRConClient() : m_Socket(this)
 {
 	m_bAuthenticated = false;
 	m_iAuthRequestID = 1; // must start at 1
@@ -253,62 +243,56 @@ CRConClient::CRConClient() : m_Socket( this )
 	m_nConsoleLogIndex = 0;
 }
 
-#pragma warning ( default : 4355 )
+#pragma warning(default : 4355)
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CRConClient::~CRConClient()
-{
-}
-
+CRConClient::~CRConClient() {}
 
 //-----------------------------------------------------------------------------
 // Changes the password
 //-----------------------------------------------------------------------------
-void CRConClient::SetPassword( const char *pPassword )
+void CRConClient::SetPassword(const char *pPassword)
 {
 	m_Socket.CloseAllAcceptedSockets();
 	m_Password = pPassword;
 }
 
-void CRConClient::SetRemoteFileDirectory( const char *pDir )
+void CRConClient::SetRemoteFileDirectory(const char *pDir)
 {
 	m_RemoteFileDir = pDir;
 	m_nScreenShotIndex = 0;
 	m_nConsoleLogIndex = 0;
-	g_pFullFileSystem->CreateDirHierarchy( pDir, "MOD" );
+	g_pFullFileSystem->CreateDirHierarchy(pDir, "MOD");
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: set the addresss of the remote server
 //-----------------------------------------------------------------------------
-void CRConClient::SetAddress( const netadr_t &netAdr )
+void CRConClient::SetAddress(const netadr_t &netAdr)
 {
 	m_Socket.CloseAllAcceptedSockets();
 	m_Address = netAdr;
-	if ( m_Address.GetPort() == 0  )
+	if(m_Address.GetPort() == 0)
 	{
-		m_Address.SetPort( PORT_SERVER ); // override the port setting, by default rcon tries to bind to the same port as the server
+		m_Address.SetPort(
+			PORT_SERVER); // override the port setting, by default rcon tries to bind to the same port as the server
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Inherited from ISocketCreatorListener
 //-----------------------------------------------------------------------------
-bool CRConClient::ShouldAcceptSocket( SocketHandle_t hSocket, const netadr_t & netAdr )
+bool CRConClient::ShouldAcceptSocket(SocketHandle_t hSocket, const netadr_t &netAdr)
 {
 	// Can't connect if we're already connected
 	return !IsConnected();
 }
 
-void CRConClient::OnSocketAccepted( SocketHandle_t hSocket, const netadr_t & netAdr, void** ppData )
-{
-}
+void CRConClient::OnSocketAccepted(SocketHandle_t hSocket, const netadr_t &netAdr, void **ppData) {}
 
-void CRConClient::OnSocketClosed( SocketHandle_t hSocket, const netadr_t & netAdr, void* pData )
+void CRConClient::OnSocketClosed(SocketHandle_t hSocket, const netadr_t &netAdr, void *pData)
 {
 	// reset state
 	m_bAuthenticated = false;
@@ -318,16 +302,14 @@ void CRConClient::OnSocketClosed( SocketHandle_t hSocket, const netadr_t & netAd
 	m_RecvBuffer.Purge();
 }
 
-
-
 //-----------------------------------------------------------------------------
 // Connects to the address specified by SetAddress
 //-----------------------------------------------------------------------------
 bool CRConClient::ConnectSocket()
 {
-	if ( m_Socket.ConnectSocket( m_Address, true ) < 0 )
+	if(m_Socket.ConnectSocket(m_Address, true) < 0)
 	{
-		Warning( "Unable to connect to remote server (%s)\n", m_Address.ToString() );
+		Warning("Unable to connect to remote server (%s)\n", m_Address.ToString());
 		return false;
 	}
 	return true;
@@ -338,29 +320,26 @@ void CRConClient::CloseSocket()
 	m_Socket.CloseAllAcceptedSockets();
 }
 
-
 //-----------------------------------------------------------------------------
 // Are we connected?
 //-----------------------------------------------------------------------------
-bool CRConClient::IsConnected()	const
+bool CRConClient::IsConnected() const
 {
 	return m_Socket.GetAcceptedSocketCount() > 0;
 }
 
-
 //-----------------------------------------------------------------------------
 // Creates a listen server, connects to remote machines that connect to it
 //-----------------------------------------------------------------------------
-void CRConClient::CreateListenSocket( const netadr_t &netAdr )
+void CRConClient::CreateListenSocket(const netadr_t &netAdr)
 {
-	m_Socket.CreateListenSocket( netAdr );
+	m_Socket.CreateListenSocket(netAdr);
 }
 
 void CRConClient::CloseListenSocket()
 {
-	m_Socket.CloseListenSocket( );
+	m_Socket.CloseListenSocket();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: send queued messages
@@ -368,27 +347,27 @@ void CRConClient::CloseListenSocket()
 void CRConClient::SendQueuedData()
 {
 	SocketHandle_t hSocket = GetSocketHandle();
-	while ( m_SendBuffer.TellMaxPut() - m_SendBuffer.TellGet() > sizeof(int) )
+	while(m_SendBuffer.TellMaxPut() - m_SendBuffer.TellGet() > sizeof(int))
 	{
-		size_t nSize = *(int*)m_SendBuffer.PeekGet();
-		Assert( nSize >= m_SendBuffer.TellMaxPut() - m_SendBuffer.TellGet() - sizeof( int ) );
-		int ret = send( hSocket, (const char *)m_SendBuffer.PeekGet(), nSize + sizeof( int ), 0 );
-		if ( ret != -1 )
+		size_t nSize = *(int *)m_SendBuffer.PeekGet();
+		Assert(nSize >= m_SendBuffer.TellMaxPut() - m_SendBuffer.TellGet() - sizeof(int));
+		int ret = send(hSocket, (const char *)m_SendBuffer.PeekGet(), nSize + sizeof(int), 0);
+		if(ret != -1)
 		{
-			m_SendBuffer.SeekGet( CUtlBuffer::SEEK_CURRENT, nSize + sizeof( int ) );
+			m_SendBuffer.SeekGet(CUtlBuffer::SEEK_CURRENT, nSize + sizeof(int));
 			continue;
 		}
 
-		if ( !SocketWouldBlock() )
+		if(!SocketWouldBlock())
 		{
-			Warning( "Lost RCON connection, please retry command.\n"); 
+			Warning("Lost RCON connection, please retry command.\n");
 			CloseSocket();
 		}
 		break;
 	}
 
 	int nSizeRemaining = m_SendBuffer.TellMaxPut() - m_SendBuffer.TellGet();
-	if ( nSizeRemaining <= sizeof(int) )
+	if(nSizeRemaining <= sizeof(int))
 	{
 		m_SendBuffer.Purge();
 		return;
@@ -397,103 +376,102 @@ void CRConClient::SendQueuedData()
 	// In this case, we've still got queued messages to send
 	// Keep the portion of the buffer we didn't process for next time
 	CUtlBuffer tmpBuf;
-	tmpBuf.Put( m_SendBuffer.PeekGet(), nSizeRemaining );
+	tmpBuf.Put(m_SendBuffer.PeekGet(), nSizeRemaining);
 	m_SendBuffer.Purge();
-	m_SendBuffer.Put( tmpBuf.Base(), tmpBuf.TellPut() );
+	m_SendBuffer.Put(tmpBuf.Base(), tmpBuf.TellPut());
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: parse received data
 //-----------------------------------------------------------------------------
 void CRConClient::ParseReceivedData()
 {
-	m_RecvBuffer.SeekGet( CUtlBuffer::SEEK_HEAD, 0 );
+	m_RecvBuffer.SeekGet(CUtlBuffer::SEEK_HEAD, 0);
 
 	int size = m_RecvBuffer.GetInt();
-	while ( size && size <= m_RecvBuffer.TellPut() - m_RecvBuffer.TellGet() )
+	while(size && size <= m_RecvBuffer.TellPut() - m_RecvBuffer.TellGet())
 	{
-		//DevMsg( "RCON: got packet %i long\n", size );
+		// DevMsg( "RCON: got packet %i long\n", size );
 		int reqID = m_RecvBuffer.GetInt();
 		int cmdID = m_RecvBuffer.GetInt(); // ignore the cmd id
 		//		DevMsg( "RCON Cmd: <-- %i %i %i\n", reqID, cmdID, readLen );
 
-		switch( cmdID )
+		switch(cmdID)
 		{
-		case SERVERDATA_AUTH_RESPONSE:
+			case SERVERDATA_AUTH_RESPONSE:
 			{
-				if ( reqID == -1 ) // bad password
+				if(reqID == -1) // bad password
 				{
-					Msg( "Bad RCON password\n" );
+					Msg("Bad RCON password\n");
 					m_bAuthenticated = false;
 				}
 				else
 				{
-					Assert( reqID == m_iAuthRequestID );
+					Assert(reqID == m_iAuthRequestID);
 					m_bAuthenticated = true;
 				}
 				char dummy[2];
-				m_RecvBuffer.GetString( dummy );
-				m_RecvBuffer.GetString( dummy );
+				m_RecvBuffer.GetString(dummy);
+				m_RecvBuffer.GetString(dummy);
 			}
 			break;
 
-		case SERVERDATA_SCREENSHOT_RESPONSE:
+			case SERVERDATA_SCREENSHOT_RESPONSE:
 			{
 				int nDataSize = m_RecvBuffer.GetInt();
-				SaveRemoteScreenshot( m_RecvBuffer.PeekGet(), nDataSize );
-				m_RecvBuffer.SeekGet( CUtlBuffer::SEEK_CURRENT, nDataSize );
+				SaveRemoteScreenshot(m_RecvBuffer.PeekGet(), nDataSize);
+				m_RecvBuffer.SeekGet(CUtlBuffer::SEEK_CURRENT, nDataSize);
 			}
 			break;
 
-		case SERVERDATA_CONSOLE_LOG_RESPONSE:
+			case SERVERDATA_CONSOLE_LOG_RESPONSE:
 			{
 				int nDataSize = m_RecvBuffer.GetInt();
-				SaveRemoteConsoleLog( m_RecvBuffer.PeekGet(), nDataSize );
-				m_RecvBuffer.SeekGet( CUtlBuffer::SEEK_CURRENT, nDataSize );
+				SaveRemoteConsoleLog(m_RecvBuffer.PeekGet(), nDataSize);
+				m_RecvBuffer.SeekGet(CUtlBuffer::SEEK_CURRENT, nDataSize);
 			}
 			break;
 
-		case SERVERDATA_VPROF_DATA:
+			case SERVERDATA_VPROF_DATA:
 			{
 				int nDataSize = m_RecvBuffer.GetInt();
-				m_VProfExport.OnRemoteData( m_RecvBuffer.PeekGet(), nDataSize );
-				m_RecvBuffer.SeekGet( CUtlBuffer::SEEK_CURRENT, nDataSize );
+				m_VProfExport.OnRemoteData(m_RecvBuffer.PeekGet(), nDataSize);
+				m_RecvBuffer.SeekGet(CUtlBuffer::SEEK_CURRENT, nDataSize);
 			}
 			break;
 
-		case SERVERDATA_VPROF_GROUPS:
+			case SERVERDATA_VPROF_GROUPS:
 			{
 				int nDataSize = m_RecvBuffer.GetInt();
-				m_VProfExport.OnRemoteGroupData( m_RecvBuffer.PeekGet(), nDataSize );
-				m_RecvBuffer.SeekGet( CUtlBuffer::SEEK_CURRENT, nDataSize );
+				m_VProfExport.OnRemoteGroupData(m_RecvBuffer.PeekGet(), nDataSize);
+				m_RecvBuffer.SeekGet(CUtlBuffer::SEEK_CURRENT, nDataSize);
 			}
 			break;
 
-		case SERVERDATA_RESPONSE_STRING:
+			case SERVERDATA_RESPONSE_STRING:
 			{
 				char pBuf[2048];
-				m_RecvBuffer.GetString( pBuf );
-				Msg( "%s", pBuf );
+				m_RecvBuffer.GetString(pBuf);
+				Msg("%s", pBuf);
 			}
 			break;
 
-		default:
+			default:
 			{
 				// Displays a message from the server
 				int strLen = m_RecvBuffer.TellPut() - m_RecvBuffer.TellGet();
 				CUtlMemory<char> msg;
-				msg.EnsureCapacity( strLen + 1 );
-				m_RecvBuffer.GetStringManualCharCount( msg.Base(), msg.Count() );
+				msg.EnsureCapacity(strLen + 1);
+				m_RecvBuffer.GetStringManualCharCount(msg.Base(), msg.Count());
 
-				msg[ msg.Count() - 1 ] = '\0';
-				Msg( "%s", (const char *)msg.Base() );
-				m_RecvBuffer.GetStringManualCharCount( msg.Base(), msg.Count() ); // ignore the second string
+				msg[msg.Count() - 1] = '\0';
+				Msg("%s", (const char *)msg.Base());
+				m_RecvBuffer.GetStringManualCharCount(msg.Base(), msg.Count()); // ignore the second string
 			}
 			break;
 		}
 
-		if ( m_RecvBuffer.TellPut() - m_RecvBuffer.TellGet() >= sizeof(int) )
+		if(m_RecvBuffer.TellPut() - m_RecvBuffer.TellGet() >= sizeof(int))
 		{
 			size = m_RecvBuffer.GetInt(); // read how much is in this packet
 		}
@@ -503,23 +481,23 @@ void CRConClient::ParseReceivedData()
 		}
 	}
 
-	if ( size || (m_RecvBuffer.TellPut() - m_RecvBuffer.TellGet() > 0) )
+	if(size || (m_RecvBuffer.TellPut() - m_RecvBuffer.TellGet() > 0))
 	{
 		// In this case, we've got a partial message; we didn't get it all.
 		// Keep the portion of the buffer we didn't process for next time
 		CUtlBuffer tmpBuf;
-		if ( m_RecvBuffer.TellPut() - m_RecvBuffer.TellGet() > 0 )
+		if(m_RecvBuffer.TellPut() - m_RecvBuffer.TellGet() > 0)
 		{
-			tmpBuf.Put( m_RecvBuffer.PeekGet(), m_RecvBuffer.TellPut() - m_RecvBuffer.TellGet() );
+			tmpBuf.Put(m_RecvBuffer.PeekGet(), m_RecvBuffer.TellPut() - m_RecvBuffer.TellGet());
 		}
 		m_RecvBuffer.Purge();
-		if ( size > 0 )
+		if(size > 0)
 		{
-			m_RecvBuffer.PutInt( size );
+			m_RecvBuffer.PutInt(size);
 		}
-		if ( tmpBuf.TellPut() > 0 )
+		if(tmpBuf.TellPut() > 0)
 		{
-			m_RecvBuffer.Put( tmpBuf.Base(), tmpBuf.TellPut() );
+			m_RecvBuffer.Put(tmpBuf.Base(), tmpBuf.TellPut());
 		}
 	}
 	else
@@ -528,7 +506,6 @@ void CRConClient::ParseReceivedData()
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: check for any server responses
 //-----------------------------------------------------------------------------
@@ -536,99 +513,98 @@ void CRConClient::RunFrame()
 {
 	m_Socket.RunFrame();
 
-	if ( !IsConnected() )
+	if(!IsConnected())
 		return;
 
 	SendQueuedData();
 
 	SocketHandle_t hSocket = GetSocketHandle();
 	char ch;
-	int pendingLen = recv( hSocket, &ch, sizeof(ch), MSG_PEEK );
-	if ( pendingLen == -1 && SocketWouldBlock() )
+	int pendingLen = recv(hSocket, &ch, sizeof(ch), MSG_PEEK);
+	if(pendingLen == -1 && SocketWouldBlock())
 		return;
 
-	if ( pendingLen == 0 ) // socket got closed
+	if(pendingLen == 0) // socket got closed
 	{
 		CloseSocket();
 		return;
 	}
-	
-	if ( pendingLen < 0 )
+
+	if(pendingLen < 0)
 	{
 		CloseSocket();
-		Warning( "Lost RCON connection, please retry command (%s)\n", NET_ErrorString( WSAGetLastError() ) );
+		Warning("Lost RCON connection, please retry command (%s)\n", NET_ErrorString(WSAGetLastError()));
 		return;
 	}
 
 	// find out how much we have to read
 	unsigned long readLen = 0;
-	ioctlsocket( hSocket, FIONREAD, &readLen );
-	if ( readLen <= sizeof(int) ) 
+	ioctlsocket(hSocket, FIONREAD, &readLen);
+	if(readLen <= sizeof(int))
 		return;
 
 	// we have a command to process
 	// Read data into a utlbuffer
-	m_RecvBuffer.EnsureCapacity( m_RecvBuffer.TellPut() + readLen + 1 );
-	char *recvbuffer = (char *)_alloca( min( 1024ul, readLen + 1 ) );
+	m_RecvBuffer.EnsureCapacity(m_RecvBuffer.TellPut() + readLen + 1);
+	char *recvbuffer = (char *)_alloca(min(1024ul, readLen + 1));
 	unsigned int len = 0;
-	while ( len < readLen )
+	while(len < readLen)
 	{
-		int recvLen = recv( hSocket, recvbuffer , min( 1024ul, readLen - len ) , 0 );
-		if ( recvLen == 0 ) // socket was closed
+		int recvLen = recv(hSocket, recvbuffer, min(1024ul, readLen - len), 0);
+		if(recvLen == 0) // socket was closed
 		{
 			CloseSocket();
 			break;
 		}
-		
-		if ( recvLen < 0 && !SocketWouldBlock() )
+
+		if(recvLen < 0 && !SocketWouldBlock())
 		{
-			Warning( "RCON Cmd: recv error (%s)\n", NET_ErrorString( WSAGetLastError() ) );
+			Warning("RCON Cmd: recv error (%s)\n", NET_ErrorString(WSAGetLastError()));
 			break;
 		}
 
-		m_RecvBuffer.Put( recvbuffer, recvLen );
+		m_RecvBuffer.Put(recvbuffer, recvLen);
 		len += recvLen;
 	}
-	
+
 	ParseReceivedData();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: send a response to the server
 //-----------------------------------------------------------------------------
-void CRConClient::SendResponse( CUtlBuffer &response, bool bAutoAuthenticate )
+void CRConClient::SendResponse(CUtlBuffer &response, bool bAutoAuthenticate)
 {
-	if ( bAutoAuthenticate && !IsAuthenticated() )
+	if(bAutoAuthenticate && !IsAuthenticated())
 	{
 		Authenticate();
-		if ( IsConnected() )
+		if(IsConnected())
 		{
-			m_SendBuffer.Put( response.Base(), response.TellMaxPut() );
+			m_SendBuffer.Put(response.Base(), response.TellMaxPut());
 		}
 		return;
 	}
 
-	int ret = send( GetSocketHandle(), (const char *)response.Base(), response.TellMaxPut(), 0 );
-	if ( ret == -1 )
+	int ret = send(GetSocketHandle(), (const char *)response.Base(), response.TellMaxPut(), 0);
+	if(ret == -1)
 	{
-		if ( SocketWouldBlock() )
+		if(SocketWouldBlock())
 		{
-			m_SendBuffer.Put( response.Base(), response.TellMaxPut() );
+			m_SendBuffer.Put(response.Base(), response.TellMaxPut());
 		}
 		else
 		{
-			Warning( "Lost RCON connection, please retry command\n" ); 
+			Warning("Lost RCON connection, please retry command\n");
 			CloseSocket();
 		}
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: builds a simple command to send to the server
 //-----------------------------------------------------------------------------
-void CRConClient::BuildResponse( CUtlBuffer &response, ServerDataRequestType_t msg, const char *pString1, const char *pString2 )
+void CRConClient::BuildResponse(CUtlBuffer &response, ServerDataRequestType_t msg, const char *pString1,
+								const char *pString2)
 {
 	// build the response
 	response.PutInt(0); // the size, filled in below
@@ -636,12 +612,11 @@ void CRConClient::BuildResponse( CUtlBuffer &response, ServerDataRequestType_t m
 	response.PutInt(msg);
 	response.PutString(pString1);
 	response.PutString(pString2);
-	int nSize = response.TellPut() - sizeof(int); 
-	response.SeekPut( CUtlBuffer::SEEK_HEAD, 0 );
-	response.PutInt( nSize ); // the size
-	response.SeekPut( CUtlBuffer::SEEK_CURRENT, nSize );
+	int nSize = response.TellPut() - sizeof(int);
+	response.SeekPut(CUtlBuffer::SEEK_HEAD, 0);
+	response.PutInt(nSize); // the size
+	response.SeekPut(CUtlBuffer::SEEK_CURRENT, nSize);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: authenticate ourselves
@@ -654,78 +629,75 @@ void CRConClient::Authenticate()
 	response.PutInt(0); // the size, filled in below
 	response.PutInt(++m_iAuthRequestID);
 	response.PutInt(SERVERDATA_AUTH);
-	response.PutString( m_Password.Get() );
+	response.PutString(m_Password.Get());
 
 	// Use the otherwise-empty second string for the userid.  The server will use this to
 	// exec "mp_disable_autokick <userid>" upon successful authentication.
 	bool addedUserID = false;
-	if ( cl.IsConnected() )
+	if(cl.IsConnected())
 	{
-		if ( cl.m_nPlayerSlot < cl.m_nMaxClients && cl.m_nPlayerSlot >= 0 )
+		if(cl.m_nPlayerSlot < cl.m_nMaxClients && cl.m_nPlayerSlot >= 0)
 		{
-			Assert( cl.m_pUserInfoTable );
-			if ( cl.m_pUserInfoTable )
+			Assert(cl.m_pUserInfoTable);
+			if(cl.m_pUserInfoTable)
 			{
-				player_info_t *pi = (player_info_t*) cl.m_pUserInfoTable->GetStringUserData( cl.m_nPlayerSlot, NULL );
-				if ( pi )
+				player_info_t *pi = (player_info_t *)cl.m_pUserInfoTable->GetStringUserData(cl.m_nPlayerSlot, NULL);
+				if(pi)
 				{
 					addedUserID = true;
 					// Fixup from network order (little endian)
-					response.PutString( va( "%d", LittleLong( pi->userID ) ) );
+					response.PutString(va("%d", LittleLong(pi->userID)));
 				}
 			}
 		}
 	}
 
-	if ( !addedUserID )
+	if(!addedUserID)
 	{
-		response.PutString( "" );
+		response.PutString("");
 	}
-	int size = response.TellPut() - sizeof(int); 
-	response.SeekPut( CUtlBuffer::SEEK_HEAD, 0 );
+	int size = response.TellPut() - sizeof(int);
+	response.SeekPut(CUtlBuffer::SEEK_HEAD, 0);
 	response.PutInt(size); // the size
-	response.SeekPut( CUtlBuffer::SEEK_CURRENT, size );
+	response.SeekPut(CUtlBuffer::SEEK_CURRENT, size);
 
-	SendResponse( response, false );
+	SendResponse(response, false);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: send an rcon command to a connected server
 //-----------------------------------------------------------------------------
-void CRConClient::SendCmd( const char *msg )
+void CRConClient::SendCmd(const char *msg)
 {
-	if ( !IsConnected() )
+	if(!IsConnected())
 	{
-		if ( !ConnectSocket() )
+		if(!ConnectSocket())
 			return;
 	}
 
 	CUtlBuffer response;
-	BuildResponse( response, SERVERDATA_EXECCOMMAND, msg, "" );
-	SendResponse( response );
+	BuildResponse(response, SERVERDATA_EXECCOMMAND, msg, "");
+	SendResponse(response);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Start vprofiling
 //-----------------------------------------------------------------------------
 void CRConClient::StartVProfData()
 {
-	if ( !IsConnected() )
+	if(!IsConnected())
 	{
-		if ( !ConnectSocket() )
+		if(!ConnectSocket())
 			return;
 	}
 
 	// Override the vprof export to point to our local profiling data
-	OverrideVProfExport( &m_VProfExport );
+	OverrideVProfExport(&m_VProfExport);
 
 	CUtlBuffer response;
-	BuildResponse( response, SERVERDATA_VPROF, "", "" );
-	SendResponse( response );
+	BuildResponse(response, SERVERDATA_VPROF, "", "");
+	SendResponse(response);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Stop vprofiling
@@ -733,94 +705,93 @@ void CRConClient::StartVProfData()
 void CRConClient::StopVProfData()
 {
 	// Reset the vprof export to point to the normal profiling data
-	ResetVProfExport( &m_VProfExport );
+	ResetVProfExport(&m_VProfExport);
 
 	// Don't bother restarting a connection to turn this off
-	if ( !IsConnected() )
+	if(!IsConnected())
 		return;
 
 	CUtlBuffer response;
-	BuildResponse( response, SERVERDATA_REMOVE_VPROF, "", "" );
-	SendResponse( response );
+	BuildResponse(response, SERVERDATA_REMOVE_VPROF, "", "");
+	SendResponse(response);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: get data from the server
 //-----------------------------------------------------------------------------
 void CRConClient::TakeScreenshot()
 {
-	if ( !IsConnected() )
+	if(!IsConnected())
 	{
-		if ( !ConnectSocket() )
+		if(!ConnectSocket())
 			return;
 	}
 
 	CUtlBuffer response;
-	BuildResponse( response, SERVERDATA_TAKE_SCREENSHOT, "", "" );
-	SendResponse( response );
+	BuildResponse(response, SERVERDATA_TAKE_SCREENSHOT, "", "");
+	SendResponse(response);
 }
 
 void CRConClient::GrabConsoleLog()
 {
-	if ( !IsConnected() )
+	if(!IsConnected())
 	{
-		if ( !ConnectSocket() )
+		if(!ConnectSocket())
 			return;
 	}
 
 	CUtlBuffer response;
-	BuildResponse( response, SERVERDATA_SEND_CONSOLE_LOG, "", "" );
-	SendResponse( response );
+	BuildResponse(response, SERVERDATA_SEND_CONSOLE_LOG, "", "");
+	SendResponse(response);
 }
-
 
 //-----------------------------------------------------------------------------
 // We've got data from the server, save it
 //-----------------------------------------------------------------------------
-void CRConClient::SaveRemoteScreenshot( const void* pBuffer, int nBufLen )
+void CRConClient::SaveRemoteScreenshot(const void *pBuffer, int nBufLen)
 {
 	char pScreenshotPath[MAX_PATH];
-	do 
+	do
 	{
-		Q_snprintf( pScreenshotPath, sizeof( pScreenshotPath ), "%s/screenshot%04d.jpg", m_RemoteFileDir.Get(), m_nScreenShotIndex++ );	
-	} while ( g_pFullFileSystem->FileExists( pScreenshotPath, "MOD" ) );
+		Q_snprintf(pScreenshotPath, sizeof(pScreenshotPath), "%s/screenshot%04d.jpg", m_RemoteFileDir.Get(),
+				   m_nScreenShotIndex++);
+	} while(g_pFullFileSystem->FileExists(pScreenshotPath, "MOD"));
 
 	char pFullPath[MAX_PATH];
-	GetModSubdirectory( pScreenshotPath, pFullPath, sizeof(pFullPath) );
-	HZIP hZip = OpenZip( (void*)pBuffer, nBufLen, ZIP_MEMORY );
+	GetModSubdirectory(pScreenshotPath, pFullPath, sizeof(pFullPath));
+	HZIP hZip = OpenZip((void *)pBuffer, nBufLen, ZIP_MEMORY);
 
 	int nIndex;
 	ZIPENTRY zipInfo;
-	FindZipItem( hZip, "screenshot.jpg", true, &nIndex, &zipInfo );
-	if ( nIndex >= 0 )
+	FindZipItem(hZip, "screenshot.jpg", true, &nIndex, &zipInfo);
+	if(nIndex >= 0)
 	{
-		UnzipItem( hZip, nIndex, pFullPath, 0, ZIP_FILENAME );
+		UnzipItem(hZip, nIndex, pFullPath, 0, ZIP_FILENAME);
 	}
-	CloseZip( hZip );
+	CloseZip(hZip);
 }
 
-void CRConClient::SaveRemoteConsoleLog( const void* pBuffer, int nBufLen )
+void CRConClient::SaveRemoteConsoleLog(const void *pBuffer, int nBufLen)
 {
-	if ( nBufLen == 0 )
+	if(nBufLen == 0)
 		return;
 
 	char pLogPath[MAX_PATH];
-	do 
+	do
 	{
-		Q_snprintf( pLogPath, sizeof( pLogPath ), "%s/console%04d.log", m_RemoteFileDir.Get(), m_nConsoleLogIndex++ );	
-	} while ( g_pFullFileSystem->FileExists( pLogPath, "MOD" ) );
+		Q_snprintf(pLogPath, sizeof(pLogPath), "%s/console%04d.log", m_RemoteFileDir.Get(), m_nConsoleLogIndex++);
+	} while(g_pFullFileSystem->FileExists(pLogPath, "MOD"));
 
 	char pFullPath[MAX_PATH];
-	GetModSubdirectory( pLogPath, pFullPath, sizeof(pFullPath) );
-	HZIP hZip = OpenZip( (void*)pBuffer, nBufLen, ZIP_MEMORY );
+	GetModSubdirectory(pLogPath, pFullPath, sizeof(pFullPath));
+	HZIP hZip = OpenZip((void *)pBuffer, nBufLen, ZIP_MEMORY);
 
 	int nIndex;
 	ZIPENTRY zipInfo;
-	FindZipItem( hZip, "console.log", true, &nIndex, &zipInfo );
-	if ( nIndex >= 0 )
+	FindZipItem(hZip, "console.log", true, &nIndex, &zipInfo);
+	if(nIndex >= 0)
 	{
-		UnzipItem( hZip, nIndex, pFullPath, 0, ZIP_FILENAME );
+		UnzipItem(hZip, nIndex, pFullPath, 0, ZIP_FILENAME);
 	}
-	CloseZip( hZip );
+	CloseZip(hZip);
 }

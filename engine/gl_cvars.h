@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -17,24 +17,24 @@
 #include "cmd.h"
 
 // Stuff that's dealt with by the material system
-extern	ConVar	mat_wireframe;		// Draw the world in wireframe mode
-extern	ConVar	mat_normals;		// Draw the world with vertex normals
-extern	ConVar	mat_luxels;			// Draw lightmaps as checkerboards
-extern  ConVar	mat_loadtextures;	// Can help load levels quickly for debugging.
-extern	ConVar	mat_bumpbasis;		// Draw the world with the bump basis vectors drawn
-extern	ConVar	mat_envmapsize;		// Dimensions of square skybox bitmap (in 3D screen shots, not game textures)
-extern  ConVar  mat_envmaptgasize;
-extern  ConVar  mat_levelflush;
-extern	ConVar	mat_hdr_level;
+extern ConVar mat_wireframe;	// Draw the world in wireframe mode
+extern ConVar mat_normals;		// Draw the world with vertex normals
+extern ConVar mat_luxels;		// Draw lightmaps as checkerboards
+extern ConVar mat_loadtextures; // Can help load levels quickly for debugging.
+extern ConVar mat_bumpbasis;	// Draw the world with the bump basis vectors drawn
+extern ConVar mat_envmapsize;	// Dimensions of square skybox bitmap (in 3D screen shots, not game textures)
+extern ConVar mat_envmaptgasize;
+extern ConVar mat_levelflush;
+extern ConVar mat_hdr_level;
 
 static inline bool CanCheat()
 {
-	extern	ConVar	sv_cheats;
-	extern	ConVar	cl_debug_respect_cheat_vars;
+	extern ConVar sv_cheats;
+	extern ConVar cl_debug_respect_cheat_vars;
 
 #ifdef _DEBUG
 	bool bRespectCheatVars = cl_debug_respect_cheat_vars.GetBool() && !Cmd_IsRptActive();
-	if ( bRespectCheatVars )
+	if(bRespectCheatVars)
 		return sv_cheats.GetBool();
 	return true;
 #else
@@ -47,20 +47,20 @@ static inline bool CanCheat()
 #endif
 }
 
-static inline int WireFrameMode( void )
+static inline int WireFrameMode(void)
 {
-	if ( CanCheat() )
+	if(CanCheat())
 		return mat_wireframe.GetInt();
 	return 0;
 }
 
-static inline bool ShouldDrawInWireFrameMode( void )
+static inline bool ShouldDrawInWireFrameMode(void)
 {
-	if ( CanCheat() )
-		return ( mat_wireframe.GetInt() != 0 );
+	if(CanCheat())
+		return (mat_wireframe.GetInt() != 0);
 	return false;
 }
 
-extern	ConVar	r_drawbrushmodels;
+extern ConVar r_drawbrushmodels;
 
-#endif	//GL_CVARS_H
+#endif // GL_CVARS_H

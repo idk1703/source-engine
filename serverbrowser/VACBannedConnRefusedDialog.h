@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -10,20 +10,15 @@
 #pragma once
 #endif
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Displays information about new VAC bans
 //-----------------------------------------------------------------------------
 class CVACBannedConnRefusedDialog : public vgui::Frame
 {
-	DECLARE_CLASS_SIMPLE( CVACBannedConnRefusedDialog, vgui::Frame );
+	DECLARE_CLASS_SIMPLE(CVACBannedConnRefusedDialog, vgui::Frame);
 
 public:
-	CVACBannedConnRefusedDialog( vgui::VPANEL hVParent, const char *name );
-
+	CVACBannedConnRefusedDialog(vgui::VPANEL hVParent, const char *name);
 };
-
-
-
 
 #endif // VACBANNEDCONNREFUSED_H

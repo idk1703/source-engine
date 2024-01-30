@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,17 +15,17 @@
 C_CSRootPanel *g_pCSRootPanel = NULL;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void VGUI_CreateClientDLLRootPanel( void )
+void VGUI_CreateClientDLLRootPanel(void)
 {
-	g_pCSRootPanel = new C_CSRootPanel( enginevgui->GetPanel( PANEL_CLIENTDLL ) );
+	g_pCSRootPanel = new C_CSRootPanel(enginevgui->GetPanel(PANEL_CLIENTDLL));
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void VGUI_DestroyClientDLLRootPanel( void )
+void VGUI_DestroyClientDLLRootPanel(void)
 {
 	delete g_pCSRootPanel;
 	g_pCSRootPanel = NULL;
@@ -35,7 +35,7 @@ void VGUI_DestroyClientDLLRootPanel( void )
 // Purpose: Game specific root panel
 // Output : vgui::Panel
 //-----------------------------------------------------------------------------
-vgui::VPANEL VGui_GetClientDLLRootPanel( void )
+vgui::VPANEL VGui_GetClientDLLRootPanel(void)
 {
 	return g_pCSRootPanel->GetVPanel();
 }

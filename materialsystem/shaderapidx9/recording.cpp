@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -31,29 +31,29 @@ static int g_CommandStartIdx = 0;
 // Opens the recording file
 //-----------------------------------------------------------------------------
 
-static FILE* OpenRecordingFile()
+static FILE *OpenRecordingFile()
 {
 #ifdef CRASH_RECORDING
 	static FILE *fp = 0;
 #else
-	FILE* fp = 0;
+	FILE *fp = 0;
 #endif
 	static bool g_CantOpenFile = false;
 	static bool g_NeverOpened = true;
-	if (!g_CantOpenFile)
+	if(!g_CantOpenFile)
 	{
 #ifdef CRASH_RECORDING
-		if( g_NeverOpened )
+		if(g_NeverOpened)
 		{
-			fp = fopen( "shaderdx8.rec", "wbc" );
+			fp = fopen("shaderdx8.rec", "wbc");
 		}
 #else
-		fp = fopen( "shaderdx8.rec", g_NeverOpened ? "wb" : "ab" );
+		fp = fopen("shaderdx8.rec", g_NeverOpened ? "wb" : "ab");
 #endif
-		if (!fp)
+		if(!fp)
 		{
 			Warning("Unable to open recording file shaderdx8.rec!\n");
-			g_CantOpenFile = true;			
+			g_CantOpenFile = true;
 		}
 		g_NeverOpened = false;
 	}
@@ -69,25 +69,23 @@ static FILE* OpenRecordingFile()
 static void WriteRecordingFile()
 {
 	// Store the command size
-	*(int*)&g_pRecordingBuffer[g_CommandStartIdx] = 
-		g_pRecordingBuffer.Size() - g_CommandStartIdx;
+	*(int *)&g_pRecordingBuffer[g_CommandStartIdx] = g_pRecordingBuffer.Size() - g_CommandStartIdx;
 
 #ifndef CRASH_RECORDING
-	// When not crash recording, flush when buffer gets too big, 
+	// When not crash recording, flush when buffer gets too big,
 	// or when Present() is called
-	if ((g_pRecordingBuffer.Size() < COMMAND_BUFFER_SIZE) &&
-		(g_pRecordingBuffer[g_CommandStartIdx+4] != DX8_PRESENT))
+	if((g_pRecordingBuffer.Size() < COMMAND_BUFFER_SIZE) && (g_pRecordingBuffer[g_CommandStartIdx + 4] != DX8_PRESENT))
 		return;
 #endif
 
-	FILE* fp = OpenRecordingFile();
-	if (fp)
+	FILE *fp = OpenRecordingFile();
+	if(fp)
 	{
 		// store the command size
-		fwrite( g_pRecordingBuffer.Base(), 1, g_pRecordingBuffer.Size(), fp );
-		fflush( fp );
+		fwrite(g_pRecordingBuffer.Base(), 1, g_pRecordingBuffer.Size(), fp);
+		fflush(fp);
 #ifndef CRASH_RECORDING
-		fclose( fp );
+		fclose(fp);
 #endif
 	}
 
@@ -98,12 +96,12 @@ static void WriteRecordingFile()
 void FinishRecording()
 {
 #ifndef CRASH_RECORDING
-	FILE* fp = OpenRecordingFile();
-	if (fp)
+	FILE *fp = OpenRecordingFile();
+	if(fp)
 	{
 		// store the command size
-		fwrite( g_pRecordingBuffer.Base(), 1, g_pRecordingBuffer.Size(), fp );
-		fflush( fp );
+		fwrite(g_pRecordingBuffer.Base(), 1, g_pRecordingBuffer.Size(), fp);
+		fflush(fp);
 	}
 
 	g_pRecordingBuffer.RemoveAll();
@@ -117,21 +115,21 @@ static bool g_bDoRecord = true;
 // Records a command
 //-----------------------------------------------------------------------------
 
-void RecordCommand( RecordingCommands_t cmd, int numargs )
+void RecordCommand(RecordingCommands_t cmd, int numargs)
 {
-	if( !g_bDoRecord )
+	if(!g_bDoRecord)
 	{
 		return;
 	}
-	Assert( g_ArgsRemaining == 0 );
+	Assert(g_ArgsRemaining == 0);
 
-	g_CommandStartIdx = g_pRecordingBuffer.AddMultipleToTail( 6 );
+	g_CommandStartIdx = g_pRecordingBuffer.AddMultipleToTail(6);
 
 	// save space for the total command size
-	g_pRecordingBuffer[g_CommandStartIdx+4] = cmd;
-	g_pRecordingBuffer[g_CommandStartIdx+5] = numargs;
+	g_pRecordingBuffer[g_CommandStartIdx + 4] = cmd;
+	g_pRecordingBuffer[g_CommandStartIdx + 5] = numargs;
 	g_ArgsRemaining = numargs;
-	if (g_ArgsRemaining == 0)
+	if(g_ArgsRemaining == 0)
 		WriteRecordingFile();
 }
 
@@ -139,19 +137,18 @@ void RecordCommand( RecordingCommands_t cmd, int numargs )
 // Records an argument for a command, flushes when the command is done
 //-----------------------------------------------------------------------------
 
-void RecordArgument( void const* pMemory, int size )
+void RecordArgument(void const *pMemory, int size)
 {
-	if( !g_bDoRecord )
+	if(!g_bDoRecord)
 	{
 		return;
 	}
-	Assert( g_ArgsRemaining > 0 );
+	Assert(g_ArgsRemaining > 0);
 	int tail = g_pRecordingBuffer.Size();
-	g_pRecordingBuffer.AddMultipleToTail( size );
-	memcpy( &g_pRecordingBuffer[tail], pMemory, size );
-	if (--g_ArgsRemaining == 0)
+	g_pRecordingBuffer.AddMultipleToTail(size);
+	memcpy(&g_pRecordingBuffer[tail], pMemory, size);
+	if(--g_ArgsRemaining == 0)
 		WriteRecordingFile();
 }
-
 
 #endif // RECORDING

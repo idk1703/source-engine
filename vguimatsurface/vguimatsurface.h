@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Implementation of the VGUI ISurface interface using the 
+// Purpose: Implementation of the VGUI ISurface interface using the
 // material system to implement it
 //
 // $Revision: $
@@ -13,10 +13,9 @@
 #include <vgui/VGUI.h>
 #include "tier3/tier3.h"
 
-
 namespace vgui
 {
-	class IInputInternal; 
+	class IInputInternal;
 }
 
 //-----------------------------------------------------------------------------
@@ -24,7 +23,4 @@ namespace vgui
 //-----------------------------------------------------------------------------
 extern vgui::IInputInternal *g_pIInput;
 
-
 #endif // VGUIMATSURFACE_H
-
-

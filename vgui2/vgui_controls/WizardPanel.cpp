@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,7 +28,6 @@ WizardPanel::WizardPanel(Panel *parent, const char *panelName) : Frame(parent, p
 	_currentData = new KeyValues("WizardData");
 	_showButtons = true;
 
-
 	SetSizeable(false);
 
 	CreateButtons();
@@ -39,14 +38,14 @@ WizardPanel::WizardPanel(Panel *parent, const char *panelName) : Frame(parent, p
 //-----------------------------------------------------------------------------
 WizardPanel::~WizardPanel()
 {
-	if (_currentData)
+	if(_currentData)
 	{
 		_currentData->deleteThis();
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void WizardPanel::PerformLayout()
 {
@@ -56,7 +55,7 @@ void WizardPanel::PerformLayout()
 	int x, y, wide, tall;
 	GetClientArea(x, y, wide, tall);
 
-	if (_currentSubPanel && _currentSubPanel->isNonWizardPanel())
+	if(_currentSubPanel && _currentSubPanel->isNonWizardPanel())
 	{
 		// just have the subpanel cover the full size
 		_currentSubPanel->SetBounds(x, y, wide, tall);
@@ -68,9 +67,9 @@ void WizardPanel::PerformLayout()
 	else
 	{
 		// make room for the buttons at bottom
-		if (_currentSubPanel) 
+		if(_currentSubPanel)
 		{
-			if( _showButtons )
+			if(_showButtons)
 			{
 				_currentSubPanel->SetBounds(x, y, wide, tall - 35);
 			}
@@ -83,10 +82,9 @@ void WizardPanel::PerformLayout()
 		// align the buttons to the right hand side
 		GetSize(wide, tall);
 
-
 		int bwide, btall;
 		_cancelButton->GetSize(bwide, btall);
-		
+
 		x = wide - (20 + bwide);
 		y = tall - (12 + btall);
 
@@ -94,9 +92,9 @@ void WizardPanel::PerformLayout()
 		x -= (20 + bwide);
 
 		// only display one of the next or finish buttons (and only if both are visible)
-		if ( _showButtons )
+		if(_showButtons)
 		{
-			if (_finishButton->IsEnabled() )
+			if(_finishButton->IsEnabled())
 			{
 				_nextButton->SetVisible(false);
 				_finishButton->SetVisible(true);
@@ -117,35 +115,33 @@ void WizardPanel::PerformLayout()
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: if we don't show buttons then let the sub panel occupy the whole screen
 //-----------------------------------------------------------------------------
 void WizardPanel::GetClientArea(int &x, int &y, int &wide, int &tall)
 {
-	if( _showButtons )
+	if(_showButtons)
 	{
-		BaseClass::GetClientArea( x, y, wide, tall );
+		BaseClass::GetClientArea(x, y, wide, tall);
 	}
 	else
 	{
 		x = 0;
 		y = 0;
-		GetSize( wide, tall );
+		GetSize(wide, tall);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void WizardPanel::ApplySchemeSettings(IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void WizardPanel::Run(WizardSubPanel *startPanel)
 {
@@ -160,32 +156,32 @@ void WizardPanel::Run(WizardSubPanel *startPanel)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void WizardPanel::ActivateBuildMode()
 {
 	// no subpanel, no build mode
-	if (!_currentSubPanel)
+	if(!_currentSubPanel)
 		return;
 
 	_currentSubPanel->ActivateBuildMode();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void WizardPanel::ResetDefaultButton()
 {
 	// work out which is the default button
-	if (_nextButton->IsEnabled())
+	if(_nextButton->IsEnabled())
 	{
 		_nextButton->SetAsDefaultButton(true);
 	}
-	else if (_finishButton->IsEnabled())
+	else if(_finishButton->IsEnabled())
 	{
 		_finishButton->SetAsDefaultButton(true);
 	}
-	else if (_prevButton->IsEnabled())
+	else if(_prevButton->IsEnabled())
 	{
 		_prevButton->SetAsDefaultButton(true);
 	}
@@ -195,7 +191,7 @@ void WizardPanel::ResetDefaultButton()
 		_cancelButton->SetAsDefaultButton(true);
 	}
 	*/
-	
+
 	// reset them all (this may not be necessary)
 	_nextButton->InvalidateLayout();
 	_prevButton->InvalidateLayout();
@@ -206,16 +202,16 @@ void WizardPanel::ResetDefaultButton()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void WizardPanel::ResetKeyFocus()
 {
 	// set the focus on the default
 	FocusNavGroup &navGroup = GetFocusNavGroup();
 	Panel *def = navGroup.GetDefaultPanel();
-	if (def)
+	if(def)
 	{
-		if (def->IsEnabled() && def->IsVisible())
+		if(def->IsEnabled() && def->IsVisible())
 		{
 			def->RequestFocus();
 		}
@@ -228,9 +224,8 @@ void WizardPanel::ResetKeyFocus()
 	ResetDefaultButton();
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void WizardPanel::CreateButtons()
 {
@@ -264,13 +259,13 @@ void WizardPanel::ResetHistory()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void WizardPanel::ActivateNextSubPanel(WizardSubPanel *subPanel)
 {
 	// get rid of previous panel
 	WizardSubPanel *prevPanel = _currentSubPanel;
-	if (prevPanel && prevPanel->ShouldDisplayPanel())
+	if(prevPanel && prevPanel->ShouldDisplayPanel())
 	{
 		// hide
 		prevPanel->SetVisible(false);
@@ -284,7 +279,7 @@ void WizardPanel::ActivateNextSubPanel(WizardSubPanel *subPanel)
 	_nextButton->SetEnabled(true);
 	_cancelButton->SetEnabled(true);
 	_finishButton->SetEnabled(true);
-	if ( _showButtons ) 
+	if(_showButtons)
 	{
 		_prevButton->SetVisible(true);
 		_cancelButton->SetVisible(true);
@@ -300,17 +295,17 @@ void WizardPanel::ActivateNextSubPanel(WizardSubPanel *subPanel)
 	_currentSubPanel->OnDisplay();
 	_currentSubPanel->InvalidateLayout(false);
 
-	SETUP_PANEL( _currentSubPanel );
+	SETUP_PANEL(_currentSubPanel);
 	int wide, tall;
-	if ( _currentSubPanel->GetDesiredSize(wide, tall) )
+	if(_currentSubPanel->GetDesiredSize(wide, tall))
 	{
 		SetSize(wide, tall);
 	}
 
-	if (!prevPanel)
+	if(!prevPanel)
 	{
 		// no previous panel, so disable the back button
-		_prevButton->SetEnabled(false);		
+		_prevButton->SetEnabled(false);
 	}
 
 	_currentSubPanel->RequestFocus();
@@ -328,14 +323,14 @@ void WizardPanel::ActivatePrevSubPanel()
 	_currentSubPanel->SetVisible(false);
 
 	WizardSubPanel *prevPanel = NULL;
-	if (_subPanelStack.GetCount())
+	if(_subPanelStack.GetCount())
 	{
 		// check to see if we need to jump back to a previous sub panel
 		WizardSubPanel *searchPanel = _currentSubPanel->GetPrevSubPanel();
-		if (searchPanel && _subPanelStack.HasElement(searchPanel))
+		if(searchPanel && _subPanelStack.HasElement(searchPanel))
 		{
 			// keep poping the stack till we find it
-			while (_subPanelStack.GetCount() && prevPanel != searchPanel)
+			while(_subPanelStack.GetCount() && prevPanel != searchPanel)
 			{
 				prevPanel = _subPanelStack[_subPanelStack.GetCount() - 1];
 				_subPanelStack.RemoveElementAt(_subPanelStack.GetCount() - 1);
@@ -349,7 +344,7 @@ void WizardPanel::ActivatePrevSubPanel()
 		}
 	}
 
-	if (!prevPanel)
+	if(!prevPanel)
 	{
 		ivgui()->DPrintf2("Error: WizardPanel::ActivatePrevSubPanel(): no previous panel to go back to\n");
 		return;
@@ -357,7 +352,7 @@ void WizardPanel::ActivatePrevSubPanel()
 
 	// hide old panel
 	_currentSubPanel->SetVisible(false);
-	
+
 	// reenable all buttons, returning them to their default state
 	_prevButton->SetEnabled(true);
 	_nextButton->SetEnabled(true);
@@ -372,9 +367,9 @@ void WizardPanel::ActivatePrevSubPanel()
 	_currentSubPanel->OnDisplay();
 	_currentSubPanel->InvalidateLayout(false);
 
-	SETUP_PANEL( _currentSubPanel );
+	SETUP_PANEL(_currentSubPanel);
 	int wide, tall;
-	if ( _currentSubPanel->GetDesiredSize(wide, tall) )
+	if(_currentSubPanel->GetDesiredSize(wide, tall))
 	{
 		SetSize(wide, tall);
 	}
@@ -382,10 +377,10 @@ void WizardPanel::ActivatePrevSubPanel()
 	// show the previous panel, but don't Activate it (since it should show just what it was previously)
 	_currentSubPanel->SetVisible(true);
 
-	if (!_subPanelStack.GetCount())
+	if(!_subPanelStack.GetCount())
 	{
 		// no previous panel, so disable the back button
-		_prevButton->SetEnabled(false);		
+		_prevButton->SetEnabled(false);
 	}
 
 	RecalculateTabOrdering();
@@ -398,7 +393,7 @@ void WizardPanel::ActivatePrevSubPanel()
 //-----------------------------------------------------------------------------
 void WizardPanel::RecalculateTabOrdering()
 {
-	if (_currentSubPanel)
+	if(_currentSubPanel)
 	{
 		_currentSubPanel->SetTabPosition(1);
 	}
@@ -409,11 +404,11 @@ void WizardPanel::RecalculateTabOrdering()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void WizardPanel::SetNextButtonEnabled(bool state)
 {
-	if (_nextButton->IsEnabled() != state)
+	if(_nextButton->IsEnabled() != state)
 	{
 		_nextButton->SetEnabled(state);
 		InvalidateLayout(false);
@@ -421,11 +416,11 @@ void WizardPanel::SetNextButtonEnabled(bool state)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void WizardPanel::SetPrevButtonEnabled(bool state)
 {
-	if (_prevButton->IsEnabled() != state)
+	if(_prevButton->IsEnabled() != state)
 	{
 		_prevButton->SetEnabled(state);
 		InvalidateLayout(false);
@@ -433,11 +428,11 @@ void WizardPanel::SetPrevButtonEnabled(bool state)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void WizardPanel::SetFinishButtonEnabled(bool state)
 {
-	if (_finishButton->IsEnabled() != state)
+	if(_finishButton->IsEnabled() != state)
 	{
 		_finishButton->SetEnabled(state);
 		InvalidateLayout(false);
@@ -445,20 +440,19 @@ void WizardPanel::SetFinishButtonEnabled(bool state)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void WizardPanel::SetCancelButtonEnabled(bool state)
 {
-	if (_cancelButton->IsEnabled() != state)
+	if(_cancelButton->IsEnabled() != state)
 	{
 		_cancelButton->SetEnabled(state);
 		InvalidateLayout(false);
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void WizardPanel::SetNextButtonVisible(bool state)
 {
@@ -466,7 +460,7 @@ void WizardPanel::SetNextButtonVisible(bool state)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void WizardPanel::SetPrevButtonVisible(bool state)
 {
@@ -474,7 +468,7 @@ void WizardPanel::SetPrevButtonVisible(bool state)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void WizardPanel::SetFinishButtonVisible(bool state)
 {
@@ -482,7 +476,7 @@ void WizardPanel::SetFinishButtonVisible(bool state)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void WizardPanel::SetCancelButtonVisible(bool state)
 {
@@ -490,11 +484,11 @@ void WizardPanel::SetCancelButtonVisible(bool state)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void WizardPanel::SetNextButtonText(const char *text)
 {
-	if (text)
+	if(text)
 	{
 		_nextButton->SetText(text);
 	}
@@ -505,11 +499,11 @@ void WizardPanel::SetNextButtonText(const char *text)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void WizardPanel::SetPrevButtonText(const char *text)
 {
-	if (text)
+	if(text)
 	{
 		_prevButton->SetText(text);
 	}
@@ -520,11 +514,11 @@ void WizardPanel::SetPrevButtonText(const char *text)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void WizardPanel::SetFinishButtonText(const char *text)
 {
-	if (text)
+	if(text)
 	{
 		_finishButton->SetText(text);
 	}
@@ -535,11 +529,11 @@ void WizardPanel::SetFinishButtonText(const char *text)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void WizardPanel::SetCancelButtonText(const char *text)
 {
-	if (text)
+	if(text)
 	{
 		_cancelButton->SetText(text);
 	}
@@ -555,12 +549,12 @@ void WizardPanel::SetCancelButtonText(const char *text)
 WizardSubPanel *WizardPanel::FindNextValidSubPanel(WizardSubPanel *currentPanel)
 {
 	// skip over sub panels if they don't want to be displayed
-	while (currentPanel)
+	while(currentPanel)
 	{
 		currentPanel->SetWizardPanel(this);
-		if (currentPanel->ShouldDisplayPanel())
+		if(currentPanel->ShouldDisplayPanel())
 			break;
-		
+
 		// ok the panel wants to be skipped, so skip ahead
 		currentPanel = currentPanel->GetNextSubPanel();
 	}
@@ -573,14 +567,14 @@ WizardSubPanel *WizardPanel::FindNextValidSubPanel(WizardSubPanel *currentPanel)
 //-----------------------------------------------------------------------------
 void WizardPanel::OnNextButton()
 {
-	if (_currentSubPanel)
+	if(_currentSubPanel)
 	{
 		bool shouldAdvance = _currentSubPanel->OnNextButton();
-		if (shouldAdvance)
+		if(shouldAdvance)
 		{
 			WizardSubPanel *nextPanel = FindNextValidSubPanel(_currentSubPanel->GetNextSubPanel());
 
-			if (nextPanel)
+			if(nextPanel)
 			{
 				KeyValues *kv = new KeyValues("ActivateNextSubPanel");
 				kv->SetPtr("panel", nextPanel);
@@ -596,29 +590,29 @@ void WizardPanel::OnNextButton()
 void WizardPanel::OnPrevButton()
 {
 	bool shouldRetreat = true;
-	if (_currentSubPanel)
+	if(_currentSubPanel)
 	{
 		shouldRetreat = _currentSubPanel->OnPrevButton();
 	}
 
-	if (shouldRetreat)
+	if(shouldRetreat)
 	{
 		ActivatePrevSubPanel();
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void WizardPanel::OnFinishButton()
 {
-	if (_currentSubPanel && _currentSubPanel->OnFinishButton())
+	if(_currentSubPanel && _currentSubPanel->OnFinishButton())
 	{
 		// hide ourselves away
 		BaseClass::OnClose();
 
 		// automatically delete ourselves if marked to do so
-		if (IsAutoDeleteSet())
+		if(IsAutoDeleteSet())
 		{
 			MarkForDeletion();
 		}
@@ -626,30 +620,29 @@ void WizardPanel::OnFinishButton()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void WizardPanel::OnCancelButton()
 {
-	if (_currentSubPanel && _currentSubPanel->OnCancelButton())
+	if(_currentSubPanel && _currentSubPanel->OnCancelButton())
 	{
 		// hide ourselves away
 		BaseClass::OnClose();
-		if (IsAutoDeleteSet())
+		if(IsAutoDeleteSet())
 		{
 			MarkForDeletion();
 		}
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: command handler for catching escape key presses
 //-----------------------------------------------------------------------------
 void WizardPanel::OnCommand(const char *command)
 {
-	if (!stricmp(command, "Cancel"))
+	if(!stricmp(command, "Cancel"))
 	{
-		if (_cancelButton->IsEnabled())
+		if(_cancelButton->IsEnabled())
 		{
 			_cancelButton->DoClick();
 		}
@@ -660,17 +653,16 @@ void WizardPanel::OnCommand(const char *command)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Maps close button to cancel button
 //-----------------------------------------------------------------------------
 void WizardPanel::OnClose()
 {
-	if (_cancelButton->IsEnabled())
+	if(_cancelButton->IsEnabled())
 	{
 		_cancelButton->DoClick();
 	}
-	else if (_finishButton->IsEnabled())
+	else if(_finishButton->IsEnabled())
 	{
 		_finishButton->DoClick();
 	}
@@ -679,24 +671,23 @@ void WizardPanel::OnClose()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 KeyValues *WizardPanel::GetWizardData()
 {
 	return _currentData;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: whether to show the next,prev,finish and cancel buttons
 //-----------------------------------------------------------------------------
 void WizardPanel::ShowButtons(bool state)
-{ 
-	_showButtons = state; 	// hide the wizard panel buttons
-	SetNextButtonVisible( state );
-	SetPrevButtonVisible( state );
-	SetFinishButtonVisible( state );
-	SetCancelButtonVisible( state );
+{
+	_showButtons = state; // hide the wizard panel buttons
+	SetNextButtonVisible(state);
+	SetPrevButtonVisible(state);
+	SetFinishButtonVisible(state);
+	SetCancelButtonVisible(state);
 }
 
 //-----------------------------------------------------------------------------
@@ -705,7 +696,7 @@ void WizardPanel::ShowButtons(bool state)
 void WizardPanel::OnCloseFrameButtonPressed()
 {
 	// only allow close if the cancel button is enabled
-	if (_cancelButton->IsEnabled())
+	if(_cancelButton->IsEnabled())
 	{
 		BaseClass::OnCloseFrameButtonPressed();
 	}

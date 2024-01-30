@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,8 +10,6 @@
 #pragma once
 #endif
 
-
-bool Map_AreAnyLeavesVisible( const struct worldbrushdata_t &worldBrush, int *leafList, int nLeaves );
-
+bool Map_AreAnyLeavesVisible(const struct worldbrushdata_t &worldBrush, int *leafList, int nLeaves);
 
 #endif // MOD_VIS_H

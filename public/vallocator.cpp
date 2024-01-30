@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -17,7 +17,7 @@
 
 VStdAllocator g_StdAllocator;
 
-void* VStdAllocator::Alloc(unsigned long size)
+void *VStdAllocator::Alloc(unsigned long size)
 {
 	if(size)
 	{

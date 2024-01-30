@@ -4,40 +4,36 @@
 //
 //===========================================================================//
 
-
 #ifndef DMEBONEMASKLIST_H
 #define DMEBONEMASKLIST_H
-
 
 #ifdef _WIN32
 #pragma once
 #endif
 
-
 #include "datamodel/dmattributevar.h"
 #include "mdlobjects/dmemdllist.h"
-
 
 //-----------------------------------------------------------------------------
 // Forward Declarations
 //-----------------------------------------------------------------------------
 class CDmeBoneMask;
 
-
 //-----------------------------------------------------------------------------
 // A class representing a list of bone masks
 //-----------------------------------------------------------------------------
 class CDmeBoneMaskList : public CDmeMdlList
 {
-	DEFINE_ELEMENT( CDmeBoneMaskList, CDmeMdlList );
+	DEFINE_ELEMENT(CDmeBoneMaskList, CDmeMdlList);
 
 public:
-	virtual CDmAttribute *GetListAttr() { return m_BoneMasks.GetAttribute(); }
+	virtual CDmAttribute *GetListAttr()
+	{
+		return m_BoneMasks.GetAttribute();
+	}
 
 private:
-	CDmaElementArray< CDmeBoneMask > m_BoneMasks;
-
+	CDmaElementArray<CDmeBoneMask> m_BoneMasks;
 };
-
 
 #endif // DMEBONEMASKLIST_H

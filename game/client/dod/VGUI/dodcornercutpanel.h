@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,38 +17,42 @@
 
 #include "dod_shareddefs.h"
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Draws the corner-cut background panels
 //-----------------------------------------------------------------------------
 class CDoDCutEditablePanel : public vgui::EditablePanel
 {
 public:
-	DECLARE_CLASS_SIMPLE( CDoDCutEditablePanel, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CDoDCutEditablePanel, vgui::EditablePanel);
 
-	CDoDCutEditablePanel( vgui::Panel *parent, const char *name );
+	CDoDCutEditablePanel(vgui::Panel *parent, const char *name);
 
 	virtual void PaintBackground();
 
-	virtual void SetBorder( vgui::IBorder *border );
+	virtual void SetBorder(vgui::IBorder *border);
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 
-	virtual void SetVisible( bool state )
+	virtual void SetVisible(bool state)
 	{
-		BaseClass::SetVisible( state );
+		BaseClass::SetVisible(state);
 	}
 
-	virtual void ApplySettings( KeyValues *inResourceData );
-	virtual void GetSettings( KeyValues *outResourceData );
+	virtual void ApplySettings(KeyValues *inResourceData);
+	virtual void GetSettings(KeyValues *outResourceData);
 
-	virtual void SetCornerToCut( int nCorner ){ m_nCornerToCut = nCorner; }
-	virtual void SetCornerCutSize( int nCutSize ){ m_nCornerCutSize = nCutSize; }
-	virtual void SetBackGroundColor( const char *pszNewColor );
-	virtual void SetBorderColor( const char *pszNewColor );
+	virtual void SetCornerToCut(int nCorner)
+	{
+		m_nCornerToCut = nCorner;
+	}
+	virtual void SetCornerCutSize(int nCutSize)
+	{
+		m_nCornerCutSize = nCutSize;
+	}
+	virtual void SetBackGroundColor(const char *pszNewColor);
+	virtual void SetBorderColor(const char *pszNewColor);
 
 private:
-
 	int m_iBackgroundTexture;
 
 	int m_nCornerToCut;
@@ -63,4 +67,3 @@ private:
 };
 
 #endif // DOD_CORNERCUTPANEL_H
-

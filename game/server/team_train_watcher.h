@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -20,25 +20,26 @@ class CFuncTrackTrain;
 class CPathTrack;
 class CTeamControlPoint;
 
-#define TEAM_TRAIN_ALERT_DISTANCE	750   // alert is the VO warning
-#define TEAM_TRAIN_ALARM_DISTANCE	200   // alarm is the looping sound played at the control point
+#define TEAM_TRAIN_ALERT_DISTANCE 750 // alert is the VO warning
+#define TEAM_TRAIN_ALARM_DISTANCE 200 // alarm is the looping sound played at the control point
 
-#define TEAM_TRAIN_ALERT			"Announcer.Cart.Warning"
-#define TEAM_TRAIN_FINAL_ALERT		"Announcer.Cart.FinalWarning"
-#define TEAM_TRAIN_ALARM			"Cart.Warning"
-#define TEAM_TRAIN_ALARM_SINGLE		"Cart.WarningSingle"
+#define TEAM_TRAIN_ALERT		"Announcer.Cart.Warning"
+#define TEAM_TRAIN_FINAL_ALERT	"Announcer.Cart.FinalWarning"
+#define TEAM_TRAIN_ALARM		"Cart.Warning"
+#define TEAM_TRAIN_ALARM_SINGLE "Cart.WarningSingle"
 
-#define TW_THINK		"CTeamTrainWatcherThink"
-#define TW_ALARM_THINK	"CTeamTrainWatcherAlarmThink"
-#define TW_ALARM_THINK_INTERVAL	8.0
+#define TW_THINK				"CTeamTrainWatcherThink"
+#define TW_ALARM_THINK			"CTeamTrainWatcherAlarmThink"
+#define TW_ALARM_THINK_INTERVAL 8.0
 
 // #define TWMASTER_THINK	"CTeamTrainWatcherMasterThink"
 
-DECLARE_AUTO_LIST( ITFTeamTrainWatcher );
+DECLARE_AUTO_LIST(ITFTeamTrainWatcher);
 
 class CTeamTrainWatcher : public CBaseEntity, public CGameEventListener, public ITFTeamTrainWatcher
 {
-	DECLARE_CLASS( CTeamTrainWatcher, CBaseEntity );
+	DECLARE_CLASS(CTeamTrainWatcher, CBaseEntity);
+
 public:
 	DECLARE_SERVERCLASS();
 	DECLARE_DATADESC();
@@ -46,71 +47,80 @@ public:
 	CTeamTrainWatcher();
 	~CTeamTrainWatcher();
 
-	virtual void UpdateOnRemove( void );
+	virtual void UpdateOnRemove(void);
 	virtual int UpdateTransmitState();
 
-	void InputRoundActivate( inputdata_t &inputdata );
-	void InputEnable( inputdata_t &inputdata );
-	void InputDisable( inputdata_t &inputdata );
+	void InputRoundActivate(inputdata_t &inputdata);
+	void InputEnable(inputdata_t &inputdata);
+	void InputDisable(inputdata_t &inputdata);
 
-	void InputSetNumTrainCappers( inputdata_t &inputdata );
-	void InputOnStartOvertime( inputdata_t &inputdata );
-	void InputSetSpeedForwardModifier( inputdata_t &inputdata );
-	void InputSetTrainRecedeTime( inputdata_t &inputdata );
-	void InputSetTrainCanRecede( inputdata_t &inputdata );
-	void InputSetTrainRecedeTimeAndUpdate( inputdata_t &inputdata );
+	void InputSetNumTrainCappers(inputdata_t &inputdata);
+	void InputOnStartOvertime(inputdata_t &inputdata);
+	void InputSetSpeedForwardModifier(inputdata_t &inputdata);
+	void InputSetTrainRecedeTime(inputdata_t &inputdata);
+	void InputSetTrainCanRecede(inputdata_t &inputdata);
+	void InputSetTrainRecedeTimeAndUpdate(inputdata_t &inputdata);
 
 	// ==========================================================
 	// given a start node and a list of goal nodes
 	// calculate the distance between each
 	// ==========================================================
-	void WatcherActivate( void );
+	void WatcherActivate(void);
 
-	void WatcherThink( void );
-	void WatcherAlarmThink( void );
+	void WatcherThink(void);
+	void WatcherAlarmThink(void);
 
-	CBaseEntity *GetTrainEntity( void );
-	bool IsDisabled( void ) { return m_bDisabled; }
+	CBaseEntity *GetTrainEntity(void);
+	bool IsDisabled(void)
+	{
+		return m_bDisabled;
+	}
 
-	bool TimerMayExpire( void );
+	bool TimerMayExpire(void);
 
-	void StopCaptureAlarm( void );
+	void StopCaptureAlarm(void);
 
-	void SetNumTrainCappers( int iNumCappers, CBaseEntity *pTrigger );  // only used for train watchers that control the train movement
+	void SetNumTrainCappers(int iNumCappers,
+							CBaseEntity *pTrigger); // only used for train watchers that control the train movement
 
-	virtual void FireGameEvent( IGameEvent * event );
+	virtual void FireGameEvent(IGameEvent *event);
 
-	int GetCapturerCount( void ) const;			// return the number of players who are "capturing" the payload, or -1 if the payload is blocked
+	int GetCapturerCount(
+		void) const; // return the number of players who are "capturing" the payload, or -1 if the payload is blocked
 
-	void ProjectPointOntoPath( const Vector &pos, Vector *posOnPath, float *distanceAlongPath ) const;	// project the given position onto the track and return the point and how far along that projected position is
-	bool IsAheadOfTrain( const Vector &pos ) const;	// return true if the given position is farther down the track than the train is
+	void ProjectPointOntoPath(const Vector &pos, Vector *posOnPath,
+							  float *distanceAlongPath) const; // project the given position onto the track and return
+															   // the point and how far along that projected position is
+	bool IsAheadOfTrain(
+		const Vector &pos) const; // return true if the given position is farther down the track than the train is
 
-	bool IsTrainAtStart( void ) const;				// return true if the train hasn't left its starting position yet
-	bool IsTrainNearCheckpoint( void ) const;		// return true if the train is almost at the next checkpoint
+	bool IsTrainAtStart(void) const;		// return true if the train hasn't left its starting position yet
+	bool IsTrainNearCheckpoint(void) const; // return true if the train is almost at the next checkpoint
 
-	float GetTrainDistanceAlongTrack( void ) const;
-	Vector GetNextCheckpointPosition( void ) const;	// return world space location of next checkpoint along the path
+	float GetTrainDistanceAlongTrack(void) const;
+	Vector GetNextCheckpointPosition(void) const; // return world space location of next checkpoint along the path
 
-#if defined( STAGING_ONLY ) && defined( TF_DLL )
-	void DumpStats( void );
+#if defined(STAGING_ONLY) && defined(TF_DLL)
+	void DumpStats(void);
 #endif // STAGING_ONLY && TF_DLL
 
-	float GetTrainProgress() { return m_flTotalProgress; }
+	float GetTrainProgress()
+	{
+		return m_flTotalProgress;
+	}
 
 private:
-
-	void StartCaptureAlarm( CTeamControlPoint *pPoint );
-	void PlayCaptureAlert( CTeamControlPoint *pPoint, bool bFinalPointInMap );
-	void InternalSetNumTrainCappers( int iNumCappers, CBaseEntity *pTrigger );
-	void InternalSetSpeedForwardModifier( float flModifier );
+	void StartCaptureAlarm(CTeamControlPoint *pPoint);
+	void PlayCaptureAlert(CTeamControlPoint *pPoint, bool bFinalPointInMap);
+	void InternalSetNumTrainCappers(int iNumCappers, CBaseEntity *pTrigger);
+	void InternalSetSpeedForwardModifier(float flModifier);
 #ifdef GLOWS_ENABLE
-	void FindGlowEntity( void );
+	void FindGlowEntity(void);
 #endif // GLOWS_ENABLE
-	void HandleTrainMovement( bool bStartReceding = false );
-	void HandleSparks( bool bSparks );
+	void HandleTrainMovement(bool bStartReceding = false);
+	void HandleSparks(bool bSparks);
 
 private:
-
 	bool m_bDisabled;
 	bool m_bTrainCanRecede;
 	// === Data ===
@@ -119,19 +129,19 @@ private:
 	CHandle<CFuncTrackTrain> m_hTrain;
 
 	// start node
-	CHandle<CPathTrack>	m_hStartNode;
+	CHandle<CPathTrack> m_hStartNode;
 
 	// goal node
-	CHandle<CPathTrack>	m_hGoalNode;
+	CHandle<CPathTrack> m_hGoalNode;
 
 	string_t m_iszTrain;
 	string_t m_iszStartNode;
 	string_t m_iszGoalNode;
 
 	// list of node associations with control points
-	typedef struct 
+	typedef struct
 	{
-		CHandle<CPathTrack>	hPathTrack;
+		CHandle<CPathTrack> hPathTrack;
 		CHandle<CTeamControlPoint> hCP;
 		float flDistanceFromStart;
 		bool bAlertPlayed;
@@ -143,25 +153,26 @@ private:
 	string_t m_iszLinkedPathTracks[MAX_CONTROL_POINTS];
 	string_t m_iszLinkedCPs[MAX_CONTROL_POINTS];
 
-	float m_flTotalPathDistance;	// calculated only at round start, node graph
+	float m_flTotalPathDistance; // calculated only at round start, node graph
 	// may get chopped as the round progresses
 
 	float m_flTrainDistanceAccumulator;
-	float m_flTrainDistanceFromStart;	// actual distance along path of train, for comparing against m_CPLinks[].flDistanceFromStart
+	float m_flTrainDistanceFromStart; // actual distance along path of train, for comparing against
+									  // m_CPLinks[].flDistanceFromStart
 
 	float m_flSpeedLevels[3];
 
 	// === Networked Data ===
 
 	// current total progress, percentage
-	CNetworkVar( float, m_flTotalProgress );
+	CNetworkVar(float, m_flTotalProgress);
 
-	CNetworkVar( int, m_iTrainSpeedLevel );
+	CNetworkVar(int, m_iTrainSpeedLevel);
 
-	CNetworkVar( int, m_nNumCappers );
+	CNetworkVar(int, m_nNumCappers);
 
 	bool m_bWaitingToRecede;
-	CNetworkVar( float, m_flRecedeTime );
+	CNetworkVar(float, m_flRecedeTime);
 	float m_flRecedeTotalTime;
 	float m_flRecedeStartTime;
 	COutputEvent m_OnTrainStartRecede;
@@ -178,7 +189,7 @@ private:
 	// added for new mode where the train_watcher handles the train movement
 	bool m_bHandleTrainMovement;
 	string_t m_iszSparkName;
-	CUtlVector< CHandle<CEnvSpark> > m_Sparks;
+	CUtlVector<CHandle<CEnvSpark>> m_Sparks;
 	float m_flSpeedForwardModifier;
 	int m_iCurrentHillType;
 	float m_flCurrentSpeed;
@@ -187,21 +198,19 @@ private:
 	int m_nTrainRecedeTime;
 
 #ifdef GLOWS_ENABLE
-	CNetworkVar( EHANDLE, m_hGlowEnt );
+	CNetworkVar(EHANDLE, m_hGlowEnt);
 #endif // GLOWS_ENABLE
 };
 
-
-inline float CTeamTrainWatcher::GetTrainDistanceAlongTrack( void ) const
+inline float CTeamTrainWatcher::GetTrainDistanceAlongTrack(void) const
 {
 	return m_flTrainDistanceFromStart;
 }
 
-inline int CTeamTrainWatcher::GetCapturerCount( void ) const
+inline int CTeamTrainWatcher::GetCapturerCount(void) const
 {
 	return m_nNumCappers;
 }
-
 
 /*
 class CTeamTrainWatcherMaster : public CBaseEntity, public CGameEventListener
@@ -231,4 +240,4 @@ private:
 extern EHANDLE g_hTeamTrainWatcherMaster;
 */
 
-#endif //TEAM_TRAIN_WATCHER_H
+#endif // TEAM_TRAIN_WATCHER_H

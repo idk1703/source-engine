@@ -14,40 +14,31 @@
 #include "mxtk/mxButton.h"
 #include <windows.h>
 
-
-
 class mxButton_i
 {
 public:
 	int dummy;
 };
 
-
-
-mxButton::mxButton (mxWindow *parent, int x, int y, int w, int h, const char *label, int id)
-: mxWidget (parent, x, y, w, h, label)
+mxButton::mxButton(mxWindow *parent, int x, int y, int w, int h, const char *label, int id)
+	: mxWidget(parent, x, y, w, h, label)
 {
-	if (!parent)
+	if(!parent)
 		return;
 
 	DWORD dwStyle = WS_VISIBLE | WS_CHILD;
-	HWND hwndParent = (HWND) ((mxWidget *) parent)->getHandle ();
+	HWND hwndParent = (HWND)((mxWidget *)parent)->getHandle();
 
-	void *handle = (void *) CreateWindowEx (0, "BUTTON", label, dwStyle,
-				x, y, w, h, hwndParent,
-				(HMENU) id, (HINSTANCE) GetModuleHandle (NULL), NULL);
-	
-	SendMessage ((HWND) handle, WM_SETFONT, (WPARAM) (HFONT) GetStockObject (ANSI_VAR_FONT), MAKELPARAM (TRUE, 0));
-	SetWindowLong ((HWND) handle, GWL_USERDATA, (LONG) this);
+	void *handle = (void *)CreateWindowEx(0, "BUTTON", label, dwStyle, x, y, w, h, hwndParent, (HMENU)id,
+										  (HINSTANCE)GetModuleHandle(NULL), NULL);
 
-	setType (MX_BUTTON);
-	setHandle (handle);
-	setParent (parent);
-	setId (id);
+	SendMessage((HWND)handle, WM_SETFONT, (WPARAM)(HFONT)GetStockObject(ANSI_VAR_FONT), MAKELPARAM(TRUE, 0));
+	SetWindowLong((HWND)handle, GWL_USERDATA, (LONG)this);
+
+	setType(MX_BUTTON);
+	setHandle(handle);
+	setParent(parent);
+	setId(id);
 }
 
-
-
-mxButton::~mxButton ()
-{
-}
+mxButton::~mxButton() {}

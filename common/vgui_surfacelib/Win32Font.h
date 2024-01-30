@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,7 +11,7 @@
 #pragma once
 #endif
 
-#if !defined( _X360 )
+#if !defined(_X360)
 #define WIN32_LEAN_AND_MEAN
 #define OEMRESOURCE
 #include <windows.h>
@@ -69,55 +69,63 @@ public:
 	virtual int GetFlags();
 
 	// returns true if this font is underlined
-	bool GetUnderlined() { return m_bUnderlined; }
+	bool GetUnderlined()
+	{
+		return m_bUnderlined;
+	}
 
 	// gets the name of this font
-	const char *GetName() { return m_szName.String(); }
-	const char *GetFamilyName() { return NULL; }
+	const char *GetName()
+	{
+		return m_szName.String();
+	}
+	const char *GetFamilyName()
+	{
+		return NULL;
+	}
 
 	// gets the width of ch given its position around before and after chars
-	void GetKernedCharWidth( wchar_t ch, wchar_t chBefore, wchar_t chAfter, float &wide, float &abcA );
+	void GetKernedCharWidth(wchar_t ch, wchar_t chBefore, wchar_t chAfter, float &wide, float &abcA);
 
-#if defined( _X360 )
+#if defined(_X360)
 	// generates texture data for a set of chars
-	virtual void GetCharsRGBA( newChar_t *newChars, int numNewChars, unsigned char *pRGBA );
+	virtual void GetCharsRGBA(newChar_t *newChars, int numNewChars, unsigned char *pRGBA);
 
 	virtual void CloseResource();
 #endif
 
 private:
-
-#if !defined( _X360 )
-	HFONT			m_hFont;
-	HDC				m_hDC;
-	HBITMAP			m_hDIB;
+#if !defined(_X360)
+	HFONT m_hFont;
+	HDC m_hDC;
+	HBITMAP m_hDIB;
 #else
-	HXUIFONT		m_hFont;
-	HDC				m_hDC;
+	HXUIFONT m_hFont;
+	HDC m_hDC;
 #endif
 
 	// pointer to buffer for use when generated bitmap versions of a texture
-	unsigned char	*m_pBuf;
+	unsigned char *m_pBuf;
 
 protected:
-	CUtlSymbol		m_szName;
+	CUtlSymbol m_szName;
 
-	short			m_iTall;
-	unsigned short	m_iWeight;
-	unsigned short	m_iFlags;
-	unsigned short	m_iScanLines;
-	unsigned short	m_iBlur;
-	unsigned short	m_rgiBitmapSize[2];
-	bool			m_bUnderlined;
+	short m_iTall;
+	unsigned short m_iWeight;
+	unsigned short m_iFlags;
+	unsigned short m_iScanLines;
+	unsigned short m_iBlur;
+	unsigned short m_rgiBitmapSize[2];
+	bool m_bUnderlined;
 
-	unsigned int	m_iHeight : 8;
-	unsigned int	m_iMaxCharWidth : 8;
-	unsigned int	m_iAscent : 8;
-	unsigned int	m_iDropShadowOffset : 1;
-	unsigned int	m_iOutlineSize : 1;
-	unsigned int	m_bAntiAliased : 1;
-	unsigned int	m_bRotary : 1;
-	unsigned int	m_bAdditive : 1; //29
+	unsigned int m_iHeight : 8;
+	unsigned int m_iMaxCharWidth : 8;
+	unsigned int m_iAscent : 8;
+	unsigned int m_iDropShadowOffset : 1;
+	unsigned int m_iOutlineSize : 1;
+	unsigned int m_bAntiAliased : 1;
+	unsigned int m_bRotary : 1;
+	unsigned int m_bAdditive : 1; // 29
 
 private:
 	// abc widths
@@ -128,8 +136,8 @@ private:
 		char c;
 	};
 
-#if !defined( _X360 )
-	// On PC we cache char widths on demand when actually requested to minimize our use of the kernels 
+#if !defined(_X360)
+	// On PC we cache char widths on demand when actually requested to minimize our use of the kernels
 	// paged pool (GDI may cache information about glyphs we have requested and take up lots of paged pool)
 	struct abc_cache_t
 	{
@@ -140,7 +148,10 @@ private:
 	static bool ExtendedABCWidthsCacheLessFunc(const abc_cache_t &lhs, const abc_cache_t &rhs);
 #else
 	// 360 requires all possible characters during font init
-	enum { ABCWIDTHS_CACHE_SIZE = 256 };
+	enum
+	{
+		ABCWIDTHS_CACHE_SIZE = 256
+	};
 	abc_t m_ABCWidthsCache[ABCWIDTHS_CACHE_SIZE];
 #endif
 };

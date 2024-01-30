@@ -18,7 +18,7 @@
 
 namespace vgui
 {
-typedef ButtonCode_t KeyCode;
+	typedef ButtonCode_t KeyCode;
 }
 
 #endif // KEYCODE_H

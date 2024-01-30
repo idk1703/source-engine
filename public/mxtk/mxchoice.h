@@ -14,17 +14,11 @@
 #ifndef INCLUDED_MXCHOICE
 #define INCLUDED_MXCHOICE
 
-
-
 #ifndef INCLUDED_MXWIDGET
 #include "mxtk/mxWidget.h"
 #endif
 
-
-
 class mxWindow;
-
-
 
 class mxChoice_i;
 class mxChoice : public mxWidget
@@ -33,25 +27,23 @@ class mxChoice : public mxWidget
 
 public:
 	// CREATORS
-	mxChoice (mxWindow *parent, int x, int y, int w, int h, int id = 0);
-	virtual ~mxChoice ();
+	mxChoice(mxWindow *parent, int x, int y, int w, int h, int id = 0);
+	virtual ~mxChoice();
 
 	// MANIPULATORS
-	void add (const char *item);
-	void select (int index);
-	void remove (int index);
-	void removeAll ();
+	void add(const char *item);
+	void select(int index);
+	void remove(int index);
+	void removeAll();
 
 	// ACCESSORS
-	int getItemCount () const;
-	int getSelectedIndex () const;
+	int getItemCount() const;
+	int getSelectedIndex() const;
 
 private:
 	// NOT IMPLEMENTED
-	mxChoice (const mxChoice&);
-	mxChoice& operator= (const mxChoice&);
+	mxChoice(const mxChoice &);
+	mxChoice &operator=(const mxChoice &);
 };
-
-
 
 #endif // INCLUDED_MXCHOICE

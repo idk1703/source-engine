@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,35 +13,34 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-void EngineBitBufErrorHandler( BitBufErrorType errorType, const char *pDebugName )
+void EngineBitBufErrorHandler(BitBufErrorType errorType, const char *pDebugName)
 {
-	if ( !pDebugName )
+	if(!pDebugName)
 	{
 		pDebugName = "(unknown)";
 	}
 
-	static CUtlSymbolTable errorNames[ BITBUFERROR_NUM_ERRORS ];
+	static CUtlSymbolTable errorNames[BITBUFERROR_NUM_ERRORS];
 
 	// Only print an error a couple times.
-	CUtlSymbol sym = errorNames[ errorType ].Find( pDebugName );
-	if ( UTL_INVAL_SYMBOL == sym )
+	CUtlSymbol sym = errorNames[errorType].Find(pDebugName);
+	if(UTL_INVAL_SYMBOL == sym)
 	{
-		errorNames[ errorType ].AddString( pDebugName );
-		if ( errorType == BITBUFERROR_VALUE_OUT_OF_RANGE )
+		errorNames[errorType].AddString(pDebugName);
+		if(errorType == BITBUFERROR_VALUE_OUT_OF_RANGE)
 		{
-			Warning( "Error in bitbuf [%s]: out of range value. Debug in bitbuf_errorhandler.cpp\n", pDebugName );
+			Warning("Error in bitbuf [%s]: out of range value. Debug in bitbuf_errorhandler.cpp\n", pDebugName);
 		}
-		else if ( errorType == BITBUFERROR_BUFFER_OVERRUN )
+		else if(errorType == BITBUFERROR_BUFFER_OVERRUN)
 		{
-			Warning( "Error in bitbuf [%s]: buffer overrun. Debug in bitbuf_errorhandler.cpp\n", pDebugName );
+			Warning("Error in bitbuf [%s]: buffer overrun. Debug in bitbuf_errorhandler.cpp\n", pDebugName);
 		}
 	}
 
-	AssertMsg( false, "%s: %s errorType: %d", __FUNCTION__, pDebugName, errorType );
+	AssertMsg(false, "%s: %s errorType: %d", __FUNCTION__, pDebugName, errorType);
 }
 
 void InstallBitBufErrorHandler()
 {
-	SetBitBufErrorHandler( EngineBitBufErrorHandler );
+	SetBitBufErrorHandler(EngineBitBufErrorHandler);
 }
-

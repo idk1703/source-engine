@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,30 +10,23 @@
 #pragma once
 #endif
 
-
 #include "basecsgrenade_projectile.h"
-
 
 class CFlashbangProjectile : public CBaseCSGrenadeProjectile
 {
 public:
-	DECLARE_CLASS( CFlashbangProjectile, CBaseCSGrenadeProjectile );
+	DECLARE_CLASS(CFlashbangProjectile, CBaseCSGrenadeProjectile);
 
-// Overrides.
+	// Overrides.
 public:
 	virtual void Spawn();
 	virtual void Precache();
-	virtual void BounceSound( void );
+	virtual void BounceSound(void);
 	virtual void Detonate();
 
-// Grenade stuff.
-	static CFlashbangProjectile* Create( 
-		const Vector &position, 
-		const QAngle &angles, 
-		const Vector &velocity, 
-		const AngularImpulse &angVelocity, 
-		CBaseCombatCharacter *pOwner );	
+	// Grenade stuff.
+	static CFlashbangProjectile *Create(const Vector &position, const QAngle &angles, const Vector &velocity,
+										const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner);
 };
-
 
 #endif // HEGRENADE_PROJECTILE_H

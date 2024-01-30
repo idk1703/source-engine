@@ -9,9 +9,9 @@
  *
  * \author mdurand
  *
- * \todo 
+ * \todo
  *
- * \bug 
+ * \bug
  *
  */
 #ifndef MODCONFIGSHELPER_H
@@ -27,13 +27,13 @@ class ModConfigsHelper
 {
 public:
 	/**
-	 * Default constructor which automatically finds and sets the base directory for all MODs 
+	 * Default constructor which automatically finds and sets the base directory for all MODs
 	 * and populates a vector of MOD directory names.
 	 */
 	ModConfigsHelper();
 
 	/**
-	 * Default destructor. 
+	 * Default destructor.
 	 */
 	~ModConfigsHelper();
 

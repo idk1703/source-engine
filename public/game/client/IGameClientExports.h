@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -30,24 +30,23 @@ public:
 	virtual void OnGameUIHidden() = 0;
 #endif
 
-    //=============================================================================
-    // HPE_BEGIN
-    // [dwenger] Necessary for stats display
-    //=============================================================================
+	//=============================================================================
+	// HPE_BEGIN
+	// [dwenger] Necessary for stats display
+	//=============================================================================
 
-    virtual void CreateAchievementsPanel( vgui::Panel* pParent ) = 0;
-    virtual void DisplayAchievementPanel( ) = 0;
-    virtual void ShutdownAchievementPanel( ) = 0;
-	virtual int GetAchievementsPanelMinWidth( void ) const = 0;
+	virtual void CreateAchievementsPanel(vgui::Panel * pParent) = 0;
+	virtual void DisplayAchievementPanel() = 0;
+	virtual void ShutdownAchievementPanel() = 0;
+	virtual int GetAchievementsPanelMinWidth(void) const = 0;
 
-    //=============================================================================
-    // HPE_END
-    //=============================================================================
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
 
 	virtual const char *GetHolidayString() = 0;
 };
 
 #define GAMECLIENTEXPORTS_INTERFACE_VERSION "GameClientExports001"
-
 
 #endif // IGAMECLIENTEXPORTS_H

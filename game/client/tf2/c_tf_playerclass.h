@@ -17,34 +17,33 @@ class CUserCmd;
 class C_PlayerClass
 {
 public:
+	DECLARE_CLASS_NOBASE(C_PlayerClass);
 
-	DECLARE_CLASS_NOBASE( C_PlayerClass );
-
-	C_PlayerClass( C_BaseTFPlayer *pPlayer );
+	C_PlayerClass(C_BaseTFPlayer *pPlayer);
 	~C_PlayerClass();
 
-	static C_PlayerClass   *Create( C_BaseTFPlayer *pPlayer, int iClassType );
-	static void				Destroy( C_PlayerClass *pPlayerClass );
+	static C_PlayerClass *Create(C_BaseTFPlayer *pPlayer, int iClassType);
+	static void Destroy(C_PlayerClass *pPlayerClass);
 
-	virtual void			PreClassThink( void ) {};
-	virtual void			ClassThink( void ) {};
-	virtual void			PostClassThink( void ) {};
+	virtual void PreClassThink(void) {};
+	virtual void ClassThink(void) {};
+	virtual void PostClassThink(void) {};
 
-	virtual void			ClassPreDataUpdate( void ) {};
-	virtual void			ClassOnDataChanged( void ) {};
+	virtual void ClassPreDataUpdate(void) {};
+	virtual void ClassOnDataChanged(void) {};
 
-	virtual void			CreateMove( float flInputSampleTime, CUserCmd *pCmd ) {};
+	virtual void CreateMove(float flInputSampleTime, CUserCmd *pCmd) {};
 
 	// Vehicles
-	virtual bool			CanGetInVehicle( void ) { return true; }
+	virtual bool CanGetInVehicle(void)
+	{
+		return true;
+	}
 
 protected:
-
-	C_BaseTFPlayer		*m_pPlayer;		// reference to player (peer)
+	C_BaseTFPlayer *m_pPlayer; // reference to player (peer)
 };
 
-
 #include "TFClassData_Shared.h"
-
 
 #endif // C_TF_PLAYERCLASS_H

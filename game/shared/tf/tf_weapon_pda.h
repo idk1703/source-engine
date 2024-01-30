@@ -13,80 +13,103 @@
 #include "tf_shareddefs.h"
 #include "tf_weaponbase.h"
 #ifdef CLIENT_DLL
-	#include "tf_hud_base_build_menu.h"
+#include "tf_hud_base_build_menu.h"
 #endif
 
 // Client specific.
-#if defined( CLIENT_DLL ) 
-	#define CTFWeaponPDA C_TFWeaponPDA
-	#define CTFWeaponPDA_Engineer_Build	C_TFWeaponPDA_Engineer_Build
-	#define CTFWeaponPDA_Engineer_Destroy	C_TFWeaponPDA_Engineer_Destroy
-	#define CTFWeaponPDA_Spy		C_TFWeaponPDA_Spy
-	#define CTFWeaponPDA_Spy_Build	C_TFWeaponPDA_Spy_Build
-	
-	#define CTFWeaponPDAExpansion_Dispenser		C_TFWeaponPDAExpansion_Dispenser
-	#define CTFWeaponPDAExpansion_Teleporter	C_TFWeaponPDAExpansion_Teleporter
+#if defined(CLIENT_DLL)
+#define CTFWeaponPDA				  C_TFWeaponPDA
+#define CTFWeaponPDA_Engineer_Build	  C_TFWeaponPDA_Engineer_Build
+#define CTFWeaponPDA_Engineer_Destroy C_TFWeaponPDA_Engineer_Destroy
+#define CTFWeaponPDA_Spy			  C_TFWeaponPDA_Spy
+#define CTFWeaponPDA_Spy_Build		  C_TFWeaponPDA_Spy_Build
+
+#define CTFWeaponPDAExpansion_Dispenser	 C_TFWeaponPDAExpansion_Dispenser
+#define CTFWeaponPDAExpansion_Teleporter C_TFWeaponPDAExpansion_Teleporter
 #endif
 
 class CTFWeaponPDA : public CTFWeaponBase
 {
 public:
-	DECLARE_CLASS( CTFWeaponPDA, CTFWeaponBase );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_CLASS(CTFWeaponPDA, CTFWeaponBase);
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
-#if !defined( CLIENT_DLL ) 
+#if !defined(CLIENT_DLL)
 	DECLARE_DATADESC();
 #endif
 
 	CTFWeaponPDA();
 
-	virtual void	Spawn();
+	virtual void Spawn();
 
-#if !defined( CLIENT_DLL )
-		virtual void	Precache();
-		virtual void	GetControlPanelInfo( int nPanelIndex, const char *&pPanelName );
+#if !defined(CLIENT_DLL)
+	virtual void Precache();
+	virtual void GetControlPanelInfo(int nPanelIndex, const char *&pPanelName);
 #else
-		virtual float	CalcViewmodelBob( void );
-		virtual CHudBaseBuildMenu *GetBuildMenu() const { return NULL; }
+	virtual float CalcViewmodelBob(void);
+	virtual CHudBaseBuildMenu *GetBuildMenu() const
+	{
+		return NULL;
+	}
 #endif
 
-	virtual bool	ShouldShowControlPanels( void );
+	virtual bool ShouldShowControlPanels(void);
 
-	virtual void	PrimaryAttack();
-	virtual void	SecondaryAttack();
-	virtual int		GetWeaponID( void ) const						{ return TF_WEAPON_PDA; }
-	virtual bool	ShouldDrawCrosshair( void )						{ return false; }
-	virtual bool	HasPrimaryAmmo()								{ return true; }
-	virtual bool	CanBeSelected()									{ return true; }
+	virtual void PrimaryAttack();
+	virtual void SecondaryAttack();
+	virtual int GetWeaponID(void) const
+	{
+		return TF_WEAPON_PDA;
+	}
+	virtual bool ShouldDrawCrosshair(void)
+	{
+		return false;
+	}
+	virtual bool HasPrimaryAmmo()
+	{
+		return true;
+	}
+	virtual bool CanBeSelected()
+	{
+		return true;
+	}
 #ifdef CLIENT_DLL
-	virtual void	OnDataChanged( DataUpdateType_t type ) OVERRIDE;
-	virtual void	UpdateOnRemove() OVERRIDE;
+	virtual void OnDataChanged(DataUpdateType_t type) OVERRIDE;
+	virtual void UpdateOnRemove() OVERRIDE;
 #endif
 
-	virtual const char *GetPanelName() { return "pda_panel"; }
+	virtual const char *GetPanelName()
+	{
+		return "pda_panel";
+	}
 
-
-public:	
-	CTFWeaponInfo	*m_pWeaponInfo;
+public:
+	CTFWeaponInfo *m_pWeaponInfo;
 
 private:
 #ifdef CLIENT_DLL
 	void HideBuildMenu() const;
 #endif
 
-	CTFWeaponPDA( const CTFWeaponPDA & ) {}
+	CTFWeaponPDA(const CTFWeaponPDA &) {}
 };
 
 class CTFWeaponPDA_Engineer_Build : public CTFWeaponPDA
 {
 public:
-	DECLARE_CLASS( CTFWeaponPDA_Engineer_Build, CTFWeaponPDA );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_CLASS(CTFWeaponPDA_Engineer_Build, CTFWeaponPDA);
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
-	virtual const char *GetPanelName() { return ""; }
-	virtual int		GetWeaponID( void ) const { return TF_WEAPON_PDA_ENGINEER_BUILD; }
+	virtual const char *GetPanelName()
+	{
+		return "";
+	}
+	virtual int GetWeaponID(void) const
+	{
+		return TF_WEAPON_PDA_ENGINEER_BUILD;
+	}
 #ifdef CLIENT_DLL
 	virtual CHudBaseBuildMenu *GetBuildMenu() const OVERRIDE;
 #endif
@@ -100,68 +123,80 @@ extern ConVar tf_build_menu_controller_mode;
 class CTFWeaponPDA_Engineer_Destroy : public CTFWeaponPDA
 {
 public:
-	DECLARE_CLASS( CTFWeaponPDA_Engineer_Destroy, CTFWeaponPDA );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_CLASS(CTFWeaponPDA_Engineer_Destroy, CTFWeaponPDA);
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
-	virtual const char *GetPanelName() { return ""; }
-	virtual int		GetWeaponID( void ) const { return TF_WEAPON_PDA_ENGINEER_DESTROY; }
+	virtual const char *GetPanelName()
+	{
+		return "";
+	}
+	virtual int GetWeaponID(void) const
+	{
+		return TF_WEAPON_PDA_ENGINEER_DESTROY;
+	}
 #ifdef CLIENT_DLL
 	virtual CHudBaseBuildMenu *GetBuildMenu() const OVERRIDE;
 #endif
 
-	virtual bool	VisibleInWeaponSelection( void );
+	virtual bool VisibleInWeaponSelection(void);
 };
 
 class CTFWeaponPDA_Spy : public CTFWeaponPDA
 {
 public:
-	DECLARE_CLASS( CTFWeaponPDA_Spy, CTFWeaponPDA );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_CLASS(CTFWeaponPDA_Spy, CTFWeaponPDA);
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
-	virtual const char *GetPanelName() { return ""; }
-	virtual int		GetWeaponID( void ) const { return TF_WEAPON_PDA_SPY; }
+	virtual const char *GetPanelName()
+	{
+		return "";
+	}
+	virtual int GetWeaponID(void) const
+	{
+		return TF_WEAPON_PDA_SPY;
+	}
 #ifdef CLIENT_DLL
 	virtual CHudBaseBuildMenu *GetBuildMenu() const OVERRIDE;
-	virtual bool Deploy( void );
+	virtual bool Deploy(void);
 #endif
 
-	virtual bool			CanBeSelected( void ) OVERRIDE;
-	virtual bool			VisibleInWeaponSelection( void ) OVERRIDE;
+	virtual bool CanBeSelected(void) OVERRIDE;
+	virtual bool VisibleInWeaponSelection(void) OVERRIDE;
 
-	virtual void			ItemPreFrame( void );					// called each frame by the player PreThink
-	virtual void			ItemBusyFrame( void );					// called each frame by the player PostThink
-	virtual void			ItemHolsterFrame( void );			// called each frame by the player PreThink, if the weapon is holstered
+	virtual void ItemPreFrame(void);	 // called each frame by the player PreThink
+	virtual void ItemBusyFrame(void);	 // called each frame by the player PostThink
+	virtual void ItemHolsterFrame(void); // called each frame by the player PreThink, if the weapon is holstered
 
-	void	CheckDisguiseTimer( void );
-	void	ProcessDisguiseImpulse( void );
+	void CheckDisguiseTimer(void);
+	void ProcessDisguiseImpulse(void);
 };
 
 // ********************************************************************************************
 // PDA Expansion Slots
 class CTFWeaponPDAExpansion_Dispenser : public CTFWearable
 {
-	DECLARE_CLASS( CTFWeaponPDAExpansion_Dispenser, CTFWearable );
+	DECLARE_CLASS(CTFWeaponPDAExpansion_Dispenser, CTFWearable);
 
 public:
 	DECLARE_NETWORKCLASS();
 	DECLARE_DATADESC();
 
-	virtual void		Equip( CBasePlayer *pOwner );
-	virtual void		UnEquip( CBasePlayer *pOwner );
+	virtual void Equip(CBasePlayer *pOwner);
+	virtual void UnEquip(CBasePlayer *pOwner);
 };
 
 class CTFWeaponPDAExpansion_Teleporter : public CTFWearable
 {
-	DECLARE_CLASS( CTFWeaponPDAExpansion_Teleporter, CTFWearable );
+	DECLARE_CLASS(CTFWeaponPDAExpansion_Teleporter, CTFWearable);
 
 public:
 	DECLARE_NETWORKCLASS();
 	DECLARE_DATADESC();
 
-	virtual void		Equip( CBasePlayer *pOwner );
-	virtual void		UnEquip( CBasePlayer *pOwner );
+	virtual void Equip(CBasePlayer *pOwner);
+	virtual void UnEquip(CBasePlayer *pOwner);
 };
 
 #ifdef STAGING_ONLY
@@ -171,21 +206,30 @@ public:
 class CTFWeaponPDA_Spy_Build : public CTFWeaponPDA
 {
 public:
-	DECLARE_CLASS( CTFWeaponPDA_Spy_Build, CTFWeaponPDA );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_CLASS(CTFWeaponPDA_Spy_Build, CTFWeaponPDA);
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
-	virtual bool CanDeploy( void ) OVERRIDE;
-	virtual const char *GetPanelName() { return ""; }
-	virtual int	GetWeaponID( void ) const { return TF_WEAPON_PDA_SPY_BUILD; }
-	virtual bool VisibleInWeaponSelection( void ) OVERRIDE;
+	virtual bool CanDeploy(void) OVERRIDE;
+	virtual const char *GetPanelName()
+	{
+		return "";
+	}
+	virtual int GetWeaponID(void) const
+	{
+		return TF_WEAPON_PDA_SPY_BUILD;
+	}
+	virtual bool VisibleInWeaponSelection(void) OVERRIDE;
 #ifdef CLIENT_DLL
 	virtual CHudBaseBuildMenu *GetBuildMenu() const OVERRIDE;
 #endif
 
-	float GetProgress( void );
-	int	GetCount( void );
-	const char*	GetEffectLabelText( void ) { return "#TF_Traps"; }
+	float GetProgress(void);
+	int GetCount(void);
+	const char *GetEffectLabelText(void)
+	{
+		return "#TF_Traps";
+	}
 };
 #endif
 

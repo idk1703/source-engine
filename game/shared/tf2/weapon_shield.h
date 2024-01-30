@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,49 +15,51 @@
 #include "basetfcombatweapon_shared.h"
 #include "tf_shieldshared.h"
 
-
-#if defined( CLIENT_DLL )
+#if defined(CLIENT_DLL)
 #define CWeaponShield C_WeaponShield
-#define CShield C_Shield
+#define CShield		  C_Shield
 #endif
 
 class CShield;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CWeaponShield : public CBaseTFCombatWeapon
 {
-	DECLARE_CLASS( CWeaponShield, CBaseTFCombatWeapon );
+	DECLARE_CLASS(CWeaponShield, CBaseTFCombatWeapon);
 
 public:
 	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CWeaponShield();
-	
-	virtual void UpdateOnRemove( void );
+
+	virtual void UpdateOnRemove(void);
 
 	// Firing
-	virtual void	ItemPostFrame( void );
-	virtual float	GetFireRate( void );
-	virtual float	GetDamage( float flDistance, int iLocation );
+	virtual void ItemPostFrame(void);
+	virtual float GetFireRate(void);
+	virtual float GetDamage(float flDistance, int iLocation);
 
-	virtual bool	Deploy( void );
-	virtual bool	Holster( CBaseCombatWeapon *pSwitchingTo = NULL );
-	virtual void	WeaponIdle( void );
-	virtual bool	VisibleInWeaponSelection( void ) { return false; }
+	virtual bool Deploy(void);
+	virtual bool Holster(CBaseCombatWeapon *pSwitchingTo = NULL);
+	virtual void WeaponIdle(void);
+	virtual bool VisibleInWeaponSelection(void)
+	{
+		return false;
+	}
 
 	// All predicted weapons need to implement and return true
-	virtual bool IsPredicted( void ) const
-	{ 
+	virtual bool IsPredicted(void) const
+	{
 		return true;
 	}
 
-#if defined( CLIENT_DLL )
-	virtual bool	ShouldPredict( void )
+#if defined(CLIENT_DLL)
+	virtual bool ShouldPredict(void)
 	{
-		if ( GetOwner() == C_BasePlayer::GetLocalPlayer() )
+		if(GetOwner() == C_BasePlayer::GetLocalPlayer())
 			return true;
 
 		return BaseClass::ShouldPredict();
@@ -65,17 +67,17 @@ public:
 #endif
 
 private:
-	CWeaponShield( const CWeaponShield & );
+	CWeaponShield(const CWeaponShield &);
 
 	// Lock the projected shield
-	void SetShieldPositionLocked( bool bLocked );
+	void SetShieldPositionLocked(bool bLocked);
 
 	// Input
-	void PrimaryAttack( void );
+	void PrimaryAttack(void);
 
 private:
 	// Data
-	CNetworkVar( CHandle<CShield>, m_hDeployedShield );
+	CNetworkVar(CHandle<CShield>, m_hDeployedShield);
 	bool m_bShieldPositionLocked;
 	bool m_bIsDeployed;
 };

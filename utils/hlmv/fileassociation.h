@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -25,27 +25,21 @@
 #ifndef INCLUDED_FILEASSOCIATION
 #define INCLUDED_FILEASSOCIATION
 
-
-
 #ifndef INCLUDED_MXWINDOW
 #include <mxtk/mxWindow.h>
 #endif
 
-
-
-#define IDC_EXTENSION			1001
-#define IDC_ADD					1002
-#define IDC_REMOVE				1003
-#define IDC_ACTION1				1004
-#define IDC_ACTION2				1005
-#define IDC_ACTION3				1006
-#define IDC_ACTION4				1007
-#define IDC_PROGRAM				1008
-#define IDC_CHOOSEPROGRAM		1009
-#define IDC_OK					1010
-#define IDC_CANCEL				1011
-
-
+#define IDC_EXTENSION	  1001
+#define IDC_ADD			  1002
+#define IDC_REMOVE		  1003
+#define IDC_ACTION1		  1004
+#define IDC_ACTION2		  1005
+#define IDC_ACTION3		  1006
+#define IDC_ACTION4		  1007
+#define IDC_PROGRAM		  1008
+#define IDC_CHOOSEPROGRAM 1009
+#define IDC_OK			  1010
+#define IDC_CANCEL		  1011
 
 typedef struct
 {
@@ -54,15 +48,10 @@ typedef struct
 	int association;
 } association_t;
 
-
-
-
 class mxChoice;
 class mxRadioButton;
 class mxLineEdit;
 class mxButton;
-
-
 
 class FileAssociation : public mxWindow
 {
@@ -72,27 +61,23 @@ class FileAssociation : public mxWindow
 	mxButton *bChooseProgram;
 	association_t d_associations[16];
 
-	void initAssociations ();
-	void saveAssociations ();
+	void initAssociations();
+	void saveAssociations();
 
 public:
 	// CREATORS
-	FileAssociation ();
-	virtual ~FileAssociation ();
+	FileAssociation();
+	virtual ~FileAssociation();
 
 	// MANIPULATORS
-	int handleEvent (mxEvent *event);
-	void setAssociation (int index);
+	int handleEvent(mxEvent *event);
+	void setAssociation(int index);
 
 	// ACCESSORS
-	int getMode (char *extension);
-	char *getProgram (char *extension);
+	int getMode(char *extension);
+	char *getProgram(char *extension);
 };
 
-
-
 extern FileAssociation *g_FileAssociation;
-
-
 
 #endif // INCLUDED_FILEASSOCIATION

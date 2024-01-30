@@ -1,11 +1,11 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
 //=============================================================================//
-#if !defined( KBUTTON_H )
+#if !defined(KBUTTON_H)
 #define KBUTTON_H
 #ifdef _WIN32
 #pragma once
@@ -14,9 +14,9 @@
 struct kbutton_t
 {
 	// key nums holding it down
-	int		down[ 2 ];		
+	int down[2];
 	// low bit is down state
-	int		state;			
+	int state;
 };
 
 #endif // KBUTTON_H

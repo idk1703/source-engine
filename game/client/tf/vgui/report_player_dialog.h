@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,32 +17,32 @@
 
 class CReportPlayerDialog : public vgui::Frame
 {
-	DECLARE_CLASS_SIMPLE( CReportPlayerDialog, vgui::Frame );
+	DECLARE_CLASS_SIMPLE(CReportPlayerDialog, vgui::Frame);
 
 public:
-	CReportPlayerDialog( vgui::Panel *parent );
+	CReportPlayerDialog(vgui::Panel *parent);
 	~CReportPlayerDialog();
 
 	virtual void Activate();
 
 private:
-	MESSAGE_FUNC( OnItemSelected, "ItemSelected" );
-	MESSAGE_FUNC_PARAMS( OnTextChanged, "TextChanged", data );
-	virtual void OnCommand( const char *command );
+	MESSAGE_FUNC(OnItemSelected, "ItemSelected");
+	MESSAGE_FUNC_PARAMS(OnTextChanged, "TextChanged", data);
+	virtual void OnCommand(const char *command);
 
 	void ReportPlayer();
 	void RefreshPlayerProperties();
 	bool IsValidPlayerSelected();
 
-	void OnKeyCodePressed( vgui::KeyCode code )
+	void OnKeyCodePressed(vgui::KeyCode code)
 	{
-		if ( code == KEY_XBUTTON_B )
+		if(code == KEY_XBUTTON_B)
 		{
 			Close();
 		}
 		else
 		{
-			BaseClass::OnKeyCodePressed( code );
+			BaseClass::OnKeyCodePressed(code);
 		}
 	}
 
@@ -51,6 +51,6 @@ private:
 	vgui::ComboBox *m_pReasonBox;
 };
 
-bool ReportPlayerAccount( CSteamID steamID, int nReason );
+bool ReportPlayerAccount(CSteamID steamID, int nReason);
 
 #endif // REPORT_PLAYER_DIALOG_H

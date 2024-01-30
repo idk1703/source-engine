@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -9,5 +9,4 @@
 
 #include <jm/fileiter.h>
 
-#endif     
-
+#endif

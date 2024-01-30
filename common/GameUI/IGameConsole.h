@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -11,7 +11,6 @@
 #endif
 
 #include "tier1/interface.h"
-
 
 //-----------------------------------------------------------------------------
 // Purpose: interface to game/dev console
@@ -33,7 +32,7 @@ public:
 	// return true if the console has focus
 	virtual bool IsConsoleVisible() = 0;
 
-	virtual void SetParent( int parent ) = 0;
+	virtual void SetParent(int parent) = 0;
 };
 
 #define GAMECONSOLE_INTERFACE_VERSION "GameConsole004"

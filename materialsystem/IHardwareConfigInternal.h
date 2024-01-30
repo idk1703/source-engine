@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -13,7 +13,6 @@
 #pragma once
 #endif
 
-
 #include "materialsystem/imaterialsystemhardwareconfig.h"
 
 //-----------------------------------------------------------------------------
@@ -25,6 +24,5 @@ public:
 	// Gets at the HW specific shader DLL name
 	virtual const char *GetHWSpecificShaderDLLName() const = 0;
 };
-
 
 #endif // IHARDWARECONFIGINTERNAL_H

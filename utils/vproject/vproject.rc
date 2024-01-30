@@ -38,23 +38,23 @@ IDI_VPROJECT            ICON                    "vproject.ico"
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE 
+1 TEXTINCLUDE
 BEGIN
-    "resource.h\0"
+	"resource.h\0"
 END
 
-2 TEXTINCLUDE 
+2 TEXTINCLUDE
 BEGIN
-    "#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
-    "#include ""windows.h""\r\n"
-    "#undef APSTUDIO_HIDDEN_SYMBOLS\r\n"
-    "\0"
+	"#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
+	"#include ""windows.h""\r\n"
+	"#undef APSTUDIO_HIDDEN_SYMBOLS\r\n"
+	"\0"
 END
 
-3 TEXTINCLUDE 
+3 TEXTINCLUDE
 BEGIN
-    "\r\n"
-    "\0"
+	"\r\n"
+	"\0"
 END
 
 #endif    // APSTUDIO_INVOKED
@@ -66,18 +66,18 @@ END
 //
 
 IDD_VPROJECT DIALOGEX 0, 0, 254, 101
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
-    WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION |
+	WS_SYSMENU
 CAPTION "VProject"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    LTEXT           "Project Name: (Clear To Delete)",IDC_STATIC,7,7,237,8
-    EDITTEXT        IDC_MODIFY_PROJECT,7,18,237,14,ES_AUTOHSCROLL
-    LTEXT           "Game Directory: (example: u:\\dev\\game\\hl2)",
-                    IDC_STATIC,7,39,237,8
-    EDITTEXT        IDC_MODIFY_GAMEDIR,7,50,237,14,ES_AUTOHSCROLL
-    PUSHBUTTON      "Cancel",IDC_CANCEL,138,80,50,14
-    DEFPUSHBUTTON   "OK",IDC_OK,194,80,50,14
+	LTEXT           "Project Name: (Clear To Delete)",IDC_STATIC,7,7,237,8
+	EDITTEXT        IDC_MODIFY_PROJECT,7,18,237,14,ES_AUTOHSCROLL
+	LTEXT           "Game Directory: (example: u:\\dev\\game\\hl2)",
+					IDC_STATIC,7,39,237,8
+	EDITTEXT        IDC_MODIFY_GAMEDIR,7,50,237,14,ES_AUTOHSCROLL
+	PUSHBUTTON      "Cancel",IDC_CANCEL,138,80,50,14
+	DEFPUSHBUTTON   "OK",IDC_OK,194,80,50,14
 END
 
 
@@ -87,15 +87,15 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO 
+GUIDELINES DESIGNINFO
 BEGIN
-    IDD_VPROJECT, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 244
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 94
-    END
+	IDD_VPROJECT, DIALOG
+	BEGIN
+		LEFTMARGIN, 7
+		RIGHTMARGIN, 244
+		TOPMARGIN, 7
+		BOTTOMMARGIN, 94
+	END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -113,4 +113,3 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
-

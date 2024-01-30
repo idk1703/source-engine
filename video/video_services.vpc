@@ -5,9 +5,9 @@
 //  Created by: 		Matt Pritchard
 //
 //  Description:		Centralized & abstracted cross-platform video services
-//                      Provides a central interface where the game can 
+//                      Provides a central interface where the game can
 //                      handle video requests and query video capabilities
-// 
+//
 //-----------------------------------------------------------------------------
 
 $Macro SRCDIR		".."
@@ -27,20 +27,20 @@ $Configuration
 
 $Configuration  "Debug"
 {
-        $General
-        {
-                $OutputDirectory                        "debug_video_services" [$WINDOWS]
-                $IntermediateDirectory                  "debug_video_services" [$WINDOWS]
-        }
+	$General
+	{
+		$OutputDirectory                        "debug_video_services" [$WINDOWS]
+		$IntermediateDirectory                  "debug_video_services" [$WINDOWS]
+	}
 }
 
 $Configuration  "Release"
 {
-        $General
-        {
-                $OutputDirectory                        "Release_video_services" [$WINDOWS]
-                $IntermediateDirectory                  "Release_video_services" [$WINDOWS]
-        }
+	$General
+	{
+		$OutputDirectory                        "Release_video_services" [$WINDOWS]
+		$IntermediateDirectory                  "Release_video_services" [$WINDOWS]
+	}
 }
 
 
@@ -69,4 +69,3 @@ $Project "video_services"
 		$Lib	tier3
 	}
 }
-

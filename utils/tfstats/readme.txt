@@ -2,11 +2,11 @@ TFStats v2.0 readme file
 
 v2.0 New Features
 * Full search custom rules.  Custom rules can now search every event in the log
-	and match based on regular expression matching patterns. 
+	and match based on regular expression matching patterns.
 * General Rule File.  TFStats now reads TFC.RUL in addition to any map specific
-	rule files so you can put any server-specific rules in tfc.rul. 
-* Persistent Player Statistics. Player's stats are now saved (if you so specify) 
-	on the hard-disk and every time you generate a report more are saved and/or 
+	rule files so you can put any server-specific rules in tfc.rul.
+* Persistent Player Statistics. Player's stats are now saved (if you so specify)
+	on the hard-disk and every time you generate a report more are saved and/or
 	merged (if a player's stats had already been saved).  What this does is allow
 	player stats to accumulate over time, across many matches.  This also has support
 	for omitting players who have been absent for a long time from the report.
@@ -17,16 +17,16 @@ v2.0 New Features
 	easy to use controls to control all of the new switches that TFStats supports and
 	the directories it reads from and writes to.
 * Shared Report Resources. TFStats can now generate several reports that share
-	the same set of reports to preserve hard-drive space.  
+	the same set of reports to preserve hard-drive space.
 
 v2.0 Bug Fixes
 *Players with < and > in their names now work properly.
 *Multiline Broadcasts are now handled correctly.
 
 v1.5 New Features
-*Team Differentiation:  If a player plays on two different teams, tfstats 
-	gathers stats for each team seperately, then when viewing that players 
-	stats, there's a link to that player's merged stats. 
+*Team Differentiation:  If a player plays on two different teams, tfstats
+	gathers stats for each team seperately, then when viewing that players
+	stats, there's a link to that player's merged stats.
 *Pseudonyms for players: This is so it's not confusing if players change their
 	names. it uses the name they used for the most time, and also lists other
 	names they used.

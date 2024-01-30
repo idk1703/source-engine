@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,25 +15,24 @@
 
 class CCvarNegateCheckButton : public vgui::CheckButton
 {
-	DECLARE_CLASS_SIMPLE( CCvarNegateCheckButton, vgui::CheckButton );
+	DECLARE_CLASS_SIMPLE(CCvarNegateCheckButton, vgui::CheckButton);
 
 public:
-	CCvarNegateCheckButton( vgui::Panel *parent, const char *panelName, const char *text, 
-		char const *cvarname );
+	CCvarNegateCheckButton(vgui::Panel *parent, const char *panelName, const char *text, char const *cvarname);
 	~CCvarNegateCheckButton();
 
-	virtual void	SetSelected( bool state );
-	virtual void	Paint();
+	virtual void SetSelected(bool state);
+	virtual void Paint();
 
-	void			Reset();
-	void			ApplyChanges();
-	bool			HasBeenModified();
+	void Reset();
+	void ApplyChanges();
+	bool HasBeenModified();
 
 private:
-	MESSAGE_FUNC( OnButtonChecked, "CheckButtonChecked" );
+	MESSAGE_FUNC(OnButtonChecked, "CheckButtonChecked");
 
-	char			*m_pszCvarName;
-	bool			m_bStartState;
+	char *m_pszCvarName;
+	bool m_bStartState;
 };
 
 #endif // CVARNEGATECHECKBUTTON_H

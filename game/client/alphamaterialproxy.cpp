@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,8 +18,8 @@ class CAlphaMaterialProxy : public CEntityMaterialProxy
 public:
 	CAlphaMaterialProxy();
 	virtual ~CAlphaMaterialProxy();
-	virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
-	virtual void OnBind( C_BaseEntity *pEntity );
+	virtual bool Init(IMaterial *pMaterial, KeyValues *pKeyValues);
+	virtual void OnBind(C_BaseEntity *pEntity);
 	virtual IMaterial *GetMaterial();
 
 private:
@@ -31,32 +31,29 @@ CAlphaMaterialProxy::CAlphaMaterialProxy()
 	m_AlphaVar = NULL;
 }
 
-CAlphaMaterialProxy::~CAlphaMaterialProxy()
-{
-}
+CAlphaMaterialProxy::~CAlphaMaterialProxy() {}
 
-
-bool CAlphaMaterialProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
+bool CAlphaMaterialProxy::Init(IMaterial *pMaterial, KeyValues *pKeyValues)
 {
 	bool foundVar;
-	m_AlphaVar = pMaterial->FindVar( "$alpha", &foundVar, false );
+	m_AlphaVar = pMaterial->FindVar("$alpha", &foundVar, false);
 	return foundVar;
 }
 
-void CAlphaMaterialProxy::OnBind( C_BaseEntity *pEnt )
+void CAlphaMaterialProxy::OnBind(C_BaseEntity *pEnt)
 {
-	if (m_AlphaVar)
+	if(m_AlphaVar)
 	{
-		m_AlphaVar->SetFloatValue( pEnt->m_clrRender->a );
+		m_AlphaVar->SetFloatValue(pEnt->m_clrRender->a);
 	}
 }
 
 IMaterial *CAlphaMaterialProxy::GetMaterial()
 {
-	if ( !m_AlphaVar )
+	if(!m_AlphaVar)
 		return NULL;
 
 	return m_AlphaVar->GetOwningMaterial();
 }
 
-EXPOSE_INTERFACE( CAlphaMaterialProxy, IMaterialProxy, "Alpha" IMATERIAL_PROXY_INTERFACE_VERSION );
+EXPOSE_INTERFACE(CAlphaMaterialProxy, IMaterialProxy, "Alpha" IMATERIAL_PROXY_INTERFACE_VERSION);

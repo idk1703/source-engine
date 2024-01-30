@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -12,8 +12,6 @@
 
 #ifdef _DEBUG
 
-ConVar net_synctags( "net_synctags", "0", 0, "Insert tokens into the net stream to find client/server mismatches." );
+ConVar net_synctags("net_synctags", "0", 0, "Insert tokens into the net stream to find client/server mismatches.");
 
 #endif
-
-

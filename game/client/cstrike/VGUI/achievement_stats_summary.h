@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -26,17 +26,17 @@ const int cAchievementsDialogMinWidth = 1024; // don't show this screen for lowe
 //-----------------------------------------------------------------------------
 class CAchievementAndStatsSummary : public vgui::PropertyDialog
 {
-    DECLARE_CLASS_SIMPLE( CAchievementAndStatsSummary, vgui::PropertyDialog );
+	DECLARE_CLASS_SIMPLE(CAchievementAndStatsSummary, vgui::PropertyDialog);
 
 public:
-    CAchievementAndStatsSummary(vgui::Panel *parent);
-    ~CAchievementAndStatsSummary();
+	CAchievementAndStatsSummary(vgui::Panel *parent);
+	~CAchievementAndStatsSummary();
 
-    virtual void Activate();
+	virtual void Activate();
 
-	void OnKeyCodePressed( vgui::KeyCode code )
+	void OnKeyCodePressed(vgui::KeyCode code)
 	{
-		if ( code == KEY_XBUTTON_B )
+		if(code == KEY_XBUTTON_B)
 		{
 			Close();
 		}
@@ -47,16 +47,15 @@ public:
 	}
 
 protected:
-    virtual bool OnOK(bool applyOnly);
-    virtual void OnSizeChanged( int newWide, int newTall );
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual bool OnOK(bool applyOnly);
+	virtual void OnSizeChanged(int newWide, int newTall);
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 
 private:
-    CAchievementsPage*  m_pAchievementsPage;
-    CLifetimeStatsPage* m_pLifetimeStatsPage;
-	CMatchStatsPage*	m_pMatchStatsPage;
-	CStatsSummary*		m_pStatsSummary;
+	CAchievementsPage *m_pAchievementsPage;
+	CLifetimeStatsPage *m_pLifetimeStatsPage;
+	CMatchStatsPage *m_pMatchStatsPage;
+	CStatsSummary *m_pStatsSummary;
 };
-
 
 #endif // ACHIEVEMENTANDSTATSSUMMARY_H

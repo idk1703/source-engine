@@ -27,7 +27,7 @@ $Project "vpccrccheck"
 		$File	"crccheck_shared.cpp"
 		$File	"$SRCDIR\tier1\checksum_crc.cpp"
 	}
-	
+
 	$Folder "Link Libraries" [$WIN32]
 	{
 		$Lib tier0

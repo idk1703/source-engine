@@ -13,135 +13,125 @@
 //-----------------------------------------------------------------------------
 // Purpose: RecvProxy that converts the Team's player UtlVector to entindexes
 //-----------------------------------------------------------------------------
-void RecvProxy_PlayerList(  const CRecvProxyData *pData, void *pStruct, void *pOut )
+void RecvProxy_PlayerList(const CRecvProxyData *pData, void *pStruct, void *pOut)
 {
-	C_Team *pTeam = (C_Team*)pOut;
+	C_Team *pTeam = (C_Team *)pOut;
 	pTeam->m_aPlayers[pData->m_iElement] = pData->m_Value.m_Int;
 }
 
-
-void RecvProxyArrayLength_PlayerArray( void *pStruct, int objectID, int currentArrayLength )
+void RecvProxyArrayLength_PlayerArray(void *pStruct, int objectID, int currentArrayLength)
 {
-	C_Team *pTeam = (C_Team*)pStruct;
-	
-	if ( pTeam->m_aPlayers.Size() != currentArrayLength )
-		pTeam->m_aPlayers.SetSize( currentArrayLength );
+	C_Team *pTeam = (C_Team *)pStruct;
+
+	if(pTeam->m_aPlayers.Size() != currentArrayLength)
+		pTeam->m_aPlayers.SetSize(currentArrayLength);
 }
 
-
 IMPLEMENT_CLIENTCLASS_DT_NOBASE(C_Team, DT_Team, CTeam)
-	RecvPropInt( RECVINFO(m_iTeamNum)),
-	RecvPropInt( RECVINFO(m_iScore)),
-	RecvPropInt( RECVINFO(m_iRoundsWon) ),
-	RecvPropString( RECVINFO(m_szTeamname)),
-	
-	RecvPropArray2( 
-		RecvProxyArrayLength_PlayerArray,
-		RecvPropInt( "player_array_element", 0, SIZEOF_IGNORE, 0, RecvProxy_PlayerList ), 
-		MAX_PLAYERS, 
-		0, 
-		"player_array"
-		)
-END_RECV_TABLE()
+RecvPropInt(RECVINFO(m_iTeamNum)), RecvPropInt(RECVINFO(m_iScore)), RecvPropInt(RECVINFO(m_iRoundsWon)),
+	RecvPropString(RECVINFO(m_szTeamname)),
 
-BEGIN_PREDICTION_DATA( C_Team )
-	DEFINE_PRED_ARRAY( m_szTeamname, FIELD_CHARACTER, MAX_TEAM_NAME_LENGTH, FTYPEDESC_PRIVATE ),
-	DEFINE_PRED_FIELD( m_iScore, FIELD_INTEGER, FTYPEDESC_PRIVATE ),
-	DEFINE_PRED_FIELD( m_iRoundsWon, FIELD_INTEGER, FTYPEDESC_PRIVATE ),
-	DEFINE_PRED_FIELD( m_iDeaths, FIELD_INTEGER, FTYPEDESC_PRIVATE ),
-	DEFINE_PRED_FIELD( m_iPing, FIELD_INTEGER, FTYPEDESC_PRIVATE ),
-	DEFINE_PRED_FIELD( m_iPacketloss, FIELD_INTEGER, FTYPEDESC_PRIVATE ),
-	DEFINE_PRED_FIELD( m_iTeamNum, FIELD_INTEGER, FTYPEDESC_PRIVATE ),
-END_PREDICTION_DATA();
+	RecvPropArray2(RecvProxyArrayLength_PlayerArray,
+				   RecvPropInt("player_array_element", 0, SIZEOF_IGNORE, 0, RecvProxy_PlayerList), MAX_PLAYERS, 0,
+				   "player_array")
+END_RECV_TABLE
+()
+
+	BEGIN_PREDICTION_DATA(C_Team)
+		DEFINE_PRED_ARRAY(m_szTeamname, FIELD_CHARACTER, MAX_TEAM_NAME_LENGTH, FTYPEDESC_PRIVATE),
+	DEFINE_PRED_FIELD(m_iScore, FIELD_INTEGER, FTYPEDESC_PRIVATE),
+	DEFINE_PRED_FIELD(m_iRoundsWon, FIELD_INTEGER, FTYPEDESC_PRIVATE),
+	DEFINE_PRED_FIELD(m_iDeaths, FIELD_INTEGER, FTYPEDESC_PRIVATE),
+	DEFINE_PRED_FIELD(m_iPing, FIELD_INTEGER, FTYPEDESC_PRIVATE),
+	DEFINE_PRED_FIELD(m_iPacketloss, FIELD_INTEGER, FTYPEDESC_PRIVATE),
+	DEFINE_PRED_FIELD(m_iTeamNum, FIELD_INTEGER, FTYPEDESC_PRIVATE),
+END_PREDICTION_DATA
+();
 
 // Global list of client side team entities
-CUtlVector< C_Team * > g_Teams;
+CUtlVector<C_Team *> g_Teams;
 
 //=================================================================================================
 // C_Team functionality
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_Team::C_Team()
 {
 	m_iScore = 0;
 	m_iRoundsWon = 0;
-	memset( m_szTeamname, 0, sizeof(m_szTeamname) );
+	memset(m_szTeamname, 0, sizeof(m_szTeamname));
 
 	m_iDeaths = 0;
 	m_iPing = 0;
 	m_iPacketloss = 0;
 
 	// Add myself to the global list of team entities
-	g_Teams.AddToTail( this );
+	g_Teams.AddToTail(this);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_Team::~C_Team()
 {
-	g_Teams.FindAndRemove( this );
+	g_Teams.FindAndRemove(this);
 }
-
 
 void C_Team::RemoveAllPlayers()
 {
 	m_aPlayers.RemoveAll();
 }
 
-void C_Team::PreDataUpdate( DataUpdateType_t updateType )
+void C_Team::PreDataUpdate(DataUpdateType_t updateType)
 {
-	BaseClass::PreDataUpdate( updateType );
+	BaseClass::PreDataUpdate(updateType);
 }
 
-
 //-----------------------------------------------------------------------------
-// Gets the ith player on the team (may return NULL) 
+// Gets the ith player on the team (may return NULL)
 //-----------------------------------------------------------------------------
-C_BasePlayer* C_Team::GetPlayer( int idx )
+C_BasePlayer *C_Team::GetPlayer(int idx)
 {
-	return (C_BasePlayer*)cl_entitylist->GetEnt(m_aPlayers[idx]);
+	return (C_BasePlayer *)cl_entitylist->GetEnt(m_aPlayers[idx]);
 }
-
 
 int C_Team::GetTeamNumber() const
 {
 	return m_iTeamNum;
 }
 
-
 //=================================================================================================
 // TEAM HANDLING
 //=================================================================================================
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-char *C_Team::Get_Name( void )
+char *C_Team::Get_Name(void)
 {
 	return m_szTeamname;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int C_Team::Get_Score( void )
+int C_Team::Get_Score(void)
 {
 	return m_iScore;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int C_Team::Get_Deaths( void )
+int C_Team::Get_Deaths(void)
 {
 	return m_iDeaths;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int C_Team::Get_Ping( void )
+int C_Team::Get_Ping(void)
 {
 	return m_iPing;
 }
@@ -149,7 +139,7 @@ int C_Team::Get_Ping( void )
 //-----------------------------------------------------------------------------
 // Purpose: Return the number of players in this team
 //-----------------------------------------------------------------------------
-int C_Team::Get_Number_Players( void )
+int C_Team::Get_Number_Players(void)
 {
 	return m_aPlayers.Size();
 }
@@ -157,46 +147,42 @@ int C_Team::Get_Number_Players( void )
 //-----------------------------------------------------------------------------
 // Purpose: Returns true if the specified player is on this team
 //-----------------------------------------------------------------------------
-bool C_Team::ContainsPlayer( int iPlayerIndex )
+bool C_Team::ContainsPlayer(int iPlayerIndex)
 {
-	for (int i = 0; i < m_aPlayers.Size(); i++ )
+	for(int i = 0; i < m_aPlayers.Size(); i++)
 	{
-		if ( m_aPlayers[i] == iPlayerIndex )
+		if(m_aPlayers[i] == iPlayerIndex)
 			return true;
 	}
 
 	return false;
 }
 
-
-void C_Team::ClientThink()
-{
-}
-
+void C_Team::ClientThink() {}
 
 //=================================================================================================
 // GLOBAL CLIENT TEAM HANDLING
 //=================================================================================================
 // Purpose: Get the C_Team for the local player
 //-----------------------------------------------------------------------------
-C_Team *GetLocalTeam( void )
+C_Team *GetLocalTeam(void)
 {
 	C_BasePlayer *player = C_BasePlayer::GetLocalPlayer();
 
-	if ( !player )
+	if(!player)
 		return NULL;
-	
-	return GetPlayersTeam( player->index );
+
+	return GetPlayersTeam(player->index);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Get the C_Team for the specified team number
 //-----------------------------------------------------------------------------
-C_Team *GetGlobalTeam( int iTeamNumber )
+C_Team *GetGlobalTeam(int iTeamNumber)
 {
-	for (int i = 0; i < g_Teams.Count(); i++ )
+	for(int i = 0; i < g_Teams.Count(); i++)
 	{
-		if ( g_Teams[i]->GetTeamNumber() == iTeamNumber )
+		if(g_Teams[i]->GetTeamNumber() == iTeamNumber)
 			return g_Teams[i];
 	}
 
@@ -208,17 +194,17 @@ C_Team *GetGlobalTeam( int iTeamNumber )
 //-----------------------------------------------------------------------------
 int GetNumTeams()
 {
-	return g_Teams.Count() + 1; 
+	return g_Teams.Count() + 1;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Get the team of the specified player
 //-----------------------------------------------------------------------------
-C_Team *GetPlayersTeam( int iPlayerIndex )
+C_Team *GetPlayersTeam(int iPlayerIndex)
 {
-	for (int i = 0; i < g_Teams.Count(); i++ )
+	for(int i = 0; i < g_Teams.Count(); i++)
 	{
-		if ( g_Teams[i]->ContainsPlayer( iPlayerIndex ) )
+		if(g_Teams[i]->ContainsPlayer(iPlayerIndex))
 			return g_Teams[i];
 	}
 
@@ -228,19 +214,19 @@ C_Team *GetPlayersTeam( int iPlayerIndex )
 //-----------------------------------------------------------------------------
 // Purpose: Get the team of the specified player
 //-----------------------------------------------------------------------------
-C_Team *GetPlayersTeam( C_BasePlayer *pPlayer )
+C_Team *GetPlayersTeam(C_BasePlayer *pPlayer)
 {
-	return GetPlayersTeam( pPlayer->entindex() );
+	return GetPlayersTeam(pPlayer->entindex());
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns true if the two specified players are on the same team
 //-----------------------------------------------------------------------------
-bool ArePlayersOnSameTeam( int iPlayerIndex1, int iPlayerIndex2 )
+bool ArePlayersOnSameTeam(int iPlayerIndex1, int iPlayerIndex2)
 {
-	for (int i = 0; i < g_Teams.Count(); i++ )
+	for(int i = 0; i < g_Teams.Count(); i++)
 	{
-		if ( g_Teams[i]->ContainsPlayer( iPlayerIndex1 ) && g_Teams[i]->ContainsPlayer( iPlayerIndex2 ) )
+		if(g_Teams[i]->ContainsPlayer(iPlayerIndex1) && g_Teams[i]->ContainsPlayer(iPlayerIndex2))
 			return true;
 	}
 
@@ -250,7 +236,7 @@ bool ArePlayersOnSameTeam( int iPlayerIndex1, int iPlayerIndex2 )
 //-----------------------------------------------------------------------------
 // Purpose: Get the number of team managers
 //-----------------------------------------------------------------------------
-int GetNumberOfTeams( void )
+int GetNumberOfTeams(void)
 {
 	return g_Teams.Size();
 }

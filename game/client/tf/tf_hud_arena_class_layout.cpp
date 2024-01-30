@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -54,78 +54,78 @@ const char *g_sImagesRed[] = {
 	"",
 };
 
+DECLARE_HUDELEMENT(CHudArenaClassLayout);
 
-DECLARE_HUDELEMENT( CHudArenaClassLayout );
-
-bool ArenaClassLayoutKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding )
+bool ArenaClassLayoutKeyInput(int down, ButtonCode_t keynum, const char *pszCurrentBinding)
 {
-	CHudArenaClassLayout *pArenaClassLayoutPanel = ( CHudArenaClassLayout * )GET_HUDELEMENT( CHudArenaClassLayout );
+	CHudArenaClassLayout *pArenaClassLayoutPanel = (CHudArenaClassLayout *)GET_HUDELEMENT(CHudArenaClassLayout);
 
-	if ( pArenaClassLayoutPanel && pArenaClassLayoutPanel->ShouldDraw() )
+	if(pArenaClassLayoutPanel && pArenaClassLayoutPanel->ShouldDraw())
 	{
-		return pArenaClassLayoutPanel->HandleKeyCodePressed( keynum );
+		return pArenaClassLayoutPanel->HandleKeyCodePressed(keynum);
 	}
 
 	return false;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CHudArenaClassLayout::CHudArenaClassLayout( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudArenaClassLayout" )
+CHudArenaClassLayout::CHudArenaClassLayout(const char *pElementName)
+	: CHudElement(pElementName), BaseClass(NULL, "HudArenaClassLayout")
 {
 	Panel *pParent = g_pClientMode->GetViewport();
-	SetParent( pParent );
+	SetParent(pParent);
 
-	vgui::SETUP_PANEL( this );
+	vgui::SETUP_PANEL(this);
 
-	SetKeyBoardInputEnabled( true );
+	SetKeyBoardInputEnabled(true);
 
-	vgui::ivgui()->AddTickSignal( GetVPanel(), 100 );
+	vgui::ivgui()->AddTickSignal(GetVPanel(), 100);
 
-	m_pBackground = new CTFImagePanel( this, "background" );
-	m_pLocalPlayerBG = new CTFImagePanel( this, "localPlayerBG" );
-	m_pTitle = new CExLabel( this, "title", "" );
-	m_pChangeLabel = new CExLabel( this, "changeLabel", "" );
-	m_pChangeLabelShadow = new CExLabel( this, "changeLabelShadow", "" );
+	m_pBackground = new CTFImagePanel(this, "background");
+	m_pLocalPlayerBG = new CTFImagePanel(this, "localPlayerBG");
+	m_pTitle = new CExLabel(this, "title", "");
+	m_pChangeLabel = new CExLabel(this, "changeLabel", "");
+	m_pChangeLabelShadow = new CExLabel(this, "changeLabelShadow", "");
 
 	char tempName[MAX_PATH];
-	for ( int i = 0 ; i < MAX_CLASS_IMAGES ; ++i )
+	for(int i = 0; i < MAX_CLASS_IMAGES; ++i)
 	{
-		Q_snprintf( tempName, sizeof( tempName ), "classImage%d", i );
-		m_ClassImages[i] = new CTFImagePanel( this, tempName );
+		Q_snprintf(tempName, sizeof(tempName), "classImage%d", i);
+		m_ClassImages[i] = new CTFImagePanel(this, tempName);
 	}
 
-	SetVisible( false );
+	SetVisible(false);
 
-	RegisterForRenderGroup( "mid" );
+	RegisterForRenderGroup("mid");
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CHudArenaClassLayout::Init( void )
+void CHudArenaClassLayout::Init(void)
 {
 	CHudElement::Init();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CHudArenaClassLayout::ApplySchemeSettings( IScheme *pScheme )
+void CHudArenaClassLayout::ApplySchemeSettings(IScheme *pScheme)
 {
 	// load control settings...
-	LoadControlSettings( "resource/UI/HudArenaClassLayout.res" );
+	LoadControlSettings("resource/UI/HudArenaClassLayout.res");
 
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CHudArenaClassLayout::PerformLayout( void )
+void CHudArenaClassLayout::PerformLayout(void)
 {
-	if ( !g_TF_PR )
+	if(!g_TF_PR)
 		return;
 
 	int i = 0;
@@ -135,94 +135,96 @@ void CHudArenaClassLayout::PerformLayout( void )
 	CTFImagePanel *pImage = NULL;
 	int nImageXPos = 0, nImageYPos = 0;
 
-	if ( GetLocalPlayerTeam() <= LAST_SHARED_TEAM )
+	if(GetLocalPlayerTeam() <= LAST_SHARED_TEAM)
 		return;
 
-	int nClass = g_TF_PR->GetPlayerClass( GetLocalPlayerIndex() );
-	if ( nClass == TF_CLASS_UNDEFINED )
+	int nClass = g_TF_PR->GetPlayerClass(GetLocalPlayerIndex());
+	if(nClass == TF_CLASS_UNDEFINED)
 		return;
 
 	// count the number of players on our team that have chosen a playerclass
-	for ( i = 1 ; i <= MAX_PLAYERS ; i++ )
+	for(i = 1; i <= MAX_PLAYERS; i++)
 	{
-		if ( g_TF_PR->GetTeam( i ) == GetLocalPlayerTeam() )
+		if(g_TF_PR->GetTeam(i) == GetLocalPlayerTeam())
 		{
-			if ( g_TF_PR->GetPlayerClass( i ) > TF_CLASS_UNDEFINED ) 
+			if(g_TF_PR->GetPlayerClass(i) > TF_CLASS_UNDEFINED)
 			{
-				teamPlayers.AddToTail( i );
+				teamPlayers.AddToTail(i);
 			}
 		}
 
-		if ( teamPlayers.Count() >= MAX_CLASS_IMAGES )
+		if(teamPlayers.Count() >= MAX_CLASS_IMAGES)
 		{
 			break;
 		}
 	}
 
-	if ( teamPlayers.Count() > 0 )
+	if(teamPlayers.Count() > 0)
 	{
 		int nBackgroundXPos, nBackgroundYPos, nBackgroundWide, nBackgroundTall;
 		int nImageWide = m_ClassImages[iImageIndex]->GetWide();
-		int nTotalWidth = ( teamPlayers.Count() * nImageWide ) + ( 2 * XRES( 10 ) ); // the XRES(10) is for the background to be scaled to cover the images on both ends
-		int nXPos = ( GetWide() - nTotalWidth ) * 0.5;
+		int nTotalWidth =
+			(teamPlayers.Count() * nImageWide) +
+			(2 * XRES(10)); // the XRES(10) is for the background to be scaled to cover the images on both ends
+		int nXPos = (GetWide() - nTotalWidth) * 0.5;
 
-		m_pBackground->GetBounds( nBackgroundXPos, nBackgroundYPos, nBackgroundWide, nBackgroundTall );
-		m_pBackground->SetBounds( nXPos, nBackgroundYPos, nTotalWidth, nBackgroundTall );
+		m_pBackground->GetBounds(nBackgroundXPos, nBackgroundYPos, nBackgroundWide, nBackgroundTall);
+		m_pBackground->SetBounds(nXPos, nBackgroundYPos, nTotalWidth, nBackgroundTall);
 
 		// this is where our first image will start
-		nXPos += XRES( 10 );
+		nXPos += XRES(10);
 
 		// the first image on the left is always the local player (and we'll have a special background behind it)
 		pImage = m_ClassImages[iImageIndex];
 		iImageIndex++;
 
-		if ( pImage )
+		if(pImage)
 		{
-			pImage->SetVisible( true );
-			pImage->GetPos( nImageXPos, nImageYPos ); // only really care about the YPos here
-			pImage->SetPos( nXPos, nImageYPos );
-			pImage->SetImage( nLocalPlayerTeam == TF_TEAM_BLUE ? g_sImagesBlue[nClass] : g_sImagesRed[nClass] );
+			pImage->SetVisible(true);
+			pImage->GetPos(nImageXPos, nImageYPos); // only really care about the YPos here
+			pImage->SetPos(nXPos, nImageYPos);
+			pImage->SetImage(nLocalPlayerTeam == TF_TEAM_BLUE ? g_sImagesBlue[nClass] : g_sImagesRed[nClass]);
 
-			if ( teamPlayers.Count() > 1 )
+			if(teamPlayers.Count() > 1)
 			{
 				// local player background
 				int nBGXPos, nBGYPos;
-				m_pLocalPlayerBG->SetVisible( true );
-				m_pLocalPlayerBG->GetPos( nBGXPos, nBGYPos );
-				m_pLocalPlayerBG->SetPos( nXPos, nBGYPos );
+				m_pLocalPlayerBG->SetVisible(true);
+				m_pLocalPlayerBG->GetPos(nBGXPos, nBGYPos);
+				m_pLocalPlayerBG->SetPos(nXPos, nBGYPos);
 			}
 			else
 			{
-				m_pLocalPlayerBG->SetVisible( false );
+				m_pLocalPlayerBG->SetVisible(false);
 			}
 
 			nXPos += nImageWide;
 		}
 
-		for ( i = 0 ; i < teamPlayers.Count() ; i++ )
+		for(i = 0; i < teamPlayers.Count(); i++)
 		{
 			int iPlayerIndex = teamPlayers[i];
 
-			if ( iPlayerIndex == GetLocalPlayerIndex() )
+			if(iPlayerIndex == GetLocalPlayerIndex())
 				continue;
 
-			if ( iImageIndex >= MAX_CLASS_IMAGES )
+			if(iImageIndex >= MAX_CLASS_IMAGES)
 				continue;
 
-			if ( g_TF_PR->GetTeam( iPlayerIndex ) == GetLocalPlayerTeam() )
+			if(g_TF_PR->GetTeam(iPlayerIndex) == GetLocalPlayerTeam())
 			{
-				nClass = g_TF_PR->GetPlayerClass( iPlayerIndex );
+				nClass = g_TF_PR->GetPlayerClass(iPlayerIndex);
 
-				if ( nClass == TF_CLASS_UNDEFINED )
+				if(nClass == TF_CLASS_UNDEFINED)
 					continue;
 
 				pImage = m_ClassImages[iImageIndex];
 
-				if ( pImage )
+				if(pImage)
 				{
-					pImage->SetVisible( true );
-					pImage->SetPos( nXPos, nImageYPos );
-					pImage->SetImage( nLocalPlayerTeam == TF_TEAM_BLUE ? g_sImagesBlue[nClass] : g_sImagesRed[nClass] );
+					pImage->SetVisible(true);
+					pImage->SetPos(nXPos, nImageYPos);
+					pImage->SetImage(nLocalPlayerTeam == TF_TEAM_BLUE ? g_sImagesBlue[nClass] : g_sImagesRed[nClass]);
 					nXPos += nImageWide;
 				}
 
@@ -232,32 +234,32 @@ void CHudArenaClassLayout::PerformLayout( void )
 	}
 
 	// turn off any unused images
-	while ( iImageIndex < MAX_CLASS_IMAGES )
+	while(iImageIndex < MAX_CLASS_IMAGES)
 	{
 		pImage = m_ClassImages[iImageIndex];
-		if ( pImage )
+		if(pImage)
 		{
-			pImage->SetVisible( false );
+			pImage->SetVisible(false);
 		}
 
 		iImageIndex++;
 	}
 
 	C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
-	if ( pLocalPlayer && m_pChangeLabel && m_pChangeLabelShadow )
+	if(pLocalPlayer && m_pChangeLabel && m_pChangeLabelShadow)
 	{
 		bool bShow = true;
 
-		if ( ( pLocalPlayer->m_Shared.GetArenaNumChanges() >= tf_arena_change_limit.GetInt() ) ||
-			 ( tf_arena_force_class.GetBool() == false ) )
+		if((pLocalPlayer->m_Shared.GetArenaNumChanges() >= tf_arena_change_limit.GetInt()) ||
+		   (tf_arena_force_class.GetBool() == false))
 		{
 			bShow = false;
 		}
 
-		if ( m_pChangeLabel->IsVisible() != bShow )
+		if(m_pChangeLabel->IsVisible() != bShow)
 		{
-			m_pChangeLabel->SetVisible( bShow );
-			m_pChangeLabelShadow->SetVisible( bShow );
+			m_pChangeLabel->SetVisible(bShow);
+			m_pChangeLabelShadow->SetVisible(bShow);
 		}
 	}
 
@@ -265,34 +267,34 @@ void CHudArenaClassLayout::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CHudArenaClassLayout::ShouldDraw( void )
+bool CHudArenaClassLayout::ShouldDraw(void)
 {
-	if ( TFGameRules() == NULL )
+	if(TFGameRules() == NULL)
 		return false;
 
-	if ( CHudElement::ShouldDraw() == false )
+	if(CHudElement::ShouldDraw() == false)
 		return false;
 
-	if ( TFGameRules()->State_Get() != GR_STATE_PREROUND )
+	if(TFGameRules()->State_Get() != GR_STATE_PREROUND)
 		return false;
 
-	if ( TFGameRules()->IsInArenaMode() == false )
+	if(TFGameRules()->IsInArenaMode() == false)
 		return false;
 
-	if ( GetLocalPlayerTeam() > LAST_SHARED_TEAM )
+	if(GetLocalPlayerTeam() > LAST_SHARED_TEAM)
 	{
-		if ( ( tf_arena_force_class.GetBool() == true ) || ( GetGlobalTeam( GetLocalPlayerTeam() )->Get_Number_Players() > 1 ) )
+		if((tf_arena_force_class.GetBool() == true) || (GetGlobalTeam(GetLocalPlayerTeam())->Get_Number_Players() > 1))
 		{
 			C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
-			if ( pLocalPlayer && pLocalPlayer->IsAlive() )
+			if(pLocalPlayer && pLocalPlayer->IsAlive())
 			{
 				C_TFPlayerClass *pClass = pLocalPlayer->GetPlayerClass();
-				if ( pClass && pClass->GetClassIndex() != TF_CLASS_UNDEFINED )
+				if(pClass && pClass->GetClassIndex() != TF_CLASS_UNDEFINED)
 				{
 					return true;
-				}					
+				}
 			}
 		}
 	}
@@ -301,55 +303,54 @@ bool CHudArenaClassLayout::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CHudArenaClassLayout::SetVisible( bool state )
+void CHudArenaClassLayout::SetVisible(bool state)
 {
-	IGameEvent *event = gameeventmanager->CreateEvent( "show_class_layout" );
-	if ( event )
+	IGameEvent *event = gameeventmanager->CreateEvent("show_class_layout");
+	if(event)
 	{
-		event->SetBool( "show", state );
-		gameeventmanager->FireEventClientSide( event );
+		event->SetBool("show", state);
+		gameeventmanager->FireEventClientSide(event);
 	}
 
-	BaseClass::SetVisible( state );
+	BaseClass::SetVisible(state);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CHudArenaClassLayout::OnTick( void )
+void CHudArenaClassLayout::OnTick(void)
 {
 	bool bVisible = ShouldDraw();
 
-	if ( bVisible != IsVisible() )
+	if(bVisible != IsVisible())
 	{
-		SetVisible( bVisible );
+		SetVisible(bVisible);
 	}
 
-	if ( !bVisible )
+	if(!bVisible)
 		return;
-	
-	InvalidateLayout( true );
+
+	InvalidateLayout(true);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CHudArenaClassLayout::HandleKeyCodePressed( vgui::KeyCode code )
+bool CHudArenaClassLayout::HandleKeyCodePressed(vgui::KeyCode code)
 {
-	if ( code == KEY_F4 )
+	if(code == KEY_F4)
 	{
-		if ( ShouldDraw() && ( tf_arena_force_class.GetBool() == true ) )
+		if(ShouldDraw() && (tf_arena_force_class.GetBool() == true))
 		{
 			C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
-			if ( pLocalPlayer && ( pLocalPlayer->m_Shared.GetArenaNumChanges() < tf_arena_change_limit.GetInt() ) )
+			if(pLocalPlayer && (pLocalPlayer->m_Shared.GetArenaNumChanges() < tf_arena_change_limit.GetInt()))
 			{
-				engine->ClientCmd( "arena_changeclass" );
+				engine->ClientCmd("arena_changeclass");
 			}
 		}
 	}
 
 	return false;
 }
-

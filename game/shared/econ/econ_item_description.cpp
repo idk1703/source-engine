@@ -12,53 +12,52 @@
 #include "econ_dynamic_recipe.h"
 
 #ifdef GC
-	// the GC needs accountdetails to get persona names
-	#include "gcsdk/accountdetails.h"
+// the GC needs accountdetails to get persona names
+#include "gcsdk/accountdetails.h"
 #else // !GC
 
-	#ifndef EXTERNALTESTS_DLL
-		#include "econ_item_inventory.h"
-	#endif
+#ifndef EXTERNALTESTS_DLL
+#include "econ_item_inventory.h"
+#endif
 
-	#ifdef CLIENT_DLL
-		#include "gc_clientsystem.h"
-		#include "client_community_market.h"			// for Market data in tooltips
-		#include "econ_ui.h"							// for money-value-to-display-string formatting
-		#include "store/store_panel.h"					// for money-value-to-display-string formatting
-	#endif // CLIENT_DLL
-#endif // GC
-
+#ifdef CLIENT_DLL
+#include "gc_clientsystem.h"
+#include "client_community_market.h" // for Market data in tooltips
+#include "econ_ui.h"				 // for money-value-to-display-string formatting
+#include "store/store_panel.h"		 // for money-value-to-display-string formatting
+#endif								 // CLIENT_DLL
+#endif								 // GC
 
 #ifdef PROJECT_TF
-	#include "tf_duel_summary.h"
-	#include "econ_contribution.h"
-	#include "tf_player_info.h"
-	#include "tf_wardata.h"
+#include "tf_duel_summary.h"
+#include "econ_contribution.h"
+#include "tf_player_info.h"
+#include "tf_wardata.h"
 
-	#ifdef TF_CLIENT_DLL
-		#include "tf_gamerules.h"
-		#include "tf_mapinfo.h"
-	#endif 
+#ifdef TF_CLIENT_DLL
+#include "tf_gamerules.h"
+#include "tf_mapinfo.h"
+#endif
 #endif
 
 #ifdef VPROF_ENABLED
-	static const char *g_pszEconDescriptionVprofGroup = _T("Econ Description");
+static const char *g_pszEconDescriptionVprofGroup = _T("Econ Description");
 #endif
 
-extern const char *GetWearLocalizationString( float flWear );
+extern const char *GetWearLocalizationString(float flWear);
 
 // --------------------------------------------------------------------------
 // Local Helper
 // --------------------------------------------------------------------------
 const size_t k_VerboseStringBufferSize = 128;
-static char *BuildVerboseStrings( char buf[k_VerboseStringBufferSize], bool bIsVerbose, const char *format, ... )
+static char *BuildVerboseStrings(char buf[k_VerboseStringBufferSize], bool bIsVerbose, const char *format, ...)
 {
-	if ( !bIsVerbose )
+	if(!bIsVerbose)
 		return NULL;
 
 	va_list argptr;
-	va_start( argptr, format );
-	Q_vsnprintf( buf, k_VerboseStringBufferSize, format, argptr );
+	va_start(argptr, format);
+	Q_vsnprintf(buf, k_VerboseStringBufferSize, format, argptr);
 	va_end(argptr);
 
 	return buf;
@@ -67,9 +66,9 @@ static char *BuildVerboseStrings( char buf[k_VerboseStringBufferSize], bool bIsV
 // --------------------------------------------------------------------------
 // Purpose:
 // --------------------------------------------------------------------------
-static bool IsStorePreviewItem( const IEconItemInterface *pEconItem )
+static bool IsStorePreviewItem(const IEconItemInterface *pEconItem)
 {
-	Assert( pEconItem );
+	Assert(pEconItem);
 
 #ifdef CLIENT_DLL
 	return pEconItem->GetFlags() & kEconItemFlagClient_StoreItem;
@@ -81,27 +80,29 @@ static bool IsStorePreviewItem( const IEconItemInterface *pEconItem )
 // --------------------------------------------------------------------------
 // Purpose:
 // --------------------------------------------------------------------------
-void IEconItemDescription::YieldingFillOutEconItemDescription( IEconItemDescription *out_pDescription, CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void IEconItemDescription::YieldingFillOutEconItemDescription(IEconItemDescription *out_pDescription,
+															  CLocalizationProvider *pLocalizationProvider,
+															  const IEconItemInterface *pEconItem)
 {
-	VPROF_BUDGET( "IEconItemDescription::YieldingFillOutEconItemDescription()", g_pszEconDescriptionVprofGroup );
+	VPROF_BUDGET("IEconItemDescription::YieldingFillOutEconItemDescription()", g_pszEconDescriptionVprofGroup);
 
-	Assert( out_pDescription );
-	Assert( pLocalizationProvider );
-	Assert( pEconItem );
+	Assert(out_pDescription);
+	Assert(pLocalizationProvider);
+	Assert(pEconItem);
 
-	out_pDescription->YieldingCacheDescriptionData( pLocalizationProvider, pEconItem );
-	out_pDescription->GenerateDescriptionLines( pLocalizationProvider, pEconItem );
+	out_pDescription->YieldingCacheDescriptionData(pLocalizationProvider, pEconItem);
+	out_pDescription->GenerateDescriptionLines(pLocalizationProvider, pEconItem);
 }
 
 // --------------------------------------------------------------------------
 // Purpose:
 // --------------------------------------------------------------------------
-const econ_item_description_line_t *IEconItemDescription::GetFirstLineWithMetaType( uint32 unMetaTypeSearchFlags ) const
+const econ_item_description_line_t *IEconItemDescription::GetFirstLineWithMetaType(uint32 unMetaTypeSearchFlags) const
 {
-	for ( unsigned int i = 0; i < GetLineCount(); i++ )
+	for(unsigned int i = 0; i < GetLineCount(); i++)
 	{
-		const econ_item_description_line_t& pLine = GetLine(i);
-		if ( (pLine.unMetaType & unMetaTypeSearchFlags) == unMetaTypeSearchFlags )
+		const econ_item_description_line_t &pLine = GetLine(i);
+		if((pLine.unMetaType & unMetaTypeSearchFlags) == unMetaTypeSearchFlags)
 			return &pLine;
 	}
 
@@ -113,46 +114,47 @@ const econ_item_description_line_t *IEconItemDescription::GetFirstLineWithMetaTy
 // --------------------------------------------------------------------------
 // Purpose:
 // --------------------------------------------------------------------------
-CLocalizedStringArg<CLocalizedRTime32>::CLocalizedStringArg( const CLocalizedRTime32& cTimeIn )
+CLocalizedStringArg<CLocalizedRTime32>::CLocalizedStringArg(const CLocalizedRTime32 &cTimeIn)
 {
 #if TF_ANTI_IDLEBOT_VERIFICATION
 	// We expect the client and the GC to display dates and times differently in certain situations (ie.,
 	// they may disagree on whether to display in GMT). Rather than trying to find the specific cases where
 	// they might agree and let them through, we just early out and feed back the empty string for all
 	// date/time formatting when doing client verification.
-	if ( cTimeIn.m_pHashContext )
+	if(cTimeIn.m_pHashContext)
 		return;
 #endif
 
-	CRTime cTime( cTimeIn.m_unTime );
+	CRTime cTime(cTimeIn.m_unTime);
 
 	// The GC will always display time in GMT. "Local time" isn't a useful thing from a client's perspective
 	// when viewing an item in the Steam Community, etc.
 #ifdef GC_DLL
-	cTime.SetToGMT( true );
+	cTime.SetToGMT(true);
 #else
-	cTime.SetToGMT( cTimeIn.m_bForceGMTOnClient );
+	cTime.SetToGMT(cTimeIn.m_bForceGMTOnClient);
 #endif
 
-	const locchar_t *loc_LocalizationFormat = cTimeIn.m_pLocalizationProvider->Find( cTime.BIsGMT() ? "Econ_DateFormat_GMT" : "Econ_DateFormat" );
+	const locchar_t *loc_LocalizationFormat =
+		cTimeIn.m_pLocalizationProvider->Find(cTime.BIsGMT() ? "Econ_DateFormat_GMT" : "Econ_DateFormat");
 
 	time_t tTime = cTime.GetRTime32();
 	struct tm tmStruct;
-	struct tm *ptm = cTime.BIsGMT() ? Plat_gmtime( &tTime, &tmStruct ) : Plat_localtime( &tTime, &tmStruct );
+	struct tm *ptm = cTime.BIsGMT() ? Plat_gmtime(&tTime, &tmStruct) : Plat_localtime(&tTime, &tmStruct);
 
-	time_t tFinalTime = mktime( ptm );
-	
-	char rgchDateBuf[ 128 ];
-	BGetLocalFormattedDate( tFinalTime, rgchDateBuf, sizeof( rgchDateBuf ) );
+	time_t tFinalTime = mktime(ptm);
 
-	KeyValues *pKeyValues = new KeyValues( "DateTokens" );
+	char rgchDateBuf[128];
+	BGetLocalFormattedDate(tFinalTime, rgchDateBuf, sizeof(rgchDateBuf));
 
-	pKeyValues->SetString( "day", &rgchDateBuf[0] );
-	pKeyValues->SetInt( "hour", cTime.GetHour() );
-	pKeyValues->SetString( "min", CFmtStr( "%02u", cTime.GetMinute() ).Access() );
-	pKeyValues->SetString( "sec", CFmtStr( "%02u", cTime.GetSecond() ).Access() );
+	KeyValues *pKeyValues = new KeyValues("DateTokens");
 
-	m_Str = CConstructLocalizedString( loc_LocalizationFormat, pKeyValues );
+	pKeyValues->SetString("day", &rgchDateBuf[0]);
+	pKeyValues->SetInt("hour", cTime.GetHour());
+	pKeyValues->SetString("min", CFmtStr("%02u", cTime.GetMinute()).Access());
+	pKeyValues->SetString("sec", CFmtStr("%02u", cTime.GetSecond()).Access());
+
+	m_Str = CConstructLocalizedString(loc_LocalizationFormat, pKeyValues);
 
 	pKeyValues->deleteThis();
 }
@@ -160,25 +162,26 @@ CLocalizedStringArg<CLocalizedRTime32>::CLocalizedStringArg( const CLocalizedRTi
 // --------------------------------------------------------------------------
 // Purpose:
 // --------------------------------------------------------------------------
-void CEconItemDescription::YieldingFillOutAccountPersonaName( const CLocalizationProvider *pLocalizationProvider, uint32 unAccountID )
+void CEconItemDescription::YieldingFillOutAccountPersonaName(const CLocalizationProvider *pLocalizationProvider,
+															 uint32 unAccountID)
 {
-	Assert( pLocalizationProvider );
- 
+	Assert(pLocalizationProvider);
+
 	// Never cache invalid accounts.
-	if ( unAccountID == 0 )
-	return;
- 
+	if(unAccountID == 0)
+		return;
+
 	// Make sure we have a cache entry for this account ID. If we're hashing, we won't fill
 	// this with real data to avoid discrepancies between the GC view of a persona name and the
 	// client view, both of which are cached differently. If we're not hashing, we'll do our best
 	// to find the current name. Either way, by the time this function ends we expect to have a
 	// value stored for this account ID.
-	CEconItemDescription::steam_account_persona_name_t& AccountPersona = vecPersonaNames[ vecPersonaNames.AddToTail() ];
+	CEconItemDescription::steam_account_persona_name_t &AccountPersona = vecPersonaNames[vecPersonaNames.AddToTail()];
 	AccountPersona.unAccountID = unAccountID;
- 
+
 #if TF_ANTI_IDLEBOT_VERIFICATION
 	// Force persona names to match "verify" between the client and the GC for verification.
-	if ( m_pHashContext )
+	if(m_pHashContext)
 	{
 		AccountPersona.loc_sPersonaName = LOCCHAR("verify");
 	}
@@ -186,37 +189,37 @@ void CEconItemDescription::YieldingFillOutAccountPersonaName( const CLocalizatio
 #endif // TF_ANTI_IDLEBOT_VERIFICATION
 	{
 		const char *utf8_PersonaName = NULL;
- 
+
 #ifdef GC
-		CSteamID steamID( unAccountID, GCSDK::GGCHost()->GetUniverse(), k_EAccountTypeIndividual );
-		utf8_PersonaName = GGCGameBase()->YieldingGetPersonaName( steamID );
+		CSteamID steamID(unAccountID, GCSDK::GGCHost()->GetUniverse(), k_EAccountTypeIndividual);
+		utf8_PersonaName = GGCGameBase()->YieldingGetPersonaName(steamID);
 #else // if defined( CLIENT_DLL )
-		utf8_PersonaName = InventoryManager()->PersonaName_Get( unAccountID );
+		utf8_PersonaName = InventoryManager()->PersonaName_Get(unAccountID);
 #endif
 
-#if defined( CLIENT_DLL )
-		m_bUnknownPlayer = Q_strncmp( utf8_PersonaName, "[unknown]", ARRAYSIZE( "[unknown]" ) ) == 0;
+#if defined(CLIENT_DLL)
+		m_bUnknownPlayer = Q_strncmp(utf8_PersonaName, "[unknown]", ARRAYSIZE("[unknown]")) == 0;
 #endif
- 
+
 		// We should have filled this in with something by now, even if that something is "we couldn't
 		// find useful information".
-		Assert( utf8_PersonaName );
- 
+		Assert(utf8_PersonaName);
+
 		// Convert our UTF8 to whatever we're using for localized display, and done.
-		pLocalizationProvider->ConvertUTF8ToLocchar( utf8_PersonaName, &AccountPersona.loc_sPersonaName );
+		pLocalizationProvider->ConvertUTF8ToLocchar(utf8_PersonaName, &AccountPersona.loc_sPersonaName);
 	}
- 
-	Assert( !AccountPersona.loc_sPersonaName.IsEmpty() );
+
+	Assert(!AccountPersona.loc_sPersonaName.IsEmpty());
 }
 
 // --------------------------------------------------------------------------
 // Purpose:
 // --------------------------------------------------------------------------
-const locchar_t *CEconItemDescription::FindAccountPersonaName( uint32 unAccountID ) const
+const locchar_t *CEconItemDescription::FindAccountPersonaName(uint32 unAccountID) const
 {
-	FOR_EACH_VEC( vecPersonaNames, i )
+	FOR_EACH_VEC(vecPersonaNames, i)
 	{
-		if ( vecPersonaNames[i].unAccountID == unAccountID )
+		if(vecPersonaNames[i].unAccountID == unAccountID)
 			return vecPersonaNames[i].loc_sPersonaName.Get();
 	}
 
@@ -227,44 +230,45 @@ const locchar_t *CEconItemDescription::FindAccountPersonaName( uint32 unAccountI
 // --------------------------------------------------------------------------
 // Purpose:
 // --------------------------------------------------------------------------
-void CEconItemDescription::YieldingFillOutAccountTypeCache( uint32 unAccountID, int nClassID )
+void CEconItemDescription::YieldingFillOutAccountTypeCache(uint32 unAccountID, int nClassID)
 {
-	if( !unAccountID )
+	if(!unAccountID)
 		return;
 
 #ifdef GC_DLL
-	CEconSharedObjectCache *pSOCache = GGCEcon()->YieldingFindOrLoadEconSOCache( CSteamID( unAccountID, GCSDK::GGCHost()->GetUniverse(), k_EAccountTypeIndividual ) );
+	CEconSharedObjectCache *pSOCache = GGCEcon()->YieldingFindOrLoadEconSOCache(
+		CSteamID(unAccountID, GCSDK::GGCHost()->GetUniverse(), k_EAccountTypeIndividual));
 #else // if defined( CLIENT_DLL )
 	EUniverse eUniverse = GetUniverse();
 
-	if ( eUniverse == k_EUniverseInvalid )
+	if(eUniverse == k_EUniverseInvalid)
 		return;
 
-	GCSDK::CGCClientSharedObjectCache *pSOCache = GCClientSystem()->GetSOCache( CSteamID( unAccountID, eUniverse, k_EAccountTypeIndividual ) );
+	GCSDK::CGCClientSharedObjectCache *pSOCache =
+		GCClientSystem()->GetSOCache(CSteamID(unAccountID, eUniverse, k_EAccountTypeIndividual));
 #endif
-	if ( !pSOCache )
+	if(!pSOCache)
 		return;
 
-	GCSDK::CSharedObjectTypeCache *pTypeCache = pSOCache->FindTypeCache( nClassID );
-	if ( !pTypeCache )
+	GCSDK::CSharedObjectTypeCache *pTypeCache = pSOCache->FindTypeCache(nClassID);
+	if(!pTypeCache)
 		return;
 
-	CEconItemDescription::steam_account_type_cache_t& AccountTypeCache = vecTypeCaches[ vecTypeCaches.AddToTail() ];
+	CEconItemDescription::steam_account_type_cache_t &AccountTypeCache = vecTypeCaches[vecTypeCaches.AddToTail()];
 
 	AccountTypeCache.unAccountID = unAccountID;
-	AccountTypeCache.nClassID	 = nClassID;
-	AccountTypeCache.pTypeCache	 = pTypeCache;
+	AccountTypeCache.nClassID = nClassID;
+	AccountTypeCache.pTypeCache = pTypeCache;
 }
 
 // --------------------------------------------------------------------------
 // Purpose:
 // --------------------------------------------------------------------------
-GCSDK::CSharedObjectTypeCache *CEconItemDescription::FindAccountTypeCache( uint32 unAccountID, int nClassID ) const
+GCSDK::CSharedObjectTypeCache *CEconItemDescription::FindAccountTypeCache(uint32 unAccountID, int nClassID) const
 {
-	FOR_EACH_VEC( vecTypeCaches, i )
+	FOR_EACH_VEC(vecTypeCaches, i)
 	{
-		if ( vecTypeCaches[i].unAccountID == unAccountID &&
-			 vecTypeCaches[i].nClassID == nClassID )
+		if(vecTypeCaches[i].unAccountID == unAccountID && vecTypeCaches[i].nClassID == nClassID)
 		{
 			return vecTypeCaches[i].pTypeCache;
 		}
@@ -276,54 +280,55 @@ GCSDK::CSharedObjectTypeCache *CEconItemDescription::FindAccountTypeCache( uint3
 // --------------------------------------------------------------------------
 // Purpose:
 // --------------------------------------------------------------------------
-template < typename T >
-const T *CEconItemDescription::FindAccountTypeCacheSingleton( uint32 unAccountID, int nClassID ) const
+template<typename T>
+const T *CEconItemDescription::FindAccountTypeCacheSingleton(uint32 unAccountID, int nClassID) const
 {
-	GCSDK::CSharedObjectTypeCache *pSOTypeCache = FindAccountTypeCache( unAccountID, nClassID );
-	if ( !pSOTypeCache )
+	GCSDK::CSharedObjectTypeCache *pSOTypeCache = FindAccountTypeCache(unAccountID, nClassID);
+	if(!pSOTypeCache)
 		return NULL;
 
-	if ( pSOTypeCache->GetCount() != 1 )
+	if(pSOTypeCache->GetCount() != 1)
 		return NULL;
 
-	return dynamic_cast<T *>( pSOTypeCache->GetObject( 0 ) );
+	return dynamic_cast<T *>(pSOTypeCache->GetObject(0));
 }
 
 // --------------------------------------------------------------------------
 // Purpose:
 // --------------------------------------------------------------------------
-void CEconItemDescription::YieldingCacheDescriptionData( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::YieldingCacheDescriptionData(const CLocalizationProvider *pLocalizationProvider,
+														const IEconItemInterface *pEconItem)
 {
-	VPROF_BUDGET( "CEconItemDescription::YieldingCacheDescriptionData()", g_pszEconDescriptionVprofGroup );
-	
+	VPROF_BUDGET("CEconItemDescription::YieldingCacheDescriptionData()", g_pszEconDescriptionVprofGroup);
+
 	vecPersonaNames.Purge();
 	vecTypeCaches.Purge();
 
 	// For each attribute that is set to display as an account ID, load the persona name for that account
 	// ID in advance so that we don't yield somewhere crazy down below.
-	
+
 	// Walk our attribute list and accumulate IDs.
 	CSteamAccountIDAttributeCollector AccountIDCollector;
-	pEconItem->IterateAttributes( &AccountIDCollector );
-	const CUtlVector<uint32>& vecSteamAccountIDs = AccountIDCollector.GetAccountIDs();
+	pEconItem->IterateAttributes(&AccountIDCollector);
+	const CUtlVector<uint32> &vecSteamAccountIDs = AccountIDCollector.GetAccountIDs();
 
 	// Look up the persona names for each account referenced by an attribute directly.
-	FOR_EACH_VEC( vecSteamAccountIDs, i )
+	FOR_EACH_VEC(vecSteamAccountIDs, i)
 	{
-		YieldingFillOutAccountPersonaName( pLocalizationProvider, vecSteamAccountIDs[i] );
+		YieldingFillOutAccountPersonaName(pLocalizationProvider, vecSteamAccountIDs[i]);
 	}
 
 	// Look up the persona names for each account referencing an attribute indirectly (ie., just stuffed
 	// into 32 bits).
-	for ( int i = 0; i < GetKillEaterAttrCount(); i++ )
+	for(int i = 0; i < GetKillEaterAttrCount(); i++)
 	{
 		uint32 unRestrictionType;
-		if ( pEconItem->FindAttribute( GetKillEaterAttr_Restriction(i), &unRestrictionType ) &&
-			 unRestrictionType == kStrangeEventRestriction_VictimSteamAccount )
+		if(pEconItem->FindAttribute(GetKillEaterAttr_Restriction(i), &unRestrictionType) &&
+		   unRestrictionType == kStrangeEventRestriction_VictimSteamAccount)
 		{
 			uint32 unAccountID;
-			DbgVerify( pEconItem->FindAttribute( GetKillEaterAttr_RestrictionValue(i), &unAccountID ) );
-			YieldingFillOutAccountPersonaName( pLocalizationProvider, unAccountID );
+			DbgVerify(pEconItem->FindAttribute(GetKillEaterAttr_RestrictionValue(i), &unAccountID));
+			YieldingFillOutAccountPersonaName(pLocalizationProvider, unAccountID);
 		}
 	}
 
@@ -334,134 +339,139 @@ void CEconItemDescription::YieldingCacheDescriptionData( const CLocalizationProv
 	{
 		// We'll need to access other information about our duel stats later, but we also need to precache
 		// the account name of whoever our last kill was beforehand.
-		YieldingFillOutAccountTypeCache( unAccountID, CTFDuelSummary::k_nTypeID );
+		YieldingFillOutAccountTypeCache(unAccountID, CTFDuelSummary::k_nTypeID);
 
 		// In TF, we also store information about our previous duel target, stored way way down inside some
 		// other structures.
-		const CTFDuelSummary *pDuelSummary = FindAccountTypeCacheSingleton<CTFDuelSummary>( unAccountID, CTFDuelSummary::k_nTypeID );
+		const CTFDuelSummary *pDuelSummary =
+			FindAccountTypeCacheSingleton<CTFDuelSummary>(unAccountID, CTFDuelSummary::k_nTypeID);
 
-		if ( pDuelSummary )
+		if(pDuelSummary)
 		{
-			YieldingFillOutAccountPersonaName( pLocalizationProvider, pDuelSummary->Obj().last_duel_account_id() );
+			YieldingFillOutAccountPersonaName(pLocalizationProvider, pDuelSummary->Obj().last_duel_account_id());
 		}
 	}
 
 	// Map contributions.
-	YieldingFillOutAccountTypeCache( unAccountID, CTFMapContribution::k_nTypeID );
+	YieldingFillOutAccountTypeCache(unAccountID, CTFMapContribution::k_nTypeID);
 
 	// New users helped.
-	YieldingFillOutAccountTypeCache( unAccountID, CTFPlayerInfo::k_nTypeID );
+	YieldingFillOutAccountTypeCache(unAccountID, CTFPlayerInfo::k_nTypeID);
 
 	// War data
-	YieldingFillOutAccountTypeCache( unAccountID, CWarData::k_nTypeID );
+	YieldingFillOutAccountTypeCache(unAccountID, CWarData::k_nTypeID);
 
 #ifdef CLIENT_DLL
 	// Duck LeaderBoards
 	{
-		static CSchemaAttributeDefHandle pAttrDef_DisplayDuckLeaderboard( "display duck leaderboard" );
-		if ( pEconItem->FindAttribute( pAttrDef_DisplayDuckLeaderboard ) )
+		static CSchemaAttributeDefHandle pAttrDef_DisplayDuckLeaderboard("display duck leaderboard");
+		if(pEconItem->FindAttribute(pAttrDef_DisplayDuckLeaderboard))
 		{
-			CUtlVector< AccountID_t > accountIds;
-			Leaderboards_GetDuckLeaderboardSteamIDs( accountIds );
+			CUtlVector<AccountID_t> accountIds;
+			Leaderboards_GetDuckLeaderboardSteamIDs(accountIds);
 
-			FOR_EACH_VEC( accountIds, i )
+			FOR_EACH_VEC(accountIds, i)
 			{
 				// Look up the persona names for each account referenced in the leaderboard
-				YieldingFillOutAccountPersonaName( pLocalizationProvider, accountIds[i] );
+				YieldingFillOutAccountPersonaName(pLocalizationProvider, accountIds[i]);
 			}
 		}
 	}
 #endif // CLIENT_DLL
 
 #if TF_ANTI_IDLEBOT_VERIFICATION
-	if ( m_pHashContext )
+	if(m_pHashContext)
 	{
 		// Feed in the account IDs of each person we care about. We don't feed in the actual persona name
 		// string because this could theoretically differ between the GC and the client if one is out of sync.
-		FOR_EACH_VEC( vecPersonaNames, i )
+		FOR_EACH_VEC(vecPersonaNames, i)
 		{
-			char verboseStringBuf[ k_VerboseStringBufferSize ];
-			TFDescription_HashDataMunge( m_pHashContext, vecPersonaNames[i].unAccountID, m_bIsVerbose, BuildVerboseStrings( verboseStringBuf, m_bIsVerbose, "%d", vecPersonaNames[i].unAccountID ) );
+			char verboseStringBuf[k_VerboseStringBufferSize];
+			TFDescription_HashDataMunge(
+				m_pHashContext, vecPersonaNames[i].unAccountID, m_bIsVerbose,
+				BuildVerboseStrings(verboseStringBuf, m_bIsVerbose, "%d", vecPersonaNames[i].unAccountID));
 		}
 
 		// Are we in text mode or not? We'll use this to generate two different hashes to compare against.
-		unsigned int unRunningTextMode = 
+		unsigned int unRunningTextMode =
 #ifdef GC_DLL
-										  m_bTextModeEnabled
+			m_bTextModeEnabled
 #else
-										  *((bool *)g_pClientPurchaseInterface - 156)
+			*((bool *)g_pClientPurchaseInterface - 156)
 #endif
-									    ? 0x73aaff8e
-										: 0x12800c0a;
+				? 0x73aaff8e
+				: 0x12800c0a;
 
-		char verboseStringBuf[ k_VerboseStringBufferSize ];
-		TFDescription_HashDataMunge( m_pHashContext, unRunningTextMode, m_bIsVerbose, BuildVerboseStrings( verboseStringBuf, m_bIsVerbose, "%d", unRunningTextMode ) );
+		char verboseStringBuf[k_VerboseStringBufferSize];
+		TFDescription_HashDataMunge(m_pHashContext, unRunningTextMode, m_bIsVerbose,
+									BuildVerboseStrings(verboseStringBuf, m_bIsVerbose, "%d", unRunningTextMode));
 	}
 #endif // TF_ANTI_IBLEBOT_VERIFICATION
 
 #endif // PROJECT_TF
 }
 
-void CEconItemDescription::GenerateDescriptionLines( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::GenerateDescriptionLines(const CLocalizationProvider *pLocalizationProvider,
+													const IEconItemInterface *pEconItem)
 {
-	VPROF_BUDGET( "CEconItemDescription::GenerateDescriptionLines()", g_pszEconDescriptionVprofGroup );
+	VPROF_BUDGET("CEconItemDescription::GenerateDescriptionLines()", g_pszEconDescriptionVprofGroup);
 
-	Assert( pLocalizationProvider );
-	Assert( pEconItem );
+	Assert(pLocalizationProvider);
+	Assert(pEconItem);
 
 	m_vecDescLines.Purge();
 
-	Generate_ItemName( pLocalizationProvider, pEconItem );
-	Generate_ItemRarityDesc( pLocalizationProvider, pEconItem );
-	Generate_ItemLevelDesc( pLocalizationProvider, pEconItem );
-	//Generate_WearAmountDesc( pLocalizationProvider, pEconItem );
-#if defined( STAGING_ONLY ) && defined( CLIENT_DLL )
-	Generate_DebugInformation( pLocalizationProvider, pEconItem );
+	Generate_ItemName(pLocalizationProvider, pEconItem);
+	Generate_ItemRarityDesc(pLocalizationProvider, pEconItem);
+	Generate_ItemLevelDesc(pLocalizationProvider, pEconItem);
+	// Generate_WearAmountDesc( pLocalizationProvider, pEconItem );
+#if defined(STAGING_ONLY) && defined(CLIENT_DLL)
+	Generate_DebugInformation(pLocalizationProvider, pEconItem);
 #endif
 
 	// If we decide that for performance reasons some descriptions only want the name/description
 	// information and not all the details, this is the block to skip over.
 	{
-		Generate_CraftTag( pLocalizationProvider, pEconItem );
-		Generate_StyleDesc( pLocalizationProvider, pEconItem );
-		Generate_Painted( pLocalizationProvider, pEconItem );
+		Generate_CraftTag(pLocalizationProvider, pEconItem);
+		Generate_StyleDesc(pLocalizationProvider, pEconItem);
+		Generate_Painted(pLocalizationProvider, pEconItem);
 
-		Generate_HolidayRestriction( pLocalizationProvider, pEconItem );	
+		Generate_HolidayRestriction(pLocalizationProvider, pEconItem);
 #ifdef PROJECT_TF
-		Generate_SaxxyAwardDesc( pLocalizationProvider, pEconItem );
+		Generate_SaxxyAwardDesc(pLocalizationProvider, pEconItem);
 #endif // PROJECT_TF
-		Generate_VisibleAttributes( pLocalizationProvider, pEconItem );
+		Generate_VisibleAttributes(pLocalizationProvider, pEconItem);
 
-		Generate_QualityDesc( pLocalizationProvider, pEconItem );		
-		Generate_ItemDesc( pLocalizationProvider, pEconItem );
-		Generate_Bundle( pLocalizationProvider, pEconItem );
-		Generate_GiftedBy( pLocalizationProvider, pEconItem );
+		Generate_QualityDesc(pLocalizationProvider, pEconItem);
+		Generate_ItemDesc(pLocalizationProvider, pEconItem);
+		Generate_Bundle(pLocalizationProvider, pEconItem);
+		Generate_GiftedBy(pLocalizationProvider, pEconItem);
 #ifdef PROJECT_TF
-		Generate_DuelingMedal( pLocalizationProvider, pEconItem );
-		Generate_MapContributor( pLocalizationProvider, pEconItem );
-		Generate_FriendlyHat( pLocalizationProvider, pEconItem );
-		Generate_SquadSurplusClaimedBy( pLocalizationProvider, pEconItem );
-		Generate_MvmChallenges( pLocalizationProvider, pEconItem );
-		Generate_DynamicRecipe( pLocalizationProvider, pEconItem );
-		Generate_Leaderboard( pLocalizationProvider, pEconItem );
+		Generate_DuelingMedal(pLocalizationProvider, pEconItem);
+		Generate_MapContributor(pLocalizationProvider, pEconItem);
+		Generate_FriendlyHat(pLocalizationProvider, pEconItem);
+		Generate_SquadSurplusClaimedBy(pLocalizationProvider, pEconItem);
+		Generate_MvmChallenges(pLocalizationProvider, pEconItem);
+		Generate_DynamicRecipe(pLocalizationProvider, pEconItem);
+		Generate_Leaderboard(pLocalizationProvider, pEconItem);
 #endif // PROJECT_TF
-		Generate_XifierToolTargetItem( pLocalizationProvider, pEconItem );
-		Generate_LootListDesc( pLocalizationProvider, pEconItem );
-		Generate_EventDetail( pLocalizationProvider, pEconItem );
-		Generate_ItemSetDesc( pLocalizationProvider, pEconItem );
-		Generate_CollectionDesc( pLocalizationProvider, pEconItem );
-		Generate_ExpirationDesc( pLocalizationProvider, pEconItem );
-		Generate_DropPeriodDesc( pLocalizationProvider, pEconItem ); 
+		Generate_XifierToolTargetItem(pLocalizationProvider, pEconItem);
+		Generate_LootListDesc(pLocalizationProvider, pEconItem);
+		Generate_EventDetail(pLocalizationProvider, pEconItem);
+		Generate_ItemSetDesc(pLocalizationProvider, pEconItem);
+		Generate_CollectionDesc(pLocalizationProvider, pEconItem);
+		Generate_ExpirationDesc(pLocalizationProvider, pEconItem);
+		Generate_DropPeriodDesc(pLocalizationProvider, pEconItem);
 
-		Generate_MarketInformation( pLocalizationProvider, pEconItem );
-		Generate_DirectX8Warning( pLocalizationProvider, pEconItem );
+		Generate_MarketInformation(pLocalizationProvider, pEconItem);
+		Generate_DirectX8Warning(pLocalizationProvider, pEconItem);
 	}
 
 	// Certain information (tradeability, etc.) used to only get displayed if we were the owning player, or
 	// if we were looking at an unowned item (ie., a store preview) and want to show what it will look like
 	// when it *is* owned. Unfortunately this led to problems where you wouldn't know if the item you were
 	// about to be traded (currently not owned by you) would be craftable, etc.
-	Generate_FlagsAttributes( pLocalizationProvider, pEconItem );
+	Generate_FlagsAttributes(pLocalizationProvider, pEconItem);
 }
 
 // --------------------------------------------------------------------------
@@ -470,7 +480,8 @@ void CEconItemDescription::GenerateDescriptionLines( const CLocalizationProvider
 //			to throw at it.
 // --------------------------------------------------------------------------
 
-/*static*/ uint32 GetScoreTypeForKillEaterAttr( const IEconItemInterface *pEconItem, const CEconItemAttributeDefinition *pAttribDef )
+/*static*/ uint32 GetScoreTypeForKillEaterAttr(const IEconItemInterface *pEconItem,
+											   const CEconItemAttributeDefinition *pAttribDef)
 {
 	// What sort of event are we tracking? If we don't have an attribute at all we're one of the
 	// old kill-eater weapons that didn't specify what it was tracking.
@@ -479,7 +490,7 @@ void CEconItemDescription::GenerateDescriptionLines( const CLocalizationProvider
 	// This will overwrite our default 0 value if we have a value set but leave it if not.
 	{
 		float fKillEaterEventType;
-		if ( FindAttribute_UnsafeBitwiseCast<attrib_value_t>( pEconItem, pAttribDef, &fKillEaterEventType ) )
+		if(FindAttribute_UnsafeBitwiseCast<attrib_value_t>(pEconItem, pAttribDef, &fKillEaterEventType))
 		{
 			unKillEaterEventType = fKillEaterEventType;
 		}
@@ -491,30 +502,54 @@ void CEconItemDescription::GenerateDescriptionLines( const CLocalizationProvider
 // The item backend may add craft numbers well past what we want to display in the game. This
 // function determines whether a given number should be visible rather than always showing
 // whatever the GC shows.
-bool ShouldDisplayCraftCounterValue( int iValue )
+bool ShouldDisplayCraftCounterValue(int iValue)
 {
 	return iValue > 0 && iValue <= 100;
 }
 
 // This function will return the localized string (ie., "Face-Melting") for a specific item based
 // on the score it has accumulated.
-#if defined( CLIENT_DLL ) && defined( STAGING_ONLY )
-	ConVar staging_force_strange_score_selector_value( "staging_force_strange_score_selector_value", "-1" );
+#if defined(CLIENT_DLL) && defined(STAGING_ONLY)
+ConVar staging_force_strange_score_selector_value("staging_force_strange_score_selector_value", "-1");
 #endif // defined( CLIENT_DLL ) && defined( STAGING_ONLY )
 
 class CStrangeRankLocalizationGenerator
 {
 public:
-	CStrangeRankLocalizationGenerator( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem, bool bHashContextOff );
+	CStrangeRankLocalizationGenerator(const CLocalizationProvider *pLocalizationProvider,
+									  const IEconItemInterface *pEconItem, bool bHashContextOff);
 
-	bool IsValid() const { return m_bValid; }
+	bool IsValid() const
+	{
+		return m_bValid;
+	}
 
-	const locchar_t *GetRankLocalized() const { Assert( m_bValid ); return m_loc_Rank; }
-	const locchar_t *GetRankSecondaryLocalized() const { Assert( m_bValid ); return m_loc_SecondaryRank; }
+	const locchar_t *GetRankLocalized() const
+	{
+		Assert(m_bValid);
+		return m_loc_Rank;
+	}
+	const locchar_t *GetRankSecondaryLocalized() const
+	{
+		Assert(m_bValid);
+		return m_loc_SecondaryRank;
+	}
 
-	uint32 GetStrangeType() const { Assert( m_bValid ); return m_unType; }
-	uint32 GetStrangeScore() const { Assert( m_bValid ); return m_unScore; }
-	uint32 GetUsedStrangeSlot() const { Assert( m_bValid ); return m_unUsedStrangeSlot; }
+	uint32 GetStrangeType() const
+	{
+		Assert(m_bValid);
+		return m_unType;
+	}
+	uint32 GetStrangeScore() const
+	{
+		Assert(m_bValid);
+		return m_unScore;
+	}
+	uint32 GetUsedStrangeSlot() const
+	{
+		Assert(m_bValid);
+		return m_unUsedStrangeSlot;
+	}
 
 private:
 	bool m_bValid;
@@ -527,229 +562,220 @@ private:
 	uint32 m_unUsedStrangeSlot;
 };
 
-CStrangeRankLocalizationGenerator::CStrangeRankLocalizationGenerator( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem, bool bHashContextOff )
-	: m_bValid( false )
-	, m_loc_Rank( NULL )
-	, m_loc_SecondaryRank( NULL )
-	, m_unType( kKillEaterEvent_PlayerKill )
-	, m_unScore( 0 )
-	, m_unUsedStrangeSlot( 0 )
+CStrangeRankLocalizationGenerator::CStrangeRankLocalizationGenerator(const CLocalizationProvider *pLocalizationProvider,
+																	 const IEconItemInterface *pEconItem,
+																	 bool bHashContextOff)
+	: m_bValid(false),
+	  m_loc_Rank(NULL),
+	  m_loc_SecondaryRank(NULL),
+	  m_unType(kKillEaterEvent_PlayerKill),
+	  m_unScore(0),
+	  m_unUsedStrangeSlot(0)
 {
-	Assert( pLocalizationProvider );
-	Assert( pEconItem );
+	Assert(pLocalizationProvider);
+	Assert(pEconItem);
 
-	static CSchemaAttributeDefHandle pAttrDef_StrangeScoreSelector( "strange score selector" );
+	static CSchemaAttributeDefHandle pAttrDef_StrangeScoreSelector("strange score selector");
 
 	// Do we have a strange score selector attribute? If so, the value of this attribute will tell us which strange
 	// attribute we're actually going to use to generate a name. Leaving this value as 0 will fall back to the
 	// default behavior of looking at the base "kill eater" attribute.
-	if ( pEconItem->FindAttribute( pAttrDef_StrangeScoreSelector, &m_unUsedStrangeSlot ) )
+	if(pEconItem->FindAttribute(pAttrDef_StrangeScoreSelector, &m_unUsedStrangeSlot))
 	{
 		// Make sure the value we pulled from the database is within range.
-		m_unUsedStrangeSlot = MIN( m_unUsedStrangeSlot, static_cast<uint32>( GetKillEaterAttrCount() ) );
+		m_unUsedStrangeSlot = MIN(m_unUsedStrangeSlot, static_cast<uint32>(GetKillEaterAttrCount()));
 	}
 
-#if defined( CLIENT_DLL ) && defined( STAGING_ONLY )
-	if ( staging_force_strange_score_selector_value.GetInt() > 0 )
+#if defined(CLIENT_DLL) && defined(STAGING_ONLY)
+	if(staging_force_strange_score_selector_value.GetInt() > 0)
 	{
 		m_unUsedStrangeSlot = staging_force_strange_score_selector_value.GetInt();
 	}
 #endif // defined( CLIENT_DLL ) && defined( STAGING_ONLY )
 
 	// Use the strange prefix if the weapon has one.
-	if ( !pEconItem->FindAttribute( GetKillEaterAttr_Score( m_unUsedStrangeSlot ), &m_unScore ) )
+	if(!pEconItem->FindAttribute(GetKillEaterAttr_Score(m_unUsedStrangeSlot), &m_unScore))
 		return;
 
 	// What type of event are we tracking and how does it describe itself?
-	m_unType = GetScoreTypeForKillEaterAttr( pEconItem, GetKillEaterAttr_Type( m_unUsedStrangeSlot ) );
+	m_unType = GetScoreTypeForKillEaterAttr(pEconItem, GetKillEaterAttr_Type(m_unUsedStrangeSlot));
 
-	const char *pszLevelingDataName = GetItemSchema()->GetKillEaterScoreTypeLevelingDataName( m_unType );
-	if ( !pszLevelingDataName )
+	const char *pszLevelingDataName = GetItemSchema()->GetKillEaterScoreTypeLevelingDataName(m_unType);
+	if(!pszLevelingDataName)
 	{
 		pszLevelingDataName = KILL_EATER_RANK_LEVEL_BLOCK_NAME;
 	}
 
 	uint32 uUsedScore = m_unScore;
-#ifdef TF_ANTI_IDLEBOT_VERIFICATION	
+#ifdef TF_ANTI_IDLEBOT_VERIFICATION
 	// TF2 Anti-Idle hack.  It totally needs to be fixed
-	if ( !bHashContextOff )
+	if(!bHashContextOff)
 	{
 		uUsedScore = 0;
 	}
-#endif //TF_ANTI_IDLEBOT_VERIFICATION
+#endif // TF_ANTI_IDLEBOT_VERIFICATION
 
-	// For TF - Strange Scores reset on Trade, sharing that information is actually misleading so we'll always display base strange name
+	// For TF - Strange Scores reset on Trade, sharing that information is actually misleading so we'll always display
+	// base strange name
 #ifdef TF_GC_DLL
 	uUsedScore = 0;
 #endif // TF_GC_DLL
 
-	const CItemLevelingDefinition *pLevelDef = GetItemSchema()->GetItemLevelForScore( pszLevelingDataName, uUsedScore );
-	if ( !pLevelDef )
+	const CItemLevelingDefinition *pLevelDef = GetItemSchema()->GetItemLevelForScore(pszLevelingDataName, uUsedScore);
+	if(!pLevelDef)
 		return;
 
 	// Primary rank established!
-	m_loc_Rank = pLocalizationProvider->Find( pLevelDef->GetNameLocalizationKey() );
+	m_loc_Rank = pLocalizationProvider->Find(pLevelDef->GetNameLocalizationKey());
 	m_bValid = true;
 
 	// Does this score slot have a restriction that adds additional text somewhere in the localization token?
 	uint32 unFilterType;
 	uint32 unFilterValue;
-	if ( pEconItem->FindAttribute( GetKillEaterAttr_Restriction( m_unUsedStrangeSlot ), &unFilterType ) &&
-		 pEconItem->FindAttribute( GetKillEaterAttr_RestrictionValue( m_unUsedStrangeSlot ), &unFilterValue ) )
+	if(pEconItem->FindAttribute(GetKillEaterAttr_Restriction(m_unUsedStrangeSlot), &unFilterType) &&
+	   pEconItem->FindAttribute(GetKillEaterAttr_RestrictionValue(m_unUsedStrangeSlot), &unFilterValue))
 	{
 		// Game-specific code doesn't belong here. "We're shipping soon" hack fun!
 #ifdef PROJECT_TF
-		if ( unFilterType == kStrangeEventRestriction_Map )
+		if(unFilterType == kStrangeEventRestriction_Map)
 		{
-			const MapDef_t *pMap = GetItemSchema()->GetMasterMapDefByIndex( unFilterValue );
-			if ( pMap && pMap->pszStrangePrefixLocKey )
+			const MapDef_t *pMap = GetItemSchema()->GetMasterMapDefByIndex(unFilterValue);
+			if(pMap && pMap->pszStrangePrefixLocKey)
 			{
-				m_loc_SecondaryRank = pLocalizationProvider->Find( pMap->pszStrangePrefixLocKey );
+				m_loc_SecondaryRank = pLocalizationProvider->Find(pMap->pszStrangePrefixLocKey);
 			}
 		}
-		else if (unFilterType == kStrangeEventRestriction_Competitive)
+		else if(unFilterType == kStrangeEventRestriction_Competitive)
 		{
-			m_loc_SecondaryRank = pLocalizationProvider->Find( "TF_StrangeFilter_Prefix_Competitive" );
+			m_loc_SecondaryRank = pLocalizationProvider->Find("TF_StrangeFilter_Prefix_Competitive");
 		}
 #endif // PROJECT_TF
 	}
 }
 
 // ---------------------------------------------------------------------------------------------------------------------------
-void Econ_SetNameAsPaintkit( locchar_t( &out_pItemName )[MAX_ITEM_NAME_LENGTH], const CLocalizationProvider *pLocalizationProvider, CEconItemPaintKitDefinition *pPaintKit )
+void Econ_SetNameAsPaintkit(locchar_t (&out_pItemName)[MAX_ITEM_NAME_LENGTH],
+							const CLocalizationProvider *pLocalizationProvider, CEconItemPaintKitDefinition *pPaintKit)
 {
-	if ( !pPaintKit )
+	if(!pPaintKit)
 		return;
 
 	// Generate Paint kitted name
 	// IE Purple Rain Sniper Rifle
 	locchar_t tempName[MAX_ITEM_NAME_LENGTH];
-	loc_scpy_safe( tempName, out_pItemName );
+	loc_scpy_safe(tempName, out_pItemName);
 #ifndef GC
-	//bool bAppendWeapon = wcsstr( pPaintKitStr, out_pItemName ) == NULL;
-	g_pVGuiLocalize->ConstructString_safe( out_pItemName,
-		LOCCHAR( "%s1" ),
-		1,
-		pLocalizationProvider->Find( pPaintKit->GetLocalizeName() ) );
+	// bool bAppendWeapon = wcsstr( pPaintKitStr, out_pItemName ) == NULL;
+	g_pVGuiLocalize->ConstructString_safe(out_pItemName, LOCCHAR("%s1"), 1,
+										  pLocalizationProvider->Find(pPaintKit->GetLocalizeName()));
 #else
 	// GC doesn't have g_pVGuiLocalize so we construct the painted gun string like this
-	locchar_t *pPaintKitStr = pLocalizationProvider->Find( pPaintKit->GetLocalizeName() );
-	loc_scpy_safe( out_pItemName, pPaintKitStr ? pPaintKitStr : LOCCHAR( "" ) );
+	locchar_t *pPaintKitStr = pLocalizationProvider->Find(pPaintKit->GetLocalizeName());
+	loc_scpy_safe(out_pItemName, pPaintKitStr ? pPaintKitStr : LOCCHAR(""));
 #endif
 }
 
 // ---------------------------------------------------------------------------------------------------------------------------
-void Econ_ConcatPaintKitName( locchar_t( &out_pItemName )[MAX_ITEM_NAME_LENGTH], const CLocalizationProvider *pLocalizationProvider, CEconItemPaintKitDefinition *pPaintKit )
+void Econ_ConcatPaintKitName(locchar_t (&out_pItemName)[MAX_ITEM_NAME_LENGTH],
+							 const CLocalizationProvider *pLocalizationProvider, CEconItemPaintKitDefinition *pPaintKit)
 {
-	if ( !pPaintKit )
+	if(!pPaintKit)
 		return;
 
 	// Check to see if the paintkit localized name already has the weapon name, if so do not add (Weapon)
-	locchar_t *pPaintKitStr = pLocalizationProvider->FindSafe( pPaintKit->GetLocalizeName() );
+	locchar_t *pPaintKitStr = pLocalizationProvider->FindSafe(pPaintKit->GetLocalizeName());
 
 	locchar_t tempName[MAX_ITEM_NAME_LENGTH];
-	loc_scpy_safe( tempName, out_pItemName );
+	loc_scpy_safe(tempName, out_pItemName);
 
 #ifndef GC
-	bool bAppendWeapon = wcsstr( pPaintKitStr, out_pItemName ) == NULL;
+	bool bAppendWeapon = wcsstr(pPaintKitStr, out_pItemName) == NULL;
 	// Generate Paint kitted name
 	// IE Purple Rain Sniper Rifle
 
-	if ( bAppendWeapon )
+	if(bAppendWeapon)
 	{
-		g_pVGuiLocalize->ConstructString_safe( out_pItemName,
-			LOCCHAR("%s1 (%s2)"),
-			2,
-			pPaintKitStr,
-			tempName );
+		g_pVGuiLocalize->ConstructString_safe(out_pItemName, LOCCHAR("%s1 (%s2)"), 2, pPaintKitStr, tempName);
 	}
 	else
 	{
-		g_pVGuiLocalize->ConstructString_safe( out_pItemName,
-			LOCCHAR("%s1"),
-			1,
-			pPaintKitStr
-		);
+		g_pVGuiLocalize->ConstructString_safe(out_pItemName, LOCCHAR("%s1"), 1, pPaintKitStr);
 	}
 #else
 	// GC doesn't have g_pVGuiLocalize so we construct the painted gun string like this
-	bool bAppendWeapon = V_strstr( pPaintKitStr, out_pItemName ) == NULL;
+	bool bAppendWeapon = V_strstr(pPaintKitStr, out_pItemName) == NULL;
 	// Generate Paint kitted name
 	// IE Purple Rain Sniper Rifle
-	loc_scpy_safe( out_pItemName, pPaintKitStr ? pPaintKitStr : LOCCHAR( "" ) );
-	if ( bAppendWeapon )
+	loc_scpy_safe(out_pItemName, pPaintKitStr ? pPaintKitStr : LOCCHAR(""));
+	if(bAppendWeapon)
 	{
-		loc_scat_safe( out_pItemName, LOCCHAR( " " ) );
-		loc_scat_safe( out_pItemName, tempName );
+		loc_scat_safe(out_pItemName, LOCCHAR(" "));
+		loc_scat_safe(out_pItemName, tempName);
 	}
 #endif
 }
 
 // ---------------------------------------------------------------------------------------------------------------------------
-void Econ_ConcatPaintKitWear( locchar_t( &out_pItemName )[MAX_ITEM_NAME_LENGTH], const CLocalizationProvider *pLocalizationProvider, float flWear )
+void Econ_ConcatPaintKitWear(locchar_t (&out_pItemName)[MAX_ITEM_NAME_LENGTH],
+							 const CLocalizationProvider *pLocalizationProvider, float flWear)
 {
-	if ( flWear <= 0.0 )
+	if(flWear <= 0.0)
 		return;
 
 #ifndef GC
 	locchar_t tempName[MAX_ITEM_NAME_LENGTH];
-	loc_scpy_safe( tempName, out_pItemName );
+	loc_scpy_safe(tempName, out_pItemName);
 
-	g_pVGuiLocalize->ConstructString_safe( out_pItemName,
-		LOCCHAR( "%s1 (%s2)" ),
-		2,
-		tempName,
-		pLocalizationProvider->Find( GetWearLocalizationString( flWear ) ) 
-	);
+	g_pVGuiLocalize->ConstructString_safe(out_pItemName, LOCCHAR("%s1 (%s2)"), 2, tempName,
+										  pLocalizationProvider->Find(GetWearLocalizationString(flWear)));
 #else
 	// GC doesn't have g_pVGuiLocalize so we construct the painted gun string like this
-	locchar_t *pWearStr = pLocalizationProvider->Find( GetWearLocalizationString( flWear ) );
-	loc_scat_safe( out_pItemName, LOCCHAR( " (" ) );
-	loc_scat_safe( out_pItemName, pWearStr ? pWearStr : LOCCHAR( "" ) );
-	loc_scat_safe( out_pItemName, LOCCHAR( ")" ) );
+	locchar_t *pWearStr = pLocalizationProvider->Find(GetWearLocalizationString(flWear));
+	loc_scat_safe(out_pItemName, LOCCHAR(" ("));
+	loc_scat_safe(out_pItemName, pWearStr ? pWearStr : LOCCHAR(""));
+	loc_scat_safe(out_pItemName, LOCCHAR(")"));
 #endif
 }
 // ---------------------------------------------------------------------------------------------------------------------------
-static bool GetLocalizedBaseItemName( locchar_t (&szItemName)[MAX_ITEM_NAME_LENGTH], const CLocalizationProvider *pLocalizationProvider, const CEconItemDefinition *pEconItemDefinition )
+static bool GetLocalizedBaseItemName(locchar_t (&szItemName)[MAX_ITEM_NAME_LENGTH],
+									 const CLocalizationProvider *pLocalizationProvider,
+									 const CEconItemDefinition *pEconItemDefinition)
 {
-	if ( pEconItemDefinition->GetItemBaseName() )
+	if(pEconItemDefinition->GetItemBaseName())
 	{
-		const locchar_t *pLocalizedItemName = pLocalizationProvider->Find( pEconItemDefinition->GetItemBaseName() );
-		if ( !pLocalizedItemName || !pLocalizedItemName[0] )
+		const locchar_t *pLocalizedItemName = pLocalizationProvider->Find(pEconItemDefinition->GetItemBaseName());
+		if(!pLocalizedItemName || !pLocalizedItemName[0])
 		{
 			// Couldn't localize it, just use it raw
-			pLocalizationProvider->ConvertUTF8ToLocchar( pEconItemDefinition->GetItemBaseName(), szItemName, ARRAYSIZE( szItemName ) );
+			pLocalizationProvider->ConvertUTF8ToLocchar(pEconItemDefinition->GetItemBaseName(), szItemName,
+														ARRAYSIZE(szItemName));
 		}
 		else
 		{
-			loc_scpy_safe( szItemName, pLocalizedItemName );
+			loc_scpy_safe(szItemName, pLocalizedItemName);
 		}
 
 		return true;
 	}
-	
+
 	return false;
 }
 
 // Given the item in pEconItem and the localization provider passed in, stuff the correct *localized*
 // string into out_pItemName.
-static void GenerateLocalizedFullItemName
-(
-	locchar_t (&out_pItemName)[MAX_ITEM_NAME_LENGTH],
-	const CLocalizationProvider	*pLocalizationProvider,
-	const IEconItemInterface	*pEconItem,
-	EGenerateLocalizedFullItemNameFlag_t eFlagsMask,
-	bool						bHashContextOff
-)
+static void GenerateLocalizedFullItemName(locchar_t (&out_pItemName)[MAX_ITEM_NAME_LENGTH],
+										  const CLocalizationProvider *pLocalizationProvider,
+										  const IEconItemInterface *pEconItem,
+										  EGenerateLocalizedFullItemNameFlag_t eFlagsMask, bool bHashContextOff)
 {
 	bool bUseProperName = bHashContextOff;
-	Assert( pLocalizationProvider );
-	Assert( pEconItem );
+	Assert(pLocalizationProvider);
+	Assert(pEconItem);
 
 	static const locchar_t *s_pUnknownItemName = LOCCHAR("Unknown Item");
 
 	const CEconItemDefinition *pEconItemDefinition = pEconItem->GetItemDefinition();
-	if ( !pEconItemDefinition )
+	if(!pEconItemDefinition)
 	{
 		out_pItemName[0] = (locchar_t)0;
 		return;
@@ -758,527 +784,566 @@ static void GenerateLocalizedFullItemName
 	bool bIgnoreQualityAndWear = false;
 	bool bIgnoreNameWithPaintkit = false;
 	bool bHasCustomName = false;
-	if ( eFlagsMask == k_EGenerateLocalizedFullItemName_Default )
+	if(eFlagsMask == k_EGenerateLocalizedFullItemName_Default)
 	{
 		bIgnoreQualityAndWear = pEconItem->GetCustomPainkKitDefinition() ? true : false;
 	}
 
-	if ( eFlagsMask == k_EGenerateLocalizedFullItemName_WithPaintkitNoItem )
+	if(eFlagsMask == k_EGenerateLocalizedFullItemName_WithPaintkitNoItem)
 	{
 		bIgnoreNameWithPaintkit = pEconItem->GetCustomPainkKitDefinition() ? true : false;
 		bIgnoreQualityAndWear = pEconItem->GetCustomPainkKitDefinition() ? true : false;
 	}
 
-	// Figure out which localization pattern we're using. By default we assume we're using the common "[Quality] [Item Name]"
-	// format, but if we're a unique item with an article we'll change this later on.
+	// Figure out which localization pattern we're using. By default we assume we're using the common "[Quality] [Item
+	// Name]" format, but if we're a unique item with an article we'll change this later on.
 	const char *pszLocalizationPattern = "ItemNameFormat";
 
 	// Start with the base name.
-	locchar_t szItemName[ MAX_ITEM_NAME_LENGTH ];
+	locchar_t szItemName[MAX_ITEM_NAME_LENGTH];
 
-	static CSchemaAttributeDefHandle pAttrDef_ItemNameTextOverride( "item name text override" );
+	static CSchemaAttributeDefHandle pAttrDef_ItemNameTextOverride("item name text override");
 	CAttribute_String attrItemNameTextOverride;
 	// Check if we ahve a item name override
-	if ( pEconItem->FindAttribute( pAttrDef_ItemNameTextOverride, &attrItemNameTextOverride ) )
+	if(pEconItem->FindAttribute(pAttrDef_ItemNameTextOverride, &attrItemNameTextOverride))
 	{
-		const locchar_t *pNameOverrideString = pLocalizationProvider->Find( attrItemNameTextOverride.value().c_str() );
-		if ( pNameOverrideString )
+		const locchar_t *pNameOverrideString = pLocalizationProvider->Find(attrItemNameTextOverride.value().c_str());
+		if(pNameOverrideString)
 		{
-			loc_scpy_safe( szItemName, pNameOverrideString );
+			loc_scpy_safe(szItemName, pNameOverrideString);
 			bHasCustomName = true;
 		}
 	}
-	else if( !GetLocalizedBaseItemName( szItemName, pLocalizationProvider, pEconItemDefinition ) )
+	else if(!GetLocalizedBaseItemName(szItemName, pLocalizationProvider, pEconItemDefinition))
 	{
-		loc_scpy_safe( szItemName, s_pUnknownItemName );
+		loc_scpy_safe(szItemName, s_pUnknownItemName);
 	}
 
 	// Check for killstreak attribute
-	enum { kKillStreakLength = 64, };
-	locchar_t szKillStreak[ kKillStreakLength ] = LOCCHAR("");
-	static CSchemaAttributeDefHandle pAttrDef_KillStreak( "killstreak tier" );
+	enum
+	{
+		kKillStreakLength = 64,
+	};
+	locchar_t szKillStreak[kKillStreakLength] = LOCCHAR("");
+	static CSchemaAttributeDefHandle pAttrDef_KillStreak("killstreak tier");
 	uint32 nKillStreakValue;
 
-	if ( pEconItem->FindAttribute( pAttrDef_KillStreak, &nKillStreakValue ) && !bIgnoreQualityAndWear )
+	if(pEconItem->FindAttribute(pAttrDef_KillStreak, &nKillStreakValue) && !bIgnoreQualityAndWear)
 	{
-		nKillStreakValue = (float&)(nKillStreakValue);
+		nKillStreakValue = (float &)(nKillStreakValue);
 
 		// if you have the eyeballs you are automatically higher tier
-		static CSchemaAttributeDefHandle pAttrDef_KillStreakEyes( "killstreak effect" );
-		static CSchemaAttributeDefHandle pAttrDef_KillStreakSheen( "killstreak idleeffect" );
-		if ( pEconItem->FindAttribute( pAttrDef_KillStreakEyes ) )
+		static CSchemaAttributeDefHandle pAttrDef_KillStreakEyes("killstreak effect");
+		static CSchemaAttributeDefHandle pAttrDef_KillStreakSheen("killstreak idleeffect");
+		if(pEconItem->FindAttribute(pAttrDef_KillStreakEyes))
 		{
-			nKillStreakValue = 3;	// professional
+			nKillStreakValue = 3; // professional
 		}
-		else if ( pEconItem->FindAttribute( pAttrDef_KillStreakSheen ) )
+		else if(pEconItem->FindAttribute(pAttrDef_KillStreakSheen))
 		{
-			nKillStreakValue = 2;	// specialized
+			nKillStreakValue = 2; // specialized
 		}
 
 		const locchar_t *pKillStreakLocalizedString = NULL;
-		
+
 		// All tier-1 killstreaks have idle effect 1
-		if ( nKillStreakValue == 1 )
+		if(nKillStreakValue == 1)
 		{
-			pKillStreakLocalizedString = pLocalizationProvider->Find( "ItemNameKillStreakv0" );
+			pKillStreakLocalizedString = pLocalizationProvider->Find("ItemNameKillStreakv0");
 		}
-		else if ( nKillStreakValue == 2 )
+		else if(nKillStreakValue == 2)
 		{
-			pKillStreakLocalizedString = pLocalizationProvider->Find( "ItemNameKillStreakv1" );
+			pKillStreakLocalizedString = pLocalizationProvider->Find("ItemNameKillStreakv1");
 		}
 		else // Tier-2's are things above 1
 		{
-			pKillStreakLocalizedString = pLocalizationProvider->Find( "ItemNameKillStreakv2" );
+			pKillStreakLocalizedString = pLocalizationProvider->Find("ItemNameKillStreakv2");
 		}
 
-		if ( pKillStreakLocalizedString )
+		if(pKillStreakLocalizedString)
 		{
-			loc_scpy_safe( szKillStreak, pKillStreakLocalizedString );
+			loc_scpy_safe(szKillStreak, pKillStreakLocalizedString);
 			//  If we're appending some sort of killstreak identifier, dont use the proper name
 			bUseProperName = false;
 		}
 	}
 
 	// Check to see if we have a quality text override attribute.  We can get this when a temporary item
-	// comes in from a crafting recipe that needs to get its name generated, and wants to specify that it 
+	// comes in from a crafting recipe that needs to get its name generated, and wants to specify that it
 	// takes in any quality
-	static CSchemaAttributeDefHandle pAttrDef_QualityTextOverride( "quality text override" );
+	static CSchemaAttributeDefHandle pAttrDef_QualityTextOverride("quality text override");
 	CAttribute_String attrQualityTextOverride;
-	pEconItem->FindAttribute( pAttrDef_QualityTextOverride, &attrQualityTextOverride );
+	pEconItem->FindAttribute(pAttrDef_QualityTextOverride, &attrQualityTextOverride);
 
 	// Generate our quality string.
-	enum { kQualityLength = 128, };
-	locchar_t szQuality[ kQualityLength ] = LOCCHAR("");
+	enum
+	{
+		kQualityLength = 128,
+	};
+	locchar_t szQuality[kQualityLength] = LOCCHAR("");
 
 	// Unique names may have a prefix or not, and so use a different format. (This is less to deal
 	// with the space after "The" and more to deal with foreign languages that want to display unique
 	// and non-unique items differently.
 	const uint8 unQuality = pEconItem->GetQuality();
-	if ( unQuality == AE_SELFMADE || ( !bIgnoreQualityAndWear ) )
+	if(unQuality == AE_SELFMADE || (!bIgnoreQualityAndWear))
 	{
 		// It's possible to get in here with a quality of -1 if we're dealing with an item view that has no
 		// associated item. In that case we're probably doing something like browsing the armory, and in any
 		// event don't have an item and so don't have a quality and so we just don't show a quality string.
 		// If we have a quality text override, use that.
-		const char *pszQualityLocalizationString = attrQualityTextOverride.has_value() 
-												 ? attrQualityTextOverride.value().c_str()
-												 : EconQuality_GetLocalizationString( (EEconItemQuality)unQuality );
+		const char *pszQualityLocalizationString = attrQualityTextOverride.has_value()
+													   ? attrQualityTextOverride.value().c_str()
+													   : EconQuality_GetLocalizationString((EEconItemQuality)unQuality);
 
-		if ( unQuality > 0 && pszQualityLocalizationString && unQuality != AE_PAINTKITWEAPON )
+		if(unQuality > 0 && pszQualityLocalizationString && unQuality != AE_PAINTKITWEAPON)
 		{
 			// Unique items use proper names, but not if we have a quality text override
-			if ( unQuality == AE_UNIQUE && !attrQualityTextOverride.has_value() )
+			if(unQuality == AE_UNIQUE && !attrQualityTextOverride.has_value())
 			{
-				const locchar_t *pszArticleContent = NULL;				
-				if ( bUseProperName && pEconItemDefinition->HasProperName() )
+				const locchar_t *pszArticleContent = NULL;
+				if(bUseProperName && pEconItemDefinition->HasProperName())
 				{
-					pszArticleContent = pLocalizationProvider->Find( "TF_Unique_Prepend_Proper" );
+					pszArticleContent = pLocalizationProvider->Find("TF_Unique_Prepend_Proper");
 				}
-				
+
 				// If the language isn't supposed to have articles or we just haven't provided one yet, fall
 				// back to the empty string.
-				if ( !pszArticleContent )
+				if(!pszArticleContent)
 				{
 					pszArticleContent = LOCCHAR("");
 				}
 
-				loc_scpy_safe( szQuality, pszArticleContent );
+				loc_scpy_safe(szQuality, pszArticleContent);
 			}
 			// Any quality besides unique ignores "proper name" articles.
 			else
 			{
-				const locchar_t *pQualityLocalizedString = pLocalizationProvider->Find( pszQualityLocalizationString );
-				if ( pQualityLocalizedString )
+				const locchar_t *pQualityLocalizedString = pLocalizationProvider->Find(pszQualityLocalizationString);
+				if(pQualityLocalizedString)
 				{
-					loc_scpy_safe( szQuality, pQualityLocalizedString );
-					loc_scat_safe( szQuality, LOCCHAR(" ") );
+					loc_scpy_safe(szQuality, pQualityLocalizedString);
+					loc_scat_safe(szQuality, LOCCHAR(" "));
 				}
 			}
 		}
 
 		{
-			static CSchemaAttributeDefHandle pAttrDef_HideStrangePrefix( "hide_strange_prefix" );
-			if ( !pAttrDef_HideStrangePrefix || !pEconItem->FindAttribute( pAttrDef_HideStrangePrefix ) )
+			static CSchemaAttributeDefHandle pAttrDef_HideStrangePrefix("hide_strange_prefix");
+			if(!pAttrDef_HideStrangePrefix || !pEconItem->FindAttribute(pAttrDef_HideStrangePrefix))
 			{
 				//
-				CStrangeRankLocalizationGenerator RankGenerator( pLocalizationProvider, pEconItem, bHashContextOff );
-				if ( RankGenerator.IsValid() )
+				CStrangeRankLocalizationGenerator RankGenerator(pLocalizationProvider, pEconItem, bHashContextOff);
+				if(RankGenerator.IsValid())
 				{
 					// If the quality of this item is special (not just strange) persist and append that value
 					// Otherwise the ranker will replace the 'strange' quality tag with a strange rank
-					if ( unQuality == AE_STRANGE )
+					if(unQuality == AE_STRANGE)
 					{
-						loc_scpy_safe( szQuality,
-								   CConstructLocalizedString( LOCCHAR("%s1%s2 "),
-															  RankGenerator.GetRankLocalized(),
-															  RankGenerator.GetRankSecondaryLocalized() ? RankGenerator.GetRankSecondaryLocalized() : LOCCHAR("") ) );
+						loc_scpy_safe(szQuality,
+									  CConstructLocalizedString(LOCCHAR("%s1%s2 "), RankGenerator.GetRankLocalized(),
+																RankGenerator.GetRankSecondaryLocalized()
+																	? RankGenerator.GetRankSecondaryLocalized()
+																	: LOCCHAR("")));
 					}
 					else // Strange Unusual Something
 					{
-						loc_scpy_safe( szQuality,
-								   CConstructLocalizedString( LOCCHAR("%s1%s2 %s3"),
-															  RankGenerator.GetRankLocalized(),
-															  RankGenerator.GetRankSecondaryLocalized() ? RankGenerator.GetRankSecondaryLocalized() : LOCCHAR(""),
-															  szQuality) );
+						loc_scpy_safe(szQuality,
+									  CConstructLocalizedString(LOCCHAR("%s1%s2 %s3"), RankGenerator.GetRankLocalized(),
+																RankGenerator.GetRankSecondaryLocalized()
+																	? RankGenerator.GetRankSecondaryLocalized()
+																	: LOCCHAR(""),
+																szQuality));
 					}
 				}
 			}
 		}
 	}
 
-	static CSchemaAttributeDefHandle pAttrDef_IsAustralium( "is australium item" );
-	enum { kAustraliumLength = 64, };
-	locchar_t szAustraliumSkin[ kAustraliumLength ] = LOCCHAR("");
-	if ( pAttrDef_IsAustralium && pEconItem->FindAttribute( pAttrDef_IsAustralium ) )
+	static CSchemaAttributeDefHandle pAttrDef_IsAustralium("is australium item");
+	enum
 	{
-		const locchar_t *pAustraliumLocalizedString = pLocalizationProvider->Find( "ItemNameAustralium" );
-		if ( pAustraliumLocalizedString )
-		{
-			loc_scpy_safe( szAustraliumSkin, pAustraliumLocalizedString );
-		}
-	}
-	
-	static CSchemaAttributeDefHandle pAttrDef_IsFestivized( "is_festivized" );
-	enum { kFestiveLength = 64, };
-	locchar_t szIsFestivized[kFestiveLength] = LOCCHAR( "" );
-	if ( pAttrDef_IsFestivized && pEconItem->FindAttribute( pAttrDef_IsFestivized ) )
+		kAustraliumLength = 64,
+	};
+	locchar_t szAustraliumSkin[kAustraliumLength] = LOCCHAR("");
+	if(pAttrDef_IsAustralium && pEconItem->FindAttribute(pAttrDef_IsAustralium))
 	{
-		// TODO : update ItemNameFestive in tf_english to Festivized later to differentiate Festive vs Festivized
-		const locchar_t *pFestivizedLocalizedString = pLocalizationProvider->Find( "ItemNameFestive" );
-		if ( pFestivizedLocalizedString )
+		const locchar_t *pAustraliumLocalizedString = pLocalizationProvider->Find("ItemNameAustralium");
+		if(pAustraliumLocalizedString)
 		{
-			loc_scpy_safe( szIsFestivized, pFestivizedLocalizedString );
+			loc_scpy_safe(szAustraliumSkin, pAustraliumLocalizedString);
 		}
 	}
 
-	const char* pszQualityFormat = ( !attrQualityTextOverride.has_value() && ( unQuality == AE_NORMAL || unQuality == AE_UNIQUE || unQuality == AE_PAINTKITWEAPON || bIgnoreQualityAndWear ) && unQuality != AE_SELFMADE ) 
-								 ? "ItemNameNormalOrUniqueQualityFormat" 
-								 : "ItemNameQualityFormat";
+	static CSchemaAttributeDefHandle pAttrDef_IsFestivized("is_festivized");
+	enum
+	{
+		kFestiveLength = 64,
+	};
+	locchar_t szIsFestivized[kFestiveLength] = LOCCHAR("");
+	if(pAttrDef_IsFestivized && pEconItem->FindAttribute(pAttrDef_IsFestivized))
+	{
+		// TODO : update ItemNameFestive in tf_english to Festivized later to differentiate Festive vs Festivized
+		const locchar_t *pFestivizedLocalizedString = pLocalizationProvider->Find("ItemNameFestive");
+		if(pFestivizedLocalizedString)
+		{
+			loc_scpy_safe(szIsFestivized, pFestivizedLocalizedString);
+		}
+	}
+
+	const char *pszQualityFormat = (!attrQualityTextOverride.has_value() &&
+									(unQuality == AE_NORMAL || unQuality == AE_UNIQUE ||
+									 unQuality == AE_PAINTKITWEAPON || bIgnoreQualityAndWear) &&
+									unQuality != AE_SELFMADE)
+									   ? "ItemNameNormalOrUniqueQualityFormat"
+									   : "ItemNameQualityFormat";
 
 	// TODO : Make Generic
 	// Journal Leveling
 	uint32 unDuckBadgeLevel;
-	static CSchemaAttributeDefHandle pAttrDef_DuckBadgeLevel( "duck rating" );
-	enum { kDuckBadgeLength = 64, };
+	static CSchemaAttributeDefHandle pAttrDef_DuckBadgeLevel("duck rating");
+	enum
+	{
+		kDuckBadgeLength = 64,
+	};
 	locchar_t szDuckBadge[kDuckBadgeLength] = LOCCHAR("");
-	{	//if ( pItem && FindAttribute_UnsafeBitwiseCast<attrib_value_t>( pItem, pAttr_DuckLevelBadge, &iDuckBadgeLevel ) )
-		if ( pAttrDef_DuckBadgeLevel && FindAttribute_UnsafeBitwiseCast<attrib_value_t>( pEconItem, pAttrDef_DuckBadgeLevel, &unDuckBadgeLevel ) && unDuckBadgeLevel != 0 )
+	{ // if ( pItem && FindAttribute_UnsafeBitwiseCast<attrib_value_t>( pItem, pAttr_DuckLevelBadge, &iDuckBadgeLevel )
+	  // )
+		if(pAttrDef_DuckBadgeLevel &&
+		   FindAttribute_UnsafeBitwiseCast<attrib_value_t>(pEconItem, pAttrDef_DuckBadgeLevel, &unDuckBadgeLevel) &&
+		   unDuckBadgeLevel != 0)
 		{
-			const CItemLevelingDefinition *pLevelDef = GetItemSchema()->GetItemLevelForScore( "Journal_DuckBadge", unDuckBadgeLevel );
-			if ( pLevelDef )
+			const CItemLevelingDefinition *pLevelDef =
+				GetItemSchema()->GetItemLevelForScore("Journal_DuckBadge", unDuckBadgeLevel);
+			if(pLevelDef)
 			{
-				loc_scpy_safe( szDuckBadge, pLocalizationProvider->Find( pLevelDef->GetNameLocalizationKey() ) );
-				loc_scat_safe( szDuckBadge, LOCCHAR(" ") );
+				loc_scpy_safe(szDuckBadge, pLocalizationProvider->Find(pLevelDef->GetNameLocalizationKey()));
+				loc_scat_safe(szDuckBadge, LOCCHAR(" "));
 			}
 		}
 	}
 
 	// Strange Unusual Festive Killstreak Australium ducks
-	loc_scpy_safe( szQuality, CConstructLocalizedString( pLocalizationProvider->Find( pszQualityFormat ), szQuality, szIsFestivized, szKillStreak, szAustraliumSkin, szDuckBadge ) );
+	loc_scpy_safe(szQuality, CConstructLocalizedString(pLocalizationProvider->Find(pszQualityFormat), szQuality,
+													   szIsFestivized, szKillStreak, szAustraliumSkin, szDuckBadge));
 
-	enum { kLocalizedCrateSeriesLength = 128, };
-	locchar_t szLocalizedCrateSeries[ kLocalizedCrateSeriesLength ] = LOCCHAR("");
+	enum
+	{
+		kLocalizedCrateSeriesLength = 128,
+	};
+	locchar_t szLocalizedCrateSeries[kLocalizedCrateSeriesLength] = LOCCHAR("");
 
 #ifdef PROJECT_TF
-	static CSchemaAttributeDefHandle pAttrDef_SupplyCrateSeries( "set supply crate series" );
+	static CSchemaAttributeDefHandle pAttrDef_SupplyCrateSeries("set supply crate series");
 	// do not display series number for crates that have a collection reference
-	if ( pAttrDef_SupplyCrateSeries && pEconItemDefinition->GetItemClass() && !Q_stricmp( pEconItemDefinition->GetItemClass(), "supply_crate" ) && !pEconItemDefinition->GetCollectionReference() )
+	if(pAttrDef_SupplyCrateSeries && pEconItemDefinition->GetItemClass() &&
+	   !Q_stricmp(pEconItemDefinition->GetItemClass(), "supply_crate") &&
+	   !pEconItemDefinition->GetCollectionReference())
 	{
 		// It's a crate, find a series #
 		uint32 unSupplyCrateSeries;
 		float fSupplyCrateSeries;
-		if ( FindAttribute_UnsafeBitwiseCast<attrib_value_t>( pEconItem, pAttrDef_SupplyCrateSeries, &fSupplyCrateSeries ) && fSupplyCrateSeries != 0.0f )
+		if(FindAttribute_UnsafeBitwiseCast<attrib_value_t>(pEconItem, pAttrDef_SupplyCrateSeries,
+														   &fSupplyCrateSeries) &&
+		   fSupplyCrateSeries != 0.0f)
 		{
 			unSupplyCrateSeries = fSupplyCrateSeries;
 
-			loc_scpy_safe( szLocalizedCrateSeries,
-						   CConstructLocalizedString( pLocalizationProvider->Find( "ItemNameCraftSeries" ),
-													  unSupplyCrateSeries ) );
+			loc_scpy_safe(
+				szLocalizedCrateSeries,
+				CConstructLocalizedString(pLocalizationProvider->Find("ItemNameCraftSeries"), unSupplyCrateSeries));
 		}
 	}
 
 	// This is not "crate series number"; this is "release series number", ie., "a series 3 chemistry kit".
-	static CSchemaAttributeDefHandle pAttrDef_SeriesNumber( "series number" );
-	if ( pAttrDef_SeriesNumber )
+	static CSchemaAttributeDefHandle pAttrDef_SeriesNumber("series number");
+	if(pAttrDef_SeriesNumber)
 	{
 		float flSeriesNumber = 0.0f;
-		if ( FindAttribute_UnsafeBitwiseCast<attrib_value_t>( pEconItem, pAttrDef_SeriesNumber, &flSeriesNumber ) && flSeriesNumber != 0.0f )
+		if(FindAttribute_UnsafeBitwiseCast<attrib_value_t>(pEconItem, pAttrDef_SeriesNumber, &flSeriesNumber) &&
+		   flSeriesNumber != 0.0f)
 		{
 			uint32 unSeriesNumber = flSeriesNumber;
 
-			loc_scpy_safe( szLocalizedCrateSeries,
-						   CConstructLocalizedString( pLocalizationProvider->Find( "ItemNameCraftSeries" ),
-													  unSeriesNumber ) );
+			loc_scpy_safe(
+				szLocalizedCrateSeries,
+				CConstructLocalizedString(pLocalizationProvider->Find("ItemNameCraftSeries"), unSeriesNumber));
 		}
 	}
 #endif
 
 	// Were we one of the first couple that were crafted? If so, output our craft number as well.
-	locchar_t *pCraftNumberLocFormat = pLocalizationProvider->Find( "ItemNameCraftNumberFormat" );
+	locchar_t *pCraftNumberLocFormat = pLocalizationProvider->Find("ItemNameCraftNumberFormat");
 
-	enum { kLocalizedCraftIndexLength = 128, };
-	locchar_t szLocalizedCraftIndex[ kLocalizedCraftIndexLength ] = LOCCHAR("");
-
-	if ( pCraftNumberLocFormat )
+	enum
 	{
-		static CSchemaAttributeDefHandle pAttrDef_UniqueCraftIndex( "unique craft index" );
+		kLocalizedCraftIndexLength = 128,
+	};
+	locchar_t szLocalizedCraftIndex[kLocalizedCraftIndexLength] = LOCCHAR("");
+
+	if(pCraftNumberLocFormat)
+	{
+		static CSchemaAttributeDefHandle pAttrDef_UniqueCraftIndex("unique craft index");
 
 		uint32 unCraftIndex;
-		if ( pEconItem->FindAttribute( pAttrDef_UniqueCraftIndex, &unCraftIndex ) &&
-			 ShouldDisplayCraftCounterValue( unCraftIndex ) )
+		if(pEconItem->FindAttribute(pAttrDef_UniqueCraftIndex, &unCraftIndex) &&
+		   ShouldDisplayCraftCounterValue(unCraftIndex))
 		{
-			locchar_t szCraftNumber[ kLocalizedCraftIndexLength ];
-			loc_sprintf_safe( szCraftNumber, LOCCHAR( "%i" ), unCraftIndex );
-				
-			ILocalize::ConstructString_safe( szLocalizedCraftIndex,
-										pCraftNumberLocFormat,
-										1,
-										szCraftNumber );
+			locchar_t szCraftNumber[kLocalizedCraftIndexLength];
+			loc_sprintf_safe(szCraftNumber, LOCCHAR("%i"), unCraftIndex);
+
+			ILocalize::ConstructString_safe(szLocalizedCraftIndex, pCraftNumberLocFormat, 1, szCraftNumber);
 		}
 	}
 
 	// Generate tool application string
-	enum { kToolApplicationNameLength = 128, };
-	locchar_t szToolTargetNameName[ kToolApplicationNameLength ] = LOCCHAR("");
-	locchar_t szDynamicRecipeOutputName[ kToolApplicationNameLength ] = LOCCHAR("");
+	enum
+	{
+		kToolApplicationNameLength = 128,
+	};
+	locchar_t szToolTargetNameName[kToolApplicationNameLength] = LOCCHAR("");
+	locchar_t szDynamicRecipeOutputName[kToolApplicationNameLength] = LOCCHAR("");
 
-	static CSchemaAttributeDefHandle pAttribDef_ToolTarget( "tool target item" );
-	if( pAttribDef_ToolTarget && pEconItem->GetItemDefinition()->GetItemClass() && !Q_stricmp( pEconItem->GetItemDefinition()->GetItemClass(), "tool" ) )
+	static CSchemaAttributeDefHandle pAttribDef_ToolTarget("tool target item");
+	if(pAttribDef_ToolTarget && pEconItem->GetItemDefinition()->GetItemClass() &&
+	   !Q_stricmp(pEconItem->GetItemDefinition()->GetItemClass(), "tool"))
 	{
 		// It's a tool, see if it has a tool target item attribute
 		float flItemDef;
-		if ( FindAttribute_UnsafeBitwiseCast<attrib_value_t>( pEconItem, pAttribDef_ToolTarget, &flItemDef ) )
+		if(FindAttribute_UnsafeBitwiseCast<attrib_value_t>(pEconItem, pAttribDef_ToolTarget, &flItemDef))
 		{
 			const item_definition_index_t unItemDef = flItemDef;
 
-			locchar_t szTargetItemName[ MAX_ITEM_NAME_LENGTH ] = LOCCHAR("Unknown Item");
+			locchar_t szTargetItemName[MAX_ITEM_NAME_LENGTH] = LOCCHAR("Unknown Item");
 
 			// Get base name of target item
-			const CEconItemDefinition *pEconTargetDef = GetItemSchema()->GetItemDefinition( unItemDef );
-			if ( pEconTargetDef )
+			const CEconItemDefinition *pEconTargetDef = GetItemSchema()->GetItemDefinition(unItemDef);
+			if(pEconTargetDef)
 			{
-				GetLocalizedBaseItemName( szTargetItemName, pLocalizationProvider, pEconTargetDef );
+				GetLocalizedBaseItemName(szTargetItemName, pLocalizationProvider, pEconTargetDef);
 			}
 
-			loc_scpy_safe( szToolTargetNameName,
-					   CConstructLocalizedString( pLocalizationProvider->Find( "ItemNameToolTargetNameFormat" ),
-					                              szTargetItemName ) );
+			loc_scpy_safe(szToolTargetNameName,
+						  CConstructLocalizedString(pLocalizationProvider->Find("ItemNameToolTargetNameFormat"),
+													szTargetItemName));
 		}
 		else
 		{
-			CRecipeComponentMatchingIterator componentIterator( pEconItem, NULL );
-			pEconItem->IterateAttributes( &componentIterator );
+			CRecipeComponentMatchingIterator componentIterator(pEconItem, NULL);
+			pEconItem->IterateAttributes(&componentIterator);
 
 			// It only makes sense to mention the output if there's only 1 output
-			if( componentIterator.GetMatchingComponentOutputs().Count() == 1 )
+			if(componentIterator.GetMatchingComponentOutputs().Count() == 1)
 			{
 				CAttribute_DynamicRecipeComponent attribValue;
-				pEconItem->FindAttribute( componentIterator.GetMatchingComponentOutputs().Head(), &attribValue );
+				pEconItem->FindAttribute(componentIterator.GetMatchingComponentOutputs().Head(), &attribValue);
 
 				CEconItem tempItem;
-				if ( !DecodeItemFromEncodedAttributeString( attribValue, &tempItem ) )
+				if(!DecodeItemFromEncodedAttributeString(attribValue, &tempItem))
 				{
-					AssertMsg2( 0, "%s: Unable to decode dynamic recipe output attribute on item %llu.", __FUNCTION__, pEconItem->GetID() );
+					AssertMsg2(0, "%s: Unable to decode dynamic recipe output attribute on item %llu.", __FUNCTION__,
+							   pEconItem->GetID());
 				}
 				else
 				{
 					locchar_t loc_ItemName[MAX_ITEM_NAME_LENGTH];
-					GenerateLocalizedFullItemName( loc_ItemName, pLocalizationProvider, &tempItem, k_EGenerateLocalizedFullItemName_Default, false );
-			
-					loc_scpy_safe( szDynamicRecipeOutputName,
-						   CConstructLocalizedString( pLocalizationProvider->Find( "ItemNameDynamicRecipeTargetNameFormat" ),
-													  loc_ItemName ) );
+					GenerateLocalizedFullItemName(loc_ItemName, pLocalizationProvider, &tempItem,
+												  k_EGenerateLocalizedFullItemName_Default, false);
+
+					loc_scpy_safe(
+						szDynamicRecipeOutputName,
+						CConstructLocalizedString(pLocalizationProvider->Find("ItemNameDynamicRecipeTargetNameFormat"),
+												  loc_ItemName));
 				}
 			}
 		}
 	}
 
-
 	// PaintKit and Wear
-	if ( !bHasCustomName )
+	if(!bHasCustomName)
 	{
 		CEconItemPaintKitDefinition *pPaintKit = pEconItem->GetCustomPainkKitDefinition();
-		if ( pPaintKit )
+		if(pPaintKit)
 		{
-			if ( bIgnoreNameWithPaintkit )
+			if(bIgnoreNameWithPaintkit)
 			{
-				Econ_SetNameAsPaintkit( szItemName, pLocalizationProvider, pPaintKit ); 
+				Econ_SetNameAsPaintkit(szItemName, pLocalizationProvider, pPaintKit);
 			}
 			else
 			{
-				Econ_ConcatPaintKitName( szItemName, pLocalizationProvider, pPaintKit );
-				if ( !bIgnoreQualityAndWear )
+				Econ_ConcatPaintKitName(szItemName, pLocalizationProvider, pPaintKit);
+				if(!bIgnoreQualityAndWear)
 				{
 					float flWear = 0;
-					if ( pEconItem->GetCustomPaintKitWear( flWear ) )
+					if(pEconItem->GetCustomPaintKitWear(flWear))
 					{
-						Econ_ConcatPaintKitWear( szItemName, pLocalizationProvider, flWear );
+						Econ_ConcatPaintKitWear(szItemName, pLocalizationProvider, flWear);
 					}
 				}
 			}
 		}
 	}
 
-	locchar_t *pNameLocalizationFormat = pLocalizationProvider->Find( pszLocalizationPattern );
+	locchar_t *pNameLocalizationFormat = pLocalizationProvider->Find(pszLocalizationPattern);
 
-	if ( pNameLocalizationFormat )
+	if(pNameLocalizationFormat)
 	{
-		ILocalize::ConstructString_safe( out_pItemName,
-									pNameLocalizationFormat,
-									6,
-									szQuality,
-									szItemName,
-									szLocalizedCraftIndex,
-									szLocalizedCrateSeries,
-									szToolTargetNameName,
-									szDynamicRecipeOutputName);
+		ILocalize::ConstructString_safe(out_pItemName, pNameLocalizationFormat, 6, szQuality, szItemName,
+										szLocalizedCraftIndex, szLocalizedCrateSeries, szToolTargetNameName,
+										szDynamicRecipeOutputName);
 	}
 	else
 	{
-		loc_scpy_safe( out_pItemName, s_pUnknownItemName );
+		loc_scpy_safe(out_pItemName, s_pUnknownItemName);
 	}
 }
 
 // --------------------------------------------------------------------------
 // Purpose:
 // --------------------------------------------------------------------------
-void CEconItemDescription::Generate_ItemName( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::Generate_ItemName(const CLocalizationProvider *pLocalizationProvider,
+											 const IEconItemInterface *pEconItem)
 {
-	Assert( pLocalizationProvider );
-	Assert( pEconItem );
+	Assert(pLocalizationProvider);
+	Assert(pEconItem);
 
 	// If this item has a custom name, use it instead of doing our crazy name compositing based on quality,
 	// type, etc.
 	const char *utf8_CustomName = pEconItem->GetCustomName();
 
-	if ( utf8_CustomName && utf8_CustomName[0] )
+	if(utf8_CustomName && utf8_CustomName[0])
 	{
-		locchar_t loc_CustomName[ MAX_ITEM_NAME_LENGTH ];
-		pLocalizationProvider->ConvertUTF8ToLocchar( utf8_CustomName, loc_CustomName, sizeof( loc_CustomName ) );
+		locchar_t loc_CustomName[MAX_ITEM_NAME_LENGTH];
+		pLocalizationProvider->ConvertUTF8ToLocchar(utf8_CustomName, loc_CustomName, sizeof(loc_CustomName));
 
 		// Store it in the item name, wrapped in quotes to prevent item name spoofing
 		// We use two single quotes, because the double quote isn't very visible in the TF2 font
-		locchar_t loc_CustomNameWithQuotes[ MAX_ITEM_NAME_LENGTH ];
-		loc_scpy_safe( loc_CustomNameWithQuotes, LOCCHAR("''") );
-		loc_scat_safe( loc_CustomNameWithQuotes, loc_CustomName );
-		loc_scat_safe( loc_CustomNameWithQuotes, LOCCHAR("''") );
+		locchar_t loc_CustomNameWithQuotes[MAX_ITEM_NAME_LENGTH];
+		loc_scpy_safe(loc_CustomNameWithQuotes, LOCCHAR("''"));
+		loc_scat_safe(loc_CustomNameWithQuotes, loc_CustomName);
+		loc_scat_safe(loc_CustomNameWithQuotes, LOCCHAR("''"));
 
-		AddDescLine( loc_CustomNameWithQuotes, /* this will be ignored: */ ATTRIB_COL_LEVEL, kDescLineFlag_Name );
+		AddDescLine(loc_CustomNameWithQuotes, /* this will be ignored: */ ATTRIB_COL_LEVEL, kDescLineFlag_Name);
 	}
 	else
 	{
 		locchar_t loc_ItemName[MAX_ITEM_NAME_LENGTH];
-		GenerateLocalizedFullItemName( loc_ItemName, pLocalizationProvider, pEconItem, k_EGenerateLocalizedFullItemName_WithPaintkitNoItem, m_pHashContext == NULL );
+		GenerateLocalizedFullItemName(loc_ItemName, pLocalizationProvider, pEconItem,
+									  k_EGenerateLocalizedFullItemName_WithPaintkitNoItem, m_pHashContext == NULL);
 
-		AddDescLine( loc_ItemName, /* this will be ignored: */ ATTRIB_COL_LEVEL, kDescLineFlag_Name );
+		AddDescLine(loc_ItemName, /* this will be ignored: */ ATTRIB_COL_LEVEL, kDescLineFlag_Name);
 	}
 }
 
 // --------------------------------------------------------------------------
 // Purpose:
 // --------------------------------------------------------------------------
-const locchar_t *GetLocalizedStringForKillEaterTypeAttr( const CLocalizationProvider *pLocalizationProvider, uint32 unKillEaterEventType )
+const locchar_t *GetLocalizedStringForKillEaterTypeAttr(const CLocalizationProvider *pLocalizationProvider,
+														uint32 unKillEaterEventType)
 {
-	Assert( pLocalizationProvider );
-	
-	// Generate localized string.
-	const char *pszLocString = GetItemSchema()->GetKillEaterScoreTypeLocString( unKillEaterEventType );
+	Assert(pLocalizationProvider);
 
-	return pszLocString != NULL
-		 ? pLocalizationProvider->Find( pszLocString )
-		 : LOCCHAR("");
+	// Generate localized string.
+	const char *pszLocString = GetItemSchema()->GetKillEaterScoreTypeLocString(unKillEaterEventType);
+
+	return pszLocString != NULL ? pLocalizationProvider->Find(pszLocString) : LOCCHAR("");
 }
 
 class CStrangeRestrictionAttrWrapper
 {
 public:
-	CStrangeRestrictionAttrWrapper( const CLocalizationProvider *pLocalizationProvider, const locchar_t *loc_In )
-		: m_str( loc_In ? pLocalizationProvider->Find( "ItemTypeDescStrangeFilterSubStr" ) : LOCCHAR(""), loc_In ? loc_In : LOCCHAR("") )
+	CStrangeRestrictionAttrWrapper(const CLocalizationProvider *pLocalizationProvider, const locchar_t *loc_In)
+		: m_str(loc_In ? pLocalizationProvider->Find("ItemTypeDescStrangeFilterSubStr") : LOCCHAR(""),
+				loc_In ? loc_In : LOCCHAR(""))
 	{
 		//
 	}
 
-	const locchar_t *operator *() const
+	const locchar_t *operator*() const
 	{
-		return static_cast<const locchar_t *>( m_str );
+		return static_cast<const locchar_t *>(m_str);
 	}
 
 private:
 	CConstructLocalizedString m_str;
 };
 
-const locchar_t *CEconItemDescription::GetLocalizedStringForStrangeRestrictionAttr( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem, int iAttrIndex ) const
+const locchar_t *CEconItemDescription::GetLocalizedStringForStrangeRestrictionAttr(
+	const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem, int iAttrIndex) const
 {
 	uint32 unRestrictionType;
 	uint32 unRestrictionValue;
-	if ( !pEconItem->FindAttribute( GetKillEaterAttr_Restriction( iAttrIndex ), &unRestrictionType ) ||
-		 !pEconItem->FindAttribute( GetKillEaterAttr_RestrictionValue( iAttrIndex ), &unRestrictionValue ) ||
-		 unRestrictionType == kStrangeEventRestriction_None )
+	if(!pEconItem->FindAttribute(GetKillEaterAttr_Restriction(iAttrIndex), &unRestrictionType) ||
+	   !pEconItem->FindAttribute(GetKillEaterAttr_RestrictionValue(iAttrIndex), &unRestrictionValue) ||
+	   unRestrictionType == kStrangeEventRestriction_None)
 	{
 		return NULL;
 	}
 
-	switch ( unRestrictionType )
+	switch(unRestrictionType)
 	{
 #ifdef PROJECT_TF
-	case kStrangeEventRestriction_Map:
-	{
-		const MapDef_t *pMap = GetItemSchema()->GetMasterMapDefByIndex( unRestrictionValue );
-		if ( pMap )
-			return pLocalizationProvider->Find( pMap->pszMapNameLocKey );
-	}
-	case kStrangeEventRestriction_Competitive:
-	{
-		return pLocalizationProvider->Find( "ItemTypeDescStrangeFilterCompetitive" );
-	}
+		case kStrangeEventRestriction_Map:
+		{
+			const MapDef_t *pMap = GetItemSchema()->GetMasterMapDefByIndex(unRestrictionValue);
+			if(pMap)
+				return pLocalizationProvider->Find(pMap->pszMapNameLocKey);
+		}
+		case kStrangeEventRestriction_Competitive:
+		{
+			return pLocalizationProvider->Find("ItemTypeDescStrangeFilterCompetitive");
+		}
 #endif // PROJECT_TF
 
-	case kStrangeEventRestriction_VictimSteamAccount:
-		return FindAccountPersonaName( unRestrictionValue );
+		case kStrangeEventRestriction_VictimSteamAccount:
+			return FindAccountPersonaName(unRestrictionValue);
 	}
 
 	return NULL;
 }
 
-bool CEconItemDescription::BGenerate_ItemLevelDesc_StrangeNameAndStats( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem, const locchar_t *locTypename )
+bool CEconItemDescription::BGenerate_ItemLevelDesc_StrangeNameAndStats(
+	const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem,
+	const locchar_t *locTypename)
 {
-	CStrangeRankLocalizationGenerator RankGenerator( pLocalizationProvider, pEconItem, m_pHashContext == NULL );
-	if ( !RankGenerator.IsValid() )
+	CStrangeRankLocalizationGenerator RankGenerator(pLocalizationProvider, pEconItem, m_pHashContext == NULL);
+	if(!RankGenerator.IsValid())
 		return false;
-	
+
 	// For Collection Items
-	if ( pEconItem->GetCustomPainkKitDefinition() )
+	if(pEconItem->GetCustomPainkKitDefinition())
 	{
-		AddDescLine( CConstructLocalizedString( pLocalizationProvider->Find( "Attrib_stattrakmodule" ), RankGenerator.GetRankLocalized() ), 
-			ATTRIB_COL_STRANGE, 
-			kDescLineFlag_Misc 
-		);
-		
+		AddDescLine(CConstructLocalizedString(pLocalizationProvider->Find("Attrib_stattrakmodule"),
+											  RankGenerator.GetRankLocalized()),
+					ATTRIB_COL_STRANGE, kDescLineFlag_Misc);
+
 		// Are we tracking alternate stats as well?
-		for ( int i = 0; i < GetKillEaterAttrCount(); i++ )
+		for(int i = 0; i < GetKillEaterAttrCount(); i++)
 		{
-			const CEconItemAttributeDefinition *pKillEaterAltAttrDef = GetKillEaterAttr_Score( i ),
-				*pKillEaterAltScoreTypeAttrDef = GetKillEaterAttr_Type( i );
-			if ( !pKillEaterAltAttrDef || !pKillEaterAltScoreTypeAttrDef )
+			const CEconItemAttributeDefinition *pKillEaterAltAttrDef = GetKillEaterAttr_Score(i),
+											   *pKillEaterAltScoreTypeAttrDef = GetKillEaterAttr_Type(i);
+			if(!pKillEaterAltAttrDef || !pKillEaterAltScoreTypeAttrDef)
 				continue;
 
 			uint32 unKillEaterAltScore;
-			if ( !pEconItem->FindAttribute( pKillEaterAltAttrDef, &unKillEaterAltScore ) )
+			if(!pEconItem->FindAttribute(pKillEaterAltAttrDef, &unKillEaterAltScore))
 				continue;
 
 			// Older items can optionally not specify a type attribute at all and have an implicit "I'm tracking
 			// kills" zeroth attribute. We require a score type for any slot besides that.
-			if ( i != 0 && !pEconItem->FindAttribute( pKillEaterAltScoreTypeAttrDef ) )
+			if(i != 0 && !pEconItem->FindAttribute(pKillEaterAltScoreTypeAttrDef))
 				continue;
 
-			const uint32 unKillEaterAltType = GetScoreTypeForKillEaterAttr( pEconItem, pKillEaterAltScoreTypeAttrDef );
+			const uint32 unKillEaterAltType = GetScoreTypeForKillEaterAttr(pEconItem, pKillEaterAltScoreTypeAttrDef);
 
-			AddDescLine( CConstructLocalizedString( pLocalizationProvider->Find( "ItemTypeDescKillEaterAltv2" ),
-				unKillEaterAltScore,
-				GetLocalizedStringForKillEaterTypeAttr( pLocalizationProvider, unKillEaterAltType ),
-				*CStrangeRestrictionAttrWrapper( pLocalizationProvider, GetLocalizedStringForStrangeRestrictionAttr( pLocalizationProvider, pEconItem, i ) ) ),
+			AddDescLine(
+				CConstructLocalizedString(
+					pLocalizationProvider->Find("ItemTypeDescKillEaterAltv2"), unKillEaterAltScore,
+					GetLocalizedStringForKillEaterTypeAttr(pLocalizationProvider, unKillEaterAltType),
+					*CStrangeRestrictionAttrWrapper(pLocalizationProvider, GetLocalizedStringForStrangeRestrictionAttr(
+																			   pLocalizationProvider, pEconItem, i))),
 				ATTRIB_COL_LEVEL,
-				kDescLineFlag_Misc );		// strange item scores past the first are not considered part of the type
+				kDescLineFlag_Misc); // strange item scores past the first are not considered part of the type
 		}
 
 		return true;
@@ -1288,50 +1353,51 @@ bool CEconItemDescription::BGenerate_ItemLevelDesc_StrangeNameAndStats( const CL
 
 	// Look for Limited Item Attr
 	bool bLimitedQuantity = false;
-	static CSchemaAttributeDefHandle pAttrDef_LimitedQuantityItem( "limited quantity item" );
-	bLimitedQuantity = pEconItem->FindAttribute( pAttrDef_LimitedQuantityItem );
+	static CSchemaAttributeDefHandle pAttrDef_LimitedQuantityItem("limited quantity item");
+	bLimitedQuantity = pEconItem->FindAttribute(pAttrDef_LimitedQuantityItem);
 
-	AddDescLine( CConstructLocalizedString( pLocalizationProvider->Find( "ItemTypeDescKillEater" ),
-												RankGenerator.GetRankLocalized(),
-												locTypename ? locTypename : LOCCHAR(""),
-												RankGenerator.GetStrangeScore(),
-												GetLocalizedStringForKillEaterTypeAttr( pLocalizationProvider, RankGenerator.GetStrangeType() ),
-												*CStrangeRestrictionAttrWrapper( pLocalizationProvider, GetLocalizedStringForStrangeRestrictionAttr( pLocalizationProvider, pEconItem, RankGenerator.GetUsedStrangeSlot() ) ),
-												RankGenerator.GetRankSecondaryLocalized() ? RankGenerator.GetRankSecondaryLocalized() : LOCCHAR(""), 
-												bLimitedQuantity ? pLocalizationProvider->Find( "LimitedQualityDesc" ) : LOCCHAR("")
-												),
-					bLimitedQuantity ? ATTRIB_COL_LIMITED_QUANTITY : ATTRIB_COL_LEVEL,
-					kDescLineFlag_Type );
+	AddDescLine(CConstructLocalizedString(
+					pLocalizationProvider->Find("ItemTypeDescKillEater"), RankGenerator.GetRankLocalized(),
+					locTypename ? locTypename : LOCCHAR(""), RankGenerator.GetStrangeScore(),
+					GetLocalizedStringForKillEaterTypeAttr(pLocalizationProvider, RankGenerator.GetStrangeType()),
+					*CStrangeRestrictionAttrWrapper(pLocalizationProvider, GetLocalizedStringForStrangeRestrictionAttr(
+																			   pLocalizationProvider, pEconItem,
+																			   RankGenerator.GetUsedStrangeSlot())),
+					RankGenerator.GetRankSecondaryLocalized() ? RankGenerator.GetRankSecondaryLocalized() : LOCCHAR(""),
+					bLimitedQuantity ? pLocalizationProvider->Find("LimitedQualityDesc") : LOCCHAR("")),
+				bLimitedQuantity ? ATTRIB_COL_LIMITED_QUANTITY : ATTRIB_COL_LEVEL, kDescLineFlag_Type);
 
 	// Are we tracking alternate stats as well?
-	for ( int i = 0; i < GetKillEaterAttrCount(); i++ )
+	for(int i = 0; i < GetKillEaterAttrCount(); i++)
 	{
-		const CEconItemAttributeDefinition *pKillEaterAltAttrDef			= GetKillEaterAttr_Score(i),
-										   *pKillEaterAltScoreTypeAttrDef	= GetKillEaterAttr_Type(i);
-		if ( !pKillEaterAltAttrDef || !pKillEaterAltScoreTypeAttrDef )
+		const CEconItemAttributeDefinition *pKillEaterAltAttrDef = GetKillEaterAttr_Score(i),
+										   *pKillEaterAltScoreTypeAttrDef = GetKillEaterAttr_Type(i);
+		if(!pKillEaterAltAttrDef || !pKillEaterAltScoreTypeAttrDef)
 			continue;
 
 		uint32 unKillEaterAltScore;
-		if ( !pEconItem->FindAttribute( pKillEaterAltAttrDef, &unKillEaterAltScore ) )
+		if(!pEconItem->FindAttribute(pKillEaterAltAttrDef, &unKillEaterAltScore))
 			continue;
 
 		// Older items can optionally not specify a type attribute at all and have an implicit "I'm tracking
 		// kills" zeroth attribute. We require a score type for any slot besides that.
-		if ( i != 0 && !pEconItem->FindAttribute( pKillEaterAltScoreTypeAttrDef ) )
+		if(i != 0 && !pEconItem->FindAttribute(pKillEaterAltScoreTypeAttrDef))
 			continue;
 
-		const uint32 unKillEaterAltType = GetScoreTypeForKillEaterAttr( pEconItem, pKillEaterAltScoreTypeAttrDef );
-			
+		const uint32 unKillEaterAltType = GetScoreTypeForKillEaterAttr(pEconItem, pKillEaterAltScoreTypeAttrDef);
+
 		// Skip if this is our primary stat and we already output it above.
-		if ( unKillEaterAltType == RankGenerator.GetStrangeType() )
+		if(unKillEaterAltType == RankGenerator.GetStrangeType())
 			continue;
 
-		AddDescLine( CConstructLocalizedString( pLocalizationProvider->Find( "ItemTypeDescKillEaterAlt" ),
-												unKillEaterAltScore,
-												GetLocalizedStringForKillEaterTypeAttr( pLocalizationProvider, unKillEaterAltType ),
-												*CStrangeRestrictionAttrWrapper( pLocalizationProvider, GetLocalizedStringForStrangeRestrictionAttr( pLocalizationProvider, pEconItem, i ) ) ),
-					 ATTRIB_COL_LEVEL,
-					 kDescLineFlag_Misc );		// strange item scores past the first are not considered part of the type
+		AddDescLine(
+			CConstructLocalizedString(
+				pLocalizationProvider->Find("ItemTypeDescKillEaterAlt"), unKillEaterAltScore,
+				GetLocalizedStringForKillEaterTypeAttr(pLocalizationProvider, unKillEaterAltType),
+				*CStrangeRestrictionAttrWrapper(pLocalizationProvider, GetLocalizedStringForStrangeRestrictionAttr(
+																		   pLocalizationProvider, pEconItem, i))),
+			ATTRIB_COL_LEVEL,
+			kDescLineFlag_Misc); // strange item scores past the first are not considered part of the type
 	}
 
 	return true;
@@ -1340,138 +1406,144 @@ bool CEconItemDescription::BGenerate_ItemLevelDesc_StrangeNameAndStats( const CL
 // --------------------------------------------------------------------------
 // Purpose:
 // --------------------------------------------------------------------------
-uint32 GetItemDescriptionDisplayLevel( const IEconItemInterface *pEconItem )
+uint32 GetItemDescriptionDisplayLevel(const IEconItemInterface *pEconItem)
 {
-	Assert( pEconItem );
+	Assert(pEconItem);
 
-	static CSchemaAttributeDefHandle pAttrDef_WideItemLevel( "wide item level" );
+	static CSchemaAttributeDefHandle pAttrDef_WideItemLevel("wide item level");
 
 	uint32 unWideLevelValue;
-	if ( pEconItem->FindAttribute( pAttrDef_WideItemLevel, &unWideLevelValue ) )
+	if(pEconItem->FindAttribute(pAttrDef_WideItemLevel, &unWideLevelValue))
 		return unWideLevelValue;
 
 	return pEconItem->GetItemLevel();
 }
 
-void CEconItemDescription::Generate_ItemLevelDesc_Default( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem, const locchar_t *locTypename )
+void CEconItemDescription::Generate_ItemLevelDesc_Default(const CLocalizationProvider *pLocalizationProvider,
+														  const IEconItemInterface *pEconItem,
+														  const locchar_t *locTypename)
 {
 	// By default, items will only show the level if there is an item type to go along with it.
 	// Combined, these will build a string like "Level 10 Shotgun". We allow a custom attribute
 	// to force the level to be displayed by itself even if there is no item class ("Level 10").
-	static CSchemaAttributeDefHandle pAttrDef_ForceLevelDisplay( "force_level_display" );
+	static CSchemaAttributeDefHandle pAttrDef_ForceLevelDisplay("force_level_display");
 
 	item_definition_index_t usDefIndex = pEconItem->GetItemDefIndex();
 
-
 #ifdef CLIENT_DLL
-	const bool bIsStoreItem = IsStorePreviewItem( pEconItem );
+	const bool bIsStoreItem = IsStorePreviewItem(pEconItem);
 	const bool bIsPreviewItem = pEconItem->GetFlags() & kEconItemFlagClient_Preview;
 
-	// If the item doesn't have a valid itemID, we'll just use the locTypename for the item level description. 
+	// If the item doesn't have a valid itemID, we'll just use the locTypename for the item level description.
 	// We don't want to display "Level 0 Hat" in places like the Mann Co. Store and Armory. We'll just display "Hat".
-	if ( bIsStoreItem || bIsPreviewItem || pEconItem->GetItemDefinition()->GetRarity() != k_unItemRarity_Any )
+	if(bIsStoreItem || bIsPreviewItem || pEconItem->GetItemDefinition()->GetRarity() != k_unItemRarity_Any)
 	{
-		if ( locTypename && *locTypename )
+		if(locTypename && *locTypename)
 		{
-			AddDescLine( locTypename, ATTRIB_COL_LEVEL, kDescLineFlag_Type, NULL, usDefIndex );
+			AddDescLine(locTypename, ATTRIB_COL_LEVEL, kDescLineFlag_Type, NULL, usDefIndex);
 		}
 		return;
 	}
 #endif
 
 	float fForceLevelDisplayValue;
-	bool bForceLevelDisplay = FindAttribute_UnsafeBitwiseCast<attrib_value_t>( pEconItem, pAttrDef_ForceLevelDisplay, &fForceLevelDisplayValue )
-							&& fForceLevelDisplayValue > 0.0f;
-		
-	if ( ( locTypename && *locTypename ) || bForceLevelDisplay )
+	bool bForceLevelDisplay = FindAttribute_UnsafeBitwiseCast<attrib_value_t>(pEconItem, pAttrDef_ForceLevelDisplay,
+																			  &fForceLevelDisplayValue) &&
+							  fForceLevelDisplayValue > 0.0f;
+
+	if((locTypename && *locTypename) || bForceLevelDisplay)
 	{
-		if ( locTypename )
+		if(locTypename)
 		{
 			// How are we going to format our level number and base type string?
 			const locchar_t *pszFormatString = NULL;
 
 #ifdef PROJECT_TF
-			static CSchemaAttributeDefHandle pAttrDef_OverrideItemLevelDescString( CTFItemSchema::k_rchOverrideItemLevelDescStringAttribName );
-			static const char *s_pszCustomItemLevelDescLocalizationTokens[] =
-			{
+			static CSchemaAttributeDefHandle pAttrDef_OverrideItemLevelDescString(
+				CTFItemSchema::k_rchOverrideItemLevelDescStringAttribName);
+			static const char *s_pszCustomItemLevelDescLocalizationTokens[] = {
 				"ItemTypeDescCustomLevelString_MvMTour",
 			};
 
 			// ...are we going to use a custom format string specified in an attribute?
 			uint32 unOverrideItemLevelDescString = 0;
-			if ( pEconItem->FindAttribute( pAttrDef_OverrideItemLevelDescString, &unOverrideItemLevelDescString )
-				&& unOverrideItemLevelDescString != 0
-				&& unOverrideItemLevelDescString <= ARRAYSIZE( s_pszCustomItemLevelDescLocalizationTokens ) ) 
+			if(pEconItem->FindAttribute(pAttrDef_OverrideItemLevelDescString, &unOverrideItemLevelDescString) &&
+			   unOverrideItemLevelDescString != 0 &&
+			   unOverrideItemLevelDescString <= ARRAYSIZE(s_pszCustomItemLevelDescLocalizationTokens))
 			{
-				const char *pszLevelLocalizationToken = s_pszCustomItemLevelDescLocalizationTokens[ unOverrideItemLevelDescString - 1 ];
-				Assert( pszLevelLocalizationToken );
+				const char *pszLevelLocalizationToken =
+					s_pszCustomItemLevelDescLocalizationTokens[unOverrideItemLevelDescString - 1];
+				Assert(pszLevelLocalizationToken);
 
-				pszFormatString = pLocalizationProvider->Find( pszLevelLocalizationToken );
+				pszFormatString = pLocalizationProvider->Find(pszLevelLocalizationToken);
 			}
 #endif // PROJECT_TF
 
-			// Either we didn't have a custom override attribute, or we did and it had an invalid value, or it had a valid
-			// value but the localization system failed to find something for that key. In any event, we fall back to our default
-			// format string here.
-			if ( pszFormatString == NULL )
+			// Either we didn't have a custom override attribute, or we did and it had an invalid value, or it had a
+			// valid value but the localization system failed to find something for that key. In any event, we fall back
+			// to our default format string here.
+			if(pszFormatString == NULL)
 			{
 				bool bLimitedQuantity = false;
-				static CSchemaAttributeDefHandle pAttrDef_LimitedQuantityItem( "limited quantity item" );
-				bLimitedQuantity = pEconItem->FindAttribute( pAttrDef_LimitedQuantityItem );
+				static CSchemaAttributeDefHandle pAttrDef_LimitedQuantityItem("limited quantity item");
+				bLimitedQuantity = pEconItem->FindAttribute(pAttrDef_LimitedQuantityItem);
 
-#if defined( TF_CLIENT_DLL )
-				if ( pEconItem->GetItemDefinition()->GetItemClass() && V_strcmp( pEconItem->GetItemDefinition()->GetItemClass(), "map_token" ) == 0 )
+#if defined(TF_CLIENT_DLL)
+				if(pEconItem->GetItemDefinition()->GetItemClass() &&
+				   V_strcmp(pEconItem->GetItemDefinition()->GetItemClass(), "map_token") == 0)
 				{
 					// For map stamps on the client we can show how many hours they've played each map
 					// And how many times they've donated to it instead of the generic "level"
-					for ( int i = 0; i < GetItemSchema()->GetMapCount(); i++ )
+					for(int i = 0; i < GetItemSchema()->GetMapCount(); i++)
 					{
-						const MapDef_t* pMap = GetItemSchema()->GetMasterMapDefByIndex( i );
+						const MapDef_t *pMap = GetItemSchema()->GetMasterMapDefByIndex(i);
 
-						if ( pMap->mapStampDef != pEconItem->GetItemDefinition() )
+						if(pMap->mapStampDef != pEconItem->GetItemDefinition())
 							continue;
 
-						int nItemLevel = MapInfo_GetDonationAmount( steamapicontext->SteamUser()->GetSteamID().GetAccountID(), pMap->pszMapName );
+						int nItemLevel = MapInfo_GetDonationAmount(
+							steamapicontext->SteamUser()->GetSteamID().GetAccountID(), pMap->pszMapName);
 
-						MapStats_t &mapStats = GetMapStats( pMap->GetStatsIdentifier() );
-						int nNumHours = ( mapStats.accumulated.m_iStat[TFMAPSTAT_PLAYTIME] ) / ( 60 /*sec*/ * 60 /*min*/ );
+						MapStats_t &mapStats = GetMapStats(pMap->GetStatsIdentifier());
+						int nNumHours = (mapStats.accumulated.m_iStat[TFMAPSTAT_PLAYTIME]) / (60 /*sec*/ * 60 /*min*/);
 
-						AddDescLine( CConstructLocalizedString( pLocalizationProvider->Find( "ItemTypeDescCustomLevelString_MapStamp" ), (uint32)nItemLevel, (uint32)nNumHours ), ATTRIB_COL_LEVEL, kDescLineFlag_Type );
+						AddDescLine(CConstructLocalizedString(
+										pLocalizationProvider->Find("ItemTypeDescCustomLevelString_MapStamp"),
+										(uint32)nItemLevel, (uint32)nNumHours),
+									ATTRIB_COL_LEVEL, kDescLineFlag_Type);
 						return;
 					}
 				}
-				else 
+				else
 #endif
 				{
-					if ( bLimitedQuantity )
+					if(bLimitedQuantity)
 					{
 						// Limited Item Description
-						pszFormatString = pLocalizationProvider->Find( "ItemTypeDescLimited" );
-						AddDescLine( CConstructLocalizedString(
-								pszFormatString,
-								GetItemDescriptionDisplayLevel( pEconItem ),
-								locTypename,
-								pLocalizationProvider->Find( "LimitedQualityDesc" ) ),
-							ATTRIB_COL_LIMITED_QUANTITY,
-							kDescLineFlag_Type,
-							NULL,
-							usDefIndex
-							);
+						pszFormatString = pLocalizationProvider->Find("ItemTypeDescLimited");
+						AddDescLine(CConstructLocalizedString(pszFormatString,
+															  GetItemDescriptionDisplayLevel(pEconItem), locTypename,
+															  pLocalizationProvider->Find("LimitedQualityDesc")),
+									ATTRIB_COL_LIMITED_QUANTITY, kDescLineFlag_Type, NULL, usDefIndex);
 						return;
 					}
-					pszFormatString = pLocalizationProvider->Find( "ItemTypeDesc" );
+					pszFormatString = pLocalizationProvider->Find("ItemTypeDesc");
 				}
 			}
 
-			// If we still don't have a format string here, it means our default also failed, but CConstructLocalizedString will
-			// handle that safely.
-			AddDescLine( CConstructLocalizedString( pszFormatString, GetItemDescriptionDisplayLevel( pEconItem ), locTypename ), ATTRIB_COL_LEVEL, kDescLineFlag_Type, NULL, usDefIndex );
+			// If we still don't have a format string here, it means our default also failed, but
+			// CConstructLocalizedString will handle that safely.
+			AddDescLine(
+				CConstructLocalizedString(pszFormatString, GetItemDescriptionDisplayLevel(pEconItem), locTypename),
+				ATTRIB_COL_LEVEL, kDescLineFlag_Type, NULL, usDefIndex);
 		}
 		else
 		{
-			Assert( bForceLevelDisplay );
+			Assert(bForceLevelDisplay);
 
-			AddDescLine( CConstructLocalizedString( pLocalizationProvider->Find( "ItemTypeDescNoLevel" ), GetItemDescriptionDisplayLevel( pEconItem ) ), ATTRIB_COL_LEVEL, kDescLineFlag_Type, NULL, usDefIndex );
+			AddDescLine(CConstructLocalizedString(pLocalizationProvider->Find("ItemTypeDescNoLevel"),
+												  GetItemDescriptionDisplayLevel(pEconItem)),
+						ATTRIB_COL_LEVEL, kDescLineFlag_Type, NULL, usDefIndex);
 		}
 	}
 }
@@ -1479,180 +1551,193 @@ void CEconItemDescription::Generate_ItemLevelDesc_Default( const CLocalizationPr
 // --------------------------------------------------------------------------
 // Purpose:
 // --------------------------------------------------------------------------
-void CEconItemDescription::Generate_ItemLevelDesc( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::Generate_ItemLevelDesc(const CLocalizationProvider *pLocalizationProvider,
+												  const IEconItemInterface *pEconItem)
 {
-	Assert( pLocalizationProvider );
-	Assert( pEconItem );
+	Assert(pLocalizationProvider);
+	Assert(pEconItem);
 
 	const GameItemDefinition_t *pItemDef = pEconItem->GetItemDefinition();
-	if ( !pItemDef )
+	if(!pItemDef)
 		return;
 
-	const locchar_t *locTypename = pLocalizationProvider->Find( pItemDef->GetItemTypeName() );
+	const locchar_t *locTypename = pLocalizationProvider->Find(pItemDef->GetItemTypeName());
 
 	// Kill-eating weapons replace the standard weapon name/level line with a label
 	// describing the current class of the item instead of the level. This overrides
 	// even "force_level_display".
-	if ( BGenerate_ItemLevelDesc_StrangeNameAndStats( pLocalizationProvider, pEconItem, locTypename ) )
+	if(BGenerate_ItemLevelDesc_StrangeNameAndStats(pLocalizationProvider, pEconItem, locTypename))
 		return;
 
 	// Not strange, but if you are paint kitted or have a collection reference dont create this
-	if ( pEconItem->GetCustomPainkKitDefinition() || pItemDef->GetCollectionReference() )
+	if(pEconItem->GetCustomPainkKitDefinition() || pItemDef->GetCollectionReference())
 		return;
 
 	// If we didn't generate a fancy strange name, we fall back to our default behavior.
-	Generate_ItemLevelDesc_Default( pLocalizationProvider, pEconItem, locTypename );
+	Generate_ItemLevelDesc_Default(pLocalizationProvider, pEconItem, locTypename);
 }
 
-#if defined( STAGING_ONLY ) && defined( CLIENT_DLL )
-ConVar econ_include_debug_item_description( "econ_include_debug_item_description","0", FCVAR_CLIENTDLL | FCVAR_ARCHIVE, "Controls display of the additional debug fields in CEconItemDescription (definition index, etc.)." );
+#if defined(STAGING_ONLY) && defined(CLIENT_DLL)
+ConVar econ_include_debug_item_description(
+	"econ_include_debug_item_description", "0", FCVAR_CLIENTDLL | FCVAR_ARCHIVE,
+	"Controls display of the additional debug fields in CEconItemDescription (definition index, etc.).");
 
 // --------------------------------------------------------------------------
 // Purpose:
 // --------------------------------------------------------------------------
-void CEconItemDescription::Generate_DebugInformation( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::Generate_DebugInformation(const CLocalizationProvider *pLocalizationProvider,
+													 const IEconItemInterface *pEconItem)
 {
-	Assert( pLocalizationProvider );
-	Assert( pEconItem );
+	Assert(pLocalizationProvider);
+	Assert(pEconItem);
 
-	if ( !econ_include_debug_item_description.GetBool() )
+	if(!econ_include_debug_item_description.GetBool())
 		return;
 
 #if TF_ANTI_IDLEBOT_VERIFICATION
 	// Adding these extra description lines would mess with our GC/client sync.
-	if ( m_pHashContext )
+	if(m_pHashContext)
 		return;
 #endif // TF_ANTI_IDLEBOT_VERIFICATION
 
-	AddDescLine( CConstructLocalizedString( LOCCHAR("([ Item ID: %s1 ])"), pEconItem->GetID() ), ATTRIB_COL_POSITIVE, kDescLineFlag_Misc );
-	AddDescLine( CConstructLocalizedString( LOCCHAR("([ Item Definition Index: %s1 ])"), (uint32)pEconItem->GetItemDefIndex() ), ATTRIB_COL_POSITIVE, kDescLineFlag_Misc );
-	AddDescLine( CConstructLocalizedString( LOCCHAR("([ In Use?: %s1 ])"), pEconItem->GetInUse() ? LOCCHAR("true") : LOCCHAR("false") ), ATTRIB_COL_POSITIVE, kDescLineFlag_Misc );
+	AddDescLine(CConstructLocalizedString(LOCCHAR("([ Item ID: %s1 ])"), pEconItem->GetID()), ATTRIB_COL_POSITIVE,
+				kDescLineFlag_Misc);
+	AddDescLine(
+		CConstructLocalizedString(LOCCHAR("([ Item Definition Index: %s1 ])"), (uint32)pEconItem->GetItemDefIndex()),
+		ATTRIB_COL_POSITIVE, kDescLineFlag_Misc);
+	AddDescLine(CConstructLocalizedString(LOCCHAR("([ In Use?: %s1 ])"),
+										  pEconItem->GetInUse() ? LOCCHAR("true") : LOCCHAR("false")),
+				ATTRIB_COL_POSITIVE, kDescLineFlag_Misc);
 	AddEmptyDescLine();
 
 	class CDebugAttributeDisplayer : public IEconItemAttributeIterator
 	{
 	public:
-		CDebugAttributeDisplayer( CEconItemDescription *pOut_Desc ) : m_pDesc( pOut_Desc ) { Assert( m_pDesc ); }
+		CDebugAttributeDisplayer(CEconItemDescription *pOut_Desc) : m_pDesc(pOut_Desc)
+		{
+			Assert(m_pDesc);
+		}
 
-		virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, attrib_value_t value ) OVERRIDE
+		virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef,
+											 attrib_value_t value) OVERRIDE
 		{
 			// Ugh.
-			wchar_t wszAttrDef[ 256 ];
-			ILocalize::ConvertANSIToUnicode( pAttrDef->GetDefinitionName(), &wszAttrDef[0], sizeof( wszAttrDef ) );
+			wchar_t wszAttrDef[256];
+			ILocalize::ConvertANSIToUnicode(pAttrDef->GetDefinitionName(), &wszAttrDef[0], sizeof(wszAttrDef));
 
-			m_pDesc->AddDescLine( CConstructLocalizedString( LOCCHAR("([ Attribute [%s1]: '%s2' ( %s3 | %s4 ) ])"),
-															 (uint32)pAttrDef->GetDefinitionIndex(),
-															 wszAttrDef,
-															 *(uint32 *)&value,
-															 *(float *)&value ), ATTRIB_COL_POSITIVE, kDescLineFlag_Misc );
+			m_pDesc->AddDescLine(CConstructLocalizedString(LOCCHAR("([ Attribute [%s1]: '%s2' ( %s3 | %s4 ) ])"),
+														   (uint32)pAttrDef->GetDefinitionIndex(), wszAttrDef,
+														   *(uint32 *)&value, *(float *)&value),
+								 ATTRIB_COL_POSITIVE, kDescLineFlag_Misc);
 
 			return true;
 		}
 
-		virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, float value ) OVERRIDE
+		virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef, float value) OVERRIDE
 		{
 			// Ugh.
-			wchar_t wszAttrDef[ 256 ];
-			ILocalize::ConvertANSIToUnicode( pAttrDef->GetDefinitionName(), &wszAttrDef[0], sizeof( wszAttrDef ) );
+			wchar_t wszAttrDef[256];
+			ILocalize::ConvertANSIToUnicode(pAttrDef->GetDefinitionName(), &wszAttrDef[0], sizeof(wszAttrDef));
 
-			m_pDesc->AddDescLine( CConstructLocalizedString( LOCCHAR("([ Attribute [%s1]: '%s2' ( %f ) ])"),
-															 (uint32)pAttrDef->GetDefinitionIndex(),
-															 wszAttrDef,
-															 value ), ATTRIB_COL_POSITIVE, kDescLineFlag_Misc );
+			m_pDesc->AddDescLine(CConstructLocalizedString(LOCCHAR("([ Attribute [%s1]: '%s2' ( %f ) ])"),
+														   (uint32)pAttrDef->GetDefinitionIndex(), wszAttrDef, value),
+								 ATTRIB_COL_POSITIVE, kDescLineFlag_Misc);
 
 			return true;
 		}
 
-		virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const uint64& value ) OVERRIDE
+		virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef, const uint64 &value) OVERRIDE
 		{
 			// Ugh.
-			wchar_t wszAttrDef[ 256 ];
-			ILocalize::ConvertANSIToUnicode( pAttrDef->GetDefinitionName(), &wszAttrDef[0], sizeof( wszAttrDef ) );
+			wchar_t wszAttrDef[256];
+			ILocalize::ConvertANSIToUnicode(pAttrDef->GetDefinitionName(), &wszAttrDef[0], sizeof(wszAttrDef));
 
-			m_pDesc->AddDescLine( CConstructLocalizedString( LOCCHAR("([ Attribute [%s1]: '%s2' ( %llu ) ])"),
-															 (uint32)pAttrDef->GetDefinitionIndex(),
-															 wszAttrDef,
-															 value ), ATTRIB_COL_POSITIVE, kDescLineFlag_Misc );
+			m_pDesc->AddDescLine(CConstructLocalizedString(LOCCHAR("([ Attribute [%s1]: '%s2' ( %llu ) ])"),
+														   (uint32)pAttrDef->GetDefinitionIndex(), wszAttrDef, value),
+								 ATTRIB_COL_POSITIVE, kDescLineFlag_Misc);
 
 			return true;
 		}
 
-		virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const CAttribute_String& value ) OVERRIDE
+		virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef,
+											 const CAttribute_String &value) OVERRIDE
 		{
 			// Ugh.
-			wchar_t wszAttrDef[ 256 ];
-			ILocalize::ConvertANSIToUnicode( pAttrDef->GetDefinitionName(), &wszAttrDef[0], sizeof( wszAttrDef ) );
+			wchar_t wszAttrDef[256];
+			ILocalize::ConvertANSIToUnicode(pAttrDef->GetDefinitionName(), &wszAttrDef[0], sizeof(wszAttrDef));
 
-			wchar_t wszAttrContents[ 1024 ];
-			ILocalize::ConvertANSIToUnicode( value.value().c_str(), &wszAttrContents[0], sizeof( wszAttrContents ) );
+			wchar_t wszAttrContents[1024];
+			ILocalize::ConvertANSIToUnicode(value.value().c_str(), &wszAttrContents[0], sizeof(wszAttrContents));
 
-			m_pDesc->AddDescLine( CConstructLocalizedString( LOCCHAR("([ Attribute [%s1]: '%s2' ( \"%s3\" ) ])"),
-															 (uint32)pAttrDef->GetDefinitionIndex(),
-															 wszAttrDef,
-															 wszAttrContents ), ATTRIB_COL_POSITIVE, kDescLineFlag_Misc );
+			m_pDesc->AddDescLine(CConstructLocalizedString(LOCCHAR("([ Attribute [%s1]: '%s2' ( \"%s3\" ) ])"),
+														   (uint32)pAttrDef->GetDefinitionIndex(), wszAttrDef,
+														   wszAttrContents),
+								 ATTRIB_COL_POSITIVE, kDescLineFlag_Misc);
 			return true;
 		}
 
-		virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const CAttribute_DynamicRecipeComponent& value ) OVERRIDE
+		virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef,
+											 const CAttribute_DynamicRecipeComponent &value) OVERRIDE
 		{
-			const char* pszItemName = GetItemSchema()->GetItemDefinition( value.def_index() )->GetItemBaseName();
+			const char *pszItemName = GetItemSchema()->GetItemDefinition(value.def_index())->GetItemBaseName();
 
-			wchar_t wszItemQuality[ 256 ];
-			ILocalize::ConvertANSIToUnicode( EconQuality_GetQualityString(EEconItemQuality(value.item_quality())), &wszItemQuality[0], sizeof( wszItemQuality ) );
+			wchar_t wszItemQuality[256];
+			ILocalize::ConvertANSIToUnicode(EconQuality_GetQualityString(EEconItemQuality(value.item_quality())),
+											&wszItemQuality[0], sizeof(wszItemQuality));
 
-			wchar_t wszAttrString[ 256 ];
-			ILocalize::ConvertANSIToUnicode(  value.attributes_string().c_str(), &wszAttrString[0], sizeof( wszAttrString ) );
+			wchar_t wszAttrString[256];
+			ILocalize::ConvertANSIToUnicode(value.attributes_string().c_str(), &wszAttrString[0],
+											sizeof(wszAttrString));
 
-			wchar_t wszCount[ 64 ];
-			ILocalize::ConvertANSIToUnicode( CFmtStr( "%d/%d", value.num_fulfilled(), value.num_required() ), &wszCount[0], sizeof( wszCount ) );
+			wchar_t wszCount[64];
+			ILocalize::ConvertANSIToUnicode(CFmtStr("%d/%d", value.num_fulfilled(), value.num_required()), &wszCount[0],
+											sizeof(wszCount));
 
-			locchar_t wszLocalizedItemName[ 128 ];
-			const locchar_t *pLocalizedItemName = GLocalizationProvider()->Find( pszItemName );
-			if ( pLocalizedItemName )
+			locchar_t wszLocalizedItemName[128];
+			const locchar_t *pLocalizedItemName = GLocalizationProvider()->Find(pszItemName);
+			if(pLocalizedItemName)
 			{
-				V_wcscpy_safe( wszLocalizedItemName, pLocalizedItemName );
+				V_wcscpy_safe(wszLocalizedItemName, pLocalizedItemName);
 			}
 			else
 			{
 				// name wasn't found by Find(), so just convert the pszItemName
-				ILocalize::ConvertANSIToUnicode( pszItemName, &wszLocalizedItemName[0], sizeof( wszLocalizedItemName ) );
+				ILocalize::ConvertANSIToUnicode(pszItemName, &wszLocalizedItemName[0], sizeof(wszLocalizedItemName));
 			}
 
-			m_pDesc->AddDescLine( CConstructLocalizedString( LOCCHAR( "\nItem: \"%s1\"\nQuality: %s2\nAttribs:%s3\nCount: %s4" ),
-															 wszLocalizedItemName,
-															 wszItemQuality,
-															 wszAttrString,
-															 wszCount ),
-															 ATTRIB_COL_POSITIVE, kDescLineFlag_Misc );
+			m_pDesc->AddDescLine(
+				CConstructLocalizedString(LOCCHAR("\nItem: \"%s1\"\nQuality: %s2\nAttribs:%s3\nCount: %s4"),
+										  wszLocalizedItemName, wszItemQuality, wszAttrString, wszCount),
+				ATTRIB_COL_POSITIVE, kDescLineFlag_Misc);
 			return true;
 		}
 
-		virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const CAttribute_ItemSlotCriteria& value ) OVERRIDE
+		virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef,
+											 const CAttribute_ItemSlotCriteria &value) OVERRIDE
 		{
 			// Ugh.
-			wchar_t wszAttrDef[ 256 ];
-			ILocalize::ConvertANSIToUnicode( pAttrDef->GetDefinitionName(), &wszAttrDef[0], sizeof( wszAttrDef ) );
+			wchar_t wszAttrDef[256];
+			ILocalize::ConvertANSIToUnicode(pAttrDef->GetDefinitionName(), &wszAttrDef[0], sizeof(wszAttrDef));
 
-			wchar_t wszAttrTags[ 256 ];
-			ILocalize::ConvertANSIToUnicode( value.tags().c_str(), &wszAttrTags[0], sizeof( wszAttrTags ) );
+			wchar_t wszAttrTags[256];
+			ILocalize::ConvertANSIToUnicode(value.tags().c_str(), &wszAttrTags[0], sizeof(wszAttrTags));
 
-			m_pDesc->AddDescLine( CConstructLocalizedString( LOCCHAR("([ Attribute [%s1]: '%s2'])\nTags: \"%s3\""),
-															 (uint32)pAttrDef->GetDefinitionIndex(),
-															 wszAttrDef,
-															 wszAttrTags ),
-															 ATTRIB_COL_POSITIVE, kDescLineFlag_Misc );
+			m_pDesc->AddDescLine(CConstructLocalizedString(LOCCHAR("([ Attribute [%s1]: '%s2'])\nTags: \"%s3\""),
+														   (uint32)pAttrDef->GetDefinitionIndex(), wszAttrDef,
+														   wszAttrTags),
+								 ATTRIB_COL_POSITIVE, kDescLineFlag_Misc);
 			return true;
 		}
 
-		virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const CAttribute_WorldItemPlacement& value ) OVERRIDE
+		virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef,
+											 const CAttribute_WorldItemPlacement &value) OVERRIDE
 		{
-			wchar_t wszAttrDef[ 256 ];
-			ILocalize::ConvertANSIToUnicode( pAttrDef->GetDefinitionName(), &wszAttrDef[0], sizeof( wszAttrDef ) );
+			wchar_t wszAttrDef[256];
+			ILocalize::ConvertANSIToUnicode(pAttrDef->GetDefinitionName(), &wszAttrDef[0], sizeof(wszAttrDef));
 
-			m_pDesc->AddDescLine( CConstructLocalizedString( LOCCHAR( "([ Attribute [%s1]: '%s2'])\n" ),
-															 (uint32)pAttrDef->GetDefinitionIndex(),
-															 wszAttrDef ),
-															 ATTRIB_COL_POSITIVE, kDescLineFlag_Misc );
+			m_pDesc->AddDescLine(CConstructLocalizedString(LOCCHAR("([ Attribute [%s1]: '%s2'])\n"),
+														   (uint32)pAttrDef->GetDefinitionIndex(), wszAttrDef),
+								 ATTRIB_COL_POSITIVE, kDescLineFlag_Misc);
 			return true;
 		}
 
@@ -1660,287 +1745,307 @@ void CEconItemDescription::Generate_DebugInformation( const CLocalizationProvide
 		CEconItemDescription *m_pDesc;
 	};
 
-	CDebugAttributeDisplayer DebugAttributeDisplayer( this );
-	pEconItem->IterateAttributes( &DebugAttributeDisplayer );
+	CDebugAttributeDisplayer DebugAttributeDisplayer(this);
+	pEconItem->IterateAttributes(&DebugAttributeDisplayer);
 }
 #endif // defined( STAGING_ONLY ) && defined( CLIENT_DLL )
 
 // --------------------------------------------------------------------------
 // Purpose:
 // --------------------------------------------------------------------------
-void CEconItemDescription::Generate_CraftTag( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::Generate_CraftTag(const CLocalizationProvider *pLocalizationProvider,
+											 const IEconItemInterface *pEconItem)
 {
-	Assert( pLocalizationProvider );
-	Assert( pEconItem );
+	Assert(pLocalizationProvider);
+	Assert(pEconItem);
 
-	static CSchemaAttributeDefHandle pAttribDef_MakersMarkId( "makers mark id" );
+	static CSchemaAttributeDefHandle pAttribDef_MakersMarkId("makers mark id");
 
 	attrib_value_t value;
-	if ( !pEconItem->FindAttribute( pAttribDef_MakersMarkId, &value ) )
+	if(!pEconItem->FindAttribute(pAttribDef_MakersMarkId, &value))
 		return;
 
-	AddAttributeDescription( pLocalizationProvider, pAttribDef_MakersMarkId, value );
+	AddAttributeDescription(pLocalizationProvider, pAttribDef_MakersMarkId, value);
 }
 
 // --------------------------------------------------------------------------
 // Purpose:
 // --------------------------------------------------------------------------
-void CEconItemDescription::Generate_StyleDesc( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::Generate_StyleDesc(const CLocalizationProvider *pLocalizationProvider,
+											  const IEconItemInterface *pEconItem)
 {
-	Assert( pLocalizationProvider );
-	Assert( pEconItem );
+	Assert(pLocalizationProvider);
+	Assert(pEconItem);
 
 	const GameItemDefinition_t *pItemDef = pEconItem->GetItemDefinition();
-	if ( !pItemDef )
+	if(!pItemDef)
 		return;
 
-	const CEconStyleInfo *pStyle = pItemDef->GetStyleInfo( pEconItem->GetStyle() );
-	if ( !pStyle )
+	const CEconStyleInfo *pStyle = pItemDef->GetStyleInfo(pEconItem->GetStyle());
+	if(!pStyle)
 		return;
 
-	const locchar_t *loc_StyleName = pLocalizationProvider->Find( pStyle->GetName() );
-	if ( !loc_StyleName )
+	const locchar_t *loc_StyleName = pLocalizationProvider->Find(pStyle->GetName());
+	if(!loc_StyleName)
 		return;
-	
-	AddDescLine( CConstructLocalizedString( pLocalizationProvider->Find( "#Econ_Style_Desc" ), loc_StyleName ), ATTRIB_COL_LEVEL, kDescLineFlag_Misc );
+
+	AddDescLine(CConstructLocalizedString(pLocalizationProvider->Find("#Econ_Style_Desc"), loc_StyleName),
+				ATTRIB_COL_LEVEL, kDescLineFlag_Misc);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CEconItemDescription::Generate_HolidayRestriction( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::Generate_HolidayRestriction(const CLocalizationProvider *pLocalizationProvider,
+													   const IEconItemInterface *pEconItem)
 {
-	Assert( pLocalizationProvider );
-	Assert( pEconItem );
+	Assert(pLocalizationProvider);
+	Assert(pEconItem);
 
 	const GameItemDefinition_t *pItemDef = pEconItem->GetItemDefinition();
-	if ( !pItemDef )
+	if(!pItemDef)
 		return;
 
 	const char *pszHolidayRestriction = pItemDef->GetHolidayRestriction();
-	if ( !pszHolidayRestriction )
+	if(!pszHolidayRestriction)
 		return;
 
 	// Report any special restrictions. We'll output in a different color depending on whether or not
 	// the restriction currently prevents the item from showing up.
-	LocalizedAddDescLine( pLocalizationProvider,
-						  CFmtStr( "Econ_holiday_restriction_%s", pszHolidayRestriction ).Access(),
-						  EconHolidays_IsHolidayActive( EconHolidays_GetHolidayForString( pszHolidayRestriction ), CRTime::RTime32TimeCur() ) ? ATTRIB_COL_LEVEL : ATTRIB_COL_NEGATIVE,
-						  kDescLineFlag_Misc );
+	LocalizedAddDescLine(
+		pLocalizationProvider, CFmtStr("Econ_holiday_restriction_%s", pszHolidayRestriction).Access(),
+		EconHolidays_IsHolidayActive(EconHolidays_GetHolidayForString(pszHolidayRestriction), CRTime::RTime32TimeCur())
+			? ATTRIB_COL_LEVEL
+			: ATTRIB_COL_NEGATIVE,
+		kDescLineFlag_Misc);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CEconItemDescription::Generate_QualityDesc( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::Generate_QualityDesc(const CLocalizationProvider *pLocalizationProvider,
+												const IEconItemInterface *pEconItem)
 {
-	Assert( pLocalizationProvider );
-	Assert( pEconItem );
+	Assert(pLocalizationProvider);
+	Assert(pEconItem);
 
 	// Does this item quality have additional description information that goes along with
 	// besides the usual name/coloration changes?
 	const char *pszQualityDescLocalizationKey = NULL;
 
-	switch( pEconItem->GetQuality() )
+	switch(pEconItem->GetQuality())
 	{
-	case AE_SELFMADE:
-		pszQualityDescLocalizationKey = "Attrib_Selfmade_Description";
-		break;
-	case AE_COMMUNITY:
-		pszQualityDescLocalizationKey = "Attrib_Community_Description";
-		break;
+		case AE_SELFMADE:
+			pszQualityDescLocalizationKey = "Attrib_Selfmade_Description";
+			break;
+		case AE_COMMUNITY:
+			pszQualityDescLocalizationKey = "Attrib_Community_Description";
+			break;
 	}
 
 	// We don't need to do anything special.
-	if ( !pszQualityDescLocalizationKey )
+	if(!pszQualityDescLocalizationKey)
 		return;
 
 	// If this item has a particle system attached but doesn't have the attribute that we usually use
 	// to attach particles, we hack it and dump out an extra line to show the particle system description
 	// as well.
-	static CSchemaAttributeDefHandle pAttrDef_ParticleEffect( "attach particle effect" );
-	static attachedparticlesystem_t *pSparkleSystem = GetItemSchema()->FindAttributeControlledParticleSystem( "community_sparkle" );
+	static CSchemaAttributeDefHandle pAttrDef_ParticleEffect("attach particle effect");
+	static attachedparticlesystem_t *pSparkleSystem =
+		GetItemSchema()->FindAttributeControlledParticleSystem("community_sparkle");
 
 	// If the schema understands these properties...
-	if ( pAttrDef_ParticleEffect && pSparkleSystem )
+	if(pAttrDef_ParticleEffect && pSparkleSystem)
 	{
 		// ...and we don't have a real particle effect attribute attribute...
-		if ( !pEconItem->FindAttribute( pAttrDef_ParticleEffect ) )
+		if(!pEconItem->FindAttribute(pAttrDef_ParticleEffect))
 		{
 			// check for Unusual Cap def index (1173)
 			// We manually assign unusual effect to content author. No community sparkle
-			if ( pEconItem->GetItemDefIndex() != 1173 )
+			if(pEconItem->GetItemDefIndex() != 1173)
 			{
 				// ...then manually add the description as if we did.
 				float flSystemID = pSparkleSystem->nSystemID;
-				AddAttributeDescription( pLocalizationProvider, pAttrDef_ParticleEffect, *(uint32*)&flSystemID );
+				AddAttributeDescription(pLocalizationProvider, pAttrDef_ParticleEffect, *(uint32 *)&flSystemID);
 			}
 		}
 	}
 
-	LocalizedAddDescLine( pLocalizationProvider, pszQualityDescLocalizationKey, ATTRIB_COL_NEUTRAL, kDescLineFlag_Misc );
+	LocalizedAddDescLine(pLocalizationProvider, pszQualityDescLocalizationKey, ATTRIB_COL_NEUTRAL, kDescLineFlag_Misc);
 }
 
 //-----------------------------------------------------------------------------
-void CEconItemDescription::Generate_ItemRarityDesc( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::Generate_ItemRarityDesc(const CLocalizationProvider *pLocalizationProvider,
+												   const IEconItemInterface *pEconItem)
 {
-	const CEconItemRarityDefinition* pItemRarity = GetItemSchema()->GetRarityDefinition( pEconItem->GetItemDefinition()->GetRarity() );
-	if ( !pItemRarity )
+	const CEconItemRarityDefinition *pItemRarity =
+		GetItemSchema()->GetRarityDefinition(pEconItem->GetItemDefinition()->GetRarity());
+	if(!pItemRarity)
 		return;
-	
+
 	const GameItemDefinition_t *pItemDef = pEconItem->GetItemDefinition();
-	if ( !pItemDef )
+	if(!pItemDef)
 		return;
 
 	const char *pszTooltip = "TFUI_InvTooltip_Rarity";
 
 	attrib_colors_t colorRarity = pItemRarity->GetAttribColor();
 
-	const locchar_t *loc_RarityText = pLocalizationProvider->Find( pItemRarity->GetLocKey() );
-	const locchar_t *locTypename = pLocalizationProvider->Find( pItemDef->GetItemTypeName() );
+	const locchar_t *loc_RarityText = pLocalizationProvider->Find(pItemRarity->GetLocKey());
+	const locchar_t *locTypename = pLocalizationProvider->Find(pItemDef->GetItemTypeName());
 	const locchar_t *loc_WearText = LOCCHAR("");
 
 	float flWear = 0;
-	if ( pEconItem->GetCustomPaintKitWear( flWear ) )
+	if(pEconItem->GetCustomPaintKitWear(flWear))
 	{
-		loc_WearText = pLocalizationProvider->Find( GetWearLocalizationString( flWear ) );
+		loc_WearText = pLocalizationProvider->Find(GetWearLocalizationString(flWear));
 	}
 	else
 	{
 		pszTooltip = "TFUI_InvTooltip_RarityNoWear";
 	}
 
-	AddDescLine( CConstructLocalizedString( pLocalizationProvider->Find( pszTooltip ), loc_RarityText, locTypename, loc_WearText ), colorRarity, kDescLineFlag_Misc );
+	AddDescLine(
+		CConstructLocalizedString(pLocalizationProvider->Find(pszTooltip), loc_RarityText, locTypename, loc_WearText),
+		colorRarity, kDescLineFlag_Misc);
 }
 
-
 //-----------------------------------------------------------------------------
-void CEconItemDescription::Generate_WearAmountDesc( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::Generate_WearAmountDesc(const CLocalizationProvider *pLocalizationProvider,
+												   const IEconItemInterface *pEconItem)
 {
-	if ( pEconItem->GetCustomPainkKitDefinition() == 0 )
+	if(pEconItem->GetCustomPainkKitDefinition() == 0)
 		return;
 
-	Assert( pLocalizationProvider );
-	Assert( pEconItem );
+	Assert(pLocalizationProvider);
+	Assert(pEconItem);
 
 	float flWear = 0;
-	if ( pEconItem->GetCustomPaintKitWear( flWear ) )
+	if(pEconItem->GetCustomPaintKitWear(flWear))
 	{
 		locchar_t loc_WearText[MAX_ATTRIBUTE_DESCRIPTION_LENGTH];
-		
-		loc_scpy_safe( loc_WearText, pLocalizationProvider->Find( "#TFUI_InvTooltip_Wear" ) );
-		loc_scat_safe( loc_WearText, LOCCHAR( " " ) );
-		loc_scat_safe( loc_WearText, pLocalizationProvider->Find( GetWearLocalizationString( flWear ) ) );
 
-		AddDescLine( loc_WearText, ATTRIB_COL_NEUTRAL, kDescLineFlag_Misc );
+		loc_scpy_safe(loc_WearText, pLocalizationProvider->Find("#TFUI_InvTooltip_Wear"));
+		loc_scat_safe(loc_WearText, LOCCHAR(" "));
+		loc_scat_safe(loc_WearText, pLocalizationProvider->Find(GetWearLocalizationString(flWear)));
+
+		AddDescLine(loc_WearText, ATTRIB_COL_NEUTRAL, kDescLineFlag_Misc);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CEconItemDescription::Generate_ItemDesc( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::Generate_ItemDesc(const CLocalizationProvider *pLocalizationProvider,
+											 const IEconItemInterface *pEconItem)
 {
-	Assert( pLocalizationProvider );
-	Assert( pEconItem );
+	Assert(pLocalizationProvider);
+	Assert(pEconItem);
 
 	// Show the custom description if it has one.
 	const char *utf8_CustomDesc = pEconItem->GetCustomDesc();
-	if ( utf8_CustomDesc && utf8_CustomDesc[0] )
+	if(utf8_CustomDesc && utf8_CustomDesc[0])
 	{
-		locchar_t loc_CustomDesc[ MAX_ITEM_DESC_LENGTH ];
-		pLocalizationProvider->ConvertUTF8ToLocchar( utf8_CustomDesc, loc_CustomDesc, sizeof( loc_CustomDesc ) );
+		locchar_t loc_CustomDesc[MAX_ITEM_DESC_LENGTH];
+		pLocalizationProvider->ConvertUTF8ToLocchar(utf8_CustomDesc, loc_CustomDesc, sizeof(loc_CustomDesc));
 
-		locchar_t loc_CustomDescWithQuotes[ MAX_ITEM_DESC_LENGTH ];
-		loc_scpy_safe( loc_CustomDescWithQuotes, LOCCHAR("''") );
-		loc_scat_safe( loc_CustomDescWithQuotes, loc_CustomDesc );
-		loc_scat_safe( loc_CustomDescWithQuotes, LOCCHAR("''") );
+		locchar_t loc_CustomDescWithQuotes[MAX_ITEM_DESC_LENGTH];
+		loc_scpy_safe(loc_CustomDescWithQuotes, LOCCHAR("''"));
+		loc_scat_safe(loc_CustomDescWithQuotes, loc_CustomDesc);
+		loc_scat_safe(loc_CustomDescWithQuotes, LOCCHAR("''"));
 
-		AddDescLine( loc_CustomDescWithQuotes, ATTRIB_COL_NEUTRAL, kDescLineFlag_Desc );
+		AddDescLine(loc_CustomDescWithQuotes, ATTRIB_COL_NEUTRAL, kDescLineFlag_Desc);
 		return;
 	}
 
 	// No custom description -- see if the item has a default description as part of the definition.
 	const GameItemDefinition_t *pItemDef = pEconItem->GetItemDefinition();
-	if ( !pItemDef )
+	if(!pItemDef)
 		return;
 
 	// Add any additional item description
-	if ( pItemDef->GetItemDesc() )
+	if(pItemDef->GetItemDesc())
 	{
-		LocalizedAddDescLine( pLocalizationProvider, pItemDef->GetItemDesc(), ATTRIB_COL_NEUTRAL, kDescLineFlag_Desc );
+		LocalizedAddDescLine(pLocalizationProvider, pItemDef->GetItemDesc(), ATTRIB_COL_NEUTRAL, kDescLineFlag_Desc);
 	}
 
 	// If we're a store preview item, show the available styles in the tooltip so potential buyers
 	// have more information.
-	if ( IsStorePreviewItem( pEconItem ) )
+	if(IsStorePreviewItem(pEconItem))
 	{
-		if ( pItemDef && pItemDef->GetNumStyles() > 0 )
+		if(pItemDef && pItemDef->GetNumStyles() > 0)
 		{
 			AddEmptyDescLine();
-			LocalizedAddDescLine( pLocalizationProvider, "#Store_AvailableStyles_Header", ATTRIB_COL_LEVEL, kDescLineFlag_Misc );
-			
-			for ( int i = 0; i < pItemDef->GetNumStyles(); i++ )
+			LocalizedAddDescLine(pLocalizationProvider, "#Store_AvailableStyles_Header", ATTRIB_COL_LEVEL,
+								 kDescLineFlag_Misc);
+
+			for(int i = 0; i < pItemDef->GetNumStyles(); i++)
 			{
-				LocalizedAddDescLine( pLocalizationProvider, pItemDef->GetStyleInfo( i )->GetName(), ATTRIB_COL_LEVEL, kDescLineFlag_Misc );
+				LocalizedAddDescLine(pLocalizationProvider, pItemDef->GetStyleInfo(i)->GetName(), ATTRIB_COL_LEVEL,
+									 kDescLineFlag_Misc);
 			}
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 
 // If we have at least this many items in our bundle then display multiple entries
 // per line. Otherwise display one item per line for clarity.
-enum { kDescription_CompositeBundleEntriesCount = 15 };
-
-void CEconItemDescription::Generate_Bundle( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+enum
 {
-	Assert( pLocalizationProvider );
-	Assert( pEconItem );
+	kDescription_CompositeBundleEntriesCount = 15
+};
+
+void CEconItemDescription::Generate_Bundle(const CLocalizationProvider *pLocalizationProvider,
+										   const IEconItemInterface *pEconItem)
+{
+	Assert(pLocalizationProvider);
+	Assert(pEconItem);
 
 	const GameItemDefinition_t *pItemDef = pEconItem->GetItemDefinition();
-	if ( !pItemDef )
+	if(!pItemDef)
 		return;
 
 	const bundleinfo_t *pBundleInfo = pItemDef->GetBundleInfo();
-	if ( !pBundleInfo )
+	if(!pBundleInfo)
 		return;
 
 	enum EBundleEntryDisplayStyle
 	{
-		kBundleDisplay_SingleEntry,			// one entry per line
-		kBundleDisplay_PairEntry,			// "Some Item, Some Other Item," (with ending comma)
-		kBundleDisplay_PairEntryFinal,		// "Some Item, Some Other Item" (with no ending comma)
+		kBundleDisplay_SingleEntry,	   // one entry per line
+		kBundleDisplay_PairEntry,	   // "Some Item, Some Other Item," (with ending comma)
+		kBundleDisplay_PairEntryFinal, // "Some Item, Some Other Item" (with no ending comma)
 	};
 
 #ifdef GC_DLL
 	AddEmptyDescLine();
 #endif // GC_DLL
 
-	CUtlVector< item_definition_index_t > vecPackBundlesAdded;
+	CUtlVector<item_definition_index_t> vecPackBundlesAdded;
 
-	FOR_EACH_VEC( pBundleInfo->vecItemDefs, i )
+	FOR_EACH_VEC(pBundleInfo->vecItemDefs, i)
 	{
 		// Sanity check.
 		const CEconItemDefinition *pBundleItemDef = pBundleInfo->vecItemDefs[i];
-		if ( !pBundleItemDef )
+		if(!pBundleItemDef)
 			continue;
 
-		// If the current item is part of a pack bundle, add the pack bundle to the description, rather than the individual item
+			// If the current item is part of a pack bundle, add the pack bundle to the description, rather than the
+			// individual item
 #ifdef DOTA
-		if ( pBundleItemDef->IsPackItem() )
+		if(pBundleItemDef->IsPackItem())
 		{
-			const CUtlVector< CEconItemDefinition * > &vecPackBundleItemDefs = pBundleItemDef->GetOwningPackBundles();
+			const CUtlVector<CEconItemDefinition *> &vecPackBundleItemDefs = pBundleItemDef->GetOwningPackBundles();
 
 			item_definition_index_t usPackBundleItemDefIndex = vecPackBundleItemDefs[i]->GetDefinitionIndex();
-			if ( vecPackBundlesAdded.HasElement( usPackBundleItemDefIndex ) )
+			if(vecPackBundlesAdded.HasElement(usPackBundleItemDefIndex))
 				continue;
 
 			// Remember the def index so we don't add the reference to the pack bundle more than once
-			vecPackBundlesAdded.AddToTail( usPackBundleItemDefIndex );
+			vecPackBundlesAdded.AddToTail(usPackBundleItemDefIndex);
 
 			// Now, point pBundleItemDef at the pack bundle itself and carry on
 			pBundleItemDef = pPackBundleItemDef;
@@ -1949,52 +2054,59 @@ void CEconItemDescription::Generate_Bundle( const CLocalizationProvider *pLocali
 
 		// Figure out which display style to use for this item. By default we put one item one each line...
 		EBundleEntryDisplayStyle eDisplayStyle = kBundleDisplay_SingleEntry;
-		
+
 		// ...but if we have a whole bunch of items in a single bundle, we lump them together two per line to
 		// save space. Only do this on the client. On the GC, use single lines so that link meta data can be passed
 		// along per-line to the store bundle pages.
-#if defined( CLIENT_DLL ) && !defined( TF_CLIENT_DLL )
-		if ( pBundleInfo->vecItemDefs.Count() >= kDescription_CompositeBundleEntriesCount )
+#if defined(CLIENT_DLL) && !defined(TF_CLIENT_DLL)
+		if(pBundleInfo->vecItemDefs.Count() >= kDescription_CompositeBundleEntriesCount)
 		{
 			const int iRemainingItems = pBundleInfo->vecItemDefs.Count() - i;
 
 			// We distinguish between "there are at least three entries left", which means we'll end the line
 			// with a comma, etc.
-			if ( iRemainingItems > 2 )
+			if(iRemainingItems > 2)
 			{
 				eDisplayStyle = kBundleDisplay_PairEntry;
 			}
 			// ...or if these are our very last two items, we list our last two items and that's it.
-			else if ( iRemainingItems == 2 )
+			else if(iRemainingItems == 2)
 			{
 				eDisplayStyle = kBundleDisplay_PairEntryFinal;
 			}
 		}
 #endif
 
-		if ( eDisplayStyle == kBundleDisplay_SingleEntry )
+		if(eDisplayStyle == kBundleDisplay_SingleEntry)
 		{
-			// pBundleItemDef will point at the pack bundle if pBundleItemDef is a pack item. In DotA, pack bundles *only* include pack items, whereas in TF, there are bundles which include some items where are individually for sale and others that are not. For example, the Scout Starter Bundle, etc.
+			// pBundleItemDef will point at the pack bundle if pBundleItemDef is a pack item. In DotA, pack bundles
+			// *only* include pack items, whereas in TF, there are bundles which include some items where are
+			// individually for sale and others that are not. For example, the Scout Starter Bundle, etc.
 #ifdef DOTA
-			LocalizedAddDescLine( pLocalizationProvider, pBundleItemDef->GetItemBaseName(), ATTRIB_COL_BUNDLE_ITEM, kDescLineFlag_Misc, NULL, pBundleItemDef->GetDefinitionIndex() );
+			LocalizedAddDescLine(pLocalizationProvider, pBundleItemDef->GetItemBaseName(), ATTRIB_COL_BUNDLE_ITEM,
+								 kDescLineFlag_Misc, NULL, pBundleItemDef->GetDefinitionIndex());
 #else
-			LocalizedAddDescLine( pLocalizationProvider, pBundleItemDef->GetItemBaseName(), pBundleItemDef->IsPackItem() ? ATTRIB_COL_NEUTRAL : ATTRIB_COL_BUNDLE_ITEM, kDescLineFlag_Misc, NULL, pBundleItemDef->IsPackItem() ? INVALID_ITEM_DEF_INDEX : pBundleItemDef->GetDefinitionIndex(), !pBundleItemDef->IsPackItem() );
+			LocalizedAddDescLine(
+				pLocalizationProvider, pBundleItemDef->GetItemBaseName(),
+				pBundleItemDef->IsPackItem() ? ATTRIB_COL_NEUTRAL : ATTRIB_COL_BUNDLE_ITEM, kDescLineFlag_Misc, NULL,
+				pBundleItemDef->IsPackItem() ? INVALID_ITEM_DEF_INDEX : pBundleItemDef->GetDefinitionIndex(),
+				!pBundleItemDef->IsPackItem());
 #endif
 		}
 		else
 		{
-			Assert( eDisplayStyle == kBundleDisplay_PairEntry || eDisplayStyle == kBundleDisplay_PairEntryFinal );
+			Assert(eDisplayStyle == kBundleDisplay_PairEntry || eDisplayStyle == kBundleDisplay_PairEntryFinal);
 
 			const CEconItemDefinition *pOtherBundleItem = pBundleInfo->vecItemDefs[i + 1];
 			const char *pOtherBundleItemBaseName = pOtherBundleItem ? pOtherBundleItem->GetItemBaseName() : "";
 
-			AddDescLine( CConstructLocalizedString( pLocalizationProvider->Find( eDisplayStyle == kBundleDisplay_PairEntryFinal ? "Econ_Bundle_Double" : "Econ_Bundle_DoubleContinued" ),
-													pLocalizationProvider->Find( pBundleItemDef->GetItemBaseName() ),
-													pLocalizationProvider->Find( pOtherBundleItemBaseName ) ),
-						 ATTRIB_COL_BUNDLE_ITEM,
-						 kDescLineFlag_Misc,
-						 NULL,
-						 pBundleItemDef->GetDefinitionIndex() );
+			AddDescLine(
+				CConstructLocalizedString(pLocalizationProvider->Find(eDisplayStyle == kBundleDisplay_PairEntryFinal
+																		  ? "Econ_Bundle_Double"
+																		  : "Econ_Bundle_DoubleContinued"),
+										  pLocalizationProvider->Find(pBundleItemDef->GetItemBaseName()),
+										  pLocalizationProvider->Find(pOtherBundleItemBaseName)),
+				ATTRIB_COL_BUNDLE_ITEM, kDescLineFlag_Misc, NULL, pBundleItemDef->GetDefinitionIndex());
 
 			// We consumed a second element as well.
 			i++;
@@ -2003,283 +2115,295 @@ void CEconItemDescription::Generate_Bundle( const CLocalizationProvider *pLocali
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CEconItemDescription::Generate_GiftedBy( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::Generate_GiftedBy(const CLocalizationProvider *pLocalizationProvider,
+											 const IEconItemInterface *pEconItem)
 {
-	Assert( pLocalizationProvider );
-	Assert( pEconItem );
+	Assert(pLocalizationProvider);
+	Assert(pEconItem);
 
-	static CSchemaAttributeDefHandle pAttrDef_GiftedBy( "gifter account id" );
-	static CSchemaAttributeDefHandle pAttrDef_EventDate( "event date" );
+	static CSchemaAttributeDefHandle pAttrDef_GiftedBy("gifter account id");
+	static CSchemaAttributeDefHandle pAttrDef_EventDate("event date");
 
 	attrib_value_t val_GifterId;
-	if ( pAttrDef_GiftedBy && pEconItem->FindAttribute( pAttrDef_GiftedBy, &val_GifterId ) )
+	if(pAttrDef_GiftedBy && pEconItem->FindAttribute(pAttrDef_GiftedBy, &val_GifterId))
 	{
 		// Who gifted us this present?
-		AddAttributeDescription( pLocalizationProvider, pAttrDef_GiftedBy, val_GifterId );
+		AddAttributeDescription(pLocalizationProvider, pAttrDef_GiftedBy, val_GifterId);
 
 		// Do we also have (optional) information about when it happened?
 		attrib_value_t val_EventData;
-		if ( pAttrDef_EventDate && pEconItem->FindAttribute( pAttrDef_EventDate, &val_EventData ) )
+		if(pAttrDef_EventDate && pEconItem->FindAttribute(pAttrDef_EventDate, &val_EventData))
 		{
-			AddAttributeDescription( pLocalizationProvider, pAttrDef_EventDate, val_EventData );
+			AddAttributeDescription(pLocalizationProvider, pAttrDef_EventDate, val_EventData);
 		}
 	}
 }
 
 #ifdef PROJECT_TF
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-static bool IsDuelingMedal( const GameItemDefinition_t *pItemDef )
+static bool IsDuelingMedal(const GameItemDefinition_t *pItemDef)
 {
-	static CSchemaItemDefHandle pAttrDef_DuelingMedals[] =
-	{
-		CSchemaItemDefHandle( "Duel Medal Bronze" ),	
-		CSchemaItemDefHandle( "Duel Medal Silver" ),
-		CSchemaItemDefHandle( "Duel Medal Gold" ),
-		CSchemaItemDefHandle( "Duel Medal Plat" ),
+	static CSchemaItemDefHandle pAttrDef_DuelingMedals[] = {
+		CSchemaItemDefHandle("Duel Medal Bronze"),
+		CSchemaItemDefHandle("Duel Medal Silver"),
+		CSchemaItemDefHandle("Duel Medal Gold"),
+		CSchemaItemDefHandle("Duel Medal Plat"),
 	};
 
-	Assert( pItemDef );
+	Assert(pItemDef);
 
-	for ( int i = 0; i < ARRAYSIZE( pAttrDef_DuelingMedals ); i++ )
-		if ( pItemDef == pAttrDef_DuelingMedals[i] )
+	for(int i = 0; i < ARRAYSIZE(pAttrDef_DuelingMedals); i++)
+		if(pItemDef == pAttrDef_DuelingMedals[i])
 			return true;
 
 	return false;
 }
 
-void CEconItemDescription::Generate_DuelingMedal( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::Generate_DuelingMedal(const CLocalizationProvider *pLocalizationProvider,
+												 const IEconItemInterface *pEconItem)
 {
-	Assert( pLocalizationProvider );
-	Assert( pEconItem );
+	Assert(pLocalizationProvider);
+	Assert(pEconItem);
 
-	static CSchemaAttributeDefHandle pAttrDef_EventDate( "event date" );
+	static CSchemaAttributeDefHandle pAttrDef_EventDate("event date");
 
 	const GameItemDefinition_t *pItemDef = pEconItem->GetItemDefinition();
-	if ( !pItemDef )
+	if(!pItemDef)
 		return;
 
-	if ( !IsDuelingMedal( pItemDef ) )
+	if(!IsDuelingMedal(pItemDef))
 		return;
 
-	const CTFDuelSummary *pDuelSummary = FindAccountTypeCacheSingleton<CTFDuelSummary>( pEconItem->GetAccountID(), CTFDuelSummary::k_nTypeID );
-	if ( !pDuelSummary )
+	const CTFDuelSummary *pDuelSummary =
+		FindAccountTypeCacheSingleton<CTFDuelSummary>(pEconItem->GetAccountID(), CTFDuelSummary::k_nTypeID);
+	if(!pDuelSummary)
 		return;
 
 	// Add the date received first.
 	attrib_value_t value;
-	if ( !pEconItem->FindAttribute( pAttrDef_EventDate, &value ) )
+	if(!pEconItem->FindAttribute(pAttrDef_EventDate, &value))
 		return;
 
 	// We feed our format-string parameters in via KeyValues.
-	KeyValues *pKeyValues = new KeyValues( "DuelStrings" );
+	KeyValues *pKeyValues = new KeyValues("DuelStrings");
 
-	CLocalizedRTime32 time = { pDuelSummary->Obj().last_duel_timestamp(), false, pLocalizationProvider TF_ANTI_IDLEBOT_VERIFICATION_ONLY_COMMA TF_ANTI_IDLEBOT_VERIFICATION_ONLY_ARG( m_pHashContext ) };
+	CLocalizedRTime32 time = {pDuelSummary->Obj().last_duel_timestamp(), false,
+							  pLocalizationProvider TF_ANTI_IDLEBOT_VERIFICATION_ONLY_COMMA
+								  TF_ANTI_IDLEBOT_VERIFICATION_ONLY_ARG(m_pHashContext)};
 
-	TypedKeyValuesStringHelper<locchar_t>::Write( pKeyValues, "last_date",	 CLocalizedStringArg<CLocalizedRTime32>( time ).GetLocArg() );
-	TypedKeyValuesStringHelper<locchar_t>::Write( pKeyValues, "wins",		 CLocalizedStringArg<uint32>( pDuelSummary->Obj().duel_wins() ).GetLocArg() );
-	TypedKeyValuesStringHelper<locchar_t>::Write( pKeyValues, "last_target", FindAccountPersonaName( pDuelSummary->Obj().last_duel_account_id() ) );
+	TypedKeyValuesStringHelper<locchar_t>::Write(pKeyValues, "last_date",
+												 CLocalizedStringArg<CLocalizedRTime32>(time).GetLocArg());
+	TypedKeyValuesStringHelper<locchar_t>::Write(
+		pKeyValues, "wins", CLocalizedStringArg<uint32>(pDuelSummary->Obj().duel_wins()).GetLocArg());
+	TypedKeyValuesStringHelper<locchar_t>::Write(pKeyValues, "last_target",
+												 FindAccountPersonaName(pDuelSummary->Obj().last_duel_account_id()));
 
 	// What happened in our last duel? This will be used as a format string to wrap the above data.
 	const char *pszTextFormat;
-	switch ( pDuelSummary->Obj().last_duel_status() )
+	switch(pDuelSummary->Obj().last_duel_status())
 	{
-	case kDuelStatus_Loss: 
-		pszTextFormat = "#TF_Duel_Desc_Lost";
-		break;
-	case kDuelStatus_Tie:
-		pszTextFormat = "#TF_Duel_Desc_Tied";
-		break;
-	case kDuelStatus_Win:
-	default:
-		pszTextFormat = "#TF_Duel_Desc_Won";
-		break;
+		case kDuelStatus_Loss:
+			pszTextFormat = "#TF_Duel_Desc_Lost";
+			break;
+		case kDuelStatus_Tie:
+			pszTextFormat = "#TF_Duel_Desc_Tied";
+			break;
+		case kDuelStatus_Win:
+		default:
+			pszTextFormat = "#TF_Duel_Desc_Won";
+			break;
 	}
 
 	// Output our whole description.
 	AddEmptyDescLine();
-	AddAttributeDescription( pLocalizationProvider, pAttrDef_EventDate, value );
+	AddAttributeDescription(pLocalizationProvider, pAttrDef_EventDate, value);
 	AddEmptyDescLine();
-	AddDescLine( CConstructLocalizedString( pLocalizationProvider->Find( pszTextFormat ), pKeyValues ), ATTRIB_COL_NEUTRAL, kDescLineFlag_Misc );
+	AddDescLine(CConstructLocalizedString(pLocalizationProvider->Find(pszTextFormat), pKeyValues), ATTRIB_COL_NEUTRAL,
+				kDescLineFlag_Misc);
 
 	pKeyValues->deleteThis();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CEconItemDescription::Generate_MapContributor( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::Generate_MapContributor(const CLocalizationProvider *pLocalizationProvider,
+												   const IEconItemInterface *pEconItem)
 {
-	Assert( pLocalizationProvider );
-	Assert( pEconItem );
+	Assert(pLocalizationProvider);
+	Assert(pEconItem);
 
-	static CSchemaItemDefHandle pItemDef_WorldTraveler( "World Traveler" );
-	if ( !pItemDef_WorldTraveler || pEconItem->GetItemDefinition() != pItemDef_WorldTraveler )
+	static CSchemaItemDefHandle pItemDef_WorldTraveler("World Traveler");
+	if(!pItemDef_WorldTraveler || pEconItem->GetItemDefinition() != pItemDef_WorldTraveler)
 		return;
 
-	GCSDK::CSharedObjectTypeCache *pTypeCache = FindAccountTypeCache( pEconItem->GetAccountID(), CTFMapContribution::k_nTypeID );
-	if ( !pTypeCache )
+	GCSDK::CSharedObjectTypeCache *pTypeCache =
+		FindAccountTypeCache(pEconItem->GetAccountID(), CTFMapContribution::k_nTypeID);
+	if(!pTypeCache)
 		return;
 
-	static const char *kDonationLevels[] =
-	{
-		"#TF_MapDonationLevel_Bronze",
-		"#TF_MapDonationLevel_Silver",
-		"#TF_MapDonationLevel_Gold",
-		"#TF_MapDonationLevel_Platinum",
-		"#TF_MapDonationLevel_Diamond",
-		"#TF_MapDonationLevel_Australium1",
-		"#TF_MapDonationLevel_Australium2",
-		"#TF_MapDonationLevel_Australium3",
-		"#TF_MapDonationLevel_Unobtainium"
-	};
-	const int kNumDonationLevels = ARRAYSIZE( kDonationLevels );
+	static const char *kDonationLevels[] = {
+		"#TF_MapDonationLevel_Bronze",		"#TF_MapDonationLevel_Silver",		"#TF_MapDonationLevel_Gold",
+		"#TF_MapDonationLevel_Platinum",	"#TF_MapDonationLevel_Diamond",		"#TF_MapDonationLevel_Australium1",
+		"#TF_MapDonationLevel_Australium2", "#TF_MapDonationLevel_Australium3", "#TF_MapDonationLevel_Unobtainium"};
+	const int kNumDonationLevels = ARRAYSIZE(kDonationLevels);
 	const int kNumDonationsPerLevel = 25;
 
-	CUtlVector<const CTFMapContribution *> vecContributionsPerLevel[ kNumDonationLevels ];
+	CUtlVector<const CTFMapContribution *> vecContributionsPerLevel[kNumDonationLevels];
 
-	for ( uint32 i = 0; i < pTypeCache->GetCount(); ++i )
+	for(uint32 i = 0; i < pTypeCache->GetCount(); ++i)
 	{
-		CTFMapContribution *pMapContribution = (CTFMapContribution*)( pTypeCache->GetObject( i ) );
-		const CEconItemDefinition *pMapItemDef = GetItemSchema()->GetItemDefinition( pMapContribution->Obj().def_index() );
-		if ( pMapItemDef )
+		CTFMapContribution *pMapContribution = (CTFMapContribution *)(pTypeCache->GetObject(i));
+		const CEconItemDefinition *pMapItemDef =
+			GetItemSchema()->GetItemDefinition(pMapContribution->Obj().def_index());
+		if(pMapItemDef)
 		{
-			int iLevel = MIN( pMapContribution->Obj().contribution_level() / kNumDonationsPerLevel, kNumDonationLevels - 1 );
-			vecContributionsPerLevel[iLevel].AddToTail( pMapContribution );
+			int iLevel =
+				MIN(pMapContribution->Obj().contribution_level() / kNumDonationsPerLevel, kNumDonationLevels - 1);
+			vecContributionsPerLevel[iLevel].AddToTail(pMapContribution);
 		}
 	}
-	for ( int i = 0; i < kNumDonationLevels; ++i )
+	for(int i = 0; i < kNumDonationLevels; ++i)
 	{
-		const CUtlVector<const CTFMapContribution *>& vecContributions = vecContributionsPerLevel[i];
-		if ( vecContributions.Count() > 0 )
+		const CUtlVector<const CTFMapContribution *> &vecContributions = vecContributionsPerLevel[i];
+		if(vecContributions.Count() > 0)
 		{
 			// Add header like "Silver:" to show the level of contribution for each of the maps following.
-			LocalizedAddDescLine( pLocalizationProvider, kDonationLevels[i], ATTRIB_COL_ITEMSET_NAME, kDescLineFlag_Misc );
+			LocalizedAddDescLine(pLocalizationProvider, kDonationLevels[i], ATTRIB_COL_ITEMSET_NAME,
+								 kDescLineFlag_Misc);
 
 			// Add a label showing the map names and number of contributions for each map.
-			locchar_t tempDescription[MAX_ITEM_DESCRIPTION_LENGTH] = { 0 };
-			FOR_EACH_VEC( vecContributions, j )
+			locchar_t tempDescription[MAX_ITEM_DESCRIPTION_LENGTH] = {0};
+			FOR_EACH_VEC(vecContributions, j)
 			{
 				const CTFMapContribution *pMapContribution = vecContributions[j];
-				const CEconItemDefinition *pMapItemDef = GetItemSchema()->GetItemDefinition( pMapContribution->Obj().def_index() );
-				Assert( pMapItemDef );
+				const CEconItemDefinition *pMapItemDef =
+					GetItemSchema()->GetItemDefinition(pMapContribution->Obj().def_index());
+				Assert(pMapItemDef);
 
-				const char *pszMapNameLocalizationToken = pMapItemDef->GetDefinitionString( "map_name", NULL );
-				if ( pszMapNameLocalizationToken )
+				const char *pszMapNameLocalizationToken = pMapItemDef->GetDefinitionString("map_name", NULL);
+				if(pszMapNameLocalizationToken)
 				{
-					loc_sncat( tempDescription,	
-							   CConstructLocalizedString( pLocalizationProvider->Find( "#Attrib_MapDonation" ),
-														  pLocalizationProvider->Find( pszMapNameLocalizationToken ),
-														  (uint32)pMapContribution->Obj().contribution_level() ),
-							   MAX_ITEM_DESCRIPTION_LENGTH );
+					loc_sncat(tempDescription,
+							  CConstructLocalizedString(pLocalizationProvider->Find("#Attrib_MapDonation"),
+														pLocalizationProvider->Find(pszMapNameLocalizationToken),
+														(uint32)pMapContribution->Obj().contribution_level()),
+							  MAX_ITEM_DESCRIPTION_LENGTH);
 
-					if ( j < ( vecContributions.Count() - 1 ) )
+					if(j < (vecContributions.Count() - 1))
 					{
-						loc_sncat( tempDescription, LOCCHAR( ", " ), MAX_ITEM_DESCRIPTION_LENGTH );
+						loc_sncat(tempDescription, LOCCHAR(", "), MAX_ITEM_DESCRIPTION_LENGTH);
 					}
 				}
 			}
 
-			if ( tempDescription[0] )
+			if(tempDescription[0])
 			{
-				AddDescLine( tempDescription, ATTRIB_COL_POSITIVE, kDescLineFlag_Misc );
+				AddDescLine(tempDescription, ATTRIB_COL_POSITIVE, kDescLineFlag_Misc);
 			}
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CEconItemDescription::Generate_FriendlyHat( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::Generate_FriendlyHat(const CLocalizationProvider *pLocalizationProvider,
+												const IEconItemInterface *pEconItem)
 {
-	Assert( pLocalizationProvider );
-	Assert( pEconItem );
+	Assert(pLocalizationProvider);
+	Assert(pEconItem);
 
-	static CSchemaItemDefHandle pItemDef_FriendlyHat( "Friendly Item" );
-	if ( !pItemDef_FriendlyHat || pEconItem->GetItemDefinition() != pItemDef_FriendlyHat )
+	static CSchemaItemDefHandle pItemDef_FriendlyHat("Friendly Item");
+	if(!pItemDef_FriendlyHat || pEconItem->GetItemDefinition() != pItemDef_FriendlyHat)
 		return;
 
-	const CTFPlayerInfo *pPlayerInfo = FindAccountTypeCacheSingleton<CTFPlayerInfo>( pEconItem->GetAccountID(), CTFPlayerInfo::k_nTypeID );
-	if ( !pPlayerInfo )
+	const CTFPlayerInfo *pPlayerInfo =
+		FindAccountTypeCacheSingleton<CTFPlayerInfo>(pEconItem->GetAccountID(), CTFPlayerInfo::k_nTypeID);
+	if(!pPlayerInfo)
 		return;
 
-	AddDescLine( CConstructLocalizedString( pLocalizationProvider->Find( "#Attrib_NewUsersHelped" ), (uint32)pPlayerInfo->Obj().num_new_users_helped() ), ATTRIB_COL_POSITIVE, kDescLineFlag_Misc );
+	AddDescLine(CConstructLocalizedString(pLocalizationProvider->Find("#Attrib_NewUsersHelped"),
+										  (uint32)pPlayerInfo->Obj().num_new_users_helped()),
+				ATTRIB_COL_POSITIVE, kDescLineFlag_Misc);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CEconItemDescription::Generate_SaxxyAwardDesc( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::Generate_SaxxyAwardDesc(const CLocalizationProvider *pLocalizationProvider,
+												   const IEconItemInterface *pEconItem)
 {
-	Assert( pLocalizationProvider );
-	Assert( pEconItem );
+	Assert(pLocalizationProvider);
+	Assert(pEconItem);
 
 	// Don't display anything for items besides the Saxxy itself.
-	static CSchemaItemDefHandle pItemDef_Saxxy( "Saxxy" );
-	static CSchemaItemDefHandle pItemDef_MemoryMaker( "The Memory Maker" );
-	if ( ( !pItemDef_Saxxy || pEconItem->GetItemDefinition() != pItemDef_Saxxy ) &&
-		 ( !pItemDef_MemoryMaker || pEconItem->GetItemDefinition() != pItemDef_MemoryMaker ) )
+	static CSchemaItemDefHandle pItemDef_Saxxy("Saxxy");
+	static CSchemaItemDefHandle pItemDef_MemoryMaker("The Memory Maker");
+	if((!pItemDef_Saxxy || pEconItem->GetItemDefinition() != pItemDef_Saxxy) &&
+	   (!pItemDef_MemoryMaker || pEconItem->GetItemDefinition() != pItemDef_MemoryMaker))
 	{
 		return;
 	}
 
 	// Output our award category if present, or abort if absent.
-	static CSchemaAttributeDefHandle pAttrDef_SaxxyAwardCategory( "saxxy award category" );
-	static CSchemaAttributeDefHandle pAttrDef_EventDate( "event date" );
+	static CSchemaAttributeDefHandle pAttrDef_SaxxyAwardCategory("saxxy award category");
+	static CSchemaAttributeDefHandle pAttrDef_EventDate("event date");
 
-	uint32 unAwardCategory,
-		   unEventDate;
-	if ( !pEconItem->FindAttribute( pAttrDef_SaxxyAwardCategory, &unAwardCategory ) ||
-		 !pEconItem->FindAttribute( pAttrDef_EventDate, &unEventDate ) )
+	uint32 unAwardCategory, unEventDate;
+	if(!pEconItem->FindAttribute(pAttrDef_SaxxyAwardCategory, &unAwardCategory) ||
+	   !pEconItem->FindAttribute(pAttrDef_EventDate, &unEventDate))
 	{
 		return;
 	}
 
-	CRTime cTime( unEventDate );
-	cTime.SetToGMT( false );
+	CRTime cTime(unEventDate);
+	cTime.SetToGMT(false);
 
 	const char *pszFormatString = "#Attrib_SaxxyAward";
-	if ( pEconItem->GetItemDefinition() == pItemDef_MemoryMaker )
+	if(pEconItem->GetItemDefinition() == pItemDef_MemoryMaker)
 	{
 		pszFormatString = "#Attrib_MemoryMakerAward";
 	}
 
-	AddDescLine( CConstructLocalizedString( pLocalizationProvider->Find( pszFormatString ),
-											pLocalizationProvider->Find( CFmtStr( "Replay_Contest_Category%d", unAwardCategory ).Access() ),
-											(uint32)cTime.GetYear() ),
-			     ATTRIB_COL_POSITIVE,
-				 kDescLineFlag_Misc );
+	AddDescLine(CConstructLocalizedString(
+					pLocalizationProvider->Find(pszFormatString),
+					pLocalizationProvider->Find(CFmtStr("Replay_Contest_Category%d", unAwardCategory).Access()),
+					(uint32)cTime.GetYear()),
+				ATTRIB_COL_POSITIVE, kDescLineFlag_Misc);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CEconItemDescription::Generate_MvmChallenges( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::Generate_MvmChallenges(const CLocalizationProvider *pLocalizationProvider,
+												  const IEconItemInterface *pEconItem)
 {
 	// Look for our "challenges completed" attribute. If we have this, we assume we're a badge
 	// of some kind. If we don't, we don't display MvM information. This would be a little weird
 	// for level 0 badges that have no completed challenges, but those are something that currently
 	// exist.
-	static CSchemaAttributeDefHandle pAttrDef_ChallengesCompleted( CTFItemSchema::k_rchMvMChallengeCompletedMaskAttribName );
+	static CSchemaAttributeDefHandle pAttrDef_ChallengesCompleted(
+		CTFItemSchema::k_rchMvMChallengeCompletedMaskAttribName);
 
 	uint32 unMask = 0;
-	if ( !pEconItem->FindAttribute( pAttrDef_ChallengesCompleted, &unMask ) )
+	if(!pEconItem->FindAttribute(pAttrDef_ChallengesCompleted, &unMask))
 		return;
-	
+
 	// Look through our list of MvM tours to figure out which badge this came from. The badge itself
 	// doesn't know and we need this information to figure out which completion bits map to which
 	// missions.
 	const MvMTour_t *pTour = NULL;
 
-	FOR_EACH_VEC( GetItemSchema()->GetMvmTours(), i )
+	FOR_EACH_VEC(GetItemSchema()->GetMvmTours(), i)
 	{
-		const MvMTour_t& tour = GetItemSchema()->GetMvmTours()[i];
+		const MvMTour_t &tour = GetItemSchema()->GetMvmTours()[i];
 
-		if ( tour.m_pBadgeItemDef == pEconItem->GetItemDefinition() )
+		if(tour.m_pBadgeItemDef == pEconItem->GetItemDefinition())
 		{
 			pTour = &tour;
 			break;
@@ -2288,244 +2412,237 @@ void CEconItemDescription::Generate_MvmChallenges( const CLocalizationProvider *
 
 	// Couldn't find a tour matching this badge? (This can happen if a client has a busted schema or if
 	// we remove a tour for some reason.)
-	if ( !pTour )
+	if(!pTour)
 		return;
 
-	const CUtlVector<MvMMission_t>& vecAllMissions = GetItemSchema()->GetMvmMissions();
+	const CUtlVector<MvMMission_t> &vecAllMissions = GetItemSchema()->GetMvmMissions();
 	CUtlVector<int> vecCompletedMissions;
 
-	FOR_EACH_VEC( pTour->m_vecMissions, i )
+	FOR_EACH_VEC(pTour->m_vecMissions, i)
 	{
 		// Make sure our mission index is valid based on our current schema. If we're a client playing a
 		// game during a GC roll, we could wind up looking at someone else's badge where they have a
 		// mission that we don't understand.
 		const int iMissionIndex = pTour->m_vecMissions[i].m_iMissionIndex;
-		if ( !vecAllMissions.IsValidIndex( iMissionIndex ) )
+		if(!vecAllMissions.IsValidIndex(iMissionIndex))
 			continue;
 
 		const int iBadgeSlot = pTour->m_vecMissions[i].m_iBadgeSlot;
-		if ( iBadgeSlot >= 0 && ((unMask & (1U << iBadgeSlot)) != 0) )
+		if(iBadgeSlot >= 0 && ((unMask & (1U << iBadgeSlot)) != 0))
 		{
-			vecCompletedMissions.AddToTail( iMissionIndex );
+			vecCompletedMissions.AddToTail(iMissionIndex);
 		}
 	}
 
 	// Add a summary line for the number they have completed
-	AddDescLine(
-		CConstructLocalizedString(
-			pLocalizationProvider->Find( "#Attrib_MvMChallengesCompletedSummary" ),
-			uint32( vecCompletedMissions.Count() )
-		),
-		ATTRIB_COL_POSITIVE,
-		kDescLineFlag_Misc
-	);
+	AddDescLine(CConstructLocalizedString(pLocalizationProvider->Find("#Attrib_MvMChallengesCompletedSummary"),
+										  uint32(vecCompletedMissions.Count())),
+				ATTRIB_COL_POSITIVE, kDescLineFlag_Misc);
 
 	// Detail lines for each completed challenge
-	FOR_EACH_VEC( vecCompletedMissions, i )
+	FOR_EACH_VEC(vecCompletedMissions, i)
 	{
-		const MvMMission_t& mission = vecAllMissions[ vecCompletedMissions[i] ];
-		const MvMMap_t& map = GetItemSchema()->GetMvmMaps()[ mission.m_iDisplayMapIndex ];
-		const locchar_t *pszLocFmt = pLocalizationProvider->Find( "#Attrib_MvMChallengeCompletedDetail" );
-		const locchar_t *pszLocMap = pLocalizationProvider->Find( map.m_sDisplayName.Get() );
-		const locchar_t *pszLocChal = pLocalizationProvider->Find( mission.m_sDisplayName.Get() );
-		if ( pszLocFmt && pszLocMap && pszLocChal )
+		const MvMMission_t &mission = vecAllMissions[vecCompletedMissions[i]];
+		const MvMMap_t &map = GetItemSchema()->GetMvmMaps()[mission.m_iDisplayMapIndex];
+		const locchar_t *pszLocFmt = pLocalizationProvider->Find("#Attrib_MvMChallengeCompletedDetail");
+		const locchar_t *pszLocMap = pLocalizationProvider->Find(map.m_sDisplayName.Get());
+		const locchar_t *pszLocChal = pLocalizationProvider->Find(mission.m_sDisplayName.Get());
+		if(pszLocFmt && pszLocMap && pszLocChal)
 		{
-			CConstructLocalizedString locLine(
-				pszLocFmt,
-				pszLocMap,
-				pszLocChal
-			);
-			AddDescLine(
-				locLine,
-				ATTRIB_COL_POSITIVE,
-				kDescLineFlag_Misc
-			);
+			CConstructLocalizedString locLine(pszLocFmt, pszLocMap, pszLocChal);
+			AddDescLine(locLine, ATTRIB_COL_POSITIVE, kDescLineFlag_Misc);
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CEconItemDescription::Generate_SquadSurplusClaimedBy( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::Generate_SquadSurplusClaimedBy(const CLocalizationProvider *pLocalizationProvider,
+														  const IEconItemInterface *pEconItem)
 {
-	Assert( pLocalizationProvider );
-	Assert( pEconItem );
+	Assert(pLocalizationProvider);
+	Assert(pEconItem);
 
-	static CSchemaAttributeDefHandle pAttrDef_SquadSurplusClaimer( "squad surplus claimer id" );
-	static CSchemaAttributeDefHandle pAttrDef_EventDate( "event date" );
+	static CSchemaAttributeDefHandle pAttrDef_SquadSurplusClaimer("squad surplus claimer id");
+	static CSchemaAttributeDefHandle pAttrDef_EventDate("event date");
 
 	attrib_value_t val_GifterId;
-	if ( pAttrDef_SquadSurplusClaimer&& pEconItem->FindAttribute( pAttrDef_SquadSurplusClaimer, &val_GifterId ) )
+	if(pAttrDef_SquadSurplusClaimer && pEconItem->FindAttribute(pAttrDef_SquadSurplusClaimer, &val_GifterId))
 	{
 		// Who gifted us this present?
-		AddAttributeDescription( pLocalizationProvider, pAttrDef_SquadSurplusClaimer, val_GifterId );
+		AddAttributeDescription(pLocalizationProvider, pAttrDef_SquadSurplusClaimer, val_GifterId);
 
 		// Do we also have (optional) information about when it happened?
 		attrib_value_t val_EventData;
-		if ( pAttrDef_EventDate && pEconItem->FindAttribute( pAttrDef_EventDate, &val_EventData ) )
+		if(pAttrDef_EventDate && pEconItem->FindAttribute(pAttrDef_EventDate, &val_EventData))
 		{
-			AddAttributeDescription( pLocalizationProvider, pAttrDef_EventDate, val_EventData );
+			AddAttributeDescription(pLocalizationProvider, pAttrDef_EventDate, val_EventData);
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CEconItemDescription::Generate_DynamicRecipe( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::Generate_DynamicRecipe(const CLocalizationProvider *pLocalizationProvider,
+												  const IEconItemInterface *pEconItem)
 {
 	// Gather our attributes we care about
-	CRecipeComponentMatchingIterator componentIterator( pEconItem, NULL );
-	pEconItem->IterateAttributes( &componentIterator );
+	CRecipeComponentMatchingIterator componentIterator(pEconItem, NULL);
+	pEconItem->IterateAttributes(&componentIterator);
 
 	// Nothing to say, bail!
-	if( !componentIterator.GetMatchingComponentInputs().Count() && 
-		!componentIterator.GetMatchingComponentOutputs().Count() )
+	if(!componentIterator.GetMatchingComponentInputs().Count() &&
+	   !componentIterator.GetMatchingComponentOutputs().Count())
 	{
 		return;
 	}
 
 	// Add the no partial complete tag if the attribute exists
-	static CSchemaAttributeDefHandle pAttrib_NoPartialComplete( "recipe no partial complete" );
-	if ( pEconItem->FindAttribute( pAttrib_NoPartialComplete ) )
+	static CSchemaAttributeDefHandle pAttrib_NoPartialComplete("recipe no partial complete");
+	if(pEconItem->FindAttribute(pAttrib_NoPartialComplete))
 	{
-		LocalizedAddDescLine( pLocalizationProvider, "TF_ItemDynamic_Recipe_No_Partial_Completion", ATTRIB_COL_POSITIVE, kDescLineFlag_Misc );
+		LocalizedAddDescLine(pLocalizationProvider, "TF_ItemDynamic_Recipe_No_Partial_Completion", ATTRIB_COL_POSITIVE,
+							 kDescLineFlag_Misc);
 	}
 
 	AddEmptyDescLine();
 
-	if ( componentIterator.GetMatchingComponentInputs().Count() )
+	if(componentIterator.GetMatchingComponentInputs().Count())
 	{
 		// Print out item input header
-		LocalizedAddDescLine( pLocalizationProvider, "TF_ItemDynamic_Recipe_Inputs", ATTRIB_COL_NEUTRAL, kDescLineFlag_Misc );
+		LocalizedAddDescLine(pLocalizationProvider, "TF_ItemDynamic_Recipe_Inputs", ATTRIB_COL_NEUTRAL,
+							 kDescLineFlag_Misc);
 		// Print out inputs
-		FOR_EACH_VEC( componentIterator.GetMatchingComponentInputs(), i )
+		FOR_EACH_VEC(componentIterator.GetMatchingComponentInputs(), i)
 		{
 			CAttribute_DynamicRecipeComponent attribValue;
-			pEconItem->FindAttribute( componentIterator.GetMatchingComponentInputs()[i], &attribValue );
+			pEconItem->FindAttribute(componentIterator.GetMatchingComponentInputs()[i], &attribValue);
 
-			const GameItemDefinition_t *pItemDef = dynamic_cast<GameItemDefinition_t *>( GetItemSchema()->GetItemDefinition( attribValue.def_index() ) );
-			if ( !pItemDef )
+			const GameItemDefinition_t *pItemDef =
+				dynamic_cast<GameItemDefinition_t *>(GetItemSchema()->GetItemDefinition(attribValue.def_index()));
+			if(!pItemDef)
 				continue;
 
 			int nCount = attribValue.num_required() - attribValue.num_fulfilled();
 
 			// This is a completed component.  We don't want to show it (for now)
-			if( nCount == 0 )
+			if(nCount == 0)
 				continue;
 
 			CEconItem tempItem;
-			if ( !DecodeItemFromEncodedAttributeString( attribValue, &tempItem ) )
+			if(!DecodeItemFromEncodedAttributeString(attribValue, &tempItem))
 			{
-				AssertMsg2( 0, "%s: Unable to decode dynamic recipe input attribute on item %llu.", __FUNCTION__, pEconItem->GetID() );
+				AssertMsg2(0, "%s: Unable to decode dynamic recipe input attribute on item %llu.", __FUNCTION__,
+						   pEconItem->GetID());
 				continue;
 			}
 
 			locchar_t lineItem[256];
 			locchar_t loc_ItemName[MAX_ITEM_NAME_LENGTH];
-			GenerateLocalizedFullItemName( loc_ItemName, pLocalizationProvider, &tempItem, k_EGenerateLocalizedFullItemName_Default, m_pHashContext == NULL );
+			GenerateLocalizedFullItemName(loc_ItemName, pLocalizationProvider, &tempItem,
+										  k_EGenerateLocalizedFullItemName_Default, m_pHashContext == NULL);
 
-			loc_sprintf_safe( lineItem, 
-				              LOCCHAR("%s x %d"), 
-							  loc_ItemName,
-							  nCount 
-			);
+			loc_sprintf_safe(lineItem, LOCCHAR("%s x %d"), loc_ItemName, nCount);
 
-			AddDescLine( lineItem, ATTRIB_COL_ITEMSET_MISSING, kDescLineFlag_Misc );
+			AddDescLine(lineItem, ATTRIB_COL_ITEMSET_MISSING, kDescLineFlag_Misc);
 		}
 
 		AddEmptyDescLine();
 	}
 
 	// Print out outputs
-	LocalizedAddDescLine( pLocalizationProvider, "TF_ItemDynamic_Recipe_Outputs", ATTRIB_COL_NEUTRAL, kDescLineFlag_Misc );
-	FOR_EACH_VEC( componentIterator.GetMatchingComponentOutputs(), i )
+	LocalizedAddDescLine(pLocalizationProvider, "TF_ItemDynamic_Recipe_Outputs", ATTRIB_COL_NEUTRAL,
+						 kDescLineFlag_Misc);
+	FOR_EACH_VEC(componentIterator.GetMatchingComponentOutputs(), i)
 	{
 		CAttribute_DynamicRecipeComponent attribValue;
-		pEconItem->FindAttribute( componentIterator.GetMatchingComponentOutputs()[i], &attribValue );
+		pEconItem->FindAttribute(componentIterator.GetMatchingComponentOutputs()[i], &attribValue);
 
 		CEconItem tempItem;
-		if ( !DecodeItemFromEncodedAttributeString( attribValue, &tempItem ) )
+		if(!DecodeItemFromEncodedAttributeString(attribValue, &tempItem))
 		{
-			AssertMsg2( 0, "%s: Unable to decode dynamic recipe output attribute on item %llu.", __FUNCTION__, pEconItem->GetID() );
+			AssertMsg2(0, "%s: Unable to decode dynamic recipe output attribute on item %llu.", __FUNCTION__,
+					   pEconItem->GetID());
 			continue;
 		}
 
 		locchar_t loc_ItemName[MAX_ITEM_NAME_LENGTH];
-		GenerateLocalizedFullItemName( loc_ItemName, pLocalizationProvider, &tempItem, k_EGenerateLocalizedFullItemName_Default, m_pHashContext == NULL );
+		GenerateLocalizedFullItemName(loc_ItemName, pLocalizationProvider, &tempItem,
+									  k_EGenerateLocalizedFullItemName_Default, m_pHashContext == NULL);
 
-		AddDescLine( loc_ItemName, /* this will be ignored: */ ATTRIB_COL_ITEMSET_MISSING, kDescLineFlag_Misc );
+		AddDescLine(loc_ItemName, /* this will be ignored: */ ATTRIB_COL_ITEMSET_MISSING, kDescLineFlag_Misc);
 
 		// Iterate through the attributes on this temp item and have it store the attributes that should affect
 		// this component's name.  Once we have that, have it fill out a temporary CEconItemDescription.
 		CRecipeNameAttributeDisplayer recipeAttributeIterator;
-		tempItem.IterateAttributes( &recipeAttributeIterator );
+		tempItem.IterateAttributes(&recipeAttributeIterator);
 		recipeAttributeIterator.SortAttributes();
 		CEconItemDescription tempDescription;
-		recipeAttributeIterator.Finalize( &tempItem, &tempDescription, pLocalizationProvider );
+		recipeAttributeIterator.Finalize(&tempItem, &tempDescription, pLocalizationProvider);
 
 		// Check if that temp CEconItemDescription has any attributes we want.  If so, steal them.
-		if ( tempDescription.m_vecDescLines.Count() > 0 )
+		if(tempDescription.m_vecDescLines.Count() > 0)
 		{
 			locchar_t loc_Attribs[MAX_ITEM_NAME_LENGTH] = LOCCHAR("");
 
 			// Put the attributes on the next line in parenthesis
-			loc_scat_safe( loc_Attribs, LOCCHAR("(") );
+			loc_scat_safe(loc_Attribs, LOCCHAR("("));
 
 			// Put in each attribute
-			FOR_EACH_VEC( tempDescription.m_vecDescLines, j )
+			FOR_EACH_VEC(tempDescription.m_vecDescLines, j)
 			{
 				// Comma separated
-				if ( j > 0 )
+				if(j > 0)
 				{
-					loc_scat_safe( loc_Attribs, LOCCHAR(", ") );
+					loc_scat_safe(loc_Attribs, LOCCHAR(", "));
 				}
 
-				loc_sprintf_safe( loc_Attribs,
-								  LOCCHAR("%s%s"),
-								  loc_Attribs,
-								  tempDescription.m_vecDescLines[j].sText.Get() );
+				loc_sprintf_safe(loc_Attribs, LOCCHAR("%s%s"), loc_Attribs,
+								 tempDescription.m_vecDescLines[j].sText.Get());
 			}
 
-			loc_scat_safe( loc_Attribs, LOCCHAR(")") );
+			loc_scat_safe(loc_Attribs, LOCCHAR(")"));
 
 			// Print out in the same color as the item name above
-			AddDescLine( loc_Attribs, /* this will be ignored: */ ATTRIB_COL_ITEMSET_MISSING, kDescLineFlag_Misc );
+			AddDescLine(loc_Attribs, /* this will be ignored: */ ATTRIB_COL_ITEMSET_MISSING, kDescLineFlag_Misc);
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-void CEconItemDescription::Generate_Leaderboard( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::Generate_Leaderboard(const CLocalizationProvider *pLocalizationProvider,
+												const IEconItemInterface *pEconItem)
 {
 #ifdef GC_DLL
 	return;
 #endif
 
 #ifdef TF_CLIENT_DLL
-	Assert( pLocalizationProvider );
-	Assert( pEconItem );
+	Assert(pLocalizationProvider);
+	Assert(pEconItem);
 
-	static CSchemaAttributeDefHandle pAttrDef_DisplayDuckLeaderboard( "display duck leaderboard" );
-	
-	if ( pEconItem->FindAttribute( pAttrDef_DisplayDuckLeaderboard ) )
+	static CSchemaAttributeDefHandle pAttrDef_DisplayDuckLeaderboard("display duck leaderboard");
+
+	if(pEconItem->FindAttribute(pAttrDef_DisplayDuckLeaderboard))
 	{
 		// Friend Board
-		//locchar_t lineItem[256];
-		//		
-		//AddDescLine( pLocalizationProvider->Find( "#TF_DuckLeaderboard_Friends" ), ATTRIB_COL_POSITIVE, kDescLineFlag_Misc );
+		// locchar_t lineItem[256];
 		//
-		//CUtlVector< LeaderboardEntry_t > scores;
-		//Leaderboards_GetDuckLeaderboard( scores, g_szDuckLeaderboardNames[0] );
+		// AddDescLine( pLocalizationProvider->Find( "#TF_DuckLeaderboard_Friends" ), ATTRIB_COL_POSITIVE,
+		// kDescLineFlag_Misc );
+		//
+		// CUtlVector< LeaderboardEntry_t > scores;
+		// Leaderboards_GetDuckLeaderboard( scores, g_szDuckLeaderboardNames[0] );
 
 		//// Show max of top 10
-		//for ( int i = 0; i < scores.Count() && i < 10; i++ )
+		// for ( int i = 0; i < scores.Count() && i < 10; i++ )
 		//{
 		//	const locchar_t *pName = FindAccountPersonaName( scores[i].m_steamIDUser.GetAccountID() );
 		//	uint32 iRank = scores[i].m_nGlobalRank;
 		//	uint32 iScore = scores[i].m_nScore;
-		//	
+		//
 		//	AddDescLine(
 		//		CConstructLocalizedString(
 		//			pLocalizationProvider->Find( "#TF_DuckLeaderboard_Entry" ),
@@ -2534,7 +2651,7 @@ void CEconItemDescription::Generate_Leaderboard( const CLocalizationProvider *pL
 		//		ATTRIB_COL_POSITIVE,
 		//		kDescLineFlag_Misc
 		//	);
-		//}
+		// }
 	}
 #endif // TF_CLIENT_DLL
 }
@@ -2542,28 +2659,29 @@ void CEconItemDescription::Generate_Leaderboard( const CLocalizationProvider *pL
 #endif // PROJECT_TF
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-const CEconItemDefinition *GetPaintItemDefinitionForPaintedItem( const IEconItemInterface *pEconItem )
+const CEconItemDefinition *GetPaintItemDefinitionForPaintedItem(const IEconItemInterface *pEconItem)
 {
-	static CSchemaAttributeDefHandle pAttribDef_Paint( "set item tint RGB" );
+	static CSchemaAttributeDefHandle pAttribDef_Paint("set item tint RGB");
 
 	attrib_value_t unPaintRGBAttrBits;
-	if ( !pAttribDef_Paint || !pEconItem->FindAttribute( pAttribDef_Paint, &unPaintRGBAttrBits ) )
+	if(!pAttribDef_Paint || !pEconItem->FindAttribute(pAttribDef_Paint, &unPaintRGBAttrBits))
 		return NULL;
 
 	const CEconItemSchema::ToolsItemDefinitionMap_t &toolDefs = GetItemSchema()->GetToolsItemDefinitionMap();
 
-	FOR_EACH_MAP_FAST( toolDefs, i )
+	FOR_EACH_MAP_FAST(toolDefs, i)
 	{
 		const CEconItemDefinition *pItemDef = toolDefs[i];
 
 		// ignore everything that is not a paint can tool
 		const IEconTool *pEconTool = pItemDef->GetEconTool();
-		if ( pEconTool && !V_strcmp( pEconTool->GetTypeName(), "paint_can" ) ) 
+		if(pEconTool && !V_strcmp(pEconTool->GetTypeName(), "paint_can"))
 		{
 			attrib_value_t unPaintRGBAttrCompareBits;
-			if ( FindAttribute( pItemDef, pAttribDef_Paint, &unPaintRGBAttrCompareBits ) && unPaintRGBAttrCompareBits == unPaintRGBAttrBits )
+			if(FindAttribute(pItemDef, pAttribDef_Paint, &unPaintRGBAttrCompareBits) &&
+			   unPaintRGBAttrCompareBits == unPaintRGBAttrBits)
 				return pItemDef;
 		}
 	}
@@ -2574,226 +2692,236 @@ const CEconItemDefinition *GetPaintItemDefinitionForPaintedItem( const IEconItem
 //-----------------------------------------------------------------------------
 // Purpose: Specify target (strangifiers, etc that can only be applied to specific items)
 //-----------------------------------------------------------------------------
-void CEconItemDescription::Generate_XifierToolTargetItem( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::Generate_XifierToolTargetItem(const CLocalizationProvider *pLocalizationProvider,
+														 const IEconItemInterface *pEconItem)
 {
-	Assert( pLocalizationProvider );
-	Assert( pEconItem );
+	Assert(pLocalizationProvider);
+	Assert(pEconItem);
 
 	// Make sure it's a tool of the appropriate type
 	const CEconTool_Xifier *pTool = pEconItem->GetItemDefinition()->GetTypedEconTool<CEconTool_Xifier>();
-	if ( pTool == NULL )
+	if(pTool == NULL)
 		return;
 
 	// Make sure there is a specific target item
-	static CSchemaAttributeDefHandle pAttribDef_ToolTargetItem( "tool target item" );
+	static CSchemaAttributeDefHandle pAttribDef_ToolTargetItem("tool target item");
 	float flItemDef;
-	if( pAttribDef_ToolTargetItem && FindAttribute_UnsafeBitwiseCast<attrib_value_t>( pEconItem, pAttribDef_ToolTargetItem, &flItemDef ) )
+	if(pAttribDef_ToolTargetItem &&
+	   FindAttribute_UnsafeBitwiseCast<attrib_value_t>(pEconItem, pAttribDef_ToolTargetItem, &flItemDef))
 	{
-		locchar_t szTargetItemName[ MAX_ITEM_NAME_LENGTH ] = LOCCHAR("Unknown Item");
+		locchar_t szTargetItemName[MAX_ITEM_NAME_LENGTH] = LOCCHAR("Unknown Item");
 
 		// It's a tool, see if it has a tool target item attribute
 		const item_definition_index_t unItemDef = flItemDef;
-		const CEconItemDefinition *pEconTargetDef = GetItemSchema()->GetItemDefinition( unItemDef );
+		const CEconItemDefinition *pEconTargetDef = GetItemSchema()->GetItemDefinition(unItemDef);
 
 		// Start with the base name.
-		if ( pEconTargetDef )
+		if(pEconTargetDef)
 		{
-			GetLocalizedBaseItemName( szTargetItemName, pLocalizationProvider, pEconTargetDef );
+			GetLocalizedBaseItemName(szTargetItemName, pLocalizationProvider, pEconTargetDef);
 		}
 
 		const char *pszDesc = pTool->GetItemDescToolTargetLocToken();
-		AssertMsg( pszDesc && *pszDesc, "%s: missing 'item_desc_tool_target' key", pTool->GetTypeName() );
-		AddDescLine( CConstructLocalizedString( pLocalizationProvider->Find( pszDesc ),
-					 szTargetItemName ),
-					 ATTRIB_COL_NEUTRAL,
-					 kDescLineFlag_Desc );
+		AssertMsg(pszDesc && *pszDesc, "%s: missing 'item_desc_tool_target' key", pTool->GetTypeName());
+		AddDescLine(CConstructLocalizedString(pLocalizationProvider->Find(pszDesc), szTargetItemName),
+					ATTRIB_COL_NEUTRAL, kDescLineFlag_Desc);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CEconItemDescription::Generate_Painted( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::Generate_Painted(const CLocalizationProvider *pLocalizationProvider,
+											const IEconItemInterface *pEconItem)
 {
-	Assert( pLocalizationProvider );
-	Assert( pEconItem );
+	Assert(pLocalizationProvider);
+	Assert(pEconItem);
 
-	static CSchemaAttributeDefHandle pAttrDef_PaintEffect( "Paint Effect" );
+	static CSchemaAttributeDefHandle pAttrDef_PaintEffect("Paint Effect");
 
 	float fPaintEffectType;
-	if ( pAttrDef_PaintEffect && FindAttribute_UnsafeBitwiseCast<attrib_value_t>( pEconItem, pAttrDef_PaintEffect, &fPaintEffectType ) )
+	if(pAttrDef_PaintEffect &&
+	   FindAttribute_UnsafeBitwiseCast<attrib_value_t>(pEconItem, pAttrDef_PaintEffect, &fPaintEffectType))
 	{
-		if ( fPaintEffectType == 1 )
+		if(fPaintEffectType == 1)
 		{
-			LocalizedAddDescLine( pLocalizationProvider, "Econ_Paint_Effect_Oscillating", ATTRIB_COL_NEUTRAL, kDescLineFlag_Misc );
+			LocalizedAddDescLine(pLocalizationProvider, "Econ_Paint_Effect_Oscillating", ATTRIB_COL_NEUTRAL,
+								 kDescLineFlag_Misc);
 		}
-		else if ( fPaintEffectType == 2 )
+		else if(fPaintEffectType == 2)
 		{
-			LocalizedAddDescLine( pLocalizationProvider, "Econ_Paint_Effect_Position", ATTRIB_COL_NEUTRAL, kDescLineFlag_Misc );
+			LocalizedAddDescLine(pLocalizationProvider, "Econ_Paint_Effect_Position", ATTRIB_COL_NEUTRAL,
+								 kDescLineFlag_Misc);
 		}
-		else if ( fPaintEffectType == 3 )
+		else if(fPaintEffectType == 3)
 		{
-			LocalizedAddDescLine( pLocalizationProvider, "Econ_Paint_Effect_LowHealthWarning", ATTRIB_COL_NEUTRAL, kDescLineFlag_Misc );
+			LocalizedAddDescLine(pLocalizationProvider, "Econ_Paint_Effect_LowHealthWarning", ATTRIB_COL_NEUTRAL,
+								 kDescLineFlag_Misc);
 		}
 	}
 
 	// Find the name of the paint we have applied in the least efficient way imaginable!
 	const CEconItemDefinition *pItemDef = pEconItem->GetItemDefinition();
-	static CSchemaAttributeDefHandle pAttrDef_ShowPaint( "show paint description" );
-	if ( pItemDef && ( !pItemDef->IsTool() || FindAttribute( pEconItem, pAttrDef_ShowPaint ) ) )
+	static CSchemaAttributeDefHandle pAttrDef_ShowPaint("show paint description");
+	if(pItemDef && (!pItemDef->IsTool() || FindAttribute(pEconItem, pAttrDef_ShowPaint)))
 	{
-		const CEconItemDefinition *pTempDef = GetPaintItemDefinitionForPaintedItem( pEconItem );
-		if ( pTempDef )
+		const CEconItemDefinition *pTempDef = GetPaintItemDefinitionForPaintedItem(pEconItem);
+		if(pTempDef)
 		{
-			const locchar_t *locLocalizedPaintName = pLocalizationProvider->Find( pTempDef->GetItemBaseName() );
+			const locchar_t *locLocalizedPaintName = pLocalizationProvider->Find(pTempDef->GetItemBaseName());
 
-			if ( locLocalizedPaintName )
+			if(locLocalizedPaintName)
 			{
-				AddDescLine( CConstructLocalizedString( pLocalizationProvider->Find( "Econ_Paint_Name" ),
-							 locLocalizedPaintName ),
-							 ATTRIB_COL_LEVEL,
-							 kDescLineFlag_Misc );
+				AddDescLine(
+					CConstructLocalizedString(pLocalizationProvider->Find("Econ_Paint_Name"), locLocalizedPaintName),
+					ATTRIB_COL_LEVEL, kDescLineFlag_Misc);
 			}
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CEconItemDescription::Generate_Uses( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::Generate_Uses(const CLocalizationProvider *pLocalizationProvider,
+										 const IEconItemInterface *pEconItem)
 {
-	Assert( pLocalizationProvider );
-	Assert( pEconItem );
+	Assert(pLocalizationProvider);
+	Assert(pEconItem);
 
 	// don't display a quantity if we have the unlimited quantity attribute
-	static CSchemaAttributeDefHandle unlimitedQuantityAttribute( "unlimited quantity" );
-	if ( pEconItem->FindAttribute( unlimitedQuantityAttribute ) )
+	static CSchemaAttributeDefHandle unlimitedQuantityAttribute("unlimited quantity");
+	if(pEconItem->FindAttribute(unlimitedQuantityAttribute))
 		return;
 
 	// Collection tools don't display this.
 	const GameItemDefinition_t *pItemDef = pEconItem->GetItemDefinition();
-	if ( !pItemDef )
+	if(!pItemDef)
 		return;
 
 	const IEconTool *pEconTool = pItemDef->GetEconTool();
-	if ( !pEconTool->ShouldDisplayQuantity( pEconItem ) )
+	if(!pEconTool->ShouldDisplayQuantity(pEconItem))
 		return;
 
 	int iQuantity = pEconItem->GetQuantity();
-	bool bIsTool = pItemDef->GetItemClass() && !Q_strcmp( pItemDef->GetItemClass(), "tool" );
-	bool bIsConsumable = ( pItemDef->GetCapabilities() & ITEM_CAP_USABLE_GC ) != 0 && iQuantity != 0;	
+	bool bIsTool = pItemDef->GetItemClass() && !Q_strcmp(pItemDef->GetItemClass(), "tool");
+	bool bIsConsumable = (pItemDef->GetCapabilities() & ITEM_CAP_USABLE_GC) != 0 && iQuantity != 0;
 
-	if ( bIsTool || bIsConsumable )
+	if(bIsTool || bIsConsumable)
 	{
 		locchar_t wszQuantity[10];
-		loc_sprintf_safe( wszQuantity, LOCCHAR( "%d" ), iQuantity );
+		loc_sprintf_safe(wszQuantity, LOCCHAR("%d"), iQuantity);
 
 		// Add an empty line before the usage display.
 		AddEmptyDescLine();
-		
+
 		// Display our usage count.
-		AddDescLine( CConstructLocalizedString( pLocalizationProvider->Find( "#Attrib_LimitedUse" ), &wszQuantity[0] ), ATTRIB_COL_LIMITED_USE, kDescLineFlag_Misc );
+		AddDescLine(CConstructLocalizedString(pLocalizationProvider->Find("#Attrib_LimitedUse"), &wszQuantity[0]),
+					ATTRIB_COL_LIMITED_USE, kDescLineFlag_Misc);
 	}
 }
 
 // --------------------------------------------------------------------------
 // Purpose:
 // --------------------------------------------------------------------------
-void CEconItemDescription::Generate_LootListDesc( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::Generate_LootListDesc(const CLocalizationProvider *pLocalizationProvider,
+												 const IEconItemInterface *pEconItem)
 {
-	Assert( pLocalizationProvider );
-	Assert( pEconItem );
+	Assert(pLocalizationProvider);
+	Assert(pEconItem);
 
 	const CEconItemDefinition *pItemDef = pEconItem->GetItemDefinition();
-	if ( !pItemDef )
+	if(!pItemDef)
 		return;
 
 	// Don't add this description if the item is a special crate type.
 	const IEconTool *pEconTool = pItemDef->GetEconTool();
 	const bool bIsRestrictedCrate = pEconTool && pEconTool->GetUsageRestriction()
-								  ? !V_stricmp( pEconTool->GetUsageRestriction(), "winter" ) || !V_stricmp( pEconTool->GetUsageRestriction(), "summer" )
-								  : false;
+										? !V_stricmp(pEconTool->GetUsageRestriction(), "winter") ||
+											  !V_stricmp(pEconTool->GetUsageRestriction(), "summer")
+										: false;
 
-	if ( bIsRestrictedCrate )
+	if(bIsRestrictedCrate)
 		return;
 
 	// Do we have a generation code we want to make public? We do this regardless of whether we're describing our
 	// loot list contents in detail.
 	{
-		static CSchemaAttributeDefHandle pAttrDef_CrateGenerationCode( "crate generation code" );
+		static CSchemaAttributeDefHandle pAttrDef_CrateGenerationCode("crate generation code");
 		CAttribute_String sCrateGenerationCode;
 
-		const locchar_t *pszCrateGenerationCodeLoc = pLocalizationProvider->Find( "Attrib_CrateGenerationCode" );
+		const locchar_t *pszCrateGenerationCodeLoc = pLocalizationProvider->Find("Attrib_CrateGenerationCode");
 
-		if ( pEconItem->FindAttribute( pAttrDef_CrateGenerationCode, &sCrateGenerationCode ) && sCrateGenerationCode.value().length() > 0 )
+		if(pEconItem->FindAttribute(pAttrDef_CrateGenerationCode, &sCrateGenerationCode) &&
+		   sCrateGenerationCode.value().length() > 0)
 		{
 			CUtlConstStringBase<locchar_t> loc_sAttrValue;
-			pLocalizationProvider->ConvertUTF8ToLocchar( sCrateGenerationCode.value().c_str(), &loc_sAttrValue );
+			pLocalizationProvider->ConvertUTF8ToLocchar(sCrateGenerationCode.value().c_str(), &loc_sAttrValue);
 
-			AddDescLine( CConstructLocalizedString( pszCrateGenerationCodeLoc, loc_sAttrValue.Get() ),
-						 ATTRIB_COL_POSITIVE,
-						 kDescLineFlag_Misc );
+			AddDescLine(CConstructLocalizedString(pszCrateGenerationCodeLoc, loc_sAttrValue.Get()), ATTRIB_COL_POSITIVE,
+						kDescLineFlag_Misc);
 		}
 	}
 
 	// Grab the actual contents of our loot list.
-	CCrateLootListWrapper LootListWrapper( pEconItem );
+	CCrateLootListWrapper LootListWrapper(pEconItem);
 	const IEconLootList *pLootList = LootListWrapper.GetEconLootList();
 
-	if ( pLootList == nullptr )
+	if(pLootList == nullptr)
 		return;
 
 	// If our base loot list is set not to list contents, skip the header/footer as well and don't display anything.
-	if ( !pLootList->BPublicListContents() )
+	if(!pLootList->BPublicListContents())
 		return;
 
 	AddEmptyDescLine();
 
-	if ( !pLootList->GetLootListCollectionReference() )
+	if(!pLootList->GetLootListCollectionReference())
 	{
-		LocalizedAddDescLine( pLocalizationProvider, pLootList->GetLootListHeaderLocalizationKey(), ATTRIB_COL_NEUTRAL, kDescLineFlag_Misc );
+		LocalizedAddDescLine(pLocalizationProvider, pLootList->GetLootListHeaderLocalizationKey(), ATTRIB_COL_NEUTRAL,
+							 kDescLineFlag_Misc);
 	}
 	else
 	{
 
-		int iCollectionIndex = GetItemSchema()->GetItemCollections().Find( pLootList->GetLootListCollectionReference() );
-		if ( GetItemSchema()->GetItemCollections().IsValidIndex( iCollectionIndex ) )
+		int iCollectionIndex = GetItemSchema()->GetItemCollections().Find(pLootList->GetLootListCollectionReference());
+		if(GetItemSchema()->GetItemCollections().IsValidIndex(iCollectionIndex))
 		{
-			LocalizedAddDescLine( pLocalizationProvider, (GetItemSchema()->GetItemCollections()[iCollectionIndex])->m_pszLocalizedDesc, ATTRIB_COL_NEUTRAL, kDescLineFlag_Misc );
+			LocalizedAddDescLine(pLocalizationProvider,
+								 (GetItemSchema()->GetItemCollections()[iCollectionIndex])->m_pszLocalizedDesc,
+								 ATTRIB_COL_NEUTRAL, kDescLineFlag_Misc);
 		}
 	}
 
 	class CDescriptionLootListIterator : public IEconLootList::IEconLootListIterator
 	{
 	public:
-		CDescriptionLootListIterator( CEconItemDescription *pThis, const CLocalizationProvider *pLocalizationProvider, bool bUseProperName )
-			: m_pThis( pThis )
-			, m_pLocalizationProvider( pLocalizationProvider )
-			, m_bUseProperName( bUseProperName )
+		CDescriptionLootListIterator(CEconItemDescription *pThis, const CLocalizationProvider *pLocalizationProvider,
+									 bool bUseProperName)
+			: m_pThis(pThis), m_pLocalizationProvider(pLocalizationProvider), m_bUseProperName(bUseProperName)
 		{
 		}
 
-		virtual void OnIterate( item_definition_index_t unItemDefIndex ) OVERRIDE
+		virtual void OnIterate(item_definition_index_t unItemDefIndex) OVERRIDE
 		{
-			const CEconItemDefinition *pItemDef = GetItemSchema()->GetItemDefinition( unItemDefIndex );
-			if ( pItemDef )
+			const CEconItemDefinition *pItemDef = GetItemSchema()->GetItemDefinition(unItemDefIndex);
+			if(pItemDef)
 			{
 				// Check if this item is already owned
 				bool bOwned = false;
 				bool bUnusual = false;
 #ifdef CLIENT_DLL
 				CPlayerInventory *pLocalInv = TFInventoryManager()->GetLocalInventory();
-				if ( pLocalInv )
+				if(pLocalInv)
 				{
-					for ( int i = 0; i < pLocalInv->GetItemCount(); ++i )
+					for(int i = 0; i < pLocalInv->GetItemCount(); ++i)
 					{
-						CEconItemView *pItem = pLocalInv->GetItem( i );
-						if ( pItem->GetItemDefinition() == pItemDef )
+						CEconItemView *pItem = pLocalInv->GetItem(i);
+						if(pItem->GetItemDefinition() == pItemDef)
 						{
 							bOwned = true;
 							// Check Quality
-							if ( pItem->GetQuality() == AE_UNUSUAL )
+							if(pItem->GetQuality() == AE_UNUSUAL)
 							{
 								bUnusual = true;
 								break;
@@ -2802,70 +2930,69 @@ void CEconItemDescription::Generate_LootListDesc( const CLocalizationProvider *p
 					}
 				}
 #endif
-				const locchar_t * pCheckmark = bOwned ? m_pLocalizationProvider->Find( "TF_Checkmark" ) : m_pLocalizationProvider->Find( "TF_LackOfCheckmark" );
-				if ( bOwned && bUnusual )
+				const locchar_t *pCheckmark = bOwned ? m_pLocalizationProvider->Find("TF_Checkmark")
+													 : m_pLocalizationProvider->Find("TF_LackOfCheckmark");
+				if(bOwned && bUnusual)
 				{
-					pCheckmark = m_pLocalizationProvider->Find( "TF_Checkmark_Unusual" );
+					pCheckmark = m_pLocalizationProvider->Find("TF_Checkmark_Unusual");
 				}
 
 				attrib_colors_t colorRarity = ATTRIB_COL_RARITY_DEFAULT;
-				const CEconItemRarityDefinition* pItemRarity = GetItemSchema()->GetRarityDefinition( pItemDef->GetRarity() );
-				if ( pItemRarity )
+				const CEconItemRarityDefinition *pItemRarity =
+					GetItemSchema()->GetRarityDefinition(pItemDef->GetRarity());
+				if(pItemRarity)
 				{
 					colorRarity = pItemRarity->GetAttribColor();
 				}
 
-				m_pThis->AddDescLine(
-					CConstructLocalizedString( LOCCHAR( "%s1%s2" ), pCheckmark,
-					CEconItemLocalizedFullNameGenerator(
-					m_pLocalizationProvider,
-					pItemDef,
-					m_bUseProperName
-					).GetFullName() ),
-					colorRarity,
-					kDescLineFlag_Misc,
-					NULL,
-					pItemDef->GetDefinitionIndex()
-					);
+				m_pThis->AddDescLine(CConstructLocalizedString(LOCCHAR("%s1%s2"), pCheckmark,
+															   CEconItemLocalizedFullNameGenerator(
+																   m_pLocalizationProvider, pItemDef, m_bUseProperName)
+																   .GetFullName()),
+									 colorRarity, kDescLineFlag_Misc, NULL, pItemDef->GetDefinitionIndex());
 			}
 		}
 
 	private:
-		CEconItemDescription *m_pThis;		// look at me I'm a lambda!
+		CEconItemDescription *m_pThis; // look at me I'm a lambda!
 		const CLocalizationProvider *m_pLocalizationProvider;
 		bool m_bUseProperName;
 	};
 
-	CDescriptionLootListIterator it( this, pLocalizationProvider, m_pHashContext == NULL );
-	pLootList->EnumerateUserFacingPotentialDrops( &it );
+	CDescriptionLootListIterator it(this, pLocalizationProvider, m_pHashContext == NULL);
+	pLootList->EnumerateUserFacingPotentialDrops(&it);
 
-	if ( pLootList->GetLootListFooterLocalizationKey() )
+	if(pLootList->GetLootListFooterLocalizationKey())
 	{
-		LocalizedAddDescLine( pLocalizationProvider, pLootList->GetLootListFooterLocalizationKey(), ATTRIB_COL_POSITIVE, kDescLineFlag_Misc );
+		LocalizedAddDescLine(pLocalizationProvider, pLootList->GetLootListFooterLocalizationKey(), ATTRIB_COL_POSITIVE,
+							 kDescLineFlag_Misc);
 	}
 	else
 	{
-		const char *pszRareLootListFooterLocalizationKey = pItemDef->GetDefinitionString( "loot_list_rare_item_footer", "#Econ_Revolving_Loot_List_Rare_Item" );
-		LocalizedAddDescLine( pLocalizationProvider, pszRareLootListFooterLocalizationKey, ATTRIB_COL_POSITIVE, kDescLineFlag_Misc );
+		const char *pszRareLootListFooterLocalizationKey =
+			pItemDef->GetDefinitionString("loot_list_rare_item_footer", "#Econ_Revolving_Loot_List_Rare_Item");
+		LocalizedAddDescLine(pLocalizationProvider, pszRareLootListFooterLocalizationKey, ATTRIB_COL_POSITIVE,
+							 kDescLineFlag_Misc);
 	}
 }
 
 // --------------------------------------------------------------------------
-void CEconItemDescription::Generate_EventDetail( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::Generate_EventDetail(const CLocalizationProvider *pLocalizationProvider,
+												const IEconItemInterface *pEconItem)
 {
-	Assert( pLocalizationProvider );
-	Assert( pEconItem );
+	Assert(pLocalizationProvider);
+	Assert(pEconItem);
 
 	const CEconItemDefinition *pItemDef = pEconItem->GetItemDefinition();
-	if ( !pItemDef )
+	if(!pItemDef)
 		return;
 
 	// Check to see if we should append any extra description information
-	const char *pszEventLocalizationKey = pItemDef->GetDefinitionString( "event_desc_footer", NULL );
-	if ( pszEventLocalizationKey )
+	const char *pszEventLocalizationKey = pItemDef->GetDefinitionString("event_desc_footer", NULL);
+	if(pszEventLocalizationKey)
 	{
 		AddEmptyDescLine();
-		LocalizedAddDescLine( pLocalizationProvider, pszEventLocalizationKey, ATTRIB_COL_POSITIVE, kDescLineFlag_Misc );
+		LocalizedAddDescLine(pLocalizationProvider, pszEventLocalizationKey, ATTRIB_COL_POSITIVE, kDescLineFlag_Misc);
 	}
 }
 // --------------------------------------------------------------------------
@@ -2873,29 +3000,30 @@ void CEconItemDescription::Generate_EventDetail( const CLocalizationProvider *pL
 // --------------------------------------------------------------------------
 #ifdef CLIENT_DLL
 
-static bool IsItemEquipped( uint32 unAccountID, const CEconItemDefinition *pSearchItemDef, const GameItemDefinition_t **ppFoundSetItemDef )
+static bool IsItemEquipped(uint32 unAccountID, const CEconItemDefinition *pSearchItemDef,
+						   const GameItemDefinition_t **ppFoundSetItemDef)
 {
-	Assert( pSearchItemDef );
-	Assert( ppFoundSetItemDef );
+	Assert(pSearchItemDef);
+	Assert(ppFoundSetItemDef);
 
-	CPlayerInventory *pInv = InventoryManager()->GetInventoryForAccount( unAccountID );
-	if ( !pInv )
+	CPlayerInventory *pInv = InventoryManager()->GetInventoryForAccount(unAccountID);
+	if(!pInv)
 		return false;
 
-	for ( int i = 0; i < pInv->GetItemCount(); i++ )
+	for(int i = 0; i < pInv->GetItemCount(); i++)
 	{
-		const CEconItemView *pInvItem = pInv->GetItem( i );
-		if ( !pInvItem )
+		const CEconItemView *pInvItem = pInv->GetItem(i);
+		if(!pInvItem)
 			continue;
 
 		// This code is client-only so we expect to always get back an item definition pointer.
 		const GameItemDefinition_t *pInvItemDef = pInvItem->GetItemDefinition();
-		Assert( pInvItemDef );
+		Assert(pInvItemDef);
 
-		if ( pInvItemDef->GetSetItemRemap() != pSearchItemDef->GetDefinitionIndex() )
+		if(pInvItemDef->GetSetItemRemap() != pSearchItemDef->GetDefinitionIndex())
 			continue;
 
-		if ( !pInvItem->IsEquipped() )
+		if(!pInvItem->IsEquipped())
 			continue;
 
 		*ppFoundSetItemDef = pInvItemDef;
@@ -2907,20 +3035,21 @@ static bool IsItemEquipped( uint32 unAccountID, const CEconItemDefinition *pSear
 
 #endif // CLIENT_DLL
 
-void CEconItemDescription::Generate_ItemSetDesc( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::Generate_ItemSetDesc(const CLocalizationProvider *pLocalizationProvider,
+												const IEconItemInterface *pEconItem)
 {
-	Assert( pLocalizationProvider );
-	Assert( pEconItem );
+	Assert(pLocalizationProvider);
+	Assert(pEconItem);
 
 	const GameItemDefinition_t *pItemDef = pEconItem->GetItemDefinition();
-	if ( !pItemDef )
+	if(!pItemDef)
 		return;
 
 	const CEconItemSetDefinition *pItemSetDef = pItemDef->GetItemSetDefinition();
-	if ( !pItemSetDef )
+	if(!pItemSetDef)
 		return;
 
-	bool bAllItemsEquipped = true;		// filled in below when iterating over items
+	bool bAllItemsEquipped = true; // filled in below when iterating over items
 
 	// Some item sets are tagged to only appear on items at all if the entire set is visible. Rather than
 	// walk the whole set multiple times checking for item equipped state, we build up a set of description lines
@@ -2929,35 +3058,39 @@ void CEconItemDescription::Generate_ItemSetDesc( const CLocalizationProvider *pL
 	{
 		CUtlVector<econ_item_description_line_t> vecPotentialDescLines;
 
-		AddEmptyDescLine( &vecPotentialDescLines );
-		LocalizedAddDescLine( pLocalizationProvider, pItemSetDef->m_pszLocalizedName, ATTRIB_COL_ITEMSET_NAME, kDescLineFlag_Set | kDescLineFlag_SetName, &vecPotentialDescLines, pItemSetDef->m_iBundleItemDef );
+		AddEmptyDescLine(&vecPotentialDescLines);
+		LocalizedAddDescLine(pLocalizationProvider, pItemSetDef->m_pszLocalizedName, ATTRIB_COL_ITEMSET_NAME,
+							 kDescLineFlag_Set | kDescLineFlag_SetName, &vecPotentialDescLines,
+							 pItemSetDef->m_iBundleItemDef);
 
 		// Kyle says: Jon wants different formatting on the GC for sets.
-#if defined( GC_DLL )
+#if defined(GC_DLL)
 #if TF_ANTI_IDLEBOT_VERIFICATION
-		if ( !m_pHashContext )
+		if(!m_pHashContext)
 #endif // TF_ANTI_IDLEBOT_VERIFICATION
 		{
-			AddEmptyDescLine( &vecPotentialDescLines );
+			AddEmptyDescLine(&vecPotentialDescLines);
 		}
-#endif // defined( GC_DLL ) && 
+#endif // defined( GC_DLL ) &&
 
 		// Iterate over the items in the set. We'll output a line in different colors to show
 		// the current state of this item. For normal item sets, the color is based on whether
 		// the owner has the item in question equipped (except on the GC, where we always say
 		// "it's not equipped" to avoid confusion). For collections, the color is based on whether
 		// the item has been collected.
-		FOR_EACH_VEC( pItemSetDef->m_iItemDefs, i )
+		FOR_EACH_VEC(pItemSetDef->m_iItemDefs, i)
 		{
-			const GameItemDefinition_t *pOtherSetItem = dynamic_cast<const GameItemDefinition_t *>( GetItemSchema()->GetItemDefinition( pItemSetDef->m_iItemDefs[i] ) );
-			if ( !pOtherSetItem )
+			const GameItemDefinition_t *pOtherSetItem = dynamic_cast<const GameItemDefinition_t *>(
+				GetItemSchema()->GetItemDefinition(pItemSetDef->m_iItemDefs[i]));
+			if(!pOtherSetItem)
 				continue;
 
 			item_definition_index_t usLinkItemDefIndex = pOtherSetItem->GetDefinitionIndex();
 
 #ifdef DOTA
-			// If the current item is part of a pack bundle, add the pack bundle to the description, rather than the individual item
-			if ( pOtherSetItem->IsPackItem() )
+			// If the current item is part of a pack bundle, add the pack bundle to the description, rather than the
+			// individual item
+			if(pOtherSetItem->IsPackItem())
 			{
 				// Link to the pack bundle, not the individual pack item
 				usLinkItemDefIndex = pOtherSetItem->GetOwningPackBundle()->GetDefinitionIndex();
@@ -2970,150 +3103,154 @@ void CEconItemDescription::Generate_ItemSetDesc( const CLocalizationProvider *pL
 
 			const bool bItemPresent =
 #ifdef GC_DLL
-									  false;													// the GC always treats set items as unequipped for clarity in trading
+				false; // the GC always treats set items as unequipped for clarity in trading
 #else
 #if TF_ANTI_IDLEBOT_VERIFICATION
-									  m_pHashContext
-									? false														// when generating descriptions for GC verification we treat item sets as unequipped to match the GC
+				m_pHashContext ? false // when generating descriptions for GC verification we treat item sets as
+									   // unequipped to match the GC
 #endif
-									: IsItemEquipped( pEconItem->GetAccountID(), pOtherSetItem, &pFoundSetItemDef );	// non-GC display will find out whether the player in question has this item actively equipped
+							   : IsItemEquipped(pEconItem->GetAccountID(), pOtherSetItem,
+												&pFoundSetItemDef); // non-GC display will find out whether the player
+																	// in question has this item actively equipped
 #endif
 
-			AddDescLine( CEconItemLocalizedFullNameGenerator( 
-				pLocalizationProvider, 
-				pFoundSetItemDef ? pFoundSetItemDef : pOtherSetItem,
-				m_pHashContext == NULL
-			).GetFullName(), bItemPresent ? ATTRIB_COL_ITEMSET_EQUIPPED : ATTRIB_COL_ITEMSET_MISSING, kDescLineFlag_Set, &vecPotentialDescLines, usLinkItemDefIndex );
+			AddDescLine(CEconItemLocalizedFullNameGenerator(pLocalizationProvider,
+															pFoundSetItemDef ? pFoundSetItemDef : pOtherSetItem,
+															m_pHashContext == NULL)
+							.GetFullName(),
+						bItemPresent ? ATTRIB_COL_ITEMSET_EQUIPPED : ATTRIB_COL_ITEMSET_MISSING, kDescLineFlag_Set,
+						&vecPotentialDescLines, usLinkItemDefIndex);
 
 			bAllItemsEquipped &= bItemPresent;
 		}
 
 		// If the item set is set to be only displayed when the full set is equipped, give up here and
 		// toss out our potential lines. Otherwise submit them for real.
-		if ( pItemSetDef->m_bIsHiddenSet && !bAllItemsEquipped )
+		if(pItemSetDef->m_bIsHiddenSet && !bAllItemsEquipped)
 			return;
 
-		FOR_EACH_VEC( vecPotentialDescLines, i )
+		FOR_EACH_VEC(vecPotentialDescLines, i)
 		{
-			AddDescLine( vecPotentialDescLines[i].sText.Get(), vecPotentialDescLines[i].eColor, vecPotentialDescLines[i].unMetaType, NULL, vecPotentialDescLines[i].unDefIndex );
+			AddDescLine(vecPotentialDescLines[i].sText.Get(), vecPotentialDescLines[i].eColor,
+						vecPotentialDescLines[i].unMetaType, NULL, vecPotentialDescLines[i].unDefIndex);
 		}
 	}
 
 	// Show the set only attributes if we have the entire set and we have bonus attributes to display.
 	bool bHasVisible = false;
-	FOR_EACH_VEC( pItemSetDef->m_iAttributes, i )
+	FOR_EACH_VEC(pItemSetDef->m_iAttributes, i)
 	{
-		const CEconItemSetDefinition::itemset_attrib_t& attrib = pItemSetDef->m_iAttributes[i];
-		const CEconItemAttributeDefinition *pAttrDef = GetItemSchema()->GetAttributeDefinition( attrib.m_iAttribDefIndex );
+		const CEconItemSetDefinition::itemset_attrib_t &attrib = pItemSetDef->m_iAttributes[i];
+		const CEconItemAttributeDefinition *pAttrDef =
+			GetItemSchema()->GetAttributeDefinition(attrib.m_iAttribDefIndex);
 
-		if ( !pAttrDef->IsHidden() )
+		if(!pAttrDef->IsHidden())
 		{
 			bHasVisible = true;
 			break;
 		}
 	}
 
-	if ( !bHasVisible )
+	if(!bHasVisible)
 		return;
 
 	AddEmptyDescLine();
-	LocalizedAddDescLine( pLocalizationProvider, "#Econ_Set_Bonus", ATTRIB_COL_ITEMSET_NAME, kDescLineFlag_Set );
+	LocalizedAddDescLine(pLocalizationProvider, "#Econ_Set_Bonus", ATTRIB_COL_ITEMSET_NAME, kDescLineFlag_Set);
 
-	FOR_EACH_VEC( pItemSetDef->m_iAttributes, i )
+	FOR_EACH_VEC(pItemSetDef->m_iAttributes, i)
 	{
-		const CEconItemSetDefinition::itemset_attrib_t& attrib = pItemSetDef->m_iAttributes[i];
-		const CEconItemAttributeDefinition *pAttrDef = GetItemSchema()->GetAttributeDefinition( attrib.m_iAttribDefIndex );
+		const CEconItemSetDefinition::itemset_attrib_t &attrib = pItemSetDef->m_iAttributes[i];
+		const CEconItemAttributeDefinition *pAttrDef =
+			GetItemSchema()->GetAttributeDefinition(attrib.m_iAttribDefIndex);
 
-		if ( pAttrDef )
+		if(pAttrDef)
 		{
 			// Add the attribute description. Override the color to be grayed out if we don't have the
 			// full set equipped.
-			AddAttributeDescription( pLocalizationProvider,
-									 pAttrDef,
-									 *(attrib_value_t *)&attrib.m_flValue,
-									 bAllItemsEquipped ? /* "do not override": */ NUM_ATTRIB_COLORS : ATTRIB_COL_ITEMSET_MISSING );
+			AddAttributeDescription(pLocalizationProvider, pAttrDef, *(attrib_value_t *)&attrib.m_flValue,
+									bAllItemsEquipped ? /* "do not override": */ NUM_ATTRIB_COLORS
+													  : ATTRIB_COL_ITEMSET_MISSING);
 		}
 	}
 }
 
 // --------------------------------------------------------------------------
-void CEconItemDescription::Generate_CollectionDesc( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::Generate_CollectionDesc(const CLocalizationProvider *pLocalizationProvider,
+												   const IEconItemInterface *pEconItem)
 {
-	Assert( pLocalizationProvider );
-	Assert( pEconItem );
+	Assert(pLocalizationProvider);
+	Assert(pEconItem);
 
 	const CEconItemDefinition *pItemDef = pEconItem->GetItemDefinition();
-	if ( !pItemDef )
+	if(!pItemDef)
 		return;
 
 	const CEconItemCollectionDefinition *pCollection = pItemDef->GetItemCollectionDefinition();
-	if ( !pCollection )
+	if(!pCollection)
 		return;
 
-	// Collection Header .. 
-	const locchar_t *loc_name = pLocalizationProvider->Find( pCollection->m_pszLocalizedName );
-	
+	// Collection Header ..
+	const locchar_t *loc_name = pLocalizationProvider->Find(pCollection->m_pszLocalizedName);
+
 	// Add a bit of spacing, this is only for the market
 	// Add empty line
-	AddDescLine( LOCCHAR( " " ), ATTRIB_COL_NEUTRAL, kDescLineFlag_CollectionName | kDescLineFlag_Empty );
-	AddDescLine( LOCCHAR( " " ), ATTRIB_COL_NEUTRAL, kDescLineFlag_CollectionName | kDescLineFlag_Empty );
+	AddDescLine(LOCCHAR(" "), ATTRIB_COL_NEUTRAL, kDescLineFlag_CollectionName | kDescLineFlag_Empty);
+	AddDescLine(LOCCHAR(" "), ATTRIB_COL_NEUTRAL, kDescLineFlag_CollectionName | kDescLineFlag_Empty);
 
-	AddDescLine(
-		CConstructLocalizedString( LOCCHAR( "%s1" ), loc_name ), 
-		ATTRIB_COL_NEUTRAL, 
-		kDescLineFlag_CollectionName 
-	);
-	
-	FOR_EACH_VEC( pCollection->m_iItemDefs, index )
+	AddDescLine(CConstructLocalizedString(LOCCHAR("%s1"), loc_name), ATTRIB_COL_NEUTRAL, kDescLineFlag_CollectionName);
+
+	FOR_EACH_VEC(pCollection->m_iItemDefs, index)
 	{
 		int eFlag = kDescLineFlag_Collection;
-		const CEconItemDefinition *pTempItemDef = GetItemSchema()->GetItemDefinition( pCollection->m_iItemDefs[index] );
-		if ( pTempItemDef )
+		const CEconItemDefinition *pTempItemDef = GetItemSchema()->GetItemDefinition(pCollection->m_iItemDefs[index]);
+		if(pTempItemDef)
 		{
 			// Check if this item is already owned
 			bool bOwned = false;
 			bool bUnusual = false;
-			if ( pTempItemDef == pItemDef )
+			if(pTempItemDef == pItemDef)
 			{
 				bOwned = true;
 				eFlag |= kDescLineFlag_CollectionCurrentItem;
-				if ( pEconItem->GetQuality() == AE_UNUSUAL )
+				if(pEconItem->GetQuality() == AE_UNUSUAL)
 				{
 					bUnusual = true;
 				}
 			}
 #ifdef CLIENT_DLL
-			else 
+			else
 			{
 				CPlayerInventory *pLocalInv = TFInventoryManager()->GetLocalInventory();
-				if ( pLocalInv )
+				if(pLocalInv)
 				{
-					const CEconItemCollectionDefinition *pRefCollection = GetItemSchema()->GetCollectionByName( pTempItemDef->GetCollectionReference() );
+					const CEconItemCollectionDefinition *pRefCollection =
+						GetItemSchema()->GetCollectionByName(pTempItemDef->GetCollectionReference());
 					// if item has a collection reference, we are looking for all those items and this item
-					if ( pRefCollection )
+					if(pRefCollection)
 					{
 						bOwned = true;
-						FOR_EACH_VEC( pRefCollection->m_iItemDefs, iRefCollectionItem  )
+						FOR_EACH_VEC(pRefCollection->m_iItemDefs, iRefCollectionItem)
 						{
-							const CEconItemView *pRefItem = pLocalInv->FindFirstItembyItemDef( pRefCollection->m_iItemDefs[ iRefCollectionItem ] );
-							if ( !pRefItem )
+							const CEconItemView *pRefItem =
+								pLocalInv->FindFirstItembyItemDef(pRefCollection->m_iItemDefs[iRefCollectionItem]);
+							if(!pRefItem)
 							{
 								bOwned = false;
 								break;
 							}
 						}
 					}
-					else 
-					{	
+					else
+					{
 						// Normal Backpack scan
-						for ( int i = 0; i < pLocalInv->GetItemCount(); ++i )
+						for(int i = 0; i < pLocalInv->GetItemCount(); ++i)
 						{
-							CEconItemView *pItem = pLocalInv->GetItem( i );
-							if ( pItem->GetItemDefinition() == pTempItemDef ) 
+							CEconItemView *pItem = pLocalInv->GetItem(i);
+							if(pItem->GetItemDefinition() == pTempItemDef)
 							{
 								bOwned = true;
 								// Check Quality
-								if ( pItem->GetQuality() == AE_UNUSUAL )
+								if(pItem->GetQuality() == AE_UNUSUAL)
 								{
 									bUnusual = true;
 									break;
@@ -3124,169 +3261,166 @@ void CEconItemDescription::Generate_CollectionDesc( const CLocalizationProvider 
 				}
 			}
 #endif
-			
-			const locchar_t * pCheckmark = bOwned ? pLocalizationProvider->Find( "TF_Checkmark" ) : pLocalizationProvider->Find( "TF_LackOfCheckmark" );
-			if ( bOwned && bUnusual )
+
+			const locchar_t *pCheckmark = bOwned ? pLocalizationProvider->Find("TF_Checkmark")
+												 : pLocalizationProvider->Find("TF_LackOfCheckmark");
+			if(bOwned && bUnusual)
 			{
-				pCheckmark = pLocalizationProvider->Find( "TF_Checkmark_Unusual" );
+				pCheckmark = pLocalizationProvider->Find("TF_Checkmark_Unusual");
 			}
 
 			attrib_colors_t colorRarity = ATTRIB_COL_RARITY_DEFAULT;
-			const CEconItemRarityDefinition* pItemRarity = GetItemSchema()->GetRarityDefinition( pTempItemDef->GetRarity() );
-			if ( pItemRarity )
+			const CEconItemRarityDefinition *pItemRarity =
+				GetItemSchema()->GetRarityDefinition(pTempItemDef->GetRarity());
+			if(pItemRarity)
 			{
 				colorRarity = pItemRarity->GetAttribColor();
 			}
 
-			AddDescLine( 
-				CConstructLocalizedString( LOCCHAR("%s1%s2"), pCheckmark,
-					CEconItemLocalizedFullNameGenerator(
-					pLocalizationProvider,
-					pTempItemDef,
-					m_pHashContext == NULL
-				).GetFullName() ), 
-				colorRarity,
-				eFlag,
-				NULL,
-				pTempItemDef->GetDefinitionIndex()
-			);
+			AddDescLine(CConstructLocalizedString(LOCCHAR("%s1%s2"), pCheckmark,
+												  CEconItemLocalizedFullNameGenerator(
+													  pLocalizationProvider, pTempItemDef, m_pHashContext == NULL)
+													  .GetFullName()),
+						colorRarity, eFlag, NULL, pTempItemDef->GetDefinitionIndex());
 		}
 	}
 }
 // --------------------------------------------------------------------------
 // Purpose:
 // --------------------------------------------------------------------------
-void CEconItemDescription::Generate_ExpirationDesc( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::Generate_ExpirationDesc(const CLocalizationProvider *pLocalizationProvider,
+												   const IEconItemInterface *pEconItem)
 {
-	Assert( pLocalizationProvider );
-	Assert( pEconItem );
+	Assert(pLocalizationProvider);
+	Assert(pEconItem);
 
 	const CEconItemDefinition *pItemDef = pEconItem->GetItemDefinition();
-	if ( !pItemDef )
+	if(!pItemDef)
 		return;
 
 	// Look for schema-specified static expiration date.
 	RTime32 timeSchemaExpiration = pItemDef->GetExpirationDate();
-	
+
 	// Look also for a dynamic attribute -- this could come from item tryouts.
-	static CSchemaAttributeDefHandle pAttrDef_ExpirationDate( "expiration date" );
+	static CSchemaAttributeDefHandle pAttrDef_ExpirationDate("expiration date");
 
 	RTime32 timeAttrExpiration = 0;
-	pEconItem->FindAttribute( pAttrDef_ExpirationDate, &timeAttrExpiration );		// if we don't have the attribute we'll use our starting value of 0
-	
+	pEconItem->FindAttribute(pAttrDef_ExpirationDate,
+							 &timeAttrExpiration); // if we don't have the attribute we'll use our starting value of 0
+
 	// Which will have us expire first?
-	RTime32 timeExpiration = MAX( timeSchemaExpiration, timeAttrExpiration );
+	RTime32 timeExpiration = MAX(timeSchemaExpiration, timeAttrExpiration);
 
 	// If we still don't have an expiration date we don't display anything.
-	if ( !timeExpiration )
+	if(!timeExpiration)
 		return;
 
 	AddEmptyDescLine();
 
 #ifdef TF_CLIENT_DLL
 	// is this a loaner item?
-	if ( GetAssociatedQuestItemID( pEconItem ) != INVALID_ITEM_ID )
+	if(GetAssociatedQuestItemID(pEconItem) != INVALID_ITEM_ID)
 	{
-		AddDescLine( pLocalizationProvider->Find( "#Attrib_LoanerItemExpirationDate" ),
-			ATTRIB_COL_NEGATIVE,
-			kDescLineFlag_Misc );
+		AddDescLine(pLocalizationProvider->Find("#Attrib_LoanerItemExpirationDate"), ATTRIB_COL_NEGATIVE,
+					kDescLineFlag_Misc);
 	}
 	else
 #endif // TF_CLIENT_DLL
 	{
-		CLocalizedRTime32 time = { timeExpiration, false, pLocalizationProvider TF_ANTI_IDLEBOT_VERIFICATION_ONLY_COMMA TF_ANTI_IDLEBOT_VERIFICATION_ONLY_ARG( m_pHashContext ) };
-		AddDescLine( CConstructLocalizedString( pLocalizationProvider->Find( "#Attrib_ExpirationDate" ),
-			time ),
-			ATTRIB_COL_NEGATIVE,
-			kDescLineFlag_Misc );
+		CLocalizedRTime32 time = {timeExpiration, false,
+								  pLocalizationProvider TF_ANTI_IDLEBOT_VERIFICATION_ONLY_COMMA
+									  TF_ANTI_IDLEBOT_VERIFICATION_ONLY_ARG(m_pHashContext)};
+		AddDescLine(CConstructLocalizedString(pLocalizationProvider->Find("#Attrib_ExpirationDate"), time),
+					ATTRIB_COL_NEGATIVE, kDescLineFlag_Misc);
 	}
 }
 
-
-void CEconItemDescription::Generate_DropPeriodDesc( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::Generate_DropPeriodDesc(const CLocalizationProvider *pLocalizationProvider,
+												   const IEconItemInterface *pEconItem)
 {
-	Assert( pLocalizationProvider );
-	Assert( pEconItem );
+	Assert(pLocalizationProvider);
+	Assert(pEconItem);
 
-	static CSchemaAttributeDefHandle pAttr_EndDropDate( "end drop date" );
+	static CSchemaAttributeDefHandle pAttr_EndDropDate("end drop date");
 
 	// See if we have the drop date period end attribute
 	CAttribute_String value;
-	if ( !FindAttribute( pEconItem, pAttr_EndDropDate, &value ) )
+	if(!FindAttribute(pEconItem, pAttr_EndDropDate, &value))
 		return;
 
 	AddEmptyDescLine();
 
 	// Convert the string value to an RTime32
-	RTime32 endDate = CRTime::RTime32FromString( value.value().c_str() );
+	RTime32 endDate = CRTime::RTime32FromString(value.value().c_str());
 	// Is the time before or after now?  Use different strings for each
-	const char* pszDropString =  endDate > CRTime::RTime32TimeCur()
-							  ? "#Attrib_DropPeriodComing"
-							  : "#Attrib_DropPeriodPast";
+	const char *pszDropString =
+		endDate > CRTime::RTime32TimeCur() ? "#Attrib_DropPeriodComing" : "#Attrib_DropPeriodPast";
 
-	CLocalizedRTime32 time = { endDate, false, pLocalizationProvider TF_ANTI_IDLEBOT_VERIFICATION_ONLY_COMMA TF_ANTI_IDLEBOT_VERIFICATION_ONLY_ARG( m_pHashContext ) };
-	AddDescLine( CConstructLocalizedString( pLocalizationProvider->Find( pszDropString ),
-											time ),
-				 ATTRIB_COL_LEVEL,
-				 kDescLineFlag_Misc );
+	CLocalizedRTime32 time = {endDate, false,
+							  pLocalizationProvider TF_ANTI_IDLEBOT_VERIFICATION_ONLY_COMMA
+								  TF_ANTI_IDLEBOT_VERIFICATION_ONLY_ARG(m_pHashContext)};
+	AddDescLine(CConstructLocalizedString(pLocalizationProvider->Find(pszDropString), time), ATTRIB_COL_LEVEL,
+				kDescLineFlag_Misc);
 }
 
 // --------------------------------------------------------------------------
 // Purpose:
 // --------------------------------------------------------------------------
 #ifdef TF_CLIENT_DLL
-	extern ConVar cl_showbackpackrarities;
-	extern ConVar cl_show_market_data_on_items;
-#endif 
+extern ConVar cl_showbackpackrarities;
+extern ConVar cl_show_market_data_on_items;
+#endif
 
-void CEconItemDescription::Generate_MarketInformation( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::Generate_MarketInformation(const CLocalizationProvider *pLocalizationProvider,
+													  const IEconItemInterface *pEconItem)
 {
 	// Deprecated;
 	// We now have right click go to market
 	return;
-//
-//	Assert( pLocalizationProvider );
-//	Assert( pEconItem );
-//
-//	// Early-out to avoid doing more expensive name lookups for items that can't possibly have
-//	// entries.
-//	if ( !pEconItem->IsMarketable() )
-//		return;
-//
-//	// For now, Market information is only shown on clients, and even then only sometimes.
-//#ifdef CLIENT_DLL
-//#if TF_ANTI_IDLEBOT_VERIFICATION
-//	// Don't generate this client-only information when we're trying to match GC output.
-//	if ( m_pHashContext )
-//		return;
-//#endif // TF_ANTI_IDLEBOT_VERIFICATION
-//
-//#ifdef TF_CLIENT_DLL
-//	if ( cl_show_market_data_on_items.GetInt() == 0 )
-//		return;
-//
-//	if ( cl_show_market_data_on_items.GetInt() == 1 && cl_showbackpackrarities.GetInt() != 2 )
-//		return;
-//#endif // TF_CLIENT_DLL
-//
-//	steam_market_gc_identifier_t ident;
-//	ident.m_unDefIndex = pEconItem->GetItemDefIndex();
-//	ident.m_unQuality = pEconItem->GetQuality();
-//	
-//	const client_market_data_t *pClientMarketData = GetClientMarketData( ident );
-//	if ( !pClientMarketData )
-//		return;
-//
-//	locchar_t loc_Price[ kLocalizedPriceSizeInChararacters ];
-//	MakeMoneyString( loc_Price, ARRAYSIZE( loc_Price ), pClientMarketData->m_unLowestPrice, EconUI()->GetStorePanel()->GetCurrency() );
-//
-//	AddEmptyDescLine();
-//	AddDescLine( CConstructLocalizedString( pLocalizationProvider->Find( "#Econ_MarketTooltipFormat" ),
-//											pClientMarketData->m_unQuantityAvailable,
-//											loc_Price ),
-//				 ATTRIB_COL_POSITIVE,
-//				 kDescLineFlag_Misc );
-//#endif // CLIENT_DLL
+	//
+	//	Assert( pLocalizationProvider );
+	//	Assert( pEconItem );
+	//
+	//	// Early-out to avoid doing more expensive name lookups for items that can't possibly have
+	//	// entries.
+	//	if ( !pEconItem->IsMarketable() )
+	//		return;
+	//
+	//	// For now, Market information is only shown on clients, and even then only sometimes.
+	//#ifdef CLIENT_DLL
+	//#if TF_ANTI_IDLEBOT_VERIFICATION
+	//	// Don't generate this client-only information when we're trying to match GC output.
+	//	if ( m_pHashContext )
+	//		return;
+	//#endif // TF_ANTI_IDLEBOT_VERIFICATION
+	//
+	//#ifdef TF_CLIENT_DLL
+	//	if ( cl_show_market_data_on_items.GetInt() == 0 )
+	//		return;
+	//
+	//	if ( cl_show_market_data_on_items.GetInt() == 1 && cl_showbackpackrarities.GetInt() != 2 )
+	//		return;
+	//#endif // TF_CLIENT_DLL
+	//
+	//	steam_market_gc_identifier_t ident;
+	//	ident.m_unDefIndex = pEconItem->GetItemDefIndex();
+	//	ident.m_unQuality = pEconItem->GetQuality();
+	//
+	//	const client_market_data_t *pClientMarketData = GetClientMarketData( ident );
+	//	if ( !pClientMarketData )
+	//		return;
+	//
+	//	locchar_t loc_Price[ kLocalizedPriceSizeInChararacters ];
+	//	MakeMoneyString( loc_Price, ARRAYSIZE( loc_Price ), pClientMarketData->m_unLowestPrice,
+	//EconUI()->GetStorePanel()->GetCurrency() );
+	//
+	//	AddEmptyDescLine();
+	//	AddDescLine( CConstructLocalizedString( pLocalizationProvider->Find( "#Econ_MarketTooltipFormat" ),
+	//											pClientMarketData->m_unQuantityAvailable,
+	//											loc_Price ),
+	//				 ATTRIB_COL_POSITIVE,
+	//				 kDescLineFlag_Misc );
+	//#endif // CLIENT_DLL
 }
 
 // --------------------------------------------------------------------------
@@ -3294,10 +3428,9 @@ void CEconItemDescription::Generate_MarketInformation( const CLocalizationProvid
 // --------------------------------------------------------------------------
 struct localized_localplayer_line_t
 {
-	localized_localplayer_line_t( const char *pLocalizationKey, attrib_colors_t eAttribColor, const char *pLocalizationSubKey = NULL )
-		: m_pLocalizationKey( pLocalizationKey )
-		, m_pLocalizationSubKey( pLocalizationSubKey )
-		, m_eAttribColor( eAttribColor )
+	localized_localplayer_line_t(const char *pLocalizationKey, attrib_colors_t eAttribColor,
+								 const char *pLocalizationSubKey = NULL)
+		: m_pLocalizationKey(pLocalizationKey), m_pLocalizationSubKey(pLocalizationSubKey), m_eAttribColor(eAttribColor)
 	{
 		//
 	}
@@ -3307,197 +3440,208 @@ struct localized_localplayer_line_t
 	attrib_colors_t m_eAttribColor;
 };
 
-void CEconItemDescription::Generate_FlagsAttributes( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::Generate_FlagsAttributes(const CLocalizationProvider *pLocalizationProvider,
+													const IEconItemInterface *pEconItem)
 {
-	Assert( pLocalizationProvider );
-	Assert( pEconItem );
+	Assert(pLocalizationProvider);
+	Assert(pEconItem);
 
 	const CEconItemDefinition *pItemDef = pEconItem->GetItemDefinition();
-	if ( pItemDef && pItemDef->GetEconTool() && pItemDef->GetEconTool()->ShouldDisplayQuantity( pEconItem ) )
+	if(pItemDef && pItemDef->GetEconTool() && pItemDef->GetEconTool()->ShouldDisplayQuantity(pEconItem))
 	{
 		AddEmptyDescLine();
-		AddDescLine( CConstructLocalizedString( pLocalizationProvider->Find( "#Attrib_LimitedUse" ), (uint32)pEconItem->GetQuantity() ),
-					 ATTRIB_COL_LIMITED_USE,
-					 kDescLineFlag_LimitedUse );
+		AddDescLine(CConstructLocalizedString(pLocalizationProvider->Find("#Attrib_LimitedUse"),
+											  (uint32)pEconItem->GetQuantity()),
+					ATTRIB_COL_LIMITED_USE, kDescLineFlag_LimitedUse);
 	}
-	
+
 	CUtlVector<localized_localplayer_line_t> vecLines;
 
 	// Is this item in use? (ie., being used as part of a cross-game trade)
-	if ( pEconItem->GetInUse() )
+	if(pEconItem->GetInUse())
 	{
-		vecLines.AddToTail( localized_localplayer_line_t( "#Attrib_InUse", ATTRIB_COL_NEUTRAL ) );
+		vecLines.AddToTail(localized_localplayer_line_t("#Attrib_InUse", ATTRIB_COL_NEUTRAL));
 	}
 
-	static CSchemaAttributeDefHandle pAttrDef_TradableAfter( "tradable after date" );
-	static CSchemaAttributeDefHandle pAttrDef_ToolEscrowUntil( "tool escrow until date" );
-	static CSchemaAttributeDefHandle pAttrDef_AlwaysTradableAndUsableInCrafting( "always tradable" );
+	static CSchemaAttributeDefHandle pAttrDef_TradableAfter("tradable after date");
+	static CSchemaAttributeDefHandle pAttrDef_ToolEscrowUntil("tool escrow until date");
+	static CSchemaAttributeDefHandle pAttrDef_AlwaysTradableAndUsableInCrafting("always tradable");
 
-	uint32 unTradeTime = 0,
-		   unEscrowTime = 0;
-	const bool bHasTradableAfterDate = pEconItem->FindAttribute( pAttrDef_TradableAfter, &unTradeTime );
-	const bool bHasToolEscrowUntilDate = pEconItem->FindAttribute( pAttrDef_ToolEscrowUntil, &unEscrowTime );
+	uint32 unTradeTime = 0, unEscrowTime = 0;
+	const bool bHasTradableAfterDate = pEconItem->FindAttribute(pAttrDef_TradableAfter, &unTradeTime);
+	const bool bHasToolEscrowUntilDate = pEconItem->FindAttribute(pAttrDef_ToolEscrowUntil, &unEscrowTime);
 	const bool bHasExpiringTimer = bHasTradableAfterDate || bHasToolEscrowUntilDate;
 
 #ifdef CLIENT_DLL
-	const bool bIsStoreItem = IsStorePreviewItem( pEconItem );
+	const bool bIsStoreItem = IsStorePreviewItem(pEconItem);
 	const bool bIsPreviewItem = pEconItem->GetFlags() & kEconItemFlagClient_Preview;
 
-	if ( bIsStoreItem || bIsPreviewItem )
+	if(bIsStoreItem || bIsPreviewItem)
 	{
 #if TF_ANTI_IDLEBOT_VERIFICATION
-		if ( !m_pHashContext )
+		if(!m_pHashContext)
 #endif // TF_ANTI_IDLEBOT_VERIFICATION
 		{
 			// Does this item come with other packages on Steam?
-			const econ_store_entry_t *pStoreEntry = GetEconPriceSheet() ? GetEconPriceSheet()->GetEntry( pItemDef->GetDefinitionIndex() ) : NULL;
-			if ( pStoreEntry && pStoreEntry->GetGiftSteamPackageID() != 0 )
+			const econ_store_entry_t *pStoreEntry =
+				GetEconPriceSheet() ? GetEconPriceSheet()->GetEntry(pItemDef->GetDefinitionIndex()) : NULL;
+			if(pStoreEntry && pStoreEntry->GetGiftSteamPackageID() != 0)
 			{
-				const char *pszSteamPackageLocalizationToken = GetItemSchema()->GetSteamPackageLocalizationToken( pStoreEntry->GetGiftSteamPackageID() );
-				if ( pszSteamPackageLocalizationToken )
+				const char *pszSteamPackageLocalizationToken =
+					GetItemSchema()->GetSteamPackageLocalizationToken(pStoreEntry->GetGiftSteamPackageID());
+				if(pszSteamPackageLocalizationToken)
 				{
-					vecLines.AddToTail( localized_localplayer_line_t( "#Attrib_Store_IncludesSteamGiftPackage", ATTRIB_COL_POSITIVE, pszSteamPackageLocalizationToken ) );
-					vecLines.AddToTail( localized_localplayer_line_t( NULL, ATTRIB_COL_POSITIVE ) );
+					vecLines.AddToTail(localized_localplayer_line_t("#Attrib_Store_IncludesSteamGiftPackage",
+																	ATTRIB_COL_POSITIVE,
+																	pszSteamPackageLocalizationToken));
+					vecLines.AddToTail(localized_localplayer_line_t(NULL, ATTRIB_COL_POSITIVE));
 				}
 			}
-		
+
 			// While the above apply to store *and* preview items, the below only apply to store items.
-			if ( bIsStoreItem )
+			if(bIsStoreItem)
 			{
 				// Don't display this line for map stamps because they can't be traded.
-				if ( pItemDef && pItemDef->GetItemClass() && !FStrEq( pItemDef->GetItemClass(), "map_token" ) )
+				if(pItemDef && pItemDef->GetItemClass() && !FStrEq(pItemDef->GetItemClass(), "map_token"))
 				{
-					static CSchemaAttributeDefHandle pAttrib_CannotTrade( "cannot trade" );
-					Assert( pAttrib_CannotTrade );
+					static CSchemaAttributeDefHandle pAttrib_CannotTrade("cannot trade");
+					Assert(pAttrib_CannotTrade);
 
-					// Some items cannot ever be traded, so don't indicate to the users that they'll be tradeable after a few days.
-					if ( !FindAttribute( pItemDef, pAttrib_CannotTrade ) )
+					// Some items cannot ever be traded, so don't indicate to the users that they'll be tradeable after
+					// a few days.
+					if(!FindAttribute(pItemDef, pAttrib_CannotTrade))
 					{
-						vecLines.AddToTail( localized_localplayer_line_t( "#Attrib_Store_TradableAfterDate", ATTRIB_COL_NEGATIVE ) );
+						vecLines.AddToTail(
+							localized_localplayer_line_t("#Attrib_Store_TradableAfterDate", ATTRIB_COL_NEGATIVE));
 					}
 
-					if ( pItemDef->GetEconTool() && pItemDef->GetEconTool()->RequiresToolEscrowPeriod() )
+					if(pItemDef->GetEconTool() && pItemDef->GetEconTool()->RequiresToolEscrowPeriod())
 					{
-						vecLines.AddToTail( localized_localplayer_line_t( "#Attrib_Store_ToolEscrowUntilDate", ATTRIB_COL_NEGATIVE ) );
+						vecLines.AddToTail(
+							localized_localplayer_line_t("#Attrib_Store_ToolEscrowUntilDate", ATTRIB_COL_NEGATIVE));
 					}
 				}
 
-				if ( !pItemDef || (pItemDef->GetCapabilities() & ITEM_CAP_CAN_BE_CRAFTED_IF_PURCHASED) == 0 )
+				if(!pItemDef || (pItemDef->GetCapabilities() & ITEM_CAP_CAN_BE_CRAFTED_IF_PURCHASED) == 0)
 				{
-					if ( pItemDef->IsBundle() )
+					if(pItemDef->IsBundle())
 					{
-						vecLines.AddToTail( localized_localplayer_line_t( "#Attrib_CannotCraftWeapons", ATTRIB_COL_NEGATIVE ) );
+						vecLines.AddToTail(
+							localized_localplayer_line_t("#Attrib_CannotCraftWeapons", ATTRIB_COL_NEGATIVE));
 					}
 					else
 					{
-						vecLines.AddToTail( localized_localplayer_line_t( "#Attrib_CannotCraft", ATTRIB_COL_NEGATIVE ) );
+						vecLines.AddToTail(localized_localplayer_line_t("#Attrib_CannotCraft", ATTRIB_COL_NEGATIVE));
 					}
 				}
 			}
 		}
 	}
 	else
-#endif // CLIENT_DLL	
-	if ( bHasExpiringTimer )
-	{
-		if ( unTradeTime > CRTime::RTime32TimeCur() )
+#endif // CLIENT_DLL
+		if(bHasExpiringTimer)
 		{
-			AddAttributeDescription( pLocalizationProvider, pAttrDef_TradableAfter, unTradeTime );
-		}
+			if(unTradeTime > CRTime::RTime32TimeCur())
+			{
+				AddAttributeDescription(pLocalizationProvider, pAttrDef_TradableAfter, unTradeTime);
+			}
 
-		if ( unEscrowTime > CRTime::RTime32TimeCur() )
-		{
-			AddAttributeDescription( pLocalizationProvider, pAttrDef_ToolEscrowUntil, unEscrowTime );
-		}
+			if(unEscrowTime > CRTime::RTime32TimeCur())
+			{
+				AddAttributeDescription(pLocalizationProvider, pAttrDef_ToolEscrowUntil, unEscrowTime);
+			}
 
-		if ( !pEconItem->IsUsableInCrafting() )
-		{
-			vecLines.AddToTail( localized_localplayer_line_t( "#Attrib_CannotCraft", ATTRIB_COL_NEUTRAL ) );
+			if(!pEconItem->IsUsableInCrafting())
+			{
+				vecLines.AddToTail(localized_localplayer_line_t("#Attrib_CannotCraft", ATTRIB_COL_NEUTRAL));
+			}
 		}
-	}
-	else if ( pEconItem->FindAttribute( pAttrDef_AlwaysTradableAndUsableInCrafting ) && pEconItem->IsTradable() )
-	{
-		// do nothing if we are always tradable or usable in crafting
-		//
-		// some items are marked as "always_tradable" in their itemDef but the specific item may have the 
-		// "non_economy" flag, so we need to also check that this specific item is tradable before doing nothing 
-	}
-	else
-	{
-		const int32			  iQuality = pEconItem->GetQuality();
-		const eEconItemOrigin eOrigin  = pEconItem->GetOrigin();
-
-		if ( iQuality >= AE_COMMUNITY && iQuality <= AE_SELFMADE )
+		else if(pEconItem->FindAttribute(pAttrDef_AlwaysTradableAndUsableInCrafting) && pEconItem->IsTradable())
 		{
-			vecLines.AddToTail( localized_localplayer_line_t( "#Attrib_SpecialItem", ATTRIB_COL_NEUTRAL ) );
-		}
-		else if ( eOrigin == kEconItemOrigin_Achievement )
-		{
-			vecLines.AddToTail( localized_localplayer_line_t( "#Attrib_AchievementItem", ATTRIB_COL_NEUTRAL ) );
-		}
-		else if ( eOrigin == kEconItemOrigin_CollectionReward )
-		{
-			vecLines.AddToTail( localized_localplayer_line_t( "#Attrib_CollectionReward", ATTRIB_COL_NEUTRAL ) );
-		}
-		else if ( eOrigin == kEconItemOrigin_PreviewItem )
-		{
-			vecLines.AddToTail( localized_localplayer_line_t( "#Attrib_PreviewItem", ATTRIB_COL_NEUTRAL ) );
-		}
-		else if ( eOrigin == kEconItemOrigin_QuestLoanerItem )
-		{
-			vecLines.AddToTail( localized_localplayer_line_t( "#Attrib_LoanerItem", ATTRIB_COL_NEUTRAL ) );
-		}
-		else if ( eOrigin == kEconItemOrigin_Invalid )
-		{
-			// do nothing, but skip the below "cannot trade/cannot craft" block below"
-		}
-		else if ( (pEconItem->GetFlags() & kEconItemFlag_NonEconomy) != 0 )
-		{
-			vecLines.AddToTail( localized_localplayer_line_t( "#Attrib_NonEconomyItem", ATTRIB_COL_NEUTRAL ) );
+			// do nothing if we are always tradable or usable in crafting
+			//
+			// some items are marked as "always_tradable" in their itemDef but the specific item may have the
+			// "non_economy" flag, so we need to also check that this specific item is tradable before doing nothing
 		}
 		else
 		{
-			const bool bIsTradable = pEconItem->IsTradable(),
-					   bIsCraftable = pEconItem->IsUsableInCrafting();
+			const int32 iQuality = pEconItem->GetQuality();
+			const eEconItemOrigin eOrigin = pEconItem->GetOrigin();
 
-			if ( !bIsTradable && !bIsCraftable )
+			if(iQuality >= AE_COMMUNITY && iQuality <= AE_SELFMADE)
 			{
-				vecLines.AddToTail( localized_localplayer_line_t( "#Attrib_CannotTradeOrCraft", ATTRIB_COL_NEUTRAL ) );
+				vecLines.AddToTail(localized_localplayer_line_t("#Attrib_SpecialItem", ATTRIB_COL_NEUTRAL));
+			}
+			else if(eOrigin == kEconItemOrigin_Achievement)
+			{
+				vecLines.AddToTail(localized_localplayer_line_t("#Attrib_AchievementItem", ATTRIB_COL_NEUTRAL));
+			}
+			else if(eOrigin == kEconItemOrigin_CollectionReward)
+			{
+				vecLines.AddToTail(localized_localplayer_line_t("#Attrib_CollectionReward", ATTRIB_COL_NEUTRAL));
+			}
+			else if(eOrigin == kEconItemOrigin_PreviewItem)
+			{
+				vecLines.AddToTail(localized_localplayer_line_t("#Attrib_PreviewItem", ATTRIB_COL_NEUTRAL));
+			}
+			else if(eOrigin == kEconItemOrigin_QuestLoanerItem)
+			{
+				vecLines.AddToTail(localized_localplayer_line_t("#Attrib_LoanerItem", ATTRIB_COL_NEUTRAL));
+			}
+			else if(eOrigin == kEconItemOrigin_Invalid)
+			{
+				// do nothing, but skip the below "cannot trade/cannot craft" block below"
+			}
+			else if((pEconItem->GetFlags() & kEconItemFlag_NonEconomy) != 0)
+			{
+				vecLines.AddToTail(localized_localplayer_line_t("#Attrib_NonEconomyItem", ATTRIB_COL_NEUTRAL));
 			}
 			else
 			{
-				if ( !bIsTradable )
-				{
-					vecLines.AddToTail( localized_localplayer_line_t( "#Attrib_CannotTrade", ATTRIB_COL_NEUTRAL ) );
-				}
+				const bool bIsTradable = pEconItem->IsTradable(), bIsCraftable = pEconItem->IsUsableInCrafting();
 
-				if ( !bIsCraftable )
+				if(!bIsTradable && !bIsCraftable)
 				{
-					vecLines.AddToTail( localized_localplayer_line_t( "#Attrib_CannotCraft", ATTRIB_COL_NEUTRAL ) );
+					vecLines.AddToTail(localized_localplayer_line_t("#Attrib_CannotTradeOrCraft", ATTRIB_COL_NEUTRAL));
+				}
+				else
+				{
+					if(!bIsTradable)
+					{
+						vecLines.AddToTail(localized_localplayer_line_t("#Attrib_CannotTrade", ATTRIB_COL_NEUTRAL));
+					}
+
+					if(!bIsCraftable)
+					{
+						vecLines.AddToTail(localized_localplayer_line_t("#Attrib_CannotCraft", ATTRIB_COL_NEUTRAL));
+					}
 				}
 			}
 		}
-	}
 
-	if ( vecLines.Count() > 0 )
+	if(vecLines.Count() > 0)
 	{
-		const locchar_t *loc_AttribFormat_AdditionalNode = pLocalizationProvider->Find( "#AttribFormat_AdditionalNote" );
-		if ( loc_AttribFormat_AdditionalNode )
+		const locchar_t *loc_AttribFormat_AdditionalNode = pLocalizationProvider->Find("#AttribFormat_AdditionalNote");
+		if(loc_AttribFormat_AdditionalNode)
 		{
 			AddEmptyDescLine();
 
-			FOR_EACH_VEC( vecLines, i )
+			FOR_EACH_VEC(vecLines, i)
 			{
-				const char *pszLocalizationKey	  = vecLines[i].m_pLocalizationKey;
+				const char *pszLocalizationKey = vecLines[i].m_pLocalizationKey;
 				const char *pszLocalizationSubKey = vecLines[i].m_pLocalizationSubKey;
 
-				if ( pszLocalizationKey )
+				if(pszLocalizationKey)
 				{
-					AddDescLine( pszLocalizationSubKey ?
-									CConstructLocalizedString( pLocalizationProvider->Find( pszLocalizationKey ), pLocalizationProvider->Find( pszLocalizationSubKey ) ):	// has subtoken, doesn't use additional note format
-									CConstructLocalizedString( loc_AttribFormat_AdditionalNode, pLocalizationProvider->Find( pszLocalizationKey ) ),						// no subtoken, uses base additional note format
-								 vecLines[i].m_eAttribColor,
-								 kDescLineFlag_Misc );
+					AddDescLine(pszLocalizationSubKey
+									? CConstructLocalizedString(pLocalizationProvider->Find(pszLocalizationKey),
+																pLocalizationProvider->Find(pszLocalizationSubKey))
+									: // has subtoken, doesn't use additional note format
+									CConstructLocalizedString(
+										loc_AttribFormat_AdditionalNode,
+										pLocalizationProvider->Find(
+											pszLocalizationKey)), // no subtoken, uses base additional note format
+								vecLines[i].m_eAttribColor, kDescLineFlag_Misc);
 				}
 				else
 				{
@@ -3512,12 +3656,13 @@ void CEconItemDescription::Generate_FlagsAttributes( const CLocalizationProvider
 // Purpose:
 // --------------------------------------------------------------------------
 
-bool CEconItemDescription::CVisibleAttributeDisplayer::OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, attrib_value_t value )
+bool CEconItemDescription::CVisibleAttributeDisplayer::OnIterateAttributeValue(
+	const CEconItemAttributeDefinition *pAttrDef, attrib_value_t value)
 {
-	if ( !pAttrDef->IsHidden() )
+	if(!pAttrDef->IsHidden())
 	{
-		attrib_iterator_value_t attrVal = { pAttrDef, value };
-		m_vecAttributes.AddToTail( attrVal );
+		attrib_iterator_value_t attrVal = {pAttrDef, value};
+		m_vecAttributes.AddToTail(attrVal);
 	}
 
 	return true;
@@ -3531,73 +3676,79 @@ void CEconItemDescription::CVisibleAttributeDisplayer::SortAttributes()
 	// tie, we sort by attribute index, which is arbitrary but consistent across the client/GC.
 	struct AttributeValueSorter
 	{
-		static int sSort( const attrib_iterator_value_t *pA, const attrib_iterator_value_t *pB )
+		static int sSort(const attrib_iterator_value_t *pA, const attrib_iterator_value_t *pB)
 		{
 			const int iEffectTypeDelta = pA->m_pAttrDef->GetEffectType() - pB->m_pAttrDef->GetEffectType();
-			if ( iEffectTypeDelta != 0 )
+			if(iEffectTypeDelta != 0)
 				return iEffectTypeDelta;
 
 			return pA->m_pAttrDef->GetDefinitionIndex() - pB->m_pAttrDef->GetDefinitionIndex();
 		}
 	};
 
-	m_vecAttributes.Sort( &AttributeValueSorter::sSort );
+	m_vecAttributes.Sort(&AttributeValueSorter::sSort);
 }
 
-void CEconItemDescription::CVisibleAttributeDisplayer::Finalize( const IEconItemInterface *pEconItem, CEconItemDescription *pEconItemDescription, const CLocalizationProvider *pLocalizationProvider )
+void CEconItemDescription::CVisibleAttributeDisplayer::Finalize(const IEconItemInterface *pEconItem,
+																CEconItemDescription *pEconItemDescription,
+																const CLocalizationProvider *pLocalizationProvider)
 {
-	// HACK so we dont show series number on select crates since they are self describing (Event Crates, Collection Crates)
-	static CSchemaAttributeDefHandle pAttrDef_SupplyCrateSeries( "set supply crate series" );
-	static CSchemaAttributeDefHandle pAttrDef_HideSeries( "hide crate series number" );
+	// HACK so we dont show series number on select crates since they are self describing (Event Crates, Collection
+	// Crates)
+	static CSchemaAttributeDefHandle pAttrDef_SupplyCrateSeries("set supply crate series");
+	static CSchemaAttributeDefHandle pAttrDef_HideSeries("hide crate series number");
 
-	FOR_EACH_VEC( m_vecAttributes, i )
+	FOR_EACH_VEC(m_vecAttributes, i)
 	{
-		if ( pEconItem && m_vecAttributes[i].m_pAttrDef == pAttrDef_SupplyCrateSeries && pEconItem->FindAttribute( pAttrDef_HideSeries ) )
+		if(pEconItem && m_vecAttributes[i].m_pAttrDef == pAttrDef_SupplyCrateSeries &&
+		   pEconItem->FindAttribute(pAttrDef_HideSeries))
 			continue;
 
-		pEconItemDescription->AddAttributeDescription( pLocalizationProvider, m_vecAttributes[i].m_pAttrDef, m_vecAttributes[i].m_value );
+		pEconItemDescription->AddAttributeDescription(pLocalizationProvider, m_vecAttributes[i].m_pAttrDef,
+													  m_vecAttributes[i].m_value);
 	}
 }
 
 // --------------------------------------------------------------------------
 // Purpose:
 // --------------------------------------------------------------------------
-void CEconItemDescription::Generate_VisibleAttributes( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::Generate_VisibleAttributes(const CLocalizationProvider *pLocalizationProvider,
+													  const IEconItemInterface *pEconItem)
 {
-	Assert( pLocalizationProvider );
-	Assert( pEconItem );
+	Assert(pLocalizationProvider);
+	Assert(pEconItem);
 
 	CVisibleAttributeDisplayer AttributeDisplayer;
-	pEconItem->IterateAttributes( &AttributeDisplayer );
+	pEconItem->IterateAttributes(&AttributeDisplayer);
 	AttributeDisplayer.SortAttributes();
-	AttributeDisplayer.Finalize( pEconItem, this, pLocalizationProvider );
+	AttributeDisplayer.Finalize(pEconItem, this, pLocalizationProvider);
 }
 
 // --------------------------------------------------------------------------
-void CEconItemDescription::Generate_DirectX8Warning( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem )
+void CEconItemDescription::Generate_DirectX8Warning(const CLocalizationProvider *pLocalizationProvider,
+													const IEconItemInterface *pEconItem)
 {
 #ifdef CLIENT_DLL
-	static ConVarRef mat_dxlevel( "mat_dxlevel" );
+	static ConVarRef mat_dxlevel("mat_dxlevel");
 	const CEconItemDefinition *pEconItemDefinition = pEconItem->GetItemDefinition();
-	// If less than 90, we’re in DX8 mode. 
+	// If less than 90, weï¿½re in DX8 mode.
 	// Display warning if you are looking at a painthit item or case
-	if ( mat_dxlevel.GetInt() < 90 && pEconItemDefinition && ( pEconItemDefinition->GetItemCollectionDefinition() || pEconItemDefinition->GetCollectionReference() ) )
+	if(mat_dxlevel.GetInt() < 90 && pEconItemDefinition &&
+	   (pEconItemDefinition->GetItemCollectionDefinition() || pEconItemDefinition->GetCollectionReference()))
 	{
 		AddEmptyDescLine();
-		AddDescLine( pLocalizationProvider->Find( "#Attrib_DirectX8Warning" ),
-			ATTRIB_COL_NEGATIVE,
-			kDescLineFlag_Misc );
+		AddDescLine(pLocalizationProvider->Find("#Attrib_DirectX8Warning"), ATTRIB_COL_NEGATIVE, kDescLineFlag_Misc);
 	}
 
 #endif
 }
 
-
-bool CEconItemDescription::CRecipeNameAttributeDisplayer::OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, attrib_value_t value )
+bool CEconItemDescription::CRecipeNameAttributeDisplayer::OnIterateAttributeValue(
+	const CEconItemAttributeDefinition *pAttrDef, attrib_value_t value)
 {
-	if ( pAttrDef->CanAffectRecipeComponentName() )
+	if(pAttrDef->CanAffectRecipeComponentName())
 	{
-		return CVisibleAttributeDisplayer::OnIterateAttributeValue( pAttrDef, value );
+		return CVisibleAttributeDisplayer::OnIterateAttributeValue(pAttrDef, value);
 	}
 
 	return true;
@@ -3606,16 +3757,21 @@ bool CEconItemDescription::CRecipeNameAttributeDisplayer::OnIterateAttributeValu
 // --------------------------------------------------------------------------
 // Purpose:
 // --------------------------------------------------------------------------
-static attrib_colors_t GetAttributeDefaultColor( const CEconItemAttributeDefinition *pAttribDef )
+static attrib_colors_t GetAttributeDefaultColor(const CEconItemAttributeDefinition *pAttribDef)
 {
 	// positive attribute?
-	switch ( pAttribDef->GetEffectType() )
+	switch(pAttribDef->GetEffectType())
 	{
-	case ATTRIB_EFFECT_NEUTRAL:			return ATTRIB_COL_NEUTRAL;
-	case ATTRIB_EFFECT_POSITIVE:		return ATTRIB_COL_POSITIVE;
-	case ATTRIB_EFFECT_NEGATIVE:		return ATTRIB_COL_NEGATIVE;
-	case ATTRIB_EFFECT_STRANGE:			return ATTRIB_COL_STRANGE;
-	case ATTRIB_EFFECT_UNUSUAL:			return ATTRIB_COL_UNUSUAL;
+		case ATTRIB_EFFECT_NEUTRAL:
+			return ATTRIB_COL_NEUTRAL;
+		case ATTRIB_EFFECT_POSITIVE:
+			return ATTRIB_COL_POSITIVE;
+		case ATTRIB_EFFECT_NEGATIVE:
+			return ATTRIB_COL_NEGATIVE;
+		case ATTRIB_EFFECT_STRANGE:
+			return ATTRIB_COL_STRANGE;
+		case ATTRIB_EFFECT_UNUSUAL:
+			return ATTRIB_COL_UNUSUAL;
 	}
 
 	// hell if we know
@@ -3625,86 +3781,80 @@ static attrib_colors_t GetAttributeDefaultColor( const CEconItemAttributeDefinit
 // --------------------------------------------------------------------------
 // Purpose:
 // --------------------------------------------------------------------------
-void CEconAttributeDescription::InternalConstruct
-(
-	const CLocalizationProvider *pLocalizationProvider,
-	const CEconItemAttributeDefinition *pAttribDef,
+void CEconAttributeDescription::InternalConstruct(
+	const CLocalizationProvider *pLocalizationProvider, const CEconItemAttributeDefinition *pAttribDef,
 	attrib_value_t value,
-	TF_ANTI_IDLEBOT_VERIFICATION_ONLY_ARG( MD5Context_t *pHashContext ) TF_ANTI_IDLEBOT_VERIFICATION_ONLY_COMMA
-	IAccountPersonaLocalizer *pOptionalAccountPersonaLocalizer
-)
+	TF_ANTI_IDLEBOT_VERIFICATION_ONLY_ARG(MD5Context_t *pHashContext)
+		TF_ANTI_IDLEBOT_VERIFICATION_ONLY_COMMA IAccountPersonaLocalizer *pOptionalAccountPersonaLocalizer)
 {
-	Assert( pAttribDef != NULL );
+	Assert(pAttribDef != NULL);
 
-	const float& value_as_float = (float&)value;
-	const uint32& value_as_uint32 = (uint32&)value;
+	const float &value_as_float = (float &)value;
+	const uint32 &value_as_uint32 = (uint32 &)value;
 
 	// Calculate our color first -- if we don't know what to do, we'll wind up as neutral.
-	m_eDefaultColor = GetAttributeDefaultColor( pAttribDef );
+	m_eDefaultColor = GetAttributeDefaultColor(pAttribDef);
 
 	// Early out abort if we don't have a localization string for this attribute.
 	locchar_t *loc_String = pAttribDef->GetDescriptionString() && pLocalizationProvider
-						  ? pLocalizationProvider->Find( pAttribDef->GetDescriptionString() )
-						  : NULL;
+								? pLocalizationProvider->Find(pAttribDef->GetDescriptionString())
+								: NULL;
 
-	if ( !loc_String )
+	if(!loc_String)
 		return;
 
 	char szAttrShortDescToken[MAX_PATH];
-	V_sprintf_safe( szAttrShortDescToken, "%s%s", pAttribDef->GetDescriptionString(), "_shortdesc" );
+	V_sprintf_safe(szAttrShortDescToken, "%s%s", pAttribDef->GetDescriptionString(), "_shortdesc");
 
-	locchar_t *loc_ShortString = pLocalizationProvider 
-							   ? pLocalizationProvider->Find( szAttrShortDescToken ) 
-							   : NULL;
+	locchar_t *loc_ShortString = pLocalizationProvider ? pLocalizationProvider->Find(szAttrShortDescToken) : NULL;
 
 	// How do we format an attribute value of this type?
-	switch ( pAttribDef->GetDescriptionFormat() )
+	switch(pAttribDef->GetDescriptionFormat())
 	{
-	case ATTDESCFORM_VALUE_IS_ADDITIVE_PERCENTAGE:
-		m_loc_sValue = CLocalizedStringArg<float>( value_as_float * 100.0f ).GetLocArg();
-		break;
-
-	case ATTDESCFORM_VALUE_IS_ACCOUNT_ID:
-#ifdef CLIENT_DLL
-		// If this assert fires, it means that the client fed in an attribute that should be localized
-		// as a Steam persona name but didn't feed it any way to get that information. The GC won't
-		// assert, but also won't generate anything for the attribute text.
-		//
-		// It's still totally fine to pass in NULL for the persona localizer as long as you don't
-		// expect to have any attributes that have account IDs.
-		Assert( pOptionalAccountPersonaLocalizer );
-#endif		
-		if ( pOptionalAccountPersonaLocalizer )
-		{
-			m_loc_sValue = pOptionalAccountPersonaLocalizer->FindAccountPersonaName( value_as_uint32 );
-		}
-		break;
-
-	case ATTDESCFORM_VALUE_IS_ADDITIVE:
-		m_loc_sValue = pAttribDef->IsStoredAsFloat()
-					 ? CLocalizedStringArg<float>( value_as_float ).GetLocArg()
-					 : CLocalizedStringArg<uint32>( value_as_uint32 ).GetLocArg();
-		break;
-
-	case ATTDESCFORM_VALUE_IS_INVERTED_PERCENTAGE:
-		if ( value_as_float < 1.0 )
-		{
-			m_loc_sValue = CLocalizedStringArg<float>( (1.0 - value_as_float) * 100.0f ).GetLocArg();
+		case ATTDESCFORM_VALUE_IS_ADDITIVE_PERCENTAGE:
+			m_loc_sValue = CLocalizedStringArg<float>(value_as_float * 100.0f).GetLocArg();
 			break;
-		}
 
-		// We intentionally fall through when value_as_float >= 1.0f to treat it the same as "value as
-		// percentage".
-	case ATTDESCFORM_VALUE_IS_PERCENTAGE:
-		m_loc_sValue = CLocalizedStringArg<float>( (value_as_float * 100.0f) - 100.0f ).GetLocArg();
-		break;
+		case ATTDESCFORM_VALUE_IS_ACCOUNT_ID:
+#ifdef CLIENT_DLL
+			// If this assert fires, it means that the client fed in an attribute that should be localized
+			// as a Steam persona name but didn't feed it any way to get that information. The GC won't
+			// assert, but also won't generate anything for the attribute text.
+			//
+			// It's still totally fine to pass in NULL for the persona localizer as long as you don't
+			// expect to have any attributes that have account IDs.
+			Assert(pOptionalAccountPersonaLocalizer);
+#endif
+			if(pOptionalAccountPersonaLocalizer)
+			{
+				m_loc_sValue = pOptionalAccountPersonaLocalizer->FindAccountPersonaName(value_as_uint32);
+			}
+			break;
 
-	case ATTDESCFORM_VALUE_IS_DATE:
+		case ATTDESCFORM_VALUE_IS_ADDITIVE:
+			m_loc_sValue = pAttribDef->IsStoredAsFloat() ? CLocalizedStringArg<float>(value_as_float).GetLocArg()
+														 : CLocalizedStringArg<uint32>(value_as_uint32).GetLocArg();
+			break;
+
+		case ATTDESCFORM_VALUE_IS_INVERTED_PERCENTAGE:
+			if(value_as_float < 1.0)
+			{
+				m_loc_sValue = CLocalizedStringArg<float>((1.0 - value_as_float) * 100.0f).GetLocArg();
+				break;
+			}
+
+			// We intentionally fall through when value_as_float >= 1.0f to treat it the same as "value as
+			// percentage".
+		case ATTDESCFORM_VALUE_IS_PERCENTAGE:
+			m_loc_sValue = CLocalizedStringArg<float>((value_as_float * 100.0f) - 100.0f).GetLocArg();
+			break;
+
+		case ATTDESCFORM_VALUE_IS_DATE:
 		{
 			bool bUseGMT = false;
 
 #ifdef PROJECT_TF
-			static CSchemaAttributeDefHandle pAttribDef_SetEmployeeNumber( "custom employee number" );
+			static CSchemaAttributeDefHandle pAttribDef_SetEmployeeNumber("custom employee number");
 
 			// only use GMT for custom employee number -- not doing this generated a bunch of support
 			// tickets because items were granted based on GC time but would display local time, causing
@@ -3712,67 +3862,76 @@ void CEconAttributeDescription::InternalConstruct
 			bUseGMT = (pAttribDef == pAttribDef_SetEmployeeNumber);
 #endif // PROJECT_TF
 
-			CLocalizedRTime32 time = { value_as_uint32, bUseGMT, pLocalizationProvider TF_ANTI_IDLEBOT_VERIFICATION_ONLY_COMMA TF_ANTI_IDLEBOT_VERIFICATION_ONLY_ARG( pHashContext ) };
-			m_loc_sValue = CLocalizedStringArg<CLocalizedRTime32>( time ).GetLocArg();
+			CLocalizedRTime32 time = {value_as_uint32, bUseGMT,
+									  pLocalizationProvider TF_ANTI_IDLEBOT_VERIFICATION_ONLY_COMMA
+										  TF_ANTI_IDLEBOT_VERIFICATION_ONLY_ARG(pHashContext)};
+			m_loc_sValue = CLocalizedStringArg<CLocalizedRTime32>(time).GetLocArg();
 			break;
 		}
 
-	case ATTDESCFORM_VALUE_IS_PARTICLE_INDEX:
+		case ATTDESCFORM_VALUE_IS_PARTICLE_INDEX:
 		{
 			// This is a horrible, horrible line of code. It exists because old particle references are
 			// ints stored as floats as float bit patterns and new particle references are ints stored
 			// as ints all the way through.
-			CUtlConstString utf8_ParticleKeyName( CFmtStr( "#Attrib_Particle%i", pAttribDef->IsStoredAsInteger() ? value_as_uint32 : (int)value_as_float ).Access() );	// this value is stored as a float but interpreted as an int (1.0 -> 1)
-			if ( utf8_ParticleKeyName.IsEmpty() )
+			CUtlConstString utf8_ParticleKeyName(
+				CFmtStr("#Attrib_Particle%i", pAttribDef->IsStoredAsInteger() ? value_as_uint32 : (int)value_as_float)
+					.Access()); // this value is stored as a float but interpreted as an int (1.0 -> 1)
+			if(utf8_ParticleKeyName.IsEmpty())
 				return;
 
-			m_loc_sValue = pLocalizationProvider->Find( utf8_ParticleKeyName.Get() );
+			m_loc_sValue = pLocalizationProvider->Find(utf8_ParticleKeyName.Get());
 			break;
 		}
 
-	case ATTDESCFORM_VALUE_IS_KILLSTREAKEFFECT_INDEX:
+		case ATTDESCFORM_VALUE_IS_KILLSTREAKEFFECT_INDEX:
 		{
-			CUtlConstString utf8_KeyName( CFmtStr( "#Attrib_KillStreakEffect%i", (int)value_as_float ).Access() );	// this value is stored as a float but interpreted as an int (1.0 -> 1)
-			if ( utf8_KeyName.IsEmpty() )
+			CUtlConstString utf8_KeyName(
+				CFmtStr("#Attrib_KillStreakEffect%i", (int)value_as_float)
+					.Access()); // this value is stored as a float but interpreted as an int (1.0 -> 1)
+			if(utf8_KeyName.IsEmpty())
 				return;
 
-			m_loc_sValue = pLocalizationProvider->Find( utf8_KeyName.Get() );
+			m_loc_sValue = pLocalizationProvider->Find(utf8_KeyName.Get());
 			break;
 		}
 
-	case ATTDESCFORM_VALUE_IS_KILLSTREAK_IDLEEFFECT_INDEX:
+		case ATTDESCFORM_VALUE_IS_KILLSTREAK_IDLEEFFECT_INDEX:
 		{
-			CUtlConstString utf8_KeyName( CFmtStr( "#Attrib_KillStreakIdleEffect%i", (int)value_as_float ).Access() );	// this value is stored as a float but interpreted as an int (1.0 -> 1)
-			if ( utf8_KeyName.IsEmpty() )
+			CUtlConstString utf8_KeyName(
+				CFmtStr("#Attrib_KillStreakIdleEffect%i", (int)value_as_float)
+					.Access()); // this value is stored as a float but interpreted as an int (1.0 -> 1)
+			if(utf8_KeyName.IsEmpty())
 				return;
 
-			m_loc_sValue = pLocalizationProvider->Find( utf8_KeyName.Get() );
+			m_loc_sValue = pLocalizationProvider->Find(utf8_KeyName.Get());
 			break;
 		}
-	// Don't output any value for bitmasks, but let the attribute text display.
-	case ATTDESCFORM_VALUE_IS_OR:
-		break;
+		// Don't output any value for bitmasks, but let the attribute text display.
+		case ATTDESCFORM_VALUE_IS_OR:
+			break;
 
-	default:
+		default:
 #ifdef CLIENT_DLL
-		// Only assert on the client -- the GC will just silently fail rather than crash if we ever run into
-		// this case, but if we are adding a new display type this will help us catch a reason why it isn't
-		// showing up.
-		Assert( !"Unhandled attribute value display type in CEconAttributeDescription." );
+			// Only assert on the client -- the GC will just silently fail rather than crash if we ever run into
+			// this case, but if we are adding a new display type this will help us catch a reason why it isn't
+			// showing up.
+			Assert(!"Unhandled attribute value display type in CEconAttributeDescription.");
 
-		// Anywhere besides the client, we intentionally fall through to return immediately.
+			// Anywhere besides the client, we intentionally fall through to return immediately.
 #endif
-	case ATTDESCFORM_VALUE_IS_ITEM_DEF:			// referencing definitions is handled per-attribute
-		return;
+		case ATTDESCFORM_VALUE_IS_ITEM_DEF: // referencing definitions is handled per-attribute
+			return;
 
-	case ATTDESCFORM_VALUE_IS_FROM_LOOKUP_TABLE:
+		case ATTDESCFORM_VALUE_IS_FROM_LOOKUP_TABLE:
 		{
-			const char *pszLocalizationToken = GetItemSchema()->FindStringTableEntry( pAttribDef->GetDefinitionName(), (int)value_as_float );
-			if ( !pszLocalizationToken )
+			const char *pszLocalizationToken =
+				GetItemSchema()->FindStringTableEntry(pAttribDef->GetDefinitionName(), (int)value_as_float);
+			if(!pszLocalizationToken)
 				return;
 
-			const locchar_t *loc_Entry = pLocalizationProvider->Find( pszLocalizationToken );
-			if ( !loc_Entry )
+			const locchar_t *loc_Entry = pLocalizationProvider->Find(pszLocalizationToken);
+			if(!loc_Entry)
 				return;
 
 			m_loc_sValue = loc_Entry;
@@ -3780,30 +3939,31 @@ void CEconAttributeDescription::InternalConstruct
 		}
 	}
 
-	// Some attributes have a short description for the upgrade 
-	if ( loc_ShortString )
+	// Some attributes have a short description for the upgrade
+	if(loc_ShortString)
 	{
-		m_loc_sShortValue = CConstructLocalizedString( loc_ShortString, m_loc_sValue.Get() );
+		m_loc_sShortValue = CConstructLocalizedString(loc_ShortString, m_loc_sValue.Get());
 	}
 
 	// Combine the value string we just generated with the localized display for that value. (ie., the value
 	// might be "10" and the display would be "health is increased by 10%".)
-	m_loc_sValue = CConstructLocalizedString( loc_String, m_loc_sValue.Get() );
+	m_loc_sValue = CConstructLocalizedString(loc_String, m_loc_sValue.Get());
 
 	// Is this an attribute that needs a custom wrapper around the default attribute text? (ie.,
 	// if our string was "Damage +10%" we want that to be "(only on Hightower: Damage +10%)")
-	if ( pAttribDef->GetUserGenerationType() )
+	if(pAttribDef->GetUserGenerationType())
 	{
-		const locchar_t *locUGTLocalizationKey = pLocalizationProvider->Find( CFmtStr( "#Econ_Attrib_UserGeneratedWrapper_%i", pAttribDef->GetUserGenerationType() ).Get() );
+		const locchar_t *locUGTLocalizationKey = pLocalizationProvider->Find(
+			CFmtStr("#Econ_Attrib_UserGeneratedWrapper_%i", pAttribDef->GetUserGenerationType()).Get());
 
-		if ( locUGTLocalizationKey )
+		if(locUGTLocalizationKey)
 		{
-			m_loc_sValue = CConstructLocalizedString( locUGTLocalizationKey, m_loc_sValue.Get() );
+			m_loc_sValue = CConstructLocalizedString(locUGTLocalizationKey, m_loc_sValue.Get());
 		}
 	}
 
 	// If there's no short description, just copy the normal one
-	if ( !loc_ShortString )
+	if(!loc_ShortString)
 	{
 		m_loc_sShortValue = m_loc_sValue;
 	}
@@ -3812,88 +3972,103 @@ void CEconAttributeDescription::InternalConstruct
 // --------------------------------------------------------------------------
 // Purpose:
 // --------------------------------------------------------------------------
-void CEconItemDescription::AddAttributeDescription( const CLocalizationProvider *pLocalizationProvider, const CEconItemAttributeDefinition *pAttribDef, attrib_value_t value, attrib_colors_t eOverrideDisplayColor /* = NUM_ATTRIB_COLORS */ )
+void CEconItemDescription::AddAttributeDescription(const CLocalizationProvider *pLocalizationProvider,
+												   const CEconItemAttributeDefinition *pAttribDef, attrib_value_t value,
+												   attrib_colors_t eOverrideDisplayColor /* = NUM_ATTRIB_COLORS */)
 {
-	Assert( pLocalizationProvider );
-	Assert( pAttribDef );
-	
-	CEconAttributeDescription AttrDesc( pLocalizationProvider,
-										pAttribDef,
-										value,
-										TF_ANTI_IDLEBOT_VERIFICATION_ONLY_ARG( m_pHashContext ) TF_ANTI_IDLEBOT_VERIFICATION_ONLY_COMMA
-										this );
+	Assert(pLocalizationProvider);
+	Assert(pAttribDef);
 
-	if ( AttrDesc.GetDescription().IsEmpty() )
+	CEconAttributeDescription AttrDesc(pLocalizationProvider, pAttribDef, value,
+									   TF_ANTI_IDLEBOT_VERIFICATION_ONLY_ARG(m_pHashContext)
+										   TF_ANTI_IDLEBOT_VERIFICATION_ONLY_COMMA this);
+
+	if(AttrDesc.GetDescription().IsEmpty())
 		return;
 
 	// Is this an attribute that needs a custom wrapper around the default attribute text? (ie.,
 	// if our string was "Damage +10%" we want that to be "(only on Hightower: Damage +10%)")
-	attrib_colors_t eDefaultAttribColor = GetAttributeDefaultColor( pAttribDef );
+	attrib_colors_t eDefaultAttribColor = GetAttributeDefaultColor(pAttribDef);
 
 #ifdef TF_CLIENT_DLL
 	enum
 	{
-		kUserGeneratedAttributeType_None				= 0,
-		kUserGeneratedAttributeType_MVMEngineering		= 1,
-		kUserGeneratedAttributeType_HalloweenSpell		= 2
+		kUserGeneratedAttributeType_None = 0,
+		kUserGeneratedAttributeType_MVMEngineering = 1,
+		kUserGeneratedAttributeType_HalloweenSpell = 2
 	};
 
 	// On TF, these user-generated attributes can be from upgrade cards which only apply in MvM.
 	// We then colorize them based on whether they'll be active, with the caveat that out-of-game
 	// views always say yes (GC, loadout when not on a server, etc.).
-	if ( pAttribDef->GetUserGenerationType() == kUserGeneratedAttributeType_MVMEngineering && TFGameRules() && !TFGameRules()->IsMannVsMachineMode() )
+	if(pAttribDef->GetUserGenerationType() == kUserGeneratedAttributeType_MVMEngineering && TFGameRules() &&
+	   !TFGameRules()->IsMannVsMachineMode())
 	{
 		eDefaultAttribColor = ATTRIB_COL_ITEMSET_MISSING;
 	}
 	// They can also be from Halloween spells. These are intended to expire after Halloween in any
 	// event, but for display purposes they'll appear in grey unless the holiday is active.
-	else if ( pAttribDef->GetUserGenerationType() == kUserGeneratedAttributeType_HalloweenSpell && !EconHolidays_IsHolidayActive( kHoliday_Halloween, CRTime::RTime32TimeCur() ) )
+	else if(pAttribDef->GetUserGenerationType() == kUserGeneratedAttributeType_HalloweenSpell &&
+			!EconHolidays_IsHolidayActive(kHoliday_Halloween, CRTime::RTime32TimeCur()))
 	{
 		eDefaultAttribColor = ATTRIB_COL_ITEMSET_MISSING;
 	}
 #endif // TF_CLIENT_DLL
 
-	AddDescLine( AttrDesc.GetDescription().Get(),
-				 eOverrideDisplayColor != NUM_ATTRIB_COLORS ?					// are we overriding the output color?
-					eOverrideDisplayColor :										// we are
-					eDefaultAttribColor,										// fall back to normal attribute color
-				 kDescLineFlag_Attribute );
+	AddDescLine(AttrDesc.GetDescription().Get(),
+				eOverrideDisplayColor != NUM_ATTRIB_COLORS ? // are we overriding the output color?
+					eOverrideDisplayColor
+														   : // we are
+					eDefaultAttribColor,					 // fall back to normal attribute color
+				kDescLineFlag_Attribute);
 }
 
 // --------------------------------------------------------------------------
 // Purpose:
 // --------------------------------------------------------------------------
-void CEconItemDescription::AddDescLine( const locchar_t *pString, attrib_colors_t eColor, uint32 unMetaType, CUtlVector<econ_item_description_line_t> *out_pOptionalDescLineDest /* = NULL */, item_definition_index_t unDefIndex /* = INVALID_ITEM_DEF_INDEX */, bool bIsItemForSale /*= true*/ )
+void CEconItemDescription::AddDescLine(const locchar_t *pString, attrib_colors_t eColor, uint32 unMetaType,
+									   CUtlVector<econ_item_description_line_t> *out_pOptionalDescLineDest /* = NULL */,
+									   item_definition_index_t unDefIndex /* = INVALID_ITEM_DEF_INDEX */,
+									   bool bIsItemForSale /*= true*/)
 {
-	CUtlVector<econ_item_description_line_t>& vecTargetDescLines = out_pOptionalDescLineDest ? *out_pOptionalDescLineDest : m_vecDescLines;
+	CUtlVector<econ_item_description_line_t> &vecTargetDescLines =
+		out_pOptionalDescLineDest ? *out_pOptionalDescLineDest : m_vecDescLines;
 
-	econ_item_description_line_t& line = vecTargetDescLines[ vecTargetDescLines.AddToTail() ];
+	econ_item_description_line_t &line = vecTargetDescLines[vecTargetDescLines.AddToTail()];
 
-	line.eColor		= eColor;
+	line.eColor = eColor;
 	line.unMetaType = unMetaType;
-	line.sText		= pString;
+	line.sText = pString;
 	line.unDefIndex = unDefIndex;
 	line.bIsItemForSale = bIsItemForSale;
 
 #if TF_ANTI_IDLEBOT_VERIFICATION
-	if ( m_pHashContext )
+	if(m_pHashContext)
 	{
 		const int iLineCount = vecTargetDescLines.Count() + 1;
 
-		char verboseStringBuf[ k_VerboseStringBufferSize ];
-		TFDescription_HashDataMunge( m_pHashContext, iLineCount, m_bIsVerbose, BuildVerboseStrings( verboseStringBuf, m_bIsVerbose, "%d", iLineCount ) );			// which line did we just add?
-		TFDescription_HashDataMunge( m_pHashContext, line.eColor, m_bIsVerbose, BuildVerboseStrings( verboseStringBuf, m_bIsVerbose,"%d", line.eColor ) );
-		TFDescription_HashDataMunge( m_pHashContext, line.unMetaType, m_bIsVerbose, BuildVerboseStrings( verboseStringBuf, m_bIsVerbose, "%d", line.unMetaType ) );
+		char verboseStringBuf[k_VerboseStringBufferSize];
+		TFDescription_HashDataMunge(
+			m_pHashContext, iLineCount, m_bIsVerbose,
+			BuildVerboseStrings(verboseStringBuf, m_bIsVerbose, "%d", iLineCount)); // which line did we just add?
+		TFDescription_HashDataMunge(m_pHashContext, line.eColor, m_bIsVerbose,
+									BuildVerboseStrings(verboseStringBuf, m_bIsVerbose, "%d", line.eColor));
+		TFDescription_HashDataMunge(m_pHashContext, line.unMetaType, m_bIsVerbose,
+									BuildVerboseStrings(verboseStringBuf, m_bIsVerbose, "%d", line.unMetaType));
 
 #ifdef GC_DLL
-		COMPILE_TIME_ASSERT( sizeof( locchar_t ) == sizeof( char ) );
-		TFDescription_HashDataMungeContents( m_pHashContext, pString, StringFuncs<locchar_t>::Length( pString ) * sizeof( locchar_t ), m_bIsVerbose, pString );
+		COMPILE_TIME_ASSERT(sizeof(locchar_t) == sizeof(char));
+		TFDescription_HashDataMungeContents(m_pHashContext, pString,
+											StringFuncs<locchar_t>::Length(pString) * sizeof(locchar_t), m_bIsVerbose,
+											pString);
 #else
-		COMPILE_TIME_ASSERT( sizeof( locchar_t ) == sizeof( wchar_t ) );
+		COMPILE_TIME_ASSERT(sizeof(locchar_t) == sizeof(wchar_t));
 
 		CUtlConstString ansiString;
-		GLocalizationProvider()->ConvertLoccharToANSI( pString, &ansiString );
-		TFDescription_HashDataMungeContents( m_pHashContext, ansiString.Get(), StringFuncs<char>::Length( ansiString.Get() ) * sizeof( char ), m_bIsVerbose, ansiString.Get() );
+		GLocalizationProvider()->ConvertLoccharToANSI(pString, &ansiString);
+		TFDescription_HashDataMungeContents(m_pHashContext, ansiString.Get(),
+											StringFuncs<char>::Length(ansiString.Get()) * sizeof(char), m_bIsVerbose,
+											ansiString.Get());
 #endif
 	}
 #endif // TF_ANTI_IDLEBOT_VERIFICATION
@@ -3902,31 +4077,34 @@ void CEconItemDescription::AddDescLine( const locchar_t *pString, attrib_colors_
 // --------------------------------------------------------------------------
 // Purpose:
 // --------------------------------------------------------------------------
-void CEconItemDescription::AddEmptyDescLine( CUtlVector<econ_item_description_line_t> *out_pOptionalDescLineDest )
+void CEconItemDescription::AddEmptyDescLine(CUtlVector<econ_item_description_line_t> *out_pOptionalDescLineDest)
 {
-	AddDescLine( LOCCHAR(" "), ATTRIB_COL_NEUTRAL, kDescLineFlag_Empty, out_pOptionalDescLineDest );
+	AddDescLine(LOCCHAR(" "), ATTRIB_COL_NEUTRAL, kDescLineFlag_Empty, out_pOptionalDescLineDest);
 }
 
 // --------------------------------------------------------------------------
 // Purpose:
 // --------------------------------------------------------------------------
-void CEconItemDescription::LocalizedAddDescLine( const CLocalizationProvider *pLocalizationProvider, const char *pLocalizationToken, attrib_colors_t eColor, uint32 unMetaType, CUtlVector<econ_item_description_line_t> *out_pOptionalDescLineDest /* = NULL */, item_definition_index_t unDefIndex /* = INVALID_ITEM_DEF_INDEX */, bool bIsItemForSale /* = true */ )
+void CEconItemDescription::LocalizedAddDescLine(
+	const CLocalizationProvider *pLocalizationProvider, const char *pLocalizationToken, attrib_colors_t eColor,
+	uint32 unMetaType, CUtlVector<econ_item_description_line_t> *out_pOptionalDescLineDest /* = NULL */,
+	item_definition_index_t unDefIndex /* = INVALID_ITEM_DEF_INDEX */, bool bIsItemForSale /* = true */)
 {
-	Assert( pLocalizationToken );
+	Assert(pLocalizationToken);
 
-	const locchar_t *pTextToAdd = pLocalizationProvider->Find( pLocalizationToken );
+	const locchar_t *pTextToAdd = pLocalizationProvider->Find(pLocalizationToken);
 
-	if ( pTextToAdd )
+	if(pTextToAdd)
 	{
-		AddDescLine( pTextToAdd, eColor, unMetaType, out_pOptionalDescLineDest, unDefIndex, bIsItemForSale );
+		AddDescLine(pTextToAdd, eColor, unMetaType, out_pOptionalDescLineDest, unDefIndex, bIsItemForSale);
 	}
-	else if ( pLocalizationToken && (pLocalizationToken[0] != '#') )
+	else if(pLocalizationToken && (pLocalizationToken[0] != '#'))
 	{
 		// If we couldn't localize correctly, we might be a string literal like "My temp item desc.". In
 		// this case, we use that string as-is.
 		CUtlConstStringBase<locchar_t> loc_sText;
-		pLocalizationProvider->ConvertUTF8ToLocchar( pLocalizationToken, &loc_sText );
-		AddDescLine( loc_sText.Get(), eColor, unMetaType, out_pOptionalDescLineDest, unDefIndex, bIsItemForSale );
+		pLocalizationProvider->ConvertUTF8ToLocchar(pLocalizationToken, &loc_sText);
+		AddDescLine(loc_sText.Get(), eColor, unMetaType, out_pOptionalDescLineDest, unDefIndex, bIsItemForSale);
 	}
 	else
 	{
@@ -3935,9 +4113,10 @@ void CEconItemDescription::LocalizedAddDescLine( const CLocalizationProvider *pL
 	}
 
 #if TF_ANTI_IDLEBOT_VERIFICATION
-	if ( m_pHashContext )
+	if(m_pHashContext)
 	{
-		TFDescription_HashDataMungeContents( m_pHashContext, pLocalizationToken, V_strlen( pLocalizationToken ), m_bIsVerbose, pLocalizationToken );
+		TFDescription_HashDataMungeContents(m_pHashContext, pLocalizationToken, V_strlen(pLocalizationToken),
+											m_bIsVerbose, pLocalizationToken);
 	}
 #endif // TF_ANTI_IDLEBOT_VERIFICATION
 }
@@ -3945,41 +4124,80 @@ void CEconItemDescription::LocalizedAddDescLine( const CLocalizationProvider *pL
 // --------------------------------------------------------------------------
 // Purpose:
 // --------------------------------------------------------------------------
-class CGameItemDefinition_EconItemInterfaceWrapper : public CMaterialOverrideContainer< IEconItemInterface >
+class CGameItemDefinition_EconItemInterfaceWrapper : public CMaterialOverrideContainer<IEconItemInterface>
 {
 public:
-	CGameItemDefinition_EconItemInterfaceWrapper( const CEconItemDefinition *pEconItemDefinition, entityquality_t eQuality )
-		: m_pEconItemDefinition( pEconItemDefinition )
-		, m_eQuality( eQuality )
+	CGameItemDefinition_EconItemInterfaceWrapper(const CEconItemDefinition *pEconItemDefinition,
+												 entityquality_t eQuality)
+		: m_pEconItemDefinition(pEconItemDefinition), m_eQuality(eQuality)
 	{
-		Assert( m_pEconItemDefinition );
+		Assert(m_pEconItemDefinition);
 	}
 
-	virtual const GameItemDefinition_t *GetItemDefinition() const { return assert_cast<const GameItemDefinition_t *>( m_pEconItemDefinition ); }
+	virtual const GameItemDefinition_t *GetItemDefinition() const
+	{
+		return assert_cast<const GameItemDefinition_t *>(m_pEconItemDefinition);
+	}
 
-	virtual itemid_t		GetID() const { return INVALID_ITEM_ID; }
-	virtual uint32			GetAccountID() const { return 0; }
-	virtual int32			GetQuality() const { return m_eQuality; }
-	virtual style_index_t	GetStyle() const { return INVALID_STYLE_INDEX; }
-	virtual uint8			GetFlags() const { return 0; }
-	virtual eEconItemOrigin GetOrigin() const { return kEconItemOrigin_Invalid; }
-	virtual int				GetQuantity() const { return 1; }
-	virtual uint32			GetItemLevel() const { return 0; }
-	virtual bool			GetInUse() const { return false; }
+	virtual itemid_t GetID() const
+	{
+		return INVALID_ITEM_ID;
+	}
+	virtual uint32 GetAccountID() const
+	{
+		return 0;
+	}
+	virtual int32 GetQuality() const
+	{
+		return m_eQuality;
+	}
+	virtual style_index_t GetStyle() const
+	{
+		return INVALID_STYLE_INDEX;
+	}
+	virtual uint8 GetFlags() const
+	{
+		return 0;
+	}
+	virtual eEconItemOrigin GetOrigin() const
+	{
+		return kEconItemOrigin_Invalid;
+	}
+	virtual int GetQuantity() const
+	{
+		return 1;
+	}
+	virtual uint32 GetItemLevel() const
+	{
+		return 0;
+	}
+	virtual bool GetInUse() const
+	{
+		return false;
+	}
 
-	virtual const char	   *GetCustomName() const { return NULL; }
-	virtual const char	   *GetCustomDesc() const { return NULL; }
+	virtual const char *GetCustomName() const
+	{
+		return NULL;
+	}
+	virtual const char *GetCustomDesc() const
+	{
+		return NULL;
+	}
 
-	virtual CEconItemPaintKitDefinition *GetCustomPainkKitDefinition( void ) const { return GetItemDefinition()->GetCustomPainkKitDefinition(); }
+	virtual CEconItemPaintKitDefinition *GetCustomPainkKitDefinition(void) const
+	{
+		return GetItemDefinition()->GetCustomPainkKitDefinition();
+	}
 
 	// IEconItemInterface attribute iteration interface. This is not meant to be used for
 	// attribute lookup! This is meant for anything that requires iterating over the full
 	// attribute list.
-	virtual void IterateAttributes( class IEconItemAttributeIterator *pIterator ) const OVERRIDE
+	virtual void IterateAttributes(class IEconItemAttributeIterator *pIterator) const OVERRIDE
 	{
-		Assert( pIterator );
+		Assert(pIterator);
 
-		m_pEconItemDefinition->IterateAttributes( pIterator );
+		m_pEconItemDefinition->IterateAttributes(pIterator);
 	}
 
 private:
@@ -3990,12 +4208,15 @@ private:
 // --------------------------------------------------------------------------
 // Purpose:
 // --------------------------------------------------------------------------
-CEconItemLocalizedFullNameGenerator::CEconItemLocalizedFullNameGenerator( const CLocalizationProvider *pLocalizationProvider, const CEconItemDefinition *pItemDef, bool bUseProperName, entityquality_t eQuality )
+CEconItemLocalizedFullNameGenerator::CEconItemLocalizedFullNameGenerator(
+	const CLocalizationProvider *pLocalizationProvider, const CEconItemDefinition *pItemDef, bool bUseProperName,
+	entityquality_t eQuality)
 {
-	Assert( pItemDef );
+	Assert(pItemDef);
 
-	CGameItemDefinition_EconItemInterfaceWrapper EconItemDefinitionWrapper( pItemDef, eQuality );
-	GenerateLocalizedFullItemName( m_loc_LocalizedItemName, pLocalizationProvider, &EconItemDefinitionWrapper, k_EGenerateLocalizedFullItemName_Default, bUseProperName );
+	CGameItemDefinition_EconItemInterfaceWrapper EconItemDefinitionWrapper(pItemDef, eQuality);
+	GenerateLocalizedFullItemName(m_loc_LocalizedItemName, pLocalizationProvider, &EconItemDefinitionWrapper,
+								  k_EGenerateLocalizedFullItemName_Default, bUseProperName);
 }
 
 // --------------------------------------------------------------------------
@@ -4004,47 +4225,90 @@ CEconItemLocalizedFullNameGenerator::CEconItemLocalizedFullNameGenerator( const 
 class CMarketNameGenerator_EconItemInterfaceWrapper : public IEconItemInterface
 {
 public:
-	CMarketNameGenerator_EconItemInterfaceWrapper( CEconItem *pItem )
-		: m_pItem( pItem )
+	CMarketNameGenerator_EconItemInterfaceWrapper(CEconItem *pItem) : m_pItem(pItem)
 	{
-		Assert( m_pItem );
+		Assert(m_pItem);
 	}
 
-	virtual const GameItemDefinition_t *GetItemDefinition() const { return m_pItem->GetItemDefinition(); }
+	virtual const GameItemDefinition_t *GetItemDefinition() const
+	{
+		return m_pItem->GetItemDefinition();
+	}
 
-	virtual itemid_t		GetID() const { return m_pItem->GetID(); }
-	virtual uint32			GetAccountID() const { return 0; }
-	virtual int32			GetQuality() const { return m_pItem->GetQuality(); }
-	virtual style_index_t	GetStyle() const { return INVALID_STYLE_INDEX; }
-	virtual uint8			GetFlags() const { return 0; }
-	virtual eEconItemOrigin GetOrigin() const { return kEconItemOrigin_Invalid; }
-	virtual int				GetQuantity() const { return 1; }
-	virtual uint32			GetItemLevel() const { return 0; }
-	virtual bool			GetInUse() const { return false; }
+	virtual itemid_t GetID() const
+	{
+		return m_pItem->GetID();
+	}
+	virtual uint32 GetAccountID() const
+	{
+		return 0;
+	}
+	virtual int32 GetQuality() const
+	{
+		return m_pItem->GetQuality();
+	}
+	virtual style_index_t GetStyle() const
+	{
+		return INVALID_STYLE_INDEX;
+	}
+	virtual uint8 GetFlags() const
+	{
+		return 0;
+	}
+	virtual eEconItemOrigin GetOrigin() const
+	{
+		return kEconItemOrigin_Invalid;
+	}
+	virtual int GetQuantity() const
+	{
+		return 1;
+	}
+	virtual uint32 GetItemLevel() const
+	{
+		return 0;
+	}
+	virtual bool GetInUse() const
+	{
+		return false;
+	}
 
-	virtual const char	   *GetCustomName() const { return NULL; }
-	virtual const char	   *GetCustomDesc() const { return NULL; }
+	virtual const char *GetCustomName() const
+	{
+		return NULL;
+	}
+	virtual const char *GetCustomDesc() const
+	{
+		return NULL;
+	}
 
-	virtual CEconItemPaintKitDefinition *GetCustomPainkKitDefinition( void ) const { return m_pItem->GetCustomPainkKitDefinition(); }
-	virtual bool GetCustomPaintKitWear( float &flWear ) const { return m_pItem->GetCustomPaintKitWear( flWear ); }
+	virtual CEconItemPaintKitDefinition *GetCustomPainkKitDefinition(void) const
+	{
+		return m_pItem->GetCustomPainkKitDefinition();
+	}
+	virtual bool GetCustomPaintKitWear(float &flWear) const
+	{
+		return m_pItem->GetCustomPaintKitWear(flWear);
+	}
 
-	virtual IMaterial	   *GetMaterialOverride( int iTeam ) OVERRIDE { return m_pItem->GetMaterialOverride( iTeam ); }
+	virtual IMaterial *GetMaterialOverride(int iTeam) OVERRIDE
+	{
+		return m_pItem->GetMaterialOverride(iTeam);
+	}
 
 	// IEconItemInterface attribute iteration interface. This is not meant to be used for
 	// attribute lookup! This is meant for anything that requires iterating over the full
 	// attribute list.
-	virtual void IterateAttributes( class IEconItemAttributeIterator *pIterator ) const OVERRIDE
+	virtual void IterateAttributes(class IEconItemAttributeIterator *pIterator) const OVERRIDE
 	{
-		Assert( pIterator );
+		Assert(pIterator);
 
 		// Wrap their iterator in our iterator that will selectively let specific attributes
 		// get iterated on by the wrapped iterator.
-		CMarketNameGenerator_SelectiveAttributeIterator iteratorWrapper( pIterator );
-		m_pItem->IterateAttributes( &iteratorWrapper );
+		CMarketNameGenerator_SelectiveAttributeIterator iteratorWrapper(pIterator);
+		m_pItem->IterateAttributes(&iteratorWrapper);
 	}
 
 private:
-
 	CEconItem *m_pItem;
 
 	// Iterator class that wraps another iterator and selectively allows specific attributes to be
@@ -4052,82 +4316,86 @@ private:
 	class CMarketNameGenerator_SelectiveAttributeIterator : public IEconItemAttributeIterator
 	{
 	public:
-		CMarketNameGenerator_SelectiveAttributeIterator( IEconItemAttributeIterator* pIterator )
-			: m_pIterator( pIterator )
-		{}
-
-		virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, attrib_value_t value ) OVERRIDE
+		CMarketNameGenerator_SelectiveAttributeIterator(IEconItemAttributeIterator *pIterator) : m_pIterator(pIterator)
 		{
-			if( pAttrDef->CanAffectMarketName() )
+		}
+
+		virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef,
+											 attrib_value_t value) OVERRIDE
+		{
+			if(pAttrDef->CanAffectMarketName())
 			{
-				m_pIterator->OnIterateAttributeValue( pAttrDef, value );
+				m_pIterator->OnIterateAttributeValue(pAttrDef, value);
 			}
 
 			return true;
 		}
 
-		virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, float value ) OVERRIDE
+		virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef, float value) OVERRIDE
 		{
-			if( pAttrDef->CanAffectMarketName() )
+			if(pAttrDef->CanAffectMarketName())
 			{
-				m_pIterator->OnIterateAttributeValue( pAttrDef, value );
+				m_pIterator->OnIterateAttributeValue(pAttrDef, value);
 			}
 
 			return true;
 		}
 
-		virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const uint64& value ) OVERRIDE
+		virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef, const uint64 &value) OVERRIDE
 		{
-			if( pAttrDef->CanAffectMarketName() )
+			if(pAttrDef->CanAffectMarketName())
 			{
-				m_pIterator->OnIterateAttributeValue( pAttrDef, value );
+				m_pIterator->OnIterateAttributeValue(pAttrDef, value);
 			}
 
 			return true;
 		}
 
-		virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const CAttribute_String& value ) OVERRIDE
+		virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef,
+											 const CAttribute_String &value) OVERRIDE
 		{
-			if( pAttrDef->CanAffectMarketName() )
+			if(pAttrDef->CanAffectMarketName())
 			{
-				m_pIterator->OnIterateAttributeValue( pAttrDef, value );
+				m_pIterator->OnIterateAttributeValue(pAttrDef, value);
 			}
 
 			return true;
 		}
 
-		virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const CAttribute_DynamicRecipeComponent& value ) OVERRIDE
+		virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef,
+											 const CAttribute_DynamicRecipeComponent &value) OVERRIDE
 		{
-			if( pAttrDef->CanAffectMarketName() )
+			if(pAttrDef->CanAffectMarketName())
 			{
-				m_pIterator->OnIterateAttributeValue( pAttrDef, value );
+				m_pIterator->OnIterateAttributeValue(pAttrDef, value);
 			}
 
 			return true;
 		}
 
-		virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const CAttribute_ItemSlotCriteria& value ) OVERRIDE
+		virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef,
+											 const CAttribute_ItemSlotCriteria &value) OVERRIDE
 		{
-			if( pAttrDef->CanAffectMarketName() )
+			if(pAttrDef->CanAffectMarketName())
 			{
-				m_pIterator->OnIterateAttributeValue( pAttrDef, value );
+				m_pIterator->OnIterateAttributeValue(pAttrDef, value);
 			}
 
 			return true;
 		}
 
-		virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const CAttribute_WorldItemPlacement& value ) OVERRIDE
+		virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef,
+											 const CAttribute_WorldItemPlacement &value) OVERRIDE
 		{
-			if ( pAttrDef->CanAffectMarketName() )
+			if(pAttrDef->CanAffectMarketName())
 			{
-				m_pIterator->OnIterateAttributeValue( pAttrDef, value );
+				m_pIterator->OnIterateAttributeValue(pAttrDef, value);
 			}
 
 			return true;
 		}
 
 	private:
-
 		IEconItemAttributeIterator *m_pIterator;
 	};
 };
@@ -4135,12 +4403,14 @@ private:
 // --------------------------------------------------------------------------
 // Purpose:
 // --------------------------------------------------------------------------
-CEconItemLocalizedMarketNameGenerator::CEconItemLocalizedMarketNameGenerator( const CLocalizationProvider *pLocalizationProvider, CEconItem *pItem, bool bUseProperName )
+CEconItemLocalizedMarketNameGenerator::CEconItemLocalizedMarketNameGenerator(
+	const CLocalizationProvider *pLocalizationProvider, CEconItem *pItem, bool bUseProperName)
 {
-	Assert( pItem );
+	Assert(pItem);
 
-	CMarketNameGenerator_EconItemInterfaceWrapper EconItemWrapper( pItem );
-	GenerateLocalizedFullItemName( m_loc_LocalizedItemName, pLocalizationProvider, &EconItemWrapper, k_EGenerateLocalizedFullItemName_WithPaintWear, bUseProperName );
+	CMarketNameGenerator_EconItemInterfaceWrapper EconItemWrapper(pItem);
+	GenerateLocalizedFullItemName(m_loc_LocalizedItemName, pLocalizationProvider, &EconItemWrapper,
+								  k_EGenerateLocalizedFullItemName_WithPaintWear, bUseProperName);
 }
 
 #endif // BUILD_ITEM_NAME_AND_DESC

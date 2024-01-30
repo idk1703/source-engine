@@ -10,6 +10,5 @@ $envmapcameraspace = 0;
 $envmapsphere = 0;
 $vertexcolor = 1;
 
-&LightmappedGeneric( $detail, $envmap, $envmapcameraspace, $envmapsphere, 
+&LightmappedGeneric( $detail, $envmap, $envmapcameraspace, $envmapsphere,
 				$vertexcolor );
-

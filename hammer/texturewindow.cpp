@@ -1,12 +1,12 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
 #include "stdafx.h"
 #pragma warning(push, 1)
-#pragma warning(disable:4701 4702 4530)
+#pragma warning(disable : 4701 4702 4530)
 #include <fstream>
 #pragma warning(pop)
 #include "hammer.h"
@@ -23,12 +23,10 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 const DWORD NO_FILE_FILTER = 0xFFFFFFF0L;
 const int iPadding = 4;
 const int iTexNameFontHeight = 7;
 const int iTexIconHeight = 12;
-
 
 BEGIN_MESSAGE_MAP(CTextureWindow, CWnd)
 	//{{AFX_MSG_MAP(CTextureWindow)
@@ -43,7 +41,6 @@ BEGIN_MESSAGE_MAP(CTextureWindow, CWnd)
 	ON_WM_CHAR()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor. Initializes data members.
@@ -68,21 +65,17 @@ CTextureWindow::CTextureWindow(void)
 	m_bShowErrors = true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Destructor.
 //-----------------------------------------------------------------------------
-CTextureWindow::~CTextureWindow(void)
-{
-} 
-
+CTextureWindow::~CTextureWindow(void) {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pParentWnd - 
-//			rect - 
+// Purpose:
+// Input  : *pParentWnd -
+//			rect -
 //-----------------------------------------------------------------------------
-void CTextureWindow::Create(CWnd *pParentWnd, RECT& rect)
+void CTextureWindow::Create(CWnd *pParentWnd, RECT &rect)
 {
 	static CString TextureWndClassName;
 
@@ -91,15 +84,13 @@ void CTextureWindow::Create(CWnd *pParentWnd, RECT& rect)
 	if(TextureWndClassName.IsEmpty())
 	{
 		// create class
-		TextureWndClassName = AfxRegisterWndClass(CS_DBLCLKS | CS_HREDRAW | 
-			CS_VREDRAW, LoadCursor(NULL, IDC_ARROW), 
-			(HBRUSH) GetStockObject(BLACK_BRUSH), 
-			AfxGetApp()->LoadIcon(IDI_TEXTUREWINDOW));
+		TextureWndClassName =
+			AfxRegisterWndClass(CS_DBLCLKS | CS_HREDRAW | CS_VREDRAW, LoadCursor(NULL, IDC_ARROW),
+								(HBRUSH)GetStockObject(BLACK_BRUSH), AfxGetApp()->LoadIcon(IDI_TEXTUREWINDOW));
 	}
 
 	CWnd::Create(TextureWndClassName, "TextureBrowserWindow",
-		SS_SUNKEN | WS_TABSTOP | WS_CHILD | WS_VSCROLL | WS_HSCROLL, 
-		rect, pParentWnd, IDC_TEXTUREWINDOW);
+				 SS_SUNKEN | WS_TABSTOP | WS_CHILD | WS_VSCROLL | WS_HSCROLL, rect, pParentWnd, IDC_TEXTUREWINDOW);
 
 	UpdateScrollSizes();
 
@@ -113,16 +104,14 @@ void CTextureWindow::Create(CWnd *pParentWnd, RECT& rect)
 	ReleaseDC(pDC);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bEnable - 
+// Purpose:
+// Input  : bEnable -
 //-----------------------------------------------------------------------------
 void CTextureWindow::EnableUpdate(bool bEnable)
 {
 	m_bEnableUpdate = bEnable;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Searches for all of the keywords in an array of keywords within
@@ -134,37 +123,37 @@ void CTextureWindow::EnableUpdate(bool bEnable)
 //-----------------------------------------------------------------------------
 bool CTextureWindow::MatchKeywords(const char *pszSearch, char **pszKeyword, int nKeywords)
 {
-	if (nKeywords != 0)
+	if(nKeywords != 0)
 	{
-		for (int i = 0; i < nKeywords; i++)
+		for(int i = 0; i < nKeywords; i++)
 		{
-			if (Q_stristr(pszSearch, pszKeyword[i]) == NULL)
+			if(Q_stristr(pszSearch, pszKeyword[i]) == NULL)
 			{
-				return(false);
+				return (false);
 			}
 		}
 	}
 
-	return(true);
+	return (true);
 }
 
 //-----------------------------------------------------------------------------
 // Changes type filter bits
 //-----------------------------------------------------------------------------
 
-void CTextureWindow::SetTypeFilter( int filter, bool enable )
+void CTextureWindow::SetTypeFilter(int filter, bool enable)
 {
-	if (enable)
+	if(enable)
 		m_nTypeFilter |= filter;
 	else
 		m_nTypeFilter &= ~filter;
 
-	if (m_bEnableUpdate)
+	if(m_bEnableUpdate)
 	{
 		UpdateScrollSizes();
 		SelectTexture(szCurTexture, false);
-		
-		if (IsWindow(m_hWnd))
+
+		if(IsWindow(m_hWnd))
 		{
 			Invalidate();
 			UpdateWindow();
@@ -173,56 +162,56 @@ void CTextureWindow::SetTypeFilter( int filter, bool enable )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pTE - 
-//			bStart - 
+// Purpose:
+// Input  : *pTE -
+//			bStart -
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
 BOOL CTextureWindow::EnumTexturePositions(TWENUMPOS *pTE, BOOL bStart)
 {
 	RECT &texrect = pTE->texrect;
 
-	if (bStart)
+	if(bStart)
 	{
 		pTE->cur_x = iPadding;
 		pTE->cur_y = iPadding;
 		pTE->largest_y = 0;
 		pTE->iTexIndex = 0;
 
-		if (IsWindow(m_hWnd))
+		if(IsWindow(m_hWnd))
 		{
 			GetClientRect(&pTE->clientrect);
 		}
 
 		SetRect(&texrect, 0, 0, 0, 0);
 	}
-	
+
 	bool bFound = false;
-	
+
 	do
 	{
 		pTE->pTex = g_Textures.EnumActiveTextures(&pTE->iTexIndex, m_eTextureFormat);
 
-		if (pTE->pTex == NULL)
+		if(pTE->pTex == NULL)
 			continue;
 
 		bFound = false;
 
 		// If we are iterating a specific list of textures, make sure it is in the list.
 		// dvs: inefficient, the specific list should control the loop, not act as a filter
-		if (m_pSpecificList != NULL)
+		if(m_pSpecificList != NULL)
 		{
 			int nIndex = m_pSpecificList->Find(pTE->pTex);
-			if (nIndex == -1)
+			if(nIndex == -1)
 				continue;
-	
+
 			pTE->nUsageCount = m_pSpecificList->Element(nIndex).nUsageCount;
 		}
 
 		// Filter by texture name.
 		char szTemp[MAX_PATH];
 		pTE->pTex->GetShortName(szTemp);
-		if (MatchKeywords(szTemp, m_Filters, m_nFilters))
+		if(MatchKeywords(szTemp, m_Filters, m_nFilters))
 		{
 			//
 			// Filter by keywords.
@@ -230,10 +219,10 @@ BOOL CTextureWindow::EnumTexturePositions(TWENUMPOS *pTE, BOOL bStart)
 
 			// NOTE: Try not to access the material here when finding the position
 			// because it causes the materials to be cached (slow!!)
-			if (m_nKeywords)
+			if(m_nKeywords)
 			{
 				pTE->pTex->GetKeywords(szTemp);
-				if (MatchKeywords(szTemp, m_Keyword, m_nKeywords))
+				if(MatchKeywords(szTemp, m_Keyword, m_nKeywords))
 				{
 					bFound = true;
 				}
@@ -247,31 +236,31 @@ BOOL CTextureWindow::EnumTexturePositions(TWENUMPOS *pTE, BOOL bStart)
 		// Filter based on opacity, etc.
 		// NOTE: Try not to access the material here when finding the position
 		// because it causes the materials to be cached (slow!!)
-		if (bFound && ((m_nTypeFilter & TYPEFILTER_ALL) != TYPEFILTER_ALL))
+		if(bFound && ((m_nTypeFilter & TYPEFILTER_ALL) != TYPEFILTER_ALL))
 		{
-			IMaterial* pMaterial = pTE->pTex->GetMaterial();
-			if (pMaterial)
+			IMaterial *pMaterial = pTE->pTex->GetMaterial();
+			if(pMaterial)
 			{
 				bFound = false;
-				if ( pMaterial->GetMaterialVarFlag( MATERIAL_VAR_SELFILLUM ) )
+				if(pMaterial->GetMaterialVarFlag(MATERIAL_VAR_SELFILLUM))
 				{
-					if (m_nTypeFilter & TYPEFILTER_SELFILLUM)
+					if(m_nTypeFilter & TYPEFILTER_SELFILLUM)
 						bFound = true;
 				}
-				if ( pMaterial->GetMaterialVarFlag( MATERIAL_VAR_BASEALPHAENVMAPMASK ) )
+				if(pMaterial->GetMaterialVarFlag(MATERIAL_VAR_BASEALPHAENVMAPMASK))
 				{
-					if (m_nTypeFilter & TYPEFILTER_ENVMASK)
+					if(m_nTypeFilter & TYPEFILTER_ENVMASK)
 						bFound = true;
 				}
 
-				if ( pMaterial->GetMaterialVarFlag( MATERIAL_VAR_TRANSLUCENT ) )
+				if(pMaterial->GetMaterialVarFlag(MATERIAL_VAR_TRANSLUCENT))
 				{
-					if (m_nTypeFilter & TYPEFILTER_TRANSLUCENT)
+					if(m_nTypeFilter & TYPEFILTER_TRANSLUCENT)
 						bFound = true;
 				}
 				else
 				{
-					if (m_nTypeFilter & TYPEFILTER_OPAQUE)
+					if(m_nTypeFilter & TYPEFILTER_OPAQUE)
 						bFound = true;
 				}
 			}
@@ -279,29 +268,27 @@ BOOL CTextureWindow::EnumTexturePositions(TWENUMPOS *pTE, BOOL bStart)
 
 		// Blow off zero-size materials, but only if they've been loaded...
 		// Otherwise we have to cache everything which will take forever...
-		if ( bFound && pTE->pTex->IsLoaded() )
+		if(bFound && pTE->pTex->IsLoaded())
 		{
-			if ((pTE->pTex->GetWidth() == 0) || (pTE->pTex->GetHeight() == 0))
+			if((pTE->pTex->GetWidth() == 0) || (pTE->pTex->GetHeight() == 0))
 			{
 				bFound = false;
 			}
 		}
-			
-	} while ((pTE->pTex != NULL) && (!bFound));
 
-	if ((!bFound) || (pTE->pTex == NULL))
+	} while((pTE->pTex != NULL) && (!bFound));
+
+	if((!bFound) || (pTE->pTex == NULL))
 	{
-		return(FALSE);
+		return (FALSE);
 	}
 
 doresize:
 
-	SetRect( &texrect, pTE->cur_x, pTE->cur_y,
-		pTE->cur_x + iDisplaySize,
-		pTE->cur_y + iDisplaySize );
+	SetRect(&texrect, pTE->cur_x, pTE->cur_y, pTE->cur_x + iDisplaySize, pTE->cur_y + iDisplaySize);
 
-	// if we've got one texture on this row already, and this one goes out of 
-	// the client area, jump to the next row. we want to have at least one texture on 
+	// if we've got one texture on this row already, and this one goes out of
+	// the client area, jump to the next row. we want to have at least one texture on
 	// each row, or we will sit in an infinite loop.
 	if(pTE->cur_x > iPadding && texrect.right > pTE->clientrect.right)
 	{
@@ -321,7 +308,6 @@ doresize:
 	return TRUE;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Sets the dimensions of each texture within the texture window.
 // Input  : iSize - 32 to display as 32 x 32 textures.
@@ -337,14 +323,13 @@ void CTextureWindow::SetDisplaySize(int iSize)
 	RedrawWindow();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Sets the name filter that is used to filter the texture window contents.
 // Input  : pszFilter - Space, comma, or semicolon delimited names to filter against.
 //-----------------------------------------------------------------------------
 void CTextureWindow::SetNameFilter(LPCTSTR pszFilter)
 {
-	if (m_bEnableUpdate)
+	if(m_bEnableUpdate)
 	{
 		// kill highlight
 		HighlightCurTexture();
@@ -357,18 +342,18 @@ void CTextureWindow::SetNameFilter(LPCTSTR pszFilter)
 	// delimit the filter
 	m_nFilters = 0;
 	char *p = strtok(m_szFilter, " ,;");
-	while (p != NULL)
-	{	
+	while(p != NULL)
+	{
 		m_Filters[m_nFilters++] = p;
 		p = strtok(NULL, " ,;");
 	}
 
-	if (m_bEnableUpdate)
+	if(m_bEnableUpdate)
 	{
 		UpdateScrollSizes();
 		SelectTexture(szCurTexture, false);
-		
-		if (IsWindow(m_hWnd))
+
+		if(IsWindow(m_hWnd))
 		{
 			Invalidate();
 			UpdateWindow();
@@ -376,14 +361,13 @@ void CTextureWindow::SetNameFilter(LPCTSTR pszFilter)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Sets the keywords that are used to filter the texture window contents.
 // Input  : pszFilter - Space, comma, or semicolon delimited keywords to filter against.
 //-----------------------------------------------------------------------------
 void CTextureWindow::SetKeywords(LPCTSTR pszKeywords)
 {
-	if (m_bEnableUpdate)
+	if(m_bEnableUpdate)
 	{
 		// kill highlight
 		HighlightCurTexture();
@@ -396,18 +380,18 @@ void CTextureWindow::SetKeywords(LPCTSTR pszKeywords)
 	// delimit the filter
 	m_nKeywords = 0;
 	char *p = strtok(m_szKeywords, " ,;");
-	while (p != NULL)
-	{	
+	while(p != NULL)
+	{
 		m_Keyword[m_nKeywords++] = p;
 		p = strtok(NULL, " ,;");
 	}
 
-	if (m_bEnableUpdate)
+	if(m_bEnableUpdate)
 	{
 		UpdateScrollSizes();
 		SelectTexture(szCurTexture, false);
-		
-		if (IsWindow(m_hWnd))
+
+		if(IsWindow(m_hWnd))
 		{
 			Invalidate();
 			UpdateWindow();
@@ -415,9 +399,8 @@ void CTextureWindow::SetKeywords(LPCTSTR pszKeywords)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTextureWindow::UpdateScrollSizes(void)
 {
@@ -426,7 +409,8 @@ void CTextureWindow::UpdateScrollSizes(void)
 	total_x = total_y = 0;
 
 	if(EnumTexturePositions(&TE, TRUE))
-		do {
+		do
+		{
 			if(TE.texrect.right > total_x)
 				total_x = TE.texrect.right;
 			if(TE.texrect.bottom > total_y)
@@ -455,9 +439,8 @@ void CTextureWindow::UpdateScrollSizes(void)
 	TRACE0(szbuf);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTextureWindow::OnPaint(void)
 {
@@ -466,7 +449,7 @@ void CTextureWindow::OnPaint(void)
 	// setup font
 	dc.SelectObject(&TexFont);
 	dc.SetTextColor(RGB(255, 255, 255));
-	//dc.SetBkColor(RGB(0,0,0));
+	// dc.SetBkColor(RGB(0,0,0));
 	dc.SetBkMode(TRANSPARENT);
 
 	CRect clientrect;
@@ -482,27 +465,28 @@ void CTextureWindow::OnPaint(void)
 	char szDrawTexture[128];
 	char szFirstDrawnTexture[128];
 
-	while (bNotDone)
+	while(bNotDone)
 	{
 		TE.pTex->GetShortName(szDrawTexture);
 
-		if (!strcmpi(szCurTexture, szDrawTexture))
+		if(!strcmpi(szCurTexture, szDrawTexture))
 		{
 			rectHighlight = TE.texrect;
 			rectHighlight.InflateRect(2, 4);
 			bFoundHighlight = TRUE;
 		}
 
-		if (dc.RectVisible(&TE.texrect))
+		if(dc.RectVisible(&TE.texrect))
 		{
 			// ensure loaded
 			TE.pTex->Load();
 
-			CPalette *pOld = dc.SelectPalette(TE.pTex->HasPalette() ? TE.pTex->GetPalette() : g_pGameConfig->Palette, FALSE);
+			CPalette *pOld =
+				dc.SelectPalette(TE.pTex->HasPalette() ? TE.pTex->GetPalette() : g_pGameConfig->Palette, FALSE);
 			dc.RealizePalette();
 
 			int flags = drawCaption | drawIcons;
-			if (m_bShowErrors)
+			if(m_bShowErrors)
 				flags |= drawErrors;
 
 			DrawTexData_t DrawTexData;
@@ -516,7 +500,7 @@ void CTextureWindow::OnPaint(void)
 		//
 		// Save the name of the first drawn texture in case we need to highlight it.
 		//
-		if (bFirst)
+		if(bFirst)
 		{
 			bFirst = FALSE;
 			strcpy(szFirstDrawnTexture, szDrawTexture);
@@ -537,27 +521,25 @@ void CTextureWindow::OnPaint(void)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nType - 
-//			cx - 
-//			cy - 
+// Purpose:
+// Input  : nType -
+//			cx -
+//			cy -
 //-----------------------------------------------------------------------------
-void CTextureWindow::OnSize(UINT nType, int cx, int cy) 
+void CTextureWindow::OnSize(UINT nType, int cx, int cy)
 {
 	CWnd::OnSize(nType, cx, cy);
 	UpdateScrollSizes();
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nSBCode - 
-//			nPos - 
-//			pScrollBar - 
+// Purpose:
+// Input  : nSBCode -
+//			nPos -
+//			pScrollBar -
 //-----------------------------------------------------------------------------
-void CTextureWindow::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar) 
+void CTextureWindow::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar *pScrollBar)
 {
 	int iPos = int(nPos);
 	SCROLLINFO si;
@@ -568,22 +550,22 @@ void CTextureWindow::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 
 	switch(nSBCode)
 	{
-	case SB_LINELEFT:
-		iPos = -int(si.nPage / 4);
-		break;
-	case SB_LINERIGHT:
-		iPos = int(si.nPage / 4);
-		break;
-	case SB_PAGELEFT:
-		iPos = -int(si.nPage / 2);
-		break;
-	case SB_PAGERIGHT:
-		iPos = int(si.nPage / 2);
-		break;
-	case SB_THUMBTRACK:
-	case SB_THUMBPOSITION:
-		iPos -= iCurPos;
-		break;
+		case SB_LINELEFT:
+			iPos = -int(si.nPage / 4);
+			break;
+		case SB_LINERIGHT:
+			iPos = int(si.nPage / 4);
+			break;
+		case SB_PAGELEFT:
+			iPos = -int(si.nPage / 2);
+			break;
+		case SB_PAGERIGHT:
+			iPos = int(si.nPage / 2);
+			break;
+		case SB_THUMBTRACK:
+		case SB_THUMBPOSITION:
+			iPos -= iCurPos;
+			break;
 	}
 
 	if(iCurPos + iPos < 0)
@@ -599,14 +581,13 @@ void CTextureWindow::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	CWnd::OnHScroll(nSBCode, nPos, pScrollBar);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nSBCode - 
-//			nPos - 
-//			pScrollBar - 
+// Purpose:
+// Input  : nSBCode -
+//			nPos -
+//			pScrollBar -
 //-----------------------------------------------------------------------------
-void CTextureWindow::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar) 
+void CTextureWindow::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar *pScrollBar)
 {
 	SCROLLINFO si;
 
@@ -614,28 +595,28 @@ void CTextureWindow::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	int iCurPos = GetScrollPos(SB_VERT);
 	int iLimit = GetScrollLimit(SB_VERT);
 	int iPos = int(si.nPos);
-	
+
 	switch(nSBCode)
 	{
-	case SB_LINEUP:
-		iPos = -int(si.nPage / 4);
-		break;
-	case SB_LINEDOWN:
-		iPos = int(si.nPage / 4);
-		break;
-	case SB_PAGEUP:
-		iPos = -int(si.nPage / 2);
-		break;
-	case SB_PAGEDOWN:
-		iPos = int(si.nPage / 2);
-		break;
-	case SB_THUMBTRACK:
-	case SB_THUMBPOSITION:
-		iPos = si.nTrackPos - iCurPos;
-		break;
-	case SB_ENDSCROLL:
-		iPos = 0;
-		break;
+		case SB_LINEUP:
+			iPos = -int(si.nPage / 4);
+			break;
+		case SB_LINEDOWN:
+			iPos = int(si.nPage / 4);
+			break;
+		case SB_PAGEUP:
+			iPos = -int(si.nPage / 2);
+			break;
+		case SB_PAGEDOWN:
+			iPos = int(si.nPage / 2);
+			break;
+		case SB_THUMBTRACK:
+		case SB_THUMBPOSITION:
+			iPos = si.nTrackPos - iCurPos;
+			break;
+		case SB_ENDSCROLL:
+			iPos = 0;
+			break;
 	}
 
 	if(iCurPos + iPos < 0)
@@ -652,10 +633,9 @@ void CTextureWindow::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	CWnd::OnVScroll(nSBCode, nPos, pScrollBar);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pDC - 
+// Purpose:
+// Input  : *pDC -
 //-----------------------------------------------------------------------------
 void CTextureWindow::HighlightCurTexture(CDC *pDC)
 {
@@ -683,7 +663,6 @@ void CTextureWindow::HighlightCurTexture(CDC *pDC)
 		::ReleaseDC(m_hWnd, dc.Detach());
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Selects a given texture by name, scrolling the window if necessary
 //			to make the selected texture visible.
@@ -698,31 +677,31 @@ void CTextureWindow::SelectTexture(LPCTSTR pszTexture, BOOL bAllowRedraw)
 	IEditorTexture *pTex = g_Textures.FindActiveTexture(pszTexture);
 
 	CRect r(100, 100, 500, 500);
-	if (IsWindow(m_hWnd))
+	if(IsWindow(m_hWnd))
 	{
 		GetClientRect(r);
 	}
 	int iClientHeight = r.Height();
 
-	if (pTex == NULL)
+	if(pTex == NULL)
 	{
 		return;
 	}
 
-	while (bNotDone)
+	while(bNotDone)
 	{
-		if (pTex == TE.pTex)
+		if(pTex == TE.pTex)
 		{
 			// found it - make sure it's visible
-			if (IsWindow(m_hWnd))
+			if(IsWindow(m_hWnd))
 			{
 				int iScrollPos = GetScrollPos(SB_VERT);
-				if (iScrollPos + iClientHeight < TE.texrect.top || TE.texrect.bottom < iScrollPos)
+				if(iScrollPos + iClientHeight < TE.texrect.top || TE.texrect.bottom < iScrollPos)
 				{
 					SetScrollPos(SB_VERT, TE.texrect.top);
 					ScrollWindow(0, iScrollPos - TE.texrect.top);
 
-					if (bAllowRedraw)
+					if(bAllowRedraw)
 					{
 						RedrawWindow();
 					}
@@ -735,7 +714,7 @@ void CTextureWindow::SelectTexture(LPCTSTR pszTexture, BOOL bAllowRedraw)
 			pTex->GetShortName(szCurTexture);
 
 			// highlight new texture
-			if (IsWindow(m_hWnd))
+			if(IsWindow(m_hWnd))
 			{
 				rectHighlight = CRect(&TE.texrect);
 				rectHighlight.InflateRect(2, 4);
@@ -753,13 +732,12 @@ void CTextureWindow::SelectTexture(LPCTSTR pszTexture, BOOL bAllowRedraw)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nFlags - 
-//			point - 
+// Purpose:
+// Input  : nFlags -
+//			point -
 //-----------------------------------------------------------------------------
-void CTextureWindow::OnLButtonDown(UINT nFlags, CPoint point) 
+void CTextureWindow::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	// find clicked texture
 	TWENUMPOS TE;
@@ -773,9 +751,9 @@ void CTextureWindow::OnLButtonDown(UINT nFlags, CPoint point)
 
 	point += CPoint(iHorzPos, iVertPos);
 
-	while (bNotDone)
+	while(bNotDone)
 	{
-		if (PtInRect(&TE.texrect, point))
+		if(PtInRect(&TE.texrect, point))
 		{
 			TE.pTex->GetShortName(szNewTexture);
 			break;
@@ -809,43 +787,40 @@ void CTextureWindow::OnLButtonDown(UINT nFlags, CPoint point)
 	CWnd::OnLButtonDown(nFlags, point);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Notifies our parent window of a double-click event.
-// Input  : nFlags - 
-//			point - 
+// Input  : nFlags -
+//			point -
 //-----------------------------------------------------------------------------
-void CTextureWindow::OnLButtonDblClk(UINT nFlags, CPoint point) 
+void CTextureWindow::OnLButtonDblClk(UINT nFlags, CPoint point)
 {
 	GetParent()->PostMessage(TWN_LBUTTONDBLCLK);
 	CWnd::OnLButtonDblClk(nFlags, point);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nChar - 
-//			nRepCnt - 
-//			nFlags - 
+// Purpose:
+// Input  : nChar -
+//			nRepCnt -
+//			nFlags -
 //-----------------------------------------------------------------------------
-void CTextureWindow::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 
+void CTextureWindow::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	CWnd::OnKeyDown(nChar, nRepCnt, nFlags);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nFlags - 
-//			zDelta - 
-//			point - 
+// Purpose:
+// Input  : nFlags -
+//			zDelta -
+//			point -
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
 BOOL CTextureWindow::OnMouseWheel(UINT nFlags, short zDelta, CPoint point)
 {
 	int nScrollCode;
 
-	if (zDelta > 0)
+	if(zDelta > 0)
 	{
 		nScrollCode = SB_LINEUP;
 	}
@@ -859,8 +834,8 @@ BOOL CTextureWindow::OnMouseWheel(UINT nFlags, short zDelta, CPoint point)
 	int iCurPos = GetScrollPos(SB_VERT);
 	int iLimit = GetScrollLimit(SB_VERT);
 	int iPos = int(si.nPos);
-	
-	switch (nScrollCode)
+
+	switch(nScrollCode)
 	{
 		case SB_LINEUP:
 		{
@@ -875,38 +850,36 @@ BOOL CTextureWindow::OnMouseWheel(UINT nFlags, short zDelta, CPoint point)
 		}
 	}
 
-	if (iCurPos + iPos < 0)
+	if(iCurPos + iPos < 0)
 	{
 		iPos = -iCurPos;
 	}
 
-	if (iCurPos + iPos > iLimit)
+	if(iCurPos + iPos > iLimit)
 	{
 		iPos = iLimit - iCurPos;
 	}
 
-	if (iPos)
+	if(iPos)
 	{
 		SetScrollPos(SB_VERT, iCurPos + iPos);
 		ScrollWindow(0, -iPos);
 		UpdateWindow();
 	}
 
-	return(TRUE);
+	return (TRUE);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nChar - 
-//			nRepCnt - 
-//			nFlags - 
+// Purpose:
+// Input  : nChar -
+//			nRepCnt -
+//			nFlags -
 //-----------------------------------------------------------------------------
-void CTextureWindow::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags) 
+void CTextureWindow::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	CWnd::OnChar(nChar, nRepCnt, nFlags);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets the contents of the texture window to a specific list of textures.
@@ -916,7 +889,7 @@ void CTextureWindow::SetSpecificList(TextureWindowTexList *pList)
 {
 	m_pSpecificList = pList;
 
-	if (m_hWnd != NULL)
+	if(m_hWnd != NULL)
 	{
 		UpdateScrollSizes();
 		SelectTexture(szCurTexture, FALSE);
@@ -924,14 +897,11 @@ void CTextureWindow::SetSpecificList(TextureWindowTexList *pList)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : eTextureFormat - 
+// Purpose:
+// Input  : eTextureFormat -
 //-----------------------------------------------------------------------------
 void CTextureWindow::SetTextureFormat(TEXTUREFORMAT eTextureFormat)
 {
 	m_eTextureFormat = eTextureFormat;
 }
-
-

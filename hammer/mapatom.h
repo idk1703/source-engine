@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,11 +18,11 @@ class CRender3D;
 
 enum SelectionState_t
 {
-	SELECT_NONE = 0,			// unselected
-	SELECT_NORMAL,				// selected
-	SELECT_MORPH,				// selected for vertex manipulation
-	SELECT_MULTI_PARTIAL,		// partial selection in a multiselect
-	SELECT_MODIFY,				// being modified by a tool
+	SELECT_NONE = 0,	  // unselected
+	SELECT_NORMAL,		  // selected
+	SELECT_MORPH,		  // selected for vertex manipulation
+	SELECT_MULTI_PARTIAL, // partial selection in a multiselect
+	SELECT_MODIFY,		  // being modified by a tool
 };
 
 //
@@ -30,8 +30,8 @@ enum SelectionState_t
 //
 enum Notify_Dependent_t
 {
-	Notify_Changed = 0,		// The notifying object has changed.
-	Notify_Removed,			// The notifying object is being removed from the world.
+	Notify_Changed = 0, // The notifying object has changed.
+	Notify_Removed,		// The notifying object is being removed from the world.
 	Notify_Undo,
 	Notify_Transform,
 	Notify_Rebuild,
@@ -43,8 +43,6 @@ enum Notify_Dependent_t
 class CMapAtom
 {
 public:
-
-
 	int m_nObjectID;
 	//-----------------------------------------------------------------------------
 	// Purpose: Debugging hook.
@@ -56,7 +54,7 @@ public:
 	//-----------------------------------------------------------------------------
 	virtual bool IsSelected(void) const
 	{
-		return(m_eSelectionState != SELECT_NONE);
+		return (m_eSelectionState != SELECT_NONE);
 	}
 
 	//-----------------------------------------------------------------------------
@@ -64,7 +62,7 @@ public:
 	//-----------------------------------------------------------------------------
 	virtual SelectionState_t GetSelectionState(void) const
 	{
-		return(m_eSelectionState);
+		return (m_eSelectionState);
 	}
 
 	//-----------------------------------------------------------------------------
@@ -76,7 +74,7 @@ public:
 		m_eSelectionState = eSelectionState;
 		return ePrevState;
 	}
-		
+
 	//-----------------------------------------------------------------------------
 	// Purpose: Sets the render color of this object.
 	//-----------------------------------------------------------------------------
@@ -86,7 +84,7 @@ public:
 		g = green;
 		b = blue;
 	}
-		
+
 	//-----------------------------------------------------------------------------
 	// Purpose: Sets the render color of this object.
 	//-----------------------------------------------------------------------------
@@ -106,7 +104,7 @@ public:
 		green = g;
 		blue = b;
 	}
-		
+
 	//-----------------------------------------------------------------------------
 	// Purpose: Returns the render color of this object.
 	//-----------------------------------------------------------------------------
@@ -120,10 +118,10 @@ public:
 
 		return rgbColor;
 	}
-		
+
 	//-----------------------------------------------------------------------------
 	// Purpose: Sets this object's parent.
-	// Input  : pParent - 
+	// Input  : pParent -
 	//-----------------------------------------------------------------------------
 	virtual void SetParent(CMapAtom *pParent)
 	{
@@ -136,7 +134,7 @@ public:
 	//-----------------------------------------------------------------------------
 	virtual CMapAtom *GetParent(void) const
 	{
-		return(m_pParent);
+		return (m_pParent);
 	}
 
 	//-----------------------------------------------------------------------------
@@ -148,45 +146,39 @@ public:
 	//-----------------------------------------------------------------------------
 	virtual bool RenderPreload(CRender3D *pRender, bool bNewContext)
 	{
-		return(true);
+		return (true);
 	}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: Renders this object into the 3D view.
 	// Input  : pRender - Pointer to the 3D rendering interface.
 	//-----------------------------------------------------------------------------
-	virtual void Render3D(CRender3D *pRender)
-	{
-	}
+	virtual void Render3D(CRender3D *pRender) {}
 
 	//-----------------------------------------------------------------------------
 	// Purpose: Renders this object into the 3D view.
 	// Input  : pRender - Pointer to the 3D rendering interface.
 	//-----------------------------------------------------------------------------
-	virtual void Render2D(CRender2D *pRender)
-	{
-	}
+	virtual void Render2D(CRender2D *pRender) {}
 
-	
-	virtual void AddShadowingTriangles( CUtlVector<Vector> &tri_list )
+	virtual void AddShadowingTriangles(CUtlVector<Vector> &tri_list)
 	{
 		// should add triangles representing the shadows this object would cast
 		// in lighting preview mode by adding 3 vector positions per triangle
 	}
 
-
 	//-----------------------------------------------------------------------------
 	// Purpose: Returns a coordinate frame to render in
-	// Input  : matrix - 
+	// Input  : matrix -
 	// Output : returns true if a new matrix is returned, false if the new matrix is bad
 	//-----------------------------------------------------------------------------
-	virtual bool GetTransformMatrix( VMatrix& matrix )
+	virtual bool GetTransformMatrix(VMatrix &matrix)
 	{
 		// try and get our parents transform matrix
 		CMapAtom *p = GetParent();
-		if ( p )
+		if(p)
 		{
-			return p->GetTransformMatrix( matrix );
+			return p->GetTransformMatrix(matrix);
 		}
 
 		return false;
@@ -196,7 +188,7 @@ public:
 	// Transformation functions.
 	//-----------------------------------------------------------------------------
 	void Transform(const VMatrix &matrix)
-	{ 
+	{
 		DoTransform(matrix);
 		PostUpdate(Notify_Transform);
 	}
@@ -214,12 +206,12 @@ public:
 	void TransRotate(const Vector &RefPoint, const QAngle &Angles)
 	{
 		VMatrix matrix;
-		QAngle hammerAngle( -Angles.y, Angles.z, Angles.x );
-		matrix.SetupMatrixOrgAngles( vec3_origin, hammerAngle );
+		QAngle hammerAngle(-Angles.y, Angles.z, Angles.x);
+		matrix.SetupMatrixOrgAngles(vec3_origin, hammerAngle);
 		Vector vOffset;
-		matrix.V3Mul( RefPoint, vOffset );
+		matrix.V3Mul(RefPoint, vOffset);
 		vOffset = RefPoint - vOffset;
-		matrix.SetTranslation( vOffset );
+		matrix.SetTranslation(vOffset);
 
 		DoTransform(matrix);
 		PostUpdate(Notify_Transform);
@@ -229,11 +221,11 @@ public:
 	{
 		VMatrix matrix;
 		matrix.Identity();
-		matrix = matrix.Scale( Scale );
+		matrix = matrix.Scale(Scale);
 		Vector vOffset;
-		matrix.V3Mul( RefPoint, vOffset );
+		matrix.V3Mul(RefPoint, vOffset);
 		vOffset = RefPoint - vOffset;
-		matrix.SetTranslation( vOffset );
+		matrix.SetTranslation(vOffset);
 
 		DoTransform(matrix);
 		PostUpdate(Notify_Transform);
@@ -250,7 +242,10 @@ public:
 	// representation for the entity that it belongs to. Entities with no
 	// visual elements are given a default box so they can be seen.
 	//-----------------------------------------------------------------------------
-	virtual bool IsVisualElement(void) { return(false);	}
+	virtual bool IsVisualElement(void)
+	{
+		return (false);
+	}
 
 	//-----------------------------------------------------------------------------
 	// Override this to tell the renderer to render you last. This is useful for
@@ -258,14 +253,13 @@ public:
 	//-----------------------------------------------------------------------------
 	virtual bool ShouldRenderLast(void)
 	{
-		return(false);
+		return (false);
 	}
-	virtual void SignalChanged(void )								// object has changed
+	virtual void SignalChanged(void) // object has changed
 	{
 	}
 
 protected:
-
 	static int s_nObjectIDCtr;
 
 	CMapAtom(void)
@@ -279,14 +273,13 @@ protected:
 	// DoTransform functions. Virtual, called by base Transfom functions.
 	//-----------------------------------------------------------------------------
 	virtual void DoTransform(const VMatrix &matrix) {}
-		
+
 	CMapAtom *m_pParent;				// This object's parent.
-	SelectionState_t m_eSelectionState;	// The current selection state of this object.
+	SelectionState_t m_eSelectionState; // The current selection state of this object.
 
-	unsigned char r;					// Red color component.
-	unsigned char g;					// Green color component.
-	unsigned char b;					// Blue color component.
-}; 
-
+	unsigned char r; // Red color component.
+	unsigned char g; // Green color component.
+	unsigned char b; // Blue color component.
+};
 
 #endif // MAPATOM_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,39 +10,37 @@
 #pragma once
 #endif
 
-
 class CSplashWnd : public CWnd
 {
-// Construction
+	// Construction
 protected:
 	CSplashWnd();
 
-// Attributes:
+	// Attributes:
 public:
 	CBitmap m_bitmap;
 
-// Operations
+	// Operations
 public:
 	static void EnableSplashScreen(bool bEnable = TRUE);
 	static void ShowSplashScreen(CWnd *pParentWnd = NULL);
-	static BOOL PreTranslateAppMessage(MSG* pMsg);
+	static BOOL PreTranslateAppMessage(MSG *pMsg);
 	static void HideSplashScreen();
 
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CSplashWnd)
 	//}}AFX_VIRTUAL
 
-// Implementation
+	// Implementation
 public:
 	~CSplashWnd();
 	virtual void PostNcDestroy();
 
-	BOOL Create(CWnd* pParentWnd = NULL);
+	BOOL Create(CWnd *pParentWnd = NULL);
 
-// Generated message map functions
+	// Generated message map functions
 protected:
-
 	void DoHide();
 
 	//{{AFX_MSG(CSplashWnd)
@@ -53,9 +51,8 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 
-	bool m_bHideRequested;		// Set when the app signals the splash screen to hide.
-	bool m_bMinTimerExpired;	// Set when OnTimer is called -- ensures that we stay up long enough to be seen.
+	bool m_bHideRequested;	 // Set when the app signals the splash screen to hide.
+	bool m_bMinTimerExpired; // Set when OnTimer is called -- ensures that we stay up long enough to be seen.
 };
-
 
 #endif // SPLASH_H

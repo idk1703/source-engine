@@ -488,7 +488,7 @@ L 07/22/1999 - 18:14:49: "Gimp*<30>" say "ill kill a sniper"
 L 07/22/1999 - 18:15:18: "Gimp*<30>" say "when map change?"
 L 07/22/1999 - 18:15:50: "stain099<31>" disconnected
 L 07/22/1999 - 18:15:53: =------= MATCH RESULTS =------=
-L 07/22/1999 - 18:15:53: "yellow" and "red" defeated "blue" 
+L 07/22/1999 - 18:15:53: "yellow" and "red" defeated "blue"
 L 07/22/1999 - 18:15:53: "blue" RESULTS: "1" players. "-2" frags, "1" unaccounted for. "250" team score. Allies:"2"
 L 07/22/1999 - 18:15:53: "red" RESULTS: "3" players. "23" frags, "3" unaccounted for. "250" team score. Allies:"1"
 L 07/22/1999 - 18:15:53: "yellow" RESULTS: "0" players. "17" frags, "0" unaccounted for. "350" team score. Allies:

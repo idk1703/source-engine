@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -18,9 +18,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // CStrDlg dialog
 
-CStrDlg::CStrDlg(DWORD dwFlags, LPCTSTR pszString, LPCTSTR pszPrompt, 
-				 LPCTSTR pszTitle)
-	: CDialog(CStrDlg::IDD, NULL)
+CStrDlg::CStrDlg(DWORD dwFlags, LPCTSTR pszString, LPCTSTR pszPrompt, LPCTSTR pszTitle) : CDialog(CStrDlg::IDD, NULL)
 {
 	//{{AFX_DATA_INIT(CStrDlg)
 	m_string = _T("");
@@ -36,7 +34,7 @@ CStrDlg::CStrDlg(DWORD dwFlags, LPCTSTR pszString, LPCTSTR pszPrompt,
 	m_strTitle = pszTitle;
 }
 
-void CStrDlg::DoDataExchange(CDataExchange* pDX)
+void CStrDlg::DoDataExchange(CDataExchange *pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	DDX_Text(pDX, IDC_PROMPT, m_strPrompt);
@@ -62,11 +60,11 @@ void CStrDlg::SetRange(int iLow, int iHigh, int iIncrement_)
 	this->iIncrement = 1;
 }
 
-BOOL CStrDlg::OnInitDialog() 
+BOOL CStrDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
-	if(dwFlags & Spin)	// enable spin
+	if(dwFlags & Spin) // enable spin
 	{
 		m_cSpin.EnableWindow(TRUE);
 		m_cSpin.SetRange(iRangeLow, iRangeHigh);

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: used by all .exe's that run under steam and out, 
+// Purpose: used by all .exe's that run under steam and out,
 //			so they can be launched indirectly by steam and launch steam themselves
 //
 //=============================================================================//
@@ -19,7 +19,7 @@
 //			if it returns true, then exit
 //			if it ruturns false, then continue with normal startup
 //-----------------------------------------------------------------------------
-bool ShouldLaunchAppViaSteam(const char *cmdLine, const char *steamFilesystemDllName, const char *stdioFilesystemDllName);
-
+bool ShouldLaunchAppViaSteam(const char *cmdLine, const char *steamFilesystemDllName,
+							 const char *stdioFilesystemDllName);
 
 #endif // STEAMAPPSTARTUP_H

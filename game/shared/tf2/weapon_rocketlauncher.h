@@ -12,9 +12,9 @@
 
 #include "basetfcombatweapon_shared.h"
 
-#if defined( CLIENT_DLL )
+#if defined(CLIENT_DLL)
 // Client Only
-	#define CWeaponRocketLauncher C_WeaponRocketLauncher
+#define CWeaponRocketLauncher C_WeaponRocketLauncher
 #endif
 
 //=============================================================================
@@ -23,10 +23,10 @@
 //
 class CWeaponRocketLauncher : public CWeaponCombatUsedWithShieldBase
 {
-	DECLARE_CLASS( CWeaponRocketLauncher, CWeaponCombatUsedWithShieldBase );
+	DECLARE_CLASS(CWeaponRocketLauncher, CWeaponCombatUsedWithShieldBase);
 
 public:
-// Client & Server
+	// Client & Server
 
 	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
@@ -34,25 +34,28 @@ public:
 	CWeaponRocketLauncher();
 	~CWeaponRocketLauncher();
 
-	void	Spawn( void );
+	void Spawn(void);
 
 	// All predicted weapons need to implement and return true
-	bool	IsPredicted( void ) const { return true; }
-	void	PrimaryAttack( void );
-	void	ItemPostFrame( void );
-	float	GetFireRate( void );
-	bool	ComputeEMPFireState( void );
+	bool IsPredicted(void) const
+	{
+		return true;
+	}
+	void PrimaryAttack(void);
+	void ItemPostFrame(void);
+	float GetFireRate(void);
+	bool ComputeEMPFireState(void);
 
-#if defined( CLIENT_DLL )
-// Client Only
+#if defined(CLIENT_DLL)
+	// Client Only
 
-	bool	ShouldPredict( void );
+	bool ShouldPredict(void);
 #endif
 
 private:
-// Client & Server
+	// Client & Server
 
-	CWeaponRocketLauncher( const CWeaponRocketLauncher& );
+	CWeaponRocketLauncher(const CWeaponRocketLauncher &);
 };
 
 #endif // WEAPON_ROCKETLAUNCHER_H

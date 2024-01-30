@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -10,43 +10,41 @@
 #include "items.h"
 #include "cs_player.h"
 
-
 class CItemNvgs : public CItem
 {
 public:
+	DECLARE_CLASS(CItemNvgs, CItem);
 
-	DECLARE_CLASS( CItemNvgs, CItem );
+	void Spawn(void)
+	{
+		Precache();
+		BaseClass::Spawn();
+	}
 
-	void Spawn( void )
-	{ 
-		Precache( );
-		BaseClass::Spawn( );
-	}
-	
-	void Precache( void )
+	void Precache(void)
 	{
-		PrecacheScriptSound( "BaseCombatCharacter.ItemPickup2" );
+		PrecacheScriptSound("BaseCombatCharacter.ItemPickup2");
 	}
-	
-	bool MyTouch( CBasePlayer *pBasePlayer )
+
+	bool MyTouch(CBasePlayer *pBasePlayer)
 	{
-		CCSPlayer *pPlayer = dynamic_cast< CCSPlayer* >( pBasePlayer );
-		if ( !pPlayer )
+		CCSPlayer *pPlayer = dynamic_cast<CCSPlayer *>(pBasePlayer);
+		if(!pPlayer)
 		{
-			Assert( false );
+			Assert(false);
 			return false;
 		}
 
 		pPlayer->m_bHasNightVision = true;
 
-		if ( pPlayer->IsDead() == false )
+		if(pPlayer->IsDead() == false)
 		{
-			CPASAttenuationFilter filter( pPlayer );
-			EmitSound( filter, entindex(), "BaseCombatCharacter.ItemPickup2" );
+			CPASAttenuationFilter filter(pPlayer);
+			EmitSound(filter, entindex(), "BaseCombatCharacter.ItemPickup2");
 
-			CSingleUserRecipientFilter user( pPlayer );
-			UserMessageBegin( user, "ItemPickup" );
-			WRITE_STRING( "item_nvgs" );
+			CSingleUserRecipientFilter user(pPlayer);
+			UserMessageBegin(user, "ItemPickup");
+			WRITE_STRING("item_nvgs");
 			MessageEnd();
 		}
 
@@ -54,6 +52,4 @@ public:
 	}
 };
 
-LINK_ENTITY_TO_CLASS( item_nvgs, CItemNvgs );
-
-
+LINK_ENTITY_TO_CLASS(item_nvgs, CItemNvgs);

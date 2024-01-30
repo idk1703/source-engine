@@ -12,7 +12,7 @@
 
 CCircularBuffer::CCircularBuffer()
 {
-	SetSize( 0 );
+	SetSize(0);
 }
 
 CCircularBuffer::CCircularBuffer(int size)
@@ -21,13 +21,13 @@ CCircularBuffer::CCircularBuffer(int size)
 }
 
 //------------------ Copyright (c) 1999 Valve, LLC. ----------------------------
-//Purpose : Sets the maximum size for a circular buffer. This does not do any
+// Purpose : Sets the maximum size for a circular buffer. This does not do any
 //			memory allocation, it simply informs the buffer of its size.
-//Author  : DSpeyrer
+// Author  : DSpeyrer
 //------------------------------------------------------------------------------
 void CCircularBuffer::SetSize(int size)
 {
-	Assert( this );
+	Assert(this);
 
 	m_nSize = size;
 	m_nRead = 0;
@@ -35,10 +35,9 @@ void CCircularBuffer::SetSize(int size)
 	m_nCount = 0;
 }
 
-
 //------------------ Copyright (c) 1999 Valve, LLC. ----------------------------
-//Purpose : Empties a circular buffer.
-//Author  : DSpeyrer
+// Purpose : Empties a circular buffer.
+// Author  : DSpeyrer
 //------------------------------------------------------------------------------
 void CCircularBuffer::Flush()
 {
@@ -49,60 +48,56 @@ void CCircularBuffer::Flush()
 	m_nCount = 0;
 }
 
-
 //------------------ Copyright (c) 1999 Valve, LLC. ----------------------------
-//Purpose : Returns the available space in a circular buffer.
-//Author  : DSpeyrer
+// Purpose : Returns the available space in a circular buffer.
+// Author  : DSpeyrer
 //------------------------------------------------------------------------------
 int CCircularBuffer::GetWriteAvailable()
 {
 	AssertValid();
 
-	return(m_nSize - m_nCount);
+	return (m_nSize - m_nCount);
 }
 
-
 //------------------ Copyright (c) 1999 Valve, LLC. ----------------------------
-//Purpose : Returns the size of a circular buffer.
-//Author  : DSpeyrer
+// Purpose : Returns the size of a circular buffer.
+// Author  : DSpeyrer
 //------------------------------------------------------------------------------
 int CCircularBuffer::GetSize()
 {
 	AssertValid();
 
-	return(m_nSize);
+	return (m_nSize);
 }
 
-
 //------------------ Copyright (c) 1999 Valve, LLC. ----------------------------
-//Purpose : Returns the number of bytes in a circular buffer.
-//Author  : DSpeyrer
+// Purpose : Returns the number of bytes in a circular buffer.
+// Author  : DSpeyrer
 //------------------------------------------------------------------------------
 int CCircularBuffer::GetReadAvailable()
 {
 	AssertValid();
 
-	return(m_nCount);
+	return (m_nCount);
 }
 
-
 //------------------ Copyright (c) 1999 Valve, LLC. ----------------------------
-//Purpose : Reads a specified number of bytes from a circular buffer without
+// Purpose : Reads a specified number of bytes from a circular buffer without
 //			consuming them. They will still be available for future calls to
 //			Read or Peek.
-//Input   : pchDest - destination buffer.
+// Input   : pchDest - destination buffer.
 //			m_nCount - number of bytes to place in destination buffer.
-//Output  : Returns the number of bytes placed in the destination buffer.
-//Author  : DSpeyrer
+// Output  : Returns the number of bytes placed in the destination buffer.
+// Author  : DSpeyrer
 //------------------------------------------------------------------------------
 int CCircularBuffer::Peek(char *pchDest, int nCount)
 {
 	// If no data available, just return.
 	if(m_nCount == 0)
 	{
-		return(0);
+		return (0);
 	}
-	
+
 	//
 	// Requested amount should not exceed the available amount.
 	//
@@ -112,7 +107,7 @@ int CCircularBuffer::Peek(char *pchDest, int nCount)
 	// Copy as many of the requested bytes as possible.
 	// If buffer wrap occurs split the data into two chunks.
 	//
-	if (m_nRead + nCount > m_nSize)
+	if(m_nRead + nCount > m_nSize)
 	{
 		int nCount1 = m_nSize - m_nRead;
 		memcpy(pchDest, &m_chData[m_nRead], nCount1);
@@ -126,34 +121,33 @@ int CCircularBuffer::Peek(char *pchDest, int nCount)
 	{
 		memcpy(pchDest, &m_chData[m_nRead], nCount);
 	}
-	
+
 	AssertValid();
 	return nCount;
 }
 
-
 //------------------ Copyright (c) 1999 Valve, LLC. ----------------------------
-//Purpose : Advances the read index, consuming a specified number of bytes from
+// Purpose : Advances the read index, consuming a specified number of bytes from
 //			the circular buffer.
-//Input   : m_nCount - number of bytes to consume.
-//Output  : Returns the actual number of bytes consumed.
-//Author  : DSpeyrer
+// Input   : m_nCount - number of bytes to consume.
+// Output  : Returns the actual number of bytes consumed.
+// Author  : DSpeyrer
 //------------------------------------------------------------------------------
 int CCircularBuffer::Advance(int nCount)
 {
 	// If no data available, just return.
-	if (m_nCount == 0)
+	if(m_nCount == 0)
 	{
-		return(0);
+		return (0);
 	}
-	
+
 	//
 	// Requested amount should not exceed the available amount.
 	//
 	nCount = MIN(m_nCount, nCount);
 
-	// Advance the read pointer, checking for buffer 
-	//wrap.
+	// Advance the read pointer, checking for buffer
+	// wrap.
 	//
 	m_nRead = (m_nRead + nCount) % m_nSize;
 	m_nCount -= nCount;
@@ -162,7 +156,7 @@ int CCircularBuffer::Advance(int nCount)
 	// If we have emptied the buffer, reset the read and write indices
 	// to minimize buffer wrap.
 	//
-	if (m_nCount == 0)
+	if(m_nCount == 0)
 	{
 		m_nRead = 0;
 		m_nWrite = 0;
@@ -172,29 +166,28 @@ int CCircularBuffer::Advance(int nCount)
 	return nCount;
 }
 
-
 //------------------ Copyright (c) 1999 Valve, LLC. ----------------------------
-//Purpose : Reads a specified number of bytes from a circular buffer. The bytes
+// Purpose : Reads a specified number of bytes from a circular buffer. The bytes
 //			will be consumed by the read process.
-//Input   : pchDest - destination buffer.
+// Input   : pchDest - destination buffer.
 //			m_nCount - number of bytes to place in destination buffer.
-//Output  : Returns the number of bytes placed in the destination buffer.
-//Author  : DSpeyrer
+// Output  : Returns the number of bytes placed in the destination buffer.
+// Author  : DSpeyrer
 //------------------------------------------------------------------------------
 int CCircularBuffer::Read(void *pchDestIn, int nCount)
 {
 	int nPeeked;
 	int nRead;
 
-	char *pchDest = (char*)pchDestIn;
+	char *pchDest = (char *)pchDestIn;
 
 	nPeeked = Peek(pchDest, nCount);
 
-	if (nPeeked != 0)
+	if(nPeeked != 0)
 	{
 		nRead = Advance(nPeeked);
 
-		assert( nRead == nPeeked);
+		assert(nRead == nPeeked);
 	}
 	else
 	{
@@ -202,30 +195,29 @@ int CCircularBuffer::Read(void *pchDestIn, int nCount)
 	}
 
 	AssertValid();
-	return(nRead);
+	return (nRead);
 }
 
-
 //------------------ Copyright (c) 1999 Valve, LLC. ----------------------------
-//Purpose : Writes a specified number of bytes to the buffer.
-//Input   : pm_chData - buffer containing bytes to bw written.
+// Purpose : Writes a specified number of bytes to the buffer.
+// Input   : pm_chData - buffer containing bytes to bw written.
 //			m_nCount - the number of bytes to write.
-//Output  : Returns the number of bytes written. If there wa insufficient space
+// Output  : Returns the number of bytes written. If there wa insufficient space
 //			to write all requested bytes, the value returned will be less than
 //			the requested amount.
-//Author  : DSpeyrer
+// Author  : DSpeyrer
 //------------------------------------------------------------------------------
 int CCircularBuffer::Write(void *pData, int nBytesRequested)
 {
 	// Write all the data.
 	int nBytesToWrite = nBytesRequested;
-	char *pDataToWrite = (char*)pData;
-	
+	char *pDataToWrite = (char *)pData;
+
 	while(nBytesToWrite)
 	{
 		int from = m_nWrite;
 		int to = m_nWrite + nBytesToWrite;
-		
+
 		if(to >= m_nSize)
 		{
 			to = m_nSize;
@@ -254,18 +246,17 @@ int CCircularBuffer::Write(void *pData, int nBytesRequested)
 	return nBytesRequested;
 }
 
-CCircularBuffer *AllocateCircularBuffer( int nSize )
+CCircularBuffer *AllocateCircularBuffer(int nSize)
 {
-	char *pBuff = (char *)malloc( sizeof( CCircularBuffer ) + nSize - 1 );
+	char *pBuff = (char *)malloc(sizeof(CCircularBuffer) + nSize - 1);
 
 	CCircularBuffer *pCCircularBuffer = (CCircularBuffer *)pBuff;
 
-	pCCircularBuffer->SetSize( nSize );
+	pCCircularBuffer->SetSize(nSize);
 	return pCCircularBuffer;
 }
 
-void FreeCircularBuffer( CCircularBuffer *pCircularBuffer )
+void FreeCircularBuffer(CCircularBuffer *pCircularBuffer)
 {
-	free( (char*)pCircularBuffer );
+	free((char *)pCircularBuffer);
 }
-

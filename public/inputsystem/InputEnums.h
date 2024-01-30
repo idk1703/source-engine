@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -11,16 +11,16 @@
 #endif
 
 // Standard maximum +/- value of a joystick axis
-#define MAX_BUTTONSAMPLE			32768
+#define MAX_BUTTONSAMPLE 32768
 
-#if !defined( _X360 )
-#define INVALID_USER_ID		-1
+#if !defined(_X360)
+#define INVALID_USER_ID -1
 #else
-#define INVALID_USER_ID		XBX_INVALID_USER_ID
+#define INVALID_USER_ID XBX_INVALID_USER_ID
 #endif
 
 //-----------------------------------------------------------------------------
-// Forward declarations: 
+// Forward declarations:
 //-----------------------------------------------------------------------------
 
 enum
@@ -30,12 +30,12 @@ enum
 	MAX_NOVINT_DEVICES = 2,
 };
 
-#if defined( LINUX )
+#if defined(LINUX)
 // Linux has a slightly different mapping order on the joystick axes
 enum JoystickAxis_t
 {
 	JOY_AXIS_X = 0,
- 	JOY_AXIS_Y,
+	JOY_AXIS_Y,
 	JOY_AXIS_Z,
 	JOY_AXIS_U,
 	JOY_AXIS_R,
@@ -46,7 +46,7 @@ enum JoystickAxis_t
 enum JoystickAxis_t
 {
 	JOY_AXIS_X = 0,
- 	JOY_AXIS_Y,
+	JOY_AXIS_Y,
 	JOY_AXIS_Z,
 	JOY_AXIS_R,
 	JOY_AXIS_U,
@@ -60,11 +60,11 @@ enum JoystickAxis_t
 //-----------------------------------------------------------------------------
 enum
 {
-	MS_WM_XBUTTONDOWN	= 0x020B,
-	MS_WM_XBUTTONUP		= 0x020C,
-	MS_WM_XBUTTONDBLCLK	= 0x020D,
-	MS_MK_BUTTON4		= 0x0020,
-	MS_MK_BUTTON5		= 0x0040,
+	MS_WM_XBUTTONDOWN = 0x020B,
+	MS_WM_XBUTTONUP = 0x020C,
+	MS_WM_XBUTTONDBLCLK = 0x020D,
+	MS_MK_BUTTON4 = 0x0020,
+	MS_MK_BUTTON5 = 0x0040,
 };
 
 //-----------------------------------------------------------------------------
@@ -74,25 +74,25 @@ enum InputEventType_t
 {
 	IE_ButtonPressed = 0,	// m_nData contains a ButtonCode_t
 	IE_ButtonReleased,		// m_nData contains a ButtonCode_t
-	IE_ButtonDoubleClicked,	// m_nData contains a ButtonCode_t
+	IE_ButtonDoubleClicked, // m_nData contains a ButtonCode_t
 	IE_AnalogValueChanged,	// m_nData contains an AnalogCode_t, m_nData2 contains the value
 
 	IE_FirstSystemEvent = 100,
 	IE_Quit = IE_FirstSystemEvent,
 	IE_ControllerInserted,	// m_nData contains the controller ID
-	IE_ControllerUnplugged,	// m_nData contains the controller ID
+	IE_ControllerUnplugged, // m_nData contains the controller ID
 
-	IE_FirstVguiEvent = 1000,	// Assign ranges for other systems that post user events here
+	IE_FirstVguiEvent = 1000, // Assign ranges for other systems that post user events here
 	IE_FirstAppEvent = 2000,
 };
 
 struct InputEvent_t
 {
-	int m_nType;				// Type of the event (see InputEventType_t)
-	int m_nTick;				// Tick on which the event occurred
-	int m_nData;				// Generic 32-bit data, what it contains depends on the event
-	int m_nData2;				// Generic 32-bit data, what it contains depends on the event
-	int m_nData3;				// Generic 32-bit data, what it contains depends on the event
+	int m_nType;  // Type of the event (see InputEventType_t)
+	int m_nTick;  // Tick on which the event occurred
+	int m_nData;  // Generic 32-bit data, what it contains depends on the event
+	int m_nData2; // Generic 32-bit data, what it contains depends on the event
+	int m_nData3; // Generic 32-bit data, what it contains depends on the event
 };
 
 //-----------------------------------------------------------------------------
@@ -134,8 +134,10 @@ typedef enum
 	SK_BUTTON_START,
 	SK_BUTTON_STEAM,
 	SK_BUTTON_INACTIVE_START,
-	SK_VBUTTON_F1,						// These are "virtual" buttons. Useful if you want to have flow that maps an action to button code to be interpreted by some UI that accepts keystrokes, but you
-	SK_VBUTTON_F2,						// don't want to map to real button (perhaps because it would be interpreted by UI in a way you don't like). 																																										
+	SK_VBUTTON_F1, // These are "virtual" buttons. Useful if you want to have flow that maps an action to button code to
+				   // be interpreted by some UI that accepts keystrokes, but you
+	SK_VBUTTON_F2, // don't want to map to real button (perhaps because it would be interpreted by UI in a way you don't
+				   // like).
 	SK_VBUTTON_F3,
 	SK_VBUTTON_F4,
 	SK_VBUTTON_F5,
@@ -182,7 +184,7 @@ enum GameActionSet_t
 enum GameActionSetFlags_t
 {
 	GAME_ACTION_SET_FLAGS_NONE = 0,
-	GAME_ACTION_SET_FLAGS_TAUNTING = (1<<0),
+	GAME_ACTION_SET_FLAGS_TAUNTING = (1 << 0),
 };
 
 enum JoystickType_t

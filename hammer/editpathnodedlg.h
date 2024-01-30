@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,40 +13,40 @@
 
 #include "resource.h"
 
-
 /////////////////////////////////////////////////////////////////////////////
 // CEditPathNodeDlg dialog
 
 class CEditPathNodeDlg : public CDialog
 {
-// Construction
+	// Construction
 public:
-	CEditPathNodeDlg(CWnd* pParent = NULL);   // standard constructor
+	CEditPathNodeDlg(CWnd *pParent = NULL); // standard constructor
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CEditPathNodeDlg)
-	enum { IDD = IDD_EDITPATHNODE };
-	BOOL	m_bRetrigger;
-	int		m_iSpeed;
-	int		m_iWait;
-	int		m_iYawSpeed;
-	CString	m_strName;
+	enum
+	{
+		IDD = IDD_EDITPATHNODE
+	};
+	BOOL m_bRetrigger;
+	int m_iSpeed;
+	int m_iWait;
+	int m_iYawSpeed;
+	CString m_strName;
 	//}}AFX_DATA
 
-
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CEditPathNodeDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
 protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
+													 //}}AFX_VIRTUAL
 
+	// Implementation
+protected:
 	// Generated message map functions
 	//{{AFX_MSG(CEditPathNodeDlg)
-		// NOTE: the ClassWizard will add member functions here
+	// NOTE: the ClassWizard will add member functions here
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

@@ -17,46 +17,43 @@
 #include <commdlg.h>
 #include <string.h>
 
-
-
-int
-mxMessageBox (mxWindow *parent, const char *msg, const char *title, int style)
+int mxMessageBox(mxWindow *parent, const char *msg, const char *title, int style)
 {
 	HWND hwndParent = 0;
-	if (parent)
-		hwndParent = (HWND) parent->getHandle ();
+	if(parent)
+		hwndParent = (HWND)parent->getHandle();
 
 	UINT uType = 0;
 
-	if (style & MX_MB_OK)
+	if(style & MX_MB_OK)
 		uType |= MB_OK;
-	else if (style & MX_MB_YESNO)
+	else if(style & MX_MB_YESNO)
 		uType |= MB_YESNO;
-	else if (style & MX_MB_YESNOCANCEL)
+	else if(style & MX_MB_YESNOCANCEL)
 		uType |= MB_YESNOCANCEL;
 
-	if (style & MX_MB_INFORMATION)
+	if(style & MX_MB_INFORMATION)
 		uType |= MB_ICONINFORMATION;
-	else if (style & MX_MB_ERROR)
+	else if(style & MX_MB_ERROR)
 		uType |= MB_ICONHAND;
-	else if (style & MX_MB_WARNING)
+	else if(style & MX_MB_WARNING)
 		uType |= MB_ICONEXCLAMATION;
-	else if (style & MX_MB_QUESTION)
+	else if(style & MX_MB_QUESTION)
 		uType |= MB_ICONQUESTION;
 
-	int ret = MessageBox (hwndParent, msg, title, uType);
+	int ret = MessageBox(hwndParent, msg, title, uType);
 
-	switch (ret)
+	switch(ret)
 	{
-	case IDOK:
-	case IDYES:
-		return 0;
+		case IDOK:
+		case IDYES:
+			return 0;
 
-	case IDNO:
-		return 1;
+		case IDNO:
+			return 1;
 
-	case IDCANCEL:
-		return 2;
+		case IDCANCEL:
+			return 2;
 	}
 
 	return 0;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,9 +23,8 @@
 
 using namespace vgui;
 
-
 // Lame copy from Panel
-enum PinCorner_e 
+enum PinCorner_e
 {
 	PIN_TOPLEFT = 0,
 	PIN_TOPRIGHT,
@@ -41,21 +40,19 @@ enum PinCorner_e
 	NUM_PIN_POINTS,
 };
 
-float PinDeltas[NUM_PIN_POINTS][2] =
-{
-	{ 0, 0 },	// PIN_TOPLEFT,
-	{ 1, 0 },	// PIN_TOPRIGHT,
-	{ 0, 1 },	// PIN_BOTTOMLEFT,
-	{ 1, 1 },	// PIN_BOTTOMRIGHT,
-	{ 0.5, 0 },	// PIN_CENTER_TOP,
-	{ 1, 0.5 },	// PIN_CENTER_RIGHT,
-	{ 0.5, 1 },	// PIN_CENTER_BOTTOM,
-	{ 0, 0.5 },	// PIN_CENTER_LEFT,
+float PinDeltas[NUM_PIN_POINTS][2] = {
+	{0, 0},	  // PIN_TOPLEFT,
+	{1, 0},	  // PIN_TOPRIGHT,
+	{0, 1},	  // PIN_BOTTOMLEFT,
+	{1, 1},	  // PIN_BOTTOMRIGHT,
+	{0.5, 0}, // PIN_CENTER_TOP,
+	{1, 0.5}, // PIN_CENTER_RIGHT,
+	{0.5, 1}, // PIN_CENTER_BOTTOM,
+	{0, 0.5}, // PIN_CENTER_LEFT,
 };
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 VPanel::VPanel()
 {
@@ -92,16 +89,16 @@ VPanel::VPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 VPanel::~VPanel()
 {
 	// Someone just deleted their parent Panel while it was being used in InternalSolveTraverse().
 	// This will cause a difficult to debug crash, so we spew out the panel name here in hopes
 	//  it will help track down the offender.
-	if ( m_nThinkTraverseLevel != 0 )
+	if(m_nThinkTraverseLevel != 0)
 	{
-		Warning( "Deleting in-use vpanel: %s/%s %p.\n", GetName(), GetClassName(), this );
+		Warning("Deleting in-use vpanel: %s/%s %p.\n", GetName(), GetClassName(), this);
 #ifdef STAGING_ONLY
 		DebuggerBreak();
 #endif
@@ -109,27 +106,27 @@ VPanel::~VPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void VPanel::TraverseLevel( int val )
+void VPanel::TraverseLevel(int val)
 {
 	// Bump up our traverse level.
 	m_nThinkTraverseLevel += m_nThinkTraverseLevel;
 
 	// Bump up our client panel traverse level.
-	if ( Client() )
+	if(Client())
 	{
-		VPANEL vp = g_pVGui->HandleToPanel( _clientPanelHandle );
-		if ( vp == vgui::INVALID_PANEL )
+		VPANEL vp = g_pVGui->HandleToPanel(_clientPanelHandle);
+		if(vp == vgui::INVALID_PANEL)
 		{
 			// This is really bad - we have a Client() pointer that is invalid.
-			Warning( "Panel '%s/%s' has invalid client: %p.\n", GetName(), GetClassName(), Client() );
+			Warning("Panel '%s/%s' has invalid client: %p.\n", GetName(), GetClassName(), Client());
 #ifdef STAGING_ONLY
 			DebuggerBreak();
 #endif
 		}
 
-		if ( Client()->GetVPanel() )
+		if(Client()->GetVPanel())
 		{
 			VPanel *vpanel = (VPanel *)Client()->GetVPanel();
 			vpanel->m_nThinkTraverseLevel += vpanel->m_nThinkTraverseLevel;
@@ -152,16 +149,16 @@ void VPanel::TraverseLevel( int val )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VPanel::Init(IClientPanel *attachedClientPanel)
 {
 	_clientPanel = attachedClientPanel;
-	_clientPanelHandle = g_pVGui->PanelToHandle( attachedClientPanel ? attachedClientPanel->GetVPanel() : 0 );
+	_clientPanelHandle = g_pVGui->PanelToHandle(attachedClientPanel ? attachedClientPanel->GetVPanel() : 0);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VPanel::Solve()
 {
@@ -170,44 +167,46 @@ void VPanel::Solve()
 	basePos[1] = _pos[1];
 
 	int baseSize[2];
-	GetSize( baseSize[0], baseSize[1] );
+	GetSize(baseSize[0], baseSize[1]);
 
 	VPanel *parent = GetParent();
-	if (IsPopup())
+	if(IsPopup())
 	{
 		// if we're a popup, draw at the highest level
 		parent = (VPanel *)g_pSurface->GetEmbeddedPanel();
 	}
 
 	int pabs[2];
-	if ( parent )
+	if(parent)
 	{
 		parent->GetAbsPos(pabs[0], pabs[1]);
 	}
 
-	if ( _pinsibling )
+	if(_pinsibling)
 	{
 		_pinsibling->Solve();
 
 		int sibPos[2];
 		int sibSize[2];
-		_pinsibling->GetInternalAbsPos( sibPos[0], sibPos[1] );
-		_pinsibling->GetSize( sibSize[0], sibSize[1] );
+		_pinsibling->GetInternalAbsPos(sibPos[0], sibPos[1]);
+		_pinsibling->GetSize(sibSize[0], sibSize[1]);
 
-		for ( int i = 0; i < 2; i++ )
+		for(int i = 0; i < 2; i++)
 		{
-			if ( parent )
+			if(parent)
 			{
 				sibPos[i] -= pabs[i];
 			}
 
 			// Determine which direction positive values move in. For center pins, we use screen relative signs.
 			int iSign = 1;
-			if ( i == 0 && (_pinsibling_their_corner == PIN_CENTER_LEFT || _pinsibling_their_corner == PIN_TOPLEFT || _pinsibling_their_corner == PIN_BOTTOMLEFT) )
+			if(i == 0 && (_pinsibling_their_corner == PIN_CENTER_LEFT || _pinsibling_their_corner == PIN_TOPLEFT ||
+						  _pinsibling_their_corner == PIN_BOTTOMLEFT))
 			{
 				iSign = -1;
 			}
-			else if ( i == 1 && (_pinsibling_their_corner == PIN_CENTER_TOP || _pinsibling_their_corner == PIN_TOPLEFT || _pinsibling_their_corner == PIN_TOPRIGHT) )
+			else if(i == 1 && (_pinsibling_their_corner == PIN_CENTER_TOP || _pinsibling_their_corner == PIN_TOPLEFT ||
+							   _pinsibling_their_corner == PIN_TOPRIGHT))
 			{
 				iSign = -1;
 			}
@@ -226,16 +225,16 @@ void VPanel::Solve()
 	_absPos[1] = basePos[1];
 
 	// put into parent space
-	int pinset[4] = {0, 0, 0, 0}; 
-	if ( parent )
+	int pinset[4] = {0, 0, 0, 0};
+	if(parent)
 	{
-		parent->GetInset( pinset[0], pinset[1], pinset[2], pinset[3] );
+		parent->GetInset(pinset[0], pinset[1], pinset[2], pinset[3]);
 
 		absX += pabs[0] + pinset[0];
 		absY += pabs[1] + pinset[1];
 
-		_absPos[0] = clamp( absX, -32767, 32767 );
-		_absPos[1] = clamp( absY, -32767, 32767 );
+		_absPos[0] = clamp(absX, -32767, 32767);
+		_absPos[1] = clamp(absY, -32767, 32767);
 	}
 
 	// set initial bounds
@@ -244,21 +243,21 @@ void VPanel::Solve()
 
 	int absX2 = absX + baseSize[0];
 	int absY2 = absY + baseSize[1];
-	_clipRect[2] = clamp( absX2, -32767, 32767 );
-	_clipRect[3] = clamp( absY2, -32767, 32767 );
+	_clipRect[2] = clamp(absX2, -32767, 32767);
+	_clipRect[3] = clamp(absY2, -32767, 32767);
 
 	// clip to parent, if we're not a popup
-	if ( parent && !IsPopup() )
-	{ 
+	if(parent && !IsPopup())
+	{
 		int pclip[4];
 		parent->GetClipRect(pclip[0], pclip[1], pclip[2], pclip[3]);
 
-		if (_clipRect[0] < pclip[0])
+		if(_clipRect[0] < pclip[0])
 		{
 			_clipRect[0] = pclip[0];
 		}
 
-		if (_clipRect[1] < pclip[1])
+		if(_clipRect[1] < pclip[1])
 		{
 			_clipRect[1] = pclip[1];
 		}
@@ -273,25 +272,23 @@ void VPanel::Solve()
 			_clipRect[3] = pclip[3] - pinset[3];
 		}
 
-		if ( _clipRect[0] > _clipRect[2] )
+		if(_clipRect[0] > _clipRect[2])
 		{
 			_clipRect[2] = _clipRect[0];
 		}
 
-		if ( _clipRect[1] > _clipRect[3] )
+		if(_clipRect[1] > _clipRect[3])
 		{
 			_clipRect[3] = _clipRect[1];
 		}
 	}
 
-	Assert( _clipRect[0] <= _clipRect[2] );
-	Assert( _clipRect[1] <= _clipRect[3] );
+	Assert(_clipRect[0] <= _clipRect[2]);
+	Assert(_clipRect[1] <= _clipRect[3]);
 }
 
-
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VPanel::SetPos(int x, int y)
 {
@@ -300,7 +297,7 @@ void VPanel::SetPos(int x, int y)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VPanel::GetPos(int &x, int &y)
 {
@@ -309,66 +306,66 @@ void VPanel::GetPos(int &x, int &y)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void VPanel::SetSize(int wide,int tall)
+void VPanel::SetSize(int wide, int tall)
 {
-	if (wide<_minimumSize[0])
+	if(wide < _minimumSize[0])
 	{
-		wide=_minimumSize[0];
+		wide = _minimumSize[0];
 	}
-	if (tall<_minimumSize[1])
+	if(tall < _minimumSize[1])
 	{
-		tall=_minimumSize[1];
+		tall = _minimumSize[1];
 	}
 
-	if (_size[0] == wide && _size[1] == tall)
+	if(_size[0] == wide && _size[1] == tall)
 		return;
 
-	_size[0]=wide;
-	_size[1]=tall;
+	_size[0] = wide;
+	_size[1] = tall;
 
 	Client()->OnSizeChanged(wide, tall);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void VPanel::GetSize(int& wide,int& tall)
+void VPanel::GetSize(int &wide, int &tall)
 {
-	wide=_size[0];
-	tall=_size[1];
+	wide = _size[0];
+	tall = _size[1];
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void VPanel::SetMinimumSize(int wide,int tall)
+void VPanel::SetMinimumSize(int wide, int tall)
 {
-	_minimumSize[0]=wide;
-	_minimumSize[1]=tall;
+	_minimumSize[0] = wide;
+	_minimumSize[1] = tall;
 
 	// check if we're currently smaller than the new minimum size
 	int currentWidth = _size[0];
-	if (currentWidth < wide)
+	if(currentWidth < wide)
 	{
 		currentWidth = wide;
 	}
 	int currentHeight = _size[1];
-	if (currentHeight < tall)
+	if(currentHeight < tall)
 	{
 		currentHeight = tall;
 	}
 
 	// resize to new minimum size if necessary
-	if (currentWidth != _size[0] || currentHeight != _size[1])
+	if(currentWidth != _size[0] || currentHeight != _size[1])
 	{
 		SetSize(currentWidth, currentHeight);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VPanel::GetMinimumSize(int &wide, int &tall)
 {
@@ -377,11 +374,11 @@ void VPanel::GetMinimumSize(int &wide, int &tall)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VPanel::SetVisible(bool state)
 {
-	if (_visible == state)
+	if(_visible == state)
 		return;
 
 	// need to tell the surface (in case special window processing needs to occur)
@@ -389,14 +386,14 @@ void VPanel::SetVisible(bool state)
 
 	_visible = state;
 
-	if( IsPopup() )
+	if(IsPopup())
 	{
 		vgui::g_pSurface->CalculateMouseVisible();
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VPanel::SetEnabled(bool state)
 {
@@ -404,7 +401,7 @@ void VPanel::SetEnabled(bool state)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool VPanel::IsVisible()
 {
@@ -412,7 +409,7 @@ bool VPanel::IsVisible()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool VPanel::IsEnabled()
 {
@@ -420,18 +417,18 @@ bool VPanel::IsEnabled()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VPanel::GetAbsPos(int &x, int &y)
 {
 	x = _absPos[0];
 	y = _absPos[1];
 
-	g_pSurface->OffsetAbsPos( x, y );
+	g_pSurface->OffsetAbsPos(x, y);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VPanel::GetInternalAbsPos(int &x, int &y)
 {
@@ -440,7 +437,7 @@ void VPanel::GetInternalAbsPos(int &x, int &y)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VPanel::GetClipRect(int &x0, int &y0, int &x1, int &y1)
 {
@@ -451,7 +448,7 @@ void VPanel::GetClipRect(int &x0, int &y0, int &x1, int &y1)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VPanel::SetInset(int left, int top, int right, int bottom)
 {
@@ -462,7 +459,7 @@ void VPanel::SetInset(int left, int top, int right, int bottom)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VPanel::GetInset(int &left, int &top, int &right, int &bottom)
 {
@@ -473,28 +470,28 @@ void VPanel::GetInset(int &left, int &top, int &right, int &bottom)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VPanel::SetParent(VPanel *newParent)
 {
-	if (this == newParent)
+	if(this == newParent)
 		return;
 
-	if (_parent == newParent)
+	if(_parent == newParent)
 		return;
 
-	if (_parent != NULL)
+	if(_parent != NULL)
 	{
 		_parent->_childDar.RemoveElement(this);
 		_parent = null;
 	}
 
-	if (newParent != NULL)
+	if(newParent != NULL)
 	{
 		_parent = newParent;
 		_parent->_childDar.PutElement(this);
-		SetZPos(_zpos);						// re-sort parent's panel order if necessary
-		if (_parent->Client())
+		SetZPos(_zpos); // re-sort parent's panel order if necessary
+		if(_parent->Client())
 		{
 			_parent->Client()->OnChildAdded((VPANEL)this);
 		}
@@ -502,7 +499,7 @@ void VPanel::SetParent(VPanel *newParent)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int VPanel::GetChildCount()
 {
@@ -510,20 +507,20 @@ int VPanel::GetChildCount()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 VPanel *VPanel::GetChild(int index)
 {
 	return _childDar[index];
 }
 
-CUtlVector< VPanel *> &VPanel::GetChildren()
+CUtlVector<VPanel *> &VPanel::GetChildren()
 {
 	return _childDar;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 VPanel *VPanel::GetParent()
 {
@@ -537,42 +534,42 @@ void VPanel::SetZPos(int z)
 {
 	_zpos = z;
 
-	if (_parent)
+	if(_parent)
 	{
 		// find the child in the list
 		int childCount = _parent->GetChildCount();
 		int i;
-		for (i = 0; i < childCount; i++)
+		for(i = 0; i < childCount; i++)
 		{
-			if (_parent->GetChild(i) == this)
+			if(_parent->GetChild(i) == this)
 				break;
 		}
 
-		if (i == childCount)
+		if(i == childCount)
 			return;
 
-		while (1)
+		while(1)
 		{
 			VPanel *prevChild = NULL, *nextChild = NULL;
 
-			if ( i > 0 )
+			if(i > 0)
 			{
-				prevChild = _parent->GetChild( i - 1 );
+				prevChild = _parent->GetChild(i - 1);
 			}
-			if ( i <(childCount - 1) )
+			if(i < (childCount - 1))
 			{
-				nextChild = _parent->GetChild( i + 1 );
+				nextChild = _parent->GetChild(i + 1);
 			}
 
 			// check either side of the child to see if it should move
-			if ( i > 0 && prevChild && ( prevChild->_zpos > _zpos ) )
+			if(i > 0 && prevChild && (prevChild->_zpos > _zpos))
 			{
 				// swap with the lower
 				_parent->_childDar.SetElementAt(prevChild, i);
 				_parent->_childDar.SetElementAt(this, i - 1);
 				i--;
 			}
-			else if (i < (childCount - 1) && nextChild && ( nextChild->_zpos < _zpos ) )
+			else if(i < (childCount - 1) && nextChild && (nextChild->_zpos < _zpos))
 			{
 				// swap with the higher
 				_parent->_childDar.SetElementAt(nextChild, i);
@@ -602,16 +599,16 @@ void VPanel::MoveToFront(void)
 {
 	g_pSurface->MovePopupToFront((VPANEL)this);
 
-	if (_parent)
+	if(_parent)
 	{
 		// move this panel to the end of it's parents list
 		_parent->_childDar.MoveElementToEnd(this);
 
 		// Validate the Z order
 		int i = _parent->_childDar.GetCount() - 2;
-		while (i >= 0)
+		while(i >= 0)
 		{
-			if (_parent->_childDar[i]->_zpos > _zpos)
+			if(_parent->_childDar[i]->_zpos > _zpos)
 			{
 				// we can't be in front of this; swap positions
 				_parent->_childDar.SetElementAt(_parent->_childDar[i], i + 1);
@@ -634,7 +631,7 @@ void VPanel::MoveToFront(void)
 //-----------------------------------------------------------------------------
 void VPanel::MoveToBack()
 {
-	if (_parent)
+	if(_parent)
 	{
 		// move this panel to the end of it's parents list
 		_parent->_childDar.RemoveElement(this);
@@ -642,9 +639,9 @@ void VPanel::MoveToBack()
 
 		// Validate the Z order
 		int i = 1;
-		while (i < _parent->_childDar.GetCount())
+		while(i < _parent->_childDar.GetCount())
 		{
-			if (_parent->_childDar[i]->_zpos < _zpos)
+			if(_parent->_childDar[i]->_zpos < _zpos)
 			{
 				// we can't be behind this; swap positions
 				_parent->_childDar.SetElementAt(_parent->_childDar[i], i - 1);
@@ -667,10 +664,10 @@ void VPanel::MoveToBack()
 //-----------------------------------------------------------------------------
 bool VPanel::HasParent(VPanel *potentialParent)
 {
-	if (this == potentialParent)
+	if(this == potentialParent)
 		return true;
 
-	if (_parent)
+	if(_parent)
 	{
 		return _parent->HasParent(potentialParent);
 	}
@@ -703,7 +700,7 @@ bool VPanel::IsTopmostPopup() const
 	return _isTopmostPopup;
 }
 
-void VPanel::SetTopmostPopup( bool bEnable )
+void VPanel::SetTopmostPopup(bool bEnable)
 {
 	_isTopmostPopup = bEnable;
 }
@@ -712,9 +709,9 @@ bool VPanel::IsFullyVisible()
 {
 	// recursively check to see if the panel and all it's parents are visible
 	VPanel *panel = this;
-	while (panel)
+	while(panel)
 	{
-		if (!panel->_visible)
+		if(!panel->_visible)
 		{
 			return false;
 		}
@@ -741,12 +738,10 @@ HScheme VPanel::GetScheme()
 	return Client()->GetScheme();
 }
 
-
 void VPanel::SendMessage(KeyValues *params, VPANEL ifrompanel)
 {
 	Client()->OnMessage(params, ifrompanel);
 }
-
 
 void VPanel::SetKeyBoardInputEnabled(bool state)
 {
@@ -764,7 +759,7 @@ bool VPanel::IsKeyBoardInputEnabled()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool VPanel::IsMouseInputEnabled()
 {
@@ -774,7 +769,7 @@ bool VPanel::IsMouseInputEnabled()
 //-----------------------------------------------------------------------------
 // Purpose: sibling pins
 //-----------------------------------------------------------------------------
-void VPanel::SetSiblingPin(VPanel *newSibling, byte iMyCornerToPin, byte iSiblingCornerToPinTo )
+void VPanel::SetSiblingPin(VPanel *newSibling, byte iMyCornerToPin, byte iSiblingCornerToPinTo)
 {
 	_pinsibling = newSibling;
 	_pinsibling_my_corner = iMyCornerToPin;

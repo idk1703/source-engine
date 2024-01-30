@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -23,50 +23,49 @@ CManageGamesDialog *g_pManageGamesDialog = NULL;
 class CModalDirectorySelectDialog : public vgui::DirectorySelectDialog
 {
 public:
-	CModalDirectorySelectDialog( vgui::Panel *parent, const char *title )
-		: vgui::DirectorySelectDialog( parent, title )
+	CModalDirectorySelectDialog(vgui::Panel *parent, const char *title) : vgui::DirectorySelectDialog(parent, title)
 	{
 		m_PrevAppFocusPanel = vgui::input()->GetAppModalSurface();
 	}
 
-	~CModalDirectorySelectDialog( void )
+	~CModalDirectorySelectDialog(void)
 	{
-		vgui::input()->SetAppModalSurface( m_PrevAppFocusPanel );
+		vgui::input()->SetAppModalSurface(m_PrevAppFocusPanel);
 	}
 
-
 public:
-	vgui::VPANEL	m_PrevAppFocusPanel;
+	vgui::VPANEL m_PrevAppFocusPanel;
 };
 
 //-----------------------------------------------------------------------------
 // Constructor
 //-----------------------------------------------------------------------------
-CManageGamesDialog::CManageGamesDialog( Panel *parent, const char *name, int configID ) : BaseClass( parent, name ), m_nConfigID( configID )
+CManageGamesDialog::CManageGamesDialog(Panel *parent, const char *name, int configID)
+	: BaseClass(parent, name), m_nConfigID(configID)
 {
-	Assert( !g_pManageGamesDialog );
+	Assert(!g_pManageGamesDialog);
 	g_pManageGamesDialog = this;
 
 	SetSize(384, 420);
 	SetMinimumSize(200, 50);
 
-	SetMinimizeButtonVisible( false );
-	
-	m_pGameNameEntry= new vgui::TextEntry( this, "GameName" );
-	m_pGameDirEntry = new vgui::TextEntry( this, "GamePath" );
-	
-	LoadControlSettings( "ManageGamesDialog.res" );
+	SetMinimizeButtonVisible(false);
 
-	SetDeleteSelfOnClose( true );
+	m_pGameNameEntry = new vgui::TextEntry(this, "GameName");
+	m_pGameDirEntry = new vgui::TextEntry(this, "GamePath");
 
-	SetSizeable( false );
+	LoadControlSettings("ManageGamesDialog.res");
+
+	SetDeleteSelfOnClose(true);
+
+	SetSizeable(false);
 	MoveToCenterOfScreen();
 }
 
 //-----------------------------------------------------------------------------
-// Destructor 
+// Destructor
 //-----------------------------------------------------------------------------
-CManageGamesDialog::~CManageGamesDialog( void )
+CManageGamesDialog::~CManageGamesDialog(void)
 {
 	g_pManageGamesDialog = NULL;
 }
@@ -74,22 +73,22 @@ CManageGamesDialog::~CManageGamesDialog( void )
 //-----------------------------------------------------------------------------
 // Purpose: Sets the game directory
 //-----------------------------------------------------------------------------
-void CManageGamesDialog::SetGameDir( const char *szDir )
+void CManageGamesDialog::SetGameDir(const char *szDir)
 {
 	// Strip any trailing slashes
 	char szGameDir[MAX_PATH];
-	Q_strncpy( szGameDir, szDir, MAX_PATH );
-	Q_StripTrailingSlash( szGameDir );
+	Q_strncpy(szGameDir, szDir, MAX_PATH);
+	Q_StripTrailingSlash(szGameDir);
 
-	m_pGameDirEntry->SetText( szGameDir );
+	m_pGameDirEntry->SetText(szGameDir);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Set the game name
 //-----------------------------------------------------------------------------
-void CManageGamesDialog::SetGameName( const char *szDir )
+void CManageGamesDialog::SetGameName(const char *szDir)
 {
-	m_pGameNameEntry->SetText( szDir );
+	m_pGameNameEntry->SetText(szDir);
 }
 
 //-----------------------------------------------------------------------------
@@ -97,17 +96,17 @@ void CManageGamesDialog::SetGameName( const char *szDir )
 // Input  : *name - name to test
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CManageGamesDialog::IsGameNameUnique( const char *name )
+bool CManageGamesDialog::IsGameNameUnique(const char *name)
 {
 	// Check all names
-	for ( int i = 0; i < g_Configs.Count(); i++ )
+	for(int i = 0; i < g_Configs.Count(); i++)
 	{
 		// Skip ourself
-		if ( i == m_nConfigID )
+		if(i == m_nConfigID)
 			continue;
 
 		// Test it
-		if ( Q_stricmp( name, g_Configs[i]->m_Name.Base() ) == 0 )
+		if(Q_stricmp(name, g_Configs[i]->m_Name.Base()) == 0)
 			return false;
 	}
 
@@ -117,87 +116,88 @@ bool CManageGamesDialog::IsGameNameUnique( const char *name )
 //-----------------------------------------------------------------------------
 // Purpose: Handles dialog commands
 //-----------------------------------------------------------------------------
-void CManageGamesDialog::OnCommand( const char *command )
+void CManageGamesDialog::OnCommand(const char *command)
 {
 	// Handle "OK" button
-	if ( Q_stricmp( command, "Select" ) == 0 )
+	if(Q_stricmp(command, "Select") == 0)
 	{
 		char textBuffer[1024];
 
 		// Save out the data
-		m_pGameNameEntry->GetText( textBuffer, sizeof( textBuffer ) );
-		
+		m_pGameNameEntry->GetText(textBuffer, sizeof(textBuffer));
+
 		// Make sure we're not setting this to a duplicate
-		if ( IsGameNameUnique( textBuffer ) == false )
+		if(IsGameNameUnique(textBuffer) == false)
 		{
 			// Select the text
-			m_pGameNameEntry->SelectAllText( true );
+			m_pGameNameEntry->SelectAllText(true);
 
 			// Pop a message box and refuse to close
-			VGUIMessageBox( this, "Error", "Game name %s already exists!  Please enter a unique name.", textBuffer );
+			VGUIMessageBox(this, "Error", "Game name %s already exists!  Please enter a unique name.", textBuffer);
 
-			BaseClass::OnCommand( command );
+			BaseClass::OnCommand(command);
 			return;
 		}
 
 		KeyValues *actionSignal = new KeyValues("ManageSelect");
 
-		if ( actionSignal == NULL )
+		if(actionSignal == NULL)
 		{
-			Assert( 0 );
+			Assert(0);
 			return;
 		}
 
 		// See if we need to add a new config
-		if ( m_nConfigID == NEW_CONFIG_ID )
+		if(m_nConfigID == NEW_CONFIG_ID)
 		{
 			// Create a new data container and point to it
-			m_nConfigID = g_Configs.AddToTail( new CGameConfig() );
+			m_nConfigID = g_Configs.AddToTail(new CGameConfig());
 
 			// Send an overidden action signal to notify that we've added, not edited a field
 			actionSignal->SetName("AddSelect");
 		}
 
 		// Otherwise take the name
-		UtlStrcpy( g_Configs[m_nConfigID]->m_Name, textBuffer );
-		
+		UtlStrcpy(g_Configs[m_nConfigID]->m_Name, textBuffer);
+
 		// Take the game directory
-		m_pGameDirEntry->GetText( textBuffer, sizeof( textBuffer ) );
+		m_pGameDirEntry->GetText(textBuffer, sizeof(textBuffer));
 
 		// Strip off the trailing slash always
-		Q_StripTrailingSlash( textBuffer );
+		Q_StripTrailingSlash(textBuffer);
 
-		UtlStrcpy( g_Configs[m_nConfigID]->m_ModDir, textBuffer );
-		
+		UtlStrcpy(g_Configs[m_nConfigID]->m_ModDir, textBuffer);
+
 		// Tell the parent we altered its data so it can refresh
-		PostActionSignal( actionSignal );
+		PostActionSignal(actionSignal);
 
 		Close();
 	}
 	// Modified to allow more than one browse button
-	else if ( Q_stricmp( command, "BrowseDir" ) == 0 )
+	else if(Q_stricmp(command, "BrowseDir") == 0)
 	{
 		// Create a new dialog
-		CModalDirectorySelectDialog *pDlg = vgui::SETUP_PANEL( new CModalDirectorySelectDialog( this, "Select Game Directory" ) );
-		
+		CModalDirectorySelectDialog *pDlg =
+			vgui::SETUP_PANEL(new CModalDirectorySelectDialog(this, "Select Game Directory"));
+
 		char textBuffer[1024];
-		m_pGameDirEntry->GetText( textBuffer, sizeof( textBuffer ) );
-		
+		m_pGameDirEntry->GetText(textBuffer, sizeof(textBuffer));
+
 		// Get the currently set dir and use that as the start
-		pDlg->ExpandTreeToPath( textBuffer );
+		pDlg->ExpandTreeToPath(textBuffer);
 		pDlg->MoveToCenterOfScreen();
-		pDlg->AddActionSignalTarget( this );
-		pDlg->SetDeleteSelfOnClose( true );
+		pDlg->AddActionSignalTarget(this);
+		pDlg->SetDeleteSelfOnClose(true);
 		pDlg->DoModal();
 	}
 
-	BaseClass::OnCommand( command );
+	BaseClass::OnCommand(command);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Notify us that the directory dialog has returned a new entry
 //-----------------------------------------------------------------------------
-void CManageGamesDialog::OnChooseDirectory( const char *dir )
+void CManageGamesDialog::OnChooseDirectory(const char *dir)
 {
-	SetGameDir( dir );
+	SetGameDir(dir);
 }

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -15,32 +15,33 @@ extern void v_strncpy(char *dest, const char *src, int bufsize);
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CServerInfoMsgHandlerDetails::CServerInfoMsgHandlerDetails( CServerInfo *baseobject, HANDLERTYPE type, void *typeinfo /*= NULL*/ ) 
-	: CMsgHandler( type, typeinfo )
-{ 
+CServerInfoMsgHandlerDetails::CServerInfoMsgHandlerDetails(CServerInfo *baseobject, HANDLERTYPE type,
+														   void *typeinfo /*= NULL*/)
+	: CMsgHandler(type, typeinfo)
+{
 	m_pServerInfo = baseobject;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Process cracked message
 //-----------------------------------------------------------------------------
-bool CServerInfoMsgHandlerDetails::Process( netadr_t *from, CMsgBuffer *msg )
+bool CServerInfoMsgHandlerDetails::Process(netadr_t *from, CMsgBuffer *msg)
 {
 	// Skip the control character
 	msg->ReadByte();
 
 	// get response name
 	const char *str = msg->ReadString();
-	if ( !str || !str[0] )
+	if(!str || !str[0])
 		return false;
 
 	// get infostring
 	str = msg->ReadString();
-	if ( !str || !str[0] )
+	if(!str || !str[0])
 		return false;
 
-	char info[ 2048 ];
-	strncpy( info, str, 2047 );
+	char info[2048];
+	strncpy(info, str, 2047);
 	info[2047] = 0;
 
 	char name[256], map[256], gamedir[256], desc[256];
@@ -55,20 +56,10 @@ bool CServerInfoMsgHandlerDetails::Process( netadr_t *from, CMsgBuffer *msg )
 	char serverType = *Info_ValueForKey(info, "type");
 	bool password = atoi(Info_ValueForKey(info, "password"));
 
-	m_pServerInfo->UpdateServer(from,	// index of server
-					(serverType == 'p'),
-					name,			
-					map,	
-					gamedir,
-					desc,
-					players,
-					maxplayers,
-					msg->GetTime(),		// receive time
-					password
-					);
-	
+	m_pServerInfo->UpdateServer(from, // index of server
+								(serverType == 'p'), name, map, gamedir, desc, players, maxplayers,
+								msg->GetTime(), // receive time
+								password);
 
 	return true;
 }
-
-

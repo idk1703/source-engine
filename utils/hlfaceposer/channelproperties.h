@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,23 +16,23 @@ class CChoreoScene;
 #include "basedialogparams.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 struct CChannelParams : public CBaseDialogParams
 {
 	// i/o channel name
-	char			m_szName[ 256 ];
+	char m_szName[256];
 
 	// For creating a new channel:
 	// i
-	bool			m_bShowActors;
+	bool m_bShowActors;
 	// i/o
-	char			m_szSelectedActor[ 256 ];
+	char m_szSelectedActor[256];
 	// i
-	CChoreoScene	*m_pScene;
+	CChoreoScene *m_pScene;
 };
 
 // set/create channel properties
-int ChannelProperties( CChannelParams *params );
+int ChannelProperties(CChannelParams *params);
 
 #endif // CHANNELPROPERTIES_H

@@ -1,11 +1,11 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
 
-#if !defined( C_BASETFPLAYER_H )
+#if !defined(C_BASETFPLAYER_H)
 #define C_BASETFPLAYER_H
 #ifdef _WIN32
 #pragma once
@@ -40,346 +40,392 @@ class C_WeaponCombatShield;
 class C_BaseTFPlayer : public C_BasePlayer
 {
 public:
-	DECLARE_CLASS( C_BaseTFPlayer, C_BasePlayer );
+	DECLARE_CLASS(C_BaseTFPlayer, C_BasePlayer);
 	DECLARE_CLIENTCLASS();
 	DECLARE_ENTITY_PANEL();
 	DECLARE_MINIMAP_PANEL();
 	DECLARE_PREDICTABLE();
 
-					C_BaseTFPlayer();
-	virtual			~C_BaseTFPlayer();
+	C_BaseTFPlayer();
+	virtual ~C_BaseTFPlayer();
 
 private:
-	void			Clear();	// Clear all elements.
+	void Clear(); // Clear all elements.
 
 public:
-	bool			IsHidden() const;
-	bool			IsDamageBoosted() const;
+	bool IsHidden() const;
+	bool IsDamageBoosted() const;
 
-	bool			HasNamedTechnology( const char *name );
+	bool HasNamedTechnology(const char *name);
 
-	float			LastAttackTime() const { return m_flLastAttackTime; }
-	void			SetLastAttackTime( float flTime ) { m_flLastAttackTime = flTime; }
-
-	// Return this client's C_BaseTFPlayer pointer
-	static C_BaseTFPlayer* GetLocalPlayer( void )
+	float LastAttackTime() const
 	{
-		return ( static_cast< C_BaseTFPlayer * >( C_BasePlayer::GetLocalPlayer() ) );
+		return m_flLastAttackTime;
+	}
+	void SetLastAttackTime(float flTime)
+	{
+		m_flLastAttackTime = flTime;
 	}
 
-	virtual void		ClientThink( void );
-	virtual void		OnPreDataChanged( DataUpdateType_t updateType );
-	virtual void		OnDataChanged( DataUpdateType_t updateType );
-	virtual void		PreDataUpdate( DataUpdateType_t updateType );
-	virtual void		PostDataUpdate( DataUpdateType_t updateType );
-	virtual void		ReceiveMessage( int classID, bf_read &msg );
-	virtual void		Release( void );
+	// Return this client's C_BaseTFPlayer pointer
+	static C_BaseTFPlayer *GetLocalPlayer(void)
+	{
+		return (static_cast<C_BaseTFPlayer *>(C_BasePlayer::GetLocalPlayer()));
+	}
 
-	virtual void		ItemPostFrame( void );
+	virtual void ClientThink(void);
+	virtual void OnPreDataChanged(DataUpdateType_t updateType);
+	virtual void OnDataChanged(DataUpdateType_t updateType);
+	virtual void PreDataUpdate(DataUpdateType_t updateType);
+	virtual void PostDataUpdate(DataUpdateType_t updateType);
+	virtual void ReceiveMessage(int classID, bf_read &msg);
+	virtual void Release(void);
 
-	virtual bool		ShouldDraw();
-	virtual int			DrawModel( int flags );
+	virtual void ItemPostFrame(void);
 
-	virtual void		SetDormant( bool bDormant );
+	virtual bool ShouldDraw();
+	virtual int DrawModel(int flags);
 
-	virtual void		GetBoneControllers(float controllers[MAXSTUDIOBONES]);
+	virtual void SetDormant(bool bDormant);
 
-	virtual int			GetRenderTeamNumber( void );
-	virtual void		ComputeFxBlend( void );
-	virtual bool		IsTransparent( void );
+	virtual void GetBoneControllers(float controllers[MAXSTUDIOBONES]);
+
+	virtual int GetRenderTeamNumber(void);
+	virtual void ComputeFxBlend(void);
+	virtual bool IsTransparent(void);
 
 	// Called by the view model if its rendering is being overridden.
-	virtual bool		ViewModel_IsTransparent( void );
+	virtual bool ViewModel_IsTransparent(void);
 
-	virtual bool		IsOverridingViewmodel( void );
-	virtual int			DrawOverriddenViewmodel( C_BaseViewModel *pViewmodel, int flags );
-	virtual void		CreateMove( float flInputSampleTime, CUserCmd *pCmd );
-	virtual float		GetDefaultAnimSpeed( void );
+	virtual bool IsOverridingViewmodel(void);
+	virtual int DrawOverriddenViewmodel(C_BaseViewModel *pViewmodel, int flags);
+	virtual void CreateMove(float flInputSampleTime, CUserCmd *pCmd);
+	virtual float GetDefaultAnimSpeed(void);
 
-	int					GetClass( void );
+	int GetClass(void);
 
 	// Called when not in tactical mode. Allows view to be overriden for things like driving a tank.
-	void				OverrideView( CViewSetup *pSetup );
+	void OverrideView(CViewSetup *pSetup);
 
 	// Called when not in tactical mode. Allows view model drawing to be disabled for things like driving a tank.
-	bool				ShouldDrawViewModel();
+	bool ShouldDrawViewModel();
 
-	void				GetTargetDescription( char *pDest, int bufferSize );
+	void GetTargetDescription(char *pDest, int bufferSize);
 
 	// Orders
-	void				SetPersonalOrder( C_Order *pOrder );
-	void				RemoveOrderTarget();
+	void SetPersonalOrder(C_Order *pOrder);
+	void RemoveOrderTarget();
 
 	// Resources
-	int					GetBankResources( void );
+	int GetBankResources(void);
 
 	// Objects
-	void				SetSelectedObject( C_BaseObject *pObject );
-	C_BaseObject		*GetSelectedObject( void );
-	int					GetNumObjects( int iObjectType );
-	int					GetObjectCount( void );
-	C_BaseObject		*GetObject( int index );
+	void SetSelectedObject(C_BaseObject *pObject);
+	C_BaseObject *GetSelectedObject(void);
+	int GetNumObjects(int iObjectType);
+	int GetObjectCount(void);
+	C_BaseObject *GetObject(int index);
 
 	// Targets
-	void				Add_Target( C_BaseEntity *pTarget, const char *sName );
-	void				Remove_Target( C_BaseEntity *pTarget );
-	void				Remove_Target( CTargetReticle *pTargetReticle );
+	void Add_Target(C_BaseEntity *pTarget, const char *sName);
+	void Remove_Target(C_BaseEntity *pTarget);
+	void Remove_Target(CTargetReticle *pTargetReticle);
 
-	void				UpdateTargetReticles( void );
+	void UpdateTargetReticles(void);
 
-	bool				IsUsingThermalVision( void ) const;
+	bool IsUsingThermalVision(void) const;
 
 	// Weapon handling
-	virtual bool				IsAllowedToSwitchWeapons( void );
-	virtual bool				Weapon_ShouldSetLast( CBaseCombatWeapon *pOldWeapon, CBaseCombatWeapon *pNewWeapon );
-	virtual bool				Weapon_ShouldSelectItem( CBaseCombatWeapon *pWeapon );
-	virtual	C_BaseCombatWeapon	*GetActiveWeaponForSelection( void );
-	virtual C_BaseCombatWeapon  *GetLastWeaponBeforeObject( void ) { return m_hLastWeaponBeforeObject; }
+	virtual bool IsAllowedToSwitchWeapons(void);
+	virtual bool Weapon_ShouldSetLast(CBaseCombatWeapon *pOldWeapon, CBaseCombatWeapon *pNewWeapon);
+	virtual bool Weapon_ShouldSelectItem(CBaseCombatWeapon *pWeapon);
+	virtual C_BaseCombatWeapon *GetActiveWeaponForSelection(void);
+	virtual C_BaseCombatWeapon *GetLastWeaponBeforeObject(void)
+	{
+		return m_hLastWeaponBeforeObject;
+	}
 
-	virtual C_BaseAnimating* GetRenderedWeaponModel();
+	virtual C_BaseAnimating *GetRenderedWeaponModel();
 
 	// ID Target
-	void				SetIDEnt( C_BaseEntity *pEntity );
-	int					GetIDTarget( void ) const;
-	void				UpdateIDTarget( void );
+	void SetIDEnt(C_BaseEntity *pEntity);
+	int GetIDTarget(void) const;
+	void UpdateIDTarget(void);
 
-	bool				IsKnockedDown( void ) const;
-	void				CheckKnockdownState( void );
-	bool				CheckKnockdownAngleOverride( void ) const;
-	void				SetKnockdownAngles( const QAngle& ang );
-	void				GetKnockdownAngles( QAngle& outAngles );
-	float				GetKnockdownViewheightAdjust( void ) const;
+	bool IsKnockedDown(void) const;
+	void CheckKnockdownState(void);
+	bool CheckKnockdownAngleOverride(void) const;
+	void SetKnockdownAngles(const QAngle &ang);
+	void GetKnockdownAngles(QAngle &outAngles);
+	float GetKnockdownViewheightAdjust(void) const;
 
 	// Team handling
-	virtual void		TeamChange( int iNewTeam );
+	virtual void TeamChange(int iNewTeam);
 
 	// Camouflage effect
-	virtual bool		IsCamouflaged( void );
-	virtual float		GetCamouflageAmount( void );
-	virtual float		ComputeCamoEffectAmount( void );	// 0 - visible, 1 = invisible
-	virtual int			ComputeCamoAlpha( void );
-	virtual void		CheckCamoDampening( void );
-	virtual void		SetCamoDampening( float amount );
-	virtual float		GetDampeningAmount( void );
-	virtual void		CheckCameraMovement( void );
+	virtual bool IsCamouflaged(void);
+	virtual float GetCamouflageAmount(void);
+	virtual float ComputeCamoEffectAmount(void); // 0 - visible, 1 = invisible
+	virtual int ComputeCamoAlpha(void);
+	virtual void CheckCamoDampening(void);
+	virtual void SetCamoDampening(float amount);
+	virtual float GetDampeningAmount(void);
+	virtual void CheckCameraMovement(void);
 
-	IMaterial			*GetCamoMaterial( void );
-	virtual float		GetMovementCamoSuppression( void );
-	virtual void		CheckMovementCamoSuppression( void );
-	virtual void		SetMovementCamoSuppression( float amount );
+	IMaterial *GetCamoMaterial(void);
+	virtual float GetMovementCamoSuppression(void);
+	virtual void CheckMovementCamoSuppression(void);
+	virtual void SetMovementCamoSuppression(float amount);
 
 	// Adrenalin
-	void				CheckAdrenalin( void );
+	void CheckAdrenalin(void);
 
-	void				CheckLastMovement( void );
-	float				GetLastMoveTime( void );
-	float				GetOverlayAlpha( void );
+	void CheckLastMovement(void);
+	float GetLastMoveTime(void);
+	float GetOverlayAlpha(void);
 
-	float				GetLastDamageTime( void ) const;
-	float				GetLastGainHealthTime( void ) const;
-	
+	float GetLastDamageTime(void) const;
+	float GetLastGainHealthTime(void) const;
+
 	// Powerups
-	virtual void		PowerupStart( int iPowerup, bool bInitial );
-	virtual void		PowerupEnd( int iPowerup );
+	virtual void PowerupStart(int iPowerup, bool bInitial);
+	virtual void PowerupEnd(int iPowerup);
 
 	// Sniper
-	bool				IsDeployed( void );
-	bool				IsDeploying( void );
-	bool				IsUnDeploying( void );
+	bool IsDeployed(void);
+	bool IsDeploying(void);
+	bool IsUnDeploying(void);
 
-	virtual void		AddEntity( void );
+	virtual void AddEntity(void);
 
 	// Vertification
-	inline bool HasClass( void ) { return GetPlayerClass() != NULL; }
+	inline bool HasClass(void)
+	{
+		return GetPlayerClass() != NULL;
+	}
 
-	bool	IsClass( TFClass iClass );
+	bool IsClass(TFClass iClass);
 
+	virtual int GetMaxHealth() const
+	{
+		return m_iMaxHealth;
+	}
 
-	virtual int	GetMaxHealth() const { return m_iMaxHealth; }
-
-	bool ClassProxyUpdate( int nClassID );
+	bool ClassProxyUpdate(int nClassID);
 
 	// Should this object cast shadows?
-	virtual ShadowType_t		ShadowCastType();
+	virtual ShadowType_t ShadowCastType();
 
 	// Prediction stuff
-	virtual void				PreThink( void );
-	virtual void				PostThink( void );
+	virtual void PreThink(void);
+	virtual void PostThink(void);
 
 	// Combat prototyping
-	bool		IsBlocking( void ) const { return m_bIsBlocking; }
-	bool		IsParrying( void ) const { return m_bIsParrying; }
-	void		SetBlocking( bool bBlocking ) { m_bIsBlocking = bBlocking; }
-	void		SetParrying( bool bParrying ) { m_bIsParrying = bParrying; }
+	bool IsBlocking(void) const
+	{
+		return m_bIsBlocking;
+	}
+	bool IsParrying(void) const
+	{
+		return m_bIsParrying;
+	}
+	void SetBlocking(bool bBlocking)
+	{
+		m_bIsBlocking = bBlocking;
+	}
+	void SetParrying(bool bParrying)
+	{
+		m_bIsParrying = bParrying;
+	}
 
 	// Vehicles
-	void				SetVehicleRole( int nRole );
-	bool				CanGetInVehicle( void );
-	
+	void SetVehicleRole(int nRole);
+	bool CanGetInVehicle(void);
+
 	// Returns true if we're in a vehicle and it's mounted on another vehicle
 	// (ie: are we in a manned gun that's mounted on a tank).
 	bool IsVehicleMounted() const;
 
-	virtual bool		IsUseableEntity( CBaseEntity *pEntity );
+	virtual bool IsUseableEntity(CBaseEntity *pEntity);
 
-// Shared Client / Server code
+	// Shared Client / Server code
 public:
-	bool					IsHittingShield( const Vector &vecVelocity, float *flDamage );
-	C_WeaponCombatShield	*GetCombatShield( void );
-	virtual void			PainSound( void );
+	bool IsHittingShield(const Vector &vecVelocity, float *flDamage);
+	C_WeaponCombatShield *GetCombatShield(void);
+	virtual void PainSound(void);
 
 public:
 	// Data for only the local player
-	CTFPlayerLocalData		m_TFLocal;
+	CTFPlayerLocalData m_TFLocal;
 
 	// Accessors...
-	const QAngle& DeployedAngles() const	{ return m_vecDeployedAngles; }
-	int ZoneState() const					{ return m_iCurrentZoneState; }
-	float CamouflageAmount() const			{ return m_flCamouflageAmount; }
-	int	PlayerClass() const					{ return m_iPlayerClass; }
+	const QAngle &DeployedAngles() const
+	{
+		return m_vecDeployedAngles;
+	}
+	int ZoneState() const
+	{
+		return m_iCurrentZoneState;
+	}
+	float CamouflageAmount() const
+	{
+		return m_flCamouflageAmount;
+	}
+	int PlayerClass() const
+	{
+		return m_iPlayerClass;
+	}
 	C_PlayerClass *GetPlayerClass();
-	C_Order *PersonalOrder()				{ return m_hPersonalOrder; }
-	C_BaseEntity *SpawnPoint()				{ return m_hSpawnPoint.Get(); }
+	C_Order *PersonalOrder()
+	{
+		return m_hPersonalOrder;
+	}
+	C_BaseEntity *SpawnPoint()
+	{
+		return m_hSpawnPoint.Get();
+	}
 
-	C_VehicleTeleportStation* GetSelectedMCV() const;
+	C_VehicleTeleportStation *GetSelectedMCV() const;
 
 	// Object sapper placement handling
-	//float							m_flSapperAttachmentFinishTime;
-	//float							m_flSapperAttachmentStartTime;
-	//CHandle< CGrenadeObjectSapper >	m_hSapper;
-	//CHandle< CBaseObject >			m_hSappedObject;
-	CHealthBarPanel					*m_pSapperAttachmentStatus;
+	// float							m_flSapperAttachmentFinishTime;
+	// float							m_flSapperAttachmentStartTime;
+	// CHandle< CGrenadeObjectSapper >	m_hSapper;
+	// CHandle< CBaseObject >			m_hSappedObject;
+	CHealthBarPanel *m_pSapperAttachmentStatus;
 
 private:
-	C_BaseTFPlayer( const C_BaseTFPlayer & );
+	C_BaseTFPlayer(const C_BaseTFPlayer &);
 
 	// Client-side obstacle avoidance
-	void PerformClientSideObstacleAvoidance( float flFrameTime, CUserCmd *pCmd );
+	void PerformClientSideObstacleAvoidance(float flFrameTime, CUserCmd *pCmd);
 
-	float		m_flLastAttackTime;
+	float m_flLastAttackTime;
 
 	EHANDLE m_hSelectedMCV;
 
 	// Weapon used before switching to an object placement
-	CHandle<C_BaseCombatWeapon>	m_hLastWeaponBeforeObject;
+	CHandle<C_BaseCombatWeapon> m_hLastWeaponBeforeObject;
 
-	float		m_flCamouflageAmount;
+	float m_flCamouflageAmount;
 
 	// Movement.
-	Vector		m_vecPosDelta;
+	Vector m_vecPosDelta;
 
-	enum { MOMENTUM_MAXSIZE = 10 };
-	float		m_aMomentum[MOMENTUM_MAXSIZE];
-	int			m_iMomentumHead;
+	enum
+	{
+		MOMENTUM_MAXSIZE = 10
+	};
+	float m_aMomentum[MOMENTUM_MAXSIZE];
+	int m_iMomentumHead;
 
 	// Player Class
-	int							m_iPlayerClass;
-	C_AllPlayerClasses			m_PlayerClasses;
+	int m_iPlayerClass;
+	C_AllPlayerClasses m_PlayerClasses;
 
 	// Spawn location...
-	EHANDLE				m_hSpawnPoint;
-	
+	EHANDLE m_hSpawnPoint;
+
 	// Orders
-	CHandle< C_Order >	m_hSelectedOrder;
-	CHandle< C_Order >	m_hPersonalOrder;
-	int					m_iSelectedTarget;
-	int					m_iPersonalTarget;
-	CUtlVector< CTargetReticle * > m_aTargetReticles;	// A list of entities to show target reticles for
+	CHandle<C_Order> m_hSelectedOrder;
+	CHandle<C_Order> m_hPersonalOrder;
+	int m_iSelectedTarget;
+	int m_iPersonalTarget;
+	CUtlVector<CTargetReticle *> m_aTargetReticles; // A list of entities to show target reticles for
 
 	// Objects
-	CHandle< C_BaseObject > m_hSelectedObject;
+	CHandle<C_BaseObject> m_hSelectedObject;
 
-	int					m_iLastHealth;
+	int m_iLastHealth;
 
-	bool				m_bIsBlocking;
-	bool				m_bIsParrying;
+	bool m_bIsBlocking;
+	bool m_bIsParrying;
 
-	bool				m_bUnderAttack;
-	int					m_iMaxHealth;
-	bool				m_bDeployed;
-	bool				m_bDeploying;
-	bool				m_bUnDeploying;
-	QAngle				m_vecDeployedAngles;
-	int					m_iCurrentZoneState;
-	int					m_TFPlayerFlags;
+	bool m_bUnderAttack;
+	int m_iMaxHealth;
+	bool m_bDeployed;
+	bool m_bDeploying;
+	bool m_bUnDeploying;
+	QAngle m_vecDeployedAngles;
+	int m_iCurrentZoneState;
+	int m_TFPlayerFlags;
 
-	int					m_nOldTacticalView;
-	int					m_nOldPlayerClass;
+	int m_nOldTacticalView;
+	int m_nOldPlayerClass;
 
-	float				m_flNextUseCheck;
+	float m_flNextUseCheck;
 
-	bool				m_bOldThermalVision;
-	bool				m_bOldAttachingSapper;
+	bool m_bOldThermalVision;
+	bool m_bOldAttachingSapper;
 
-	bool				m_bOldKnockDownState;
-	float				m_flStartKnockdown;
-	float				m_flEndKnockdown;
-	QAngle				m_vecOriginalViewAngles;
-	QAngle				m_vecCurrentKnockdownAngles;
-	QAngle				m_vecKnockDownGoalAngles;
-	bool				m_bKnockdownOverrideAngles;
-	float				m_flKnockdownViewheightAdjust;
+	bool m_bOldKnockDownState;
+	float m_flStartKnockdown;
+	float m_flEndKnockdown;
+	QAngle m_vecOriginalViewAngles;
+	QAngle m_vecCurrentKnockdownAngles;
+	QAngle m_vecKnockDownGoalAngles;
+	bool m_bKnockdownOverrideAngles;
+	float m_flKnockdownViewheightAdjust;
 
-	CPlayerAnimState	m_PlayerAnimState;
+	CPlayerAnimState m_PlayerAnimState;
 
 	// For sniper hiding
-	float				m_flLastMoveTime;
-	Vector				m_vecLastOrigin;
+	float m_flLastMoveTime;
+	Vector m_vecLastOrigin;
 
 	// For material proxies
-	float				m_flLastDamageTime;
-	float				m_flLastGainHealthTime;
+	float m_flLastDamageTime;
+	float m_flLastGainHealthTime;
 
-	IMaterial			*m_pThermalMaterial;
-	IMaterial			*m_pCamoEffectMaterial;
+	IMaterial *m_pThermalMaterial;
+	IMaterial *m_pCamoEffectMaterial;
 
 	// Camouflage
-	float				m_flDampeningAmount;
-	float				m_flGoalDampeningAmount;
-	float				m_flDampeningStayoutTime;
+	float m_flDampeningAmount;
+	float m_flGoalDampeningAmount;
+	float m_flDampeningStayoutTime;
 
 	// Suppression of camo based on movement
-	float				m_flMovementCamoSuppression;
-	float				m_flGoalMovementCamoSuppressionAmount;
-	float				m_flMovementCamoSuppressionStayoutTime;
+	float m_flMovementCamoSuppression;
+	float m_flGoalMovementCamoSuppressionAmount;
+	float m_flMovementCamoSuppressionStayoutTime;
 
 	// Adrenalin
-	float				m_flNextAdrenalinEffect;
-	bool				m_bFadingIn;
+	float m_flNextAdrenalinEffect;
+	bool m_bFadingIn;
 
 	// ID Target
-	int					m_iIDEntIndex;
+	int m_iIDEntIndex;
 
-	CMaterialReference	m_BoostMaterial;
-	CMaterialReference	m_EMPMaterial;
-	float				m_BoostModelAngles[3];
+	CMaterialReference m_BoostMaterial;
+	CMaterialReference m_EMPMaterial;
+	float m_BoostModelAngles[3];
 
 	// Personal shield effects.
-	CUtlLinkedList<CPersonalShieldEffect*, int>	m_PersonalShieldEffects;
-		
-	CHandle< C_WeaponCombatShield > m_hWeaponCombatShield;
+	CUtlLinkedList<CPersonalShieldEffect *, int> m_PersonalShieldEffects;
+
+	CHandle<C_WeaponCombatShield> m_hWeaponCombatShield;
 
 	// No one should call this
-	C_BaseTFPlayer& operator=( const C_BaseTFPlayer& src );
+	C_BaseTFPlayer &operator=(const C_BaseTFPlayer &src);
 
-	friend void RecvProxy_PlayerClass( const CRecvProxyData *pData, void *pStruct, void *pOut );
-
+	friend void RecvProxy_PlayerClass(const CRecvProxyData *pData, void *pStruct, void *pOut);
 
 	friend class CTFPrediction;
 };
 
-int GetLocalPlayerClass( void );
-bool IsLocalPlayerClass( int iClass );
-bool IsLocalPlayerInTactical( );
-inline C_BaseTFPlayer *ToBaseTFPlayer( C_BaseEntity *pEntity )
+int GetLocalPlayerClass(void);
+bool IsLocalPlayerClass(int iClass);
+bool IsLocalPlayerInTactical();
+inline C_BaseTFPlayer *ToBaseTFPlayer(C_BaseEntity *pEntity)
 {
-	if ( !pEntity || !pEntity->IsPlayer() )
+	if(!pEntity || !pEntity->IsPlayer())
 		return NULL;
 
 #if _DEBUG
-	return dynamic_cast<C_BaseTFPlayer *>( pEntity );
+	return dynamic_cast<C_BaseTFPlayer *>(pEntity);
 #else
-	return static_cast<C_BaseTFPlayer *>( pEntity );
+	return static_cast<C_BaseTFPlayer *>(pEntity);
 #endif
 }
 

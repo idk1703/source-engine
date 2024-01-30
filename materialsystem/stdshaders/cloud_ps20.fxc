@@ -10,7 +10,7 @@ struct PS_INPUT
 	float2 cloudAlphaCoords	: TEXCOORD1;
 	float  fogFactor		: TEXCOORD2;
 };
- 
+
 float4 main( PS_INPUT i ) : COLOR
 {
 	float4 vBase = tex2D( BaseTextureSampler, i.baseCoords );

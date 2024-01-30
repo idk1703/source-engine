@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,25 +19,23 @@ class KeyValues;
 namespace vgui
 {
 
-enum MessageSendType_t
-{
-	MESSAGE_SENT = 0,
-	MESSAGE_POSTED,
-	MESSAGE_RECEIVED
-};
+	enum MessageSendType_t
+	{
+		MESSAGE_SENT = 0,
+		MESSAGE_POSTED,
+		MESSAGE_RECEIVED
+	};
 
-class VPanel;
+	class VPanel;
 
+	class IMessageListener
+	{
+	public:
+		virtual void Message(VPanel *pSender, VPanel *pReceiver, KeyValues *pKeyValues, MessageSendType_t type) = 0;
+	};
 
-class IMessageListener
-{
-public:
-	virtual void Message( VPanel* pSender, VPanel* pReceiver, 
-		KeyValues* pKeyValues, MessageSendType_t type ) = 0;
-};
+	IMessageListener *MessageListener();
 
-IMessageListener* MessageListener();
-
-}
+} // namespace vgui
 
 #endif // IMESSAGELISTENER_H

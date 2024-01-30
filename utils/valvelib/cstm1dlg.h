@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -16,34 +16,36 @@
 
 class CCustom1Dlg : public CAppWizStepDlg
 {
-// Construction
+	// Construction
 public:
 	CCustom1Dlg();
 	virtual BOOL OnDismiss();
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CCustom1Dlg)
-	enum { IDD = IDD_CUSTOM1 };
-	CString	m_RootPath;
-	CString	m_TargetPath;
-	int		m_ProjectType;
-	BOOL	m_ToolProject;
-	CString	m_ImplibPath;
-	BOOL	m_PublicProject;
-	BOOL	m_ConsoleApp;
-	BOOL	m_PublishImportLib;
-	CString	m_SrcPath;
+	enum
+	{
+		IDD = IDD_CUSTOM1
+	};
+	CString m_RootPath;
+	CString m_TargetPath;
+	int m_ProjectType;
+	BOOL m_ToolProject;
+	CString m_ImplibPath;
+	BOOL m_PublicProject;
+	BOOL m_ConsoleApp;
+	BOOL m_PublishImportLib;
+	CString m_SrcPath;
 	//}}AFX_DATA
 
-
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CCustom1Dlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
+protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
+													 //}}AFX_VIRTUAL
 
-// Implementation
+	// Implementation
 protected:
 	// Generated message map functions
 	//{{AFX_MSG(CCustom1Dlg)
@@ -58,10 +60,9 @@ protected:
 
 private:
 	void RecomputeTargetPath();
-	bool ComputeRelativePath( );
+	bool ComputeRelativePath();
 	void EnableCheckboxes();
 };
-
 
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.

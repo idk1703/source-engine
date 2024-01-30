@@ -4,11 +4,10 @@
 //
 //===========================================================================//
 
-
 #ifndef TIER2DM_H
 #define TIER2DM_H
 
-#if defined( _WIN32 )
+#if defined(_WIN32)
 #pragma once
 #endif
 
@@ -17,7 +16,7 @@
 //-----------------------------------------------------------------------------
 // Set up methods related to datamodel interfaces
 //-----------------------------------------------------------------------------
-bool ConnectDataModel( CreateInterfaceFn factory );
+bool ConnectDataModel(CreateInterfaceFn factory);
 InitReturnVal_t InitDataModel();
 void ShutdownDataModel();
 void DisconnectDataModel();
@@ -25,22 +24,20 @@ void DisconnectDataModel();
 //-----------------------------------------------------------------------------
 // Helper empty implementation of an IAppSystem for tier2 libraries
 //-----------------------------------------------------------------------------
-template< class IInterface, int ConVarFlag = 0 > 
-class CTier2DmAppSystem : public CTier2AppSystem< IInterface, ConVarFlag >
+template<class IInterface, int ConVarFlag = 0>
+class CTier2DmAppSystem : public CTier2AppSystem<IInterface, ConVarFlag>
 {
-	typedef CTier2AppSystem< IInterface, ConVarFlag > BaseClass;
+	typedef CTier2AppSystem<IInterface, ConVarFlag> BaseClass;
 
 public:
-	CTier2DmAppSystem( bool bIsPrimaryAppSystem = true ) : BaseClass( bIsPrimaryAppSystem )
-	{
-	}
+	CTier2DmAppSystem(bool bIsPrimaryAppSystem = true) : BaseClass(bIsPrimaryAppSystem) {}
 
-	virtual bool Connect( CreateInterfaceFn factory ) 
+	virtual bool Connect(CreateInterfaceFn factory)
 	{
-		if ( !BaseClass::Connect( factory ) )
+		if(!BaseClass::Connect(factory))
 			return false;
 
-		ConnectDataModel( factory );
+		ConnectDataModel(factory);
 
 		return true;
 	}
@@ -48,11 +45,11 @@ public:
 	virtual InitReturnVal_t Init()
 	{
 		InitReturnVal_t nRetVal = BaseClass::Init();
-		if ( nRetVal != INIT_OK )
+		if(nRetVal != INIT_OK)
 			return nRetVal;
 
 		nRetVal = InitDataModel();
-		if ( nRetVal != INIT_OK )
+		if(nRetVal != INIT_OK)
 			return nRetVal;
 
 		return INIT_OK;
@@ -64,13 +61,11 @@ public:
 		BaseClass::Shutdown();
 	}
 
-	virtual void Disconnect() 
+	virtual void Disconnect()
 	{
 		DisconnectDataModel();
 		BaseClass::Disconnect();
 	}
 };
 
-
 #endif // TIER2DM_H
-

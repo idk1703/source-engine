@@ -17,7 +17,7 @@ extern void v_strncpy(char *dest, const char *src, int bufsize);
 
 namespace
 {
-	const float SERVER_TIMEOUT =5.0f; // timeout before failing
+	const float SERVER_TIMEOUT = 5.0f; // timeout before failing
 }
 
 typedef enum
@@ -27,25 +27,25 @@ typedef enum
 	INFO_RECEIVED
 } RCONSTATUS;
 
-CServerInfo::CServerInfo(IResponse *target,serveritem_t &server) {
-	
-	memcpy(&m_Server, &server,sizeof(serveritem_t));
-	m_pResponseTarget=target;
+CServerInfo::CServerInfo(IResponse *target, serveritem_t &server)
+{
 
-	m_bIsRefreshing=false;
+	memcpy(&m_Server, &server, sizeof(serveritem_t));
+	m_pResponseTarget = target;
+
+	m_bIsRefreshing = false;
 
 	int bytecode = S2A_INFO_DETAILED;
 	m_pQuery = new CSocket("internet server query", -1);
 	m_pQuery->AddMessageHandler(new CServerInfoMsgHandlerDetails(this, CMsgHandler::MSGHANDLER_ALL, &bytecode));
 
-	m_fSendTime= 0;
+	m_fSendTime = 0;
 }
 
-CServerInfo::~CServerInfo() {
+CServerInfo::~CServerInfo()
+{
 	delete m_pQuery;
-
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: sends a status query packet to a single server
@@ -53,15 +53,15 @@ CServerInfo::~CServerInfo() {
 void CServerInfo::Query()
 {
 	CMsgBuffer *buffer = m_pQuery->GetSendBuffer();
-	assert( buffer );
-	
-	if ( !buffer ) 
+	assert(buffer);
+
+	if(!buffer)
 	{
 		return;
 	}
 
-	m_bIsRefreshing=true;
-	m_bRefreshed=false;
+	m_bIsRefreshing = true;
+	m_bRefreshed = false;
 
 	netadr_t adr;
 
@@ -84,38 +84,32 @@ void CServerInfo::Query()
 	buffer->WriteString("infostring");
 
 	// Sendmessage
-	m_pQuery->SendMessage( &adr );
+	m_pQuery->SendMessage(&adr);
 
 	m_fSendTime = CSocket::GetClock();
-	
 }
 
-
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CServerInfo::RunFrame()
 {
 
 	float curtime = CSocket::GetClock();
-	if(m_fSendTime!=0 && (curtime-m_fSendTime)> 5.0f) // 10 seconds timeout
-	{	
+	if(m_fSendTime != 0 && (curtime - m_fSendTime) > 5.0f) // 10 seconds timeout
+	{
 		m_fSendTime = 0;
 		m_pResponseTarget->ServerFailedToRespond();
 	}
 
-
-	if (m_pQuery)
+	if(m_pQuery)
 	{
 		m_pQuery->Frame();
 	}
-
 }
 
-void CServerInfo::UpdateServer(netadr_t *adr, bool proxy, const char *serverName, const char *map, 
-						 const char *gamedir, const char *gameDescription, int players, 
-						 int maxPlayers, float recvTime, bool password)
+void CServerInfo::UpdateServer(netadr_t *adr, bool proxy, const char *serverName, const char *map, const char *gamedir,
+							   const char *gameDescription, int players, int maxPlayers, float recvTime, bool password)
 {
 
 	m_Server.received = INFO_RECEIVED;
@@ -132,56 +126,52 @@ void CServerInfo::UpdateServer(netadr_t *adr, bool proxy, const char *serverName
 	m_Server.proxy = proxy;
 	m_Server.password = password;
 
-
 	int ping = (int)((recvTime - m_fSendTime) * 1000);
 
-
-	if (ping > 3000 || ping < 0)
+	if(ping > 3000 || ping < 0)
 	{
 		// make sure ping is valid
 		ping = 1200;
 	}
 
-	// add to ping times list 
-//	server.pings[0] = server.pings[1];
-//	server.pings[1] = server.pings[2];
-//	server.pings[2] = ping;
+	// add to ping times list
+	//	server.pings[0] = server.pings[1];
+	//	server.pings[1] = server.pings[2];
+	//	server.pings[2] = ping;
 
 	// calculate ping
-//	ping = CalculateAveragePing(server);
+	//	ping = CalculateAveragePing(server);
 
 	m_Server.ping = ping;
 
-
-	m_bIsRefreshing=false;
-	m_bRefreshed=true;
+	m_bIsRefreshing = false;
+	m_bRefreshed = true;
 	m_fSendTime = 0;
 
 	// notify the UI of the new server info
 	m_pResponseTarget->ServerResponded();
-
 }
 
-void CServerInfo::Refresh() 
+void CServerInfo::Refresh()
 {
 	Query();
 }
 
-bool CServerInfo::IsRefreshing() 
+bool CServerInfo::IsRefreshing()
 {
 
 	return m_bIsRefreshing;
 }
 
-serveritem_t &CServerInfo::GetServer() 
+serveritem_t &CServerInfo::GetServer()
 {
 	return m_Server;
 }
 
-bool CServerInfo::Refreshed() 
+bool CServerInfo::Refreshed()
 {
 	bool val = m_bRefreshed;
-	m_bRefreshed=false;
+	m_bRefreshed = false;
 
 	return val;
 }

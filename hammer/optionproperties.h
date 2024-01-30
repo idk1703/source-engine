@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -22,12 +22,12 @@ class COptionProperties : public CPropertySheet
 {
 	DECLARE_DYNAMIC(COptionProperties)
 
-// Construction
+	// Construction
 public:
-	COptionProperties(UINT nIDCaption, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
-	COptionProperties(LPCTSTR pszCaption, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
+	COptionProperties(UINT nIDCaption, CWnd *pParentWnd = NULL, UINT iSelectPage = 0);
+	COptionProperties(LPCTSTR pszCaption, CWnd *pParentWnd = NULL, UINT iSelectPage = 0);
 
-// Attributes
+	// Attributes
 public:
 	COPTGeneral General;
 	COPTView2D View2D;
@@ -36,15 +36,14 @@ public:
 	COPTConfigs Configs;
 	COPTBuild Build;
 
-// Operations
+	// Operations
 public:
-
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(COptionProperties)
 	//}}AFX_VIRTUAL
 
-// Implementation
+	// Implementation
 public:
 	virtual ~COptionProperties();
 	void DoStandardInit();

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -29,7 +29,7 @@
 
 #include "MainPanel.h"
 #include <imanageserver.h>
-#include "ivguimodule.h" 
+#include "ivguimodule.h"
 #include <vgui/IVGui.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -42,21 +42,20 @@ CSysModule *g_hAdminServerModule = NULL;
 extern IAdminServer *g_pAdminServer;
 char *gpszCvars = NULL;
 
-
-void Sys_Sleep_Old( int msec );
+void Sys_Sleep_Old(int msec);
 
 extern BOOL gbAppHasBeenTerminated; // used to signal the server thread
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CMainPanel::CMainPanel( ) : Panel(NULL, "CMainPanel")
+CMainPanel::CMainPanel() : Panel(NULL, "CMainPanel")
 {
-	SetPaintBackgroundEnabled( false );
-	SetFgColor( Color( 0,0,0,0 ) );
+	SetPaintBackgroundEnabled(false);
+	SetFgColor(Color(0, 0, 0, 0));
 	m_bStarting = false;
 	m_flPreviousSteamProgress = 0.0f;
-	m_pGameServer= NULL;
+	m_pGameServer = NULL;
 }
 
 //-----------------------------------------------------------------------------
@@ -64,17 +63,16 @@ CMainPanel::CMainPanel( ) : Panel(NULL, "CMainPanel")
 //-----------------------------------------------------------------------------
 CMainPanel::~CMainPanel()
 {
-	if (gpszCvars)
+	if(gpszCvars)
 	{
 		free(gpszCvars);
 	}
-
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Called once to set up
 //-----------------------------------------------------------------------------
-void CMainPanel::Initialize( )
+void CMainPanel::Initialize()
 {
 	s_InternetDlg = this;
 	m_pGameServer = NULL;
@@ -83,7 +81,7 @@ void CMainPanel::Initialize( )
 	m_bIsInConfig = true;
 	m_bClosing = false;
 	m_pProgressBox = NULL;
-	m_hShutdown = NULL; 
+	m_hShutdown = NULL;
 
 	MoveToFront();
 
@@ -91,16 +89,16 @@ void CMainPanel::Initialize( )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CMainPanel::Open( void )
-{	
+void CMainPanel::Open(void)
+{
 	m_pConfigPage->SetVisible(true);
 	m_pConfigPage->MoveToFront();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMainPanel::OnClose()
 {
@@ -126,11 +124,12 @@ void CMainPanel::StartServer(const char *cvars)
 	// hide the config page and close it
 	m_pConfigPage->SetVisible(false);
 	m_pConfigPage->Close();
-		
+
 	gpszCvars = strdup(cvars);
 
 	// show the basic progress box immediately
-	m_pProgressBox = new ProgressBox("#Start_Server_Loading_Title", "#Server_UpdatingSteamResources", "Starting dedicated server...");
+	m_pProgressBox = new ProgressBox("#Start_Server_Loading_Title", "#Server_UpdatingSteamResources",
+									 "Starting dedicated server...");
 	m_pProgressBox->SetCancelButtonVisible(true);
 	m_pProgressBox->ShowWindow();
 
@@ -138,15 +137,15 @@ void CMainPanel::StartServer(const char *cvars)
 	char reslist[_MAX_PATH];
 	_snprintf(reslist, sizeof(reslist), "reslists/%s/preload.lst", m_pConfigPage->GetGameName());
 	m_hResourceWaitHandle = g_pFullFileSystem->WaitForResources(reslist);
-	if (!m_hResourceWaitHandle)
+	if(!m_hResourceWaitHandle)
 	{
-		Assert( 0 );
+		Assert(0);
 	}
 
 	m_pProgressBox->SetCancelButtonEnabled(false);
 
-	m_hShutdown	= CreateEvent( NULL, TRUE, FALSE, NULL );
-		ivgui()->AddTickSignal(GetVPanel());
+	m_hShutdown = CreateEvent(NULL, TRUE, FALSE, NULL);
+	ivgui()->AddTickSignal(GetVPanel());
 }
 
 //-----------------------------------------------------------------------------
@@ -154,10 +153,10 @@ void CMainPanel::StartServer(const char *cvars)
 //-----------------------------------------------------------------------------
 void CMainPanel::OnTick()
 {
-	if (m_hResourceWaitHandle)
+	if(m_hResourceWaitHandle)
 	{
 		// see if we've been cancelled
-		if (!m_pProgressBox.Get() || !m_pProgressBox->IsVisible())
+		if(!m_pProgressBox.Get() || !m_pProgressBox->IsVisible())
 		{
 			// cancel out
 			g_pFullFileSystem->CancelWaitForResources(m_hResourceWaitHandle);
@@ -169,12 +168,12 @@ void CMainPanel::OnTick()
 		// update resource waiting
 		bool complete;
 		float progress;
-		if (g_pFullFileSystem->GetWaitForResourcesProgress(m_hResourceWaitHandle, &progress, &complete))
+		if(g_pFullFileSystem->GetWaitForResourcesProgress(m_hResourceWaitHandle, &progress, &complete))
 		{
-			vgui::ivgui()->DPrintf2( "progress %.2f %s\n", progress, complete ? "not complete" : "complete" );
+			vgui::ivgui()->DPrintf2("progress %.2f %s\n", progress, complete ? "not complete" : "complete");
 
 			// don't set the progress if we've jumped straight from 0 to 100% complete
-			if (!(progress == 1.0f && m_flPreviousSteamProgress == 0.0f))
+			if(!(progress == 1.0f && m_flPreviousSteamProgress == 0.0f))
 			{
 				m_pProgressBox->SetProgress(progress);
 				m_flPreviousSteamProgress = progress;
@@ -183,10 +182,10 @@ void CMainPanel::OnTick()
 
 		// This is here because without it, the dedicated server will consume a lot of CPU and it will slow Steam down
 		// so much that it'll download at 64k instead of 6M.
-		Sleep( 200 );
+		Sleep(200);
 
 		// see if we're done
-		if (complete)
+		if(complete)
 		{
 			m_hResourceWaitHandle = NULL;
 			m_bStarting = true;
@@ -196,21 +195,21 @@ void CMainPanel::OnTick()
 		}
 	}
 
-	if (m_bStarting) // if we are actively launching the app
+	if(m_bStarting) // if we are actively launching the app
 	{
 		static int count = 0;
-		if (WAIT_OBJECT_0 == WaitForSingleObject(m_hShutdown, 10) || count > 5000)
-		{	
-			if (!m_bStarted)
-			{	
+		if(WAIT_OBJECT_0 == WaitForSingleObject(m_hShutdown, 10) || count > 5000)
+		{
+			if(!m_bStarted)
+			{
 				serveritem_t server;
 				m_pConfigPage->GetServer(server);
 				ManageServerUIHandle_t managePage = g_pAdminServer->OpenManageServerDialog(server.name, server.gameDir);
 				m_pGameServer = g_pAdminServer->GetManageServerInterface(managePage);
 				m_bStarted = true;
 
-				if (m_pProgressBox)
-				{	
+				if(m_pProgressBox)
+				{
 					m_pProgressBox->Close();
 					m_pProgressBox = NULL;
 				}
@@ -219,13 +218,13 @@ void CMainPanel::OnTick()
 			{
 				DoStop();
 			}
-			
+
 			surface()->SetCursor(dc_user);
 			m_bStarting = false;
 			ResetEvent(m_hShutdown);
 		}
 		else
-		{	
+		{
 			count++;
 		}
 	}
@@ -241,8 +240,8 @@ void CMainPanel::DoStop()
 	m_bStarted = false;
 	m_bClosing = true;
 
-	if (m_pProgressBox)
-	{	
+	if(m_pProgressBox)
+	{
 		m_pProgressBox->Close();
 		m_pProgressBox = NULL;
 	}
@@ -255,7 +254,7 @@ void CMainPanel::DoStop()
 //-----------------------------------------------------------------------------
 void CMainPanel::AddConsoleText(const char *msg)
 {
-	if (m_pGameServer)
+	if(m_pGameServer)
 	{
 		m_pGameServer->AddToConsole(msg);
 	}
@@ -264,9 +263,8 @@ void CMainPanel::AddConsoleText(const char *msg)
 //-----------------------------------------------------------------------------
 // Purpose: Message map
 //-----------------------------------------------------------------------------
-MessageMapItem_t CMainPanel::m_MessageMap[] =
-{
-	MAP_MESSAGE( CMainPanel, "Quit", OnClose ),
+MessageMapItem_t CMainPanel::m_MessageMap[] = {
+	MAP_MESSAGE(CMainPanel, "Quit", OnClose),
 };
 
 IMPLEMENT_PANELMAP(CMainPanel, BaseClass);

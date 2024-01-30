@@ -9,176 +9,164 @@
 /**
  * Global singleton accessor.
  */
-CTacticalMissionManager &TheTacticalMissions( void )
+CTacticalMissionManager &TheTacticalMissions(void)
 {
 	static CTacticalMissionManager *manager = g_pGameRules->TacticalMissionManagerFactory();
 
 	return *manager;
 }
 
-
 //---------------------------------------------------------------------------------------------
-class CListMissions : public CTacticalMissionManager::IForEachMission 
+class CListMissions : public CTacticalMissionManager::IForEachMission
 {
 public:
-	virtual bool Inspect( const CTacticalMission &mission )
+	virtual bool Inspect(const CTacticalMission &mission)
 	{
-		Msg( "%s\n", mission.GetName() );
+		Msg("%s\n", mission.GetName());
 		return true;
 	}
 };
 
-CON_COMMAND_F( mission_list, "List all available tactical missions", FCVAR_GAMEDLL )
+CON_COMMAND_F(mission_list, "List all available tactical missions", FCVAR_GAMEDLL)
 {
-	if ( !UTIL_IsCommandIssuedByServerAdmin() )
+	if(!UTIL_IsCommandIssuedByServerAdmin())
 		return;
 
 	CListMissions list;
-	TheTacticalMissions().ForEachMission( list );
+	TheTacticalMissions().ForEachMission(list);
 }
-
-
 
 //---------------------------------------------------------------------------------------------
 class CShowZone : public IForEachNavArea
 {
 public:
-	virtual bool Inspect( const CNavArea *area )
+	virtual bool Inspect(const CNavArea *area)
 	{
-		area->DrawFilled( 255, 255, 0, 255, 9999.9f );
+		area->DrawFilled(255, 255, 0, 255, 9999.9f);
 		return true;
 	}
 };
 
-
-CON_COMMAND_F( mission_show, "Show the given mission", FCVAR_GAMEDLL )
+CON_COMMAND_F(mission_show, "Show the given mission", FCVAR_GAMEDLL)
 {
-	if ( !UTIL_IsCommandIssuedByServerAdmin() )
+	if(!UTIL_IsCommandIssuedByServerAdmin())
 		return;
 
-	if ( args.ArgC() < 2 )
+	if(args.ArgC() < 2)
 	{
-		Msg( "%s <name of mission>\n", args.Arg(0) );
+		Msg("%s <name of mission>\n", args.Arg(0));
 		return;
 	}
 
-	const CTacticalMission *mission = TheTacticalMissions().GetMission( args.Arg(1) );
-	if ( mission )
+	const CTacticalMission *mission = TheTacticalMissions().GetMission(args.Arg(1));
+	if(mission)
 	{
-		const CTacticalMissionZone *zone = mission->GetDeployZone( NULL );
-		if ( zone )
+		const CTacticalMissionZone *zone = mission->GetDeployZone(NULL);
+		if(zone)
 		{
 			CShowZone show;
-			zone->ForEachArea( show );
+			zone->ForEachArea(show);
 		}
 		else
 		{
-			Msg( "No deploy zone\n" );
+			Msg("No deploy zone\n");
 		}
 	}
 	else
 	{
-		Msg( "Unknown mission '%s'\n", args.Arg(1) );
+		Msg("Unknown mission '%s'\n", args.Arg(1));
 	}
 }
 
-
 //---------------------------------------------------------------------------------------------
-CNavArea *CTacticalMissionZone::SelectArea( CBasePlayer *who ) const
+CNavArea *CTacticalMissionZone::SelectArea(CBasePlayer *who) const
 {
-	if ( m_areaVector.Count() == 0 )
+	if(m_areaVector.Count() == 0)
 		return NULL;
 
-	int which = RandomInt( 0, m_areaVector.Count()-1 );
-	return m_areaVector[ which ];
+	int which = RandomInt(0, m_areaVector.Count() - 1);
+	return m_areaVector[which];
 }
-
 
 //---------------------------------------------------------------------------------------------
 /**
  * Iterate each area in this zone.
  * If functor returns false, stop iterating and return false.
  */
-bool CTacticalMissionZone::ForEachArea( IForEachNavArea &func ) const
+bool CTacticalMissionZone::ForEachArea(IForEachNavArea &func) const
 {
 	int i;
 
-	for( i=0; i<m_areaVector.Count(); ++i )
+	for(i = 0; i < m_areaVector.Count(); ++i)
 	{
-		if ( func.Inspect( m_areaVector[i] ) == false )
+		if(func.Inspect(m_areaVector[i]) == false)
 			break;
 	}
 
-	bool wasCompleteIteration = ( i == m_areaVector.Count() );
+	bool wasCompleteIteration = (i == m_areaVector.Count());
 
-	func.PostIteration( wasCompleteIteration );
+	func.PostIteration(wasCompleteIteration);
 
 	return wasCompleteIteration;
 }
 
-
 //---------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------
-CTacticalMissionManager::CTacticalMissionManager( void )
+CTacticalMissionManager::CTacticalMissionManager(void)
 {
-	ListenForGameEvent( "round_start" );
-	ListenForGameEvent( "teamplay_round_start" );
+	ListenForGameEvent("round_start");
+	ListenForGameEvent("teamplay_round_start");
 }
 
-
 //---------------------------------------------------------------------------------------------
-void CTacticalMissionManager::FireGameEvent( IGameEvent *gameEvent )
+void CTacticalMissionManager::FireGameEvent(IGameEvent *gameEvent)
 {
-	if ( FStrEq( gameEvent->GetName(), "round_start" ) || FStrEq( gameEvent->GetName(), "teamplay_round_start" ) )
+	if(FStrEq(gameEvent->GetName(), "round_start") || FStrEq(gameEvent->GetName(), "teamplay_round_start"))
 	{
 		OnRoundRestart();
 	}
 }
 
-
 //---------------------------------------------------------------------------------------------
-void CTacticalMissionManager::Register( CTacticalMission *mission )
+void CTacticalMissionManager::Register(CTacticalMission *mission)
 {
-	if ( m_missionVector.Find( mission ) == m_missionVector.InvalidIndex() )
+	if(m_missionVector.Find(mission) == m_missionVector.InvalidIndex())
 	{
-		m_missionVector.AddToTail( mission );
+		m_missionVector.AddToTail(mission);
 	}
 }
 
-
 //---------------------------------------------------------------------------------------------
-void CTacticalMissionManager::Unregister( CTacticalMission *mission )
+void CTacticalMissionManager::Unregister(CTacticalMission *mission)
 {
-	m_missionVector.FindAndRemove( mission );
+	m_missionVector.FindAndRemove(mission);
 }
-
 
 //---------------------------------------------------------------------------------------------
 /**
  * Given a mission name, return the mission (or NULL)
  */
-const CTacticalMission *CTacticalMissionManager::GetMission( const char *name )
+const CTacticalMission *CTacticalMissionManager::GetMission(const char *name)
 {
-	FOR_EACH_VEC( m_missionVector, it )
+	FOR_EACH_VEC(m_missionVector, it)
 	{
-		if ( FStrEq( m_missionVector[it]->GetName(), name ) )
+		if(FStrEq(m_missionVector[it]->GetName(), name))
 			return m_missionVector[it];
 	}
 
 	return NULL;
 }
 
-
 //---------------------------------------------------------------------------------------------
 /**
  * Iterate each mission.
  * If functor returns false, stop iterating and return false.
  */
-bool CTacticalMissionManager::ForEachMission( CTacticalMissionManager::IForEachMission &func )
+bool CTacticalMissionManager::ForEachMission(CTacticalMissionManager::IForEachMission &func)
 {
-	FOR_EACH_VEC( m_missionVector, it )
+	FOR_EACH_VEC(m_missionVector, it)
 	{
-		if ( !func.Inspect( *m_missionVector[it] ) )
+		if(!func.Inspect(*m_missionVector[it]))
 			return false;
 	}
 

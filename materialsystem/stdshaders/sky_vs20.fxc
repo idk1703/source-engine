@@ -2,7 +2,7 @@
 
 const float4 g_vTextureSizeInfo : register( SHADER_SPECIFIC_CONST_0 );
 const float4 g_mBaseTexCoordTransform[2] : register( SHADER_SPECIFIC_CONST_1 );
-												   //SHADER_SPECIFIC_CONST_2
+													//SHADER_SPECIFIC_CONST_2
 
 #define TEXEL_XINCR (g_vTextureSizeInfo.x)
 #define TEXEL_YINCR (g_vTextureSizeInfo.y)
@@ -17,8 +17,8 @@ struct VS_INPUT
 
 struct VS_OUTPUT
 {
-    float4 projPos					: POSITION;
-    
+	float4 projPos					: POSITION;
+
 //#if defined( _X360 )
 //	float2 baseTexCoord		: TEXCOORD0;
 //#else

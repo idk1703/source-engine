@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -16,27 +16,27 @@
 
 //--------------------------------------------------------------------------------------------------------------
 /**
- * Compute travel distance along shortest path from startPos to goalPos. 
+ * Compute travel distance along shortest path from startPos to goalPos.
  * Return -1 if can't reach endPos from goalPos.
  */
-template< typename CostFunctor >
-float NavAreaTravelDistance( const Vector &startPos, const Vector &goalPos, CostFunctor &costFunc )
+template<typename CostFunctor>
+float NavAreaTravelDistance(const Vector &startPos, const Vector &goalPos, CostFunctor &costFunc)
 {
-	CNavArea *startArea = TheNavMesh->GetNearestNavArea( startPos );
-	if (startArea == NULL)
+	CNavArea *startArea = TheNavMesh->GetNearestNavArea(startPos);
+	if(startArea == NULL)
 	{
 		return -1.0f;
 	}
 
 	// compute path between areas using given cost heuristic
 	CNavArea *goalArea = NULL;
-	if (NavAreaBuildPath( startArea, NULL, &goalPos, costFunc, &goalArea ) == false)
+	if(NavAreaBuildPath(startArea, NULL, &goalPos, costFunc, &goalArea) == false)
 	{
 		return -1.0f;
 	}
 
 	// compute distance along path
-	if (goalArea->GetParent() == NULL)
+	if(goalArea->GetParent() == NULL)
 	{
 		// both points are in the same area - return euclidean distance
 		return (goalPos - startPos).Length();
@@ -50,7 +50,7 @@ float NavAreaTravelDistance( const Vector &startPos, const Vector &goalPos, Cost
 		area = goalArea->GetParent();
 		distance = (goalPos - area->GetCenter()).Length();
 
-		for( ; area->GetParent(); area = area->GetParent() )
+		for(; area->GetParent(); area = area->GetParent())
 		{
 			distance += (area->GetCenter() - area->GetParent()->GetCenter()).Length();
 		}

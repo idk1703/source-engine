@@ -12,29 +12,25 @@
 #pragma once
 #endif
 
-
 #include "utlvector.h"
 #include "team.h"
 #include "tfc_shareddefs.h"
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Team Manager
 //-----------------------------------------------------------------------------
 class CTFCTeam : public CTeam
 {
-	DECLARE_CLASS( CTFCTeam, CTeam );
+	DECLARE_CLASS(CTFCTeam, CTeam);
 	DECLARE_SERVERCLASS();
 
 public:
-
 	// Initialization
-	virtual void Init( const char *pName, int iNumber );
+	virtual void Init(const char *pName, int iNumber);
 	color32 GetTeamColor();
 };
 
-
-extern CTFCTeam *GetGlobalTFCTeam( int iIndex );
+extern CTFCTeam *GetGlobalTFCTeam(int iIndex);
 
 void TeamFortress_TeamShowScores(BOOL bLong, CBasePlayer *pPlayer);
 int TeamFortress_TeamGetScoreFrags(int tno);
@@ -48,11 +44,10 @@ typedef struct
 
 extern Vector rgbcolors[5];
 extern team_color_t teamcolors[5][PC_LASTCLASS]; // Colors for each of the 4 teams
-extern int number_of_teams;	// This is incremented for each map as info_player_teamspawn are created.
+extern int number_of_teams; // This is incremented for each map as info_player_teamspawn are created.
 extern const char *teamnames[5];
 #define g_szTeamColors teamnames
 
-color32 Vector255ToRGBColor( const Vector &vColor );
-
+color32 Vector255ToRGBColor(const Vector &vColor);
 
 #endif // TF_TEAM_H

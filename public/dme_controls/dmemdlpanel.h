@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -11,28 +11,24 @@
 #pragma once
 #endif
 
-
 #include "matsys_controls/mdlpanel.h"
 
-
 class CDmeMDLMakefile;
-
 
 //-----------------------------------------------------------------------------
 // MDL Viewer Panel (hooked into DMEPanel)
 //-----------------------------------------------------------------------------
 class CDmeMDLPanel : public CMDLPanel
 {
-	DECLARE_CLASS_SIMPLE( CDmeMDLPanel, CMDLPanel );
+	DECLARE_CLASS_SIMPLE(CDmeMDLPanel, CMDLPanel);
 
 public:
 	// constructor, destructor
-	CDmeMDLPanel( vgui::Panel *pParent, const char *pName );
+	CDmeMDLPanel(vgui::Panel *pParent, const char *pName);
 	virtual ~CDmeMDLPanel();
 
 	// DMEPanel..
-	void SetDmeElement( CDmeMDLMakefile *pMDLMakefile );
+	void SetDmeElement(CDmeMDLMakefile *pMDLMakefile);
 };
-
 
 #endif // DMEMDLPANEL_H

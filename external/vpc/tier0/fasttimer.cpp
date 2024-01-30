@@ -1,6 +1,6 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,7 +13,7 @@
 // NOTE: This has to be the last file included!
 //#include "tier0/memdbgon.h"
 
-uint64 g_ClockSpeed;	// Clocks/sec
+uint64 g_ClockSpeed; // Clocks/sec
 unsigned long g_dwClockSpeed;
 double g_ClockSpeedMicrosecondsMultiplier;
 double g_ClockSpeedMillisecondsMultiplier;

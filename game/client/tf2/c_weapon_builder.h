@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,7 +19,8 @@
 //=============================================================================
 class C_WeaponBuilder : public C_WeaponCombatUsedWithShieldBase
 {
-	DECLARE_CLASS( C_WeaponBuilder, C_WeaponCombatUsedWithShieldBase );
+	DECLARE_CLASS(C_WeaponBuilder, C_WeaponCombatUsedWithShieldBase);
+
 public:
 	DECLARE_CLIENTCLASS();
 	DECLARE_PREDICTABLE();
@@ -28,36 +29,42 @@ public:
 	~C_WeaponBuilder();
 
 	virtual void Redraw();
-	virtual bool VisibleInWeaponSelection( void ) { return false; }
+	virtual bool VisibleInWeaponSelection(void)
+	{
+		return false;
+	}
 
-	virtual bool	IsPlacingObject( void );
-	virtual bool	IsBuildingObject( void );
+	virtual bool IsPlacingObject(void);
+	virtual bool IsBuildingObject(void);
 
-	virtual const char *GetCurrentSelectionObjectName( void );
+	virtual const char *GetCurrentSelectionObjectName(void);
 
-	C_BaseObject	*GetPlacementModel( void ) { return m_hObjectBeingBuilt.Get(); }
+	C_BaseObject *GetPlacementModel(void)
+	{
+		return m_hObjectBeingBuilt.Get();
+	}
 
 public:
 	// Builder Data
-	int			m_iBuildState;
+	int m_iBuildState;
 	unsigned int m_iCurrentObject;
-	int			m_iCurrentObjectState;
-	float		m_flStartTime;
-	float		m_flTotalTime;
+	int m_iCurrentObjectState;
+	float m_flStartTime;
+	float m_flTotalTime;
 	vgui::HFont m_hFont;
 
 	// Our placement model
-	CHandle<C_BaseObject>	m_hObjectBeingBuilt;
+	CHandle<C_BaseObject> m_hObjectBeingBuilt;
 
 	// Objects that this builder can build
-	bool		m_bObjectValidity[ OBJ_LAST ];
+	bool m_bObjectValidity[OBJ_LAST];
 	// Buildability of each object
-	bool		m_bObjectBuildability[ OBJ_LAST ];
+	bool m_bObjectBuildability[OBJ_LAST];
 
 	// Materials
-	CMaterialReference	m_pIconFireToSelect;
+	CMaterialReference m_pIconFireToSelect;
 
 private:
-	C_WeaponBuilder( const C_WeaponBuilder & );
+	C_WeaponBuilder(const C_WeaponBuilder &);
 };
 #endif // C_WEAPON_BUILDER_H

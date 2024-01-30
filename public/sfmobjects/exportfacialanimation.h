@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -10,18 +10,16 @@
 #pragma once
 #endif
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
 class CDmeFilmClip;
 class CDmeAnimationSet;
 
-
 //-----------------------------------------------------------------------------
 // Exports an .fac file
 //-----------------------------------------------------------------------------
-bool ExportFacialAnimation( const char *pFileName, CDmeFilmClip *pMovie, CDmeFilmClip *pShot, CDmeAnimationSet *pAnimationSet );
-
+bool ExportFacialAnimation(const char *pFileName, CDmeFilmClip *pMovie, CDmeFilmClip *pShot,
+						   CDmeAnimationSet *pAnimationSet);
 
 #endif // EXPORTFACIALANIMATION_H

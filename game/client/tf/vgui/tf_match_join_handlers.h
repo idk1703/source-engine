@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,7 +23,6 @@ public:
 	virtual void MatchFound() = 0;
 
 protected:
-
 	void JoinMatch();
 };
 
@@ -34,7 +33,6 @@ public:
 	virtual void MatchFound() OVERRIDE;
 
 private:
-
 	float m_flNextAutoJoinTime;
 };
 
@@ -46,12 +44,12 @@ public:
 
 	virtual void MatchFound() OVERRIDE;
 
-	static void OnJoinLobbyInProgressCallback( bool bConfirmed, void *pContext );
-private:
+	static void OnJoinLobbyInProgressCallback(bool bConfirmed, void *pContext);
 
+private:
 	void UpdatePromptState();
 
-	static CTFRejoinConfirmDialog* m_pRejoinPrompt;
+	static CTFRejoinConfirmDialog *m_pRejoinPrompt;
 	float m_flNextRejoinThinkTime;
 };
 

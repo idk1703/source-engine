@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,11 +14,11 @@
 #include "vgui_controls/Frame.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CCDKeyEntryDialog : public vgui::Frame
 {
-	DECLARE_CLASS_SIMPLE( CCDKeyEntryDialog, vgui::Frame );
+	DECLARE_CLASS_SIMPLE(CCDKeyEntryDialog, vgui::Frame);
 
 public:
 	CCDKeyEntryDialog(vgui::Panel *parent, bool inConnect = false);
@@ -29,13 +29,16 @@ public:
 	static bool IsValidWeakCDKeyInRegistry();
 
 private:
-	enum { MAX_CDKEY_ERRORS = 5 };
+	enum
+	{
+		MAX_CDKEY_ERRORS = 5
+	};
 
 	virtual void OnCommand(const char *command);
 	virtual void OnClose();
 	virtual void OnThink();
 
-	MESSAGE_FUNC_PTR( OnTextChanged, "TextChanged", panel );
+	MESSAGE_FUNC_PTR(OnTextChanged, "TextChanged", panel);
 	bool IsEnteredKeyValid();
 
 	vgui::Button *m_pOK;
@@ -51,8 +54,7 @@ private:
 	bool m_bEnteredValidCDKey;
 
 	bool m_bInConnect;
-	int m_iErrCount; 
+	int m_iErrCount;
 };
-
 
 #endif // CDKEYENTRYDIALOG_H

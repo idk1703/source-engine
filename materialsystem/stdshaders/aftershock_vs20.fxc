@@ -24,7 +24,7 @@ struct VS_INPUT
 
 struct VS_OUTPUT
 {
-    float4 vProjPosition		: POSITION;		// Projection-space position
+	float4 vProjPosition		: POSITION;		// Projection-space position
 	float3 vWorldNormal			: TEXCOORD0;	// World-space normal
 	float3 vWorldTangent		: TEXCOORD1;
 	float3 vWorldBinormal		: TEXCOORD2;
@@ -96,7 +96,7 @@ VS_OUTPUT main( const VS_INPUT i )
 	float2 vUv1 = vBaseUv.xy * 8.0f;
 	float2 vUv1Scroll = vBaseUv.xy * 16.0f;
 	vUv1Scroll.y -= g_flTime * 0.1f;
-	
+
 	o.vUv1.xy = vUv1.xy;
 	o.vUv1.wz = vUv1Scroll.xy;
 

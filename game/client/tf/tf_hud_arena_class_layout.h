@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -17,28 +17,31 @@
 
 using namespace vgui;
 
-#define MAX_CLASS_IMAGES	12
+#define MAX_CLASS_IMAGES 12
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudArenaClassLayout : public CHudElement, public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CHudArenaClassLayout, EditablePanel );
+	DECLARE_CLASS_SIMPLE(CHudArenaClassLayout, EditablePanel);
 
 public:
-	CHudArenaClassLayout( const char *pElementName );
+	CHudArenaClassLayout(const char *pElementName);
 
-	virtual void	Init( void );
-	virtual void	ApplySchemeSettings( IScheme *scheme );
-	virtual bool	ShouldDraw( void );
-	virtual void	OnTick( void );
-	virtual void	PerformLayout( void );
-	bool HandleKeyCodePressed( vgui::KeyCode code );
+	virtual void Init(void);
+	virtual void ApplySchemeSettings(IScheme *scheme);
+	virtual bool ShouldDraw(void);
+	virtual void OnTick(void);
+	virtual void PerformLayout(void);
+	bool HandleKeyCodePressed(vgui::KeyCode code);
 
-	virtual int GetRenderGroupPriority() { return 40; }
+	virtual int GetRenderGroupPriority()
+	{
+		return 40;
+	}
 
-	virtual void	SetVisible( bool state );
+	virtual void SetVisible(bool state);
 
 private:
 	CTFImagePanel *m_pBackground;

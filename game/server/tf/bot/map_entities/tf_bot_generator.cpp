@@ -16,47 +16,44 @@
 extern ConVar tf_bot_prefix_name_with_difficulty;
 extern ConVar tf_bot_difficulty;
 
-extern void CreateBotName( int iTeam, int iClassIndex, CTFBot::DifficultyType skill, char* pBuffer, int iBufferSize );
+extern void CreateBotName(int iTeam, int iClassIndex, CTFBot::DifficultyType skill, char *pBuffer, int iBufferSize);
 
 //------------------------------------------------------------------------------
 
-BEGIN_DATADESC( CTFBotGenerator )
-	DEFINE_KEYFIELD( m_spawnCount,		FIELD_INTEGER,	"count" ),
-	DEFINE_KEYFIELD( m_maxActiveCount,	FIELD_INTEGER,	"maxActive" ),
-	DEFINE_KEYFIELD( m_spawnInterval,	FIELD_FLOAT,	"interval" ),
-	DEFINE_KEYFIELD( m_className,		FIELD_STRING,	"class" ),
-	DEFINE_KEYFIELD( m_teamName,		FIELD_STRING,	"team" ),
-	DEFINE_KEYFIELD( m_actionPointName,	FIELD_STRING,	"action_point" ),
-	DEFINE_KEYFIELD( m_initialCommand,	FIELD_STRING,	"initial_command" ),
-	DEFINE_KEYFIELD( m_bSuppressFire,	FIELD_BOOLEAN,	"suppressFire" ),
-	DEFINE_KEYFIELD( m_bDisableDodge,	FIELD_BOOLEAN,	"disableDodge" ),
-	DEFINE_KEYFIELD( m_iOnDeathAction,	FIELD_INTEGER,	"actionOnDeath" ),
-	DEFINE_KEYFIELD( m_bUseTeamSpawnpoint,	FIELD_BOOLEAN,	"useTeamSpawnPoint" ),
-	DEFINE_KEYFIELD( m_difficulty,		FIELD_INTEGER,	"difficulty" ),
-	DEFINE_KEYFIELD( m_bRetainBuildings,	FIELD_BOOLEAN,	"retainBuildings" ),
-	DEFINE_KEYFIELD( m_bSpawnOnlyWhenTriggered,	FIELD_BOOLEAN, "spawnOnlyWhenTriggered" ),
+BEGIN_DATADESC(CTFBotGenerator)
+	DEFINE_KEYFIELD(m_spawnCount, FIELD_INTEGER, "count"),
+		DEFINE_KEYFIELD(m_maxActiveCount, FIELD_INTEGER, "maxActive"),
+		DEFINE_KEYFIELD(m_spawnInterval, FIELD_FLOAT, "interval"), DEFINE_KEYFIELD(m_className, FIELD_STRING, "class"),
+		DEFINE_KEYFIELD(m_teamName, FIELD_STRING, "team"),
+		DEFINE_KEYFIELD(m_actionPointName, FIELD_STRING, "action_point"),
+		DEFINE_KEYFIELD(m_initialCommand, FIELD_STRING, "initial_command"),
+		DEFINE_KEYFIELD(m_bSuppressFire, FIELD_BOOLEAN, "suppressFire"),
+		DEFINE_KEYFIELD(m_bDisableDodge, FIELD_BOOLEAN, "disableDodge"),
+		DEFINE_KEYFIELD(m_iOnDeathAction, FIELD_INTEGER, "actionOnDeath"),
+		DEFINE_KEYFIELD(m_bUseTeamSpawnpoint, FIELD_BOOLEAN, "useTeamSpawnPoint"),
+		DEFINE_KEYFIELD(m_difficulty, FIELD_INTEGER, "difficulty"),
+		DEFINE_KEYFIELD(m_bRetainBuildings, FIELD_BOOLEAN, "retainBuildings"),
+		DEFINE_KEYFIELD(m_bSpawnOnlyWhenTriggered, FIELD_BOOLEAN, "spawnOnlyWhenTriggered"),
 
-	DEFINE_INPUTFUNC( FIELD_VOID, "Enable", InputEnable ),
-	DEFINE_INPUTFUNC( FIELD_VOID, "Disable", InputDisable ),
-	DEFINE_INPUTFUNC( FIELD_BOOLEAN, "SetSuppressFire", InputSetSuppressFire ),
-	DEFINE_INPUTFUNC( FIELD_BOOLEAN, "SetDisableDodge", InputSetDisableDodge ),
-	DEFINE_INPUTFUNC( FIELD_INTEGER, "SetDifficulty", InputSetDifficulty ),
-	DEFINE_INPUTFUNC( FIELD_STRING, "CommandGotoActionPoint", InputCommandGotoActionPoint ),
+		DEFINE_INPUTFUNC(FIELD_VOID, "Enable", InputEnable), DEFINE_INPUTFUNC(FIELD_VOID, "Disable", InputDisable),
+		DEFINE_INPUTFUNC(FIELD_BOOLEAN, "SetSuppressFire", InputSetSuppressFire),
+		DEFINE_INPUTFUNC(FIELD_BOOLEAN, "SetDisableDodge", InputSetDisableDodge),
+		DEFINE_INPUTFUNC(FIELD_INTEGER, "SetDifficulty", InputSetDifficulty),
+		DEFINE_INPUTFUNC(FIELD_STRING, "CommandGotoActionPoint", InputCommandGotoActionPoint),
 
-	DEFINE_INPUTFUNC( FIELD_STRING, "SetAttentionFocus", InputSetAttentionFocus ),
-	DEFINE_INPUTFUNC( FIELD_STRING, "ClearAttentionFocus", InputClearAttentionFocus ),
+		DEFINE_INPUTFUNC(FIELD_STRING, "SetAttentionFocus", InputSetAttentionFocus),
+		DEFINE_INPUTFUNC(FIELD_STRING, "ClearAttentionFocus", InputClearAttentionFocus),
 
-	DEFINE_INPUTFUNC( FIELD_VOID, "SpawnBot", InputSpawnBot ),
-	DEFINE_INPUTFUNC( FIELD_VOID, "RemoveBots", InputRemoveBots ),
+		DEFINE_INPUTFUNC(FIELD_VOID, "SpawnBot", InputSpawnBot),
+		DEFINE_INPUTFUNC(FIELD_VOID, "RemoveBots", InputRemoveBots),
 
-	DEFINE_OUTPUT( m_onSpawned, "OnSpawned" ),
-	DEFINE_OUTPUT( m_onExpended, "OnExpended" ),
-	DEFINE_OUTPUT( m_onBotKilled, "OnBotKilled" ),
+		DEFINE_OUTPUT(m_onSpawned, "OnSpawned"), DEFINE_OUTPUT(m_onExpended, "OnExpended"),
+		DEFINE_OUTPUT(m_onBotKilled, "OnBotKilled"),
 
-	DEFINE_THINKFUNC( GeneratorThink ),
+		DEFINE_THINKFUNC(GeneratorThink),
 END_DATADESC()
 
-LINK_ENTITY_TO_CLASS( bot_generator, CTFBotGenerator );
+LINK_ENTITY_TO_CLASS(bot_generator, CTFBotGenerator);
 
 enum
 {
@@ -66,131 +63,132 @@ enum
 };
 
 //------------------------------------------------------------------------------
-CTFBotGenerator::CTFBotGenerator( void ) 
-	: m_bBotChoosesClass(false)
-	, m_bSuppressFire(false)
-	, m_bDisableDodge(false)
-	, m_bUseTeamSpawnpoint(false)
-	, m_bRetainBuildings(false)
-	, m_bExpended(false)
-	, m_iOnDeathAction(kOnDeath_RemoveSelf)
-	, m_difficulty(CTFBot::UNDEFINED)
-	, m_spawnCountRemaining(0)
-	, m_bSpawnOnlyWhenTriggered(false)
-	, m_bEnabled(true)
+CTFBotGenerator::CTFBotGenerator(void)
+	: m_bBotChoosesClass(false),
+	  m_bSuppressFire(false),
+	  m_bDisableDodge(false),
+	  m_bUseTeamSpawnpoint(false),
+	  m_bRetainBuildings(false),
+	  m_bExpended(false),
+	  m_iOnDeathAction(kOnDeath_RemoveSelf),
+	  m_difficulty(CTFBot::UNDEFINED),
+	  m_spawnCountRemaining(0),
+	  m_bSpawnOnlyWhenTriggered(false),
+	  m_bEnabled(true)
 {
-	SetThink( NULL );
+	SetThink(NULL);
 }
 
 //------------------------------------------------------------------------------
-void CTFBotGenerator::InputEnable( inputdata_t &inputdata )
+void CTFBotGenerator::InputEnable(inputdata_t &inputdata)
 {
 	m_bEnabled = true;
 
-	if ( m_bExpended )
+	if(m_bExpended)
 	{
 		return;
 	}
 
-	SetThink( &CTFBotGenerator::GeneratorThink );
+	SetThink(&CTFBotGenerator::GeneratorThink);
 
-	if ( m_spawnCountRemaining )
+	if(m_spawnCountRemaining)
 	{
 		// already generating - don't restart count
 		return;
 	}
-	SetNextThink( gpGlobals->curtime );
+	SetNextThink(gpGlobals->curtime);
 	m_spawnCountRemaining = m_spawnCount;
 }
 
 //------------------------------------------------------------------------------
-void CTFBotGenerator::InputDisable( inputdata_t &inputdata )
+void CTFBotGenerator::InputDisable(inputdata_t &inputdata)
 {
 	m_bEnabled = false;
 
 	// just stop thinking
-	SetThink( NULL );
+	SetThink(NULL);
 }
 
 //------------------------------------------------------------------------------
-void CTFBotGenerator::InputSetSuppressFire( inputdata_t &inputdata )
+void CTFBotGenerator::InputSetSuppressFire(inputdata_t &inputdata)
 {
 	m_bSuppressFire = inputdata.value.Bool();
 }
 
 //------------------------------------------------------------------------------
-void CTFBotGenerator::InputSetDisableDodge( inputdata_t &inputdata )
+void CTFBotGenerator::InputSetDisableDodge(inputdata_t &inputdata)
 {
 	m_bDisableDodge = inputdata.value.Bool();
 }
 
 //------------------------------------------------------------------------------
-void CTFBotGenerator::InputSetDifficulty( inputdata_t &inputdata )
+void CTFBotGenerator::InputSetDifficulty(inputdata_t &inputdata)
 {
-	m_difficulty = clamp( inputdata.value.Int(), (int) CTFBot::UNDEFINED, (int) CTFBot::EXPERT );
+	m_difficulty = clamp(inputdata.value.Int(), (int)CTFBot::UNDEFINED, (int)CTFBot::EXPERT);
 }
 
 //------------------------------------------------------------------------------
-void CTFBotGenerator::InputCommandGotoActionPoint( inputdata_t &inputdata )
+void CTFBotGenerator::InputCommandGotoActionPoint(inputdata_t &inputdata)
 {
-	CTFBotActionPoint *pActionPoint = dynamic_cast<CTFBotActionPoint *>( gEntList.FindEntityByName( NULL, inputdata.value.String() ) );
-	if ( pActionPoint == NULL )
+	CTFBotActionPoint *pActionPoint =
+		dynamic_cast<CTFBotActionPoint *>(gEntList.FindEntityByName(NULL, inputdata.value.String()));
+	if(pActionPoint == NULL)
 	{
 		return;
 	}
-	for ( int i = 0; i < m_spawnedBotVector.Count(); )
+	for(int i = 0; i < m_spawnedBotVector.Count();)
 	{
-		CHandle< CTFBot > hBot = m_spawnedBotVector[i];
-		if ( hBot == NULL )
+		CHandle<CTFBot> hBot = m_spawnedBotVector[i];
+		if(hBot == NULL)
 		{
 			m_spawnedBotVector.FastRemove(i);
 			continue;
 		}
-		if ( hBot->GetTeamNumber() == TEAM_SPECTATOR )
+		if(hBot->GetTeamNumber() == TEAM_SPECTATOR)
 		{
 			m_spawnedBotVector.FastRemove(i);
 			continue;
 		}
-		hBot->SetActionPoint( pActionPoint );
-		hBot->OnCommandString( "goto action point" );
+		hBot->SetActionPoint(pActionPoint);
+		hBot->OnCommandString("goto action point");
 		++i;
 	}
 }
 
 //------------------------------------------------------------------------------
-void CTFBotGenerator::InputSetAttentionFocus( inputdata_t &inputdata )
+void CTFBotGenerator::InputSetAttentionFocus(inputdata_t &inputdata)
 {
-	CBaseEntity *focus = gEntList.FindEntityByName( NULL, inputdata.value.String() );
+	CBaseEntity *focus = gEntList.FindEntityByName(NULL, inputdata.value.String());
 
-	if ( focus == NULL )
+	if(focus == NULL)
 	{
 		return;
 	}
 
-	for( int i = 0; i < m_spawnedBotVector.Count(); )
+	for(int i = 0; i < m_spawnedBotVector.Count();)
 	{
 		CTFBot *bot = m_spawnedBotVector[i];
 
-		if ( !bot || bot->GetTeamNumber() == TEAM_SPECTATOR )
+		if(!bot || bot->GetTeamNumber() == TEAM_SPECTATOR)
 		{
 			m_spawnedBotVector.FastRemove(i);
 			continue;
 		}
 
-		bot->SetAttentionFocus( focus );
+		bot->SetAttentionFocus(focus);
 
 		++i;
 	}
 }
 
 //------------------------------------------------------------------------------
-void CTFBotGenerator::InputClearAttentionFocus( inputdata_t &inputdata )
+void CTFBotGenerator::InputClearAttentionFocus(inputdata_t &inputdata)
 {
-	for( int i = 0; i < m_spawnedBotVector.Count(); )
+	for(int i = 0; i < m_spawnedBotVector.Count();)
 	{
 		CTFBot *bot = m_spawnedBotVector[i];
 
-		if ( !bot || bot->GetTeamNumber() == TEAM_SPECTATOR )
+		if(!bot || bot->GetTeamNumber() == TEAM_SPECTATOR)
 		{
 			m_spawnedBotVector.FastRemove(i);
 			continue;
@@ -203,24 +201,24 @@ void CTFBotGenerator::InputClearAttentionFocus( inputdata_t &inputdata )
 }
 
 //------------------------------------------------------------------------------
-void CTFBotGenerator::InputSpawnBot( inputdata_t &inputdata )
+void CTFBotGenerator::InputSpawnBot(inputdata_t &inputdata)
 {
-	if ( m_bEnabled )
+	if(m_bEnabled)
 	{
 		SpawnBot();
 	}
 }
 
 //------------------------------------------------------------------------------
-void CTFBotGenerator::InputRemoveBots( inputdata_t &inputdata )
+void CTFBotGenerator::InputRemoveBots(inputdata_t &inputdata)
 {
-	for( int i = 0; i < m_spawnedBotVector.Count(); i++ )
+	for(int i = 0; i < m_spawnedBotVector.Count(); i++)
 	{
 		CTFBot *pBot = m_spawnedBotVector[i];
-		if ( pBot )
+		if(pBot)
 		{
 			pBot->Remove();
-			engine->ServerCommand( UTIL_VarArgs( "kickid %d\n", pBot->GetUserID() ) );
+			engine->ServerCommand(UTIL_VarArgs("kickid %d\n", pBot->GetUserID()));
 		}
 
 		m_spawnedBotVector.FastRemove(i);
@@ -228,9 +226,9 @@ void CTFBotGenerator::InputRemoveBots( inputdata_t &inputdata )
 }
 
 //------------------------------------------------------------------------------
-void CTFBotGenerator::OnBotKilled( CTFBot *pBot )
+void CTFBotGenerator::OnBotKilled(CTFBot *pBot)
 {
-	m_onBotKilled.FireOutput( pBot, this );
+	m_onBotKilled.FireOutput(pBot, this);
 }
 
 //------------------------------------------------------------------------------
@@ -238,41 +236,41 @@ void CTFBotGenerator::OnBotKilled( CTFBot *pBot )
 void CTFBotGenerator::Activate()
 {
 	BaseClass::Activate();
-	m_bBotChoosesClass = FStrEq( m_className.ToCStr(), "auto" );
-	m_moveGoal = gEntList.FindEntityByName( NULL, m_actionPointName.ToCStr() );
+	m_bBotChoosesClass = FStrEq(m_className.ToCStr(), "auto");
+	m_moveGoal = gEntList.FindEntityByName(NULL, m_actionPointName.ToCStr());
 }
 
 //------------------------------------------------------------------------------
-void CTFBotGenerator::GeneratorThink( void )
+void CTFBotGenerator::GeneratorThink(void)
 {
 	// still waiting for the real game to start?
 	gamerules_roundstate_t roundState = TFGameRules()->State_Get();
-	if ( roundState >= GR_STATE_TEAM_WIN || roundState < GR_STATE_PREROUND ||  TFGameRules()->IsInWaitingForPlayers() )
+	if(roundState >= GR_STATE_TEAM_WIN || roundState < GR_STATE_PREROUND || TFGameRules()->IsInWaitingForPlayers())
 	{
-		SetNextThink( gpGlobals->curtime + 1.0f );
+		SetNextThink(gpGlobals->curtime + 1.0f);
 		return;
 	}
 
 	// create the bot finally...
-	if ( !m_bSpawnOnlyWhenTriggered )
+	if(!m_bSpawnOnlyWhenTriggered)
 	{
 		SpawnBot();
 	}
 }
 
 //------------------------------------------------------------------------------
-void CTFBotGenerator::SpawnBot( void )
+void CTFBotGenerator::SpawnBot(void)
 {
 	// did we exceed the max active count?
-	for ( int i = 0; i < m_spawnedBotVector.Count(); )
+	for(int i = 0; i < m_spawnedBotVector.Count();)
 	{
-		CHandle< CTFBot > hBot = m_spawnedBotVector[i];
-		if ( hBot == NULL )
+		CHandle<CTFBot> hBot = m_spawnedBotVector[i];
+		if(hBot == NULL)
 		{
 			m_spawnedBotVector.FastRemove(i);
 			continue;
 		}
-		if ( hBot->GetTeamNumber() == TEAM_SPECTATOR )
+		if(hBot->GetTeamNumber() == TEAM_SPECTATOR)
 		{
 			m_spawnedBotVector.FastRemove(i);
 			continue;
@@ -280,140 +278,140 @@ void CTFBotGenerator::SpawnBot( void )
 		++i;
 	}
 
-	if ( m_spawnedBotVector.Count() >= m_maxActiveCount )
+	if(m_spawnedBotVector.Count() >= m_maxActiveCount)
 	{
-		SetNextThink( gpGlobals->curtime + 0.1f );
+		SetNextThink(gpGlobals->curtime + 0.1f);
 		return;
 	}
 
 	char name[256];
 	CTFBot *bot = TheTFBots().GetAvailableBotFromPool();
-	if ( bot == NULL )
+	if(bot == NULL)
 	{
-		CreateBotName( TEAM_UNASSIGNED, TF_CLASS_UNDEFINED, (CTFBot::DifficultyType)m_difficulty, name, sizeof(name) );
-		bot = NextBotCreatePlayerBot< CTFBot >( name );
+		CreateBotName(TEAM_UNASSIGNED, TF_CLASS_UNDEFINED, (CTFBot::DifficultyType)m_difficulty, name, sizeof(name));
+		bot = NextBotCreatePlayerBot<CTFBot>(name);
 	}
 
-	if ( bot ) 
-	{										   
-		m_spawnedBotVector.AddToTail( bot );
+	if(bot)
+	{
+		m_spawnedBotVector.AddToTail(bot);
 
 #ifdef TF_RAID_MODE
-		if ( TFGameRules()->IsRaidMode() )
+		if(TFGameRules()->IsRaidMode())
 		{
-			bot->SetAttribute( CTFBot::IS_NPC );
+			bot->SetAttribute(CTFBot::IS_NPC);
 		}
 #endif // TF_RAID_MODE
 
-		bot->SetSpawner( this );
+		bot->SetSpawner(this);
 
-		if ( m_bUseTeamSpawnpoint == false )
+		if(m_bUseTeamSpawnpoint == false)
 		{
-			bot->SetSpawnPoint( this );		
+			bot->SetSpawnPoint(this);
 		}
 
-		if ( m_bSuppressFire )
+		if(m_bSuppressFire)
 		{
-			bot->SetAttribute( CTFBot::SUPPRESS_FIRE );
+			bot->SetAttribute(CTFBot::SUPPRESS_FIRE);
 		}
 
-		if ( m_bRetainBuildings )
+		if(m_bRetainBuildings)
 		{
-			bot->SetAttribute( CTFBot::RETAIN_BUILDINGS );
+			bot->SetAttribute(CTFBot::RETAIN_BUILDINGS);
 		}
 
-		if ( m_bDisableDodge )
+		if(m_bDisableDodge)
 		{
-			bot->SetAttribute( CTFBot::DISABLE_DODGE );
+			bot->SetAttribute(CTFBot::DISABLE_DODGE);
 		}
 
-		if ( m_difficulty != CTFBot::UNDEFINED )
+		if(m_difficulty != CTFBot::UNDEFINED)
 		{
-			bot->SetDifficulty( (CTFBot::DifficultyType )m_difficulty );
+			bot->SetDifficulty((CTFBot::DifficultyType)m_difficulty);
 		}
 
 		// propagate the generator's spawn flags into all bots generated
-		bot->ClearBehaviorFlag( TFBOT_ALL_BEHAVIOR_FLAGS );
-		bot->SetBehaviorFlag( m_spawnflags );
+		bot->ClearBehaviorFlag(TFBOT_ALL_BEHAVIOR_FLAGS);
+		bot->SetBehaviorFlag(m_spawnflags);
 
-		switch ( m_iOnDeathAction )
+		switch(m_iOnDeathAction)
 		{
-		case kOnDeath_RemoveSelf:
-			bot->SetAttribute( CTFBot::REMOVE_ON_DEATH );
-			break;
-		case kOnDeath_MoveToSpectatorTeam:
-			bot->SetAttribute( CTFBot::BECOME_SPECTATOR_ON_DEATH );
-			break;
+			case kOnDeath_RemoveSelf:
+				bot->SetAttribute(CTFBot::REMOVE_ON_DEATH);
+				break;
+			case kOnDeath_MoveToSpectatorTeam:
+				bot->SetAttribute(CTFBot::BECOME_SPECTATOR_ON_DEATH);
+				break;
 		} // switch
 
-		bot->SetActionPoint( dynamic_cast<CTFBotActionPoint *>( m_moveGoal.Get() ) );
+		bot->SetActionPoint(dynamic_cast<CTFBotActionPoint *>(m_moveGoal.Get()));
 
 		// pick a team and force the team change
 		// HandleCommand_JoinTeam() may fail, but this should always succeed
 		int iTeam = TEAM_UNASSIGNED;
-		if ( FStrEq( m_teamName.ToCStr(), "auto" ) )
+		if(FStrEq(m_teamName.ToCStr(), "auto"))
 		{
 			iTeam = bot->GetAutoTeam();
 		}
-		else if ( FStrEq( m_teamName.ToCStr(), "spectate" ) )
+		else if(FStrEq(m_teamName.ToCStr(), "spectate"))
 		{
 			iTeam = TEAM_SPECTATOR;
 		}
 		else
 		{
-			for ( int i = 0; i < TF_TEAM_COUNT; ++i )
+			for(int i = 0; i < TF_TEAM_COUNT; ++i)
 			{
-				COMPILE_TIME_ASSERT( TF_TEAM_COUNT == ARRAYSIZE( g_aTeamNames ) );
-				if ( FStrEq( m_teamName.ToCStr(), g_aTeamNames[i] ) )
+				COMPILE_TIME_ASSERT(TF_TEAM_COUNT == ARRAYSIZE(g_aTeamNames));
+				if(FStrEq(m_teamName.ToCStr(), g_aTeamNames[i]))
 				{
 					iTeam = i;
 					break;
 				}
 			}
 		}
-		if ( iTeam == TEAM_UNASSIGNED )
+		if(iTeam == TEAM_UNASSIGNED)
 		{
 			iTeam = bot->GetAutoTeam();
 		}
-		bot->ChangeTeam( iTeam, false, false );
-		
-		const char* pClassName =  m_bBotChoosesClass ? bot->GetNextSpawnClassname() : m_className.ToCStr();
-		bot->HandleCommand_JoinClass( pClassName );
+		bot->ChangeTeam(iTeam, false, false);
+
+		const char *pClassName = m_bBotChoosesClass ? bot->GetNextSpawnClassname() : m_className.ToCStr();
+		bot->HandleCommand_JoinClass(pClassName);
 
 		// in training, reset the after the bot joins the class
-		if ( TFGameRules()->IsInTraining() )
+		if(TFGameRules()->IsInTraining())
 		{
 			CTFBot::DifficultyType skill = bot->GetDifficulty();
-			CreateBotName( iTeam, bot->GetPlayerClass()->GetClassIndex(), skill, name, sizeof(name) );
-			engine->SetFakeClientConVarValue( bot->edict(), "name", name );
+			CreateBotName(iTeam, bot->GetPlayerClass()->GetClassIndex(), skill, name, sizeof(name));
+			engine->SetFakeClientConVarValue(bot->edict(), "name", name);
 		}
 
-		if ( bot->IsAlive() == false )
+		if(bot->IsAlive() == false)
 		{
 			bot->ForceRespawn();
 		}
 
 		// make sure the bot is facing the right way.
 		// @todo Tom Bui: for some reason it is still turning towards another direction...need to investigate
-		bot->SnapEyeAngles( GetAbsAngles() );
+		bot->SnapEyeAngles(GetAbsAngles());
 
-		if ( FStrEq( m_initialCommand.ToCStr(), "" ) == false )
+		if(FStrEq(m_initialCommand.ToCStr(), "") == false)
 		{
 			// @note Tom Bui: we call Update() once here to make sure the bot is ready to receive commands
 			bot->Update();
-			bot->OnCommandString( m_initialCommand.ToCStr() );
+			bot->OnCommandString(m_initialCommand.ToCStr());
 		}
-		m_onSpawned.FireOutput( bot, this );
+		m_onSpawned.FireOutput(bot, this);
 
 		--m_spawnCountRemaining;
-		if ( m_spawnCountRemaining )
+		if(m_spawnCountRemaining)
 		{
-			SetNextThink( gpGlobals->curtime + m_spawnInterval );
+			SetNextThink(gpGlobals->curtime + m_spawnInterval);
 		}
 		else
 		{
-			SetThink( NULL );
-			m_onExpended.FireOutput( this, this );
+			SetThink(NULL);
+			m_onExpended.FireOutput(this, this);
 			m_bExpended = true;
 		}
 	}
@@ -421,50 +419,43 @@ void CTFBotGenerator::SpawnBot( void )
 
 //------------------------------------------------------------------------------
 
-BEGIN_DATADESC( CTFBotActionPoint )
-	DEFINE_KEYFIELD( m_stayTime,			FIELD_FLOAT,	"stay_time" ),
-	DEFINE_KEYFIELD( m_desiredDistance,		FIELD_FLOAT,	"desired_distance" ),
-	DEFINE_KEYFIELD( m_nextActionPointName,	FIELD_STRING,	"next_action_point" ),
-	DEFINE_KEYFIELD( m_command,				FIELD_STRING,	"command" ),
-	DEFINE_OUTPUT( m_onReachedActionPoint, "OnBotReached" ),
+BEGIN_DATADESC(CTFBotActionPoint)
+	DEFINE_KEYFIELD(m_stayTime, FIELD_FLOAT, "stay_time"),
+		DEFINE_KEYFIELD(m_desiredDistance, FIELD_FLOAT, "desired_distance"),
+		DEFINE_KEYFIELD(m_nextActionPointName, FIELD_STRING, "next_action_point"),
+		DEFINE_KEYFIELD(m_command, FIELD_STRING, "command"), DEFINE_OUTPUT(m_onReachedActionPoint, "OnBotReached"),
 END_DATADESC()
 
-LINK_ENTITY_TO_CLASS( bot_action_point, CTFBotActionPoint );
+LINK_ENTITY_TO_CLASS(bot_action_point, CTFBotActionPoint);
 
 //------------------------------------------------------------------------------
 
-CTFBotActionPoint::CTFBotActionPoint()
-: m_stayTime( 0.0f )
-, m_desiredDistance( 1.0f )
-
-{
-
-}
+CTFBotActionPoint::CTFBotActionPoint() : m_stayTime(0.0f), m_desiredDistance(1.0f) {}
 
 //------------------------------------------------------------------------------
 
 void CTFBotActionPoint::Activate()
 {
 	BaseClass::Activate();
-	m_moveGoal = gEntList.FindEntityByName( NULL, m_nextActionPointName.ToCStr() );
+	m_moveGoal = gEntList.FindEntityByName(NULL, m_nextActionPointName.ToCStr());
 }
 
 //------------------------------------------------------------------------------
 
-bool CTFBotActionPoint::IsWithinRange( CBaseEntity *entity )
+bool CTFBotActionPoint::IsWithinRange(CBaseEntity *entity)
 {
-	return ( entity->GetAbsOrigin() - GetAbsOrigin() ).IsLengthLessThan( m_desiredDistance );
+	return (entity->GetAbsOrigin() - GetAbsOrigin()).IsLengthLessThan(m_desiredDistance);
 }
 
 //------------------------------------------------------------------------------
 
-void CTFBotActionPoint::ReachedActionPoint( CTFBot* pBot )
+void CTFBotActionPoint::ReachedActionPoint(CTFBot *pBot)
 {
-	if ( FStrEq( m_command.ToCStr(), "" ) == false )
+	if(FStrEq(m_command.ToCStr(), "") == false)
 	{
-		pBot->OnCommandString( m_command.ToCStr() );
+		pBot->OnCommandString(m_command.ToCStr());
 	}
-	m_onReachedActionPoint.FireOutput( pBot, this );
+	m_onReachedActionPoint.FireOutput(pBot, this);
 }
 
 //------------------------------------------------------------------------------

@@ -11,39 +11,34 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
+//-----------------------------------------------------------------------------
+// Expose this class to the scene database
+//-----------------------------------------------------------------------------
+IMPLEMENT_ELEMENT_FACTORY(DmeBodyGroup, CDmeBodyGroup);
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
-//-----------------------------------------------------------------------------
-IMPLEMENT_ELEMENT_FACTORY( DmeBodyGroup, CDmeBodyGroup );
-
-
-//-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeBodyGroup::OnConstruction()
 {
-	m_BodyParts.Init( this, "bodyParts" );
+	m_BodyParts.Init(this, "bodyParts");
 }
 
-void CDmeBodyGroup::OnDestruction()
-{
-}
-
+void CDmeBodyGroup::OnDestruction() {}
 
 //-----------------------------------------------------------------------------
-// Finds a body part by name 
+// Finds a body part by name
 //-----------------------------------------------------------------------------
-CDmeLODList *CDmeBodyGroup::FindBodyPart( const char *pName )
+CDmeLODList *CDmeBodyGroup::FindBodyPart(const char *pName)
 {
 	int nCount = m_BodyParts.Count();
-	for ( int i = 0; i < nCount; ++i )
+	for(int i = 0; i < nCount; ++i)
 	{
-		CDmeLODList *pLODList = CastElement< CDmeLODList >( m_BodyParts[ i ] );
-		if ( !pLODList )
+		CDmeLODList *pLODList = CastElement<CDmeLODList>(m_BodyParts[i]);
+		if(!pLODList)
 			continue;
 
-		if ( !Q_stricmp( pName, pLODList->GetName() )	)
+		if(!Q_stricmp(pName, pLODList->GetName()))
 			return pLODList;
 	}
 

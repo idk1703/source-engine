@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,7 +10,7 @@
 #include "cbase.h"
 #include "weapon_dodbasegun.h"
 
-#if defined( CLIENT_DLL )
+#if defined(CLIENT_DLL)
 #define CDODFireSelectWeapon C_DODFireSelectWeapon
 
 #include "c_dod_player.h"
@@ -19,36 +19,36 @@
 class CDODFireSelectWeapon : public CWeaponDODBaseGun
 {
 public:
-	DECLARE_CLASS( CDODFireSelectWeapon, CWeaponDODBaseGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_CLASS(CDODFireSelectWeapon, CWeaponDODBaseGun);
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CDODFireSelectWeapon();
 
 	virtual void Spawn();
-	virtual void PrimaryAttack( void );
-	virtual void SecondaryAttack( void );
-	virtual float GetWeaponAccuracy( float flPlayerSpeed );
-	virtual float GetFireDelay( void );
-	virtual void Drop( const Vector &vecVelocity );
+	virtual void PrimaryAttack(void);
+	virtual void SecondaryAttack(void);
+	virtual float GetWeaponAccuracy(float flPlayerSpeed);
+	virtual float GetFireDelay(void);
+	virtual void Drop(const Vector &vecVelocity);
 
-	bool IsSemiAuto( void );
+	bool IsSemiAuto(void);
 
-	virtual Activity GetIdleActivity( void );
-	virtual Activity GetPrimaryAttackActivity( void );
-	virtual Activity GetReloadActivity( void );
-	virtual Activity GetDrawActivity( void );
+	virtual Activity GetIdleActivity(void);
+	virtual Activity GetPrimaryAttackActivity(void);
+	virtual Activity GetReloadActivity(void);
+	virtual Activity GetDrawActivity(void);
 
 #ifdef CLIENT_DLL
-	virtual Vector GetDesiredViewModelOffset( C_DODPlayer *pOwner );
+	virtual Vector GetDesiredViewModelOffset(C_DODPlayer *pOwner);
 
-	void ResetViewModelAnimDir( void )
+	void ResetViewModelAnimDir(void)
 	{
 		m_bAnimToSemiAuto = true;
 		m_flPosChangeTimer = 0;
 	}
 
-	virtual void OnWeaponDropped( void )
+	virtual void OnWeaponDropped(void)
 	{
 		ResetViewModelAnimDir();
 
@@ -59,7 +59,7 @@ public:
 #endif
 
 private:
-	CNetworkVar( bool, m_bSemiAuto );
+	CNetworkVar(bool, m_bSemiAuto);
 
 #ifdef CLIENT_DLL
 	bool m_bAnimToSemiAuto;
@@ -67,7 +67,7 @@ private:
 #endif
 
 private:
-	CDODFireSelectWeapon( const CDODFireSelectWeapon & );
+	CDODFireSelectWeapon(const CDODFireSelectWeapon &);
 };
 
-#endif //WEAPON_DODFIRESELECT_H
+#endif // WEAPON_DODFIRESELECT_H

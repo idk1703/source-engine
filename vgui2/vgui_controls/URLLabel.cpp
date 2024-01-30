@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -26,33 +26,35 @@ vgui::Panel *URLLabel_Factory()
 	return new URLLabel(NULL, NULL, "URLLabel", NULL);
 }
 
-DECLARE_BUILD_FACTORY_CUSTOM( URLLabel, URLLabel_Factory );
+DECLARE_BUILD_FACTORY_CUSTOM(URLLabel, URLLabel_Factory);
 //-----------------------------------------------------------------------------
 // Purpose: constructor
 //-----------------------------------------------------------------------------
-URLLabel::URLLabel(Panel *parent, const char *panelName, const char *text, const char *pszURL) : Label(parent, panelName, text)
+URLLabel::URLLabel(Panel *parent, const char *panelName, const char *text, const char *pszURL)
+	: Label(parent, panelName, text)
 {
-    m_pszURL = NULL;
+	m_pszURL = NULL;
 	m_bUnderline = false;
-    m_iURLSize = 0;
-    if (pszURL && strlen(pszURL) > 0)
-    {
-        SetURL(pszURL);
-    }
+	m_iURLSize = 0;
+	if(pszURL && strlen(pszURL) > 0)
+	{
+		SetURL(pszURL);
+	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: unicode constructor
 //-----------------------------------------------------------------------------
-URLLabel::URLLabel(Panel *parent, const char *panelName, const wchar_t *wszText, const char *pszURL) : Label(parent, panelName, wszText)
+URLLabel::URLLabel(Panel *parent, const char *panelName, const wchar_t *wszText, const char *pszURL)
+	: Label(parent, panelName, wszText)
 {
-    m_pszURL = NULL;
+	m_pszURL = NULL;
 	m_bUnderline = false;
-    m_iURLSize = 0;
-    if (pszURL && strlen(pszURL) > 0)
-    {
-        SetURL(pszURL);
-    }
+	m_iURLSize = 0;
+	if(pszURL && strlen(pszURL) > 0)
+	{
+		SetURL(pszURL);
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -60,8 +62,8 @@ URLLabel::URLLabel(Panel *parent, const char *panelName, const wchar_t *wszText,
 //-----------------------------------------------------------------------------
 URLLabel::~URLLabel()
 {
-    if (m_pszURL)
-        delete [] m_pszURL;
+	if(m_pszURL)
+		delete[] m_pszURL;
 }
 
 //-----------------------------------------------------------------------------
@@ -70,10 +72,10 @@ URLLabel::~URLLabel()
 void URLLabel::SetURL(const char *pszURL)
 {
 	int iNewURLSize = strlen(pszURL);
-	if (iNewURLSize > m_iURLSize || !m_pszURL)
+	if(iNewURLSize > m_iURLSize || !m_pszURL)
 	{
-		delete [] m_pszURL;
-		m_pszURL = new char [iNewURLSize + 1];
+		delete[] m_pszURL;
+		m_pszURL = new char[iNewURLSize + 1];
 	}
 	strcpy(m_pszURL, pszURL);
 	m_iURLSize = iNewURLSize;
@@ -84,13 +86,13 @@ void URLLabel::SetURL(const char *pszURL)
 //-----------------------------------------------------------------------------
 void URLLabel::OnMousePressed(MouseCode code)
 {
-    if (code == MOUSE_LEFT)
-    {
-        if (m_pszURL)
+	if(code == MOUSE_LEFT)
+	{
+		if(m_pszURL)
 		{
-	        system()->ShellExecute("open", m_pszURL);
+			system()->ShellExecute("open", m_pszURL);
 		}
-    }
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -101,13 +103,13 @@ void URLLabel::ApplySettings(KeyValues *inResourceData)
 	BaseClass::ApplySettings(inResourceData);
 
 	const char *pszURL = inResourceData->GetString("URLText", NULL);
-	if (pszURL)
+	if(pszURL)
 	{
-		if (pszURL[0] == '#')
+		if(pszURL[0] == '#')
 		{
 			// it's a localized url, look it up
 			const wchar_t *ws = g_pVGuiLocalize->Find(pszURL + 1);
-			if (ws)
+			if(ws)
 			{
 				char localizedUrl[512];
 				g_pVGuiLocalize->ConvertUnicodeToANSI(ws, localizedUrl, sizeof(localizedUrl));
@@ -116,7 +118,7 @@ void URLLabel::ApplySettings(KeyValues *inResourceData)
 		}
 		else
 		{
-	        SetURL(pszURL);
+			SetURL(pszURL);
 		}
 	}
 }
@@ -124,11 +126,11 @@ void URLLabel::ApplySettings(KeyValues *inResourceData)
 //-----------------------------------------------------------------------------
 // Purpose: saves them to disk
 //-----------------------------------------------------------------------------
-void URLLabel::GetSettings( KeyValues *outResourceData )
+void URLLabel::GetSettings(KeyValues *outResourceData)
 {
 	BaseClass::GetSettings(outResourceData);
 
-	if (m_pszURL)
+	if(m_pszURL)
 	{
 		outResourceData->SetString("URLText", m_pszURL);
 	}
@@ -137,7 +139,7 @@ void URLLabel::GetSettings( KeyValues *outResourceData )
 //-----------------------------------------------------------------------------
 // Purpose: Returns a description of the label string
 //-----------------------------------------------------------------------------
-const char *URLLabel::GetDescription( void )
+const char *URLLabel::GetDescription(void)
 {
 	static char buf[1024];
 	_snprintf(buf, sizeof(buf), "%s, string URLText", BaseClass::GetDescription());
@@ -151,8 +153,7 @@ void URLLabel::ApplySchemeSettings(IScheme *pScheme)
 {
 	// set our font to be underlined by default
 	// the Label::ApplySchemeSettings() will override it if override set in scheme file
-	SetFont( pScheme->GetFont( "DefaultUnderline", IsProportional() ) );
-    BaseClass::ApplySchemeSettings(pScheme);
-    SetCursor(dc_hand);
+	SetFont(pScheme->GetFont("DefaultUnderline", IsProportional()));
+	BaseClass::ApplySchemeSettings(pScheme);
+	SetCursor(dc_hand);
 }
-

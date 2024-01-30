@@ -11,58 +11,67 @@
 class CTFTankBoss : public CTFBaseBoss
 {
 public:
-	DECLARE_CLASS( CTFTankBoss, CTFBaseBoss );
+	DECLARE_CLASS(CTFTankBoss, CTFBaseBoss);
 	DECLARE_SERVERCLASS();
 	DECLARE_DATADESC();
 
 	CTFTankBoss();
 	virtual ~CTFTankBoss();
 
-	virtual void Precache( void );
-	virtual void Spawn( void );
-	virtual void SetSkin( int nSkin ) { if ( m_body ) m_body->SetSkin( nSkin ); }
+	virtual void Precache(void);
+	virtual void Spawn(void);
+	virtual void SetSkin(int nSkin)
+	{
+		if(m_body)
+			m_body->SetSkin(nSkin);
+	}
 
-	virtual void UpdateOnRemove( void );
+	virtual void UpdateOnRemove(void);
 
-	virtual void UpdateCollisionBounds( void );
+	virtual void UpdateCollisionBounds(void);
 
-	virtual CTFTankBossBody *GetBodyInterface( void ) const { return m_body; }
+	virtual CTFTankBossBody *GetBodyInterface(void) const
+	{
+		return m_body;
+	}
 
-	virtual int OnTakeDamage_Alive( const CTakeDamageInfo &rawInfo );
+	virtual int OnTakeDamage_Alive(const CTakeDamageInfo &rawInfo);
 
-	virtual void Event_Killed( const CTakeDamageInfo &info );
+	virtual void Event_Killed(const CTakeDamageInfo &info);
 
-	void TankBossThink( void );
+	void TankBossThink(void);
 
-	void SetStartingPathTrackNode( char *name );
+	void SetStartingPathTrackNode(char *name);
 
-	void DefineOnKilledOutput( EventInfo *eventInfo );
-	void DefineOnBombDroppedOutput( EventInfo *eventInfo );
+	void DefineOnKilledOutput(EventInfo *eventInfo);
+	void DefineOnBombDroppedOutput(EventInfo *eventInfo);
 
-	void SetWaveSpawnPopulator( CWaveSpawnPopulator *pWave ){ m_pWaveSpawnPopulator = pWave; }
+	void SetWaveSpawnPopulator(CWaveSpawnPopulator *pWave)
+	{
+		m_pWaveSpawnPopulator = pWave;
+	}
 
-	virtual int GetCurrencyValue( void );
+	virtual int GetCurrencyValue(void);
 
 	// Input handlers
-	void InputDestroyIfAtCapturePoint( inputdata_t &inputdata );
-	void InputAddCaptureDestroyPostfix( inputdata_t &inputdata );
+	void InputDestroyIfAtCapturePoint(inputdata_t &inputdata);
+	void InputAddCaptureDestroyPostfix(inputdata_t &inputdata);
 
-	void UpdatePingSound( void );
+	void UpdatePingSound(void);
 
 protected:
-	virtual void ModifyDamage( CTakeDamageInfo *info ) const;
+	virtual void ModifyDamage(CTakeDamageInfo *info) const;
 
 private:
-
 	void Explode();
 
 private:
 	CTFTankBossBody *m_body;
 
-	CHandle< CPathTrack > m_startNode;
-	CHandle< CPathTrack > m_endNode;
-	CHandle< CPathTrack > m_goalNode;
-	CUtlVector< float > m_CumulativeDistances;
+	CHandle<CPathTrack> m_startNode;
+	CHandle<CPathTrack> m_endNode;
+	CHandle<CPathTrack> m_goalNode;
+	CUtlVector<float> m_CumulativeDistances;
 	float m_fTotalDistance;
 	int m_nNodeNumber;
 
@@ -81,7 +90,7 @@ private:
 	int m_lastHealth;
 	int m_damageModelIndex;
 	int m_nDeathAnimPick;
-	char m_szDeathPostfix[ 8 ];
+	char m_szDeathPostfix[8];
 
 	Vector m_lastRightTrackPos;
 	Vector m_lastLeftTrackPos;
@@ -90,11 +99,11 @@ private:
 
 	EventInfo m_onKilledEventInfo;
 	EventInfo m_onBombDroppedEventInfo;
-	void FirePopFileEvent( EventInfo *eventInfo );
+	void FirePopFileEvent(EventInfo *eventInfo);
 
-	CHandle< CBaseAnimating > m_bomb;
-	CHandle< CBaseAnimating > m_leftTracks;
-	CHandle< CBaseAnimating > m_rightTracks;
+	CHandle<CBaseAnimating> m_bomb;
+	CHandle<CBaseAnimating> m_leftTracks;
+	CHandle<CBaseAnimating> m_rightTracks;
 
 	CountdownTimer m_crushTimer;
 	CWaveSpawnPopulator *m_pWaveSpawnPopulator;
@@ -106,22 +115,21 @@ private:
 
 	static float m_flLastTankAlert;
 
-	CHistoryVector< EntityHistory_t, CEntityHistoryLess, 12 > m_vecDamagers;
+	CHistoryVector<EntityHistory_t, CEntityHistoryLess, 12> m_vecDamagers;
 };
 
-
-inline void CTFTankBoss::DefineOnKilledOutput( EventInfo *eventInfo )
+inline void CTFTankBoss::DefineOnKilledOutput(EventInfo *eventInfo)
 {
-	if ( eventInfo )
+	if(eventInfo)
 	{
 		m_onKilledEventInfo.m_action = eventInfo->m_action;
 		m_onKilledEventInfo.m_target = eventInfo->m_target;
 	}
 }
 
-inline void CTFTankBoss::DefineOnBombDroppedOutput( EventInfo *eventInfo )
+inline void CTFTankBoss::DefineOnBombDroppedOutput(EventInfo *eventInfo)
 {
-	if ( eventInfo )
+	if(eventInfo)
 	{
 		m_onBombDroppedEventInfo.m_action = eventInfo->m_action;
 		m_onBombDroppedEventInfo.m_target = eventInfo->m_target;

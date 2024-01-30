@@ -11,33 +11,35 @@
 #include "Path/NextBotPathFollow.h"
 #include "Path/NextBotChasePath.h"
 
-
 //-----------------------------------------------------------------------------
-class CTFBotSquadAttack : public Action< CTFBot >
+class CTFBotSquadAttack : public Action<CTFBot>
 {
 public:
-	virtual ActionResult< CTFBot >	OnStart( CTFBot *me, Action< CTFBot > *priorAction );
-	virtual ActionResult< CTFBot >	Update( CTFBot *me, float interval );
+	virtual ActionResult<CTFBot> OnStart(CTFBot *me, Action<CTFBot> *priorAction);
+	virtual ActionResult<CTFBot> Update(CTFBot *me, float interval);
 
-	virtual ActionResult< CTFBot >	OnResume( CTFBot *me, Action< CTFBot > *interruptingAction );
+	virtual ActionResult<CTFBot> OnResume(CTFBot *me, Action<CTFBot> *interruptingAction);
 
-	virtual EventDesiredResult< CTFBot > OnStuck( CTFBot *me );
+	virtual EventDesiredResult<CTFBot> OnStuck(CTFBot *me);
 
-	QueryResultType	ShouldRetreat( const INextBot *me ) const;
+	QueryResultType ShouldRetreat(const INextBot *me) const;
 
-	virtual const char *GetName( void ) const	{ return "SquadPatrol"; };
+	virtual const char *GetName(void) const
+	{
+		return "SquadPatrol";
+	};
 
 private:
 	CountdownTimer m_vocalizeTimer;
 	PathFollower m_path;
 	ChasePath m_chasePath;
-	CHandle< CTFPlayer > m_victim;
+	CHandle<CTFPlayer> m_victim;
 	CountdownTimer m_victimConsiderTimer;
 
-	CTFBot *GetSquadLeader( CTFBot *me ) const;
+	CTFBot *GetSquadLeader(CTFBot *me) const;
 };
 
-inline QueryResultType CTFBotSquadAttack::ShouldRetreat( const INextBot *me ) const
+inline QueryResultType CTFBotSquadAttack::ShouldRetreat(const INextBot *me) const
 {
 	return ANSWER_NO;
 }

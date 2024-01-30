@@ -1,6 +1,6 @@
 //========= Copyright 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -11,7 +11,7 @@
 #pragma once
 
 #ifdef _WIN32
-// 
+//
 // Prevent tons of unused windows definitions
 //
 #define WIN32_LEAN_AND_MEAN
@@ -19,9 +19,9 @@
 #define NOSERVICE
 #define NOMCX
 #define NOIME
-#if !defined( _X360 )
+#if !defined(_X360)
 #pragma warning(push, 1)
-#pragma warning(disable: 4005)
+#pragma warning(disable : 4005)
 #include <windows.h>
 #pragma warning(pop)
 #endif

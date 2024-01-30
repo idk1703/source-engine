@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -19,30 +19,35 @@ class CWaveFile
 {
 public:
 	// One or both may be valid
-	CWaveFile( char const *filename );
+	CWaveFile(char const *filename);
 
 	~CWaveFile();
 
 	static int GetLanguageId();
 
-	char const	*GetName() const;
-	char const	*GetFileName() const;
+	char const *GetName() const;
+	char const *GetFileName() const;
 
-	char const	*GetSentenceText();
+	char const *GetSentenceText();
 
-	int			GetPhonemeCount();
-	int			GetWordCount();
+	int GetPhonemeCount();
+	int GetWordCount();
 
-	bool		IsAsyncLoading() const { return m_bAsyncLoading; }
-	void		SetAsyncLoading( bool async ) { m_bAsyncLoading = async; }
+	bool IsAsyncLoading() const
+	{
+		return m_bAsyncLoading;
+	}
+	void SetAsyncLoading(bool async)
+	{
+		m_bAsyncLoading = async;
+	}
 
-	bool		HasLoadedSentenceInfo() const;
-	void				EnsureSentence();
+	bool HasLoadedSentenceInfo() const;
+	void EnsureSentence();
 
-	void		Play();
+	void Play();
 
-	
-	bool		GetVoiceDuck();
+	bool GetVoiceDuck();
 	/*
 	void		SetVoiceDuck( bool duck );
 	void		ToggleVoiceDucking();
@@ -53,18 +58,17 @@ public:
 	bool		IsCheckedOut() const;
 	*/
 
-	int			GetIconIndex() const;
+	int GetIconIndex() const;
 
-	void				SetThreadLoadedSentence( CSentence& sentence );
+	void SetThreadLoadedSentence(CSentence &sentence);
 
-//	void				ExportValveDataChunk( char const *tempfile );
-//	void				ImportValveDataChunk( char const *tempfile );
+	//	void				ExportValveDataChunk( char const *tempfile );
+	//	void				ImportValveDataChunk( char const *tempfile );
 
-//	void				GetPhonemeExportFile( char *path, int maxlen );
+	//	void				GetPhonemeExportFile( char *path, int maxlen );
 
 private:
-
-	CSentence			m_Sentence;
+	CSentence m_Sentence;
 
 	enum
 	{
@@ -73,14 +77,14 @@ private:
 		MAX_SOUND_FILENAME = 128,
 	};
 
-	char				m_szName[ MAX_SOUND_FILENAME ];
-	char				m_szFileName[ MAX_SOUND_FILENAME ];
+	char m_szName[MAX_SOUND_FILENAME];
+	char m_szFileName[MAX_SOUND_FILENAME];
 
-//	CVCDFile			*m_pOwner;
-//	CSoundEntry			*m_pOwnerSE;
+	//	CVCDFile			*m_pOwner;
+	//	CSoundEntry			*m_pOwnerSE;
 
-	bool				m_bSentenceLoaded;
-	bool				m_bAsyncLoading;
+	bool m_bSentenceLoaded;
+	bool m_bAsyncLoading;
 };
 
 #endif // WAVEFILE_H

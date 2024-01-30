@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,13 +10,10 @@
 #pragma once
 #endif
 
-
-int MapEngineKeyToVirtualKey( int keyCode );
-
+int MapEngineKeyToVirtualKey(int keyCode);
 
 // Pause VCR playback.
 void VCR_EnterPausedState();
-
 
 // During VCR playback, this can be adjusted to slow down the playback.
 extern int g_iVCRPlaybackSleepInterval;
@@ -25,6 +22,5 @@ extern int g_iVCRPlaybackSleepInterval;
 extern bool g_bVCRSingleStep;
 
 extern bool g_bShowVCRPlaybackDisplay;
-
 
 #endif // SYS_MAINWIND_H

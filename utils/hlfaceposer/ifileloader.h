@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -17,13 +17,13 @@ class CWaveFile;
 class IFileLoader
 {
 public:
-	virtual void			AddWaveFilesToThread( CUtlVector< CWaveFile * >& wavefiles ) = 0;
+	virtual void AddWaveFilesToThread(CUtlVector<CWaveFile *> &wavefiles) = 0;
 
-	virtual int				ProcessCompleted() = 0;
+	virtual int ProcessCompleted() = 0;
 
-	virtual	void			Start() = 0;
+	virtual void Start() = 0;
 
-	virtual int				GetPendingLoadCount() = 0;
+	virtual int GetPendingLoadCount() = 0;
 };
 
 extern IFileLoader *fileloader;

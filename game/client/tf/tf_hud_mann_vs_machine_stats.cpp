@@ -12,33 +12,27 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // CCreditDisplayPanel
 //-----------------------------------------------------------------------------
-DECLARE_BUILD_FACTORY( CCreditDisplayPanel );
+DECLARE_BUILD_FACTORY(CCreditDisplayPanel);
 
-CCreditDisplayPanel::CCreditDisplayPanel( Panel *parent, const char *pName ): vgui::EditablePanel( parent, pName )
-{
-
-}
+CCreditDisplayPanel::CCreditDisplayPanel(Panel *parent, const char *pName) : vgui::EditablePanel(parent, pName) {}
 
 //-----------------------------------------------------------------------------
-void CCreditDisplayPanel::ApplySchemeSettings( IScheme *pScheme )
+void CCreditDisplayPanel::ApplySchemeSettings(IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
-	LoadControlSettings( "resource/UI/MvMCreditSubPanel.res" );
+	BaseClass::ApplySchemeSettings(pScheme);
+	LoadControlSettings("resource/UI/MvMCreditSubPanel.res");
 }
 
 //-----------------------------------------------------------------------------
 // CCreditSpendPanel
 //-----------------------------------------------------------------------------
-DECLARE_BUILD_FACTORY( CCreditSpendPanel );
+DECLARE_BUILD_FACTORY(CCreditSpendPanel);
 
-CCreditSpendPanel::CCreditSpendPanel( Panel *parent, const char *pName ): vgui::EditablePanel( parent, pName )
-{
-
-}
+CCreditSpendPanel::CCreditSpendPanel(Panel *parent, const char *pName) : vgui::EditablePanel(parent, pName) {}
 
 //-----------------------------------------------------------------------------
-void CCreditSpendPanel::ApplySchemeSettings( IScheme *pScheme )
+void CCreditSpendPanel::ApplySchemeSettings(IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
-	LoadControlSettings( "resource/UI/MvMCreditSpendPanel.res" );
+	BaseClass::ApplySchemeSettings(pScheme);
+	LoadControlSettings("resource/UI/MvMCreditSpendPanel.res");
 }

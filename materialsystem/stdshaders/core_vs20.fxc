@@ -27,7 +27,7 @@ struct VS_INPUT
 
 struct VS_OUTPUT
 {
-    float4 vProjPos_POSITION		: POSITION;	
+	float4 vProjPos_POSITION		: POSITION;
 	float  vFog						: FOG;
 	float2 vBumpTexCoord			: TEXCOORD0;
 	float3 vTangentEyeVect			: TEXCOORD1;
@@ -49,8 +49,8 @@ VS_OUTPUT main( const VS_INPUT v )
 	float4 vObjTangent;
 	DecompressVertex_NormalTangent( v.vNormal, v.vUserData, vObjNormal, vObjTangent );
 
-	SkinPositionNormalAndTangentSpace( 
-			g_bSkinning, 
+	SkinPositionNormalAndTangentSpace(
+			g_bSkinning,
 			v.vPos, vObjNormal, vObjTangent,
 			v.vBoneWeights, v.vBoneIndices,
 			worldPos, worldNormal, worldTangentS, worldTangentT );
@@ -68,7 +68,7 @@ VS_OUTPUT main( const VS_INPUT v )
 	float4 vProjPos = mul( float4( worldPos, 1 ), cViewProj );
 	o.vProjPos_POSITION = vProjPos;
 	o.projNormal_screenCoordW.xyz = mul( worldNormal, cViewProj );
-	
+
 	o.worldPos_projPosZ = float4( worldPos.xyz, vProjPos.z );
 
 	// Map projected position to the refraction texture

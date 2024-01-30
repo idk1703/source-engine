@@ -28,7 +28,7 @@ const float4 g_EyePos_SpecExponent		: register( PSREG_EYEPOS_SPEC_EXPONENT );
 struct PS_INPUT
 {
 	float4 vProjPos					: POSITION;
-	
+
 	//vStaticTexCoord and vAlphaMaskTexCoord are the same numbers, but we need to map TEXCOORD0 to sampler 0, and TEXCOORD1 to sampler1. ps11 compatibility issue
 #if( HASSTATICTEXTURE )
 	float2 vStaticTexCoord			: TEXCOORD0;
@@ -53,7 +53,7 @@ struct PS_INPUT
 float4 main( PS_INPUT i ) : COLOR
 {
 	HALF4 result;
-	
+
 #	if( HASSTATICTEXTURE )
 		result.rgb = tex2D( StaticTextureSampler, i.vStaticTexCoord ).rgb;
 #	else

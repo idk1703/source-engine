@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -18,29 +18,27 @@ public:
 	virtual ~CSDKEventLog() {};
 
 public:
-	bool PrintEvent( IGameEvent * event )	// override virtual function
+	bool PrintEvent(IGameEvent *event) // override virtual function
 	{
-		if ( BaseClass::PrintEvent( event ) )
+		if(BaseClass::PrintEvent(event))
 		{
 			return true;
 		}
-	
-		if ( Q_strcmp(event->GetName(), "sdk_") == 0 )
+
+		if(Q_strcmp(event->GetName(), "sdk_") == 0)
 		{
-			return PrintSDKEvent( event );
+			return PrintSDKEvent(event);
 		}
 
 		return false;
 	}
 
 protected:
-
-	bool PrintSDKEvent( IGameEvent * event )	// print Mod specific logs
+	bool PrintSDKEvent(IGameEvent *event) // print Mod specific logs
 	{
-		//const char * name = event->GetName() + Q_strlen("sdk_"); // remove prefix
+		// const char * name = event->GetName() + Q_strlen("sdk_"); // remove prefix
 		return false;
 	}
-
 };
 
 CSDKEventLog g_SDKEventLog;
@@ -48,8 +46,7 @@ CSDKEventLog g_SDKEventLog;
 //-----------------------------------------------------------------------------
 // Singleton access
 //-----------------------------------------------------------------------------
-IGameSystem* GameLogSystem()
+IGameSystem *GameLogSystem()
 {
 	return &g_SDKEventLog;
 }
-

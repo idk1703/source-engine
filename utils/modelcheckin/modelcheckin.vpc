@@ -23,7 +23,7 @@ $Project "ModelCheckIn"
 	$Folder	"Source Files"
 	{
 		-$File	"$SRCDIR\public\tier0\memoverride.cpp"
-		
+
 		$File	"ModelCheckIn.cpp"
 		$File	"ModelCheckIn.rc"
 		$File	"ModelCheckInDlg.cpp"

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -13,7 +13,6 @@
 
 using vgui::ListPanel;
 using vgui::ListPanelItem;
-
 
 // these functions are common to most server lists in sorts
 int __cdecl PasswordCompare(ListPanel *pPanel, const ListPanelItem &p1, const ListPanelItem &p2);

@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2006, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2006, Valve Corporation, All rights reserved. ============//
 
 // STATIC: "BUMPMAP"					"0..1"
 
@@ -46,7 +46,7 @@ struct VS_INPUT
 
 struct VS_OUTPUT
 {
-    float4 vProjPosition		: POSITION;		// Projection-space position
+	float4 vProjPosition		: POSITION;		// Projection-space position
 	float3 vWorldNormal			: TEXCOORD0;	// World-space normal
 	float3 vProjPosForRefract	: TEXCOORD1;
 	float3 vWorldViewVector		: TEXCOORD2;
@@ -83,7 +83,7 @@ VS_OUTPUT main( const VS_INPUT i )
 		#if !defined( SHADER_MODEL_VS_3_0 ) || !MORPHING
 			ApplyMorph( i.vPosFlex, i.vNormalFlex, vObjPosition.xyz, vObjNormal );
 		#else
-			ApplyMorph( morphSampler, cMorphTargetTextureDim, cMorphSubrect, i.vVertexID, float3( 0, 0, 0 ), 
+			ApplyMorph( morphSampler, cMorphTargetTextureDim, cMorphSubrect, i.vVertexID, float3( 0, 0, 0 ),
 				vObjPosition.xyz, vObjNormal );
 		#endif
 	#endif
@@ -91,7 +91,7 @@ VS_OUTPUT main( const VS_INPUT i )
 	// Transform the position
 	float3 vWorldPosition = { 0.0f, 0.0f, 0.0f };
 	float3 vWorldNormal = { 0.0f, 0.0f, 0.0f };
-	
+
 	float3 vWorldTangent = { 0.0f, 0.0f, 0.0f };
 	float3 vWorldBinormal = { 0.0f, 0.0f, 0.0f };
 
@@ -126,7 +126,7 @@ VS_OUTPUT main( const VS_INPUT i )
 	o.vTexCoord0.x = dot( i.vTexCoord0.xy, cBaseTexCoordTransform[0] );
 	o.vTexCoord0.y = dot( i.vTexCoord0.xy, cBaseTexCoordTransform[1] );
 
-	// model space 
+	// model space
 	o.vModelSpacePos = float4( i.vPos.xyz, 0) ;
 	return o;
 }

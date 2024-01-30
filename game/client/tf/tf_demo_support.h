@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Revision: $
 // $NoKeywords: $
@@ -28,7 +28,7 @@ struct DemoEvent_t
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFDemoSupport : public CAutoGameSystemPerFrame, public CGameEventListener
 {
@@ -36,21 +36,27 @@ public:
 	CTFDemoSupport();
 
 	virtual bool Init() OVERRIDE;
-	virtual void Update( float frametime ) OVERRIDE;
-	virtual char const *Name() OVERRIDE { return "CTFDemoSupport"; }
-	virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
+	virtual void Update(float frametime) OVERRIDE;
+	virtual char const *Name() OVERRIDE
+	{
+		return "CTFDemoSupport";
+	}
+	virtual void FireGameEvent(IGameEvent *event) OVERRIDE;
 	virtual void LevelInitPostEntity() OVERRIDE;
 	virtual void LevelShutdownPostEntity() OVERRIDE;
-	bool StartRecording( void );
-	void StopRecording( bool bFromEngine = false );
-	bool IsRecording( void ){ return m_bRecording; }
-	void BookMarkCurrentTick( const char *pszValue = NULL );
-	void Status( void );
+	bool StartRecording(void);
+	void StopRecording(bool bFromEngine = false);
+	bool IsRecording(void)
+	{
+		return m_bRecording;
+	}
+	void BookMarkCurrentTick(const char *pszValue = NULL);
+	void Status(void);
 
 private:
-	bool IsValidPath( const char *pszFolder );
-	void LogEvent( EDemoEventType eType, int nValue = 0, const char *pszValue = NULL );
-	void Notify( char *pszMessage );
+	bool IsValidPath(const char *pszFolder);
+	void LogEvent(EDemoEventType eType, int nValue = 0, const char *pszValue = NULL);
+	void Notify(char *pszMessage);
 
 	bool m_bRecording;
 	char m_szFolder[24];

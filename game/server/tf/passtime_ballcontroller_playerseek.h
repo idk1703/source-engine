@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,16 +20,23 @@ class CPasstimeBallControllerPlayerSeek : public CPasstimeBallController
 {
 public:
 	CPasstimeBallControllerPlayerSeek();
-private:
-	virtual bool IsActive() const OVERRIDE { return true; }
-	virtual bool Apply( CPasstimeBall *ball ) OVERRIDE;
-	virtual void OnDisabled() OVERRIDE { SetIsEnabled( true ); } // never actually disable
-	virtual void OnBallSpawned( CPasstimeBall *ball ) OVERRIDE;
 
-	CTFPlayer *FindTarget( CTFPlayer *pIgnorePlayer, const Vector& ballOrigin ) const;
-	bool Seek( CPasstimeBall *ball, CTFPlayer *pTarget ) const;
+private:
+	virtual bool IsActive() const OVERRIDE
+	{
+		return true;
+	}
+	virtual bool Apply(CPasstimeBall *ball) OVERRIDE;
+	virtual void OnDisabled() OVERRIDE
+	{
+		SetIsEnabled(true);
+	} // never actually disable
+	virtual void OnBallSpawned(CPasstimeBall *ball) OVERRIDE;
+
+	CTFPlayer *FindTarget(CTFPlayer *pIgnorePlayer, const Vector &ballOrigin) const;
+	bool Seek(CPasstimeBall *ball, CTFPlayer *pTarget) const;
 
 	float m_fEnableTime;
 };
 
-#endif // PASSTIME_BALLCONTROLLER_PLAYERSEEK_H  
+#endif // PASSTIME_BALLCONTROLLER_PLAYERSEEK_H

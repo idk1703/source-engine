@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,15 +11,14 @@
 
 using namespace vgui;
 
-
-class EditablePanel2Demo: public DemoPage
+class EditablePanel2Demo : public DemoPage
 {
-	public:
-		EditablePanel2Demo(Panel *parent, const char *name);
-		~EditablePanel2Demo();
-	
-	private:
-		ComboBox *m_pInternetSpeed;	
+public:
+	EditablePanel2Demo(Panel *parent, const char *name);
+	~EditablePanel2Demo();
+
+private:
+	ComboBox *m_pInternetSpeed;
 };
 
 //-----------------------------------------------------------------------------
@@ -31,7 +30,6 @@ EditablePanel2Demo::EditablePanel2Demo(Panel *parent, const char *name) : DemoPa
 	// resource files. All Frames belong to the Editable Panel class.
 	// The class EditablePanel2Demo is a PropertyPage class, and PropertyPage
 	// is an EditablePanel, so we can load in a resource file for this class.
-
 
 	// Load the vgui controls from a resource file.
 	// The resource file looks like this:
@@ -75,12 +73,12 @@ EditablePanel2Demo::EditablePanel2Demo(Panel *parent, const char *name) : DemoPa
 	}
 	*/
 
-	// VGUI control panel resource values are grouped by a panel name, here 
+	// VGUI control panel resource values are grouped by a panel name, here
 	// we have 2 panels, one called "SpeedLabel" and one called
 	// "Internet Speed".
 	// Each control has a set of keyValues that describe attributes of
 	// the panel. SpeedLabel's control name is Label, this is a vgui Label class.
-	// Its 'xpos' and 'ypos' tell is position in the parent window. 
+	// Its 'xpos' and 'ypos' tell is position in the parent window.
 	// Its 'wide' and 'tall' tell its size.
 	// 'AutoResize' is false meaning this panel will not grow or shrink in size
 	// response to panel resizing.
@@ -92,21 +90,14 @@ EditablePanel2Demo::EditablePanel2Demo(Panel *parent, const char *name) : DemoPa
 	// gain focus when the hotkey is hit. The associated control is called
 	// "InternetSpeed" and this panel name happens to be the very next panel in the list.
 	// Its 'ControlName' tells us it is a ComboBox. Hitting the 'S' hotkey will trigger
-	// the combo box to gain focus. Note that the combo box does not currently 
+	// the combo box to gain focus. Note that the combo box does not currently
 	// have any items within it.
 
-
-	// This will be the menu items of our combo box menu.	
+	// This will be the menu items of our combo box menu.
 	// List of all the different internet speeds
-	char *g_Speeds[] =
-	{
-		{ "Modem - 14.4k"},
-		{ "Modem - 28.8k"},
-		{ "Modem - 33.6k"},
-		{ "Modem - 56k"},
-		{ "ISDN - 112k"},
-		{ "DSL > 256k"},
-		{ "LAN/T1 > 1M"},		
+	char *g_Speeds[] = {
+		{"Modem - 14.4k"}, {"Modem - 28.8k"}, {"Modem - 33.6k"}, {"Modem - 56k"},
+		{"ISDN - 112k"},   {"DSL > 256k"},	  {"LAN/T1 > 1M"},
 	};
 
 	// Create a combo box with the name "InternetSpeed"
@@ -115,36 +106,29 @@ EditablePanel2Demo::EditablePanel2Demo(Panel *parent, const char *name) : DemoPa
 	m_pInternetSpeed = new ComboBox(this, "InternetSpeed", ARRAYSIZE(g_Speeds), false);
 
 	// Add menu items to this combo box.
-	for (int i = 0; i < ARRAYSIZE(g_Speeds); i++)
+	for(int i = 0; i < ARRAYSIZE(g_Speeds); i++)
 	{
-		m_pInternetSpeed->AddItem(g_Speeds[i], NULL );
+		m_pInternetSpeed->AddItem(g_Speeds[i], NULL);
 	}
 
 	// Load the resource file settings into our panel.
 	LoadControlSettings("Demo/EditablePanelDemo.res");
 
-	// When the settings are applied (in applySettings()) our panels gain the 
+	// When the settings are applied (in applySettings()) our panels gain the
 	// additional layout specified by the resource keyValues.
 
 	// There, we are done, we have created one control from "thin air" (the Label)
 	// and only had to specify the menu items of the other control (the ComboBox).
 	// All the rest of the layout was done using the EditablePanel's smarts and
 	// a resource file.
-
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-EditablePanel2Demo::~EditablePanel2Demo()
-{
-}
+EditablePanel2Demo::~EditablePanel2Demo() {}
 
-
-
-Panel* EditablePanel2Demo_Create(Panel *parent)
+Panel *EditablePanel2Demo_Create(Panel *parent)
 {
 	return new EditablePanel2Demo(parent, "EditablePanel2Demo");
 }
-
-

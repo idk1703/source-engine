@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -19,22 +19,18 @@
 
 namespace vgui
 {
-class Panel;
+	class Panel;
 };
 
-
-class CClickableTabbedPanel: public vgui2::PropertySheet 
+class CClickableTabbedPanel : public vgui2::PropertySheet
 {
 
 public:
 	CClickableTabbedPanel(vgui2::Panel *parent, const char *panelName);
 	~CClickableTabbedPanel();
 
-
 private:
-//	void onMousePressed(vgui2::MouseCode code);
-
-
+	//	void onMousePressed(vgui2::MouseCode code);
 };
 
-#endif //CLICKABLETABBEDPANEL
+#endif // CLICKABLETABBEDPANEL

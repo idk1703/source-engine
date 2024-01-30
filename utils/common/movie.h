@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -21,14 +21,11 @@ typedef struct
 	unsigned long size;
 } movieblockheader_t;
 
-
-typedef struct	
+typedef struct
 {
 	short width;
 	short height;
 	short depth;
 } movieframe_t;
-
-
 
 #endif _MOVIE_H_

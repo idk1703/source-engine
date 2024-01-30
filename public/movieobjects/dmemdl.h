@@ -22,7 +22,6 @@
 #include <string>
 #include <vector>
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
@@ -35,28 +34,27 @@ class CDmeDrawSettings;
 struct matrix3x4_t;
 class CStudioHdr;
 
-
 //-----------------------------------------------------------------------------
 // A class representing an MDL
 //-----------------------------------------------------------------------------
 class CDmeMDL : public CDmeShape
 {
-	DEFINE_ELEMENT( CDmeMDL, CDmeShape );
+	DEFINE_ELEMENT(CDmeMDL, CDmeShape);
 
 public:
-	virtual void Draw( const matrix3x4_t& shapeToWorld, CDmeDrawSettings *pDrawSettings = NULL );
+	virtual void Draw(const matrix3x4_t &shapeToWorld, CDmeDrawSettings *pDrawSettings = NULL);
 
-	void DrawInEngine( bool bDrawInEngine );
+	void DrawInEngine(bool bDrawInEngine);
 	bool IsDrawingInEngine() const;
 
-	void SetMDL( MDLHandle_t handle );
-	MDLHandle_t GetMDL( ) const;
+	void SetMDL(MDLHandle_t handle);
+	MDLHandle_t GetMDL() const;
 	float GetRadius() const; // NOTE: This radius is one that is centered at the origin
-	void GetBoundingSphere( Vector &vecCenter, float &flRadius );
-	void GetBoundingBox( Vector *pMins, Vector *pMaxs ) const;
+	void GetBoundingSphere(Vector &vecCenter, float &flRadius);
+	void GetBoundingBox(Vector *pMins, Vector *pMaxs) const;
 
 	// Computes bone-to-world transforms
-	void SetUpBones( const matrix3x4_t& shapeToWorld, int nMaxBoneCount, matrix3x4_t *pOutputMatrices );
+	void SetUpBones(const matrix3x4_t &shapeToWorld, int nMaxBoneCount, matrix3x4_t *pOutputMatrices);
 
 public:
 	CDmaColor m_Color;

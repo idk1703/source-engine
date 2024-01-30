@@ -17,12 +17,16 @@
 //---------------------------------------------------------------------------------
 // Purpose: All the account-level information that the GC tracks for TF
 //---------------------------------------------------------------------------------
-class CTFPlayerInfo : public GCSDK::CProtoBufSharedObject< CSOTFPlayerInfo, k_EEconTypePlayerInfo >
+class CTFPlayerInfo : public GCSDK::CProtoBufSharedObject<CSOTFPlayerInfo, k_EEconTypePlayerInfo>
 {
 #ifdef GC
-	DECLARE_CLASS_MEMPOOL( CTFPlayerInfo );
+	DECLARE_CLASS_MEMPOOL(CTFPlayerInfo);
+
 public:
-	virtual bool BIsDatabaseBacked() const { return false; }
+	virtual bool BIsDatabaseBacked() const
+	{
+		return false;
+	}
 #endif
 };
 

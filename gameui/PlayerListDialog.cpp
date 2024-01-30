@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -49,12 +49,10 @@ CPlayerListDialog::CPlayerListDialog(vgui::Panel *parent) : BaseClass(parent, "P
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CPlayerListDialog::~CPlayerListDialog()
-{
-}
+CPlayerListDialog::~CPlayerListDialog() {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerListDialog::Activate()
 {
@@ -63,21 +61,21 @@ void CPlayerListDialog::Activate()
 	// refresh player list
 	m_pPlayerList->DeleteAllItems();
 	int maxClients = engine->GetMaxClients();
-	for (int i = 1; i <= maxClients; i++)
+	for(int i = 1; i <= maxClients; i++)
 	{
-		// get the player info from the engine	
+		// get the player info from the engine
 		player_info_t pi;
 
-		if ( !engine->GetPlayerInfo(i, &pi) )
+		if(!engine->GetPlayerInfo(i, &pi))
 			continue;
 
 		char szPlayerIndex[32];
-		Q_snprintf(szPlayerIndex, sizeof( szPlayerIndex ), "%d", i);
+		Q_snprintf(szPlayerIndex, sizeof(szPlayerIndex), "%d", i);
 
 		// collate user data then add it to the table
 		KeyValues *data = new KeyValues(szPlayerIndex);
-		
-		data->SetString("Name", pi.name );
+
+		data->SetString("Name", pi.name);
 		data->SetInt("index", i);
 
 		// add to the list
@@ -88,7 +86,7 @@ void CPlayerListDialog::Activate()
 	RefreshPlayerProperties();
 
 	// select the first item by default
-	m_pPlayerList->SetSingleSelectedItem( m_pPlayerList->GetItemIDFromRow(0) );
+	m_pPlayerList->SetSingleSelectedItem(m_pPlayerList->GetItemIDFromRow(0));
 
 	// toggle button states
 	OnItemSelected();
@@ -99,49 +97,49 @@ void CPlayerListDialog::Activate()
 //-----------------------------------------------------------------------------
 void CPlayerListDialog::RefreshPlayerProperties()
 {
-	for (int i = 0; i <= m_pPlayerList->GetItemCount(); i++)
+	for(int i = 0; i <= m_pPlayerList->GetItemCount(); i++)
 	{
 		KeyValues *data = m_pPlayerList->GetItem(i);
-		if (!data)
+		if(!data)
 			continue;
 
 		// assemble properties
 		int playerIndex = data->GetInt("index");
 		player_info_t pi;
 
-		if ( !engine->GetPlayerInfo( playerIndex, &pi) )
+		if(!engine->GetPlayerInfo(playerIndex, &pi))
 		{
 			// disconnected
 			data->SetString("properties", "Disconnected");
 			continue;
 		}
 
-		data->SetString( "name", pi.name );
+		data->SetString("name", pi.name);
 
 		bool muted = false, friends = false, bot = false;
-		
-		if ( GameClientExports() && GameClientExports()->IsPlayerGameVoiceMuted(playerIndex) )
+
+		if(GameClientExports() && GameClientExports()->IsPlayerGameVoiceMuted(playerIndex))
 		{
 			muted = true;
 		}
-		if ( pi.fakeplayer )
+		if(pi.fakeplayer)
 		{
 			bot = true;
 		}
 
-		if (bot)
+		if(bot)
 		{
 			data->SetString("properties", "CPU Player");
 		}
-		else if (muted && friends)
+		else if(muted && friends)
 		{
 			data->SetString("properties", "Friend; Muted");
 		}
-		else if (muted)
+		else if(muted)
 		{
 			data->SetString("properties", "Muted");
 		}
-		else if (friends)
+		else if(friends)
 		{
 			data->SetString("properties", "Friend");
 		}
@@ -158,7 +156,7 @@ void CPlayerListDialog::RefreshPlayerProperties()
 //-----------------------------------------------------------------------------
 void CPlayerListDialog::OnCommand(const char *command)
 {
-	if (!stricmp(command, "Mute"))
+	if(!stricmp(command, "Mute"))
 	{
 		ToggleMuteStateOfSelectedUser();
 	}
@@ -173,18 +171,18 @@ void CPlayerListDialog::OnCommand(const char *command)
 //-----------------------------------------------------------------------------
 void CPlayerListDialog::ToggleMuteStateOfSelectedUser()
 {
-	if (!GameClientExports())
+	if(!GameClientExports())
 		return;
 
-	for ( int iSelectedItem = 0; iSelectedItem < m_pPlayerList->GetSelectedItemsCount(); iSelectedItem++ )
+	for(int iSelectedItem = 0; iSelectedItem < m_pPlayerList->GetSelectedItemsCount(); iSelectedItem++)
 	{
-		KeyValues *data = m_pPlayerList->GetItem( m_pPlayerList->GetSelectedItem( iSelectedItem ) );
-		if (!data)
+		KeyValues *data = m_pPlayerList->GetItem(m_pPlayerList->GetSelectedItem(iSelectedItem));
+		if(!data)
 			return;
 		int playerIndex = data->GetInt("index");
 		Assert(playerIndex);
 
-		if (GameClientExports()->IsPlayerGameVoiceMuted(playerIndex))
+		if(GameClientExports()->IsPlayerGameVoiceMuted(playerIndex))
 		{
 			GameClientExports()->UnmutePlayerGameVoice(playerIndex);
 		}
@@ -199,7 +197,7 @@ void CPlayerListDialog::ToggleMuteStateOfSelectedUser()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerListDialog::OnItemSelected()
 {
@@ -208,7 +206,7 @@ void CPlayerListDialog::OnItemSelected()
 
 	// set the button state based on the selected item
 	bool bMuteButtonEnabled = false;
-	if (m_pPlayerList->GetSelectedItemsCount() > 0)
+	if(m_pPlayerList->GetSelectedItemsCount() > 0)
 	{
 		KeyValues *data = m_pPlayerList->GetItem(m_pPlayerList->GetSelectedItem(0));
 
@@ -216,18 +214,19 @@ void CPlayerListDialog::OnItemSelected()
 
 		int iLocalPlayer = engine->GetLocalPlayer();
 
-		int iPlayerIndex = data->GetInt("index");		
-		bool isValidPlayer = engine->GetPlayerInfo( iPlayerIndex, &pi );
+		int iPlayerIndex = data->GetInt("index");
+		bool isValidPlayer = engine->GetPlayerInfo(iPlayerIndex, &pi);
 
-		// make sure the player is not a bot, or the user 
+		// make sure the player is not a bot, or the user
 		// Matt - changed this check to see if player indeces match, instead of using friends ID
-		if ( pi.fakeplayer || iPlayerIndex == iLocalPlayer ) // || pi.friendsID == g_pFriendsUser->GetFriendsID() )
+		if(pi.fakeplayer || iPlayerIndex == iLocalPlayer) // || pi.friendsID == g_pFriendsUser->GetFriendsID() )
 		{
-			// invalid player, 
+			// invalid player,
 			isValidPlayer = false;
 		}
 
-		if (data && isValidPlayer && GameClientExports() && GameClientExports()->IsPlayerGameVoiceMuted(data->GetInt("index")))
+		if(data && isValidPlayer && GameClientExports() &&
+		   GameClientExports()->IsPlayerGameVoiceMuted(data->GetInt("index")))
 		{
 			m_pMuteButton->SetText("#GameUI_UnmuteIngameVoice");
 		}
@@ -236,7 +235,7 @@ void CPlayerListDialog::OnItemSelected()
 			m_pMuteButton->SetText("#GameUI_MuteIngameVoice");
 		}
 
-		if (GameClientExports() && isValidPlayer)
+		if(GameClientExports() && isValidPlayer)
 		{
 			bMuteButtonEnabled = true;
 		}
@@ -246,5 +245,5 @@ void CPlayerListDialog::OnItemSelected()
 		m_pMuteButton->SetText("#GameUI_MuteIngameVoice");
 	}
 
-	m_pMuteButton->SetEnabled( bMuteButtonEnabled );
+	m_pMuteButton->SetEnabled(bMuteButtonEnabled);
 }

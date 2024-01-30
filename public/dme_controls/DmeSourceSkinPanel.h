@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -13,7 +13,6 @@
 #include "vgui_controls/EditablePanel.h"
 #include "datamodel/dmehandle.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
@@ -21,23 +20,22 @@ namespace vgui
 {
 	class TextEntry;
 	class CheckButton;
-}
+} // namespace vgui
 
 class CDmeSourceSkin;
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Asset builder
 //-----------------------------------------------------------------------------
 class CDmeSourceSkinPanel : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CDmeSourceSkinPanel, EditablePanel );
+	DECLARE_CLASS_SIMPLE(CDmeSourceSkinPanel, EditablePanel);
 
 public:
-	CDmeSourceSkinPanel( vgui::Panel *pParent, const char *pPanelName );
+	CDmeSourceSkinPanel(vgui::Panel *pParent, const char *pPanelName);
 	virtual ~CDmeSourceSkinPanel();
 
-	void SetDmeElement( CDmeSourceSkin *pSourceSkin );
+	void SetDmeElement(CDmeSourceSkin *pSourceSkin);
 
 	/*
 	messages sent:
@@ -45,18 +43,17 @@ public:
 	*/
 
 private:
-	MESSAGE_FUNC_PARAMS( OnTextChanged, "TextChanged", kv );
-	MESSAGE_FUNC_INT( OnCheckButtonChecked, "CheckButtonChecked", state );
+	MESSAGE_FUNC_PARAMS(OnTextChanged, "TextChanged", kv);
+	MESSAGE_FUNC_INT(OnCheckButtonChecked, "CheckButtonChecked", state);
 
 	// Marks the file as dirty
-	void SetDirty( );
+	void SetDirty();
 
 	vgui::TextEntry *m_pSkinName;
 	vgui::TextEntry *m_pScale;
 	vgui::CheckButton *m_pFlipTriangles;
 
-	CDmeHandle< CDmeSourceSkin > m_hSourceSkin;
+	CDmeHandle<CDmeSourceSkin> m_hSourceSkin;
 };
-
 
 #endif // DMESOURCESKINPANEL_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -43,6 +43,5 @@ private:
 	mpcontrol_t *m_pList;
 	CPanelListPanel *m_pOptionsList;
 };
-
 
 #endif // CREATEMULTIPLAYERGAMEGAMEPLAYPAGE_H

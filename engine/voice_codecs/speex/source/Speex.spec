@@ -16,8 +16,8 @@ BuildRoot: /var/tmp/%{name}-build-root
 Docdir: /usr/share/doc
 
 %description
-Speex is a patent-free audio codec designed especially for voice (unlike 
-Vorbis which targets general audio) signals and providing good narrowband 
+Speex is a patent-free audio codec designed especially for voice (unlike
+Vorbis which targets general audio) signals and providing good narrowband
 and wideband quality. This project aims to be complementary to the Vorbis
 codec.
 
@@ -30,12 +30,12 @@ Requires:	%{name} = %{version}
 Speex development files.
 
 %changelog
-* Thu Oct 03 2002 Jean-Marc Valin 
+* Thu Oct 03 2002 Jean-Marc Valin
 - Added devel package inspired from PLD spec file
 
 * Tue Jul 30 2002 Fredrik Rambris <boost@users.sourceforge.net> 0.5.2
 - Added buildroot and docdir and ldconfig. Makes it builadble by non-roots
-  and also doesn't write to actual library paths when building.
+	and also doesn't write to actual library paths when building.
 
 %prep
 %setup

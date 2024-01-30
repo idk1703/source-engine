@@ -40,7 +40,7 @@ $Configuration "Release"
 		// General
 		$AdditionalIncludeDirectories		"$SRCDIR\common;$SRCDIR\public;$SRCDIR\public\tier0;$SRCDIR\public\tier1"
 		$DebugInformationFormat				"C7 Compatible (/Z7)"
-		$SuppressStartupBanner				"Yes (/nologo)"	
+		$SuppressStartupBanner				"Yes (/nologo)"
 		$WarningLevel						"Level 4 (/W4)"
 		$TreatWarningsAsErrors				"No"
 
@@ -136,12 +136,12 @@ $Configuration "Release"
 		$ForceSymbolReferences
 		$LinkLibraryDependencies
 
-		// Command Line			
+		// Command Line
 	}
 
 	$BrowseInformation
 	{
-		$SuppressStartupBanner				"Yes (/nologo)"	
+		$SuppressStartupBanner				"Yes (/nologo)"
 		$OutputFile							"$(OutDir)/$OUTLIBNAME.bsc"
 		$AdditionalOptions
 	}
@@ -155,7 +155,7 @@ $Configuration "Release"
 
 	$PreLinkEvent
 	{
-		$CommandLine						
+		$CommandLine
 		$Description
 		$ExcludedFromBuild					"No"
 	}

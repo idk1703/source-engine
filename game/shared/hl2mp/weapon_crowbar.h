@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -15,10 +15,8 @@
 #define HL2MP_WEAPON_CROWBAR_H
 #pragma once
 
-
 #include "weapon_hl2mpbasehlmpcombatweapon.h"
 #include "weapon_hl2mpbasebasebludgeon.h"
-
 
 #ifdef CLIENT_DLL
 #define CWeaponCrowbar C_WeaponCrowbar
@@ -31,9 +29,9 @@
 class CWeaponCrowbar : public CBaseHL2MPBludgeonWeapon
 {
 public:
-	DECLARE_CLASS( CWeaponCrowbar, CBaseHL2MPBludgeonWeapon );
+	DECLARE_CLASS(CWeaponCrowbar, CBaseHL2MPBludgeonWeapon);
 
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 #ifndef CLIENT_DLL
@@ -42,29 +40,28 @@ public:
 
 	CWeaponCrowbar();
 
-	float		GetRange( void );
-	float		GetFireRate( void );
+	float GetRange(void);
+	float GetFireRate(void);
 
-	void		AddViewKick( void );
-	float		GetDamageForActivity( Activity hitActivity );
-	void		SecondaryAttack( void )	{	return;	}
+	void AddViewKick(void);
+	float GetDamageForActivity(Activity hitActivity);
+	void SecondaryAttack(void)
+	{
+		return;
+	}
 
-	void		Drop( const Vector &vecVelocity );
-
+	void Drop(const Vector &vecVelocity);
 
 	// Animation event
 #ifndef CLIENT_DLL
-	virtual void Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatCharacter *pOperator );
-	void HandleAnimEventMeleeHit( animevent_t *pEvent, CBaseCombatCharacter *pOperator );
-	int WeaponMeleeAttack1Condition( float flDot, float flDist );
+	virtual void Operator_HandleAnimEvent(animevent_t *pEvent, CBaseCombatCharacter *pOperator);
+	void HandleAnimEventMeleeHit(animevent_t *pEvent, CBaseCombatCharacter *pOperator);
+	int WeaponMeleeAttack1Condition(float flDot, float flDist);
 #endif
 
-	CWeaponCrowbar( const CWeaponCrowbar & );
+	CWeaponCrowbar(const CWeaponCrowbar &);
 
 private:
-		
 };
 
-
 #endif // HL2MP_WEAPON_CROWBAR_H
-

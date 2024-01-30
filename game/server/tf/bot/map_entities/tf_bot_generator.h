@@ -8,35 +8,34 @@
 
 #include "bot/tf_bot.h"
 
-
 class CTFBotGenerator : public CPointEntity
 {
 public:
-	DECLARE_CLASS( CTFBotGenerator, CPointEntity );
+	DECLARE_CLASS(CTFBotGenerator, CPointEntity);
 	DECLARE_DATADESC();
 
-	CTFBotGenerator( void );
-	virtual ~CTFBotGenerator() { }
+	CTFBotGenerator(void);
+	virtual ~CTFBotGenerator() {}
 
 	virtual void Activate();
 
-	void GeneratorThink( void );
-	void SpawnBot( void );
+	void GeneratorThink(void);
+	void SpawnBot(void);
 
 	// Input.
-	void InputEnable( inputdata_t &inputdata );
-	void InputDisable( inputdata_t &inputdata );
-	void InputSetSuppressFire( inputdata_t &inputdata );
-	void InputSetDisableDodge( inputdata_t &inputdata );
-	void InputSetDifficulty( inputdata_t &inputdata );
-	void InputCommandGotoActionPoint( inputdata_t &inputdata );
-	void InputSetAttentionFocus( inputdata_t &inputdata );
-	void InputClearAttentionFocus( inputdata_t &inputdata );
-	void InputSpawnBot( inputdata_t &inputdata );
-	void InputRemoveBots( inputdata_t &inputdata );
+	void InputEnable(inputdata_t &inputdata);
+	void InputDisable(inputdata_t &inputdata);
+	void InputSetSuppressFire(inputdata_t &inputdata);
+	void InputSetDisableDodge(inputdata_t &inputdata);
+	void InputSetDifficulty(inputdata_t &inputdata);
+	void InputCommandGotoActionPoint(inputdata_t &inputdata);
+	void InputSetAttentionFocus(inputdata_t &inputdata);
+	void InputClearAttentionFocus(inputdata_t &inputdata);
+	void InputSpawnBot(inputdata_t &inputdata);
+	void InputRemoveBots(inputdata_t &inputdata);
 
 	// Output
-	void OnBotKilled( CTFBot *pBot );
+	void OnBotKilled(CTFBot *pBot);
 
 private:
 	bool m_bBotChoosesClass;
@@ -54,7 +53,7 @@ private:
 	string_t m_teamName;
 	string_t m_actionPointName;
 	string_t m_initialCommand;
-	CHandle< CBaseEntity > m_moveGoal;
+	CHandle<CBaseEntity> m_moveGoal;
 	int m_difficulty;
 	bool m_bSpawnOnlyWhenTriggered;
 	bool m_bEnabled;
@@ -63,7 +62,7 @@ private:
 	COutputEvent m_onExpended;
 	COutputEvent m_onBotKilled;
 
-	CUtlVector< CHandle< CTFBot > > m_spawnedBotVector;
+	CUtlVector<CHandle<CTFBot>> m_spawnedBotVector;
 };
 
 //---------------------------------------------------------------
@@ -74,19 +73,20 @@ private:
 //
 class CTFBotActionPoint : public CPointEntity
 {
-	DECLARE_CLASS( CTFBotActionPoint, CPointEntity );
+	DECLARE_CLASS(CTFBotActionPoint, CPointEntity);
+
 public:
 	DECLARE_DATADESC();
 
- 	CTFBotActionPoint( void );
- 	virtual ~CTFBotActionPoint() { }
+	CTFBotActionPoint(void);
+	virtual ~CTFBotActionPoint() {}
 
 	virtual void Activate();
 
-	bool IsWithinRange( CBaseEntity *entity );
-	void ReachedActionPoint( CTFBot* pBot );
+	bool IsWithinRange(CBaseEntity *entity);
+	void ReachedActionPoint(CTFBot *pBot);
 
-	CHandle< CBaseEntity > m_moveGoal;
+	CHandle<CBaseEntity> m_moveGoal;
 
 	// reflected
 	float m_stayTime;

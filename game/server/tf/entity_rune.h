@@ -13,23 +13,23 @@
 #include "tf_powerup.h"
 #include "tf_gamerules.h"
 
-#define TF_RUNE_STRENGTH		"models/pickups/pickup_powerup_strength.mdl"
-#define TF_RUNE_RESIST			"models/pickups/pickup_powerup_defense.mdl"
-#define TF_RUNE_REGEN			"models/pickups/pickup_powerup_regen.mdl"
-#define TF_RUNE_HASTE			"models/pickups/pickup_powerup_haste.mdl"
-#define TF_RUNE_VAMPIRE			"models/pickups/pickup_powerup_vampire.mdl"
-#define TF_RUNE_REFLECT 		"models/pickups/pickup_powerup_reflect.mdl"
-#define TF_RUNE_PRECISION 		"models/pickups/pickup_powerup_precision.mdl"
-#define TF_RUNE_AGILITY 		"models/pickups/pickup_powerup_agility.mdl"
-#define TF_RUNE_KNOCKOUT 		"models/pickups/pickup_powerup_knockout.mdl"
-#define TF_RUNE_KING			"models/pickups/pickup_powerup_king.mdl"
-#define TF_RUNE_PLAGUE			"models/pickups/pickup_powerup_plague.mdl"
-#define TF_RUNE_SUPERNOVA		"models/pickups/pickup_powerup_supernova.mdl"
+#define TF_RUNE_STRENGTH  "models/pickups/pickup_powerup_strength.mdl"
+#define TF_RUNE_RESIST	  "models/pickups/pickup_powerup_defense.mdl"
+#define TF_RUNE_REGEN	  "models/pickups/pickup_powerup_regen.mdl"
+#define TF_RUNE_HASTE	  "models/pickups/pickup_powerup_haste.mdl"
+#define TF_RUNE_VAMPIRE	  "models/pickups/pickup_powerup_vampire.mdl"
+#define TF_RUNE_REFLECT	  "models/pickups/pickup_powerup_reflect.mdl"
+#define TF_RUNE_PRECISION "models/pickups/pickup_powerup_precision.mdl"
+#define TF_RUNE_AGILITY	  "models/pickups/pickup_powerup_agility.mdl"
+#define TF_RUNE_KNOCKOUT  "models/pickups/pickup_powerup_knockout.mdl"
+#define TF_RUNE_KING	  "models/pickups/pickup_powerup_king.mdl"
+#define TF_RUNE_PLAGUE	  "models/pickups/pickup_powerup_plague.mdl"
+#define TF_RUNE_SUPERNOVA "models/pickups/pickup_powerup_supernova.mdl"
 
-#define TF_RUNE_TEMP_CRIT		"models/pickups/pickup_powerup_crit.mdl"
-#define TF_RUNE_TEMP_UBER		"models/pickups/pickup_powerup_uber.mdl"
+#define TF_RUNE_TEMP_CRIT "models/pickups/pickup_powerup_crit.mdl"
+#define TF_RUNE_TEMP_UBER "models/pickups/pickup_powerup_uber.mdl"
 
-DECLARE_AUTO_LIST( IInfoPowerupSpawnAutoList );
+DECLARE_AUTO_LIST(IInfoPowerupSpawnAutoList);
 
 //=============================================================================
 //
@@ -40,77 +40,78 @@ DECLARE_AUTO_LIST( IInfoPowerupSpawnAutoList );
 class CTFRune : public CTFPowerup
 {
 public:
-	DECLARE_CLASS( CTFRune, CTFPowerup );
+	DECLARE_CLASS(CTFRune, CTFPowerup);
 
 	CTFRune();
 	~CTFRune();
 
-	virtual void	Spawn( void ) OVERRIDE;
-	virtual void	Precache( void ) OVERRIDE;
-	virtual bool	MyTouch( CBasePlayer *pPlayer );
-	static CTFRune*	CreateRune( const Vector &vecOrigin, RuneTypes_t nType, int nTeam, bool bShouldReposition, bool bApplyForce, Vector vecSpawnDirection = vec3_origin );
-	static bool		RepositionRune( RuneTypes_t nType, int nTeamNumber );
-	float			GetRuneRepositionTime( void );
+	virtual void Spawn(void) OVERRIDE;
+	virtual void Precache(void) OVERRIDE;
+	virtual bool MyTouch(CBasePlayer *pPlayer);
+	static CTFRune *CreateRune(const Vector &vecOrigin, RuneTypes_t nType, int nTeam, bool bShouldReposition,
+							   bool bApplyForce, Vector vecSpawnDirection = vec3_origin);
+	static bool RepositionRune(RuneTypes_t nType, int nTeamNumber);
+	float GetRuneRepositionTime(void);
 
-	virtual const char *GetDefaultPowerupModel( void )
+	virtual const char *GetDefaultPowerupModel(void)
 	{
-		if ( m_nRuneType == RUNE_STRENGTH )
+		if(m_nRuneType == RUNE_STRENGTH)
 		{
 			return TF_RUNE_STRENGTH;
 		}
-		else if ( m_nRuneType == RUNE_RESIST )
+		else if(m_nRuneType == RUNE_RESIST)
 		{
 			return TF_RUNE_RESIST;
 		}
-		else if ( m_nRuneType == RUNE_REGEN )
+		else if(m_nRuneType == RUNE_REGEN)
 		{
 			return TF_RUNE_REGEN;
 		}
-		else if ( m_nRuneType == RUNE_HASTE )
+		else if(m_nRuneType == RUNE_HASTE)
 		{
 			return TF_RUNE_HASTE;
 		}
-		else if ( m_nRuneType == RUNE_VAMPIRE )
+		else if(m_nRuneType == RUNE_VAMPIRE)
 		{
 			return TF_RUNE_VAMPIRE;
 		}
-		else if ( m_nRuneType == RUNE_REFLECT )
+		else if(m_nRuneType == RUNE_REFLECT)
 		{
 			return TF_RUNE_REFLECT;
 		}
-		else if ( m_nRuneType == RUNE_PRECISION )
+		else if(m_nRuneType == RUNE_PRECISION)
 		{
 			return TF_RUNE_PRECISION;
 		}
-		else if ( m_nRuneType == RUNE_AGILITY )
+		else if(m_nRuneType == RUNE_AGILITY)
 		{
 			return TF_RUNE_AGILITY;
 		}
-		else if ( m_nRuneType == RUNE_KNOCKOUT )
+		else if(m_nRuneType == RUNE_KNOCKOUT)
 		{
 			return TF_RUNE_KNOCKOUT;
 		}
-		else if ( m_nRuneType == RUNE_KING )
+		else if(m_nRuneType == RUNE_KING)
 		{
 			return TF_RUNE_KING;
 		}
-		else if ( m_nRuneType == RUNE_PLAGUE )
+		else if(m_nRuneType == RUNE_PLAGUE)
 		{
 			return TF_RUNE_PLAGUE;
 		}
-		else if ( m_nRuneType == RUNE_SUPERNOVA )
+		else if(m_nRuneType == RUNE_SUPERNOVA)
 		{
 			return TF_RUNE_SUPERNOVA;
 		}
 		return TF_RUNE_STRENGTH;
 	}
-	
-	virtual int		UpdateTransmitState( void ) OVERRIDE;
-	virtual	int		ShouldTransmit( const CCheckTransmitInfo *pInfo ) OVERRIDE;
+
+	virtual int UpdateTransmitState(void) OVERRIDE;
+	virtual int ShouldTransmit(const CCheckTransmitInfo *pInfo) OVERRIDE;
 
 protected:
 	bool m_bApplyForce;
-	virtual void ComeToRest( void );
+	virtual void ComeToRest(void);
 	Vector m_vecSpawnDirection;
 
 private:
@@ -133,20 +134,23 @@ private:
 class CTFRuneTemp : public CTFPowerup
 {
 public:
-	DECLARE_CLASS( CTFRuneTemp, CTFPowerup );
+	DECLARE_CLASS(CTFRuneTemp, CTFPowerup);
 
 	CTFRuneTemp();
 
-	virtual void		Spawn( void ) OVERRIDE;
-	virtual void		Precache( void ) OVERRIDE;
-	virtual bool		MyTouch( CBasePlayer *pPlayer ) OVERRIDE;
-	virtual const char 	*GetDefaultPowerupModel( void ) OVERRIDE { return TF_RUNE_TEMP_CRIT; }
-	virtual float		GetRespawnDelay( void ) OVERRIDE;
-		
-protected:
-	void	TempRuneRespawnThink( void );
+	virtual void Spawn(void) OVERRIDE;
+	virtual void Precache(void) OVERRIDE;
+	virtual bool MyTouch(CBasePlayer *pPlayer) OVERRIDE;
+	virtual const char *GetDefaultPowerupModel(void) OVERRIDE
+	{
+		return TF_RUNE_TEMP_CRIT;
+	}
+	virtual float GetRespawnDelay(void) OVERRIDE;
 
-	int		m_nRuneTempType;
+protected:
+	void TempRuneRespawnThink(void);
+
+	int m_nRuneTempType;
 };
 
 //=============================================================================
@@ -158,7 +162,7 @@ protected:
 class CTFRuneTempCrit : public CTFRuneTemp
 {
 public:
-	DECLARE_CLASS( CTFRuneTempCrit, CTFRuneTemp );
+	DECLARE_CLASS(CTFRuneTempCrit, CTFRuneTemp);
 
 	CTFRuneTempCrit();
 };
@@ -172,12 +176,14 @@ public:
 class CTFRuneTempUber : public CTFRuneTemp
 {
 public:
-	DECLARE_CLASS( CTFRuneTempUber, CTFRuneTemp );
+	DECLARE_CLASS(CTFRuneTempUber, CTFRuneTemp);
 
 	CTFRuneTempUber();
 
-	virtual const char 	*GetDefaultPowerupModel( void ) OVERRIDE { return TF_RUNE_TEMP_UBER; }
-
+	virtual const char *GetDefaultPowerupModel(void) OVERRIDE
+	{
+		return TF_RUNE_TEMP_UBER;
+	}
 };
 
 //=============================================================================
@@ -189,22 +195,28 @@ public:
 class CTFInfoPowerupSpawn : public CPointEntity, public IInfoPowerupSpawnAutoList
 {
 public:
-	DECLARE_CLASS( CTFInfoPowerupSpawn, CPointEntity );
+	DECLARE_CLASS(CTFInfoPowerupSpawn, CPointEntity);
 	CTFInfoPowerupSpawn();
 	DECLARE_DATADESC();
-	
+
 	virtual void Spawn() OVERRIDE;
 
-	bool IsDisabled() const { return m_bDisabled; }
-	bool HasRune() const { return m_hRune != NULL; }
-	void SetRune( CTFRune *pRune ) { m_hRune = pRune; }
+	bool IsDisabled() const
+	{
+		return m_bDisabled;
+	}
+	bool HasRune() const
+	{
+		return m_hRune != NULL;
+	}
+	void SetRune(CTFRune *pRune)
+	{
+		m_hRune = pRune;
+	}
 
 private:
 	bool m_bDisabled;
 	int m_nTeam;
-	CHandle< CTFRune > m_hRune;
+	CHandle<CTFRune> m_hRune;
 };
 #endif // ENTITY_RUNE_H
-
-
-

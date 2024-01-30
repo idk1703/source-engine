@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,57 +15,52 @@
 
 C_SDKRootPanel *g_pRootPanel = NULL;
 
-
 //-----------------------------------------------------------------------------
 // Global functions.
 //-----------------------------------------------------------------------------
-void VGUI_CreateClientDLLRootPanel( void )
+void VGUI_CreateClientDLLRootPanel(void)
 {
-	g_pRootPanel = new C_SDKRootPanel( enginevgui->GetPanel( PANEL_CLIENTDLL ) );
+	g_pRootPanel = new C_SDKRootPanel(enginevgui->GetPanel(PANEL_CLIENTDLL));
 }
 
-void VGUI_DestroyClientDLLRootPanel( void )
+void VGUI_DestroyClientDLLRootPanel(void)
 {
 	delete g_pRootPanel;
 	g_pRootPanel = NULL;
 }
 
-vgui::VPANEL VGui_GetClientDLLRootPanel( void )
+vgui::VPANEL VGui_GetClientDLLRootPanel(void)
 {
 	return g_pRootPanel->GetVPanel();
 }
 
-
 //-----------------------------------------------------------------------------
 // C_SDKRootPanel implementation.
 //-----------------------------------------------------------------------------
-C_SDKRootPanel::C_SDKRootPanel( vgui::VPANEL parent )
-	: BaseClass( NULL, "SDK Root Panel" )
+C_SDKRootPanel::C_SDKRootPanel(vgui::VPANEL parent) : BaseClass(NULL, "SDK Root Panel")
 {
-	SetParent( parent );
-	SetPaintEnabled( false );
-	SetPaintBorderEnabled( false );
-	SetPaintBackgroundEnabled( false );
+	SetParent(parent);
+	SetPaintEnabled(false);
+	SetPaintBorderEnabled(false);
+	SetPaintBackgroundEnabled(false);
 
 	// This panel does post child painting
-	SetPostChildPaintEnabled( true );
+	SetPostChildPaintEnabled(true);
 
 	// Make it screen sized
-	SetBounds( 0, 0, ScreenWidth(), ScreenHeight() );
+	SetBounds(0, 0, ScreenWidth(), ScreenHeight());
 
 	// Ask for OnTick messages
-	vgui::ivgui()->AddTickSignal( GetVPanel() );
+	vgui::ivgui()->AddTickSignal(GetVPanel());
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-C_SDKRootPanel::~C_SDKRootPanel( void )
-{
-}
+C_SDKRootPanel::~C_SDKRootPanel(void) {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_SDKRootPanel::PostChildPaint()
 {
@@ -79,28 +74,19 @@ void C_SDKRootPanel::PostChildPaint()
 // Purpose: For each panel effect, check if it wants to draw and draw it on
 //  this panel/surface if so
 //-----------------------------------------------------------------------------
-void C_SDKRootPanel::RenderPanelEffects( void )
-{
-}
+void C_SDKRootPanel::RenderPanelEffects(void) {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_SDKRootPanel::OnTick( void )
-{
-}
+void C_SDKRootPanel::OnTick(void) {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Reset effects on level load/shutdown
 //-----------------------------------------------------------------------------
-void C_SDKRootPanel::LevelInit( void )
-{
-}
+void C_SDKRootPanel::LevelInit(void) {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_SDKRootPanel::LevelShutdown( void )
-{
-}
-
+void C_SDKRootPanel::LevelShutdown(void) {}

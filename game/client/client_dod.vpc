@@ -25,7 +25,7 @@ $Project "Client (DOD)"
 		-$File	"$SRCDIR\game\shared\weapon_parse_default.cpp"
 		-$File	"history_resource.cpp"
 		-$File	"hud_hintdisplay.cpp"
-		
+
 		$File	"hud_voicestatus.cpp"
 
 		$File	"$SRCDIR\game\shared\playerclass_info_parse.cpp"

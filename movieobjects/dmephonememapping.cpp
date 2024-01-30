@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "movieobjects/dmephonememapping.h"
@@ -9,14 +9,12 @@
 //-----------------------------------------------------------------------------
 // CDmePhonemeMapping
 //-----------------------------------------------------------------------------
-IMPLEMENT_ELEMENT_FACTORY( DmePhonemeMapping, CDmePhonemeMapping );
+IMPLEMENT_ELEMENT_FACTORY(DmePhonemeMapping, CDmePhonemeMapping);
 
 void CDmePhonemeMapping::OnConstruction()
 {
-	m_Preset.Init( this, "preset" );
-	m_Weight.InitAndSet( this, "weight", 1.0f );
+	m_Preset.Init(this, "preset");
+	m_Weight.InitAndSet(this, "weight", 1.0f);
 }
 
-void CDmePhonemeMapping::OnDestruction()
-{
-}
+void CDmePhonemeMapping::OnDestruction() {}

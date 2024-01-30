@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -9,7 +9,7 @@
 
 using namespace vgui;
 
-static const long RETRY_TIME = 10000;		// refresh server every 10 seconds
+static const long RETRY_TIME = 10000; // refresh server every 10 seconds
 static const long CHALLENGE_ENTRIES = 1024;
 
 extern "C"
@@ -23,12 +23,12 @@ extern "C"
 //-----------------------------------------------------------------------------
 // Purpose: Comparison function used in query redblack tree
 //-----------------------------------------------------------------------------
-bool QueryLessFunc( const struct challenge_s &item1, const struct challenge_s &item2 )
+bool QueryLessFunc(const struct challenge_s &item1, const struct challenge_s &item2)
 {
 	// compare port then ip
-	if ( item1.addr.GetPort() < item2.addr.GetPort() )
+	if(item1.addr.GetPort() < item2.addr.GetPort())
 		return true;
-	else if ( item1.addr.GetPort() > item2.addr.GetPort() )
+	else if(item1.addr.GetPort() > item2.addr.GetPort())
 		return false;
 
 	int ip1 = item1.addr.GetIPNetworkByteOrder();
@@ -37,14 +37,14 @@ bool QueryLessFunc( const struct challenge_s &item1, const struct challenge_s &i
 	return ip1 < ip2;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CDialogGameInfo::CDialogGameInfo( vgui::Panel *parent, int serverIP, int queryPort, unsigned short connectionPort, const char *pszConnectCode ) : 
-	Frame(parent, "DialogGameInfo"),
-	m_CallbackPersonaStateChange( this, &CDialogGameInfo::OnPersonaStateChange ),
-	m_sConnectCode( pszConnectCode )
+CDialogGameInfo::CDialogGameInfo(vgui::Panel *parent, int serverIP, int queryPort, unsigned short connectionPort,
+								 const char *pszConnectCode)
+	: Frame(parent, "DialogGameInfo"),
+	  m_CallbackPersonaStateChange(this, &CDialogGameInfo::OnPersonaStateChange),
+	  m_sConnectCode(pszConnectCode)
 {
 	SetBounds(0, 0, 512, 512);
 	SetMinimumSize(416, 340);
@@ -92,8 +92,8 @@ CDialogGameInfo::CDialogGameInfo( vgui::Panel *parent, int serverIP, int queryPo
 	m_iRequestRetry = 0;
 
 	// create a new server to watch
-	memset(&m_Server, 0, sizeof(m_Server) );
-	m_Server.m_NetAdr.Init( serverIP, queryPort, connectionPort );
+	memset(&m_Server, 0, sizeof(m_Server));
+	m_Server.m_NetAdr.Init(serverIP, queryPort, connectionPort);
 
 	// refresh immediately
 	RequestInfo();
@@ -102,8 +102,8 @@ CDialogGameInfo::CDialogGameInfo( vgui::Panel *parent, int serverIP, int queryPo
 	ivgui()->AddTickSignal(this->GetVPanel());
 
 	LoadControlSettings("Servers/DialogGameInfo.res");
-	RegisterControlSettingsFile( "Servers/DialogGameInfo_SinglePlayer.res" );
-	RegisterControlSettingsFile( "Servers/DialogGameInfo_AutoRetry.res" );
+	RegisterControlSettingsFile("Servers/DialogGameInfo_SinglePlayer.res");
+	RegisterControlSettingsFile("Servers/DialogGameInfo_AutoRetry.res");
 	MoveToCenterOfScreen();
 }
 
@@ -112,44 +112,43 @@ CDialogGameInfo::CDialogGameInfo( vgui::Panel *parent, int serverIP, int queryPo
 //-----------------------------------------------------------------------------
 CDialogGameInfo::~CDialogGameInfo()
 {
-	if ( !steamapicontext->SteamMatchmakingServers() )
+	if(!steamapicontext->SteamMatchmakingServers())
 		return;
 
-	if ( m_hPingQuery != HSERVERQUERY_INVALID )
-		steamapicontext->SteamMatchmakingServers()->CancelServerQuery( m_hPingQuery );
-	if ( m_hPlayersQuery != HSERVERQUERY_INVALID )
-		steamapicontext->SteamMatchmakingServers()->CancelServerQuery( m_hPlayersQuery );
+	if(m_hPingQuery != HSERVERQUERY_INVALID)
+		steamapicontext->SteamMatchmakingServers()->CancelServerQuery(m_hPingQuery);
+	if(m_hPlayersQuery != HSERVERQUERY_INVALID)
+		steamapicontext->SteamMatchmakingServers()->CancelServerQuery(m_hPlayersQuery);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: send a player query to a server
 //-----------------------------------------------------------------------------
-void CDialogGameInfo::SendPlayerQuery( uint32 unIP, uint16 usQueryPort )
+void CDialogGameInfo::SendPlayerQuery(uint32 unIP, uint16 usQueryPort)
 {
-	if ( !steamapicontext->SteamMatchmakingServers() )
+	if(!steamapicontext->SteamMatchmakingServers())
 		return;
 
-	if ( m_hPlayersQuery != HSERVERQUERY_INVALID )
-		steamapicontext->SteamMatchmakingServers()->CancelServerQuery( m_hPlayersQuery );
-	m_hPlayersQuery = steamapicontext->SteamMatchmakingServers()->PlayerDetails( unIP, usQueryPort, this );
+	if(m_hPlayersQuery != HSERVERQUERY_INVALID)
+		steamapicontext->SteamMatchmakingServers()->CancelServerQuery(m_hPlayersQuery);
+	m_hPlayersQuery = steamapicontext->SteamMatchmakingServers()->PlayerDetails(unIP, usQueryPort, this);
 	m_bPlayerListUpdatePending = true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Activates the dialog
 //-----------------------------------------------------------------------------
 void CDialogGameInfo::Run(const char *titleName)
 {
-	if ( titleName )
+	if(titleName)
 	{
-		SetTitle( "#ServerBrowser_GameInfoWithNameTitle", true );
+		SetTitle("#ServerBrowser_GameInfoWithNameTitle", true);
 	}
 	else
 	{
-		SetTitle( "#ServerBrowser_GameInfoWithNameTitle", true );
+		SetTitle("#ServerBrowser_GameInfoWithNameTitle", true);
 	}
-	SetDialogVariable( "game", titleName );
+	SetDialogVariable("game", titleName);
 
 	// get the info from the user
 	RequestInfo();
@@ -159,32 +158,32 @@ void CDialogGameInfo::Run(const char *titleName)
 //-----------------------------------------------------------------------------
 // Purpose: Changes which server to watch
 //-----------------------------------------------------------------------------
-void CDialogGameInfo::ChangeGame( int serverIP, int queryPort, unsigned short connectionPort )
+void CDialogGameInfo::ChangeGame(int serverIP, int queryPort, unsigned short connectionPort)
 {
-	memset( &m_Server, 0x0, sizeof(m_Server) );
+	memset(&m_Server, 0x0, sizeof(m_Server));
 
-	m_Server.m_NetAdr.Init( serverIP, queryPort, connectionPort );
+	m_Server.m_NetAdr.Init(serverIP, queryPort, connectionPort);
 
 	// remember the dialogs position so we can keep it the same
 	int x, y;
-	GetPos( x, y );
+	GetPos(x, y);
 
 	// see if we need to change dialog state
-	if ( !m_Server.m_NetAdr.GetIP() || !m_Server.m_NetAdr.GetQueryPort() )
+	if(!m_Server.m_NetAdr.GetIP() || !m_Server.m_NetAdr.GetQueryPort())
 	{
 		// not in a server, load the simple settings dialog
 		SetMinimumSize(0, 0);
-		SetSizeable( false );
-		LoadControlSettings( "Servers/DialogGameInfo_SinglePlayer.res" );
+		SetSizeable(false);
+		LoadControlSettings("Servers/DialogGameInfo_SinglePlayer.res");
 	}
 	else
 	{
 		// moving from a single-player game -> multiplayer, reset dialog
 		SetMinimumSize(416, 340);
-		SetSizeable( true );
-		LoadControlSettings( "Servers/DialogGameInfo.res" );
+		SetSizeable(true);
+		LoadControlSettings("Servers/DialogGameInfo.res");
 	}
-	SetPos( x, y );
+	SetPos(x, y);
 
 	// Start refresh immediately
 	m_iRequestRetry = 0;
@@ -192,11 +191,10 @@ void CDialogGameInfo::ChangeGame( int serverIP, int queryPort, unsigned short co
 	InvalidateLayout();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: updates the dialog if it's watching a friend who changes servers
 //-----------------------------------------------------------------------------
-void CDialogGameInfo::OnPersonaStateChange( PersonaStateChange_t *pPersonaStateChange )
+void CDialogGameInfo::OnPersonaStateChange(PersonaStateChange_t *pPersonaStateChange)
 {
 #if 0 // TBD delete this func
 	if ( m_SteamIDFriend && m_SteamIDFriend == pPersonaStateChange->m_ulSteamID )
@@ -206,7 +204,7 @@ void CDialogGameInfo::OnPersonaStateChange( PersonaStateChange_t *pPersonaStateC
 		uint32 unGameIP;
 		uint16 usGamePort;
 		uint16 usQueryPort;
-		
+
 		if ( SteamFriends()->GetFriendGamePlayed( m_SteamIDFriend, &nGameID, &unGameIP, &usGamePort, &usQueryPort ) )
 		{
 			if ( pPersonaStateChange->m_nChangeFlags & k_EPersonaChangeGamePlayed )
@@ -222,30 +220,28 @@ void CDialogGameInfo::OnPersonaStateChange( PersonaStateChange_t *pPersonaStateC
 #endif
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Associates a user with this dialog
 //-----------------------------------------------------------------------------
-void CDialogGameInfo::SetFriend( uint64 ulSteamIDFriend )
+void CDialogGameInfo::SetFriend(uint64 ulSteamIDFriend)
 {
 	// set the title to include the friends name
-	SetTitle( "#ServerBrowser_GameInfoWithNameTitle", true );
-	SetDialogVariable( "game", steamapicontext->SteamFriends()->GetFriendPersonaName( ulSteamIDFriend ) );
-	SetDialogVariable( "friend", steamapicontext->SteamFriends()->GetFriendPersonaName( ulSteamIDFriend ) );
+	SetTitle("#ServerBrowser_GameInfoWithNameTitle", true);
+	SetDialogVariable("game", steamapicontext->SteamFriends()->GetFriendPersonaName(ulSteamIDFriend));
+	SetDialogVariable("friend", steamapicontext->SteamFriends()->GetFriendPersonaName(ulSteamIDFriend));
 
 	// store the friend we're associated with
 	m_SteamIDFriend = ulSteamIDFriend;
 
 	FriendGameInfo_t friendGameInfo;
-	if ( steamapicontext->SteamFriends()->GetFriendGamePlayed( ulSteamIDFriend, &friendGameInfo ) )
+	if(steamapicontext->SteamFriends()->GetFriendGamePlayed(ulSteamIDFriend, &friendGameInfo))
 	{
 		uint16 usConnPort = friendGameInfo.m_usGamePort;
-		if ( friendGameInfo.m_usQueryPort < QUERY_PORT_ERROR )
+		if(friendGameInfo.m_usQueryPort < QUERY_PORT_ERROR)
 			usConnPort = friendGameInfo.m_usQueryPort;
-		ChangeGame( friendGameInfo.m_unGameIP, usConnPort, friendGameInfo.m_usGamePort );
+		ChangeGame(friendGameInfo.m_unGameIP, usConnPort, friendGameInfo.m_usGamePort);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: data access
@@ -255,7 +251,6 @@ uint64 CDialogGameInfo::GetAssociatedFriend()
 	return m_SteamIDFriend;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: lays out the data
 //-----------------------------------------------------------------------------
@@ -263,17 +258,16 @@ void CDialogGameInfo::PerformLayout()
 {
 	BaseClass::PerformLayout();
 
-	SetControlString( "ServerText", m_Server.GetName() );
-	SetControlString( "GameText", m_Server.m_szGameDescription );
-	SetControlString( "MapText", m_Server.m_szMap );
-	SetControlString( "GameTags", m_Server.m_szGameTags );
+	SetControlString("ServerText", m_Server.GetName());
+	SetControlString("GameText", m_Server.m_szGameDescription);
+	SetControlString("MapText", m_Server.m_szMap);
+	SetControlString("GameTags", m_Server.m_szGameTags);
 
-
-	if ( !m_Server.m_bHadSuccessfulResponse )
+	if(!m_Server.m_bHadSuccessfulResponse)
 	{
 		SetControlString("SecureText", "");
 	}
-	else if ( m_Server.m_bSecure )
+	else if(m_Server.m_bSecure)
 	{
 		SetControlString("SecureText", "#ServerBrowser_Secure");
 	}
@@ -283,7 +277,7 @@ void CDialogGameInfo::PerformLayout()
 	}
 
 	char buf[128];
-	if ( m_Server.m_nMaxPlayers > 0)
+	if(m_Server.m_nMaxPlayers > 0)
 	{
 		Q_snprintf(buf, sizeof(buf), "%d / %d", m_Server.m_nPlayers, m_Server.m_nMaxPlayers);
 	}
@@ -293,11 +287,11 @@ void CDialogGameInfo::PerformLayout()
 	}
 	SetControlString("PlayersText", buf);
 
-	if ( m_Server.m_NetAdr.GetIP() && m_Server.m_NetAdr.GetQueryPort() )
+	if(m_Server.m_NetAdr.GetIP() && m_Server.m_NetAdr.GetQueryPort())
 	{
-		SetControlString("ServerIPText", m_Server.m_NetAdr.GetConnectionAddressString() );
+		SetControlString("ServerIPText", m_Server.m_NetAdr.GetConnectionAddressString());
 		m_pConnectButton->SetEnabled(true);
-		if ( m_pAutoRetry->IsSelected() )
+		if(m_pAutoRetry->IsSelected())
 		{
 			m_pAutoRetryAlert->SetVisible(true);
 			m_pAutoRetryJoin->SetVisible(true);
@@ -314,9 +308,9 @@ void CDialogGameInfo::PerformLayout()
 		m_pConnectButton->SetEnabled(false);
 	}
 
-	if ( m_Server.m_bHadSuccessfulResponse )
+	if(m_Server.m_bHadSuccessfulResponse)
 	{
-		Q_snprintf(buf, sizeof(buf), "%d", m_Server.m_nPing );
+		Q_snprintf(buf, sizeof(buf), "%d", m_Server.m_nPing);
 		SetControlString("PingText", buf);
 	}
 	else
@@ -325,13 +319,13 @@ void CDialogGameInfo::PerformLayout()
 	}
 
 	// set the info text
-	if ( m_pAutoRetry->IsSelected() )
+	if(m_pAutoRetry->IsSelected())
 	{
-		if ( m_Server.m_nPlayers < m_Server.m_nMaxPlayers )
+		if(m_Server.m_nPlayers < m_Server.m_nMaxPlayers)
 		{
 			m_pInfoLabel->SetText("#ServerBrowser_PressJoinToConnect");
 		}
-		else if (m_pAutoRetryJoin->IsSelected())
+		else if(m_pAutoRetryJoin->IsSelected())
 		{
 			m_pInfoLabel->SetText("#ServerBrowser_JoinWhenSlotIsFree");
 		}
@@ -340,11 +334,11 @@ void CDialogGameInfo::PerformLayout()
 			m_pInfoLabel->SetText("#ServerBrowser_AlertWhenSlotIsFree");
 		}
 	}
-	else if (m_bServerFull)
+	else if(m_bServerFull)
 	{
 		m_pInfoLabel->SetText("#ServerBrowser_CouldNotConnectServerFull");
 	}
-	else if (m_bServerNotResponding)
+	else if(m_bServerNotResponding)
 	{
 		m_pInfoLabel->SetText("#ServerBrowser_ServerNotResponding");
 	}
@@ -354,7 +348,7 @@ void CDialogGameInfo::PerformLayout()
 		m_pInfoLabel->SetText("");
 	}
 
-	if ( m_Server.m_bHadSuccessfulResponse && !(m_Server.m_nPlayers + m_Server.m_nBotPlayers) )
+	if(m_Server.m_bHadSuccessfulResponse && !(m_Server.m_nPlayers + m_Server.m_nBotPlayers))
 	{
 		m_pPlayerList->SetEmptyListText("#ServerBrowser_ServerHasNoPlayers");
 	}
@@ -369,9 +363,9 @@ void CDialogGameInfo::PerformLayout()
 	Repaint();
 }
 
-void CDialogGameInfo::OnKeyCodePressed( vgui::KeyCode code )
+void CDialogGameInfo::OnKeyCodePressed(vgui::KeyCode code)
 {
-	if ( code == KEY_XBUTTON_B || code == KEY_XBUTTON_A || code == STEAMCONTROLLER_A || code == STEAMCONTROLLER_B )
+	if(code == KEY_XBUTTON_B || code == KEY_XBUTTON_A || code == STEAMCONTROLLER_A || code == STEAMCONTROLLER_B)
 	{
 		m_pCloseButton->DoClick();
 	}
@@ -411,11 +405,11 @@ void CDialogGameInfo::OnConnect()
 //-----------------------------------------------------------------------------
 // Purpose: Cancel auto-retry if we connect to the game by other means
 //-----------------------------------------------------------------------------
-void CDialogGameInfo::OnConnectToGame( int ip, int port )
+void CDialogGameInfo::OnConnectToGame(int ip, int port)
 {
 	// if we just connected to the server we were looking at, close the dialog
 	// important so that we don't auto-retry a server that we are already on
-	if ( m_Server.m_NetAdr.GetIP() == (uint32)ip && m_Server.m_NetAdr.GetConnectionPort() == (uint16)port )
+	if(m_Server.m_NetAdr.GetIP() == (uint32)ip && m_Server.m_NetAdr.GetConnectionPort() == (uint16)port)
 	{
 		// close this dialog
 		Close();
@@ -437,7 +431,7 @@ void CDialogGameInfo::OnRefresh()
 //-----------------------------------------------------------------------------
 void CDialogGameInfo::OnButtonToggled(Panel *panel)
 {
-	if (panel == m_pAutoRetry)
+	if(panel == m_pAutoRetry)
 	{
 		ShowAutoRetryOptions(m_pAutoRetry->IsSelected());
 	}
@@ -452,31 +446,31 @@ void CDialogGameInfo::ShowAutoRetryOptions(bool state)
 {
 	// we need to extend the dialog
 	int growSize = 60;
-	if (!state)
+	if(!state)
 	{
 		growSize = -growSize;
 	}
 
 	// alter the dialog size accordingly
 	int x, y, wide, tall;
-	GetBounds( x, y, wide, tall );
+	GetBounds(x, y, wide, tall);
 
 	// load a new layout file depending on the state
 	SetMinimumSize(416, 340);
-	if ( state )
-		LoadControlSettings( "Servers/DialogGameInfo_AutoRetry.res" );
+	if(state)
+		LoadControlSettings("Servers/DialogGameInfo_AutoRetry.res");
 	else
-		LoadControlSettings( "Servers/DialogGameInfo.res" );
+		LoadControlSettings("Servers/DialogGameInfo.res");
 
-	// restore size and position as 
+	// restore size and position as
 	// load control settings will override them
-	SetBounds( x, y, wide, tall + growSize );
+	SetBounds(x, y, wide, tall + growSize);
 
 	// restore other properties of the dialog
 	PerformLayout();
 
-	m_pAutoRetryAlert->SetSelected( true );
-	
+	m_pAutoRetryAlert->SetSelected(true);
+
 	InvalidateLayout();
 }
 
@@ -485,16 +479,17 @@ void CDialogGameInfo::ShowAutoRetryOptions(bool state)
 //-----------------------------------------------------------------------------
 void CDialogGameInfo::RequestInfo()
 {
-	if ( !steamapicontext->SteamMatchmakingServers() )
+	if(!steamapicontext->SteamMatchmakingServers())
 		return;
 
-	if ( m_iRequestRetry == 0 )
+	if(m_iRequestRetry == 0)
 	{
 		// reset the time at which we auto-refresh
 		m_iRequestRetry = system()->GetTimeMillis() + RETRY_TIME;
-		if ( m_hPingQuery != HSERVERQUERY_INVALID )
-			steamapicontext->SteamMatchmakingServers()->CancelServerQuery( m_hPingQuery );
-		m_hPingQuery = steamapicontext->SteamMatchmakingServers()->PingServer( m_Server.m_NetAdr.GetIP(), m_Server.m_NetAdr.GetQueryPort(), this );
+		if(m_hPingQuery != HSERVERQUERY_INVALID)
+			steamapicontext->SteamMatchmakingServers()->CancelServerQuery(m_hPingQuery);
+		m_hPingQuery = steamapicontext->SteamMatchmakingServers()->PingServer(m_Server.m_NetAdr.GetIP(),
+																			  m_Server.m_NetAdr.GetQueryPort(), this);
 	}
 }
 
@@ -504,7 +499,7 @@ void CDialogGameInfo::RequestInfo()
 void CDialogGameInfo::OnTick()
 {
 	// check to see if we should perform an auto-refresh
-	if ( m_iRequestRetry && m_iRequestRetry < system()->GetTimeMillis() )
+	if(m_iRequestRetry && m_iRequestRetry < system()->GetTimeMillis())
 	{
 		m_iRequestRetry = 0;
 		RequestInfo();
@@ -514,10 +509,9 @@ void CDialogGameInfo::OnTick()
 //-----------------------------------------------------------------------------
 // Purpose: called when the server has successfully responded
 //-----------------------------------------------------------------------------
-void CDialogGameInfo::ServerResponded( gameserveritem_t &server )
+void CDialogGameInfo::ServerResponded(gameserveritem_t &server)
 {
-	if( m_Server.m_NetAdr.GetQueryPort() &&
-		m_Server.m_NetAdr.GetQueryPort() != server.m_NetAdr.GetQueryPort() )
+	if(m_Server.m_NetAdr.GetQueryPort() && m_Server.m_NetAdr.GetQueryPort() != server.m_NetAdr.GetQueryPort())
 	{
 		return; // this is not the guy we talked about
 	}
@@ -526,7 +520,7 @@ void CDialogGameInfo::ServerResponded( gameserveritem_t &server )
 
 	// FIXME(johns): This is a workaround for a steam bug, where it inproperly reads signed bytes out of the
 	//               message. Once the upstream fix makes it into our SteamSDK, this block can be removed.
-	server.m_nPlayers    = (uint8)(int8)server.m_nPlayers;
+	server.m_nPlayers = (uint8)(int8)server.m_nPlayers;
 	server.m_nBotPlayers = (uint8)(int8)server.m_nBotPlayers;
 	server.m_nMaxPlayers = (uint8)(int8)server.m_nMaxPlayers;
 
@@ -536,13 +530,13 @@ void CDialogGameInfo::ServerResponded( gameserveritem_t &server )
 	// Preserve our connection port, since we may be querying the sourceTV port but getting a response for the real
 	// server. This is a limitation of the steam Matchmaking API where it doesn't properly send us a sourcetv response
 	// but instead the main server's response (unless we're connecting to a proxy, THEN we get the sourcetv response!)
-	m_Server.m_NetAdr.SetConnectionPort( connectionPort );
+	m_Server.m_NetAdr.SetConnectionPort(connectionPort);
 
-	if ( m_bConnecting )
+	if(m_bConnecting)
 	{
 		ConnectToServer();
 	}
-	else if ( m_pAutoRetry->IsSelected() && server.m_nPlayers < server.m_nMaxPlayers )
+	else if(m_pAutoRetry->IsSelected() && server.m_nPlayers < server.m_nMaxPlayers)
 	{
 		// there is a slot free, we can join
 
@@ -553,14 +547,14 @@ void CDialogGameInfo::ServerResponded( gameserveritem_t &server )
 		FlashWindow();
 
 		// if it's set, connect right away
-		if (m_pAutoRetryJoin->IsSelected())
+		if(m_pAutoRetryJoin->IsSelected())
 		{
 			ConnectToServer();
 		}
 	}
 	else
 	{
-		SendPlayerQuery( server.m_NetAdr.GetIP(), server.m_NetAdr.GetQueryPort() );
+		SendPlayerQuery(server.m_NetAdr.GetIP(), server.m_NetAdr.GetQueryPort());
 	}
 
 	m_bServerNotResponding = false;
@@ -569,7 +563,6 @@ void CDialogGameInfo::ServerResponded( gameserveritem_t &server )
 	Repaint();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: called when a server response has timed out
 //-----------------------------------------------------------------------------
@@ -577,7 +570,7 @@ void CDialogGameInfo::ServerFailedToRespond()
 {
 	// the server didn't respond, mark that in the UI
 	// only mark if we haven't ever received a response
-	if ( !m_Server.m_bHadSuccessfulResponse )
+	if(!m_Server.m_bHadSuccessfulResponse)
 	{
 		m_bServerNotResponding = true;
 	}
@@ -585,8 +578,6 @@ void CDialogGameInfo::ServerFailedToRespond()
 	InvalidateLayout();
 	Repaint();
 }
-
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructs a command to send a running game to connect to a server,
@@ -596,35 +587,34 @@ void CDialogGameInfo::ServerFailedToRespond()
 // way we could ask the engine itself to construct arguments in ways that fit.
 // Might be worth the effort as we start to add more engines.
 //-----------------------------------------------------------------------------
-void CDialogGameInfo::ApplyConnectCommand( const gameserveritem_t &server )
+void CDialogGameInfo::ApplyConnectCommand(const gameserveritem_t &server)
 {
-	char command[ 256 ];
+	char command[256];
 	// set the server password, if any
-	if ( m_szPassword[0] )
+	if(m_szPassword[0])
 	{
-		Q_snprintf( command, Q_ARRAYSIZE( command ), "password \"%s\"\n", m_szPassword );
-		g_pRunGameEngine->AddTextCommand( command );
+		Q_snprintf(command, Q_ARRAYSIZE(command), "password \"%s\"\n", m_szPassword);
+		g_pRunGameEngine->AddTextCommand(command);
 	}
 	// send engine command to change servers
-	Q_snprintf( command, Q_ARRAYSIZE( command ), "connect %s %s\n", server.m_NetAdr.GetConnectionAddressString(), m_sConnectCode.String() );
-	g_pRunGameEngine->AddTextCommand( command );
+	Q_snprintf(command, Q_ARRAYSIZE(command), "connect %s %s\n", server.m_NetAdr.GetConnectionAddressString(),
+			   m_sConnectCode.String());
+	g_pRunGameEngine->AddTextCommand(command);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructs game options to use when running a game to connect to a server
 //-----------------------------------------------------------------------------
-void CDialogGameInfo::ConstructConnectArgs( char *pchOptions, int cchOptions, const gameserveritem_t &server )
+void CDialogGameInfo::ConstructConnectArgs(char *pchOptions, int cchOptions, const gameserveritem_t &server)
 {
-	Q_snprintf( pchOptions, cchOptions, " +connect %s", server.m_NetAdr.GetConnectionAddressString() );
-	if ( m_szPassword[0] )
+	Q_snprintf(pchOptions, cchOptions, " +connect %s", server.m_NetAdr.GetConnectionAddressString());
+	if(m_szPassword[0])
 	{
-		Q_strcat( pchOptions, " +password \"", cchOptions );
-		Q_strcat( pchOptions, m_szPassword, cchOptions );
-		Q_strcat( pchOptions, "\"", cchOptions );
+		Q_strcat(pchOptions, " +password \"", cchOptions);
+		Q_strcat(pchOptions, m_szPassword, cchOptions);
+		Q_strcat(pchOptions, "\"", cchOptions);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Connects to the server
@@ -634,27 +624,26 @@ void CDialogGameInfo::ConnectToServer()
 	m_bConnecting = false;
 
 	// check VAC status
-	if ( m_Server.m_bSecure && ServerBrowser().IsVACBannedFromGame( m_Server.m_nAppID ) )
+	if(m_Server.m_bSecure && ServerBrowser().IsVACBannedFromGame(m_Server.m_nAppID))
 	{
 		// refuse the user
-		CVACBannedConnRefusedDialog *pDlg = new CVACBannedConnRefusedDialog( GetVParent(), "VACBannedConnRefusedDialog" );
+		CVACBannedConnRefusedDialog *pDlg = new CVACBannedConnRefusedDialog(GetVParent(), "VACBannedConnRefusedDialog");
 		pDlg->Activate();
 		Close();
 		return;
 	}
 
-
 	// check to see if we need a password
-	if ( m_Server.m_bPassword && !m_szPassword[0] )
+	if(m_Server.m_bPassword && !m_szPassword[0])
 	{
 		CDialogServerPassword *box = new CDialogServerPassword(this);
 		box->AddActionSignalTarget(this);
-		box->Activate( m_Server.GetName(), 0 );
+		box->Activate(m_Server.GetName(), 0);
 		return;
 	}
 
 	// check the player count
-	if ( m_Server.m_nPlayers >= m_Server.m_nMaxPlayers )
+	if(m_Server.m_nPlayers >= m_Server.m_nMaxPlayers)
 	{
 		// mark why we cannot connect
 		m_bServerFull = true;
@@ -666,46 +655,46 @@ void CDialogGameInfo::ConnectToServer()
 
 	// tell the engine to connect
 	const char *gameDir = m_Server.m_szGameDir;
-	if (g_pRunGameEngine->IsRunning())
+	if(g_pRunGameEngine->IsRunning())
 	{
-		ApplyConnectCommand( m_Server );
+		ApplyConnectCommand(m_Server);
 	}
 	else
 	{
 		char connectArgs[256];
-		ConstructConnectArgs( connectArgs, Q_ARRAYSIZE( connectArgs ), m_Server );
-		
-		if ( ( m_Server.m_bSecure && JoiningSecureServerCall() )|| !m_Server.m_bSecure )
+		ConstructConnectArgs(connectArgs, Q_ARRAYSIZE(connectArgs), m_Server);
+
+		if((m_Server.m_bSecure && JoiningSecureServerCall()) || !m_Server.m_bSecure)
 		{
-			switch ( g_pRunGameEngine->RunEngine( m_Server.m_nAppID, gameDir, connectArgs ) )
+			switch(g_pRunGameEngine->RunEngine(m_Server.m_nAppID, gameDir, connectArgs))
 			{
-			case IRunGameEngine::k_ERunResultModNotInstalled:
+				case IRunGameEngine::k_ERunResultModNotInstalled:
 				{
-				MessageBox *dlg = new MessageBox( "#ServerBrowser_GameInfoTitle", "#ServerBrowser_ModNotInstalled" );
-				dlg->DoModal();
-				SetVisible(false);
-				return;
+					MessageBox *dlg = new MessageBox("#ServerBrowser_GameInfoTitle", "#ServerBrowser_ModNotInstalled");
+					dlg->DoModal();
+					SetVisible(false);
+					return;
 				}
 				break;
-			case IRunGameEngine::k_ERunResultAppNotFound:
+				case IRunGameEngine::k_ERunResultAppNotFound:
 				{
-				MessageBox *dlg = new MessageBox( "#ServerBrowser_GameInfoTitle", "#ServerBrowser_AppNotFound" );
-				dlg->DoModal();
-				SetVisible(false);
-				return;
+					MessageBox *dlg = new MessageBox("#ServerBrowser_GameInfoTitle", "#ServerBrowser_AppNotFound");
+					dlg->DoModal();
+					SetVisible(false);
+					return;
 				}
 				break;
-			case IRunGameEngine::k_ERunResultNotInitialized:
+				case IRunGameEngine::k_ERunResultNotInitialized:
 				{
-				MessageBox *dlg = new MessageBox( "#ServerBrowser_GameInfoTitle", "#ServerBrowser_NotInitialized" );
-				dlg->DoModal();
-				SetVisible(false);
-				return;
+					MessageBox *dlg = new MessageBox("#ServerBrowser_GameInfoTitle", "#ServerBrowser_NotInitialized");
+					dlg->DoModal();
+					SetVisible(false);
+					return;
 				}
 				break;
-			case IRunGameEngine::k_ERunResultOkay:
-			default:
-				break;
+				case IRunGameEngine::k_ERunResultOkay:
+				default:
+					break;
 			};
 		}
 	}
@@ -717,9 +706,7 @@ void CDialogGameInfo::ConnectToServer()
 //-----------------------------------------------------------------------------
 // Purpose: called when the current refresh list is complete
 //-----------------------------------------------------------------------------
-void CDialogGameInfo::RefreshComplete( EMatchMakingServerResponse response )
-{
-}
+void CDialogGameInfo::RefreshComplete(EMatchMakingServerResponse response) {}
 
 //-----------------------------------------------------------------------------
 // Purpose: handles response from the get password dialog
@@ -747,7 +734,7 @@ void CDialogGameInfo::ClearPlayerList()
 //-----------------------------------------------------------------------------
 void CDialogGameInfo::AddPlayerToList(const char *playerName, int score, float timePlayedSeconds)
 {
-	if ( m_bPlayerListUpdatePending )
+	if(m_bPlayerListUpdatePending)
 	{
 		m_bPlayerListUpdatePending = false;
 		m_pPlayerList->RemoveAll();
@@ -757,7 +744,7 @@ void CDialogGameInfo::AddPlayerToList(const char *playerName, int score, float t
 	player->SetString("PlayerName", playerName);
 	player->SetInt("Score", score);
 	player->SetInt("TimeSec", (int)timePlayedSeconds);
-	
+
 	// construct a time string
 	int seconds = (int)timePlayedSeconds;
 	int minutes = seconds / 60;
@@ -766,20 +753,20 @@ void CDialogGameInfo::AddPlayerToList(const char *playerName, int score, float t
 	minutes %= 60;
 	char buf[64];
 	buf[0] = 0;
-	if (hours)
+	if(hours)
 	{
-		Q_snprintf(buf, sizeof(buf), "%dh %dm %ds", hours, minutes, seconds);	
+		Q_snprintf(buf, sizeof(buf), "%dh %dm %ds", hours, minutes, seconds);
 	}
-	else if (minutes)
+	else if(minutes)
 	{
-		Q_snprintf(buf, sizeof(buf), "%dm %ds", minutes, seconds);	
+		Q_snprintf(buf, sizeof(buf), "%dm %ds", minutes, seconds);
 	}
 	else
 	{
-		Q_snprintf(buf, sizeof(buf), "%ds", seconds);	
+		Q_snprintf(buf, sizeof(buf), "%ds", seconds);
 	}
 	player->SetString("Time", buf);
-	
+
 	m_pPlayerList->AddItem(player, 0, false, true);
 	player->deleteThis();
 }
@@ -792,11 +779,10 @@ int CDialogGameInfo::PlayerTimeColumnSortFunc(ListPanel *pPanel, const ListPanel
 	int p1time = p1.kv->GetInt("TimeSec");
 	int p2time = p2.kv->GetInt("TimeSec");
 
-	if (p1time > p2time)
+	if(p1time > p2time)
 		return -1;
-	if (p1time < p2time)
+	if(p1time < p2time)
 		return 1;
 
 	return 0;
 }
-

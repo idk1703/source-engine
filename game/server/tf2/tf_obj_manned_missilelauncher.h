@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -17,41 +17,41 @@
 // ------------------------------------------------------------------------ //
 class CObjectMannedMissileLauncher : public CObjectBaseMannedGun
 {
-	DECLARE_CLASS( CObjectMannedMissileLauncher, CObjectBaseMannedGun );
+	DECLARE_CLASS(CObjectMannedMissileLauncher, CObjectBaseMannedGun);
 
 public:
 	DECLARE_SERVERCLASS();
 	DECLARE_DATADESC();
 
-	static CObjectMannedMissileLauncher* Create(const Vector &vOrigin, const QAngle &vAngles);
+	static CObjectMannedMissileLauncher *Create(const Vector &vOrigin, const QAngle &vAngles);
 
 	CObjectMannedMissileLauncher();
 
-	virtual void	Spawn();
-	virtual void	Precache();
-	virtual void	FinishedBuilding( void );
-	virtual void	SetupTeamModel( void );
-	void			MissileRechargeThink( void );
+	virtual void Spawn();
+	virtual void Precache();
+	virtual void FinishedBuilding(void);
+	virtual void SetupTeamModel(void);
+	void MissileRechargeThink(void);
 
-#if defined( CLIENT_DLL )
-	virtual bool	ShouldPredict( void )
+#if defined(CLIENT_DLL)
+	virtual bool ShouldPredict(void)
 	{
-		if ( GetOwner() == C_BasePlayer::GetLocalPlayer() )
+		if(GetOwner() == C_BasePlayer::GetLocalPlayer())
 			return true;
 
 		return BaseClass::ShouldPredict();
 	}
 
-	virtual void	PreDataUpdate( DataUpdateType_t updateType );
-	virtual void	PostDataUpdate( DataUpdateType_t updateType );
+	virtual void PreDataUpdate(DataUpdateType_t updateType);
+	virtual void PostDataUpdate(DataUpdateType_t updateType);
 #endif
 
 protected:
 	// Fire the weapon
-	virtual void Fire( void );
+	virtual void Fire(void);
 
-	int		m_nPreviousTeam;
-	int		m_nMaxAmmoCount;
+	int m_nPreviousTeam;
+	int m_nMaxAmmoCount;
 };
 
 #endif // TF_OBJ_MANNED_MISSILELAUNCHER_H

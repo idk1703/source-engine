@@ -24,4 +24,3 @@ float4 main( PS_INPUT i ) : COLOR
 	// Add in bloom and return
 	return FinalOutput( c0 + bloomamount.xxxx * c1, 0, PIXEL_FOG_TYPE_NONE, TONEMAP_SCALE_NONE );
 }
-

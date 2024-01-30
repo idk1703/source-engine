@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2006, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2006, Valve Corporation, All rights reserved. ============//
 
 // STATIC: "X360APPCHOOSER" "0..1" [= 0]
 
@@ -16,7 +16,7 @@ struct VS_INPUT
 
 struct VS_OUTPUT
 {
-    float4 projPos					: POSITION;	
+	float4 projPos					: POSITION;
 	float2 baseTexCoord				: TEXCOORD0;
 	float2 ZeroTexCoord				: TEXCOORD1;
 	float2 bloomTexCoord            : TEXCOORD2;

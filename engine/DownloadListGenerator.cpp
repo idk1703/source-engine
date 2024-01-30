@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -30,15 +30,14 @@ CDownloadListGenerator &DownloadListGenerator()
 	return g_DownloadListGenerator;
 }
 
-ConVar	sv_logdownloadlist( "sv_logdownloadlist", IsX360() ? "0" : "1" );
+ConVar sv_logdownloadlist("sv_logdownloadlist", IsX360() ? "0" : "1");
 
 extern int GetSvPureMode();
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CDownloadListGenerator::CDownloadListGenerator()
-	: m_AlreadyWrittenFileNames( 0, 0, true )
+CDownloadListGenerator::CDownloadListGenerator() : m_AlreadyWrittenFileNames(0, 0, true)
 {
 	m_hReslistFile = FILESYSTEM_INVALID_HANDLE;
 	m_pStringTable = NULL;
@@ -47,9 +46,9 @@ CDownloadListGenerator::CDownloadListGenerator()
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CDownloadListGenerator::SetStringTable( INetworkStringTable *pStringTable )
+void CDownloadListGenerator::SetStringTable(INetworkStringTable *pStringTable)
 {
-	if ( IsX360() )
+	if(IsX360())
 	{
 		// not supporting
 		return;
@@ -67,13 +66,13 @@ void CDownloadListGenerator::SetStringTable( INetworkStringTable *pStringTable )
 
 	bool useNodeGraph = true;
 	KeyValues *modinfo = new KeyValues("ModInfo");
-	if ( modinfo->LoadFromFile( g_pFileSystem, "gameinfo.txt" ) )
+	if(modinfo->LoadFromFile(g_pFileSystem, "gameinfo.txt"))
 	{
-		useNodeGraph = modinfo->GetInt( "nodegraph", 1 ) != 0;
+		useNodeGraph = modinfo->GetInt("nodegraph", 1) != 0;
 	}
 	modinfo->deleteThis();
 
-	if ( useNodeGraph )
+	if(useNodeGraph)
 	{
 		Q_snprintf(path, sizeof(path), "maps\\graphs\\%s.ain", m_mapName);
 		OnResourcePrecached(path);
@@ -83,16 +82,16 @@ void CDownloadListGenerator::SetStringTable( INetworkStringTable *pStringTable )
 	OnResourcePrecached(path);
 
 	char resfilename[MAX_OSPATH];
-	KeyValues *resfilekeys = new KeyValues( "resourefiles" );
+	KeyValues *resfilekeys = new KeyValues("resourefiles");
 
-	Q_snprintf( resfilename, sizeof( resfilename), "maps/%s.res", m_mapName );
+	Q_snprintf(resfilename, sizeof(resfilename), "maps/%s.res", m_mapName);
 
-	if ( resfilekeys->LoadFromFile( g_pFileSystem, resfilename, "GAME" ) )
+	if(resfilekeys->LoadFromFile(g_pFileSystem, resfilename, "GAME"))
 	{
 		KeyValues *entry = resfilekeys->GetFirstSubKey();
-		while ( entry )
+		while(entry)
 		{
-			OnResourcePrecached( entry->GetName() );
+			OnResourcePrecached(entry->GetName());
 			entry = entry->GetNextKey();
 		}
 	}
@@ -104,14 +103,14 @@ void CDownloadListGenerator::SetStringTable( INetworkStringTable *pStringTable )
 //-----------------------------------------------------------------------------
 void CDownloadListGenerator::OnLevelLoadStart(const char *levelName)
 {
-	if ( IsX360() )
+	if(IsX360())
 	{
 		// not supporting
 		return;
 	}
 
 	// close the previous level reslist, if any
-	if (m_hReslistFile != FILESYSTEM_INVALID_HANDLE)
+	if(m_hReslistFile != FILESYSTEM_INVALID_HANDLE)
 	{
 		g_pFileSystem->Close(m_hReslistFile);
 		m_hReslistFile = FILESYSTEM_INVALID_HANDLE;
@@ -120,21 +119,21 @@ void CDownloadListGenerator::OnLevelLoadStart(const char *levelName)
 	// reset the duplication list
 	m_AlreadyWrittenFileNames.RemoveAll();
 
-	if ( sv_logdownloadlist.GetBool() )
+	if(sv_logdownloadlist.GetBool())
 	{
 		// open the new level reslist
 		char path[MAX_OSPATH];
-		g_pFileSystem->CreateDirHierarchy( "DownloadLists", "MOD" );
+		g_pFileSystem->CreateDirHierarchy("DownloadLists", "MOD");
 		Q_snprintf(path, sizeof(path), "DownloadLists/%s.lst", levelName);
 		m_hReslistFile = g_pFileSystem->Open(path, "wt", "GAME");
 	}
 
 	// add a slash to the end of com_gamedir, so we can only deal with files for this mod
-	Q_snprintf( m_gameDir, sizeof(m_gameDir), "%s/", com_gamedir );
-	Q_FixSlashes( m_gameDir );
+	Q_snprintf(m_gameDir, sizeof(m_gameDir), "%s/", com_gamedir);
+	Q_FixSlashes(m_gameDir);
 
 	// save off the map name
-	Q_snprintf( m_mapName, sizeof( m_mapName ), "%s", levelName );
+	Q_snprintf(m_mapName, sizeof(m_mapName), "%s", levelName);
 }
 
 //-----------------------------------------------------------------------------
@@ -142,13 +141,13 @@ void CDownloadListGenerator::OnLevelLoadStart(const char *levelName)
 //-----------------------------------------------------------------------------
 void CDownloadListGenerator::OnLevelLoadEnd()
 {
-	if ( IsX360() )
+	if(IsX360())
 	{
 		// not supporting
 		return;
 	}
 
-	if ( m_hReslistFile != FILESYSTEM_INVALID_HANDLE )
+	if(m_hReslistFile != FILESYSTEM_INVALID_HANDLE)
 	{
 		g_pFileSystem->Close(m_hReslistFile);
 		m_hReslistFile = FILESYSTEM_INVALID_HANDLE;
@@ -161,18 +160,18 @@ void CDownloadListGenerator::OnLevelLoadEnd()
 //-----------------------------------------------------------------------------
 void CDownloadListGenerator::OnModelPrecached(const char *relativePathFileName)
 {
-	if ( IsX360() )
+	if(IsX360())
 	{
 		// not supporting
 		return;
 	}
 
-	if (Q_strstr(relativePathFileName, ".vmt"))
+	if(Q_strstr(relativePathFileName, ".vmt"))
 	{
 		// it's a materials file, make sure that it starts in the materials directory, and we get the .vtf
 		char file[_MAX_PATH];
 
-		if (!Q_strnicmp(relativePathFileName, "materials", strlen("materials")))
+		if(!Q_strnicmp(relativePathFileName, "materials", strlen("materials")))
 		{
 			Q_strncpy(file, relativePathFileName, sizeof(file));
 		}
@@ -186,7 +185,7 @@ void CDownloadListGenerator::OnModelPrecached(const char *relativePathFileName)
 
 		// get the matching vtf file
 		char *ext = Q_strstr(file, ".vmt");
-		if (ext)
+		if(ext)
 		{
 			Q_strncpy(ext, ".vtf", 5);
 			OnResourcePrecached(file);
@@ -203,21 +202,21 @@ void CDownloadListGenerator::OnModelPrecached(const char *relativePathFileName)
 //-----------------------------------------------------------------------------
 void CDownloadListGenerator::OnSoundPrecached(const char *relativePathFileName)
 {
-	if ( IsX360() )
+	if(IsX360())
 	{
 		// not supporting
 		return;
 	}
 
 	// skip any special characters
-	if (!V_isalnum(relativePathFileName[0]))
+	if(!V_isalnum(relativePathFileName[0]))
 	{
 		++relativePathFileName;
 	}
 
 	// prepend the sound/ directory if necessary
 	char file[_MAX_PATH];
-	if (!Q_strnicmp(relativePathFileName, "sound", strlen("sound")))
+	if(!Q_strnicmp(relativePathFileName, "sound", strlen("sound")))
 	{
 		Q_strncpy(file, relativePathFileName, sizeof(file));
 	}
@@ -235,66 +234,66 @@ void CDownloadListGenerator::OnSoundPrecached(const char *relativePathFileName)
 //-----------------------------------------------------------------------------
 void CDownloadListGenerator::OnResourcePrecached(const char *relativePathFileName)
 {
-	if ( IsX360() )
+	if(IsX360())
 	{
 		// not supporting
 		return;
 	}
 
 	// ignore empty string
-	if (relativePathFileName[0] == 0)
+	if(relativePathFileName[0] == 0)
 	{
 		return;
 	}
 
 	// ignore files that start with '*' since they signify special models
-	if (relativePathFileName[0] == '*')
+	if(relativePathFileName[0] == '*')
 	{
 		return;
 	}
 
 	char fullPath[_MAX_PATH];
-	if (g_pFileSystem->GetLocalPath(relativePathFileName, fullPath, sizeof(fullPath)))
+	if(g_pFileSystem->GetLocalPath(relativePathFileName, fullPath, sizeof(fullPath)))
 	{
-		OnResourcePrecachedFullPath( fullPath, relativePathFileName);
+		OnResourcePrecachedFullPath(fullPath, relativePathFileName);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: marks a precached file as needing a specific CRC on the client
 //-----------------------------------------------------------------------------
-void CDownloadListGenerator::ForceSimpleMaterial( const char *relativePathFileName )
+void CDownloadListGenerator::ForceSimpleMaterial(const char *relativePathFileName)
 {
-	if ( IsX360() )
+	if(IsX360())
 	{
 		// not supporting
 		return;
 	}
 
-	if ( !m_pStringTable )
+	if(!m_pStringTable)
 		return;
 
-	if ( !Q_stristr(relativePathFileName, ".vmt") && !Q_stristr(relativePathFileName, ".vtf"))
+	if(!Q_stristr(relativePathFileName, ".vmt") && !Q_stristr(relativePathFileName, ".vtf"))
 	{
-		DevMsg( "Tried to enforce simple material on %s\n", relativePathFileName );
+		DevMsg("Tried to enforce simple material on %s\n", relativePathFileName);
 		return;
 	}
 
 	// it's a materials file, make sure that it starts in the materials directory, and we get the .vtf
 	char szFixedFilename[_MAX_PATH];
-	if (!Q_strnicmp(relativePathFileName, "materials", strlen("materials")))
+	if(!Q_strnicmp(relativePathFileName, "materials", strlen("materials")))
 	{
-		V_strcpy_safe( szFixedFilename, relativePathFileName );
+		V_strcpy_safe(szFixedFilename, relativePathFileName);
 	}
 	else
 	{
 		// prepend the materials directory
-		V_sprintf_safe( szFixedFilename, "materials\\%s", relativePathFileName );
+		V_sprintf_safe(szFixedFilename, "materials\\%s", relativePathFileName);
 	}
-	V_FixSlashes( szFixedFilename );
-	if ( !g_pFullFileSystem->FileExists( szFixedFilename, "game" ) )
+	V_FixSlashes(szFixedFilename);
+	if(!g_pFullFileSystem->FileExists(szFixedFilename, "game"))
 	{
-		DevMsg( "Cannot force simple material on %s; file not found\n", szFixedFilename );
+		DevMsg("Cannot force simple material on %s; file not found\n", szFixedFilename);
 		return;
 	}
 
@@ -303,56 +302,55 @@ void CDownloadListGenerator::ForceSimpleMaterial( const char *relativePathFileNa
 	userData.crc = 0;
 
 	// Only set consistency data if pure, otherwise just create entry in download list
-	if ( GetSvPureMode() < 0 )
+	if(GetSvPureMode() < 0)
 	{
-		m_pStringTable->AddString( true, szFixedFilename );
+		m_pStringTable->AddString(true, szFixedFilename);
 	}
 	else
 	{
-		int index = m_pStringTable->FindStringIndex( szFixedFilename );
-		if ( index != INVALID_STRING_INDEX )
+		int index = m_pStringTable->FindStringIndex(szFixedFilename);
+		if(index != INVALID_STRING_INDEX)
 		{
-			m_pStringTable->SetStringUserData( index, sizeof( ExactFileUserData ), &userData );
+			m_pStringTable->SetStringUserData(index, sizeof(ExactFileUserData), &userData);
 		}
 		else
 		{
-			m_pStringTable->AddString( true, szFixedFilename, sizeof( ExactFileUserData ), &userData );
+			m_pStringTable->AddString(true, szFixedFilename, sizeof(ExactFileUserData), &userData);
 		}
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: marks a precached model as having a maximum size on the client
 //-----------------------------------------------------------------------------
-void CDownloadListGenerator::ForceModelBounds( const char *relativePathFileName, const Vector &mins, const Vector &maxs )
+void CDownloadListGenerator::ForceModelBounds(const char *relativePathFileName, const Vector &mins, const Vector &maxs)
 {
-	if ( IsX360() )
+	if(IsX360())
 	{
 		// not supporting
 		return;
 	}
 
-	if ( !m_pStringTable )
+	if(!m_pStringTable)
 		return;
 
-	if ( !relativePathFileName )
+	if(!relativePathFileName)
 		relativePathFileName = "";
 
-	if (!Q_stristr(relativePathFileName, ".mdl"))
+	if(!Q_stristr(relativePathFileName, ".mdl"))
 	{
-		DevMsg( "Warning - trying to enforce model bounds on %s\n", relativePathFileName );
+		DevMsg("Warning - trying to enforce model bounds on %s\n", relativePathFileName);
 		return;
 	}
 
 	char relativeFileName[_MAX_PATH];
-	Q_strncpy( relativeFileName, relativePathFileName, sizeof( relativeFileName ) );
-	Q_FixSlashes( relativeFileName );
+	Q_strncpy(relativeFileName, relativePathFileName, sizeof(relativeFileName));
+	Q_FixSlashes(relativeFileName);
 
 	// Only set consistency data if pure, otherwise just create entry in download list
-	if ( GetSvPureMode() < 0 )
+	if(GetSvPureMode() < 0)
 	{
-		m_pStringTable->AddString( true, relativePathFileName );
+		m_pStringTable->AddString(true, relativePathFileName);
 	}
 	else
 	{
@@ -361,14 +359,14 @@ void CDownloadListGenerator::ForceModelBounds( const char *relativePathFileName,
 		userData.mins = mins;
 		userData.maxs = maxs;
 
-		int index = m_pStringTable->FindStringIndex( relativeFileName );
-		if ( index != INVALID_STRING_INDEX )
+		int index = m_pStringTable->FindStringIndex(relativeFileName);
+		if(index != INVALID_STRING_INDEX)
 		{
-			m_pStringTable->SetStringUserData( index, sizeof( ModelBoundsUserData ), &userData );
+			m_pStringTable->SetStringUserData(index, sizeof(ModelBoundsUserData), &userData);
 		}
 		else
 		{
-			m_pStringTable->AddString( true, relativeFileName, sizeof( ModelBoundsUserData ), &userData );
+			m_pStringTable->AddString(true, relativeFileName, sizeof(ModelBoundsUserData), &userData);
 		}
 	}
 }
@@ -376,38 +374,38 @@ void CDownloadListGenerator::ForceModelBounds( const char *relativePathFileName,
 //-----------------------------------------------------------------------------
 // Purpose: Logs out file access to a file
 //-----------------------------------------------------------------------------
-void CDownloadListGenerator::OnResourcePrecachedFullPath( char *fullPathFileName, const char *relativeFileName )
+void CDownloadListGenerator::OnResourcePrecachedFullPath(char *fullPathFileName, const char *relativeFileName)
 {
-	if ( IsX360() )
+	if(IsX360())
 	{
 		// not supporting
 		return;
 	}
 
-	Q_FixSlashes( fullPathFileName );
+	Q_FixSlashes(fullPathFileName);
 
-	if ( !g_pFileSystem->FileExists( fullPathFileName ) )
+	if(!g_pFileSystem->FileExists(fullPathFileName))
 	{
-		return;	// don't allow files for download the server doesn't have
+		return; // don't allow files for download the server doesn't have
 	}
 
-	if ( Q_strncasecmp( m_gameDir, fullPathFileName, Q_strlen( m_gameDir ) ) )
+	if(Q_strncasecmp(m_gameDir, fullPathFileName, Q_strlen(m_gameDir)))
 	{
-		return;	// the game dir must be part of the full name
+		return; // the game dir must be part of the full name
 	}
 
 	// make sure the filename hasn't already been written
-	UtlSymId_t filename = m_AlreadyWrittenFileNames.Find( fullPathFileName );
-	if ( filename != UTL_INVAL_SYMBOL )
+	UtlSymId_t filename = m_AlreadyWrittenFileNames.Find(fullPathFileName);
+	if(filename != UTL_INVAL_SYMBOL)
 	{
 		return;
 	}
 
 	// record in list, so we don't write it again
-	m_AlreadyWrittenFileNames.AddString( fullPathFileName );
+	m_AlreadyWrittenFileNames.AddString(fullPathFileName);
 
 	// add extras for mdl's
-	if (Q_strstr(relativeFileName, ".mdl"))
+	if(Q_strstr(relativeFileName, ".mdl"))
 	{
 		// it's a model, get it's other files as well
 		char file[_MAX_PATH];
@@ -437,17 +435,14 @@ void CDownloadListGenerator::OnResourcePrecachedFullPath( char *fullPathFileName
 	}
 
 	FileHandle_t handle = m_hReslistFile;
-	if ( handle != FILESYSTEM_INVALID_HANDLE )
+	if(handle != FILESYSTEM_INVALID_HANDLE)
 	{
 		g_pFileSystem->Write("\"", 1, handle);
-		g_pFileSystem->Write( relativeFileName, Q_strlen(relativeFileName), handle );
+		g_pFileSystem->Write(relativeFileName, Q_strlen(relativeFileName), handle);
 		g_pFileSystem->Write("\"\n", 2, handle);
 	}
-	if ( m_pStringTable )
+	if(m_pStringTable)
 	{
-		m_pStringTable->AddString( true, relativeFileName );
+		m_pStringTable->AddString(true, relativeFileName);
 	}
 }
-
-
-	

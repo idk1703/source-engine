@@ -24,12 +24,12 @@ CHudBaseTimer::CHudBaseTimer(vgui::Panel *parent, const char *name) : BaseClass(
 }
 
 void CHudBaseTimer::SetMinutes(int minutes)
-{	
+{
 	m_iMinutes = minutes;
 }
 
 void CHudBaseTimer::SetSeconds(int seconds)
-{	
+{
 	m_iSeconds = seconds;
 }
 
@@ -38,9 +38,9 @@ void CHudBaseTimer::PaintTime(HFont font, int xpos, int ypos, int mins, int secs
 	surface()->DrawSetTextFont(font);
 	wchar_t unicode[6];
 	V_snwprintf(unicode, ARRAYSIZE(unicode), L"%d:%.2d", mins, secs);
-	
+
 	surface()->DrawSetTextPos(xpos, ypos);
-	surface()->DrawUnicodeString( unicode );
+	surface()->DrawUnicodeString(unicode);
 }
 
 void CHudBaseTimer::Paint()
@@ -48,15 +48,15 @@ void CHudBaseTimer::Paint()
 	float alpha = m_flAlphaOverride / 255;
 	Color fgColor = GetFgColor();
 	fgColor[3] *= alpha;
-	SetFgColor( fgColor );
-	
+	SetFgColor(fgColor);
+
 	surface()->DrawSetTextColor(GetFgColor());
-	PaintTime( m_hNumberFont, digit_xpos, digit_ypos, m_iMinutes, m_iSeconds );
+	PaintTime(m_hNumberFont, digit_xpos, digit_ypos, m_iMinutes, m_iSeconds);
 
 	// draw the overbright blur
-	for (float fl = m_flBlur; fl > 0.0f; fl -= 1.0f)
+	for(float fl = m_flBlur; fl > 0.0f; fl -= 1.0f)
 	{
-		if (fl >= 1.0f)
+		if(fl >= 1.0f)
 		{
 			PaintTime(m_hNumberGlowFont, digit_xpos, digit_ypos, m_iMinutes, m_iSeconds);
 		}

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -14,67 +14,58 @@
 class CFunc_LOD : public CBaseEntity
 {
 	DECLARE_DATADESC();
-	DECLARE_CLASS( CFunc_LOD, CBaseEntity );
+	DECLARE_CLASS(CFunc_LOD, CBaseEntity);
+
 public:
 	DECLARE_SERVERCLASS();
 
-					CFunc_LOD();
-	virtual 		~CFunc_LOD();
-
+	CFunc_LOD();
+	virtual ~CFunc_LOD();
 
 	// When the viewer is between:
 	// (0 and m_fNonintrusiveDist):					the bmodel is forced to be visible
 	// (m_fNonintrusiveDist and m_fDisappearDist):	the bmodel is trying to appear or disappear nonintrusively
-	//												(waits until it's out of the view frustrum or until there's a lot of motion)
+	//												(waits until it's out of the view frustrum or until there's a lot of
+	//motion)
 	// (m_fDisappearDist+):							the bmodel is forced to be invisible
-	CNetworkVar( float, m_fDisappearDist );
+	CNetworkVar(float, m_fDisappearDist);
 
-// CBaseEntity overrides.
+	// CBaseEntity overrides.
 public:
-
-	virtual void	Spawn();
-	bool			CreateVPhysics();
-	virtual void	Activate();
-	virtual bool	KeyValue( const char *szKeyName, const char *szValue );
+	virtual void Spawn();
+	bool CreateVPhysics();
+	virtual void Activate();
+	virtual bool KeyValue(const char *szKeyName, const char *szValue);
 };
 
-
 IMPLEMENT_SERVERCLASS_ST(CFunc_LOD, DT_Func_LOD)
-	SendPropFloat(SENDINFO(m_fDisappearDist), 0, SPROP_NOSCALE),
-END_SEND_TABLE()
+SendPropFloat(SENDINFO(m_fDisappearDist), 0, SPROP_NOSCALE),
+END_SEND_TABLE
+()
 
-
-LINK_ENTITY_TO_CLASS(func_lod, CFunc_LOD);
-
+	LINK_ENTITY_TO_CLASS(func_lod, CFunc_LOD);
 
 //---------------------------------------------------------
 // Save/Restore
 //---------------------------------------------------------
-BEGIN_DATADESC( CFunc_LOD )
+BEGIN_DATADESC(CFunc_LOD)
 
-	DEFINE_FIELD( m_fDisappearDist,	FIELD_FLOAT ),
+	DEFINE_FIELD(m_fDisappearDist, FIELD_FLOAT),
 
 END_DATADESC()
-
 
 // ------------------------------------------------------------------------------------- //
 // CFunc_LOD implementation.
 // ------------------------------------------------------------------------------------- //
-CFunc_LOD::CFunc_LOD()
-{
-}
+CFunc_LOD::CFunc_LOD() {}
 
-
-CFunc_LOD::~CFunc_LOD()
-{
-}
-
+CFunc_LOD::~CFunc_LOD() {}
 
 void CFunc_LOD::Spawn()
 {
 	// Bind to our bmodel.
-	SetModel( STRING( GetModelName() ) );
-	SetSolid( SOLID_BSP );
+	SetModel(STRING(GetModelName()));
+	SetSolid(SOLID_BSP);
 	BaseClass::Spawn();
 
 	CreateVPhysics();
@@ -91,18 +82,17 @@ void CFunc_LOD::Activate()
 	BaseClass::Activate();
 }
 
-
-bool CFunc_LOD::KeyValue( const char *szKeyName, const char *szValue )
+bool CFunc_LOD::KeyValue(const char *szKeyName, const char *szValue)
 {
-	if (FStrEq(szKeyName, "DisappearDist"))
+	if(FStrEq(szKeyName, "DisappearDist"))
 	{
 		m_fDisappearDist = (float)atof(szValue);
 	}
-	else if (FStrEq(szKeyName, "Solid"))
+	else if(FStrEq(szKeyName, "Solid"))
 	{
-		if (atoi(szValue) != 0)
+		if(atoi(szValue) != 0)
 		{
-			AddSolidFlags( FSOLID_NOT_SOLID );
+			AddSolidFlags(FSOLID_NOT_SOLID);
 		}
 	}
 	else
@@ -112,4 +102,3 @@ bool CFunc_LOD::KeyValue( const char *szKeyName, const char *szValue )
 
 	return true;
 }
-			  

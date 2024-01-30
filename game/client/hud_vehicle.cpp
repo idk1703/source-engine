@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,33 +20,32 @@
 
 using namespace vgui;
 
-DECLARE_HUDELEMENT( CHudVehicle );
+DECLARE_HUDELEMENT(CHudVehicle);
 
-CHudVehicle::CHudVehicle( const char *pElementName ) :
-  CHudElement( pElementName ), BaseClass( NULL, "HudVehicle" )
+CHudVehicle::CHudVehicle(const char *pElementName) : CHudElement(pElementName), BaseClass(NULL, "HudVehicle")
 {
 	vgui::Panel *pParent = g_pClientMode->GetViewport();
-	SetParent( pParent );
+	SetParent(pParent);
 
-	SetHiddenBits( HIDEHUD_PLAYERDEAD | HIDEHUD_VEHICLE_CROSSHAIR );
+	SetHiddenBits(HIDEHUD_PLAYERDEAD | HIDEHUD_VEHICLE_CROSSHAIR);
 }
 
-void CHudVehicle::ApplySchemeSettings( IScheme *scheme )
+void CHudVehicle::ApplySchemeSettings(IScheme *scheme)
 {
-	BaseClass::ApplySchemeSettings( scheme );
+	BaseClass::ApplySchemeSettings(scheme);
 
-	SetPaintBackgroundEnabled( false );
-	SetForceStereoRenderToFrameBuffer( true );
+	SetPaintBackgroundEnabled(false);
+	SetForceStereoRenderToFrameBuffer(true);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : IClientVehicle
 //-----------------------------------------------------------------------------
 IClientVehicle *CHudVehicle::GetLocalPlayerVehicle()
 {
 	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
-	if ( !pPlayer ||  !pPlayer->IsInAVehicle() )
+	if(!pPlayer || !pPlayer->IsInAVehicle())
 	{
 		return NULL;
 	}
@@ -55,36 +54,35 @@ IClientVehicle *CHudVehicle::GetLocalPlayerVehicle()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CHudVehicle::ShouldDraw()
 {
 	// Don't draw if we're getting into/out of the vehicle
 	IClientVehicle *pVehicle = GetLocalPlayerVehicle();
-	if ( pVehicle )
+	if(pVehicle)
 	{
-		C_PropVehicleDriveable *pDrivable = dynamic_cast<C_PropVehicleDriveable*>(pVehicle);
-		
-		if ( ( pDrivable ) && ( pDrivable->IsRunningEnterExitAnim() ) )
+		C_PropVehicleDriveable *pDrivable = dynamic_cast<C_PropVehicleDriveable *>(pVehicle);
+
+		if((pDrivable) && (pDrivable->IsRunningEnterExitAnim()))
 			return false;
 
 		return CHudElement::ShouldDraw();
 	}
 
 	return false;
-}	
+}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CHudVehicle::Paint( void )
+void CHudVehicle::Paint(void)
 {
 	IClientVehicle *v = GetLocalPlayerVehicle();
-	if ( !v )
+	if(!v)
 		return;
 
 	// Vehicle-based hud...
 	v->DrawHudElements();
 }
-

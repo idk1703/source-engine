@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,10 +13,8 @@
 
 #include "platform.h"
 
-#define CHECK_PROCESS_UNSUPPORTED		-1
+#define CHECK_PROCESS_UNSUPPORTED -1
 
-
-int CheckOtherInstancesRunning( void );
-
+int CheckOtherInstancesRunning(void);
 
 #endif // CL_CHECK_PROCESS_H

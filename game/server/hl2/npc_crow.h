@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,17 +10,17 @@
 #pragma once
 #endif
 
-#define BIRDTYPE_CROW 1
-#define BIRDTYPE_PIGEON 2
+#define BIRDTYPE_CROW	 1
+#define BIRDTYPE_PIGEON	 2
 #define BIRDTYPE_SEAGULL 3
 
 //
 // Spawnflags.
 //
-#define SF_CROW_FLYING		16
+#define SF_CROW_FLYING 16
 
-#define CROW_TAKEOFF_SPEED		170
-#define CROW_AIRSPEED			220 // FIXME: should be about 440, but I need to add acceleration
+#define CROW_TAKEOFF_SPEED 170
+#define CROW_AIRSPEED	   220 // FIXME: should be about 440, but I need to add acceleration
 
 //
 // Custom schedules.
@@ -45,16 +45,15 @@ enum
 	SCHED_CROW_BARNACLED,
 };
 
-
 //
 // Custom tasks.
 //
-enum 
+enum
 {
 	TASK_CROW_FIND_FLYTO_NODE = LAST_SHARED_TASK,
-	//TASK_CROW_PREPARE_TO_FLY,
+	// TASK_CROW_PREPARE_TO_FLY,
 	TASK_CROW_TAKEOFF,
-	//TASK_CROW_LAND,
+	// TASK_CROW_LAND,
 	TASK_CROW_FLY,
 	TASK_CROW_FLY_TO_HINT,
 	TASK_CROW_PICK_RANDOM_GOAL,
@@ -66,7 +65,6 @@ enum
 
 	TASK_CROW_WAIT_FOR_BARNACLE_KILL,
 };
-
 
 //
 // Custom conditions.
@@ -87,115 +85,121 @@ enum FlyState_t
 	FlyState_Landing,
 };
 
-
 //-----------------------------------------------------------------------------
 // The crow class.
 //-----------------------------------------------------------------------------
 class CNPC_Crow : public CAI_BaseNPC
 {
-	DECLARE_CLASS( CNPC_Crow, CAI_BaseNPC );
+	DECLARE_CLASS(CNPC_Crow, CAI_BaseNPC);
 
 public:
-
 	//
 	// CBaseEntity:
 	//
-	virtual void Spawn( void );
-	virtual void Precache( void );
+	virtual void Spawn(void);
+	virtual void Precache(void);
 
-	virtual Vector BodyTarget( const Vector &posSrc, bool bNoisy = true );
+	virtual Vector BodyTarget(const Vector &posSrc, bool bNoisy = true);
 
-	virtual int DrawDebugTextOverlays( void );
+	virtual int DrawDebugTextOverlays(void);
 
 	//
 	// CBaseCombatCharacter:
 	//
-	virtual int OnTakeDamage_Alive( const CTakeDamageInfo &info );
-	virtual bool CorpseGib( const CTakeDamageInfo &info );
-	bool	BecomeRagdollOnClient( const Vector &force );
+	virtual int OnTakeDamage_Alive(const CTakeDamageInfo &info);
+	virtual bool CorpseGib(const CTakeDamageInfo &info);
+	bool BecomeRagdollOnClient(const Vector &force);
 
 	//
 	// CAI_BaseNPC:
 	//
-	virtual float MaxYawSpeed( void ) { return 120.0f; }
-	
-	virtual Class_T Classify( void );
-	virtual void GatherEnemyConditions( CBaseEntity *pEnemy );
+	virtual float MaxYawSpeed(void)
+	{
+		return 120.0f;
+	}
 
-	virtual void HandleAnimEvent( animevent_t *pEvent );
-	virtual int GetSoundInterests( void );
-	virtual int SelectSchedule( void );
-	virtual void StartTask( const Task_t *pTask );
-	virtual void RunTask( const Task_t *pTask );
+	virtual Class_T Classify(void);
+	virtual void GatherEnemyConditions(CBaseEntity *pEnemy);
 
-	virtual bool HandleInteraction( int interactionType, void *data, CBaseCombatCharacter *sourceEnt );
+	virtual void HandleAnimEvent(animevent_t *pEvent);
+	virtual int GetSoundInterests(void);
+	virtual int SelectSchedule(void);
+	virtual void StartTask(const Task_t *pTask);
+	virtual void RunTask(const Task_t *pTask);
 
-	virtual void OnChangeActivity( Activity eNewActivity );
+	virtual bool HandleInteraction(int interactionType, void *data, CBaseCombatCharacter *sourceEnt);
 
-	virtual bool OverrideMove( float flInterval );
+	virtual void OnChangeActivity(Activity eNewActivity);
 
-	virtual bool FValidateHintType( CAI_Hint *pHint );
-	virtual Activity GetHintActivity( short sHintType, Activity HintsActivity );
+	virtual bool OverrideMove(float flInterval);
 
-	virtual void PainSound( const CTakeDamageInfo &info );
-	virtual void DeathSound( const CTakeDamageInfo &info );
-	virtual void IdleSound( void );
-	virtual void AlertSound( void );
-	virtual void StopLoopingSounds( void );
-	virtual void UpdateEfficiency( bool bInPVS );
+	virtual bool FValidateHintType(CAI_Hint *pHint);
+	virtual Activity GetHintActivity(short sHintType, Activity HintsActivity);
 
-	virtual bool QueryHearSound( CSound *pSound );
+	virtual void PainSound(const CTakeDamageInfo &info);
+	virtual void DeathSound(const CTakeDamageInfo &info);
+	virtual void IdleSound(void);
+	virtual void AlertSound(void);
+	virtual void StopLoopingSounds(void);
+	virtual void UpdateEfficiency(bool bInPVS);
 
-	void InputFlyAway( inputdata_t &inputdata );
-	
-	void TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr, CDmgAccumulator *pAccumulator );
-	void StartTargetHandling( CBaseEntity *pTargetEnt );
+	virtual bool QueryHearSound(CSound *pSound);
+
+	void InputFlyAway(inputdata_t &inputdata);
+
+	void TraceAttack(const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr, CDmgAccumulator *pAccumulator);
+	void StartTargetHandling(CBaseEntity *pTargetEnt);
 
 	DEFINE_CUSTOM_AI;
 	DECLARE_DATADESC();
 
-	int			m_iBirdType;
-	bool		m_bOnJeep;
+	int m_iBirdType;
+	bool m_bOnJeep;
 
 protected:
-	void SetFlyingState( FlyState_t eState );
-	inline bool IsFlying( void ) const { return GetNavType() == NAV_FLY; }
+	void SetFlyingState(FlyState_t eState);
+	inline bool IsFlying(void) const
+	{
+		return GetNavType() == NAV_FLY;
+	}
 
-	void Takeoff( const Vector &vGoal );
-	void FlapSound( void );
+	void Takeoff(const Vector &vGoal);
+	void FlapSound(void);
 
-	void MoveCrowFly( float flInterval );
-	bool Probe( const Vector &vecMoveDir, float flSpeed, Vector &vecDeflect );
+	void MoveCrowFly(float flInterval);
+	bool Probe(const Vector &vecMoveDir, float flSpeed, Vector &vecDeflect);
 
-	bool IsDeaf() { return m_bIsDeaf; }
+	bool IsDeaf()
+	{
+		return m_bIsDeaf;
+	}
 
 protected:
 	float m_flGroundIdleMoveTime;
 
-	float m_flEnemyDist;		// Distance to GetEnemy(), cached in GatherEnemyConditions.
-	int m_nMorale;				// Used to determine which avoidance schedule to pick. Degrades as I pick avoidance schedules.
-	
+	float m_flEnemyDist; // Distance to GetEnemy(), cached in GatherEnemyConditions.
+	int m_nMorale;		 // Used to determine which avoidance schedule to pick. Degrades as I pick avoidance schedules.
+
 	bool m_bReachedMoveGoal;
 
-	float m_flHopStartZ;		// Our Z coordinate when we started a hop. Used to check for accidentally hopping off things.
+	float m_flHopStartZ; // Our Z coordinate when we started a hop. Used to check for accidentally hopping off things.
 
-	bool		m_bPlayedLoopingSound;
+	bool m_bPlayedLoopingSound;
 
 private:
+	Activity NPC_TranslateActivity(Activity eNewActivity);
 
-	Activity NPC_TranslateActivity( Activity eNewActivity );
+	float m_flSoarTime;
+	bool m_bSoar;
+	Vector m_vLastStoredOrigin;
+	float m_flLastStuckCheck;
 
-	float				m_flSoarTime;
-	bool				m_bSoar;
-	Vector				m_vLastStoredOrigin;
-	float				m_flLastStuckCheck;
-	
-	float				m_flDangerSoundTime;
+	float m_flDangerSoundTime;
 
-	Vector				m_vDesiredTarget;
-	Vector				m_vCurrentTarget;
+	Vector m_vDesiredTarget;
+	Vector m_vCurrentTarget;
 
-	bool				m_bIsDeaf;
+	bool m_bIsDeaf;
 };
 
 //-----------------------------------------------------------------------------
@@ -203,31 +207,30 @@ private:
 //-----------------------------------------------------------------------------
 class CNPC_Seagull : public CNPC_Crow
 {
-	DECLARE_CLASS( CNPC_Seagull, CNPC_Crow );
+	DECLARE_CLASS(CNPC_Seagull, CNPC_Crow);
 
 public:
-	
-	void Spawn( void )
+	void Spawn(void)
 	{
-		SetModelName( AllocPooledString("models/seagull.mdl") );
+		SetModelName(AllocPooledString("models/seagull.mdl"));
 		BaseClass::Spawn();
 
 		m_iBirdType = BIRDTYPE_SEAGULL;
 	}
 
-	void PainSound( const CTakeDamageInfo &info )
+	void PainSound(const CTakeDamageInfo &info)
 	{
-		EmitSound( "NPC_Seagull.Pain" );
+		EmitSound("NPC_Seagull.Pain");
 	}
 
-	void DeathSound( const CTakeDamageInfo &info )
+	void DeathSound(const CTakeDamageInfo &info)
 	{
-		EmitSound( "NPC_Seagull.Pain" );
+		EmitSound("NPC_Seagull.Pain");
 	}
 
-	void IdleSound( void )
+	void IdleSound(void)
 	{
-		EmitSound( "NPC_Seagull.Idle" );
+		EmitSound("NPC_Seagull.Idle");
 	}
 };
 
@@ -236,20 +239,20 @@ public:
 //-----------------------------------------------------------------------------
 class CNPC_Pigeon : public CNPC_Crow
 {
-	DECLARE_CLASS( CNPC_Pigeon, CNPC_Crow );
+	DECLARE_CLASS(CNPC_Pigeon, CNPC_Crow);
 
 public:
-	void Spawn( void )
+	void Spawn(void)
 	{
-		SetModelName( AllocPooledString("models/pigeon.mdl") );
+		SetModelName(AllocPooledString("models/pigeon.mdl"));
 		BaseClass::Spawn();
 
 		m_iBirdType = BIRDTYPE_PIGEON;
 	}
 
-	void IdleSound( void )
+	void IdleSound(void)
 	{
-		EmitSound( "NPC_Pigeon.Idle" );
+		EmitSound("NPC_Pigeon.Idle");
 	}
 };
 

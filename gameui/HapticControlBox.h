@@ -7,17 +7,21 @@
 #include "cvarslider.h"
 class ControlBoxVisual : public vgui::Panel
 {
-	DECLARE_CLASS_SIMPLE(ControlBoxVisual,vgui::Panel);
+	DECLARE_CLASS_SIMPLE(ControlBoxVisual, vgui::Panel);
+
 public:
-	ControlBoxVisual(vgui::Panel *parent, const char *panelName, CCvarSlider *near, CCvarSlider *right, CCvarSlider *up, CCvarSlider *far, CCvarSlider *left, CCvarSlider *down);
+	ControlBoxVisual(vgui::Panel *parent, const char *panelName, CCvarSlider *near, CCvarSlider *right, CCvarSlider *up,
+					 CCvarSlider *far, CCvarSlider *left, CCvarSlider *down);
 	virtual void Paint();
 	MESSAGE_FUNC_PARAMS(OnSlideEnter, "CursorEnteredSlider", data);
 	MESSAGE_FUNC_PARAMS(OnSlideExit, "CursorExitedSlider", data);
+
 protected:
-	void DrawCube(float Near=-1, float Right=-1, float Up=-1, float Far=1, float Left=1, float Down=1, int specialside=-1);
+	void DrawCube(float Near = -1, float Right = -1, float Up = -1, float Far = 1, float Left = 1, float Down = 1,
+				  int specialside = -1);
 	enum eBoxID
 	{
-		HUI_BOX_UP =0,
+		HUI_BOX_UP = 0,
 		HUI_BOX_RIGHT,
 		HUI_BOX_NEAR,
 		HUI_BOX_DOWN,
@@ -28,7 +32,7 @@ protected:
 
 	struct CCvarSliderCube
 	{
-		CCvarSliderCube(CCvarSlider *n,CCvarSlider *r,CCvarSlider *u,CCvarSlider *f,CCvarSlider *l,CCvarSlider *d)
+		CCvarSliderCube(CCvarSlider *n, CCvarSlider *r, CCvarSlider *u, CCvarSlider *f, CCvarSlider *l, CCvarSlider *d)
 		{
 			Near = n;
 			Right = r;
@@ -45,7 +49,7 @@ protected:
 		CCvarSlider *Down;
 	};
 
-	CCvarSliderCube *SlideValues;// up right near down left far and spingk
+	CCvarSliderCube *SlideValues; // up right near down left far and spingk
 	int m_iMouseOver;
 	float m_flTime;
 };

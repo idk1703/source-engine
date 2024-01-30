@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,30 +16,31 @@
 
 class C_PlayerClassSapper : public C_PlayerClass
 {
-	
-	DECLARE_CLASS( C_PlayerClassSapper, C_PlayerClass );
+
+	DECLARE_CLASS(C_PlayerClassSapper, C_PlayerClass);
 
 public:
-
-	C_PlayerClassSapper( C_BaseTFPlayer *pPlayer );
+	C_PlayerClassSapper(C_BaseTFPlayer *pPlayer);
 	virtual ~C_PlayerClassSapper();
 
 	DECLARE_PREDICTABLE();
 
-	PlayerClassSapperData_t* GetClassData( void ) { return &m_ClassData; } 
+	PlayerClassSapperData_t *GetClassData(void)
+	{
+		return &m_ClassData;
+	}
 
 	// Energy handling
-	float	GetDrainedEnergy( void );
-	void	DeductDrainedEnergy( float flEnergy );
+	float GetDrainedEnergy(void);
+	void DeductDrainedEnergy(float flEnergy);
 
 protected:
-
-	PlayerClassSapperData_t	m_ClassData;
+	PlayerClassSapperData_t m_ClassData;
 
 public:
-	float	m_flDrainedEnergy;
+	float m_flDrainedEnergy;
 };
 
-EXTERN_RECV_TABLE( DT_PlayerClassSapperData )
+EXTERN_RECV_TABLE(DT_PlayerClassSapperData)
 
 #endif // C_TF_CLASS_TECHNICIAN_H

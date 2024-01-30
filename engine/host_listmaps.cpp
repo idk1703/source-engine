@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -20,11 +20,11 @@
 #include "tier0/memdbgon.h"
 
 // Imported from other .cpp files
-void Host_Map_f( const CCommand &args );
-void Host_Map_Background_f( const CCommand &args );
-void Host_Map_Commentary_f( const CCommand &args );
-void Host_Changelevel_f( const CCommand &args );
-void Host_Changelevel2_f( const CCommand &args );
+void Host_Map_f(const CCommand &args);
+void Host_Map_Background_f(const CCommand &args);
+void Host_Map_Commentary_f(const CCommand &args);
+void Host_Changelevel_f(const CCommand &args);
+void Host_Changelevel2_f(const CCommand &args);
 
 //-----------------------------------------------------------------------------
 // Purpose: For each map, stores when the map last changed on disk and whether
@@ -40,108 +40,108 @@ public:
 		VALID,
 	};
 
-					CMapListItem( void );
-	
-	void			SetValid( int valid );
-	int				GetValid( void ) const;
+	CMapListItem(void);
 
-	void			SetFileTimestamp( long ts );
-	long			GetFileTimestamp( void ) const;
+	void SetValid(int valid);
+	int GetValid(void) const;
 
-	bool			IsSameTime( long ts ) const;
+	void SetFileTimestamp(long ts);
+	long GetFileTimestamp(void) const;
 
-	static long		GetFSTimeStamp( char const *name );
-	static int		CheckFSHeaderVersion( char const *name );
+	bool IsSameTime(long ts) const;
+
+	static long GetFSTimeStamp(char const *name);
+	static int CheckFSHeaderVersion(char const *name);
 
 private:
-	int				m_nValid;
-	long			m_lFileTimestamp;
+	int m_nValid;
+	long m_lFileTimestamp;
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CMapListItem::CMapListItem( void )
+CMapListItem::CMapListItem(void)
 {
 	m_nValid = PENDING;
 	m_lFileTimestamp = 0L;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : valid - 
+// Purpose:
+// Input  : valid -
 //-----------------------------------------------------------------------------
-void CMapListItem::SetValid( int valid )
+void CMapListItem::SetValid(int valid)
 {
 	m_nValid = valid;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-int CMapListItem::GetValid( void ) const
+int CMapListItem::GetValid(void) const
 {
 	return m_nValid;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : ts - 
+// Purpose:
+// Input  : ts -
 //-----------------------------------------------------------------------------
-void CMapListItem::SetFileTimestamp( long ts )
+void CMapListItem::SetFileTimestamp(long ts)
 {
 	m_lFileTimestamp = ts;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : long
 //-----------------------------------------------------------------------------
-long CMapListItem::GetFileTimestamp( void ) const
+long CMapListItem::GetFileTimestamp(void) const
 {
 	return m_lFileTimestamp;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Check whether this map file has changed related to the passed in timestamp
-// Input  : ts - 
+// Input  : ts -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CMapListItem::IsSameTime( long ts ) const
+bool CMapListItem::IsSameTime(long ts) const
 {
-	return ( m_lFileTimestamp == ts ) ? true : false;
+	return (m_lFileTimestamp == ts) ? true : false;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Get the timestamp for the file from the file system
-// Input  : *name - 
+// Input  : *name -
 // Output : long
 //-----------------------------------------------------------------------------
-long CMapListItem::GetFSTimeStamp( char const *name )
+long CMapListItem::GetFSTimeStamp(char const *name)
 {
-	long ts = g_pFileSystem->GetFileTime( name );
+	long ts = g_pFileSystem->GetFileTime(name);
 	return ts;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Check whether the specified map header version is up-to-date
-// Input  : *name - 
+// Input  : *name -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-int CMapListItem::CheckFSHeaderVersion( char const *name )
+int CMapListItem::CheckFSHeaderVersion(char const *name)
 {
 	dheader_t header;
-	memset( &header, 0, sizeof( header ) );
+	memset(&header, 0, sizeof(header));
 
-	FileHandle_t fp = g_pFileSystem->Open ( name, "rb" );
-	if ( fp )
+	FileHandle_t fp = g_pFileSystem->Open(name, "rb");
+	if(fp)
 	{
-		g_pFileSystem->Read( &header, sizeof( header ), fp );
-		g_pFileSystem->Close( fp );
+		g_pFileSystem->Read(&header, sizeof(header), fp);
+		g_pFileSystem->Close(fp);
 	}
 
-	return ( header.version >= MINBSPVERSION && header.version <= BSPVERSION ) ? VALID : INVALID;
+	return (header.version >= MINBSPVERSION && header.version <= BSPVERSION) ? VALID : INVALID;
 }
 
 // How often to check the filesystem for updated map info
@@ -153,91 +153,91 @@ int CMapListItem::CheckFSHeaderVersion( char const *name )
 class CMapListManager
 {
 public:
-	CMapListManager( void );
-	~CMapListManager( void );
+	CMapListManager(void);
+	~CMapListManager(void);
 
 	// See if it's time to revisit the items in the list
-	void			RefreshList( void );
+	void RefreshList(void);
 
 	// Get item count, etc
-	int				GetMapCount( void ) const;
-	int				IsMapValid( int index ) const;
-	char const 		*GetMapName( int index ) const;
+	int GetMapCount(void) const;
+	int IsMapValid(int index) const;
+	char const *GetMapName(int index) const;
 
-	void			Think( void );
+	void Think(void);
 
 private:
 	// Clear list
-	void			ClearList( void );
+	void ClearList(void);
 	// Rebuild list from scratch
-	void			BuildList( void );
+	void BuildList(void);
 
 private:
 	// Dictionary of items
-	CUtlDict< CMapListItem, int > m_Items;
+	CUtlDict<CMapListItem, int> m_Items;
 
 	// Time of last update
-	float			m_flLastRefreshTime;
+	float m_flLastRefreshTime;
 
-	bool			m_bDirty;
+	bool m_bDirty;
 };
 
 // Singleton manager object
 static CMapListManager g_MapListMgr;
 
-void Host_UpdateMapList( void )
+void Host_UpdateMapList(void)
 {
 	g_MapListMgr.Think();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CMapListManager::CMapListManager( void )
+CMapListManager::CMapListManager(void)
 {
 	m_flLastRefreshTime = -1.0f;
 	m_bDirty = false;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CMapListManager::~CMapListManager( void )
+CMapListManager::~CMapListManager(void)
 {
 	ClearList();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CMapListManager::Think( void )
+void CMapListManager::Think(void)
 {
 	return;
 
-	if ( !m_bDirty )
+	if(!m_bDirty)
 		return;
 
 #ifndef SWDS
 	// Only update pending files if console is visible to avoid slamming FS while in a map
-	if ( !EngineVGui()->IsConsoleVisible() )
+	if(!EngineVGui()->IsConsoleVisible())
 		return;
 #endif
 
 	int i;
 
 	m_bDirty = false;
-		
-	for ( i = m_Items.Count() - 1; i >= 0 ; i-- )
+
+	for(i = m_Items.Count() - 1; i >= 0; i--)
 	{
-		CMapListItem *item = &m_Items[ i ];
-		if ( item->GetValid() != CMapListItem::PENDING )
+		CMapListItem *item = &m_Items[i];
+		if(item->GetValid() != CMapListItem::PENDING)
 		{
 			continue;
 		}
 
-		char const *filename = m_Items.GetElementName( i );
+		char const *filename = m_Items.GetElementName(i);
 
-		item->SetValid( CMapListItem::CheckFSHeaderVersion( filename ) );
+		item->SetValid(CMapListItem::CheckFSHeaderVersion(filename));
 
 		// Keep fixing things up next frame
 		m_bDirty = true;
@@ -248,78 +248,78 @@ void CMapListManager::Think( void )
 //-----------------------------------------------------------------------------
 // Purpose: FIXME:  Refresh doesn't notice maps that have been deleted... oh well
 //-----------------------------------------------------------------------------
-void CMapListManager::RefreshList( void )
+void CMapListManager::RefreshList(void)
 {
-	if ( m_flLastRefreshTime == -1.0f )
+	if(m_flLastRefreshTime == -1.0f)
 	{
 		BuildList();
 		return;
 	}
 
-	if ( realtime < m_flLastRefreshTime + MIN_REFRESH_INTERVAL )
+	if(realtime < m_flLastRefreshTime + MIN_REFRESH_INTERVAL)
 		return;
 
-	ConDMsg( "Refreshing map list...\n" );
+	ConDMsg("Refreshing map list...\n");
 
 	// Search the directory structure.
 	char mapwild[MAX_QPATH];
-	Q_strncpy(mapwild,"maps/*.bsp", sizeof( mapwild ) );
-	char const *findfn = Sys_FindFirst( mapwild, NULL, 0 );
-	while ( findfn )
+	Q_strncpy(mapwild, "maps/*.bsp", sizeof(mapwild));
+	char const *findfn = Sys_FindFirst(mapwild, NULL, 0);
+	while(findfn)
 	{
-		if ( IsPC() && V_stristr( findfn, ".360.bsp" ) )
+		if(IsPC() && V_stristr(findfn, ".360.bsp"))
 		{
 			// ignore 360 bsp
-			findfn = Sys_FindNext( NULL, 0 );
+			findfn = Sys_FindNext(NULL, 0);
 			continue;
 		}
-		else if ( IsX360() && !V_stristr( findfn, ".360.bsp" ) )
+		else if(IsX360() && !V_stristr(findfn, ".360.bsp"))
 		{
 			// ignore pc bsp
-			findfn = Sys_FindNext( NULL, 0 );
+			findfn = Sys_FindNext(NULL, 0);
 			continue;
 		}
 
 		// Make full fileame (maps/foo.bsp) and map name (foo)
-		char szFileName[ MAX_QPATH ] = { 0 };
-		V_snprintf( szFileName, sizeof( szFileName ), "maps/%s", findfn );
+		char szFileName[MAX_QPATH] = {0};
+		V_snprintf(szFileName, sizeof(szFileName), "maps/%s", findfn);
 
-		char szMapName[256] = { 0 };
-		V_strncpy( szMapName, findfn, sizeof( szMapName ) );
-		char *pExt = V_stristr( szMapName, ".bsp" );
-		if ( pExt )
+		char szMapName[256] = {0};
+		V_strncpy(szMapName, findfn, sizeof(szMapName));
+		char *pExt = V_stristr(szMapName, ".bsp");
+		if(pExt)
 		{
 			*pExt = '\0';
 		}
 
-		int idx = m_Items.Find( szMapName );
-		if ( idx == m_Items.InvalidIndex() )
+		int idx = m_Items.Find(szMapName);
+		if(idx == m_Items.InvalidIndex())
 		{
 			CMapListItem item;
-			item.SetFileTimestamp( item.GetFSTimeStamp( szFileName ) );
-			item.SetValid( CMapListItem::PENDING );
+			item.SetFileTimestamp(item.GetFSTimeStamp(szFileName));
+			item.SetValid(CMapListItem::PENDING);
 			// Insert into dictionary
-			m_Items.Insert( szMapName, item );
+			m_Items.Insert(szMapName, item);
 
 			m_bDirty = true;
 		}
 		else
 		{
-			CMapListItem *item = &m_Items[ idx ];
-			Assert( item );
+			CMapListItem *item = &m_Items[idx];
+			Assert(item);
 
 			// Make sure data is up to date
-			long timestamp = g_pFileSystem->GetFileTime( szFileName );
-			if ( !item->IsSameTime( timestamp ) )
+			long timestamp = g_pFileSystem->GetFileTime(szFileName);
+			if(!item->IsSameTime(timestamp))
 			{
-				item->SetFileTimestamp( timestamp );
-				item->SetValid( CMapListItem::PENDING );
+				item->SetFileTimestamp(timestamp);
+				item->SetValid(CMapListItem::PENDING);
 
 				m_bDirty = true;
 			}
 		}
 
-		findfn = Sys_FindNext( NULL, 0 );
+		findfn = Sys_FindNext(NULL, 0);
 	}
 
 	Sys_FindClose();
@@ -328,46 +328,46 @@ void CMapListManager::RefreshList( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
-int CMapListManager::GetMapCount( void ) const
+int CMapListManager::GetMapCount(void) const
 {
 	return m_Items.Count();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-int CMapListManager::IsMapValid( int index ) const
+int CMapListManager::IsMapValid(int index) const
 {
-	if ( !m_Items.IsValidIndex( index ) )
+	if(!m_Items.IsValidIndex(index))
 		return false;
 
-	CMapListItem const *item = &m_Items[ index ];
-	Assert( item );
+	CMapListItem const *item = &m_Items[index];
+	Assert(item);
 	return item->GetValid();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 // Output : char const
 //-----------------------------------------------------------------------------
-char const *CMapListManager::GetMapName( int index ) const
+char const *CMapListManager::GetMapName(int index) const
 {
-	if ( !m_Items.IsValidIndex( index ) )
+	if(!m_Items.IsValidIndex(index))
 		return "Invalid!!!";
 
-	return m_Items.GetElementName( index );
+	return m_Items.GetElementName(index);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Wipe the list
 //-----------------------------------------------------------------------------
-void CMapListManager::ClearList( void )
+void CMapListManager::ClearList(void)
 {
 	m_Items.Purge();
 	m_bDirty = false;
@@ -376,53 +376,53 @@ void CMapListManager::ClearList( void )
 //-----------------------------------------------------------------------------
 // Purpose: Rebuild the entire list
 //-----------------------------------------------------------------------------
-void CMapListManager::BuildList( void )
+void CMapListManager::BuildList(void)
 {
 	ClearList();
 
 	// Search the directory structure.
 	char mapwild[MAX_QPATH];
-	Q_strncpy(mapwild,"maps/*.bsp", sizeof( mapwild ) );
-	char const *findfn = Sys_FindFirst( mapwild, NULL, 0 );
-	while ( findfn )
+	Q_strncpy(mapwild, "maps/*.bsp", sizeof(mapwild));
+	char const *findfn = Sys_FindFirst(mapwild, NULL, 0);
+	while(findfn)
 	{
-		if ( IsPC() && V_stristr( findfn, ".360.bsp" ) )
+		if(IsPC() && V_stristr(findfn, ".360.bsp"))
 		{
 			// ignore 360 bsp
-			findfn = Sys_FindNext( NULL, 0 );
+			findfn = Sys_FindNext(NULL, 0);
 			continue;
 		}
-		else if ( IsX360() && !V_stristr( findfn, ".360.bsp" ) )
+		else if(IsX360() && !V_stristr(findfn, ".360.bsp"))
 		{
 			// ignore pc bsp
-			findfn = Sys_FindNext( NULL, 0 );
+			findfn = Sys_FindNext(NULL, 0);
 			continue;
 		}
 
 		// Make full fileame (maps/foo.bsp) and map name (foo)
-		char szFileName[ MAX_QPATH ] = { 0 };
-		V_snprintf( szFileName, sizeof( szFileName ), "maps/%s", findfn );
+		char szFileName[MAX_QPATH] = {0};
+		V_snprintf(szFileName, sizeof(szFileName), "maps/%s", findfn);
 
-		char szMapName[256] = { 0 };
-		V_strncpy( szMapName, findfn, sizeof( szMapName ) );
-		char *pExt = V_stristr( szMapName, ".bsp" );
-		if ( pExt )
+		char szMapName[256] = {0};
+		V_strncpy(szMapName, findfn, sizeof(szMapName));
+		char *pExt = V_stristr(szMapName, ".bsp");
+		if(pExt)
 		{
 			*pExt = '\0';
 		}
 
 		CMapListItem item;
-		item.SetFileTimestamp( item.GetFSTimeStamp( szFileName ) );
-		item.SetValid( CMapListItem::PENDING );
+		item.SetFileTimestamp(item.GetFSTimeStamp(szFileName));
+		item.SetValid(CMapListItem::PENDING);
 
 		// Insert into dictionary
-		int idx = m_Items.Find( szMapName );
-		if ( idx == m_Items.InvalidIndex() )
+		int idx = m_Items.Find(szMapName);
+		if(idx == m_Items.InvalidIndex())
 		{
-			m_Items.Insert( szMapName, item );
+			m_Items.Insert(szMapName, item);
 		}
 
-		findfn = Sys_FindNext( NULL, 0 );
+		findfn = Sys_FindNext(NULL, 0);
 	}
 
 	Sys_FindClose();
@@ -434,60 +434,60 @@ void CMapListManager::BuildList( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pakorfilesys - 
-//			*mapname - 
+// Purpose:
+// Input  : *pakorfilesys -
+//			*mapname -
 // Output : static void
 //-----------------------------------------------------------------------------
-static bool MapList_CheckPrintMap( const char *pakorfilesys, const char *mapname, int valid,
-							   bool showoutdated, bool verbose )
+static bool MapList_CheckPrintMap(const char *pakorfilesys, const char *mapname, int valid, bool showoutdated,
+								  bool verbose)
 {
-	bool validorpending = ( valid != CMapListItem::INVALID ) ? true : false;
+	bool validorpending = (valid != CMapListItem::INVALID) ? true : false;
 
-	if ( !verbose )
+	if(!verbose)
 	{
 		return validorpending;
 	}
 
-	char prefix[ 32 ];
-	prefix[ 0 ] = 0;
+	char prefix[32];
+	prefix[0] = 0;
 
-	switch ( valid )
+	switch(valid)
 	{
-	default:
-	case CMapListItem::VALID:
-		break;
-	case CMapListItem::PENDING:
-		Q_strncpy( prefix, "PENDING:  ", sizeof( prefix ) );
-		break;
-	case CMapListItem::INVALID:
-		Q_strncpy( prefix, "OUTDATED:  ", sizeof( prefix ) );
-		break;
+		default:
+		case CMapListItem::VALID:
+			break;
+		case CMapListItem::PENDING:
+			Q_strncpy(prefix, "PENDING:  ", sizeof(prefix));
+			break;
+		case CMapListItem::INVALID:
+			Q_strncpy(prefix, "OUTDATED:  ", sizeof(prefix));
+			break;
 	}
 
-	if ( validorpending ^ showoutdated )
+	if(validorpending ^ showoutdated)
 	{
-		ConMsg( "%s %s %s\n", prefix, pakorfilesys, mapname );
+		ConMsg("%s %s %s\n", prefix, pakorfilesys, mapname);
 	}
 
 	return validorpending;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pszSubString - 
-//			listobsolete - 
-//			maxitemlength - 
+// Purpose:
+// Input  : *pszSubString -
+//			listobsolete -
+//			maxitemlength -
 // Output : static int
 //-----------------------------------------------------------------------------
-static int MapList_CountMaps( const char *pszSubString, bool listobsolete, int& maxitemlength )
+static int MapList_CountMaps(const char *pszSubString, bool listobsolete, int &maxitemlength)
 {
 	g_MapListMgr.RefreshList();
 
 	maxitemlength = 0;
 
 	int substringlength = 0;
-	if ( pszSubString && pszSubString[0] )
+	if(pszSubString && pszSubString[0])
 	{
 		substringlength = strlen(pszSubString);
 	}
@@ -497,18 +497,18 @@ static int MapList_CountMaps( const char *pszSubString, bool listobsolete, int& 
 	//
 	int count = 0;
 	int showOutdated;
-	for( showOutdated = listobsolete ? 1 : 0; showOutdated >= 0; showOutdated-- )
+	for(showOutdated = listobsolete ? 1 : 0; showOutdated >= 0; showOutdated--)
 	{
-		for ( int i = 0; i < g_MapListMgr.GetMapCount(); i++ )
+		for(int i = 0; i < g_MapListMgr.GetMapCount(); i++)
 		{
-			char const *mapname = g_MapListMgr.GetMapName( i );
-			int valid = g_MapListMgr.IsMapValid( i );
+			char const *mapname = g_MapListMgr.GetMapName(i);
+			int valid = g_MapListMgr.IsMapValid(i);
 
-			if ( !substringlength || V_stristr( mapname, pszSubString ) )
+			if(!substringlength || V_stristr(mapname, pszSubString))
 			{
-				if ( MapList_CheckPrintMap( "(fs)", mapname, valid, showOutdated ? true : false, false ) )
+				if(MapList_CheckPrintMap("(fs)", mapname, valid, showOutdated ? true : false, false))
 				{
-					maxitemlength = max( maxitemlength, (int)( strlen( mapname ) + 1 ) );
+					maxitemlength = max(maxitemlength, (int)(strlen(mapname) + 1));
 					count++;
 				}
 			}
@@ -519,16 +519,17 @@ static int MapList_CountMaps( const char *pszSubString, bool listobsolete, int& 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //  Lists all maps matching the substring
 //  If the substring is empty, or "*", then lists all maps
-// Input  : *pszSubString - 
+// Input  : *pszSubString -
 //-----------------------------------------------------------------------------
-int MapList_ListMaps( const char *pszSubString, bool listobsolete, bool verbose, int maxcount, int maxitemlength, char maplist[][ 64 ] )
+int MapList_ListMaps(const char *pszSubString, bool listobsolete, bool verbose, int maxcount, int maxitemlength,
+					 char maplist[][64])
 {
 	g_MapListMgr.RefreshList();
 	int substringlength = 0;
-	if (pszSubString && pszSubString[0])
+	if(pszSubString && pszSubString[0])
 	{
 		substringlength = strlen(pszSubString);
 	}
@@ -537,34 +538,34 @@ int MapList_ListMaps( const char *pszSubString, bool listobsolete, bool verbose,
 	// search through the path, one element at a time
 	//
 
-	if ( verbose )
+	if(verbose)
 	{
-		ConMsg( "-------------\n");
+		ConMsg("-------------\n");
 	}
 
 	int count = 0;
 	int showOutdated;
-	for( showOutdated = listobsolete ? 1 : 0; showOutdated >= 0; showOutdated-- )
+	for(showOutdated = listobsolete ? 1 : 0; showOutdated >= 0; showOutdated--)
 	{
-		if ( count >= maxcount )
+		if(count >= maxcount)
 			break;
 
-		//search the directory structure.
-		for ( int i = 0; i < g_MapListMgr.GetMapCount(); i++ )
+		// search the directory structure.
+		for(int i = 0; i < g_MapListMgr.GetMapCount(); i++)
 		{
-			if ( count >= maxcount )
+			if(count >= maxcount)
 				break;
 
-			char const *mapname = g_MapListMgr.GetMapName( i );
-			int valid = g_MapListMgr.IsMapValid( i );
+			char const *mapname = g_MapListMgr.GetMapName(i);
+			int valid = g_MapListMgr.IsMapValid(i);
 
-			if ( !substringlength || V_stristr( mapname, pszSubString ) )
+			if(!substringlength || V_stristr(mapname, pszSubString))
 			{
-				if ( MapList_CheckPrintMap( "(fs)", mapname, valid, showOutdated ? true : false, verbose ) )
+				if(MapList_CheckPrintMap("(fs)", mapname, valid, showOutdated ? true : false, verbose))
 				{
-					if ( maxitemlength != 0 )
+					if(maxitemlength != 0)
 					{
-						Q_strncpy( maplist[ count ], mapname, maxitemlength );
+						Q_strncpy(maplist[count], mapname, maxitemlength);
 					}
 					count++;
 				}
@@ -576,35 +577,36 @@ int MapList_ListMaps( const char *pszSubString, bool listobsolete, bool verbose,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *partial - 
-//			context - 
-//			longest - 
-//			maxcommands - 
-//			**commands - 
+// Purpose:
+// Input  : *partial -
+//			context -
+//			longest -
+//			maxcommands -
+//			**commands -
 // Output : int
 //-----------------------------------------------------------------------------
-int _Host_Map_f_CompletionFunc( char const *cmdname, char const *partial, char commands[ COMMAND_COMPLETION_MAXITEMS ][ COMMAND_COMPLETION_ITEM_LENGTH ] )
+int _Host_Map_f_CompletionFunc(char const *cmdname, char const *partial,
+							   char commands[COMMAND_COMPLETION_MAXITEMS][COMMAND_COMPLETION_ITEM_LENGTH])
 {
 	char *substring = (char *)partial;
-	if ( Q_strstr( partial, cmdname ) )
+	if(Q_strstr(partial, cmdname))
 	{
-		substring = (char *)partial + strlen( cmdname );
+		substring = (char *)partial + strlen(cmdname);
 	}
 
 	int longest = 0;
-	int count = min( MapList_CountMaps( substring, false, longest ), COMMAND_COMPLETION_MAXITEMS );
-	if ( count > 0 )
+	int count = min(MapList_CountMaps(substring, false, longest), COMMAND_COMPLETION_MAXITEMS);
+	if(count > 0)
 	{
-		MapList_ListMaps( substring, false, false, COMMAND_COMPLETION_MAXITEMS, longest, commands );
+		MapList_ListMaps(substring, false, false, COMMAND_COMPLETION_MAXITEMS, longest, commands);
 
 		// Now prepend maps * in front of all of the options
 		int i;
-		for ( i = 0; i < count ; i++ )
+		for(i = 0; i < count; i++)
 		{
-			char old[ COMMAND_COMPLETION_ITEM_LENGTH ];
-			Q_strncpy( old, commands[ i ], sizeof( old ) );
-			Q_snprintf( commands[ i ], sizeof( commands[ i ] ), "%s%s", cmdname, old );
+			char old[COMMAND_COMPLETION_ITEM_LENGTH];
+			Q_strncpy(old, commands[i], sizeof(old));
+			Q_snprintf(commands[i], sizeof(commands[i]), "%s%s", cmdname, old);
 		}
 	}
 
@@ -612,102 +614,112 @@ int _Host_Map_f_CompletionFunc( char const *cmdname, char const *partial, char c
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *partial - 
-//			context - 
-//			longest - 
-//			maxcommands - 
-//			**commands - 
+// Purpose:
+// Input  : *partial -
+//			context -
+//			longest -
+//			maxcommands -
+//			**commands -
 // Output : int
 //-----------------------------------------------------------------------------
-static int Host_Map_f_CompletionFunc( char const *partial, char commands[ COMMAND_COMPLETION_MAXITEMS ][ COMMAND_COMPLETION_ITEM_LENGTH ] )
+static int Host_Map_f_CompletionFunc(char const *partial,
+									 char commands[COMMAND_COMPLETION_MAXITEMS][COMMAND_COMPLETION_ITEM_LENGTH])
 {
 	char const *cmdname = "map ";
-	return _Host_Map_f_CompletionFunc( cmdname, partial, commands );
+	return _Host_Map_f_CompletionFunc(cmdname, partial, commands);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *partial - 
-//			context - 
-//			longest - 
-//			maxcommands - 
-//			**commands - 
+// Purpose:
+// Input  : *partial -
+//			context -
+//			longest -
+//			maxcommands -
+//			**commands -
 // Output : int
 //-----------------------------------------------------------------------------
-static int Host_Map_Commentary_f_CompletionFunc( char const *partial, char commands[ COMMAND_COMPLETION_MAXITEMS ][ COMMAND_COMPLETION_ITEM_LENGTH ] )
+static int Host_Map_Commentary_f_CompletionFunc(
+	char const *partial, char commands[COMMAND_COMPLETION_MAXITEMS][COMMAND_COMPLETION_ITEM_LENGTH])
 {
 	char const *cmdname = "map_commentary ";
-	return _Host_Map_f_CompletionFunc( cmdname, partial, commands );
+	return _Host_Map_f_CompletionFunc(cmdname, partial, commands);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *partial - 
-//			context - 
-//			longest - 
-//			maxcommands - 
-//			**commands - 
+// Purpose:
+// Input  : *partial -
+//			context -
+//			longest -
+//			maxcommands -
+//			**commands -
 // Output : int
 //-----------------------------------------------------------------------------
-static int Host_Changelevel_f_CompletionFunc( char const *partial, char commands[ COMMAND_COMPLETION_MAXITEMS ][ COMMAND_COMPLETION_ITEM_LENGTH ] )
+static int Host_Changelevel_f_CompletionFunc(char const *partial,
+											 char commands[COMMAND_COMPLETION_MAXITEMS][COMMAND_COMPLETION_ITEM_LENGTH])
 {
 	char const *cmdname = "changelevel ";
-	return _Host_Map_f_CompletionFunc( cmdname, partial, commands );
+	return _Host_Map_f_CompletionFunc(cmdname, partial, commands);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *partial - 
-//			context - 
-//			longest - 
-//			maxcommands - 
-//			**commands - 
+// Purpose:
+// Input  : *partial -
+//			context -
+//			longest -
+//			maxcommands -
+//			**commands -
 // Output : int
 //-----------------------------------------------------------------------------
-static int Host_Changelevel2_f_CompletionFunc( char const *partial, char commands[ COMMAND_COMPLETION_MAXITEMS ][ COMMAND_COMPLETION_ITEM_LENGTH ] )
+static int Host_Changelevel2_f_CompletionFunc(
+	char const *partial, char commands[COMMAND_COMPLETION_MAXITEMS][COMMAND_COMPLETION_ITEM_LENGTH])
 {
 	char const *cmdname = "changelevel2 ";
-	return _Host_Map_f_CompletionFunc( cmdname, partial, commands );
+	return _Host_Map_f_CompletionFunc(cmdname, partial, commands);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: do a dir of the maps dir
 //-----------------------------------------------------------------------------
-static void Host_Maps_f( const CCommand &args )
+static void Host_Maps_f(const CCommand &args)
 {
 	const char *pszSubString = NULL;
 
-	if ( args.ArgC() != 2 && args.ArgC() != 3 )
+	if(args.ArgC() != 2 && args.ArgC() != 3)
 	{
-		ConMsg( "Usage:  maps <substring>\nmaps * for full listing\n" );
+		ConMsg("Usage:  maps <substring>\nmaps * for full listing\n");
 		return;
 	}
 
-	if ( args.ArgC() == 2 )
+	if(args.ArgC() == 2)
 	{
 		pszSubString = args[1];
-		if (!pszSubString || !pszSubString[0])
+		if(!pszSubString || !pszSubString[0])
 			return;
 	}
 
-	if ( pszSubString && ( pszSubString[0] == '*' ))
+	if(pszSubString && (pszSubString[0] == '*'))
 		pszSubString = NULL;
 
 	int longest = 0;
-	int count = MapList_CountMaps( pszSubString, true, longest );
-	if ( count > 0 )
+	int count = MapList_CountMaps(pszSubString, true, longest);
+	if(count > 0)
 	{
-		MapList_ListMaps( pszSubString, true, true, count, 0, NULL );
+		MapList_ListMaps(pszSubString, true, true, count, 0, NULL);
 	}
 }
 
 #ifndef BENCHMARK
-static ConCommand maps("maps", Host_Maps_f, "Displays list of maps." );
-static ConCommand map("map", Host_Map_f, "Start playing on specified map.", FCVAR_DONTRECORD, Host_Map_f_CompletionFunc );
-static ConCommand map_background("map_background", Host_Map_Background_f, "Runs a map as the background to the main menu.", FCVAR_DONTRECORD, Host_Map_f_CompletionFunc );
-static ConCommand map_commentary("map_commentary", Host_Map_Commentary_f, "Start playing, with commentary, on a specified map.", FCVAR_DONTRECORD, Host_Map_Commentary_f_CompletionFunc );
-static ConCommand changelevel("changelevel", Host_Changelevel_f, "Change server to the specified map", FCVAR_DONTRECORD, Host_Changelevel_f_CompletionFunc );
-static ConCommand changelevel2("changelevel2", Host_Changelevel2_f, "Transition to the specified map in single player", FCVAR_DONTRECORD, Host_Changelevel2_f_CompletionFunc );
+static ConCommand maps("maps", Host_Maps_f, "Displays list of maps.");
+static ConCommand map("map", Host_Map_f, "Start playing on specified map.", FCVAR_DONTRECORD,
+					  Host_Map_f_CompletionFunc);
+static ConCommand map_background("map_background", Host_Map_Background_f,
+								 "Runs a map as the background to the main menu.", FCVAR_DONTRECORD,
+								 Host_Map_f_CompletionFunc);
+static ConCommand map_commentary("map_commentary", Host_Map_Commentary_f,
+								 "Start playing, with commentary, on a specified map.", FCVAR_DONTRECORD,
+								 Host_Map_Commentary_f_CompletionFunc);
+static ConCommand changelevel("changelevel", Host_Changelevel_f, "Change server to the specified map", FCVAR_DONTRECORD,
+							  Host_Changelevel_f_CompletionFunc);
+static ConCommand changelevel2("changelevel2", Host_Changelevel2_f, "Transition to the specified map in single player",
+							   FCVAR_DONTRECORD, Host_Changelevel2_f_CompletionFunc);
 #endif

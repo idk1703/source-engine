@@ -17,38 +17,28 @@
 #include <string.h>
 #include <ctype.h>
 
-
-
-int
-mx_strncasecmp (const char *s1, const char *s2, int count)
+int mx_strncasecmp(const char *s1, const char *s2, int count)
 {
 #ifdef WIN32
-	return _strnicmp (s1, s2, count);
+	return _strnicmp(s1, s2, count);
 #else
-	return strncasecmp (s1, s2, count);
+	return strncasecmp(s1, s2, count);
 #endif
 }
 
-
-
-int
-mx_strcasecmp (const char *s1, const char *s2)
+int mx_strcasecmp(const char *s1, const char *s2)
 {
 #ifdef WIN32
-	return _stricmp (s1, s2);
+	return _stricmp(s1, s2);
 #else
-	return strcasecmp (s1, s2);
+	return strcasecmp(s1, s2);
 #endif
 }
 
-
-
-
-char *
-mx_strlower (char *str)
+char *mx_strlower(char *str)
 {
 	int i;
-	for (i = (int)strlen (str) - 1; i >= 0; i--)
-		str[i] = (char)tolower (str[i]);
+	for(i = (int)strlen(str) - 1; i >= 0; i--)
+		str[i] = (char)tolower(str[i]);
 	return str;
 }

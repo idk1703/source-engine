@@ -11,7 +11,7 @@ struct VS_INPUT
 
 struct VS_OUTPUT
 {
-	float4 projPos					: POSITION;	
+	float4 projPos					: POSITION;
 	float2 baseTexCoord				: TEXCOORD0;
 };
 
@@ -26,10 +26,10 @@ VS_OUTPUT main( const VS_INPUT v )
 	worldPos = mul4x3( float4( v.vPos, 1 ), cModel[0] );
 	projPos = mul( float4( worldPos, 1 ), cViewProj );
 	o.projPos = projPos;
-		
+
 	o.baseTexCoord.x = dot( v.vLightmapTexCoord, cLightmapTexCoordTransform[0].xy ) + cLightmapTexCoordTransform[0].w;
 	o.baseTexCoord.y = dot( v.vLightmapTexCoord, cLightmapTexCoordTransform[1].xy ) + cLightmapTexCoordTransform[1].w;
-	
+
 #ifdef _PS3
 	// Account for OpenGL's flipped y coordinate and expanded z range [-1,1] instead of [0,1]
 	o.projPos.y = -o.projPos.y;

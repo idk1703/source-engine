@@ -135,7 +135,7 @@ $Project "Studiomdl"
 		$File	"$SRCDIR\public\tier0\vprof.h"
 		$File	"$SRCDIR\public\vstdlib\vstdlib.h"
 	}
-	
+
 	$Folder	"Link Libraries"
 	{
 		$Lib appframework

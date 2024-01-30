@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -13,10 +13,9 @@
 class IProgressDialog
 {
 public:
-
-	virtual void Start( char const *pchTitle, char const *pchText, bool bShowCancel ) = 0;
-	virtual void Update( float flZeroToOneFraction ) = 0;
-	virtual void UpdateText( char const *pchFmt, ... ) = 0;
+	virtual void Start(char const *pchTitle, char const *pchText, bool bShowCancel) = 0;
+	virtual void Update(float flZeroToOneFraction) = 0;
+	virtual void UpdateText(char const *pchFmt, ...) = 0;
 	virtual bool IsCancelled() = 0;
 	virtual void Finish() = 0;
 };

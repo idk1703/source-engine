@@ -7,18 +7,18 @@ class CTFPlayer;
 class CTFArcherProxy : public CBaseAnimating
 {
 public:
-	DECLARE_CLASS( CTFArcherProxy, CBaseAnimating );
+	DECLARE_CLASS(CTFArcherProxy, CBaseAnimating);
 
-	virtual void Precache( void );
-	virtual void Spawn( void );
+	virtual void Precache(void);
+	virtual void Spawn(void);
 
-	void Update( void );
+	void Update(void);
 
-	void ShootArrowAt( CBaseEntity *target );
-	void ShootGrenadeAt( CBaseEntity *target );
+	void ShootArrowAt(CBaseEntity *target);
+	void ShootGrenadeAt(CBaseEntity *target);
 
 protected:
-	CTFPlayer *SelectTarget( void );
+	CTFPlayer *SelectTarget(void);
 
 	enum BehaviorStateType
 	{
@@ -26,8 +26,7 @@ protected:
 		EMERGE,
 		AIM_AND_FIRE,
 		HIDE,
-	}
-	m_state;
+	} m_state;
 
 	CountdownTimer m_timer;
 	Vector m_homePos;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -24,7 +24,8 @@ namespace vgui
 //-----------------------------------------------------------------------------
 class CRawLogPanel : public vgui::PropertyPage
 {
-	DECLARE_CLASS_SIMPLE( CRawLogPanel, vgui::PropertyPage );
+	DECLARE_CLASS_SIMPLE(CRawLogPanel, vgui::PropertyPage);
+
 public:
 	CRawLogPanel(vgui::Panel *parent, const char *name);
 	~CRawLogPanel();
@@ -35,7 +36,7 @@ public:
 	void DoInsertString(const char *str);
 
 private:
-	MESSAGE_FUNC_CHARPTR( OnCommandSubmitted, "CommandSubmitted", command );
+	MESSAGE_FUNC_CHARPTR(OnCommandSubmitted, "CommandSubmitted", command);
 
 	vgui::CConsolePanel *m_pConsole;
 };

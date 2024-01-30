@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -13,8 +13,7 @@
 #include <vgui/KeyCode.h>
 
 // Convert from Windows scan codes to VGUI key codes.
-vgui::KeyCode KeyCode_VirtualKeyToVGUI( int key );
-int			  KeyCode_VGUIToVirtualKey( vgui::KeyCode keycode );
-
+vgui::KeyCode KeyCode_VirtualKeyToVGUI(int key);
+int KeyCode_VGUIToVirtualKey(vgui::KeyCode keycode);
 
 #endif // VGUI_KEY_TRANSLATION_H

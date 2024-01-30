@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,29 +15,33 @@
 
 class CBasePlayer;
 
-#if defined( CLIENT_DLL )
+#if defined(CLIENT_DLL)
 #define CWeaponCombatUsedWithShieldBase C_WeaponCombatUsedWithShieldBase
 #endif
 
 class CWeaponCombatUsedWithShieldBase : public CBaseTFCombatWeapon
 {
-	DECLARE_CLASS( CWeaponCombatUsedWithShieldBase, CBaseTFCombatWeapon );
+	DECLARE_CLASS(CWeaponCombatUsedWithShieldBase, CBaseTFCombatWeapon);
+
 public:
 	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
-	CWeaponCombatUsedWithShieldBase( void ) {}
+	CWeaponCombatUsedWithShieldBase(void) {}
 
-	virtual bool	CanDeploy( void );
-	virtual int		UpdateClientData( CBasePlayer *pPlayer );
-	virtual bool	SupportsTwoHanded( void ) { return true; };
-	void			AllowShieldPostFrame( bool allow );
-	virtual int		GetShieldState( void );
+	virtual bool CanDeploy(void);
+	virtual int UpdateClientData(CBasePlayer *pPlayer);
+	virtual bool SupportsTwoHanded(void)
+	{
+		return true;
+	};
+	void AllowShieldPostFrame(bool allow);
+	virtual int GetShieldState(void);
 
 	/*
 	// All predicted weapons need to implement and return true
 	virtual bool			IsPredicted( void ) const
-	{ 
+	{
 		return true;
 	}
 
@@ -52,8 +56,7 @@ public:
 #endif
 	*/
 
-private:														
-	CWeaponCombatUsedWithShieldBase( const CWeaponCombatUsedWithShieldBase & );						
-
+private:
+	CWeaponCombatUsedWithShieldBase(const CWeaponCombatUsedWithShieldBase &);
 };
 #endif // WEAPON_COMBAT_USEDWITHSHIELDBASE_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,6 +13,6 @@
 
 class CEventParams;
 
-int EventProperties_FireTrigger( CEventParams *params );
+int EventProperties_FireTrigger(CEventParams *params);
 
 #endif // EVENTPROPERTIES_FIRETRIGGER_H

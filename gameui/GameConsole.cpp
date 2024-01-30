@@ -1,10 +1,9 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
-
 
 #include <stdio.h>
 
@@ -54,7 +53,7 @@ CGameConsole::~CGameConsole()
 void CGameConsole::Initialize()
 {
 #ifndef _XBOX
-	m_pConsole = vgui::SETUP_PANEL( new CGameConsoleDialog() ); // we add text before displaying this so set it up now!
+	m_pConsole = vgui::SETUP_PANEL(new CGameConsoleDialog()); // we add text before displaying this so set it up now!
 
 	// set the console to taking up most of the right-half of the screen
 	int swide, stall;
@@ -62,11 +61,7 @@ void CGameConsole::Initialize()
 	int offsetx = vgui::scheme()->GetProportionalScaledValue(16);
 	int offsety = vgui::scheme()->GetProportionalScaledValue(64);
 
-	m_pConsole->SetBounds(
-		swide / 2 - offsetx,
-		offsety,
-		swide / 2,
-		stall - (offsety * 2));
+	m_pConsole->SetBounds(swide / 2 - offsetx, offsety, swide / 2, stall - (offsety * 2));
 
 	m_bInitialized = true;
 #endif
@@ -78,7 +73,7 @@ void CGameConsole::Initialize()
 void CGameConsole::Activate()
 {
 #ifndef _XBOX
-	if (!m_bInitialized)
+	if(!m_bInitialized)
 		return;
 
 	vgui::surface()->RestrictPaintToSinglePanel(NULL);
@@ -92,7 +87,7 @@ void CGameConsole::Activate()
 void CGameConsole::Hide()
 {
 #ifndef _XBOX
-	if (!m_bInitialized)
+	if(!m_bInitialized)
 		return;
 
 	m_pConsole->Hide();
@@ -105,13 +100,12 @@ void CGameConsole::Hide()
 void CGameConsole::Clear()
 {
 #ifndef _XBOX
-	if (!m_bInitialized)
+	if(!m_bInitialized)
 		return;
 
 	m_pConsole->Clear();
 #endif
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: returns true if the console is currently in focus
@@ -119,9 +113,9 @@ void CGameConsole::Clear()
 bool CGameConsole::IsConsoleVisible()
 {
 #ifndef _XBOX
-	if (!m_bInitialized)
+	if(!m_bInitialized)
 		return false;
-	
+
 	return m_pConsole->IsVisible();
 #else
 	return false;
@@ -134,20 +128,20 @@ bool CGameConsole::IsConsoleVisible()
 void CGameConsole::ActivateDelayed(float time)
 {
 #ifndef _XBOX
-	if (!m_bInitialized)
+	if(!m_bInitialized)
 		return;
 
 	m_pConsole->PostMessage(m_pConsole, new KeyValues("Activate"), time);
 #endif
 }
 
-void CGameConsole::SetParent( int parent )
-{	
+void CGameConsole::SetParent(int parent)
+{
 #ifndef _XBOX
-	if (!m_bInitialized)
+	if(!m_bInitialized)
 		return;
 
-	m_pConsole->SetParent( static_cast<vgui::VPANEL>( parent ));
+	m_pConsole->SetParent(static_cast<vgui::VPANEL>(parent));
 #endif
 }
 
@@ -162,7 +156,7 @@ void CGameConsole::OnCmdCondump()
 }
 
 #ifndef _XBOX
-CON_COMMAND( condump, "dump the text currently in the console to condumpXX.log" )
+CON_COMMAND(condump, "dump the text currently in the console to condumpXX.log")
 {
 	g_GameConsole.OnCmdCondump();
 }

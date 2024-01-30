@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,27 +10,23 @@
 #pragma once
 #endif
 
-
 #include "items.h"
 
-
-class CHolidayGift: public CItem
+class CHolidayGift : public CItem
 {
 public:
-	DECLARE_CLASS( CHolidayGift, CItem );
+	DECLARE_CLASS(CHolidayGift, CItem);
 
 public:
-	
 	virtual void Precache();
-	virtual void Spawn( void );
-	virtual bool MyTouch( CBasePlayer *pBasePlayer );
-	virtual void ItemTouch( CBaseEntity *pOther );
-	void DropSoundThink( void );
+	virtual void Spawn(void);
+	virtual bool MyTouch(CBasePlayer *pBasePlayer);
+	virtual void ItemTouch(CBaseEntity *pOther);
+	void DropSoundThink(void);
 
 public:
-
-	static CHolidayGift* Create( const Vector &position, const QAngle &angles, const QAngle &eyeAngles, const Vector &velocity, CBaseCombatCharacter *pOwner );
+	static CHolidayGift *Create(const Vector &position, const QAngle &angles, const QAngle &eyeAngles,
+								const Vector &velocity, CBaseCombatCharacter *pOwner);
 };
-
 
 #endif // HOLIDAY_GIFT_H

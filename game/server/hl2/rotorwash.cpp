@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -17,87 +17,93 @@
 class CRotorWashEmitter : public CBaseEntity
 {
 public:
-	DECLARE_CLASS( CRotorWashEmitter, CBaseEntity );
+	DECLARE_CLASS(CRotorWashEmitter, CBaseEntity);
 	DECLARE_SERVERCLASS();
 	DECLARE_DATADESC();
 
-	void SetAltitude( float flAltitude ) { m_flAltitude = flAltitude; }
-	void SetEmit( bool state ) { m_bEmit = state; }
-	void Spawn ( void );
-	void Precache( void );
-	int ShouldTransmit( const CCheckTransmitInfo *pInfo );
-	int UpdateTransmitState( void );
+	void SetAltitude(float flAltitude)
+	{
+		m_flAltitude = flAltitude;
+	}
+	void SetEmit(bool state)
+	{
+		m_bEmit = state;
+	}
+	void Spawn(void);
+	void Precache(void);
+	int ShouldTransmit(const CCheckTransmitInfo *pInfo);
+	int UpdateTransmitState(void);
 
 protected:
-
-	CNetworkVar( bool, m_bEmit );
-	CNetworkVar( float, m_flAltitude );
+	CNetworkVar(bool, m_bEmit);
+	CNetworkVar(float, m_flAltitude);
 };
 
-IMPLEMENT_SERVERCLASS_ST( CRotorWashEmitter, DT_RotorWashEmitter )
-	SendPropFloat(SENDINFO(m_flAltitude), -1, SPROP_NOSCALE ),
-END_SEND_TABLE()
+IMPLEMENT_SERVERCLASS_ST(CRotorWashEmitter, DT_RotorWashEmitter)
+SendPropFloat(SENDINFO(m_flAltitude), -1, SPROP_NOSCALE),
+END_SEND_TABLE
+()
 
-LINK_ENTITY_TO_CLASS( env_rotorwash_emitter, CRotorWashEmitter );
+	LINK_ENTITY_TO_CLASS(env_rotorwash_emitter, CRotorWashEmitter);
 
-BEGIN_DATADESC( CRotorWashEmitter )
-	DEFINE_FIELD( 		m_bEmit, 		FIELD_BOOLEAN ),
-	DEFINE_KEYFIELD( m_flAltitude, 	FIELD_FLOAT, "altitude" ),
+BEGIN_DATADESC(CRotorWashEmitter)
+	DEFINE_FIELD(m_bEmit, FIELD_BOOLEAN), DEFINE_KEYFIELD(m_flAltitude, FIELD_FLOAT, "altitude"),
 END_DATADESC()
 
-void CRotorWashEmitter::Spawn( void )
+void CRotorWashEmitter::Spawn(void)
 {
 	Precache();
 	BaseClass::Spawn();
-	SetEmit( false );
+	SetEmit(false);
 }
 
-void CRotorWashEmitter::Precache( void )
+void CRotorWashEmitter::Precache(void)
 {
-	PrecacheMaterial( "effects/splashwake3" );
+	PrecacheMaterial("effects/splashwake3");
 }
 
-int CRotorWashEmitter::ShouldTransmit( const CCheckTransmitInfo *pInfo )
+int CRotorWashEmitter::ShouldTransmit(const CCheckTransmitInfo *pInfo)
 {
-	if ( GetParent() )
+	if(GetParent())
 	{
-		return GetParent()->ShouldTransmit( pInfo );
+		return GetParent()->ShouldTransmit(pInfo);
 	}
 
 	return FL_EDICT_PVSCHECK;
 }
 
-int CRotorWashEmitter::UpdateTransmitState( void )
+int CRotorWashEmitter::UpdateTransmitState(void)
 {
-	if ( GetParent() )
+	if(GetParent())
 	{
-		return SetTransmitState( FL_EDICT_FULLCHECK );
+		return SetTransmitState(FL_EDICT_FULLCHECK);
 	}
 
-	return SetTransmitState( FL_EDICT_PVSCHECK );
+	return SetTransmitState(FL_EDICT_PVSCHECK);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &localOrigin - 
-//			&localAngles - 
-//			*pOwner - 
-//			flAltitude - 
+// Purpose:
+// Input  : &localOrigin -
+//			&localAngles -
+//			*pOwner -
+//			flAltitude -
 // Output : CBaseEntity
 //-----------------------------------------------------------------------------
-CBaseEntity *CreateRotorWashEmitter( const Vector &localOrigin, const QAngle &localAngles, CBaseEntity *pOwner, float flAltitude )
+CBaseEntity *CreateRotorWashEmitter(const Vector &localOrigin, const QAngle &localAngles, CBaseEntity *pOwner,
+									float flAltitude)
 {
-	CRotorWashEmitter *pEmitter = (CRotorWashEmitter *) CreateEntityByName( "env_rotorwash_emitter" );
+	CRotorWashEmitter *pEmitter = (CRotorWashEmitter *)CreateEntityByName("env_rotorwash_emitter");
 
-	if ( pEmitter == NULL )
+	if(pEmitter == NULL)
 		return NULL;
 
-	pEmitter->SetAbsOrigin( localOrigin );
-	pEmitter->SetAbsAngles( localAngles );
-	pEmitter->FollowEntity( pOwner );
+	pEmitter->SetAbsOrigin(localOrigin);
+	pEmitter->SetAbsAngles(localAngles);
+	pEmitter->FollowEntity(pOwner);
 
-	pEmitter->SetAltitude( flAltitude );
-	pEmitter->SetEmit( false );
+	pEmitter->SetAltitude(flAltitude);
+	pEmitter->SetEmit(false);
 
 	return pEmitter;
 }

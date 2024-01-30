@@ -22,61 +22,59 @@
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
-															 
-void AddSubKeyNamed( KeyValues *pKeys, const char *pszName );
 
-static CItemModelPanelToolTip* g_spItemTooltip = NULL;
-CQuestTooltip* g_spTextTooltip = NULL;
+void AddSubKeyNamed(KeyValues *pKeys, const char *pszName);
+
+static CItemModelPanelToolTip *g_spItemTooltip = NULL;
+CQuestTooltip *g_spTextTooltip = NULL;
 
 CQuestLogPanel *GetQuestLog()
 {
-	CQuestLogPanel *pQuestLogPanel = (CQuestLogPanel*)gViewPortInterface->FindPanelByName( PANEL_QUEST_LOG );
+	CQuestLogPanel *pQuestLogPanel = (CQuestLogPanel *)gViewPortInterface->FindPanelByName(PANEL_QUEST_LOG);
 	return pQuestLogPanel;
 }
 
 //-------------------------------------------------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CScrollableQuestList::CScrollableQuestList( vgui::Panel *parent, const char *pszPanelName ) 
-	: EditablePanel( parent, pszPanelName )
-	, m_pCompletingPanel( NULL )
-	, m_bQuestsLayoutDirty( false )
-	, m_pszNoQuests( NULL )
-	, m_pszNeedAPass( NULL )
-	, m_pszNotPossible( NULL )
+CScrollableQuestList::CScrollableQuestList(vgui::Panel *parent, const char *pszPanelName)
+	: EditablePanel(parent, pszPanelName),
+	  m_pCompletingPanel(NULL),
+	  m_bQuestsLayoutDirty(false),
+	  m_pszNoQuests(NULL),
+	  m_pszNeedAPass(NULL),
+	  m_pszNotPossible(NULL)
 {
-	m_pContainer = new EditablePanel( this, "Container" );
-	m_vecQuestItemPanels.SetSize( 2 );
+	m_pContainer = new EditablePanel(this, "Container");
+	m_vecQuestItemPanels.SetSize(2);
 
-	FOR_EACH_VEC( m_vecQuestItemPanels, i )
+	FOR_EACH_VEC(m_vecQuestItemPanels, i)
 	{
-		m_vecQuestItemPanels[ i ] = new CQuestItemPanel( m_pContainer, "QuestItemPanel", NULL, this );
+		m_vecQuestItemPanels[i] = new CQuestItemPanel(m_pContainer, "QuestItemPanel", NULL, this);
 	}
 }
 
-CScrollableQuestList::~CScrollableQuestList()
-{
-}
+CScrollableQuestList::~CScrollableQuestList() {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CScrollableQuestList::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CScrollableQuestList::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ );
-	BaseClass::ApplySchemeSettings( pScheme );
+	tmZone(TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__);
+	BaseClass::ApplySchemeSettings(pScheme);
 
 	const char *pszResFile = "Resource/UI/econ/ScrollableQuestList.res";
 
 	// Check if the operation wants to override our default res file
-	const auto& mapOperations = GetItemSchema()->GetOperationDefinitions();
-	FOR_EACH_MAP_FAST( mapOperations, i )
+	const auto &mapOperations = GetItemSchema()->GetOperationDefinitions();
+	FOR_EACH_MAP_FAST(mapOperations, i)
 	{
-		CEconOperationDefinition* pCurrentOperation = mapOperations[i];
+		CEconOperationDefinition *pCurrentOperation = mapOperations[i];
 		// Take the first active operation's res file that's different than default
-		if ( pCurrentOperation->IsActive() && pCurrentOperation->GetQuestListOverrideResFile() )
+		if(pCurrentOperation->IsActive() && pCurrentOperation->GetQuestListOverrideResFile())
 		{
 			// Use the first found for now
 			pszResFile = pCurrentOperation->GetQuestListOverrideResFile();
@@ -84,36 +82,36 @@ void CScrollableQuestList::ApplySchemeSettings( vgui::IScheme *pScheme )
 		}
 	}
 
-	LoadControlSettings( pszResFile );
+	LoadControlSettings(pszResFile);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CScrollableQuestList::ApplySettings( KeyValues *inResourceData )
+void CScrollableQuestList::ApplySettings(KeyValues *inResourceData)
 {
-	tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ );
-	BaseClass::ApplySettings( inResourceData );
+	tmZone(TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__);
+	BaseClass::ApplySettings(inResourceData);
 
-	m_pszNoQuests		= inResourceData->GetString( "no_quests", "#QuestLog_NoQuests" );
-	m_pszNeedAPass		= inResourceData->GetString( "need_a_pass", "#QuestLog_NeedPassForContracts" );
-	m_pszNotPossible	= inResourceData->GetString( "not_possible", "#QuestLog_NoContractsPossible" );
+	m_pszNoQuests = inResourceData->GetString("no_quests", "#QuestLog_NoQuests");
+	m_pszNeedAPass = inResourceData->GetString("need_a_pass", "#QuestLog_NeedPassForContracts");
+	m_pszNotPossible = inResourceData->GetString("not_possible", "#QuestLog_NoContractsPossible");
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CScrollableQuestList::PerformLayout( void ) 
+void CScrollableQuestList::PerformLayout(void)
 {
-	tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ );
-	BaseClass::PerformLayout();	
+	tmZone(TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__);
+	BaseClass::PerformLayout();
 
-	m_pContainer->InvalidateLayout( true );
+	m_pContainer->InvalidateLayout(true);
 
-	FOR_EACH_VEC( m_vecQuestItemPanels, i )
+	FOR_EACH_VEC(m_vecQuestItemPanels, i)
 	{
-		m_vecQuestItemPanels[ i ]->InvalidateLayout( true, true );
-		m_vecQuestItemPanels[ i ]->SetZPos( 1 + i );
+		m_vecQuestItemPanels[i]->InvalidateLayout(true, true);
+		m_vecQuestItemPanels[i]->SetZPos(1 + i);
 	}
 
 	PositionQuestItemPanels();
@@ -122,12 +120,12 @@ void CScrollableQuestList::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CScrollableQuestList::OnThink()
 {
-	tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ );
-	if ( m_bQuestsLayoutDirty )
+	tmZone(TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__);
+	if(m_bQuestsLayoutDirty)
 	{
 		m_bQuestsLayoutDirty = false;
 
@@ -135,28 +133,28 @@ void CScrollableQuestList::OnThink()
 	}
 
 	// Conditionally turn mouse input on/off based on where the mouse is
-	FOR_EACH_VEC( m_vecQuestItemPanels, i )
+	FOR_EACH_VEC(m_vecQuestItemPanels, i)
 	{
-		m_vecQuestItemPanels[i]->SetMouseInputEnabled( m_vecQuestItemPanels[i]->IsCursorOverMainContainer() );
+		m_vecQuestItemPanels[i]->SetMouseInputEnabled(m_vecQuestItemPanels[i]->IsCursorOverMainContainer());
 	}
 }
 
-void CScrollableQuestList::OnCommand( const char *command )
+void CScrollableQuestList::OnCommand(const char *command)
 {
-	if ( FStrEq( command, "deselect_all" ) )
+	if(FStrEq(command, "deselect_all"))
 	{
-		SetSelected( NULL, false );
+		SetSelected(NULL, false);
 	}
 
-	BaseClass::OnCommand( command );
+	BaseClass::OnCommand(command);
 }
 
-int QuestSort_AcquiredTime( CQuestItemPanel* const* p1, CQuestItemPanel* const* p2 )
+int QuestSort_AcquiredTime(CQuestItemPanel *const *p1, CQuestItemPanel *const *p2)
 {
-	if ( !(*p1)->GetItem() )
+	if(!(*p1)->GetItem())
 		return -1;
 
-	if ( !(*p2)->GetItem() )
+	if(!(*p2)->GetItem())
 		return 1;
 
 	// Newest items first
@@ -164,101 +162,105 @@ int QuestSort_AcquiredTime( CQuestItemPanel* const* p1, CQuestItemPanel* const* 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CScrollableQuestList::PositionQuestItemPanels()
 {
-	tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ );
+	tmZone(TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__);
 	// We dont do anything when a quest is completing
-	if ( m_pCompletingPanel != NULL )
+	if(m_pCompletingPanel != NULL)
 		return;
 
 	int nVisible = 0;
-	FOR_EACH_VEC( m_vecQuestItemPanels, i )
+	FOR_EACH_VEC(m_vecQuestItemPanels, i)
 	{
-		CQuestItemPanel* pPanel = m_vecQuestItemPanels[i];
-		if ( pPanel )
+		CQuestItemPanel *pPanel = m_vecQuestItemPanels[i];
+		if(pPanel)
 		{
-			pPanel->SetVisible( pPanel->GetItem() );
+			pPanel->SetVisible(pPanel->GetItem());
 
-			if ( pPanel->GetItem() )
+			if(pPanel->GetItem())
 			{
 				++nVisible;
 			}
 		}
 	}
 
-	CExLabel *pLabel = FindControl<CExLabel>( "EmptyLabel", true );
-	if ( pLabel )
+	CExLabel *pLabel = FindControl<CExLabel>("EmptyLabel", true);
+	if(pLabel)
 	{
-		pLabel->SetVisible( nVisible == 0 );
+		pLabel->SetVisible(nVisible == 0);
 	}
 
 	// Check for a selected panel
-	const CQuestItemPanel* pSelected = NULL;
-	FOR_EACH_VEC( m_vecQuestItemPanels, i )
+	const CQuestItemPanel *pSelected = NULL;
+	FOR_EACH_VEC(m_vecQuestItemPanels, i)
 	{
-		if ( m_vecQuestItemPanels[i]->IsSelected() )
+		if(m_vecQuestItemPanels[i]->IsSelected())
 		{
-			Assert( pSelected == NULL );
+			Assert(pSelected == NULL);
 			pSelected = m_vecQuestItemPanels[i];
 		}
 	}
 
 	struct FolderCommands_t
 	{
-		const char* m_pszSelected;
-		const char* m_pszOtherIsSelected;
-		const char* m_pszNoneSelected;
+		const char *m_pszSelected;
+		const char *m_pszOtherIsSelected;
+		const char *m_pszNoneSelected;
 	};
 
-	const FolderCommands_t folderCommands[] = { { "QuestItem_Back_Selected", "QuestItem_Back_OtherSelected", "QuestItem_Back_NoneSelected" }
-											  , { "QuestItem_Front_Selected", "QuestItem_Front_OtherSelected", "QuestItem_Front_NoneSelected" } };
+	const FolderCommands_t folderCommands[] = {
+		{"QuestItem_Back_Selected", "QuestItem_Back_OtherSelected", "QuestItem_Back_NoneSelected"},
+		{"QuestItem_Front_Selected", "QuestItem_Front_OtherSelected", "QuestItem_Front_NoneSelected"}};
 
 	// Update the positions
-	FOR_EACH_VEC( m_vecQuestItemPanels, i )
+	FOR_EACH_VEC(m_vecQuestItemPanels, i)
 	{
 		// This is the selected panel
-		if ( pSelected == m_vecQuestItemPanels[ i ] )
+		if(pSelected == m_vecQuestItemPanels[i])
 		{
-			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( m_vecQuestItemPanels[ i ], folderCommands[i].m_pszSelected );	
+			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence(m_vecQuestItemPanels[i],
+																					folderCommands[i].m_pszSelected);
 		}
-		else if ( pSelected )	// Some other panel is selected
+		else if(pSelected) // Some other panel is selected
 		{
-			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( m_vecQuestItemPanels[ i ], folderCommands[i].m_pszOtherIsSelected );	
+			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence(
+				m_vecQuestItemPanels[i], folderCommands[i].m_pszOtherIsSelected);
 		}
 		else // No panel is selected
 		{
-			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( m_vecQuestItemPanels[ i ], folderCommands[i].m_pszNoneSelected );	
+			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence(
+				m_vecQuestItemPanels[i], folderCommands[i].m_pszNoneSelected);
 		}
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CScrollableQuestList::SetSelected( CQuestItemPanel *pItem, bool bImmediately )
+void CScrollableQuestList::SetSelected(CQuestItemPanel *pItem, bool bImmediately)
 {
-	tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ );
-	FOR_EACH_VEC( m_vecQuestItemPanels, i )
+	tmZone(TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__);
+	FOR_EACH_VEC(m_vecQuestItemPanels, i)
 	{
-		m_vecQuestItemPanels[ i ]->SetSelected( m_vecQuestItemPanels[ i ] == pItem, bImmediately );
+		m_vecQuestItemPanels[i]->SetSelected(m_vecQuestItemPanels[i] == pItem, bImmediately);
 	}
 
 	PositionQuestItemPanels();
 }
 
-bool DoesLootlistDropQuests( const CEconLootListDefinition* pLootList )
+bool DoesLootlistDropQuests(const CEconLootListDefinition *pLootList)
 {
-	FOR_EACH_VEC( pLootList->GetLootListContents(), j )
+	FOR_EACH_VEC(pLootList->GetLootListContents(), j)
 	{
-		const CEconLootListDefinition::drop_item_t& item = pLootList->GetLootListContents()[j];
+		const CEconLootListDefinition::drop_item_t &item = pLootList->GetLootListContents()[j];
 		// 0 and greater means item.  Less than 0 means nested lootlist
-		if( item.m_iItemOrLootlistDef >= 0 )
+		if(item.m_iItemOrLootlistDef >= 0)
 		{
-			const GameItemDefinition_t* pItemDef = assert_cast<const GameItemDefinition_t *>( GetItemSchema()->GetItemDefinition( item.m_iItemOrLootlistDef ) );
-			if( pItemDef )
+			const GameItemDefinition_t *pItemDef = assert_cast<const GameItemDefinition_t *>(
+				GetItemSchema()->GetItemDefinition(item.m_iItemOrLootlistDef));
+			if(pItemDef)
 			{
 				return pItemDef->GetQuestDef();
 			}
@@ -267,13 +269,13 @@ bool DoesLootlistDropQuests( const CEconLootListDefinition* pLootList )
 		{
 			// Get the nested lootlist
 			int iLLIndex = (item.m_iItemOrLootlistDef * -1) - 1;
-			const CEconLootListDefinition *pNestedLootList = GetItemSchema()->GetLootListByIndex( iLLIndex );
-			Assert( pNestedLootList );
-			if ( !pNestedLootList )
+			const CEconLootListDefinition *pNestedLootList = GetItemSchema()->GetLootListByIndex(iLLIndex);
+			Assert(pNestedLootList);
+			if(!pNestedLootList)
 				continue;
 
 			// Dig through all of this lootlist's entries
-			return DoesLootlistDropQuests( pNestedLootList );
+			return DoesLootlistDropQuests(pNestedLootList);
 		}
 	}
 
@@ -285,19 +287,19 @@ bool DoesLootlistDropQuests( const CEconLootListDefinition* pLootList )
 //-----------------------------------------------------------------------------
 void CScrollableQuestList::UpdateEmptyMessage()
 {
-	tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ );
+	tmZone(TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__);
 
-	CCyclingAdContainerPanel* pPassStoreAd = FindControl< CCyclingAdContainerPanel >( "ItemAd", true );
-	if ( !pPassStoreAd )
+	CCyclingAdContainerPanel *pPassStoreAd = FindControl<CCyclingAdContainerPanel>("ItemAd", true);
+	if(!pPassStoreAd)
 		return;
 
-	pPassStoreAd->SetVisible( false );
-	SetDialogVariable( "noquests", "" );
+	pPassStoreAd->SetVisible(false);
+	SetDialogVariable("noquests", "");
 
-	FOR_EACH_VEC( m_vecQuestItemPanels, i )
+	FOR_EACH_VEC(m_vecQuestItemPanels, i)
 	{
 		// Case 1 above
-		if ( m_vecQuestItemPanels[ i ]->GetItem() )
+		if(m_vecQuestItemPanels[i]->GetItem())
 			return;
 	}
 
@@ -305,89 +307,96 @@ void CScrollableQuestList::UpdateEmptyMessage()
 	const char *pszNoQuestsText = m_pszNotPossible;
 
 	// Find any active quest-dropping operations
-	const auto& mapOperations = GetItemSchema()->GetOperationDefinitions();
-	FOR_EACH_MAP_FAST( mapOperations, iOperation )
+	const auto &mapOperations = GetItemSchema()->GetOperationDefinitions();
+	FOR_EACH_MAP_FAST(mapOperations, iOperation)
 	{
-		CEconOperationDefinition *pOperation = mapOperations[ iOperation ];
-		const CSchemaLootListDefHandle pOperationLootlist( pOperation->GetOperationLootlist() );
+		CEconOperationDefinition *pOperation = mapOperations[iOperation];
+		const CSchemaLootListDefHandle pOperationLootlist(pOperation->GetOperationLootlist());
 		// Must still be dropping, and be dropping quests
-		if ( CRTime::RTime32TimeCur() < pOperation->GetStopGivingToPlayerDate() && pOperationLootlist && DoesLootlistDropQuests( pOperationLootlist ) )
+		if(CRTime::RTime32TimeCur() < pOperation->GetStopGivingToPlayerDate() && pOperationLootlist &&
+		   DoesLootlistDropQuests(pOperationLootlist))
 		{
 			// If there's a required item and a gateway item
-			if ( pOperation->GetRequiredItemDefIndex() != INVALID_ITEM_DEF_INDEX && pOperation->GetGatewayItemDefIndex() != INVALID_ITEM_DEF_INDEX )
+			if(pOperation->GetRequiredItemDefIndex() != INVALID_ITEM_DEF_INDEX &&
+			   pOperation->GetGatewayItemDefIndex() != INVALID_ITEM_DEF_INDEX)
 			{
 				// And the user doesn't have the required item
-				if ( TFInventoryManager()->GetLocalTFInventory()->FindFirstItembyItemDef( pOperation->GetRequiredItemDefIndex() ) == NULL )
+				if(TFInventoryManager()->GetLocalTFInventory()->FindFirstItembyItemDef(
+					   pOperation->GetRequiredItemDefIndex()) == NULL)
 				{
 					// The user needs to get the item
 					pszNoQuestsText = m_pszNeedAPass;
 
-					bool bStoreIsReady = EconUI()->GetStorePanel() && EconUI()->GetStorePanel()->GetPriceSheet() && EconUI()->GetStorePanel()->GetCart() && steamapicontext && steamapicontext->SteamUser();
+					bool bStoreIsReady = EconUI()->GetStorePanel() && EconUI()->GetStorePanel()->GetPriceSheet() &&
+										 EconUI()->GetStorePanel()->GetCart() && steamapicontext &&
+										 steamapicontext->SteamUser();
 					bool bGatewayItemInStore = false;
 					// Check if the gateway item is in the Mann Co Store
-					if ( bStoreIsReady )
+					if(bStoreIsReady)
 					{
-						bGatewayItemInStore = EconUI()->GetStorePanel()->GetPriceSheet()->GetEntry( pOperation->GetGatewayItemDefIndex() ) != NULL;
+						bGatewayItemInStore = EconUI()->GetStorePanel()->GetPriceSheet()->GetEntry(
+												  pOperation->GetGatewayItemDefIndex()) != NULL;
 					}
 
-					CEconItemDefinition* pGatewayItemDef = GetItemSchema()->GetItemDefinition( pOperation->GetGatewayItemDefIndex() );
-					Assert( pGatewayItemDef );
-					if ( !pGatewayItemDef )
+					CEconItemDefinition *pGatewayItemDef =
+						GetItemSchema()->GetItemDefinition(pOperation->GetGatewayItemDefIndex());
+					Assert(pGatewayItemDef);
+					if(!pGatewayItemDef)
 						return;
 
 					// Cook up KVs for this item ad
-					KeyValuesAD pKVItemAd( "items" ); // The panel will copy these
-					KeyValues* pKVItem = pKVItemAd->CreateNewKey();
-					pKVItem->SetName( "0" );
-					pKVItem->SetString( "item", pGatewayItemDef->GetDefinitionName() );
-					pKVItem->SetInt( "show_market", bGatewayItemInStore ? 0 : 1 );
+					KeyValuesAD pKVItemAd("items"); // The panel will copy these
+					KeyValues *pKVItem = pKVItemAd->CreateNewKey();
+					pKVItem->SetName("0");
+					pKVItem->SetString("item", pGatewayItemDef->GetDefinitionName());
+					pKVItem->SetInt("show_market", bGatewayItemInStore ? 0 : 1);
 
-					pPassStoreAd->SetVisible( true );
-					pPassStoreAd->SetItemKVs( pKVItemAd );
+					pPassStoreAd->SetVisible(true);
+					pPassStoreAd->SetItemKVs(pKVItemAd);
 
 					// This is the most important thing to communicate.  Don't let other operations stomp it.
 					break;
 				}
 			}
-	
+
 			pszNoQuestsText = m_pszNoQuests;
 			// Don't break.  Give more important operations a chance to present
 		}
 	}
 
-	SetDialogVariable( "noquests", g_pVGuiLocalize->Find( pszNoQuestsText ) );
+	SetDialogVariable("noquests", g_pVGuiLocalize->Find(pszNoQuestsText));
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CScrollableQuestList::PopulateQuestLists()
 {
-	tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ );
+	tmZone(TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__);
 	// We dont do anything when a quest is completing
-	if ( m_pCompletingPanel != NULL )
+	if(m_pCompletingPanel != NULL)
 		return;
 
 	DirtyQuestLayout();
 
-	CUtlVector< CEconItemView * > vecQuestItems;
-	TFInventoryManager()->GetAllQuestItems( &vecQuestItems );
+	CUtlVector<CEconItemView *> vecQuestItems;
+	TFInventoryManager()->GetAllQuestItems(&vecQuestItems);
 
-	CUtlVector< CQuestItemPanel* > vecAvailablePanels;
+	CUtlVector<CQuestItemPanel *> vecAvailablePanels;
 
-	FOR_EACH_VEC( m_vecQuestItemPanels, i )
+	FOR_EACH_VEC(m_vecQuestItemPanels, i)
 	{
 		bool bFound = false;
-		if ( m_vecQuestItemPanels[ i ]->GetItem() )
+		if(m_vecQuestItemPanels[i]->GetItem())
 		{
-			FOR_EACH_VEC_BACK( vecQuestItems, j )
+			FOR_EACH_VEC_BACK(vecQuestItems, j)
 			{
 				// See if the item in the panel is still in the list of items we own
-				if ( m_vecQuestItemPanels[ i ]->GetItem()->GetOriginalID() == vecQuestItems[ j ]->GetOriginalID() )
+				if(m_vecQuestItemPanels[i]->GetItem()->GetOriginalID() == vecQuestItems[j]->GetOriginalID())
 				{
 					// Refresh it
-					m_vecQuestItemPanels[ i ]->InvalidateLayout();
-					vecQuestItems.Remove( j );
+					m_vecQuestItemPanels[i]->InvalidateLayout();
+					vecQuestItems.Remove(j);
 					bFound = true;
 					break;
 				}
@@ -395,69 +404,69 @@ void CScrollableQuestList::PopulateQuestLists()
 		}
 
 		// Didn't find it.  Clear it out
-		if ( !bFound )
+		if(!bFound)
 		{
-			if ( m_vecQuestItemPanels[ i ]->GetItem() )
+			if(m_vecQuestItemPanels[i]->GetItem())
 			{
-				m_vecQuestItemPanels[ i ]->SetItem( NULL );
+				m_vecQuestItemPanels[i]->SetItem(NULL);
 			}
 
-			if ( m_vecQuestItemPanels[ i ]->IsSelected() )
+			if(m_vecQuestItemPanels[i]->IsSelected())
 			{
-				SetSelected( m_vecQuestItemPanels[ i ], false );
+				SetSelected(m_vecQuestItemPanels[i], false);
 			}
 
-			vecAvailablePanels.AddToTail( m_vecQuestItemPanels[ i ] );
+			vecAvailablePanels.AddToTail(m_vecQuestItemPanels[i]);
 		}
 	}
 
-	for ( int i = 0 ; i < vecQuestItems.Count(); ++i )
+	for(int i = 0; i < vecQuestItems.Count(); ++i)
 	{
 		CEconItemView *pItem = vecQuestItems[i];
 
-		if ( i < vecAvailablePanels.Count() )
+		if(i < vecAvailablePanels.Count())
 		{
-			vecAvailablePanels[ i ]->SetItem( pItem );
+			vecAvailablePanels[i]->SetItem(pItem);
 		}
-		else if ( i >= m_vecQuestItemPanels.Count() )
+		else if(i >= m_vecQuestItemPanels.Count())
 		{
-			Assert( !"Ran out of quest panels!" );
+			Assert(!"Ran out of quest panels!");
 		}
 	}
 
 	// Sort the panels to make sure they're in order
-	m_vecQuestItemPanels.Sort( &QuestSort_AcquiredTime );
+	m_vecQuestItemPanels.Sort(&QuestSort_AcquiredTime);
 
 	// Sorting is done manually
-	FOR_EACH_VEC( m_vecQuestItemPanels, i )
+	FOR_EACH_VEC(m_vecQuestItemPanels, i)
 	{
-		m_vecQuestItemPanels[ i ]->SetZPos( i + 1 );
+		m_vecQuestItemPanels[i]->SetZPos(i + 1);
 	}
 
 	PositionQuestItemPanels();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CScrollableQuestList::QuestCompletedResponse()
 {
-	FOR_EACH_VEC( m_vecQuestItemPanels, i )
+	FOR_EACH_VEC(m_vecQuestItemPanels, i)
 	{
 		m_vecQuestItemPanels[i]->QuestCompletedResponse();
 	}
 
-//	PopulateQuestLists();
+	//	PopulateQuestLists();
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Return true if any quest item panels are in the passed in state
 //-----------------------------------------------------------------------------
-bool CScrollableQuestList::AnyQuestItemPanelsInState( CQuestItemPanel::EItemPanelState_t eState ) const
+bool CScrollableQuestList::AnyQuestItemPanelsInState(CQuestItemPanel::EItemPanelState_t eState) const
 {
-	FOR_EACH_VEC( m_vecQuestItemPanels, i )
+	FOR_EACH_VEC(m_vecQuestItemPanels, i)
 	{
-		if ( m_vecQuestItemPanels[i]->GetState() == eState )
+		if(m_vecQuestItemPanels[i]->GetState() == eState)
 			return true;
 	}
 
@@ -467,84 +476,85 @@ bool CScrollableQuestList::AnyQuestItemPanelsInState( CQuestItemPanel::EItemPane
 //-------------------------------------------------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CQuestLogPanel::CQuestLogPanel( IViewPort *pViewPort )
-		: EditablePanel( NULL, PANEL_QUEST_LOG )
-		, m_bWaitingForComplete( false )
-		, m_pQuestList( NULL )
-		, m_bInventoryDirty( true )
-		, m_iQuestLogKey( BUTTON_CODE_INVALID )
+CQuestLogPanel::CQuestLogPanel(IViewPort *pViewPort)
+	: EditablePanel(NULL, PANEL_QUEST_LOG),
+	  m_bWaitingForComplete(false),
+	  m_pQuestList(NULL),
+	  m_bInventoryDirty(true),
+	  m_iQuestLogKey(BUTTON_CODE_INVALID)
 {
-	if (g_pVGuiLocalize)
+	if(g_pVGuiLocalize)
 	{
-		g_pVGuiLocalize->AddFile( "resource/tf_quests_%language%.txt" );
+		g_pVGuiLocalize->AddFile("resource/tf_quests_%language%.txt");
 	}
 
-	vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/ClientScheme.res", "ClientScheme");
+	vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx(enginevgui->GetPanel(PANEL_CLIENTDLL),
+																"resource/ClientScheme.res", "ClientScheme");
 	SetScheme(scheme);
-	SetProportional( true );
+	SetProportional(true);
 
-	ListenForGameEvent( "inventory_updated" );
-	ListenForGameEvent( "gameui_hidden" );
-	ListenForGameEvent( "gc_connected" );
+	ListenForGameEvent("inventory_updated");
+	ListenForGameEvent("gameui_hidden");
+	ListenForGameEvent("gc_connected");
 
 	// Create the item model panel tooltip
-	m_pMouseOverItemPanel = new CItemModelPanel( this, "mouseoveritempanel" );
-	m_pMouseOverTooltip = new CItemModelPanelToolTip( this );
-	m_pMouseOverTooltip->SetupPanels( this, m_pMouseOverItemPanel );
+	m_pMouseOverItemPanel = new CItemModelPanel(this, "mouseoveritempanel");
+	m_pMouseOverTooltip = new CItemModelPanelToolTip(this);
+	m_pMouseOverTooltip->SetupPanels(this, m_pMouseOverItemPanel);
 
 	// Create the text tooltip
-	m_pToolTip = new CQuestTooltip( this );
-	m_pToolTipEmbeddedPanel = new vgui::EditablePanel( this, "TooltipPanel" );
-	m_pToolTipEmbeddedPanel->SetKeyBoardInputEnabled( false );
-	m_pToolTipEmbeddedPanel->SetMouseInputEnabled( false );
-//	m_pToolTipEmbeddedPanel->MakePopup();
-	m_pToolTip->SetEmbeddedPanel( m_pToolTipEmbeddedPanel );
-	m_pToolTip->SetTooltipDelay( 0 );
+	m_pToolTip = new CQuestTooltip(this);
+	m_pToolTipEmbeddedPanel = new vgui::EditablePanel(this, "TooltipPanel");
+	m_pToolTipEmbeddedPanel->SetKeyBoardInputEnabled(false);
+	m_pToolTipEmbeddedPanel->SetMouseInputEnabled(false);
+	//	m_pToolTipEmbeddedPanel->MakePopup();
+	m_pToolTip->SetEmbeddedPanel(m_pToolTipEmbeddedPanel);
+	m_pToolTip->SetTooltipDelay(0);
 
-	EditablePanel *pMainContainer = new EditablePanel( this, "MainContainer" );
-	m_pQuestList = new CScrollableQuestList( pMainContainer, "QuestList" );
+	EditablePanel *pMainContainer = new EditablePanel(this, "MainContainer");
+	m_pQuestList = new CScrollableQuestList(pMainContainer, "QuestList");
 
-	m_pProgressPanel = new EditablePanel( this, "ProgressPanel" );
+	m_pProgressPanel = new EditablePanel(this, "ProgressPanel");
 
-	m_pDebugButton = new CExButton( pMainContainer, "Options", "Options", this, "open_debug_menu" );
+	m_pDebugButton = new CExButton(pMainContainer, "Options", "Options", this, "open_debug_menu");
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Look into the moused-over panel and take "tiptext" from its dialog
 //			variables and set it as our own.
 //-----------------------------------------------------------------------------
-void CQuestTooltip::ShowTooltip( Panel *pCurrentPanel )
+void CQuestTooltip::ShowTooltip(Panel *pCurrentPanel)
 {
-	EditablePanel* pEditableCurrentPanel = dynamic_cast< EditablePanel* >( pCurrentPanel );
-	if ( pEditableCurrentPanel )
+	EditablePanel *pEditableCurrentPanel = dynamic_cast<EditablePanel *>(pCurrentPanel);
+	if(pEditableCurrentPanel)
 	{
-		KeyValues* pKVVariables = pEditableCurrentPanel->GetDialogVariables();
-		const wchar_t *pwszTipText = pKVVariables->GetWString( "tiptext", L"" );
-		m_pEmbeddedPanel->SetDialogVariable( "tiptext", pwszTipText );
+		KeyValues *pKVVariables = pEditableCurrentPanel->GetDialogVariables();
+		const wchar_t *pwszTipText = pKVVariables->GetWString("tiptext", L"");
+		m_pEmbeddedPanel->SetDialogVariable("tiptext", pwszTipText);
 	}
 
-	BaseClass::ShowTooltip( pCurrentPanel );
+	BaseClass::ShowTooltip(pCurrentPanel);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Position ourselves down and to the right as far as posible
 //-----------------------------------------------------------------------------
-void CQuestTooltip::PositionWindow( Panel *pTipPanel )
+void CQuestTooltip::PositionWindow(Panel *pTipPanel)
 {
-	tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ );
+	tmZone(TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__);
 	int iTipW, iTipH;
-	pTipPanel->GetSize( iTipW, iTipH );
+	pTipPanel->GetSize(iTipW, iTipH);
 
 	int cursorX, cursorY;
 	vgui::input()->GetCursorPos(cursorX, cursorY);
 
 	int px, py, wide, tall;
-	ipanel()->GetAbsPos( m_pEmbeddedPanel->GetParent()->GetVPanel(), px, py );
+	ipanel()->GetAbsPos(m_pEmbeddedPanel->GetParent()->GetVPanel(), px, py);
 	m_pEmbeddedPanel->GetParent()->GetSize(wide, tall);
 
-	if ( !m_pEmbeddedPanel->IsPopup() )
+	if(!m_pEmbeddedPanel->IsPopup())
 	{
 		// Move the cursor into our parent space
 		cursorX -= px;
@@ -552,65 +562,61 @@ void CQuestTooltip::PositionWindow( Panel *pTipPanel )
 	}
 
 	// Dangle as far down and as far right as possible
-	int nXPos = cursorX - Max( 0, ( ( iTipW + cursorX ) - wide ) );
-	int nYPos = ( cursorY + 20 )- Max( 0, ( ( iTipH + cursorY + 20 ) - tall ) ) ;
+	int nXPos = cursorX - Max(0, ((iTipW + cursorX) - wide));
+	int nYPos = (cursorY + 20) - Max(0, ((iTipH + cursorY + 20) - tall));
 
-	pTipPanel->SetPos( nXPos, nYPos );
+	pTipPanel->SetPos(nXPos, nYPos);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CQuestLogPanel::~CQuestLogPanel()
+CQuestLogPanel::~CQuestLogPanel() {}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+void CQuestLogPanel::AttachToGameUI(void)
 {
-}
+	C_CTFGameStats::ImmediateWriteInterfaceEvent("interface_open", "quest_log_panel");
 
-
-//-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-void CQuestLogPanel::AttachToGameUI( void )
-{
-	C_CTFGameStats::ImmediateWriteInterfaceEvent( "interface_open",	"quest_log_panel" );
-
-	if ( GetClientModeTFNormal()->GameUI() )
+	if(GetClientModeTFNormal()->GameUI())
 	{
-		GetClientModeTFNormal()->GameUI()->SetMainMenuOverride( GetVPanel() );
+		GetClientModeTFNormal()->GameUI()->SetMainMenuOverride(GetVPanel());
 	}
 
-	SetKeyBoardInputEnabled( true );
-	SetMouseInputEnabled( true );
+	SetKeyBoardInputEnabled(true);
+	SetMouseInputEnabled(true);
 	SetCursor(dc_arrow);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-const char *CQuestLogPanel::GetName( void )
+const char *CQuestLogPanel::GetName(void)
 {
 	return PANEL_QUEST_LOG;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CQuestLogPanel::ApplySchemeSettings( IScheme *pScheme )
+void CQuestLogPanel::ApplySchemeSettings(IScheme *pScheme)
 {
-	tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ );
-	BaseClass::ApplySchemeSettings( pScheme );
+	tmZone(TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__);
+	BaseClass::ApplySchemeSettings(pScheme);
 
 	const char *pszResFile = "Resource/UI/econ/QuestLogPanel.res";
 
 	// Check if the operation wants to override our default res file
-	const auto& mapOperations = GetItemSchema()->GetOperationDefinitions();
-	FOR_EACH_MAP_FAST( mapOperations, i )
+	const auto &mapOperations = GetItemSchema()->GetOperationDefinitions();
+	FOR_EACH_MAP_FAST(mapOperations, i)
 	{
-		CEconOperationDefinition* pOperation = mapOperations[i];
-		if ( pOperation->IsActive() && pOperation->IsCampaign() )
+		CEconOperationDefinition *pOperation = mapOperations[i];
+		if(pOperation->IsActive() && pOperation->IsCampaign())
 		{
 			// Use the first found for now
-			if ( pOperation->GetQuestLogOverrideResFile() )
+			if(pOperation->GetQuestLogOverrideResFile())
 			{
 				pszResFile = pOperation->GetQuestLogOverrideResFile();
 			}
@@ -618,117 +624,122 @@ void CQuestLogPanel::ApplySchemeSettings( IScheme *pScheme )
 		}
 	}
 
-	LoadControlSettings( pszResFile );
+	LoadControlSettings(pszResFile);
 
 	g_spItemTooltip = m_pMouseOverTooltip;
 	g_spTextTooltip = m_pToolTip;
 
 	// The outer dim / close button
 	{
-		Button* pButton = FindControl<Button>( "OutsideCloseButton" );
-		if ( pButton )
+		Button *pButton = FindControl<Button>("OutsideCloseButton");
+		if(pButton)
 		{
-			pButton->AddActionSignalTarget( this );
-			pButton->SetPaintBackgroundEnabled( false );
+			pButton->AddActionSignalTarget(this);
+			pButton->SetPaintBackgroundEnabled(false);
 		}
 	}
 
-	m_pQuestList->InvalidateLayout( false, true );
+	m_pQuestList->InvalidateLayout(false, true);
 
-	Assert( m_pQuestList );
+	Assert(m_pQuestList);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestLogPanel::PerformLayout()
 {
 	BaseClass::PerformLayout();
 
-	if ( GetUniverse() != k_EUniversePublic )
+	if(GetUniverse() != k_EUniversePublic)
 	{
 		int x, y;
-		m_pDebugButton->GetParent()->GetPos( x, y );
+		m_pDebugButton->GetParent()->GetPos(x, y);
 		int w, h;
-		m_pDebugButton->GetParent()->GetSize( w, h );
+		m_pDebugButton->GetParent()->GetSize(w, h);
 		m_pDebugButton->SizeToContents();
-		m_pDebugButton->SetVisible( true );
-		m_pDebugButton->SetPos( x + w - m_pDebugButton->GetWide() - 60, y + 15 );
-		m_pDebugButton->SetZPos( 1000 );
+		m_pDebugButton->SetVisible(true);
+		m_pDebugButton->SetPos(x + w - m_pDebugButton->GetWide() - 60, y + 15);
+		m_pDebugButton->SetZPos(1000);
 	}
 	else
 	{
-		m_pDebugButton->SetVisible( false );
+		m_pDebugButton->SetVisible(false);
 	}
 
 	UpdateQuestsItemPanels();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CQuestLogPanel::OnCommand( const char *pCommand )
+void CQuestLogPanel::OnCommand(const char *pCommand)
 {
-	if ( FStrEq( pCommand, "close" ) )
+	if(FStrEq(pCommand, "close"))
 	{
-		if ( enginevgui->IsGameUIVisible() )
+		if(enginevgui->IsGameUIVisible())
 		{
-			ShowPanel( false );
+			ShowPanel(false);
 		}
 		else
 		{
-			IViewPortPanel *pQuestLog = ( gViewPortInterface->FindPanelByName( PANEL_QUEST_LOG ) );
-			if ( pQuestLog )
+			IViewPortPanel *pQuestLog = (gViewPortInterface->FindPanelByName(PANEL_QUEST_LOG));
+			if(pQuestLog)
 			{
-				gViewPortInterface->ShowPanel( pQuestLog, false );
+				gViewPortInterface->ShowPanel(pQuestLog, false);
 			}
 		}
 	}
-	else if ( Q_stricmp( "open_debug_menu", pCommand ) == 0 )
+	else if(Q_stricmp("open_debug_menu", pCommand) == 0)
 	{
-		if ( GetUniverse() == k_EUniverseBeta || GetUniverse() == k_EUniverseDev )
+		if(GetUniverse() == k_EUniverseBeta || GetUniverse() == k_EUniverseDev)
 		{
 			const char *pszContextMenuBorder = "NotificationDefault";
 			const char *pszContextMenuFont = "HudFontMediumSecondary";
 
-			Menu *pContextMenu = new Menu( this, "ContextMenu" );
-			pContextMenu->SetBorder( scheme()->GetIScheme( GetScheme() )->GetBorder( pszContextMenuBorder ) );
-			pContextMenu->SetFont( scheme()->GetIScheme( GetScheme() )->GetFont( pszContextMenuFont ) );
-		
+			Menu *pContextMenu = new Menu(this, "ContextMenu");
+			pContextMenu->SetBorder(scheme()->GetIScheme(GetScheme())->GetBorder(pszContextMenuBorder));
+			pContextMenu->SetFont(scheme()->GetIScheme(GetScheme())->GetFont(pszContextMenuFont));
 
-			MenuBuilder contextMenuBuilder( pContextMenu, this );
+			MenuBuilder contextMenuBuilder(pContextMenu, this);
 
-			const auto& mapOperations = GetItemSchema()->GetOperationDefinitions();
-			FOR_EACH_MAP_FAST( mapOperations, iOperation )
+			const auto &mapOperations = GetItemSchema()->GetOperationDefinitions();
+			FOR_EACH_MAP_FAST(mapOperations, iOperation)
 			{
 				bool bHasAnyQuests = false;
-				Menu* pOperationSubMenu = NULL;
+				Menu *pOperationSubMenu = NULL;
 
-				CEconOperationDefinition *pOperation = mapOperations[ iOperation ];
-				const CEconLootListDefinition *pLootListDef = GetItemSchema()->GetLootListByName( pOperation->GetOperationLootlist() );
-				if ( pLootListDef )
+				CEconOperationDefinition *pOperation = mapOperations[iOperation];
+				const CEconLootListDefinition *pLootListDef =
+					GetItemSchema()->GetLootListByName(pOperation->GetOperationLootlist());
+				if(pLootListDef)
 				{
-					auto& vecContents = pLootListDef->GetLootListContents();
-					FOR_EACH_VEC( vecContents, i )
+					auto &vecContents = pLootListDef->GetLootListContents();
+					FOR_EACH_VEC(vecContents, i)
 					{
-						if ( vecContents[i].m_iItemOrLootlistDef > 0 )
+						if(vecContents[i].m_iItemOrLootlistDef > 0)
 						{
-							const GameItemDefinition_t* pItemDef = (GameItemDefinition_t*)GetItemSchema()->GetItemDefinition( vecContents[i].m_iItemOrLootlistDef );
-							if ( pItemDef && pItemDef->GetQuestDef() )
+							const GameItemDefinition_t *pItemDef =
+								(GameItemDefinition_t *)GetItemSchema()->GetItemDefinition(
+									vecContents[i].m_iItemOrLootlistDef);
+							if(pItemDef && pItemDef->GetQuestDef())
 							{
-								if ( !bHasAnyQuests )
+								if(!bHasAnyQuests)
 								{
 									bHasAnyQuests = true;
 
-									pOperationSubMenu = new Menu( this, "OperationSubMenu" );
-									pOperationSubMenu->SetBorder( scheme()->GetIScheme( GetScheme() )->GetBorder( pszContextMenuBorder ) );
-									pOperationSubMenu->SetFont( scheme()->GetIScheme( GetScheme() )->GetFont( pszContextMenuFont ) );
+									pOperationSubMenu = new Menu(this, "OperationSubMenu");
+									pOperationSubMenu->SetBorder(
+										scheme()->GetIScheme(GetScheme())->GetBorder(pszContextMenuBorder));
+									pOperationSubMenu->SetFont(
+										scheme()->GetIScheme(GetScheme())->GetFont(pszContextMenuFont));
 
-									contextMenuBuilder.AddCascadingMenuItem( pOperation->GetName(), pOperationSubMenu, "operations" );
+									contextMenuBuilder.AddCascadingMenuItem(pOperation->GetName(), pOperationSubMenu,
+																			"operations");
 								}
 
-								pOperationSubMenu->AddMenuItem( pItemDef->GetItemBaseName(), CFmtStr( "give%s", pItemDef->GetDefinitionName() ), this );
+								pOperationSubMenu->AddMenuItem(pItemDef->GetItemBaseName(),
+															   CFmtStr("give%s", pItemDef->GetDefinitionName()), this);
 							}
 						}
 					}
@@ -736,91 +747,95 @@ void CQuestLogPanel::OnCommand( const char *pCommand )
 			}
 
 			bool bHasAnyQuests = false;
-			Menu* pAllSubMenu = NULL;
+			Menu *pAllSubMenu = NULL;
 
-			FOR_EACH_MAP_FAST( GetItemSchema()->GetItemDefinitionMap(), i )
+			FOR_EACH_MAP_FAST(GetItemSchema()->GetItemDefinitionMap(), i)
 			{
-				const GameItemDefinition_t* pItemDef = (GameItemDefinition_t*)GetItemSchema()->GetItemDefinitionMap()[ i ];
-				if ( pItemDef->GetQuestDef() )
+				const GameItemDefinition_t *pItemDef =
+					(GameItemDefinition_t *)GetItemSchema()->GetItemDefinitionMap()[i];
+				if(pItemDef->GetQuestDef())
 				{
-					if ( !bHasAnyQuests )
+					if(!bHasAnyQuests)
 					{
 						bHasAnyQuests = true;
 
-						pAllSubMenu = new Menu( this, "AllSubMenu" );
-						pAllSubMenu->SetBorder( scheme()->GetIScheme( GetScheme() )->GetBorder( pszContextMenuBorder ) );
-						pAllSubMenu->SetFont( scheme()->GetIScheme( GetScheme() )->GetFont( pszContextMenuFont ) );
+						pAllSubMenu = new Menu(this, "AllSubMenu");
+						pAllSubMenu->SetBorder(scheme()->GetIScheme(GetScheme())->GetBorder(pszContextMenuBorder));
+						pAllSubMenu->SetFont(scheme()->GetIScheme(GetScheme())->GetFont(pszContextMenuFont));
 
-						contextMenuBuilder.AddCascadingMenuItem( "all", pAllSubMenu, "all" );
+						contextMenuBuilder.AddCascadingMenuItem("all", pAllSubMenu, "all");
 					}
 
-					pAllSubMenu->AddMenuItem( pItemDef->GetItemBaseName(), CFmtStr( "give%s", pItemDef->GetDefinitionName() ), this );
+					pAllSubMenu->AddMenuItem(pItemDef->GetItemBaseName(),
+											 CFmtStr("give%s", pItemDef->GetDefinitionName()), this);
 				}
 			}
 
 			// Position to the cursor's position
 			int nX, nY;
-			g_pVGuiInput->GetCursorPosition( nX, nY );
-			pContextMenu->SetPos( nX - 1, nY - 1 );
-	
+			g_pVGuiInput->GetCursorPosition(nX, nY);
+			pContextMenu->SetPos(nX - 1, nY - 1);
+
 			pContextMenu->SetVisible(true);
 			pContextMenu->AddActionSignalTarget(this);
 		}
 	}
-	else if ( Q_strnicmp( "give", pCommand, 4 ) == 0 )
+	else if(Q_strnicmp("give", pCommand, 4) == 0)
 	{
-		if ( GetUniverse() != k_EUniversePublic )
+		if(GetUniverse() != k_EUniversePublic)
 		{
-			if ( !steamapicontext || !steamapicontext->SteamUser() )
+			if(!steamapicontext || !steamapicontext->SteamUser())
 			{
 				Msg("Not connected to Steam.\n");
 				return;
 			}
 
 			CSteamID steamIDForPlayer = steamapicontext->SteamUser()->GetSteamID();
-			if ( !steamIDForPlayer.IsValid() )
+			if(!steamIDForPlayer.IsValid())
 			{
 				Msg("Failed to find a valid steamID for the local player.\n");
 				return;
 			}
 
-			const char* pszItemToGive = pCommand + 4;
-			Msg( "Sending request to generate '%s' for Local Player (%llu)\n", pszItemToGive, steamIDForPlayer.ConvertToUint64() );
+			const char *pszItemToGive = pCommand + 4;
+			Msg("Sending request to generate '%s' for Local Player (%llu)\n", pszItemToGive,
+				steamIDForPlayer.ConvertToUint64());
 
 			CItemSelectionCriteria criteria;
 
-			GCSDK::CProtoBufMsg<CMsgDevNewItemRequest> msg( k_EMsgGCDev_NewItemRequest );
-			msg.Body().set_receiver( steamIDForPlayer.ConvertToUint64() );
+			GCSDK::CProtoBufMsg<CMsgDevNewItemRequest> msg(k_EMsgGCDev_NewItemRequest);
+			msg.Body().set_receiver(steamIDForPlayer.ConvertToUint64());
 
-			criteria.SetIgnoreEnabledFlag( true );
-			if ( !criteria.BAddCondition( "name", k_EOperator_String_EQ, pszItemToGive, true ) ||
-				!criteria.BSerializeToMsg( *msg.Body().mutable_criteria() ) )
+			criteria.SetIgnoreEnabledFlag(true);
+			if(!criteria.BAddCondition("name", k_EOperator_String_EQ, pszItemToGive, true) ||
+			   !criteria.BSerializeToMsg(*msg.Body().mutable_criteria()))
 			{
-				Msg( "Failed to add condition and/or serialize item grant request. This is probably caused by having a string that's too long.\n" );
+				Msg("Failed to add condition and/or serialize item grant request. This is probably caused by having a "
+					"string that's too long.\n");
 				return;
 			}
-			GCClientSystem()->BSendMessage( msg );
+			GCClientSystem()->BSendMessage(msg);
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CQuestLogPanel::FireGameEvent( IGameEvent *event )
+void CQuestLogPanel::FireGameEvent(IGameEvent *event)
 {
-	tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ );
+	tmZone(TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__);
 	// Listen for inventory updates in case our item gets changed while the user
 	// is looking at us.  We want to re-do our entire layout since a quest might
 	// have been equipped / destroyed / completed and we need to re-categorize
 	// all the user's quests.
-	if ( FStrEq( event->GetName(), "inventory_updated" ) && !m_bWaitingForComplete )
+	if(FStrEq(event->GetName(), "inventory_updated") && !m_bWaitingForComplete)
 	{
 		m_bInventoryDirty = true;
 
-		if ( IsVisible() )
+		if(IsVisible())
 		{
-			if ( m_pQuestList )
+			if(m_pQuestList)
 			{
 				m_pQuestList->PopulateQuestLists();
 				m_pQuestList->UpdateEmptyMessage();
@@ -829,143 +844,140 @@ void CQuestLogPanel::FireGameEvent( IGameEvent *event )
 			UpdateQuestsItemPanels();
 		}
 	}
-	else if ( FStrEq( event->GetName(), "gameui_hidden" ) )
+	else if(FStrEq(event->GetName(), "gameui_hidden"))
 	{
-		ShowPanel( false );
+		ShowPanel(false);
 		return;
 	}
-	else if ( FStrEq( event->GetName(), "gc_connected" ) )
+	else if(FStrEq(event->GetName(), "gc_connected"))
 	{
 		m_bInventoryDirty = true;
-		InvalidateLayout( false, true );
+		InvalidateLayout(false, true);
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CQuestLogPanel::ShowPanel( bool bShow )
+void CQuestLogPanel::ShowPanel(bool bShow)
 {
 	// Snag this so we know what to listen for
-	m_iQuestLogKey = gameuifuncs->GetButtonCodeForBind( "show_quest_log" );
+	m_iQuestLogKey = gameuifuncs->GetButtonCodeForBind("show_quest_log");
 
-	if ( m_pQuestList && bShow )
+	if(m_pQuestList && bShow)
 	{
-		m_pQuestList->SetSelected( NULL, true );
+		m_pQuestList->SetSelected(NULL, true);
 		m_pQuestList->DirtyQuestLayout();
 	}
 
-	SetVisible( bShow );
+	SetVisible(bShow);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CQuestLogPanel::OnKeyCodePressed( KeyCode code )
+void CQuestLogPanel::OnKeyCodePressed(KeyCode code)
 {
-	if ( code == m_iQuestLogKey || code == STEAMCONTROLLER_B )
+	if(code == m_iQuestLogKey || code == STEAMCONTROLLER_B)
 	{
-		ShowPanel( false );
+		ShowPanel(false);
 		return;
 	}
 
-	BaseClass::OnKeyCodePressed( code );
+	BaseClass::OnKeyCodePressed(code);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CQuestLogPanel::OnKeyCodeTyped( KeyCode code )
+void CQuestLogPanel::OnKeyCodeTyped(KeyCode code)
 {
-	if ( code == KEY_ESCAPE )
+	if(code == KEY_ESCAPE)
 	{
-		if ( IsVisible() )
+		if(IsVisible())
 		{
-			SetVisible( false );
+			SetVisible(false);
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CQuestLogPanel::SetVisible( bool bState ) 
+void CQuestLogPanel::SetVisible(bool bState)
 {
-	tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ );
+	tmZone(TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__);
 	// Default to showing the active quests upon opening
-	if ( bState == true )
+	if(bState == true)
 	{
 		UpdateQuestsItemPanels();
 
-		IGameEvent *event = gameeventmanager->CreateEvent( "questlog_opened" );
-		if ( event )
+		IGameEvent *event = gameeventmanager->CreateEvent("questlog_opened");
+		if(event)
 		{
-			gameeventmanager->FireEventClientSide( event );
+			gameeventmanager->FireEventClientSide(event);
 		}
 
-		if ( enginevgui->IsGameUIVisible() )
+		if(enginevgui->IsGameUIVisible())
 		{
 			AttachToGameUI();
 		}
 		else
 		{
-			ipanel()->SetParent( GetVPanel(), VGui_GetClientDLLRootPanel() );
+			ipanel()->SetParent(GetVPanel(), VGui_GetClientDLLRootPanel());
 
-			MakePopup( false, true );
-			SetKeyBoardInputEnabled( true );
-			SetMouseInputEnabled( true );
+			MakePopup(false, true);
+			SetKeyBoardInputEnabled(true);
+			SetMouseInputEnabled(true);
 			MoveToFront();
 		}
 
-		engine->ClientCmd_Unrestricted( "gameui_preventescapetoshow\n" );
-		vgui::surface()->PlaySound( "ui/panel_open.wav" );
+		engine->ClientCmd_Unrestricted("gameui_preventescapetoshow\n");
+		vgui::surface()->PlaySound("ui/panel_open.wav");
 	}
-	else if ( IsVisible() )
+	else if(IsVisible())
 	{
 		// Detach from the GameUI when we hide
-		IViewPortPanel *pMMOverride = gViewPortInterface->FindPanelByName( PANEL_MAINMENUOVERRIDE );
-		if ( pMMOverride )
+		IViewPortPanel *pMMOverride = gViewPortInterface->FindPanelByName(PANEL_MAINMENUOVERRIDE);
+		if(pMMOverride)
 		{
-			((CHudMainMenuOverride*)pMMOverride)->AttachToGameUI();	
+			((CHudMainMenuOverride *)pMMOverride)->AttachToGameUI();
 		}
 
-		engine->ClientCmd_Unrestricted( "gameui_allowescapetoshow\n" );
-		vgui::surface()->PlaySound( "ui/panel_close.wav" );
+		engine->ClientCmd_Unrestricted("gameui_allowescapetoshow\n");
+		vgui::surface()->PlaySound("ui/panel_close.wav");
 	}
 
-	BaseClass::SetVisible( bState );
+	BaseClass::SetVisible(bState);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestLogPanel::QuestCompletedResponse()
 {
 	m_bWaitingForComplete = false;
 	m_bInventoryDirty = true;
 
-	if ( m_pQuestList )
+	if(m_pQuestList)
 		m_pQuestList->QuestCompletedResponse();
 
-	//UpdateQuestsItemPanels();
+	// UpdateQuestsItemPanels();
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestLogPanel::UpdateQuestsItemPanels()
 {
 	UpdateBadgeProgressPanels();
 
-	tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ );
-	if ( m_bInventoryDirty )
+	tmZone(TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__);
+	if(m_bInventoryDirty)
 	{
 		m_pQuestList->QuestCompletedResponse();
 
-		if ( m_pQuestList )
+		if(m_pQuestList)
 		{
 			m_pQuestList->PopulateQuestLists();
 			m_pQuestList->UpdateEmptyMessage();
@@ -976,13 +988,13 @@ void CQuestLogPanel::UpdateQuestsItemPanels()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestLogPanel::MarkQuestsDirty()
 {
 	m_bInventoryDirty = true;
 
-	if ( IsVisible() )
+	if(IsVisible())
 	{
 		UpdateQuestsItemPanels();
 	}
@@ -991,91 +1003,95 @@ void CQuestLogPanel::MarkQuestsDirty()
 //-----------------------------------------------------------------------------
 // Purpose: Return true if any quest item panels are in the passed in state
 //-----------------------------------------------------------------------------
-bool CQuestLogPanel::AnyQuestItemPanelsInState( CQuestItemPanel::EItemPanelState_t eState ) const
+bool CQuestLogPanel::AnyQuestItemPanelsInState(CQuestItemPanel::EItemPanelState_t eState) const
 {
-	return m_pQuestList->AnyQuestItemPanelsInState( eState );
+	return m_pQuestList->AnyQuestItemPanelsInState(eState);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CQuestLogPanel::OnCompleteQuest( void )
+void CQuestLogPanel::OnCompleteQuest(void)
 {
 	m_bWaitingForComplete = true;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuestLogPanel::UpdateBadgeProgressPanels()
 {
 	CEconOperationDefinition *pCurrentOperation = NULL;
-	const auto& mapOperations = GetItemSchema()->GetOperationDefinitions();
-	FOR_EACH_MAP_FAST( mapOperations, i )
+	const auto &mapOperations = GetItemSchema()->GetOperationDefinitions();
+	FOR_EACH_MAP_FAST(mapOperations, i)
 	{
-		CEconOperationDefinition* pOperation = mapOperations[i];
-		if ( pOperation->IsActive() && pOperation->IsCampaign() )
+		CEconOperationDefinition *pOperation = mapOperations[i];
+		if(pOperation->IsActive() && pOperation->IsCampaign())
 		{
 			pCurrentOperation = pOperation;
 			break;
 		}
 	}
 
-	if ( pCurrentOperation )
+	if(pCurrentOperation)
 	{
-		CEconItemView *pCoin = TFInventoryManager()->GetLocalTFInventory()->FindFirstItembyItemDef( pCurrentOperation->GetRequiredItemDefIndex() );
-		if ( pCoin )
+		CEconItemView *pCoin = TFInventoryManager()->GetLocalTFInventory()->FindFirstItembyItemDef(
+			pCurrentOperation->GetRequiredItemDefIndex());
+		if(pCoin)
 		{
-			m_pProgressPanel->SetVisible( true );
-			CItemModelPanel *pCoinPanel = m_pProgressPanel->FindControl< CItemModelPanel >( "CoinModelPanel" );
-			if ( pCoinPanel )
+			m_pProgressPanel->SetVisible(true);
+			CItemModelPanel *pCoinPanel = m_pProgressPanel->FindControl<CItemModelPanel>("CoinModelPanel");
+			if(pCoinPanel)
 			{
-				pCoinPanel->SetItem( pCoin );
+				pCoinPanel->SetItem(pCoin);
 			}
 
 			uint32 nNumCompletedContracts = 0;
 			{
 				uint32 nCompletedContractsTemp = 0;
-				GetKilleaterValueByEvent( pCoin, kKillEaterEvent_CosmeticOperationContractsCompleted, nCompletedContractsTemp );
-				nNumCompletedContracts = Max( nNumCompletedContracts, nCompletedContractsTemp );
+				GetKilleaterValueByEvent(pCoin, kKillEaterEvent_CosmeticOperationContractsCompleted,
+										 nCompletedContractsTemp);
+				nNumCompletedContracts = Max(nNumCompletedContracts, nCompletedContractsTemp);
 				// Halloween has it's own thing for whatever reason
-				GetKilleaterValueByEvent( pCoin, kKillEaterEvent_HalloweenContractsCompleted, nCompletedContractsTemp );
-				nNumCompletedContracts = Max( nNumCompletedContracts, nCompletedContractsTemp );
-				Assert( pCurrentOperation->GetMaxDropCount() > 0 );
+				GetKilleaterValueByEvent(pCoin, kKillEaterEvent_HalloweenContractsCompleted, nCompletedContractsTemp);
+				nNumCompletedContracts = Max(nNumCompletedContracts, nCompletedContractsTemp);
+				Assert(pCurrentOperation->GetMaxDropCount() > 0);
 			}
 
 			uint32 nNumContractPoints = 0;
 			{
 				uint32 nContractsPointsTemp = 0;
-				GetKilleaterValueByEvent( pCoin, kKillEaterEvent_CosmeticOperationContractsPoints, nContractsPointsTemp );
-				nNumContractPoints = Max( nContractsPointsTemp, nNumContractPoints );
+				GetKilleaterValueByEvent(pCoin, kKillEaterEvent_CosmeticOperationContractsPoints, nContractsPointsTemp);
+				nNumContractPoints = Max(nContractsPointsTemp, nNumContractPoints);
 				// Halloween has it's own thing for whatever reason
-				GetKilleaterValueByEvent( pCoin, kKillEaterEvent_HalloweenSouls, nContractsPointsTemp );
-				nNumContractPoints = Max( nContractsPointsTemp, nNumContractPoints );
+				GetKilleaterValueByEvent(pCoin, kKillEaterEvent_HalloweenSouls, nContractsPointsTemp);
+				nNumContractPoints = Max(nContractsPointsTemp, nNumContractPoints);
 			}
 
-			EditablePanel *pBadgeContainer = m_pProgressPanel->FindControl< EditablePanel >( "BadgeMeterContainer" );
-			if ( pBadgeContainer )
+			EditablePanel *pBadgeContainer = m_pProgressPanel->FindControl<EditablePanel>("BadgeMeterContainer");
+			if(pBadgeContainer)
 			{
-				ContinuousProgressBar *pBadgeProgressBar = pBadgeContainer->FindControl< ContinuousProgressBar >( "BadgeProgressMeter" );
-				if ( pBadgeProgressBar )
+				ContinuousProgressBar *pBadgeProgressBar =
+					pBadgeContainer->FindControl<ContinuousProgressBar>("BadgeProgressMeter");
+				if(pBadgeProgressBar)
 				{
-					const char *pszLevelingDataName = GetItemSchema()->GetKillEaterScoreTypeLevelingDataName( kKillEaterEvent_HalloweenSouls );
-					Assert( pszLevelingDataName );
+					const char *pszLevelingDataName =
+						GetItemSchema()->GetKillEaterScoreTypeLevelingDataName(kKillEaterEvent_HalloweenSouls);
+					Assert(pszLevelingDataName);
 
-					const CUtlVector<CItemLevelingDefinition> *pLevelingData = GetItemSchema()->GetItemLevelingData( pszLevelingDataName );
-					Assert( pLevelingData );
+					const CUtlVector<CItemLevelingDefinition> *pLevelingData =
+						GetItemSchema()->GetItemLevelingData(pszLevelingDataName);
+					Assert(pLevelingData);
 
 					int nRequiredPointsToNextRank = 0;
 					int nRequiredPointsToCurrentRank = 0;
 					const char *pszCurrentLevelName = NULL;
-					FOR_EACH_VEC( (*pLevelingData), i )
+					FOR_EACH_VEC((*pLevelingData), i)
 					{
 						pszCurrentLevelName = (*pLevelingData)[i].GetNameLocalizationKey();
 
 						const uint32 nRank = (*pLevelingData)[i].GetRequiredScore();
-						if ( nNumContractPoints < nRank )
+						if(nNumContractPoints < nRank)
 						{
 							nRequiredPointsToNextRank = nRank;
 							break;
@@ -1087,56 +1103,59 @@ void CQuestLogPanel::UpdateBadgeProgressPanels()
 					}
 
 					// if no next level, just use max points
-					if ( nRequiredPointsToNextRank == 0 )
+					if(nRequiredPointsToNextRank == 0)
 					{
 						// assuming each contract's worth 130 (100 point + 30 bonus)
 						nRequiredPointsToNextRank = pCurrentOperation->GetMaxDropCount() * 130;
 					}
 
-					float flProgress = (float)( nNumContractPoints - nRequiredPointsToCurrentRank ) / (float)( nRequiredPointsToNextRank - nRequiredPointsToCurrentRank );
-					pBadgeProgressBar->SetProgress( flProgress );
+					float flProgress = (float)(nNumContractPoints - nRequiredPointsToCurrentRank) /
+									   (float)(nRequiredPointsToNextRank - nRequiredPointsToCurrentRank);
+					pBadgeProgressBar->SetProgress(flProgress);
 
-					CExLabel *pLabel = m_pProgressPanel->FindControl< CExLabel >( "BadgeProgressLabel" );
-					if ( pLabel )
+					CExLabel *pLabel = m_pProgressPanel->FindControl<CExLabel>("BadgeProgressLabel");
+					if(pLabel)
 					{
-						pLabel->SetText( CConstructLocalizedString( g_pVGuiLocalize->Find( "QuestLog_BadgeProgress" ), g_pVGuiLocalize->Find( pszCurrentLevelName ) ) );
+						pLabel->SetText(CConstructLocalizedString(g_pVGuiLocalize->Find("QuestLog_BadgeProgress"),
+																  g_pVGuiLocalize->Find(pszCurrentLevelName)));
 					}
 
-					CExLabel *pScoreLabel = pBadgeContainer->FindControl< CExLabel >( "BadgeProgressMeterText" );
-					if ( pScoreLabel )
+					CExLabel *pScoreLabel = pBadgeContainer->FindControl<CExLabel>("BadgeProgressMeterText");
+					if(pScoreLabel)
 					{
-						pScoreLabel->SetText( CFmtStr( "%d/%d", nNumContractPoints, nRequiredPointsToNextRank ) );
+						pScoreLabel->SetText(CFmtStr("%d/%d", nNumContractPoints, nRequiredPointsToNextRank));
 					}
 				}
 			}
 
-			EditablePanel *pContractContainer = m_pProgressPanel->FindControl< EditablePanel >( "ContractMeterContainer" );
-			if ( pContractContainer )
+			EditablePanel *pContractContainer = m_pProgressPanel->FindControl<EditablePanel>("ContractMeterContainer");
+			if(pContractContainer)
 			{
-				ContinuousProgressBar *pContractProgressBar = pContractContainer->FindControl< ContinuousProgressBar >( "ContractsCompletedProgressMeter" );
-				if ( pContractProgressBar )
+				ContinuousProgressBar *pContractProgressBar =
+					pContractContainer->FindControl<ContinuousProgressBar>("ContractsCompletedProgressMeter");
+				if(pContractProgressBar)
 				{
-					pContractProgressBar->SetProgress( (float)nNumCompletedContracts / (float)pCurrentOperation->GetMaxDropCount() );
+					pContractProgressBar->SetProgress((float)nNumCompletedContracts /
+													  (float)pCurrentOperation->GetMaxDropCount());
 
-					CExLabel *pLabel = pContractContainer->FindControl< CExLabel >( "ContractsCompletedProgressMeterText" );
-					if ( pLabel )
+					CExLabel *pLabel = pContractContainer->FindControl<CExLabel>("ContractsCompletedProgressMeterText");
+					if(pLabel)
 					{
-						pLabel->SetText( CFmtStr( "%d", nNumCompletedContracts ) );
+						pLabel->SetText(CFmtStr("%d", nNumCompletedContracts));
 					}
 				}
-			}			
+			}
 		}
 		else
 		{
-			m_pProgressPanel->SetVisible( false );
+			m_pProgressPanel->SetVisible(false);
 		}
 	}
 	else
 	{
-		m_pProgressPanel->SetVisible( false );
+		m_pProgressPanel->SetVisible(false);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: GC Msg handler for when a quest has been completed
@@ -1144,18 +1163,18 @@ void CQuestLogPanel::UpdateBadgeProgressPanels()
 class CGCCompleteQuestCompleteResponse : public GCSDK::CGCClientJob
 {
 public:
-	CGCCompleteQuestCompleteResponse( GCSDK::CGCClient *pClient ) : GCSDK::CGCClientJob( pClient ) {}
+	CGCCompleteQuestCompleteResponse(GCSDK::CGCClient *pClient) : GCSDK::CGCClientJob(pClient) {}
 
-	virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
+	virtual bool BYieldingRunGCJob(GCSDK::IMsgNetPacket *pNetPacket)
 	{
-		GCSDK::CGCMsg<MsgGCStandardResponse_t> msg( pNetPacket );
+		GCSDK::CGCMsg<MsgGCStandardResponse_t> msg(pNetPacket);
 
 		itemid_t nNewToolID = 0;
-		if( !msg.BReadUint64Data( &nNewToolID ) )
+		if(!msg.BReadUint64Data(&nNewToolID))
 			return true;
 
 		CQuestLogPanel *pQuestLog = GetQuestLog();
-		if ( pQuestLog )
+		if(pQuestLog)
 		{
 			pQuestLog->QuestCompletedResponse();
 		}
@@ -1164,19 +1183,19 @@ public:
 	}
 };
 
-GC_REG_JOB( GCSDK::CGCClient, CGCCompleteQuestCompleteResponse, "CGCCompleteQuestCompleteResponse", k_EMsgGCQuestCompleted, GCSDK::k_EServerTypeGCClient );
-
+GC_REG_JOB(GCSDK::CGCClient, CGCCompleteQuestCompleteResponse, "CGCCompleteQuestCompleteResponse",
+		   k_EMsgGCQuestCompleted, GCSDK::k_EServerTypeGCClient);
 
 #ifdef STAGING_ONLY
 static void cc_tf_quest_log_reload()
 {
 	CQuestLogPanel *pQuestLog = GetQuestLog();
-	if ( pQuestLog )
+	if(pQuestLog)
 	{
 		pQuestLog->MarkQuestsDirty();
-		pQuestLog->InvalidateLayout( true, true );
-		gViewPortInterface->ShowPanel( pQuestLog, true );
+		pQuestLog->InvalidateLayout(true, true);
+		gViewPortInterface->ShowPanel(pQuestLog, true);
 	}
 }
-ConCommand tf_quest_log_reload( "tf_quest_log_reload", cc_tf_quest_log_reload );
+ConCommand tf_quest_log_reload("tf_quest_log_reload", cc_tf_quest_log_reload);
 #endif

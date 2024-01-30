@@ -20,7 +20,7 @@
 #include "engine/IEngineTrace.h"
 #include "engine/idownloadsystem.h"
 #include "icliententitylist.h"
-#if !defined( DEDICATED )
+#if !defined(DEDICATED)
 #include "cl_replaycontext.h"
 #include "engine/ivdebugoverlay.h"
 #endif
@@ -30,19 +30,19 @@
 
 //----------------------------------------------------------------------------------------
 
-extern IReplaySystem				*g_pReplay;
-extern IClientReplay				*g_pClient;
-extern IServerReplay				*g_pServer;
-extern IGameEventManager2			*g_pGameEventManager;
-extern IEngineTrace					*g_pEngineTraceClient;
-extern IReplayDemoPlayer			*g_pReplayDemoPlayer;
-extern IEngineReplay				*g_pEngine;
-extern vgui::ILocalize				*g_pVGuiLocalize;
+extern IReplaySystem *g_pReplay;
+extern IClientReplay *g_pClient;
+extern IServerReplay *g_pServer;
+extern IGameEventManager2 *g_pGameEventManager;
+extern IEngineTrace *g_pEngineTraceClient;
+extern IReplayDemoPlayer *g_pReplayDemoPlayer;
+extern IEngineReplay *g_pEngine;
+extern vgui::ILocalize *g_pVGuiLocalize;
 
-#if !defined( DEDICATED )
-extern IEngineClientReplay			*g_pEngineClient;
-extern IVDebugOverlay				*g_pDebugOverlay;
-extern IDownloadSystem				*g_pDownloadSystem;
+#if !defined(DEDICATED)
+extern IEngineClientReplay *g_pEngineClient;
+extern IVDebugOverlay *g_pDebugOverlay;
+extern IDownloadSystem *g_pDownloadSystem;
 #endif
 
 //----------------------------------------------------------------------------------------
@@ -59,14 +59,14 @@ inline IServer *ReplayServerAsIServer()
 
 //----------------------------------------------------------------------------------------
 
-void		Replay_MsgBox( const char *pText );	// Display a message box
-void		Replay_MsgBox( const wchar_t *pText );
-const char	*Replay_GetBaseDir();	// Returns the replays base dir - eg, "/home/user/<...>/replays/"
+void Replay_MsgBox(const char *pText); // Display a message box
+void Replay_MsgBox(const wchar_t *pText);
+const char *Replay_GetBaseDir(); // Returns the replays base dir - eg, "/home/user/<...>/replays/"
 const char *Replay_GetDownloadURLPath();
 const char *Replay_GetDownloadURL();
-void		Replay_CrackURL( const char *pURL, char *pBaseURLOut, char *pURLPathOut );
+void Replay_CrackURL(const char *pURL, char *pBaseURLOut, char *pURLPathOut);
 #ifndef DEDICATED
-void		Replay_HudMsg( const char *pText, const char *pSound = NULL, bool bUrgent = false );
+void Replay_HudMsg(const char *pText, const char *pSound = NULL, bool bUrgent = false);
 #endif
 
 //----------------------------------------------------------------------------------------

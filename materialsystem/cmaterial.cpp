@@ -12,7 +12,7 @@
 #include <string.h>
 #include "materialsystem_global.h"
 #include "shaderapi/ishaderapi.h"
-#include "materialsystem/imaterialproxy.h"							   
+#include "materialsystem/imaterialproxy.h"
 #include "shadersystem.h"
 #include "materialsystem/imaterialproxyfactory.h"
 #include "IHardwareConfigInternal.h"
@@ -45,115 +45,123 @@ class CMaterial : public IMaterialInternal
 {
 public:
 	// Members of the IMaterial interface
-	const char  *GetName() const;
-	const char  *GetTextureGroupName() const;
+	const char *GetName() const;
+	const char *GetTextureGroupName() const;
 
-	PreviewImageRetVal_t GetPreviewImageProperties( int *width, int *height, 
-				 				ImageFormat *imageFormat, bool* isTranslucent ) const;
-	PreviewImageRetVal_t GetPreviewImage( unsigned char *data, int width, int height,
-								ImageFormat imageFormat ) const;
+	PreviewImageRetVal_t GetPreviewImageProperties(int *width, int *height, ImageFormat *imageFormat,
+												   bool *isTranslucent) const;
+	PreviewImageRetVal_t GetPreviewImage(unsigned char *data, int width, int height, ImageFormat imageFormat) const;
 
-	int			GetMappingWidth( );
-	int			GetMappingHeight( );
-	int			GetNumAnimationFrames( );
+	int GetMappingWidth();
+	int GetMappingHeight();
+	int GetNumAnimationFrames();
 
-	bool		InMaterialPage( void )						{ return false; }
-	void		GetMaterialOffset( float *pOffset );
-	void		GetMaterialScale( float *pOffset );
-	IMaterial	*GetMaterialPage( void )					{ return NULL; }
+	bool InMaterialPage(void)
+	{
+		return false;
+	}
+	void GetMaterialOffset(float *pOffset);
+	void GetMaterialScale(float *pOffset);
+	IMaterial *GetMaterialPage(void)
+	{
+		return NULL;
+	}
 
-	void		IncrementReferenceCount( );
-	void		DecrementReferenceCount( );
-	int 		GetEnumerationID( ) const;
-	void		GetLowResColorSample( float s, float t, float *color ) const;
-	
-	IMaterialVar *		FindVar( char const *varName, bool *found, bool complain = true );
-	IMaterialVar *		FindVarFast( char const *pVarName, unsigned int *pToken );
+	void IncrementReferenceCount();
+	void DecrementReferenceCount();
+	int GetEnumerationID() const;
+	void GetLowResColorSample(float s, float t, float *color) const;
+
+	IMaterialVar *FindVar(char const *varName, bool *found, bool complain = true);
+	IMaterialVar *FindVarFast(char const *pVarName, unsigned int *pToken);
 
 	// Sets new VMT shader parameters for the material
-	virtual void		SetShaderAndParams( KeyValues *pKeyValues );
+	virtual void SetShaderAndParams(KeyValues *pKeyValues);
 
-	bool				UsesEnvCubemap( void );
-	bool				NeedsSoftwareSkinning( void );
-	virtual bool		NeedsSoftwareLighting( void );
-	bool				NeedsTangentSpace( void );
-	bool				NeedsPowerOfTwoFrameBufferTexture( bool bCheckSpecificToThisFrame = true );
-	bool				NeedsFullFrameBufferTexture( bool bCheckSpecificToThisFrame = true );
-	virtual bool		IsUsingVertexID( ) const;
+	bool UsesEnvCubemap(void);
+	bool NeedsSoftwareSkinning(void);
+	virtual bool NeedsSoftwareLighting(void);
+	bool NeedsTangentSpace(void);
+	bool NeedsPowerOfTwoFrameBufferTexture(bool bCheckSpecificToThisFrame = true);
+	bool NeedsFullFrameBufferTexture(bool bCheckSpecificToThisFrame = true);
+	virtual bool IsUsingVertexID() const;
 
 	// GR - Is lightmap alpha needed?
-	bool	NeedsLightmapBlendAlpha( void );
-	
-	virtual void	AlphaModulate( float alpha );
-	virtual void	ColorModulate( float r, float g, float b );
-	virtual float	GetAlphaModulation();
-	virtual void	GetColorModulation( float *r, float *g, float *b );
+	bool NeedsLightmapBlendAlpha(void);
+
+	virtual void AlphaModulate(float alpha);
+	virtual void ColorModulate(float r, float g, float b);
+	virtual float GetAlphaModulation();
+	virtual void GetColorModulation(float *r, float *g, float *b);
 
 	// Gets the morph format
-	virtual MorphFormat_t	GetMorphFormat() const;
+	virtual MorphFormat_t GetMorphFormat() const;
 
-	void	SetMaterialVarFlag( MaterialVarFlags_t flag, bool on );
-	bool	GetMaterialVarFlag( MaterialVarFlags_t flag ) const;
+	void SetMaterialVarFlag(MaterialVarFlags_t flag, bool on);
+	bool GetMaterialVarFlag(MaterialVarFlags_t flag) const;
 
-	bool	IsTranslucent();
-	bool	IsTranslucentInternal( float fAlphaModulation ) const; //need to centralize the logic without relying on the *current* alpha modulation being that which is stored in m_pShaderParams[ALPHA].
-	bool	IsAlphaTested();
-	bool	IsVertexLit();
+	bool IsTranslucent();
+	bool IsTranslucentInternal(
+		float fAlphaModulation) const; // need to centralize the logic without relying on the *current* alpha modulation
+									   // being that which is stored in m_pShaderParams[ALPHA].
+	bool IsAlphaTested();
+	bool IsVertexLit();
 	virtual bool IsSpriteCard();
 
-	void	GetReflectivity( Vector& reflect );
-	bool	GetPropertyFlag( MaterialPropertyTypes_t type );
+	void GetReflectivity(Vector &reflect);
+	bool GetPropertyFlag(MaterialPropertyTypes_t type);
 
 	// Is the material visible from both sides?
-	bool	IsTwoSided();
+	bool IsTwoSided();
 
-	int		GetNumPasses( void );
-	int		GetTextureMemoryBytes( void );
+	int GetNumPasses(void);
+	int GetTextureMemoryBytes(void);
 
-	void	SetUseFixedFunctionBakedLighting( bool bEnable );
+	void SetUseFixedFunctionBakedLighting(bool bEnable);
 
-	virtual bool IsPrecached( ) const;
+	virtual bool IsPrecached() const;
 
 public:
 	// stuff that is visible only from within the material system
 
 	// constructor, destructor
-	CMaterial( char const* materialName, const char *pTextureGroupName, KeyValues *pVMTKeyValues );
-	virtual		~CMaterial();
+	CMaterial(char const *materialName, const char *pTextureGroupName, KeyValues *pVMTKeyValues);
+	virtual ~CMaterial();
 
-	void		DrawMesh( VertexCompressionType_t vertexCompression );
-	int			GetReferenceCount( ) const;
-	void		Uncache( bool bPreserveVars = false );
-	void		Precache();
-	void		ReloadTextures( void );
+	void DrawMesh(VertexCompressionType_t vertexCompression);
+	int GetReferenceCount() const;
+	void Uncache(bool bPreserveVars = false);
+	void Precache();
+	void ReloadTextures(void);
 	// If provided, pKeyValues and pPatchKeyValues should come from LoadVMTFile()
-	bool		PrecacheVars( KeyValues *pKeyValues = NULL, KeyValues *pPatchKeyValues = NULL, CUtlVector<FileNameHandle_t> *pIncludes = NULL, int nFindContext = MATERIAL_FINDCONTEXT_NONE );
-	void		SetMinLightmapPageID( int pageID );
-	void		SetMaxLightmapPageID( int pageID );
-	int			GetMinLightmapPageID( ) const;
-	int			GetMaxLightmapPageID( ) const;
-	void		SetNeedsWhiteLightmap( bool val );
-	bool		GetNeedsWhiteLightmap( ) const;
-	bool		IsPrecachedVars( ) const;
-	IShader *	GetShader() const;
+	bool PrecacheVars(KeyValues *pKeyValues = NULL, KeyValues *pPatchKeyValues = NULL,
+					  CUtlVector<FileNameHandle_t> *pIncludes = NULL, int nFindContext = MATERIAL_FINDCONTEXT_NONE);
+	void SetMinLightmapPageID(int pageID);
+	void SetMaxLightmapPageID(int pageID);
+	int GetMinLightmapPageID() const;
+	int GetMaxLightmapPageID() const;
+	void SetNeedsWhiteLightmap(bool val);
+	bool GetNeedsWhiteLightmap() const;
+	bool IsPrecachedVars() const;
+	IShader *GetShader() const;
 	const char *GetShaderName() const;
-	
-	virtual void			DeleteIfUnreferenced();
 
-	void					SetEnumerationID( int id );
-	void					CallBindProxy( void *proxyData );
-	virtual IMaterial		*CheckProxyReplacement( void *proxyData );
-	bool					HasProxy( void ) const;
+	virtual void DeleteIfUnreferenced();
+
+	void SetEnumerationID(int id);
+	void CallBindProxy(void *proxyData);
+	virtual IMaterial *CheckProxyReplacement(void *proxyData);
+	bool HasProxy(void) const;
 
 	// Sets the shader associated with the material
-	void SetShader( const char *pShaderName );
+	void SetShader(const char *pShaderName);
 
 	// Can we override this material in debug?
 	bool NoDebugOverride() const;
 
 	// Gets the vertex format
 	VertexFormat_t GetVertexFormat() const;
-	
+
 	// diffuse bump lightmap?
 	bool IsUsingDiffuseBumpedLighting() const;
 
@@ -170,12 +178,12 @@ public:
 	bool IsSuppressed() const;
 
 	// Do we use fog?
-	bool UseFog( void ) const;
-	
+	bool UseFog(void) const;
+
 	// Should we draw?
 	void ToggleSuppression();
 	void ToggleDebugTrace();
-	
+
 	// Refresh material based on current var values
 	void Refresh();
 	void RefreshPreservingMaterialVars();
@@ -185,9 +193,9 @@ public:
 
 	// Gets at the shader parameters
 	virtual int ShaderParamCount() const;
-	virtual IMaterialVar **GetShaderParams( void );
+	virtual IMaterialVar **GetShaderParams(void);
 
-	virtual void AddMaterialVar( IMaterialVar *pMaterialVar );
+	virtual void AddMaterialVar(IMaterialVar *pMaterialVar);
 
 	virtual bool IsErrorMaterial() const;
 
@@ -196,25 +204,37 @@ public:
 
 	virtual bool NeedsFixedFunctionFlashlight() const;
 
-	virtual void MarkAsPreloaded( bool bSet );
+	virtual void MarkAsPreloaded(bool bSet);
 	virtual bool IsPreloaded() const;
 
-	virtual void ArtificialAddRef( void );
-	virtual void ArtificialRelease( void );
+	virtual void ArtificialAddRef(void);
+	virtual void ArtificialRelease(void);
 
-	virtual void ReportVarChanged( IMaterialVar *pVar )
-	{	
+	virtual void ReportVarChanged(IMaterialVar *pVar)
+	{
 		m_ChangeID++;
 	}
-	virtual void ClearContextData( void );
+	virtual void ClearContextData(void);
 
-	virtual uint32 GetChangeID() const { return m_ChangeID; }
+	virtual uint32 GetChangeID() const
+	{
+		return m_ChangeID;
+	}
 
-	virtual bool IsRealTimeVersion( void ) const { return true; }
-	virtual IMaterialInternal *GetRealTimeVersion( void ) { return this; }
-	virtual IMaterialInternal *GetQueueFriendlyVersion( void ) { return &m_QueueFriendlyVersion; }
+	virtual bool IsRealTimeVersion(void) const
+	{
+		return true;
+	}
+	virtual IMaterialInternal *GetRealTimeVersion(void)
+	{
+		return this;
+	}
+	virtual IMaterialInternal *GetQueueFriendlyVersion(void)
+	{
+		return &m_QueueFriendlyVersion;
+	}
 
-	void DecideShouldReloadFromWhitelist( IFileList *pFilesToReload );
+	void DecideShouldReloadFromWhitelist(IFileList *pFilesToReload);
 	void ReloadFromWhitelistIfMarked();
 	bool WasReloadedFromWhitelist();
 
@@ -229,41 +249,42 @@ private:
 	bool UsesUNCFileName() const;
 
 	// Prints material flags.
-	void PrintMaterialFlags( int flags, int flagsDefined );
+	void PrintMaterialFlags(int flags, int flagsDefined);
 
 	// Parses material flags
-	bool ParseMaterialFlag( KeyValues* pParseValue, IMaterialVar* pFlagVar,
-		IMaterialVar* pFlagDefinedVar, bool parsingOverrides, int& flagMask, int& overrideMask );
+	bool ParseMaterialFlag(KeyValues *pParseValue, IMaterialVar *pFlagVar, IMaterialVar *pFlagDefinedVar,
+						   bool parsingOverrides, int &flagMask, int &overrideMask);
 
 	// Computes the material vars for the shader
-	int ParseMaterialVars( IShader* pShader, KeyValues& keyValues, 
-		KeyValues* pOverride, bool modelDefault, IMaterialVar** ppVars, int nFindContext = MATERIAL_FINDCONTEXT_NONE );
+	int ParseMaterialVars(IShader *pShader, KeyValues &keyValues, KeyValues *pOverride, bool modelDefault,
+						  IMaterialVar **ppVars, int nFindContext = MATERIAL_FINDCONTEXT_NONE);
 
 	// Figures out the preview image for worldcraft
-	char const*	GetPreviewImageName( );
-	char const* GetPreviewImageFileName( void ) const;
+	char const *GetPreviewImageName();
+	char const *GetPreviewImageFileName(void) const;
 
 	// Hooks up the shader, returns keyvalues of fallback that was used
-	KeyValues* InitializeShader( KeyValues &keyValues, KeyValues &patchKeyValues, int nFindContext = MATERIAL_FINDCONTEXT_NONE );
+	KeyValues *InitializeShader(KeyValues &keyValues, KeyValues &patchKeyValues,
+								int nFindContext = MATERIAL_FINDCONTEXT_NONE);
 
 	// Finds the flag associated with a particular flag name
-	int FindMaterialVarFlag( char const* pFlagName ) const;
+	int FindMaterialVarFlag(char const *pFlagName) const;
 
 	// Initializes, cleans up the state snapshots
 	bool InitializeStateSnapshots();
 	void CleanUpStateSnapshots();
 
 	// Initializes, cleans up the material proxy
-	void InitializeMaterialProxy( KeyValues* pFallbackKeyValues );
+	void InitializeMaterialProxy(KeyValues *pFallbackKeyValues);
 	void CleanUpMaterialProxy();
-	void DetermineProxyReplacements( KeyValues *pFallbackKeyValues );
+	void DetermineProxyReplacements(KeyValues *pFallbackKeyValues);
 
 	// Creates, destroys snapshots
 	RenderPassList_t *CreateRenderPassList();
-	void DestroyRenderPassList( RenderPassList_t *pPassList );
+	void DestroyRenderPassList(RenderPassList_t *pPassList);
 
 	// Grabs the texture width and height from the var list for faster access
-	void PrecacheMappingDimensions( );
+	void PrecacheMappingDimensions();
 
 	// Gets the renderstate
 	virtual ShaderRenderState_t *GetRenderState();
@@ -272,23 +293,22 @@ private:
 	bool IsValidRenderState() const;
 
 	// Get the material var flags
-	int	GetMaterialVarFlags() const;
-	void SetMaterialVarFlags( int flags, bool on );
-	int	GetMaterialVarFlags2() const;
-	void SetMaterialVarFlags2( int flags, bool on );
+	int GetMaterialVarFlags() const;
+	void SetMaterialVarFlags(int flags, bool on);
+	int GetMaterialVarFlags2() const;
+	void SetMaterialVarFlags2(int flags, bool on);
 
 	// Returns a dummy material variable
-	IMaterialVar*	GetDummyVariable();
+	IMaterialVar *GetDummyVariable();
 
-	IMaterialVar*	GetShaderParam( int id );
+	IMaterialVar *GetShaderParam(int id);
 
-	void			FindRepresentativeTexture( void );
+	void FindRepresentativeTexture(void);
 
-	bool ShouldSkipVar( KeyValues *pMaterialVar, bool * pWasConditional );
-
+	bool ShouldSkipVar(KeyValues *pMaterialVar, bool *pWasConditional);
 
 	// Fixed-size allocator
-	DECLARE_FIXEDSIZE_ALLOCATOR( CMaterial );
+	DECLARE_FIXEDSIZE_ALLOCATOR(CMaterial);
 
 private:
 	enum
@@ -303,90 +323,91 @@ private:
 		MATERIAL_ARTIFICIAL_REFCOUNT = 0x80,
 	};
 
-	int					m_iEnumerationID;
-	
-	int					m_minLightmapPageID;
-	int					m_maxLightmapPageID;
+	int m_iEnumerationID;
 
-	unsigned short		m_MappingWidth;
-	unsigned short		m_MappingHeight;
-	
-	IShader				*m_pShader;
+	int m_minLightmapPageID;
+	int m_maxLightmapPageID;
 
-	CUtlSymbol			m_Name;
+	unsigned short m_MappingWidth;
+	unsigned short m_MappingHeight;
+
+	IShader *m_pShader;
+
+	CUtlSymbol m_Name;
 	// Any textures created for this material go under this texture group.
-	CUtlSymbol			m_TextureGroupName;
+	CUtlSymbol m_TextureGroupName;
 
-	CInterlockedInt		m_RefCount;
-	unsigned short		m_Flags;
+	CInterlockedInt m_RefCount;
+	unsigned short m_Flags;
 
-	unsigned char		m_VarCount;
+	unsigned char m_VarCount;
 
-	CUtlVector< IMaterialProxy * > m_ProxyInfo;
+	CUtlVector<IMaterialProxy *> m_ProxyInfo;
 
 #ifdef PROXY_TRACK_NAMES
 	// Array to track names of above material proxies. Useful for tracking down issues with proxies.
-	CUtlVector< CUtlString > m_ProxyInfoNames;
+	CUtlVector<CUtlString> m_ProxyInfoNames;
 #endif
 
-	IMaterialVar**		m_pShaderParams;
-	IMaterialProxy		*m_pReplacementProxy;
+	IMaterialVar **m_pShaderParams;
+	IMaterialProxy *m_pReplacementProxy;
 	ShaderRenderState_t m_ShaderRenderState;
 
-	// This remembers filenames of VMTs that we included so we can sv_pure/flush ourselves if any of them need to be reloaded.
+	// This remembers filenames of VMTs that we included so we can sv_pure/flush ourselves if any of them need to be
+	// reloaded.
 	CUtlVector<FileNameHandle_t> m_VMTIncludes;
-	bool m_bShouldReloadFromWhitelist;	// Tells us if the material decided it should be reloaded due to sv_pure whitelist changes.
+	bool m_bShouldReloadFromWhitelist; // Tells us if the material decided it should be reloaded due to sv_pure
+									   // whitelist changes.
 
-	ITextureInternal	*m_representativeTexture;
-	Vector				m_Reflectivity;
-	uint32				m_ChangeID;
+	ITextureInternal *m_representativeTexture;
+	Vector m_Reflectivity;
+	uint32 m_ChangeID;
 
 	// Used only by procedural materials; it essentially is an in-memory .VMT file
-	KeyValues			*m_pVMTKeyValues;
+	KeyValues *m_pVMTKeyValues;
 
-#if defined( _DEBUG )
+#if defined(_DEBUG)
 	// Makes it easier to see what's going on
-	char				*m_pDebugName;
+	char *m_pDebugName;
 #endif
 
 protected:
 	CMaterial_QueueFriendly m_QueueFriendlyVersion;
 };
 
-
 // NOTE: This must be the last file included
 // Has to exist *after* fixed size allocator declaration
 #include "tier0/memdbgon.h"
 
 // Forward decls of helper functions for dealing with patch vmts.
-static void ApplyPatchKeyValues( KeyValues &keyValues, KeyValues &patchKeyValues );
-static bool AccumulateRecursiveVmtPatches( KeyValues &patchKeyValuesOut, KeyValues **ppBaseKeyValuesOut,
-										   const KeyValues& keyValues, const char *pPathID, CUtlVector<FileNameHandle_t> *pIncludes );
+static void ApplyPatchKeyValues(KeyValues &keyValues, KeyValues &patchKeyValues);
+static bool AccumulateRecursiveVmtPatches(KeyValues &patchKeyValuesOut, KeyValues **ppBaseKeyValuesOut,
+										  const KeyValues &keyValues, const char *pPathID,
+										  CUtlVector<FileNameHandle_t> *pIncludes);
 
 //-----------------------------------------------------------------------------
 // Parser utilities
 //-----------------------------------------------------------------------------
-static inline bool IsWhitespace( char c )
+static inline bool IsWhitespace(char c)
 {
 	return c == ' ' || c == '\t';
 }
 
-static inline bool IsEndline( char c )
+static inline bool IsEndline(char c)
 {
 	return c == '\n' || c == '\0';
 }
 
-static inline bool IsVector( char const* v )
+static inline bool IsVector(char const *v)
 {
-	while (IsWhitespace(*v))
+	while(IsWhitespace(*v))
 	{
 		++v;
-		if (IsEndline(*v))
+		if(IsEndline(*v))
 			return false;
 	}
 	return *v == '[' || *v == '{';
 }
-
 
 //-----------------------------------------------------------------------------
 // Methods to create state snapshots
@@ -399,7 +420,7 @@ struct EditorRenderStateList_t
 	// Store combo of alpha, color, fixed-function baked lighting, flashlight, editor mode
 	RenderPassList_t m_Snapshots[SNAPSHOT_COUNT_EDITOR];
 
-	DECLARE_FIXEDSIZE_ALLOCATOR( EditorRenderStateList_t );
+	DECLARE_FIXEDSIZE_ALLOCATOR(EditorRenderStateList_t);
 };
 #endif
 
@@ -408,72 +429,72 @@ struct StandardRenderStateList_t
 	// Store combo of alpha, color, fixed-function baked lighting, flashlight
 	RenderPassList_t m_Snapshots[SNAPSHOT_COUNT_NORMAL];
 
-	DECLARE_FIXEDSIZE_ALLOCATOR( StandardRenderStateList_t );
+	DECLARE_FIXEDSIZE_ALLOCATOR(StandardRenderStateList_t);
 };
 
 #include "tier0/memdbgon.h"
 
 #ifndef _CONSOLE
-DEFINE_FIXEDSIZE_ALLOCATOR( EditorRenderStateList_t, 256, true );
+DEFINE_FIXEDSIZE_ALLOCATOR(EditorRenderStateList_t, 256, true);
 #endif
-DEFINE_FIXEDSIZE_ALLOCATOR( StandardRenderStateList_t, 256, true );
-
+DEFINE_FIXEDSIZE_ALLOCATOR(StandardRenderStateList_t, 256, true);
 
 //-----------------------------------------------------------------------------
 // class factory methods
 //-----------------------------------------------------------------------------
-DEFINE_FIXEDSIZE_ALLOCATOR( CMaterial, 256, true );
+DEFINE_FIXEDSIZE_ALLOCATOR(CMaterial, 256, true);
 
-IMaterialInternal* IMaterialInternal::CreateMaterial( char const* pMaterialName, const char *pTextureGroupName, KeyValues *pVMTKeyValues )
+IMaterialInternal *IMaterialInternal::CreateMaterial(char const *pMaterialName, const char *pTextureGroupName,
+													 KeyValues *pVMTKeyValues)
 {
 	MaterialLock_t hMaterialLock = MaterialSystem()->Lock();
-	IMaterialInternal *pResult = new CMaterial( pMaterialName, pTextureGroupName, pVMTKeyValues );
-	MaterialSystem()->Unlock( hMaterialLock );
+	IMaterialInternal *pResult = new CMaterial(pMaterialName, pTextureGroupName, pVMTKeyValues);
+	MaterialSystem()->Unlock(hMaterialLock);
 	return pResult;
 }
 
-void IMaterialInternal::DestroyMaterial( IMaterialInternal* pMaterial )
+void IMaterialInternal::DestroyMaterial(IMaterialInternal *pMaterial)
 {
 	MaterialLock_t hMaterialLock = MaterialSystem()->Lock();
-	if (pMaterial)
+	if(pMaterial)
 	{
-		Assert( pMaterial->IsRealTimeVersion() );
-		CMaterial* pMatImp = static_cast<CMaterial*>(pMaterial);
+		Assert(pMaterial->IsRealTimeVersion());
+		CMaterial *pMatImp = static_cast<CMaterial *>(pMaterial);
 		// Deletion of the error material is deferred until after all other materials have been deleted.
 		// See CMaterialSystem::CleanUpErrorMaterial() in cmaterialsystem.cpp.
-		if ( !pMatImp->IsErrorMaterial() )
+		if(!pMatImp->IsErrorMaterial())
 		{
 			delete pMatImp;
 		}
 	}
-	MaterialSystem()->Unlock( hMaterialLock );
+	MaterialSystem()->Unlock(hMaterialLock);
 }
 
 //-----------------------------------------------------------------------------
 // constructor, destructor
 //-----------------------------------------------------------------------------
-CMaterial::CMaterial( char const* materialName, const char *pTextureGroupName, KeyValues *pKeyValues )
+CMaterial::CMaterial(char const *materialName, const char *pTextureGroupName, KeyValues *pKeyValues)
 {
-	m_Reflectivity.Init( 0.2f, 0.2f, 0.2f );
+	m_Reflectivity.Init(0.2f, 0.2f, 0.2f);
 	int len = Q_strlen(materialName);
-	char* pTemp = (char*)_alloca( len + 1 );
+	char *pTemp = (char *)_alloca(len + 1);
 
 	// Strip off the extension
-	Q_StripExtension( materialName, pTemp, len+1 );
-	Q_strlower( pTemp );
+	Q_StripExtension(materialName, pTemp, len + 1);
+	Q_strlower(pTemp);
 
-#if defined( _X360 )
+#if defined(_X360)
 	// material names are expected to be forward slashed for correct sort and find behavior!
 	// assert now to track alternate or regressed path that is source of inconsistency
-	Assert( strchr( pTemp, '\\' ) == NULL );
+	Assert(strchr(pTemp, '\\') == NULL);
 #endif
 
 	// Convert it to a symbol
 	m_Name = pTemp;
 
-#if defined( _DEBUG )
+#if defined(_DEBUG)
 	m_pDebugName = new char[strlen(pTemp) + 1];
-	Q_strncpy( m_pDebugName, pTemp, strlen(pTemp) + 1 );
+	Q_strncpy(m_pDebugName, pTemp, strlen(pTemp) + 1);
 #endif
 
 	m_bShouldReloadFromWhitelist = false;
@@ -489,12 +510,12 @@ CMaterial::CMaterial( char const* materialName, const char *pTextureGroupName, K
 	m_minLightmapPageID = m_maxLightmapPageID = 0;
 	m_TextureGroupName = pTextureGroupName;
 	m_pVMTKeyValues = pKeyValues;
-	if (m_pVMTKeyValues)
+	if(m_pVMTKeyValues)
 	{
-		m_Flags |= MATERIAL_IS_MANUALLY_CREATED; 
+		m_Flags |= MATERIAL_IS_MANUALLY_CREATED;
 	}
 
-	if ( pTemp[0] == '/' && pTemp[1] == '/' && pTemp[2] != '/' )
+	if(pTemp[0] == '/' && pTemp[1] == '/' && pTemp[2] != '/')
 	{
 		m_Flags |= MATERIAL_USES_UNC_FILENAME;
 	}
@@ -503,35 +524,35 @@ CMaterial::CMaterial( char const* materialName, const char *pTextureGroupName, K
 	m_ShaderRenderState.m_Flags = 0;
 	m_ShaderRenderState.m_VertexFormat = m_ShaderRenderState.m_VertexUsage = 0;
 	m_ShaderRenderState.m_MorphFormat = 0;
-	m_ShaderRenderState.m_pSnapshots = CreateRenderPassList(); 
+	m_ShaderRenderState.m_pSnapshots = CreateRenderPassList();
 	m_ChangeID = 0;
 
-	m_QueueFriendlyVersion.SetRealTimeVersion( this );
+	m_QueueFriendlyVersion.SetRealTimeVersion(this);
 }
 
 CMaterial::~CMaterial()
 {
-	MaterialSystem()->UnbindMaterial( this );
+	MaterialSystem()->UnbindMaterial(this);
 
 	Uncache();
 
-	if ( m_RefCount != 0 )
+	if(m_RefCount != 0)
 	{
-		DevWarning( 2, "Reference Count for Material %s (%d) != 0\n", GetName(), (int) m_RefCount );
+		DevWarning(2, "Reference Count for Material %s (%d) != 0\n", GetName(), (int)m_RefCount);
 	}
 
-	if ( m_pVMTKeyValues )
+	if(m_pVMTKeyValues)
 	{
 		m_pVMTKeyValues->deleteThis();
 		m_pVMTKeyValues = NULL;
 	}
 
-	DestroyRenderPassList( m_ShaderRenderState.m_pSnapshots ); 
+	DestroyRenderPassList(m_ShaderRenderState.m_pSnapshots);
 
 	m_representativeTexture = NULL;
 
-#if defined( _DEBUG )
-	delete [] m_pDebugName;
+#if defined(_DEBUG)
+	delete[] m_pDebugName;
 #endif
 
 	// Deliberately stomp our VTable so that we can detect cases where code tries to access freed materials.
@@ -539,84 +560,81 @@ CMaterial::~CMaterial()
 	*p = 0xc0dedbad;
 }
 
-
-void CMaterial::ClearContextData( void )
+void CMaterial::ClearContextData(void)
 {
 	int nSnapshotCount = SnapshotTypeCount();
-	for( int i = 0 ; i < nSnapshotCount ; i++ )
-		for( int j = 0 ; j < m_ShaderRenderState.m_pSnapshots[i].m_nPassCount; j++ )
+	for(int i = 0; i < nSnapshotCount; i++)
+		for(int j = 0; j < m_ShaderRenderState.m_pSnapshots[i].m_nPassCount; j++)
 		{
-			if ( m_ShaderRenderState.m_pSnapshots[i].m_pContextData[j] )
+			if(m_ShaderRenderState.m_pSnapshots[i].m_pContextData[j])
 			{
 				delete m_ShaderRenderState.m_pSnapshots[i].m_pContextData[j];
 				m_ShaderRenderState.m_pSnapshots[i].m_pContextData[j] = NULL;
 			}
-			
 		}
 }
 
 //-----------------------------------------------------------------------------
 // Sets new VMT shader parameters for the material
 //-----------------------------------------------------------------------------
-void CMaterial::SetShaderAndParams( KeyValues *pKeyValues )
+void CMaterial::SetShaderAndParams(KeyValues *pKeyValues)
 {
 	Uncache();
 
-	if ( m_pVMTKeyValues )
+	if(m_pVMTKeyValues)
 	{
 		m_pVMTKeyValues->deleteThis();
 		m_pVMTKeyValues = NULL;
 	}
 
 	m_pVMTKeyValues = pKeyValues ? pKeyValues->MakeCopy() : NULL;
-	if (m_pVMTKeyValues)
+	if(m_pVMTKeyValues)
 	{
-		m_Flags |= MATERIAL_IS_MANUALLY_CREATED; 
+		m_Flags |= MATERIAL_IS_MANUALLY_CREATED;
 	}
 
 	// Apply patches
 	const char *pMaterialName = GetName();
 	char pFileName[MAX_PATH];
 	const char *pPathID = "GAME";
-	if ( !UsesUNCFileName() )
+	if(!UsesUNCFileName())
 	{
-		Q_snprintf( pFileName, sizeof( pFileName ), "materials/%s.vmt", pMaterialName );
+		Q_snprintf(pFileName, sizeof(pFileName), "materials/%s.vmt", pMaterialName);
 	}
 	else
 	{
-		Q_snprintf( pFileName, sizeof( pFileName ), "%s.vmt", pMaterialName );
-		if ( pMaterialName[0] == '/' && pMaterialName[1] == '/' && pMaterialName[2] != '/' )
+		Q_snprintf(pFileName, sizeof(pFileName), "%s.vmt", pMaterialName);
+		if(pMaterialName[0] == '/' && pMaterialName[1] == '/' && pMaterialName[2] != '/')
 		{
 			// UNC, do full search
 			pPathID = NULL;
 		}
 	}
 
-	KeyValues *pLoadedKeyValues = new KeyValues( "vmt" );
-	if ( pLoadedKeyValues->LoadFromFile( g_pFullFileSystem, pFileName, pPathID ) )
+	KeyValues *pLoadedKeyValues = new KeyValues("vmt");
+	if(pLoadedKeyValues->LoadFromFile(g_pFullFileSystem, pFileName, pPathID))
 	{
 		// Load succeeded, check if it's a patch file
-		if ( V_stricmp( pLoadedKeyValues->GetName(), "patch" ) == 0 )
+		if(V_stricmp(pLoadedKeyValues->GetName(), "patch") == 0)
 		{
 			// it's a patch file, recursively build up patch keyvalues
-			KeyValues *pPatchKeyValues = new KeyValues( "vmt_patch" );
-			bool bSuccess = AccumulateRecursiveVmtPatches( *pPatchKeyValues, NULL, *pLoadedKeyValues, pPathID, NULL );
-			if ( bSuccess )
+			KeyValues *pPatchKeyValues = new KeyValues("vmt_patch");
+			bool bSuccess = AccumulateRecursiveVmtPatches(*pPatchKeyValues, NULL, *pLoadedKeyValues, pPathID, NULL);
+			if(bSuccess)
 			{
 				// Apply accumulated patches to final vmt
-				ApplyPatchKeyValues( *m_pVMTKeyValues, *pPatchKeyValues );
+				ApplyPatchKeyValues(*m_pVMTKeyValues, *pPatchKeyValues);
 			}
 			pPatchKeyValues->deleteThis();
 		}
 	}
 	pLoadedKeyValues->deleteThis();
 
-	if ( g_pShaderDevice->IsUsingGraphics() )
+	if(g_pShaderDevice->IsUsingGraphics())
 	{
 		Precache();
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Creates, destroys snapshots
@@ -624,55 +642,53 @@ void CMaterial::SetShaderAndParams( KeyValues *pKeyValues )
 RenderPassList_t *CMaterial::CreateRenderPassList()
 {
 	RenderPassList_t *pRenderPassList;
-	if ( IsConsole() || !MaterialSystem()->CanUseEditorMaterials() )
+	if(IsConsole() || !MaterialSystem()->CanUseEditorMaterials())
 	{
 		StandardRenderStateList_t *pList = new StandardRenderStateList_t;
-		pRenderPassList = (RenderPassList_t*)pList->m_Snapshots;
+		pRenderPassList = (RenderPassList_t *)pList->m_Snapshots;
 	}
 #ifndef _CONSOLE
 	else
 	{
 		EditorRenderStateList_t *pList = new EditorRenderStateList_t;
-		pRenderPassList = (RenderPassList_t*)pList->m_Snapshots;
+		pRenderPassList = (RenderPassList_t *)pList->m_Snapshots;
 	}
 #endif
 
 	int nSnapshotCount = SnapshotTypeCount();
-	memset( pRenderPassList, 0, nSnapshotCount * sizeof(RenderPassList_t) );
+	memset(pRenderPassList, 0, nSnapshotCount * sizeof(RenderPassList_t));
 	return pRenderPassList;
 }
 
-void CMaterial::DestroyRenderPassList( RenderPassList_t *pPassList )
+void CMaterial::DestroyRenderPassList(RenderPassList_t *pPassList)
 {
-	if ( !pPassList )
+	if(!pPassList)
 		return;
 
 	int nSnapshotCount = SnapshotTypeCount();
-	for( int i = 0 ; i < nSnapshotCount ; i++ )
-		for( int j = 0 ; j < pPassList[i].m_nPassCount; j++ )
+	for(int i = 0; i < nSnapshotCount; i++)
+		for(int j = 0; j < pPassList[i].m_nPassCount; j++)
 		{
-			if ( pPassList[i].m_pContextData[j] )
+			if(pPassList[i].m_pContextData[j])
 			{
 				delete pPassList[i].m_pContextData[j];
 				pPassList[i].m_pContextData[j] = NULL;
 			}
-			
 		}
-	if ( IsConsole() || !MaterialSystem()->CanUseEditorMaterials() )
+	if(IsConsole() || !MaterialSystem()->CanUseEditorMaterials())
 	{
-		StandardRenderStateList_t *pList = (StandardRenderStateList_t*)pPassList;
+		StandardRenderStateList_t *pList = (StandardRenderStateList_t *)pPassList;
 		delete pList;
 	}
 #ifndef _CONSOLE
 	else
 	{
-		EditorRenderStateList_t *pList = (EditorRenderStateList_t*)pPassList;
+		EditorRenderStateList_t *pList = (EditorRenderStateList_t *)pPassList;
 		delete pList;
 	}
 #endif
 }
 
-	
 //-----------------------------------------------------------------------------
 // Gets the renderstate
 //-----------------------------------------------------------------------------
@@ -682,150 +698,143 @@ ShaderRenderState_t *CMaterial::GetRenderState()
 	return &m_ShaderRenderState;
 }
 
-
 //-----------------------------------------------------------------------------
 // Returns a dummy material variable
 //-----------------------------------------------------------------------------
-IMaterialVar* CMaterial::GetDummyVariable()
+IMaterialVar *CMaterial::GetDummyVariable()
 {
-	static IMaterialVar* pDummyVar = 0;
-	if (!pDummyVar)
-		pDummyVar = IMaterialVar::Create( 0, "$dummyVar", 0 );
+	static IMaterialVar *pDummyVar = 0;
+	if(!pDummyVar)
+		pDummyVar = IMaterialVar::Create(0, "$dummyVar", 0);
 
 	return pDummyVar;
 }
 
-
 //-----------------------------------------------------------------------------
 // Are vars precached?
 //-----------------------------------------------------------------------------
-bool CMaterial::IsPrecachedVars( ) const
+bool CMaterial::IsPrecachedVars() const
 {
 	return (m_Flags & MATERIAL_VARS_IS_PRECACHED) != 0;
 }
 
-
 //-----------------------------------------------------------------------------
 // Are we precached?
 //-----------------------------------------------------------------------------
-bool CMaterial::IsPrecached( ) const
+bool CMaterial::IsPrecached() const
 {
 	return (m_Flags & MATERIAL_IS_PRECACHED) != 0;
 }
-
 
 //-----------------------------------------------------------------------------
 // Cleans up shader parameters
 //-----------------------------------------------------------------------------
 void CMaterial::CleanUpShaderParams()
 {
-	if( m_pShaderParams )
+	if(m_pShaderParams)
 	{
-		for (int i = 0; i < m_VarCount; ++i)
+		for(int i = 0; i < m_VarCount; ++i)
 		{
-			IMaterialVar::Destroy( m_pShaderParams[i] );
+			IMaterialVar::Destroy(m_pShaderParams[i]);
 		}
 
-		free( m_pShaderParams );
+		free(m_pShaderParams);
 		m_pShaderParams = 0;
 	}
 	m_VarCount = 0;
 }
 
-
 //-----------------------------------------------------------------------------
 // Initializes the material proxy
 //-----------------------------------------------------------------------------
-void CMaterial::InitializeMaterialProxy( KeyValues* pFallbackKeyValues )
+void CMaterial::InitializeMaterialProxy(KeyValues *pFallbackKeyValues)
 {
 	IMaterialProxyFactory *pMaterialProxyFactory;
-	pMaterialProxyFactory = MaterialSystem()->GetMaterialProxyFactory();	
-	if( !pMaterialProxyFactory )
+	pMaterialProxyFactory = MaterialSystem()->GetMaterialProxyFactory();
+	if(!pMaterialProxyFactory)
 		return;
 
-	DetermineProxyReplacements( pFallbackKeyValues );
+	DetermineProxyReplacements(pFallbackKeyValues);
 
-	if ( m_pReplacementProxy )
+	if(m_pReplacementProxy)
 	{
-		m_ProxyInfo.AddToTail( m_pReplacementProxy );
+		m_ProxyInfo.AddToTail(m_pReplacementProxy);
 #ifdef PROXY_TRACK_NAMES
-		m_ProxyInfoNames.AddToTail( "__replacementproxy" );
+		m_ProxyInfoNames.AddToTail("__replacementproxy");
 #endif
 	}
 
 	// See if we've got a proxy section; obey fallbacks
-	KeyValues* pProxySection = pFallbackKeyValues->FindKey("Proxies");
-	if ( pProxySection )
+	KeyValues *pProxySection = pFallbackKeyValues->FindKey("Proxies");
+	if(pProxySection)
 	{
 		// Iterate through the section + create all of the proxies
-		KeyValues* pProxyKey = pProxySection->GetFirstSubKey();
+		KeyValues *pProxyKey = pProxySection->GetFirstSubKey();
 
-		for ( ; pProxyKey; pProxyKey = pProxyKey->GetNextKey() )
+		for(; pProxyKey; pProxyKey = pProxyKey->GetNextKey())
 		{
 			// Each of the proxies should themselves be databases
-			IMaterialProxy* pProxy = pMaterialProxyFactory->CreateProxy( pProxyKey->GetName() );
-			if (!pProxy)
+			IMaterialProxy *pProxy = pMaterialProxyFactory->CreateProxy(pProxyKey->GetName());
+			if(!pProxy)
 			{
-				Warning( "Error: Material \"%s\" : proxy \"%s\" not found!\n", GetName(), pProxyKey->GetName() );
+				Warning("Error: Material \"%s\" : proxy \"%s\" not found!\n", GetName(), pProxyKey->GetName());
 				continue;
 			}
 
-			if (!pProxy->Init( this->GetQueueFriendlyVersion(), pProxyKey ))
+			if(!pProxy->Init(this->GetQueueFriendlyVersion(), pProxyKey))
 			{
-				pMaterialProxyFactory->DeleteProxy( pProxy );
-				Warning( "Error: Material \"%s\" : proxy \"%s\" unable to initialize!\n", GetName(), pProxyKey->GetName() );
+				pMaterialProxyFactory->DeleteProxy(pProxy);
+				Warning("Error: Material \"%s\" : proxy \"%s\" unable to initialize!\n", GetName(),
+						pProxyKey->GetName());
 			}
 			else
 			{
-				m_ProxyInfo.AddToTail( pProxy );
+				m_ProxyInfo.AddToTail(pProxy);
 #ifdef PROXY_TRACK_NAMES
-				m_ProxyInfoNames.AddToTail( pProxyKey->GetName() );
+				m_ProxyInfoNames.AddToTail(pProxyKey->GetName());
 #endif
 			}
 		}
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Cleans up the material proxy
 //-----------------------------------------------------------------------------
 void CMaterial::CleanUpMaterialProxy()
 {
-	if ( !m_ProxyInfo.Count() )
+	if(!m_ProxyInfo.Count())
 		return;
 
 	IMaterialProxyFactory *pMaterialProxyFactory;
 	pMaterialProxyFactory = MaterialSystem()->GetMaterialProxyFactory();
-	if ( !pMaterialProxyFactory )
+	if(!pMaterialProxyFactory)
 		return;
 
 	// Clean up material proxies
-	for ( int i = m_ProxyInfo.Count() - 1; i >= 0; i-- )
+	for(int i = m_ProxyInfo.Count() - 1; i >= 0; i--)
 	{
-		IMaterialProxy *pProxy = m_ProxyInfo[ i ];
+		IMaterialProxy *pProxy = m_ProxyInfo[i];
 
-		pMaterialProxyFactory->DeleteProxy( pProxy );
+		pMaterialProxyFactory->DeleteProxy(pProxy);
 	}
-	
+
 	m_ProxyInfo.RemoveAll();
 #ifdef PROXY_TRACK_NAMES
 	m_ProxyInfoNames.RemoveAll();
 #endif
 }
 
-
-void CMaterial::DetermineProxyReplacements( KeyValues *pFallbackKeyValues )
+void CMaterial::DetermineProxyReplacements(KeyValues *pFallbackKeyValues)
 {
-	m_pReplacementProxy = MaterialSystem()->DetermineProxyReplacements( this, pFallbackKeyValues );
+	m_pReplacementProxy = MaterialSystem()->DetermineProxyReplacements(this, pFallbackKeyValues);
 }
 
-
-static char const *GetVarName( KeyValues *pVar )
+static char const *GetVarName(KeyValues *pVar)
 {
 	char const *pVarName = pVar->GetName();
-	char const *pQuestion = strchr( pVarName, '?' );
-	if (! pQuestion )
+	char const *pQuestion = strchr(pVarName, '?');
+	if(!pQuestion)
 		return pVarName;
 	else
 		return pQuestion + 1;
@@ -834,33 +843,33 @@ static char const *GetVarName( KeyValues *pVar )
 //-----------------------------------------------------------------------------
 // Finds the index of the material var associated with a var
 //-----------------------------------------------------------------------------
-static int FindMaterialVar( IShader* pShader, char const* pVarName )
+static int FindMaterialVar(IShader *pShader, char const *pVarName)
 {
-	if ( !pShader )
+	if(!pShader)
 		return -1;
 
 	// Strip preceeding spaces
-	pVarName += strspn( pVarName, " \t" );
+	pVarName += strspn(pVarName, " \t");
 
-	for (int i = pShader->GetNumParams(); --i >= 0; )
+	for(int i = pShader->GetNumParams(); --i >= 0;)
 	{
 		// Makes the parser a little more lenient.. strips off bogus spaces in the var name.
 		const char *pParamName = pShader->GetParamName(i);
-		const char *pFound = Q_stristr( pVarName, pParamName );
+		const char *pFound = Q_stristr(pVarName, pParamName);
 
 		// The found string had better start with the first non-whitespace character
-		if ( pFound != pVarName )
+		if(pFound != pVarName)
 			continue;
 
 		// Strip spaces at the end
-		int nLen = Q_strlen( pParamName );
+		int nLen = Q_strlen(pParamName);
 		pFound += nLen;
-		while ( true )
+		while(true)
 		{
-			if ( !pFound[0] )
+			if(!pFound[0])
 				return i;
 
-			if ( !IsWhitespace( pFound[0] ) )
+			if(!IsWhitespace(pFound[0]))
 				break;
 
 			++pFound;
@@ -869,47 +878,47 @@ static int FindMaterialVar( IShader* pShader, char const* pVarName )
 	return -1;
 }
 
-
 //-----------------------------------------------------------------------------
 // Creates a vector material var
 //-----------------------------------------------------------------------------
-int ParseVectorFromKeyValueString( KeyValues *pKeyValue, const char *pMaterialName, float vecVal[4] )
+int ParseVectorFromKeyValueString(KeyValues *pKeyValue, const char *pMaterialName, float vecVal[4])
 {
-	char const* pScan = pKeyValue->GetString();
+	char const *pScan = pKeyValue->GetString();
 	bool divideBy255 = false;
 
 	// skip whitespace
-	while( IsWhitespace(*pScan) )
+	while(IsWhitespace(*pScan))
 	{
 		++pScan;
 	}
 
-	if( *pScan == '{' )
+	if(*pScan == '{')
 	{
 		divideBy255 = true;
 	}
 	else
 	{
-		Assert( *pScan == '[' );
+		Assert(*pScan == '[');
 	}
-	
+
 	// skip the '['
 	++pScan;
 	int i;
-	for( i = 0; i < 4; i++ )
+	for(i = 0; i < 4; i++)
 	{
 		// skip whitespace
-		while( IsWhitespace(*pScan) )
+		while(IsWhitespace(*pScan))
 		{
 			++pScan;
 		}
 
-		if( IsEndline(*pScan) || *pScan == ']' || *pScan == '}' )
+		if(IsEndline(*pScan) || *pScan == ']' || *pScan == '}')
 		{
-			if (*pScan != ']' && *pScan != '}')
+			if(*pScan != ']' && *pScan != '}')
 			{
-				Warning( "Warning in .VMT file (%s): no ']' or '}' found in vector key \"%s\".\n"
-					"Did you forget to surround the vector with \"s?\n", pMaterialName, pKeyValue->GetName() );
+				Warning("Warning in .VMT file (%s): no ']' or '}' found in vector key \"%s\".\n"
+						"Did you forget to surround the vector with \"s?\n",
+						pMaterialName, pKeyValue->GetName());
 			}
 
 			// allow for vec2's, etc.
@@ -917,49 +926,49 @@ int ParseVectorFromKeyValueString( KeyValues *pKeyValue, const char *pMaterialNa
 			break;
 		}
 
-		char* pEnd;
+		char *pEnd;
 
-		vecVal[i] = strtod( pScan, &pEnd );
-		if (pScan == pEnd)
+		vecVal[i] = strtod(pScan, &pEnd);
+		if(pScan == pEnd)
 		{
-			Warning( "Error in .VMT file: error parsing vector element \"%s\" in \"%s\"\n", pKeyValue->GetName(), pMaterialName );
+			Warning("Error in .VMT file: error parsing vector element \"%s\" in \"%s\"\n", pKeyValue->GetName(),
+					pMaterialName);
 			return 0;
 		}
 
 		pScan = pEnd;
 	}
 
-	if( divideBy255 )
+	if(divideBy255)
 	{
-		vecVal[0] *= ( 1.0f / 255.0f );
-		vecVal[1] *= ( 1.0f / 255.0f );
-		vecVal[2] *= ( 1.0f / 255.0f );
-		vecVal[3] *= ( 1.0f / 255.0f );
+		vecVal[0] *= (1.0f / 255.0f);
+		vecVal[1] *= (1.0f / 255.0f);
+		vecVal[2] *= (1.0f / 255.0f);
+		vecVal[3] *= (1.0f / 255.0f);
 	}
 
 	return i;
 }
 
-static IMaterialVar* CreateVectorMaterialVarFromKeyValue( IMaterial* pMaterial, KeyValues* pKeyValue )
+static IMaterialVar *CreateVectorMaterialVarFromKeyValue(IMaterial *pMaterial, KeyValues *pKeyValue)
 {
-	char const *pszName = GetVarName( pKeyValue );
+	char const *pszName = GetVarName(pKeyValue);
 	float vecVal[4];
-	int nDim = ParseVectorFromKeyValueString( pKeyValue, pszName, vecVal );
-	if ( nDim == 0 )
+	int nDim = ParseVectorFromKeyValueString(pKeyValue, pszName, vecVal);
+	if(nDim == 0)
 		return NULL;
 
 	// Create the variable!
-	return IMaterialVar::Create( pMaterial, pszName, vecVal, nDim );
+	return IMaterialVar::Create(pMaterial, pszName, vecVal, nDim);
 }
-
 
 //-----------------------------------------------------------------------------
 // Creates a vector material var
 //-----------------------------------------------------------------------------
-static IMaterialVar* CreateMatrixMaterialVarFromKeyValue( IMaterial* pMaterial, KeyValues* pKeyValue )
+static IMaterialVar *CreateMatrixMaterialVarFromKeyValue(IMaterial *pMaterial, KeyValues *pKeyValue)
 {
-	char const* pScan = pKeyValue->GetString();
-	char const *pszName = GetVarName( pKeyValue );
+	char const *pScan = pKeyValue->GetString();
+	char const *pszName = GetVarName(pKeyValue);
 
 	// Matrices can be specified one of two ways:
 	// [ # # # #  # # # #  # # # #  # # # # ]
@@ -967,109 +976,106 @@ static IMaterialVar* CreateMatrixMaterialVarFromKeyValue( IMaterial* pMaterial, 
 	// center # # scale # # rotate # translate # #
 
 	VMatrix mat;
-	int count = sscanf( pScan, " [ %f %f %f %f  %f %f %f %f  %f %f %f %f  %f %f %f %f ]",
-		&mat.m[0][0], &mat.m[0][1], &mat.m[0][2], &mat.m[0][3],
-		&mat.m[1][0], &mat.m[1][1], &mat.m[1][2], &mat.m[1][3],
-		&mat.m[2][0], &mat.m[2][1], &mat.m[2][2], &mat.m[2][3],
-		&mat.m[3][0], &mat.m[3][1], &mat.m[3][2], &mat.m[3][3] );
-	if (count == 16)
+	int count =
+		sscanf(pScan, " [ %f %f %f %f  %f %f %f %f  %f %f %f %f  %f %f %f %f ]", &mat.m[0][0], &mat.m[0][1],
+			   &mat.m[0][2], &mat.m[0][3], &mat.m[1][0], &mat.m[1][1], &mat.m[1][2], &mat.m[1][3], &mat.m[2][0],
+			   &mat.m[2][1], &mat.m[2][2], &mat.m[2][3], &mat.m[3][0], &mat.m[3][1], &mat.m[3][2], &mat.m[3][3]);
+	if(count == 16)
 	{
-		return IMaterialVar::Create( pMaterial, pszName, mat );
+		return IMaterialVar::Create(pMaterial, pszName, mat);
 	}
 
 	Vector2D scale, center;
 	float angle;
 	Vector2D translation;
-	count = sscanf( pScan, " center %f %f scale %f %f rotate %f translate %f %f",
-		&center.x, &center.y, &scale.x, &scale.y, &angle, &translation.x, &translation.y );
-	if (count != 7)
+	count = sscanf(pScan, " center %f %f scale %f %f rotate %f translate %f %f", &center.x, &center.y, &scale.x,
+				   &scale.y, &angle, &translation.x, &translation.y);
+	if(count != 7)
 		return NULL;
 
 	VMatrix temp;
-	MatrixBuildTranslation( mat, -center.x, -center.y, 0.0f );
-	MatrixBuildScale( temp, scale.x, scale.y, 1.0f );
-	MatrixMultiply( temp, mat, mat );
-	MatrixBuildRotateZ( temp, angle );
-	MatrixMultiply( temp, mat, mat );
-	MatrixBuildTranslation( temp, center.x + translation.x, center.y + translation.y, 0.0f );
-	MatrixMultiply( temp, mat, mat );
+	MatrixBuildTranslation(mat, -center.x, -center.y, 0.0f);
+	MatrixBuildScale(temp, scale.x, scale.y, 1.0f);
+	MatrixMultiply(temp, mat, mat);
+	MatrixBuildRotateZ(temp, angle);
+	MatrixMultiply(temp, mat, mat);
+	MatrixBuildTranslation(temp, center.x + translation.x, center.y + translation.y, 0.0f);
+	MatrixMultiply(temp, mat, mat);
 
 	// Create the variable!
-	return IMaterialVar::Create( pMaterial, pszName, mat );
+	return IMaterialVar::Create(pMaterial, pszName, mat);
 }
-
 
 //-----------------------------------------------------------------------------
 // Creates a material var from a key value
 //-----------------------------------------------------------------------------
 
-static IMaterialVar* CreateMaterialVarFromKeyValue( IMaterial* pMaterial, KeyValues* pKeyValue )
+static IMaterialVar *CreateMaterialVarFromKeyValue(IMaterial *pMaterial, KeyValues *pKeyValue)
 {
-	char const *pszName = GetVarName( pKeyValue );
-	switch( pKeyValue->GetDataType() )
+	char const *pszName = GetVarName(pKeyValue);
+	switch(pKeyValue->GetDataType())
 	{
 		case KeyValues::TYPE_INT:
-			return IMaterialVar::Create( pMaterial, pszName, pKeyValue->GetInt() );
-			
+			return IMaterialVar::Create(pMaterial, pszName, pKeyValue->GetInt());
+
 		case KeyValues::TYPE_FLOAT:
-			return IMaterialVar::Create( pMaterial, pszName, pKeyValue->GetFloat() );
-			
+			return IMaterialVar::Create(pMaterial, pszName, pKeyValue->GetFloat());
+
 		case KeyValues::TYPE_STRING:
 		{
-			char const* pString = pKeyValue->GetString();
-			if (!pString || !pString[0])
+			char const *pString = pKeyValue->GetString();
+			if(!pString || !pString[0])
 				return 0;
-			
+
 			// Look for matrices
-			IMaterialVar *pMatrixVar = CreateMatrixMaterialVarFromKeyValue( pMaterial, pKeyValue );
-			if (pMatrixVar)
+			IMaterialVar *pMatrixVar = CreateMatrixMaterialVarFromKeyValue(pMaterial, pKeyValue);
+			if(pMatrixVar)
 				return pMatrixVar;
-			
+
 			// Look for vectors
-			if (!IsVector(pString))
-				return IMaterialVar::Create( pMaterial, pszName, pString );
-			
+			if(!IsVector(pString))
+				return IMaterialVar::Create(pMaterial, pszName, pString);
+
 			// Parse the string as a vector...
-			return CreateVectorMaterialVarFromKeyValue( pMaterial, pKeyValue );
+			return CreateVectorMaterialVarFromKeyValue(pMaterial, pKeyValue);
 		}
 	}
-	
+
 	return 0;
 }
-
 
 //-----------------------------------------------------------------------------
 // Reads out common flags, prevents them from becoming material vars
 //-----------------------------------------------------------------------------
-int CMaterial::FindMaterialVarFlag( char const* pFlagName ) const
+int CMaterial::FindMaterialVarFlag(char const *pFlagName) const
 {
 	// Strip preceeding spaces
-	while ( pFlagName[0] )
+	while(pFlagName[0])
 	{
-		if ( !IsWhitespace( pFlagName[0] ) )
+		if(!IsWhitespace(pFlagName[0]))
 			break;
 
 		++pFlagName;
 	}
 
-	for( int i = 0; *ShaderSystem()->ShaderStateString(i); ++i )
+	for(int i = 0; *ShaderSystem()->ShaderStateString(i); ++i)
 	{
 		const char *pStateString = ShaderSystem()->ShaderStateString(i);
-		const char *pFound = Q_stristr( pFlagName, pStateString );
+		const char *pFound = Q_stristr(pFlagName, pStateString);
 
 		// The found string had better start with the first non-whitespace character
-		if ( pFound != pFlagName )
+		if(pFound != pFlagName)
 			continue;
 
 		// Strip spaces at the end
-		int nLen = Q_strlen( pStateString );
+		int nLen = Q_strlen(pStateString);
 		pFound += nLen;
-		while ( true )
+		while(true)
 		{
-			if ( !pFound[0] )
+			if(!pFound[0])
 				return (1 << i);
 
-			if ( !IsWhitespace( pFound[0] ) )
+			if(!IsWhitespace(pFound[0]))
 				break;
 
 			++pFound;
@@ -1078,82 +1084,79 @@ int CMaterial::FindMaterialVarFlag( char const* pFlagName ) const
 	return 0;
 }
 
-
 //-----------------------------------------------------------------------------
 // Print material flags
 //-----------------------------------------------------------------------------
-void CMaterial::PrintMaterialFlags( int flags, int flagsDefined )
+void CMaterial::PrintMaterialFlags(int flags, int flagsDefined)
 {
 	int i;
-	for( i = 0; *ShaderSystem()->ShaderStateString(i); i++ )
+	for(i = 0; *ShaderSystem()->ShaderStateString(i); i++)
 	{
-		if( flags & ( 1<<i ) )
+		if(flags & (1 << i))
 		{
-			Warning( "%s|", ShaderSystem()->ShaderStateString(i) );
+			Warning("%s|", ShaderSystem()->ShaderStateString(i));
 		}
 	}
-	Warning( "\n" );
+	Warning("\n");
 }
-
 
 //-----------------------------------------------------------------------------
 // Parses material flags
 //-----------------------------------------------------------------------------
-bool CMaterial::ParseMaterialFlag( KeyValues* pParseValue, IMaterialVar* pFlagVar,
-	IMaterialVar* pFlagDefinedVar, bool parsingOverrides, int& flagMask, int& overrideMask )
+bool CMaterial::ParseMaterialFlag(KeyValues *pParseValue, IMaterialVar *pFlagVar, IMaterialVar *pFlagDefinedVar,
+								  bool parsingOverrides, int &flagMask, int &overrideMask)
 {
 	// See if the var is a flag...
-	int flagbit = FindMaterialVarFlag( GetVarName( pParseValue ) );
-	if (!flagbit)
+	int flagbit = FindMaterialVarFlag(GetVarName(pParseValue));
+	if(!flagbit)
 		return false;
 
 	// Allow for flag override
 	int testMask = parsingOverrides ? overrideMask : flagMask;
-	if (testMask & flagbit)
+	if(testMask & flagbit)
 	{
-		Warning("Error! Flag \"%s\" is multiply defined in material \"%s\"!\n", pParseValue->GetName(), GetName() );
+		Warning("Error! Flag \"%s\" is multiply defined in material \"%s\"!\n", pParseValue->GetName(), GetName());
 		return true;
 	}
 
 	// Make sure overrides win
-	if (overrideMask & flagbit)
+	if(overrideMask & flagbit)
 		return true;
 
-	if (parsingOverrides)
+	if(parsingOverrides)
 		overrideMask |= flagbit;
 	else
 		flagMask |= flagbit;
 
 	// If so, then set the flag bit
-	if (pParseValue->GetInt())
-		pFlagVar->SetIntValue( pFlagVar->GetIntValue() | flagbit );
+	if(pParseValue->GetInt())
+		pFlagVar->SetIntValue(pFlagVar->GetIntValue() | flagbit);
 	else
-		pFlagVar->SetIntValue( pFlagVar->GetIntValue() & (~flagbit) );
+		pFlagVar->SetIntValue(pFlagVar->GetIntValue() & (~flagbit));
 
 	// Mark the flag as being defined
-	pFlagDefinedVar->SetIntValue( pFlagDefinedVar->GetIntValue() | flagbit );
+	pFlagDefinedVar->SetIntValue(pFlagDefinedVar->GetIntValue() | flagbit);
 
-/*
-	if( stristr( m_pDebugName, "glasswindow064a" ) )
-	{
-		Warning( "flags\n" );
-		PrintMaterialFlags( pFlagVar->GetIntValue(), pFlagDefinedVar->GetIntValue() );
-	}
-*/
-	
+	/*
+		if( stristr( m_pDebugName, "glasswindow064a" ) )
+		{
+			Warning( "flags\n" );
+			PrintMaterialFlags( pFlagVar->GetIntValue(), pFlagDefinedVar->GetIntValue() );
+		}
+	*/
+
 	return true;
 }
 
+ConVar mat_reduceparticles("mat_reduceparticles", "0", FCVAR_ALLOWED_IN_COMPETITIVE);
 
-ConVar mat_reduceparticles( "mat_reduceparticles",  "0", FCVAR_ALLOWED_IN_COMPETITIVE );
-
-bool CMaterial::ShouldSkipVar( KeyValues *pVar, bool *pWasConditional )
+bool CMaterial::ShouldSkipVar(KeyValues *pVar, bool *pWasConditional)
 {
 	char const *pVarName = pVar->GetName();
-	char const *pQuestion = strchr( pVarName, '?' );
-	if ( ( ! pQuestion ) || (pQuestion == pVarName ) )
+	char const *pQuestion = strchr(pVarName, '?');
+	if((!pQuestion) || (pQuestion == pVarName))
 	{
-		*pWasConditional = false;							// unconditional var
+		*pWasConditional = false; // unconditional var
 		return false;
 	}
 	else
@@ -1162,118 +1165,118 @@ bool CMaterial::ShouldSkipVar( KeyValues *pVar, bool *pWasConditional )
 		*pWasConditional = true;
 		// parse the conditional part
 		char pszConditionName[256];
-		V_strncpy( pszConditionName, pVarName, 1+pQuestion-pVarName );
+		V_strncpy(pszConditionName, pVarName, 1 + pQuestion - pVarName);
 		char const *pCond = pszConditionName;
 		bool bToggle = false;
-		if ( pCond[0] == '!' )
+		if(pCond[0] == '!')
 		{
 			pCond++;
 			bToggle = true;
 		}
 
-		if ( ! stricmp( pCond, "lowfill" ) )
+		if(!stricmp(pCond, "lowfill"))
 		{
 			bShouldSkip = !mat_reduceparticles.GetBool();
 		}
-		else if ( ! stricmp( pCond, "hdr" ) )
+		else if(!stricmp(pCond, "hdr"))
 		{
-			bShouldSkip = ( HardwareConfig()->GetHDRType() == HDR_TYPE_NONE );
+			bShouldSkip = (HardwareConfig()->GetHDRType() == HDR_TYPE_NONE);
 		}
-		else if ( ! stricmp( pCond, "srgb" ) )
+		else if(!stricmp(pCond, "srgb"))
 		{
-			bShouldSkip = ( !HardwareConfig()->UsesSRGBCorrectBlending() );
+			bShouldSkip = (!HardwareConfig()->UsesSRGBCorrectBlending());
 		}
-		else if ( ! stricmp( pCond, "ldr" ) )
+		else if(!stricmp(pCond, "ldr"))
 		{
-			bShouldSkip = ( HardwareConfig()->GetHDRType() != HDR_TYPE_NONE );
+			bShouldSkip = (HardwareConfig()->GetHDRType() != HDR_TYPE_NONE);
 		}
-		else if ( ! stricmp( pCond, "360" ) )
+		else if(!stricmp(pCond, "360"))
 		{
 			bShouldSkip = !IsX360();
 		}
 		else
 		{
-			Warning( "unrecognized conditional test %s in %s\n", pVarName, GetName() );
+			Warning("unrecognized conditional test %s in %s\n", pVarName, GetName());
 		}
 
 		return bShouldSkip ^ bToggle;
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Computes the material vars for the shader
 //-----------------------------------------------------------------------------
-int CMaterial::ParseMaterialVars( IShader* pShader, KeyValues& keyValues, 
-			KeyValues* pOverrideKeyValues, bool modelDefault, IMaterialVar** ppVars, int nFindContext )
+int CMaterial::ParseMaterialVars(IShader *pShader, KeyValues &keyValues, KeyValues *pOverrideKeyValues,
+								 bool modelDefault, IMaterialVar **ppVars, int nFindContext)
 {
-	IMaterialVar* pNewVar;
+	IMaterialVar *pNewVar;
 	bool pOverride[256];
 	bool bWasConditional[256];
 	int overrideMask = 0;
 	int flagMask = 0;
 
-	memset( ppVars, 0, 256 * sizeof(IMaterialVar*) );
-	memset( pOverride, 0, sizeof( pOverride ) );
-	memset( bWasConditional, 0, sizeof( bWasConditional ) );
+	memset(ppVars, 0, 256 * sizeof(IMaterialVar *));
+	memset(pOverride, 0, sizeof(pOverride));
+	memset(bWasConditional, 0, sizeof(bWasConditional));
 
 	// Create the flag var...
 	// Set model mode if we fell back from a model mode shader
 	int modelFlag = modelDefault ? MATERIAL_VAR_MODEL : 0;
-	ppVars[FLAGS] = IMaterialVar::Create( this, "$flags", modelFlag );
-	ppVars[FLAGS_DEFINED] = IMaterialVar::Create( this, "$flags_defined", modelFlag );
-	ppVars[FLAGS2] = IMaterialVar::Create( this, "$flags2", 0 );
-	ppVars[FLAGS_DEFINED2] = IMaterialVar::Create( this, "$flags_defined2", 0 );
+	ppVars[FLAGS] = IMaterialVar::Create(this, "$flags", modelFlag);
+	ppVars[FLAGS_DEFINED] = IMaterialVar::Create(this, "$flags_defined", modelFlag);
+	ppVars[FLAGS2] = IMaterialVar::Create(this, "$flags2", 0);
+	ppVars[FLAGS_DEFINED2] = IMaterialVar::Create(this, "$flags_defined2", 0);
 
 	int numParams = pShader ? pShader->GetNumParams() : 0;
 	int varCount = numParams;
 
 	bool parsingOverrides = (pOverrideKeyValues != 0);
-	KeyValues* pVar = pOverrideKeyValues ? pOverrideKeyValues->GetFirstSubKey() : keyValues.GetFirstSubKey();
+	KeyValues *pVar = pOverrideKeyValues ? pOverrideKeyValues->GetFirstSubKey() : keyValues.GetFirstSubKey();
 
 	const char *pszMatName = pVar ? pVar->GetString() : "Unknown";
 
-	while( pVar )
+	while(pVar)
 	{
 		bool bProcessThisOne = true;
 
 		bool bIsConditionalVar;
-		
-		const char *pszVarName = GetVarName( pVar );
 
-		if ( (nFindContext == MATERIAL_FINDCONTEXT_ISONAMODEL) && pszVarName && pszVarName[0] )
+		const char *pszVarName = GetVarName(pVar);
+
+		if((nFindContext == MATERIAL_FINDCONTEXT_ISONAMODEL) && pszVarName && pszVarName[0])
 		{
 			// Prevent ignorez models
 			// Should we do 'nofog' too? For now, decided not to.
-			if ( Q_stristr(pszVarName,"$ignorez") )
+			if(Q_stristr(pszVarName, "$ignorez"))
 			{
-				Warning("Ignoring material flag '%s' on material '%s'.\n", pszVarName, pszMatName );
+				Warning("Ignoring material flag '%s' on material '%s'.\n", pszVarName, pszMatName);
 				goto nextVar;
 			}
 		}
 
 		// See if the var is a flag...
-		if ( 
-			ShouldSkipVar( pVar, &bIsConditionalVar ) ||	// should skip?
-			((pVar->GetName()[0] == '%') && (g_pShaderDevice->IsUsingGraphics()) && (!MaterialSystem()->CanUseEditorMaterials() ) ) || // is an editor var?
-			ParseMaterialFlag( pVar, ppVars[FLAGS], ppVars[FLAGS_DEFINED], parsingOverrides, flagMask, overrideMask ) || // is a flag?
-			ParseMaterialFlag( pVar, ppVars[FLAGS2], ppVars[FLAGS_DEFINED2], parsingOverrides, flagMask, overrideMask )
-			)
+		if(ShouldSkipVar(pVar, &bIsConditionalVar) || // should skip?
+		   ((pVar->GetName()[0] == '%') && (g_pShaderDevice->IsUsingGraphics()) &&
+			(!MaterialSystem()->CanUseEditorMaterials())) || // is an editor var?
+		   ParseMaterialFlag(pVar, ppVars[FLAGS], ppVars[FLAGS_DEFINED], parsingOverrides, flagMask,
+							 overrideMask) || // is a flag?
+		   ParseMaterialFlag(pVar, ppVars[FLAGS2], ppVars[FLAGS_DEFINED2], parsingOverrides, flagMask, overrideMask))
 			bProcessThisOne = false;
 
-		if ( bProcessThisOne )
+		if(bProcessThisOne)
 		{
 			// See if the var is one of the shader params
-			int varIdx = FindMaterialVar( pShader, pszVarName );
-			
+			int varIdx = FindMaterialVar(pShader, pszVarName);
+
 			// Check for multiply defined or overridden
-			if (varIdx >= 0)
+			if(varIdx >= 0)
 			{
-				if (ppVars[varIdx] && (! bIsConditionalVar ) )
+				if(ppVars[varIdx] && (!bIsConditionalVar))
 				{
-					if ( !pOverride[varIdx] || parsingOverrides )
+					if(!pOverride[varIdx] || parsingOverrides)
 					{
-						Warning("Error! Variable \"%s\" is multiply defined in material \"%s\"!\n", pVar->GetName(), GetName() );
+						Warning("Error! Variable \"%s\" is multiply defined in material \"%s\"!\n", pVar->GetName(),
+								GetName());
 					}
 					goto nextVar;
 				}
@@ -1281,45 +1284,45 @@ int CMaterial::ParseMaterialVars( IShader* pShader, KeyValues& keyValues,
 			else
 			{
 				int i;
-				for ( i = numParams; i < varCount; ++i)
+				for(i = numParams; i < varCount; ++i)
 				{
-					Assert( ppVars[i] );
-					if (!stricmp( ppVars[i]->GetName(), pVar->GetName() ))
+					Assert(ppVars[i]);
+					if(!stricmp(ppVars[i]->GetName(), pVar->GetName()))
 						break;
 				}
-				if (i != varCount)
+				if(i != varCount)
 				{
-					if ( !pOverride[i] || parsingOverrides )
+					if(!pOverride[i] || parsingOverrides)
 					{
-						Warning("Error! Variable \"%s\" is multiply defined in material \"%s\"!\n", pVar->GetName(), GetName() );
+						Warning("Error! Variable \"%s\" is multiply defined in material \"%s\"!\n", pVar->GetName(),
+								GetName());
 					}
 					goto nextVar;
 				}
 			}
 
 			// Create a material var for this dudely dude; could be zero...
-			pNewVar = CreateMaterialVarFromKeyValue( this, pVar );
-			if (!pNewVar) 
+			pNewVar = CreateMaterialVarFromKeyValue(this, pVar);
+			if(!pNewVar)
 				goto nextVar;
 
-			if (varIdx < 0)
+			if(varIdx < 0)
 			{
 				varIdx = varCount++;
 			}
-			if ( ppVars[varIdx] )
+			if(ppVars[varIdx])
 			{
-				IMaterialVar::Destroy( ppVars[varIdx] );
+				IMaterialVar::Destroy(ppVars[varIdx]);
 			}
 			ppVars[varIdx] = pNewVar;
-			if (parsingOverrides)
+			if(parsingOverrides)
 				pOverride[varIdx] = true;
 			bWasConditional[varIdx] = bIsConditionalVar;
-
 		}
 
-nextVar:
+	nextVar:
 		pVar = pVar->GetNextKey();
-		if (!pVar && parsingOverrides)
+		if(!pVar && parsingOverrides)
 		{
 			pVar = keyValues.GetFirstSubKey();
 			parsingOverrides = false;
@@ -1327,104 +1330,102 @@ nextVar:
 	}
 
 	// Create undefined vars for all the actual material vars
-	for (int i = 0; i < numParams; ++i)
+	for(int i = 0; i < numParams; ++i)
 	{
-		if (!ppVars[i])
-			ppVars[i] = IMaterialVar::Create( this, pShader->GetParamName(i) );
+		if(!ppVars[i])
+			ppVars[i] = IMaterialVar::Create(this, pShader->GetParamName(i));
 	}
 
 	return varCount;
 }
 
-
-static KeyValues *CheckConditionalFakeShaderName( char const *pShaderName, char const *pSuffixName,
-												  KeyValues *pKeyValues )
+static KeyValues *CheckConditionalFakeShaderName(char const *pShaderName, char const *pSuffixName,
+												 KeyValues *pKeyValues)
 {
-	KeyValues *pFallbackSection = pKeyValues->FindKey( pSuffixName );
-	if (pFallbackSection)
+	KeyValues *pFallbackSection = pKeyValues->FindKey(pSuffixName);
+	if(pFallbackSection)
 		return pFallbackSection;
 
 	char nameBuf[256];
-	V_snprintf( nameBuf, sizeof(nameBuf), "%s_%s", pShaderName, pSuffixName );
-	pFallbackSection = pKeyValues->FindKey( nameBuf );
+	V_snprintf(nameBuf, sizeof(nameBuf), "%s_%s", pShaderName, pSuffixName);
+	pFallbackSection = pKeyValues->FindKey(nameBuf);
 
-	if (pFallbackSection)
+	if(pFallbackSection)
 		return pFallbackSection;
 
 	return NULL;
 }
 
-
-static KeyValues *FindBuiltinFallbackBlock( char const *pShaderName, KeyValues *pKeyValues )
+static KeyValues *FindBuiltinFallbackBlock(char const *pShaderName, KeyValues *pKeyValues)
 {
 	// handle "fake" shader fallbacks which are conditional upon mode. like _hdr_dx9, etc
-	if ( HardwareConfig()->GetDXSupportLevel() < 90 )
+	if(HardwareConfig()->GetDXSupportLevel() < 90)
 	{
-		KeyValues *pRet = CheckConditionalFakeShaderName( pShaderName,"<DX90", pKeyValues );
-		if ( pRet )
+		KeyValues *pRet = CheckConditionalFakeShaderName(pShaderName, "<DX90", pKeyValues);
+		if(pRet)
 			return pRet;
 	}
-	if ( HardwareConfig()->GetDXSupportLevel() < 95 )
+	if(HardwareConfig()->GetDXSupportLevel() < 95)
 	{
-		KeyValues *pRet = CheckConditionalFakeShaderName( pShaderName,"<DX95", pKeyValues );
-		if ( pRet )
+		KeyValues *pRet = CheckConditionalFakeShaderName(pShaderName, "<DX95", pKeyValues);
+		if(pRet)
 			return pRet;
 	}
-	if ( HardwareConfig()->GetDXSupportLevel() < 90 || !HardwareConfig()->SupportsPixelShaders_2_b() )
+	if(HardwareConfig()->GetDXSupportLevel() < 90 || !HardwareConfig()->SupportsPixelShaders_2_b())
 	{
-		KeyValues *pRet = CheckConditionalFakeShaderName( pShaderName,"<DX90_20b", pKeyValues );
-		if ( pRet )
+		KeyValues *pRet = CheckConditionalFakeShaderName(pShaderName, "<DX90_20b", pKeyValues);
+		if(pRet)
 			return pRet;
 	}
-	if ( HardwareConfig()->GetDXSupportLevel() >= 90 && HardwareConfig()->SupportsPixelShaders_2_b() )
+	if(HardwareConfig()->GetDXSupportLevel() >= 90 && HardwareConfig()->SupportsPixelShaders_2_b())
 	{
-		KeyValues *pRet = CheckConditionalFakeShaderName( pShaderName,">=DX90_20b", pKeyValues );
-		if ( pRet )
+		KeyValues *pRet = CheckConditionalFakeShaderName(pShaderName, ">=DX90_20b", pKeyValues);
+		if(pRet)
 			return pRet;
 	}
-	if ( HardwareConfig()->GetDXSupportLevel() <= 90 )
+	if(HardwareConfig()->GetDXSupportLevel() <= 90)
 	{
-		KeyValues *pRet = CheckConditionalFakeShaderName( pShaderName,"<=DX90", pKeyValues );
-		if ( pRet )
+		KeyValues *pRet = CheckConditionalFakeShaderName(pShaderName, "<=DX90", pKeyValues);
+		if(pRet)
 			return pRet;
 	}
-	if ( HardwareConfig()->GetDXSupportLevel() >= 90 )
+	if(HardwareConfig()->GetDXSupportLevel() >= 90)
 	{
-		KeyValues *pRet = CheckConditionalFakeShaderName( pShaderName,">=DX90", pKeyValues );
-		if ( pRet )
+		KeyValues *pRet = CheckConditionalFakeShaderName(pShaderName, ">=DX90", pKeyValues);
+		if(pRet)
 			return pRet;
 	}
-	if ( HardwareConfig()->GetDXSupportLevel() > 90 )
+	if(HardwareConfig()->GetDXSupportLevel() > 90)
 	{
-		KeyValues *pRet = CheckConditionalFakeShaderName( pShaderName,">DX90", pKeyValues );
-		if ( pRet )
+		KeyValues *pRet = CheckConditionalFakeShaderName(pShaderName, ">DX90", pKeyValues);
+		if(pRet)
 			return pRet;
 	}
-	if ( HardwareConfig()->GetHDRType() != HDR_TYPE_NONE )
+	if(HardwareConfig()->GetHDRType() != HDR_TYPE_NONE)
 	{
-		KeyValues *pRet = CheckConditionalFakeShaderName( pShaderName,"hdr_dx9", pKeyValues );
-		if ( pRet )
+		KeyValues *pRet = CheckConditionalFakeShaderName(pShaderName, "hdr_dx9", pKeyValues);
+		if(pRet)
 			return pRet;
-		pRet = CheckConditionalFakeShaderName( pShaderName,"hdr", pKeyValues );
-		if ( pRet )
+		pRet = CheckConditionalFakeShaderName(pShaderName, "hdr", pKeyValues);
+		if(pRet)
 			return pRet;
 	}
 	else
 	{
-		KeyValues *pRet = CheckConditionalFakeShaderName( pShaderName,"ldr", pKeyValues );
-		if ( pRet )
+		KeyValues *pRet = CheckConditionalFakeShaderName(pShaderName, "ldr", pKeyValues);
+		if(pRet)
 			return pRet;
 	}
-	if ( HardwareConfig()->UsesSRGBCorrectBlending() )
+	if(HardwareConfig()->UsesSRGBCorrectBlending())
 	{
-		KeyValues *pRet = CheckConditionalFakeShaderName( pShaderName,"srgb", pKeyValues );
-		if ( pRet )
+		KeyValues *pRet = CheckConditionalFakeShaderName(pShaderName, "srgb", pKeyValues);
+		if(pRet)
 			return pRet;
 	}
-	if ( HardwareConfig()->GetDXSupportLevel() >= 90 )
+	if(HardwareConfig()->GetDXSupportLevel() >= 90)
 	{
-		KeyValues *pRet = CheckConditionalFakeShaderName( pShaderName,"dx9", pKeyValues );
-		if ( pRet )
+		KeyValues *pRet = CheckConditionalFakeShaderName(pShaderName, "dx9", pKeyValues);
+		if(pRet)
 			return pRet;
 	}
 	return NULL;
@@ -1438,175 +1439,176 @@ inline const char *MissingShaderName()
 //-----------------------------------------------------------------------------
 // Hooks up the shader
 //-----------------------------------------------------------------------------
-KeyValues* CMaterial::InitializeShader( KeyValues &keyValues, KeyValues &patchKeyValues, int nFindContext )
+KeyValues *CMaterial::InitializeShader(KeyValues &keyValues, KeyValues &patchKeyValues, int nFindContext)
 {
 	MaterialLock_t hMaterialLock = MaterialSystem()->Lock();
 
-	KeyValues* pCurrentFallback = &keyValues;
-	KeyValues* pFallbackSection = 0;
+	KeyValues *pCurrentFallback = &keyValues;
+	KeyValues *pFallbackSection = 0;
 
 	char szShaderName[MAX_PATH];
-	char const* pShaderName = pCurrentFallback->GetName();
-	if ( !pShaderName )
+	char const *pShaderName = pCurrentFallback->GetName();
+	if(!pShaderName)
 	{
-		// I'm not quite sure how this can happen, but we'll see... 
-		Warning( "Shader not specified in material %s\nUsing wireframe instead...\n", GetName() );
-		Assert( 0 );
+		// I'm not quite sure how this can happen, but we'll see...
+		Warning("Shader not specified in material %s\nUsing wireframe instead...\n", GetName());
+		Assert(0);
 		pShaderName = MissingShaderName();
 	}
 	else
 	{
 		// can't pass a stable reference to the key values name around
 		// naive leaf functions can cause KV system to re-alloc
-		V_strncpy( szShaderName, pShaderName, sizeof( szShaderName ) );
+		V_strncpy(szShaderName, pShaderName, sizeof(szShaderName));
 		pShaderName = szShaderName;
 	}
 
-	IShader* pShader;
-	IMaterialVar* ppVars[256];
+	IShader *pShader;
+	IMaterialVar *ppVars[256];
 	char pFallbackShaderNameBuf[256];
 	char pFallbackMaterialNameBuf[256];
 	int varCount = 0;
 	bool modelDefault = false;
 
 	// Keep going until there's no more fallbacks...
-	while( true )
+	while(true)
 	{
 		// Find the shader for this material. Note that this may not be
 		// the actual shader we use due to fallbacks...
-		pShader = ShaderSystem()->FindShader( pShaderName );
-		if ( !pShader )
+		pShader = ShaderSystem()->FindShader(pShaderName);
+		if(!pShader)
 		{
-			if ( g_pShaderDevice->IsUsingGraphics() )
+			if(g_pShaderDevice->IsUsingGraphics())
 			{
-				Warning( "Error: Material \"%s\" uses unknown shader \"%s\"\n", GetName(), pShaderName );
-				//hushed Assert( 0 );
+				Warning("Error: Material \"%s\" uses unknown shader \"%s\"\n", GetName(), pShaderName);
+				// hushed Assert( 0 );
 			}
 
 			pShaderName = MissingShaderName();
-			pShader = ShaderSystem()->FindShader( pShaderName );
+			pShader = ShaderSystem()->FindShader(pShaderName);
 
-			if ( !HushAsserts() )
+			if(!HushAsserts())
 			{
-				AssertMsg( pShader, "pShader==NULL. Shader: %s", GetName() );
+				AssertMsg(pShader, "pShader==NULL. Shader: %s", GetName());
 			}
 
 #ifndef DEDICATED
-			if ( !pShader ) 
-	 		{
+			if(!pShader)
+			{
 #ifdef LINUX
 				// Exit out here. We're running into issues where this material is returned in a horribly broken
 				//  state and you wind up crashing in LockMesh() because the vertex and index buffer pointers
 				//  are NULL. You can repro this by not dying here and showing the intro movie. This happens on
 				//  Linux when you run from a symlink'd SteamApps directory.
-				Error( "Shader '%s' for material '%s' not found.\n",
-					   pCurrentFallback->GetName() ? pCurrentFallback->GetName() : pShaderName, GetName() );
+				Error("Shader '%s' for material '%s' not found.\n",
+					  pCurrentFallback->GetName() ? pCurrentFallback->GetName() : pShaderName, GetName());
 #endif
-	 			MaterialSystem()->Unlock( hMaterialLock );
-	 			return NULL;
-	 		}
+				MaterialSystem()->Unlock(hMaterialLock);
+				return NULL;
+			}
 #endif
-
 		}
 
 		bool bHasBuiltinFallbackBlock = false;
-		if ( !pFallbackSection )
+		if(!pFallbackSection)
 		{
-			pFallbackSection = FindBuiltinFallbackBlock( pShaderName, &keyValues );
-			if( pFallbackSection )
+			pFallbackSection = FindBuiltinFallbackBlock(pShaderName, &keyValues);
+			if(pFallbackSection)
 			{
 				bHasBuiltinFallbackBlock = true;
-				pFallbackSection->ChainKeyValue( &keyValues );
+				pFallbackSection->ChainKeyValue(&keyValues);
 				pCurrentFallback = pFallbackSection;
 			}
 		}
 
 		// Here we must set up all flags + material vars that the shader needs
 		// because it may look at them when choosing shader fallback.
-		varCount = ParseMaterialVars( pShader, keyValues, pFallbackSection, modelDefault, ppVars, nFindContext );
+		varCount = ParseMaterialVars(pShader, keyValues, pFallbackSection, modelDefault, ppVars, nFindContext);
 
-		if ( !pShader )
+		if(!pShader)
 			break;
 
 		// Make sure we set default values before the fallback is looked for
-		ShaderSystem()->InitShaderParameters( pShader, ppVars, GetName() );
+		ShaderSystem()->InitShaderParameters(pShader, ppVars, GetName());
 
 		// Now that the material vars are parsed, see if there's a fallback
 		// But only if we're not in the tools
-/*
-		if (!g_pShaderAPI->IsUsingGraphics())
-			break;
-*/
+		/*
+				if (!g_pShaderAPI->IsUsingGraphics())
+					break;
+		*/
 
 		// Check for a fallback; if not, we're done
-		pShaderName = pShader->GetFallbackShader( ppVars );
-		if (!pShaderName)
+		pShaderName = pShader->GetFallbackShader(ppVars);
+		if(!pShaderName)
 		{
 			break;
 		}
 		// Copy off the shader name, as it may be in a materialvar in the shader
 		// because we're about to delete all materialvars
-		Q_strncpy( pFallbackShaderNameBuf, pShaderName, 256 );
+		Q_strncpy(pFallbackShaderNameBuf, pShaderName, 256);
 		pShaderName = pFallbackShaderNameBuf;
 
 		// Remember the model flag if we're on dx7 or higher...
-		if (HardwareConfig()->SupportsVertexAndPixelShaders())
+		if(HardwareConfig()->SupportsVertexAndPixelShaders())
 		{
-			modelDefault = ( ppVars[FLAGS]->GetIntValue() & MATERIAL_VAR_MODEL ) != 0;
+			modelDefault = (ppVars[FLAGS]->GetIntValue() & MATERIAL_VAR_MODEL) != 0;
 		}
 
 		// Try to get the section associated with the fallback shader
-		// Then chain it to the base data so it can override the 
+		// Then chain it to the base data so it can override the
 		// values if it wants to
-		if( !bHasBuiltinFallbackBlock )
+		if(!bHasBuiltinFallbackBlock)
 		{
-			pFallbackSection = keyValues.FindKey( pShaderName );
-			if (pFallbackSection)
+			pFallbackSection = keyValues.FindKey(pShaderName);
+			if(pFallbackSection)
 			{
-				pFallbackSection->ChainKeyValue( &keyValues );
+				pFallbackSection->ChainKeyValue(&keyValues);
 				pCurrentFallback = pFallbackSection;
 			}
 		}
 
 		// Now, blow away all of the material vars + try again...
-		for (int i = 0; i < varCount; ++i)
+		for(int i = 0; i < varCount; ++i)
 		{
-			Assert( ppVars[i] );
-			IMaterialVar::Destroy( ppVars[i] );
+			Assert(ppVars[i]);
+			IMaterialVar::Destroy(ppVars[i]);
 		}
 
 		// Check the KeyValues for '$fallbackmaterial'
-		// Note we have to do this *after* we chain the keyvalues 
+		// Note we have to do this *after* we chain the keyvalues
 		// based on the fallback shader	since the names of the fallback material
 		// must lie within the shader-specific block usually.
-		const char *pFallbackMaterial = pCurrentFallback->GetString( "$fallbackmaterial" );
-		if ( pFallbackMaterial[0] )
+		const char *pFallbackMaterial = pCurrentFallback->GetString("$fallbackmaterial");
+		if(pFallbackMaterial[0])
 		{
 			// Don't fallback to ourselves
-			if ( Q_stricmp( GetName(), pFallbackMaterial ) )
+			if(Q_stricmp(GetName(), pFallbackMaterial))
 			{
 				// Gotta copy it off; clearing the keyvalues will blow the string away
-				Q_strncpy( pFallbackMaterialNameBuf, pFallbackMaterial, 256 );
+				Q_strncpy(pFallbackMaterialNameBuf, pFallbackMaterial, 256);
 				keyValues.Clear();
-				if( !LoadVMTFile( keyValues, patchKeyValues, pFallbackMaterialNameBuf, UsesUNCFileName(), NULL ) )
+				if(!LoadVMTFile(keyValues, patchKeyValues, pFallbackMaterialNameBuf, UsesUNCFileName(), NULL))
 				{
-					Warning( "CMaterial::PrecacheVars: error loading vmt file %s for %s\n", pFallbackMaterialNameBuf, GetName() );
+					Warning("CMaterial::PrecacheVars: error loading vmt file %s for %s\n", pFallbackMaterialNameBuf,
+							GetName());
 					keyValues = *(((CMaterial *)g_pErrorMaterial)->m_pVMTKeyValues);
 				}
 			}
 			else
 			{
-				Warning( "CMaterial::PrecacheVars: fallback material for vmt file %s is itself!\n", GetName() );
+				Warning("CMaterial::PrecacheVars: fallback material for vmt file %s is itself!\n", GetName());
 				keyValues = *(((CMaterial *)g_pErrorMaterial)->m_pVMTKeyValues);
 			}
 			pCurrentFallback = &keyValues;
 			pFallbackSection = NULL;
 
-			// I'm not quite sure how this can happen, but we'll see... 
+			// I'm not quite sure how this can happen, but we'll see...
 			pShaderName = pCurrentFallback->GetName();
-			if (!pShaderName)
+			if(!pShaderName)
 			{
-				Warning("Shader not specified in material %s (fallback %s)\nUsing wireframe instead...\n", GetName(), pFallbackMaterialNameBuf );
+				Warning("Shader not specified in material %s (fallback %s)\nUsing wireframe instead...\n", GetName(),
+						pFallbackMaterialNameBuf);
 				pShaderName = MissingShaderName();
 			}
 		}
@@ -1617,17 +1619,17 @@ KeyValues* CMaterial::InitializeShader( KeyValues &keyValues, KeyValues &patchKe
 
 	// Store off the material vars + flags
 	m_VarCount = varCount;
-	m_pShaderParams = (IMaterialVar**)malloc( varCount * sizeof(IMaterialVar*) );
-	memcpy( m_pShaderParams, ppVars, varCount * sizeof(IMaterialVar*) );
+	m_pShaderParams = (IMaterialVar **)malloc(varCount * sizeof(IMaterialVar *));
+	memcpy(m_pShaderParams, ppVars, varCount * sizeof(IMaterialVar *));
 
 #ifdef _DEBUG
-	for (int i = 0; i < varCount; ++i)
+	for(int i = 0; i < varCount; ++i)
 	{
-		Assert( ppVars[i] );
+		Assert(ppVars[i]);
 	}
 #endif
 
-	MaterialSystem()->Unlock( hMaterialLock );
+	MaterialSystem()->Unlock(hMaterialLock);
 	return pCurrentFallback;
 }
 
@@ -1635,13 +1637,13 @@ KeyValues* CMaterial::InitializeShader( KeyValues &keyValues, KeyValues &patchKe
 // Gets the texturemap size
 //-----------------------------------------------------------------------------
 
-void CMaterial::PrecacheMappingDimensions( )
+void CMaterial::PrecacheMappingDimensions()
 {
 	// Cache mapping width and mapping height
-	if (!m_representativeTexture)
+	if(!m_representativeTexture)
 	{
 #ifdef PARANOID
-		Warning( "No representative texture on material: \"%s\"\n", GetName() );
+		Warning("No representative texture on material: \"%s\"\n", GetName());
 #endif
 		m_MappingWidth = 64;
 		m_MappingHeight = 64;
@@ -1653,15 +1655,14 @@ void CMaterial::PrecacheMappingDimensions( )
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Initialize the state snapshot
 //-----------------------------------------------------------------------------
 bool CMaterial::InitializeStateSnapshots()
 {
-	if (IsPrecached())
+	if(IsPrecached())
 	{
-		if ( MaterialSystem()->GetCurrentMaterial() == this)
+		if(MaterialSystem()->GetCurrentMaterial() == this)
 		{
 			g_pShaderAPI->FlushBufferedPrimitives();
 		}
@@ -1669,7 +1670,8 @@ bool CMaterial::InitializeStateSnapshots()
 		// Default state
 		CleanUpStateSnapshots();
 
-		if ( m_pShader && !ShaderSystem()->InitRenderState( m_pShader, m_VarCount, m_pShaderParams, &m_ShaderRenderState, GetName() ))
+		if(m_pShader &&
+		   !ShaderSystem()->InitRenderState(m_pShader, m_VarCount, m_pShaderParams, &m_ShaderRenderState, GetName()))
 		{
 			m_Flags &= ~MATERIAL_VALID_RENDERSTATE;
 			return false;
@@ -1683,7 +1685,7 @@ bool CMaterial::InitializeStateSnapshots()
 
 void CMaterial::CleanUpStateSnapshots()
 {
-	if (IsValidRenderState())
+	if(IsValidRenderState())
 	{
 		ShaderSystem()->CleanupRenderState(&m_ShaderRenderState);
 		// -- THIS CANNOT BE HERE: m_Flags &= ~MATERIAL_VALID_RENDERSTATE;
@@ -1693,7 +1695,6 @@ void CMaterial::CleanUpStateSnapshots()
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // This sets up a debugging/error shader...
 //-----------------------------------------------------------------------------
@@ -1701,7 +1702,7 @@ void CMaterial::SetupErrorShader()
 {
 	// Preserve the model flags
 	int flags = 0;
-	if ( m_pShaderParams && m_pShaderParams[FLAGS] )
+	if(m_pShaderParams && m_pShaderParams[FLAGS])
 	{
 		flags = (m_pShaderParams[FLAGS]->GetIntValue() & MATERIAL_VAR_MODEL);
 	}
@@ -1711,29 +1712,29 @@ void CMaterial::SetupErrorShader()
 
 	// We had a failure; replace it with a valid shader...
 
-	m_pShader = ShaderSystem()->FindShader( MissingShaderName() );
-	Assert( m_pShader );
+	m_pShader = ShaderSystem()->FindShader(MissingShaderName());
+	Assert(m_pShader);
 
 	// Create undefined vars for all the actual material vars
 	m_VarCount = m_pShader->GetNumParams();
-	m_pShaderParams = (IMaterialVar**)malloc( m_VarCount * sizeof(IMaterialVar*) );
+	m_pShaderParams = (IMaterialVar **)malloc(m_VarCount * sizeof(IMaterialVar *));
 
-	for (int i = 0; i < m_VarCount; ++i)
+	for(int i = 0; i < m_VarCount; ++i)
 	{
-		m_pShaderParams[i] = IMaterialVar::Create( this, m_pShader->GetParamName(i) );
+		m_pShaderParams[i] = IMaterialVar::Create(this, m_pShader->GetParamName(i));
 	}
 
 	// Store the model flags
-	SetMaterialVarFlags( flags, true );
+	SetMaterialVarFlags(flags, true);
 
 	// Set the default values
-	ShaderSystem()->InitShaderParameters( m_pShader, m_pShaderParams, "Error" );
+	ShaderSystem()->InitShaderParameters(m_pShader, m_pShaderParams, "Error");
 
 	// Invokes the SHADER_INIT block in the various shaders,
-	ShaderSystem()->InitShaderInstance( m_pShader, m_pShaderParams, "Error", GetTextureGroupName() );
+	ShaderSystem()->InitShaderInstance(m_pShader, m_pShaderParams, "Error", GetTextureGroupName());
 
 #ifdef DBGFLAG_ASSERT
-	bool ok = 
+	bool ok =
 #endif
 		InitializeStateSnapshots();
 
@@ -1742,28 +1743,26 @@ void CMaterial::SetupErrorShader()
 	Assert(ok);
 }
 
-
 //-----------------------------------------------------------------------------
 // This computes the state snapshots for this material
 //-----------------------------------------------------------------------------
 void CMaterial::RecomputeStateSnapshots()
 {
 	CMatCallQueue *pCallQueue = MaterialSystem()->GetRenderCallQueue();
-	if ( pCallQueue )
+	if(pCallQueue)
 	{
-		pCallQueue->QueueCall( this, &CMaterial::RecomputeStateSnapshots );
+		pCallQueue->QueueCall(this, &CMaterial::RecomputeStateSnapshots);
 		return;
 	}
 
 	bool ok = InitializeStateSnapshots();
 
 	// compute the state snapshots
-	if (!ok)
+	if(!ok)
 	{
 		SetupErrorShader();
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Are we valid
@@ -1773,13 +1772,12 @@ inline bool CMaterial::IsValidRenderState() const
 	return (m_Flags & MATERIAL_VALID_RENDERSTATE) != 0;
 }
 
-
 //-----------------------------------------------------------------------------
 // Gets/sets material var flags
 //-----------------------------------------------------------------------------
 inline int CMaterial::GetMaterialVarFlags() const
 {
-	if ( m_pShaderParams && m_pShaderParams[FLAGS] )
+	if(m_pShaderParams && m_pShaderParams[FLAGS])
 	{
 		return m_pShaderParams[FLAGS]->GetIntValueFast();
 	}
@@ -1789,30 +1787,30 @@ inline int CMaterial::GetMaterialVarFlags() const
 	}
 }
 
-inline void CMaterial::SetMaterialVarFlags( int flags, bool on )
+inline void CMaterial::SetMaterialVarFlags(int flags, bool on)
 {
-	if ( !m_pShaderParams )
+	if(!m_pShaderParams)
 	{
-		Assert( 0 );	// are we hanging onto a material that has been cleaned up or isn't ready?
+		Assert(0); // are we hanging onto a material that has been cleaned up or isn't ready?
 		return;
 	}
 
-	if (on)
+	if(on)
 	{
-		m_pShaderParams[FLAGS]->SetIntValue( GetMaterialVarFlags() | flags );
+		m_pShaderParams[FLAGS]->SetIntValue(GetMaterialVarFlags() | flags);
 	}
 	else
 	{
-		m_pShaderParams[FLAGS]->SetIntValue( GetMaterialVarFlags() & (~flags) );
+		m_pShaderParams[FLAGS]->SetIntValue(GetMaterialVarFlags() & (~flags));
 	}
 
 	// Mark it as being defined...
-	m_pShaderParams[FLAGS_DEFINED]->SetIntValue( m_pShaderParams[FLAGS_DEFINED]->GetIntValueFast() | flags );
+	m_pShaderParams[FLAGS_DEFINED]->SetIntValue(m_pShaderParams[FLAGS_DEFINED]->GetIntValueFast() | flags);
 }
 
 inline int CMaterial::GetMaterialVarFlags2() const
 {
-	if ( m_pShaderParams && m_VarCount > FLAGS2 && m_pShaderParams[FLAGS2] )
+	if(m_pShaderParams && m_VarCount > FLAGS2 && m_pShaderParams[FLAGS2])
 	{
 		return m_pShaderParams[FLAGS2]->GetIntValueFast();
 	}
@@ -1822,32 +1820,30 @@ inline int CMaterial::GetMaterialVarFlags2() const
 	}
 }
 
-inline void CMaterial::SetMaterialVarFlags2( int flags, bool on )
+inline void CMaterial::SetMaterialVarFlags2(int flags, bool on)
 {
-	if ( m_pShaderParams && m_VarCount > FLAGS2 && m_pShaderParams[FLAGS2] )
+	if(m_pShaderParams && m_VarCount > FLAGS2 && m_pShaderParams[FLAGS2])
 	{
-		if (on)
-			m_pShaderParams[FLAGS2]->SetIntValue( GetMaterialVarFlags2() | flags );
+		if(on)
+			m_pShaderParams[FLAGS2]->SetIntValue(GetMaterialVarFlags2() | flags);
 		else
-			m_pShaderParams[FLAGS2]->SetIntValue( GetMaterialVarFlags2() & (~flags) );
+			m_pShaderParams[FLAGS2]->SetIntValue(GetMaterialVarFlags2() & (~flags));
 	}
 
-	if ( m_pShaderParams && m_VarCount > FLAGS_DEFINED2 && m_pShaderParams[FLAGS_DEFINED2] )
+	if(m_pShaderParams && m_VarCount > FLAGS_DEFINED2 && m_pShaderParams[FLAGS_DEFINED2])
 	{
 		// Mark it as being defined...
-		m_pShaderParams[FLAGS_DEFINED2]->SetIntValue( 
-			m_pShaderParams[FLAGS_DEFINED2]->GetIntValueFast() | flags );
+		m_pShaderParams[FLAGS_DEFINED2]->SetIntValue(m_pShaderParams[FLAGS_DEFINED2]->GetIntValueFast() | flags);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Gets the morph format
 //-----------------------------------------------------------------------------
 MorphFormat_t CMaterial::GetMorphFormat() const
 {
-	const_cast<CMaterial*>(this)->Precache();
-	Assert( IsValidRenderState() );
+	const_cast<CMaterial *>(this)->Precache();
+	Assert(IsValidRenderState());
 	return m_ShaderRenderState.m_MorphFormat;
 }
 
@@ -1856,28 +1852,27 @@ MorphFormat_t CMaterial::GetMorphFormat() const
 //-----------------------------------------------------------------------------
 VertexFormat_t CMaterial::GetVertexFormat() const
 {
-	Assert( IsValidRenderState() );
+	Assert(IsValidRenderState());
 	return m_ShaderRenderState.m_VertexFormat;
 }
 
 VertexFormat_t CMaterial::GetVertexUsage() const
 {
-	Assert( IsValidRenderState() );
+	Assert(IsValidRenderState());
 	return m_ShaderRenderState.m_VertexUsage;
 }
 
 bool CMaterial::PerformDebugTrace() const
 {
-	return IsValidRenderState() && ((GetMaterialVarFlags() & MATERIAL_VAR_DEBUG ) != 0);
+	return IsValidRenderState() && ((GetMaterialVarFlags() & MATERIAL_VAR_DEBUG) != 0);
 }
-
 
 //-----------------------------------------------------------------------------
 // Are we suppressed?
 //-----------------------------------------------------------------------------
-bool  CMaterial::IsSuppressed() const
+bool CMaterial::IsSuppressed() const
 {
-	if ( !IsValidRenderState() )
+	if(!IsValidRenderState())
 		return true;
 
 	return ((GetMaterialVarFlags() & MATERIAL_VAR_NO_DRAW) != 0);
@@ -1885,22 +1880,20 @@ bool  CMaterial::IsSuppressed() const
 
 void CMaterial::ToggleSuppression()
 {
-	if (IsValidRenderState())
+	if(IsValidRenderState())
 	{
-		if ((GetMaterialVarFlags() & MATERIAL_VAR_NO_DEBUG_OVERRIDE) != 0)
+		if((GetMaterialVarFlags() & MATERIAL_VAR_NO_DEBUG_OVERRIDE) != 0)
 			return;
 
-		SetMaterialVarFlags( MATERIAL_VAR_NO_DRAW, 
-			(GetMaterialVarFlags() & MATERIAL_VAR_NO_DRAW) == 0 );
+		SetMaterialVarFlags(MATERIAL_VAR_NO_DRAW, (GetMaterialVarFlags() & MATERIAL_VAR_NO_DRAW) == 0);
 	}
 }
 
 void CMaterial::ToggleDebugTrace()
 {
-	if (IsValidRenderState())
+	if(IsValidRenderState())
 	{
-		SetMaterialVarFlags( MATERIAL_VAR_DEBUG, 
-			(GetMaterialVarFlags() & MATERIAL_VAR_DEBUG) == 0 );
+		SetMaterialVarFlags(MATERIAL_VAR_DEBUG, (GetMaterialVarFlags() & MATERIAL_VAR_DEBUG) == 0);
 	}
 }
 
@@ -1913,210 +1906,203 @@ bool CMaterial::NoDebugOverride() const
 	return IsValidRenderState() && (GetMaterialVarFlags() & MATERIAL_VAR_NO_DEBUG_OVERRIDE) != 0;
 }
 
-
 //-----------------------------------------------------------------------------
 // Material Var flags
 //-----------------------------------------------------------------------------
-void CMaterial::SetMaterialVarFlag( MaterialVarFlags_t flag, bool on )
+void CMaterial::SetMaterialVarFlag(MaterialVarFlags_t flag, bool on)
 {
 	CMatCallQueue *pCallQueue = MaterialSystem()->GetRenderCallQueue();
-	if ( pCallQueue )
+	if(pCallQueue)
 	{
-		pCallQueue->QueueCall( this, &CMaterial::SetMaterialVarFlag, flag, on );
+		pCallQueue->QueueCall(this, &CMaterial::SetMaterialVarFlag, flag, on);
 		return;
 	}
 
-	bool oldOn = (GetMaterialVarFlags( ) & flag) != 0;
-	if (oldOn != on)
+	bool oldOn = (GetMaterialVarFlags() & flag) != 0;
+	if(oldOn != on)
 	{
-		SetMaterialVarFlags( flag, on );
+		SetMaterialVarFlags(flag, on);
 
 		// This is going to be called from client code; recompute snapshots!
 		RecomputeStateSnapshots();
 	}
 }
 
-bool CMaterial::GetMaterialVarFlag( MaterialVarFlags_t flag ) const
+bool CMaterial::GetMaterialVarFlag(MaterialVarFlags_t flag) const
 {
 	return (GetMaterialVarFlags() & flag) != 0;
 }
 
-
 //-----------------------------------------------------------------------------
 // Do we use the env_cubemap entity to get cubemaps from the level?
 //-----------------------------------------------------------------------------
-bool CMaterial::UsesEnvCubemap( void )
+bool CMaterial::UsesEnvCubemap(void)
 {
 	Precache();
 
-	if( !m_pShader )
+	if(!m_pShader)
 	{
-		if ( !HushAsserts() )
+		if(!HushAsserts())
 		{
-			AssertMsg( m_pShader, "m_pShader==NULL. Shader: %s", GetName() );
+			AssertMsg(m_pShader, "m_pShader==NULL. Shader: %s", GetName());
 		}
 		return false;
 	}
 
-	Assert( m_pShaderParams );
-	return IsFlag2Set( m_pShaderParams, MATERIAL_VAR2_USES_ENV_CUBEMAP );
+	Assert(m_pShaderParams);
+	return IsFlag2Set(m_pShaderParams, MATERIAL_VAR2_USES_ENV_CUBEMAP);
 }
-
 
 //-----------------------------------------------------------------------------
 // Do we need a tangent space at the vertex level?
 //-----------------------------------------------------------------------------
-bool CMaterial::NeedsTangentSpace( void )
+bool CMaterial::NeedsTangentSpace(void)
 {
 	Precache();
 
-	if( !m_pShader )
+	if(!m_pShader)
 	{
-		if ( !HushAsserts() )
+		if(!HushAsserts())
 		{
-			AssertMsg( m_pShader, "m_pShader==NULL. Shader: %s", GetName() );
+			AssertMsg(m_pShader, "m_pShader==NULL. Shader: %s", GetName());
 		}
 		return false;
 	}
 
-	Assert( m_pShaderParams );
-	return IsFlag2Set( m_pShaderParams, MATERIAL_VAR2_NEEDS_TANGENT_SPACES );
+	Assert(m_pShaderParams);
+	return IsFlag2Set(m_pShaderParams, MATERIAL_VAR2_NEEDS_TANGENT_SPACES);
 }
 
-bool CMaterial::NeedsPowerOfTwoFrameBufferTexture( bool bCheckSpecificToThisFrame )
+bool CMaterial::NeedsPowerOfTwoFrameBufferTexture(bool bCheckSpecificToThisFrame)
 {
 	PrecacheVars();
-	if( !m_pShader )
+	if(!m_pShader)
 	{
-		if ( !HushAsserts() )
+		if(!HushAsserts())
 		{
-			AssertMsg( m_pShader, "m_pShader==NULL. Shader: %s", GetName() );
+			AssertMsg(m_pShader, "m_pShader==NULL. Shader: %s", GetName());
 		}
 		return false;
 	}
 
-	Assert( m_pShaderParams );
-	return m_pShader->NeedsPowerOfTwoFrameBufferTexture( m_pShaderParams, bCheckSpecificToThisFrame );
+	Assert(m_pShaderParams);
+	return m_pShader->NeedsPowerOfTwoFrameBufferTexture(m_pShaderParams, bCheckSpecificToThisFrame);
 }
 
-bool CMaterial::NeedsFullFrameBufferTexture( bool bCheckSpecificToThisFrame )
+bool CMaterial::NeedsFullFrameBufferTexture(bool bCheckSpecificToThisFrame)
 {
 	PrecacheVars();
-	if( !m_pShader )
+	if(!m_pShader)
 	{
-		if ( !HushAsserts() )
+		if(!HushAsserts())
 		{
-			AssertMsg( m_pShader, "m_pShader==NULL. Shader: %s", GetName() );
+			AssertMsg(m_pShader, "m_pShader==NULL. Shader: %s", GetName());
 		}
 		return false;
 	}
 
-	Assert( m_pShaderParams );
-	return m_pShader->NeedsFullFrameBufferTexture( m_pShaderParams, bCheckSpecificToThisFrame );
+	Assert(m_pShaderParams);
+	return m_pShader->NeedsFullFrameBufferTexture(m_pShaderParams, bCheckSpecificToThisFrame);
 }
 
 // GR - Is lightmap alpha needed?
-bool CMaterial::NeedsLightmapBlendAlpha( void )
+bool CMaterial::NeedsLightmapBlendAlpha(void)
 {
 	Precache();
-	return (GetMaterialVarFlags2() & MATERIAL_VAR2_BLEND_WITH_LIGHTMAP_ALPHA ) != 0;
+	return (GetMaterialVarFlags2() & MATERIAL_VAR2_BLEND_WITH_LIGHTMAP_ALPHA) != 0;
 }
 
 //-----------------------------------------------------------------------------
 // Do we need software skinning?
 //-----------------------------------------------------------------------------
-bool CMaterial::NeedsSoftwareSkinning( void )
+bool CMaterial::NeedsSoftwareSkinning(void)
 {
 	Precache();
-	Assert( m_pShader );
-	if( !m_pShader )
+	Assert(m_pShader);
+	if(!m_pShader)
 	{
 		return false;
 	}
 
-	Assert( m_pShaderParams );
-	return IsFlagSet( m_pShaderParams, MATERIAL_VAR_NEEDS_SOFTWARE_SKINNING );
+	Assert(m_pShaderParams);
+	return IsFlagSet(m_pShaderParams, MATERIAL_VAR_NEEDS_SOFTWARE_SKINNING);
 }
-
 
 //-----------------------------------------------------------------------------
 // Do we need software lighting?
 //-----------------------------------------------------------------------------
-bool CMaterial::NeedsSoftwareLighting( void )
+bool CMaterial::NeedsSoftwareLighting(void)
 {
 	Precache();
-	Assert( m_pShader );
-	if( !m_pShader )
+	Assert(m_pShader);
+	if(!m_pShader)
 	{
 		return false;
 	}
-	Assert( m_pShaderParams );
-	return IsFlag2Set( m_pShaderParams, MATERIAL_VAR2_NEEDS_SOFTWARE_LIGHTING );
+	Assert(m_pShaderParams);
+	return IsFlag2Set(m_pShaderParams, MATERIAL_VAR2_NEEDS_SOFTWARE_LIGHTING);
 }
 
 //-----------------------------------------------------------------------------
 // Alpha/color modulation
 //-----------------------------------------------------------------------------
-void CMaterial::AlphaModulate( float alpha )
+void CMaterial::AlphaModulate(float alpha)
 {
 	Precache();
-	if ( m_VarCount > ALPHA )
+	if(m_VarCount > ALPHA)
 		m_pShaderParams[ALPHA]->SetFloatValue(alpha);
 }
 
-void CMaterial::ColorModulate( float r, float g, float b )
+void CMaterial::ColorModulate(float r, float g, float b)
 {
 	Precache();
-	if ( m_VarCount > COLOR )
-		m_pShaderParams[COLOR]->SetVecValue( r, g, b );
+	if(m_VarCount > COLOR)
+		m_pShaderParams[COLOR]->SetVecValue(r, g, b);
 }
 
 float CMaterial::GetAlphaModulation()
 {
 	Precache();
-	if ( m_VarCount > ALPHA )
+	if(m_VarCount > ALPHA)
 		return m_pShaderParams[ALPHA]->GetFloatValue();
 	return 0.0f;
 }
 
-void CMaterial::GetColorModulation( float *r, float *g, float *b )
+void CMaterial::GetColorModulation(float *r, float *g, float *b)
 {
 	Precache();
 
-	float pColor[3] = { 0.0f, 0.0f, 0.0f };
-	if ( m_VarCount > COLOR )
-		m_pShaderParams[COLOR]->GetVecValue( pColor, 3 );
+	float pColor[3] = {0.0f, 0.0f, 0.0f};
+	if(m_VarCount > COLOR)
+		m_pShaderParams[COLOR]->GetVecValue(pColor, 3);
 	*r = pColor[0];
 	*g = pColor[1];
 	*b = pColor[2];
 }
-
 
 //-----------------------------------------------------------------------------
 // Do we use fog?
 //-----------------------------------------------------------------------------
 bool CMaterial::UseFog() const
 {
-	Assert( m_VarCount > 0 );
+	Assert(m_VarCount > 0);
 	return IsValidRenderState() && ((GetMaterialVarFlags() & MATERIAL_VAR_NOFOG) == 0);
 }
-
 
 //-----------------------------------------------------------------------------
 // diffuse bump?
 //-----------------------------------------------------------------------------
 bool CMaterial::IsUsingDiffuseBumpedLighting() const
 {
-	return (GetMaterialVarFlags2() & MATERIAL_VAR2_LIGHTING_BUMPED_LIGHTMAP ) != 0;
+	return (GetMaterialVarFlags2() & MATERIAL_VAR2_LIGHTING_BUMPED_LIGHTMAP) != 0;
 }
-
 
 //-----------------------------------------------------------------------------
 // lightmap?
 //-----------------------------------------------------------------------------
 bool CMaterial::IsUsingLightmap() const
 {
-	return (GetMaterialVarFlags2() & MATERIAL_VAR2_LIGHTING_LIGHTMAP ) != 0;
+	return (GetMaterialVarFlags2() & MATERIAL_VAR2_LIGHTING_LIGHTMAP) != 0;
 }
 
 bool CMaterial::IsManuallyCreated() const
@@ -2129,29 +2115,28 @@ bool CMaterial::UsesUNCFileName() const
 	return (m_Flags & MATERIAL_USES_UNC_FILENAME) != 0;
 }
 
-
-void CMaterial::DecideShouldReloadFromWhitelist( IFileList *pFilesToReload )
+void CMaterial::DecideShouldReloadFromWhitelist(IFileList *pFilesToReload)
 {
 	m_bShouldReloadFromWhitelist = false;
-	if ( IsManuallyCreated() || !IsPrecached() )
+	if(IsManuallyCreated() || !IsPrecached())
 		return;
 
 	// Materials loaded with an absolute pathname are usually debug materials.
-	if ( V_IsAbsolutePath( GetName() ) )
+	if(V_IsAbsolutePath(GetName()))
 		return;
 
 	char vmtFilename[MAX_PATH];
-	V_ComposeFileName( "materials", GetName(), vmtFilename, sizeof( vmtFilename ) );
-	V_strncat( vmtFilename, ".vmt", sizeof( vmtFilename ) );
+	V_ComposeFileName("materials", GetName(), vmtFilename, sizeof(vmtFilename));
+	V_strncat(vmtFilename, ".vmt", sizeof(vmtFilename));
 
 	// Check if either this file or any of the files it included need to be reloaded.
-	bool bShouldReload = pFilesToReload->IsFileInList( vmtFilename );
-	if ( !bShouldReload )
+	bool bShouldReload = pFilesToReload->IsFileInList(vmtFilename);
+	if(!bShouldReload)
 	{
-		for ( int i=0; i < m_VMTIncludes.Count(); i++ )
+		for(int i = 0; i < m_VMTIncludes.Count(); i++)
 		{
-			g_pFullFileSystem->String( m_VMTIncludes[i], vmtFilename, sizeof( vmtFilename ) );
-			if ( pFilesToReload->IsFileInList( vmtFilename ) )
+			g_pFullFileSystem->String(m_VMTIncludes[i], vmtFilename, sizeof(vmtFilename));
+			if(pFilesToReload->IsFileInList(vmtFilename))
 			{
 				bShouldReload = true;
 				break;
@@ -2164,33 +2149,34 @@ void CMaterial::DecideShouldReloadFromWhitelist( IFileList *pFilesToReload )
 
 void CMaterial::ReloadFromWhitelistIfMarked()
 {
-	if ( !m_bShouldReloadFromWhitelist )
+	if(!m_bShouldReloadFromWhitelist)
 		return;
 
-	#ifdef PURE_SERVER_DEBUG_SPEW
+#ifdef PURE_SERVER_DEBUG_SPEW
 	{
 		char vmtFilename[MAX_PATH];
-		V_ComposeFileName( "materials", GetName(), vmtFilename, sizeof( vmtFilename ) );
-		V_strncat( vmtFilename, ".vmt", sizeof( vmtFilename ) );
-		Msg( "Reloading %s due to pure server whitelist change\n", GetName() );
+		V_ComposeFileName("materials", GetName(), vmtFilename, sizeof(vmtFilename));
+		V_strncat(vmtFilename, ".vmt", sizeof(vmtFilename));
+		Msg("Reloading %s due to pure server whitelist change\n", GetName());
 	}
-	#endif
+#endif
 
 	Uncache();
 	Precache();
-	if ( !GetShader() )
+	if(!GetShader())
 	{
-		// We can get in here if we previously loaded this material off disk and now the whitelist 
+		// We can get in here if we previously loaded this material off disk and now the whitelist
 		// says to get it out of Steam but it's not in Steam. So just setup a wireframe thingy
 		// to draw the material with.
 		m_Flags |= MATERIAL_IS_PRECACHED | MATERIAL_VARS_IS_PRECACHED;
-		#if DEBUG
-		if (IsOSX())
+#if DEBUG
+		if(IsOSX())
 		{
-			printf("\n ##### CMaterial::ReloadFromWhitelistIfMarked: GetShader failed on %s, calling SetupErrorShader", m_pDebugName );
+			printf("\n ##### CMaterial::ReloadFromWhitelistIfMarked: GetShader failed on %s, calling SetupErrorShader",
+				   m_pDebugName);
 		}
-		#endif
-		
+#endif
+
 		SetupErrorShader();
 	}
 }
@@ -2203,16 +2189,17 @@ bool CMaterial::WasReloadedFromWhitelist()
 //-----------------------------------------------------------------------------
 // Loads the material vars
 //-----------------------------------------------------------------------------
-bool CMaterial::PrecacheVars( KeyValues *pVMTKeyValues, KeyValues *pPatchKeyValues, CUtlVector<FileNameHandle_t> *pIncludes, int nFindContext )
+bool CMaterial::PrecacheVars(KeyValues *pVMTKeyValues, KeyValues *pPatchKeyValues,
+							 CUtlVector<FileNameHandle_t> *pIncludes, int nFindContext)
 {
 	// We should get both parameters or neither
-	Assert( ( pVMTKeyValues == NULL ) ? ( pPatchKeyValues == NULL ) : ( pPatchKeyValues != NULL ) );
+	Assert((pVMTKeyValues == NULL) ? (pPatchKeyValues == NULL) : (pPatchKeyValues != NULL));
 
 	// Don't bother if we're already precached
-	if( IsPrecachedVars() )
+	if(IsPrecachedVars())
 		return true;
 
-	if ( pIncludes )
+	if(pIncludes)
 		m_VMTIncludes = *pIncludes;
 	else
 		m_VMTIncludes.Purge();
@@ -2223,16 +2210,16 @@ bool CMaterial::PrecacheVars( KeyValues *pVMTKeyValues, KeyValues *pPatchKeyValu
 	bool bError = false;
 	KeyValues *vmtKeyValues = NULL;
 	KeyValues *patchKeyValues = NULL;
-	if ( m_pVMTKeyValues )
+	if(m_pVMTKeyValues)
 	{
 		// Use the procedural KeyValues
 		vmtKeyValues = m_pVMTKeyValues;
-		patchKeyValues = new KeyValues( "vmt_patches" );
+		patchKeyValues = new KeyValues("vmt_patches");
 
 		// The caller should not be passing in KeyValues if we have procedural ones
-		Assert( ( pVMTKeyValues == NULL ) && ( pPatchKeyValues == NULL ) );
+		Assert((pVMTKeyValues == NULL) && (pPatchKeyValues == NULL));
 	}
-	else if ( pVMTKeyValues )
+	else if(pVMTKeyValues)
 	{
 		// Use the passed-in (already-loaded) KeyValues
 		vmtKeyValues = pVMTKeyValues;
@@ -2243,23 +2230,23 @@ bool CMaterial::PrecacheVars( KeyValues *pVMTKeyValues, KeyValues *pPatchKeyValu
 		m_VMTIncludes.Purge();
 
 		// load data from the vmt file
-		vmtKeyValues = new KeyValues( "vmt" );
-		patchKeyValues = new KeyValues( "vmt_patches" );
-		if( !LoadVMTFile( *vmtKeyValues, *patchKeyValues, GetName(), UsesUNCFileName(), &m_VMTIncludes ) )
+		vmtKeyValues = new KeyValues("vmt");
+		patchKeyValues = new KeyValues("vmt_patches");
+		if(!LoadVMTFile(*vmtKeyValues, *patchKeyValues, GetName(), UsesUNCFileName(), &m_VMTIncludes))
 		{
-			Warning( "CMaterial::PrecacheVars: error loading vmt file for %s\n", GetName() );
+			Warning("CMaterial::PrecacheVars: error loading vmt file for %s\n", GetName());
 			bError = true;
 		}
 	}
 
-	if ( ! bError )
+	if(!bError)
 	{
 		// Needed to prevent re-entrancy
 		m_Flags |= MATERIAL_VARS_IS_PRECACHED;
 
 		// Create shader and the material vars...
-		KeyValues *pFallbackKeyValues = InitializeShader( *vmtKeyValues, *patchKeyValues, nFindContext );
-		if ( pFallbackKeyValues )
+		KeyValues *pFallbackKeyValues = InitializeShader(*vmtKeyValues, *patchKeyValues, nFindContext);
+		if(pFallbackKeyValues)
 		{
 			// Gotta initialize the proxies too, using the fallback proxies
 			InitializeMaterialProxy(pFallbackKeyValues);
@@ -2268,20 +2255,19 @@ bool CMaterial::PrecacheVars( KeyValues *pVMTKeyValues, KeyValues *pPatchKeyValu
 	}
 
 	// Clean up
-	if ( ( vmtKeyValues != m_pVMTKeyValues ) && ( vmtKeyValues != pVMTKeyValues ) )
+	if((vmtKeyValues != m_pVMTKeyValues) && (vmtKeyValues != pVMTKeyValues))
 	{
 		vmtKeyValues->deleteThis();
 	}
-	if ( patchKeyValues != pPatchKeyValues )
+	if(patchKeyValues != pPatchKeyValues)
 	{
 		patchKeyValues->deleteThis();
 	}
 
-	MaterialSystem()->Unlock( hMaterialLock );
+	MaterialSystem()->Unlock(hMaterialLock);
 
 	return bOk;
 }
-
 
 //-----------------------------------------------------------------------------
 // Loads the material info from the VMT file
@@ -2289,11 +2275,11 @@ bool CMaterial::PrecacheVars( KeyValues *pVMTKeyValues, KeyValues *pPatchKeyValu
 void CMaterial::Precache()
 {
 	// Don't bother if we're already precached
-	if ( IsPrecached() )
+	if(IsPrecached())
 		return;
 
 	// load data from the vmt file
-	if ( !PrecacheVars() )
+	if(!PrecacheVars())
 		return;
 
 	MaterialLock_t hMaterialLock = MaterialSystem()->Lock();
@@ -2301,9 +2287,9 @@ void CMaterial::Precache()
 	m_Flags |= MATERIAL_IS_PRECACHED;
 
 	// Invokes the SHADER_INIT block in the various shaders,
-	if ( m_pShader ) 
+	if(m_pShader)
 	{
-		ShaderSystem()->InitShaderInstance( m_pShader, m_pShaderParams, GetName(), GetTextureGroupName() );
+		ShaderSystem()->InitShaderInstance(m_pShader, m_pShaderParams, GetName(), GetTextureGroupName());
 	}
 
 	// compute the state snapshots
@@ -2314,24 +2300,23 @@ void CMaterial::Precache()
 	// Reads in the texture width and height from the material var
 	PrecacheMappingDimensions();
 
-	Assert( IsValidRenderState() );
+	Assert(IsValidRenderState());
 
-	if( m_pShaderParams )
+	if(m_pShaderParams)
 		m_QueueFriendlyVersion.UpdateToRealTime();
 
-	MaterialSystem()->Unlock( hMaterialLock );
+	MaterialSystem()->Unlock(hMaterialLock);
 }
-
 
 //-----------------------------------------------------------------------------
 // Unloads the material data from memory
 //-----------------------------------------------------------------------------
-void CMaterial::Uncache( bool bPreserveVars )
+void CMaterial::Uncache(bool bPreserveVars)
 {
 	MaterialLock_t hMaterialLock = MaterialSystem()->Lock();
 
 	// Don't bother if we're not cached
-	if ( IsPrecached() )
+	if(IsPrecached())
 	{
 		// Clean up the state snapshots
 		CleanUpStateSnapshots();
@@ -2339,9 +2324,9 @@ void CMaterial::Uncache( bool bPreserveVars )
 		m_Flags &= ~MATERIAL_IS_PRECACHED;
 	}
 
-	if ( !bPreserveVars )
+	if(!bPreserveVars)
 	{
-		if ( IsPrecachedVars() )
+		if(IsPrecachedVars())
 		{
 			// Clean up the shader + params
 			CleanUpShaderParams();
@@ -2354,36 +2339,36 @@ void CMaterial::Uncache( bool bPreserveVars )
 		}
 	}
 
-	MaterialSystem()->Unlock( hMaterialLock );
+	MaterialSystem()->Unlock(hMaterialLock);
 
 	// Whether we just now did it, or we were already unloaded,
 	// notify the pure system that the material is unloaded,
 	// so it doesn't caue us to fail sv_pure checks
-	if ( ( m_Flags & ( MATERIAL_VARS_IS_PRECACHED | MATERIAL_IS_MANUALLY_CREATED | MATERIAL_USES_UNC_FILENAME ) ) == 0 )
+	if((m_Flags & (MATERIAL_VARS_IS_PRECACHED | MATERIAL_IS_MANUALLY_CREATED | MATERIAL_USES_UNC_FILENAME)) == 0)
 	{
-		char szName[ MAX_PATH ];
-		V_sprintf_safe( szName, "materials/%s.vmt", GetName() );
-		g_pFullFileSystem->NotifyFileUnloaded( szName, "GAME" );
+		char szName[MAX_PATH];
+		V_sprintf_safe(szName, "materials/%s.vmt", GetName());
+		g_pFullFileSystem->NotifyFileUnloaded(szName, "GAME");
 	}
 }
 
 //-----------------------------------------------------------------------------
 // reload all textures used by this materals
 //-----------------------------------------------------------------------------
-void CMaterial::ReloadTextures( void )
+void CMaterial::ReloadTextures(void)
 {
 	Precache();
 	int i;
 	int nParams = ShaderParamCount();
 	IMaterialVar **ppVars = GetShaderParams();
-	for( i = 0; i < nParams; i++ )
+	for(i = 0; i < nParams; i++)
 	{
-		if( ppVars[i] )		
+		if(ppVars[i])
 		{
-			if( ppVars[i]->IsTexture() )
+			if(ppVars[i]->IsTexture())
 			{
-				ITextureInternal *pTexture = ( ITextureInternal * )ppVars[i]->GetTextureValue();
-				if( !IsTextureInternalEnvCubemap( pTexture ) )
+				ITextureInternal *pTexture = (ITextureInternal *)ppVars[i]->GetTextureValue();
+				if(!IsTextureInternalEnvCubemap(pTexture))
 				{
 					pTexture->Download();
 				}
@@ -2392,14 +2377,13 @@ void CMaterial::ReloadTextures( void )
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Meant to be used with materials created using CreateMaterial
 // It updates the materials to reflect the current values stored in the material vars
 //-----------------------------------------------------------------------------
 void CMaterial::Refresh()
 {
-	if ( g_pShaderDevice->IsUsingGraphics() )
+	if(g_pShaderDevice->IsUsingGraphics())
 	{
 		Uncache();
 		Precache();
@@ -2408,9 +2392,9 @@ void CMaterial::Refresh()
 
 void CMaterial::RefreshPreservingMaterialVars()
 {
-	if ( g_pShaderDevice->IsUsingGraphics() )
+	if(g_pShaderDevice->IsUsingGraphics())
 	{
-		Uncache( true );
+		Uncache(true);
 		Precache();
 	}
 }
@@ -2418,49 +2402,46 @@ void CMaterial::RefreshPreservingMaterialVars()
 //-----------------------------------------------------------------------------
 // Gets the material name
 //-----------------------------------------------------------------------------
-char const* CMaterial::GetName() const
+char const *CMaterial::GetName() const
 {
 	return m_Name.String();
 }
 
-
-char const* CMaterial::GetTextureGroupName() const
+char const *CMaterial::GetTextureGroupName() const
 {
 	return m_TextureGroupName.String();
 }
 
-
 //-----------------------------------------------------------------------------
 // Material dimensions
 //-----------------------------------------------------------------------------
-int	CMaterial::GetMappingWidth( )
+int CMaterial::GetMappingWidth()
 {
 	Precache();
 	return m_MappingWidth;
 }
 
-int	CMaterial::GetMappingHeight( )
+int CMaterial::GetMappingHeight()
 {
 	Precache();
 	return m_MappingHeight;
 }
 
-
 //-----------------------------------------------------------------------------
 // Animated material info
 //-----------------------------------------------------------------------------
 
-int CMaterial::GetNumAnimationFrames( )
+int CMaterial::GetNumAnimationFrames()
 {
 	Precache();
-	if( m_representativeTexture )
+	if(m_representativeTexture)
 	{
 		return m_representativeTexture->GetNumAnimationFrames();
 	}
 	else
 	{
 #ifndef POSIX
-		Warning( "CMaterial::GetNumAnimationFrames:\nno representative texture for material %s\n", GetName() );
+		Warning("CMaterial::GetNumAnimationFrames:\nno representative texture for material %s\n", GetName());
 #endif
 		return 1;
 	}
@@ -2469,7 +2450,7 @@ int CMaterial::GetNumAnimationFrames( )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CMaterial::GetMaterialOffset( float *pOffset )
+void CMaterial::GetMaterialOffset(float *pOffset)
 {
 	// Identity.
 	pOffset[0] = 0.0f;
@@ -2479,7 +2460,7 @@ void CMaterial::GetMaterialOffset( float *pOffset )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CMaterial::GetMaterialScale( float *pScale )
+void CMaterial::GetMaterialScale(float *pScale)
 {
 	// Identity.
 	pScale[0] = 1.0f;
@@ -2489,17 +2470,17 @@ void CMaterial::GetMaterialScale( float *pScale )
 //-----------------------------------------------------------------------------
 // Reference count
 //-----------------------------------------------------------------------------
-void CMaterial::IncrementReferenceCount( )
+void CMaterial::IncrementReferenceCount()
 {
 	++m_RefCount;
 }
 
-void CMaterial::DecrementReferenceCount( )
+void CMaterial::DecrementReferenceCount()
 {
 	--m_RefCount;
 }
 
-int CMaterial::GetReferenceCount( )	const
+int CMaterial::GetReferenceCount() const
 {
 	return m_RefCount;
 }
@@ -2507,58 +2488,58 @@ int CMaterial::GetReferenceCount( )	const
 //-----------------------------------------------------------------------------
 // Sets the shader associated with the material
 //-----------------------------------------------------------------------------
-void CMaterial::SetShader( const char *pShaderName )
+void CMaterial::SetShader(const char *pShaderName)
 {
-	Assert( pShaderName );
+	Assert(pShaderName);
 
 	int i;
-	IShader* pShader;
-	IMaterialVar* ppVars[256];
+	IShader *pShader;
+	IMaterialVar *ppVars[256];
 	int iVarCount = 0;
 
 	// Clean up existing state
 	Uncache();
 
 	// Keep going until there's no more fallbacks...
-	while( true )
+	while(true)
 	{
 		// Find the shader for this material. Note that this may not be
 		// the actual shader we use due to fallbacks...
-		pShader = ShaderSystem()->FindShader( pShaderName );
-		if (!pShader)
+		pShader = ShaderSystem()->FindShader(pShaderName);
+		if(!pShader)
 		{
 			// Couldn't find the shader we wanted to use; it's not defined...
-			Warning( "SetShader: Couldn't find shader %s for material %s!\n", pShaderName, GetName() );
+			Warning("SetShader: Couldn't find shader %s for material %s!\n", pShaderName, GetName());
 			pShaderName = MissingShaderName();
-			pShader = ShaderSystem()->FindShader( pShaderName );
-			Assert( pShader );
+			pShader = ShaderSystem()->FindShader(pShaderName);
+			Assert(pShader);
 		}
 
 		// Create undefined vars for all the actual material vars
 		iVarCount = pShader->GetNumParams();
-		for (i = 0; i < iVarCount; ++i)
+		for(i = 0; i < iVarCount; ++i)
 		{
-			ppVars[i] = IMaterialVar::Create( this, pShader->GetParamName(i) );
+			ppVars[i] = IMaterialVar::Create(this, pShader->GetParamName(i));
 		}
 
 		// Make sure we set default values before the fallback is looked for
-		ShaderSystem()->InitShaderParameters( pShader, ppVars, pShaderName );
+		ShaderSystem()->InitShaderParameters(pShader, ppVars, pShaderName);
 
 		// Now that the material vars are parsed, see if there's a fallback
 		// But only if we're not in the tools
-		if (!g_pShaderDevice->IsUsingGraphics())
+		if(!g_pShaderDevice->IsUsingGraphics())
 			break;
 
 		// Check for a fallback; if not, we're done
-		pShaderName = pShader->GetFallbackShader( ppVars );
-		if (!pShaderName)
+		pShaderName = pShader->GetFallbackShader(ppVars);
+		if(!pShaderName)
 			break;
 
 		// Now, blow away all of the material vars + try again...
-		for (i = 0; i < iVarCount; ++i)
+		for(i = 0; i < iVarCount; ++i)
 		{
-			Assert( ppVars[i] );
-			IMaterialVar::Destroy( ppVars[i] );
+			Assert(ppVars[i]);
+			IMaterialVar::Destroy(ppVars[i]);
 		}
 	}
 
@@ -2567,11 +2548,11 @@ void CMaterial::SetShader( const char *pShaderName )
 
 	// Store off the material vars + flags
 	m_VarCount = iVarCount;
-	m_pShaderParams = (IMaterialVar**)malloc( iVarCount * sizeof(IMaterialVar*) );
-	memcpy( m_pShaderParams, ppVars, iVarCount * sizeof(IMaterialVar*) );
+	m_pShaderParams = (IMaterialVar **)malloc(iVarCount * sizeof(IMaterialVar *));
+	memcpy(m_pShaderParams, ppVars, iVarCount * sizeof(IMaterialVar *));
 
 	// Invokes the SHADER_INIT block in the various shaders,
-	ShaderSystem()->InitShaderInstance( m_pShader, m_pShaderParams, GetName(), GetTextureGroupName() );
+	ShaderSystem()->InitShaderInstance(m_pShader, m_pShaderParams, GetName(), GetTextureGroupName());
 
 	// Precache our initial state...
 	// NOTE: What happens here for textures???
@@ -2584,20 +2565,19 @@ void CMaterial::SetShader( const char *pShaderName )
 
 const char *CMaterial::GetShaderName() const
 {
-	const_cast< CMaterial* >( this )->PrecacheVars();
+	const_cast<CMaterial *>(this)->PrecacheVars();
 	return m_pShader ? m_pShader->GetName() : "shader_error";
 }
-
 
 //-----------------------------------------------------------------------------
 // Enumeration ID
 //-----------------------------------------------------------------------------
-int CMaterial::GetEnumerationID( ) const
+int CMaterial::GetEnumerationID() const
 {
 	return m_iEnumerationID;
 }
 
-void CMaterial::SetEnumerationID( int id )
+void CMaterial::SetEnumerationID(int id)
 {
 	m_iEnumerationID = id;
 }
@@ -2605,9 +2585,9 @@ void CMaterial::SetEnumerationID( int id )
 //-----------------------------------------------------------------------------
 // Preview image
 //-----------------------------------------------------------------------------
-char const* CMaterial::GetPreviewImageName( void )
+char const *CMaterial::GetPreviewImageName(void)
 {
-	if ( IsConsole() )
+	if(IsConsole())
 	{
 		// not supporting
 		return NULL;
@@ -2617,60 +2597,60 @@ char const* CMaterial::GetPreviewImageName( void )
 
 	bool found;
 	IMaterialVar *pRepresentativeTextureVar;
-	
-	FindVar( "%noToolTexture", &found, false );
-	if (found)
+
+	FindVar("%noToolTexture", &found, false);
+	if(found)
 		return NULL;
 
-	pRepresentativeTextureVar = FindVar( "%toolTexture", &found, false );
-	if( found )
+	pRepresentativeTextureVar = FindVar("%toolTexture", &found, false);
+	if(found)
 	{
-		if (pRepresentativeTextureVar->GetType() == MATERIAL_VAR_TYPE_STRING )
+		if(pRepresentativeTextureVar->GetType() == MATERIAL_VAR_TYPE_STRING)
 			return pRepresentativeTextureVar->GetStringValue();
-		if (pRepresentativeTextureVar->GetType() == MATERIAL_VAR_TYPE_TEXTURE )
+		if(pRepresentativeTextureVar->GetType() == MATERIAL_VAR_TYPE_TEXTURE)
 			return pRepresentativeTextureVar->GetTextureValue()->GetName();
 	}
-	pRepresentativeTextureVar = FindVar( "$baseTexture", &found, false );
-	if( found )
+	pRepresentativeTextureVar = FindVar("$baseTexture", &found, false);
+	if(found)
 	{
-		if (pRepresentativeTextureVar->GetType() == MATERIAL_VAR_TYPE_STRING )
+		if(pRepresentativeTextureVar->GetType() == MATERIAL_VAR_TYPE_STRING)
 			return pRepresentativeTextureVar->GetStringValue();
-		if (pRepresentativeTextureVar->GetType() == MATERIAL_VAR_TYPE_TEXTURE )
+		if(pRepresentativeTextureVar->GetType() == MATERIAL_VAR_TYPE_TEXTURE)
 			return pRepresentativeTextureVar->GetTextureValue()->GetName();
 	}
 	return GetName();
 }
 
-char const* CMaterial::GetPreviewImageFileName( void ) const
+char const *CMaterial::GetPreviewImageFileName(void) const
 {
-	char const* pName = const_cast<CMaterial*>(this)->GetPreviewImageName();
-	if( !pName )
+	char const *pName = const_cast<CMaterial *>(this)->GetPreviewImageName();
+	if(!pName)
 		return NULL;
 
 	static char vtfFilename[MATERIAL_MAX_PATH];
-	if( Q_strlen( pName ) >= MATERIAL_MAX_PATH - 5 )
+	if(Q_strlen(pName) >= MATERIAL_MAX_PATH - 5)
 	{
-		Warning( "MATERIAL_MAX_PATH to short for %s.vtf\n", pName );
+		Warning("MATERIAL_MAX_PATH to short for %s.vtf\n", pName);
 		return NULL;
 	}
 
-	if ( !UsesUNCFileName() )
+	if(!UsesUNCFileName())
 	{
-		Q_snprintf( vtfFilename, sizeof( vtfFilename ), "materials/%s.vtf", pName );
+		Q_snprintf(vtfFilename, sizeof(vtfFilename), "materials/%s.vtf", pName);
 	}
 	else
 	{
-		Q_snprintf( vtfFilename, sizeof( vtfFilename ), "%s.vtf", pName );
+		Q_snprintf(vtfFilename, sizeof(vtfFilename), "%s.vtf", pName);
 	}
 
 	return vtfFilename;
 }
 
-PreviewImageRetVal_t CMaterial::GetPreviewImageProperties( int *width, int *height, 
-				 		ImageFormat *imageFormat, bool* isTranslucent ) const
-{	
-	char const* pFileName = GetPreviewImageFileName();
-	if ( IsX360() || !pFileName )
+PreviewImageRetVal_t CMaterial::GetPreviewImageProperties(int *width, int *height, ImageFormat *imageFormat,
+														  bool *isTranslucent) const
+{
+	char const *pFileName = GetPreviewImageFileName();
+	if(IsX360() || !pFileName)
 	{
 		*width = *height = 0;
 		*imageFormat = IMAGE_FORMAT_RGBA8888;
@@ -2678,20 +2658,20 @@ PreviewImageRetVal_t CMaterial::GetPreviewImageProperties( int *width, int *heig
 		return MATERIAL_NO_PREVIEW_IMAGE;
 	}
 
-	int nHeaderSize = VTFFileHeaderSize( VTF_MAJOR_VERSION );
-	unsigned char *pMem = (unsigned char *)stackalloc( nHeaderSize );
-	CUtlBuffer buf( pMem, nHeaderSize );
-	if( !g_pFullFileSystem->ReadFile( pFileName, NULL, buf, nHeaderSize ) )
+	int nHeaderSize = VTFFileHeaderSize(VTF_MAJOR_VERSION);
+	unsigned char *pMem = (unsigned char *)stackalloc(nHeaderSize);
+	CUtlBuffer buf(pMem, nHeaderSize);
+	if(!g_pFullFileSystem->ReadFile(pFileName, NULL, buf, nHeaderSize))
 	{
-		Warning( "\"%s\" - \"%s\": cached version doesn't exist\n", GetName(), pFileName );
+		Warning("\"%s\" - \"%s\": cached version doesn't exist\n", GetName(), pFileName);
 		return MATERIAL_PREVIEW_IMAGE_BAD;
 	}
-	
+
 	IVTFTexture *pVTFTexture = CreateVTFTexture();
-	if (!pVTFTexture->Unserialize( buf, true ))
+	if(!pVTFTexture->Unserialize(buf, true))
 	{
-		Warning( "Error reading material \"%s\"\n", pFileName );
-		DestroyVTFTexture( pVTFTexture );
+		Warning("Error reading material \"%s\"\n", pFileName);
+		DestroyVTFTexture(pVTFTexture);
 		return MATERIAL_PREVIEW_IMAGE_BAD;
 	}
 
@@ -2699,118 +2679,118 @@ PreviewImageRetVal_t CMaterial::GetPreviewImageProperties( int *width, int *heig
 	*height = pVTFTexture->Height();
 	*imageFormat = pVTFTexture->Format();
 	*isTranslucent = (pVTFTexture->Flags() & (TEXTUREFLAGS_ONEBITALPHA | TEXTUREFLAGS_EIGHTBITALPHA)) != 0;
-	DestroyVTFTexture( pVTFTexture );
+	DestroyVTFTexture(pVTFTexture);
 	return MATERIAL_PREVIEW_IMAGE_OK;
 }
 
-PreviewImageRetVal_t CMaterial::GetPreviewImage( unsigned char *pData, int width, int height,
-					             ImageFormat imageFormat ) const
+PreviewImageRetVal_t CMaterial::GetPreviewImage(unsigned char *pData, int width, int height,
+												ImageFormat imageFormat) const
 {
 	CUtlBuffer buf;
 	int nHeaderSize;
 	int nImageOffset, nImageSize;
 
-	char const* pFileName = GetPreviewImageFileName();
-	if ( IsX360() || !pFileName )
+	char const *pFileName = GetPreviewImageFileName();
+	if(IsX360() || !pFileName)
 	{
 		return MATERIAL_NO_PREVIEW_IMAGE;
 	}
 
 	IVTFTexture *pVTFTexture = CreateVTFTexture();
-	FileHandle_t fileHandle = g_pFullFileSystem->Open( pFileName, "rb" );
-	if( !fileHandle )
+	FileHandle_t fileHandle = g_pFullFileSystem->Open(pFileName, "rb");
+	if(!fileHandle)
 	{
-		Warning( "\"%s\": cached version doesn't exist\n", pFileName );
+		Warning("\"%s\": cached version doesn't exist\n", pFileName);
 		goto fail;
 	}
 
-	nHeaderSize = VTFFileHeaderSize( VTF_MAJOR_VERSION );
-	buf.EnsureCapacity( nHeaderSize );
-	
+	nHeaderSize = VTFFileHeaderSize(VTF_MAJOR_VERSION);
+	buf.EnsureCapacity(nHeaderSize);
+
 	// read the header first.. it's faster!!
 	int nBytesRead; // GCC won't let this be initialized right away
-	nBytesRead = g_pFullFileSystem->Read( buf.Base(), nHeaderSize, fileHandle );
-	buf.SeekPut( CUtlBuffer::SEEK_HEAD, nBytesRead );
-		
+	nBytesRead = g_pFullFileSystem->Read(buf.Base(), nHeaderSize, fileHandle);
+	buf.SeekPut(CUtlBuffer::SEEK_HEAD, nBytesRead);
+
 	// Unserialize the header
-	if (!pVTFTexture->Unserialize( buf, true ))
+	if(!pVTFTexture->Unserialize(buf, true))
 	{
-		Warning( "Error reading material \"%s\"\n", pFileName );
+		Warning("Error reading material \"%s\"\n", pFileName);
 		goto fail;
 	}
-		
+
 	// FIXME: Make sure the preview image size requested is the same
 	// size as mip level 0 of the texture
-	Assert( (width == pVTFTexture->Width()) && (height == pVTFTexture->Height()) );
-		
-	// Determine where in the file to start reading (frame 0, face 0, mip 0)
-	pVTFTexture->ImageFileInfo( 0, 0, 0, &nImageOffset, &nImageSize );
+	Assert((width == pVTFTexture->Width()) && (height == pVTFTexture->Height()));
 
-	if ( nImageSize == 0 )
+	// Determine where in the file to start reading (frame 0, face 0, mip 0)
+	pVTFTexture->ImageFileInfo(0, 0, 0, &nImageOffset, &nImageSize);
+
+	if(nImageSize == 0)
 	{
-		Warning( "Couldn't determine offset and size of material \"%s\"\n", pFileName );
+		Warning("Couldn't determine offset and size of material \"%s\"\n", pFileName);
 		goto fail;
 	}
-		
-	// Prep the utlbuffer for reading
-	buf.EnsureCapacity( nImageSize );
-	buf.SeekPut( CUtlBuffer::SEEK_HEAD, 0 );
-		
-	// Read in the bits at the specified location
-	g_pFullFileSystem->Seek( fileHandle, nImageOffset, FILESYSTEM_SEEK_HEAD );
-	g_pFullFileSystem->Read( buf.Base(), nImageSize, fileHandle );
-	g_pFullFileSystem->Close( fileHandle );
-		
-	// Convert from the format read in to the requested format
-	ImageLoader::ConvertImageFormat( (unsigned char*)buf.Base(), pVTFTexture->Format(), 
-		pData, imageFormat, width, height );
 
-	DestroyVTFTexture( pVTFTexture );
+	// Prep the utlbuffer for reading
+	buf.EnsureCapacity(nImageSize);
+	buf.SeekPut(CUtlBuffer::SEEK_HEAD, 0);
+
+	// Read in the bits at the specified location
+	g_pFullFileSystem->Seek(fileHandle, nImageOffset, FILESYSTEM_SEEK_HEAD);
+	g_pFullFileSystem->Read(buf.Base(), nImageSize, fileHandle);
+	g_pFullFileSystem->Close(fileHandle);
+
+	// Convert from the format read in to the requested format
+	ImageLoader::ConvertImageFormat((unsigned char *)buf.Base(), pVTFTexture->Format(), pData, imageFormat, width,
+									height);
+
+	DestroyVTFTexture(pVTFTexture);
 	return MATERIAL_PREVIEW_IMAGE_OK;
 
 fail:
-	if( fileHandle )
+	if(fileHandle)
 	{
-		g_pFullFileSystem->Close( fileHandle );
+		g_pFullFileSystem->Close(fileHandle);
 	}
-	int nSize = ImageLoader::GetMemRequired( width, height, 1, imageFormat, false );
-	memset( pData, 0xff, nSize );
-	DestroyVTFTexture( pVTFTexture );
+	int nSize = ImageLoader::GetMemRequired(width, height, 1, imageFormat, false);
+	memset(pData, 0xff, nSize);
+	DestroyVTFTexture(pVTFTexture);
 	return MATERIAL_PREVIEW_IMAGE_BAD;
 }
 
 //-----------------------------------------------------------------------------
 // Material variables
 //-----------------------------------------------------------------------------
-IMaterialVar *CMaterial::FindVar( char const *pVarName, bool *pFound, bool complain )
+IMaterialVar *CMaterial::FindVar(char const *pVarName, bool *pFound, bool complain)
 {
 	PrecacheVars();
 
 	// FIXME: Could look for flags here too...
 
 	MaterialVarSym_t sym = IMaterialVar::FindSymbol(pVarName);
-	if ( sym != UTL_INVAL_SYMBOL )
+	if(sym != UTL_INVAL_SYMBOL)
 	{
-		for (int i = m_VarCount; --i >= 0; )
+		for(int i = m_VarCount; --i >= 0;)
 		{
-			if (m_pShaderParams[i]->GetNameAsSymbol() == sym)
+			if(m_pShaderParams[i]->GetNameAsSymbol() == sym)
 			{
-				if( pFound )
-					*pFound = true;					  
+				if(pFound)
+					*pFound = true;
 				return m_pShaderParams[i];
 			}
 		}
 	}
 
-	if( pFound )
+	if(pFound)
 		*pFound = false;
 
-	if( complain )
+	if(complain)
 	{
 		static int complainCount = 0;
-		if( complainCount < 100 )
+		if(complainCount < 100)
 		{
-			Warning( "No such variable \"%s\" for material \"%s\"\n", pVarName, GetName() );
+			Warning("No such variable \"%s\" for material \"%s\"\n", pVarName, GetName());
 			complainCount++;
 		}
 	}
@@ -2824,17 +2804,17 @@ struct tokencache_t
 	unsigned char cached;
 };
 
-IMaterialVar *CMaterial::FindVarFast( char const *pVarName, unsigned int *pCacheData )
+IMaterialVar *CMaterial::FindVarFast(char const *pVarName, unsigned int *pCacheData)
 {
 	tokencache_t *pToken = reinterpret_cast<tokencache_t *>(pCacheData);
 	PrecacheVars();
 
-	if ( pToken->cached )
+	if(pToken->cached)
 	{
-		if ( pToken->varIndex < m_VarCount && m_pShaderParams[pToken->varIndex]->GetNameAsSymbol() == pToken->symbol )
+		if(pToken->varIndex < m_VarCount && m_pShaderParams[pToken->varIndex]->GetNameAsSymbol() == pToken->symbol)
 			return m_pShaderParams[pToken->varIndex];
 		// FIXME: Could look for flags here too...
-		if ( !IMaterialVar::SymbolMatches(pVarName, pToken->symbol) )
+		if(!IMaterialVar::SymbolMatches(pVarName, pToken->symbol))
 		{
 			pToken->symbol = IMaterialVar::FindSymbol(pVarName);
 		}
@@ -2845,11 +2825,11 @@ IMaterialVar *CMaterial::FindVarFast( char const *pVarName, unsigned int *pCache
 		pToken->symbol = IMaterialVar::FindSymbol(pVarName);
 	}
 
-	if ( pToken->symbol != UTL_INVAL_SYMBOL )
+	if(pToken->symbol != UTL_INVAL_SYMBOL)
 	{
-		for (int i = m_VarCount; --i >= 0; )
+		for(int i = m_VarCount; --i >= 0;)
 		{
-			if (m_pShaderParams[i]->GetNameAsSymbol() == pToken->symbol)
+			if(m_pShaderParams[i]->GetNameAsSymbol() == pToken->symbol)
 			{
 				pToken->varIndex = i;
 				return m_pShaderParams[i];
@@ -2862,33 +2842,31 @@ IMaterialVar *CMaterial::FindVarFast( char const *pVarName, unsigned int *pCache
 //-----------------------------------------------------------------------------
 // Lovely material properties
 //-----------------------------------------------------------------------------
-void CMaterial::GetReflectivity( Vector& reflect )
+void CMaterial::GetReflectivity(Vector &reflect)
 {
 	Precache();
 
 	reflect = m_Reflectivity;
 }
 
-
-bool CMaterial::GetPropertyFlag( MaterialPropertyTypes_t type )
+bool CMaterial::GetPropertyFlag(MaterialPropertyTypes_t type)
 {
 	Precache();
 
-	if (!IsValidRenderState())
+	if(!IsValidRenderState())
 		return false;
 
-	switch( type )
+	switch(type)
 	{
-	case MATERIAL_PROPERTY_NEEDS_LIGHTMAP:
-		return IsUsingLightmap();
+		case MATERIAL_PROPERTY_NEEDS_LIGHTMAP:
+			return IsUsingLightmap();
 
-	case MATERIAL_PROPERTY_NEEDS_BUMPED_LIGHTMAPS:
-		return IsUsingDiffuseBumpedLighting();
+		case MATERIAL_PROPERTY_NEEDS_BUMPED_LIGHTMAPS:
+			return IsUsingDiffuseBumpedLighting();
 	}
 
 	return false;
 }
-
 
 //-----------------------------------------------------------------------------
 // Is the material visible from both sides?
@@ -2899,32 +2877,28 @@ bool CMaterial::IsTwoSided()
 	return GetMaterialVarFlag(MATERIAL_VAR_NOCULL);
 }
 
-
 //-----------------------------------------------------------------------------
 // Are we translucent?
 //-----------------------------------------------------------------------------
 bool CMaterial::IsTranslucent()
 {
 	Precache();
-	if ( m_VarCount > ALPHA )
-		return IsTranslucentInternal( m_pShaderParams? m_pShaderParams[ALPHA]->GetFloatValue() : 0.0  );
+	if(m_VarCount > ALPHA)
+		return IsTranslucentInternal(m_pShaderParams ? m_pShaderParams[ALPHA]->GetFloatValue() : 0.0);
 	return false;
 }
 
-
-bool CMaterial::IsTranslucentInternal( float fAlphaModulation ) const
+bool CMaterial::IsTranslucentInternal(float fAlphaModulation) const
 {
-	if (m_pShader && IsValidRenderState())
+	if(m_pShader && IsValidRenderState())
 	{
 		// I have to check for alpha modulation here because it isn't
 		// factored into the shader's notion of whether or not it's transparent
-		return ::IsTranslucent(&m_ShaderRenderState) || 
-			(fAlphaModulation < 1.0f) ||
-			m_pShader->IsTranslucent( m_pShaderParams );
+		return ::IsTranslucent(&m_ShaderRenderState) || (fAlphaModulation < 1.0f) ||
+			   m_pShader->IsTranslucent(m_pShaderParams);
 	}
 	return false;
 }
-
 
 //-----------------------------------------------------------------------------
 // Are we alphatested?
@@ -2932,14 +2906,12 @@ bool CMaterial::IsTranslucentInternal( float fAlphaModulation ) const
 bool CMaterial::IsAlphaTested()
 {
 	Precache();
-	if (m_pShader && IsValidRenderState())
+	if(m_pShader && IsValidRenderState())
 	{
-		return ::IsAlphaTested(&m_ShaderRenderState) || 
-				GetMaterialVarFlag( MATERIAL_VAR_ALPHATEST );
+		return ::IsAlphaTested(&m_ShaderRenderState) || GetMaterialVarFlag(MATERIAL_VAR_ALPHATEST);
 	}
 	return false;
 }
-
 
 //-----------------------------------------------------------------------------
 // Are we vertex lit?
@@ -2947,13 +2919,12 @@ bool CMaterial::IsAlphaTested()
 bool CMaterial::IsVertexLit()
 {
 	Precache();
-	if (IsValidRenderState())
+	if(IsValidRenderState())
 	{
-		return ( GetMaterialVarFlags2() & MATERIAL_VAR2_LIGHTING_VERTEX_LIT ) != 0;
+		return (GetMaterialVarFlags2() & MATERIAL_VAR2_LIGHTING_VERTEX_LIT) != 0;
 	}
 	return false;
 }
-
 
 //-----------------------------------------------------------------------------
 // Is the shader a sprite card shader?
@@ -2961,71 +2932,69 @@ bool CMaterial::IsVertexLit()
 bool CMaterial::IsSpriteCard()
 {
 	Precache();
-	if (IsValidRenderState())
+	if(IsValidRenderState())
 	{
-		return ( GetMaterialVarFlags2() & MATERIAL_VAR2_IS_SPRITECARD ) != 0;
+		return (GetMaterialVarFlags2() & MATERIAL_VAR2_IS_SPRITECARD) != 0;
 	}
 	return false;
 }
 
-
 //-----------------------------------------------------------------------------
 // Proxies
 //-----------------------------------------------------------------------------
-void CMaterial::CallBindProxy( void *proxyData )
+void CMaterial::CallBindProxy(void *proxyData)
 {
 	CMatCallQueue *pCallQueue = MaterialSystem()->GetRenderCallQueue();
-	bool bIsThreaded = ( pCallQueue != NULL );
-	switch (g_config.proxiesTestMode)
+	bool bIsThreaded = (pCallQueue != NULL);
+	switch(g_config.proxiesTestMode)
 	{
-	case 0:
+		case 0:
 		{
 			// Make sure we call the proxies in the order in which they show up
 			// in the .vmt file
-			if ( m_ProxyInfo.Count() )
+			if(m_ProxyInfo.Count())
 			{
-				if ( bIsThreaded )
+				if(bIsThreaded)
 				{
-					EnableThreadedMaterialVarAccess( true, m_pShaderParams, m_VarCount );
+					EnableThreadedMaterialVarAccess(true, m_pShaderParams, m_VarCount);
 				}
-				for( int i = 0; i < m_ProxyInfo.Count(); ++i )
+				for(int i = 0; i < m_ProxyInfo.Count(); ++i)
 				{
-					m_ProxyInfo[i]->OnBind( proxyData );
+					m_ProxyInfo[i]->OnBind(proxyData);
 				}
-				if ( bIsThreaded )
+				if(bIsThreaded)
 				{
-					EnableThreadedMaterialVarAccess( false, m_pShaderParams, m_VarCount );
+					EnableThreadedMaterialVarAccess(false, m_pShaderParams, m_VarCount);
 				}
 			}
 		}
 		break;
 
-	case 2:
-		// alpha mod all....
-		{
-			float value = ( sin( 2.0f * M_PI * Plat_FloatTime() / 10.0f ) * 0.5f ) + 0.5f;
-			m_pShaderParams[ALPHA]->SetFloatValue( value );
-		}
-		break;
+		case 2:
+			// alpha mod all....
+			{
+				float value = (sin(2.0f * M_PI * Plat_FloatTime() / 10.0f) * 0.5f) + 0.5f;
+				m_pShaderParams[ALPHA]->SetFloatValue(value);
+			}
+			break;
 
-	case 3:
-		// color mod all...
-		{
-			float value = ( sin( 2.0f * M_PI * Plat_FloatTime() / 10.0f ) * 0.5f ) + 0.5f;
-			m_pShaderParams[COLOR]->SetVecValue( value, 1.0f, 1.0f );
-		}
-		break;
+		case 3:
+			// color mod all...
+			{
+				float value = (sin(2.0f * M_PI * Plat_FloatTime() / 10.0f) * 0.5f) + 0.5f;
+				m_pShaderParams[COLOR]->SetVecValue(value, 1.0f, 1.0f);
+			}
+			break;
 	}
 }
 
-
-IMaterial *CMaterial::CheckProxyReplacement( void *proxyData )
+IMaterial *CMaterial::CheckProxyReplacement(void *proxyData)
 {
-	if ( m_pReplacementProxy != NULL )
+	if(m_pReplacementProxy != NULL)
 	{
-		IMaterial	*pReplaceMaterial = m_pReplacementProxy->GetMaterial();
+		IMaterial *pReplaceMaterial = m_pReplacementProxy->GetMaterial();
 
-		if ( pReplaceMaterial )
+		if(pReplaceMaterial)
 		{
 			return pReplaceMaterial;
 		}
@@ -3034,71 +3003,68 @@ IMaterial *CMaterial::CheckProxyReplacement( void *proxyData )
 	return this;
 }
 
-
-bool CMaterial::HasProxy( )	const
+bool CMaterial::HasProxy() const
 {
-	const_cast< CMaterial* >( this )->PrecacheVars();
+	const_cast<CMaterial *>(this)->PrecacheVars();
 	return m_ProxyInfo.Count() > 0;
 }
-
 
 //-----------------------------------------------------------------------------
 // Main draw method
 //-----------------------------------------------------------------------------
 
 #ifdef _WIN32
-#pragma warning (disable: 4189)
+#pragma warning(disable : 4189)
 #endif
 
-void CMaterial::DrawMesh( VertexCompressionType_t vertexCompression )
+void CMaterial::DrawMesh(VertexCompressionType_t vertexCompression)
 {
-	if ( m_pShader )
+	if(m_pShader)
 	{
 #ifdef _DEBUG
-		if ( GetMaterialVarFlags() & MATERIAL_VAR_DEBUG )
+		if(GetMaterialVarFlags() & MATERIAL_VAR_DEBUG)
 		{
 			// Putcher breakpoint here to catch the rendering of a material
 			// marked for debugging ($debug = 1 in a .vmt file) dynamic state version
 			int x = 0;
 		}
 #endif
-		if ((GetMaterialVarFlags() & MATERIAL_VAR_NO_DRAW) == 0)
+		if((GetMaterialVarFlags() & MATERIAL_VAR_NO_DRAW) == 0)
 		{
 			const char *pName = m_pShader->GetName();
-			ShaderSystem()->DrawElements( m_pShader, m_pShaderParams, &m_ShaderRenderState, vertexCompression, m_ChangeID ^ g_nDebugVarsSignature );
+			ShaderSystem()->DrawElements(m_pShader, m_pShaderParams, &m_ShaderRenderState, vertexCompression,
+										 m_ChangeID ^ g_nDebugVarsSignature);
 		}
 	}
 	else
 	{
-		Warning( "CMaterial::DrawElements: No bound shader\n" );
+		Warning("CMaterial::DrawElements: No bound shader\n");
 	}
 }
 
 #ifdef _WIN32
-#pragma warning (default: 4189)
+#pragma warning(default : 4189)
 #endif
 
-IShader *CMaterial::GetShader( ) const
+IShader *CMaterial::GetShader() const
 {
 	return m_pShader;
 }
 
-IMaterialVar *CMaterial::GetShaderParam( int id )
+IMaterialVar *CMaterial::GetShaderParam(int id)
 {
 	return m_pShaderParams[id];
 }
 
-
 //-----------------------------------------------------------------------------
 // Adds a material variable to the material
 //-----------------------------------------------------------------------------
-void CMaterial::AddMaterialVar( IMaterialVar *pMaterialVar )
+void CMaterial::AddMaterialVar(IMaterialVar *pMaterialVar)
 {
 	++m_VarCount;
-	m_pShaderParams = (IMaterialVar**)realloc( m_pShaderParams, m_VarCount * sizeof( IMaterialVar*) );
-	m_pShaderParams[m_VarCount-1] = pMaterialVar;
+	m_pShaderParams = (IMaterialVar **)realloc(m_pShaderParams, m_VarCount * sizeof(IMaterialVar *));
+	m_pShaderParams[m_VarCount - 1] = pMaterialVar;
 }
-
 
 bool CMaterial::IsErrorMaterial() const
 {
@@ -3107,38 +3073,37 @@ bool CMaterial::IsErrorMaterial() const
 	return g_pErrorMaterial == pThis;
 }
 
-
-void CMaterial::FindRepresentativeTexture( void )
+void CMaterial::FindRepresentativeTexture(void)
 {
 	Precache();
-	
+
 	// First try to find the base texture...
 	bool found;
-	IMaterialVar *textureVar = FindVar( "$baseTexture", &found, false );
-	if( found && textureVar->GetType() == MATERIAL_VAR_TYPE_TEXTURE )
+	IMaterialVar *textureVar = FindVar("$baseTexture", &found, false);
+	if(found && textureVar->GetType() == MATERIAL_VAR_TYPE_TEXTURE)
 	{
-		ITextureInternal *pTexture = ( ITextureInternal * )textureVar->GetTextureValue();
-		if( pTexture )
+		ITextureInternal *pTexture = (ITextureInternal *)textureVar->GetTextureValue();
+		if(pTexture)
 		{
-			pTexture->GetReflectivity( m_Reflectivity );
+			pTexture->GetReflectivity(m_Reflectivity);
 		}
 	}
-	if( !found || textureVar->GetType() != MATERIAL_VAR_TYPE_TEXTURE )
+	if(!found || textureVar->GetType() != MATERIAL_VAR_TYPE_TEXTURE)
 	{
 		// Try the env map mask if the base texture doesn't work...
 		// this is needed for specular decals
-		textureVar = FindVar( "$envmapmask", &found, false );
-		if( !found || textureVar->GetType() != MATERIAL_VAR_TYPE_TEXTURE )
+		textureVar = FindVar("$envmapmask", &found, false);
+		if(!found || textureVar->GetType() != MATERIAL_VAR_TYPE_TEXTURE)
 		{
 			// Try the bumpmap
-			textureVar = FindVar( "$bumpmap", &found, false );
-			if( !found || textureVar->GetType() != MATERIAL_VAR_TYPE_TEXTURE )
+			textureVar = FindVar("$bumpmap", &found, false);
+			if(!found || textureVar->GetType() != MATERIAL_VAR_TYPE_TEXTURE)
 			{
-				textureVar = FindVar( "$dudvmap", &found, false );
-				if( !found || textureVar->GetType() != MATERIAL_VAR_TYPE_TEXTURE )
+				textureVar = FindVar("$dudvmap", &found, false);
+				if(!found || textureVar->GetType() != MATERIAL_VAR_TYPE_TEXTURE)
 				{
-					textureVar = FindVar( "$normalmap", &found, false );
-					if( !found || textureVar->GetType() != MATERIAL_VAR_TYPE_TEXTURE )
+					textureVar = FindVar("$normalmap", &found, false);
+					if(!found || textureVar->GetType() != MATERIAL_VAR_TYPE_TEXTURE)
 					{
 						//				Warning( "Can't find representative texture for material \"%s\"\n",	GetName() );
 						m_representativeTexture = TextureManager()->ErrorTexture();
@@ -3149,69 +3114,67 @@ void CMaterial::FindRepresentativeTexture( void )
 		}
 	}
 
-	m_representativeTexture = static_cast<ITextureInternal *>( textureVar->GetTextureValue() );
-	if (m_representativeTexture)
+	m_representativeTexture = static_cast<ITextureInternal *>(textureVar->GetTextureValue());
+	if(m_representativeTexture)
 	{
 		m_representativeTexture->Precache();
 	}
 	else
 	{
 		m_representativeTexture = TextureManager()->ErrorTexture();
-		Assert( m_representativeTexture );
+		Assert(m_representativeTexture);
 	}
 }
 
-
-void CMaterial::GetLowResColorSample( float s, float t, float *color ) const
+void CMaterial::GetLowResColorSample(float s, float t, float *color) const
 {
-	if( !m_representativeTexture )
+	if(!m_representativeTexture)
 	{
 		return;
 	}
-	m_representativeTexture->GetLowResColorSample( s, t, color);
+	m_representativeTexture->GetLowResColorSample(s, t, color);
 }
-
 
 //-----------------------------------------------------------------------------
 // Lightmap-related methods
 //-----------------------------------------------------------------------------
 
-void CMaterial::SetMinLightmapPageID( int pageID )
+void CMaterial::SetMinLightmapPageID(int pageID)
 {
 	m_minLightmapPageID = pageID;
 }
 
-void CMaterial::SetMaxLightmapPageID( int pageID )
+void CMaterial::SetMaxLightmapPageID(int pageID)
 {
 	m_maxLightmapPageID = pageID;
 }
 
-int CMaterial::GetMinLightmapPageID( ) const
+int CMaterial::GetMinLightmapPageID() const
 {
 	return m_minLightmapPageID;
 }
 
-int	CMaterial::GetMaxLightmapPageID( ) const
+int CMaterial::GetMaxLightmapPageID() const
 {
 	return m_maxLightmapPageID;
 }
 
-void CMaterial::SetNeedsWhiteLightmap( bool val )
+void CMaterial::SetNeedsWhiteLightmap(bool val)
 {
-	if ( val )
+	if(val)
 		m_Flags |= MATERIAL_NEEDS_WHITE_LIGHTMAP;
 	else
 		m_Flags &= ~MATERIAL_NEEDS_WHITE_LIGHTMAP;
 }
 
-bool CMaterial::GetNeedsWhiteLightmap( ) const
+bool CMaterial::GetNeedsWhiteLightmap() const
 {
 	return (m_Flags & MATERIAL_NEEDS_WHITE_LIGHTMAP) != 0;
 }
 
-void CMaterial::MarkAsPreloaded( bool bSet )
+void CMaterial::MarkAsPreloaded(bool bSet)
 {
-	if ( bSet )
+	if(bSet)
 	{
 		m_Flags |= MATERIAL_IS_PRELOADED;
 	}
@@ -3223,12 +3186,12 @@ void CMaterial::MarkAsPreloaded( bool bSet )
 
 bool CMaterial::IsPreloaded() const
 {
-	return ( m_Flags & MATERIAL_IS_PRELOADED ) != 0;
+	return (m_Flags & MATERIAL_IS_PRELOADED) != 0;
 }
 
-void CMaterial::ArtificialAddRef( void )
+void CMaterial::ArtificialAddRef(void)
 {
-	if ( m_Flags & MATERIAL_ARTIFICIAL_REFCOUNT )
+	if(m_Flags & MATERIAL_ARTIFICIAL_REFCOUNT)
 	{
 		// already done
 		return;
@@ -3238,9 +3201,9 @@ void CMaterial::ArtificialAddRef( void )
 	m_RefCount++;
 }
 
-void CMaterial::ArtificialRelease( void )
+void CMaterial::ArtificialRelease(void)
 {
-	if ( !( m_Flags & MATERIAL_ARTIFICIAL_REFCOUNT ) )
+	if(!(m_Flags & MATERIAL_ARTIFICIAL_REFCOUNT))
 	{
 		return;
 	}
@@ -3252,7 +3215,7 @@ void CMaterial::ArtificialRelease( void )
 //-----------------------------------------------------------------------------
 // Return the shader params
 //-----------------------------------------------------------------------------
-IMaterialVar **CMaterial::GetShaderParams( void )
+IMaterialVar **CMaterial::GetShaderParams(void)
 {
 	return m_pShaderParams;
 }
@@ -3262,83 +3225,82 @@ int CMaterial::ShaderParamCount() const
 	return m_VarCount;
 }
 
-
 //-----------------------------------------------------------------------------
 // VMT parser
 //-----------------------------------------------------------------------------
-void InsertKeyValues( KeyValues& dst, KeyValues& src, bool bCheckForExistence, bool bRecursive )
+void InsertKeyValues(KeyValues &dst, KeyValues &src, bool bCheckForExistence, bool bRecursive)
 {
 	KeyValues *pSrcVar = src.GetFirstSubKey();
-	while( pSrcVar )
+	while(pSrcVar)
 	{
-		if ( !bCheckForExistence || dst.FindKey( pSrcVar->GetName() ) )
+		if(!bCheckForExistence || dst.FindKey(pSrcVar->GetName()))
 		{
-			switch( pSrcVar->GetDataType() )
+			switch(pSrcVar->GetDataType())
 			{
-			case KeyValues::TYPE_STRING:
-				dst.SetString( pSrcVar->GetName(), pSrcVar->GetString() );
-				break;
-			case KeyValues::TYPE_INT:
-				dst.SetInt( pSrcVar->GetName(), pSrcVar->GetInt() );
-				break;
-			case KeyValues::TYPE_FLOAT:
-				dst.SetFloat( pSrcVar->GetName(), pSrcVar->GetFloat() );
-				break;
-			case KeyValues::TYPE_PTR:
-				dst.SetPtr( pSrcVar->GetName(), pSrcVar->GetPtr() );
-				break;
-			case KeyValues::TYPE_NONE:
+				case KeyValues::TYPE_STRING:
+					dst.SetString(pSrcVar->GetName(), pSrcVar->GetString());
+					break;
+				case KeyValues::TYPE_INT:
+					dst.SetInt(pSrcVar->GetName(), pSrcVar->GetInt());
+					break;
+				case KeyValues::TYPE_FLOAT:
+					dst.SetFloat(pSrcVar->GetName(), pSrcVar->GetFloat());
+					break;
+				case KeyValues::TYPE_PTR:
+					dst.SetPtr(pSrcVar->GetName(), pSrcVar->GetPtr());
+					break;
+				case KeyValues::TYPE_NONE:
 				{
 					// Subkey. Recurse.
-					KeyValues *pNewDest = dst.FindKey( pSrcVar->GetName(), true );
-					Assert( pNewDest );
-					InsertKeyValues( *pNewDest, *pSrcVar, bCheckForExistence, true );
+					KeyValues *pNewDest = dst.FindKey(pSrcVar->GetName(), true);
+					Assert(pNewDest);
+					InsertKeyValues(*pNewDest, *pSrcVar, bCheckForExistence, true);
 				}
 				break;
 			}
 		}
 		pSrcVar = pSrcVar->GetNextKey();
 	}
-	
-	if ( bRecursive && !dst.GetFirstSubKey() )
+
+	if(bRecursive && !dst.GetFirstSubKey())
 	{
 		// Insert a dummy key to an empty subkey to make sure it doesn't get removed
-		dst.SetInt( "__vmtpatchdummy", 1 );
+		dst.SetInt("__vmtpatchdummy", 1);
 	}
 
-	if( bCheckForExistence )
+	if(bCheckForExistence)
 	{
-		for( KeyValues *pScan = dst.GetFirstTrueSubKey(); pScan; pScan = pScan->GetNextTrueSubKey() )
+		for(KeyValues *pScan = dst.GetFirstTrueSubKey(); pScan; pScan = pScan->GetNextTrueSubKey())
 		{
-			KeyValues *pTmp = src.FindKey( pScan->GetName() );
-			if( !pTmp )
+			KeyValues *pTmp = src.FindKey(pScan->GetName());
+			if(!pTmp)
 				continue;
 			// make sure that this is a subkey.
-			if( pTmp->GetDataType() != KeyValues::TYPE_NONE )
+			if(pTmp->GetDataType() != KeyValues::TYPE_NONE)
 				continue;
-			InsertKeyValues( *pScan, *pTmp, bCheckForExistence );
+			InsertKeyValues(*pScan, *pTmp, bCheckForExistence);
 		}
 	}
 }
 
-void WriteKeyValuesToFile( const char *pFileName, KeyValues& keyValues )
+void WriteKeyValuesToFile(const char *pFileName, KeyValues &keyValues)
 {
-	keyValues.SaveToFile( g_pFullFileSystem, pFileName );
+	keyValues.SaveToFile(g_pFullFileSystem, pFileName);
 }
 
-void ApplyPatchKeyValues( KeyValues &keyValues, KeyValues &patchKeyValues )
+void ApplyPatchKeyValues(KeyValues &keyValues, KeyValues &patchKeyValues)
 {
-	KeyValues *pInsertSection = patchKeyValues.FindKey( "insert" );
-	KeyValues *pReplaceSection = patchKeyValues.FindKey( "replace" );
+	KeyValues *pInsertSection = patchKeyValues.FindKey("insert");
+	KeyValues *pReplaceSection = patchKeyValues.FindKey("replace");
 
-	if ( pInsertSection )
+	if(pInsertSection)
 	{
-		InsertKeyValues( keyValues, *pInsertSection, false );
+		InsertKeyValues(keyValues, *pInsertSection, false);
 	}
 
-	if ( pReplaceSection )
+	if(pReplaceSection)
 	{
-		InsertKeyValues( keyValues, *pReplaceSection, true );
+		InsertKeyValues(keyValues, *pReplaceSection, true);
 	}
 
 	// Could add other commands here, like "delete", "rename", etc.
@@ -3348,79 +3310,81 @@ void ApplyPatchKeyValues( KeyValues &keyValues, KeyValues &patchKeyValues )
 // Adds keys from srcKeys to destKeys, overwriting any keys that are already
 // there.
 //-----------------------------------------------------------------------------
-void MergeKeyValues( KeyValues &srcKeys, KeyValues &destKeys )
+void MergeKeyValues(KeyValues &srcKeys, KeyValues &destKeys)
 {
-	for( KeyValues *pKV = srcKeys.GetFirstValue(); pKV; pKV = pKV->GetNextValue() )
+	for(KeyValues *pKV = srcKeys.GetFirstValue(); pKV; pKV = pKV->GetNextValue())
 	{
-		switch( pKV->GetDataType() )
+		switch(pKV->GetDataType())
 		{
-		case KeyValues::TYPE_STRING:
-			destKeys.SetString( pKV->GetName(), pKV->GetString() );
-			break;
-		case KeyValues::TYPE_INT:
-			destKeys.SetInt( pKV->GetName(), pKV->GetInt() );
-			break;
-		case KeyValues::TYPE_FLOAT:
-			destKeys.SetFloat( pKV->GetName(), pKV->GetFloat() );
-			break;
-		case KeyValues::TYPE_PTR:
-			destKeys.SetPtr( pKV->GetName(), pKV->GetPtr() );
-			break;
+			case KeyValues::TYPE_STRING:
+				destKeys.SetString(pKV->GetName(), pKV->GetString());
+				break;
+			case KeyValues::TYPE_INT:
+				destKeys.SetInt(pKV->GetName(), pKV->GetInt());
+				break;
+			case KeyValues::TYPE_FLOAT:
+				destKeys.SetFloat(pKV->GetName(), pKV->GetFloat());
+				break;
+			case KeyValues::TYPE_PTR:
+				destKeys.SetPtr(pKV->GetName(), pKV->GetPtr());
+				break;
 		}
 	}
-	for( KeyValues *pKV = srcKeys.GetFirstTrueSubKey(); pKV; pKV = pKV->GetNextTrueSubKey() )
+	for(KeyValues *pKV = srcKeys.GetFirstTrueSubKey(); pKV; pKV = pKV->GetNextTrueSubKey())
 	{
-		KeyValues *pDestKV = destKeys.FindKey( pKV->GetName(), true );
-		MergeKeyValues( *pKV, *pDestKV );
+		KeyValues *pDestKV = destKeys.FindKey(pKV->GetName(), true);
+		MergeKeyValues(*pKV, *pDestKV);
 	}
 }
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void AccumulatePatchKeyValues( KeyValues &srcKeyValues, KeyValues &patchKeyValues )
+void AccumulatePatchKeyValues(KeyValues &srcKeyValues, KeyValues &patchKeyValues)
 {
-	KeyValues *pDestInsertSection = patchKeyValues.FindKey( "insert" );
-	if ( pDestInsertSection == NULL )
+	KeyValues *pDestInsertSection = patchKeyValues.FindKey("insert");
+	if(pDestInsertSection == NULL)
 	{
-		pDestInsertSection = new KeyValues( "insert" );
-		patchKeyValues.AddSubKey( pDestInsertSection );
+		pDestInsertSection = new KeyValues("insert");
+		patchKeyValues.AddSubKey(pDestInsertSection);
 	}
 
-	KeyValues *pDestReplaceSection = patchKeyValues.FindKey( "replace" );
-	if ( pDestReplaceSection == NULL )
+	KeyValues *pDestReplaceSection = patchKeyValues.FindKey("replace");
+	if(pDestReplaceSection == NULL)
 	{
-		pDestReplaceSection = new KeyValues( "replace" );
-		patchKeyValues.AddSubKey( pDestReplaceSection );
+		pDestReplaceSection = new KeyValues("replace");
+		patchKeyValues.AddSubKey(pDestReplaceSection);
 	}
 
-	KeyValues *pSrcInsertSection = srcKeyValues.FindKey( "insert" );
-	if ( pSrcInsertSection )
+	KeyValues *pSrcInsertSection = srcKeyValues.FindKey("insert");
+	if(pSrcInsertSection)
 	{
-		MergeKeyValues( *pSrcInsertSection, *pDestInsertSection );
+		MergeKeyValues(*pSrcInsertSection, *pDestInsertSection);
 	}
 
-	KeyValues *pSrcReplaceSection = srcKeyValues.FindKey( "replace" );
-	if ( pSrcReplaceSection )
+	KeyValues *pSrcReplaceSection = srcKeyValues.FindKey("replace");
+	if(pSrcReplaceSection)
 	{
-		MergeKeyValues( *pSrcReplaceSection, *pDestReplaceSection );
+		MergeKeyValues(*pSrcReplaceSection, *pDestReplaceSection);
 	}
 }
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-bool AccumulateRecursiveVmtPatches( KeyValues &patchKeyValuesOut, KeyValues **ppBaseKeyValuesOut, const KeyValues& keyValues, const char *pPathID, CUtlVector<FileNameHandle_t> *pIncludes )
+bool AccumulateRecursiveVmtPatches(KeyValues &patchKeyValuesOut, KeyValues **ppBaseKeyValuesOut,
+								   const KeyValues &keyValues, const char *pPathID,
+								   CUtlVector<FileNameHandle_t> *pIncludes)
 {
-	if ( pIncludes )
+	if(pIncludes)
 	{
 		pIncludes->Purge();
 	}
 
 	patchKeyValuesOut.Clear();
 
-	if ( V_stricmp( keyValues.GetName(), "patch" ) != 0 )
+	if(V_stricmp(keyValues.GetName(), "patch") != 0)
 	{
 		// Not a patch file, nothing to do
-		if ( ppBaseKeyValuesOut )
+		if(ppBaseKeyValuesOut)
 		{
 			// flag to the caller that the passed in keyValues are in fact final non-patch values
 			*ppBaseKeyValuesOut = NULL;
@@ -3432,42 +3396,42 @@ bool AccumulateRecursiveVmtPatches( KeyValues &patchKeyValuesOut, KeyValues **pp
 
 	// Recurse down through all patch files:
 	int nCount = 0;
-	while( ( nCount < 10 ) && ( V_stricmp( pCurrentKeyValues->GetName(), "patch" ) == 0 ) )
+	while((nCount < 10) && (V_stricmp(pCurrentKeyValues->GetName(), "patch") == 0))
 	{
 		// Accumulate the new patch keys from this file
-		AccumulatePatchKeyValues( *pCurrentKeyValues, patchKeyValuesOut );
-		
-		// Load the included file
-		const char *pIncludeFileName = pCurrentKeyValues->GetString( "include" );
+		AccumulatePatchKeyValues(*pCurrentKeyValues, patchKeyValuesOut);
 
-		if ( pIncludeFileName == NULL )
+		// Load the included file
+		const char *pIncludeFileName = pCurrentKeyValues->GetString("include");
+
+		if(pIncludeFileName == NULL)
 		{
 			// A patch file without an include key? Not good...
-			Warning( "VMT patch file has no include key - invalid!\n" );
-			Assert( pIncludeFileName );
+			Warning("VMT patch file has no include key - invalid!\n");
+			Assert(pIncludeFileName);
 			break;
 		}
 
-		CUtlString includeFileName( pIncludeFileName ); // copy off the string before we clear the keyvalues it lives in
+		CUtlString includeFileName(pIncludeFileName); // copy off the string before we clear the keyvalues it lives in
 		pCurrentKeyValues->Clear();
-		bool bSuccess = pCurrentKeyValues->LoadFromFile( g_pFullFileSystem, includeFileName, pPathID );
-		if( bSuccess )
+		bool bSuccess = pCurrentKeyValues->LoadFromFile(g_pFullFileSystem, includeFileName, pPathID);
+		if(bSuccess)
 		{
-			if ( pIncludes )
+			if(pIncludes)
 			{
 				// Remember that we included this file for the pure server stuff.
-				pIncludes->AddToTail( g_pFullFileSystem->FindOrAddFileName( includeFileName ) );
+				pIncludes->AddToTail(g_pFullFileSystem->FindOrAddFileName(includeFileName));
 			}
 		}
 		else
 		{
 			pCurrentKeyValues->deleteThis();
 #ifndef DEDICATED
-			Warning( "Failed to load $include VMT file (%s)\n", includeFileName.String() );
+			Warning("Failed to load $include VMT file (%s)\n", includeFileName.String());
 #endif
-			if ( !HushAsserts() )
+			if(!HushAsserts())
 			{
-				AssertMsg( false, "Failed to load $include VMT file (%s)", includeFileName.String() );
+				AssertMsg(false, "Failed to load $include VMT file (%s)", includeFileName.String());
 			}
 			return false;
 		}
@@ -3475,7 +3439,7 @@ bool AccumulateRecursiveVmtPatches( KeyValues &patchKeyValuesOut, KeyValues **pp
 		nCount++;
 	}
 
-	if ( ppBaseKeyValuesOut )
+	if(ppBaseKeyValuesOut)
 	{
 		*ppBaseKeyValuesOut = pCurrentKeyValues;
 	}
@@ -3484,87 +3448,90 @@ bool AccumulateRecursiveVmtPatches( KeyValues &patchKeyValuesOut, KeyValues **pp
 		pCurrentKeyValues->deleteThis();
 	}
 
-	if( nCount >= 10 )
+	if(nCount >= 10)
 	{
-		Warning( "Infinite recursion in patch file?\n" );
+		Warning("Infinite recursion in patch file?\n");
 	}
 	return true;
 }
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void ExpandPatchFile( KeyValues& keyValues, KeyValues &patchKeyValues, const char *pPathID, CUtlVector<FileNameHandle_t> *pIncludes )
+void ExpandPatchFile(KeyValues &keyValues, KeyValues &patchKeyValues, const char *pPathID,
+					 CUtlVector<FileNameHandle_t> *pIncludes)
 {
 	KeyValues *pNonPatchKeyValues = NULL;
-	if ( !patchKeyValues.IsEmpty() )
+	if(!patchKeyValues.IsEmpty())
 	{
 		pNonPatchKeyValues = keyValues.MakeCopy();
 	}
 	else
 	{
-		bool bSuccess = AccumulateRecursiveVmtPatches( patchKeyValues, &pNonPatchKeyValues, keyValues, pPathID, pIncludes );
-		if ( !bSuccess )
+		bool bSuccess =
+			AccumulateRecursiveVmtPatches(patchKeyValues, &pNonPatchKeyValues, keyValues, pPathID, pIncludes);
+		if(!bSuccess)
 		{
 			return;
 		}
 	}
 
-	if ( pNonPatchKeyValues != NULL )
+	if(pNonPatchKeyValues != NULL)
 	{
 		// We're dealing with a patch file. Apply accumulated patches to final vmt
-		ApplyPatchKeyValues( *pNonPatchKeyValues, patchKeyValues );
+		ApplyPatchKeyValues(*pNonPatchKeyValues, patchKeyValues);
 		keyValues = *pNonPatchKeyValues;
 		pNonPatchKeyValues->deleteThis();
 	}
 }
 
-bool LoadVMTFile( KeyValues &vmtKeyValues, KeyValues &patchKeyValues, const char *pMaterialName, bool bAbsolutePath, CUtlVector<FileNameHandle_t> *pIncludes )
+bool LoadVMTFile(KeyValues &vmtKeyValues, KeyValues &patchKeyValues, const char *pMaterialName, bool bAbsolutePath,
+				 CUtlVector<FileNameHandle_t> *pIncludes)
 {
 	char pFileName[MAX_PATH];
 	const char *pPathID = "GAME";
-	if ( !bAbsolutePath )
+	if(!bAbsolutePath)
 	{
-		Q_snprintf( pFileName, sizeof( pFileName ), "materials/%s.vmt", pMaterialName );
+		Q_snprintf(pFileName, sizeof(pFileName), "materials/%s.vmt", pMaterialName);
 	}
 	else
 	{
-		Q_snprintf( pFileName, sizeof( pFileName ), "%s.vmt", pMaterialName );
-		if ( pMaterialName[0] == '/' && pMaterialName[1] == '/' && pMaterialName[2] != '/' )
+		Q_snprintf(pFileName, sizeof(pFileName), "%s.vmt", pMaterialName);
+		if(pMaterialName[0] == '/' && pMaterialName[1] == '/' && pMaterialName[2] != '/')
 		{
 			// UNC, do full search
 			pPathID = NULL;
 		}
 	}
 
-	if ( !vmtKeyValues.LoadFromFile( g_pFullFileSystem, pFileName, pPathID ) )
+	if(!vmtKeyValues.LoadFromFile(g_pFullFileSystem, pFileName, pPathID))
 	{
 		return false;
 	}
-	ExpandPatchFile( vmtKeyValues, patchKeyValues, pPathID, pIncludes );
+	ExpandPatchFile(vmtKeyValues, patchKeyValues, pPathID, pIncludes);
 
 	return true;
 }
 
-int CMaterial::GetNumPasses( void )
+int CMaterial::GetNumPasses(void)
 {
 	Precache();
-//	int mod = m_ShaderRenderState.m_Modulation;
+	//	int mod = m_ShaderRenderState.m_Modulation;
 	int mod = 0;
 	return m_ShaderRenderState.m_pSnapshots[mod].m_nPassCount;
 }
 
-int CMaterial::GetTextureMemoryBytes( void )
+int CMaterial::GetTextureMemoryBytes(void)
 {
 	Precache();
 	int bytes = 0;
 	int i;
-	for( i = 0; i < m_VarCount; i++ )
+	for(i = 0; i < m_VarCount; i++)
 	{
 		IMaterialVar *pVar = m_pShaderParams[i];
-		if( pVar->GetType() == MATERIAL_VAR_TYPE_TEXTURE )
+		if(pVar->GetType() == MATERIAL_VAR_TYPE_TEXTURE)
 		{
 			ITexture *pTexture = pVar->GetTextureValue();
-			if( pTexture && pTexture != ( ITexture * )0xffffffff )
+			if(pTexture && pTexture != (ITexture *)0xffffffff)
 			{
 				bytes += pTexture->GetApproximateVidMemBytes();
 			}
@@ -3573,27 +3540,27 @@ int CMaterial::GetTextureMemoryBytes( void )
 	return bytes;
 }
 
-void CMaterial::SetUseFixedFunctionBakedLighting( bool bEnable )
+void CMaterial::SetUseFixedFunctionBakedLighting(bool bEnable)
 {
-	SetMaterialVarFlags2( MATERIAL_VAR2_USE_FIXED_FUNCTION_BAKED_LIGHTING, bEnable );
+	SetMaterialVarFlags2(MATERIAL_VAR2_USE_FIXED_FUNCTION_BAKED_LIGHTING, bEnable);
 }
 
 bool CMaterial::NeedsFixedFunctionFlashlight() const
 {
-	return ( GetMaterialVarFlags2() & MATERIAL_VAR2_NEEDS_FIXED_FUNCTION_FLASHLIGHT ) &&
-		MaterialSystem()->InFlashlightMode();
+	return (GetMaterialVarFlags2() & MATERIAL_VAR2_NEEDS_FIXED_FUNCTION_FLASHLIGHT) &&
+		   MaterialSystem()->InFlashlightMode();
 }
 
-bool CMaterial::IsUsingVertexID( ) const
+bool CMaterial::IsUsingVertexID() const
 {
-	return ( GetMaterialVarFlags2() & MATERIAL_VAR2_USES_VERTEXID ) != 0;
+	return (GetMaterialVarFlags2() & MATERIAL_VAR2_USES_VERTEXID) != 0;
 }
 
 void CMaterial::DeleteIfUnreferenced()
 {
-	if ( m_RefCount > 0 )
+	if(m_RefCount > 0)
 		return;
-	IMaterialVar::DeleteUnreferencedTextures( true );
-	IMaterialInternal::DestroyMaterial( this );
-	IMaterialVar::DeleteUnreferencedTextures( false );
+	IMaterialVar::DeleteUnreferencedTextures(true);
+	IMaterialInternal::DestroyMaterial(this);
+	IMaterialVar::DeleteUnreferencedTextures(false);
 }

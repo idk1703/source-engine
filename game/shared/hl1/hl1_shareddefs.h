@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,11 +10,10 @@
 #pragma once
 #endif
 
-
 //--------------
 // HL1 SPECIFIC
 //--------------
-#define DMG_MISSILEDEFENSE	(DMG_LASTGENERICFLAG<<2)	// The only kind of damage missiles take. (special missile defense)
-
+#define DMG_MISSILEDEFENSE \
+	(DMG_LASTGENERICFLAG << 2) // The only kind of damage missiles take. (special missile defense)
 
 #endif // HL1_SHAREDDEFS_H

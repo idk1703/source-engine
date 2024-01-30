@@ -1,15 +1,15 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
 //=============================================================================//
 
-// This module implements the voice record and compression functions 
+// This module implements the voice record and compression functions
 
 #include "audio_pch.h"
-#if !defined( _X360 )
+#if !defined(_X360)
 #include "dsound.h"
 #endif
 #include <assert.h>
@@ -17,27 +17,23 @@
 #include "tier0/vcrmode.h"
 #include "ivoicerecord.h"
 
-#if defined( _X360 )
+#if defined(_X360)
 #include "xbox/xbox_win32stubs.h"
 #endif
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-
 // ------------------------------------------------------------------------------
 // Globals.
 // ------------------------------------------------------------------------------
 
-typedef HRESULT (WINAPI *DirectSoundCaptureCreateFn)(const GUID FAR *lpGUID, LPDIRECTSOUNDCAPTURE *pCapture, LPUNKNOWN pUnkOuter);
-
-
+typedef HRESULT(WINAPI *DirectSoundCaptureCreateFn)(const GUID FAR *lpGUID, LPDIRECTSOUNDCAPTURE *pCapture,
+													LPUNKNOWN pUnkOuter);
 
 // ------------------------------------------------------------------------------
 // Static helpers
 // ------------------------------------------------------------------------------
-
-
 
 // ------------------------------------------------------------------------------
 // VoiceRecord_DSound
@@ -46,80 +42,74 @@ typedef HRESULT (WINAPI *DirectSoundCaptureCreateFn)(const GUID FAR *lpGUID, LPD
 class VoiceRecord_DSound : public IVoiceRecord
 {
 protected:
+	virtual ~VoiceRecord_DSound();
 
-	virtual				~VoiceRecord_DSound();
-
-
-// IVoiceRecord.
+	// IVoiceRecord.
 public:
+	VoiceRecord_DSound();
+	virtual void Release();
 
-						VoiceRecord_DSound();
-	virtual void		Release();
+	virtual bool RecordStart();
+	virtual void RecordStop();
 
-	virtual bool		RecordStart();
-	virtual void		RecordStop();
-	
 	// Initialize. The format of the data we expect from the provider is
 	// 8-bit signed mono at the specified sample rate.
-	virtual bool		Init(int sampleRate);
+	virtual bool Init(int sampleRate);
 
-	virtual void		Idle();
+	virtual void Idle();
 
 	// Get the most recent N samples.
-	virtual int			GetRecordedData(short *pOut, int nSamplesWanted);
+	virtual int GetRecordedData(short *pOut, int nSamplesWanted);
 
 private:
-	void				Term();				// Delete members.
-	void				Clear();			// Clear members.
-	void				UpdateWrapping();
+	void Term();  // Delete members.
+	void Clear(); // Clear members.
+	void UpdateWrapping();
 
-	inline DWORD		NumCaptureBufferBytes()	{return m_nCaptureBufferBytes;}
-
+	inline DWORD NumCaptureBufferBytes()
+	{
+		return m_nCaptureBufferBytes;
+	}
 
 private:
-	HINSTANCE					m_hInstDS;
+	HINSTANCE m_hInstDS;
 
-	LPDIRECTSOUNDCAPTURE		m_pCapture;
-	LPDIRECTSOUNDCAPTUREBUFFER	m_pCaptureBuffer;
+	LPDIRECTSOUNDCAPTURE m_pCapture;
+	LPDIRECTSOUNDCAPTUREBUFFER m_pCaptureBuffer;
 
 	// How many bytes our capture buffer has.
-	DWORD						m_nCaptureBufferBytes;
-	
-	// We need to know when the capture buffer loops, so we install an event and 
+	DWORD m_nCaptureBufferBytes;
+
+	// We need to know when the capture buffer loops, so we install an event and
 	// update this in the event.
-	DWORD						m_WrapOffset;
-	HANDLE						m_hWrapEvent;
+	DWORD m_WrapOffset;
+	HANDLE m_hWrapEvent;
 
 	// This is our (unwrapped) position that tells how much data we've given to the app.
-	DWORD						m_LastReadPos;
+	DWORD m_LastReadPos;
 };
-
-
 
 VoiceRecord_DSound::VoiceRecord_DSound()
 {
 	Clear();
 }
 
-
 VoiceRecord_DSound::~VoiceRecord_DSound()
 {
 	Term();
 }
-
 
 void VoiceRecord_DSound::Release()
 {
 	delete this;
 }
 
-
 bool VoiceRecord_DSound::RecordStart()
 {
-	//When we start recording we want to make sure we don't provide any audio
-	//that occurred before now. So set m_LastReadPos to the current
-	//read position of the audio device
-	if (m_pCaptureBuffer == NULL)
+	// When we start recording we want to make sure we don't provide any audio
+	// that occurred before now. So set m_LastReadPos to the current
+	// read position of the audio device
+	if(m_pCaptureBuffer == NULL)
 	{
 		return false;
 	}
@@ -128,12 +118,12 @@ bool VoiceRecord_DSound::RecordStart()
 
 	DWORD dwStatus;
 	HRESULT hr = m_pCaptureBuffer->GetStatus(&dwStatus);
-	if (FAILED(hr) || !(dwStatus & DSCBSTATUS_CAPTURING))
+	if(FAILED(hr) || !(dwStatus & DSCBSTATUS_CAPTURING))
 		return false;
 
 	DWORD dwReadPos;
 	hr = m_pCaptureBuffer->GetCurrentPosition(NULL, &dwReadPos);
-	if (!FAILED(hr))
+	if(!FAILED(hr))
 	{
 		m_LastReadPos = dwReadPos + m_WrapOffset;
 	}
@@ -141,22 +131,19 @@ bool VoiceRecord_DSound::RecordStart()
 	return true;
 }
 
-
-void VoiceRecord_DSound::RecordStop()
-{
-}
+void VoiceRecord_DSound::RecordStop() {}
 
 static bool IsRunningWindows7()
 {
-	if ( IsPC() )
+	if(IsPC())
 	{
 		OSVERSIONINFOEX osvi;
 		ZeroMemory(&osvi, sizeof(OSVERSIONINFOEX));
 		osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
 
-		if ( GetVersionEx ((OSVERSIONINFO *)&osvi) )
+		if(GetVersionEx((OSVERSIONINFO *)&osvi))
 		{
-			if ( osvi.dwMajorVersion > 6 || (osvi.dwMajorVersion == 6 && osvi.dwMinorVersion >= 1) )
+			if(osvi.dwMajorVersion > 6 || (osvi.dwMajorVersion == 6 && osvi.dwMinorVersion >= 1))
 				return true;
 		}
 	}
@@ -169,23 +156,18 @@ bool VoiceRecord_DSound::Init(int sampleRate)
 	DSCBUFFERDESC dscDesc;
 	DirectSoundCaptureCreateFn createFn;
 
-	
 	Term();
 
-
-	WAVEFORMATEX recordFormat =
-	{
+	WAVEFORMATEX recordFormat = {
 		WAVE_FORMAT_PCM,		// wFormatTag
 		1,						// nChannels
-		(uint32)sampleRate,				// nSamplesPerSec
-		(uint32)sampleRate*2,			// nAvgBytesPerSec
+		(uint32)sampleRate,		// nSamplesPerSec
+		(uint32)sampleRate * 2, // nAvgBytesPerSec
 		2,						// nBlockAlign
 		16,						// wBitsPerSample
 		sizeof(WAVEFORMATEX)	// cbSize
 	};
 
-
-	
 	// Load the DSound DLL.
 	m_hInstDS = LoadLibrary("dsound.dll");
 	if(!m_hInstDS)
@@ -196,7 +178,7 @@ bool VoiceRecord_DSound::Init(int sampleRate)
 		goto HandleError;
 
 	const GUID FAR *pGuid = &DSDEVID_DefaultVoiceCapture;
-	if ( IsRunningWindows7() )
+	if(IsRunningWindows7())
 	{
 		pGuid = NULL;
 	}
@@ -215,7 +197,6 @@ bool VoiceRecord_DSound::Init(int sampleRate)
 	if(FAILED(hr))
 		goto HandleError;
 
-
 	// Figure out how many bytes we got in our capture buffer.
 	DSCBCAPS caps;
 	memset(&caps, 0, sizeof(caps));
@@ -227,7 +208,6 @@ bool VoiceRecord_DSound::Init(int sampleRate)
 
 	m_nCaptureBufferBytes = caps.dwBufferBytes;
 
-
 	// Set it up so we get notification when the buffer wraps.
 	m_hWrapEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
 	if(!m_hWrapEvent)
@@ -236,13 +216,13 @@ bool VoiceRecord_DSound::Init(int sampleRate)
 	DSBPOSITIONNOTIFY dsbNotify;
 	dsbNotify.dwOffset = dscDesc.dwBufferBytes - 1;
 	dsbNotify.hEventNotify = m_hWrapEvent;
-	
+
 	// Get the IDirectSoundNotify interface.
 	LPDIRECTSOUNDNOTIFY pNotify;
-	hr = m_pCaptureBuffer->QueryInterface(IID_IDirectSoundNotify, (void**)&pNotify);
+	hr = m_pCaptureBuffer->QueryInterface(IID_IDirectSoundNotify, (void **)&pNotify);
 	if(FAILED(hr))
 		goto HandleError;
-	
+
 	hr = pNotify->SetNotificationPositions(1, &dsbNotify);
 	pNotify->Release();
 	if(FAILED(hr))
@@ -255,12 +235,10 @@ bool VoiceRecord_DSound::Init(int sampleRate)
 
 	return true;
 
-
 HandleError:;
 	Term();
 	return false;
 }
-
 
 void VoiceRecord_DSound::Term()
 {
@@ -282,7 +260,6 @@ void VoiceRecord_DSound::Term()
 	Clear();
 }
 
-
 void VoiceRecord_DSound::Clear()
 {
 	m_pCapture = NULL;
@@ -293,13 +270,12 @@ void VoiceRecord_DSound::Clear()
 	m_hInstDS = NULL;
 }
 
-
 void VoiceRecord_DSound::Idle()
 {
 	UpdateWrapping();
 }
 
-int VoiceRecord_DSound::GetRecordedData( short *pOut, int nSamples )
+int VoiceRecord_DSound::GetRecordedData(short *pOut, int nSamples)
 {
 	if(!m_pCaptureBuffer)
 	{
@@ -312,20 +288,20 @@ int VoiceRecord_DSound::GetRecordedData( short *pOut, int nSamples )
 	if(FAILED(hr) || !(dwStatus & DSCBSTATUS_CAPTURING))
 		return 0;
 
-	Idle();	// Update wrapping..
+	Idle(); // Update wrapping..
 
-	DWORD nBytesWanted = (DWORD)( nSamples << 1 );
+	DWORD nBytesWanted = (DWORD)(nSamples << 1);
 
 	DWORD dwReadPos;
-	hr = m_pCaptureBuffer->GetCurrentPosition( NULL, &dwReadPos);
+	hr = m_pCaptureBuffer->GetCurrentPosition(NULL, &dwReadPos);
 	if(FAILED(hr))
 		return 0;
 
 	dwReadPos += m_WrapOffset;
 
 	// Read the range (dwReadPos-nSamplesWanted, dwReadPos), but don't re-read data we've already read.
-	DWORD readStart = Max( dwReadPos - nBytesWanted, (DWORD)0u );
-	if ( readStart < m_LastReadPos )
+	DWORD readStart = Max(dwReadPos - nBytesWanted, (DWORD)0u);
+	if(readStart < m_LastReadPos)
 	{
 		readStart = m_LastReadPos;
 	}
@@ -334,21 +310,20 @@ int VoiceRecord_DSound::GetRecordedData( short *pOut, int nSamples )
 	LPVOID pData[2];
 	DWORD dataLen[2];
 
-	hr = m_pCaptureBuffer->Lock(
-		readStart % NumCaptureBufferBytes(),	// Offset.
-		dwReadPos - readStart,					// Number of bytes to lock.
-		&pData[0],								// Buffer 1.
-		&dataLen[0],							// Buffer 1 length.
-		&pData[1],								// Buffer 2.
-		&dataLen[1],							// Buffer 2 length.
-		0										// Flags.
-		);
+	hr = m_pCaptureBuffer->Lock(readStart % NumCaptureBufferBytes(), // Offset.
+								dwReadPos - readStart,				 // Number of bytes to lock.
+								&pData[0],							 // Buffer 1.
+								&dataLen[0],						 // Buffer 1 length.
+								&pData[1],							 // Buffer 2.
+								&dataLen[1],						 // Buffer 2 length.
+								0									 // Flags.
+	);
 
 	if(FAILED(hr))
 		return 0;
 
 	// Hopefully we didn't get too much data back!
-	if((dataLen[0]+dataLen[1]) > nBytesWanted )
+	if((dataLen[0] + dataLen[1]) > nBytesWanted)
 	{
 		assert(false);
 		m_pCaptureBuffer->Unlock(pData[0], dataLen[0], pData[1], dataLen[1]);
@@ -357,7 +332,7 @@ int VoiceRecord_DSound::GetRecordedData( short *pOut, int nSamples )
 
 	// Copy the data to the output.
 	memcpy(pOut, pData[0], dataLen[0]);
-	memcpy(&pOut[dataLen[0]/2], pData[1], dataLen[1]);
+	memcpy(&pOut[dataLen[0] / 2], pData[1], dataLen[1]);
 
 	m_pCaptureBuffer->Unlock(pData[0], dataLen[0], pData[1], dataLen[1]);
 
@@ -367,22 +342,19 @@ int VoiceRecord_DSound::GetRecordedData( short *pOut, int nSamples )
 	return (dataLen[0] + dataLen[1]) >> 1;
 }
 
-
 void VoiceRecord_DSound::UpdateWrapping()
 {
 	if(!m_pCaptureBuffer)
 		return;
 
 	// Has the buffer wrapped?
-	if ( VCRHook_WaitForSingleObject(m_hWrapEvent, 0) == WAIT_OBJECT_0 )
+	if(VCRHook_WaitForSingleObject(m_hWrapEvent, 0) == WAIT_OBJECT_0)
 	{
 		m_WrapOffset += m_nCaptureBufferBytes;
 	}
 }
 
-
-
-IVoiceRecord* CreateVoiceRecord_DSound(int sampleRate)
+IVoiceRecord *CreateVoiceRecord_DSound(int sampleRate)
 {
 	VoiceRecord_DSound *pRecord = new VoiceRecord_DSound;
 	if(pRecord && pRecord->Init(sampleRate))
@@ -397,4 +369,3 @@ IVoiceRecord* CreateVoiceRecord_DSound(int sampleRate)
 		return NULL;
 	}
 }
-

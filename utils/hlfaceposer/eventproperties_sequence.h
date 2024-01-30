@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,6 +13,6 @@
 
 class CEventParams;
 
-int EventProperties_Sequence( CEventParams *params );
+int EventProperties_Sequence(CEventParams *params);
 
 #endif // EVENTPROPERTIES_SEQUENCE_H

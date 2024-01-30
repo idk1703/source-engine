@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -21,41 +21,36 @@
 #include "vgui/mousecode.h"
 #include "vgui/IScheme.h"
 
-
 class CCreateModWizard : public vgui::WizardPanel
 {
 	typedef vgui::WizardPanel BaseClass;
 
 public:
-	CCreateModWizard( vgui::Panel *parent, const char *name, KeyValues *pKeyValues, bool bRunFromCommandLine );
+	CCreateModWizard(vgui::Panel *parent, const char *name, KeyValues *pKeyValues, bool bRunFromCommandLine);
 	virtual ~CCreateModWizard();
 
 	void Run();
 
 protected:
-
 	KeyValues *m_pKeyValues; // These come from inside the CreateMod command in the medialist.txt file.
 	bool m_bRunFromCommandLine;
 
 private:
-
-	//DECLARE_PANELMAP();
+	// DECLARE_PANELMAP();
 };
 
-
 // Utility functions.
-bool CreateFullDirectory( const char *pDirName );
-bool CreateSubdirectory( const char *pDirName, const char *pSubdirName );
+bool CreateFullDirectory(const char *pDirName);
+bool CreateSubdirectory(const char *pDirName, const char *pSubdirName);
 
-bool DoCopyFile( const char *pInputFilename, const char *pOutputFilename );
+bool DoCopyFile(const char *pInputFilename, const char *pOutputFilename);
 
-void RunCreateModWizard( bool bRunFromCommandLine );
+void RunCreateModWizard(bool bRunFromCommandLine);
 
 // Sets a value in the registry that other apps (like the VS Express edition) can look at.
-void SetModWizardStatusCode( unsigned long code );
+void SetModWizardStatusCode(unsigned long code);
 
 // Called when they get to the "finished!" dialog.
 void NoteModWizardFinished();
-
 
 #endif // CREATEMODWIZARD_H

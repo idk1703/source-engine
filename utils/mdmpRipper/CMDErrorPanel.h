@@ -19,17 +19,17 @@ using namespace vgui;
 
 class CMDErrorPanel : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CMDErrorPanel, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CMDErrorPanel, vgui::EditablePanel);
 
-	vgui::ListPanel *m_pTokenList;	
+	vgui::ListPanel *m_pTokenList;
 	vgui::TextEntry *m_pMaxResults;
 	vgui::TextEntry *m_pQueryCounts;
 
 	CUtlVector<HANDLE> m_MiniDumpHandles;
 
 public:
-	CMDErrorPanel( vgui::Panel *pParent, const char *pName );
-	virtual void OnCommand( const char *pCommand );
+	CMDErrorPanel(vgui::Panel *pParent, const char *pName);
+	virtual void OnCommand(const char *pCommand);
 	virtual void Close();
 	void DownloadMinidumps();
 	void CheckModules();

@@ -26,203 +26,189 @@
 #include "tf_vehicle_teleport_station.h"
 #include "weapon_shield.h"
 
-
-ConVar	class_escort_speed( "class_escort_speed","200", FCVAR_NONE, "Escort movement speed" );
-
+ConVar class_escort_speed("class_escort_speed", "200", FCVAR_NONE, "Escort movement speed");
 
 //=============================================================================
 //
 // Escort Data Table
 //
-BEGIN_SEND_TABLE_NOBASE( CPlayerClassEscort, DT_PlayerClassEscortData )
+BEGIN_SEND_TABLE_NOBASE(CPlayerClassEscort, DT_PlayerClassEscortData)
 END_SEND_TABLE()
 
-
-
-bool OrderCreator_Mortar( CPlayerClassEscort *pClass )
+bool OrderCreator_Mortar(CPlayerClassEscort *pClass)
 {
-	return COrderMortarAttack::CreateOrder( pClass );
+	return COrderMortarAttack::CreateOrder(pClass);
 }
 
-
-bool OrderCreator_ShieldWall( CPlayerClassEscort *pClass )
+bool OrderCreator_ShieldWall(CPlayerClassEscort *pClass)
 {
-	return COrderBuildShieldWall::CreateOrder( pClass );
+	return COrderBuildShieldWall::CreateOrder(pClass);
 }
-
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
-const char *CPlayerClassEscort::GetClassModelString( int nTeam )
+const char *CPlayerClassEscort::GetClassModelString(int nTeam)
 {
 	static const char *string = "models/player/alien_escort.mdl";
 	return string;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CPlayerClassEscort::CPlayerClassEscort( CBaseTFPlayer *pPlayer, TFClass iClass ) : CPlayerClass( pPlayer, iClass )
+CPlayerClassEscort::CPlayerClassEscort(CBaseTFPlayer *pPlayer, TFClass iClass) : CPlayerClass(pPlayer, iClass)
 {
-	for (int i = 0; i < MAX_TF_TEAMS; ++i)
+	for(int i = 0; i < MAX_TF_TEAMS; ++i)
 	{
-		SetClassModel( MAKE_STRING(GetClassModelString(i)), i ); 
+		SetClassModel(MAKE_STRING(GetClassModelString(i)), i);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CPlayerClassEscort::SetupSizeData( void )
+void CPlayerClassEscort::SetupSizeData(void)
 {
 	// Initially set the player to the base player class standing hull size.
-	m_pPlayer->SetCollisionBounds( ESCORTCLASS_HULL_STAND_MIN, ESCORTCLASS_HULL_STAND_MAX );
-	m_pPlayer->SetViewOffset( ESCORTCLASS_VIEWOFFSET_STAND );
-	m_pPlayer->m_Local.m_flStepSize = ESCORTCLASS_STEPSIZE;	
-}
-
-
-//-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-CPlayerClassEscort::~CPlayerClassEscort()
-{
+	m_pPlayer->SetCollisionBounds(ESCORTCLASS_HULL_STAND_MIN, ESCORTCLASS_HULL_STAND_MAX);
+	m_pPlayer->SetViewOffset(ESCORTCLASS_VIEWOFFSET_STAND);
+	m_pPlayer->m_Local.m_flStepSize = ESCORTCLASS_STEPSIZE;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CPlayerClassEscort::ClassActivate( void )
+CPlayerClassEscort::~CPlayerClassEscort() {}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+void CPlayerClassEscort::ClassActivate(void)
 {
 	BaseClass::ClassActivate();
 
 	// Setup movement data.
 	m_hWeaponProjectedShield = NULL;
 	SetupMoveData();
-	memset( &m_ClassData, 0, sizeof( m_ClassData ) );
+	memset(&m_ClassData, 0, sizeof(m_ClassData));
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CWeaponShield *CPlayerClassEscort::GetProjectedShield( void )
+CWeaponShield *CPlayerClassEscort::GetProjectedShield(void)
 {
-	if ( !m_hWeaponProjectedShield )
+	if(!m_hWeaponProjectedShield)
 	{
-		m_hWeaponProjectedShield = static_cast< CWeaponShield * >( m_pPlayer->Weapon_OwnsThisType( "weapon_shield" ) );
-		if ( !m_hWeaponProjectedShield )
+		m_hWeaponProjectedShield = static_cast<CWeaponShield *>(m_pPlayer->Weapon_OwnsThisType("weapon_shield"));
+		if(!m_hWeaponProjectedShield)
 		{
-			m_hWeaponProjectedShield = static_cast< CWeaponShield * >( m_pPlayer->GiveNamedItem( "weapon_shield" ) );
+			m_hWeaponProjectedShield = static_cast<CWeaponShield *>(m_pPlayer->GiveNamedItem("weapon_shield"));
 		}
 	}
 
-	if ( m_hWeaponProjectedShield )
+	if(m_hWeaponProjectedShield)
 	{
- 		m_hWeaponProjectedShield->SetReflectViewModelAnimations( true );
+		m_hWeaponProjectedShield->SetReflectViewModelAnimations(true);
 	}
 
 	return m_hWeaponProjectedShield;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CPlayerClassEscort::CreateClass( void )
+void CPlayerClassEscort::CreateClass(void)
 {
 	BaseClass::CreateClass();
 
-	CWeaponTwoHandedContainer *p = ( CWeaponTwoHandedContainer * )m_pPlayer->Weapon_OwnsThisType( "weapon_twohandedcontainer" );
-	if ( !p )
+	CWeaponTwoHandedContainer *p =
+		(CWeaponTwoHandedContainer *)m_pPlayer->Weapon_OwnsThisType("weapon_twohandedcontainer");
+	if(!p)
 	{
-		p = static_cast< CWeaponTwoHandedContainer * >( m_pPlayer->GiveNamedItem( "weapon_twohandedcontainer" ) );
+		p = static_cast<CWeaponTwoHandedContainer *>(m_pPlayer->GiveNamedItem("weapon_twohandedcontainer"));
 	}
 
 	CWeaponShield *pShield = GetProjectedShield();
-	if ( p && pShield )
+	if(p && pShield)
 	{
-		p->SetWeapons( NULL, pShield );
+		p->SetWeapons(NULL, pShield);
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CPlayerClassEscort::ResupplyAmmo( float flFraction, ResupplyReason_t reason )
+bool CPlayerClassEscort::ResupplyAmmo(float flFraction, ResupplyReason_t reason)
 {
 	bool bGiven = false;
-	if ((reason == RESUPPLY_ALL_FROM_STATION) || (reason == RESUPPLY_AMMO_FROM_STATION))
+	if((reason == RESUPPLY_ALL_FROM_STATION) || (reason == RESUPPLY_AMMO_FROM_STATION))
 	{
-		if ( ResupplyAmmoType( 200 * flFraction, "Bullets" ) )
+		if(ResupplyAmmoType(200 * flFraction, "Bullets"))
 			bGiven = true;
 	}
 
-	if ((reason == RESUPPLY_ALL_FROM_STATION) || (reason == RESUPPLY_GRENADES_FROM_STATION))
+	if((reason == RESUPPLY_ALL_FROM_STATION) || (reason == RESUPPLY_GRENADES_FROM_STATION))
 	{
-		if (ResupplyAmmoType( 5 * flFraction, "ShieldGrenades" ))
+		if(ResupplyAmmoType(5 * flFraction, "ShieldGrenades"))
 			bGiven = true;
 	}
 
 	// On respawn, resupply base weapon ammo
-	if ( reason == RESUPPLY_RESPAWN )
+	if(reason == RESUPPLY_RESPAWN)
 	{
-		if ( ResupplyAmmoType( 200, "Bullets" ) )
+		if(ResupplyAmmoType(200, "Bullets"))
 			bGiven = true;
 	}
 
-	if ( BaseClass::ResupplyAmmo(flFraction, reason) )
+	if(BaseClass::ResupplyAmmo(flFraction, reason))
 		bGiven = true;
 
 	return bGiven;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Set escort class specific movement data here.
 //-----------------------------------------------------------------------------
-void CPlayerClassEscort::SetupMoveData( void )
+void CPlayerClassEscort::SetupMoveData(void)
 {
 	// Setup Class statistics
 	m_flMaxWalkingSpeed = class_escort_speed.GetFloat();
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CPlayerClassEscort::SetPlayerHull( void )
+void CPlayerClassEscort::SetPlayerHull(void)
 {
-	if ( m_pPlayer->GetFlags() & FL_DUCKING )
+	if(m_pPlayer->GetFlags() & FL_DUCKING)
 	{
-		m_pPlayer->SetCollisionBounds( ESCORTCLASS_HULL_DUCK_MIN, ESCORTCLASS_HULL_DUCK_MAX );
+		m_pPlayer->SetCollisionBounds(ESCORTCLASS_HULL_DUCK_MIN, ESCORTCLASS_HULL_DUCK_MAX);
 	}
 	else
 	{
-		m_pPlayer->SetCollisionBounds( ESCORTCLASS_HULL_STAND_MIN, ESCORTCLASS_HULL_STAND_MAX );
+		m_pPlayer->SetCollisionBounds(ESCORTCLASS_HULL_STAND_MIN, ESCORTCLASS_HULL_STAND_MAX);
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CPlayerClassEscort::ResetViewOffset( void )
+void CPlayerClassEscort::ResetViewOffset(void)
 {
-	if ( m_pPlayer )
+	if(m_pPlayer)
 	{
-		m_pPlayer->SetViewOffset( ESCORTCLASS_VIEWOFFSET_STAND );
+		m_pPlayer->SetViewOffset(ESCORTCLASS_VIEWOFFSET_STAND);
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CPlayerClassEscort::PowerupStart( int iPowerup, float flAmount, CBaseEntity *pAttacker, CDamageModifier *pDamageModifier )
+void CPlayerClassEscort::PowerupStart(int iPowerup, float flAmount, CBaseEntity *pAttacker,
+									  CDamageModifier *pDamageModifier)
 {
 	/*
 	switch( iPowerup )
@@ -247,13 +233,13 @@ void CPlayerClassEscort::PowerupStart( int iPowerup, float flAmount, CBaseEntity
 	}
 	*/
 
-	BaseClass::PowerupStart( iPowerup, flAmount, pAttacker, pDamageModifier );
+	BaseClass::PowerupStart(iPowerup, flAmount, pAttacker, pDamageModifier);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Powerup has just started
 //-----------------------------------------------------------------------------
-void CPlayerClassEscort::PowerupEnd( int iPowerup )
+void CPlayerClassEscort::PowerupEnd(int iPowerup)
 {
 	/*
 	switch( iPowerup )
@@ -270,5 +256,5 @@ void CPlayerClassEscort::PowerupEnd( int iPowerup )
 	}
 	*/
 
-	BaseClass::PowerupEnd( iPowerup );
+	BaseClass::PowerupEnd(iPowerup);
 }

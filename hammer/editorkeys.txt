@@ -36,8 +36,8 @@ Enter       - create object drawn with block/entity tool
 Alt+Shift+C - insert original prefab
 Ctrl+R	    - create prefab with selected objects
 Ctrl+T	    - create entity with selected objects. to add objects to
-              an existing entity, select IT and the objects and hit 
-		      Ctrl+T (you will be prompted.)
+	an existing entity, select IT and the objects and hit
+			Ctrl+T (you will be prompted.)
 
 Other object operations:
 Ctrl+B	  - snap selected objects to grid (based on boundbox)
@@ -75,16 +75,16 @@ Ctrl+F	- split faces (morph mode)
 Select tool:
 CTRL    - hold ctrl and click to keep current selection
 SHIFT   - hold shift when rotating to constrain rotation to
-          15 degrees. hold shift when moving to create a 
-		  copy of the original object at the new location.
+	15 degrees. hold shift when moving to create a
+		copy of the original object at the new location.
 (drag)  - hold lbutton and drag to select with a box. press
-          ENTER to select objects hitting the box, or 
-		  Shift+ENTER to select objects only entirely 
-		  within the box.
+	ENTER to select objects hitting the box, or
+		Shift+ENTER to select objects only entirely
+		within the box.
 
 Camera tool:
 SHIFT   - create a new camera with shift (replaces old camera,
-          currently.)
+	currently.)
 
 Clipper tool:
 CTRL    - hold CTRL to move the whole clipper (both handles)

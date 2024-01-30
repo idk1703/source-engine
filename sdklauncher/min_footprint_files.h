@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -10,10 +10,8 @@
 #pragma once
 #endif
 
-
 // If bForceRefresh is true, then it will dump out all the files
 // regardless of what version we think we currently have.
-void DumpMinFootprintFiles( bool bForceRefresh );
-
+void DumpMinFootprintFiles(bool bForceRefresh);
 
 #endif // MIN_FOOTPRINT_FILES_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -24,9 +24,9 @@ public:
 
 	// call this to activate the menu
 	void ShowMenu(vgui::Panel *target, unsigned int banID);
+
 private:
 	vgui::Panel *parent; // so we can send it messages
 };
-
 
 #endif // BANCONTEXTMENU_H

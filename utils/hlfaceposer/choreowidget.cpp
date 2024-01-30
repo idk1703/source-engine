@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,34 +17,34 @@ static int widgets = 0;
 // CChoreoWidget new/delete
 // All fields in the object are all initialized to 0.
 //-----------------------------------------------------------------------------
-void *CChoreoWidget::operator new( size_t stAllocateBlock )
+void *CChoreoWidget::operator new(size_t stAllocateBlock)
 {
 	widgets++;
 	// call into engine to get memory
-	Assert( stAllocateBlock != 0 );
-	return calloc( 1, stAllocateBlock );
+	Assert(stAllocateBlock != 0);
+	return calloc(1, stAllocateBlock);
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pMem - 
+// Purpose:
+// Input  : *pMem -
 //-----------------------------------------------------------------------------
-void CChoreoWidget::operator delete( void *pMem )
+void CChoreoWidget::operator delete(void *pMem)
 {
 	widgets--;
 	// set the memory to a known value
-	int size = _msize( pMem );
-	memset( pMem, 0xfe, size );
+	int size = _msize(pMem);
+	memset(pMem, 0xfe, size);
 
 	// get the engine to free the memory
-	free( pMem );
+	free(pMem);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Construct widget, all widgets clip their children and brethren
-// Input  : *parent - 
+// Input  : *parent -
 //-----------------------------------------------------------------------------
-CChoreoWidget::CChoreoWidget( CChoreoWidget *parent )
+CChoreoWidget::CChoreoWidget(CChoreoWidget *parent)
 {
 	m_bSelected = false;
 	m_pParent = parent;
@@ -54,26 +54,24 @@ CChoreoWidget::CChoreoWidget( CChoreoWidget *parent )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CChoreoWidget::~CChoreoWidget( void )
-{
-}
+CChoreoWidget::~CChoreoWidget(void) {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Default implementation, just return base row height
 //-----------------------------------------------------------------------------
-int	CChoreoWidget::GetItemHeight( void )
+int CChoreoWidget::GetItemHeight(void)
 {
 	return m_pView->GetRowHeight();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : mx - 
-//			my - 
+// Purpose:
+// Input  : mx -
+//			my -
 //-----------------------------------------------------------------------------
-void CChoreoWidget::LocalToScreen( int& mx, int& my )
+void CChoreoWidget::LocalToScreen(int &mx, int &my)
 {
 	/*
 	HWND wnd = (HWND)getHandle();
@@ -83,33 +81,33 @@ void CChoreoWidget::LocalToScreen( int& mx, int& my )
 	POINT pt;
 	pt.x = (short)mx;
 	pt.y = (short)my;
-	
+
 	ClientToScreen( wnd, &pt );
-	
+
 	mx = pt.x;
 	my = pt.y;
 	*/
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CChoreoWidget::IsSelected( void )
+bool CChoreoWidget::IsSelected(void)
 {
 	return m_bSelected;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : selected - 
+// Purpose:
+// Input  : selected -
 //-----------------------------------------------------------------------------
-void CChoreoWidget::SetSelected( bool selected )
+void CChoreoWidget::SetSelected(bool selected)
 {
 	m_bSelected = selected;
 }
 
-void CChoreoWidget::setBounds( int x, int y, int w, int h )
+void CChoreoWidget::setBounds(int x, int y, int w, int h)
 {
 	m_rcBounds.left = x;
 	m_rcBounds.right = x + w;
@@ -117,47 +115,47 @@ void CChoreoWidget::setBounds( int x, int y, int w, int h )
 	m_rcBounds.bottom = y + h;
 }
 
-int CChoreoWidget::x( void )
+int CChoreoWidget::x(void)
 {
 	return m_rcBounds.left;
 }
 
-int CChoreoWidget::y( void )
+int CChoreoWidget::y(void)
 {
 	return m_rcBounds.top;
 }
 
-int CChoreoWidget::w( void )
+int CChoreoWidget::w(void)
 {
 	return m_rcBounds.right - m_rcBounds.left;
 }
 
-int CChoreoWidget::h( void )
+int CChoreoWidget::h(void)
 {
 	return m_rcBounds.bottom - m_rcBounds.top;
 }
 
-CChoreoWidget *CChoreoWidget::getParent( void )
+CChoreoWidget *CChoreoWidget::getParent(void)
 {
 	return m_pParent;
 }
 
-void CChoreoWidget::setVisible( bool visible )
+void CChoreoWidget::setVisible(bool visible)
 {
 	m_bVisible = visible;
 }
 
-bool CChoreoWidget::getVisible( void )
+bool CChoreoWidget::getVisible(void)
 {
 	return m_bVisible;
 }
 
-void CChoreoWidget::getBounds( RECT& bounds )
+void CChoreoWidget::getBounds(RECT &bounds)
 {
 	bounds = m_rcBounds;
 }
 
-RECT &CChoreoWidget::getBounds( void )
+RECT &CChoreoWidget::getBounds(void)
 {
 	return m_rcBounds;
 }

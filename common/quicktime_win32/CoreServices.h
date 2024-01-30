@@ -1,30 +1,29 @@
 /*
-     File:       CoreServices.h
- 
-     Contains:   Master include for CoreServices (non-UI toolbox)
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 1999-2001 by Apple Computer, Inc., all rights reserved.
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+	File:       CoreServices.h
+
+	Contains:   Master include for CoreServices (non-UI toolbox)
+
+	Version:    QuickTime 7.3
+
+	Copyright:  (c) 2007 (c) 1999-2001 by Apple Computer, Inc., all rights reserved.
+
+	Bugs?:      For bug reports, consult the following page on
+			the World Wide Web:
+
+				http://developer.apple.com/bugreporter/
+
 */
 #ifndef __CORESERVICES__
 #define __CORESERVICES__
 
 /*
-   By default using this header means you are building code for carbon.
-   You can override this by setting TARGET_API_MAC_CARBON to zero before
-   including this file
+	By default using this header means you are building code for carbon.
+	You can override this by setting TARGET_API_MAC_CARBON to zero before
+	including this file
 */
 #ifndef TARGET_API_MAC_CARBON
 #define TARGET_API_MAC_CARBON 1
-#endif  /* !defined(TARGET_API_MAC_CARBON) */
-
+#endif /* !defined(TARGET_API_MAC_CARBON) */
 
 #ifndef __CONDITIONALMACROS__
 #include <ConditionalMacros.h>
@@ -374,6 +373,4 @@
 #include <WSMethodInvocation.h>
 #endif
 
-
 #endif /* __CORESERVICES__ */
-

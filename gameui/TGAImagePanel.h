@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -19,17 +19,17 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 class CTGAImagePanel : public vgui::Panel
 {
-	DECLARE_CLASS_SIMPLE( CTGAImagePanel, vgui::Panel );
+	DECLARE_CLASS_SIMPLE(CTGAImagePanel, vgui::Panel);
 
 public:
-	CTGAImagePanel( vgui::Panel *parent, const char *name );
+	CTGAImagePanel(vgui::Panel *parent, const char *name);
 
 	~CTGAImagePanel();
 
-	void SetTGA( const char *filename );
-	void SetTGANonMod( const char *filename );
+	void SetTGA(const char *filename);
+	void SetTGANonMod(const char *filename);
 
-	virtual void Paint( void );
+	virtual void Paint(void);
 
 private:
 	int m_iTextureID;
@@ -38,4 +38,4 @@ private:
 	char m_szTGAName[256];
 };
 
-#endif //TGAIMAGEPANEL_H
+#endif // TGAIMAGEPANEL_H

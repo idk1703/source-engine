@@ -10,12 +10,12 @@
 
 #if !defined(_WIN32)
 
-	void Sleep( unsigned int ms );
-	bool IsIconic( VD3DHWND hWnd );
-	BOOL ClientToScreen( VD3DHWND hWnd, LPPOINT pPoint );
-	void* GetCurrentThread();
-	void SetThreadAffinityMask( void *hThread, int nMask );
-	void GlobalMemoryStatus( MEMORYSTATUS *pOut );
+void Sleep(unsigned int ms);
+bool IsIconic(VD3DHWND hWnd);
+BOOL ClientToScreen(VD3DHWND hWnd, LPPOINT pPoint);
+void *GetCurrentThread();
+void SetThreadAffinityMask(void *hThread, int nMask);
+void GlobalMemoryStatus(MEMORYSTATUS *pOut);
 #endif
 
 #endif // WINUTILS_H

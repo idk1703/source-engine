@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "cbase.h"
@@ -16,48 +16,48 @@
 #include "soundbrowser.h"
 #include "wavebrowser.h"
 
-CWorkspace::CWorkspace( char const *filename )
+CWorkspace::CWorkspace(char const *filename)
 {
-	m_szVSSUserName[ 0 ] = 0;
-	m_szVSSProject[ 0 ] = 0;
+	m_szVSSUserName[0] = 0;
+	m_szVSSProject[0] = 0;
 
-	Q_strncpy( m_szFile, filename, sizeof( m_szFile ) );
+	Q_strncpy(m_szFile, filename, sizeof(m_szFile));
 	// By default, name is the same as the filename
-	Q_FileBase( m_szFile, m_szName, sizeof( m_szName ) );
+	Q_FileBase(m_szFile, m_szName, sizeof(m_szName));
 	m_bDirty = false;
 	LoadFromFile();
 }
 
 CWorkspace::~CWorkspace()
 {
-	while ( m_Projects.Count() > 0 )
+	while(m_Projects.Count() > 0)
 	{
-		CProject *p = m_Projects[ 0 ];
-		m_Projects.Remove( 0 );
+		CProject *p = m_Projects[0];
+		m_Projects.Remove(0);
 		delete p;
 	}
 }
 
-char const	*CWorkspace::GetName() const
+char const *CWorkspace::GetName() const
 {
 	return m_szName;
 }
 
-bool CWorkspace::IsDirty( void ) const
+bool CWorkspace::IsDirty(void) const
 {
 	int c = GetProjectCount();
-	for ( int i = 0; i < c; i++ )
+	for(int i = 0; i < c; i++)
 	{
-		CProject *p = GetProject( i );
-		Assert( p );
-		if ( p->IsDirty() )
+		CProject *p = GetProject(i);
+		Assert(p);
+		if(p->IsDirty())
 			return true;
 	}
 
 	return m_bDirty;
 }
 
-void CWorkspace::SetDirty( bool dirty )
+void CWorkspace::SetDirty(bool dirty)
 {
 	m_bDirty = dirty;
 }
@@ -67,40 +67,39 @@ int CWorkspace::GetProjectCount() const
 	return m_Projects.Count();
 }
 
-CProject *CWorkspace::GetProject( int index ) const
+CProject *CWorkspace::GetProject(int index) const
 {
-	if ( index < 0 || index >= m_Projects.Count() )
+	if(index < 0 || index >= m_Projects.Count())
 		return NULL;
-	return m_Projects[ index ];
+	return m_Projects[index];
 }
 
-void CWorkspace::RemoveProject( CProject *project )
+void CWorkspace::RemoveProject(CProject *project)
 {
-	if ( m_Projects.Find( project ) == m_Projects.InvalidIndex() )
+	if(m_Projects.Find(project) == m_Projects.InvalidIndex())
 		return;
 
-	m_Projects.FindAndRemove( project );
-	SetDirty( true );
+	m_Projects.FindAndRemove(project);
+	SetDirty(true);
 }
 
-
-void CWorkspace::AddProject( CProject *project )
+void CWorkspace::AddProject(CProject *project)
 {
-	SetDirty( true );
+	SetDirty(true);
 
-	Assert( m_Projects.Find( project ) == m_Projects.InvalidIndex() );
+	Assert(m_Projects.Find(project) == m_Projects.InvalidIndex());
 
-	m_Projects.AddToTail( project );
+	m_Projects.AddToTail(project);
 }
 
-CProject *CWorkspace::FindProjectFile( char const *filename ) const
+CProject *CWorkspace::FindProjectFile(char const *filename) const
 {
 	int c = GetProjectCount();
-	for ( int i = 0 ; i < c; i++ )
+	for(int i = 0; i < c; i++)
 	{
-		CProject *p = GetProject( i );
-		Assert( p );
-		if ( !Q_stricmp( p->GetFileName(), filename ) )
+		CProject *p = GetProject(i);
+		Assert(p);
+		if(!Q_stricmp(p->GetFileName(), filename))
 			return p;
 	}
 	return NULL;
@@ -108,246 +107,245 @@ CProject *CWorkspace::FindProjectFile( char const *filename ) const
 
 void CWorkspace::LoadFromFile()
 {
-	KeyValues *kv = new KeyValues( m_szName );
-	if ( kv->LoadFromFile( filesystem, m_szFile ) )
+	KeyValues *kv = new KeyValues(m_szName);
+	if(kv->LoadFromFile(filesystem, m_szFile))
 	{
-		for ( KeyValues *proj = kv->GetFirstSubKey(); proj; proj = proj->GetNextKey() )
+		for(KeyValues *proj = kv->GetFirstSubKey(); proj; proj = proj->GetNextKey())
 		{
 			// Add named projects
-			if ( !Q_stricmp( proj->GetName(), "project" ) )
+			if(!Q_stricmp(proj->GetName(), "project"))
 			{
 				bool expanded = false;
-				char filename[ 256 ];
+				char filename[256];
 				filename[0] = 0;
 
-				for ( KeyValues *sub = proj->GetFirstSubKey(); sub; sub = sub->GetNextKey() )
+				for(KeyValues *sub = proj->GetFirstSubKey(); sub; sub = sub->GetNextKey())
 				{
-					if ( !Q_stricmp( sub->GetName(), "file" ) )
+					if(!Q_stricmp(sub->GetName(), "file"))
 					{
-						Q_strcpy( filename, sub->GetString() );
+						Q_strcpy(filename, sub->GetString());
 						continue;
 					}
-					else if ( !Q_stricmp( sub->GetName(), "expanded" ) )
+					else if(!Q_stricmp(sub->GetName(), "expanded"))
 					{
 						expanded = sub->GetInt() ? true : false;
 						continue;
 					}
 					else
 					{
-						Assert( 0 );
+						Assert(0);
 					}
 				}
 
-				CProject *p = new CProject( this, filename );
-				p->SetExpanded( expanded );
-				p->SetDirty( false );
-				m_Projects.AddToTail( p );
+				CProject *p = new CProject(this, filename);
+				p->SetExpanded(expanded);
+				p->SetDirty(false);
+				m_Projects.AddToTail(p);
 
 				continue;
 			}
-			else if ( !Q_stricmp( proj->GetName(), "vss_username" ) )
+			else if(!Q_stricmp(proj->GetName(), "vss_username"))
 			{
-				SetVSSUserName( proj->GetString() );
+				SetVSSUserName(proj->GetString());
 
-				Con_Printf( "VSS User: '%s'\n", GetVSSUserName() );
+				Con_Printf("VSS User: '%s'\n", GetVSSUserName());
 				continue;
 			}
-			else if ( !Q_stricmp( proj->GetName(), "vss_project" ) )
+			else if(!Q_stricmp(proj->GetName(), "vss_project"))
 			{
-				SetVSSProject( proj->GetString() );
+				SetVSSProject(proj->GetString());
 
-				Con_Printf( "VSS Project:  '%s'\n", GetVSSProject() );
+				Con_Printf("VSS Project:  '%s'\n", GetVSSProject());
 				continue;
 			}
-			else if ( !Q_stricmp( proj->GetName(), "window" ) )
+			else if(!Q_stricmp(proj->GetName(), "window"))
 			{
-				SetDirty( true );
+				SetDirty(true);
 
-				char const *windowname = proj->GetString( "windowname", "" );
-				if ( !Q_stricmp( windowname, "workspace" ) )
+				char const *windowname = proj->GetString("windowname", "");
+				if(!Q_stricmp(windowname, "workspace"))
 				{
-					SceneManager_LoadWindowPositions( proj, GetWorkspaceManager()->GetBrowser() );
+					SceneManager_LoadWindowPositions(proj, GetWorkspaceManager()->GetBrowser());
 					continue;
 				}
-				else if ( !Q_stricmp( windowname, "soundbrowser" ) )
+				else if(!Q_stricmp(windowname, "soundbrowser"))
 				{
-					SceneManager_LoadWindowPositions( proj, GetWorkspaceManager()->GetSoundBrowser() );
+					SceneManager_LoadWindowPositions(proj, GetWorkspaceManager()->GetSoundBrowser());
 					continue;
 				}
-				else if ( !Q_stricmp( windowname, "wavebrowser" ) )
+				else if(!Q_stricmp(windowname, "wavebrowser"))
 				{
-					SceneManager_LoadWindowPositions( proj, GetWorkspaceManager()->GetWaveBrowser() );
+					SceneManager_LoadWindowPositions(proj, GetWorkspaceManager()->GetWaveBrowser());
 					continue;
 				}
-				else if ( !Q_stricmp( windowname, "main" ) )
+				else if(!Q_stricmp(windowname, "main"))
 				{
-					SceneManager_LoadWindowPositions( proj, GetWorkspaceManager() );
+					SceneManager_LoadWindowPositions(proj, GetWorkspaceManager());
 					continue;
 				}
 				else
 				{
-					Assert( 0 );
+					Assert(0);
 				}
 			}
 
-			Assert( 0 );
+			Assert(0);
 		}
 	}
 	kv->deleteThis();
 }
 
-static void SaveWindowPositions( CUtlBuffer& buf, char const *windowname, mxWindow *wnd )
+static void SaveWindowPositions(CUtlBuffer &buf, char const *windowname, mxWindow *wnd)
 {
-	buf.Printf( "\t\"window\"\n" );
-	buf.Printf( "\t{\n" );
-	buf.Printf( "\t\twindowname\t\"%s\"\n", windowname );
+	buf.Printf("\t\"window\"\n");
+	buf.Printf("\t{\n");
+	buf.Printf("\t\twindowname\t\"%s\"\n", windowname);
 
-	SceneManager_SaveWindowPositions( buf, 2, wnd );
+	SceneManager_SaveWindowPositions(buf, 2, wnd);
 
-	buf.Printf( "\t}\n" );
+	buf.Printf("\t}\n");
 }
 
 void CWorkspace::SaveToFile()
 {
-	SetDirty( false );
+	SetDirty(false);
 
-	CUtlBuffer buf( 0, 0, CUtlBuffer::TEXT_BUFFER );
+	CUtlBuffer buf(0, 0, CUtlBuffer::TEXT_BUFFER);
 
-	buf.Printf( "%s\n{\n", GetName() );
+	buf.Printf("%s\n{\n", GetName());
 
 	// walk projects
 	int c = GetProjectCount();
-	for ( int i = 0; i < c; i++ )
+	for(int i = 0; i < c; i++)
 	{
-		CProject *p = GetProject( i );
-		Assert( p );
+		CProject *p = GetProject(i);
+		Assert(p);
 
-		buf.Printf( "\t\"project\"\n" );
-		buf.Printf( "\t{\n" );
-		buf.Printf( "\t\t\"expanded\"\t\"%i\"\n", p->IsExpanded() );
-		buf.Printf( "\t\t\"file\"\t\"%s\"\n", p->GetFileName() );
-		buf.Printf( "\t}\n" );
+		buf.Printf("\t\"project\"\n");
+		buf.Printf("\t{\n");
+		buf.Printf("\t\t\"expanded\"\t\"%i\"\n", p->IsExpanded());
+		buf.Printf("\t\t\"file\"\t\"%s\"\n", p->GetFileName());
+		buf.Printf("\t}\n");
 
 		p->SaveChanges();
 	}
 
-	buf.Printf( "\t\"vss_username\"\t\"%s\"\n", GetVSSUserName() );
-	buf.Printf( "\t\"vss_project\"\t\"%s\"\n", GetVSSProject() );
+	buf.Printf("\t\"vss_username\"\t\"%s\"\n", GetVSSUserName());
+	buf.Printf("\t\"vss_project\"\t\"%s\"\n", GetVSSProject());
 
 	// Save window positions
-	SaveWindowPositions( buf, "main", GetWorkspaceManager() );
+	SaveWindowPositions(buf, "main", GetWorkspaceManager());
 
-	SaveWindowPositions( buf, "workspace", GetWorkspaceManager()->GetBrowser() );
-	SaveWindowPositions( buf, "soundbrowser", GetWorkspaceManager()->GetSoundBrowser() );
-	SaveWindowPositions( buf, "wavebrowser", GetWorkspaceManager()->GetWaveBrowser() );
-	
-	buf.Printf( "}\n" );
+	SaveWindowPositions(buf, "workspace", GetWorkspaceManager()->GetBrowser());
+	SaveWindowPositions(buf, "soundbrowser", GetWorkspaceManager()->GetSoundBrowser());
+	SaveWindowPositions(buf, "wavebrowser", GetWorkspaceManager()->GetWaveBrowser());
 
-	if ( filesystem->FileExists( m_szFile ) && !filesystem->IsFileWritable( m_szFile ) )
+	buf.Printf("}\n");
+
+	if(filesystem->FileExists(m_szFile) && !filesystem->IsFileWritable(m_szFile))
 	{
-		int retval = mxMessageBox( NULL, va( "Check out '%s'?", m_szFile ), g_appTitle, MX_MB_YESNOCANCEL );
-		if ( retval != 0 )
+		int retval = mxMessageBox(NULL, va("Check out '%s'?", m_szFile), g_appTitle, MX_MB_YESNOCANCEL);
+		if(retval != 0)
 			return;
 
-		VSS_Checkout( m_szFile );
+		VSS_Checkout(m_szFile);
 
-		if ( !filesystem->IsFileWritable( m_szFile ) )
+		if(!filesystem->IsFileWritable(m_szFile))
 		{
-			mxMessageBox( NULL, va( "Unable to check out'%s'!!!", m_szFile ), g_appTitle, MX_MB_OK );
+			mxMessageBox(NULL, va("Unable to check out'%s'!!!", m_szFile), g_appTitle, MX_MB_OK);
 			return;
 		}
 	}
 
 	// Write it out baby
-	FileHandle_t fh = filesystem->Open( m_szFile, "wt" );
-	if (fh)
+	FileHandle_t fh = filesystem->Open(m_szFile, "wt");
+	if(fh)
 	{
-		filesystem->Write( buf.Base(), buf.TellPut(), fh );
+		filesystem->Write(buf.Base(), buf.TellPut(), fh);
 		filesystem->Close(fh);
 	}
 	else
 	{
-		Con_Printf( "CWorkspace::SaveToFile:  Unable to write file %s!!!\n", m_szFile );
+		Con_Printf("CWorkspace::SaveToFile:  Unable to write file %s!!!\n", m_szFile);
 	}
 }
 
 void CWorkspace::SaveChanges()
 {
-	if ( !IsDirty() )
+	if(!IsDirty())
 		return;
 
 	SaveToFile();
 }
 
-
-void CWorkspace::ValidateTree( mxTreeView *tree, mxTreeViewItem *parent )
+void CWorkspace::ValidateTree(mxTreeView *tree, mxTreeViewItem *parent)
 {
-	CUtlVector< mxTreeViewItem * >	m_KnownItems;
+	CUtlVector<mxTreeViewItem *> m_KnownItems;
 
 	int c = GetProjectCount();
 	CProject *proj;
-	for ( int i = 0; i < c; i++ )
+	for(int i = 0; i < c; i++)
 	{
-		proj = GetProject( i );
-		if ( !proj )
+		proj = GetProject(i);
+		if(!proj)
 			continue;
 
-		char sz[ 256 ];
-		if ( proj->GetComments() && proj->GetComments()[0] )
+		char sz[256];
+		if(proj->GetComments() && proj->GetComments()[0])
 		{
-			Q_snprintf( sz, sizeof( sz ), "%s : %s", proj->GetName(), proj->GetComments() );
+			Q_snprintf(sz, sizeof(sz), "%s : %s", proj->GetName(), proj->GetComments());
 		}
 		else
 		{
-			Q_strncpy( sz, proj->GetName(), sizeof( sz ) );
+			Q_strncpy(sz, proj->GetName(), sizeof(sz));
 		}
 
-		mxTreeViewItem *spot = proj->FindItem( tree, parent );
-		if ( !spot )
+		mxTreeViewItem *spot = proj->FindItem(tree, parent);
+		if(!spot)
 		{
-			spot = tree->add( parent, sz );
+			spot = tree->add(parent, sz);
 		}
 
-		m_KnownItems.AddToTail( spot );
+		m_KnownItems.AddToTail(spot);
 
-		proj->SetOrdinal ( i );
+		proj->SetOrdinal(i);
 
-		tree->setLabel( spot, sz );
+		tree->setLabel(spot, sz);
 
-		tree->setImages( spot, proj->GetIconIndex(), proj->GetIconIndex() );
-		tree->setUserData( spot, proj );
-		//tree->setOpen( spot, proj->IsExpanded() );
+		tree->setImages(spot, proj->GetIconIndex(), proj->GetIconIndex());
+		tree->setUserData(spot, proj);
+		// tree->setOpen( spot, proj->IsExpanded() );
 
-		proj->ValidateTree( tree, spot );
+		proj->ValidateTree(tree, spot);
 	}
 
 	// Now check for dangling items
-	mxTreeViewItem *start = tree->getFirstChild( parent );
-	while ( start )
+	mxTreeViewItem *start = tree->getFirstChild(parent);
+	while(start)
 	{
-		mxTreeViewItem *next = tree->getNextChild( start );
+		mxTreeViewItem *next = tree->getNextChild(start);
 
-		if ( m_KnownItems.Find( start ) == m_KnownItems.InvalidIndex() )
+		if(m_KnownItems.Find(start) == m_KnownItems.InvalidIndex())
 		{
-			tree->remove( start );
+			tree->remove(start);
 		}
 
 		start = next;
 	}
 
-	tree->sortTree( parent, true, CWorkspaceBrowser::CompareFunc, 0 );
+	tree->sortTree(parent, true, CWorkspaceBrowser::CompareFunc, 0);
 }
 
-bool CWorkspace::CanClose( void )
+bool CWorkspace::CanClose(void)
 {
-	if ( !IsDirty() )
+	if(!IsDirty())
 		return true;
 
-	int retval = mxMessageBox( NULL, va( "Save changes to workspace '%s'?", GetName() ), g_appTitle, MX_MB_YESNOCANCEL );
-	if ( retval == 2 )
+	int retval = mxMessageBox(NULL, va("Save changes to workspace '%s'?", GetName()), g_appTitle, MX_MB_YESNOCANCEL);
+	if(retval == 2)
 		return false;
 
-	if ( retval == 0 )
+	if(retval == 0)
 	{
 		SaveChanges();
 	}
@@ -359,26 +357,25 @@ char const *CWorkspace::GetVSSUserName() const
 {
 	return m_szVSSUserName;
 }
-	
+
 char const *CWorkspace::GetVSSProject() const
 {
 	return m_szVSSProject;
 }
 
-void CWorkspace::SetVSSUserName( char const *username )
+void CWorkspace::SetVSSUserName(char const *username)
 {
-	Q_strncpy( m_szVSSUserName, username, sizeof( m_szVSSUserName ) );
+	Q_strncpy(m_szVSSUserName, username, sizeof(m_szVSSUserName));
 }
 
-void CWorkspace::SetVSSProject( char const *projectname )
+void CWorkspace::SetVSSProject(char const *projectname)
 {
-	Q_strncpy( m_szVSSProject, projectname, sizeof( m_szVSSProject ) );
-	while ( Q_strlen( m_szVSSProject ) > 0 )
+	Q_strncpy(m_szVSSProject, projectname, sizeof(m_szVSSProject));
+	while(Q_strlen(m_szVSSProject) > 0)
 	{
-		if ( m_szVSSProject[ Q_strlen( m_szVSSProject ) - 1 ] == '/' ||
-			 m_szVSSProject[ Q_strlen( m_szVSSProject ) - 1 ] == '\\' )
+		if(m_szVSSProject[Q_strlen(m_szVSSProject) - 1] == '/' || m_szVSSProject[Q_strlen(m_szVSSProject) - 1] == '\\')
 		{
-			m_szVSSProject[ Q_strlen( m_szVSSProject ) - 1 ] = 0;
+			m_szVSSProject[Q_strlen(m_szVSSProject) - 1] = 0;
 		}
 		else
 		{
@@ -387,24 +384,24 @@ void CWorkspace::SetVSSProject( char const *projectname )
 	}
 }
 
-void CWorkspace::Checkout( bool updatestateicons /*= true*/ )
+void CWorkspace::Checkout(bool updatestateicons /*= true*/)
 {
-	VSS_Checkout( GetFileName(), updatestateicons );
+	VSS_Checkout(GetFileName(), updatestateicons);
 }
 
 void CWorkspace::Checkin(bool updatestateicons /*= true*/)
 {
-	VSS_Checkin( GetFileName(), updatestateicons );
+	VSS_Checkin(GetFileName(), updatestateicons);
 }
 
 bool CWorkspace::IsCheckedOut() const
 {
-	return filesystem->IsFileWritable( GetFileName() );
+	return filesystem->IsFileWritable(GetFileName());
 }
 
 int CWorkspace::GetIconIndex() const
 {
-	if ( IsCheckedOut() )
+	if(IsCheckedOut())
 	{
 		return IMAGE_WORKSPACE_CHECKEDOUT;
 	}
@@ -414,59 +411,59 @@ int CWorkspace::GetIconIndex() const
 	}
 }
 
-void CWorkspace::MoveChildUp( ITreeItem *child )
+void CWorkspace::MoveChildUp(ITreeItem *child)
 {
 	int c = GetProjectCount();
-	for ( int i = 1; i < c; i++ )
+	for(int i = 1; i < c; i++)
 	{
-		CProject *p = GetProject( i );
-		if ( p != child )
+		CProject *p = GetProject(i);
+		if(p != child)
 			continue;
 
-		CProject *prev = GetProject( i - 1 );
+		CProject *prev = GetProject(i - 1);
 		// Swap
-		m_Projects[ i - 1 ] = p;
-		m_Projects[ i ] = prev;
+		m_Projects[i - 1] = p;
+		m_Projects[i] = prev;
 		return;
 	}
 }
 
-void CWorkspace::MoveChildDown( ITreeItem *child )
+void CWorkspace::MoveChildDown(ITreeItem *child)
 {
 	int c = GetProjectCount();
-	for ( int i = 0; i < c - 1; i++ )
+	for(int i = 0; i < c - 1; i++)
 	{
-		CProject *p = GetProject( i );
-		if ( p != child )
+		CProject *p = GetProject(i);
+		if(p != child)
 			continue;
 
-		CProject *next = GetProject( i + 1 );
+		CProject *next = GetProject(i + 1);
 		// Swap
-		m_Projects[ i ]     = next;
-		m_Projects[ i + 1 ] = p;
+		m_Projects[i] = next;
+		m_Projects[i + 1] = p;
 		return;
 	}
 }
 
-bool CWorkspace::IsChildFirst( ITreeItem *child )
+bool CWorkspace::IsChildFirst(ITreeItem *child)
 {
-	int idx = m_Projects.Find( (CProject *)child );
-	if ( idx == m_Projects.InvalidIndex() )
+	int idx = m_Projects.Find((CProject *)child);
+	if(idx == m_Projects.InvalidIndex())
 		return false;
 
-	if ( idx != 0 )
+	if(idx != 0)
 		return false;
 
 	return true;
 }
 
-bool CWorkspace::IsChildLast( ITreeItem *child )
+bool CWorkspace::IsChildLast(ITreeItem *child)
 {
-	int idx = m_Projects.Find( (CProject *)child );
-	if ( idx == m_Projects.InvalidIndex() )
+	int idx = m_Projects.Find((CProject *)child);
+	if(idx == m_Projects.InvalidIndex())
 		return false;
 
-	if ( idx != m_Projects.Count() - 1 )
+	if(idx != m_Projects.Count() - 1)
 		return false;
 
 	return true;

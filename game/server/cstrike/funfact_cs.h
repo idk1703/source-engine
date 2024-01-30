@@ -7,17 +7,9 @@
 
 struct FunFact
 {
-	FunFact() :
-		id(-1),
-		szLocalizationToken(NULL),
-		iPlayer(0),
-		iData1(0),
-		iData2(0),
-		iData3(0),
-		fMagnitude(0.0f)
-		{}
+	FunFact() : id(-1), szLocalizationToken(NULL), iPlayer(0), iData1(0), iData2(0), iData3(0), fMagnitude(0.0f) {}
 	int id;
-	const char* szLocalizationToken;
+	const char *szLocalizationToken;
 	int iPlayer;
 	int iData1;
 	int iData2;
@@ -29,34 +21,42 @@ typedef CUtlVector<FunFact> FunFactVector;
 
 class FunFactEvaluator
 {
-	DECLARE_CLASS_NOBASE( FunFactEvaluator );
+	DECLARE_CLASS_NOBASE(FunFactEvaluator);
+
 public:
-	FunFactEvaluator( int id, const char* szLocalizationToken, float fCoolness ) :
-		m_id(id),
-		m_pLocalizationToken(szLocalizationToken),
-		m_fCoolness(fCoolness)
-	{}
+	FunFactEvaluator(int id, const char *szLocalizationToken, float fCoolness)
+		: m_id(id), m_pLocalizationToken(szLocalizationToken), m_fCoolness(fCoolness)
+	{
+	}
 
 	virtual ~FunFactEvaluator() {}
 
-	int GetId() const { return m_id; }
-	const char* GetLocalizationToken() const { return m_pLocalizationToken; }
-	float GetCoolness() const { return m_fCoolness; }
+	int GetId() const
+	{
+		return m_id;
+	}
+	const char *GetLocalizationToken() const
+	{
+		return m_pLocalizationToken;
+	}
+	float GetCoolness() const
+	{
+		return m_fCoolness;
+	}
 
-	virtual bool Evaluate( FunFactVector& results ) const = 0;
+	virtual bool Evaluate(FunFactVector &results) const = 0;
 
 private:
-	int  m_id;
-	const char* m_pLocalizationToken;
+	int m_id;
+	const char *m_pLocalizationToken;
 	float m_fCoolness;
 };
 
-
-typedef FunFactEvaluator* (*funfactCreateFunc) (void);
+typedef FunFactEvaluator *(*funfactCreateFunc)(void);
 class CFunFactHelper
 {
 public:
-	CFunFactHelper ( funfactCreateFunc createFunc )
+	CFunFactHelper(funfactCreateFunc createFunc)
 	{
 		m_pfnCreate = createFunc;
 		m_pNext = s_pFirst;
@@ -68,4 +68,3 @@ public:
 };
 
 #endif // INCLUDED_funfact_cs
-

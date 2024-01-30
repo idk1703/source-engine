@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -15,14 +15,14 @@
 #include "utlsymbol.h"
 #include "networkstringtable.h"
 
-#define DOWNLOADABLE_FILE_TABLENAME	"downloadables"
-#define MAX_DOWNLOADABLE_FILES 8192
+#define DOWNLOADABLE_FILE_TABLENAME "downloadables"
+#define MAX_DOWNLOADABLE_FILES		8192
 
 enum ConsistencyType
 {
 	CONSISTENCY_NONE,
 	CONSISTENCY_EXACT,
-	CONSISTENCY_SIMPLE_MATERIAL,	// uses ExactFileUserData
+	CONSISTENCY_SIMPLE_MATERIAL, // uses ExactFileUserData
 	CONSISTENCY_BOUNDS,
 };
 
@@ -48,7 +48,7 @@ class CDownloadListGenerator
 public:
 	CDownloadListGenerator();
 
-	void SetStringTable( INetworkStringTable *pStringTable );
+	void SetStringTable(INetworkStringTable *pStringTable);
 
 	// call to mark level load/end
 	void OnLevelLoadStart(const char *levelName);
@@ -59,11 +59,11 @@ public:
 	void OnModelPrecached(const char *relativePathFileName);
 	void OnSoundPrecached(const char *relativePathFileName);
 
-	void ForceModelBounds( const char *relativePathFileName, const Vector &mins, const Vector &maxs );
-	void ForceSimpleMaterial( const char *relativePathFileName );
+	void ForceModelBounds(const char *relativePathFileName, const Vector &mins, const Vector &maxs);
+	void ForceSimpleMaterial(const char *relativePathFileName);
 
 private:
-	void OnResourcePrecachedFullPath(char *fullPathFileName, const char *relativeFileName );
+	void OnResourcePrecachedFullPath(char *fullPathFileName, const char *relativeFileName);
 	char m_gameDir[256];
 	char m_mapName[64];
 	FileHandle_t m_hReslistFile;
@@ -73,6 +73,5 @@ private:
 
 // singleton accessor
 CDownloadListGenerator &DownloadListGenerator();
-
 
 #endif // DOWNLOADLISTGENERATOR_H

@@ -1,15 +1,14 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
-#ifndef TFITEMCONSTANTS_H		// ECON_ITEM_CONSTANTS_H is used by src/common/econ_item_view.h
+#ifndef TFITEMCONSTANTS_H // ECON_ITEM_CONSTANTS_H is used by src/common/econ_item_view.h
 #define TFITEMCONSTANTS_H
 #ifdef _WIN32
 #pragma once
 #endif
-
 
 //-----------------------------------------------------------------------------
 // Weapon Types
@@ -29,7 +28,6 @@ enum
 	TF_WPN_TYPE_MELEE_ALLCLASS,
 	TF_WPN_TYPE_SECONDARY2,
 	TF_WPN_TYPE_PRIMARY2,
-
 
 	//
 	// ADD NEW ITEMS HERE TO AVOID BREAKING DEMOS
@@ -75,19 +73,19 @@ enum loadout_positions_t
 	LOADOUT_POSITION_TAUNT8,
 
 #ifdef STAGING_ONLY
-	// Extra PDA mod slots 
+	// Extra PDA mod slots
 	LOADOUT_POSITION_PDA_ADDON1,
 	LOADOUT_POSITION_PDA_ADDON2,
 
 	LOADOUT_POSITION_PDA3,
-	//LOADOUT_POSITION_MISC3,
-	//LOADOUT_POSITION_MISC4,
-	//LOADOUT_POSITION_MISC5,
-	//LOADOUT_POSITION_MISC6,
-	//LOADOUT_POSITION_MISC7,
-	//LOADOUT_POSITION_MISC8,
-	//LOADOUT_POSITION_MISC9,
-	//LOADOUT_POSITION_MISC10,
+	// LOADOUT_POSITION_MISC3,
+	// LOADOUT_POSITION_MISC4,
+	// LOADOUT_POSITION_MISC5,
+	// LOADOUT_POSITION_MISC6,
+	// LOADOUT_POSITION_MISC7,
+	// LOADOUT_POSITION_MISC8,
+	// LOADOUT_POSITION_MISC9,
+	// LOADOUT_POSITION_MISC10,
 	LOADOUT_POSITION_BUILDING2,
 #endif // STAGING_ONLY
 
@@ -108,82 +106,68 @@ enum account_loadout_positions_t
 // we can't easily change this without doing some kludgy work and breaking network/demo compatibility. In
 // the shorter term, we'll break compatibility in staging where no-one cares but leave public unchanged.
 #ifdef STAGING_ONLY
-	#define	LOADOUT_MAX_WEARABLES_COUNT ( CLASS_LOADOUT_POSITION_COUNT )
+#define LOADOUT_MAX_WEARABLES_COUNT (CLASS_LOADOUT_POSITION_COUNT)
 #else
-	#define	LOADOUT_MAX_WEARABLES_COUNT ( 8 /* !!! -- LOADOUT_POSITION_COUNT - 3 */ )
+#define LOADOUT_MAX_WEARABLES_COUNT (8 /* !!! -- LOADOUT_POSITION_COUNT - 3 */)
 #endif
 
-inline bool IsMiscSlot( int iSlot )
+inline bool IsMiscSlot(int iSlot)
 {
-	return iSlot == LOADOUT_POSITION_MISC
-		|| iSlot == LOADOUT_POSITION_MISC2
-		|| iSlot == LOADOUT_POSITION_HEAD
+	return iSlot == LOADOUT_POSITION_MISC || iSlot == LOADOUT_POSITION_MISC2 || iSlot == LOADOUT_POSITION_HEAD
 #ifdef STAGING_ONLY
-		//|| iSlot == LOADOUT_POSITION_MISC3
-		//|| iSlot == LOADOUT_POSITION_MISC4
-		//|| iSlot == LOADOUT_POSITION_MISC5
-		//|| iSlot == LOADOUT_POSITION_MISC6
-		//|| iSlot == LOADOUT_POSITION_MISC7
-		//|| iSlot == LOADOUT_POSITION_MISC8
-		//|| iSlot == LOADOUT_POSITION_MISC9
-		//|| iSlot == LOADOUT_POSITION_MISC10
+	//|| iSlot == LOADOUT_POSITION_MISC3
+	//|| iSlot == LOADOUT_POSITION_MISC4
+	//|| iSlot == LOADOUT_POSITION_MISC5
+	//|| iSlot == LOADOUT_POSITION_MISC6
+	//|| iSlot == LOADOUT_POSITION_MISC7
+	//|| iSlot == LOADOUT_POSITION_MISC8
+	//|| iSlot == LOADOUT_POSITION_MISC9
+	//|| iSlot == LOADOUT_POSITION_MISC10
 #endif // STAGING_ONLY
 		;
 }
 
-inline bool IsBuildingSlot( int iSlot )
+inline bool IsBuildingSlot(int iSlot)
 {
 	return iSlot == LOADOUT_POSITION_BUILDING
 #ifdef STAGING_ONLY
-		|| iSlot == LOADOUT_POSITION_BUILDING2
+		   || iSlot == LOADOUT_POSITION_BUILDING2
 #endif // STAGING_ONLY
 		;
 }
 
-inline bool IsTauntSlot( int iSlot )
+inline bool IsTauntSlot(int iSlot)
 {
-	return iSlot == LOADOUT_POSITION_TAUNT
-		|| iSlot == LOADOUT_POSITION_TAUNT2
-		|| iSlot == LOADOUT_POSITION_TAUNT3
-		|| iSlot == LOADOUT_POSITION_TAUNT4
-		|| iSlot == LOADOUT_POSITION_TAUNT5
-		|| iSlot == LOADOUT_POSITION_TAUNT6
-		|| iSlot == LOADOUT_POSITION_TAUNT7
-		|| iSlot == LOADOUT_POSITION_TAUNT8;
+	return iSlot == LOADOUT_POSITION_TAUNT || iSlot == LOADOUT_POSITION_TAUNT2 || iSlot == LOADOUT_POSITION_TAUNT3 ||
+		   iSlot == LOADOUT_POSITION_TAUNT4 || iSlot == LOADOUT_POSITION_TAUNT5 || iSlot == LOADOUT_POSITION_TAUNT6 ||
+		   iSlot == LOADOUT_POSITION_TAUNT7 || iSlot == LOADOUT_POSITION_TAUNT8;
 }
 
-inline bool IsWearableSlot( int iSlot ) 
+inline bool IsWearableSlot(int iSlot)
 {
-	return iSlot == LOADOUT_POSITION_HEAD
-		|| iSlot == LOADOUT_POSITION_MISC
-		|| iSlot == LOADOUT_POSITION_ACTION
-		|| IsMiscSlot( iSlot )
-		|| IsTauntSlot( iSlot );
+	return iSlot == LOADOUT_POSITION_HEAD || iSlot == LOADOUT_POSITION_MISC || iSlot == LOADOUT_POSITION_ACTION ||
+		   IsMiscSlot(iSlot) || IsTauntSlot(iSlot);
 }
 
-inline bool IsQuestSlot( int iSlot )
+inline bool IsQuestSlot(int iSlot)
 {
-	return iSlot == ACCOUNT_LOADOUT_POSITION_ACCOUNT1
-		|| iSlot == ACCOUNT_LOADOUT_POSITION_ACCOUNT2
-		|| iSlot == ACCOUNT_LOADOUT_POSITION_ACCOUNT3;
+	return iSlot == ACCOUNT_LOADOUT_POSITION_ACCOUNT1 || iSlot == ACCOUNT_LOADOUT_POSITION_ACCOUNT2 ||
+		   iSlot == ACCOUNT_LOADOUT_POSITION_ACCOUNT3;
 }
 
-inline bool IsValidItemSlot( int iSlot )
+inline bool IsValidItemSlot(int iSlot)
 {
 	return iSlot > LOADOUT_POSITION_INVALID && iSlot < CLASS_LOADOUT_POSITION_COUNT;
 }
 
-inline bool IsValidPickupWeaponSlot( int iSlot )
+inline bool IsValidPickupWeaponSlot(int iSlot)
 {
-	return iSlot == LOADOUT_POSITION_PRIMARY
-		|| iSlot == LOADOUT_POSITION_SECONDARY
-		|| iSlot == LOADOUT_POSITION_MELEE;
+	return iSlot == LOADOUT_POSITION_PRIMARY || iSlot == LOADOUT_POSITION_SECONDARY || iSlot == LOADOUT_POSITION_MELEE;
 }
-
 
 // The total number of loadouts to track for each player.
 // Right now, hardcoded to match TF's 10 classes.
-#define LOADOUT_COUNT					(10+1)	// 0th class is undefined
+#define LOADOUT_COUNT (10 + 1) // 0th class is undefined
 
 // Halloween! (Shared by GC and game client.)
 enum EHalloweenMap
@@ -198,7 +182,7 @@ enum EHalloweenMap
 
 enum EHalloweenGiftSpawnMetaInfo
 {
-	kHalloweenGiftMeta_IsUnderworldOnViaduct_DEPRECATED		= 0x01,
+	kHalloweenGiftMeta_IsUnderworldOnViaduct_DEPRECATED = 0x01,
 };
 
 #endif // TFITEMCONSTANTS_H

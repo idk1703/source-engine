@@ -21,7 +21,7 @@ OBJS = \
 all: $(HLMV)
 
 $(HLMV): $(OBJS)
-	$(CC) $(LFLAGS) -o $(HLMV) $(OBJS) $(LIBS) 
+	$(CC) $(LFLAGS) -o $(HLMV) $(OBJS) $(LIBS)
 
 ControlPanel.o: ControlPanel.cpp ControlPanel.h ViewerSettings.h StudioModel.h GlWindow.h
 	$(CC) -c $(CFLAGS) $(IFLAGS) ControlPanel.cpp

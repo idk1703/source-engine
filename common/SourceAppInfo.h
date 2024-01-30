@@ -21,8 +21,8 @@ enum ESourceApp
 	k_App_MAX
 };
 
-const int GetAppSteamAppId( ESourceApp eSourceApp );
-const char *GetAppModName( ESourceApp eSourceApp );
-const char *GetAppFullName( ESourceApp eSourceApp );
+const int GetAppSteamAppId(ESourceApp eSourceApp);
+const char *GetAppModName(ESourceApp eSourceApp);
+const char *GetAppFullName(ESourceApp eSourceApp);
 
 #endif

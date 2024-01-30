@@ -27,17 +27,16 @@ class CViewConeImage
 {
 public:
 	// initialization
-	bool Init( vgui::Panel *pParent, KeyValues* pInitData );
+	bool Init(vgui::Panel *pParent, KeyValues *pInitData);
 
 	// Paint the sucka
-	void Paint( float yaw );
+	void Paint(float yaw);
 
-	void SetColor( int r, int g, int b );
+	void SetColor(int r, int g, int b);
 
 private:
 	BitmapImage m_Image;
 };
-
 
 //-----------------------------------------------------------------------------
 // Helper method to initialize a view cone image from KeyValues data..
@@ -49,8 +48,7 @@ private:
 // NOTE: This function looks for the key values 'material' and 'color'
 // and uses them to set up the material + modulation color of the image
 //-----------------------------------------------------------------------------
-bool InitializeViewConeImage( KeyValues *pInitData, const char* pSectionName, 
-	vgui::Panel *pParent, CViewConeImage* pViewConeImage );
-
+bool InitializeViewConeImage(KeyValues *pInitData, const char *pSectionName, vgui::Panel *pParent,
+							 CViewConeImage *pViewConeImage);
 
 #endif //  VIEWCONEIMAGE_H

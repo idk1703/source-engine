@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -18,17 +18,14 @@
 /////////////////////////////////////////////////////////////////////////////
 // CUndoWarningDlg dialog
 
-
-CUndoWarningDlg::CUndoWarningDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(CUndoWarningDlg::IDD, pParent)
+CUndoWarningDlg::CUndoWarningDlg(CWnd *pParent /*=NULL*/) : CDialog(CUndoWarningDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CUndoWarningDlg)
 	m_bNoShow = FALSE;
 	//}}AFX_DATA_INIT
 }
 
-
-void CUndoWarningDlg::DoDataExchange(CDataExchange* pDX)
+void CUndoWarningDlg::DoDataExchange(CDataExchange *pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CUndoWarningDlg)
@@ -36,10 +33,9 @@ void CUndoWarningDlg::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-
 BEGIN_MESSAGE_MAP(CUndoWarningDlg, CDialog)
 	//{{AFX_MSG_MAP(CUndoWarningDlg)
-		// NOTE: the ClassWizard will add message map macros here
+	// NOTE: the ClassWizard will add message map macros here
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 

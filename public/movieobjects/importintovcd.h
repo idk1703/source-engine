@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -11,7 +11,6 @@
 #endif
 
 class CChoreoScene;
-
 
 //-----------------------------------------------------------------------------
 // Compression info
@@ -26,8 +25,8 @@ struct ImportVCDInfo_t
 //-----------------------------------------------------------------------------
 // Main entry point for importing a .fac file into a .vcd file
 //-----------------------------------------------------------------------------
-bool ImportLogsIntoVCD( const char *pFacFullPath, CChoreoScene *pChoreoScene, const ImportVCDInfo_t& info );
-bool ImportLogsIntoVCD( const char *pFacFullPath, const char *pVCDInPath, const char *pVCDOutPath, const ImportVCDInfo_t& info );
-
+bool ImportLogsIntoVCD(const char *pFacFullPath, CChoreoScene *pChoreoScene, const ImportVCDInfo_t &info);
+bool ImportLogsIntoVCD(const char *pFacFullPath, const char *pVCDInPath, const char *pVCDOutPath,
+					   const ImportVCDInfo_t &info);
 
 #endif // IMPORTINTOVCD_H

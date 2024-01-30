@@ -112,7 +112,7 @@ $Project "Client (Episodic)"
 			$File	"hl2\hud_flashlight.cpp"
 			$File	"hl2\hud_locator.cpp"
 			$File	"hl2\hud_health.cpp"
-			$File	"hl2\hud_poisondamageindicator.cpp"			
+			$File	"hl2\hud_poisondamageindicator.cpp"
 			$File	"hud_posture.cpp"
 			$File	"hl2\hud_quickinfo.cpp"
 			$File	"hl2\hud_radar.cpp"
@@ -128,5 +128,5 @@ $Project "Client (Episodic)"
 			$File	"episodic\c_npc_puppet.cpp"
 		}
 	}
-	
+
 }

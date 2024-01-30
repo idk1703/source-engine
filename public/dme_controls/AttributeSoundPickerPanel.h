@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -15,27 +15,24 @@
 
 #include "dme_controls/AttributeBasePickerPanel.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
-
 
 //-----------------------------------------------------------------------------
 // CAttributeSoundPickerPanel
 //-----------------------------------------------------------------------------
 class CAttributeSoundPickerPanel : public CAttributeBasePickerPanel
 {
-	DECLARE_CLASS_SIMPLE( CAttributeSoundPickerPanel, CAttributeBasePickerPanel );
+	DECLARE_CLASS_SIMPLE(CAttributeSoundPickerPanel, CAttributeBasePickerPanel);
 
 public:
-	CAttributeSoundPickerPanel( vgui::Panel *parent, const AttributeWidgetInfo_t &info );
+	CAttributeSoundPickerPanel(vgui::Panel *parent, const AttributeWidgetInfo_t &info);
 	~CAttributeSoundPickerPanel();
 
 private:
-	MESSAGE_FUNC_PARAMS( OnSoundSelected, "SoundSelected", kv );
+	MESSAGE_FUNC_PARAMS(OnSoundSelected, "SoundSelected", kv);
 	virtual void ShowPickerDialog();
 };
-
 
 #endif // ATTRIBUTESOUNDPICKERPANEL_H

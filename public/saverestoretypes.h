@@ -11,7 +11,7 @@
 #ifndef SAVERESTORETYPES_H
 #define SAVERESTORETYPES_H
 
-#if defined( _WIN32 )
+#if defined(_WIN32)
 #pragma once
 #endif
 
@@ -20,11 +20,9 @@
 #include <string_t.h> // NULL_STRING define
 struct edict_t;
 
-
 #ifdef EHANDLE_H // not available to engine
 #define SR_ENTS_VISIBLE 1
 #endif
-
 
 //-----------------------------------------------------------------------------
 //
@@ -35,51 +33,50 @@ class CSaveRestoreSegment
 {
 public:
 	CSaveRestoreSegment();
-	
+
 	//---------------------------------
 	// Buffer operations
 	//
-	void Init( void *pNewBase, int nBytes );
+	void Init(void *pNewBase, int nBytes);
 	void Rebase();
-	void Rewind( int nBytes );
+	void Rewind(int nBytes);
 	char *GetBuffer();
 	int BytesAvailable() const;
 	int SizeBuffer() const;
-	bool Write( const void *pData, int nBytes );
-	bool Read( void *pOutput, int nBytes );
+	bool Write(const void *pData, int nBytes);
+	bool Read(void *pOutput, int nBytes);
 	int GetCurPos();
 	char *AccessCurPos();
-	bool Seek( int absPosition );
-	void MoveCurPos( int nBytes );
+	bool Seek(int absPosition);
+	void MoveCurPos(int nBytes);
 
 	//---------------------------------
 	// Symbol table operations
 	//
-	void InitSymbolTable( char **pNewTokens, int sizeTable);
+	void InitSymbolTable(char **pNewTokens, int sizeTable);
 	char **DetachSymbolTable();
 	int SizeSymbolTable();
-	bool DefineSymbol( const char *pszToken, int token );
-	unsigned short FindCreateSymbol( const char *pszToken );
-	const char *StringFromSymbol( int token );
+	bool DefineSymbol(const char *pszToken, int token);
+	unsigned short FindCreateSymbol(const char *pszToken);
+	const char *StringFromSymbol(int token);
 
 private:
-	unsigned int HashString( const char *pszToken );
-	
+	unsigned int HashString(const char *pszToken);
+
 	//---------------------------------
 	// Buffer data
 	//
-	char		*pBaseData;		// Start of all entity save data
-	char		*pCurrentData;	// Current buffer pointer for sequential access
-	int			size;			// Current data size, aka, pCurrentData - pBaseData
-	int			bufferSize;		// Total space for data
-	
+	char *pBaseData;	// Start of all entity save data
+	char *pCurrentData; // Current buffer pointer for sequential access
+	int size;			// Current data size, aka, pCurrentData - pBaseData
+	int bufferSize;		// Total space for data
+
 	//---------------------------------
 	// Symbol table
 	//
-	int			tokenCount;		// Number of elements in the pTokens table
-	char		**pTokens;		// Hash table of entity strings (sparse)
+	int tokenCount; // Number of elements in the pTokens table
+	char **pTokens; // Hash table of entity strings (sparse)
 };
-
 
 //-----------------------------------------------------------------------------
 //
@@ -90,13 +87,13 @@ struct levellist_t
 {
 	DECLARE_SIMPLE_DATADESC();
 
-	char	mapName[ MAX_MAP_NAME_SAVE ];
-	char	landmarkName[ 32 ];
-	edict_t	*pentLandmark;
-	Vector	vecLandmarkOrigin;
+	char mapName[MAX_MAP_NAME_SAVE];
+	char landmarkName[32];
+	edict_t *pentLandmark;
+	Vector vecLandmarkOrigin;
 };
 
-#define MAX_LEVEL_CONNECTIONS	16		// These are encoded in the lower 16bits of entitytable_t->flags
+#define MAX_LEVEL_CONNECTIONS 16 // These are encoded in the lower 16bits of entitytable_t->flags
 
 //-------------------------------------
 
@@ -124,52 +121,52 @@ struct entitytable_t
 		modelname = NULL_STRING;
 	}
 
-	int			id;				// Ordinal ID of this entity (used for entity <--> pointer conversions)
-	int			edictindex;		// saved for if the entity requires a certain edict number when restored (players, world)
+	int id;			// Ordinal ID of this entity (used for entity <--> pointer conversions)
+	int edictindex; // saved for if the entity requires a certain edict number when restored (players, world)
 
-	int			saveentityindex; // the entity index the entity had at save time ( for fixing up client side entities )
-	int			restoreentityindex; // the entity index given to this entity at restore time
+	int saveentityindex;	// the entity index the entity had at save time ( for fixing up client side entities )
+	int restoreentityindex; // the entity index given to this entity at restore time
 
 #ifdef SR_ENTS_VISIBLE
-	EHANDLE		hEnt;			// Pointer to the in-game entity
+	EHANDLE hEnt; // Pointer to the in-game entity
 #else
 	EHandlePlaceholder_t hEnt;
 #endif
 
-	int			location;		// Offset from the base data of this entity
-	int			size;			// Byte size of this entity's data
-	int			flags;			// This could be a short -- bit mask of transitions that this entity is in the PVS of
-	string_t	classname;		// entity class name
-	string_t	globalname;		// entity global name
-	Vector		landmarkModelSpace;	// a fixed position in model space for comparison
-									// NOTE: Brush models can be built in different coordiante systems
-									//		in different levels, so this fixes up local quantities to match
-									//		those differences.
-	string_t	modelname;
+	int location;			   // Offset from the base data of this entity
+	int size;				   // Byte size of this entity's data
+	int flags;				   // This could be a short -- bit mask of transitions that this entity is in the PVS of
+	string_t classname;		   // entity class name
+	string_t globalname;	   // entity global name
+	Vector landmarkModelSpace; // a fixed position in model space for comparison
+							   // NOTE: Brush models can be built in different coordiante systems
+							   //		in different levels, so this fixes up local quantities to match
+							   //		those differences.
+	string_t modelname;
 
 	DECLARE_SIMPLE_DATADESC();
 };
 
-#define FENTTABLE_PLAYER		0x80000000
-#define FENTTABLE_REMOVED		0x40000000
-#define FENTTABLE_MOVEABLE		0x20000000
-#define FENTTABLE_GLOBAL		0x10000000
-#define FENTTABLE_PLAYERCHILD	0x08000000		// this entity is connected to a player, so it must be spawned with it
-#define FENTTABLE_LEVELMASK		0x0000FFFF		// reserve bits for 16 level connections
+#define FENTTABLE_PLAYER	  0x80000000
+#define FENTTABLE_REMOVED	  0x40000000
+#define FENTTABLE_MOVEABLE	  0x20000000
+#define FENTTABLE_GLOBAL	  0x10000000
+#define FENTTABLE_PLAYERCHILD 0x08000000 // this entity is connected to a player, so it must be spawned with it
+#define FENTTABLE_LEVELMASK	  0x0000FFFF // reserve bits for 16 level connections
 //-------------------------------------
 
 struct saverestorelevelinfo_t
 {
-	int			connectionCount;// Number of elements in the levelList[]
-	levellist_t	levelList[ MAX_LEVEL_CONNECTIONS ];		// List of connections from this level
+	int connectionCount;						  // Number of elements in the levelList[]
+	levellist_t levelList[MAX_LEVEL_CONNECTIONS]; // List of connections from this level
 
 	// smooth transition
-	int			fUseLandmark;
-	char		szLandmarkName[20];	// landmark we'll spawn near in next level
-	Vector		vecLandmarkOffset;	// for landmark transitions
-	float		time;
-	char		szCurrentMapName[MAX_MAP_NAME_SAVE];	// To check global entities
-	int			mapVersion;
+	int fUseLandmark;
+	char szLandmarkName[20];  // landmark we'll spawn near in next level
+	Vector vecLandmarkOffset; // for landmark transitions
+	float time;
+	char szCurrentMapName[MAX_MAP_NAME_SAVE]; // To check global entities
+	int mapVersion;
 };
 
 //-------------------------------------
@@ -177,21 +174,20 @@ struct saverestorelevelinfo_t
 class CGameSaveRestoreInfo
 {
 public:
-	CGameSaveRestoreInfo()
-		: tableCount( 0 ), pTable( 0 ), m_pCurrentEntity( 0 ), m_EntityToIndex( 1024 )
+	CGameSaveRestoreInfo() : tableCount(0), pTable(0), m_pCurrentEntity(0), m_EntityToIndex(1024)
 	{
-		memset( &levelInfo, 0, sizeof( levelInfo ) );
-		modelSpaceOffset.Init( 0, 0, 0 );
+		memset(&levelInfo, 0, sizeof(levelInfo));
+		modelSpaceOffset.Init(0, 0, 0);
 	}
 
-	void InitEntityTable( entitytable_t *pNewTable = NULL, int size = 0 )
+	void InitEntityTable(entitytable_t *pNewTable = NULL, int size = 0)
 	{
 		pTable = pNewTable;
 		tableCount = size;
 
-		for ( int i = 0; i < NumEntities(); i++ )
+		for(int i = 0; i < NumEntities(); i++)
 		{
-			GetEntityInfo( i )->Clear();
+			GetEntityInfo(i)->Clear();
 		}
 	}
 
@@ -203,13 +199,31 @@ public:
 		return pReturn;
 	}
 
-	CBaseEntity *GetCurrentEntityContext()	{ return m_pCurrentEntity; }
-	void		SetCurrentEntityContext(CBaseEntity *pEntity) { m_pCurrentEntity = pEntity; }
+	CBaseEntity *GetCurrentEntityContext()
+	{
+		return m_pCurrentEntity;
+	}
+	void SetCurrentEntityContext(CBaseEntity *pEntity)
+	{
+		m_pCurrentEntity = pEntity;
+	}
 
-	int NumEntities()						{ return tableCount; }
-	entitytable_t *GetEntityInfo( int i )	{ return (pTable + i); }
-	float GetBaseTime() const				{ return levelInfo.time; }
-	Vector GetLandmark() const				{ return ( levelInfo.fUseLandmark ) ? levelInfo.vecLandmarkOffset : vec3_origin; }
+	int NumEntities()
+	{
+		return tableCount;
+	}
+	entitytable_t *GetEntityInfo(int i)
+	{
+		return (pTable + i);
+	}
+	float GetBaseTime() const
+	{
+		return levelInfo.time;
+	}
+	Vector GetLandmark() const
+	{
+		return (levelInfo.fUseLandmark) ? levelInfo.vecLandmarkOffset : vec3_origin;
+	}
 
 	void BuildEntityHash()
 	{
@@ -218,10 +232,10 @@ public:
 		entitytable_t *pTable;
 		int nEntities = NumEntities();
 
-		for ( i = 0; i < nEntities; i++ )
+		for(i = 0; i < nEntities; i++)
 		{
-			pTable = GetEntityInfo( i );
-			m_EntityToIndex.Insert(  CHashElement( pTable->hEnt.Get(), i ) );
+			pTable = GetEntityInfo(i);
+			m_EntityToIndex.Insert(CHashElement(pTable->hEnt.Get(), i));
 		}
 #endif
 	}
@@ -231,17 +245,17 @@ public:
 		m_EntityToIndex.Purge();
 	}
 
-	int	GetEntityIndex( const CBaseEntity *pEntity )
+	int GetEntityIndex(const CBaseEntity *pEntity)
 	{
 #ifdef SR_ENTS_VISIBLE
-		if ( pEntity )
+		if(pEntity)
 		{
-			if ( m_EntityToIndex.Count() )
+			if(m_EntityToIndex.Count())
 			{
-				UtlHashHandle_t hElement = m_EntityToIndex.Find( CHashElement( pEntity ) );
-				if ( hElement != m_EntityToIndex.InvalidHandle() )
+				UtlHashHandle_t hElement = m_EntityToIndex.Find(CHashElement(pEntity));
+				if(hElement != m_EntityToIndex.InvalidHandle())
 				{
-					return m_EntityToIndex.Element( hElement ).index;
+					return m_EntityToIndex.Element(hElement).index;
 				}
 			}
 			else
@@ -250,10 +264,10 @@ public:
 				entitytable_t *pEntTable;
 
 				int nEntities = NumEntities();
-				for ( i = 0; i < nEntities; i++ )
+				for(i = 0; i < nEntities; i++)
 				{
-					pEntTable = GetEntityInfo( i );
-					if ( pEntTable->hEnt == pEntity )
+					pEntTable = GetEntityInfo(i);
+					if(pEntTable->hEnt == pEntity)
 						return pEntTable->id;
 				}
 			}
@@ -263,39 +277,38 @@ public:
 	}
 
 	saverestorelevelinfo_t levelInfo;
-	Vector		modelSpaceOffset;			// used only for globaly entity brushes modelled in different coordinate systems.
-	
-private:
-	int			tableCount;		// Number of elements in the entity table
-	entitytable_t	*pTable;		// Array of entitytable_t elements (1 for each entity)
-	CBaseEntity		*m_pCurrentEntity; // only valid during the save functions of this entity, NULL otherwise
+	Vector modelSpaceOffset; // used only for globaly entity brushes modelled in different coordinate systems.
 
+private:
+	int tableCount;				   // Number of elements in the entity table
+	entitytable_t *pTable;		   // Array of entitytable_t elements (1 for each entity)
+	CBaseEntity *m_pCurrentEntity; // only valid during the save functions of this entity, NULL otherwise
 
 	struct CHashElement
 	{
-		const CBaseEntity *pEntity; 
+		const CBaseEntity *pEntity;
 		int index;
 
-		CHashElement( const CBaseEntity *pEntity, int index) : pEntity(pEntity), index(index) {}
-		CHashElement( const CBaseEntity *pEntity ) : pEntity(pEntity) {}
+		CHashElement(const CBaseEntity *pEntity, int index) : pEntity(pEntity), index(index) {}
+		CHashElement(const CBaseEntity *pEntity) : pEntity(pEntity) {}
 		CHashElement() {}
 	};
 
 	class CHashFuncs
 	{
 	public:
-		CHashFuncs( int ) {}
+		CHashFuncs(int) {}
 
 		// COMPARE
-		bool operator()( const CHashElement &lhs, const CHashElement &rhs ) const
+		bool operator()(const CHashElement &lhs, const CHashElement &rhs) const
 		{
 			return lhs.pEntity == rhs.pEntity;
 		}
 
 		// HASH
-		unsigned int operator()( const CHashElement &item ) const
+		unsigned int operator()(const CHashElement &item) const
 		{
-			return HashItem( item.pEntity );
+			return HashItem(item.pEntity);
 		}
 	};
 
@@ -306,20 +319,17 @@ private:
 
 //-----------------------------------------------------------------------------
 
-
-class CSaveRestoreData : public CSaveRestoreSegment,
-						 public CGameSaveRestoreInfo
+class CSaveRestoreData : public CSaveRestoreSegment, public CGameSaveRestoreInfo
 {
 public:
-	CSaveRestoreData() : bAsync( false ) {}
-
+	CSaveRestoreData() : bAsync(false) {}
 
 	bool bAsync;
 };
 
-inline CSaveRestoreData *MakeSaveRestoreData( void *pMemory )
+inline CSaveRestoreData *MakeSaveRestoreData(void *pMemory)
 {
-	return new (pMemory) CSaveRestoreData;
+	return new(pMemory) CSaveRestoreData;
 }
 
 //-----------------------------------------------------------------------------
@@ -329,17 +339,17 @@ inline CSaveRestoreData *MakeSaveRestoreData( void *pMemory )
 
 inline CSaveRestoreSegment::CSaveRestoreSegment()
 {
-	memset( this, 0, sizeof(*this) );
+	memset(this, 0, sizeof(*this));
 }
 
-inline void CSaveRestoreSegment::Init( void *pNewBase, int nBytes )
+inline void CSaveRestoreSegment::Init(void *pNewBase, int nBytes)
 {
 	pCurrentData = pBaseData = (char *)pNewBase;
 	size = 0;
 	bufferSize = nBytes;
 }
 
-inline void CSaveRestoreSegment::MoveCurPos( int nBytes )
+inline void CSaveRestoreSegment::MoveCurPos(int nBytes)
 {
 	pCurrentData += nBytes;
 	size += nBytes;
@@ -352,12 +362,12 @@ inline void CSaveRestoreSegment::Rebase()
 	size = 0;
 }
 
-inline void CSaveRestoreSegment::Rewind( int nBytes )
+inline void CSaveRestoreSegment::Rewind(int nBytes)
 {
-	if ( size < nBytes )
+	if(size < nBytes)
 		nBytes = size;
 
-	MoveCurPos( -nBytes );
+	MoveCurPos(-nBytes);
 }
 
 inline char *CSaveRestoreSegment::GetBuffer()
@@ -375,34 +385,34 @@ inline int CSaveRestoreSegment::SizeBuffer() const
 	return bufferSize;
 }
 
-inline bool CSaveRestoreSegment::Write( const void *pData, int nBytes )
+inline bool CSaveRestoreSegment::Write(const void *pData, int nBytes)
 {
-	if ( nBytes > BytesAvailable() )
+	if(nBytes > BytesAvailable())
 	{
 		size = bufferSize;
 		return false;
 	}
 
-	memcpy( pCurrentData, pData, nBytes );
-	MoveCurPos( nBytes );
+	memcpy(pCurrentData, pData, nBytes);
+	MoveCurPos(nBytes);
 
 	return true;
 }
 
-inline bool CSaveRestoreSegment::Read( void *pOutput, int nBytes )
+inline bool CSaveRestoreSegment::Read(void *pOutput, int nBytes)
 {
-	if ( !BytesAvailable() )
+	if(!BytesAvailable())
 		return false;
 
-	if ( nBytes > BytesAvailable() )
+	if(nBytes > BytesAvailable())
 	{
 		size = bufferSize;
 		return false;
 	}
 
-	if ( pOutput )
-		memcpy( pOutput, pCurrentData, nBytes );
-	MoveCurPos( nBytes );
+	if(pOutput)
+		memcpy(pOutput, pCurrentData, nBytes);
+	MoveCurPos(nBytes);
 	return true;
 }
 
@@ -416,22 +426,22 @@ inline char *CSaveRestoreSegment::AccessCurPos()
 	return pCurrentData;
 }
 
-inline bool CSaveRestoreSegment::Seek( int absPosition )
+inline bool CSaveRestoreSegment::Seek(int absPosition)
 {
-	if ( absPosition < 0 || absPosition >= bufferSize )
+	if(absPosition < 0 || absPosition >= bufferSize)
 		return false;
-	
+
 	size = absPosition;
 	pCurrentData = pBaseData + size;
 	return true;
 }
 
-inline void CSaveRestoreSegment::InitSymbolTable( char **pNewTokens, int sizeTable)
+inline void CSaveRestoreSegment::InitSymbolTable(char **pNewTokens, int sizeTable)
 {
-	Assert( !pTokens );
+	Assert(!pTokens);
 	tokenCount = sizeTable;
 	pTokens = pNewTokens;
-	memset( pTokens, 0, sizeTable * sizeof( pTokens[0]) );
+	memset(pTokens, 0, sizeTable * sizeof(pTokens[0]));
 }
 
 inline char **CSaveRestoreSegment::DetachSymbolTable()
@@ -447,64 +457,64 @@ inline int CSaveRestoreSegment::SizeSymbolTable()
 	return tokenCount;
 }
 
-inline bool CSaveRestoreSegment::DefineSymbol( const char *pszToken, int token )
+inline bool CSaveRestoreSegment::DefineSymbol(const char *pszToken, int token)
 {
-	if ( pTokens[token] == NULL )
+	if(pTokens[token] == NULL)
 	{
 		pTokens[token] = (char *)pszToken;
 		return true;
 	}
-	Assert( 0 );
+	Assert(0);
 	return false;
 }
 
-inline unsigned short CSaveRestoreSegment::FindCreateSymbol( const char *pszToken )
+inline unsigned short CSaveRestoreSegment::FindCreateSymbol(const char *pszToken)
 {
-	unsigned short	hash = (unsigned short)(HashString( pszToken ) % (unsigned)tokenCount );
-	
+	unsigned short hash = (unsigned short)(HashString(pszToken) % (unsigned)tokenCount);
+
 #if _DEBUG
 	static int tokensparsed = 0;
 	tokensparsed++;
-	if ( !tokenCount || !pTokens )
+	if(!tokenCount || !pTokens)
 	{
-		AssertMsg( 0, ("No token table array in TokenHash()!") );
+		AssertMsg(0, ("No token table array in TokenHash()!"));
 	}
 #endif
 
-	for ( int i=0; i<tokenCount; i++ )
+	for(int i = 0; i < tokenCount; i++)
 	{
 #if _DEBUG
 		static bool beentheredonethat = false;
-		if ( i > 50 && !beentheredonethat )
+		if(i > 50 && !beentheredonethat)
 		{
 			beentheredonethat = true;
-			AssertMsg( 0, ("CSaveRestoreBuffer::TokenHash() is getting too full!" ) );
+			AssertMsg(0, ("CSaveRestoreBuffer::TokenHash() is getting too full!"));
 		}
 #endif
 
-		int	index = hash + i;
-		if ( index >= tokenCount )
+		int index = hash + i;
+		if(index >= tokenCount)
 			index -= tokenCount;
 
-		if ( !pTokens[index] || strcmp( pszToken, pTokens[index] ) == 0 )
+		if(!pTokens[index] || strcmp(pszToken, pTokens[index]) == 0)
 		{
 			pTokens[index] = (char *)pszToken;
 			return index;
 		}
 	}
-		
-	// Token hash table full!!! 
+
+	// Token hash table full!!!
 	// [Consider doing overflow table(s) after the main table & limiting linear hash table search]
-	Warning( "CSaveRestoreBuffer::TokenHash() is COMPLETELY FULL!" );
-	Assert( 0 );
+	Warning("CSaveRestoreBuffer::TokenHash() is COMPLETELY FULL!");
+	Assert(0);
 	return 0;
 }
 
-inline const char *CSaveRestoreSegment::StringFromSymbol( int token )
+inline const char *CSaveRestoreSegment::StringFromSymbol(int token)
 {
-	if ( token >= 0 && token < tokenCount )
+	if(token >= 0 && token < tokenCount)
 		return pTokens[token];
-	Assert( 0 );
+	Assert(0);
 	return "<<illegal>>";
 }
 
@@ -512,26 +522,25 @@ inline const char *CSaveRestoreSegment::StringFromSymbol( int token )
 ///             compilers. Either way, there's no portable intrinsic.
 
 // Newer GCC versions provide this in this header, older did by default.
-#if !defined( _rotr ) && defined( COMPILER_GCC )
+#if !defined(_rotr) && defined(COMPILER_GCC)
 #include <x86intrin.h>
 #endif
 
 #ifdef COMPILER_CLANG
-static __inline__ unsigned int __attribute__((__always_inline__, __nodebug__))
-_rotr(unsigned int _Value, int _Shift) {
+static __inline__ unsigned int __attribute__((__always_inline__, __nodebug__)) _rotr(unsigned int _Value, int _Shift)
+{
 	_Shift &= 0x1f;
 	return _Shift ? (_Value >> _Shift) | (_Value << (32 - _Shift)) : _Value;
 }
 #endif
 
-
-inline unsigned int CSaveRestoreSegment::HashString( const char *pszToken )
+inline unsigned int CSaveRestoreSegment::HashString(const char *pszToken)
 {
-	COMPILE_TIME_ASSERT( sizeof( unsigned int ) == 4 );
-	unsigned int	hash = 0;
+	COMPILE_TIME_ASSERT(sizeof(unsigned int) == 4);
+	unsigned int hash = 0;
 
-	while ( *pszToken )
-		hash = _rotr( hash, 4 ) ^ *pszToken++;
+	while(*pszToken)
+		hash = _rotr(hash, 4) ^ *pszToken++;
 
 	return hash;
 }

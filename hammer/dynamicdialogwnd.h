@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -13,30 +13,29 @@
 
 class CDynamicDialogWnd : public CWnd
 {
-// Construction
+	// Construction
 public:
 	CDynamicDialogWnd(CWnd *pParent);
 
-// Attributes
+	// Attributes
 public:
-
-// Operations
+	// Operations
 public:
 	void SetDialogClass(UINT nID, CDialog *pDialog);
 
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CDynamicDialogWnd)
 	//}}AFX_VIRTUAL
 
-// Implementation
+	// Implementation
 public:
 	virtual ~CDynamicDialogWnd();
 
 	// Generated message map functions
 protected:
 	//{{AFX_MSG(CDynamicDialogWnd)
-		// NOTE - the ClassWizard will add and remove member functions here.
+	// NOTE - the ClassWizard will add and remove member functions here.
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 

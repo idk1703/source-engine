@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,10 +10,8 @@
 #pragma once
 #endif
 
-
-void CL_CreateTextureListPanel( vgui::Panel *pPanel );
+void CL_CreateTextureListPanel(vgui::Panel *pPanel);
 
 void VGui_UpdateTextureListPanel();
-
 
 #endif // CL_TEXTURELISTPANEL_H

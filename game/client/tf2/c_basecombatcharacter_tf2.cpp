@@ -12,9 +12,9 @@
 #include "weapon_combatshield.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_BaseCombatCharacter::Release( void )
+void C_BaseCombatCharacter::Release(void)
 {
 	RemoveAllPowerups();
 
@@ -22,68 +22,68 @@ void C_BaseCombatCharacter::Release( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_BaseCombatCharacter::SetDormant( bool bDormant )
+void C_BaseCombatCharacter::SetDormant(bool bDormant)
 {
 	// If we're going dormant, stop all our powerup sounds
-	if ( bDormant )
+	if(bDormant)
 	{
 		RemoveAllPowerups();
 	}
 	else
 	{
 		// Restart any powerups on him
-		for ( int i = 0; i < MAX_POWERUPS; i++ )
+		for(int i = 0; i < MAX_POWERUPS; i++)
 		{
-			if ( m_iPowerups & (1 << i) )
+			if(m_iPowerups & (1 << i))
 			{
-				PowerupStart( i, false );
+				PowerupStart(i, false);
 			}
 		}
 	}
 
-	BaseClass::SetDormant( bDormant );
+	BaseClass::SetDormant(bDormant);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : updateType - 
+// Purpose:
+// Input  : updateType -
 //-----------------------------------------------------------------------------
-void C_BaseCombatCharacter::OnPreDataChanged( DataUpdateType_t updateType )
+void C_BaseCombatCharacter::OnPreDataChanged(DataUpdateType_t updateType)
 {
-	BaseClass::OnPreDataChanged( updateType );
+	BaseClass::OnPreDataChanged(updateType);
 
 	m_iPrevPowerups = m_iPowerups;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_BaseCombatCharacter::OnDataChanged( DataUpdateType_t updateType )
+void C_BaseCombatCharacter::OnDataChanged(DataUpdateType_t updateType)
 {
-	BaseClass::OnDataChanged( updateType );
+	BaseClass::OnDataChanged(updateType);
 
-	if ( updateType == DATA_UPDATE_CREATED )
+	if(updateType == DATA_UPDATE_CREATED)
 	{
-		SetNextClientThink( CLIENT_THINK_ALWAYS );
+		SetNextClientThink(CLIENT_THINK_ALWAYS);
 	}
 
 	// Power state changed?
-	if ( m_iPowerups != m_iPrevPowerups )
+	if(m_iPowerups != m_iPrevPowerups)
 	{
-		for ( int i = 0; i < MAX_POWERUPS; i++ )
+		for(int i = 0; i < MAX_POWERUPS; i++)
 		{
-			bool bPoweredNow = ( m_iPowerups & (1 << i) );
-			bool bPoweredThen = ( m_iPrevPowerups & (1 << i) );
+			bool bPoweredNow = (m_iPowerups & (1 << i));
+			bool bPoweredThen = (m_iPrevPowerups & (1 << i));
 
-			if ( !bPoweredThen && bPoweredNow )
+			if(!bPoweredThen && bPoweredNow)
 			{
-				PowerupStart( i, true );
+				PowerupStart(i, true);
 			}
-			else if ( bPoweredThen && !bPoweredNow )
+			else if(bPoweredThen && !bPoweredNow)
 			{
-				PowerupEnd( i );
+				PowerupEnd(i);
 			}
 		}
 	}
@@ -94,73 +94,70 @@ void C_BaseCombatCharacter::OnDataChanged( DataUpdateType_t updateType )
 //			If bInitial is set, the server's just told us this powerup has come on.
 //			If it's false, the entity had it on when it left PVS, and now it's re-entered
 //-----------------------------------------------------------------------------
-void C_BaseCombatCharacter::PowerupStart( int iPowerup, bool bInitial )
+void C_BaseCombatCharacter::PowerupStart(int iPowerup, bool bInitial)
 {
-	Assert( iPowerup >= 0 && iPowerup < MAX_POWERUPS );
+	Assert(iPowerup >= 0 && iPowerup < MAX_POWERUPS);
 
-	switch( iPowerup )
+	switch(iPowerup)
 	{
-	case POWERUP_BOOST:
-		break;
+		case POWERUP_BOOST:
+			break;
 
-	case POWERUP_EMP:
+		case POWERUP_EMP:
 		{
 			// Play the EMP sound
-			if ( !bInitial )
+			if(!bInitial)
 			{
-				EmitSound( "BaseCombatCharacter.EMPPulse" );
+				EmitSound("BaseCombatCharacter.EMPPulse");
 			}
 		}
 		break;
 
-	default:
-		break;
+		default:
+			break;
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Powerup has just finished
 //-----------------------------------------------------------------------------
-void C_BaseCombatCharacter::PowerupEnd( int iPowerup )
-{
-}
-
+void C_BaseCombatCharacter::PowerupEnd(int iPowerup) {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_BaseCombatCharacter::RemoveAllPowerups( void )
+void C_BaseCombatCharacter::RemoveAllPowerups(void)
 {
 	// Stop any powerups we have
-	if ( m_iPowerups )
+	if(m_iPowerups)
 	{
-		for ( int i = 0; i < MAX_POWERUPS; i++ )
+		for(int i = 0; i < MAX_POWERUPS; i++)
 		{
-			if ( m_iPowerups & (1 << i) )
+			if(m_iPowerups & (1 << i))
 			{
-				PowerupEnd( i );
+				PowerupEnd(i);
 			}
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_BaseCombatCharacter::ClientThink( void )
+void C_BaseCombatCharacter::ClientThink(void)
 {
 	BaseClass::ClientThink();
 
-	if ( !IsDormant() )
+	if(!IsDormant())
 	{
-		if ( HasPowerup(POWERUP_EMP) )
+		if(HasPowerup(POWERUP_EMP))
 		{
-			AddEMPEffect( WorldAlignSize().Length() * 0.15 );
+			AddEMPEffect(WorldAlignSize().Length() * 0.15);
 		}
 
-		if ( HasPowerup(POWERUP_BOOST) )
+		if(HasPowerup(POWERUP_BOOST))
 		{
-			AddBuffEffect( WorldAlignSize().Length() * 0.15 );
+			AddBuffEffect(WorldAlignSize().Length() * 0.15);
 		}
 	}
 }
@@ -168,34 +165,34 @@ void C_BaseCombatCharacter::ClientThink( void )
 //-----------------------------------------------------------------------------
 // Purpose: Draw an effect to show this entity has been EMPed
 //-----------------------------------------------------------------------------
-void C_BaseCombatCharacter::AddEMPEffect( float flSize )
+void C_BaseCombatCharacter::AddEMPEffect(float flSize)
 {
 	// Don't draw on the local player
-	if ( this == C_BasePlayer::GetLocalPlayer() )
+	if(this == C_BasePlayer::GetLocalPlayer())
 		return;
 
-	CSmartPtr<CSimpleEmitter>	pEmitter;
-	PMaterialHandle				hParticleMaterial;
-	TimedEvent					pParticleEvent;
+	CSmartPtr<CSimpleEmitter> pEmitter;
+	PMaterialHandle hParticleMaterial;
+	TimedEvent pParticleEvent;
 
-	pParticleEvent.Init( 300 );
-	pEmitter = CSimpleEmitter::Create( "ObjectEMPEffect" );
-	hParticleMaterial = pEmitter->GetPMaterial( "sprites/chargeball" );
+	pParticleEvent.Init(300);
+	pEmitter = CSimpleEmitter::Create("ObjectEMPEffect");
+	hParticleMaterial = pEmitter->GetPMaterial("sprites/chargeball");
 
 	// Add particles
 	float flCur = gpGlobals->frametime;
-	Vector vCenter = WorldSpaceCenter( );
+	Vector vCenter = WorldSpaceCenter();
 
-	while ( pParticleEvent.NextEvent( flCur ) )
+	while(pParticleEvent.NextEvent(flCur))
 	{
 		Vector vPos;
-		Vector vOffset = RandomVector( -1, 1 );
-		VectorNormalize( vOffset );
-		vPos = vCenter + (vOffset * RandomFloat( 0, flSize ));
-		
-		pEmitter->SetSortOrigin( vPos );
-		SimpleParticle *pParticle = pEmitter->AddSimpleParticle( hParticleMaterial, vPos );
-		if ( pParticle )
+		Vector vOffset = RandomVector(-1, 1);
+		VectorNormalize(vOffset);
+		vPos = vCenter + (vOffset * RandomFloat(0, flSize));
+
+		pEmitter->SetSortOrigin(vPos);
+		SimpleParticle *pParticle = pEmitter->AddSimpleParticle(hParticleMaterial, vPos);
+		if(pParticle)
 		{
 			// Move the points along the path.
 			pParticle->m_vecVelocity.Init();
@@ -203,7 +200,7 @@ void C_BaseCombatCharacter::AddEMPEffect( float flSize )
 			pParticle->m_flRollDelta = 0;
 			pParticle->m_flDieTime = 0.4f;
 			pParticle->m_flLifetime = 0;
-			pParticle->m_uchColor[0] = 255; 
+			pParticle->m_uchColor[0] = 255;
 			pParticle->m_uchColor[1] = 255;
 			pParticle->m_uchColor[2] = 255;
 			pParticle->m_uchStartAlpha = 32;
@@ -218,33 +215,33 @@ void C_BaseCombatCharacter::AddEMPEffect( float flSize )
 //-----------------------------------------------------------------------------
 // Purpose: Draw an effect to show this entity is being buffed
 //-----------------------------------------------------------------------------
-void C_BaseCombatCharacter::AddBuffEffect( float flSize )
+void C_BaseCombatCharacter::AddBuffEffect(float flSize)
 {
 	// Don't draw on the local player
-	if ( this == C_BasePlayer::GetLocalPlayer() )
+	if(this == C_BasePlayer::GetLocalPlayer())
 		return;
 
-	CSmartPtr<CSimpleEmitter>	pEmitter;
-	PMaterialHandle				hParticleMaterial;
-	TimedEvent					pParticleEvent;
+	CSmartPtr<CSimpleEmitter> pEmitter;
+	PMaterialHandle hParticleMaterial;
+	TimedEvent pParticleEvent;
 
-	pParticleEvent.Init( 300 );
-	pEmitter = CSimpleEmitter::Create( "ObjectBuffEffect" );
-	hParticleMaterial = pEmitter->GetPMaterial( "sprites/chargeball" );
+	pParticleEvent.Init(300);
+	pEmitter = CSimpleEmitter::Create("ObjectBuffEffect");
+	hParticleMaterial = pEmitter->GetPMaterial("sprites/chargeball");
 
 	// Add particles
 	float flCur = gpGlobals->frametime;
-	Vector vCenter = WorldSpaceCenter( );
+	Vector vCenter = WorldSpaceCenter();
 
-	while ( pParticleEvent.NextEvent( flCur ) )
+	while(pParticleEvent.NextEvent(flCur))
 	{
 		Vector vPos;
-		Vector vOffset = RandomVector( -1, 1 );
-		VectorNormalize( vOffset );
-		vPos = vCenter + (vOffset * RandomFloat( 0, flSize ));
-		
-		SimpleParticle *pParticle = pEmitter->AddSimpleParticle( hParticleMaterial, vPos );
-		if ( pParticle )
+		Vector vOffset = RandomVector(-1, 1);
+		VectorNormalize(vOffset);
+		vPos = vCenter + (vOffset * RandomFloat(0, flSize));
+
+		SimpleParticle *pParticle = pEmitter->AddSimpleParticle(hParticleMaterial, vPos);
+		if(pParticle)
 		{
 			// Move the points along the path.
 			pParticle->m_vecVelocity.Init();
@@ -252,7 +249,8 @@ void C_BaseCombatCharacter::AddBuffEffect( float flSize )
 			pParticle->m_flRollDelta = 0;
 			pParticle->m_flDieTime = 0.4f;
 			pParticle->m_flLifetime = 0;
-			pParticle->m_uchColor[1] = 255; pParticle->m_uchColor[0] = pParticle->m_uchColor[2] = 0;
+			pParticle->m_uchColor[1] = 255;
+			pParticle->m_uchColor[0] = pParticle->m_uchColor[2] = 0;
 			pParticle->m_uchStartAlpha = 128;
 			pParticle->m_uchEndAlpha = 0;
 			pParticle->m_uchStartSize = 3;
@@ -265,20 +263,20 @@ void C_BaseCombatCharacter::AddBuffEffect( float flSize )
 //-----------------------------------------------------------------------------
 // Purpose: Returns shield if owned.
 //-----------------------------------------------------------------------------
-C_WeaponCombatShield *C_BaseCombatCharacter::GetShield( void )
+C_WeaponCombatShield *C_BaseCombatCharacter::GetShield(void)
 {
 	C_BaseCombatWeapon *pWeapon;
-	if ( GetTeamNumber() == TEAM_ALIENS )
+	if(GetTeamNumber() == TEAM_ALIENS)
 	{
-		pWeapon = Weapon_OwnsThisType( "weapon_combat_shield_alien" );	
+		pWeapon = Weapon_OwnsThisType("weapon_combat_shield_alien");
 	}
 	else
 	{
-		pWeapon = Weapon_OwnsThisType( "weapon_combat_shield" );	
+		pWeapon = Weapon_OwnsThisType("weapon_combat_shield");
 	}
 
-	if ( !pWeapon )
+	if(!pWeapon)
 		return NULL;
 
-	return ( CWeaponCombatShield* )pWeapon;
+	return (CWeaponCombatShield *)pWeapon;
 }

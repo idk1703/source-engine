@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -22,12 +22,18 @@ public:
 	void SetBrightness(float fValue);
 	float GetBrightness();
 
-	operator LOGPALETTE*()
-	{ return pPalette; }
-	operator D3DRMPALETTEENTRY*()
-	{ return (D3DRMPALETTEENTRY*) pPalette->palPalEntry; }
-	operator CPalette*()
-	{ return &GDIPalette; }
+	operator LOGPALETTE *()
+	{
+		return pPalette;
+	}
+	operator D3DRMPALETTEENTRY *()
+	{
+		return (D3DRMPALETTEENTRY *)pPalette->palPalEntry;
+	}
+	operator CPalette *()
+	{
+		return &GDIPalette;
+	}
 
 private:
 	float fBrightness;

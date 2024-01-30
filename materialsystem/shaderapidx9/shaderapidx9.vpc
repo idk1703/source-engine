@@ -24,7 +24,7 @@ $Configuration
 		$PreprocessorDefinitions		"$BASE;GL_GLEXT_PROTOTYPES;DX_TO_GL_ABSTRACTION" [$GL]
 //		$AdditionalOptions		"/FC"
 	}
-    
+
 	$Linker
 	{
 		$SystemLibraries                    "iconv" [$OSXALL]
@@ -134,13 +134,13 @@ $Project "shaderapidx9"
 		$File	"$SRCDIR\dx9sdk\lib\d3dx9.lib" [$WIN32 && !$GL&&!$VS2015]
 		$File	"$LIBCOMMON\d3dx9.lib" [$WIN32 && !$GL &&$VS2015]
 	}
-	
+
 	$Folder "Link Libraries"
 	{
-        $Lib	bitmap
-        $Lib	mathlib
-        $Lib	tier2
+	$Lib	bitmap
+	$Lib	mathlib
+	$Lib	tier2
 		$Lib	"$LIBCOMMON/bzip2"
 		$ImpLib togl [!$IS_LIB_PROJECT && $GL]
-    }
+	}
 }

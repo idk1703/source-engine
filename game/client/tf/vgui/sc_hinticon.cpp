@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -12,31 +12,29 @@
 
 using namespace vgui;
 
-DECLARE_BUILD_FACTORY( CSCHintIcon );
+DECLARE_BUILD_FACTORY(CSCHintIcon);
 
 //-----------------------------------------------------------------------------
-CSCHintIcon::CSCHintIcon( vgui::Panel *parent, const char* panelName ) :
-	vgui::Label( parent, panelName, L"" )
-	, m_bIsActionMapped( false )
-	, m_actionSetHandle( 0 )
+CSCHintIcon::CSCHintIcon(vgui::Panel *parent, const char *panelName)
+	: vgui::Label(parent, panelName, L""), m_bIsActionMapped(false), m_actionSetHandle(0)
 {
 	m_szActionName[0] = '\0';
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CSCHintIcon::ApplySettings( KeyValues *inResourceData )
+void CSCHintIcon::ApplySettings(KeyValues *inResourceData)
 {
-	BaseClass::ApplySettings( inResourceData );
+	BaseClass::ApplySettings(inResourceData);
 
-	auto szActionName = inResourceData->GetString( "actionName", "" );
-	Q_strncpy( m_szActionName, szActionName, nMaxActionNameLength );
+	auto szActionName = inResourceData->GetString("actionName", "");
+	Q_strncpy(m_szActionName, szActionName, nMaxActionNameLength);
 
-	auto szActionSet = inResourceData->GetString( "actionSet", nullptr );
-	if ( szActionSet )
+	auto szActionSet = inResourceData->GetString("actionSet", nullptr);
+	if(szActionSet)
 	{
-		m_actionSetHandle = g_pInputSystem->GetActionSetHandle( szActionSet );
+		m_actionSetHandle = g_pInputSystem->GetActionSetHandle(szActionSet);
 	}
 	else
 	{
@@ -45,26 +43,26 @@ void CSCHintIcon::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CSCHintIcon::ApplySchemeSettings( IScheme *pScheme )
+void CSCHintIcon::ApplySchemeSettings(IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
-	const wchar_t* iconText = L"";
+	const wchar_t *iconText = L"";
 	m_bIsActionMapped = false;
-	if ( m_actionSetHandle )
+	if(m_actionSetHandle)
 	{
-		auto origin = g_pInputSystem->GetSteamControllerActionOrigin( m_szActionName, m_actionSetHandle );
-		if ( origin != k_EControllerActionOrigin_None )
+		auto origin = g_pInputSystem->GetSteamControllerActionOrigin(m_szActionName, m_actionSetHandle);
+		if(origin != k_EControllerActionOrigin_None)
 		{
-			iconText = g_pInputSystem->GetSteamControllerFontCharacterForActionOrigin( origin );
-			if ( iconText && iconText[0] )
+			iconText = g_pInputSystem->GetSteamControllerFontCharacterForActionOrigin(origin);
+			if(iconText && iconText[0])
 			{
 				m_bIsActionMapped = true;
 			}
 		}
 	}
 
-	SetText( iconText );
+	SetText(iconText);
 }

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -32,8 +32,3 @@ void Axes2::SetAxes(Axes2 &axes)
 {
 	*this = axes;
 }
-
-
-
-
-

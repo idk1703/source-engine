@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -12,24 +12,31 @@
 
 struct dlight_t;
 
-
 class CFlashlightEffect
 {
 public:
-
 	CFlashlightEffect(int nEntIndex = 0);
 	virtual ~CFlashlightEffect();
 
-	virtual void UpdateLight(const Vector &vecPos, const Vector &vecDir, const Vector &vecRight, const Vector &vecUp, int nDistance);
+	virtual void UpdateLight(const Vector &vecPos, const Vector &vecDir, const Vector &vecRight, const Vector &vecUp,
+							 int nDistance);
 	void TurnOn();
 	void TurnOff();
-	bool IsOn( void ) { return m_bIsOn;	}
+	bool IsOn(void)
+	{
+		return m_bIsOn;
+	}
 
-	ClientShadowHandle_t GetFlashlightHandle( void ) { return m_FlashlightHandle; }
-	void SetFlashlightHandle( ClientShadowHandle_t Handle ) { m_FlashlightHandle = Handle;	}
-	
+	ClientShadowHandle_t GetFlashlightHandle(void)
+	{
+		return m_FlashlightHandle;
+	}
+	void SetFlashlightHandle(ClientShadowHandle_t Handle)
+	{
+		m_FlashlightHandle = Handle;
+	}
+
 protected:
-
 	void LightOff();
 	void LightOffOld();
 	void LightOffNew();
@@ -52,13 +59,11 @@ protected:
 class CHeadlightEffect : public CFlashlightEffect
 {
 public:
-	
 	CHeadlightEffect();
 	~CHeadlightEffect();
 
-	virtual void UpdateLight(const Vector &vecPos, const Vector &vecDir, const Vector &vecRight, const Vector &vecUp, int nDistance);
+	virtual void UpdateLight(const Vector &vecPos, const Vector &vecDir, const Vector &vecRight, const Vector &vecUp,
+							 int nDistance);
 };
-
-
 
 #endif // FLASHLIGHTEFFECT_H

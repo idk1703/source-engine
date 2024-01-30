@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -18,19 +18,21 @@
 //-----------------------------------------------------------------------------
 class CConfigPanel : public vgui::Frame
 {
-	DECLARE_CLASS_SIMPLE( CConfigPanel, vgui::Frame ); 
+	DECLARE_CLASS_SIMPLE(CConfigPanel, vgui::Frame);
+
 public:
-	CConfigPanel(vgui::Panel *parent, bool autorefresh,bool savercon,int refreshtime,bool graphs, int graphsrefreshtime,bool getlogs);
+	CConfigPanel(vgui::Panel *parent, bool autorefresh, bool savercon, int refreshtime, bool graphs,
+				 int graphsrefreshtime, bool getlogs);
 	~CConfigPanel();
 
 	void Run();
-	
+
 protected:
 	// message handlers
-	MESSAGE_FUNC_PTR( OnButtonToggled, "ButtonToggled", panel );
-	MESSAGE_FUNC_PTR( OnRadioButtonChecked, "RadioButtonChecked", panel )
+	MESSAGE_FUNC_PTR(OnButtonToggled, "ButtonToggled", panel);
+	MESSAGE_FUNC_PTR(OnRadioButtonChecked, "RadioButtonChecked", panel)
 	{
-		OnButtonToggled( panel );
+		OnButtonToggled(panel);
 	}
 
 	// vgui overrides
@@ -38,7 +40,6 @@ protected:
 	virtual void OnCommand(const char *command);
 
 private:
-
 	void SetControlText(const char *textEntryName, const char *text);
 
 	vgui::Button *m_pOkayButton;

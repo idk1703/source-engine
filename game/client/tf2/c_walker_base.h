@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,24 +10,21 @@
 #pragma once
 #endif
 
-
 #include "basetfvehicle.h"
 #include "client_class.h"
-
 
 class C_WalkerBase : public C_BaseTFVehicle
 {
 public:
 	DECLARE_CLIENTCLASS();
-	DECLARE_CLASS( C_WalkerBase, C_BaseTFVehicle );
+	DECLARE_CLASS(C_WalkerBase, C_BaseTFVehicle);
 
 	C_WalkerBase() {}
 
-	virtual void OnDataChanged( DataUpdateType_t updateType );
+	virtual void OnDataChanged(DataUpdateType_t updateType);
 
 private:
-	C_WalkerBase( const C_WalkerBase &other ) {}
+	C_WalkerBase(const C_WalkerBase &other) {}
 };
-
 
 #endif // C_WALKER_BASE_H

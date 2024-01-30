@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,24 +15,24 @@
 
 namespace vgui
 {
-class Button;
-class Label;
-class ListPanel;
-};
+	class Button;
+	class Label;
+	class ListPanel;
+}; // namespace vgui
 
 class CBaseDemoAction;
 class CNewActionButton;
 class CBaseActionEditDialog;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CDemoEditorPanel : public vgui::Frame
 {
-	DECLARE_CLASS_SIMPLE( CDemoEditorPanel, vgui::Frame );
+	DECLARE_CLASS_SIMPLE(CDemoEditorPanel, vgui::Frame);
 
 public:
-	CDemoEditorPanel( vgui::Panel *parent );
+	CDemoEditorPanel(vgui::Panel *parent);
 	~CDemoEditorPanel();
 
 	virtual void OnTick();
@@ -40,40 +40,38 @@ public:
 	// Command issued
 	virtual void OnCommand(const char *command);
 
-	void	OnVDMChanged( void );
+	void OnVDMChanged(void);
 
-	void		OnRefresh();
+	void OnRefresh();
 
 protected:
+	bool IsNewActionCommand(char const *command);
 
-	bool		IsNewActionCommand( char const *command );
+	void CreateNewAction(char const *actiontype);
 
-	void		CreateNewAction( char const *actiontype );
+	void OnEdit();
+	void OnDelete();
+	void OnSave();
+	void OnRevert();
 
-	void		OnEdit();
-	void		OnDelete();
-	void		OnSave();
-	void		OnRevert();
+	void PurgeActionList();
+	void PopulateActionList();
 
-	void		PurgeActionList();
-	void		PopulateActionList();
+	CBaseDemoAction *FindActionByName(char const *name);
 
-	CBaseDemoAction *FindActionByName( char const *name );
-
-	vgui::Label		*m_pCurrentDemo;
-	vgui::Button	*m_pSave;
-	vgui::Button	*m_pRevert;
-	vgui::Button	*m_pOK;
-	vgui::Button	*m_pCancel;
+	vgui::Label *m_pCurrentDemo;
+	vgui::Button *m_pSave;
+	vgui::Button *m_pRevert;
+	vgui::Button *m_pOK;
+	vgui::Button *m_pCancel;
 
 	CNewActionButton *m_pNew;
-	vgui::Button	*m_pEdit;
-	vgui::Button	*m_pDelete;
+	vgui::Button *m_pEdit;
+	vgui::Button *m_pDelete;
 
-	vgui::ListPanel	*m_pActions;
-	
-	vgui::DHANDLE< CBaseActionEditDialog >	m_hCurrentEditor;
+	vgui::ListPanel *m_pActions;
 
+	vgui::DHANDLE<CBaseActionEditDialog> m_hCurrentEditor;
 };
 
 #endif // CL_DEMOEDITORPANEL_H

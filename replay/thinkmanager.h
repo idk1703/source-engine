@@ -27,12 +27,12 @@ class IThinker;
 class CThinkManager : public IThinkManager
 {
 public:
-	virtual void		AddThinker( IThinker *pThinker );
-	virtual void		RemoveThinker( IThinker *pThinker );
+	virtual void AddThinker(IThinker *pThinker);
+	virtual void RemoveThinker(IThinker *pThinker);
 
-	void				Think();
+	void Think();
 
-	CUtlLinkedList< IThinker *, int > m_lstManagers;
+	CUtlLinkedList<IThinker *, int> m_lstManagers;
 };
 
 //----------------------------------------------------------------------------------------

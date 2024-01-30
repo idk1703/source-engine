@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,71 +20,71 @@ class CBaseObject;
 //=========================================================
 class CWeaponBuilder : public CWeaponCombatUsedWithShieldBase
 {
-	DECLARE_CLASS( CWeaponBuilder, CWeaponCombatUsedWithShieldBase );
+	DECLARE_CLASS(CWeaponBuilder, CWeaponCombatUsedWithShieldBase);
+
 public:
 	CWeaponBuilder();
 
-	virtual void	UpdateOnRemove( void );
+	virtual void UpdateOnRemove(void);
 
 	DECLARE_SERVERCLASS();
 
-	virtual void	Precache( void );
-	virtual bool	CanDeploy( void );
-	virtual bool	CanHolster( void );
-	virtual CBaseCombatWeapon *GetLastWeapon( void );
-	virtual bool	Holster( CBaseCombatWeapon *pSwitchingTo = NULL );
-	virtual void	ItemPostFrame( void );
-	virtual void	PrimaryAttack( void );
-	virtual void	WeaponIdle( void );
-	virtual bool	Deploy( void );	
-	virtual const char	*GetViewModel( int viewmodelindex = 0 ) const;
+	virtual void Precache(void);
+	virtual bool CanDeploy(void);
+	virtual bool CanHolster(void);
+	virtual CBaseCombatWeapon *GetLastWeapon(void);
+	virtual bool Holster(CBaseCombatWeapon *pSwitchingTo = NULL);
+	virtual void ItemPostFrame(void);
+	virtual void PrimaryAttack(void);
+	virtual void WeaponIdle(void);
+	virtual bool Deploy(void);
+	virtual const char *GetViewModel(int viewmodelindex = 0) const;
 
-	void	SetCurrentState( int iState );
-	void	SetCurrentObject( int iObject );
+	void SetCurrentState(int iState);
+	void SetCurrentObject(int iObject);
 
-	virtual void	GainedNewTechnology( CBaseTechnology *pTechnology );
-	virtual void	Equip( CBaseCombatCharacter *pOwner );
+	virtual void GainedNewTechnology(CBaseTechnology *pTechnology);
+	virtual void Equip(CBaseCombatCharacter *pOwner);
 
 	// Add a new object type to the list of objects this builder weapon can build
-	void	AddBuildableObject( int iObjectType );
+	void AddBuildableObject(int iObjectType);
 
 	// Placement
-	void	StartPlacement( void );
-	void	StopPlacement( void );
-	bool	UpdatePlacement( void );
+	void StartPlacement(void);
+	void StopPlacement(void);
+	bool UpdatePlacement(void);
 
 	// Building
-	void	StartBuilding( void );
-	void	StoppedBuilding( int iObjectType );
-	bool	IsBuilding( void );
-	void	FinishedObject( void );
+	void StartBuilding(void);
+	void StoppedBuilding(int iObjectType);
+	bool IsBuilding(void);
+	void FinishedObject(void);
 
-	virtual void	GetControlPanelInfo( int nPanelIndex, const char *&pPanelName );
+	virtual void GetControlPanelInfo(int nPanelIndex, const char *&pPanelName);
 
-	virtual bool			ShouldShowControlPanels( void );
+	virtual bool ShouldShowControlPanels(void);
 
 private:
-	void	PerformModifications( CBaseObject* pObject );
+	void PerformModifications(CBaseObject *pObject);
 
 public:
-	CNetworkVar( int, m_iBuildState );
-	CNetworkVar( unsigned int, m_iCurrentObject );
-	int		m_iCurrentObjectID;
-	CNetworkVar( int, m_iCurrentObjectState );
+	CNetworkVar(int, m_iBuildState);
+	CNetworkVar(unsigned int, m_iCurrentObject);
+	int m_iCurrentObjectID;
+	CNetworkVar(int, m_iCurrentObjectState);
 
 	// Objects that this builder can build
-	CNetworkArray( bool, m_bObjectValidity, OBJ_LAST );
+	CNetworkArray(bool, m_bObjectValidity, OBJ_LAST);
 	// Buildability of each object
-	CNetworkArray( bool, m_bObjectBuildability, OBJ_LAST );
+	CNetworkArray(bool, m_bObjectBuildability, OBJ_LAST);
 
 	// Build data for the current object, propagated when the player starts to build it
-	CNetworkVar( float, m_flStartTime );
-	CNetworkVar( float, m_flTotalTime );
+	CNetworkVar(float, m_flStartTime);
+	CNetworkVar(float, m_flTotalTime);
 
-	float	m_flLastRepairTime;
+	float m_flLastRepairTime;
 
-	CNetworkHandle( CBaseObject, m_hObjectBeingBuilt );
+	CNetworkHandle(CBaseObject, m_hObjectBeingBuilt);
 };
-
 
 #endif // WEAPON_BUILDER_H

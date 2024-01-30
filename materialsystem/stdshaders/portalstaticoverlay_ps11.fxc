@@ -22,7 +22,7 @@ const HALF3 g_StaticAmount	: register( c0 ); //x is static, y is 1.0 - static
 struct PS_INPUT
 {
 	float4 vProjPos					: POSITION;
-	
+
 	//vStaticTexCoord and vAlphaMaskTexCoord are the same numbers, but we need to map TEXCOORD0 to sampler 0, and TEXCOORD1 to sampler1. ps11 compatibility issue
 #if( HASSTATICTEXTURE )
 	float2 vStaticTexCoord			: TEXCOORD0;
@@ -45,7 +45,7 @@ struct PS_INPUT
 HALF4 main( PS_INPUT i ) : COLOR
 {
 	HALF4 result;
-	
+
 #	if( HASSTATICTEXTURE )
 		result.rgb = tex2D( StaticTextureSampler, i.vStaticTexCoord ).rgb;
 #	else

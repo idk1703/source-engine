@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,7 +22,7 @@ class CCreateMultiplayerGameBotPage;
 //-----------------------------------------------------------------------------
 class CCreateMultiplayerGameDialog : public vgui::PropertyDialog
 {
-	DECLARE_CLASS_SIMPLE( CCreateMultiplayerGameDialog,  vgui::PropertyDialog );
+	DECLARE_CLASS_SIMPLE(CCreateMultiplayerGameDialog, vgui::PropertyDialog);
 
 public:
 	CCreateMultiplayerGameDialog(vgui::Panel *parent);
@@ -30,7 +30,7 @@ public:
 
 protected:
 	virtual bool OnOK(bool applyOnly);
-	virtual void OnKeyCodePressed( vgui::KeyCode code );
+	virtual void OnKeyCodePressed(vgui::KeyCode code);
 
 private:
 	CCreateMultiplayerGameServerPage *m_pServerPage;
@@ -42,6 +42,5 @@ private:
 	// for loading/saving game config
 	KeyValues *m_pSavedData;
 };
-
 
 #endif // CREATEMULTIPLAYERGAMEDIALOG_H

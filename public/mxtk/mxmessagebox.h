@@ -14,13 +14,10 @@
 #ifndef INCLUDED_MXMESSAGEBOX
 #define INCLUDED_MXMESSAGEBOX
 
-
-
 class mxWindow;
 
-
-
-enum {
+enum
+{
 	MX_MB_OK = 0,
 	MX_MB_YESNO = 1,
 	MX_MB_YESNOCANCEL = 2,
@@ -30,18 +27,15 @@ enum {
 	MX_MB_QUESTION = 32
 };
 
-
-
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-int mxMessageBox (mxWindow *parent, const char *msg, const char *title, int style = 0);
+	int mxMessageBox(mxWindow *parent, const char *msg, const char *title, int style = 0);
 
 #ifdef __cplusplus
 }
 #endif
-
-
 
 #endif // INCLUDED_MXMESSAGEBOX

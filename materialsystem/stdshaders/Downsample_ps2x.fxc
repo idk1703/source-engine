@@ -27,4 +27,3 @@ float4 main( PS_INPUT i ) : COLOR
 	float3 avgColor = ( s0 + s1 + s2 + s3 ) * 0.25f;
 	return FinalOutput( float4( avgColor, 1 ), 0, PIXEL_FOG_TYPE_NONE, TONEMAP_SCALE_NONE );
 }
-

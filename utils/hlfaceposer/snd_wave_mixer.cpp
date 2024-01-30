@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -22,16 +22,16 @@
 
 typedef struct channel_s
 {
-	int		leftvol;
-	int		rightvol;
-	int		rleftvol;
-	int		rrightvol;
-	float	pitch;
+	int leftvol;
+	int rightvol;
+	int rleftvol;
+	int rrightvol;
+	float pitch;
 } channel_t;
 
 //-----------------------------------------------------------------------------
-// These mixers provide an abstraction layer between the audio device and 
-// mixing/decoding code.  They allow data to be decoded and mixed using 
+// These mixers provide an abstraction layer between the audio device and
+// mixing/decoding code.  They allow data to be decoded and mixed using
 // optimized, format sensitive code by calling back into the device that
 // controls them.
 //-----------------------------------------------------------------------------
@@ -42,10 +42,12 @@ typedef struct channel_s
 class CAudioMixerWave8Mono : public CAudioMixerWave
 {
 public:
-	CAudioMixerWave8Mono( CWaveData *data ) : CAudioMixerWave( data ) {}
-	virtual void Mix( IAudioDevice *pDevice, channel_t *pChannel, void *pData, int outputOffset, int inputOffset, fixedint fracRate, int outCount, int timecompress, bool forward = true )
+	CAudioMixerWave8Mono(CWaveData *data) : CAudioMixerWave(data) {}
+	virtual void Mix(IAudioDevice *pDevice, channel_t *pChannel, void *pData, int outputOffset, int inputOffset,
+					 fixedint fracRate, int outCount, int timecompress, bool forward = true)
 	{
-		pDevice->Mix8Mono( pChannel, (char *)pData, outputOffset, inputOffset, fracRate, outCount, timecompress, forward );
+		pDevice->Mix8Mono(pChannel, (char *)pData, outputOffset, inputOffset, fracRate, outCount, timecompress,
+						  forward);
 	}
 };
 
@@ -55,10 +57,12 @@ public:
 class CAudioMixerWave8Stereo : public CAudioMixerWave
 {
 public:
-	CAudioMixerWave8Stereo( CWaveData *data ) : CAudioMixerWave( data ) {}
-	virtual void Mix( IAudioDevice *pDevice, channel_t *pChannel, void *pData, int outputOffset, int inputOffset, fixedint fracRate, int outCount, int timecompress, bool forward = true )
+	CAudioMixerWave8Stereo(CWaveData *data) : CAudioMixerWave(data) {}
+	virtual void Mix(IAudioDevice *pDevice, channel_t *pChannel, void *pData, int outputOffset, int inputOffset,
+					 fixedint fracRate, int outCount, int timecompress, bool forward = true)
 	{
-		pDevice->Mix8Stereo( pChannel, (char *)pData, outputOffset, inputOffset, fracRate, outCount, timecompress, forward );
+		pDevice->Mix8Stereo(pChannel, (char *)pData, outputOffset, inputOffset, fracRate, outCount, timecompress,
+							forward);
 	}
 };
 
@@ -68,13 +72,14 @@ public:
 class CAudioMixerWave16Mono : public CAudioMixerWave
 {
 public:
-	CAudioMixerWave16Mono( CWaveData *data ) : CAudioMixerWave( data ) {}
-	virtual void Mix( IAudioDevice *pDevice, channel_t *pChannel, void *pData, int outputOffset, int inputOffset, fixedint fracRate, int outCount, int timecompress, bool forward = true )
+	CAudioMixerWave16Mono(CWaveData *data) : CAudioMixerWave(data) {}
+	virtual void Mix(IAudioDevice *pDevice, channel_t *pChannel, void *pData, int outputOffset, int inputOffset,
+					 fixedint fracRate, int outCount, int timecompress, bool forward = true)
 	{
-		pDevice->Mix16Mono( pChannel, (short *)pData, outputOffset, inputOffset, fracRate, outCount, timecompress, forward );
+		pDevice->Mix16Mono(pChannel, (short *)pData, outputOffset, inputOffset, fracRate, outCount, timecompress,
+						   forward);
 	}
 };
-
 
 //-----------------------------------------------------------------------------
 // Purpose: maps mixing to 16-bit stereo mixer
@@ -82,13 +87,14 @@ public:
 class CAudioMixerWave16Stereo : public CAudioMixerWave
 {
 public:
-	CAudioMixerWave16Stereo( CWaveData *data ) : CAudioMixerWave( data ) {}
-	virtual void Mix( IAudioDevice *pDevice, channel_t *pChannel, void *pData, int outputOffset, int inputOffset, fixedint fracRate, int outCount, int timecompress, bool forward = true )
+	CAudioMixerWave16Stereo(CWaveData *data) : CAudioMixerWave(data) {}
+	virtual void Mix(IAudioDevice *pDevice, channel_t *pChannel, void *pData, int outputOffset, int inputOffset,
+					 fixedint fracRate, int outCount, int timecompress, bool forward = true)
 	{
-		pDevice->Mix16Stereo( pChannel, (short *)pData, outputOffset, inputOffset, fracRate, outCount, timecompress, forward );
+		pDevice->Mix16Stereo(pChannel, (short *)pData, outputOffset, inputOffset, fracRate, outCount, timecompress,
+							 forward);
 	}
 };
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Create an approprite mixer type given the data format
@@ -98,28 +104,28 @@ public:
 //			bits - bits per sample
 // Output : CAudioMixer * abstract mixer type that maps mixing to appropriate code
 //-----------------------------------------------------------------------------
-CAudioMixer *CreateWaveMixer( CWaveData *data, int format, int channels, int bits )
+CAudioMixer *CreateWaveMixer(CWaveData *data, int format, int channels, int bits)
 {
-	if ( format == WAVE_FORMAT_PCM )
+	if(format == WAVE_FORMAT_PCM)
 	{
-		if ( channels > 1 )
+		if(channels > 1)
 		{
-			if ( bits == 8 )
-				return new CAudioMixerWave8Stereo( data );
+			if(bits == 8)
+				return new CAudioMixerWave8Stereo(data);
 			else
-				return new CAudioMixerWave16Stereo( data );
+				return new CAudioMixerWave16Stereo(data);
 		}
 		else
 		{
-			if ( bits == 8 )
-				return new CAudioMixerWave8Mono( data );
+			if(bits == 8)
+				return new CAudioMixerWave8Mono(data);
 			else
-				return new CAudioMixerWave16Mono( data );
+				return new CAudioMixerWave16Mono(data);
 		}
 	}
-	else if ( format == WAVE_FORMAT_ADPCM )
+	else if(format == WAVE_FORMAT_ADPCM)
 	{
-		return CreateADPCMMixer( data );
+		return CreateADPCMMixer(data);
 	}
 	return NULL;
 }
@@ -129,7 +135,7 @@ CAudioMixer *CreateWaveMixer( CWaveData *data, int format, int channels, int bit
 // Purpose: Init the base WAVE mixer.
 // Input  : *data - data access object
 //-----------------------------------------------------------------------------
-CAudioMixerWave::CAudioMixerWave( CWaveData *data ) : m_pData(data), m_pChannel(NULL)
+CAudioMixerWave::CAudioMixerWave(CWaveData *data) : m_pData(data), m_pChannel(NULL)
 {
 	m_loop = 0;
 	m_sample = 0;
@@ -141,20 +147,19 @@ CAudioMixerWave::CAudioMixerWave( CWaveData *data ) : m_pData(data), m_pChannel(
 	m_bForward = true;
 	m_bAutoDelete = true;
 	m_pChannel = new channel_t;
-	m_pChannel->leftvol   = 127;
-	m_pChannel->rightvol  = 127;
-	m_pChannel->pitch		= 1.0;
+	m_pChannel->leftvol = 127;
+	m_pChannel->rightvol = 127;
+	m_pChannel->pitch = 1.0;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Frees the data access object (we own it after construction)
 //-----------------------------------------------------------------------------
-CAudioMixerWave::~CAudioMixerWave( void )
+CAudioMixerWave::~CAudioMixerWave(void)
 {
 	delete m_pData;
 	delete m_pChannel;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Decode and read the data
@@ -165,26 +170,25 @@ CAudioMixerWave::~CAudioMixerWave( void )
 //			sampleCount - number of samples needed
 // Output : number of samples available in this batch
 //-----------------------------------------------------------------------------
-int	CAudioMixerWave::GetOutputData( void **pData, int samplePosition, int sampleCount, bool forward /*= true*/ )
+int CAudioMixerWave::GetOutputData(void **pData, int samplePosition, int sampleCount, bool forward /*= true*/)
 {
-	if ( samplePosition != m_sample )
+	if(samplePosition != m_sample)
 	{
 		// Seek
 		m_sample = samplePosition;
 		m_absoluteSample = samplePosition;
 	}
 
-	return m_pData->ReadSourceData( pData, m_sample, sampleCount, forward );
+	return m_pData->ReadSourceData(pData, m_sample, sampleCount, forward);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: calls through the wavedata to get the audio source
 // Output : CAudioSource
 //-----------------------------------------------------------------------------
-CAudioSource *CAudioMixerWave::GetSource( void )
+CAudioSource *CAudioMixerWave::GetSource(void)
 {
-	if ( m_pData )
+	if(m_pData)
 		return &m_pData->Source();
 
 	return NULL;
@@ -194,19 +198,18 @@ CAudioSource *CAudioMixerWave::GetSource( void )
 // Purpose: Gets the current sample location in playback
 // Output : int (samples from start of wave)
 //-----------------------------------------------------------------------------
-int CAudioMixerWave::GetSamplePosition( void )
+int CAudioMixerWave::GetSamplePosition(void)
 {
 	return m_sample;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Gets the current sample location in playback
 // Output : int (samples from start of wave)
 //-----------------------------------------------------------------------------
-int CAudioMixerWave::GetScrubPosition( void )
+int CAudioMixerWave::GetScrubPosition(void)
 {
-	if (m_scrubSample != -1)
+	if(m_scrubSample != -1)
 	{
 		return m_scrubSample;
 	}
@@ -214,17 +217,17 @@ int CAudioMixerWave::GetScrubPosition( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : position - 
+// Purpose:
+// Input  : position -
 //-----------------------------------------------------------------------------
-bool CAudioMixerWave::SetSamplePosition( int position, bool scrubbing )
+bool CAudioMixerWave::SetSamplePosition(int position, bool scrubbing)
 {
-	position = max( 0, position );
+	position = max(0, position);
 
 	m_sample = position;
 	m_absoluteSample = position;
 	m_startpos = m_sample;
-	if (scrubbing)
+	if(scrubbing)
 	{
 		m_scrubSample = position;
 	}
@@ -232,111 +235,112 @@ bool CAudioMixerWave::SetSamplePosition( int position, bool scrubbing )
 	{
 		m_scrubSample = -1;
 	}
-		
+
 	return true;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : position - 
+// Purpose:
+// Input  : position -
 //-----------------------------------------------------------------------------
-void CAudioMixerWave::SetLoopPosition( int position )
+void CAudioMixerWave::SetLoopPosition(int position)
 {
 	m_loop = position;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
-int CAudioMixerWave::GetStartPosition( void )
+int CAudioMixerWave::GetStartPosition(void)
 {
 	return m_startpos;
 }
 
-bool CAudioMixerWave::GetActive( void )
+bool CAudioMixerWave::GetActive(void)
 {
 	return m_bActive;
 }
 
-void CAudioMixerWave::SetActive( bool active )
+void CAudioMixerWave::SetActive(bool active)
 {
 	m_bActive = active;
 }
 
-void CAudioMixerWave::SetModelIndex( int index )
+void CAudioMixerWave::SetModelIndex(int index)
 {
 	m_nModelIndex = index;
 }
 
-int CAudioMixerWave::GetModelIndex( void ) const
+int CAudioMixerWave::GetModelIndex(void) const
 {
 	return m_nModelIndex;
 }
 
-void CAudioMixerWave::SetDirection( bool forward )
+void CAudioMixerWave::SetDirection(bool forward)
 {
 	m_bForward = forward;
 }
 
-bool CAudioMixerWave::GetDirection( void ) const
+bool CAudioMixerWave::GetDirection(void) const
 {
 	return m_bForward;
 }
 
-void CAudioMixerWave::SetAutoDelete( bool autodelete )
+void CAudioMixerWave::SetAutoDelete(bool autodelete)
 {
 	m_bAutoDelete = autodelete;
 }
 
-bool CAudioMixerWave::GetAutoDelete( void ) const
+bool CAudioMixerWave::GetAutoDelete(void) const
 {
 	return m_bAutoDelete;
 }
 
-void CAudioMixerWave::SetVolume( float volume )
+void CAudioMixerWave::SetVolume(float volume)
 {
-	int ivolume = (int)( clamp( volume, 0.0f, 1.0f ) * 127.0f );
+	int ivolume = (int)(clamp(volume, 0.0f, 1.0f) * 127.0f);
 
-	m_pChannel->leftvol   = ivolume;
-	m_pChannel->rightvol  = ivolume;
+	m_pChannel->leftvol = ivolume;
+	m_pChannel->rightvol = ivolume;
 }
 
 channel_t *CAudioMixerWave::GetChannel()
 {
-	Assert( m_pChannel );
+	Assert(m_pChannel);
 	return m_pChannel;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pChannel - 
-//			sampleCount - 
-//			outputRate - 
+// Purpose:
+// Input  : *pChannel -
+//			sampleCount -
+//			outputRate -
 //-----------------------------------------------------------------------------
-void CAudioMixerWave::IncrementSamples( channel_t *pChannel, int startSample, int sampleCount,int outputRate, bool forward /*= true*/ )
+void CAudioMixerWave::IncrementSamples(channel_t *pChannel, int startSample, int sampleCount, int outputRate,
+									   bool forward /*= true*/)
 {
 	int inputSampleRate = (int)(pChannel->pitch * m_pData->Source().SampleRate());
 	float rate = (float)inputSampleRate / outputRate;
 
 	int startpos = startSample;
 
-	if ( !forward )
+	if(!forward)
 	{
-		int requestedstart = startSample - (int)( sampleCount * rate );
-		if ( requestedstart < 0 )
+		int requestedstart = startSample - (int)(sampleCount * rate);
+		if(requestedstart < 0)
 			return;
 
-		startpos = max( 0, requestedstart );
-		SetSamplePosition( startpos );
+		startpos = max(0, requestedstart);
+		SetSamplePosition(startpos);
 	}
 
-	while ( sampleCount > 0 )
+	while(sampleCount > 0)
 	{
 		int inputSampleCount;
 		int outputSampleCount = sampleCount;
-		
-		if ( outputRate != inputSampleRate )
+
+		if(outputRate != inputSampleRate)
 		{
 			inputSampleCount = (int)(sampleCount * rate);
 		}
@@ -344,9 +348,9 @@ void CAudioMixerWave::IncrementSamples( channel_t *pChannel, int startSample, in
 		{
 			inputSampleCount = sampleCount;
 		}
-		
+
 		sampleCount -= outputSampleCount;
-		if ( forward )
+		if(forward)
 		{
 			m_sample += inputSampleCount;
 			m_absoluteSample += inputSampleCount;
@@ -362,45 +366,46 @@ void CAudioMixerWave::IncrementSamples( channel_t *pChannel, int startSample, in
 //			outputRate - sampling rate of the request
 // Output : Returns true to keep mixing, false to delete this mixer
 //-----------------------------------------------------------------------------
-bool CAudioMixerWave::SkipSamples( channel_t *pChannel, int startSample, int sampleCount, int outputRate, bool forward /*= true*/ )
+bool CAudioMixerWave::SkipSamples(channel_t *pChannel, int startSample, int sampleCount, int outputRate,
+								  bool forward /*= true*/)
 {
 	int offset = 0;
 
 	int inputSampleRate = (int)(pChannel->pitch * m_pData->Source().SampleRate());
 	float rate = (float)inputSampleRate / outputRate;
 
-	sampleCount = min( sampleCount, PAINTBUFFER_SIZE );
+	sampleCount = min(sampleCount, PAINTBUFFER_SIZE);
 
 	int startpos = startSample;
 
-	if ( !forward )
+	if(!forward)
 	{
-		int requestedstart = startSample - (int)( sampleCount * rate );
-		if ( requestedstart < 0 )
+		int requestedstart = startSample - (int)(sampleCount * rate);
+		if(requestedstart < 0)
 			return false;
 
-		startpos = max( 0, requestedstart );
-		SetSamplePosition( startpos );
+		startpos = max(0, requestedstart);
+		SetSamplePosition(startpos);
 	}
 
-	while ( sampleCount > 0 )
+	while(sampleCount > 0)
 	{
 		int inputSampleCount;
 		char *pData = NULL;
 		int outputSampleCount = sampleCount;
-		
-		if ( outputRate != inputSampleRate )
+
+		if(outputRate != inputSampleRate)
 		{
 			inputSampleCount = (int)(sampleCount * rate);
-			if ( !forward )
+			if(!forward)
 			{
-				startSample = max( 0, startSample - inputSampleCount );
+				startSample = max(0, startSample - inputSampleCount);
 			}
-			int availableSamples = GetOutputData( (void **)&pData, startSample, inputSampleCount, forward );
-			if ( !availableSamples )
+			int availableSamples = GetOutputData((void **)&pData, startSample, inputSampleCount, forward);
+			if(!availableSamples)
 				break;
 
-			if ( availableSamples < inputSampleCount )
+			if(availableSamples < inputSampleCount)
 			{
 				outputSampleCount = (int)(availableSamples / rate);
 				inputSampleCount = availableSamples;
@@ -409,37 +414,35 @@ bool CAudioMixerWave::SkipSamples( channel_t *pChannel, int startSample, int sam
 			// compute new fraction part of sample index
 			float flOffset = (m_fracOffset / FIX_SCALE) + (rate * outputSampleCount);
 			flOffset = flOffset - (float)((int)flOffset);
-			m_fracOffset = FIX_FLOAT( flOffset );
+			m_fracOffset = FIX_FLOAT(flOffset);
 		}
 		else
 		{
-			if ( !forward )
+			if(!forward)
 			{
-				startSample = max( 0, startSample - sampleCount );
+				startSample = max(0, startSample - sampleCount);
 			}
-			int availableSamples = GetOutputData( (void **)&pData, startSample, sampleCount, forward );
-			if ( !availableSamples )
+			int availableSamples = GetOutputData((void **)&pData, startSample, sampleCount, forward);
+			if(!availableSamples)
 				break;
 			outputSampleCount = availableSamples;
 			inputSampleCount = availableSamples;
-
 		}
 		offset += outputSampleCount;
 		sampleCount -= outputSampleCount;
-		if ( forward )
+		if(forward)
 		{
 			m_sample += inputSampleCount;
 			m_absoluteSample += inputSampleCount;
 		}
 
-		if ( m_loop != 0 && m_sample >= m_loop )
+		if(m_loop != 0 && m_sample >= m_loop)
 		{
-			SetSamplePosition( m_startpos );
+			SetSamplePosition(m_startpos);
 		}
-
 	}
 
-	if ( sampleCount > 0 )
+	if(sampleCount > 0)
 		return false;
 
 	return true;
@@ -453,84 +456,83 @@ bool CAudioMixerWave::SkipSamples( channel_t *pChannel, int startSample, int sam
 //			outputRate - sampling rate of the request
 // Output : Returns true to keep mixing, false to delete this mixer
 //-----------------------------------------------------------------------------
-bool CAudioMixerWave::MixDataToDevice( IAudioDevice *pDevice, channel_t *pChannel, int startSample, int sampleCount, int outputRate, bool forward /*= true*/ )
+bool CAudioMixerWave::MixDataToDevice(IAudioDevice *pDevice, channel_t *pChannel, int startSample, int sampleCount,
+									  int outputRate, bool forward /*= true*/)
 {
 	int offset = 0;
 
 	int inputSampleRate = (int)(pChannel->pitch * m_pData->Source().SampleRate());
 	float rate = (float)inputSampleRate / outputRate;
-	fixedint fracstep = FIX_FLOAT( rate );
+	fixedint fracstep = FIX_FLOAT(rate);
 
-	sampleCount = min( sampleCount, PAINTBUFFER_SIZE );
+	sampleCount = min(sampleCount, PAINTBUFFER_SIZE);
 
 	int startpos = startSample;
 
-	if ( !forward )
+	if(!forward)
 	{
-		int requestedstart = startSample - (int)( sampleCount * rate );
-		if ( requestedstart < 0 )
+		int requestedstart = startSample - (int)(sampleCount * rate);
+		if(requestedstart < 0)
 			return false;
 
-		startpos = max( 0, requestedstart );
-		SetSamplePosition( startpos );
+		startpos = max(0, requestedstart);
+		SetSamplePosition(startpos);
 	}
 
-	while ( sampleCount > 0 )
+	while(sampleCount > 0)
 	{
 		int inputSampleCount;
 		char *pData = NULL;
 		int outputSampleCount = sampleCount;
-		
-		
-		if ( outputRate != inputSampleRate )
+
+		if(outputRate != inputSampleRate)
 		{
 			inputSampleCount = (int)(sampleCount * rate);
 
-			int availableSamples = GetOutputData( (void **)&pData, startpos, inputSampleCount, forward );
-			if ( !availableSamples )
+			int availableSamples = GetOutputData((void **)&pData, startpos, inputSampleCount, forward);
+			if(!availableSamples)
 				break;
 
-			if ( availableSamples < inputSampleCount )
+			if(availableSamples < inputSampleCount)
 			{
 				outputSampleCount = (int)(availableSamples / rate);
 				inputSampleCount = availableSamples;
 			}
 
-			Mix( pDevice, pChannel, pData, offset, m_fracOffset, fracstep, outputSampleCount, 0, forward );
-			
+			Mix(pDevice, pChannel, pData, offset, m_fracOffset, fracstep, outputSampleCount, 0, forward);
+
 			// compute new fraction part of sample index
 			float flOffset = (m_fracOffset / FIX_SCALE) + (rate * outputSampleCount);
 			flOffset = flOffset - (float)((int)flOffset);
-			m_fracOffset = FIX_FLOAT( flOffset );
+			m_fracOffset = FIX_FLOAT(flOffset);
 		}
 		else
 		{
-			int availableSamples = GetOutputData( (void **)&pData, startpos, sampleCount, forward );
-			if ( !availableSamples )
+			int availableSamples = GetOutputData((void **)&pData, startpos, sampleCount, forward);
+			if(!availableSamples)
 				break;
 
 			outputSampleCount = availableSamples;
 			inputSampleCount = availableSamples;
 
-			Mix( pDevice, pChannel, pData, offset, m_fracOffset, FIX(1), outputSampleCount, 0, forward );
+			Mix(pDevice, pChannel, pData, offset, m_fracOffset, FIX(1), outputSampleCount, 0, forward);
 		}
 		offset += outputSampleCount;
 		sampleCount -= outputSampleCount;
 
-		if ( forward )
+		if(forward)
 		{
 			m_sample += inputSampleCount;
 			m_absoluteSample += inputSampleCount;
 		}
 
-		if ( m_loop != 0 && m_sample >= m_loop )
+		if(m_loop != 0 && m_sample >= m_loop)
 		{
-			SetSamplePosition( m_startpos );
+			SetSamplePosition(m_startpos);
 		}
-
 	}
 
-	if ( sampleCount > 0 )
+	if(sampleCount > 0)
 		return false;
 
 	return true;

@@ -5,7 +5,6 @@
 // $NoKeywords: $
 //=============================================================================//
 
-
 #include "audio_pch.h"
 #include "minmax.h"
 #include "voice_gain.h"
@@ -17,7 +16,6 @@ CAutoGain::CAutoGain()
 {
 	Reset(128, 5.0f, 0.5f, 1);
 }
-
 
 void CAutoGain::Reset(int blockSize, float maxGain, float avgToMaxVal, float scale)
 {
@@ -38,10 +36,7 @@ void CAutoGain::Reset(int blockSize, float maxGain, float avgToMaxVal, float sca
 	m_FixedCurrentGain = 1 << AG_FIX_SHIFT;
 }
 
-
-void CAutoGain::ProcessSamples(
-	short *pSamples,
-	int nSamples)
+void CAutoGain::ProcessSamples(short *pSamples, int nSamples)
 {
 	short *pCurPos = pSamples;
 	int nSamplesLeft = nSamples;
@@ -50,11 +45,11 @@ void CAutoGain::ProcessSamples(
 	while(nSamplesLeft)
 	{
 		int nToProcess = min(nSamplesLeft, (m_BlockSize - m_CurBlockOffset));
-		for(int iSample=0; iSample < nToProcess; iSample++)
+		for(int iSample = 0; iSample < nToProcess; iSample++)
 		{
 			// Update running totals..
-			m_CurTotal += abs( pCurPos[iSample] );
-			m_CurMax = max( m_CurMax, (int)abs( pCurPos[iSample] ) );
+			m_CurTotal += abs(pCurPos[iSample]);
+			m_CurMax = max(m_CurMax, (int)abs(pCurPos[iSample]));
 
 			// Apply gain on this sample.
 			AGFixed gain = m_FixedCurrentGain + m_CurBlockOffset * m_GainMultiplier;

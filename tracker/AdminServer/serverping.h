@@ -17,13 +17,11 @@
 class CSocket;
 class IResponse;
 
-
-class CServerPing 
+class CServerPing
 {
 
 public:
-
-	CServerPing(IResponse *target,serveritem_t &server);
+	CServerPing(IResponse *target, serveritem_t &server);
 	~CServerPing();
 
 	// send a ping to the server
@@ -39,17 +37,14 @@ public:
 	void UpdateServer(float recvTime);
 
 private:
-
 	serveritem_t m_Server;
-	CSocket	*m_pQuery;	// Game server query socket
-	
+	CSocket *m_pQuery; // Game server query socket
+
 	IResponse *m_pResponseTarget;
 
 	bool m_bIsRefreshing;
 	float m_fSendTime;
 	bool m_bRefreshed;
-
 };
-
 
 #endif // SERVERPING_H

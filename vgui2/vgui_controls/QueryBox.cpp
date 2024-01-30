@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 // This class is a message box that has two buttons, ok and cancel instead of
 // just the ok button of a message box. We use a message box class for the ok button
 // and implement another button here.
@@ -17,7 +17,7 @@
 #include <tier0/memdbgon.h>
 
 #ifndef max
-#define max(a,b)            (((a) > (b)) ? (a) : (b))
+#define max(a, b) (((a) > (b)) ? (a) : (b))
 #endif
 
 using namespace vgui;
@@ -25,11 +25,11 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-QueryBox::QueryBox(const char *title, const char *queryText, vgui::Panel *parent) : MessageBox(title, queryText,parent)
+QueryBox::QueryBox(const char *title, const char *queryText, vgui::Panel *parent) : MessageBox(title, queryText, parent)
 {
 	SetDeleteSelfOnClose(true);
 	m_pCancelButton = new Button(this, "CancelButton", "#QueryBox_Cancel");
-	m_pCancelButton->SetCommand("Cancel"); 
+	m_pCancelButton->SetCommand("Cancel");
 	m_pOkButton->SetCommand("OK");
 	m_pCancelCommand = NULL;
 	m_pOkCommand = NULL;
@@ -41,11 +41,12 @@ QueryBox::QueryBox(const char *title, const char *queryText, vgui::Panel *parent
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-QueryBox::QueryBox(const wchar_t *wszTitle, const wchar_t *wszQueryText,vgui::Panel *parent) : MessageBox(wszTitle, wszQueryText,parent)
+QueryBox::QueryBox(const wchar_t *wszTitle, const wchar_t *wszQueryText, vgui::Panel *parent)
+	: MessageBox(wszTitle, wszQueryText, parent)
 {
 	SetDeleteSelfOnClose(true);
 	m_pCancelButton = new Button(this, "CancelButton", "#QueryBox_Cancel");
-	m_pCancelButton->SetCommand("Cancel"); 
+	m_pCancelButton->SetCommand("Cancel");
 	m_pOkButton->SetCommand("OK");
 	m_pCancelCommand = NULL;
 	m_pOkCommand = NULL;
@@ -61,18 +62,18 @@ QueryBox::~QueryBox()
 {
 	delete m_pCancelButton;
 
-	if ( m_pOkCommand )
+	if(m_pOkCommand)
 	{
 		m_pOkCommand->deleteThis();
 	}
-	if ( m_pCancelCommand )
+	if(m_pCancelCommand)
 	{
 		m_pCancelCommand->deleteThis();
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Layout the window for drawing 
+// Purpose: Layout the window for drawing
 //-----------------------------------------------------------------------------
 void QueryBox::PerformLayout()
 {
@@ -88,21 +89,20 @@ void QueryBox::PerformLayout()
 
 	int oldWide, oldTall;
 	m_pCancelButton->GetSize(oldWide, oldTall);
-	
+
 	int btnWide, btnTall;
 	m_pCancelButton->GetContentSize(btnWide, btnTall);
 	btnWide = max(oldWide, btnWide + 10);
 	btnTall = max(oldTall, btnTall + 10);
 	m_pCancelButton->SetSize(btnWide, btnTall);
 
-//nt boxWidth, boxTall;
+	// nt boxWidth, boxTall;
 	GetSize(boxWidth, boxTall);
-//	wide = max(wide, btnWide * 2 + 100);
-//	SetSize(wide, tall);
+	//	wide = max(wide, btnWide * 2 + 100);
+	//	SetSize(wide, tall);
 
-	m_pOkButton->SetPos((wide/2)-(m_pOkButton->GetWide())-1 + x, tall - m_pOkButton->GetTall() - 15);
-	m_pCancelButton->SetPos((wide/2) + x+16, tall - m_pCancelButton->GetTall() - 15);
-
+	m_pOkButton->SetPos((wide / 2) - (m_pOkButton->GetWide()) - 1 + x, tall - m_pOkButton->GetTall() - 15);
+	m_pCancelButton->SetPos((wide / 2) + x + 16, tall - m_pCancelButton->GetTall() - 15);
 }
 
 //-----------------------------------------------------------------------------
@@ -111,27 +111,26 @@ void QueryBox::PerformLayout()
 //-----------------------------------------------------------------------------
 void QueryBox::OnCommand(const char *command)
 {
-	if (!stricmp(command, "OK"))
+	if(!stricmp(command, "OK"))
 	{
 		OnCommand("Close");
 
-		if ( m_pOkCommand )
+		if(m_pOkCommand)
 		{
 			PostActionSignal(m_pOkCommand->MakeCopy());
 		}
 	}
-	else if (!stricmp(command, "Cancel"))
+	else if(!stricmp(command, "Cancel"))
 	{
-		OnCommand("Close");	
+		OnCommand("Close");
 
-		if (m_pCancelCommand)
+		if(m_pCancelCommand)
 		{
 			PostActionSignal(m_pCancelCommand->MakeCopy());
 		}
 	}
-	
+
 	BaseClass::OnCommand(command);
-	
 }
 
 //-----------------------------------------------------------------------------
@@ -139,7 +138,7 @@ void QueryBox::OnCommand(const char *command)
 //-----------------------------------------------------------------------------
 void QueryBox::SetOKCommand(KeyValues *keyValues)
 {
-	if ( m_pOkCommand )
+	if(m_pOkCommand)
 	{
 		m_pOkCommand->deleteThis();
 	}
@@ -152,7 +151,7 @@ void QueryBox::SetOKCommand(KeyValues *keyValues)
 //-----------------------------------------------------------------------------
 void QueryBox::SetOKCommandValue(const char *keyName, int value)
 {
-	if ( !m_pOkCommand )
+	if(!m_pOkCommand)
 	{
 		m_pOkCommand = new KeyValues("Command");
 	}
@@ -165,7 +164,7 @@ void QueryBox::SetOKCommandValue(const char *keyName, int value)
 //-----------------------------------------------------------------------------
 void QueryBox::SetCancelCommand(KeyValues *keyValues)
 {
-	if ( m_pCancelCommand )
+	if(m_pCancelCommand)
 	{
 		m_pCancelCommand->deleteThis();
 	}
@@ -176,7 +175,7 @@ void QueryBox::SetCancelCommand(KeyValues *keyValues)
 //-----------------------------------------------------------------------------
 // Purpose: Sets the cancel button text
 //-----------------------------------------------------------------------------
-void QueryBox::SetCancelButtonText(const char* buttonText)
+void QueryBox::SetCancelButtonText(const char *buttonText)
 {
 	m_pCancelButton->SetText(buttonText);
 	InvalidateLayout();
@@ -185,15 +184,15 @@ void QueryBox::SetCancelButtonText(const char* buttonText)
 //-----------------------------------------------------------------------------
 // Purpose: Sets the cancel button text
 //-----------------------------------------------------------------------------
-void QueryBox::SetCancelButtonText(const wchar_t* wszButtonText)
+void QueryBox::SetCancelButtonText(const wchar_t *wszButtonText)
 {
 	m_pCancelButton->SetText(wszButtonText);
 	InvalidateLayout();
 }
 
-void QueryBox::OnKeyCodeTyped( KeyCode code )
+void QueryBox::OnKeyCodeTyped(KeyCode code)
 {
-	if ( code == KEY_ESCAPE )
+	if(code == KEY_ESCAPE)
 	{
 		OnCommand("Cancel");
 	}
@@ -204,11 +203,11 @@ void QueryBox::OnKeyCodeTyped( KeyCode code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void QueryBox::OnKeyCodePressed( KeyCode code )
+void QueryBox::OnKeyCodePressed(KeyCode code)
 {
-	if ( code == KEY_XBUTTON_B )
+	if(code == KEY_XBUTTON_B)
 	{
 		OnCommand("Cancel");
 	}
@@ -217,6 +216,3 @@ void QueryBox::OnKeyCodePressed( KeyCode code )
 		Frame::OnKeyCodePressed(code);
 	}
 }
-
-
-

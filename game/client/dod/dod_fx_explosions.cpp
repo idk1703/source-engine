@@ -14,23 +14,23 @@
 #include "fx_explosion.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void DODExplosionCallback( const Vector &vecOrigin, const Vector &vecNormal )
+void DODExplosionCallback(const Vector &vecOrigin, const Vector &vecNormal)
 {
 	// Calculate the angles, given the normal.
 	bool bInAir = false;
-	QAngle angExplosion( 0.0f, 0.0f, 0.0f );
+	QAngle angExplosion(0.0f, 0.0f, 0.0f);
 
 	// Cannot use zeros here because we are sending the normal at a smaller bit size.
-	if ( fabs( vecNormal.x ) < 0.05f && fabs( vecNormal.y ) < 0.05f && fabs( vecNormal.z ) < 0.05f )
+	if(fabs(vecNormal.x) < 0.05f && fabs(vecNormal.y) < 0.05f && fabs(vecNormal.z) < 0.05f)
 	{
 		bInAir = true;
 		angExplosion.Init();
 	}
 	else
 	{
-		VectorAngles( vecNormal, angExplosion );
+		VectorAngles(vecNormal, angExplosion);
 		bInAir = false;
 	}
 
@@ -40,12 +40,12 @@ void DODExplosionCallback( const Vector &vecOrigin, const Vector &vecNormal )
 
 	// Explosions.
 
-	if ( UTIL_PointContents( vecOrigin ) & CONTENTS_WATER )
+	if(UTIL_PointContents(vecOrigin) & CONTENTS_WATER)
 	{
-		WaterExplosionEffect().Create( vecOrigin, 1 /*m_nMagnitude*/, 1 /*m_fScale*/, 0 /*m_nFlags*/ );
+		WaterExplosionEffect().Create(vecOrigin, 1 /*m_nMagnitude*/, 1 /*m_fScale*/, 0 /*m_nFlags*/);
 		return;
 	}
-	else if ( bInAir )
+	else if(bInAir)
 	{
 		pszEffect = "explosioncore_midair";
 	}
@@ -55,52 +55,49 @@ void DODExplosionCallback( const Vector &vecOrigin, const Vector &vecNormal )
 	}
 
 	CLocalPlayerFilter filter;
-	C_BaseEntity::EmitSound( filter, SOUND_FROM_WORLD, pszSound, &vecOrigin );
+	C_BaseEntity::EmitSound(filter, SOUND_FROM_WORLD, pszSound, &vecOrigin);
 
-	DispatchParticleEffect( pszEffect, vecOrigin, angExplosion );
+	DispatchParticleEffect(pszEffect, vecOrigin, angExplosion);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_TEDODExplosion : public C_BaseTempEntity
 {
 public:
-
-	DECLARE_CLASS( C_TEDODExplosion, C_BaseTempEntity );
+	DECLARE_CLASS(C_TEDODExplosion, C_BaseTempEntity);
 	DECLARE_CLIENTCLASS();
 
-	C_TEDODExplosion( void );
+	C_TEDODExplosion(void);
 
-	virtual void	PostDataUpdate( DataUpdateType_t updateType );
+	virtual void PostDataUpdate(DataUpdateType_t updateType);
 
 public:
-	Vector		m_vecOrigin;
-	Vector		m_vecNormal;
+	Vector m_vecOrigin;
+	Vector m_vecNormal;
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-C_TEDODExplosion::C_TEDODExplosion( void )
+C_TEDODExplosion::C_TEDODExplosion(void)
 {
 	m_vecOrigin.Init();
 	m_vecNormal.Init();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_TEDODExplosion::PostDataUpdate( DataUpdateType_t updateType )
+void C_TEDODExplosion::PostDataUpdate(DataUpdateType_t updateType)
 {
-	VPROF( "C_TETFExplosion::PostDataUpdate" );
-	DODExplosionCallback( m_vecOrigin, m_vecNormal );
+	VPROF("C_TETFExplosion::PostDataUpdate");
+	DODExplosionCallback(m_vecOrigin, m_vecNormal);
 }
 
-IMPLEMENT_CLIENTCLASS_EVENT_DT( C_TEDODExplosion, DT_TEDODExplosion, CTEDODExplosion )
-	RecvPropFloat( RECVINFO( m_vecOrigin[0] ) ),
-	RecvPropFloat( RECVINFO( m_vecOrigin[1] ) ),
-	RecvPropFloat( RECVINFO( m_vecOrigin[2] ) ),
-	RecvPropVector( RECVINFO( m_vecNormal ) ),
-END_RECV_TABLE()
-
+IMPLEMENT_CLIENTCLASS_EVENT_DT(C_TEDODExplosion, DT_TEDODExplosion, CTEDODExplosion)
+RecvPropFloat(RECVINFO(m_vecOrigin[0])), RecvPropFloat(RECVINFO(m_vecOrigin[1])),
+	RecvPropFloat(RECVINFO(m_vecOrigin[2])), RecvPropVector(RECVINFO(m_vecNormal)),
+END_RECV_TABLE
+()

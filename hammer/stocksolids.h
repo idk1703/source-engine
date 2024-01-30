@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -12,142 +12,156 @@
 #endif
 
 #pragma warning(push, 1)
-#pragma warning(disable:4701 4702 4530)
+#pragma warning(disable : 4701 4702 4530)
 #include <fstream>
 #pragma warning(pop)
 #include "mathlib/vector.h"
 #include "MapFace.h"
 
-
 class BoundBox;
 class CMapSolid;
 class Vector;
 
-
 class StockSolid
 {
-	public:
-		void Serialize(std::fstream& file, BOOL bIsStoring);
-		int GetFieldCount() const;
-		void SetFieldData(int iIndex, int iData);
-		int GetFieldData(int iIndex, int *piData = NULL) const;
-		void GetFieldRange(int iIndex, int *piRangeLower, int *piRangeUpper);
-		void SetOrigin(const Vector &o);
-		void SetCenterOffset(const Vector &ofs);
-		
-		virtual void SetFromBox(BoundBox * pBox) {}
+public:
+	void Serialize(std::fstream &file, BOOL bIsStoring);
+	int GetFieldCount() const;
+	void SetFieldData(int iIndex, int iData);
+	int GetFieldData(int iIndex, int *piData = NULL) const;
+	void GetFieldRange(int iIndex, int *piRangeLower, int *piRangeUpper);
+	void SetOrigin(const Vector &o);
+	void SetCenterOffset(const Vector &ofs);
 
-		virtual void CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eAlignment) = 0;
+	virtual void SetFromBox(BoundBox *pBox) {}
 
-		~StockSolid();
+	virtual void CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eAlignment) = 0;
 
-	protected:
-		StockSolid(int nFields);
+	~StockSolid();
 
-		typedef enum
-		{
-			DFTYPE_INTEGER,
-			DFTYPE_BOOLEAN
-		} STSDF_TYPE;
+protected:
+	StockSolid(int nFields);
 
-		void AddDataField(STSDF_TYPE type, const char *pszName, int iRangeLower = -1,
-			int iRangeUpper = -1);
+	typedef enum
+	{
+		DFTYPE_INTEGER,
+		DFTYPE_BOOLEAN
+	} STSDF_TYPE;
 
-		Vector origin;
-		Vector cofs;
+	void AddDataField(STSDF_TYPE type, const char *pszName, int iRangeLower = -1, int iRangeUpper = -1);
 
-	private:
-		void AllocateDataFields(int nFields);
+	Vector origin;
+	Vector cofs;
 
-		enum
-		{
-			DFFLAG_RANGED = 0x01
-		};
+private:
+	void AllocateDataFields(int nFields);
 
-		typedef struct
-		{
-			unsigned flags;
-			STSDF_TYPE type;
-			char szName[128];
+	enum
+	{
+		DFFLAG_RANGED = 0x01
+	};
+
+	typedef struct
+	{
+		unsigned flags;
+		STSDF_TYPE type;
+		char szName[128];
 
 		// range:
-			int iRangeLower;
-			int iRangeUpper;
+		int iRangeLower;
+		int iRangeUpper;
 
 		// value:
-			int iValue;
+		int iValue;
 
-		} STSDATAFIELD;
+	} STSDATAFIELD;
 
-		STSDATAFIELD *pFields;
-		int nFields;
-		int iMaxFields;
+	STSDATAFIELD *pFields;
+	int nFields;
+	int iMaxFields;
 };
-
 
 class StockBlock : public StockSolid
 {
-	public:
+public:
+	StockBlock();
 
-		StockBlock();
+	void CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eTextureAlignment);
+	void SetFromBox(BoundBox *pBox);
 
-		void CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eTextureAlignment);
-		void SetFromBox(BoundBox *pBox);
-
-		enum { fieldWidth, fieldDepth, fieldHeight };
+	enum
+	{
+		fieldWidth,
+		fieldDepth,
+		fieldHeight
+	};
 };
-
 
 class StockWedge : public StockSolid
 {
-	public:
+public:
+	StockWedge();
 
-		StockWedge();
+	void CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eTextureAlignment);
+	void SetFromBox(BoundBox *pBox);
 
-		void CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eTextureAlignment);
-		void SetFromBox(BoundBox *pBox);
-
-		enum { fieldWidth, fieldDepth, fieldHeight };
+	enum
+	{
+		fieldWidth,
+		fieldDepth,
+		fieldHeight
+	};
 };
-
 
 class StockCylinder : public StockSolid
 {
-	public:
+public:
+	StockCylinder();
 
-		StockCylinder();
+	void CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eTextureAlignment);
+	void SetFromBox(BoundBox *pBox);
 
-		void CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eTextureAlignment);
-		void SetFromBox(BoundBox *pBox);
-
-		enum { fieldWidth, fieldDepth, fieldHeight, fieldSideCount };
+	enum
+	{
+		fieldWidth,
+		fieldDepth,
+		fieldHeight,
+		fieldSideCount
+	};
 };
-
 
 class StockSpike : public StockSolid
 {
-	public:
+public:
+	StockSpike();
 
-		StockSpike();
+	void CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eTextureAlignment);
+	void SetFromBox(BoundBox *pBox);
 
-		void CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eTextureAlignment);
-		void SetFromBox(BoundBox *pBox);
-
-		enum { fieldWidth, fieldDepth, fieldHeight, fieldSideCount };
+	enum
+	{
+		fieldWidth,
+		fieldDepth,
+		fieldHeight,
+		fieldSideCount
+	};
 };
-
 
 class StockSphere : public StockSolid
 {
-	public:
+public:
+	StockSphere();
 
-		StockSphere();
+	void CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eTextureAlignment);
+	void SetFromBox(BoundBox *pBox);
 
-		void CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eTextureAlignment);
-		void SetFromBox(BoundBox *pBox);
-
-		enum { fieldWidth, fieldDepth, fieldHeight, fieldSideCount };
+	enum
+	{
+		fieldWidth,
+		fieldDepth,
+		fieldHeight,
+		fieldSideCount
+	};
 };
-
 
 #endif // STOCKSOLIDS_H

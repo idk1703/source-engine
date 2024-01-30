@@ -1,13 +1,13 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
 // $NoKeywords: $
 //=============================================================================//
 
-#if !defined( C_CONTROLZONE_H )
+#if !defined(C_CONTROLZONE_H)
 #define C_CONTROLZONE_H
 #ifdef _WIN32
 #pragma once
@@ -20,20 +20,20 @@ class ConVar;
 class C_ControlZone : public C_BaseEntity
 {
 public:
-	DECLARE_CLASS( C_ControlZone, C_BaseEntity );
+	DECLARE_CLASS(C_ControlZone, C_BaseEntity);
 	DECLARE_CLIENTCLASS();
 
-					C_ControlZone();
-	virtual			~C_ControlZone();
+	C_ControlZone();
+	virtual ~C_ControlZone();
 
-	virtual	bool	ShouldDraw();
-	virtual void	OnDataChanged( DataUpdateType_t updateType );
+	virtual bool ShouldDraw();
+	virtual void OnDataChanged(DataUpdateType_t updateType);
 
 public:
-	int				m_nZoneNumber;
+	int m_nZoneNumber;
 
 private:
-	const ConVar	*m_pShowTriggers;
+	const ConVar *m_pShowTriggers;
 };
 
 #endif // C_CONTROLZONE_H

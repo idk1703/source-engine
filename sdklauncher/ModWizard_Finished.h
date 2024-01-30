@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -10,16 +10,15 @@
 #pragma once
 #endif
 
-
 #include <vgui_controls/WizardSubPanel.h>
 #include <vgui_controls/Label.h>
 #include <vgui_controls/CheckButton.h>
 
-
-// --------------------------------------------------------------------------------------------------------------------- //
-// CreateModWizard sub panel 1.
-// This panel just tells them about the wizard and what it's going to do, and gives them a chance to cancel.
-// --------------------------------------------------------------------------------------------------------------------- //
+// ---------------------------------------------------------------------------------------------------------------------
+// // CreateModWizard sub panel 1. This panel just tells them about the wizard and what it's going to do, and gives them
+// a chance to cancel.
+// ---------------------------------------------------------------------------------------------------------------------
+// //
 
 namespace vgui
 {
@@ -30,11 +29,11 @@ namespace vgui
 		typedef WizardSubPanel BaseClass;
 
 	public:
-		CModWizardSubPanel_Finished( Panel *parent, const char *panelName );
+		CModWizardSubPanel_Finished(Panel *parent, const char *panelName);
 
-		void GetReady( const char *pOutputDirName );
-		
-		virtual WizardSubPanel* GetNextSubPanel();
+		void GetReady(const char *pOutputDirName);
+
+		virtual WizardSubPanel *GetNextSubPanel();
 		virtual void OnDisplayAsNext();
 		virtual void PerformLayout();
 		virtual bool OnFinishButton();
@@ -42,10 +41,9 @@ namespace vgui
 	private:
 		Label *m_pFinishedText;
 		CheckButton *m_pOpenReadme;
-		char m_OutputDirName[MAX_PATH];		// c:\mymod
+		char m_OutputDirName[MAX_PATH]; // c:\mymod
 	};
 
-}
-
+} // namespace vgui
 
 #endif // MODWIZARD_FINISHED_H

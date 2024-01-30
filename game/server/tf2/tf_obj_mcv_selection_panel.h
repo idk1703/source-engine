@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,9 +10,7 @@
 #pragma once
 #endif
 
-
 // Tells the MCV selection panels to detect network state changes.
 void SignalChangeInMCVSelectionPanels();
-
 
 #endif // TF_OBJ_MCV_SELECTION_PANEL_H

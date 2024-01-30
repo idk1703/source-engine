@@ -13,37 +13,38 @@
 #endif
 #include "techtree.h"
 
-bool ParseTechnologyFile( CUtlVector< CBaseTechnology* > &pTechnologyList, IFileSystem* pFileSystem, int nTeamNumber, char *sFileName );
+bool ParseTechnologyFile(CUtlVector<CBaseTechnology *> &pTechnologyList, IFileSystem *pFileSystem, int nTeamNumber,
+						 char *sFileName);
 
 // Color codes for resources
-rescolor sResourceColor = { 64,	255, 64 };
+rescolor sResourceColor = {64, 255, 64};
 
 // Prototype names for resources
 char sResourceName[] = "Jojierium";
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CBaseTechnology::CBaseTechnology( void )
+CBaseTechnology::CBaseTechnology(void)
 {
 	m_nTechLevel = 0;
 	ZeroPreferences();
-	SetAvailable( false );
-	SetActive( false );
-	SetPreferred( false );
-	SetVoters( 0 );
-	SetCost( 0 );
-	SetDirty( false );
+	SetAvailable(false);
+	SetActive(false);
+	SetPreferred(false);
+	SetVoters(0);
+	SetCost(0);
+	SetDirty(false);
 	m_fResourceLevel = 0;
-	memset( m_ClassResults, 0, sizeof( m_ClassResults ) );
-	memset( m_pszName, 0, sizeof( m_pszName ) );
-	memset( m_pszPrintName, 0, sizeof( m_pszPrintName ) );
-	memset( m_pszDescription, 0, sizeof( m_pszDescription ) );
-	memset( m_pszTeamSoundFile, 0, sizeof( m_pszTeamSoundFile ) );
-	memset( m_apszContainedTechs, 0, sizeof( m_apszContainedTechs ) );
-	memset( m_pContainedTechs, 0, sizeof(m_pContainedTechs) );
-	memset( m_apszDependentTechs, 0, sizeof( m_apszDependentTechs ) );
-	memset( m_pDependentTechs, 0, sizeof(m_pDependentTechs) );
+	memset(m_ClassResults, 0, sizeof(m_ClassResults));
+	memset(m_pszName, 0, sizeof(m_pszName));
+	memset(m_pszPrintName, 0, sizeof(m_pszPrintName));
+	memset(m_pszDescription, 0, sizeof(m_pszDescription));
+	memset(m_pszTeamSoundFile, 0, sizeof(m_pszTeamSoundFile));
+	memset(m_apszContainedTechs, 0, sizeof(m_apszContainedTechs));
+	memset(m_pContainedTechs, 0, sizeof(m_pContainedTechs));
+	memset(m_apszDependentTechs, 0, sizeof(m_apszDependentTechs));
+	memset(m_pDependentTechs, 0, sizeof(m_pDependentTechs));
 	m_iContainedTechs = 0;
 	m_iDependentTechs = 0;
 	m_iTeamSound = 0;
@@ -52,32 +53,30 @@ CBaseTechnology::CBaseTechnology( void )
 	m_bVehicle = false;
 	m_bTechLevelUpgrade = false;
 	m_bResourceTech = false;
-	
-	memset( m_szTextureName, 0, sizeof( m_szTextureName ) );
+
+	memset(m_szTextureName, 0, sizeof(m_szTextureName));
 	m_nTextureID = 0;
 
-	memset( m_szButtonName, 0, sizeof( m_szButtonName ) );
+	memset(m_szButtonName, 0, sizeof(m_szButtonName));
 
 	m_nNumWeaponAssociations = 0;
-	memset( m_rgszWeaponAssociation, 0, sizeof( m_rgszWeaponAssociation ) );
+	memset(m_rgszWeaponAssociation, 0, sizeof(m_rgszWeaponAssociation));
 
-	SetHidden( false );
+	SetHidden(false);
 	ResetHintsGiven();
-}	
-
-//-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-CBaseTechnology::~CBaseTechnology( void )
-{
 }
 
-static bool NameStartsWith( const char *name, const char *prefix )
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+CBaseTechnology::~CBaseTechnology(void) {}
+
+static bool NameStartsWith(const char *name, const char *prefix)
 {
-	if ( !name || !name[ 0 ] || !prefix || !prefix[ 0 ] )
+	if(!name || !name[0] || !prefix || !prefix[0])
 		return false;
 
-	if ( !strnicmp( name, prefix, strlen( prefix ) ) )
+	if(!strnicmp(name, prefix, strlen(prefix)))
 		return true;
 
 	return false;
@@ -86,65 +85,65 @@ static bool NameStartsWith( const char *name, const char *prefix )
 //-----------------------------------------------------------------------------
 // Purpose: Set the technology name
 //-----------------------------------------------------------------------------
-void CBaseTechnology::SetName( const char *pName )
+void CBaseTechnology::SetName(const char *pName)
 {
-	Q_strncpy( m_pszName, pName, sizeof(m_pszName) );
+	Q_strncpy(m_pszName, pName, sizeof(m_pszName));
 
 	// Determine special information about this technology
-	m_bClassUpgrade		= NameStartsWith( pName, "class_" );
-	m_bVehicle			= NameStartsWith( pName, "vehicle_" );
-	m_bTechLevelUpgrade	= NameStartsWith( pName, "tech_level_" ); 
+	m_bClassUpgrade = NameStartsWith(pName, "class_");
+	m_bVehicle = NameStartsWith(pName, "vehicle_");
+	m_bTechLevelUpgrade = NameStartsWith(pName, "tech_level_");
 	// HACK: Assume global techs relate to resources for now
-	m_bResourceTech		= NameStartsWith( pName, "g_" );
+	m_bResourceTech = NameStartsWith(pName, "g_");
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Set the technology print name
 //-----------------------------------------------------------------------------
-void CBaseTechnology::SetPrintName( const char *pName )
+void CBaseTechnology::SetPrintName(const char *pName)
 {
-	Q_strncpy( m_pszPrintName, pName, sizeof(m_pszPrintName) );
+	Q_strncpy(m_pszPrintName, pName, sizeof(m_pszPrintName));
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Set the technology description
 //-----------------------------------------------------------------------------
-void CBaseTechnology::SetDescription( const char *pDesc )
+void CBaseTechnology::SetDescription(const char *pDesc)
 {
-	Q_strncpy( m_pszDescription, pDesc, sizeof(m_pszDescription) );
+	Q_strncpy(m_pszDescription, pDesc, sizeof(m_pszDescription));
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pName - 
+// Purpose:
+// Input  : *pName -
 //-----------------------------------------------------------------------------
-void CBaseTechnology::SetButtonName( const char *pName )
+void CBaseTechnology::SetButtonName(const char *pName)
 {
-	Q_strncpy( m_szButtonName, pName, sizeof(m_szButtonName) );
+	Q_strncpy(m_szButtonName, pName, sizeof(m_szButtonName));
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Set the technology level
 //-----------------------------------------------------------------------------
-void CBaseTechnology::SetLevel( int iLevel )
+void CBaseTechnology::SetLevel(int iLevel)
 {
 	m_nTechLevel = iLevel;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *texture - 
+// Purpose:
+// Input  : *texture -
 //-----------------------------------------------------------------------------
-void CBaseTechnology::SetTextureName( const char *texture )
+void CBaseTechnology::SetTextureName(const char *texture)
 {
-	Q_strncpy( m_szTextureName, texture, sizeof( m_szTextureName ) );
+	Q_strncpy(m_szTextureName, texture, sizeof(m_szTextureName));
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : id - 
+// Purpose:
+// Input  : id -
 //-----------------------------------------------------------------------------
-void CBaseTechnology::SetTextureId( int id )
+void CBaseTechnology::SetTextureId(int id)
 {
 	m_nTextureID = id;
 }
@@ -152,7 +151,7 @@ void CBaseTechnology::SetTextureId( int id )
 //-----------------------------------------------------------------------------
 // Purpose: Set the technologies resource costs
 //-----------------------------------------------------------------------------
-void CBaseTechnology::SetCost( float fResourceCost )
+void CBaseTechnology::SetCost(float fResourceCost)
 {
 	m_fResourceCost = fResourceCost;
 
@@ -162,45 +161,45 @@ void CBaseTechnology::SetCost( float fResourceCost )
 //-----------------------------------------------------------------------------
 // Purpose: Set a specific class's sound
 //-----------------------------------------------------------------------------
-void CBaseTechnology::SetClassResultSound( int iClass, const char *pSound )
+void CBaseTechnology::SetClassResultSound(int iClass, const char *pSound)
 {
-	if (!pSound)
+	if(!pSound)
 		return;
 
-	Assert( iClass >= 0 && iClass < TFCLASS_CLASS_COUNT );
+	Assert(iClass >= 0 && iClass < TFCLASS_CLASS_COUNT);
 
 	// Class of 0 is the team's sound file
-	if ( iClass == 0 )
+	if(iClass == 0)
 	{
-		Q_strncpy( m_pszTeamSoundFile, pSound, sizeof(m_pszTeamSoundFile) );
+		Q_strncpy(m_pszTeamSoundFile, pSound, sizeof(m_pszTeamSoundFile));
 	}
 	else
 	{
 		m_ClassResults[iClass].bClassTouched = true;
-		Q_strncpy( m_ClassResults[iClass].pszSoundFile, pSound, sizeof(m_ClassResults[iClass].pszSoundFile) );
+		Q_strncpy(m_ClassResults[iClass].pszSoundFile, pSound, sizeof(m_ClassResults[iClass].pszSoundFile));
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : associate - 
+// Purpose:
+// Input  : associate -
 //-----------------------------------------------------------------------------
-void CBaseTechnology::SetClassResultAssociateWeapons( int iClass, bool associate )
+void CBaseTechnology::SetClassResultAssociateWeapons(int iClass, bool associate)
 {
-	Assert( iClass >= 0 && iClass < TFCLASS_CLASS_COUNT );
+	Assert(iClass >= 0 && iClass < TFCLASS_CLASS_COUNT);
 
 	m_ClassResults[iClass].m_bAssociateWeaponsForClass = associate;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Set a specific class's precached sound 
+// Purpose: Set a specific class's precached sound
 //-----------------------------------------------------------------------------
-void CBaseTechnology::SetClassResultSound( int iClass, int iSound )
+void CBaseTechnology::SetClassResultSound(int iClass, int iSound)
 {
-	Assert( iClass >= 0 && iClass < TFCLASS_CLASS_COUNT );
+	Assert(iClass >= 0 && iClass < TFCLASS_CLASS_COUNT);
 
 	// Class of 0 is the team's sound file
-	if ( iClass == 0 )
+	if(iClass == 0)
 	{
 		m_iTeamSound = iSound;
 	}
@@ -213,50 +212,50 @@ void CBaseTechnology::SetClassResultSound( int iClass, int iSound )
 //-----------------------------------------------------------------------------
 // Purpose: Set a specific class's description
 //-----------------------------------------------------------------------------
-void CBaseTechnology::SetClassResultDescription( int iClass, const char *pDesc )
+void CBaseTechnology::SetClassResultDescription(int iClass, const char *pDesc)
 {
-	if (!pDesc)
+	if(!pDesc)
 		return;
 
-	Assert( iClass > 0 && iClass < TFCLASS_CLASS_COUNT );
+	Assert(iClass > 0 && iClass < TFCLASS_CLASS_COUNT);
 	m_ClassResults[iClass].bClassTouched = true;
 
-	Q_strncpy( m_ClassResults[iClass].pszDescription, pDesc, sizeof(m_ClassResults[iClass].pszDescription)  );
+	Q_strncpy(m_ClassResults[iClass].pszDescription, pDesc, sizeof(m_ClassResults[iClass].pszDescription));
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Add a technology contained within this one
 //-----------------------------------------------------------------------------
-void CBaseTechnology::AddContainedTechnology( const char *pszTech )
+void CBaseTechnology::AddContainedTechnology(const char *pszTech)
 {
-	Q_strncpy( m_apszContainedTechs[ m_iContainedTechs ], pszTech, sizeof(m_apszContainedTechs[0])  );
+	Q_strncpy(m_apszContainedTechs[m_iContainedTechs], pszTech, sizeof(m_apszContainedTechs[0]));
 	m_iContainedTechs++;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Add a technology dependency within this one
 //-----------------------------------------------------------------------------
-void CBaseTechnology::AddDependentTechnology( const char *pszTech )
+void CBaseTechnology::AddDependentTechnology(const char *pszTech)
 {
-	Q_strncpy( m_apszDependentTechs[ m_iDependentTechs ], pszTech, sizeof(m_apszDependentTechs[0])  );
+	Q_strncpy(m_apszDependentTechs[m_iDependentTechs], pszTech, sizeof(m_apszDependentTechs[0]));
 	m_iDependentTechs++;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns true if this technology affects the specified class
 //-----------------------------------------------------------------------------
-bool CBaseTechnology::AffectsClass( int iClass )
+bool CBaseTechnology::AffectsClass(int iClass)
 {
 	// If this technology directly affects this class, return true
-	if ( m_ClassResults[ iClass ].bClassTouched )
+	if(m_ClassResults[iClass].bClassTouched)
 		return true;
 
 	// If not, do any of our contained techs affect the specified class
-	for (int i = 0; i < m_iContainedTechs; i++ )
+	for(int i = 0; i < m_iContainedTechs; i++)
 	{
-		if ( m_pContainedTechs[i] )
+		if(m_pContainedTechs[i])
 		{
-			if ( m_pContainedTechs[i]->AffectsClass( iClass ) )
+			if(m_pContainedTechs[i]->AffectsClass(iClass))
 				return true;
 		}
 	}
@@ -265,37 +264,37 @@ bool CBaseTechnology::AffectsClass( int iClass )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CBaseTechnology::IsClassUpgrade( void )
+bool CBaseTechnology::IsClassUpgrade(void)
 {
 	return m_bClassUpgrade;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CBaseTechnology::IsVehicle( void )
+bool CBaseTechnology::IsVehicle(void)
 {
 	return m_bVehicle;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CBaseTechnology::IsResourceTech( void )
+bool CBaseTechnology::IsResourceTech(void)
 {
 	return m_bResourceTech;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CBaseTechnology::IsTechLevelUpgrade( void )
+bool CBaseTechnology::IsTechLevelUpgrade(void)
 {
 	return m_bTechLevelUpgrade;
 }
@@ -304,7 +303,7 @@ bool CBaseTechnology::IsTechLevelUpgrade( void )
 // Purpose: Returns the level to which this technology belongs
 // Output : int
 //-----------------------------------------------------------------------------
-int CBaseTechnology::GetLevel( void )
+int CBaseTechnology::GetLevel(void)
 {
 	return m_nTechLevel;
 }
@@ -312,7 +311,7 @@ int CBaseTechnology::GetLevel( void )
 //-----------------------------------------------------------------------------
 // Purpose: Cost of technology in resource specified
 //-----------------------------------------------------------------------------
-float CBaseTechnology::GetResourceCost( void )
+float CBaseTechnology::GetResourceCost(void)
 {
 	return m_fResourceCost;
 }
@@ -320,7 +319,7 @@ float CBaseTechnology::GetResourceCost( void )
 //-----------------------------------------------------------------------------
 // Purpose: Retrieves the current amount of resources spent on the technology
 //-----------------------------------------------------------------------------
-float CBaseTechnology::GetResourceLevel( void )
+float CBaseTechnology::GetResourceLevel(void)
 {
 	return m_fResourceLevel;
 }
@@ -328,9 +327,9 @@ float CBaseTechnology::GetResourceLevel( void )
 //-----------------------------------------------------------------------------
 // Purpose: Sets a resource level to an amount
 //-----------------------------------------------------------------------------
-void CBaseTechnology::SetResourceLevel( float flResourceLevel )
+void CBaseTechnology::SetResourceLevel(float flResourceLevel)
 {
-	if ( m_fResourceLevel == flResourceLevel )
+	if(m_fResourceLevel == flResourceLevel)
 		return;
 
 	m_fResourceLevel = flResourceLevel;
@@ -340,30 +339,30 @@ void CBaseTechnology::SetResourceLevel( float flResourceLevel )
 	UpdateWatchers();
 
 	// Force me to be resent to clients
-	SetDirty( true );
+	SetDirty(true);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Increase the level of the specified resource spent on this technology
 // Output : Returns true if the technology's had enough resources to be bought
 //-----------------------------------------------------------------------------
-bool CBaseTechnology::IncreaseResourceLevel( float flResourcesToSpend )
+bool CBaseTechnology::IncreaseResourceLevel(float flResourcesToSpend)
 {
-	SetResourceLevel( m_fResourceLevel + flResourcesToSpend );
+	SetResourceLevel(m_fResourceLevel + flResourcesToSpend);
 
 	// Have my costs been met?
-	if ( GetResourceLevel() < GetResourceCost() )
+	if(GetResourceLevel() < GetResourceCost())
 		return false;
 
 	return true;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Figure out my overall owned percentage 
+// Purpose: Figure out my overall owned percentage
 //-----------------------------------------------------------------------------
-void CBaseTechnology::RecalculateOverallLevel( void )
+void CBaseTechnology::RecalculateOverallLevel(void)
 {
-	if ( !GetResourceCost() )
+	if(!GetResourceCost())
 	{
 		m_flOverallOwnedPercentage = 0;
 	}
@@ -374,9 +373,9 @@ void CBaseTechnology::RecalculateOverallLevel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-float CBaseTechnology::GetOverallLevel( void )
+float CBaseTechnology::GetOverallLevel(void)
 {
 	return m_flOverallOwnedPercentage;
 }
@@ -384,23 +383,23 @@ float CBaseTechnology::GetOverallLevel( void )
 //-----------------------------------------------------------------------------
 // Purpose: Force this technology to complete itself
 //-----------------------------------------------------------------------------
-void CBaseTechnology::ForceComplete( void )
+void CBaseTechnology::ForceComplete(void)
 {
-	SetResourceLevel( GetResourceCost() );
+	SetResourceLevel(GetResourceCost());
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CBaseTechnology::IsAGoalTechnology( void )
+bool CBaseTechnology::IsAGoalTechnology(void)
 {
 	return m_bGoalTechnology;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTechnology::SetGoalTechnology( bool bGoal )
+void CBaseTechnology::SetGoalTechnology(bool bGoal)
 {
 	m_bGoalTechnology = bGoal;
 }
@@ -409,7 +408,7 @@ void CBaseTechnology::SetGoalTechnology( bool bGoal )
 // Purpose: Returns the name of this technology
 // Output : const
 //-----------------------------------------------------------------------------
-const char	*CBaseTechnology::GetName( void )
+const char *CBaseTechnology::GetName(void)
 {
 	return m_pszName;
 }
@@ -418,34 +417,34 @@ const char	*CBaseTechnology::GetName( void )
 // Purpose: Returns printable name of this technology
 // Output : const
 //-----------------------------------------------------------------------------
-const char	*CBaseTechnology::GetPrintName( void )
+const char *CBaseTechnology::GetPrintName(void)
 {
 	return m_pszPrintName;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
-const char *CBaseTechnology::GetButtonName( void )
+const char *CBaseTechnology::GetButtonName(void)
 {
 	return m_szButtonName;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
-const char *CBaseTechnology::GetTextureName(void )
+const char *CBaseTechnology::GetTextureName(void)
 {
 	return m_szTextureName;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
-int CBaseTechnology::GetTextureId( void )
+int CBaseTechnology::GetTextureId(void)
 {
 	return m_nTextureID;
 }
@@ -454,12 +453,12 @@ int CBaseTechnology::GetTextureId( void )
 // Purpose: Returns description for item
 // Output : const char
 //-----------------------------------------------------------------------------
-const char *CBaseTechnology::GetDescription( int iPlayerClass )
+const char *CBaseTechnology::GetDescription(int iPlayerClass)
 {
 	// If we have a custom description for the local player's class, return that instead
-	if ( AffectsClass( iPlayerClass ) )
+	if(AffectsClass(iPlayerClass))
 	{
-		if ( m_ClassResults[iPlayerClass].pszDescription )
+		if(m_ClassResults[iPlayerClass].pszDescription)
 			return m_ClassResults[iPlayerClass].pszDescription;
 	}
 
@@ -470,52 +469,52 @@ const char *CBaseTechnology::GetDescription( int iPlayerClass )
 //-----------------------------------------------------------------------------
 // Purpose: Returns sound filename to play for this technology
 //-----------------------------------------------------------------------------
-const char *CBaseTechnology::GetSoundFile( int iClass )
+const char *CBaseTechnology::GetSoundFile(int iClass)
 {
 	// Class of 0 is the team sound
-	if ( !iClass )
+	if(!iClass)
 		return m_pszTeamSoundFile;
 
-	Assert(iClass > 0 && iClass < TFCLASS_CLASS_COUNT );
+	Assert(iClass > 0 && iClass < TFCLASS_CLASS_COUNT);
 	return m_ClassResults[iClass].pszSoundFile;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns sound to play for this technology
 //-----------------------------------------------------------------------------
-int	CBaseTechnology::GetSound( int iClass )
+int CBaseTechnology::GetSound(int iClass)
 {
 	// Class of 0 is the team sound
-	if ( !iClass )
+	if(!iClass)
 		return m_iTeamSound;
 
-	Assert(iClass > 0 && iClass < TFCLASS_CLASS_COUNT );
+	Assert(iClass > 0 && iClass < TFCLASS_CLASS_COUNT);
 	return m_ClassResults[iClass].iSound;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : iClass - 
+// Purpose:
+// Input  : iClass -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CBaseTechnology::GetAssociateWeaponsForClass( int iClass )
+bool CBaseTechnology::GetAssociateWeaponsForClass(int iClass)
 {
-	if ( !iClass )
+	if(!iClass)
 		return false;
 
-	Assert(iClass > 0 && iClass < TFCLASS_CLASS_COUNT );
+	Assert(iClass > 0 && iClass < TFCLASS_CLASS_COUNT);
 	return m_ClassResults[iClass].m_bAssociateWeaponsForClass;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns whether the technology is available to the team
-// Input  : state - 
+// Input  : state -
 //-----------------------------------------------------------------------------
-void CBaseTechnology::SetAvailable( bool state )
+void CBaseTechnology::SetAvailable(bool state)
 {
-	if ( state != m_bAvailable )
+	if(state != m_bAvailable)
 	{
-		SetDirty( true );
+		SetDirty(true);
 	}
 
 	m_bAvailable = state;
@@ -525,7 +524,7 @@ void CBaseTechnology::SetAvailable( bool state )
 // Purpose: Determine whether team posses the technology
 // Output : Returns 1 if available, 0 otherwise
 //-----------------------------------------------------------------------------
-int CBaseTechnology::GetAvailable( void )
+int CBaseTechnology::GetAvailable(void)
 {
 	return m_bAvailable;
 }
@@ -533,11 +532,11 @@ int CBaseTechnology::GetAvailable( void )
 //-----------------------------------------------------------------------------
 // Purpose: Zero out team preference counters
 //-----------------------------------------------------------------------------
-void CBaseTechnology::ZeroPreferences( void )
+void CBaseTechnology::ZeroPreferences(void)
 {
-	if ( m_nPreferenceCount )
+	if(m_nPreferenceCount)
 	{
-		SetDirty( true );
+		SetDirty(true);
 	}
 
 	m_nPreferenceCount = 0;
@@ -546,118 +545,118 @@ void CBaseTechnology::ZeroPreferences( void )
 //-----------------------------------------------------------------------------
 // Purpose: Increment preference counter
 //-----------------------------------------------------------------------------
-void CBaseTechnology::IncrementPreferences( void )
+void CBaseTechnology::IncrementPreferences(void)
 {
 	m_nPreferenceCount++;
-	SetDirty( true );
+	SetDirty(true);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Retrieve preference count
 //-----------------------------------------------------------------------------
-int CBaseTechnology::GetPreferenceCount( void )
+int CBaseTechnology::GetPreferenceCount(void)
 {
 	return m_nPreferenceCount;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-int CBaseTechnology::GetNumWeaponAssociations( void )
+int CBaseTechnology::GetNumWeaponAssociations(void)
 {
 	return m_nNumWeaponAssociations;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
-const char *CBaseTechnology::GetAssociatedWeapon( int index )
+const char *CBaseTechnology::GetAssociatedWeapon(int index)
 {
-	if ( index < 0 || index >= m_nNumWeaponAssociations )
+	if(index < 0 || index >= m_nNumWeaponAssociations)
 	{
 		return "";
 	}
 
-	return m_rgszWeaponAssociation[ index ];
+	return m_rgszWeaponAssociation[index];
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *weaponname - 
+// Purpose:
+// Input  : *weaponname -
 //-----------------------------------------------------------------------------
-void CBaseTechnology::AddAssociatedWeapon( const char *weaponname )
+void CBaseTechnology::AddAssociatedWeapon(const char *weaponname)
 {
-	if ( m_nNumWeaponAssociations >= MAX_ASSOCIATED_WEAPONS )
+	if(m_nNumWeaponAssociations >= MAX_ASSOCIATED_WEAPONS)
 	{
-		Assert( !"CBaseTechnology::AddAssociatedWeapon:  m_nNumWeaponAssociations >= MAX_ASSOCIATED_WEAPONS" );
+		Assert(!"CBaseTechnology::AddAssociatedWeapon:  m_nNumWeaponAssociations >= MAX_ASSOCIATED_WEAPONS");
 		return;
 	}
-	Q_strncpy( m_rgszWeaponAssociation[ m_nNumWeaponAssociations++ ], weaponname, TECHNOLOGY_WEAPONNAME_LENGTH );
+	Q_strncpy(m_rgszWeaponAssociation[m_nNumWeaponAssociations++], weaponname, TECHNOLOGY_WEAPONNAME_LENGTH);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int	CBaseTechnology::GetNumberContainedTechs( void )
+int CBaseTechnology::GetNumberContainedTechs(void)
 {
 	return m_iContainedTechs;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-const char *CBaseTechnology::GetContainedTechName( int iTech )
+const char *CBaseTechnology::GetContainedTechName(int iTech)
 {
-	Assert( iTech >= 0 && iTech < m_iContainedTechs );
-	return m_apszContainedTechs[ iTech ];
+	Assert(iTech >= 0 && iTech < m_iContainedTechs);
+	return m_apszContainedTechs[iTech];
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTechnology::SetContainedTech( int iTech, CBaseTechnology *pTech )
+void CBaseTechnology::SetContainedTech(int iTech, CBaseTechnology *pTech)
 {
-	Assert( iTech >= 0 && iTech < m_iContainedTechs );
+	Assert(iTech >= 0 && iTech < m_iContainedTechs);
 	m_pContainedTechs[iTech] = pTech;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int	CBaseTechnology::GetNumberDependentTechs( void )
+int CBaseTechnology::GetNumberDependentTechs(void)
 {
 	return m_iDependentTechs;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-const char *CBaseTechnology::GetDependentTechName( int iTech )
+const char *CBaseTechnology::GetDependentTechName(int iTech)
 {
-	Assert( iTech >= 0 && iTech < m_iDependentTechs );
-	return m_apszDependentTechs[ iTech ];
+	Assert(iTech >= 0 && iTech < m_iDependentTechs);
+	return m_apszDependentTechs[iTech];
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTechnology::SetDependentTech( int iTech, CBaseTechnology *pTech )
+void CBaseTechnology::SetDependentTech(int iTech, CBaseTechnology *pTech)
 {
-	Assert( iTech >= 0 && iTech < m_iDependentTechs );
-	Assert( pTech );
+	Assert(iTech >= 0 && iTech < m_iDependentTechs);
+	Assert(pTech);
 	m_pDependentTechs[iTech] = pTech;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Return true if this tech depends on the specified tech
 //-----------------------------------------------------------------------------
-bool CBaseTechnology::DependsOn( CBaseTechnology *pTech )
+bool CBaseTechnology::DependsOn(CBaseTechnology *pTech)
 {
-	for ( int i = 0; i < GetNumberDependentTechs(); i++ )
+	for(int i = 0; i < GetNumberDependentTechs(); i++)
 	{
-		if ( m_pDependentTechs[i] == pTech )
+		if(m_pDependentTechs[i] == pTech)
 			return true;
 	}
 
@@ -667,17 +666,17 @@ bool CBaseTechnology::DependsOn( CBaseTechnology *pTech )
 //-----------------------------------------------------------------------------
 // Purpose: Return true if this tech has a dependent tech that's not been completed yet
 //-----------------------------------------------------------------------------
-bool CBaseTechnology::HasInactiveDependencies( void )
+bool CBaseTechnology::HasInactiveDependencies(void)
 {
-	for ( int i = 0; i < GetNumberDependentTechs(); i++ )
+	for(int i = 0; i < GetNumberDependentTechs(); i++)
 	{
 		// This condition can occur if there's a bug in the .txt file
 		// where a tech is told to depend on a non-existent tech
-		if (!m_pDependentTechs[i])
+		if(!m_pDependentTechs[i])
 			continue;
 
 		// Client uses m_bActive, Server uses m_bAvailable (?)
-		if ( m_pDependentTechs[i]->GetAvailable() == false && m_pDependentTechs[i]->GetActive() == false )
+		if(m_pDependentTechs[i]->GetAvailable() == false && m_pDependentTechs[i]->GetActive() == false)
 			return true;
 	}
 
@@ -687,24 +686,24 @@ bool CBaseTechnology::HasInactiveDependencies( void )
 //-----------------------------------------------------------------------------
 // Purpose: Dirty bit, used for fast knowledge of when to resend techs
 //-----------------------------------------------------------------------------
-bool CBaseTechnology::IsDirty( void )
+bool CBaseTechnology::IsDirty(void)
 {
 	return m_bDirty;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTechnology::SetDirty( bool bDirty )
+void CBaseTechnology::SetDirty(bool bDirty)
 {
 	m_bDirty = bDirty;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Set availability state for item
-// Input  : state - 
+// Input  : state -
 //-----------------------------------------------------------------------------
-void CBaseTechnology::SetActive( bool state )
+void CBaseTechnology::SetActive(bool state)
 {
 	m_bActive = state;
 }
@@ -712,16 +711,16 @@ void CBaseTechnology::SetActive( bool state )
 //-----------------------------------------------------------------------------
 // Purpose: Retrieve availability state
 //-----------------------------------------------------------------------------
-bool CBaseTechnology::GetActive( void )
+bool CBaseTechnology::GetActive(void)
 {
 	return m_bActive;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Set whether this is our local preferred item
-// Input  : state - 
+// Input  : state -
 //-----------------------------------------------------------------------------
-void CBaseTechnology::SetPreferred( bool state )
+void CBaseTechnology::SetPreferred(bool state)
 {
 	m_bPreferred = state;
 }
@@ -730,16 +729,16 @@ void CBaseTechnology::SetPreferred( bool state )
 // Purpose: Retrieve local preferred state
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CBaseTechnology::GetPreferred( void )
+bool CBaseTechnology::GetPreferred(void)
 {
 	return m_bPreferred;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Set the number of players preferring this tech
-// Input  : voters - 
+// Input  : voters -
 //-----------------------------------------------------------------------------
-void CBaseTechnology::SetVoters( int voters )
+void CBaseTechnology::SetVoters(int voters)
 {
 	m_nVoters = voters;
 }
@@ -748,44 +747,44 @@ void CBaseTechnology::SetVoters( int voters )
 // Purpose: Get the number of players preferring this tech
 // Output : int
 //-----------------------------------------------------------------------------
-int CBaseTechnology::GetVoters( void )
+int CBaseTechnology::GetVoters(void)
 {
 	return m_nVoters;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hide - 
+// Purpose:
+// Input  : hide -
 //-----------------------------------------------------------------------------
-void CBaseTechnology::SetHidden( bool hide )
+void CBaseTechnology::SetHidden(bool hide)
 {
 	m_bHidden = hide;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CBaseTechnology::IsHidden( void )
+bool CBaseTechnology::IsHidden(void)
 {
 	return m_bHidden;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTechnology::ResetHintsGiven( void )
+void CBaseTechnology::ResetHintsGiven(void)
 {
 	m_HintsGiven.RemoveAll();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CBaseTechnology::GetHintsGiven( int type )
+bool CBaseTechnology::GetHintsGiven(int type)
 {
-	if ( m_HintsGiven.Find( type ) != m_HintsGiven.InvalidIndex() )
+	if(m_HintsGiven.Find(type) != m_HintsGiven.InvalidIndex())
 	{
 		return true;
 	}
@@ -794,25 +793,25 @@ bool CBaseTechnology::GetHintsGiven( int type )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : given - 
+// Purpose:
+// Input  : given -
 //-----------------------------------------------------------------------------
-void CBaseTechnology::SetHintsGiven( int type, bool given )
+void CBaseTechnology::SetHintsGiven(int type, bool given)
 {
-	if ( given )
+	if(given)
 	{
-		if ( m_HintsGiven.Find( type ) != m_HintsGiven.InvalidIndex() )
+		if(m_HintsGiven.Find(type) != m_HintsGiven.InvalidIndex())
 			return;
 
-		m_HintsGiven.AddToTail( type );
+		m_HintsGiven.AddToTail(type);
 	}
 	else
 	{
-		int idx = m_HintsGiven.Find( type );
-		if ( idx == m_HintsGiven.InvalidIndex() )
+		int idx = m_HintsGiven.Find(type);
+		if(idx == m_HintsGiven.InvalidIndex())
 			return;
 
-		m_HintsGiven.Remove( idx );
+		m_HintsGiven.Remove(idx);
 	}
 }
 
@@ -821,36 +820,36 @@ void CBaseTechnology::SetHintsGiven( int type, bool given )
 //====================================================================================================================
 #ifndef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTechnology::AddTechnologyToPlayer( CBaseTFPlayer *pPlayer )
+void CBaseTechnology::AddTechnologyToPlayer(CBaseTFPlayer *pPlayer)
 {
 	// Tell playerclasses listed to recalculate their technologies, only if they're listed in the class results
-	if ( pPlayer->PlayerClass() )
+	if(pPlayer->PlayerClass())
 	{
-		if ( m_ClassResults[ pPlayer->PlayerClass() ].bClassTouched )
+		if(m_ClassResults[pPlayer->PlayerClass()].bClassTouched)
 		{
 			CPlayerClass *pPlayerClass = pPlayer->GetPlayerClass();
-			pPlayerClass->GainedNewTechnology( this );
+			pPlayerClass->GainedNewTechnology(this);
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTechnology::AddTechnologyToTeam( CTFTeam *pTeam )
+void CBaseTechnology::AddTechnologyToTeam(CTFTeam *pTeam)
 {
-	SetAvailable( true );
+	SetAvailable(true);
 
 	// Enable all the technologies this group contains
-	if ( m_iContainedTechs )
+	if(m_iContainedTechs)
 	{
-		for (int i = 0; i < m_iContainedTechs; i++ )
+		for(int i = 0; i < m_iContainedTechs; i++)
 		{
-			if ( m_pContainedTechs[i] )
+			if(m_pContainedTechs[i])
 			{
-				pTeam->EnableTechnology( m_pContainedTechs[i] );
+				pTeam->EnableTechnology(m_pContainedTechs[i]);
 			}
 		}
 	}
@@ -859,49 +858,44 @@ void CBaseTechnology::AddTechnologyToTeam( CTFTeam *pTeam )
 //-----------------------------------------------------------------------------
 // Purpose: A technology watcher entity wants to register as a watcher for this technology
 //-----------------------------------------------------------------------------
-void CBaseTechnology::RegisterWatcher( CInfoCustomTechnology *pWatcher )
+void CBaseTechnology::RegisterWatcher(CInfoCustomTechnology *pWatcher)
 {
-	m_aWatchers.AddToTail( pWatcher );
-	pWatcher->UpdateTechPercentage( 0 );
+	m_aWatchers.AddToTail(pWatcher);
+	pWatcher->UpdateTechPercentage(0);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTechnology::UpdateWatchers( void )
+void CBaseTechnology::UpdateWatchers(void)
 {
 	// Tell all my watchers
-	for (int i = 0; i < m_aWatchers.Size(); i++ )
+	for(int i = 0; i < m_aWatchers.Size(); i++)
 	{
-		m_aWatchers[i]->UpdateTechPercentage( GetOverallLevel() );
+		m_aWatchers[i]->UpdateTechPercentage(GetOverallLevel());
 	}
 }
 #else
 //-----------------------------------------------------------------------------
 // Purpose: Client DLL UpdateWatchers does nothing
 //-----------------------------------------------------------------------------
-void CBaseTechnology::UpdateWatchers( void )
-{
-}
+void CBaseTechnology::UpdateWatchers(void) {}
 #endif
-
-
-
 
 //====================================================================================================================
 // SHARED TECHNOLOGY TREE
 //====================================================================================================================
 //-----------------------------------------------------------------------------
 // Purpose: Construct raw technology tree
-// Output : 
+// Output :
 //-----------------------------------------------------------------------------
-CTechnologyTree::CTechnologyTree( IFileSystem* pFileSystem, int nTeamNumber )
+CTechnologyTree::CTechnologyTree(IFileSystem *pFileSystem, int nTeamNumber)
 {
 	// Reset preference counter
 	ClearPreferenceCount();
 
 	// Parse the list from the data file
-	if ( ParseTechnologyFile( m_Technologies, pFileSystem, nTeamNumber, "scripts/technologytree.txt" ) == false )
+	if(ParseTechnologyFile(m_Technologies, pFileSystem, nTeamNumber, "scripts/technologytree.txt") == false)
 	{
 		Assert(0);
 		return;
@@ -914,17 +908,17 @@ CTechnologyTree::CTechnologyTree( IFileSystem* pFileSystem, int nTeamNumber )
 //-----------------------------------------------------------------------------
 // Purpose: Link all the contained technologies
 //-----------------------------------------------------------------------------
-void CTechnologyTree::LinkContainedTechnologies( void )
+void CTechnologyTree::LinkContainedTechnologies(void)
 {
-	for ( int i=0; i < m_Technologies.Size(); i++)
+	for(int i = 0; i < m_Technologies.Size(); i++)
 	{
-		for ( int j = 0; j < m_Technologies[i]->GetNumberContainedTechs(); j++ )
+		for(int j = 0; j < m_Technologies[i]->GetNumberContainedTechs(); j++)
 		{
-			const char *pName = m_Technologies[i]->GetContainedTechName( j );
-			CBaseTechnology *pTech = GetTechnology( pName );
-			if ( pTech )
+			const char *pName = m_Technologies[i]->GetContainedTechName(j);
+			CBaseTechnology *pTech = GetTechnology(pName);
+			if(pTech)
 			{
-				m_Technologies[i]->SetContainedTech( j, pTech );
+				m_Technologies[i]->SetContainedTech(j, pTech);
 			}
 		}
 	}
@@ -933,30 +927,30 @@ void CTechnologyTree::LinkContainedTechnologies( void )
 //-----------------------------------------------------------------------------
 // Purpose: Link all the dependent technologies
 //-----------------------------------------------------------------------------
-void CTechnologyTree::LinkDependentTechnologies( void )
+void CTechnologyTree::LinkDependentTechnologies(void)
 {
-	for ( int i=0; i < m_Technologies.Size(); i++)
+	for(int i = 0; i < m_Technologies.Size(); i++)
 	{
-		for ( int j = 0; j < m_Technologies[i]->GetNumberDependentTechs(); j++ )
+		for(int j = 0; j < m_Technologies[i]->GetNumberDependentTechs(); j++)
 		{
-			const char *pName = m_Technologies[i]->GetDependentTechName( j );
-			CBaseTechnology *pTech = GetTechnology( pName );
-			if ( pTech )
+			const char *pName = m_Technologies[i]->GetDependentTechName(j);
+			CBaseTechnology *pTech = GetTechnology(pName);
+			if(pTech)
 			{
-				m_Technologies[i]->SetDependentTech( j, pTech );
+				m_Technologies[i]->SetDependentTech(j, pTech);
 			}
 			else
 			{
-				Warning("Unable to find dependent technology %s!\n", pName );
+				Warning("Unable to find dependent technology %s!\n", pName);
 			}
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CTechnologyTree::~CTechnologyTree( void )
+CTechnologyTree::~CTechnologyTree(void)
 {
 	Shutdown();
 }
@@ -964,13 +958,13 @@ CTechnologyTree::~CTechnologyTree( void )
 //-----------------------------------------------------------------------------
 // Purpose: Delete all items in the tree
 //-----------------------------------------------------------------------------
-void CTechnologyTree::Shutdown( void )
+void CTechnologyTree::Shutdown(void)
 {
 	// Loop through all used items
 	int iSize = m_Technologies.Size();
-	for ( int i = iSize-1; i >= 0; i-- )
+	for(int i = iSize - 1; i >= 0; i--)
 	{
-		CBaseTechnology *pItem = m_Technologies[ i ];
+		CBaseTechnology *pItem = m_Technologies[i];
 		delete pItem;
 	}
 	m_Technologies.Purge();
@@ -979,19 +973,19 @@ void CTechnologyTree::Shutdown( void )
 //-----------------------------------------------------------------------------
 // Purpose: Add a new technology to the tree
 //-----------------------------------------------------------------------------
-void CTechnologyTree::AddTechnologyFile( IFileSystem* pFileSystem, int nTeamNumber, char *sFileName )
+void CTechnologyTree::AddTechnologyFile(IFileSystem *pFileSystem, int nTeamNumber, char *sFileName)
 {
-	ParseTechnologyFile( m_Technologies, pFileSystem, nTeamNumber, sFileName );
+	ParseTechnologyFile(m_Technologies, pFileSystem, nTeamNumber, sFileName);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Get the index of the specified item
 //-----------------------------------------------------------------------------
-int	CTechnologyTree::GetIndex( CBaseTechnology *pItem )
+int CTechnologyTree::GetIndex(CBaseTechnology *pItem)
 {
-	for ( int i=0; i < m_Technologies.Size(); i++)
+	for(int i = 0; i < m_Technologies.Size(); i++)
 	{
-		if ( m_Technologies[i] == pItem )
+		if(m_Technologies[i] == pItem)
 			return i;
 	}
 
@@ -1001,25 +995,25 @@ int	CTechnologyTree::GetIndex( CBaseTechnology *pItem )
 //-----------------------------------------------------------------------------
 // Purpose: Retrieve item by index
 //-----------------------------------------------------------------------------
-CBaseTechnology *CTechnologyTree::GetTechnology( int index )
+CBaseTechnology *CTechnologyTree::GetTechnology(int index)
 {
-	if ( index < 0 || index >= m_Technologies.Size() )
+	if(index < 0 || index >= m_Technologies.Size())
 		return NULL;
 
-	return m_Technologies[ index ];
+	return m_Technologies[index];
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CBaseTechnology* CTechnologyTree::GetTechnology( const char *pName )
+CBaseTechnology *CTechnologyTree::GetTechnology(const char *pName)
 {
-	for ( int i=0; i < m_Technologies.Size(); i++)
+	for(int i = 0; i < m_Technologies.Size(); i++)
 	{
-		if( stricmp( pName, m_Technologies[i]->GetName() ) == 0 )
+		if(stricmp(pName, m_Technologies[i]->GetName()) == 0)
 			return m_Technologies[i];
 	}
-	
+
 	return NULL;
 }
 
@@ -1027,7 +1021,7 @@ CBaseTechnology* CTechnologyTree::GetTechnology( const char *pName )
 // Purpose: Return current number of objects
 // Output : int
 //-----------------------------------------------------------------------------
-int CTechnologyTree::GetNumberTechnologies( void )
+int CTechnologyTree::GetNumberTechnologies(void)
 {
 	return m_Technologies.Size();
 }
@@ -1035,32 +1029,32 @@ int CTechnologyTree::GetNumberTechnologies( void )
 //-----------------------------------------------------------------------------
 // Purpose: Set preferred item ( turns off all other preferences first )
 //-----------------------------------------------------------------------------
-void CTechnologyTree::SetPreferredTechnology( CBaseTechnology *pItem )
+void CTechnologyTree::SetPreferredTechnology(CBaseTechnology *pItem)
 {
 	// Turn all of the others off
-	for ( int i = 0; i < m_Technologies.Size(); i++ )
+	for(int i = 0; i < m_Technologies.Size(); i++)
 	{
-		CBaseTechnology *item = m_Technologies[ i ];
-		item->SetPreferred( false );
+		CBaseTechnology *item = m_Technologies[i];
+		item->SetPreferred(false);
 	}
 
 	// Turn this one on
-	if ( pItem )
+	if(pItem)
 	{
-		pItem->SetPreferred( true );
+		pItem->SetPreferred(true);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Get the technology preferred by this client
 //-----------------------------------------------------------------------------
-CBaseTechnology* CTechnologyTree::GetPreferredTechnology( void )
+CBaseTechnology *CTechnologyTree::GetPreferredTechnology(void)
 {
 	// Turn all of the others off
-	for ( int i = 0; i < m_Technologies.Size(); i++ )
+	for(int i = 0; i < m_Technologies.Size(); i++)
 	{
-		CBaseTechnology *item = m_Technologies[ i ];
-		if ( item->GetPreferred() )
+		CBaseTechnology *item = m_Technologies[i];
+		if(item->GetPreferred())
 			return item;
 	}
 
@@ -1070,7 +1064,7 @@ CBaseTechnology* CTechnologyTree::GetPreferredTechnology( void )
 //-----------------------------------------------------------------------------
 // Purpose: Get the number of players who've voted on techs
 //-----------------------------------------------------------------------------
-int	CTechnologyTree::GetPreferenceCount( void )
+int CTechnologyTree::GetPreferenceCount(void)
 {
 	return m_nPreferenceCount;
 }
@@ -1078,7 +1072,7 @@ int	CTechnologyTree::GetPreferenceCount( void )
 //-----------------------------------------------------------------------------
 // Purpose: Zero global preference counters
 //-----------------------------------------------------------------------------
-void CTechnologyTree::ClearPreferenceCount( void )
+void CTechnologyTree::ClearPreferenceCount(void)
 {
 	m_nPreferenceCount = 0;
 }
@@ -1086,30 +1080,30 @@ void CTechnologyTree::ClearPreferenceCount( void )
 //-----------------------------------------------------------------------------
 // Purpose: Increment preference counter
 //-----------------------------------------------------------------------------
-void CTechnologyTree::IncrementPreferences( void )
+void CTechnologyTree::IncrementPreferences(void)
 {
 	m_nPreferenceCount++;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Return the most voted-for technologies 
+// Purpose: Return the most voted-for technologies
 // Input  : iDesireLevel: 1 = Most voted for, 2 = 2nd most voted for, etc
 //-----------------------------------------------------------------------------
-CBaseTechnology *CTechnologyTree::GetDesiredTechnology( int iDesireLevel )
+CBaseTechnology *CTechnologyTree::GetDesiredTechnology(int iDesireLevel)
 {
-	Assert( iDesireLevel > 0 && iDesireLevel < m_Technologies.Size() );
+	Assert(iDesireLevel > 0 && iDesireLevel < m_Technologies.Size());
 
 	// Dump the techs into a temporary array
-	CBaseTechnology *pSortedTechs[ MAX_TECHNOLOGIES ];
+	CBaseTechnology *pSortedTechs[MAX_TECHNOLOGIES];
 	int iMaxTech = 0;
-	for ( int i = 0; i < m_Technologies.Size(); i++ )
+	for(int i = 0; i < m_Technologies.Size(); i++)
 	{
 		// Skip Techs that are already available
 		CBaseTechnology *technology = m_Technologies[i];
 		if(!technology)
 			continue;
 
-		if ( technology->GetAvailable() == false )
+		if(technology->GetAvailable() == false)
 		{
 			pSortedTechs[iMaxTech] = m_Technologies[i];
 			iMaxTech++;
@@ -1117,57 +1111,57 @@ CBaseTechnology *CTechnologyTree::GetDesiredTechnology( int iDesireLevel )
 	}
 
 	// Not enough unresearched techs?
-	if ( iMaxTech < iDesireLevel )
+	if(iMaxTech < iDesireLevel)
 		return NULL;
 
 	// Bubble sort the tech array into order of desire
 	int swapped = 1;
-	while ( swapped )
+	while(swapped)
 	{
 		swapped = 0;
-		for ( int i = 1; i < iMaxTech; i++ )
+		for(int i = 1; i < iMaxTech; i++)
 		{
-			if ( pSortedTechs[i]->GetPreferenceCount() > pSortedTechs[i-1]->GetPreferenceCount() )
+			if(pSortedTechs[i]->GetPreferenceCount() > pSortedTechs[i - 1]->GetPreferenceCount())
 			{
 				CBaseTechnology *pTemp = pSortedTechs[i];
-				pSortedTechs[i] = pSortedTechs[i-1];
-				pSortedTechs[i-1] = pTemp;
+				pSortedTechs[i] = pSortedTechs[i - 1];
+				pSortedTechs[i - 1] = pTemp;
 				swapped = 1;
 			}
 		}
 	}
 
-	return pSortedTechs[ iDesireLevel - 1 ];
+	return pSortedTechs[iDesireLevel - 1];
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Find out what percentage of techs in a given level this team owns
 //-----------------------------------------------------------------------------
-float CTechnologyTree::GetPercentageOfTechLevelOwned( int iTechLevel )
+float CTechnologyTree::GetPercentageOfTechLevelOwned(int iTechLevel)
 {
 	float fTotalTechs = 0;
 	float fTechsOwned = 0;
 
-	for ( int i = 0; i < m_Technologies.Size(); i++ )
+	for(int i = 0; i < m_Technologies.Size(); i++)
 	{
 		CBaseTechnology *technology = m_Technologies[i];
-		if ( !technology )
+		if(!technology)
 			continue;
 
-		if ( technology->GetLevel() != iTechLevel )
+		if(technology->GetLevel() != iTechLevel)
 			continue;
 
 		fTotalTechs++;
 
 		// Do we have it?
-		if ( technology->GetAvailable() )
+		if(technology->GetAvailable())
 		{
 			fTechsOwned++;
 		}
 	}
 
-	if ( !fTotalTechs )
+	if(!fTotalTechs)
 		return 0.0;
 
-	return ( fTechsOwned / fTotalTechs );
+	return (fTechsOwned / fTotalTechs);
 }

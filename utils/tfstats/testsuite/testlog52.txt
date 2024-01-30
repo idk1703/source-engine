@@ -469,7 +469,7 @@ L 07/22/1999 - 17:45:31: "Hugh<37>" changed class to "Soldier"
 L 07/22/1999 - 17:45:31: "Hugh<37>" activated the goal "info_player_teamspawn"
 L 07/22/1999 - 17:45:34: "stain099<31>" activated the goal "Blue Flag"
 L 07/22/1999 - 17:45:40: =------= MATCH RESULTS =------=
-L 07/22/1999 - 17:45:40: "blue" defeated "red" 
+L 07/22/1999 - 17:45:40: "blue" defeated "red"
 L 07/22/1999 - 17:45:40: "blue" RESULTS: "2" players. "133" frags, "2" unaccounted for. "90" team score. Allies:
 L 07/22/1999 - 17:45:40: "red" RESULTS: "4" players. "134" frags, "4" unaccounted for. "80" team score. Allies:
 L 07/22/1999 - 17:45:50: Log closed.

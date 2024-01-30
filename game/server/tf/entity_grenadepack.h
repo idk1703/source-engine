@@ -20,13 +20,11 @@
 class CGrenadePack : public CTFPowerup
 {
 public:
-	DECLARE_CLASS( CGrenadePack, CTFPowerup );
+	DECLARE_CLASS(CGrenadePack, CTFPowerup);
 
-	void	Spawn( void );
-	void	Precache( void );
-	bool	MyTouch( CBasePlayer *pPlayer );
+	void Spawn(void);
+	void Precache(void);
+	bool MyTouch(CBasePlayer *pPlayer);
 };
 
 #endif // ENTITY_GRENADEPACK_H
-
-

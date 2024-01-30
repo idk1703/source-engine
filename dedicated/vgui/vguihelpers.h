@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -13,14 +13,13 @@
 
 #include "tier1/interface.h"
 
-int StartVGUI( CreateInterfaceFn dedicatedFactory );
+int StartVGUI(CreateInterfaceFn dedicatedFactory);
 void StopVGUI();
 void RunVGUIFrame();
 bool VGUIIsRunning();
 bool VGUIIsStopping();
 bool VGUIIsInConfig();
 void VGUIFinishedConfig();
-void VGUIPrintf( const char *msg );
+void VGUIPrintf(const char *msg);
 
 #endif // VGUIHELPERS_H
-

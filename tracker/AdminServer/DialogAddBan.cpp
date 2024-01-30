@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -36,7 +36,7 @@ CDialogAddBan::CDialogAddBan(vgui::Panel *parent) : Frame(parent, "DialogAddBan"
 	m_pPermBanRadio->SetSelected(true);
 
 	m_pTimeTextEntry = new TextEntry(this, "TimeTextEntry");
-	m_pTimeCombo = new ComboBox(this, "TimeCombo",3,false);
+	m_pTimeCombo = new ComboBox(this, "TimeCombo", 3, false);
 	int defaultItem = m_pTimeCombo->AddItem("#Add_Ban_Period_Minutes", NULL);
 	m_pTimeCombo->AddItem("#Add_Ban_Period_Hours", NULL);
 	m_pTimeCombo->AddItem("#Add_Ban_Period_Days", NULL);
@@ -54,18 +54,15 @@ CDialogAddBan::CDialogAddBan(vgui::Panel *parent) : Frame(parent, "DialogAddBan"
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CDialogAddBan::~CDialogAddBan()
-{
-}
-
+CDialogAddBan::~CDialogAddBan() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: initializes the dialog and brings it to the foreground
 //-----------------------------------------------------------------------------
-void CDialogAddBan::Activate(const char *type,const char *player,const char *authid)
+void CDialogAddBan::Activate(const char *type, const char *player, const char *authid)
 {
 
-	m_cType=type;
+	m_cType = type;
 
 	m_pOkayButton->SetAsDefaultButton(true);
 	MakePopup();
@@ -74,9 +71,9 @@ void CDialogAddBan::Activate(const char *type,const char *player,const char *aut
 	RequestFocus();
 	m_pIDTextEntry->RequestFocus();
 	SetVisible(true);
-	
-	SetTextEntry("PlayerTextEntry",player);
-	SetTextEntry("IDTextEntry",authid);
+
+	SetTextEntry("PlayerTextEntry", player);
+	SetTextEntry("IDTextEntry", authid);
 
 	BaseClass::Activate();
 }
@@ -87,7 +84,7 @@ void CDialogAddBan::Activate(const char *type,const char *player,const char *aut
 void CDialogAddBan::SetLabelText(const char *textEntryName, const char *text)
 {
 	Label *entry = dynamic_cast<Label *>(FindChildByName(textEntryName));
-	if (entry)
+	if(entry)
 	{
 		entry->SetText(text);
 	}
@@ -99,7 +96,7 @@ void CDialogAddBan::SetLabelText(const char *textEntryName, const char *text)
 void CDialogAddBan::SetTextEntry(const char *textEntryName, const char *text)
 {
 	TextEntry *entry = dynamic_cast<TextEntry *>(FindChildByName(textEntryName));
-	if (entry)
+	if(entry)
 	{
 		entry->SetText(text);
 	}
@@ -108,18 +105,18 @@ void CDialogAddBan::SetTextEntry(const char *textEntryName, const char *text)
 bool CDialogAddBan::IsIPCheck()
 {
 	char buf[64];
-	int dotCount=0;
-	m_pIDTextEntry->GetText(buf, sizeof(buf)-1);
+	int dotCount = 0;
+	m_pIDTextEntry->GetText(buf, sizeof(buf) - 1);
 
-	for(unsigned int i=0;i<strlen(buf);i++)
+	for(unsigned int i = 0; i < strlen(buf); i++)
 	{
-		if(buf[i]=='.')
+		if(buf[i] == '.')
 		{
 			dotCount++;
 		}
 	}
 
-	if(dotCount>0)
+	if(dotCount > 0)
 	{
 		return true;
 	}
@@ -130,74 +127,72 @@ bool CDialogAddBan::IsIPCheck()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDialogAddBan::OnCommand(const char *command)
 {
 	bool bClose = false;
 
-	if (!stricmp(command, "Okay"))
+	if(!stricmp(command, "Okay"))
 	{
 		KeyValues *msg = new KeyValues("AddBanValue");
-		char buf[64],idbuf[64];
+		char buf[64], idbuf[64];
 		float time;
 		m_pIDTextEntry->GetText(idbuf, sizeof(idbuf));
 		m_pTimeTextEntry->GetText(buf, 64);
-	
 
-		if(strlen(idbuf)<=0)
+		if(strlen(idbuf) <= 0)
 		{
 			MessageBox *dlg = new MessageBox("#Add_Ban_Error", "#Add_Ban_ID_Invalid");
 			dlg->DoModal();
-			bClose=false;
-		} 
-		else if(strlen(buf)<=0 && !m_pPermBanRadio->IsSelected())
+			bClose = false;
+		}
+		else if(strlen(buf) <= 0 && !m_pPermBanRadio->IsSelected())
 		{
 			MessageBox *dlg = new MessageBox("#Add_Ban_Error", "#Add_Ban_Time_Empty");
 			dlg->DoModal();
-			bClose=false;
+			bClose = false;
 		}
 		else
 		{
 			if(m_pPermBanRadio->IsSelected())
 			{
-				time=0;
+				time = 0;
 			}
 			else
 			{
-				sscanf(buf,"%f",&time);
-				m_pTimeCombo->GetText(buf,64);
-				if(strstr(buf,"hour"))
+				sscanf(buf, "%f", &time);
+				m_pTimeCombo->GetText(buf, 64);
+				if(strstr(buf, "hour"))
 				{
-					time*=60;
+					time *= 60;
 				}
-				else if(strstr(buf,"day"))
+				else if(strstr(buf, "day"))
 				{
-					time*=(60*24);
+					time *= (60 * 24);
 				}
-				if(time<0) 
+				if(time < 0)
 				{
 					MessageBox *dlg = new MessageBox("#Add_Ban_Error", "#Add_Ban_Time_Invalid");
 					dlg->DoModal();
-					bClose=false;
+					bClose = false;
 				}
 			}
 
-			if(time>=0)
+			if(time >= 0)
 			{
 				msg->SetFloat("time", time);
 				msg->SetString("id", idbuf);
-				msg->SetString("type",m_cType);
-				msg->SetInt("ipcheck",IsIPCheck());
+				msg->SetString("type", m_cType);
+				msg->SetInt("ipcheck", IsIPCheck());
 
 				PostActionSignal(msg);
 
 				bClose = true;
 			}
 		}
-		
 	}
-	else if (!stricmp(command, "Close"))
+	else if(!stricmp(command, "Close"))
 	{
 		bClose = true;
 	}
@@ -206,15 +201,14 @@ void CDialogAddBan::OnCommand(const char *command)
 		BaseClass::OnCommand(command);
 	}
 
-	if (bClose)
+	if(bClose)
 	{
 		Close();
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDialogAddBan::PerformLayout()
 {
@@ -235,7 +229,7 @@ void CDialogAddBan::OnClose()
 //-----------------------------------------------------------------------------
 void CDialogAddBan::OnButtonToggled(Panel *panel)
 {
-	if (panel == m_pPermBanRadio)
+	if(panel == m_pPermBanRadio)
 	{
 		m_pTimeTextEntry->SetEnabled(false);
 		m_pTimeCombo->SetEnabled(false);
@@ -243,8 +237,8 @@ void CDialogAddBan::OnButtonToggled(Panel *panel)
 	else
 	{
 		m_pTimeTextEntry->SetEnabled(true);
-		m_pTimeCombo->SetEnabled(true);	
+		m_pTimeCombo->SetEnabled(true);
 	}
-	
+
 	Repaint();
 }

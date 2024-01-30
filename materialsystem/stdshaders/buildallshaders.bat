@@ -35,7 +35,7 @@ set ALLSHADERS_CONFIG=pc
 if /i "%1" == "-x360" goto shcfg_x360
 goto shcfg_end
 :shcfg_x360
-           set ALLSHADERS_CONFIG=x360
+					set ALLSHADERS_CONFIG=x360
 :shcfg_end
 
 
@@ -43,20 +43,20 @@ REM ****************
 REM PC SHADERS
 REM ****************
 if /i "%ALLSHADERS_CONFIG%" == "pc" (
-  %BUILD_SHADER% stdshader_dx9_20b
-  %BUILD_SHADER% stdshader_dx9_20b_new	-dx9_30
-  %BUILD_SHADER% stdshader_dx9_30		-dx9_30	-force30
-  rem %BUILD_SHADER% stdshader_dx10     -dx10
+	%BUILD_SHADER% stdshader_dx9_20b
+	%BUILD_SHADER% stdshader_dx9_20b_new	-dx9_30
+	%BUILD_SHADER% stdshader_dx9_30		-dx9_30	-force30
+	rem %BUILD_SHADER% stdshader_dx10     -dx10
 )
 
 REM ****************
 REM X360 SHADERS
 REM ****************
 if /i "%ALLSHADERS_CONFIG%" == "x360" (
-  %BUILD_SHADER% stdshader_dx9_20b      %ARG_X360% %ARG_EXTRA%
-  %BUILD_SHADER% stdshader_dx9_20b_new	%ARG_X360% %ARG_EXTRA%
-  rem %BUILD_SHADER% stdshader_dx9_30   %ARG_X360% %ARG_EXTRA%
-  rem %BUILD_SHADER% stdshader_dx10     %ARG_X360% %ARG_EXTRA%
+	%BUILD_SHADER% stdshader_dx9_20b      %ARG_X360% %ARG_EXTRA%
+	%BUILD_SHADER% stdshader_dx9_20b_new	%ARG_X360% %ARG_EXTRA%
+	rem %BUILD_SHADER% stdshader_dx9_30   %ARG_X360% %ARG_EXTRA%
+	rem %BUILD_SHADER% stdshader_dx10     %ARG_X360% %ARG_EXTRA%
 )
 
 REM ****************
@@ -68,9 +68,9 @@ REM ****************
 
 rem echo.
 if not "%dynamic_shaders%" == "1" (
-  rem echo Finished full buildallshaders %*
+	rem echo Finished full buildallshaders %*
 ) else (
-  rem echo Finished dynamic buildallshaders %*
+	rem echo Finished dynamic buildallshaders %*
 )
 
 rem %TTEXE% -diff %tt_all_start% -cur

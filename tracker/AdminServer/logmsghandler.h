@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -16,7 +16,6 @@
 #include "player.h"
 #include "rcon.h"
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Socket handler for pinging internet servers
 //-----------------------------------------------------------------------------
@@ -27,16 +26,14 @@ public:
 	~CLogMsgHandlerDetails();
 
 	virtual bool Process(netadr_t *from, CMsgBuffer *msg);
-	
+
 	// indicates if a new message has arrived
 	bool NewMessage();
 
 	// returns the text of the last message recieved
 	const char *GetBuf();
 
-
 private:
-
 	IResponse *m_pLogList;
 	bool m_bNewMessage;
 	char message[512];

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -17,11 +17,11 @@
 
 static CLocalNetworkBackdoor s_LocalNetworkBackdoor;
 
-void CL_SetupLocalNetworkBackDoor( bool bUseBackDoor )
+void CL_SetupLocalNetworkBackDoor(bool bUseBackDoor)
 {
-	if ( bUseBackDoor )
+	if(bUseBackDoor)
 	{
-		if ( !g_pLocalNetworkBackdoor )
+		if(!g_pLocalNetworkBackdoor)
 		{
 			// start using local backdoor mode
 			g_pLocalNetworkBackdoor = &s_LocalNetworkBackdoor;
@@ -30,7 +30,7 @@ void CL_SetupLocalNetworkBackDoor( bool bUseBackDoor )
 	}
 	else
 	{
-		if ( g_pLocalNetworkBackdoor )
+		if(g_pLocalNetworkBackdoor)
 		{
 			// stop using localbackdooor mode
 			g_pLocalNetworkBackdoor->StopBackdoorMode();
@@ -39,5 +39,3 @@ void CL_SetupLocalNetworkBackDoor( bool bUseBackDoor )
 		}
 	}
 }
-
-

@@ -27,7 +27,7 @@ $Project "psdinfo"
 	$Folder	"Header Files"
 	{
 	}
-	
+
 	$Folder	"Link Libraries"
 	{
 		$Lib bitmap

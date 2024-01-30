@@ -11,22 +11,20 @@
 #pragma once
 #endif
 
-
 //-----------------------------------------------------------------------------
 // forward declarations
 //-----------------------------------------------------------------------------
 namespace vgui
 {
-class Panel;
+	class Panel;
 }
 
 class CToolMenuButton;
 
-
 //-----------------------------------------------------------------------------
 // Global function to create the switch menu
 //-----------------------------------------------------------------------------
-CToolMenuButton* CreateToolSwitchMenuButton( vgui::Panel *parent, const char *panelName, const char *text, vgui::Panel *pActionTarget );
-
+CToolMenuButton *CreateToolSwitchMenuButton(vgui::Panel *parent, const char *panelName, const char *text,
+											vgui::Panel *pActionTarget);
 
 #endif // TOOLSWITCHMENUBUTTON_H

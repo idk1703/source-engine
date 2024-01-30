@@ -15,36 +15,35 @@
 class CTFSpawnTemplate : public CPointEntity
 {
 public:
-	DECLARE_CLASS( CTFSpawnTemplate, CPointEntity );
+	DECLARE_CLASS(CTFSpawnTemplate, CPointEntity);
 
-	virtual ~CTFSpawnTemplate() { }
+	virtual ~CTFSpawnTemplate() {}
 
-	virtual CBaseEntity *Instantiate( void ) const = 0;			// spawn an instance of this template
+	virtual CBaseEntity *Instantiate(void) const = 0; // spawn an instance of this template
 };
-
 
 //--------------------------------------------------------
 class CTFSpawner : public CPointEntity
 {
 public:
-	DECLARE_CLASS( CTFSpawner, CPointEntity );
+	DECLARE_CLASS(CTFSpawner, CPointEntity);
 	DECLARE_DATADESC();
 
-	CTFSpawner( void );
-	virtual ~CTFSpawner() { }
+	CTFSpawner(void);
+	virtual ~CTFSpawner() {}
 
-	void SpawnerThink( void );
+	void SpawnerThink(void);
 
 	// Input.
-	void InputReset( inputdata_t &inputdata );
-	void InputEnable( inputdata_t &inputdata );
-	void InputDisable( inputdata_t &inputdata );
+	void InputReset(inputdata_t &inputdata);
+	void InputEnable(inputdata_t &inputdata);
+	void InputDisable(inputdata_t &inputdata);
 
 	// Output
-	void OnKilled( CBaseEntity *dead );
+	void OnKilled(CBaseEntity *dead);
 
 private:
-	void Reset( void );
+	void Reset(void);
 
 	bool m_bExpended;
 	int m_spawnCount;
@@ -53,14 +52,13 @@ private:
 	float m_spawnInterval;
 
 	string_t m_templateName;
-	CHandle< CTFSpawnTemplate > m_template;
+	CHandle<CTFSpawnTemplate> m_template;
 
 	COutputEvent m_onSpawned;
 	COutputEvent m_onExpended;
 	COutputEvent m_onKilled;
 
-	CUtlVector< CHandle< CBaseEntity > > m_spawnedVector;
+	CUtlVector<CHandle<CBaseEntity>> m_spawnedVector;
 };
-
 
 #endif // TF_SPAWNER_H

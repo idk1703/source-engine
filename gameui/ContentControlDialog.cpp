@@ -1,14 +1,13 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
 
-
 #include <stdio.h>
 #include <memory.h>
-#if defined( WIN32 ) && !defined( _X360 )
+#if defined(WIN32) && !defined(_X360)
 #include <windows.h>
 #endif
 
@@ -29,7 +28,7 @@
 #include <vgui_controls/TextEntry.h>
 #include <tier0/vcrmode.h>
 
-#if defined( _X360 )
+#if defined(_X360)
 #include "xbox/xbox_win32stubs.h"
 #endif
 
@@ -44,49 +43,47 @@ using namespace vgui;
 CContentControlDialog::CContentControlDialog(vgui::Panel *parent) : vgui::Frame(parent, "ContentControlDialog")
 {
 	SetBounds(0, 0, 372, 160);
-	SetSizeable( false );
+	SetSizeable(false);
 
-	SetTitle( "#GameUI_ContentLock", true );
+	SetTitle("#GameUI_ContentLock", true);
 
-	m_pStatus = new vgui::Label( this, "ContentStatus", "" );
+	m_pStatus = new vgui::Label(this, "ContentStatus", "");
 
-	m_pPasswordLabel = new vgui::Label( this, "PasswordPrompt", "#GameUI_PasswordPrompt" );
-	m_pPassword2Label = new vgui::Label( this, "PasswordReentryPrompt", "#GameUI_PasswordReentryPrompt" );
+	m_pPasswordLabel = new vgui::Label(this, "PasswordPrompt", "#GameUI_PasswordPrompt");
+	m_pPassword2Label = new vgui::Label(this, "PasswordReentryPrompt", "#GameUI_PasswordReentryPrompt");
 
-	m_pExplain = new vgui::Label( this, "ContentControlExplain", "" );
+	m_pExplain = new vgui::Label(this, "ContentControlExplain", "");
 
-	m_pPassword = new vgui::TextEntry( this, "Password" );
-	m_pPassword2 = new vgui::TextEntry( this, "Password2" );
+	m_pPassword = new vgui::TextEntry(this, "Password");
+	m_pPassword2 = new vgui::TextEntry(this, "Password2");
 
-	m_pOK = new vgui::Button( this, "Ok", "#GameUI_OK" );
-	m_pOK->SetCommand( "Ok" );
+	m_pOK = new vgui::Button(this, "Ok", "#GameUI_OK");
+	m_pOK->SetCommand("Ok");
 
-	vgui::Button *cancel = new vgui::Button( this, "Cancel", "#GameUI_Cancel" );
-	cancel->SetCommand( "Cancel" );
+	vgui::Button *cancel = new vgui::Button(this, "Cancel", "#GameUI_Cancel");
+	cancel->SetCommand("Cancel");
 
-	m_szGorePW[ 0 ] = 0;
-    ResetPassword();
+	m_szGorePW[0] = 0;
+	ResetPassword();
 
 	LoadControlSettings("Resource\\ContentControlDialog.res");
 
-//	Explain("");
-//	UpdateContentControlStatus();
+	//	Explain("");
+	//	UpdateContentControlStatus();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CContentControlDialog::~CContentControlDialog()
-{
-}
+CContentControlDialog::~CContentControlDialog() {}
 
 void CContentControlDialog::Activate()
 {
-    BaseClass::Activate();
+	BaseClass::Activate();
 
-    m_pPassword->SetText("");
-    m_pPassword->RequestFocus();
-    m_pPassword2->SetText("");
+	m_pPassword->SetText("");
+	m_pPassword->RequestFocus();
+	m_pPassword2->SetText("");
 	Explain("");
 	UpdateContentControlStatus();
 
@@ -94,7 +91,7 @@ void CContentControlDialog::Activate()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CContentControlDialog::ResetPassword()
 {
@@ -102,167 +99,169 @@ void CContentControlDialog::ResetPassword()
 #ifdef WIN32
 #ifndef _XBOX
 	HKEY key;
-	if ( ERROR_SUCCESS == VCRHook_RegOpenKeyEx(HKEY_CURRENT_USER, "Software\\Valve\\Half-Life\\Settings", 0, KEY_READ, &key))
+	if(ERROR_SUCCESS ==
+	   VCRHook_RegOpenKeyEx(HKEY_CURRENT_USER, "Software\\Valve\\Half-Life\\Settings", 0, KEY_READ, &key))
 	{
 		DWORD type;
 		DWORD bufSize = sizeof(m_szGorePW);
 
-		VCRHook_RegQueryValueEx(key, "User Token 2", NULL, &type, (unsigned char *)m_szGorePW, &bufSize );
-		VCRHook_RegCloseKey( key );
+		VCRHook_RegQueryValueEx(key, "User Token 2", NULL, &type, (unsigned char *)m_szGorePW, &bufSize);
+		VCRHook_RegCloseKey(key);
 	}
-    else
+	else
 #endif
-    {
-        m_szGorePW[ 0 ] = 0;
-    }
+	{
+		m_szGorePW[0] = 0;
+	}
 #else
-	vgui::system()->SetRegistryString( "Software\\Valve\\Half-Life\\Settings\\User Token 2", m_szGorePW );
+	vgui::system()->SetRegistryString("Software\\Valve\\Half-Life\\Settings\\User Token 2", m_szGorePW);
 #endif
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CContentControlDialog::ApplyPassword()
 {
-    WriteToken( m_szGorePW );
+	WriteToken(m_szGorePW);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CContentControlDialog::Explain( char const *fmt, ... )
+void CContentControlDialog::Explain(char const *fmt, ...)
 {
-	if ( !m_pExplain )
+	if(!m_pExplain)
 		return;
 
-	va_list		argptr;
-	char		text[1024];
+	va_list argptr;
+	char text[1024];
 
-	va_start (argptr,fmt);
-	Q_vsnprintf (text, sizeof(text), fmt, argptr);
-	va_end (argptr);
+	va_start(argptr, fmt);
+	Q_vsnprintf(text, sizeof(text), fmt, argptr);
+	va_end(argptr);
 
-	m_pExplain->SetText( text );
+	m_pExplain->SetText(text);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *command - 
+// Purpose:
+// Input  : *command -
 //-----------------------------------------------------------------------------
-void CContentControlDialog::OnCommand( const char *command )
+void CContentControlDialog::OnCommand(const char *command)
 {
-	if ( !stricmp( command, "Ok" ) )
+	if(!stricmp(command, "Ok"))
 	{
 		bool canclose = false;
 
-		char pw1[ 256 ];
-		char pw2[ 256 ];
+		char pw1[256];
+		char pw2[256];
 
-		m_pPassword->GetText( pw1, 256 );
-		m_pPassword2->GetText( pw2, 256 );
+		m_pPassword->GetText(pw1, 256);
+		m_pPassword2->GetText(pw2, 256);
 
-        // Get text and check
-//        bool enabled = PasswordEnabled(); //( m_szGorePW[0]!=0 ) ? true : false;
-//		bool pwMatch = stricmp( pw1, pw2 ) == 0 ? true : false;
+		// Get text and check
+		//        bool enabled = PasswordEnabled(); //( m_szGorePW[0]!=0 ) ? true : false;
+		//		bool pwMatch = stricmp( pw1, pw2 ) == 0 ? true : false;
 
-        if (IsPasswordEnabledInDialog())
-        {
-            canclose = DisablePassword(pw1);
-//            canclose = CheckPassword( m_szGorePW, pw1, false );
-        }
-        else if (!strcmp(pw1, pw2))
-        {
-            canclose = EnablePassword(pw1);
-//            canclose = CheckPassword( NULL, pw1, true );
-        }
+		if(IsPasswordEnabledInDialog())
+		{
+			canclose = DisablePassword(pw1);
+			//            canclose = CheckPassword( m_szGorePW, pw1, false );
+		}
+		else if(!strcmp(pw1, pw2))
+		{
+			canclose = EnablePassword(pw1);
+			//            canclose = CheckPassword( NULL, pw1, true );
+		}
 		else
 		{
-			Explain( "#GameUI_PasswordsDontMatch" );
+			Explain("#GameUI_PasswordsDontMatch");
 		}
 
-		if ( canclose )
+		if(canclose)
 		{
 			OnClose();
 		}
 	}
-	else if ( !stricmp( command, "Cancel" ) )
+	else if(!stricmp(command, "Cancel"))
 	{
 		OnClose();
 	}
 	else
 	{
-		BaseClass::OnCommand( command );
+		BaseClass::OnCommand(command);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CContentControlDialog::OnClose()
 {
 	BaseClass::OnClose();
-    PostActionSignal(new KeyValues("ContentControlClose"));
-//	MarkForDeletion();
+	PostActionSignal(new KeyValues("ContentControlClose"));
+	//	MarkForDeletion();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CContentControlDialog::WriteToken( const char *str )
+void CContentControlDialog::WriteToken(const char *str)
 {
 	// Set initial value
 #ifdef WIN32
 #ifndef _XBOX
 	HKEY key;
-	if ( ERROR_SUCCESS == VCRHook_RegOpenKeyEx(HKEY_CURRENT_USER, "Software\\Valve\\Half-Life\\Settings", 0, KEY_WRITE, &key))
+	if(ERROR_SUCCESS ==
+	   VCRHook_RegOpenKeyEx(HKEY_CURRENT_USER, "Software\\Valve\\Half-Life\\Settings", 0, KEY_WRITE, &key))
 	{
 		DWORD type = REG_SZ;
-		DWORD bufSize = strlen( str ) + 1;
+		DWORD bufSize = strlen(str) + 1;
 
-		VCRHook_RegSetValueEx(key, "User Token 2", 0, type, (const unsigned char *)str, bufSize );
+		VCRHook_RegSetValueEx(key, "User Token 2", 0, type, (const unsigned char *)str, bufSize);
 
-		VCRHook_RegCloseKey( key );
+		VCRHook_RegCloseKey(key);
 	}
 #endif
 #else
-	vgui::system()->SetRegistryString( "Software\\Valve\\Half-Life\\Settings\\User Token 2", m_szGorePW );
+	vgui::system()->SetRegistryString("Software\\Valve\\Half-Life\\Settings\\User Token 2", m_szGorePW);
 #endif
-	Q_strncpy( m_szGorePW, str, sizeof( m_szGorePW ) );
+	Q_strncpy(m_szGorePW, str, sizeof(m_szGorePW));
 
 	UpdateContentControlStatus();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CContentControlDialog::HashPassword(const char *newPW, char *hashBuffer, int maxlen )
+void CContentControlDialog::HashPassword(const char *newPW, char *hashBuffer, int maxlen)
 {
 	// Compute the md5 hash and save it.
 	unsigned char md5_hash[16];
 	MD5Context_t ctx;
 
-	MD5Init( &ctx );
-	MD5Update( &ctx, (unsigned char const *)newPW, strlen( newPW ) );
-	MD5Final( md5_hash, &ctx );
+	MD5Init(&ctx);
+	MD5Update(&ctx, (unsigned char const *)newPW, strlen(newPW));
+	MD5Final(md5_hash, &ctx);
 
-	char hex[ 128 ];
-	Q_binarytohex( md5_hash, sizeof( md5_hash ), hex, sizeof( hex ) );
+	char hex[128];
+	Q_binarytohex(md5_hash, sizeof(md5_hash), hex, sizeof(hex));
 
-//	char digestedPW[ 128 ];
-	Q_strncpy( hashBuffer, hex, maxlen );
+	//	char digestedPW[ 128 ];
+	Q_strncpy(hashBuffer, hex, maxlen);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 /*
 bool CContentControlDialog::CheckPassword( char const *oldPW, char const *newPW, bool enableContentControl )
 {
 	char digestedPW[ 128 ];
-    HashPassword(newPW, digestedPW, sizeof( digestedPW ) );
-	
-    // Compute the md5 hash and save it.
+	HashPassword(newPW, digestedPW, sizeof( digestedPW ) );
+
+	// Compute the md5 hash and save it.
 	unsigned char md5_hash[16];
 	MD5Context_t ctx;
 
@@ -277,42 +276,42 @@ bool CContentControlDialog::CheckPassword( char const *oldPW, char const *newPW,
 */
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CContentControlDialog::EnablePassword(const char *newPW)
 {
-    if ( !newPW[ 0 ] )
-    {
-        Explain( "#GameUI_MustEnterPassword" );
-        return false;
-    }
+	if(!newPW[0])
+	{
+		Explain("#GameUI_MustEnterPassword");
+		return false;
+	}
 
-	char digestedPW[ 128 ];
-    HashPassword(newPW, digestedPW, sizeof( digestedPW ) );
+	char digestedPW[128];
+	HashPassword(newPW, digestedPW, sizeof(digestedPW));
 
 	// disable violence
-/*	engine->Cvar_SetValue("violence_hblood", 0.0 );
-	engine->Cvar_SetValue("violence_hgibs" , 0.0 );
-	engine->Cvar_SetValue("violence_ablood", 0.0 );
-	engine->Cvar_SetValue("violence_agibs" , 0.0 );
-	*/
+	/*	engine->Cvar_SetValue("violence_hblood", 0.0 );
+		engine->Cvar_SetValue("violence_hgibs" , 0.0 );
+		engine->Cvar_SetValue("violence_ablood", 0.0 );
+		engine->Cvar_SetValue("violence_agibs" , 0.0 );
+		*/
 
-	ConVarRef violence_hblood( "violence_hblood" );
+	ConVarRef violence_hblood("violence_hblood");
 	violence_hblood.SetValue(false);
 
-	ConVarRef violence_hgibs( "violence_hgibs" );
+	ConVarRef violence_hgibs("violence_hgibs");
 	violence_hgibs.SetValue(false);
 
-	ConVarRef violence_ablood( "violence_ablood" );
+	ConVarRef violence_ablood("violence_ablood");
 	violence_ablood.SetValue(false);
 
-	ConVarRef violence_agibs( "violence_agibs" );
+	ConVarRef violence_agibs("violence_agibs");
 	violence_agibs.SetValue(false);
-	
-    // Store digest to registry
-//    WriteToken( digestedPW );
-    Q_strncpy(m_szGorePW, digestedPW, sizeof( m_szGorePW ) );
-    /*
+
+	// Store digest to registry
+	//    WriteToken( digestedPW );
+	Q_strncpy(m_szGorePW, digestedPW, sizeof(m_szGorePW));
+	/*
 		}
 		else
 		{
@@ -324,83 +323,82 @@ bool CContentControlDialog::EnablePassword(const char *newPW)
 			}
 		}
 	}*/
-    return true;
+	return true;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CContentControlDialog::DisablePassword(const char *oldPW)
 {
-    if ( !oldPW[ 0 ] )
-    {
-        Explain( "#GameUI_MustEnterPassword" );
-        return false;
-    }
+	if(!oldPW[0])
+	{
+		Explain("#GameUI_MustEnterPassword");
+		return false;
+	}
 
-	char digestedPW[ 128 ];
-    HashPassword(oldPW, digestedPW, sizeof( digestedPW ) );
+	char digestedPW[128];
+	HashPassword(oldPW, digestedPW, sizeof(digestedPW));
 
-    if( stricmp( m_szGorePW, digestedPW ) )
-    {
-        Explain( "#GameUI_IncorrectPassword" );
-        return false;
-    }
+	if(stricmp(m_szGorePW, digestedPW))
+	{
+		Explain("#GameUI_IncorrectPassword");
+		return false;
+	}
 
-    m_szGorePW[0] = 0;
+	m_szGorePW[0] = 0;
 
 	// set the violence cvars
-/*	engine->Cvar_SetValue("violence_hblood", 1.0 );
-	engine->Cvar_SetValue("violence_hgibs" , 1.0 );
-	engine->Cvar_SetValue("violence_ablood", 1.0 );
-	engine->Cvar_SetValue("violence_agibs" , 1.0 );
-	*/
-	ConVarRef violence_hblood( "violence_hblood" );
+	/*	engine->Cvar_SetValue("violence_hblood", 1.0 );
+		engine->Cvar_SetValue("violence_hgibs" , 1.0 );
+		engine->Cvar_SetValue("violence_ablood", 1.0 );
+		engine->Cvar_SetValue("violence_agibs" , 1.0 );
+		*/
+	ConVarRef violence_hblood("violence_hblood");
 	violence_hblood.SetValue(true);
 
-	ConVarRef violence_hgibs( "violence_hgibs" );
+	ConVarRef violence_hgibs("violence_hgibs");
 	violence_hgibs.SetValue(true);
 
-	ConVarRef violence_ablood( "violence_ablood" );
+	ConVarRef violence_ablood("violence_ablood");
 	violence_ablood.SetValue(true);
 
-	ConVarRef violence_agibs( "violence_agibs" );
+	ConVarRef violence_agibs("violence_agibs");
 	violence_agibs.SetValue(true);
 
-
-//		// Remove digest value
-//		WriteToken( "" );
+	//		// Remove digest value
+	//		WriteToken( "" );
 
 	return true;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CContentControlDialog::IsPasswordEnabledInDialog()
 {
-    return m_szGorePW[0] != 0;
+	return m_szGorePW[0] != 0;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CContentControlDialog::UpdateContentControlStatus( void )
+void CContentControlDialog::UpdateContentControlStatus(void)
 {
 	bool enabled = IsPasswordEnabledInDialog(); //( m_szGorePW[0]!=0 ) ? true : false;
-	m_pStatus->SetText( enabled ? "#GameUI_ContentStatusEnabled" : "#GameUI_ContentStatusDisabled" );
+	m_pStatus->SetText(enabled ? "#GameUI_ContentStatusEnabled" : "#GameUI_ContentStatusDisabled");
 
-    if (enabled)
-    {
-        m_pPasswordLabel->SetText("#GameUI_PasswordDisablePrompt");
-    }
-    else
-    {
-        m_pPasswordLabel->SetText("#GameUI_PasswordPrompt");
-    }
+	if(enabled)
+	{
+		m_pPasswordLabel->SetText("#GameUI_PasswordDisablePrompt");
+	}
+	else
+	{
+		m_pPasswordLabel->SetText("#GameUI_PasswordPrompt");
+	}
 
-    // hide the re-entry
-    m_pPassword2Label->SetVisible(!enabled);
-    m_pPassword2->SetVisible(!enabled);
-//	m_pOK->SetText( enabled ? "#GameUI_Disable" : "#GameUI_Enable" );
+	// hide the re-entry
+	m_pPassword2Label->SetVisible(!enabled);
+	m_pPassword2->SetVisible(!enabled);
+	//	m_pOK->SetText( enabled ? "#GameUI_Disable" : "#GameUI_Enable" );
 }

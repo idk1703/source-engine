@@ -7,17 +7,20 @@
 
 #ifdef TF_RAID_MODE
 
-class CBossAlphaWaitForPlayers : public Action< CBossAlpha >
+class CBossAlphaWaitForPlayers : public Action<CBossAlpha>
 {
 public:
-	virtual ActionResult< CBossAlpha >	OnStart( CBossAlpha *me, Action< CBossAlpha > *priorAction );
-	virtual ActionResult< CBossAlpha >	Update( CBossAlpha *me, float interval );
-	virtual void					OnEnd( CBossAlpha *me, Action< CBossAlpha > *nextAction );
+	virtual ActionResult<CBossAlpha> OnStart(CBossAlpha *me, Action<CBossAlpha> *priorAction);
+	virtual ActionResult<CBossAlpha> Update(CBossAlpha *me, float interval);
+	virtual void OnEnd(CBossAlpha *me, Action<CBossAlpha> *nextAction);
 
-	virtual EventDesiredResult< CBossAlpha > OnInjured( CBossAlpha *me, const CTakeDamageInfo &info );
-	virtual EventDesiredResult< CBossAlpha > OnContact( CBossAlpha *me, CBaseEntity *other, CGameTrace *result = NULL );
+	virtual EventDesiredResult<CBossAlpha> OnInjured(CBossAlpha *me, const CTakeDamageInfo &info);
+	virtual EventDesiredResult<CBossAlpha> OnContact(CBossAlpha *me, CBaseEntity *other, CGameTrace *result = NULL);
 
-	virtual const char *GetName( void ) const	{ return "WaitForPlayers"; }		// return name of this action
+	virtual const char *GetName(void) const
+	{
+		return "WaitForPlayers";
+	} // return name of this action
 };
 
 #endif // TF_RAID_MODE

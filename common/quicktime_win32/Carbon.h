@@ -1,17 +1,17 @@
 /*
-     File:       Carbon.h
- 
-     Contains:   Master include for all of Carbon
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 2000-2001 by Apple Computer, Inc., all rights reserved.
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+	File:       Carbon.h
+
+	Contains:   Master include for all of Carbon
+
+	Version:    QuickTime 7.3
+
+	Copyright:  (c) 2007 (c) 2000-2001 by Apple Computer, Inc., all rights reserved.
+
+	Bugs?:      For bug reports, consult the following page on
+			the World Wide Web:
+
+				http://developer.apple.com/bugreporter/
+
 */
 #ifndef __CARBON__
 #define __CARBON__
@@ -23,7 +23,6 @@
 #ifndef __APPLICATIONSERVICES__
 #include <ApplicationServices.h>
 #endif
-
 
 #ifndef __APPLICATIONSERVICES__
 #include <ApplicationServices.h>
@@ -273,9 +272,4 @@
 #include <ICACamera.h>
 #endif
 
-
-
-
-
 #endif /* __CARBON__ */
-

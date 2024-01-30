@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -8,58 +8,58 @@
 #ifndef NPC_VORTIGAUNT_H
 #define NPC_VORTIGAUNT_H
 
-#define	VORTIGAUNT_MAX_BEAMS	8
+#define VORTIGAUNT_MAX_BEAMS 8
 
 #include "hl1_ai_basenpc.h"
 //=========================================================
 //=========================================================
 class CNPC_Vortigaunt : public CHL1BaseNPC
 {
-	DECLARE_CLASS( CNPC_Vortigaunt, CHL1BaseNPC );
+	DECLARE_CLASS(CNPC_Vortigaunt, CHL1BaseNPC);
+
 public:
+	void Spawn(void);
+	void Precache(void);
+	Class_T Classify(void);
 
-	void Spawn( void );
-	void Precache( void );
-	Class_T	Classify ( void );
+	void AlertSound(void);
+	void IdleSound(void);
+	void PainSound(const CTakeDamageInfo &info);
+	void DeathSound(const CTakeDamageInfo &info);
 
-	void AlertSound( void );
-	void IdleSound( void );
-	void PainSound( const CTakeDamageInfo &info );
-	void DeathSound( const CTakeDamageInfo &info );
-	
-	int	 GetSoundInterests ( void );
-	
-	float MaxYawSpeed ( void );
+	int GetSoundInterests(void);
 
-	void Event_Killed( const CTakeDamageInfo &info );
-	void CallForHelp( char *szClassname, float flDist, CBaseEntity * pEnemy, Vector &vecLocation );
+	float MaxYawSpeed(void);
 
-	int  RangeAttack1Conditions( float flDot, float flDist );
+	void Event_Killed(const CTakeDamageInfo &info);
+	void CallForHelp(char *szClassname, float flDist, CBaseEntity *pEnemy, Vector &vecLocation);
 
-	int  OnTakeDamage_Alive( const CTakeDamageInfo &inputInfo );
-	void TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr, CDmgAccumulator *pAccumulator );
-	
-	void StartTask( const Task_t *pTask );
+	int RangeAttack1Conditions(float flDot, float flDist);
 
-	int  SelectSchedule( void );
-	int  TranslateSchedule( int scheduleType );
+	int OnTakeDamage_Alive(const CTakeDamageInfo &inputInfo);
+	void TraceAttack(const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr, CDmgAccumulator *pAccumulator);
 
-	void ArmBeam( int side );
-	void BeamGlow( void );
-	void WackBeam( int side, CBaseEntity *pEntity );
-	void ZapBeam( int side );
-	void ClearBeams( void );
+	void StartTask(const Task_t *pTask);
 
-	void HandleAnimEvent( animevent_t *pEvent );
+	int SelectSchedule(void);
+	int TranslateSchedule(int scheduleType);
 
-	virtual Disposition_t IRelationType ( CBaseEntity *pTarget );
+	void ArmBeam(int side);
+	void BeamGlow(void);
+	void WackBeam(int side, CBaseEntity *pEntity);
+	void ZapBeam(int side);
+	void ClearBeams(void);
+
+	void HandleAnimEvent(animevent_t *pEvent);
+
+	virtual Disposition_t IRelationType(CBaseEntity *pTarget);
 
 	DEFINE_CUSTOM_AI;
 	DECLARE_DATADESC();
 
 private:
 	int m_iVoicePitch;
-	int	  m_iBeams;
+	int m_iBeams;
 
 	int m_iBravery;
 
@@ -70,5 +70,4 @@ private:
 	EHANDLE m_hDead;
 };
 
-
-#endif //NPC_VORTIGAUNT_
+#endif // NPC_VORTIGAUNT_

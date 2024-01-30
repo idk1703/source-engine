@@ -11,4 +11,3 @@ $Macro OUTBINDIR	"$SRCDIR\dx9sdk\utilities"
 $Macro DX_SDK_VER	"DX9_V00_PC"
 
 $Include "dx_proxy_base.vpc"
-

@@ -18,20 +18,20 @@
 #include "Award.h"
 #include <map>
 
-
 using namespace std;
 //------------------------------------------------------------------------------------------------------
 // Purpose:  CSentryRebuildAward is given to the engineers who built a sentry
 // gun the most times
 //------------------------------------------------------------------------------------------------------
-class CSentryRebuildAward: public CAward
+class CSentryRebuildAward : public CAward
 {
 protected:
-	map<PID,int> numbuilds;
-	void noWinner(CHTMLFile& html);
-	void extendedinfo(CHTMLFile& html);
+	map<PID, int> numbuilds;
+	void noWinner(CHTMLFile &html);
+	void extendedinfo(CHTMLFile &html);
+
 public:
-	explicit CSentryRebuildAward():CAward("Worst Sentry Placement"){}
+	explicit CSentryRebuildAward() : CAward("Worst Sentry Placement") {}
 	void getWinner();
 };
 #endif // SENTRYREBUILDAWARD_H

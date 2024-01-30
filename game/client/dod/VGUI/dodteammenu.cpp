@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -26,15 +26,15 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 CDODTeamMenu::CDODTeamMenu(IViewPort *pViewPort) : CTeamMenu(pViewPort)
 {
-	m_pBackground = SETUP_PANEL( new CDODMenuBackground( this ) );
-	
-	m_pPanel = new EditablePanel( this, "TeamImagePanel" );// team image panel
-	
+	m_pBackground = SETUP_PANEL(new CDODMenuBackground(this));
+
+	m_pPanel = new EditablePanel(this, "TeamImagePanel"); // team image panel
+
 	m_pFirstButton = NULL;
 
-	LoadControlSettings("Resource/UI/TeamMenu.res");	// reload this to catch DODButtons
+	LoadControlSettings("Resource/UI/TeamMenu.res"); // reload this to catch DODButtons
 
-	vgui::ivgui()->AddTickSignal( GetVPanel() );
+	vgui::ivgui()->AddTickSignal(GetVPanel());
 
 	m_iActiveTeam = TEAM_UNASSIGNED;
 	m_iLastPlayerCount = -1;
@@ -43,35 +43,33 @@ CDODTeamMenu::CDODTeamMenu(IViewPort *pViewPort) : CTeamMenu(pViewPort)
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CDODTeamMenu::~CDODTeamMenu()
-{
-}
+CDODTeamMenu::~CDODTeamMenu() {}
 
 void CDODTeamMenu::ShowPanel(bool bShow)
 {
-	if ( bShow )
+	if(bShow)
 	{
-		engine->CheckPoint( "TeamMenu" );	//MATTTODO what is this?
+		engine->CheckPoint("TeamMenu"); // MATTTODO what is this?
 
-		m_iTeamMenuKey = gameuifuncs->GetButtonCodeForBind( "changeteam" );
+		m_iTeamMenuKey = gameuifuncs->GetButtonCodeForBind("changeteam");
 	}
-	
-	BaseClass::ShowPanel( bShow );
+
+	BaseClass::ShowPanel(bShow);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Make the first buttons page get displayed when the menu becomes visible
 //-----------------------------------------------------------------------------
-void CDODTeamMenu::SetVisible( bool state )
+void CDODTeamMenu::SetVisible(bool state)
 {
-	BaseClass::SetVisible( state );
+	BaseClass::SetVisible(state);
 
-	for( int i = 0; i< GetChildCount(); i++ ) // get all the buy buttons to performlayout
+	for(int i = 0; i < GetChildCount(); i++) // get all the buy buttons to performlayout
 	{
 		CDODMouseOverButton<EditablePanel> *button = dynamic_cast<CDODMouseOverButton<EditablePanel> *>(GetChild(i));
-		if ( button )
+		if(button)
 		{
-			if( button == m_pFirstButton && state == true )
+			if(button == m_pFirstButton && state == true)
 				button->ShowPage();
 			else
 				button->HidePage();
@@ -80,22 +78,22 @@ void CDODTeamMenu::SetVisible( bool state )
 		}
 	}
 
-	if ( state )
+	if(state)
 	{
-		Panel *pAutoButton = FindChildByName( "autobutton" );
-		if ( pAutoButton )
+		Panel *pAutoButton = FindChildByName("autobutton");
+		if(pAutoButton)
 		{
 			pAutoButton->RequestFocus();
 		}
 	}
 }
 
-void CDODTeamMenu::OnTick( void )
+void CDODTeamMenu::OnTick(void)
 {
-	C_DODTeam *pAllies = dynamic_cast<C_DODTeam *>( GetGlobalTeam(TEAM_ALLIES) );
-	C_DODTeam *pAxis = dynamic_cast<C_DODTeam *>( GetGlobalTeam(TEAM_AXIS) );
+	C_DODTeam *pAllies = dynamic_cast<C_DODTeam *>(GetGlobalTeam(TEAM_ALLIES));
+	C_DODTeam *pAxis = dynamic_cast<C_DODTeam *>(GetGlobalTeam(TEAM_AXIS));
 
-	if ( !pAllies || !pAxis )
+	if(!pAllies || !pAxis)
 		return;
 
 	static int iLastAlliesCount = -1;
@@ -104,102 +102,102 @@ void CDODTeamMenu::OnTick( void )
 	int iNumAllies = pAllies->Get_Number_Players();
 	int iNumAxis = pAxis->Get_Number_Players();
 
-	if ( iNumAllies != iLastAlliesCount )
+	if(iNumAllies != iLastAlliesCount)
 	{
 		iLastAlliesCount = iNumAllies;
 
 		wchar_t wbuf[128];
 
-		if ( iNumAllies == 1 )
+		if(iNumAllies == 1)
 		{
-			g_pVGuiLocalize->ConstructString( wbuf, sizeof(wbuf), g_pVGuiLocalize->Find("#teammenu_numAllies_1"), 0 );		
+			g_pVGuiLocalize->ConstructString(wbuf, sizeof(wbuf), g_pVGuiLocalize->Find("#teammenu_numAllies_1"), 0);
 		}
 		else
 		{
 			wchar_t wnum[6];
-			_snwprintf( wnum, ARRAYSIZE(wnum), L"%d", iNumAllies );
-			g_pVGuiLocalize->ConstructString( wbuf, sizeof(wbuf), g_pVGuiLocalize->Find("#teammenu_numAllies"), 1, wnum );
+			_snwprintf(wnum, ARRAYSIZE(wnum), L"%d", iNumAllies);
+			g_pVGuiLocalize->ConstructString(wbuf, sizeof(wbuf), g_pVGuiLocalize->Find("#teammenu_numAllies"), 1, wnum);
 		}
 
-		Label *pLabel = dynamic_cast<Label *>( FindChildByName("num_allies") );
+		Label *pLabel = dynamic_cast<Label *>(FindChildByName("num_allies"));
 
-		if ( pLabel )
-			pLabel->SetText( wbuf );
+		if(pLabel)
+			pLabel->SetText(wbuf);
 	}
 
-	if ( iNumAxis != iLastAxisCount )
+	if(iNumAxis != iLastAxisCount)
 	{
 		iLastAxisCount = iNumAxis;
 
 		wchar_t wbuf[128];
 
-		if ( iNumAxis == 1 )
+		if(iNumAxis == 1)
 		{
-			g_pVGuiLocalize->ConstructString( wbuf, sizeof(wbuf), g_pVGuiLocalize->Find("#teammenu_numAxis_1"), 0 );		
+			g_pVGuiLocalize->ConstructString(wbuf, sizeof(wbuf), g_pVGuiLocalize->Find("#teammenu_numAxis_1"), 0);
 		}
 		else
 		{
 			wchar_t wnum[6];
-			_snwprintf( wnum, ARRAYSIZE(wnum), L"%d", iNumAxis );
-			g_pVGuiLocalize->ConstructString( wbuf, sizeof(wbuf), g_pVGuiLocalize->Find("#teammenu_numAxis"), 1, wnum );
+			_snwprintf(wnum, ARRAYSIZE(wnum), L"%d", iNumAxis);
+			g_pVGuiLocalize->ConstructString(wbuf, sizeof(wbuf), g_pVGuiLocalize->Find("#teammenu_numAxis"), 1, wnum);
 		}
 
-		Label *pLabel = dynamic_cast<Label *>( FindChildByName("num_axis") );
+		Label *pLabel = dynamic_cast<Label *>(FindChildByName("num_axis"));
 
-		if ( pLabel )
-			pLabel->SetText( wbuf );
+		if(pLabel)
+			pLabel->SetText(wbuf);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: called to update the menu with new information
 //-----------------------------------------------------------------------------
-void CDODTeamMenu::Update( void )
+void CDODTeamMenu::Update(void)
 {
 	BaseClass::Update();
 
 	C_DODPlayer *pPlayer = C_DODPlayer::GetLocalDODPlayer();
 
-	Assert( pPlayer );
+	Assert(pPlayer);
 
-	const ConVar *allowspecs =  cvar->FindVar( "mp_allowspectators" );	
+	const ConVar *allowspecs = cvar->FindVar("mp_allowspectators");
 
-	if ( allowspecs && allowspecs->GetBool() )
+	if(allowspecs && allowspecs->GetBool())
 	{
-		if ( !pPlayer || !DODGameRules() )
+		if(!pPlayer || !DODGameRules())
 			return;
 
 		SetVisibleButton("specbutton", true);
 	}
 	else
 	{
-		SetVisibleButton("specbutton", false );
+		SetVisibleButton("specbutton", false);
 	}
 
-	if( pPlayer->GetTeamNumber() == TEAM_UNASSIGNED ) // we aren't on a team yet
+	if(pPlayer->GetTeamNumber() == TEAM_UNASSIGNED) // we aren't on a team yet
 	{
-		SetVisibleButton("CancelButton", false); 
+		SetVisibleButton("CancelButton", false);
 	}
 	else
 	{
-		SetVisibleButton("CancelButton", true); 
+		SetVisibleButton("CancelButton", true);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: When a team button is pressed it triggers this function to 
+// Purpose: When a team button is pressed it triggers this function to
 //			cause the player to join a team
 //-----------------------------------------------------------------------------
-void CDODTeamMenu::OnCommand( const char *command )
+void CDODTeamMenu::OnCommand(const char *command)
 {
-	if ( !FStrEq( command, "vguicancel" ) )
+	if(!FStrEq(command, "vguicancel"))
 	{
-		engine->ClientCmd( command );
+		engine->ClientCmd(command);
 	}
-		
-	BaseClass::OnCommand( command );
 
-	gViewPortInterface->ShowBackGround( false );
+	BaseClass::OnCommand(command);
+
+	gViewPortInterface->ShowBackGround(false);
 	OnClose();
 }
 
@@ -209,13 +207,13 @@ void CDODTeamMenu::OnCommand( const char *command )
 void CDODTeamMenu::SetVisibleButton(const char *textEntryName, bool state)
 {
 	Button *entry = dynamic_cast<Button *>(FindChildByName(textEntryName));
-	if (entry)
+	if(entry)
 	{
 		entry->SetVisible(state);
 	}
 }
 
-void CDODTeamMenu::ApplySchemeSettings( IScheme *pScheme )
+void CDODTeamMenu::ApplySchemeSettings(IScheme *pScheme)
 {
 
 	BaseClass::ApplySchemeSettings(pScheme);
@@ -224,49 +222,47 @@ void CDODTeamMenu::ApplySchemeSettings( IScheme *pScheme )
 //-----------------------------------------------------------------------------
 // Draw nothing
 //-----------------------------------------------------------------------------
-void CDODTeamMenu::PaintBackground( void )
-{
-}
+void CDODTeamMenu::PaintBackground(void) {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-Panel *CDODTeamMenu::CreateControlByName( const char *controlName )
+Panel *CDODTeamMenu::CreateControlByName(const char *controlName)
 {
-	if( !Q_stricmp( "DODMouseOverPanelButton", controlName ) )
+	if(!Q_stricmp("DODMouseOverPanelButton", controlName))
 	{
-		CDODMouseOverButton<EditablePanel> *newButton = new CDODMouseOverButton<EditablePanel>( this, NULL, m_pPanel );
-		
-		if( !m_pFirstButton )
+		CDODMouseOverButton<EditablePanel> *newButton = new CDODMouseOverButton<EditablePanel>(this, NULL, m_pPanel);
+
+		if(!m_pFirstButton)
 		{
 			m_pFirstButton = newButton;
 		}
 		return newButton;
 	}
-	else if( !Q_stricmp( "DODButton", controlName ) )
+	else if(!Q_stricmp("DODButton", controlName))
 	{
 		return new CDODButton(this);
 	}
-	else if ( !Q_stricmp( "CIconPanel", controlName ) )
+	else if(!Q_stricmp("CIconPanel", controlName))
 	{
 		return new CIconPanel(this, "icon_panel");
 	}
 	else
 	{
-		return BaseClass::CreateControlByName( controlName );
+		return BaseClass::CreateControlByName(controlName);
 	}
 }
 
-void CDODTeamMenu::OnShowPage( char const *pagename )
+void CDODTeamMenu::OnShowPage(char const *pagename)
 {
-	if ( !pagename || !pagename[ 0 ] )
+	if(!pagename || !pagename[0])
 		return;
 
-	if ( !Q_stricmp( pagename, "allies") )
+	if(!Q_stricmp(pagename, "allies"))
 	{
 		m_iActiveTeam = TEAM_ALLIES;
 	}
-	else if ( !Q_stricmp( pagename, "axis" ) )
+	else if(!Q_stricmp(pagename, "axis"))
 	{
 		m_iActiveTeam = TEAM_AXIS;
 	}
@@ -274,12 +270,12 @@ void CDODTeamMenu::OnShowPage( char const *pagename )
 
 void CDODTeamMenu::OnKeyCodePressed(KeyCode code)
 {
-	if ( m_iTeamMenuKey != BUTTON_CODE_INVALID && m_iTeamMenuKey == code )
+	if(m_iTeamMenuKey != BUTTON_CODE_INVALID && m_iTeamMenuKey == code)
 	{
-		ShowPanel( false );
+		ShowPanel(false);
 	}
 	else
 	{
-		BaseClass::OnKeyCodePressed( code );
+		BaseClass::OnKeyCodePressed(code);
 	}
 }

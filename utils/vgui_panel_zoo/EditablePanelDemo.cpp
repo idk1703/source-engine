@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,21 +17,19 @@
 
 using namespace vgui;
 
-// EditablePanels are panels that can create certain vgui controls 
+// EditablePanels are panels that can create certain vgui controls
 // by using the function createControlByName()
 
-
-class EditablePanelDemo: public DemoPage
+class EditablePanelDemo : public DemoPage
 {
-	public:
-		EditablePanelDemo(Panel *parent, const char *name);
-		~EditablePanelDemo();
-	
-	private:
-		EditablePanel *m_pEditablePanel;
-		Label *m_pSpeedLabel;
-		ComboBox *m_pInternetSpeed;
+public:
+	EditablePanelDemo(Panel *parent, const char *name);
+	~EditablePanelDemo();
 
+private:
+	EditablePanel *m_pEditablePanel;
+	Label *m_pSpeedLabel;
+	ComboBox *m_pInternetSpeed;
 };
 
 //-----------------------------------------------------------------------------
@@ -42,7 +40,6 @@ EditablePanelDemo::EditablePanelDemo(Panel *parent, const char *name) : DemoPage
 	// Create an EditablePanel.
 	m_pEditablePanel = new EditablePanel(this, "AnEditablePanel");
 
-	
 	// Set its position and size
 	m_pEditablePanel->SetSize(400, 200);
 	m_pEditablePanel->SetPos(0, 0);
@@ -54,9 +51,9 @@ EditablePanelDemo::EditablePanelDemo(Panel *parent, const char *name) : DemoPage
 	// Set its Position
 	m_pSpeedLabel->SetPos(20, 30);
 	// Set its size
-	m_pSpeedLabel->SetSize(96,20);
+	m_pSpeedLabel->SetSize(96, 20);
 	// Set it not to resize with the window.
-	m_pSpeedLabel->SetAutoResize(PIN_TOPLEFT, AUTORESIZE_NO, 0, 0, 0, 0 );
+	m_pSpeedLabel->SetAutoResize(PIN_TOPLEFT, AUTORESIZE_NO, 0, 0, 0, 0);
 	// Set it visible
 	m_pSpeedLabel->SetVisible(true);
 	// Set it enabled
@@ -67,20 +64,14 @@ EditablePanelDemo::EditablePanelDemo(Panel *parent, const char *name) : DemoPage
 	m_pSpeedLabel->SetText("Internet &Speed");
 	// Set its text alignment
 	m_pSpeedLabel->SetContentAlignment(Label::a_east);
-	
+
 	// Add another child panel to the EditablePanel, this time a ComboBox.
-	
-	// This will be the menu items of our combo box menu.	
+
+	// This will be the menu items of our combo box menu.
 	// List of all the different internet speeds
-	char *g_Speeds[] =
-	{
-		{ "Modem - 14.4k"},
-		{ "Modem - 28.8k"},
-		{ "Modem - 33.6k"},
-		{ "Modem - 56k"},
-		{ "ISDN - 112k"},
-		{ "DSL > 256k"},
-		{ "LAN/T1 > 1M"},		
+	char *g_Speeds[] = {
+		{"Modem - 14.4k"}, {"Modem - 28.8k"}, {"Modem - 33.6k"}, {"Modem - 56k"},
+		{"ISDN - 112k"},   {"DSL > 256k"},	  {"LAN/T1 > 1M"},
 	};
 
 	// Create the combo box using the create function
@@ -92,7 +83,7 @@ EditablePanelDemo::EditablePanelDemo(Panel *parent, const char *name) : DemoPage
 	// Set its size
 	m_pInternetSpeed->SetSize(200, 20);
 	// Set it not to resize with the window.
-	m_pInternetSpeed->SetAutoResize(PIN_TOPLEFT, AUTORESIZE_NO, 0, 0, 0, 0 );
+	m_pInternetSpeed->SetAutoResize(PIN_TOPLEFT, AUTORESIZE_NO, 0, 0, 0, 0);
 	// Set it visible
 	m_pInternetSpeed->SetVisible(true);
 	// Set it enabled
@@ -104,17 +95,16 @@ EditablePanelDemo::EditablePanelDemo(Panel *parent, const char *name) : DemoPage
 	// Set it not editable
 	m_pInternetSpeed->SetEditable(false);
 	// Set its maxchars to -1 since it is not editable
-	//m_pInternetSpeed->SetMaximumCharCount(-1);
+	// m_pInternetSpeed->SetMaximumCharCount(-1);
 	// Set the number of items in the combo box menu
 	m_pInternetSpeed->SetNumberOfEditLines(ARRAYSIZE(g_Speeds));
 	// Set the drop down arrow button visible
 	m_pInternetSpeed->SetDropdownButtonVisible(true);
 
-
 	// Add menu items to this combo box.
-	for (int i = 0; i < ARRAYSIZE(g_Speeds); i++)
+	for(int i = 0; i < ARRAYSIZE(g_Speeds); i++)
 	{
-		m_pInternetSpeed->AddItem(g_Speeds[i], NULL );
+		m_pInternetSpeed->AddItem(g_Speeds[i], NULL);
 	}
 
 	// Associate our label with our combo box
@@ -131,15 +121,9 @@ EditablePanelDemo::EditablePanelDemo(Panel *parent, const char *name) : DemoPage
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-EditablePanelDemo::~EditablePanelDemo()
-{
-}
+EditablePanelDemo::~EditablePanelDemo() {}
 
-
-
-Panel* EditablePanelDemo_Create(Panel *parent)
+Panel *EditablePanelDemo_Create(Panel *parent)
 {
 	return new EditablePanelDemo(parent, "EditablePanelDemo");
 }
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -17,7 +17,7 @@
 //
 // Contents:
 //
-//		
+//
 //
 // Authors:
 //
@@ -27,7 +27,7 @@
 //
 // Things to do:
 //
-//		
+//
 //
 //*****************************************************************************
 
@@ -38,40 +38,32 @@
 #pragma once
 #endif
 
-
 //*****************************************************************************
 //
 // 'Local' build control section.
 //
 //*****************************************************************************
 
-#if  (BUILD_MODE == BUILD_MODE_RELEASE_NORMAL)  ||  (BUILD_MODE == BUILD_MODE_RELEASE_TEST)
-
+#if(BUILD_MODE == BUILD_MODE_RELEASE_NORMAL) || (BUILD_MODE == BUILD_MODE_RELEASE_TEST)
 
 #elif BUILD_MODE == BUILD_MODE_DEBUG_NORMAL
 
-
 #else
-	// 'Safe' default settings.  This allows new build modes to be added to the 
-	// project without requiring the manual updating of all 'local build control' 
-	// sections in every module and header file.
+// 'Safe' default settings.  This allows new build modes to be added to the
+// project without requiring the manual updating of all 'local build control'
+// sections in every module and header file.
 
 #endif
-
-
 
 //*****************************************************************************
 //
 // Include files required by this header.
 //
-// Note: Do NOT place any 'using' directives or declarations in header files - 
-// put them at the top of the source files that require them.  
-// Use fully-qualified names in header files. 
+// Note: Do NOT place any 'using' directives or declarations in header files -
+// put them at the top of the source files that require them.
+// Use fully-qualified names in header files.
 //
 //*****************************************************************************
-
-
-
 
 //*****************************************************************************
 //
@@ -80,13 +72,12 @@
 //
 //*****************************************************************************
 
-
-namespace 
+namespace
 {
 	// constant definitions here
 }
 
-#define szSteamBootStrapperIconIdEnvVar  "__STEAM_BOOTSTRAPPER_ICON_ID__"
+#define szSteamBootStrapperIconIdEnvVar "__STEAM_BOOTSTRAPPER_ICON_ID__"
 
 //*****************************************************************************
 //
@@ -95,13 +86,10 @@ namespace
 //
 //*****************************************************************************
 
-
-namespace 
+namespace
 {
-// scalar and enumerated type definitions here
+	// scalar and enumerated type definitions here
 }
-
-
 
 //*****************************************************************************
 //
@@ -110,13 +98,10 @@ namespace
 //
 //*****************************************************************************
 
-
-namespace 
+namespace
 {
 	// class, structure, and complex type definitions here
 }
-
-
 
 //*****************************************************************************
 //
@@ -126,13 +111,10 @@ namespace
 //
 //*****************************************************************************
 
-
-namespace 
+namespace
 {
 	// function prototypes here
 }
-
-
 
 //*****************************************************************************
 //
@@ -142,21 +124,15 @@ namespace
 //
 //*****************************************************************************
 
-
-namespace 
+namespace
 {
 	// variable and data declarations here
 }
-
-
 
 //*****************************************************************************
 //
 // Inline function definitions.
 //
 //*****************************************************************************
-
-
-
 
 #endif

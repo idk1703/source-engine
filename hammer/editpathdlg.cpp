@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -13,9 +13,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
-CEditPathDlg::CEditPathDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(CEditPathDlg::IDD, pParent)
+CEditPathDlg::CEditPathDlg(CWnd *pParent /*=NULL*/) : CDialog(CEditPathDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CEditPathDlg)
 	m_strClass = _T("");
@@ -24,8 +22,7 @@ CEditPathDlg::CEditPathDlg(CWnd* pParent /*=NULL*/)
 	//}}AFX_DATA_INIT
 }
 
-
-void CEditPathDlg::DoDataExchange(CDataExchange* pDX)
+void CEditPathDlg::DoDataExchange(CDataExchange *pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CEditPathDlg)
@@ -36,14 +33,12 @@ void CEditPathDlg::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-
 BEGIN_MESSAGE_MAP(CEditPathDlg, CDialog)
 	//{{AFX_MSG_MAP(CEditPathDlg)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-
-BOOL CEditPathDlg::OnInitDialog() 
+BOOL CEditPathDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
@@ -57,13 +52,13 @@ BOOL CEditPathDlg::OnInitDialog()
 
 	CString str;
 	int nCount = pGD->GetClassCount();
-	for (int i = 0; i < nCount; i++)
+	for(int i = 0; i < nCount; i++)
 	{
 		GDclass *pc = pGD->GetClass(i);
-		if (!pc->IsBaseClass())
+		if(!pc->IsBaseClass())
 		{
 			str = pc->GetName();
-			if (!pc->IsClass("worldspawn"))
+			if(!pc->IsClass("worldspawn"))
 			{
 				m_cClass.AddString(str);
 			}

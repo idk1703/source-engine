@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -11,7 +11,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-void CBaseTool::Init( CMapDoc *pDocument )
+void CBaseTool::Init(CMapDoc *pDocument)
 {
 	m_bActiveTool = false;
 	m_pDocument = pDocument;
@@ -25,7 +25,7 @@ void CBaseTool::Activate()
 {
 	OnActivate();
 
-	m_pDocument->UpdateAllViews( MAPVIEW_UPDATE_TOOL );
+	m_pDocument->UpdateAllViews(MAPVIEW_UPDATE_TOOL);
 
 	m_bActiveTool = true;
 }
@@ -38,8 +38,8 @@ void CBaseTool::Deactivate()
 {
 	OnDeactivate();
 
-	if ( m_pDocument )
-		m_pDocument->UpdateAllViews( MAPVIEW_UPDATE_TOOL );
+	if(m_pDocument)
+		m_pDocument->UpdateAllViews(MAPVIEW_UPDATE_TOOL);
 
 	m_bActiveTool = false;
 }

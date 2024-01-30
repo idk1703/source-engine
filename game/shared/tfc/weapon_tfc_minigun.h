@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,21 +10,18 @@
 #pragma once
 #endif
 
-
 #include "weapon_tfcbase.h"
 
+#if defined(CLIENT_DLL)
 
-#if defined( CLIENT_DLL )
-
-	#define CTFCMinigun C_TFCMinigun
+#define CTFCMinigun C_TFCMinigun
 
 #endif
 
-
 enum MinigunState_t
 {
-// assault cannon firing states
-	AC_STATE_IDLE=0,
+	// assault cannon firing states
+	AC_STATE_IDLE = 0,
 	AC_STATE_STARTFIRING,
 	AC_STATE_FIRING,
 	AC_STATE_SPINNING
@@ -37,15 +34,14 @@ enum MinigunState_t
 class CTFCMinigun : public CWeaponTFCBase
 {
 public:
-	DECLARE_CLASS( CTFCMinigun, CWeaponTFCBase );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_CLASS(CTFCMinigun, CWeaponTFCBase);
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
-	#ifndef CLIENT_DLL
-		DECLARE_DATADESC();
-	#endif
 
-	
+#ifndef CLIENT_DLL
+	DECLARE_DATADESC();
+#endif
+
 	CTFCMinigun();
 
 	// We say yes to this so the weapon system lets us switch to it.
@@ -55,30 +51,24 @@ public:
 	virtual void PrimaryAttack();
 	virtual void WeaponIdle();
 	virtual bool Deploy();
-	virtual bool SendWeaponAnim( int iActivity );
+	virtual bool SendWeaponAnim(int iActivity);
 	virtual void HandleFireOnEmpty();
-	
-	virtual TFCWeaponID GetWeaponID( void ) const;
 
+	virtual TFCWeaponID GetWeaponID(void) const;
 
-// Overrideables.
+	// Overrideables.
 public:
-
 private:
-	
-	CTFCMinigun( const CTFCMinigun & ) {}
+	CTFCMinigun(const CTFCMinigun &) {}
 
 	void WindUp();
 	void Spin();
 	void Fire();
 	void StartSpin();
-	void WindDown( bool bFromHolster );
-
+	void WindDown(bool bFromHolster);
 
 private:
-
 	MinigunState_t m_iWeaponState;
 };
-
 
 #endif // WEAPON_TFC_MINIGUN_H

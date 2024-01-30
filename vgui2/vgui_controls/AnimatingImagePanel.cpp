@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,7 +22,7 @@
 
 using namespace vgui;
 
-DECLARE_BUILD_FACTORY( AnimatingImagePanel );
+DECLARE_BUILD_FACTORY(AnimatingImagePanel);
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
@@ -30,7 +30,7 @@ DECLARE_BUILD_FACTORY( AnimatingImagePanel );
 AnimatingImagePanel::AnimatingImagePanel(Panel *parent, const char *name) : Panel(parent, name)
 {
 	m_iCurrentImage = 0;
-	m_iFrameTimeMillis = 100;	// 10Hz frame rate
+	m_iFrameTimeMillis = 100; // 10Hz frame rate
 	m_iNextFrameTime = 0;
 	m_pImageName = NULL;
 	m_bFiltered = false;
@@ -55,28 +55,28 @@ void AnimatingImagePanel::AddImage(IImage *image)
 {
 	m_Frames.AddToTail(image);
 
-	if ( !m_bScaleImage && image != NULL )
+	if(!m_bScaleImage && image != NULL)
 	{
-		int wide,tall;
-		image->GetSize(wide,tall);
-		SetSize(wide,tall);
+		int wide, tall;
+		image->GetSize(wide, tall);
+		SetSize(wide, tall);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Load a set of animations by name.
-// Input: 
-//		baseName: is the name of the animations without their frame number or 
+// Input:
+//		baseName: is the name of the animations without their frame number or
 //			file extension, (e.g. c1.tga becomes just c.)
 //		framecount: number of frames in the animation
 //-----------------------------------------------------------------------------
 void AnimatingImagePanel::LoadAnimation(const char *baseName, int frameCount)
 {
 	m_Frames.RemoveAll();
-	for (int i = 1; i <= frameCount; i++)
+	for(int i = 1; i <= frameCount; i++)
 	{
 		char imageName[512];
-		Q_snprintf(imageName, sizeof( imageName ), "%s%d", baseName, i);
+		Q_snprintf(imageName, sizeof(imageName), "%s%d", baseName, i);
 		AddImage(scheme()->GetImage(imageName, m_bFiltered));
 	}
 }
@@ -86,29 +86,29 @@ void AnimatingImagePanel::LoadAnimation(const char *baseName, int frameCount)
 //-----------------------------------------------------------------------------
 void AnimatingImagePanel::PaintBackground()
 {
-	if ( m_Frames.IsValidIndex( m_iCurrentImage ) && m_Frames[m_iCurrentImage] != NULL )
+	if(m_Frames.IsValidIndex(m_iCurrentImage) && m_Frames[m_iCurrentImage] != NULL)
 	{
 		IImage *pImage = m_Frames[m_iCurrentImage];
 
-		surface()->DrawSetColor( 255, 255, 255, 255 );
+		surface()->DrawSetColor(255, 255, 255, 255);
 		pImage->SetPos(0, 0);
-		
-		if ( m_bScaleImage )
+
+		if(m_bScaleImage)
 		{
 			// Image size is stored in the bitmap, so temporarily set its size
 			// to our panel size and then restore after we draw it.
 
 			int imageWide, imageTall;
-			pImage->GetSize( imageWide, imageTall );
+			pImage->GetSize(imageWide, imageTall);
 
 			int wide, tall;
-			GetSize( wide, tall );
-			pImage->SetSize( wide, tall );
+			GetSize(wide, tall);
+			pImage->SetSize(wide, tall);
 
-			pImage->SetColor( Color( 255,255,255,255 ) );
+			pImage->SetColor(Color(255, 255, 255, 255));
 			pImage->Paint();
 
-			pImage->SetSize( imageWide, imageTall );
+			pImage->SetSize(imageWide, imageTall);
 		}
 		else
 		{
@@ -122,11 +122,11 @@ void AnimatingImagePanel::PaintBackground()
 //-----------------------------------------------------------------------------
 void AnimatingImagePanel::OnTick()
 {
-	if (m_bAnimating && system()->GetTimeMillis() >= m_iNextFrameTime)
+	if(m_bAnimating && system()->GetTimeMillis() >= m_iNextFrameTime)
 	{
 		m_iNextFrameTime = system()->GetTimeMillis() + m_iFrameTimeMillis;
 		m_iCurrentImage++;
-		if (!m_Frames.IsValidIndex(m_iCurrentImage))
+		if(!m_Frames.IsValidIndex(m_iCurrentImage))
 		{
 			m_iCurrentImage = 0;
 		}
@@ -141,7 +141,7 @@ void AnimatingImagePanel::OnTick()
 void AnimatingImagePanel::GetSettings(KeyValues *outResourceData)
 {
 	BaseClass::GetSettings(outResourceData);
-	if (m_pImageName)
+	if(m_pImageName)
 	{
 		outResourceData->SetString("image", m_pImageName);
 	}
@@ -155,11 +155,11 @@ void AnimatingImagePanel::ApplySettings(KeyValues *inResourceData)
 	BaseClass::ApplySettings(inResourceData);
 
 	const char *imageName = inResourceData->GetString("image", NULL);
-	if (imageName)
+	if(imageName)
 	{
-		m_bScaleImage = ( inResourceData->GetInt( "scaleImage", 0 ) == 1 );
+		m_bScaleImage = (inResourceData->GetInt("scaleImage", 0) == 1);
 
-		delete [] m_pImageName;
+		delete[] m_pImageName;
 		int len = Q_strlen(imageName) + 1;
 		m_pImageName = new char[len];
 		Q_strncpy(m_pImageName, imageName, len);
@@ -168,7 +168,7 @@ void AnimatingImagePanel::ApplySettings(KeyValues *inResourceData)
 		LoadAnimation(m_pImageName, inResourceData->GetInt("frames"));
 	}
 
-	m_iFrameTimeMillis = inResourceData->GetInt( "anim_framerate", 100 );
+	m_iFrameTimeMillis = inResourceData->GetInt("anim_framerate", 100);
 }
 
 //-----------------------------------------------------------------------------
@@ -187,7 +187,7 @@ const char *AnimatingImagePanel::GetDescription()
 void AnimatingImagePanel::StartAnimation()
 {
 	m_bAnimating = true;
-//	ivgui()->AddTickSignal(GetVPanel());
+	//	ivgui()->AddTickSignal(GetVPanel());
 }
 
 //-----------------------------------------------------------------------------
@@ -196,7 +196,7 @@ void AnimatingImagePanel::StartAnimation()
 void AnimatingImagePanel::StopAnimation()
 {
 	m_bAnimating = false;
-//	ivgui()->RemoveTickSignal(GetVPanel());
+	//	ivgui()->RemoveTickSignal(GetVPanel());
 }
 
 //-----------------------------------------------------------------------------

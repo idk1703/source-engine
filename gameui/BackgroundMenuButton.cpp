@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -30,12 +30,10 @@ CBackgroundMenuButton::CBackgroundMenuButton(vgui::Panel *parent, const char *na
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CBackgroundMenuButton::~CBackgroundMenuButton()
-{
-}
+CBackgroundMenuButton::~CBackgroundMenuButton() {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBackgroundMenuButton::OnCommand(const char *command)
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -32,68 +32,68 @@ using namespace vgui;
 
 #define INIT_HEALTH -1
 
-#define FADE_TIME	100
-#define MIN_ALPHA	100	
+#define FADE_TIME 100
+#define MIN_ALPHA 100
 
 //-----------------------------------------------------------------------------
 // Purpose: Health panel
 //-----------------------------------------------------------------------------
 class CHudHealth : public CHudElement, public CHL1HudNumbers
 {
-	DECLARE_CLASS_SIMPLE( CHudHealth, CHL1HudNumbers );
+	DECLARE_CLASS_SIMPLE(CHudHealth, CHL1HudNumbers);
 
 public:
-	CHudHealth( const char *pElementName );
+	CHudHealth(const char *pElementName);
 
-	void			Init( void );
-	void			VidInit( void );
-	void			Reset( void );
-	void			OnThink();
-	void			MsgFunc_Damage(bf_read &msg);
-
-private:
-	void	Paint( void );
-	void	ApplySchemeSettings(vgui::IScheme *pScheme);
+	void Init(void);
+	void VidInit(void);
+	void Reset(void);
+	void OnThink();
+	void MsgFunc_Damage(bf_read &msg);
 
 private:
-	CHudTexture		*icon_cross;
-	int				m_iHealth;
-	float			m_flFade;
-	int				m_bitsDamage;
-};	
+	void Paint(void);
+	void ApplySchemeSettings(vgui::IScheme *pScheme);
 
-DECLARE_HUDELEMENT( CHudHealth );
-DECLARE_HUD_MESSAGE( CHudHealth, Damage );
+private:
+	CHudTexture *icon_cross;
+	int m_iHealth;
+	float m_flFade;
+	int m_bitsDamage;
+};
+
+DECLARE_HUDELEMENT(CHudHealth);
+DECLARE_HUD_MESSAGE(CHudHealth, Damage);
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CHudHealth::CHudHealth( const char *pElementName ) : CHudElement( pElementName ), BaseClass(NULL, "HudHealth")
+CHudHealth::CHudHealth(const char *pElementName) : CHudElement(pElementName), BaseClass(NULL, "HudHealth")
 {
-	SetHiddenBits( HIDEHUD_HEALTH | HIDEHUD_PLAYERDEAD | HIDEHUD_NEEDSUIT );
+	SetHiddenBits(HIDEHUD_HEALTH | HIDEHUD_PLAYERDEAD | HIDEHUD_NEEDSUIT);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudHealth::Init()
 {
-	HOOK_HUD_MESSAGE( CHudHealth, Damage );
+	HOOK_HUD_MESSAGE(CHudHealth, Damage);
 	Reset();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudHealth::Reset()
 {
-	m_iHealth		= INIT_HEALTH;
-	m_flFade			= 0;
-	m_bitsDamage	= 0;
+	m_iHealth = INIT_HEALTH;
+	m_flFade = 0;
+	m_bitsDamage = 0;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudHealth::VidInit()
 {
@@ -102,20 +102,20 @@ void CHudHealth::VidInit()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudHealth::OnThink()
 {
 	int x = 0;
 	C_BasePlayer *local = C_BasePlayer::GetLocalPlayer();
-	if ( local )
+	if(local)
 	{
 		// Never below zero
-		x = MAX( local->GetHealth(), 0 );
+		x = MAX(local->GetHealth(), 0);
 	}
 
 	// Only update the fade if we've changed health
-	if ( x == m_iHealth )
+	if(x == m_iHealth)
 	{
 		return;
 	}
@@ -126,28 +126,28 @@ void CHudHealth::OnThink()
 
 void CHudHealth::Paint()
 {
-	Color	clrHealth;
-	int		a;
-	int		x;
-	int		y;
+	Color clrHealth;
+	int a;
+	int x;
+	int y;
 
 	BaseClass::Paint();
 
-	if ( !icon_cross )
+	if(!icon_cross)
 	{
-		icon_cross = gHUD.GetIcon( "cross" );
+		icon_cross = gHUD.GetIcon("cross");
 	}
 
-	if ( !icon_cross )
+	if(!icon_cross)
 	{
 		return;
 	}
 
 	// Has health changed? Flash the health #
-	if ( m_flFade )
+	if(m_flFade)
 	{
-		m_flFade -= ( gpGlobals->frametime * 20 );
-		if ( m_flFade <= 0 )
+		m_flFade -= (gpGlobals->frametime * 20);
+		if(m_flFade <= 0)
 		{
 			a = MIN_ALPHA;
 			m_flFade = 0;
@@ -155,7 +155,7 @@ void CHudHealth::Paint()
 		else
 		{
 			// Fade the health number back to dim
-			a = MIN_ALPHA +  ( m_flFade / FADE_TIME ) * 128;
+			a = MIN_ALPHA + (m_flFade / FADE_TIME) * 128;
 		}
 	}
 	else
@@ -164,52 +164,52 @@ void CHudHealth::Paint()
 	}
 
 	// If health is getting low, make it bright red
-	if ( m_iHealth <= 15 )
+	if(m_iHealth <= 15)
 		a = 255;
-		
-	if (m_iHealth > 25)
+
+	if(m_iHealth > 25)
 	{
 		int r, g, b, nUnused;
 
-		(gHUD.m_clrYellowish).GetColor( r, g, b, nUnused );
-		clrHealth.SetColor( r, g, b, a );
+		(gHUD.m_clrYellowish).GetColor(r, g, b, nUnused);
+		clrHealth.SetColor(r, g, b, a);
 	}
 	else
 	{
-		clrHealth.SetColor( 250, 0, 0, a );
+		clrHealth.SetColor(250, 0, 0, a);
 	}
 
-	int nFontWidth	= GetNumberFontWidth();
-	int nFontHeight	= GetNumberFontHeight();
-	int nCrossWidth	= icon_cross->Width();
+	int nFontWidth = GetNumberFontWidth();
+	int nFontHeight = GetNumberFontHeight();
+	int nCrossWidth = icon_cross->Width();
 
 	x = nCrossWidth / 2;
-	y = GetTall() - ( nFontHeight * 1.5 );
+	y = GetTall() - (nFontHeight * 1.5);
 
-	icon_cross->DrawSelf( x, y, clrHealth );
+	icon_cross->DrawSelf(x, y, clrHealth);
 
-	x = nCrossWidth + ( nFontWidth / 2 );
+	x = nCrossWidth + (nFontWidth / 2);
 
-	x = DrawHudNumber( x, y, m_iHealth, clrHealth );
+	x = DrawHudNumber(x, y, m_iHealth, clrHealth);
 
 	x += nFontWidth / 2;
 
-	int iHeight	= nFontHeight;
-	int iWidth	= nFontWidth / 10;
+	int iHeight = nFontHeight;
+	int iWidth = nFontWidth / 10;
 
-	clrHealth.SetColor( 255, 160, 0, a  );
-	vgui::surface()->DrawSetColor( clrHealth );
-	vgui::surface()->DrawFilledRect( x, y, x + iWidth, y + iHeight );
+	clrHealth.SetColor(255, 160, 0, a);
+	vgui::surface()->DrawSetColor(clrHealth);
+	vgui::surface()->DrawFilledRect(x, y, x + iWidth, y + iHeight);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudHealth::MsgFunc_Damage(bf_read &msg)
 {
-	msg.ReadByte();	// armor
-	msg.ReadByte();	// health
-	msg.ReadLong();	// damage bits
+	msg.ReadByte(); // armor
+	msg.ReadByte(); // health
+	msg.ReadLong(); // damage bits
 
 	Vector vecFrom;
 

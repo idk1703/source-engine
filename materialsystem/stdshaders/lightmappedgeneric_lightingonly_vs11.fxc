@@ -13,15 +13,15 @@ struct VS_INPUT
 struct VS_OUTPUT
 {
 	float4 vProjPos		: POSITION;
-	
+
 	float2 vTexCoord0	: TEXCOORD0;
 	float2 vTexCoord1	: TEXCOORD1;
-	
+
 	float4 vDiffuse		: COLOR0;
-	
+
 	float4 fogFactorW	: COLOR1;
 
-#if !defined( _X360 )    
+#if !defined( _X360 )
 	float  fog			: FOG;
 #endif
 };
@@ -33,9 +33,9 @@ VS_OUTPUT main( const VS_INPUT v )
 
 	float3 worldPos;
 	worldPos = mul4x3( v.vPos, cModel[0] );
-		
+
 	o.vProjPos = mul( float4( worldPos, 1 ), cViewProj );
-	
+
 	o.fogFactorW = CalcFog( worldPos, o.vProjPos, g_FogType );
 #if !defined( _X360 )
 	o.fog = o.fogFactorW;
@@ -44,8 +44,8 @@ VS_OUTPUT main( const VS_INPUT v )
 	// YUCK!  This is to make texcoords continuous for mat_softwaretl
 	o.vTexCoord0 = 0.0f;
 	o.vTexCoord1 = v.vTexCoord1;
-	
+
 	o.vDiffuse = 1.0f;
-	
+
 	return o;
 }

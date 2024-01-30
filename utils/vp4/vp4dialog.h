@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -18,7 +18,8 @@
 //-----------------------------------------------------------------------------
 class CVP4Dialog : public vgui::Frame
 {
-	DECLARE_CLASS_SIMPLE( CVP4Dialog, vgui::Frame );
+	DECLARE_CLASS_SIMPLE(CVP4Dialog, vgui::Frame);
+
 public:
 	CVP4Dialog();
 	~CVP4Dialog();
@@ -32,13 +33,13 @@ private:
 	void RefreshClientList();
 	void RefreshChangesList();
 
-	MESSAGE_FUNC( OnFileSelected, "TreeViewItemSelected" );
-	MESSAGE_FUNC( OnTextChanged, "TextChanged" );
+	MESSAGE_FUNC(OnFileSelected, "TreeViewItemSelected");
+	MESSAGE_FUNC(OnTextChanged, "TextChanged");
 
 	// changes
-	MESSAGE_FUNC_INT( CloakFolder, "CloakFolder", item );
-	MESSAGE_FUNC_INT( OpenFileForEdit, "EditFile", item );
-	MESSAGE_FUNC_INT( OpenFileForDelete, "DeleteFile", item );
+	MESSAGE_FUNC_INT(CloakFolder, "CloakFolder", item);
+	MESSAGE_FUNC_INT(OpenFileForEdit, "EditFile", item);
+	MESSAGE_FUNC_INT(OpenFileForDelete, "DeleteFile", item);
 
 	vgui::ComboBox *m_pClientCombo;
 	vgui::TreeView *m_pFileTree;
@@ -50,8 +51,6 @@ private:
 
 	vgui::ListPanel *m_pRevisionList;
 	vgui::SectionedListPanel *m_pChangesList;
-
 };
-
 
 #endif // VP4DIALOG_H

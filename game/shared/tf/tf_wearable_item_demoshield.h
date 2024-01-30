@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #ifndef TF_WEARABLE_ITEM_DEMOSHIELD_H
@@ -26,14 +26,13 @@
 class C_TFSword;
 #endif
 
-
 //=============================================================================
 //
-// 
+//
 //
 class CTFWearableDemoShield : public CTFWearable
 {
-	DECLARE_CLASS( CTFWearableDemoShield, CTFWearable );
+	DECLARE_CLASS(CTFWearableDemoShield, CTFWearable);
 
 public:
 	DECLARE_NETWORKCLASS();
@@ -43,25 +42,24 @@ public:
 
 	virtual void Precache();
 
-	void DoSpecialAction( CTFPlayer *pPlayer );
-	void EndSpecialAction( CTFPlayer *pPlayer );
+	void DoSpecialAction(CTFPlayer *pPlayer);
+	void EndSpecialAction(CTFPlayer *pPlayer);
 
 	// Charge
-	bool CanCharge( CTFPlayer *pPlayer );
-	void DoCharge( CTFPlayer *pPlayer );
-	void ShieldBash( CTFPlayer *pPlayer, float flCurrentChargeMeter );
+	bool CanCharge(CTFPlayer *pPlayer);
+	void DoCharge(CTFPlayer *pPlayer);
+	void ShieldBash(CTFPlayer *pPlayer, float flCurrentChargeMeter);
 
-	virtual void Equip( CBasePlayer* pOwner );
-	virtual void UnEquip( CBasePlayer* pOwner );
+	virtual void Equip(CBasePlayer *pOwner);
+	virtual void UnEquip(CBasePlayer *pOwner);
 
-	float CalculateChargeDamage( float flCurrentChargeMeter );
-	Vector GetShieldDamageForce( float flCurrentChargeMeter );
+	float CalculateChargeDamage(float flCurrentChargeMeter);
+	Vector GetShieldDamageForce(float flCurrentChargeMeter);
 
 private:
 #ifdef GAME_DLL
 	bool m_bImpactedSomething;
 #endif
 };
-
 
 #endif // TF_WEARABLE_ITEM_DEMOSHIELD_H

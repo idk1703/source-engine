@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -9,29 +9,24 @@
 #define PREFABS_H
 #pragma once
 
-
 #include <afxtempl.h>
 #pragma warning(push, 1)
-#pragma warning(disable:4701 4702 4530)
+#pragma warning(disable : 4701 4702 4530)
 #include <fstream>
 #pragma warning(pop)
-
 
 class BoundBox;
 class CMapClass;
 class CPrefab;
 class CPrefabLibrary;
 
-
 const POSITION ENUM_START = POSITION(1);
 const int MAX_NOTES = 501;
-
 
 enum
 {
 	pt3D,
 };
-
 
 enum LibraryType_t
 {
@@ -40,22 +35,19 @@ enum LibraryType_t
 	LibType_HalfLife2,
 };
 
-
-typedef CTypedPtrList<CPtrList, CPrefab*> CPrefabList;
-typedef CTypedPtrList<CPtrList, CPrefabLibrary*> CPrefabLibraryList;
-
+typedef CTypedPtrList<CPtrList, CPrefab *> CPrefabList;
+typedef CTypedPtrList<CPtrList, CPrefabLibrary *> CPrefabLibraryList;
 
 class CPrefab
 {
 public:
-
 	CPrefab(void);
 	virtual ~CPrefab(void);
 
 	// load/save flags:
 	enum
 	{
-		lsRMF = 0x00,	// default
+		lsRMF = 0x00, // default
 		lsMAP = 0x01,
 		lsRaw = 0x02,
 		lsUpdateFilePos = 0x04
@@ -66,18 +58,34 @@ public:
 
 	// set info:
 	void SetName(LPCTSTR pszName)
-	{ strcpy(szName, pszName); }
+	{
+		strcpy(szName, pszName);
+	}
 	void SetNotes(LPCTSTR pszNotes)
-	{ strcpy(szNotes, pszNotes); }
+	{
+		strcpy(szNotes, pszNotes);
+	}
 
 	// get info:
-	LPCTSTR GetName() { return szName; }
-	LPCTSTR GetNotes() { return szNotes; }
+	LPCTSTR GetName()
+	{
+		return szName;
+	}
+	LPCTSTR GetNotes()
+	{
+		return szNotes;
+	}
 
 	// unique id assigned at creation time:
-	DWORD GetID() { return dwID; }
+	DWORD GetID()
+	{
+		return dwID;
+	}
 
-	DWORD GetLibraryID() { return dwLibID; }
+	DWORD GetLibraryID()
+	{
+		return dwLibID;
+	}
 
 	// common interface:
 	virtual CMapClass *CreateInBox(BoundBox *pBox) = 0;
@@ -96,32 +104,30 @@ public:
 
 	// static misc stuff:
 	static pfiletype_t CheckFileType(LPCTSTR pszFilename);
-	static CPrefab* FindID(DWORD dwID);
+	static CPrefab *FindID(DWORD dwID);
 
 	// caching:
 	static void AddMRU(CPrefab *pPrefab);
 	static void EnableCaching(BOOL = TRUE);
-	static void FreeAllData();	// free ALL objects' data
+	static void FreeAllData(); // free ALL objects' data
 
 protected:
-
 	char szName[31];
 	char szNotes[MAX_NOTES];
 	DWORD dwID;
-	DWORD dwLibID;	// library id
-	
+	DWORD dwLibID; // library id
+
 	DWORD dwFileOffset;
-	DWORD dwFileSize;	// size in file - for copying purposes
+	DWORD dwFileSize; // size in file - for copying purposes
 
 	static CPrefabList PrefabList;
 	static CPrefabList MRU;
 	static BOOL bCacheEnabled;
 
-friend class CPrefabLibrary;
-friend class CPrefabLibraryRMF;
-friend class CPrefabLibraryVMF;
+	friend class CPrefabLibrary;
+	friend class CPrefabLibraryRMF;
+	friend class CPrefabLibraryVMF;
 };
-
 
 //
 // A collection of prefabs.
@@ -145,14 +151,23 @@ public:
 	}
 
 	// get info:
-	LPCTSTR GetName() { return m_szName; }
-	LPCTSTR GetNotes() { return szNotes; }
+	LPCTSTR GetName()
+	{
+		return m_szName;
+	}
+	LPCTSTR GetNotes()
+	{
+		return szNotes;
+	}
 	inline bool IsType(LibraryType_t eType);
 
 	// unique id assigned at creation time:
-	DWORD GetID() { return dwID; }
+	DWORD GetID()
+	{
+		return dwID;
+	}
 
-	CPrefab * EnumPrefabs(POSITION& p);
+	CPrefab *EnumPrefabs(POSITION &p);
 	void Add(CPrefab *pPrefab);
 	void Remove(CPrefab *pPrefab);
 	void Sort();
@@ -164,7 +179,6 @@ public:
 	static CPrefabLibrary *FindOpenLibrary(LPCTSTR pszFilename);
 
 protected:
-
 	void FreePrefabs();
 
 	static CPrefabLibraryList PrefabLibraryList;
@@ -173,13 +187,12 @@ protected:
 	char m_szName[31];
 	char szNotes[MAX_NOTES];
 	DWORD dwID;
-	LibraryType_t m_eType;			// HalfLife or HalfLife2 library?
+	LibraryType_t m_eType; // HalfLife or HalfLife2 library?
 
-friend class CPrefab;
-friend class CPrefabRMF;
-friend class CPrefabVMF;
+	friend class CPrefab;
+	friend class CPrefabRMF;
+	friend class CPrefabVMF;
 };
-
 
 class CPrefabLibraryRMF : public CPrefabLibrary
 {
@@ -196,13 +209,11 @@ public:
 	std::fstream m_file;
 
 protected:
+	DWORD m_dwDirOffset;	   // dir offset in open file
+	CString m_strOpenFileName; // open file name
 
-	DWORD m_dwDirOffset;			// dir offset in open file
-	CString m_strOpenFileName;		// open file name
-
-friend class CPrefab;
+	friend class CPrefab;
 };
-
 
 class CPrefabLibraryVMF : public CPrefabLibrary
 {
@@ -217,12 +228,10 @@ public:
 	int SetName(const char *pszName);
 
 protected:
-
 	char m_szFolderName[MAX_PATH];
 
-friend class CPrefab;
+	friend class CPrefab;
 };
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns whether this library is of a given type. Half-Life used
@@ -231,8 +240,7 @@ friend class CPrefab;
 //-----------------------------------------------------------------------------
 bool CPrefabLibrary::IsType(LibraryType_t eType)
 {
-	return(m_eType == eType);
+	return (m_eType == eType);
 }
-
 
 #endif // PREFABS_H

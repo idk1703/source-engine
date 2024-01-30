@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,37 +15,36 @@
 #include "commanderoverlaypanel.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
+// Purpose:
+// Input  : *parent -
 //-----------------------------------------------------------------------------
-C_TF2RootPanel::C_TF2RootPanel( vgui::VPANEL parent )
-	: BaseClass( NULL, "TF2 Root Panel" )
+C_TF2RootPanel::C_TF2RootPanel(vgui::VPANEL parent) : BaseClass(NULL, "TF2 Root Panel")
 {
-	SetParent( parent );
-	SetPaintEnabled( false );
-	SetPaintBorderEnabled( false );
-	SetPaintBackgroundEnabled( false );
+	SetParent(parent);
+	SetPaintEnabled(false);
+	SetPaintBorderEnabled(false);
+	SetPaintBackgroundEnabled(false);
 
 	// This panel does post child painting
-	SetPostChildPaintEnabled( true );
+	SetPostChildPaintEnabled(true);
 
 	// Make it screen sized
-	SetBounds( 0, 0, ScreenWidth(), ScreenHeight() );
+	SetBounds(0, 0, ScreenWidth(), ScreenHeight());
 
 	// Ask for OnTick messages
-	vgui::ivgui()->AddTickSignal( GetVPanel() );
+	vgui::ivgui()->AddTickSignal(GetVPanel());
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-C_TF2RootPanel::~C_TF2RootPanel( void )
+C_TF2RootPanel::~C_TF2RootPanel(void)
 {
 	ClearAllEffects();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TF2RootPanel::PostChildPaint()
 {
@@ -59,47 +58,47 @@ void C_TF2RootPanel::PostChildPaint()
 // Purpose: For each panel effect, check if it wants to draw and draw it on
 //  this panel/surface if so
 //-----------------------------------------------------------------------------
-void C_TF2RootPanel::RenderPanelEffects( void )
+void C_TF2RootPanel::RenderPanelEffects(void)
 {
-	for ( int i = 0; i < m_Effects.Size(); i++ )
+	for(int i = 0; i < m_Effects.Size(); i++)
 	{
-		CPanelEffect *e = m_Effects[ i ];
-		Assert( e );
+		CPanelEffect *e = m_Effects[i];
+		Assert(e);
 		ITFHintItem *owner = e->GetOwner();
-		if ( owner && !owner->ShouldRenderPanelEffects() )
+		if(owner && !owner->ShouldRenderPanelEffects())
 			continue;
-		if ( e->GetVisible() )
+		if(e->GetVisible())
 		{
-			e->doPaint( this );
+			e->doPaint(this);
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Add effect to list
-// Input  : *effect - 
+// Input  : *effect -
 //-----------------------------------------------------------------------------
-EFFECT_HANDLE C_TF2RootPanel::AddEffect( CPanelEffect *effect )
+EFFECT_HANDLE C_TF2RootPanel::AddEffect(CPanelEffect *effect)
 {
-	Assert( effect );
+	Assert(effect);
 
-	m_Effects.AddToTail( effect );
+	m_Effects.AddToTail(effect);
 
 	return effect->GetHandle();
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Remove effect from list
-// Input  : *effect - 
+// Input  : *effect -
 //-----------------------------------------------------------------------------
-void C_TF2RootPanel::RemoveEffect( EFFECT_HANDLE handle )
+void C_TF2RootPanel::RemoveEffect(EFFECT_HANDLE handle)
 {
-	for ( int i = m_Effects.Size() - 1; i >= 0; i-- )
+	for(int i = m_Effects.Size() - 1; i >= 0; i--)
 	{
-		CPanelEffect *e = m_Effects[ i ];
-		if ( e->GetHandle() == handle )
+		CPanelEffect *e = m_Effects[i];
+		if(e->GetHandle() == handle)
 		{
-			m_Effects.Remove( i );
+			m_Effects.Remove(i);
 			delete e;
 		}
 	}
@@ -107,15 +106,15 @@ void C_TF2RootPanel::RemoveEffect( EFFECT_HANDLE handle )
 
 //-----------------------------------------------------------------------------
 // Purpose: Find effect by handle
-// Input  : handle - 
+// Input  : handle -
 // Output : CPanelEffect
 //-----------------------------------------------------------------------------
-CPanelEffect *C_TF2RootPanel::FindEffect( EFFECT_HANDLE handle )
+CPanelEffect *C_TF2RootPanel::FindEffect(EFFECT_HANDLE handle)
 {
-	for ( int i = 0; i < m_Effects.Size(); i++ )
+	for(int i = 0; i < m_Effects.Size(); i++)
 	{
-		CPanelEffect *e = m_Effects[ i ];
-		if ( e->GetHandle() == handle )
+		CPanelEffect *e = m_Effects[i];
+		if(e->GetHandle() == handle)
 		{
 			return e;
 		}
@@ -126,34 +125,34 @@ CPanelEffect *C_TF2RootPanel::FindEffect( EFFECT_HANDLE handle )
 //-----------------------------------------------------------------------------
 // Purpose: Delete all effects
 //-----------------------------------------------------------------------------
-void C_TF2RootPanel::ClearAllEffects( void )
+void C_TF2RootPanel::ClearAllEffects(void)
 {
-	while ( m_Effects.Size() > 0 )
+	while(m_Effects.Size() > 0)
 	{
-		CPanelEffect *e = m_Effects[ 0 ];
-		m_Effects.Remove( 0 );
+		CPanelEffect *e = m_Effects[0];
+		m_Effects.Remove(0);
 		delete e;
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_TF2RootPanel::OnTick( void )
+void C_TF2RootPanel::OnTick(void)
 {
 	// Go backards
-	for ( int i = m_Effects.Size() - 1; i >= 0; i-- )
+	for(int i = m_Effects.Size() - 1; i >= 0; i--)
 	{
-		CPanelEffect *e = m_Effects[ i ];
-		Assert( e );
+		CPanelEffect *e = m_Effects[i];
+		Assert(e);
 
 		// Allow panel to think
 		e->Think();
 
 		// See if panel should disappear
-		if ( e->ShouldRemove() )
+		if(e->ShouldRemove())
 		{
-			m_Effects.Remove( i );
+			m_Effects.Remove(i);
 			delete e;
 		}
 	}
@@ -162,33 +161,32 @@ void C_TF2RootPanel::OnTick( void )
 //-----------------------------------------------------------------------------
 // Purpose: Reset effects on level load/shutdown
 //-----------------------------------------------------------------------------
-void C_TF2RootPanel::LevelInit( void )
+void C_TF2RootPanel::LevelInit(void)
 {
 	ClearAllEffects();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_TF2RootPanel::LevelShutdown( void )
+void C_TF2RootPanel::LevelShutdown(void)
 {
 	ClearAllEffects();
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Delete any panel effects owned by owner
-// Input  : *owner - 
+// Input  : *owner -
 //-----------------------------------------------------------------------------
-void C_TF2RootPanel::DestroyPanelEffects( ITFHintItem *owner )
+void C_TF2RootPanel::DestroyPanelEffects(ITFHintItem *owner)
 {
-	for ( int i = m_Effects.Size() - 1; i >= 0; i-- )
+	for(int i = m_Effects.Size() - 1; i >= 0; i--)
 	{
-		CPanelEffect *e = m_Effects[ i ];
-		if ( e->GetOwner() == owner )
+		CPanelEffect *e = m_Effects[i];
+		if(e->GetOwner() == owner)
 		{
-			m_Effects.Remove( i );
+			m_Effects.Remove(i);
 			delete e;
 		}
 	}
 }
-

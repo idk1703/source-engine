@@ -14,14 +14,13 @@
 // FIXME: This really should inherit from something	more lightweight
 //------------------------------------------------------------------------------
 
-
 //------------------------------------------------------------------------------
 // Purpose : Water LOD control entity
 //------------------------------------------------------------------------------
 class C_WaterLODControl : public C_BaseEntity
 {
 public:
-	DECLARE_CLASS( C_WaterLODControl, C_BaseEntity );
+	DECLARE_CLASS(C_WaterLODControl, C_BaseEntity);
 
 	DECLARE_CLIENTCLASS();
 
@@ -34,20 +33,19 @@ private:
 };
 
 IMPLEMENT_CLIENTCLASS_DT(C_WaterLODControl, DT_WaterLODControl, CWaterLODControl)
-	RecvPropFloat(RECVINFO(m_flCheapWaterStartDistance)),
-	RecvPropFloat(RECVINFO(m_flCheapWaterEndDistance)),
-END_RECV_TABLE()
+RecvPropFloat(RECVINFO(m_flCheapWaterStartDistance)), RecvPropFloat(RECVINFO(m_flCheapWaterEndDistance)),
+END_RECV_TABLE
+()
 
-
-//------------------------------------------------------------------------------
-// Purpose :
-// Input   :
-// Output  :
-//------------------------------------------------------------------------------
-void C_WaterLODControl::OnDataChanged(DataUpdateType_t updateType)
+	//------------------------------------------------------------------------------
+	// Purpose :
+	// Input   :
+	// Output  :
+	//------------------------------------------------------------------------------
+	void C_WaterLODControl::OnDataChanged(DataUpdateType_t updateType)
 {
-	view->SetCheapWaterStartDistance( m_flCheapWaterStartDistance );
-	view->SetCheapWaterEndDistance( m_flCheapWaterEndDistance );
+	view->SetCheapWaterStartDistance(m_flCheapWaterStartDistance);
+	view->SetCheapWaterEndDistance(m_flCheapWaterEndDistance);
 }
 
 //------------------------------------------------------------------------------
@@ -57,4 +55,3 @@ bool C_WaterLODControl::ShouldDraw()
 {
 	return false;
 }
-

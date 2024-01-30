@@ -19,27 +19,27 @@
 void CTalkativeAward::getWinner()
 {
 	CEventListIterator it;
-	
-	for (it=g_pMatchInfo->eventList()->begin(); it != g_pMatchInfo->eventList()->end(); ++it)
+
+	for(it = g_pMatchInfo->eventList()->begin(); it != g_pMatchInfo->eventList()->end(); ++it)
 	{
-		if ((*it)->getType()==CLogEvent::SAY ||(*it)->getType()==CLogEvent::SAY_TEAM)
+		if((*it)->getType() == CLogEvent::SAY || (*it)->getType() == CLogEvent::SAY_TEAM)
 		{
-			PID mouth=(*it)->getArgument(0)->asPlayerGetPID();
-			fulltalktext[mouth]+=" ";
-			fulltalktext[mouth]+=(*it)->getArgument(1)->getStringValue();
+			PID mouth = (*it)->getArgument(0)->asPlayerGetPID();
+			fulltalktext[mouth] += " ";
+			fulltalktext[mouth] += (*it)->getArgument(1)->getStringValue();
 			numtalks[mouth]++;
-			winnerID=mouth;
-			fNoWinner=false;
+			winnerID = mouth;
+			fNoWinner = false;
 		}
 	}
-	
-	map<PID,int>::iterator talkiter;
-	
-	for (talkiter=numtalks.begin();talkiter!=numtalks.end();++talkiter)
+
+	map<PID, int>::iterator talkiter;
+
+	for(talkiter = numtalks.begin(); talkiter != numtalks.end(); ++talkiter)
 	{
-		int currID=(*talkiter).first;
-		if (numtalks[currID]>numtalks[winnerID])
-			winnerID=currID;
+		int currID = (*talkiter).first;
+		if(numtalks[currID] > numtalks[winnerID])
+			winnerID = currID;
 	}
 }
 
@@ -48,7 +48,7 @@ void CTalkativeAward::getWinner()
 // Purpose:	writes html to indicate that no one won this award.
 // Input:	html - the html file to write to
 //------------------------------------------------------------------------------------------------------
-void CTalkativeAward::noWinner(CHTMLFile& html)
+void CTalkativeAward::noWinner(CHTMLFile &html)
 {
 	html.write("No one talked during this match.");
 }
@@ -58,23 +58,22 @@ void CTalkativeAward::noWinner(CHTMLFile& html)
 // Purpose:	calculates how many words a player said, and reports that.
 // Input:	html - the html file to write to
 //------------------------------------------------------------------------------------------------------
-void CTalkativeAward::extendedinfo(CHTMLFile& html)
+void CTalkativeAward::extendedinfo(CHTMLFile &html)
 {
-	int i=0;
-	char seps[]=" ";
-	char* string= new char[fulltalktext[winnerID].length()+1];
-	strcpy(string,fulltalktext[winnerID].c_str());
-	char* token = strtok( string, seps );
-	while( token != NULL )
+	int i = 0;
+	char seps[] = " ";
+	char *string = new char[fulltalktext[winnerID].length() + 1];
+	strcpy(string, fulltalktext[winnerID].c_str());
+	char *token = strtok(string, seps);
+	while(token != NULL)
 	{
-		token = strtok( NULL, seps );
+		token = strtok(NULL, seps);
 		i++;
 	}
 
-	if (i==1)
-		html.write("%s said only 1 word.",winnerName.c_str());
+	if(i == 1)
+		html.write("%s said only 1 word.", winnerName.c_str());
 	else
-		html.write("%s spoke %li words.",winnerName.c_str(),i);
-	delete [] string;
+		html.write("%s spoke %li words.", winnerName.c_str(), i);
+	delete[] string;
 }
-

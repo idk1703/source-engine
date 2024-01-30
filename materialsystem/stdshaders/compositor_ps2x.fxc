@@ -59,13 +59,13 @@ static const float4	cErrColor = float4( 0.0, 1.0, 0.0, 1.0 );
 
 #if ( COMBINE_MODE == COMBINE_MODE_MULTIPLY )
 	static const float4	cSafeColor = float4( 1.0, 1.0, 1.0, 1.0 );
-#elif ( COMBINE_MODE == COMBINE_MODE_ADD ) 
+#elif ( COMBINE_MODE == COMBINE_MODE_ADD )
 	static const float4	cSafeColor = float4( 0.0, 0.0, 0.0, 0.0 );
 #elif ( COMBINE_MODE == COMBINE_MODE_LERP )
 	static const float4	cSafeColor = float4( 1.0, 1.0, 1.0, 1.0 );
 #elif ( COMBINE_MODE == COMBINE_MODE_SELECTOR )
 	static const float4	cSafeColor = float4( 0.0, 0.0, 0.0, 0.0 );
-#elif ( COMBINE_MODE == COMBINE_MODE_LERP_TEX_FIRST ) || ( COMBINE_MODE == COMBINE_MODE_LERP_TEX_SECOND ) 
+#elif ( COMBINE_MODE == COMBINE_MODE_LERP_TEX_FIRST ) || ( COMBINE_MODE == COMBINE_MODE_LERP_TEX_SECOND )
 #elif ( COMBINE_MODE == COMBINE_MODE_BLEND )
 	static const float4	cSafeColor = float4( 0.0, 0.0, 0.0, 0.0 );
 #else
@@ -74,12 +74,12 @@ static const float4	cErrColor = float4( 0.0, 1.0, 0.0, 1.0 );
 
 float invlerp( float x, float y, float r )
 {
-    return ( r - x ) / ( y - x );
+	return ( r - x ) / ( y - x );
 }
 
 float4 invlerp( float x, float y, float4 r )
 {
-    return ( r - x ) / ( y - x );
+	return ( r - x ) / ( y - x );
 }
 
 float4 ConvertLinearTosRGB( float4 lin )
@@ -124,8 +124,8 @@ float4 ConvertsRGBToLinear( float4 srgb )
 }
 
 
-// Uses photoshop math to perform level adjustment. 
-// Note: Photoshop does this math in sRGB space, even though that is mathematically wrong. 
+// Uses photoshop math to perform level adjustment.
+// Note: Photoshop does this math in sRGB space, even though that is mathematically wrong.
 // To match photoshop, we have to convert our textures from linear space (they're always linear in the shader)
 // to sRGB, perform the calculations and then return to linear space for output from the shader.
 // Yuck.
@@ -181,23 +181,23 @@ float4 AdjustLevels( float4 inSrc, float inBlackPoint, float inWhitePoint, float
 		#endif
 		#if ( COMBINE_MODE == COMBINE_MODE_MULTIPLY )
 			return color0
-				 * color1
+				* color1
 				#if ALLOW_FOUR_TEX_LOOKUPS_PER_STAGE
-					 * color2
-					 * color3
+					* color2
+					* color3
 				#endif
 			;
 		#elif ( COMBINE_MODE == COMBINE_MODE_ADD )
 			return color0
-				 + color1
+				+ color1
 				#if ALLOW_FOUR_TEX_LOOKUPS_PER_STAGE
-					 + color2
-					 + color3
+					+ color2
+					+ color3
 				#endif
 			;
 		#elif ( COMBINE_MODE == COMBINE_MODE_BLEND )
-			// color0 is the previous frame's data. 
-			// color1 is the sticker's data, with alpha as transparency. 
+			// color0 is the previous frame's data.
+			// color1 is the sticker's data, with alpha as transparency.
 			// If we're on PS 2.0b, color2 has specular info as a grayscale texture--make sure to write that out.
 
 			#if ( DEBUG_MODE == 0 )
@@ -212,14 +212,14 @@ float4 AdjustLevels( float4 inSrc, float inBlackPoint, float inWhitePoint, float
 								+ ( color1.a )       * color1.xyz;
 
 				float tmpSpecular = ( 1.0 - color1.a ) * color0.w
-				                  + ( color1.a )       * srcSpecular;
+								+ ( color1.a )       * srcSpecular;
 
 				return float4( tmpColor.xyz, tmpSpecular );
 			#else
-				if ( i.texCoord1.x < 0 || i.texCoord1.y < 0 
-				  || i.texCoord1.x > 1 || i.texCoord1.y > 1 )
+				if ( i.texCoord1.x < 0 || i.texCoord1.y < 0
+				|| i.texCoord1.x > 1 || i.texCoord1.y > 1 )
 				{
-					return color0;				
+					return color0;
 				}
 				else
 					return float4( i.texCoord1.xy, 0, color0.a );
@@ -265,24 +265,24 @@ float4 AdjustLevels( float4 inSrc, float inBlackPoint, float inWhitePoint, float
 			float fTestColor = round( ( fNormalizedColor * 255.0 / 16.0f ) );
 
 			bool4 bTestVec[4];
-			for ( int i = 0; i < 4; ++i ) 
+			for ( int i = 0; i < 4; ++i )
 			{
-				bTestVec[i] = cSelectValues[i] != 0 
-						    ? round( cSelectValues[i] ) == fTestColor
-						    : false;
+				bTestVec[i] = cSelectValues[i] != 0
+							? round( cSelectValues[i] ) == fTestColor
+							: false;
 			}
 
-			bool4 bAny = bool4( 
-				any( bTestVec[0] ), 
-				any( bTestVec[1] ), 
-				any( bTestVec[2] ), 
+			bool4 bAny = bool4(
+				any( bTestVec[0] ),
+				any( bTestVec[1] ),
+				any( bTestVec[2] ),
 				any( bTestVec[3] )
 			);
 
 			#if ( COMBINE_MODE == COMBINE_MODE_SELECTOR )
 				return any( bAny )
-					 ? float4( 1, 1, 1, 1 ) 
-					 : float4( 0, 0, 0, 0 );
+					? float4( 1, 1, 1, 1 )
+					: float4( 0, 0, 0, 0 );
 			#else
 				#error "Surprising combine mode in function, update code."
 			#endif

@@ -1,6 +1,6 @@
-//====== Copyright © 1996-2005, Valve Corporation, All rights reserved. =======
+//====== Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. =======
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -80,7 +80,7 @@ float4 main( PS_INPUT i ) : COLOR
 	float3 vWorldEyeDir = normalize( g_EyePos_SpecExponent.xyz - i.worldPos );
 
 	// Vanilla 1-(N.V) fresnel term used later in transition lerp
-	float fresnel = 1-saturate( dot( vWorldNormal, vWorldEyeDir ) );	
+	float fresnel = 1-saturate( dot( vWorldNormal, vWorldEyeDir ) );
 
 	// Summation of diffuse illumination from all local lights
 	float3 diffuseLighting = PixelShaderDoLighting( i.worldPos, vWorldNormal,
@@ -192,7 +192,7 @@ float4 main( PS_INPUT i ) : COLOR
 	result = lerp( result.xyz * LINEAR_LIGHT_SCALE, result, saturate(g_CloakControl.y) );
 
 	float fogFactor = CalcPixelFogFactor( PIXELFOGTYPE, g_FogParams, g_EyePos_SpecExponent.z, i.worldPos.z, i.projPos.z );
-	
+
 #if WRITEWATERFOGTODESTALPHA && (PIXELFOGTYPE == PIXEL_FOG_TYPE_HEIGHT)
 	alpha = fogFactor;
 #endif

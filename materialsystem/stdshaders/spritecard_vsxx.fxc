@@ -37,7 +37,7 @@ const float4 ViewportTransformScaled : register(SHADER_SPECIFIC_CONST_10);
 
 // Define stuff for instancing on 360
 #if ( defined( _X360 ) && defined( SHADER_MODEL_VS_2_0 ) )
-#define CONST_PC 
+#define CONST_PC
 #define VERTEX_INDEX_PARAM_360 ,int Index:INDEX
 #define DO_INSTANCING 1
 #else
@@ -59,21 +59,21 @@ struct VS_INPUT
 	float4 vTexCoord2		: TEXCOORD4;
 #if DUALSEQUENCE
 	float4 vSeq2TexCoord0   : TEXCOORD5;
-	float4 vSeq2TexCoord1   : TEXCOORD6; 
+	float4 vSeq2TexCoord1   : TEXCOORD6;
 	float4 vParms1          : TEXCOORD7;  // second frame blend, ?,?,?
 #endif
 };
 
 struct VS_OUTPUT
 {
-    float4 projPos			: POSITION;	
+	float4 projPos			: POSITION;
 
 	float2 texCoord0		: TEXCOORD0;
 	float2 texCoord1		: TEXCOORD1;
 	float4 argbcolor		: COLOR;
 	float4 blendfactor0		: TEXCOORD2;
 	float2 texCoord2		: TEXCOORD3;
-#if !defined( SHADER_MODEL_VS_1_1 ) 
+#if !defined( SHADER_MODEL_VS_1_1 )
 	float4 blendfactor1		: TEXCOORD4;	// for extracting green/alpha
 #endif
 #if DUALSEQUENCE
@@ -93,7 +93,7 @@ struct VS_OUTPUT
 #define RADIUS v.vParms.z
 #define YAW (v.vParms.w)
 
-#if ( ZOOM_ANIMATE_SEQ2 ) 
+#if ( ZOOM_ANIMATE_SEQ2 )
 float getlerpscaled( float l_in, float s0, float s1, float ts )
 {
 	l_in = 2.0*(l_in-.5);
@@ -165,7 +165,7 @@ void InstancedVertexRead( inout VS_INPUT v, int index )
 #endif
 
 VS_OUTPUT main( CONST_PC VS_INPUT v
-			    VERTEX_INDEX_PARAM_360 )
+				VERTEX_INDEX_PARAM_360 )
 {
 	VS_OUTPUT o;
 
@@ -234,15 +234,15 @@ VS_OUTPUT main( CONST_PC VS_INPUT v
 	viewPos = mul4x3( v.vPos, cModelView );
 
 	float3 disp=float3( -x1,y1,0);
- 	float tmpx=disp.x*sc_yaw.x+disp.z*sc_yaw.y;
- 	disp.z = disp.z*sc_yaw.x-disp.x*sc_yaw.y;
- 	disp.x=tmpx;
+	float tmpx=disp.x*sc_yaw.x+disp.z*sc_yaw.y;
+	disp.z = disp.z*sc_yaw.x-disp.x*sc_yaw.y;
+	disp.x=tmpx;
 
 	viewPos.xyz += disp * rad;
 
 	projPos  = mul( float4(viewPos, 1.0f), cProj );
 #endif
-	
+
 #if ORIENTATION == 1
 	// Z-aligned case
 	if (l > rad/2)
@@ -252,10 +252,10 @@ VS_OUTPUT main( CONST_PC VS_INPUT v
 		float tmpx=right.x*sc_yaw.x+right.y*sc_yaw.y;
 		right.y = right.y*sc_yaw.x-right.x*sc_yaw.y;
 		right.x=tmpx;
-		
+
 		worldPos += (x1*rad)*right;
 		worldPos.z += (y1*rad)*up.z;
-		
+
 #ifndef SHADER_MODEL_VS_1_1
 		if (l < rad*2 )
 		{
@@ -300,7 +300,7 @@ VS_OUTPUT main( CONST_PC VS_INPUT v
 #endif
 
 
-#if !defined( SHADER_MODEL_VS_1_1 ) 
+#if !defined( SHADER_MODEL_VS_1_1 )
 
 	o.blendfactor1 = float4( 0.0f, 0.0f, 0.0f, 0.0f );
 
@@ -316,7 +316,7 @@ VS_OUTPUT main( CONST_PC VS_INPUT v
 			o.blendfactor1.g = v.vParms.x * 2 - 0.5f;					// 0.0 .. 1.0
 			o.blendfactor0.a = 1 - o.blendfactor1.g;					// 1.0 .. 0.0
 		}
-		else											// 0.75 .. 1.0	
+		else											// 0.75 .. 1.0
 		{
 			o.blendfactor1.a = v.vParms.x * 2 - 1.5f;					// 0.0 .. 0.5
 			o.blendfactor1.g = 1 - o.blendfactor1.a;					// 1.0 .. 0.5
@@ -333,7 +333,7 @@ VS_OUTPUT main( CONST_PC VS_INPUT v
 
 	// Need to also account for the viewport transform, which matters when rendering with mat_viewportscale != 1.0
 	vScreenPos = (vScreenPos * ViewportTransformScaled.xy) + (projPos.w * ViewportTransformScaled.zw);
-	
+
 #if defined( _X360 )
 	o.vScreenPos_ReverseZ = float4(vScreenPos.x, vScreenPos.y, projPos.w - projPos.z, projPos.w );
 #else
@@ -343,5 +343,3 @@ VS_OUTPUT main( CONST_PC VS_INPUT v
 	o.argbcolor = tint;
 	return o;
 }
-
-

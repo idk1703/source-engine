@@ -21,7 +21,10 @@ class IShaderShadow;
 //-----------------------------------------------------------------------------
 struct CloakBlendedPassVars_t
 {
-	CloakBlendedPassVars_t() { memset( this, 0xFF, sizeof(CloakBlendedPassVars_t) ); }
+	CloakBlendedPassVars_t()
+	{
+		memset(this, 0xFF, sizeof(CloakBlendedPassVars_t));
+	}
 
 	int m_nCloakFactor;
 	int m_nCloakColorTint;
@@ -34,13 +37,15 @@ struct CloakBlendedPassVars_t
 
 // Default values (Arrays should only be vec[4])
 static const float kDefaultCloakFactor = 0.0f;
-static const float kDefaultCloakColorTint[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+static const float kDefaultCloakColorTint[4] = {1.0f, 1.0f, 1.0f, 1.0f};
 static const float kDefaultRefractAmount = 0.1f;
 
-void InitParamsCloakBlendedPass( CBaseVSShader *pShader, IMaterialVar** params, const char *pMaterialName, CloakBlendedPassVars_t &info );
-void InitCloakBlendedPass( CBaseVSShader *pShader, IMaterialVar** params, CloakBlendedPassVars_t &info );
-void DrawCloakBlendedPass( CBaseVSShader *pShader, IMaterialVar** params, IShaderDynamicAPI *pShaderAPI,
-						   IShaderShadow* pShaderShadow, CloakBlendedPassVars_t &info, VertexCompressionType_t vertexCompression );
-bool CloakBlendedPassIsFullyOpaque ( IMaterialVar** params, CloakBlendedPassVars_t &info );
+void InitParamsCloakBlendedPass(CBaseVSShader *pShader, IMaterialVar **params, const char *pMaterialName,
+								CloakBlendedPassVars_t &info);
+void InitCloakBlendedPass(CBaseVSShader *pShader, IMaterialVar **params, CloakBlendedPassVars_t &info);
+void DrawCloakBlendedPass(CBaseVSShader *pShader, IMaterialVar **params, IShaderDynamicAPI *pShaderAPI,
+						  IShaderShadow *pShaderShadow, CloakBlendedPassVars_t &info,
+						  VertexCompressionType_t vertexCompression);
+bool CloakBlendedPassIsFullyOpaque(IMaterialVar **params, CloakBlendedPassVars_t &info);
 
 #endif // CLOAK_BLENDED_PASS_HELPER_H

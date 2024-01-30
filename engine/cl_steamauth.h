@@ -25,21 +25,25 @@ public:
 	void Activate();
 	void Shutdown();
 
-	void GetAuthSessionTicket( void *pTicket, int cbMaxTicket, uint32 *pcbTicket, uint32 unIP, uint16 usPort, uint64 unGSSteamID, bool bSecure );
+	void GetAuthSessionTicket(void *pTicket, int cbMaxTicket, uint32 *pcbTicket, uint32 unIP, uint16 usPort,
+							  uint64 unGSSteamID, bool bSecure);
 	void CancelAuthTicket();
 
-	bool BGSSecure() { return m_bGSSecure; }
+	bool BGSSecure()
+	{
+		return m_bGSSecure;
+	}
 	void RunFrame();
 #if !defined(NO_STEAM)
-	STEAM_CALLBACK( CSteam3Client, OnClientGameServerDeny, ClientGameServerDeny_t, m_CallbackClientGameServerDeny );
-	STEAM_CALLBACK( CSteam3Client, OnGameServerChangeRequested, GameServerChangeRequested_t, m_CallbackGameServerChangeRequested );
-	STEAM_CALLBACK( CSteam3Client, OnGameOverlayActivated, GameOverlayActivated_t, m_CallbackGameOverlayActivated );
-	STEAM_CALLBACK( CSteam3Client, OnPersonaUpdated, PersonaStateChange_t, m_CallbackPersonaStateChanged );
-	STEAM_CALLBACK( CSteam3Client, OnLowBattery, LowBatteryPower_t, m_CallbackLowBattery );
+	STEAM_CALLBACK(CSteam3Client, OnClientGameServerDeny, ClientGameServerDeny_t, m_CallbackClientGameServerDeny);
+	STEAM_CALLBACK(CSteam3Client, OnGameServerChangeRequested, GameServerChangeRequested_t,
+				   m_CallbackGameServerChangeRequested);
+	STEAM_CALLBACK(CSteam3Client, OnGameOverlayActivated, GameOverlayActivated_t, m_CallbackGameOverlayActivated);
+	STEAM_CALLBACK(CSteam3Client, OnPersonaUpdated, PersonaStateChange_t, m_CallbackPersonaStateChanged);
+	STEAM_CALLBACK(CSteam3Client, OnLowBattery, LowBatteryPower_t, m_CallbackLowBattery);
 #endif
 
 private:
-
 	//
 	// Cached data for active ticket, if any
 	//
@@ -50,7 +54,7 @@ private:
 	bool m_bGSSecure;
 	CSteamID m_steamIDGS;
 	uint32 m_nTicketSize;
-	unsigned char m_arbTicketData[ 1024 ];
+	unsigned char m_arbTicketData[1024];
 };
 
 #ifndef SWDS

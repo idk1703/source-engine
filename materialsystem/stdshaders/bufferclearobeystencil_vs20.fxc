@@ -24,12 +24,12 @@ VS_OUTPUT main( const VS_INPUT v )
 
 	o.vProjPos.xyz = v.vPos.xyz;
 	o.vProjPos.w = 1.0f;
-	
+
 #	if (USESCOLOR == 1)
 	{
 		o.vColor = v.vColor;
 	}
-#	endif	
+#	endif
 
 	return o;
 }

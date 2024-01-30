@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -17,7 +17,6 @@
 #include "movieobjects/dmeeditortypedictionary.h"
 #include "vgui_controls/MessageMap.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
@@ -27,23 +26,22 @@ namespace vgui
 {
 	class Panel;
 	class ComboBox;
-}
+} // namespace vgui
 
 //-----------------------------------------------------------------------------
 // CAttributeInterpolatorChoicePanel
 //-----------------------------------------------------------------------------
 class CAttributeInterpolatorChoicePanel : public CBaseAttributeDoubleChoicePanel
 {
-	DECLARE_CLASS_SIMPLE( CAttributeInterpolatorChoicePanel, CBaseAttributeDoubleChoicePanel );
+	DECLARE_CLASS_SIMPLE(CAttributeInterpolatorChoicePanel, CBaseAttributeDoubleChoicePanel);
 
 public:
-	CAttributeInterpolatorChoicePanel( vgui::Panel *parent,	const AttributeWidgetInfo_t &info );
+	CAttributeInterpolatorChoicePanel(vgui::Panel *parent, const AttributeWidgetInfo_t &info);
 
 private:
-	virtual void PopulateComboBoxes( vgui::ComboBox *pComboBox[2] );
-	virtual void SetAttributeFromComboBoxes( vgui::ComboBox *pComboBox[2], KeyValues *pKeyValues[ 2 ] );
-	virtual void SetComboBoxesFromAttribute( vgui::ComboBox *pComboBox[2] );
+	virtual void PopulateComboBoxes(vgui::ComboBox *pComboBox[2]);
+	virtual void SetAttributeFromComboBoxes(vgui::ComboBox *pComboBox[2], KeyValues *pKeyValues[2]);
+	virtual void SetComboBoxesFromAttribute(vgui::ComboBox *pComboBox[2]);
 };
-
 
 #endif // ATTRIBUTEINTERPOLATORTYPECHOICEPANEL_h

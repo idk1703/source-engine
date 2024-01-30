@@ -11,63 +11,61 @@
 #include "engine/IEngineSound.h"
 #include "tf_obj_sandbag_bunker.h"
 
-#define SANDBAGBUNKER_MINS			Vector(-60, -60, 0)
-#define SANDBAGBUNKER_MAXS			Vector( 60,  60, 50)
-#define SANDBAGBUNKER_MODEL			"models/objects/obj_sandbag_bunker.mdl"
-
+#define SANDBAGBUNKER_MINS	Vector(-60, -60, 0)
+#define SANDBAGBUNKER_MAXS	Vector(60, 60, 50)
+#define SANDBAGBUNKER_MODEL "models/objects/obj_sandbag_bunker.mdl"
 
 IMPLEMENT_SERVERCLASS_ST(CObjectSandbagBunker, DT_ObjectSandbagBunker)
-END_SEND_TABLE();
+END_SEND_TABLE
+();
 
 LINK_ENTITY_TO_CLASS(obj_sandbag_bunker, CObjectSandbagBunker);
 PRECACHE_REGISTER(obj_sandbag_bunker);
 
 // CVars
-ConVar	obj_sandbag_bunker_health( "obj_sandbag_bunker_health","100", FCVAR_NONE, "Sandbag bunker health" );
+ConVar obj_sandbag_bunker_health("obj_sandbag_bunker_health", "100", FCVAR_NONE, "Sandbag bunker health");
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CObjectSandbagBunker::CObjectSandbagBunker( void )
-{
-}
+CObjectSandbagBunker::CObjectSandbagBunker(void) {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CObjectSandbagBunker::Spawn( void )
+void CObjectSandbagBunker::Spawn(void)
 {
 	Precache();
-	SetModel( SANDBAGBUNKER_MODEL );
-	SetSolid( SOLID_BBOX );
+	SetModel(SANDBAGBUNKER_MODEL);
+	SetSolid(SOLID_BBOX);
 
 	UTIL_SetSize(this, SANDBAGBUNKER_MINS, SANDBAGBUNKER_MAXS);
 	m_takedamage = DAMAGE_YES;
 	m_iHealth = obj_sandbag_bunker_health.GetInt();
 
 	m_fObjectFlags |= OF_DOESNT_NEED_POWER;
-	SetType( OBJ_SANDBAG_BUNKER );
+	SetType(OBJ_SANDBAG_BUNKER);
 
-	SetSolid( SOLID_VPHYSICS );
+	SetSolid(SOLID_VPHYSICS);
 	VPhysicsInitStatic();
 
 	BaseClass::Spawn();
 
-	SetCollisionGroup( COLLISION_GROUP_VEHICLE );
+	SetCollisionGroup(COLLISION_GROUP_VEHICLE);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CObjectSandbagBunker::Precache( void )
+void CObjectSandbagBunker::Precache(void)
 {
-	PrecacheModel( SANDBAGBUNKER_MODEL );
+	PrecacheModel(SANDBAGBUNKER_MODEL);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Gets info about the control panels
 //-----------------------------------------------------------------------------
-void CObjectSandbagBunker::GetControlPanelInfo( int nPanelIndex, const char *&pPanelName )
+void CObjectSandbagBunker::GetControlPanelInfo(int nPanelIndex, const char *&pPanelName)
 {
 	pPanelName = "screen_basic_with_disable";
 }

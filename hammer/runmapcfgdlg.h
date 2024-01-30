@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -13,30 +13,32 @@
 
 class CRunMapCfgDlg : public CDialog
 {
-// Construction
+	// Construction
 public:
-	CRunMapCfgDlg(CWnd* pParent = NULL);   // standard constructor
+	CRunMapCfgDlg(CWnd *pParent = NULL); // standard constructor
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CRunMapCfgDlg)
-	enum { IDD = IDD_RUNMAPCONFIGS };
-	CListBox	m_cConfigurations;
+	enum
+	{
+		IDD = IDD_RUNMAPCONFIGS
+	};
+	CListBox m_cConfigurations;
 	//}}AFX_DATA
 
 	CHammer *m_pApp;
 
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CRunMapCfgDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
 	//}}AFX_VIRTUAL
 
 	void AddSequenceToList(int iIndex, CCommandSequence *pSeq);
 
-// Implementation
+	// Implementation
 protected:
-
 	// Generated message map functions
 	//{{AFX_MSG(CRunMapCfgDlg)
 	afx_msg void OnNew();

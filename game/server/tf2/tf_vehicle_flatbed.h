@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -13,13 +13,12 @@
 #include "tf_basefourwheelvehicle.h"
 #include "vphysics/vehicles.h"
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Flatbed truck that can carry multiple stationary objects
 //-----------------------------------------------------------------------------
-class CVehicleFlatbed: public CBaseTFFourWheelVehicle
+class CVehicleFlatbed : public CBaseTFFourWheelVehicle
 {
-	DECLARE_CLASS( CVehicleFlatbed, CBaseTFFourWheelVehicle );
+	DECLARE_CLASS(CVehicleFlatbed, CBaseTFFourWheelVehicle);
 
 public:
 	DECLARE_SERVERCLASS();
@@ -28,12 +27,15 @@ public:
 
 	CVehicleFlatbed();
 
-	virtual void	Spawn();
-	virtual void	Precache();
-	virtual void	GetControlPanelInfo( int nPanelIndex, const char *&pPanelName );
+	virtual void Spawn();
+	virtual void Precache();
+	virtual void GetControlPanelInfo(int nPanelIndex, const char *&pPanelName);
 
 	// Vehicle overrides
-	virtual bool	IsPassengerVisible( int nRole ) { return true; }
+	virtual bool IsPassengerVisible(int nRole)
+	{
+		return true;
+	}
 };
 
 #endif // TF_VEHICLE_FLATBED_H

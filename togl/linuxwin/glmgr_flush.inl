@@ -108,7 +108,7 @@ FORCEINLINE void GLMContext::FlushDrawStates( uint nStartIndex, uint nEndIndex, 
 
 	Assert( ( m_drawingProgram[kGLMVertexProgram]->m_type == kGLMVertexProgram ) && ( m_drawingProgram[kGLMFragmentProgram]->m_type == kGLMFragmentProgram ) );
 	Assert( m_drawingProgram[ kGLMVertexProgram ]->m_bTranslatedProgram && m_drawingProgram[ kGLMFragmentProgram ]->m_bTranslatedProgram );
-	
+
 #if GLMDEBUG
 	// Depth compare mode check
 	uint nCurMask = 1, nShaderSamplerMask = m_drawingProgram[kGLMFragmentProgram]->m_samplerMask;
@@ -122,8 +122,8 @@ FORCEINLINE void GLMContext::FlushDrawStates( uint nStartIndex, uint nEndIndex, 
 			if ( m_samplers[nSamplerIndex].m_samp.m_packed.m_mipFilter == D3DTEXF_LINEAR )
 			{
 				GLMDebugPrintf( "Sampler %u has mipmap filtering enabled on a texture without mipmaps! (texture name: %s, pixel shader: %s)!\n",
-					nSamplerIndex, 
-					m_samplers[nSamplerIndex].m_pBoundTex->m_debugLabel ? m_samplers[nSamplerIndex].m_pBoundTex->m_debugLabel : "?", 
+					nSamplerIndex,
+					m_samplers[nSamplerIndex].m_pBoundTex->m_debugLabel ? m_samplers[nSamplerIndex].m_pBoundTex->m_debugLabel : "?",
 					m_drawingProgram[kGLMFragmentProgram]->m_shaderName );
 			}
 		}
@@ -137,17 +137,17 @@ FORCEINLINE void GLMContext::FlushDrawStates( uint nStartIndex, uint nEndIndex, 
 			{
 				// Note this is not always an error - shadow buffer debug visualization shaders purposely want to read shadow depths (and not do the comparison)
 				GLMDebugPrintf( "Sampler %u has mipmap filtering enabled on a texture without mipmaps! (texture name: %s, pixel shader: %s)!\n",
-					nSamplerIndex, 
-					m_samplers[nSamplerIndex].m_pBoundTex->m_debugLabel ? m_samplers[nSamplerIndex].m_pBoundTex->m_debugLabel : "?", 
+					nSamplerIndex,
+					m_samplers[nSamplerIndex].m_pBoundTex->m_debugLabel ? m_samplers[nSamplerIndex].m_pBoundTex->m_debugLabel : "?",
 					m_drawingProgram[kGLMFragmentProgram]->m_shaderName );
 			}
 		}
-				
+
 		bool bSamplerIsDepth = ( m_samplers[nSamplerIndex].m_pBoundTex->m_layout->m_key.m_texFlags & kGLMTexIsDepth ) != 0;
-		bool bSamplerShadow = m_samplers[nSamplerIndex].m_samp.m_packed.m_compareMode != 0; 
+		bool bSamplerShadow = m_samplers[nSamplerIndex].m_samp.m_packed.m_compareMode != 0;
 
 		bool bShaderShadow = ( m_drawingProgram[kGLMFragmentProgram]->m_nShadowDepthSamplerMask & nCurMask ) != 0;
-		
+
 		if ( bShaderShadow )
 		{
 			// Shader expects shadow depth sampling at this sampler index
@@ -157,19 +157,19 @@ FORCEINLINE void GLMContext::FlushDrawStates( uint nStartIndex, uint nEndIndex, 
 				// FIXME: This occasionally occurs in L4D2 when CShaderAPIDx8::ExecuteCommandBuffer() sets the TEXTURE_WHITE texture in the flashlight depth texture slot.
 				GLMDebugPrintf( "Sampler %u's compare mode (%u) or format (depth=%u) is not consistent with pixel shader's compare mode (%u) (texture name: %s, pixel shader: %s)!\n",
 					nSamplerIndex, bSamplerShadow, bSamplerIsDepth, bShaderShadow,
-					m_samplers[nSamplerIndex].m_pBoundTex->m_debugLabel ? m_samplers[nSamplerIndex].m_pBoundTex->m_debugLabel : "?", 
+					m_samplers[nSamplerIndex].m_pBoundTex->m_debugLabel ? m_samplers[nSamplerIndex].m_pBoundTex->m_debugLabel : "?",
 					m_drawingProgram[kGLMFragmentProgram]->m_shaderName );
 			}
 		}
-		else 
+		else
 		{
 			// Shader does not expect shadow depth sampling as this sampler index
 			// We don't care if comparemode is enabled, but we can't have a depth texture in this sampler
 			if ( bSamplerIsDepth )
 			{
 				GLMDebugPrintf( "Sampler %u is a depth texture but the pixel shader's shadow depth sampler mask does not expect depth here (texture name: %s, pixel shader: %s)!\n",
-					nSamplerIndex, 
-					m_samplers[nSamplerIndex].m_pBoundTex->m_debugLabel ? m_samplers[nSamplerIndex].m_pBoundTex->m_debugLabel : "?", 
+					nSamplerIndex,
+					m_samplers[nSamplerIndex].m_pBoundTex->m_debugLabel ? m_samplers[nSamplerIndex].m_pBoundTex->m_debugLabel : "?",
 					m_drawingProgram[kGLMFragmentProgram]->m_shaderName );
 			}
 		}
@@ -197,7 +197,7 @@ FORCEINLINE void GLMContext::FlushDrawStates( uint nStartIndex, uint nEndIndex, 
 			}
 
 			gGL->glUseProgram( (GLuint)pNewPair->m_program );
-			
+
 			GL_BATCH_PERF( m_FlushStats.m_nTotalProgramPairChanges++; )
 
 			if ( !m_pBoundPair )
@@ -205,18 +205,18 @@ FORCEINLINE void GLMContext::FlushDrawStates( uint nStartIndex, uint nEndIndex, 
 				GL_BATCH_PERF( m_FlushStats.m_nNewPS++; )
 				GL_BATCH_PERF( m_FlushStats.m_nNewVS++; )
 			}
-			else 
+			else
 			{
 				GL_BATCH_PERF( if ( pNewPair->m_fragmentProg != m_pBoundPair->m_fragmentProg ) m_FlushStats.m_nNewPS++; )
 				GL_BATCH_PERF( if ( pNewPair->m_vertexProg != m_pBoundPair->m_vertexProg ) m_FlushStats.m_nNewVS++; )
 			}
 
 #if GL_BATCH_PERF_ANALYSIS
-			tmMessage( TELEMETRY_LEVEL2, TMMF_ICON_NOTE, "V:%s (V Regs:%u V Bone Regs:%u) F:%s (F Regs:%u)", 
+			tmMessage( TELEMETRY_LEVEL2, TMMF_ICON_NOTE, "V:%s (V Regs:%u V Bone Regs:%u) F:%s (F Regs:%u)",
 				m_drawingProgram[ kGLMVertexProgram ]->m_shaderName,
-				m_drawingProgram[ kGLMVertexProgram ]->m_descs[kGLMGLSL].m_highWater, 
-				m_drawingProgram[ kGLMVertexProgram ]->m_descs[kGLMGLSL].m_VSHighWaterBone, 
-				m_drawingProgram[ kGLMFragmentProgram ]->m_shaderName, 
+				m_drawingProgram[ kGLMVertexProgram ]->m_descs[kGLMGLSL].m_highWater,
+				m_drawingProgram[ kGLMVertexProgram ]->m_descs[kGLMGLSL].m_VSHighWaterBone,
+				m_drawingProgram[ kGLMFragmentProgram ]->m_shaderName,
 				m_drawingProgram[ kGLMFragmentProgram ]->m_descs[kGLMGLSL].m_highWater );
 #endif
 
@@ -251,7 +251,7 @@ FORCEINLINE void GLMContext::FlushDrawStates( uint nStartIndex, uint nEndIndex, 
 	Assert( m_ViewportBox.GetData().height == (int)( m_ViewportBox.GetData().widthheight >> 16 ) );
 
 	m_pBoundPair->UpdateScreenUniform( m_ViewportBox.GetData().widthheight );
-	
+
 	GL_BATCH_PERF( m_FlushStats.m_nNumChangedSamplers += m_nNumDirtySamplers );
 
 #if !defined( OSX ) // no support for sampler objects in OSX 10.6 (GL 2.1 profile)
@@ -268,7 +268,7 @@ FORCEINLINE void GLMContext::FlushDrawStates( uint nStartIndex, uint nEndIndex, 
 
 			GL_BATCH_PERF( m_FlushStats.m_nNumSamplingParamsChanged++ );
 
-#if defined( OSX ) // valid for OSX only if using GL 3.3 context 
+#if defined( OSX ) // valid for OSX only if using GL 3.3 context
 			CGLMTex *pTex = m_samplers[nSamplerIndex].m_pBoundTex;
 
 			if( pTex && !( gGL->m_bHave_GL_EXT_texture_sRGB_decode ) )
@@ -315,7 +315,7 @@ FORCEINLINE void GLMContext::FlushDrawStates( uint nStartIndex, uint nEndIndex, 
 					if ( texSRGB != glSampSRGB ) // mismatch
 					{
 						pTex->HandleSRGBMismatch( glSampSRGB, pTex->m_srgbFlipCount );
-					}	
+					}
 				}
 #endif
 			}
@@ -338,7 +338,7 @@ FORCEINLINE void GLMContext::FlushDrawStates( uint nStartIndex, uint nEndIndex, 
 				tmZone( TELEMETRY_LEVEL2, TMZF_NONE, "VSNonBoneUniformUpdate %u %u", firstDirtySlot, dirtySlotHighWater );
 #endif
 				int numSlots = dirtySlotHighWater - DXABSTRACT_VS_FIRST_BONE_SLOT;
-				
+
 				// consts after the bones (c217 onwards), since we use the concatenated destination array vc[], upload these consts starting from vc[58]
 				if( numSlots > 0 )
 				{
@@ -352,7 +352,7 @@ FORCEINLINE void GLMContext::FlushDrawStates( uint nStartIndex, uint nEndIndex, 
 					GL_BATCH_PERF( m_FlushStats.m_nFirstVSConstant = DXABSTRACT_VS_FIRST_BONE_SLOT; )
 					GL_BATCH_PERF( m_FlushStats.m_nNumVSConstants += numSlots; )
 				}
-				
+
 				numSlots = dirtySlotHighWater - firstDirtySlot;
 
 				// consts before the bones (c0-c57)
@@ -388,7 +388,7 @@ FORCEINLINE void GLMContext::FlushDrawStates( uint nStartIndex, uint nEndIndex, 
 				{
 					uint nNumBoneRegs = dirtySlotHighWaterBone;
 
-#if GL_BATCH_TELEMETRY_ZONES								
+#if GL_BATCH_TELEMETRY_ZONES
 					tmZone( TELEMETRY_LEVEL2, TMZF_NONE, "VSBoneUniformUpdate %u", nNumBoneRegs );
 #endif
 
@@ -519,7 +519,7 @@ FORCEINLINE void GLMContext::FlushDrawStates( uint nStartIndex, uint nEndIndex, 
 			uint nDeclIndex = pVertexAttribDescToStreamIndex[vertexShaderAttrib];
 			if ( nDeclIndex == 0xFF )
 			{
-				// Not good - the vertex shader has an attribute which can't be located in the decl! 
+				// Not good - the vertex shader has an attribute which can't be located in the decl!
 				// The D3D9 debug runtime is also going to complain.
 				Assert( 0 );
 
@@ -561,9 +561,9 @@ FORCEINLINE void GLMContext::FlushDrawStates( uint nStartIndex, uint nEndIndex, 
 				nBufOffset += pBuf->m_nPersistentBufferStartOffset;
 			}
 
-			SetBufAndVertexAttribPointer( nIndex, pBuf->GetHandle(), 
-				pStream->m_stride, pDeclElem->m_gldecl.m_datatype, pDeclElem->m_gldecl.m_normalized, pDeclElem->m_gldecl.m_nCompCount, 
-				reinterpret_cast< const GLvoid * >( reinterpret_cast< int >( pBuf->m_pPseudoBuf ) + nBufOffset ), 
+			SetBufAndVertexAttribPointer( nIndex, pBuf->GetHandle(),
+				pStream->m_stride, pDeclElem->m_gldecl.m_datatype, pDeclElem->m_gldecl.m_normalized, pDeclElem->m_gldecl.m_nCompCount,
+				reinterpret_cast< const GLvoid * >( reinterpret_cast< int >( pBuf->m_pPseudoBuf ) + nBufOffset ),
 				pBuf->m_nRevision );
 
 			if ( !( m_lastKnownVertexAttribMask & nMask ) )

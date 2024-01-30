@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -18,43 +18,44 @@
 #include "RunCommands.h"
 #include "MyCheckListBox.h"
 
-
 class CCommandSequence;
-
 
 class CRunMapExpertDlg : public CDialog
 {
-// Construction
+	// Construction
 public:
-	CRunMapExpertDlg(CWnd* pParent = NULL);   // standard constructor
+	CRunMapExpertDlg(CWnd *pParent = NULL); // standard constructor
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CRunMapExpertDlg)
-	enum { IDD = IDD_RUNMAPEXPERT };
-	CButton	m_cUseProcessWnd;
-	CComboBox	m_cCmdSequences;
-	CButton	m_cMoveUp;
-	CButton	m_cMoveDown;
-	CEdit	m_cEnsureFn;
-	CButton	m_cEnsureCheck;
-	CButton	m_cLongFilenames;
-	CEdit	m_cParameters;
-	CEdit	m_cCommand;
+	enum
+	{
+		IDD = IDD_RUNMAPEXPERT
+	};
+	CButton m_cUseProcessWnd;
+	CComboBox m_cCmdSequences;
+	CButton m_cMoveUp;
+	CButton m_cMoveDown;
+	CEdit m_cEnsureFn;
+	CButton m_cEnsureCheck;
+	CButton m_cLongFilenames;
+	CEdit m_cParameters;
+	CEdit m_cCommand;
 	//}}AFX_DATA
 
 	BOOL m_bSwitchMode;
 
-	CMyCheckListBox	m_cCommandList;
+	CMyCheckListBox m_cCommandList;
 	BOOL m_bNoUpdateCmd;
 
 	// currently active sequence - might be NULL <at startup>
 	CCommandSequence *m_pActiveSequence;
 
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CRunMapExpertDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
 	//}}AFX_VIRTUAL
 
 	void DeleteCommand(int iIndex);
@@ -66,9 +67,8 @@ public:
 	void SaveCommandsToSequence();
 	LPCTSTR GetCmdString(PCCOMMAND pCommand);
 
-// Implementation
+	// Implementation
 protected:
-
 	// Generated message map functions
 	//{{AFX_MSG(CRunMapExpertDlg)
 	afx_msg void OnBrowsecommand();

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,25 +11,20 @@
 #pragma once
 #endif
 
-
 #include "orders.h"
-
 
 class COrderBuildShieldWall : public COrder
 {
 public:
-	DECLARE_CLASS( COrderBuildShieldWall, COrder );
+	DECLARE_CLASS(COrderBuildShieldWall, COrder);
 	DECLARE_SERVERCLASS();
 
 	// Create an order for the player.
-	static bool		CreateOrder( CPlayerClass *pClass );
+	static bool CreateOrder(CPlayerClass *pClass);
 
-
-// COrder overrides.
+	// COrder overrides.
 public:
-
-	virtual bool	Update( void );
+	virtual bool Update(void);
 };
-
 
 #endif // ORDER_BUILDSHIELDWALL_H

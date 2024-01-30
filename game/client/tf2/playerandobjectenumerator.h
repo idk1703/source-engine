@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,22 +22,23 @@ class C_BasePlayer;
 //  local player
 class CPlayerAndObjectEnumerator : public IPartitionEnumerator
 {
-	DECLARE_CLASS_NOBASE( CPlayerAndObjectEnumerator );
-public:
-	//Forced constructor
-	CPlayerAndObjectEnumerator( float radius );
-
-	//Actual work code
-	virtual IterationRetval_t EnumElement( IHandleEntity *pHandleEntity );
-
-	int	GetObjectCount();
-	C_BaseEntity *GetObject( int index );
+	DECLARE_CLASS_NOBASE(CPlayerAndObjectEnumerator);
 
 public:
-	//Data members
-	float	m_flRadiusSquared;
+	// Forced constructor
+	CPlayerAndObjectEnumerator(float radius);
 
-	CUtlVector< CHandle< C_BaseEntity > > m_Objects;
+	// Actual work code
+	virtual IterationRetval_t EnumElement(IHandleEntity *pHandleEntity);
+
+	int GetObjectCount();
+	C_BaseEntity *GetObject(int index);
+
+public:
+	// Data members
+	float m_flRadiusSquared;
+
+	CUtlVector<CHandle<C_BaseEntity>> m_Objects;
 	C_BasePlayer *m_pLocal;
 };
 

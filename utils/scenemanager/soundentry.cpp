@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -20,43 +20,43 @@
 #include "tier3/tier3.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
-CSoundEntry::CSoundEntry( CVCDFile *vcd, char const *name ) : m_pOwner( vcd )
+CSoundEntry::CSoundEntry(CVCDFile *vcd, char const *name) : m_pOwner(vcd)
 {
-	Q_memset( &m_Params, 0, sizeof( m_Params ) );
+	Q_memset(&m_Params, 0, sizeof(m_Params));
 
-	m_szScriptFile[ 0 ] = 0;
+	m_szScriptFile[0] = 0;
 
-	Q_strncpy( m_szName, name, sizeof( m_szName ) );
+	Q_strncpy(m_szName, name, sizeof(m_szName));
 
 	// Get name out of sound emitter system
-	char filebase [ 64 ];
-	int slot = g_pSoundEmitterSystem->GetSoundIndex( name );
-	if ( g_pSoundEmitterSystem->IsValidIndex( slot ) )
+	char filebase[64];
+	int slot = g_pSoundEmitterSystem->GetSoundIndex(name);
+	if(g_pSoundEmitterSystem->IsValidIndex(slot))
 	{
-		Q_FileBase( g_pSoundEmitterSystem->GetSourceFileForSound( slot ), filebase, sizeof( filebase ) );
-		Q_strncpy( m_szScriptFile, filebase, sizeof( m_szScriptFile ) );
+		Q_FileBase(g_pSoundEmitterSystem->GetSourceFileForSound(slot), filebase, sizeof(filebase));
+		Q_strncpy(m_szScriptFile, filebase, sizeof(m_szScriptFile));
 
 		// Look up and add the .wav files for the sound entry
 
-		CSoundParametersInternal *p = g_pSoundEmitterSystem->InternalGetParametersForSound( slot );
-		if ( p )
+		CSoundParametersInternal *p = g_pSoundEmitterSystem->InternalGetParametersForSound(slot);
+		if(p)
 		{
 			CWaveBrowser *wb = GetWorkspaceManager()->GetWaveBrowser();
-			Assert( wb );
+			Assert(wb);
 
 			int waveCount = p->NumSoundNames();
-			for ( int wave = 0; wave < waveCount; wave++ )
+			for(int wave = 0; wave < waveCount; wave++)
 			{
-				char const *wavname = g_pSoundEmitterSystem->GetWaveName( p->GetSoundNames()[ wave ].symbol );
-				if ( wavname )
+				char const *wavname = g_pSoundEmitterSystem->GetWaveName(p->GetSoundNames()[wave].symbol);
+				if(wavname)
 				{
-					CWaveFile *wavefile = wb->FindEntry( wavname, false );
-					if ( wavefile )
+					CWaveFile *wavefile = wb->FindEntry(wavname, false);
+					if(wavefile)
 					{
-						AddWave( wavefile );
+						AddWave(wavefile);
 					}
 				}
 			}
@@ -79,11 +79,11 @@ int CSoundEntry::GetWaveCount() const
 	return m_Waves.Count();
 }
 
-CWaveFile *CSoundEntry::GetWave( int index )
+CWaveFile *CSoundEntry::GetWave(int index)
 {
-	if ( index < 0 || index >= m_Waves.Count() )
+	if(index < 0 || index >= m_Waves.Count())
 		return NULL;
-	return m_Waves[ index ];
+	return m_Waves[index];
 }
 
 void CSoundEntry::ClearWaves()
@@ -91,126 +91,124 @@ void CSoundEntry::ClearWaves()
 	m_Waves.RemoveAll();
 }
 
-void CSoundEntry::AddWave( CWaveFile *wave )
+void CSoundEntry::AddWave(CWaveFile *wave)
 {
-	if ( m_Waves.Find( wave ) != m_Waves.InvalidIndex() )
+	if(m_Waves.Find(wave) != m_Waves.InvalidIndex())
 		return;
 
-	m_Waves.AddToTail( wave );
+	m_Waves.AddToTail(wave);
 }
 
-void CSoundEntry::RemoveWave( CWaveFile *wave )
+void CSoundEntry::RemoveWave(CWaveFile *wave)
 {
-	m_Waves.FindAndRemove( wave );
+	m_Waves.FindAndRemove(wave);
 }
-
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *wave - 
+// Purpose:
+// Input  : *wave -
 // Output : int
 //-----------------------------------------------------------------------------
-int CSoundEntry::FindWave( CWaveFile *wave )
+int CSoundEntry::FindWave(CWaveFile *wave)
 {
-	int idx = m_Waves.Find( wave );
-	if ( idx != m_Waves.InvalidIndex() )
+	int idx = m_Waves.Find(wave);
+	if(idx != m_Waves.InvalidIndex())
 		return idx;
 
 	return -1;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
-void CSoundEntry::SetName( char const *name )
+void CSoundEntry::SetName(char const *name)
 {
-	if ( !Q_stricmp( m_szName, name ) )
+	if(!Q_stricmp(m_szName, name))
 		return;
 
-	Q_strncpy( m_szName, name, sizeof( m_szName ) );
+	Q_strncpy(m_szName, name, sizeof(m_szName));
 
 	// Get name out of sound emitter system
-	char filebase [ 64 ];
-	int slot = g_pSoundEmitterSystem->GetSoundIndex( name );
-	if ( g_pSoundEmitterSystem->IsValidIndex( slot ) )
+	char filebase[64];
+	int slot = g_pSoundEmitterSystem->GetSoundIndex(name);
+	if(g_pSoundEmitterSystem->IsValidIndex(slot))
 	{
-		Q_FileBase( g_pSoundEmitterSystem->GetSourceFileForSound( slot ), filebase, sizeof( filebase ) );
-		Q_strncpy( m_szScriptFile, filebase, sizeof( m_szScriptFile ) );
+		Q_FileBase(g_pSoundEmitterSystem->GetSourceFileForSound(slot), filebase, sizeof(filebase));
+		Q_strncpy(m_szScriptFile, filebase, sizeof(m_szScriptFile));
 	}
 }
 
-
-char const	*CSoundEntry::GetName() const
+char const *CSoundEntry::GetName() const
 {
 	return m_szName;
 }
 
-void CSoundEntry::ValidateTree( mxTreeView *tree, mxTreeViewItem* parent )
+void CSoundEntry::ValidateTree(mxTreeView *tree, mxTreeViewItem *parent)
 {
-	CUtlVector< mxTreeViewItem * >	m_KnownItems;
+	CUtlVector<mxTreeViewItem *> m_KnownItems;
 
 	int c = GetWaveCount();
 	CWaveFile *wave;
-	for ( int i = 0; i < c; i++ )
+	for(int i = 0; i < c; i++)
 	{
-		wave = GetWave( i );
-		if ( !wave )
+		wave = GetWave(i);
+		if(!wave)
 			continue;
 
-		char sz[ 256 ];
-		if ( wave->HasLoadedSentenceInfo() )
+		char sz[256];
+		if(wave->HasLoadedSentenceInfo())
 		{
-			Q_snprintf( sz, sizeof( sz ), "\"%s\" : '%s'", wave->GetName(), wave->GetSentenceText() );
+			Q_snprintf(sz, sizeof(sz), "\"%s\" : '%s'", wave->GetName(), wave->GetSentenceText());
 		}
 		else
 		{
-			Q_snprintf( sz, sizeof( sz ), "\"%s\" : '%s'", wave->GetName(), "(loading...)" );
+			Q_snprintf(sz, sizeof(sz), "\"%s\" : '%s'", wave->GetName(), "(loading...)");
 		}
 
-		mxTreeViewItem *spot = wave->FindItem( tree, parent );
-		if ( !spot )
+		mxTreeViewItem *spot = wave->FindItem(tree, parent);
+		if(!spot)
 		{
-			spot = tree->add( parent, sz );
+			spot = tree->add(parent, sz);
 		}
 
-		m_KnownItems.AddToTail( spot );
+		m_KnownItems.AddToTail(spot);
 
-		wave->SetOrdinal( i );
+		wave->SetOrdinal(i);
 
-		tree->setLabel( spot, sz );
+		tree->setLabel(spot, sz);
 
-		tree->setImages( spot, wave->GetIconIndex(), wave->GetIconIndex() );
-		tree->setUserData( spot, wave );
+		tree->setImages(spot, wave->GetIconIndex(), wave->GetIconIndex());
+		tree->setUserData(spot, wave);
 
-		wave->ValidateTree( tree, spot );
+		wave->ValidateTree(tree, spot);
 	}
 
-	mxTreeViewItem *start = tree->getFirstChild( parent );
-	while ( start )
+	mxTreeViewItem *start = tree->getFirstChild(parent);
+	while(start)
 	{
-		mxTreeViewItem *next = tree->getNextChild( start );
+		mxTreeViewItem *next = tree->getNextChild(start);
 
-		if ( m_KnownItems.Find( start ) == m_KnownItems.InvalidIndex() )
+		if(m_KnownItems.Find(start) == m_KnownItems.InvalidIndex())
 		{
-			tree->remove( start );
+			tree->remove(start);
 		}
 
 		start = next;
 	}
 
-	tree->sortTree( parent, true, CWorkspaceBrowser::CompareFunc, 0 );
+	tree->sortTree(parent, true, CWorkspaceBrowser::CompareFunc, 0);
 }
 
 void CSoundEntry::Play()
 {
-	if ( m_Waves.Count() == 0 )
+	if(m_Waves.Count() == 0)
 		return;
 
-	m_nLastPlay = ( m_nLastPlay + 1 ) % m_Waves.Count();
+	m_nLastPlay = (m_nLastPlay + 1) % m_Waves.Count();
 
-	CWaveFile *wave = GetWave( m_nLastPlay );
-	if ( !wave )
+	CWaveFile *wave = GetWave(m_nLastPlay);
+	if(!wave)
 		return;
 
 	wave->Play();
@@ -221,24 +219,24 @@ char const *CSoundEntry::GetScriptFile() const
 	return m_szScriptFile;
 }
 
-void CSoundEntry::SetScriptFile( char const *scriptfile )
+void CSoundEntry::SetScriptFile(char const *scriptfile)
 {
-	char filebase [ 64 ];
-	int slot = g_pSoundEmitterSystem->GetSoundIndex( GetName() );
-	Q_FileBase( g_pSoundEmitterSystem->GetSourceFileForSound( slot ), filebase, sizeof( filebase ) );
+	char filebase[64];
+	int slot = g_pSoundEmitterSystem->GetSoundIndex(GetName());
+	Q_FileBase(g_pSoundEmitterSystem->GetSourceFileForSound(slot), filebase, sizeof(filebase));
 
-	if ( !Q_stricmp( GetScriptFile(), filebase ) )
+	if(!Q_stricmp(GetScriptFile(), filebase))
 		return;
 
-	Q_strncpy( m_szScriptFile, filebase, sizeof( m_szScriptFile ) );
+	Q_strncpy(m_szScriptFile, filebase, sizeof(m_szScriptFile));
 }
 
 CSoundParametersInternal *CSoundEntry::GetSoundParameters()
 {
-	int soundindex = g_pSoundEmitterSystem->GetSoundIndex( GetName() );
-	if ( g_pSoundEmitterSystem->IsValidIndex( soundindex ) )
+	int soundindex = g_pSoundEmitterSystem->GetSoundIndex(GetName());
+	if(g_pSoundEmitterSystem->IsValidIndex(soundindex))
 	{
-		return g_pSoundEmitterSystem->InternalGetParametersForSound( soundindex );
+		return g_pSoundEmitterSystem->InternalGetParametersForSound(soundindex);
 	}
 	return NULL;
 }
@@ -251,7 +249,7 @@ bool CSoundEntry::IsCheckedOut() const
 
 int CSoundEntry::GetIconIndex() const
 {
-	if ( IsCheckedOut() )
+	if(IsCheckedOut())
 	{
 		return IMAGE_SPEAK_CHECKEDOUT;
 	}
@@ -261,44 +259,34 @@ int CSoundEntry::GetIconIndex() const
 	}
 }
 
+void CSoundEntry::Checkout(bool updatestateicons /*= true*/) {}
 
-void CSoundEntry::Checkout(bool updatestateicons /*= true*/)
+void CSoundEntry::Checkin(bool updatestateicons /*= true*/) {}
+
+void CSoundEntry::MoveChildUp(ITreeItem *child) {}
+
+void CSoundEntry::MoveChildDown(ITreeItem *child) {}
+
+void CSoundEntry::SetDirty(bool dirty)
 {
-}
-
-void CSoundEntry::Checkin(bool updatestateicons /*= true*/)
-{
-}
-
-
-void CSoundEntry::MoveChildUp( ITreeItem *child )
-{
-}
-
-void CSoundEntry::MoveChildDown( ITreeItem *child )
-{
-}
-
-void CSoundEntry::SetDirty( bool dirty )
-{
-	if ( GetOwnerVCDFile() )
+	if(GetOwnerVCDFile())
 	{
-		GetOwnerVCDFile()->SetDirty( dirty );
+		GetOwnerVCDFile()->SetDirty(dirty);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : wavindex - 
+// Purpose:
+// Input  : wavindex -
 // Output : char const
 //-----------------------------------------------------------------------------
-char const *CSoundEntry::GetSentenceText( int wavindex )
+char const *CSoundEntry::GetSentenceText(int wavindex)
 {
-	if ( !GetWaveCount() )
+	if(!GetWaveCount())
 		return "";
 
-	CWaveFile *w = GetWave( wavindex );
-	if ( w->HasLoadedSentenceInfo() )
+	CWaveFile *w = GetWave(wavindex);
+	if(w->HasLoadedSentenceInfo())
 	{
 		return w->GetSentenceText();
 	}
@@ -308,27 +296,26 @@ char const *CSoundEntry::GetSentenceText( int wavindex )
 	}
 }
 
-void CSoundEntry::GetCCText( wchar_t *out, int maxchars )
+void CSoundEntry::GetCCText(wchar_t *out, int maxchars)
 {
-	out[ 0 ] = 0;
+	out[0] = 0;
 
-	if ( !g_pVGuiLocalize )
+	if(!g_pVGuiLocalize)
 		return;
 
-	const wchar_t *str = g_pVGuiLocalize->Find( GetName() );
-	if ( !str )
+	const wchar_t *str = g_pVGuiLocalize->Find(GetName());
+	if(!str)
 		return;
 
-	wcsncpy( out, str, maxchars );
+	wcsncpy(out, str, maxchars);
 }
 
-
-bool CSoundEntry::IsChildFirst( ITreeItem *child )
+bool CSoundEntry::IsChildFirst(ITreeItem *child)
 {
 	return false;
 }
 
-bool CSoundEntry::IsChildLast( ITreeItem *child )
+bool CSoundEntry::IsChildLast(ITreeItem *child)
 {
 	return false;
 }

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,8 +11,6 @@
 #pragma once
 #endif
 
-
 void InstallBitBufErrorHandler();
-
 
 #endif // BITBUF_ERRORHANDLER_H

@@ -1,17 +1,17 @@
 /*
-     File:       CGRemoteOperation.h
- 
-     Contains:   CoreGraphics remote operation
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 2000-2001 by Apple Computer, Inc., all rights reserved.
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+		File:       CGRemoteOperation.h
+
+		Contains:   CoreGraphics remote operation
+
+		Version:    QuickTime 7.3
+
+		Copyright:  (c) 2007 (c) 2000-2001 by Apple Computer, Inc., all rights reserved.
+
+		Bugs?:      For bug reports, consult the following page on
+								the World Wide Web:
+
+										http://developer.apple.com/bugreporter/
+
 */
 #ifndef CGREMOTEOPERATION_H_
 #define CGREMOTEOPERATION_H_
@@ -52,23 +52,23 @@ extern "C" {
 #endif
 
 #if PRAGMA_ENUM_ALWAYSINT
-    #if defined(__fourbyteints__) && !__fourbyteints__ 
-        #define __CGREMOTEOPERATION__RESTORE_TWOBYTEINTS
-        #pragma fourbyteints on
-    #endif
-    #pragma enumsalwaysint on
+		#if defined(__fourbyteints__) && !__fourbyteints__
+				#define __CGREMOTEOPERATION__RESTORE_TWOBYTEINTS
+				#pragma fourbyteints on
+		#endif
+		#pragma enumsalwaysint on
 #elif PRAGMA_ENUM_OPTIONS
-    #pragma option enum=int
+		#pragma option enum=int
 #elif PRAGMA_ENUM_PACK
-    #if __option(pack_enums)
-        #define __CGREMOTEOPERATION__RESTORE_PACKED_ENUMS
-        #pragma options(!pack_enums)
-    #endif
+		#if __option(pack_enums)
+				#define __CGREMOTEOPERATION__RESTORE_PACKED_ENUMS
+				#pragma options(!pack_enums)
+		#endif
 #endif
 
 typedef CGError                         CGEventErr;
 enum {
-  CGEventNoErr                  = kCGErrorSuccess
+	CGEventNoErr                  = kCGErrorSuccess
 };
 
 
@@ -105,7 +105,7 @@ typedef CALLBACK_API_C( void , CGScreenRefreshCallback )(CGRectCount count, cons
  */
 /*
  *  CGRegisterScreenRefreshCallback()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -113,8 +113,8 @@ typedef CALLBACK_API_C( void , CGScreenRefreshCallback )(CGRectCount count, cons
  */
 EXTERN_API_C( void )
 CGRegisterScreenRefreshCallback(
-  CGScreenRefreshCallback   callback,
-  void *                    userParameter);
+	CGScreenRefreshCallback   callback,
+	void *                    userParameter);
 
 
 /*
@@ -123,7 +123,7 @@ CGRegisterScreenRefreshCallback(
  */
 /*
  *  CGUnregisterScreenRefreshCallback()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -131,8 +131,8 @@ CGRegisterScreenRefreshCallback(
  */
 EXTERN_API_C( void )
 CGUnregisterScreenRefreshCallback(
-  CGScreenRefreshCallback   callback,
-  void *                    userParameter);
+	CGScreenRefreshCallback   callback,
+	void *                    userParameter);
 
 
 
@@ -149,7 +149,7 @@ CGUnregisterScreenRefreshCallback(
  */
 /*
  *  CGWaitForScreenRefreshRects()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -157,8 +157,8 @@ CGUnregisterScreenRefreshCallback(
  */
 EXTERN_API_C( CGEventErr )
 CGWaitForScreenRefreshRects(
-  CGRect **      pRectArray,
-  CGRectCount *  pCount);
+	CGRect **      pRectArray,
+	CGRectCount *  pCount);
 
 
 /*
@@ -166,7 +166,7 @@ CGWaitForScreenRefreshRects(
  */
 /*
  *  CGReleaseScreenRefreshRects()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -205,7 +205,7 @@ CGReleaseScreenRefreshRects(CGRect * rectArray);
 typedef u_int32_t                       CGButtonCount;
 /*
  *  CGPostMouseEvent()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -213,11 +213,11 @@ typedef u_int32_t                       CGButtonCount;
  */
 EXTERN_API_C( CGEventErr )
 CGPostMouseEvent(
-  CGPoint         mouseCursorPosition,
-  boolean_t       updateMouseCursorPosition,
-  CGButtonCount   buttonCount,
-  boolean_t       mouseButtonDown,
-  ...);
+	CGPoint         mouseCursorPosition,
+	boolean_t       updateMouseCursorPosition,
+	CGButtonCount   buttonCount,
+	boolean_t       mouseButtonDown,
+	...);
 
 
 /*
@@ -237,7 +237,7 @@ CGPostMouseEvent(
 typedef u_int32_t                       CGWheelCount;
 /*
  *  CGPostScrollWheelEvent()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -245,9 +245,9 @@ typedef u_int32_t                       CGWheelCount;
  */
 EXTERN_API_C( CGEventErr )
 CGPostScrollWheelEvent(
-  CGWheelCount   wheelCount,
-  int32_t        wheel1,
-  ...);
+	CGWheelCount   wheelCount,
+	int32_t        wheel1,
+	...);
 
 
 /*
@@ -269,7 +269,7 @@ typedef u_int16_t                       CGCharCode;
 typedef u_int16_t                       CGKeyCode;
 /*
  *  CGPostKeyboardEvent()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -277,9 +277,9 @@ typedef u_int16_t                       CGKeyCode;
  */
 EXTERN_API_C( CGEventErr )
 CGPostKeyboardEvent(
-  CGCharCode   keyChar,
-  CGKeyCode    virtualKey,
-  boolean_t    keyDown);
+	CGCharCode   keyChar,
+	CGKeyCode    virtualKey,
+	boolean_t    keyDown);
 
 
 /*
@@ -288,7 +288,7 @@ CGPostKeyboardEvent(
  */
 /*
  *  CGWarpMouseCursorPosition()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -312,7 +312,7 @@ CGWarpMouseCursorPosition(CGPoint newCursorPosition);
  */
 /*
  *  CGInhibitLocalEvents()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -328,7 +328,7 @@ CGInhibitLocalEvents(boolean_t doInhibit);
  */
 /*
  *  CGSetLocalEventsSuppressionInterval()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -356,7 +356,7 @@ CGSetLocalEventsSuppressionInterval(CFTimeInterval seconds);
  */
 /*
  *  CGEnableEventStateCombining()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -378,23 +378,23 @@ CGEnableEventStateCombining(boolean_t doCombineState);
  * a mask of event categories to be passed through.
  */
 enum CGEventFilterMask {
-  kCGEventFilterMaskPermitLocalMouseEvents = 0x00000001, /* Mouse, scroll wheel */
-  kCGEventFilterMaskPermitLocalKeyboardEvents = 0x00000002, /* Alphanumeric keys and Command, Option, Control, Shift, AlphaLock */
-  kCGEventFilterMaskPermitSystemDefinedEvents = 0x00000004, /* Power key, bezel buttons, sticky keys */
-  kCGEventFilterMaskPermitAllEvents = kCGEventFilterMaskPermitLocalMouseEvents | kCGEventFilterMaskPermitLocalKeyboardEvents | kCGEventFilterMaskPermitSystemDefinedEvents
+	kCGEventFilterMaskPermitLocalMouseEvents = 0x00000001, /* Mouse, scroll wheel */
+	kCGEventFilterMaskPermitLocalKeyboardEvents = 0x00000002, /* Alphanumeric keys and Command, Option, Control, Shift, AlphaLock */
+	kCGEventFilterMaskPermitSystemDefinedEvents = 0x00000004, /* Power key, bezel buttons, sticky keys */
+	kCGEventFilterMaskPermitAllEvents = kCGEventFilterMaskPermitLocalMouseEvents | kCGEventFilterMaskPermitLocalKeyboardEvents | kCGEventFilterMaskPermitSystemDefinedEvents
 };
 typedef enum CGEventFilterMask CGEventFilterMask;
 
 enum CGEventSupressionState {
-  kCGEventSupressionStateSupressionInterval = 0,
-  kCGEventSupressionStateRemoteMouseDrag = 1,
-  kCGNumberOfEventSupressionStates = 2
+	kCGEventSupressionStateSupressionInterval = 0,
+	kCGEventSupressionStateRemoteMouseDrag = 1,
+	kCGNumberOfEventSupressionStates = 2
 };
 typedef enum CGEventSupressionState CGEventSupressionState;
 
 /*
  *  CGSetLocalEventsFilterDuringSupressionState()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -402,8 +402,8 @@ typedef enum CGEventSupressionState CGEventSupressionState;
  */
 EXTERN_API_C( CGEventErr )
 CGSetLocalEventsFilterDuringSupressionState(
-  CGEventFilterMask        filter,
-  CGEventSupressionState   state);
+	CGEventFilterMask        filter,
+	CGEventSupressionState   state);
 
 
 /*
@@ -428,7 +428,7 @@ CGSetLocalEventsFilterDuringSupressionState(
  */
 /*
  *  CGAssociateMouseAndMouseCursorPosition()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -454,7 +454,7 @@ CGAssociateMouseAndMouseCursorPosition(boolean_t connected);
  *     CFRelease( port );
  *     exit( 1 );
  * }
- * 
+ *
  * static void watchForServerDeath()
  * {
  *     CFMachPortRef        port;
@@ -478,7 +478,7 @@ CGAssociateMouseAndMouseCursorPosition(boolean_t connected);
  */
 /*
  *  CGWindowServerCFMachPort()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -490,14 +490,14 @@ CGWindowServerCFMachPort(void);
 
 
 #if PRAGMA_ENUM_ALWAYSINT
-    #pragma enumsalwaysint reset
-    #ifdef __CGREMOTEOPERATION__RESTORE_TWOBYTEINTS
-        #pragma fourbyteints off
-    #endif
+		#pragma enumsalwaysint reset
+		#ifdef __CGREMOTEOPERATION__RESTORE_TWOBYTEINTS
+				#pragma fourbyteints off
+		#endif
 #elif PRAGMA_ENUM_OPTIONS
-    #pragma option enum=reset
+		#pragma option enum=reset
 #elif defined(__CGREMOTEOPERATION__RESTORE_PACKED_ENUMS)
-    #pragma options(pack_enums)
+		#pragma options(pack_enums)
 #endif
 
 #ifdef PRAGMA_IMPORT_OFF
@@ -511,4 +511,3 @@ CGWindowServerCFMachPort(void);
 #endif
 
 #endif /* CGREMOTEOPERATION_H_ */
-

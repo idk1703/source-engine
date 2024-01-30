@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,7 +18,7 @@
 //-----------------------------------------------------------------------------
 class COptionsSubDifficulty : public vgui::PropertyPage
 {
-	DECLARE_CLASS_SIMPLE( COptionsSubDifficulty, vgui::PropertyPage );
+	DECLARE_CLASS_SIMPLE(COptionsSubDifficulty, vgui::PropertyPage);
 
 public:
 	COptionsSubDifficulty(vgui::Panel *parent);
@@ -26,13 +26,12 @@ public:
 	virtual void OnResetData();
 	virtual void OnApplyChanges();
 
-	MESSAGE_FUNC( OnRadioButtonChecked, "RadioButtonChecked" );
+	MESSAGE_FUNC(OnRadioButtonChecked, "RadioButtonChecked");
 
 private:
 	vgui::RadioButton *m_pEasyRadio;
 	vgui::RadioButton *m_pNormalRadio;
 	vgui::RadioButton *m_pHardRadio;
 };
-
 
 #endif // OPTIONS_SUB_DIFFICULTY_H

@@ -10,27 +10,21 @@
 #define SAVEINFO_H
 #pragma once
 
-
 #include "ChunkFile.h"
-
 
 class CMapClass;
 
-
 class CSaveInfo
 {
-	public:
+public:
+	inline CSaveInfo(void);
+	inline void SetVisiblesOnly(bool bVisiblesOnly);
 
-		inline CSaveInfo(void);
-		inline void SetVisiblesOnly(bool bVisiblesOnly);
+	bool ShouldSaveObject(CMapClass *pObject);
 
-		bool ShouldSaveObject(CMapClass *pObject);
-
-	protected:
-
-		bool m_bVisiblesOnly;
+protected:
+	bool m_bVisiblesOnly;
 };
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor.
@@ -40,15 +34,13 @@ CSaveInfo::CSaveInfo(void)
 	m_bVisiblesOnly = false;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bVisiblesOnly - 
+// Purpose:
+// Input  : bVisiblesOnly -
 //-----------------------------------------------------------------------------
 void CSaveInfo::SetVisiblesOnly(bool bVisiblesOnly)
 {
 	m_bVisiblesOnly = bVisiblesOnly;
 }
-
 
 #endif // SAVEINFO_H

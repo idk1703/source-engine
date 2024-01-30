@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -31,10 +31,9 @@ public:
 	bool StopsTest();
 
 protected:
-
-	CUtlVector<CHLTVServer*>	m_Servers;
+	CUtlVector<CHLTVServer *> m_Servers;
 };
 
-extern CHLTVTestSystem *hltvtest;	// The global HLTV server/object. NULL on xbox.
+extern CHLTVTestSystem *hltvtest; // The global HLTV server/object. NULL on xbox.
 
 #endif // HLTVSERVER_H

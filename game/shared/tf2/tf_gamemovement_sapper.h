@@ -23,28 +23,26 @@ class CTFMoveData;
 class CTFGameMovementSapper : public CTFGameMovement
 {
 
-	DECLARE_CLASS( CTFGameMovementSapper, CTFGameMovement );
+	DECLARE_CLASS(CTFGameMovementSapper, CTFGameMovement);
 
 public:
-
 	CTFGameMovementSapper();
 
 	// Interface Implementation
-//	virtual void ProcessMovement( CTFMoveData *pTFMoveData );
-	virtual void ProcessClassMovement( CBaseTFPlayer *pPlayer, CTFMoveData *pTFMoveData );
-	virtual const Vector &GetPlayerMins( bool bDucked ) const;
-	virtual const Vector &GetPlayerMaxs( bool bDucked ) const;
-	virtual const Vector &GetPlayerViewOffset( bool bDucked ) const;
+	//	virtual void ProcessMovement( CTFMoveData *pTFMoveData );
+	virtual void ProcessClassMovement(CBaseTFPlayer *pPlayer, CTFMoveData *pTFMoveData);
+	virtual const Vector &GetPlayerMins(bool bDucked) const;
+	virtual const Vector &GetPlayerMaxs(bool bDucked) const;
+	virtual const Vector &GetPlayerViewOffset(bool bDucked) const;
 
 protected:
-
-	PlayerClassSapperData_t	*m_pSapperData; 
-	Vector						m_vStandMins;
-	Vector						m_vStandMaxs;
-	Vector						m_vStandViewOffset;
-	Vector						m_vDuckMins;
-	Vector						m_vDuckMaxs;
-	Vector						m_vDuckViewOffset;
+	PlayerClassSapperData_t *m_pSapperData;
+	Vector m_vStandMins;
+	Vector m_vStandMaxs;
+	Vector m_vStandViewOffset;
+	Vector m_vDuckMins;
+	Vector m_vDuckMaxs;
+	Vector m_vDuckViewOffset;
 };
 
 #endif // TF_GAMEMOVEMENT_SAPPER_H

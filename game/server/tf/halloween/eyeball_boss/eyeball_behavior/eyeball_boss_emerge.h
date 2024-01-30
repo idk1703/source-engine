@@ -8,12 +8,15 @@
 
 //---------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------
-class CEyeballBossEmerge : public Action< CEyeballBoss >
+class CEyeballBossEmerge : public Action<CEyeballBoss>
 {
 public:
-	virtual ActionResult< CEyeballBoss >	OnStart( CEyeballBoss *me, Action< CEyeballBoss > *priorAction );
-	virtual ActionResult< CEyeballBoss >	Update( CEyeballBoss *me, float interval );
-	virtual const char *GetName( void ) const	{ return "Emerge"; }		// return name of this action
+	virtual ActionResult<CEyeballBoss> OnStart(CEyeballBoss *me, Action<CEyeballBoss> *priorAction);
+	virtual ActionResult<CEyeballBoss> Update(CEyeballBoss *me, float interval);
+	virtual const char *GetName(void) const
+	{
+		return "Emerge";
+	} // return name of this action
 
 private:
 	CountdownTimer m_riseTimer;
@@ -23,6 +26,5 @@ private:
 	Vector m_groundPos;
 	float m_height;
 };
-
 
 #endif // EYEBALL_BOSS_EMERGE_H

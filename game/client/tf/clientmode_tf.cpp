@@ -81,7 +81,7 @@
 
 #include "econ_gcmessages.h"
 
-#if defined( _X360 )
+#if defined(_X360)
 #include "tf_clientscoreboard.h"
 #endif
 
@@ -99,34 +99,34 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-void __MsgFunc_AutoBalanceVolunteer( bf_read &msg );
-void __MsgFunc_AutoBalanceVolunteer_Cancel( bf_read &msg );
-void __MsgFunc_PlayerIgnitedInv( bf_read &msg );
-void __MsgFunc_PlayerIgnited( bf_read &msg );
-void __MsgFunc_Damage( bf_read &msg );
-void __MsgFunc_HudArenaNotify( bf_read &msg );
-void __MsgFunc_UpdateAchievement( bf_read &msg );
-void __MsgFunc_DamageDodged( bf_read &msg );
-void __MsgFunc_PlayerJarated( bf_read &msg );
-void __MsgFunc_PlayerExtinguished( bf_read &msg );
-void __MsgFunc_BreakModel( bf_read &msg );
-void __MsgFunc_BreakModel_Pumpkin( bf_read &msg );
-void __MsgFunc_BreakModelRocketDud( bf_read &msg );
-void __MsgFunc_CheapBreakModel( bf_read &msg );
-void __MsgFunc_PlayerJaratedFade( bf_read &msg );
-void __MsgFunc_PlayerShieldBlocked( bf_read &msg );
-void __MsgFunc_PlayerBonusPoints( bf_read &msg );
-void __MsgFunc_SpawnFlyingBird( bf_read &msg );
-void __MsgFunc_PlayerGodRayEffect( bf_read &msg );
-void __MsgFunc_PlayerTeleportHomeEffect( bf_read &msg );
-void __MsgFunc_RDTeamPointsChanged( bf_read &msg );
-void __MsgFunc_PlayerLoadoutUpdated( bf_read &msg );
-void __MsgFunc_PlayerTauntSoundLoopStart( bf_read &msg );
-void __MsgFunc_PlayerTauntSoundLoopEnd( bf_read &msg );
-void __MsgFunc_ForcePlayerViewAngles( bf_read &msg );
-void __MsgFunc_BonusDucks( bf_read &msg );
-void __MsgFunc_PlayerPickupWeapon( bf_read &msg );
-void __MsgFunc_QuestObjectiveCompleted( bf_read &msg );
+void __MsgFunc_AutoBalanceVolunteer(bf_read &msg);
+void __MsgFunc_AutoBalanceVolunteer_Cancel(bf_read &msg);
+void __MsgFunc_PlayerIgnitedInv(bf_read &msg);
+void __MsgFunc_PlayerIgnited(bf_read &msg);
+void __MsgFunc_Damage(bf_read &msg);
+void __MsgFunc_HudArenaNotify(bf_read &msg);
+void __MsgFunc_UpdateAchievement(bf_read &msg);
+void __MsgFunc_DamageDodged(bf_read &msg);
+void __MsgFunc_PlayerJarated(bf_read &msg);
+void __MsgFunc_PlayerExtinguished(bf_read &msg);
+void __MsgFunc_BreakModel(bf_read &msg);
+void __MsgFunc_BreakModel_Pumpkin(bf_read &msg);
+void __MsgFunc_BreakModelRocketDud(bf_read &msg);
+void __MsgFunc_CheapBreakModel(bf_read &msg);
+void __MsgFunc_PlayerJaratedFade(bf_read &msg);
+void __MsgFunc_PlayerShieldBlocked(bf_read &msg);
+void __MsgFunc_PlayerBonusPoints(bf_read &msg);
+void __MsgFunc_SpawnFlyingBird(bf_read &msg);
+void __MsgFunc_PlayerGodRayEffect(bf_read &msg);
+void __MsgFunc_PlayerTeleportHomeEffect(bf_read &msg);
+void __MsgFunc_RDTeamPointsChanged(bf_read &msg);
+void __MsgFunc_PlayerLoadoutUpdated(bf_read &msg);
+void __MsgFunc_PlayerTauntSoundLoopStart(bf_read &msg);
+void __MsgFunc_PlayerTauntSoundLoopEnd(bf_read &msg);
+void __MsgFunc_ForcePlayerViewAngles(bf_read &msg);
+void __MsgFunc_BonusDucks(bf_read &msg);
+void __MsgFunc_PlayerPickupWeapon(bf_read &msg);
+void __MsgFunc_QuestObjectiveCompleted(bf_read &msg);
 
 #if !defined(NO_STEAM)
 extern ConVar cl_steamscreenshots;
@@ -134,18 +134,20 @@ extern ConVar cl_steamscreenshots;
 
 extern ISoundEmitterSystemBase *soundemitterbase;
 
-static Color colorEyeballBossText( 134, 80, 172, 255 );
-static Color colorMerasmusText( 112, 176, 74, 255 );
+static Color colorEyeballBossText(134, 80, 172, 255);
+static Color colorMerasmusText(112, 176, 74, 255);
 
-ConVar default_fov( "default_fov", "75", FCVAR_CHEAT );
-ConVar fov_desired( "fov_desired", "75", FCVAR_ARCHIVE | FCVAR_USERINFO, "Sets the base field-of-view.", true, 20.0, true, MAX_FOV );
+ConVar default_fov("default_fov", "75", FCVAR_CHEAT);
+ConVar fov_desired("fov_desired", "75", FCVAR_ARCHIVE | FCVAR_USERINFO, "Sets the base field-of-view.", true, 20.0,
+				   true, MAX_FOV);
 
 #define TF_HIGHFIVE_HINT_MAXDIST		512.0f
 #define TF_HIGHFIVE_HINT_MAXHINTS		3
-#define TF_HIGHFIVE_HINT_MINTIMEBETWEEN	10.0f
-ConVar tf_highfive_hintcount( "tf_highfive_hintcount", "0", FCVAR_CLIENTDLL | FCVAR_DONTRECORD | FCVAR_ARCHIVE, "Counts the number of times the high five hint has been displayed", true, 0, false, 0 );
+#define TF_HIGHFIVE_HINT_MINTIMEBETWEEN 10.0f
+ConVar tf_highfive_hintcount("tf_highfive_hintcount", "0", FCVAR_CLIENTDLL | FCVAR_DONTRECORD | FCVAR_ARCHIVE,
+							 "Counts the number of times the high five hint has been displayed", true, 0, false, 0);
 
-ConVar tf_taunt_always_show_hint( "tf_taunt_always_show_hint", "1", FCVAR_CLIENTDLL );
+ConVar tf_taunt_always_show_hint("tf_taunt_always_show_hint", "1", FCVAR_CLIENTDLL);
 extern ConVar tf_allow_all_team_partner_taunt;
 extern ConVar tf_mvm_buybacks_method;
 extern ConVar tf_autobalance_query_lifetime;
@@ -154,48 +156,47 @@ extern ConVar cl_notifications_show_ingame;
 
 extern ConVar sc_look_sensitivity_scale;
 
-extern bool TournamentHudElementKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
-extern bool ArenaClassLayoutKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
-extern bool CoachingHandlesKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
-extern bool ItemTestHandlesKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
-extern bool ShouldScoreBoardHandleKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
+extern bool TournamentHudElementKeyInput(int down, ButtonCode_t keynum, const char *pszCurrentBinding);
+extern bool ArenaClassLayoutKeyInput(int down, ButtonCode_t keynum, const char *pszCurrentBinding);
+extern bool CoachingHandlesKeyInput(int down, ButtonCode_t keynum, const char *pszCurrentBinding);
+extern bool ItemTestHandlesKeyInput(int down, ButtonCode_t keynum, const char *pszCurrentBinding);
+extern bool ShouldScoreBoardHandleKeyInput(int down, ButtonCode_t keynum, const char *pszCurrentBinding);
 
-static bool TrainingHandlesKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding )
+static bool TrainingHandlesKeyInput(int down, ButtonCode_t keynum, const char *pszCurrentBinding)
 {
-	if ( TFGameRules() != NULL && TFGameRules()->IsInTraining() && TFGameRules()->IsWaitingForTrainingContinue() )
+	if(TFGameRules() != NULL && TFGameRules()->IsInTraining() && TFGameRules()->IsWaitingForTrainingContinue())
 	{
-		if ( down && keynum == KEY_SPACE )
-		{								  
-			engine->ClientCmd_Unrestricted( "training_continue" );
+		if(down && keynum == KEY_SPACE)
+		{
+			engine->ClientCmd_Unrestricted("training_continue");
 			return true;
 		}
 	}
 	return false;
 }
 
-
-static bool HalloweenHandlesKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding )
+static bool HalloweenHandlesKeyInput(int down, ButtonCode_t keynum, const char *pszCurrentBinding)
 {
-	C_TFPlayer *pPlayer = ToTFPlayer( C_BasePlayer::GetLocalPlayer() );
-	if ( pPlayer )
+	C_TFPlayer *pPlayer = ToTFPlayer(C_BasePlayer::GetLocalPlayer());
+	if(pPlayer)
 	{
 		// don't do anything while dancing
-		if ( pPlayer->m_Shared.InCond( TF_COND_HALLOWEEN_THRILLER ) )
+		if(pPlayer->m_Shared.InCond(TF_COND_HALLOWEEN_THRILLER))
 		{
 			return true;
 		}
 
 		// only allow +attack
-		if ( pPlayer->m_Shared.InCond( TF_COND_HALLOWEEN_GHOST_MODE ) )
+		if(pPlayer->m_Shared.InCond(TF_COND_HALLOWEEN_GHOST_MODE))
 		{
-			if ( pszCurrentBinding )
+			if(pszCurrentBinding)
 			{
-				if ( FStrEq( pszCurrentBinding, "+attack" ) )
+				if(FStrEq(pszCurrentBinding, "+attack"))
 				{
-					engine->ServerCmd( "boo" );
+					engine->ServerCmd("boo");
 					return true;
 				}
-				else if ( FStrEq( pszCurrentBinding, "+attack2" ) || FStrEq( pszCurrentBinding, "+attack3" ) )
+				else if(FStrEq(pszCurrentBinding, "+attack2") || FStrEq(pszCurrentBinding, "+attack3"))
 				{
 					return true;
 				}
@@ -206,32 +207,30 @@ static bool HalloweenHandlesKeyInput( int down, ButtonCode_t keynum, const char 
 	return false;
 }
 
-
-static bool TauntHandlesKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding )
+static bool TauntHandlesKeyInput(int down, ButtonCode_t keynum, const char *pszCurrentBinding)
 {
-	static const char *pszStopTauntKeys[] =
-	{
+	static const char *pszStopTauntKeys[] = {
 		"+jump",
 		"+taunt",
 		"weapon_taunt",
 	};
 
-	C_TFPlayer *pPlayer = ToTFPlayer( C_BasePlayer::GetLocalPlayer() );
-	if ( pPlayer )
+	C_TFPlayer *pPlayer = ToTFPlayer(C_BasePlayer::GetLocalPlayer());
+	if(pPlayer)
 	{
-		if ( pPlayer->m_Shared.InCond( TF_COND_TAUNTING ) )
+		if(pPlayer->m_Shared.InCond(TF_COND_TAUNTING))
 		{
-			for ( int i=0; i<ARRAYSIZE( pszStopTauntKeys ); ++i )
+			for(int i = 0; i < ARRAYSIZE(pszStopTauntKeys); ++i)
 			{
-				if ( down && pszCurrentBinding && FStrEq( pszCurrentBinding, pszStopTauntKeys[i] ) )
+				if(down && pszCurrentBinding && FStrEq(pszCurrentBinding, pszStopTauntKeys[i]))
 				{
 					// Halloween Hackery
-					if ( i == 0 && pPlayer->m_Shared.InCond( TF_COND_HALLOWEEN_KART ) )
+					if(i == 0 && pPlayer->m_Shared.InCond(TF_COND_HALLOWEEN_KART))
 					{
 						continue;
 					}
 
-					engine->ClientCmd( "stop_taunt" );
+					engine->ClientCmd("stop_taunt");
 					return true;
 				}
 			}
@@ -241,74 +240,73 @@ static bool TauntHandlesKeyInput( int down, ButtonCode_t keynum, const char *psz
 	return false;
 }
 
-
 // Sets convars to tag the current mapname and the player in your crosshairs.
 // The player tagged will be overridden for killcam shots to be the killer
-static void ScreenshotTaggingKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding )
+static void ScreenshotTaggingKeyInput(int down, ButtonCode_t keynum, const char *pszCurrentBinding)
 {
-	if ( pszCurrentBinding && ( FStrEq( pszCurrentBinding, "screenshot" ) || FStrEq( pszCurrentBinding, "jpeg" ) ) )
+	if(pszCurrentBinding && (FStrEq(pszCurrentBinding, "screenshot") || FStrEq(pszCurrentBinding, "jpeg")))
 	{
 		// Tag the player in the crosshairs
-		C_TFPlayer *pPlayer = ToTFPlayer( C_BasePlayer::GetLocalPlayer() );
-		if ( pPlayer )
+		C_TFPlayer *pPlayer = ToTFPlayer(C_BasePlayer::GetLocalPlayer());
+		if(pPlayer)
 		{
-			C_TFPlayer *pCrosshairs = ToTFPlayer( UTIL_PlayerByIndex( pPlayer->GetIDTarget() ) );
-			if ( pCrosshairs )
+			C_TFPlayer *pCrosshairs = ToTFPlayer(UTIL_PlayerByIndex(pPlayer->GetIDTarget()));
+			if(pCrosshairs)
 			{
 				CSteamID steamID;
-				if ( pCrosshairs->GetSteamID( &steamID ) )
+				if(pCrosshairs->GetSteamID(&steamID))
 				{
-					ConVarRef cl_screenshotusertag( "cl_screenshotusertag" );
-					if ( cl_screenshotusertag.IsValid() )
+					ConVarRef cl_screenshotusertag("cl_screenshotusertag");
+					if(cl_screenshotusertag.IsValid())
 					{
-						cl_screenshotusertag.SetValue( (int)steamID.GetAccountID() );
+						cl_screenshotusertag.SetValue((int)steamID.GetAccountID());
 					}
 				}
 			}
 		}
 
 		// Tag the current map
-		ConVarRef cl_screenshotlocation( "cl_screenshotlocation" );
-		if ( cl_screenshotlocation.IsValid() )
+		ConVarRef cl_screenshotlocation("cl_screenshotlocation");
+		if(cl_screenshotlocation.IsValid())
 		{
 			char szMapName[MAX_MAP_NAME];
-			Q_FileBase( engine->GetLevelName(), szMapName, sizeof(szMapName) );
-			Q_strlower( szMapName );
-			cl_screenshotlocation.SetValue( GetMapDisplayName( szMapName ) );
+			Q_FileBase(engine->GetLevelName(), szMapName, sizeof(szMapName));
+			Q_strlower(szMapName);
+			cl_screenshotlocation.SetValue(GetMapDisplayName(szMapName));
 		}
 	}
 }
 
-
-static void EnableSteamScreenshots( bool bEnable )
+static void EnableSteamScreenshots(bool bEnable)
 {
 #if !defined(NO_STEAM)
-	if ( steamapicontext && steamapicontext->SteamScreenshots() )
+	if(steamapicontext && steamapicontext->SteamScreenshots())
 	{
-		ConVarRef cl_savescreenshotstosteam( "cl_savescreenshotstosteam" );
-		if ( cl_savescreenshotstosteam.IsValid() )
+		ConVarRef cl_savescreenshotstosteam("cl_savescreenshotstosteam");
+		if(cl_savescreenshotstosteam.IsValid())
 		{
-			cl_savescreenshotstosteam.SetValue( bEnable );
-			steamapicontext->SteamScreenshots()->HookScreenshots( bEnable );
+			cl_savescreenshotstosteam.SetValue(bEnable);
+			steamapicontext->SteamScreenshots()->HookScreenshots(bEnable);
 		}
 	}
 #endif
 }
 
 #if !defined(NO_STEAM)
-void SteamScreenshotsCallBack( IConVar *var, const char *pOldString, float flOldValue )
+void SteamScreenshotsCallBack(IConVar *var, const char *pOldString, float flOldValue)
 {
-	EnableSteamScreenshots( cl_steamscreenshots.GetBool() );
+	EnableSteamScreenshots(cl_steamscreenshots.GetBool());
 }
-ConVar cl_steamscreenshots( "cl_steamscreenshots", "1", FCVAR_ARCHIVE, "Enable/disable saving screenshots to Steam", SteamScreenshotsCallBack );
+ConVar cl_steamscreenshots("cl_steamscreenshots", "1", FCVAR_ARCHIVE, "Enable/disable saving screenshots to Steam",
+						   SteamScreenshotsCallBack);
 #endif
 
-
-void HUDMinModeChangedCallBack( IConVar *var, const char *pOldString, float flOldValue )
+void HUDMinModeChangedCallBack(IConVar *var, const char *pOldString, float flOldValue)
 {
-	engine->ExecuteClientCmd( "hud_reloadscheme" );
+	engine->ExecuteClientCmd("hud_reloadscheme");
 }
-ConVar cl_hud_minmode( "cl_hud_minmode", "0", FCVAR_ARCHIVE, "Set to 1 to turn on the advanced minimalist HUD mode.", HUDMinModeChangedCallBack );
+ConVar cl_hud_minmode("cl_hud_minmode", "0", FCVAR_ARCHIVE, "Set to 1 to turn on the advanced minimalist HUD mode.",
+					  HUDMinModeChangedCallBack);
 
 IClientMode *g_pClientMode = NULL;
 
@@ -319,50 +317,49 @@ IClientMode *g_pClientMode = NULL;
 class CTFModeManager : public IVModeManager
 {
 public:
-	virtual void	Init();
-	virtual void	SwitchMode( bool commander, bool force ) {}
-	virtual void	LevelInit( const char *newmap );
-	virtual void	LevelShutdown( void );
-	virtual void	ActivateMouse( bool isactive ) {}
+	virtual void Init();
+	virtual void SwitchMode(bool commander, bool force) {}
+	virtual void LevelInit(const char *newmap);
+	virtual void LevelShutdown(void);
+	virtual void ActivateMouse(bool isactive) {}
 };
 
 static CTFModeManager g_ModeManager;
-IVModeManager *modemanager = ( IVModeManager * )&g_ModeManager;
-
+IVModeManager *modemanager = (IVModeManager *)&g_ModeManager;
 
 // --------------------------------------------------------------------------------- //
 // CTFModeManager implementation.
 // --------------------------------------------------------------------------------- //
 
-#define SCREEN_FILE		"scripts/vgui_screens.txt"
+#define SCREEN_FILE "scripts/vgui_screens.txt"
 
 void CTFModeManager::Init()
 {
 	g_pClientMode = GetClientModeNormal();
-	
-	PanelMetaClassMgr()->LoadMetaClassDefinitionFile( SCREEN_FILE );
+
+	PanelMetaClassMgr()->LoadMetaClassDefinitionFile(SCREEN_FILE);
 
 	// Load the objects.txt file.
-	LoadObjectInfos( ::filesystem );
+	LoadObjectInfos(::filesystem);
 
-	GetClientVoiceMgr()->SetHeadLabelOffset( 40 );
+	GetClientVoiceMgr()->SetHeadLabelOffset(40);
 
-	EnableSteamScreenshots( true );
+	EnableSteamScreenshots(true);
 }
 
-void CTFModeManager::LevelInit( const char *newmap )
+void CTFModeManager::LevelInit(const char *newmap)
 {
-	g_pClientMode->LevelInit( newmap );
+	g_pClientMode->LevelInit(newmap);
 
-	ConVarRef voice_steal( "voice_steal" );
+	ConVarRef voice_steal("voice_steal");
 
-	if ( voice_steal.IsValid() )
+	if(voice_steal.IsValid())
 	{
-		voice_steal.SetValue( 1 );
+		voice_steal.SetValue(1);
 	}
 }
 
-void CTFModeManager::LevelShutdown( void )
+void CTFModeManager::LevelShutdown(void)
 {
 	g_pClientMode->LevelShutdown();
 
@@ -377,7 +374,7 @@ void CTFModeManager::LevelShutdown( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 ClientModeTFNormal::ClientModeTFNormal()
 {
@@ -400,99 +397,97 @@ ClientModeTFNormal::ClientModeTFNormal()
 	m_lastServerConnectTime = 0;
 	m_pTeamGoalTournament = NULL;
 
-#if defined( _X360 )
+#if defined(_X360)
 	m_pScoreboard = NULL;
 #endif
 
-	HOOK_MESSAGE( AutoBalanceVolunteer );
-	HOOK_MESSAGE( AutoBalanceVolunteer_Cancel );
+	HOOK_MESSAGE(AutoBalanceVolunteer);
+	HOOK_MESSAGE(AutoBalanceVolunteer_Cancel);
 
 	// Hook global message handlers
-	HOOK_MESSAGE( PlayerIgnited );
-	HOOK_MESSAGE( PlayerIgnitedInv );
-	HOOK_MESSAGE( Damage );
-	HOOK_MESSAGE( HudArenaNotify );
-	HOOK_MESSAGE( UpdateAchievement );
-	HOOK_MESSAGE( DamageDodged );
-	HOOK_MESSAGE( PlayerJarated );
-	HOOK_MESSAGE( PlayerExtinguished );
-	HOOK_MESSAGE( BreakModel );
-	HOOK_MESSAGE( CheapBreakModel );
-	HOOK_MESSAGE( BreakModel_Pumpkin );
-	HOOK_MESSAGE( BreakModelRocketDud );
-	HOOK_MESSAGE( PlayerJaratedFade );
-	HOOK_MESSAGE( PlayerShieldBlocked );
-	HOOK_MESSAGE( PlayerBonusPoints );
-	HOOK_MESSAGE( SpawnFlyingBird );
-	HOOK_MESSAGE( PlayerGodRayEffect );
-	HOOK_MESSAGE( PlayerTeleportHomeEffect );
-	HOOK_MESSAGE( RDTeamPointsChanged );
-	HOOK_MESSAGE( PlayerLoadoutUpdated );
-	HOOK_MESSAGE( PlayerTauntSoundLoopStart );
-	HOOK_MESSAGE( PlayerTauntSoundLoopEnd );
-	HOOK_MESSAGE( ForcePlayerViewAngles );
-	HOOK_MESSAGE( BonusDucks );
-	HOOK_MESSAGE( PlayerPickupWeapon );
-	HOOK_MESSAGE( QuestObjectiveCompleted );
-	
-#if !defined(NO_STEAM)
-	m_CallbackScreenshotRequested.Register( this, &ClientModeTFNormal::OnScreenshotRequested );
-#endif
+	HOOK_MESSAGE(PlayerIgnited);
+	HOOK_MESSAGE(PlayerIgnitedInv);
+	HOOK_MESSAGE(Damage);
+	HOOK_MESSAGE(HudArenaNotify);
+	HOOK_MESSAGE(UpdateAchievement);
+	HOOK_MESSAGE(DamageDodged);
+	HOOK_MESSAGE(PlayerJarated);
+	HOOK_MESSAGE(PlayerExtinguished);
+	HOOK_MESSAGE(BreakModel);
+	HOOK_MESSAGE(CheapBreakModel);
+	HOOK_MESSAGE(BreakModel_Pumpkin);
+	HOOK_MESSAGE(BreakModelRocketDud);
+	HOOK_MESSAGE(PlayerJaratedFade);
+	HOOK_MESSAGE(PlayerShieldBlocked);
+	HOOK_MESSAGE(PlayerBonusPoints);
+	HOOK_MESSAGE(SpawnFlyingBird);
+	HOOK_MESSAGE(PlayerGodRayEffect);
+	HOOK_MESSAGE(PlayerTeleportHomeEffect);
+	HOOK_MESSAGE(RDTeamPointsChanged);
+	HOOK_MESSAGE(PlayerLoadoutUpdated);
+	HOOK_MESSAGE(PlayerTauntSoundLoopStart);
+	HOOK_MESSAGE(PlayerTauntSoundLoopEnd);
+	HOOK_MESSAGE(ForcePlayerViewAngles);
+	HOOK_MESSAGE(BonusDucks);
+	HOOK_MESSAGE(PlayerPickupWeapon);
+	HOOK_MESSAGE(QuestObjectiveCompleted);
 
+#if !defined(NO_STEAM)
+	m_CallbackScreenshotRequested.Register(this, &ClientModeTFNormal::OnScreenshotRequested);
+#endif
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: If you don't know what a destructor is by now, you are probably going to get fired
 //-----------------------------------------------------------------------------
-ClientModeTFNormal::~ClientModeTFNormal()
-{
-}
+ClientModeTFNormal::~ClientModeTFNormal() {}
 
-// See interface.h/.cpp for specifics:  basically this ensures that we actually Sys_UnloadModule the dll and that we don't call Sys_LoadModule 
+// See interface.h/.cpp for specifics:  basically this ensures that we actually Sys_UnloadModule the dll and that we
+// don't call Sys_LoadModule
 //  over and over again.
-static CDllDemandLoader g_GameUI( "GameUI" );
+static CDllDemandLoader g_GameUI("GameUI");
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ClientModeTFNormal::Init()
 {
-	m_pMenuEngyBuild = ( CHudMenuEngyBuild * )GET_HUDELEMENT( CHudMenuEngyBuild );
-	Assert( m_pMenuEngyBuild );
+	m_pMenuEngyBuild = (CHudMenuEngyBuild *)GET_HUDELEMENT(CHudMenuEngyBuild);
+	Assert(m_pMenuEngyBuild);
 
-	m_pMenuEngyDestroy = ( CHudMenuEngyDestroy * )GET_HUDELEMENT( CHudMenuEngyDestroy );
-	Assert( m_pMenuEngyDestroy );
+	m_pMenuEngyDestroy = (CHudMenuEngyDestroy *)GET_HUDELEMENT(CHudMenuEngyDestroy);
+	Assert(m_pMenuEngyDestroy);
 
-	m_pMenuSpyDisguise = ( CHudMenuSpyDisguise * )GET_HUDELEMENT( CHudMenuSpyDisguise );
-	Assert( m_pMenuSpyDisguise );
+	m_pMenuSpyDisguise = (CHudMenuSpyDisguise *)GET_HUDELEMENT(CHudMenuSpyDisguise);
+	Assert(m_pMenuSpyDisguise);
 
-	m_pFreezePanel = ( CTFFreezePanel * )GET_HUDELEMENT( CTFFreezePanel );
-	Assert( m_pFreezePanel );
+	m_pFreezePanel = (CTFFreezePanel *)GET_HUDELEMENT(CTFFreezePanel);
+	Assert(m_pFreezePanel);
 
-	m_pQuickSwitch = ( CItemQuickSwitchPanel * )GET_HUDELEMENT( CItemQuickSwitchPanel );
-	Assert( m_pQuickSwitch );
+	m_pQuickSwitch = (CItemQuickSwitchPanel *)GET_HUDELEMENT(CItemQuickSwitchPanel);
+	Assert(m_pQuickSwitch);
 
-	m_pMenuTauntSelection = ( CHudMenuTauntSelection * )GET_HUDELEMENT( CHudMenuTauntSelection );
-	Assert( m_pMenuTauntSelection );
+	m_pMenuTauntSelection = (CHudMenuTauntSelection *)GET_HUDELEMENT(CHudMenuTauntSelection);
+	Assert(m_pMenuTauntSelection);
 
-	m_pMenuUpgradePanel = ( CHudUpgradePanel* )GET_HUDELEMENT( CHudUpgradePanel );
+	m_pMenuUpgradePanel = (CHudUpgradePanel *)GET_HUDELEMENT(CHudUpgradePanel);
 
 #ifdef STAGING_ONLY
-	m_pMenuSpyBuild = ( CHudMenuSpyBuild * )GET_HUDELEMENT( CHudMenuSpyBuild );
-	Assert( m_pMenuSpyBuild );
+	m_pMenuSpyBuild = (CHudMenuSpyBuild *)GET_HUDELEMENT(CHudMenuSpyBuild);
+	Assert(m_pMenuSpyBuild);
 #endif // STAGING_ONLY
 
-	m_pMenuSpell = ( CHudSpellMenu * )GET_HUDELEMENT( CHudSpellMenu);
-	Assert( m_pMenuSpell );
+	m_pMenuSpell = (CHudSpellMenu *)GET_HUDELEMENT(CHudSpellMenu);
+	Assert(m_pMenuSpell);
 
-	m_pEurekaTeleportMenu = ( CHudEurekaEffectTeleportMenu * )GET_HUDELEMENT( CHudEurekaEffectTeleportMenu );
-	Assert( m_pEurekaTeleportMenu  );
+	m_pEurekaTeleportMenu = (CHudEurekaEffectTeleportMenu *)GET_HUDELEMENT(CHudEurekaEffectTeleportMenu);
+	Assert(m_pEurekaTeleportMenu);
 
-	m_pTeamGoalTournament = (CHudTeamGoalTournament *)GET_HUDELEMENT( CHudTeamGoalTournament );
-	Assert( m_pTeamGoalTournament );
+	m_pTeamGoalTournament = (CHudTeamGoalTournament *)GET_HUDELEMENT(CHudTeamGoalTournament);
+	Assert(m_pTeamGoalTournament);
 
-	m_pInspectPanel = (CHudInspectPanel *)GET_HUDELEMENT( CHudInspectPanel );
-	Assert( m_pInspectPanel );
+	m_pInspectPanel = (CHudInspectPanel *)GET_HUDELEMENT(CHudInspectPanel);
+	Assert(m_pInspectPanel);
 
 	m_wasConnectedLastUpdate = false;
 
@@ -507,73 +502,73 @@ void ClientModeTFNormal::Init()
 	m_bRestrictInfoPanel = false;
 
 	CreateInterfaceFn gameUIFactory = g_GameUI.GetFactory();
-	if ( gameUIFactory )
+	if(gameUIFactory)
 	{
-		m_pGameUI = (IGameUI *) gameUIFactory(GAMEUI_INTERFACE_VERSION, NULL );
-		if ( NULL != m_pGameUI )
+		m_pGameUI = (IGameUI *)gameUIFactory(GAMEUI_INTERFACE_VERSION, NULL);
+		if(NULL != m_pGameUI)
 		{
 			// insert stats summary panel as the loading background dialog
 			CTFStatsSummaryPanel *pPanel = GStatsSummaryPanel();
-			pPanel->InvalidateLayout( false, true );
-			pPanel->SetVisible( false );
-			pPanel->MakePopup( false );
-			m_pGameUI->SetLoadingBackgroundDialog( pPanel->GetVPanel() );
+			pPanel->InvalidateLayout(false, true);
+			pPanel->SetVisible(false);
+			pPanel->MakePopup(false);
+			m_pGameUI->SetLoadingBackgroundDialog(pPanel->GetVPanel());
 
-			IViewPortPanel *pMMOverride = ( gViewPortInterface->FindPanelByName( PANEL_MAINMENUOVERRIDE ) );
-			if ( pMMOverride )
+			IViewPortPanel *pMMOverride = (gViewPortInterface->FindPanelByName(PANEL_MAINMENUOVERRIDE));
+			if(pMMOverride)
 			{
-				((CHudMainMenuOverride*)pMMOverride)->AttachToGameUI();	
+				((CHudMainMenuOverride *)pMMOverride)->AttachToGameUI();
 			}
-		}		
+		}
 	}
 
-#if defined( _X360 )
-	m_pScoreboard = (CTFClientScoreBoardDialog *)( gViewPortInterface->FindPanelByName( PANEL_SCOREBOARD ) );
-	Assert( m_pScoreboard );
+#if defined(_X360)
+	m_pScoreboard = (CTFClientScoreBoardDialog *)(gViewPortInterface->FindPanelByName(PANEL_SCOREBOARD));
+	Assert(m_pScoreboard);
 #endif
 
-	ListenForGameEvent( "localplayer_changeclass" );
+	ListenForGameEvent("localplayer_changeclass");
 
 #ifdef TF_RAID_MODE
-	ListenForGameEvent( "raid_spawn_mob" );
-	ListenForGameEvent( "raid_spawn_squad" );
+	ListenForGameEvent("raid_spawn_mob");
+	ListenForGameEvent("raid_spawn_squad");
 #endif // TF_RAID_MODE
-	
-	ListenForGameEvent( "player_upgraded" );
-	ListenForGameEvent( "player_buyback" );
-	ListenForGameEvent( "player_death" );
-	ListenForGameEvent( "player_used_powerup_bottle" );
+
+	ListenForGameEvent("player_upgraded");
+	ListenForGameEvent("player_buyback");
+	ListenForGameEvent("player_death");
+	ListenForGameEvent("player_used_powerup_bottle");
 	MannVsMachineStats_Init();
 
-	ListenForGameEvent( "pve_win_panel" );
+	ListenForGameEvent("pve_win_panel");
 
-	ListenForGameEvent( "arena_win_panel" );
-	ListenForGameEvent( "teamplay_win_panel" );
-	ListenForGameEvent( "server_spawn" );
+	ListenForGameEvent("arena_win_panel");
+	ListenForGameEvent("teamplay_win_panel");
+	ListenForGameEvent("server_spawn");
 
-	ListenForGameEvent( "pumpkin_lord_summoned" );
-	ListenForGameEvent( "pumpkin_lord_killed" );
-	ListenForGameEvent( "eyeball_boss_summoned" );
-	ListenForGameEvent( "eyeball_boss_stunned" );
-	ListenForGameEvent( "eyeball_boss_killed" );
-	ListenForGameEvent( "eyeball_boss_killer" );
-	ListenForGameEvent( "eyeball_boss_escape_imminent" );
-	ListenForGameEvent( "eyeball_boss_escaped" );
+	ListenForGameEvent("pumpkin_lord_summoned");
+	ListenForGameEvent("pumpkin_lord_killed");
+	ListenForGameEvent("eyeball_boss_summoned");
+	ListenForGameEvent("eyeball_boss_stunned");
+	ListenForGameEvent("eyeball_boss_killed");
+	ListenForGameEvent("eyeball_boss_killer");
+	ListenForGameEvent("eyeball_boss_escape_imminent");
+	ListenForGameEvent("eyeball_boss_escaped");
 
-	ListenForGameEvent( "merasmus_summoned" );
-	ListenForGameEvent( "merasmus_killed" );
-	ListenForGameEvent( "merasmus_escape_warning" );
-	ListenForGameEvent( "merasmus_escaped" );
+	ListenForGameEvent("merasmus_summoned");
+	ListenForGameEvent("merasmus_killed");
+	ListenForGameEvent("merasmus_escape_warning");
+	ListenForGameEvent("merasmus_escaped");
 
-	ListenForGameEvent( "player_highfive_start" );
-	ListenForGameEvent( "player_highfive_cancel" );
-	ListenForGameEvent( "player_highfive_success" );
+	ListenForGameEvent("player_highfive_start");
+	ListenForGameEvent("player_highfive_cancel");
+	ListenForGameEvent("player_highfive_success");
 
-	ListenForGameEvent( "client_beginconnect" );
+	ListenForGameEvent("client_beginconnect");
 
-	ListenForGameEvent( "player_teleported" );
-	ListenForGameEvent( "scorestats_accumulated_reset" );
-	ListenForGameEvent( "scorestats_accumulated_update" );
+	ListenForGameEvent("player_teleported");
+	ListenForGameEvent("scorestats_accumulated_reset");
+	ListenForGameEvent("scorestats_accumulated_update");
 
 	extern void Training_Init();
 	Training_Init();
@@ -582,7 +577,7 @@ void ClientModeTFNormal::Init()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ClientModeTFNormal::Shutdown()
 {
@@ -592,13 +587,12 @@ void ClientModeTFNormal::Shutdown()
 void ClientModeTFNormal::InitViewport()
 {
 	m_pViewport = new TFViewport();
-	m_pViewport->Start( gameuifuncs, gameeventmanager );
+	m_pViewport->Start(gameuifuncs, gameeventmanager);
 }
 
-
-void ClientModeTFNormal::LevelInit( const char *newmap )
+void ClientModeTFNormal::LevelInit(const char *newmap)
 {
-	BaseClass::LevelInit( newmap );
+	BaseClass::LevelInit(newmap);
 
 	m_bInfoPanelShown = false;
 }
@@ -606,24 +600,23 @@ void ClientModeTFNormal::LevelInit( const char *newmap )
 IClientMode *GetClientModeNormal()
 {
 	static ClientModeTFNormal g_ClientModeNormal;
-	
+
 	return &g_ClientModeNormal;
 }
 
-
-ClientModeTFNormal* GetClientModeTFNormal()
+ClientModeTFNormal *GetClientModeTFNormal()
 {
-	Assert( dynamic_cast< ClientModeTFNormal* >( GetClientModeNormal() ) );
+	Assert(dynamic_cast<ClientModeTFNormal *>(GetClientModeNormal()));
 
-	return static_cast< ClientModeTFNormal* >( GetClientModeNormal() );
+	return static_cast<ClientModeTFNormal *>(GetClientModeNormal());
 }
 
 extern ConVar v_viewmodel_fov;
-ConVar v_viewmodel_fov_demo( "viewmodel_fov_demo", "54", FCVAR_ARCHIVE );
-float ClientModeTFNormal::GetViewModelFOV( void )
+ConVar v_viewmodel_fov_demo("viewmodel_fov_demo", "54", FCVAR_ARCHIVE);
+float ClientModeTFNormal::GetViewModelFOV(void)
 {
 	// If we're playing back a demo, we clamp the viewmodel fov
-	if ( engine->IsPlayingDemo() )
+	if(engine->IsPlayingDemo())
 		return v_viewmodel_fov_demo.GetFloat();
 
 	return v_viewmodel_fov.GetFloat();
@@ -631,42 +624,39 @@ float ClientModeTFNormal::GetViewModelFOV( void )
 
 extern ConVar r_drawviewmodel;
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool ClientModeTFNormal::ShouldDrawViewModel()
 {
 	C_TFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
-	if ( pPlayer )
+	if(pPlayer)
 	{
-		if ( pPlayer->m_Shared.InCond( TF_COND_ZOOMED ) )
+		if(pPlayer->m_Shared.InCond(TF_COND_ZOOMED))
 			return false;
 	}
 
-	if ( !r_drawviewmodel.GetBool() )
+	if(!r_drawviewmodel.GetBool())
 		return false;
 
 	return true;
 }
 
-ConVar tf_hud_no_crosshair_on_scope_zoom( "tf_hud_no_crosshair_on_scope_zoom", "0", FCVAR_CLIENTDLL | FCVAR_ARCHIVE );
+ConVar tf_hud_no_crosshair_on_scope_zoom("tf_hud_no_crosshair_on_scope_zoom", "0", FCVAR_CLIENTDLL | FCVAR_ARCHIVE);
 
 bool ClientModeTFNormal::ShouldDrawCrosshair()
 {
 	C_TFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
-	if ( !pPlayer )
+	if(!pPlayer)
 		return false;
 
-	if ( pPlayer->GetPlayerClass() &&
-		 pPlayer->GetPlayerClass()->GetClassIndex() == TF_CLASS_SNIPER &&
-		 pPlayer->m_Shared.InCond( TF_COND_ZOOMED ) &&
-		 tf_hud_no_crosshair_on_scope_zoom.GetBool() )
+	if(pPlayer->GetPlayerClass() && pPlayer->GetPlayerClass()->GetClassIndex() == TF_CLASS_SNIPER &&
+	   pPlayer->m_Shared.InCond(TF_COND_ZOOMED) && tf_hud_no_crosshair_on_scope_zoom.GetBool())
 	{
 		return false;
 	}
 
 	return ClientModeShared::ShouldDrawCrosshair();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns true if VR mode should black out everything outside the HUD.
@@ -675,147 +665,147 @@ bool ClientModeTFNormal::ShouldDrawCrosshair()
 bool ClientModeTFNormal::ShouldBlackoutAroundHUD()
 {
 	C_TFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
-	if ( !pPlayer )
+	if(!pPlayer)
 		return true;
 
 	return ClientModeShared::ShouldBlackoutAroundHUD();
 }
 
-	
 //-----------------------------------------------------------------------------
 // Purpose: Allows the client mode to override mouse control stuff in sourcevr
 //-----------------------------------------------------------------------------
-HeadtrackMovementMode_t ClientModeTFNormal::ShouldOverrideHeadtrackControl() 
+HeadtrackMovementMode_t ClientModeTFNormal::ShouldOverrideHeadtrackControl()
 {
 	C_TFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
-	if ( !pPlayer )
+	if(!pPlayer)
 		return HMM_NOOVERRIDE;
 
 	// TODO: check if these actually all work right.
-	switch ( pPlayer->GetObserverMode() )
+	switch(pPlayer->GetObserverMode())
 	{
-		case OBS_MODE_DEATHCAM	:		// Turned into OBS_MODE_CHASE in VR
-		case OBS_MODE_ROAMING	:
-		case OBS_MODE_FIXED		:		// Checked - works.
-		case OBS_MODE_CHASE		:		// Checked - works.
-		case OBS_MODE_POI		:		// PASSTIME NOT CHECKED
-		case OBS_MODE_FREEZECAM	:		// Turned into OBS_MODE_CHASE in VR
+		case OBS_MODE_DEATHCAM: // Turned into OBS_MODE_CHASE in VR
+		case OBS_MODE_ROAMING:
+		case OBS_MODE_FIXED:	 // Checked - works.
+		case OBS_MODE_CHASE:	 // Checked - works.
+		case OBS_MODE_POI:		 // PASSTIME NOT CHECKED
+		case OBS_MODE_FREEZECAM: // Turned into OBS_MODE_CHASE in VR
 			return HMM_SHOOTMOVEMOUSE_LOOKFACE;
-		case OBS_MODE_IN_EYE	:		// Checked - works.
+		case OBS_MODE_IN_EYE: // Checked - works.
 			return HMM_NOOVERRIDE;
 	}
 
 	return ClientModeShared::ShouldOverrideHeadtrackControl();
 }
 
-
-int ClientModeTFNormal::GetDeathMessageStartHeight( void )
+int ClientModeTFNormal::GetDeathMessageStartHeight(void)
 {
 	return m_pViewport->GetDeathMessageStartHeight();
 }
 
-void ClientModeTFNormal::FireGameEvent( IGameEvent *event )
+void ClientModeTFNormal::FireGameEvent(IGameEvent *event)
 {
 	const char *eventname = event->GetName();
 
-	if ( !eventname || !eventname[0] )
+	if(!eventname || !eventname[0])
 		return;
 
-	CBaseHudChat *pHUDChat = (CBaseHudChat *)GET_HUDELEMENT( CHudChat );
-	if ( FStrEq( "player_changename", eventname ) )
+	CBaseHudChat *pHUDChat = (CBaseHudChat *)GET_HUDELEMENT(CHudChat);
+	if(FStrEq("player_changename", eventname))
 	{
 		return; // server sends a colorized text string for this
 	}
-	else if ( FStrEq( "localplayer_changeclass", eventname ) )
+	else if(FStrEq("localplayer_changeclass", eventname))
 	{
 		C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
-		if ( pLocalPlayer && pLocalPlayer->GetPlayerClass() )
+		if(pLocalPlayer && pLocalPlayer->GetPlayerClass())
 		{
 			int iClass = pLocalPlayer->GetPlayerClass()->GetClassIndex();
 
 			// have the player to exec a <class>.cfg file for the class they have selected
 			char szCmd[128];
-			Q_snprintf( szCmd, sizeof( szCmd ), "exec %s.cfg", GetPlayerClassData( iClass )->m_szClassName );
-			engine->ExecuteClientCmd( szCmd ); 
+			Q_snprintf(szCmd, sizeof(szCmd), "exec %s.cfg", GetPlayerClassData(iClass)->m_szClassName);
+			engine->ExecuteClientCmd(szCmd);
 		}
 	}
-	
+
 #ifdef TF_RAID_MODE
-	else if ( FStrEq( "raid_spawn_mob", eventname ) )
+	else if(FStrEq("raid_spawn_mob", eventname))
 	{
 		C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
-		if ( pLocalPlayer )
+		if(pLocalPlayer)
 		{
-			pLocalPlayer->EmitSound( "Raid.MobSpawn" );
+			pLocalPlayer->EmitSound("Raid.MobSpawn");
 		}
 	}
-	else if ( FStrEq( "raid_spawn_squad", eventname ) )
+	else if(FStrEq("raid_spawn_squad", eventname))
 	{
 		C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
-		if ( pLocalPlayer )
+		if(pLocalPlayer)
 		{
-			pLocalPlayer->EmitSound( "Raid.SquadSpawn" );
+			pLocalPlayer->EmitSound("Raid.SquadSpawn");
 		}
 	}
 #endif // TF_RAID_MODE
 
-	else if ( FStrEq( "player_connect_client", eventname ) || FStrEq( "player_disconnect", eventname ) )
+	else if(FStrEq("player_connect_client", eventname) || FStrEq("player_disconnect", eventname))
 	{
 		// ignore these
-		if ( TFGameRules() && TFGameRules()->IsPVEModeActive() && event->GetInt( "bot" ) != 0 )
+		if(TFGameRules() && TFGameRules()->IsPVEModeActive() && event->GetInt("bot") != 0)
 			return;
 	}
-	else if ( FStrEq( "server_cvar", eventname ) )
-	{		
-		if ( TFGameRules() && TFGameRules()->IsPVEModeActive() && !Q_strcmp( event->GetString("cvarname"), "tf_bot_count" ) )
-			return;
-	}
-	else if ( FStrEq( "player_buyback", eventname ) )
+	else if(FStrEq("server_cvar", eventname))
 	{
-		int idxPlayer = event->GetInt( "player" );
-		KeyValuesAD pKeyValues( "data" );
-		if ( g_TF_PR )
+		if(TFGameRules() && TFGameRules()->IsPVEModeActive() && !Q_strcmp(event->GetString("cvarname"), "tf_bot_count"))
+			return;
+	}
+	else if(FStrEq("player_buyback", eventname))
+	{
+		int idxPlayer = event->GetInt("player");
+		KeyValuesAD pKeyValues("data");
+		if(g_TF_PR)
 		{
-			const char *pszString = tf_mvm_buybacks_method.GetBool() ? "#TF_PVE_Player_BuyBack_Fixed" : "#TF_PVE_Player_BuyBack";
+			const char *pszString =
+				tf_mvm_buybacks_method.GetBool() ? "#TF_PVE_Player_BuyBack_Fixed" : "#TF_PVE_Player_BuyBack";
 
-			pKeyValues->SetString( "player", g_TF_PR->GetPlayerName( idxPlayer ) );
-			pKeyValues->SetInt( "credits", event->GetInt( "cost", 0 ) );
-			PrintTextToChatPlayer( idxPlayer, pszString, pKeyValues );
+			pKeyValues->SetString("player", g_TF_PR->GetPlayerName(idxPlayer));
+			pKeyValues->SetInt("credits", event->GetInt("cost", 0));
+			PrintTextToChatPlayer(idxPlayer, pszString, pKeyValues);
 
 			C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
-			if ( pLocalPlayer )
+			if(pLocalPlayer)
 			{
-				pLocalPlayer->EmitSound( "MVM.PlayerBoughtIn" );
+				pLocalPlayer->EmitSound("MVM.PlayerBoughtIn");
 			}
 		}
 	}
-	else if ( FStrEq( "player_death", eventname ) )
+	else if(FStrEq("player_death", eventname))
 	{
 		// Make sure they're not doing a dead ringer fake death
-		if ( ( event->GetInt( "death_flags" ) & TF_DEATH_FEIGN_DEATH ) == 0 )
+		if((event->GetInt("death_flags") & TF_DEATH_FEIGN_DEATH) == 0)
 		{
-			if ( TFGameRules() && ( TFGameRules()->State_Get() == GR_STATE_RND_RUNNING ) && ( TFGameRules()->IsMannVsMachineMode() || TFGameRules()->IsCompetitiveMode() ) )
+			if(TFGameRules() && (TFGameRules()->State_Get() == GR_STATE_RND_RUNNING) &&
+			   (TFGameRules()->IsMannVsMachineMode() || TFGameRules()->IsCompetitiveMode()))
 			{
 				C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
-				if ( pLocalPlayer )
+				if(pLocalPlayer)
 				{
-					int nVictimIndex = event->GetInt( "victim_entindex" );
-					int nVictimTeam = g_TF_PR->GetTeam( nVictimIndex );
+					int nVictimIndex = event->GetInt("victim_entindex");
+					int nVictimTeam = g_TF_PR->GetTeam(nVictimIndex);
 
 					// See if there are any other players still alive
 					bool bSomeAlive = false;
-					for ( int playerIndex = 1; playerIndex <= MAX_PLAYERS; playerIndex++ )
+					for(int playerIndex = 1; playerIndex <= MAX_PLAYERS; playerIndex++)
 					{
-						if ( !g_TF_PR->IsConnected( playerIndex ) )
+						if(!g_TF_PR->IsConnected(playerIndex))
 							continue;
 
-						if ( nVictimIndex == playerIndex )
+						if(nVictimIndex == playerIndex)
 							continue;
 
-						if ( nVictimTeam != g_TF_PR->GetTeam( playerIndex ) )
+						if(nVictimTeam != g_TF_PR->GetTeam(playerIndex))
 							continue;
 
-						if ( g_TF_PR->IsAlive( playerIndex ) )
+						if(g_TF_PR->IsAlive(playerIndex))
 						{
 							// Found one
 							bSomeAlive = true;
@@ -823,25 +813,26 @@ void ClientModeTFNormal::FireGameEvent( IGameEvent *event )
 						}
 					}
 
-					if ( !bSomeAlive )
+					if(!bSomeAlive)
 					{
-						if ( TFGameRules()->IsMannVsMachineMode() )
+						if(TFGameRules()->IsMannVsMachineMode())
 						{
-							if ( nVictimTeam == TF_TEAM_PVE_DEFENDERS )
+							if(nVictimTeam == TF_TEAM_PVE_DEFENDERS)
 							{
 								// Inform the team that everyone is dead
-								pLocalPlayer->EmitSound( "Announcer.MVM_All_Dead" );
+								pLocalPlayer->EmitSound("Announcer.MVM_All_Dead");
 							}
 						}
 						else
 						{
 							const char *pszSound = NULL;
 
-							if ( ( RandomInt( 1, 100 ) <= 20 ) || ( pLocalPlayer->GetTeamNumber() < FIRST_GAME_TEAM ) )
+							if((RandomInt(1, 100) <= 20) || (pLocalPlayer->GetTeamNumber() < FIRST_GAME_TEAM))
 							{
-								pszSound = ( nVictimTeam == TF_TEAM_RED ) ? "Announcer.TeamWipeRed" : "Announcer.TeamWipeBlu";
+								pszSound =
+									(nVictimTeam == TF_TEAM_RED) ? "Announcer.TeamWipeRed" : "Announcer.TeamWipeBlu";
 							}
-							else if ( pLocalPlayer->GetTeamNumber() == nVictimTeam )
+							else if(pLocalPlayer->GetTeamNumber() == nVictimTeam)
 							{
 								pszSound = "Announcer.YourTeamWiped";
 							}
@@ -850,9 +841,9 @@ void ClientModeTFNormal::FireGameEvent( IGameEvent *event )
 								pszSound = "Announcer.TheirTeamWiped";
 							}
 
-							if ( pszSound )
+							if(pszSound)
 							{
-								pLocalPlayer->EmitSound( pszSound );
+								pLocalPlayer->EmitSound(pszSound);
 							}
 						}
 					}
@@ -860,89 +851,101 @@ void ClientModeTFNormal::FireGameEvent( IGameEvent *event )
 			}
 		}
 	}
-	else if ( FStrEq( "player_used_powerup_bottle", eventname ) )
+	else if(FStrEq("player_used_powerup_bottle", eventname))
 	{
-		int idxPlayer = event->GetInt( "player" );
-		KeyValuesAD pKeyValues( "data" );
-		if ( g_TF_PR )
+		int idxPlayer = event->GetInt("player");
+		KeyValuesAD pKeyValues("data");
+		if(g_TF_PR)
 		{
-			pKeyValues->SetString( "player", g_TF_PR->GetPlayerName( idxPlayer ) );
+			pKeyValues->SetString("player", g_TF_PR->GetPlayerName(idxPlayer));
 			const char *pText = NULL;
-			switch ( event->GetInt( "type" ) )
+			switch(event->GetInt("type"))
 			{
-			case POWERUP_BOTTLE_CRITBOOST: pText = "#TF_PVE_Player_UsedCritsBottle"; break;
-			case POWERUP_BOTTLE_UBERCHARGE: pText = "#TF_PVE_Player_UsedUberBottle"; break;
-			case POWERUP_BOTTLE_RECALL: pText = "#TF_PVE_Player_UsedRecallBottle"; break;
-			case POWERUP_BOTTLE_REFILL_AMMO: pText = "#TF_PVE_Player_UsedRefillAmmoBottle"; break;
-			case POWERUP_BOTTLE_BUILDINGS_INSTANT_UPGRADE: pText = "#TF_PVE_Player_UsedBuildingUpgrade"; break;
-			case POWERUP_BOTTLE_RADIUS_STEALTH: pText = "#TF_PVE_Player_UsedRadiusStealth"; break;
+				case POWERUP_BOTTLE_CRITBOOST:
+					pText = "#TF_PVE_Player_UsedCritsBottle";
+					break;
+				case POWERUP_BOTTLE_UBERCHARGE:
+					pText = "#TF_PVE_Player_UsedUberBottle";
+					break;
+				case POWERUP_BOTTLE_RECALL:
+					pText = "#TF_PVE_Player_UsedRecallBottle";
+					break;
+				case POWERUP_BOTTLE_REFILL_AMMO:
+					pText = "#TF_PVE_Player_UsedRefillAmmoBottle";
+					break;
+				case POWERUP_BOTTLE_BUILDINGS_INSTANT_UPGRADE:
+					pText = "#TF_PVE_Player_UsedBuildingUpgrade";
+					break;
+				case POWERUP_BOTTLE_RADIUS_STEALTH:
+					pText = "#TF_PVE_Player_UsedRadiusStealth";
+					break;
 #ifdef STAGING_ONLY
-			case POWERUP_BOTTLE_SEE_CASH_THROUGH_WALL: pText = "#TF_PVE_Player_SeeCashThroughWall"; break;
+				case POWERUP_BOTTLE_SEE_CASH_THROUGH_WALL:
+					pText = "#TF_PVE_Player_SeeCashThroughWall";
+					break;
 #endif
 			}
-			if ( pText != NULL )
+			if(pText != NULL)
 			{
-				PrintTextToChatPlayer( idxPlayer, pText, pKeyValues );
+				PrintTextToChatPlayer(idxPlayer, pText, pKeyValues);
 			}
 
 			C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
-			if ( pLocalPlayer )
+			if(pLocalPlayer)
 			{
-				pLocalPlayer->EmitSound( "MVM.PlayerUsedPowerup" );
+				pLocalPlayer->EmitSound("MVM.PlayerUsedPowerup");
 			}
 		}
 	}
-	else if ( 
-			  FStrEq( "pve_win_panel", eventname ) ||
-			  FStrEq( "arena_win_panel", eventname ) ||
-			  FStrEq( "teamplay_win_panel", eventname )  )
+	else if(FStrEq("pve_win_panel", eventname) || FStrEq("arena_win_panel", eventname) ||
+			FStrEq("teamplay_win_panel", eventname))
 	{
-#if defined( REPLAY_ENABLED )
+#if defined(REPLAY_ENABLED)
 		DisplayReplayReminder();
 #endif
 	}
-	else if ( FStrEq( "server_spawn", eventname ) )
+	else if(FStrEq("server_spawn", eventname))
 	{
 		uint32 newServerIP = 0;
-		int newServerPort = event->GetInt( "port" );
+		int newServerPort = event->GetInt("port");
 
-		const char *pzAddress = event->GetString( "address" );
-		if ( pzAddress )
+		const char *pzAddress = event->GetString("address");
+		if(pzAddress)
 		{
 			CUtlStringList IPs;
-			V_SplitString( pzAddress, ".", IPs );
+			V_SplitString(pzAddress, ".", IPs);
 
-			if ( IPs.Count() == 4 )
+			if(IPs.Count() == 4)
 			{
 				byte ip[4];
-				for ( int i=0; i<IPs.Count() && i<4; ++i )
+				for(int i = 0; i < IPs.Count() && i < 4; ++i)
 				{
-					ip[i] = (byte) Q_atoi( IPs[i] );
+					ip[i] = (byte)Q_atoi(IPs[i]);
 				}
-				newServerIP = (ip[0]<<24) + (ip[1]<<16) + (ip[2]<<8) + ip[3];
+				newServerIP = (ip[0] << 24) + (ip[1] << 16) + (ip[2] << 8) + ip[3];
 			}
 		}
 
-		if ( m_lastServerConnectTime == 0 || newServerIP != m_lastServerIP || newServerPort != m_lastServerPort )
+		if(m_lastServerConnectTime == 0 || newServerIP != m_lastServerIP || newServerPort != m_lastServerPort)
 		{
 			// we are connecting, or have connected to a different server
 			m_lastServerIP = newServerIP;
 			m_lastServerPort = newServerPort;
 
-			const char *hostname = event->GetString( "hostname" );
-			if ( hostname )
+			const char *hostname = event->GetString("hostname");
+			if(hostname)
 			{
-				if ( m_lastServerName )
+				if(m_lastServerName)
 				{
-					delete [] m_lastServerName;
+					delete[] m_lastServerName;
 					m_lastServerName = NULL;
 				}
 
-				int hostnameLength = V_strlen( hostname )+1;
+				int hostnameLength = V_strlen(hostname) + 1;
 
-				m_lastServerName = new char[ hostnameLength ];
+				m_lastServerName = new char[hostnameLength];
 
-				V_strncpy( m_lastServerName, hostname, hostnameLength );
+				V_strncpy(m_lastServerName, hostname, hostnameLength);
 			}
 
 			m_lastServerConnectTime = GetSteamWorksSGameStatsUploader().GetTimeSinceEpoch();
@@ -952,470 +955,475 @@ void ClientModeTFNormal::FireGameEvent( IGameEvent *event )
 
 		// Play Sound and flash window if joining a game from a lobby
 		CTFGSLobby *pLobby = GTFGCClientSystem()->GetLobby();
-		if ( pLobby )
+		if(pLobby)
 		{
 			engine->FlashWindow();
 
 			// If minimized, Blink and play noise
-			if ( engine->IsActiveApp() )
+			if(engine->IsActiveApp())
 			{
-				vgui::surface()->PlaySound( "ui/vote_started.wav" );
+				vgui::surface()->PlaySound("ui/vote_started.wav");
 			}
 			else
 			{
-				char fullpath[ 512 ];
-				g_pFullFileSystem->RelativePathToFullPath( "sound/ui/vote_started.wav", "GAME", fullpath, sizeof( fullpath ) );
-				PlayOutOfGameSound( fullpath );
+				char fullpath[512];
+				g_pFullFileSystem->RelativePathToFullPath("sound/ui/vote_started.wav", "GAME", fullpath,
+														  sizeof(fullpath));
+				PlayOutOfGameSound(fullpath);
 			}
 		}
 	}
-	else if ( FStrEq( "pumpkin_lord_summoned", eventname ) )
+	else if(FStrEq("pumpkin_lord_summoned", eventname))
 	{
-		if ( !TFGameRules()->IsHalloweenScenario( CTFGameRules::HALLOWEEN_SCENARIO_DOOMSDAY ) )
+		if(!TFGameRules()->IsHalloweenScenario(CTFGameRules::HALLOWEEN_SCENARIO_DOOMSDAY))
 		{
 			C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
-			if ( pLocalPlayer )
+			if(pLocalPlayer)
 			{
-				pLocalPlayer->EmitSound( "Halloween.HeadlessBossSpawn" );
+				pLocalPlayer->EmitSound("Halloween.HeadlessBossSpawn");
 			}
 
 			CEconNotification *pNotification = new CEconNotification();
-			pNotification->SetText( "#TF_Halloween_Boss_Appeared" );
-			pNotification->SetLifetime( 5.0f );
-			pNotification->SetSoundFilename( "vo/null.mp3" );
-			NotificationQueue_Add( pNotification );
+			pNotification->SetText("#TF_Halloween_Boss_Appeared");
+			pNotification->SetLifetime(5.0f);
+			pNotification->SetSoundFilename("vo/null.mp3");
+			NotificationQueue_Add(pNotification);
 		}
 	}
-	else if ( FStrEq( "pumpkin_lord_killed", eventname ) )
+	else if(FStrEq("pumpkin_lord_killed", eventname))
 	{
-		if ( !TFGameRules()->IsHalloweenScenario( CTFGameRules::HALLOWEEN_SCENARIO_DOOMSDAY ) )
+		if(!TFGameRules()->IsHalloweenScenario(CTFGameRules::HALLOWEEN_SCENARIO_DOOMSDAY))
 		{
 			C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
-			if ( pLocalPlayer )
+			if(pLocalPlayer)
 			{
-				pLocalPlayer->EmitSound( "Halloween.HeadlessBossDeath" );
+				pLocalPlayer->EmitSound("Halloween.HeadlessBossDeath");
 			}
 
 			CEconNotification *pNotification = new CEconNotification();
-			pNotification->SetText( "#TF_Halloween_Boss_Killed" );
-			pNotification->SetLifetime( 5.0f );
-			pNotification->SetSoundFilename( "vo/null.mp3" );
-			NotificationQueue_Add( pNotification );
+			pNotification->SetText("#TF_Halloween_Boss_Killed");
+			pNotification->SetLifetime(5.0f);
+			pNotification->SetSoundFilename("vo/null.mp3");
+			NotificationQueue_Add(pNotification);
 		}
 	}
-	else if ( FStrEq( "eyeball_boss_summoned", eventname ) )
+	else if(FStrEq("eyeball_boss_summoned", eventname))
 	{
 		C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
-		if ( pLocalPlayer )
+		if(pLocalPlayer)
 		{
-			pLocalPlayer->EmitSound( "Halloween.MonoculusBossSpawn" );
+			pLocalPlayer->EmitSound("Halloween.MonoculusBossSpawn");
 		}
 
-		KeyValuesAD keyValues( "eyeball_boss" );
-		keyValues->SetColor( "custom_color", colorEyeballBossText );
+		KeyValuesAD keyValues("eyeball_boss");
+		keyValues->SetColor("custom_color", colorEyeballBossText);
 
 		CEconNotification *pNotification = new CEconNotification();
 
-		const int iLevel = event->GetInt( "level" );
+		const int iLevel = event->GetInt("level");
 
-		if ( iLevel > 1 )
+		if(iLevel > 1)
 		{
-			wchar_t	*pszBaseString = g_pVGuiLocalize->Find( "TF_Halloween_Eyeball_Boss_LevelUp_Appeared" );
-			if ( pszBaseString )
+			wchar_t *pszBaseString = g_pVGuiLocalize->Find("TF_Halloween_Eyeball_Boss_LevelUp_Appeared");
+			if(pszBaseString)
 			{
-				KeyValuesAD pKeyValues( "data" );			
-				pKeyValues->SetInt( "level", iLevel );
+				KeyValuesAD pKeyValues("data");
+				pKeyValues->SetInt("level", iLevel);
 
-				wchar_t	wTemp[256];
-				g_pVGuiLocalize->ConstructString_safe( wTemp, pszBaseString, pKeyValues );
+				wchar_t wTemp[256];
+				g_pVGuiLocalize->ConstructString_safe(wTemp, pszBaseString, pKeyValues);
 
 				static char szAnsi[1024];
-				g_pVGuiLocalize->ConvertUnicodeToANSI( wTemp, szAnsi, sizeof(szAnsi) );
+				g_pVGuiLocalize->ConvertUnicodeToANSI(wTemp, szAnsi, sizeof(szAnsi));
 
-				pNotification->SetText( szAnsi );
+				pNotification->SetText(szAnsi);
 			}
 		}
 		else
 		{
-			pNotification->SetText( "#TF_Halloween_Eyeball_Boss_Appeared" );
+			pNotification->SetText("#TF_Halloween_Eyeball_Boss_Appeared");
 		}
 
-		pNotification->SetLifetime( 5.0f );
-		pNotification->SetSoundFilename( "vo/null.mp3" );
-		pNotification->SetKeyValues( keyValues );
-		NotificationQueue_Add( pNotification );
+		pNotification->SetLifetime(5.0f);
+		pNotification->SetSoundFilename("vo/null.mp3");
+		pNotification->SetKeyValues(keyValues);
+		NotificationQueue_Add(pNotification);
 	}
-	else if ( FStrEq( "eyeball_boss_stunned", eventname ) )
+	else if(FStrEq("eyeball_boss_stunned", eventname))
 	{
-		int iPlayerIndex = event->GetInt( "player_entindex" );
-		if ( pHUDChat )
+		int iPlayerIndex = event->GetInt("player_entindex");
+		if(pHUDChat)
 		{
-			KeyValuesAD pKeyValues( "data" );
-			if ( g_TF_PR )
+			KeyValuesAD pKeyValues("data");
+			if(g_TF_PR)
 			{
-				pKeyValues->SetString( "player", g_TF_PR->GetPlayerName( iPlayerIndex ) );
+				pKeyValues->SetString("player", g_TF_PR->GetPlayerName(iPlayerIndex));
 
-				pHUDChat->SetCustomColor( colorEyeballBossText );
+				pHUDChat->SetCustomColor(colorEyeballBossText);
 
-				const int iLevel = event->GetInt( "level" );
-				if ( iLevel > 1 )
+				const int iLevel = event->GetInt("level");
+				if(iLevel > 1)
 				{
-					pKeyValues->SetInt( "level", iLevel );
-					PrintTextToChatPlayer( iPlayerIndex, "#TF_Halloween_Eyeball_Boss_LevelUp_Stun", pKeyValues );
+					pKeyValues->SetInt("level", iLevel);
+					PrintTextToChatPlayer(iPlayerIndex, "#TF_Halloween_Eyeball_Boss_LevelUp_Stun", pKeyValues);
 				}
 				else
 				{
-					PrintTextToChatPlayer( iPlayerIndex, "#TF_Halloween_Eyeball_Boss_Stun", pKeyValues );
+					PrintTextToChatPlayer(iPlayerIndex, "#TF_Halloween_Eyeball_Boss_Stun", pKeyValues);
 				}
 			}
 		}
 	}
-	else if ( FStrEq( "eyeball_boss_killed", eventname ) )
+	else if(FStrEq("eyeball_boss_killed", eventname))
 	{
 		C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
-		if ( pLocalPlayer )
+		if(pLocalPlayer)
 		{
-			pLocalPlayer->EmitSound( "Halloween.MonoculusBossDeath" );
+			pLocalPlayer->EmitSound("Halloween.MonoculusBossDeath");
 		}
 
-		KeyValuesAD keyValues( "eyeball_boss" );
-		keyValues->SetColor( "custom_color", colorEyeballBossText );
+		KeyValuesAD keyValues("eyeball_boss");
+		keyValues->SetColor("custom_color", colorEyeballBossText);
 
 		CEconNotification *pNotification = new CEconNotification();
 
-		const int iLevel = event->GetInt( "level" );
+		const int iLevel = event->GetInt("level");
 
-		if ( iLevel > 1 )
+		if(iLevel > 1)
 		{
-			wchar_t	*pszBaseString = g_pVGuiLocalize->Find( "TF_Halloween_Eyeball_Boss_LevelUp_Killed" );
-			if ( pszBaseString )
+			wchar_t *pszBaseString = g_pVGuiLocalize->Find("TF_Halloween_Eyeball_Boss_LevelUp_Killed");
+			if(pszBaseString)
 			{
-				KeyValuesAD pKeyValues( "data" );			
-				pKeyValues->SetInt( "level", iLevel );
+				KeyValuesAD pKeyValues("data");
+				pKeyValues->SetInt("level", iLevel);
 
-				wchar_t	wTemp[256];
-				g_pVGuiLocalize->ConstructString_safe( wTemp, pszBaseString, pKeyValues );
+				wchar_t wTemp[256];
+				g_pVGuiLocalize->ConstructString_safe(wTemp, pszBaseString, pKeyValues);
 
 				static char szAnsi[1024];
-				g_pVGuiLocalize->ConvertUnicodeToANSI( wTemp, szAnsi, sizeof(szAnsi) );
+				g_pVGuiLocalize->ConvertUnicodeToANSI(wTemp, szAnsi, sizeof(szAnsi));
 
-				pNotification->SetText( szAnsi );
+				pNotification->SetText(szAnsi);
 			}
 		}
 		else
 		{
-			pNotification->SetText( "#TF_Halloween_Eyeball_Boss_Killed" );
+			pNotification->SetText("#TF_Halloween_Eyeball_Boss_Killed");
 		}
 
-		pNotification->SetLifetime( 5.0f );
-		pNotification->SetSoundFilename( "vo/null.mp3" );
-		pNotification->SetKeyValues( keyValues );
-		NotificationQueue_Add( pNotification );
+		pNotification->SetLifetime(5.0f);
+		pNotification->SetSoundFilename("vo/null.mp3");
+		pNotification->SetKeyValues(keyValues);
+		NotificationQueue_Add(pNotification);
 	}
-	else if ( FStrEq( "eyeball_boss_killer", eventname ) )
+	else if(FStrEq("eyeball_boss_killer", eventname))
 	{
-		int iPlayerIndex = event->GetInt( "player_entindex" );
-		if ( pHUDChat )
+		int iPlayerIndex = event->GetInt("player_entindex");
+		if(pHUDChat)
 		{
-			KeyValuesAD pKeyValues( "data" );
-			if ( g_TF_PR )
+			KeyValuesAD pKeyValues("data");
+			if(g_TF_PR)
 			{
-				pKeyValues->SetString( "player", g_TF_PR->GetPlayerName( iPlayerIndex ) );
+				pKeyValues->SetString("player", g_TF_PR->GetPlayerName(iPlayerIndex));
 
-				pHUDChat->SetCustomColor( colorEyeballBossText );
+				pHUDChat->SetCustomColor(colorEyeballBossText);
 
-				const int iLevel = event->GetInt( "level" );
+				const int iLevel = event->GetInt("level");
 
-				if ( iLevel > 1 )
+				if(iLevel > 1)
 				{
-					pKeyValues->SetInt( "level", iLevel );
+					pKeyValues->SetInt("level", iLevel);
 
-					PrintTextToChatPlayer( iPlayerIndex, "#TF_Halloween_Eyeball_Boss_LevelUp_Killers", pKeyValues );
+					PrintTextToChatPlayer(iPlayerIndex, "#TF_Halloween_Eyeball_Boss_LevelUp_Killers", pKeyValues);
 				}
 				else
 				{
-					PrintTextToChatPlayer( iPlayerIndex, "#TF_Halloween_Eyeball_Boss_Killers", pKeyValues );
+					PrintTextToChatPlayer(iPlayerIndex, "#TF_Halloween_Eyeball_Boss_Killers", pKeyValues);
 				}
 			}
 		}
 	}
-	else if ( FStrEq( "eyeball_boss_escape_imminent", eventname ) )
+	else if(FStrEq("eyeball_boss_escape_imminent", eventname))
 	{
-		int nSecondsRemaining = event->GetInt( "time_remaining" );
+		int nSecondsRemaining = event->GetInt("time_remaining");
 
 		C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
-		if ( pLocalPlayer )
+		if(pLocalPlayer)
 		{
-			if ( nSecondsRemaining <= 10 )
-				pLocalPlayer->EmitSound( "Halloween.EyeballBossEscapeImminent" );
+			if(nSecondsRemaining <= 10)
+				pLocalPlayer->EmitSound("Halloween.EyeballBossEscapeImminent");
 			else
-				pLocalPlayer->EmitSound( "Halloween.EyeballBossEscapeSoon" );
+				pLocalPlayer->EmitSound("Halloween.EyeballBossEscapeSoon");
 		}
 
-		if ( pHUDChat )
+		if(pHUDChat)
 		{
 			char szEyeballBossEscaping[128];
-			pHUDChat->SetCustomColor( colorEyeballBossText );
+			pHUDChat->SetCustomColor(colorEyeballBossText);
 
-			const int iLevel = event->GetInt( "level" );
+			const int iLevel = event->GetInt("level");
 
-			if ( iLevel > 1 )
+			if(iLevel > 1)
 			{
-				KeyValuesAD pKeyValues( "data" );
-				pKeyValues->SetInt( "level", iLevel );
+				KeyValuesAD pKeyValues("data");
+				pKeyValues->SetInt("level", iLevel);
 
-				V_sprintf_safe( szEyeballBossEscaping, "#TF_Halloween_Eyeball_Boss_LevelUp_Escaping_In_%i", nSecondsRemaining );
+				V_sprintf_safe(szEyeballBossEscaping, "#TF_Halloween_Eyeball_Boss_LevelUp_Escaping_In_%i",
+							   nSecondsRemaining);
 
-				PrintTextToChat( szEyeballBossEscaping, pKeyValues );
+				PrintTextToChat(szEyeballBossEscaping, pKeyValues);
 			}
 			else
 			{
-				V_sprintf_safe( szEyeballBossEscaping, "#TF_Halloween_Eyeball_Boss_Escaping_In_%i", nSecondsRemaining );
+				V_sprintf_safe(szEyeballBossEscaping, "#TF_Halloween_Eyeball_Boss_Escaping_In_%i", nSecondsRemaining);
 
-				PrintTextToChat( szEyeballBossEscaping );
+				PrintTextToChat(szEyeballBossEscaping);
 			}
 		}
 	}
-	else if ( FStrEq( "eyeball_boss_escaped", eventname ) )
+	else if(FStrEq("eyeball_boss_escaped", eventname))
 	{
 		C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
-		if ( pLocalPlayer )
+		if(pLocalPlayer)
 		{
-			pLocalPlayer->EmitSound( "Halloween.EyeballBossEscaped" );
+			pLocalPlayer->EmitSound("Halloween.EyeballBossEscaped");
 		}
 
-		KeyValuesAD keyValues( "eyeball_boss" );
-		keyValues->SetColor( "custom_color", colorEyeballBossText );
+		KeyValuesAD keyValues("eyeball_boss");
+		keyValues->SetColor("custom_color", colorEyeballBossText);
 
 		CEconNotification *pNotification = new CEconNotification();
 
-		const int iLevel = event->GetInt( "level" );
+		const int iLevel = event->GetInt("level");
 
-		if ( iLevel > 1 )
+		if(iLevel > 1)
 		{
-			wchar_t	*pszBaseString = g_pVGuiLocalize->Find( "TF_Halloween_Eyeball_Boss_LevelUp_Escaped" );
-			if ( pszBaseString )
+			wchar_t *pszBaseString = g_pVGuiLocalize->Find("TF_Halloween_Eyeball_Boss_LevelUp_Escaped");
+			if(pszBaseString)
 			{
-				KeyValuesAD pKeyValues( "data" );			
-				pKeyValues->SetInt( "level", iLevel );
+				KeyValuesAD pKeyValues("data");
+				pKeyValues->SetInt("level", iLevel);
 
-				wchar_t	wTemp[256];
-				g_pVGuiLocalize->ConstructString_safe( wTemp, pszBaseString, pKeyValues );
+				wchar_t wTemp[256];
+				g_pVGuiLocalize->ConstructString_safe(wTemp, pszBaseString, pKeyValues);
 
 				static char szAnsi[1024];
-				g_pVGuiLocalize->ConvertUnicodeToANSI( wTemp, szAnsi, sizeof(szAnsi) );
+				g_pVGuiLocalize->ConvertUnicodeToANSI(wTemp, szAnsi, sizeof(szAnsi));
 
-				pNotification->SetText( szAnsi );
+				pNotification->SetText(szAnsi);
 			}
 		}
 		else
 		{
-			pNotification->SetText( "#TF_Halloween_Eyeball_Boss_Escaped" );
+			pNotification->SetText("#TF_Halloween_Eyeball_Boss_Escaped");
 		}
 
-		pNotification->SetLifetime( 5.0f );
-		pNotification->SetSoundFilename( "vo/null.mp3" );
-		pNotification->SetKeyValues( keyValues );
-		NotificationQueue_Add( pNotification );
+		pNotification->SetLifetime(5.0f);
+		pNotification->SetSoundFilename("vo/null.mp3");
+		pNotification->SetKeyValues(keyValues);
+		NotificationQueue_Add(pNotification);
 	}
-	else if ( FStrEq( "merasmus_summoned", eventname ) )
+	else if(FStrEq("merasmus_summoned", eventname))
 	{
 		C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
-		if ( pLocalPlayer )
+		if(pLocalPlayer)
 		{
-			pLocalPlayer->EmitSound( "Halloween.MerasmusBossSpawn" );
+			pLocalPlayer->EmitSound("Halloween.MerasmusBossSpawn");
 		}
 
-		KeyValuesAD keyValues( "merasmus" );
-		keyValues->SetColor( "custom_color", colorMerasmusText );
+		KeyValuesAD keyValues("merasmus");
+		keyValues->SetColor("custom_color", colorMerasmusText);
 
 		CEconNotification *pNotification = new CEconNotification();
 
-		const int iLevel = event->GetInt( "level" );
+		const int iLevel = event->GetInt("level");
 
-		if ( iLevel > 1 )
+		if(iLevel > 1)
 		{
-			wchar_t	*pszBaseString = g_pVGuiLocalize->Find( "TF_Halloween_Merasmus_LevelUp_Appeared" );
-			if ( pszBaseString )
+			wchar_t *pszBaseString = g_pVGuiLocalize->Find("TF_Halloween_Merasmus_LevelUp_Appeared");
+			if(pszBaseString)
 			{
-				KeyValuesAD pKeyValues( "data" );			
-				pKeyValues->SetInt( "level", iLevel );
+				KeyValuesAD pKeyValues("data");
+				pKeyValues->SetInt("level", iLevel);
 
-				wchar_t	wTemp[256];
-				g_pVGuiLocalize->ConstructString_safe( wTemp, pszBaseString, pKeyValues );
+				wchar_t wTemp[256];
+				g_pVGuiLocalize->ConstructString_safe(wTemp, pszBaseString, pKeyValues);
 
 				static char szAnsi[1024];
-				g_pVGuiLocalize->ConvertUnicodeToANSI( wTemp, szAnsi, sizeof(szAnsi) );
+				g_pVGuiLocalize->ConvertUnicodeToANSI(wTemp, szAnsi, sizeof(szAnsi));
 
-				pNotification->SetText( szAnsi );
+				pNotification->SetText(szAnsi);
 			}
 		}
 		else
 		{
-			pNotification->SetText( "#TF_Halloween_Merasmus_Appeared" );
+			pNotification->SetText("#TF_Halloween_Merasmus_Appeared");
 		}
 
-		pNotification->SetLifetime( 5.0f );
-		pNotification->SetSoundFilename( "vo/null.mp3" );
-		pNotification->SetKeyValues( keyValues );
-		NotificationQueue_Add( pNotification );
+		pNotification->SetLifetime(5.0f);
+		pNotification->SetSoundFilename("vo/null.mp3");
+		pNotification->SetKeyValues(keyValues);
+		NotificationQueue_Add(pNotification);
 	}
-	else if ( FStrEq( "merasmus_killed", eventname ) )
+	else if(FStrEq("merasmus_killed", eventname))
 	{
-		KeyValuesAD keyValues( "merasmus" );
-		keyValues->SetColor( "custom_color", colorMerasmusText );
+		KeyValuesAD keyValues("merasmus");
+		keyValues->SetColor("custom_color", colorMerasmusText);
 
 		CEconNotification *pNotification = new CEconNotification();
 
-		const int iLevel = event->GetInt( "level" );
+		const int iLevel = event->GetInt("level");
 
-		if ( iLevel > 1 )
+		if(iLevel > 1)
 		{
-			wchar_t	*pszBaseString = g_pVGuiLocalize->Find( "TF_Halloween_Merasmus_LevelUp_Killed" );
-			if ( pszBaseString )
+			wchar_t *pszBaseString = g_pVGuiLocalize->Find("TF_Halloween_Merasmus_LevelUp_Killed");
+			if(pszBaseString)
 			{
-				KeyValuesAD pKeyValues( "data" );			
-				pKeyValues->SetInt( "level", iLevel );
+				KeyValuesAD pKeyValues("data");
+				pKeyValues->SetInt("level", iLevel);
 
-				wchar_t	wTemp[256];
-				g_pVGuiLocalize->ConstructString_safe( wTemp, pszBaseString, pKeyValues );
+				wchar_t wTemp[256];
+				g_pVGuiLocalize->ConstructString_safe(wTemp, pszBaseString, pKeyValues);
 
 				static char szAnsi[1024];
-				g_pVGuiLocalize->ConvertUnicodeToANSI( wTemp, szAnsi, sizeof(szAnsi) );
+				g_pVGuiLocalize->ConvertUnicodeToANSI(wTemp, szAnsi, sizeof(szAnsi));
 
-				pNotification->SetText( szAnsi );
+				pNotification->SetText(szAnsi);
 			}
 		}
 		else
 		{
-			pNotification->SetText( "#TF_Halloween_Merasmus_Killed" );
+			pNotification->SetText("#TF_Halloween_Merasmus_Killed");
 		}
 
-		pNotification->SetLifetime( 5.0f );
-		pNotification->SetSoundFilename( "vo/null.mp3" );
-		pNotification->SetKeyValues( keyValues );
-		NotificationQueue_Add( pNotification );
+		pNotification->SetLifetime(5.0f);
+		pNotification->SetSoundFilename("vo/null.mp3");
+		pNotification->SetKeyValues(keyValues);
+		NotificationQueue_Add(pNotification);
 	}
-	else if ( FStrEq( "merasmus_escape_warning", eventname ) )
+	else if(FStrEq("merasmus_escape_warning", eventname))
 	{
-		int nSecondsRemaining = event->GetInt( "time_remaining" );
+		int nSecondsRemaining = event->GetInt("time_remaining");
 
 		C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
-		if ( pLocalPlayer )
+		if(pLocalPlayer)
 		{
-			if ( nSecondsRemaining <= 10 )
-				pLocalPlayer->EmitSound( "Halloween.EyeballBossEscapeImminent" );
+			if(nSecondsRemaining <= 10)
+				pLocalPlayer->EmitSound("Halloween.EyeballBossEscapeImminent");
 			else
-				pLocalPlayer->EmitSound( "Halloween.EyeballBossEscapeSoon" );
+				pLocalPlayer->EmitSound("Halloween.EyeballBossEscapeSoon");
 		}
 
-		if ( pHUDChat )
+		if(pHUDChat)
 		{
 			char szEyeballBossEscaping[128];
-			pHUDChat->SetCustomColor( colorMerasmusText );
+			pHUDChat->SetCustomColor(colorMerasmusText);
 
-			const int iLevel = event->GetInt( "level" );
+			const int iLevel = event->GetInt("level");
 
-			if ( iLevel > 1 )
+			if(iLevel > 1)
 			{
-				KeyValuesAD pKeyValues( "data" );
-				pKeyValues->SetInt( "level", iLevel );
+				KeyValuesAD pKeyValues("data");
+				pKeyValues->SetInt("level", iLevel);
 
-				V_sprintf_safe( szEyeballBossEscaping, "#TF_Halloween_Merasmus_LevelUp_Escaping_In_%i", nSecondsRemaining );
+				V_sprintf_safe(szEyeballBossEscaping, "#TF_Halloween_Merasmus_LevelUp_Escaping_In_%i",
+							   nSecondsRemaining);
 
-				PrintTextToChat( szEyeballBossEscaping, pKeyValues );
+				PrintTextToChat(szEyeballBossEscaping, pKeyValues);
 			}
 			else
 			{
-				V_sprintf_safe( szEyeballBossEscaping, "#TF_Halloween_Merasmus_Escaping_In_%i", nSecondsRemaining );
+				V_sprintf_safe(szEyeballBossEscaping, "#TF_Halloween_Merasmus_Escaping_In_%i", nSecondsRemaining);
 
-				PrintTextToChat( szEyeballBossEscaping );
+				PrintTextToChat(szEyeballBossEscaping);
 			}
 		}
 	}
-	else if ( FStrEq( "merasmus_escaped", eventname ) )
+	else if(FStrEq("merasmus_escaped", eventname))
 	{
 		C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
-		if ( pLocalPlayer )
+		if(pLocalPlayer)
 		{
-			pLocalPlayer->EmitSound( "Halloween.EyeballBossEscaped" );
+			pLocalPlayer->EmitSound("Halloween.EyeballBossEscaped");
 		}
 
-		KeyValuesAD keyValues( "merasmus" );
-		keyValues->SetColor( "custom_color", colorMerasmusText );
+		KeyValuesAD keyValues("merasmus");
+		keyValues->SetColor("custom_color", colorMerasmusText);
 
 		CEconNotification *pNotification = new CEconNotification();
 
-		const int iLevel = event->GetInt( "level" );
+		const int iLevel = event->GetInt("level");
 
-		if ( iLevel > 1 )
+		if(iLevel > 1)
 		{
-			wchar_t	*pszBaseString = g_pVGuiLocalize->Find( "TF_Halloween_Merasmus_LevelUp_Escaped" );
-			if ( pszBaseString )
+			wchar_t *pszBaseString = g_pVGuiLocalize->Find("TF_Halloween_Merasmus_LevelUp_Escaped");
+			if(pszBaseString)
 			{
-				KeyValuesAD pKeyValues( "data" );			
-				pKeyValues->SetInt( "level", iLevel );
+				KeyValuesAD pKeyValues("data");
+				pKeyValues->SetInt("level", iLevel);
 
-				wchar_t	wTemp[256];
-				g_pVGuiLocalize->ConstructString_safe( wTemp, pszBaseString, pKeyValues );
+				wchar_t wTemp[256];
+				g_pVGuiLocalize->ConstructString_safe(wTemp, pszBaseString, pKeyValues);
 
 				static char szAnsi[1024];
-				g_pVGuiLocalize->ConvertUnicodeToANSI( wTemp, szAnsi, sizeof(szAnsi) );
+				g_pVGuiLocalize->ConvertUnicodeToANSI(wTemp, szAnsi, sizeof(szAnsi));
 
-				pNotification->SetText( szAnsi );
+				pNotification->SetText(szAnsi);
 			}
 		}
 		else
 		{
-			pNotification->SetText( "#TF_Halloween_Merasmus_Escaped" );
+			pNotification->SetText("#TF_Halloween_Merasmus_Escaped");
 		}
 
-		pNotification->SetLifetime( 5.0f );
-		pNotification->SetSoundFilename( "vo/null.mp3" );
-		pNotification->SetKeyValues( keyValues );
-		NotificationQueue_Add( pNotification );
+		pNotification->SetLifetime(5.0f);
+		pNotification->SetSoundFilename("vo/null.mp3");
+		pNotification->SetKeyValues(keyValues);
+		NotificationQueue_Add(pNotification);
 	}
-	else if ( FStrEq( "player_highfive_start", eventname ) )
+	else if(FStrEq("player_highfive_start", eventname))
 	{
 		C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
 
 		// Don't show a hint if we're dead, we've already done it the maximum amount of times, or if it's too soon.
-		if ( pLocalPlayer && pLocalPlayer->IsAlive() &&
-				( tf_taunt_always_show_hint.GetBool() ||
-				( tf_highfive_hintcount.GetInt() < TF_HIGHFIVE_HINT_MAXHINTS && gpGlobals->curtime > m_flNextAllowedHighFiveHintTime ) ) )
+		if(pLocalPlayer && pLocalPlayer->IsAlive() &&
+		   (tf_taunt_always_show_hint.GetBool() || (tf_highfive_hintcount.GetInt() < TF_HIGHFIVE_HINT_MAXHINTS &&
+													gpGlobals->curtime > m_flNextAllowedHighFiveHintTime)))
 		{
-			int entindex = event->GetInt( "entindex" );
-			C_BasePlayer *pHighFiveInitiator = UTIL_PlayerByIndex( entindex );
-			if ( pHighFiveInitiator && pHighFiveInitiator != pLocalPlayer && ( pHighFiveInitiator->GetTeamNumber() == pLocalPlayer->GetTeamNumber() || tf_allow_all_team_partner_taunt.GetBool() ) )
+			int entindex = event->GetInt("entindex");
+			C_BasePlayer *pHighFiveInitiator = UTIL_PlayerByIndex(entindex);
+			if(pHighFiveInitiator && pHighFiveInitiator != pLocalPlayer &&
+			   (pHighFiveInitiator->GetTeamNumber() == pLocalPlayer->GetTeamNumber() ||
+				tf_allow_all_team_partner_taunt.GetBool()))
 			{
 				// check that this player isn't too far away
 				Vector vecStart = pLocalPlayer->EyePosition();
 				Vector vecEnd = pHighFiveInitiator->EyePosition();
 				float flLength = (vecEnd - vecStart).Length();
 
-				if ( flLength < TF_HIGHFIVE_HINT_MAXDIST )
+				if(flLength < TF_HIGHFIVE_HINT_MAXDIST)
 				{
 					// check that we have line of sight to this player
 					trace_t tr;
-					UTIL_TraceLine( vecStart, vecEnd, MASK_SOLID, pLocalPlayer, COLLISION_GROUP_NONE, &tr );
+					UTIL_TraceLine(vecStart, vecEnd, MASK_SOLID, pLocalPlayer, COLLISION_GROUP_NONE, &tr);
 
-					if ( !tr.startsolid && tr.m_pEnt != NULL && tr.m_pEnt == pHighFiveInitiator )
+					if(!tr.startsolid && tr.m_pEnt != NULL && tr.m_pEnt == pHighFiveInitiator)
 					{
-						IGameEvent *pEvent = gameeventmanager->CreateEvent( "show_annotation" );
-						if ( pEvent )
+						IGameEvent *pEvent = gameeventmanager->CreateEvent("show_annotation");
+						if(pEvent)
 						{
 							Vector location = pHighFiveInitiator->GetAbsOrigin();
 
-							pEvent->SetString( "text", "#TF_HighFive_Hint" );
-							pEvent->SetInt( "id", TF_HIGHFIVE_HINT_MASK | entindex );
-							pEvent->SetFloat( "worldPosX", location.x );
-							pEvent->SetFloat( "worldPosY", location.y );
-							pEvent->SetFloat( "worldPosZ", location.z + 48.0f );
-							pEvent->SetFloat( "lifetime", 10.0f );
-							pEvent->SetInt( "follow_entindex", entindex );
+							pEvent->SetString("text", "#TF_HighFive_Hint");
+							pEvent->SetInt("id", TF_HIGHFIVE_HINT_MASK | entindex);
+							pEvent->SetFloat("worldPosX", location.x);
+							pEvent->SetFloat("worldPosY", location.y);
+							pEvent->SetFloat("worldPosZ", location.z + 48.0f);
+							pEvent->SetFloat("lifetime", 10.0f);
+							pEvent->SetInt("follow_entindex", entindex);
 
-							gameeventmanager->FireEventClientSide( pEvent );
-							tf_highfive_hintcount.SetValue( tf_highfive_hintcount.GetInt() + 1 );
+							gameeventmanager->FireEventClientSide(pEvent);
+							tf_highfive_hintcount.SetValue(tf_highfive_hintcount.GetInt() + 1);
 
 							m_flNextAllowedHighFiveHintTime = gpGlobals->curtime + TF_HIGHFIVE_HINT_MINTIMEBETWEEN;
 						}
@@ -1424,83 +1432,82 @@ void ClientModeTFNormal::FireGameEvent( IGameEvent *event )
 			}
 		}
 	}
-	else if ( FStrEq( "player_highfive_cancel", eventname ) )
+	else if(FStrEq("player_highfive_cancel", eventname))
 	{
-		int entindex = event->GetInt( "entindex" );
-		IGameEvent *pEvent = gameeventmanager->CreateEvent( "hide_annotation" );
-		if ( pEvent )
+		int entindex = event->GetInt("entindex");
+		IGameEvent *pEvent = gameeventmanager->CreateEvent("hide_annotation");
+		if(pEvent)
 		{
-			pEvent->SetInt( "id", TF_HIGHFIVE_HINT_MASK | entindex );
-			gameeventmanager->FireEventClientSide( pEvent );
+			pEvent->SetInt("id", TF_HIGHFIVE_HINT_MASK | entindex);
+			gameeventmanager->FireEventClientSide(pEvent);
 		}
 	}
-	else if ( FStrEq( "player_highfive_success", eventname ) )
+	else if(FStrEq("player_highfive_success", eventname))
 	{
-		int entindex = event->GetInt( "initiator_entindex" );
-		IGameEvent *pEvent = gameeventmanager->CreateEvent( "hide_annotation" );
-		if ( pEvent )
+		int entindex = event->GetInt("initiator_entindex");
+		IGameEvent *pEvent = gameeventmanager->CreateEvent("hide_annotation");
+		if(pEvent)
 		{
-			pEvent->SetInt( "id", TF_HIGHFIVE_HINT_MASK | entindex );
-			gameeventmanager->FireEventClientSide( pEvent );
+			pEvent->SetInt("id", TF_HIGHFIVE_HINT_MASK | entindex);
+			gameeventmanager->FireEventClientSide(pEvent);
 		}
 	}
-	else if ( FStrEq( "client_beginconnect", eventname ) )
+	else if(FStrEq("client_beginconnect", eventname))
 	{
-		const char *pchSource = event->GetString( "source" );
-		m_bRestrictInfoPanel = pchSource && ( FStrEq( "matchmaking", pchSource ) || !Q_strncmp( pchSource, "quickplay_", 10 ) );
+		const char *pchSource = event->GetString("source");
+		m_bRestrictInfoPanel =
+			pchSource && (FStrEq("matchmaking", pchSource) || !Q_strncmp(pchSource, "quickplay_", 10));
 
 		m_bInfoPanelShown = false;
 	}
-	else if ( FStrEq( "player_teleported", eventname ) )
+	else if(FStrEq("player_teleported", eventname))
 	{
-		int iUserID = event->GetInt( "userid" );
+		int iUserID = event->GetInt("userid");
 		C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
-		if( pLocalPlayer && pLocalPlayer->GetUserID() == iUserID && UseVR() )
+		if(pLocalPlayer && pLocalPlayer->GetUserID() == iUserID && UseVR())
 		{
 			g_ClientVirtualReality.AlignTorsoAndViewToWeapon();
 		}
 	}
-	else if ( FStrEq( "scorestats_accumulated_reset", eventname ) )
+	else if(FStrEq("scorestats_accumulated_reset", eventname))
 	{
-		if ( g_TF_PR && TFGameRules() && !TFGameRules()->IsMannVsMachineMode() )
+		if(g_TF_PR && TFGameRules() && !TFGameRules()->IsMannVsMachineMode())
 		{
 			g_TF_PR->ResetPlayerScoreStats();
 		}
 	}
-	else if ( FStrEq( "scorestats_accumulated_update", eventname ) )
+	else if(FStrEq("scorestats_accumulated_update", eventname))
 	{
-		if ( g_TF_PR && TFGameRules() && !TFGameRules()->IsMannVsMachineMode() )
+		if(g_TF_PR && TFGameRules() && !TFGameRules()->IsMannVsMachineMode())
 		{
 			g_TF_PR->UpdatePlayerScoreStats();
 		}
 	}
 
-	BaseClass::FireGameEvent( event );
+	BaseClass::FireGameEvent(event);
 }
 
-void ClientModeTFNormal::PostRenderVGui()
-{
-}
+void ClientModeTFNormal::PostRenderVGui() {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool ClientModeTFNormal::CreateMove( float flInputSampleTime, CUserCmd *cmd )
+bool ClientModeTFNormal::CreateMove(float flInputSampleTime, CUserCmd *cmd)
 {
-	return BaseClass::CreateMove( flInputSampleTime, cmd );
+	return BaseClass::CreateMove(flInputSampleTime, cmd);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: See if hud elements want key input. Return 0 if the key is swallowed
 //-----------------------------------------------------------------------------
-int	ClientModeTFNormal::HudElementKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding )
+int ClientModeTFNormal::HudElementKeyInput(int down, ButtonCode_t keynum, const char *pszCurrentBinding)
 {
 	// Let scoreboard handle input first because on X360 we need gamertags and
 	// gamercards accessible at all times when gamertag is visible.
-#if defined( _X360 )
-	if ( m_pScoreboard )
+#if defined(_X360)
+	if(m_pScoreboard)
 	{
-		if ( !m_pScoreboard->HudElementKeyInput( down, keynum, pszCurrentBinding ) )
+		if(!m_pScoreboard->HudElementKeyInput(down, keynum, pszCurrentBinding))
 		{
 			return 0;
 		}
@@ -1508,244 +1515,244 @@ int	ClientModeTFNormal::HudElementKeyInput( int down, ButtonCode_t keynum, const
 #endif
 
 	// Applies basic tags if we're going to take a screenshot
-	ScreenshotTaggingKeyInput( down, keynum, pszCurrentBinding );
+	ScreenshotTaggingKeyInput(down, keynum, pszCurrentBinding);
 
-	if ( TrainingHandlesKeyInput( down, keynum, pszCurrentBinding ) )
+	if(TrainingHandlesKeyInput(down, keynum, pszCurrentBinding))
 	{
 		return 0;
 	}
 
-	if ( CoachingHandlesKeyInput( down, keynum, pszCurrentBinding ) )
+	if(CoachingHandlesKeyInput(down, keynum, pszCurrentBinding))
 	{
 		return 0;
 	}
 
-	if ( ItemTestHandlesKeyInput( down, keynum, pszCurrentBinding ) )
+	if(ItemTestHandlesKeyInput(down, keynum, pszCurrentBinding))
 	{
 		return 0;
 	}
 
-	if ( HalloweenHandlesKeyInput( down, keynum, pszCurrentBinding ) )
+	if(HalloweenHandlesKeyInput(down, keynum, pszCurrentBinding))
 	{
 		return 0;
 	}
 
-	if ( TauntHandlesKeyInput( down, keynum, pszCurrentBinding ) )
+	if(TauntHandlesKeyInput(down, keynum, pszCurrentBinding))
 	{
 		return 0;
 	}
 
 	// check for hud menus
-	if ( m_pMenuEngyBuild )
+	if(m_pMenuEngyBuild)
 	{
-		if ( !m_pMenuEngyBuild->HudElementKeyInput( down, keynum, pszCurrentBinding ) )
+		if(!m_pMenuEngyBuild->HudElementKeyInput(down, keynum, pszCurrentBinding))
 		{
 			return 0;
 		}
 	}
 
-	if ( m_pMenuEngyDestroy )
+	if(m_pMenuEngyDestroy)
 	{
-		if ( !m_pMenuEngyDestroy->HudElementKeyInput( down, keynum, pszCurrentBinding ) )
+		if(!m_pMenuEngyDestroy->HudElementKeyInput(down, keynum, pszCurrentBinding))
 		{
 			return 0;
 		}
 	}
 
-	if ( m_pMenuSpyDisguise )
+	if(m_pMenuSpyDisguise)
 	{
-		if ( !m_pMenuSpyDisguise->HudElementKeyInput( down, keynum, pszCurrentBinding ) )
+		if(!m_pMenuSpyDisguise->HudElementKeyInput(down, keynum, pszCurrentBinding))
 		{
 			return 0;
 		}
 	}
 
-	if ( m_pFreezePanel )
+	if(m_pFreezePanel)
 	{
-		m_pFreezePanel->HudElementKeyInput( down, keynum, pszCurrentBinding );
+		m_pFreezePanel->HudElementKeyInput(down, keynum, pszCurrentBinding);
 	}
 
-	if ( m_pQuickSwitch )
+	if(m_pQuickSwitch)
 	{
-		if ( !m_pQuickSwitch->HudElementKeyInput( down, keynum, pszCurrentBinding ) )
+		if(!m_pQuickSwitch->HudElementKeyInput(down, keynum, pszCurrentBinding))
 		{
 			return 0;
 		}
 	}
 
-	if ( m_pMenuTauntSelection )
+	if(m_pMenuTauntSelection)
 	{
-		if ( !m_pMenuTauntSelection->HudElementKeyInput( down, keynum, pszCurrentBinding ) )
+		if(!m_pMenuTauntSelection->HudElementKeyInput(down, keynum, pszCurrentBinding))
 		{
 			return 0;
 		}
 	}
 
 #ifdef STAGING_ONLY
-	if ( m_pMenuSpyBuild )
+	if(m_pMenuSpyBuild)
 	{
-		if ( !m_pMenuSpyBuild->HudElementKeyInput( down, keynum, pszCurrentBinding ) )
+		if(!m_pMenuSpyBuild->HudElementKeyInput(down, keynum, pszCurrentBinding))
 		{
 			return 0;
 		}
 	}
 #endif // STAGING_ONLY
 
-	if ( m_pEurekaTeleportMenu )
+	if(m_pEurekaTeleportMenu)
 	{
-		if ( !m_pEurekaTeleportMenu->HudElementKeyInput( down, keynum, pszCurrentBinding ) )
+		if(!m_pEurekaTeleportMenu->HudElementKeyInput(down, keynum, pszCurrentBinding))
 		{
 			return 0;
 		}
 	}
 
-	if ( m_pInspectPanel )
+	if(m_pInspectPanel)
 	{
-		if ( !m_pInspectPanel->HudElementKeyInput( down, keynum, pszCurrentBinding ) )
+		if(!m_pInspectPanel->HudElementKeyInput(down, keynum, pszCurrentBinding))
 		{
 			return 0;
 		}
 	}
 
-	if ( m_pTeamGoalTournament )
+	if(m_pTeamGoalTournament)
 	{
-		if ( !m_pTeamGoalTournament->HudElementKeyInput( down, keynum, pszCurrentBinding ) )
+		if(!m_pTeamGoalTournament->HudElementKeyInput(down, keynum, pszCurrentBinding))
 		{
 			return 0;
 		}
 	}
 
-	if ( TournamentHudElementKeyInput( down, keynum, pszCurrentBinding ) == true )
+	if(TournamentHudElementKeyInput(down, keynum, pszCurrentBinding) == true)
 		return 0;
 
-	if ( ArenaClassLayoutKeyInput( down, keynum, pszCurrentBinding ) == true )
+	if(ArenaClassLayoutKeyInput(down, keynum, pszCurrentBinding) == true)
 		return 0;
 
 #ifndef _X360
-	if ( ShouldScoreBoardHandleKeyInput( down, keynum, pszCurrentBinding ) )
+	if(ShouldScoreBoardHandleKeyInput(down, keynum, pszCurrentBinding))
 		return 0;
 #endif // !360
 
-	return BaseClass::HudElementKeyInput( down, keynum, pszCurrentBinding );
+	return BaseClass::HudElementKeyInput(down, keynum, pszCurrentBinding);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: See if spectator input occurred. Return 0 if the key is swallowed.
 //-----------------------------------------------------------------------------
-int ClientModeTFNormal::HandleSpectatorKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding )
+int ClientModeTFNormal::HandleSpectatorKeyInput(int down, ButtonCode_t keynum, const char *pszCurrentBinding)
 {
-#if defined( _X360 )
+#if defined(_X360)
 	// On X360 when we have scoreboard up in spectator menu we cannot
 	// steal any input because gamertags must be selectable and gamercards
 	// must be accessible.
 	// We cannot rely on any keybindings in this case since user could have
 	// remapped everything.
-	if ( m_pScoreboard && m_pScoreboard->IsVisible() )
+	if(m_pScoreboard && m_pScoreboard->IsVisible())
 	{
 		return 1;
 	}
 #endif
 
 	// @note Tom Bui: Coaching, so override all input
-	C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();	
-	if ( pLocalPlayer && pLocalPlayer->m_bIsCoaching  )
+	C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
+	if(pLocalPlayer && pLocalPlayer->m_bIsCoaching)
 	{
-		if ( down && pszCurrentBinding && Q_strcmp( pszCurrentBinding, "+jump" ) == 0 )
+		if(down && pszCurrentBinding && Q_strcmp(pszCurrentBinding, "+jump") == 0)
 		{
-			engine->ClientCmd( "spec_mode" );
+			engine->ClientCmd("spec_mode");
 			return 0;
 		}
 		return 1;
 	}
 	else
 	{
-		return BaseClass::HandleSpectatorKeyInput( down, keynum, pszCurrentBinding );
+		return BaseClass::HandleSpectatorKeyInput(down, keynum, pszCurrentBinding);
 	}
 }
 
-bool ClientModeTFNormal::DoPostScreenSpaceEffects( const CViewSetup *pSetup )
+bool ClientModeTFNormal::DoPostScreenSpaceEffects(const CViewSetup *pSetup)
 {
-	if ( !BaseClass::DoPostScreenSpaceEffects( pSetup ) )
-		return false;
-	
-	if( IsInFreezeCam() )
+	if(!BaseClass::DoPostScreenSpaceEffects(pSetup))
 		return false;
 
-	g_GlowObjectManager.RenderGlowEffects( pSetup, 0 );
+	if(IsInFreezeCam())
+		return false;
+
+	g_GlowObjectManager.RenderGlowEffects(pSetup, 0);
 
 	return true;
 }
 
 #if !defined(NO_STEAM)
-void ClientModeTFNormal::OnScreenshotRequested( ScreenshotRequested_t *pParam )
+void ClientModeTFNormal::OnScreenshotRequested(ScreenshotRequested_t *pParam)
 {
 	// Steam has requested a screenshot, act as if the key currently bound to screenshots
 	// has been pressed (we want tagging and the killcam screenshot behavior if applicable)
-	HudElementKeyInput( 0, BUTTON_CODE_INVALID, "screenshot" );
-	engine->ClientCmd( "screenshot" );
+	HudElementKeyInput(0, BUTTON_CODE_INVALID, "screenshot");
+	engine->ClientCmd("screenshot");
 }
 #endif
 
-
-
 //-----------------------------------------------------------------------------------------
-ConVar cl_ask_favorite_min_session_duration( "cl_ask_favorite_min_session_duration", "600", 0, "If player stays on a server for longer than this time (in seconds) prompt to add server to favorites" );
-ConVar cl_ask_favorite_opt_out( "cl_ask_favorite_opt_out", "0", FCVAR_ARCHIVE, "If nonzero, don't auto-ask to favorite servers" );
-ConVar cl_ask_favorite_for_any_server( "cl_ask_favorite_for_any_server", "0", 0, "If nonzero, auto-ask for local/LAN servers (for debugging)" );
+ConVar cl_ask_favorite_min_session_duration(
+	"cl_ask_favorite_min_session_duration", "600", 0,
+	"If player stays on a server for longer than this time (in seconds) prompt to add server to favorites");
+ConVar cl_ask_favorite_opt_out("cl_ask_favorite_opt_out", "0", FCVAR_ARCHIVE,
+							   "If nonzero, don't auto-ask to favorite servers");
+ConVar cl_ask_favorite_for_any_server("cl_ask_favorite_for_any_server", "0", 0,
+									  "If nonzero, auto-ask for local/LAN servers (for debugging)");
 
-
-ConVar cl_ask_blacklist_max_session_duration( "cl_ask_blacklist_max_session_duration", "60", 0, "If player stays on a server for less than this time (in seconds) prompt to add server to blacklist" );
-ConVar cl_ask_blacklist_opt_out( "cl_ask_blacklist_opt_out", "0", FCVAR_ARCHIVE, "If nonzero, don't auto-ask to blacklist servers" );
-ConVar cl_ask_blacklist_for_any_server( "cl_ask_blacklist_for_any_server", "0", 0, "If nonzero, auto-ask for local/LAN servers (for debugging)" );
-
+ConVar cl_ask_blacklist_max_session_duration(
+	"cl_ask_blacklist_max_session_duration", "60", 0,
+	"If player stays on a server for less than this time (in seconds) prompt to add server to blacklist");
+ConVar cl_ask_blacklist_opt_out("cl_ask_blacklist_opt_out", "0", FCVAR_ARCHIVE,
+								"If nonzero, don't auto-ask to blacklist servers");
+ConVar cl_ask_blacklist_for_any_server("cl_ask_blacklist_for_any_server", "0", 0,
+									   "If nonzero, auto-ask for local/LAN servers (for debugging)");
 
 //----------------------------------------------------------------------------
-void OnAskFavoriteDialogButtonPressed( bool bConfirm, void *pContext )
+void OnAskFavoriteDialogButtonPressed(bool bConfirm, void *pContext)
 {
-	if ( bConfirm )
+	if(bConfirm)
 	{
 		// add last server to our favorites
-		steamapicontext->SteamMatchmaking()->AddFavoriteGame( steamapicontext->SteamUtils()->GetAppID(),
-															  GetClientModeTFNormal()->GetLastConnectedServerIP(),
-															  GetClientModeTFNormal()->GetLastConnectedServerPort(),
-															  GetClientModeTFNormal()->GetLastConnectedServerPort(),
-															  k_unFavoriteFlagFavorite, 
-															  CRTime::RTime32TimeCur() );
+		steamapicontext->SteamMatchmaking()->AddFavoriteGame(
+			steamapicontext->SteamUtils()->GetAppID(), GetClientModeTFNormal()->GetLastConnectedServerIP(),
+			GetClientModeTFNormal()->GetLastConnectedServerPort(),
+			GetClientModeTFNormal()->GetLastConnectedServerPort(), k_unFavoriteFlagFavorite, CRTime::RTime32TimeCur());
 
 		// Send it to the GC
-		GCSDK::CGCMsg< MsgGCServerBrowser_Server_t > msg( k_EMsgGCServerBrowser_FavoriteServer );
+		GCSDK::CGCMsg<MsgGCServerBrowser_Server_t> msg(k_EMsgGCServerBrowser_FavoriteServer);
 		msg.Body().m_unIP = GetClientModeTFNormal()->GetLastConnectedServerIP();
 		msg.Body().m_usPort = GetClientModeTFNormal()->GetLastConnectedServerPort();
 		msg.Body().m_ubSource = k_EGCMsgServerBrowser_FromAutoAskDialog;
-		GCClientSystem()->BSendMessage( msg );
+		GCClientSystem()->BSendMessage(msg);
 	}
 }
 
-
 //----------------------------------------------------------------------------
-void OnAskBlacklistDialogButtonPressed( bool bConfirm, void *pContext )
+void OnAskBlacklistDialogButtonPressed(bool bConfirm, void *pContext)
 {
-	if ( bConfirm )
+	if(bConfirm)
 	{
 		// add last server to our blacklist
 		CBlacklistedServerManager blackList;
-		blackList.LoadServersFromFile( BLACKLIST_DEFAULT_SAVE_FILE, false );
+		blackList.LoadServersFromFile(BLACKLIST_DEFAULT_SAVE_FILE, false);
 
-		blackList.AddServer( GetClientModeTFNormal()->GetLastConnectedServerName(),
-							 GetClientModeTFNormal()->GetLastConnectedServerIP(),
-							 GetClientModeTFNormal()->GetLastConnectedServerPort() );
+		blackList.AddServer(GetClientModeTFNormal()->GetLastConnectedServerName(),
+							GetClientModeTFNormal()->GetLastConnectedServerIP(),
+							GetClientModeTFNormal()->GetLastConnectedServerPort());
 
-		blackList.SaveToFile( BLACKLIST_DEFAULT_SAVE_FILE );
+		blackList.SaveToFile(BLACKLIST_DEFAULT_SAVE_FILE);
 
 		// Send it to the GC
-		GCSDK::CGCMsg< MsgGCServerBrowser_Server_t > msg( k_EMsgGCServerBrowser_BlacklistServer );
+		GCSDK::CGCMsg<MsgGCServerBrowser_Server_t> msg(k_EMsgGCServerBrowser_BlacklistServer);
 		msg.Body().m_unIP = GetClientModeTFNormal()->GetLastConnectedServerIP();
 		msg.Body().m_usPort = GetClientModeTFNormal()->GetLastConnectedServerPort();
 		msg.Body().m_ubSource = k_EGCMsgServerBrowser_FromAutoAskDialog;
-		GCClientSystem()->BSendMessage( msg );
+		GCClientSystem()->BSendMessage(msg);
 	}
 }
-
 
 //----------------------------------------------------------------------------
 // If conditions are right, prompt the user to either favorite or blacklist
@@ -1755,28 +1762,28 @@ void ClientModeTFNormal::AskFavoriteOrBlacklist() const
 	// based on the time we spent on our last server, ask to favorite or blacklist it
 	int sessionDuration = GetSteamWorksSGameStatsUploader().GetTimeSinceEpoch() - m_lastServerConnectTime;
 
-	if ( sessionDuration > 0 )
+	if(sessionDuration > 0)
 	{
 		// favorite?
-		if ( !cl_ask_favorite_opt_out.GetBool() && sessionDuration > cl_ask_favorite_min_session_duration.GetFloat() )
+		if(!cl_ask_favorite_opt_out.GetBool() && sessionDuration > cl_ask_favorite_min_session_duration.GetFloat())
 		{
 			// don't ask to favorite reserved addresses
-			if ( !cl_ask_favorite_for_any_server.GetBool() )
+			if(!cl_ask_favorite_for_any_server.GetBool())
 			{
-				netadr_t netAdr( GetLastConnectedServerIP(), GetLastConnectedServerPort() );
+				netadr_t netAdr(GetLastConnectedServerIP(), GetLastConnectedServerPort());
 
-				if ( !netAdr.IsValid() || netAdr.IsReservedAdr() )
+				if(!netAdr.IsValid() || netAdr.IsReservedAdr())
 					return;
 
 				// Don't offer this for Valve servers, either
-				if ( GTFGCClientSystem()->BIsIPRecentMatchServer( netAdr ) )
+				if(GTFGCClientSystem()->BIsIPRecentMatchServer(netAdr))
 				{
 					return;
 				}
 			}
 
 			// is this server already a favorite?
-			for( int i=0; i<steamapicontext->SteamMatchmaking()->GetFavoriteGameCount(); ++i )
+			for(int i = 0; i < steamapicontext->SteamMatchmaking()->GetFavoriteGameCount(); ++i)
 			{
 				AppId_t appID = steamapicontext->SteamUtils()->GetAppID();
 				uint32 IP;
@@ -1785,17 +1792,17 @@ void ClientModeTFNormal::AskFavoriteOrBlacklist() const
 				uint32 flags;
 				uint32 time32LastPlayedOnServer;
 
-				if ( steamapicontext->SteamMatchmaking()->GetFavoriteGame( i, &appID, &IP, &connPort, &queryPort, &flags, &time32LastPlayedOnServer ) )
+				if(steamapicontext->SteamMatchmaking()->GetFavoriteGame(i, &appID, &IP, &connPort, &queryPort, &flags,
+																		&time32LastPlayedOnServer))
 				{
-					if ( ( flags & k_unFavoriteFlagFavorite ) == false )
+					if((flags & k_unFavoriteFlagFavorite) == false)
 					{
 						// not a favorite
 						continue;
 					}
 
-					if ( ( appID == 0 || appID == steamapicontext->SteamUtils()->GetAppID() ) && 
-						 IP == GetLastConnectedServerIP() &&
-						 connPort == GetLastConnectedServerPort() )
+					if((appID == 0 || appID == steamapicontext->SteamUtils()->GetAppID()) &&
+					   IP == GetLastConnectedServerIP() && connPort == GetLastConnectedServerPort())
 					{
 						// already have this server in our favorites - don't ask again
 						return;
@@ -1804,39 +1811,41 @@ void ClientModeTFNormal::AskFavoriteOrBlacklist() const
 			}
 
 			// new potential favorite - ask
-			ShowConfirmOptOutDialog( "#TF_Serverlist_Ask_Favorite_Title", "#TF_Serverlist_Ask_Favorite_Text", 
-				"#TF_Serverlist_Ask_Yes", "#TF_Serverlist_Ask_No", 
-				"#TF_ServerList_Ask_Favorite_Opt_Out", "cl_ask_favorite_opt_out", 
-				OnAskFavoriteDialogButtonPressed, NULL );
+			ShowConfirmOptOutDialog("#TF_Serverlist_Ask_Favorite_Title", "#TF_Serverlist_Ask_Favorite_Text",
+									"#TF_Serverlist_Ask_Yes", "#TF_Serverlist_Ask_No",
+									"#TF_ServerList_Ask_Favorite_Opt_Out", "cl_ask_favorite_opt_out",
+									OnAskFavoriteDialogButtonPressed, NULL);
 		}
 
 		// blacklist?
-		if ( !cl_ask_blacklist_opt_out.GetBool() && sessionDuration < cl_ask_blacklist_max_session_duration.GetFloat() )
+		if(!cl_ask_blacklist_opt_out.GetBool() && sessionDuration < cl_ask_blacklist_max_session_duration.GetFloat())
 		{
 			// is this server already blacklisted?
 			CBlacklistedServerManager blackList;
-			blackList.LoadServersFromFile( BLACKLIST_DEFAULT_SAVE_FILE, false );
+			blackList.LoadServersFromFile(BLACKLIST_DEFAULT_SAVE_FILE, false);
 
-			netadr_t lastServer( GetLastConnectedServerIP(), (unsigned short)GetLastConnectedServerPort() );
-			if ( ( !blackList.CanServerBeBlacklisted( lastServer.GetIPHostByteOrder(), lastServer.GetPort(), GetLastConnectedServerName() )
-			       || GTFGCClientSystem()->BIsIPRecentMatchServer( lastServer ) )
-			     && !cl_ask_blacklist_for_any_server.GetBool() )
+			netadr_t lastServer(GetLastConnectedServerIP(), (unsigned short)GetLastConnectedServerPort());
+			if((!blackList.CanServerBeBlacklisted(lastServer.GetIPHostByteOrder(), lastServer.GetPort(),
+												  GetLastConnectedServerName()) ||
+				GTFGCClientSystem()->BIsIPRecentMatchServer(lastServer)) &&
+			   !cl_ask_blacklist_for_any_server.GetBool())
 			{
 				// don't bother - this server is not blacklistable
 				return;
 			}
 
-			if ( blackList.IsServerBlacklisted( GetLastConnectedServerIP(), GetLastConnectedServerPort(), GetLastConnectedServerName() ) )
+			if(blackList.IsServerBlacklisted(GetLastConnectedServerIP(), GetLastConnectedServerPort(),
+											 GetLastConnectedServerName()))
 			{
 				// already marked as bad
 				return;
 			}
 
 			// new potential blacklist - ask
-			ShowConfirmOptOutDialog( "#TF_Serverlist_Ask_Blacklist_Title", "#TF_Serverlist_Ask_Blacklist_Text", 
-				"#TF_Serverlist_Ask_Yes", "#TF_Serverlist_Ask_No",
-				"#TF_ServerList_Ask_Blacklist_Opt_Out", "cl_ask_blacklist_opt_out", 
-				OnAskBlacklistDialogButtonPressed, NULL );
+			ShowConfirmOptOutDialog("#TF_Serverlist_Ask_Blacklist_Title", "#TF_Serverlist_Ask_Blacklist_Text",
+									"#TF_Serverlist_Ask_Yes", "#TF_Serverlist_Ask_No",
+									"#TF_ServerList_Ask_Blacklist_Opt_Out", "cl_ask_blacklist_opt_out",
+									OnAskBlacklistDialogButtonPressed, NULL);
 		}
 	}
 }
@@ -1855,97 +1864,101 @@ void ClientModeTFNormal::Update()
 	C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
 
 	// Update steam controller stuff if one is active
-	if ( ::input->IsSteamControllerActive() )
+	if(::input->IsSteamControllerActive())
 	{
 		// Walk through all the panels and HUD elements, see what kind of action set each one requests.
 		bool bNeedMenu = false;
 		bool bNeedHUD = false;
 		bool bNeedSpectator = false;
-		m_pViewport->ForEachPanel( [&] (IViewPortPanel* pPanel) {
-			if ( pPanel && pPanel->IsVisible() )
+		m_pViewport->ForEachPanel(
+			[&](IViewPortPanel *pPanel)
 			{
-				auto actionset = pPanel->GetPreferredActionSet();
-				if ( actionset == GAME_ACTION_SET_MENUCONTROLS )
+				if(pPanel && pPanel->IsVisible())
 				{
-					bNeedMenu = true;
+					auto actionset = pPanel->GetPreferredActionSet();
+					if(actionset == GAME_ACTION_SET_MENUCONTROLS)
+					{
+						bNeedMenu = true;
+					}
+					else if(actionset == GAME_ACTION_SET_IN_GAME_HUD)
+					{
+						bNeedHUD = true;
+					}
+					else if(actionset == GAME_ACTION_SET_SPECTATOR)
+					{
+						bNeedSpectator = true;
+					}
 				}
-				else if ( actionset == GAME_ACTION_SET_IN_GAME_HUD )
-				{
-					bNeedHUD = true;
-				}
-				else if ( actionset == GAME_ACTION_SET_SPECTATOR )
-				{
-					bNeedSpectator = true;
-				}
-			}
-		} );
+			});
 
-		gHUD.ForEachHudElement( [&]( CHudElement* pElement ) {
-			if ( pElement && pElement->IsActive() )
+		gHUD.ForEachHudElement(
+			[&](CHudElement *pElement)
 			{
-				auto actionset = pElement->GetPreferredActionSet();
-				if ( actionset == GAME_ACTION_SET_MENUCONTROLS )
+				if(pElement && pElement->IsActive())
 				{
-					bNeedMenu = true;
+					auto actionset = pElement->GetPreferredActionSet();
+					if(actionset == GAME_ACTION_SET_MENUCONTROLS)
+					{
+						bNeedMenu = true;
+					}
+					else if(actionset == GAME_ACTION_SET_IN_GAME_HUD)
+					{
+						bNeedHUD = true;
+					}
+					else if(actionset == GAME_ACTION_SET_SPECTATOR)
+					{
+						bNeedSpectator = true;
+					}
 				}
-				else if ( actionset == GAME_ACTION_SET_IN_GAME_HUD )
-				{
-					bNeedHUD = true;
-				}
-				else if ( actionset == GAME_ACTION_SET_SPECTATOR )
-				{
-					bNeedSpectator = true;
-				}
-			}
-		} );
+			});
 
 		// Set the preferred action set. Requesting menu trumps hud, which trumps spectator, which trumps fps.
-		if ( !engine->IsInGame() || !engine->IsConnected() || enginevgui->IsGameUIVisible() || bNeedMenu )
+		if(!engine->IsInGame() || !engine->IsConnected() || enginevgui->IsGameUIVisible() || bNeedMenu)
 		{
-			::input->SetPreferredGameActionSet( GAME_ACTION_SET_MENUCONTROLS );
+			::input->SetPreferredGameActionSet(GAME_ACTION_SET_MENUCONTROLS);
 		}
-		else if ( bNeedHUD )
+		else if(bNeedHUD)
 		{
-			::input->SetPreferredGameActionSet( GAME_ACTION_SET_IN_GAME_HUD );
+			::input->SetPreferredGameActionSet(GAME_ACTION_SET_IN_GAME_HUD);
 		}
-		else if ( bNeedSpectator || (pLocalPlayer && pLocalPlayer->GetTeamNumber() == TEAM_SPECTATOR) )
+		else if(bNeedSpectator || (pLocalPlayer && pLocalPlayer->GetTeamNumber() == TEAM_SPECTATOR))
 		{
-			::input->SetPreferredGameActionSet( GAME_ACTION_SET_SPECTATOR );
+			::input->SetPreferredGameActionSet(GAME_ACTION_SET_SPECTATOR);
 		}
 		else
 		{
-			::input->SetPreferredGameActionSet( GAME_ACTION_SET_FPSCONTROLS );
+			::input->SetPreferredGameActionSet(GAME_ACTION_SET_FPSCONTROLS);
 		}
 
 		// Adjust look sensitivity down if the player is current using a zoomed-in weapon (typically sniper rifle).
 		float look_sensitivity = 0.125f;
-		if ( pLocalPlayer && pLocalPlayer->m_Shared.InCond( TF_COND_ZOOMED ) )
+		if(pLocalPlayer && pLocalPlayer->m_Shared.InCond(TF_COND_ZOOMED))
 		{
 			look_sensitivity = 0.035f;
 		}
 
 		// Set the flag for special action handling if we're taunting
-		if ( pLocalPlayer && pLocalPlayer->m_Shared.InCond( TF_COND_TAUNTING ) )
+		if(pLocalPlayer && pLocalPlayer->m_Shared.InCond(TF_COND_TAUNTING))
 		{
-			::input->SetGameActionSetFlags( GAME_ACTION_SET_FLAGS_TAUNTING );
+			::input->SetGameActionSetFlags(GAME_ACTION_SET_FLAGS_TAUNTING);
 		}
 		else
 		{
-			::input->SetGameActionSetFlags( GAME_ACTION_SET_FLAGS_NONE );
+			::input->SetGameActionSetFlags(GAME_ACTION_SET_FLAGS_NONE);
 		}
 
-		sc_look_sensitivity_scale.SetValue( look_sensitivity );
+		sc_look_sensitivity_scale.SetValue(look_sensitivity);
 	}
 
-	if ( !engine->IsInGame() )
+	if(!engine->IsInGame())
 	{
 		// @note Tom Bui: we want this thing to always run, so we get animations at the main menu
-		g_pClientMode->GetViewportAnimationController()->UpdateAnimations( gpGlobals->curtime );
+		g_pClientMode->GetViewportAnimationController()->UpdateAnimations(gpGlobals->curtime);
 	}
 
-	if ( !engine->IsConnected() )
+	if(!engine->IsConnected())
 	{
-		if ( m_wasConnectedLastUpdate )
+		if(m_wasConnectedLastUpdate)
 		{
 			// just disconnected from a game
 			m_wasConnectedLastUpdate = false;
@@ -1961,18 +1974,16 @@ void ClientModeTFNormal::Update()
 	}
 }
 
-
 //----------------------------------------------------------------------------
-void	ClientModeTFNormal::ComputeVguiResConditions( KeyValues *pkvConditions ) 
+void ClientModeTFNormal::ComputeVguiResConditions(KeyValues *pkvConditions)
 {
-	BaseClass::ComputeVguiResConditions( pkvConditions );
+	BaseClass::ComputeVguiResConditions(pkvConditions);
 }
-
 
 //----------------------------------------------------------------------------
 bool ClientModeTFNormal::IsInfoPanelAllowed()
 {
-	if ( !BaseClass::IsInfoPanelAllowed() )
+	if(!BaseClass::IsInfoPanelAllowed())
 		return false;
 
 	return !m_bRestrictInfoPanel || !m_bInfoPanelShown;
@@ -1981,12 +1992,11 @@ bool ClientModeTFNormal::IsInfoPanelAllowed()
 //----------------------------------------------------------------------------
 bool ClientModeTFNormal::IsHTMLInfoPanelAllowed()
 {
-	if ( !BaseClass::IsHTMLInfoPanelAllowed() )
+	if(!BaseClass::IsHTMLInfoPanelAllowed())
 		return false;
 
 	return !m_bRestrictInfoPanel;
 }
-
 
 //----------------------------------------------------------------------------
 void ClientModeTFNormal::InfoPanelDisplayed()
@@ -2033,252 +2043,252 @@ bool ClientModeTFNormal::IsTauntSelectPanelVisible() const
 }
 
 //----------------------------------------------------------------------------
-void ClientModeTFNormal::PrintTextToChat( const char *pText, KeyValues *pKeyValues )
+void ClientModeTFNormal::PrintTextToChat(const char *pText, KeyValues *pKeyValues)
 {
-	CBaseHudChat *pHUDChat = (CBaseHudChat *)GET_HUDELEMENT( CHudChat );
-	if ( pHUDChat )
+	CBaseHudChat *pHUDChat = (CBaseHudChat *)GET_HUDELEMENT(CHudChat);
+	if(pHUDChat)
 	{
-		wchar_t wszText[1024]=L"";
-		g_pVGuiLocalize->ConstructString_safe( wszText, pText, pKeyValues );
+		wchar_t wszText[1024] = L"";
+		g_pVGuiLocalize->ConstructString_safe(wszText, pText, pKeyValues);
 		char szAnsi[1024];
-		g_pVGuiLocalize->ConvertUnicodeToANSI( wszText, szAnsi, sizeof(szAnsi) );
-		pHUDChat->Printf( CHAT_FILTER_NONE, "%s", szAnsi );
+		g_pVGuiLocalize->ConvertUnicodeToANSI(wszText, szAnsi, sizeof(szAnsi));
+		pHUDChat->Printf(CHAT_FILTER_NONE, "%s", szAnsi);
 	}
 }
 
-void ClientModeTFNormal::PrintTextToChatPlayer( int iPlayerIndex, const char *pText, KeyValues *pKeyValues )
+void ClientModeTFNormal::PrintTextToChatPlayer(int iPlayerIndex, const char *pText, KeyValues *pKeyValues)
 {
-	CBaseHudChat *pHUDChat = (CBaseHudChat *)GET_HUDELEMENT( CHudChat );
-	if ( pHUDChat )
+	CBaseHudChat *pHUDChat = (CBaseHudChat *)GET_HUDELEMENT(CHudChat);
+	if(pHUDChat)
 	{
-		wchar_t wszText[1024]=L"";
-		g_pVGuiLocalize->ConstructString_safe( wszText, pText, pKeyValues );
+		wchar_t wszText[1024] = L"";
+		g_pVGuiLocalize->ConstructString_safe(wszText, pText, pKeyValues);
 		char szAnsi[1024];
-		g_pVGuiLocalize->ConvertUnicodeToANSI( wszText, szAnsi, sizeof(szAnsi) );
-		pHUDChat->ChatPrintf( iPlayerIndex, CHAT_FILTER_NONE, "%s", szAnsi );
+		g_pVGuiLocalize->ConvertUnicodeToANSI(wszText, szAnsi, sizeof(szAnsi));
+		pHUDChat->ChatPrintf(iPlayerIndex, CHAT_FILTER_NONE, "%s", szAnsi);
 	}
 }
 
-void ClientModeTFNormal::OnDemoRecordStart( char const* pDemoBaseName ) 
+void ClientModeTFNormal::OnDemoRecordStart(char const *pDemoBaseName)
 {
-	BaseClass::OnDemoRecordStart( pDemoBaseName );	
+	BaseClass::OnDemoRecordStart(pDemoBaseName);
 }
 
 void ClientModeTFNormal::OnDemoRecordStop()
 {
-	IGameEvent *event = gameeventmanager->CreateEvent( "ds_stop" );
-	if ( event )
+	IGameEvent *event = gameeventmanager->CreateEvent("ds_stop");
+	if(event)
 	{
-		gameeventmanager->FireEventClientSide( event );
+		gameeventmanager->FireEventClientSide(event);
 	}
 
 	BaseClass::OnDemoRecordStop();
 }
 
-void __MsgFunc_PlayerBonusPoints( bf_read &msg )
+void __MsgFunc_PlayerBonusPoints(bf_read &msg)
 {
-	int nPoints = (int) msg.ReadByte();
-	int iPlayerEntIndex = (int) msg.ReadByte();
-	int iSourceEntIndex = (int) msg.ReadByte();
+	int nPoints = (int)msg.ReadByte();
+	int iPlayerEntIndex = (int)msg.ReadByte();
+	int iSourceEntIndex = (int)msg.ReadByte();
 
-	IGameEvent *event = gameeventmanager->CreateEvent( "player_bonuspoints" );
-	if ( event )
+	IGameEvent *event = gameeventmanager->CreateEvent("player_bonuspoints");
+	if(event)
 	{
-		event->SetInt( "points", nPoints );
-		event->SetInt( "player_entindex", iPlayerEntIndex );
-		event->SetInt( "source_entindex", iSourceEntIndex );
-		gameeventmanager->FireEventClientSide( event );
+		event->SetInt("points", nPoints);
+		event->SetInt("player_entindex", iPlayerEntIndex);
+		event->SetInt("source_entindex", iSourceEntIndex);
+		gameeventmanager->FireEventClientSide(event);
 	}
 }
 
-void __MsgFunc_PlayerGodRayEffect( bf_read &msg )
+void __MsgFunc_PlayerGodRayEffect(bf_read &msg)
 {
 	int iPlayerEntIndex = (int)msg.ReadByte();
 
-	CBasePlayer *player = UTIL_PlayerByIndex( iPlayerEntIndex );
-	if ( player )
+	CBasePlayer *player = UTIL_PlayerByIndex(iPlayerEntIndex);
+	if(player)
 	{
-		player->ParticleProp()->Create( "god_rays", PATTACH_ABSORIGIN_FOLLOW );
+		player->ParticleProp()->Create("god_rays", PATTACH_ABSORIGIN_FOLLOW);
 	}
 }
 
-void __MsgFunc_PlayerTeleportHomeEffect( bf_read &msg )
+void __MsgFunc_PlayerTeleportHomeEffect(bf_read &msg)
 {
 	int iPlayerEntIndex = (int)msg.ReadByte();
 
-	CBasePlayer *pPlayer = UTIL_PlayerByIndex( iPlayerEntIndex );
-	if ( pPlayer )
+	CBasePlayer *pPlayer = UTIL_PlayerByIndex(iPlayerEntIndex);
+	if(pPlayer)
 	{
-		pPlayer->ParticleProp()->Create( "drg_wrenchmotron_teleport", PATTACH_ABSORIGIN );
+		pPlayer->ParticleProp()->Create("drg_wrenchmotron_teleport", PATTACH_ABSORIGIN);
 	}
 }
 
-void __MsgFunc_RDTeamPointsChanged( bf_read &msg )
+void __MsgFunc_RDTeamPointsChanged(bf_read &msg)
 {
 	int nPoints = (int)msg.ReadShort();
 	int nTeam = (int)msg.ReadByte();
 	int nMethod = (int)msg.ReadByte();
 
-	IGameEvent *event = gameeventmanager->CreateEvent( "rd_team_points_changed" );
-	if ( event )
+	IGameEvent *event = gameeventmanager->CreateEvent("rd_team_points_changed");
+	if(event)
 	{
-		event->SetInt( "points", nPoints );
-		event->SetInt( "team", nTeam );
-		event->SetInt( "method", nMethod );
-		gameeventmanager->FireEventClientSide( event );
+		event->SetInt("points", nPoints);
+		event->SetInt("team", nTeam);
+		event->SetInt("method", nMethod);
+		gameeventmanager->FireEventClientSide(event);
 	}
 }
 
-void __MsgFunc_PlayerLoadoutUpdated( bf_read &msg )
+void __MsgFunc_PlayerLoadoutUpdated(bf_read &msg)
 {
 	int iPlayerEntIndex = (int)msg.ReadByte();
-	C_TFPlayer *pPlayer = ToTFPlayer( UTIL_PlayerByIndex( iPlayerEntIndex ) );
-	if ( pPlayer )
+	C_TFPlayer *pPlayer = ToTFPlayer(UTIL_PlayerByIndex(iPlayerEntIndex));
+	if(pPlayer)
 	{
 		CTFPlayerInventory *pInv = pPlayer->Inventory();
-		if ( pInv )
+		if(pInv)
 		{
 			pInv->ClearClassLoadoutChangeTracking();
 		}
 	}
 }
 
-void __MsgFunc_PlayerTauntSoundLoopStart( bf_read &msg )
+void __MsgFunc_PlayerTauntSoundLoopStart(bf_read &msg)
 {
 	int iPlayerEntIndex = (int)msg.ReadByte();
-	C_TFPlayer *pPlayer = ToTFPlayer( UTIL_PlayerByIndex( iPlayerEntIndex ) );
-	if ( pPlayer )
+	C_TFPlayer *pPlayer = ToTFPlayer(UTIL_PlayerByIndex(iPlayerEntIndex));
+	if(pPlayer)
 	{
 		char szTauntSoundLoopName[256];
-		msg.ReadString( szTauntSoundLoopName, sizeof(szTauntSoundLoopName) );
-		pPlayer->PlayTauntSoundLoop( szTauntSoundLoopName );
+		msg.ReadString(szTauntSoundLoopName, sizeof(szTauntSoundLoopName));
+		pPlayer->PlayTauntSoundLoop(szTauntSoundLoopName);
 	}
 }
 
-void __MsgFunc_PlayerTauntSoundLoopEnd( bf_read &msg )
+void __MsgFunc_PlayerTauntSoundLoopEnd(bf_read &msg)
 {
 	int iPlayerEntIndex = (int)msg.ReadByte();
-	C_TFPlayer *pPlayer = ToTFPlayer( UTIL_PlayerByIndex( iPlayerEntIndex ) );
-	if ( pPlayer )
+	C_TFPlayer *pPlayer = ToTFPlayer(UTIL_PlayerByIndex(iPlayerEntIndex));
+	if(pPlayer)
 	{
 		pPlayer->StopTauntSoundLoop();
 	}
 }
 
-
-void __MsgFunc_ForcePlayerViewAngles( bf_read &msg )
+void __MsgFunc_ForcePlayerViewAngles(bf_read &msg)
 {
 	// Read flag byte. Should be 1 right now.
 	int iFlags = (int)msg.ReadByte();
-	NOTE_UNUSED( iFlags );
-	Assert( iFlags == 0x01 );
+	NOTE_UNUSED(iFlags);
+	Assert(iFlags == 0x01);
 
 	int iPlayerEntIndex = (int)msg.ReadByte();
-	C_TFPlayer *pPlayer = ToTFPlayer( UTIL_PlayerByIndex( iPlayerEntIndex ) );
-	if ( pPlayer )
+	C_TFPlayer *pPlayer = ToTFPlayer(UTIL_PlayerByIndex(iPlayerEntIndex));
+	if(pPlayer)
 	{
 		QAngle viewangles;
-		msg.ReadBitAngles( viewangles );
+		msg.ReadBitAngles(viewangles);
 
 		// Set the magic angles here!
-		pPlayer->SetLocalAngles( viewangles );
-		pPlayer->SetAbsAngles( viewangles );
-		pPlayer->SetTauntYaw( viewangles[YAW] );
-		pPlayer->m_Shared.SetVehicleMoveAngles( viewangles );
+		pPlayer->SetLocalAngles(viewangles);
+		pPlayer->SetAbsAngles(viewangles);
+		pPlayer->SetTauntYaw(viewangles[YAW]);
+		pPlayer->m_Shared.SetVehicleMoveAngles(viewangles);
 	}
 }
 
-ConVar tf_halloween_bonus_ducks_cooldown( "tf_halloween_bonus_ducks_cooldown", "20", FCVAR_ARCHIVE );
-void __MsgFunc_BonusDucks( bf_read &msg )
+ConVar tf_halloween_bonus_ducks_cooldown("tf_halloween_bonus_ducks_cooldown", "20", FCVAR_ARCHIVE);
+void __MsgFunc_BonusDucks(bf_read &msg)
 {
 	static float sflNextBonusDucks = 0.f;
 
 	int iPlayerEntIndex = (int)msg.ReadByte();
 	int iIgnoreTimer = (int)msg.ReadByte();
 
-	if ( Plat_FloatTime() < sflNextBonusDucks && !iIgnoreTimer )
+	if(Plat_FloatTime() < sflNextBonusDucks && !iIgnoreTimer)
 		return;
 
 	sflNextBonusDucks = Plat_FloatTime() + tf_halloween_bonus_ducks_cooldown.GetFloat();
 
-	
-	C_TFPlayer *pPlayer = ToTFPlayer( UTIL_PlayerByIndex( iPlayerEntIndex ) );
-	if ( pPlayer )
+	C_TFPlayer *pPlayer = ToTFPlayer(UTIL_PlayerByIndex(iPlayerEntIndex));
+	if(pPlayer)
 	{
-		pPlayer->EmitSound( "sf14.Merasmus.DuckHunt.BonusDucks" );
+		pPlayer->EmitSound("sf14.Merasmus.DuckHunt.BonusDucks");
 	}
 }
 
-void __MsgFunc_PlayerPickupWeapon( bf_read &msg )
+void __MsgFunc_PlayerPickupWeapon(bf_read &msg)
 {
-	IGameEvent *event = gameeventmanager->CreateEvent( "localplayer_pickup_weapon" );
-	gameeventmanager->FireEventClientSide( event );
+	IGameEvent *event = gameeventmanager->CreateEvent("localplayer_pickup_weapon");
+	gameeventmanager->FireEventClientSide(event);
 }
 
-void __MsgFunc_AutoBalanceVolunteer( bf_read &msg )
+void __MsgFunc_AutoBalanceVolunteer(bf_read &msg)
 {
-	KeyValuesAD pKeyValues( "data" );
-	pKeyValues->SetInt( "points", tf_autobalance_xp_bonus.GetInt() );
+	KeyValuesAD pKeyValues("data");
+	pKeyValues->SetInt("points", tf_autobalance_xp_bonus.GetInt());
 
 	CAutobalanceVolunteerNotification *pNotification = new CAutobalanceVolunteerNotification();
-	pNotification->SetText( GTFGCClientSystem()->BConnectedToMatchServer( true ) ? "#TF_AutoBalanceVolunteerXPBonus" : "#TF_AutoBalanceVolunteer" );
-	pNotification->SetLifetime( tf_autobalance_query_lifetime.GetInt() );
-	pNotification->SetKeyValues( pKeyValues );
-	NotificationQueue_Add( pNotification );
+	pNotification->SetText(GTFGCClientSystem()->BConnectedToMatchServer(true) ? "#TF_AutoBalanceVolunteerXPBonus"
+																			  : "#TF_AutoBalanceVolunteer");
+	pNotification->SetLifetime(tf_autobalance_query_lifetime.GetInt());
+	pNotification->SetKeyValues(pKeyValues);
+	NotificationQueue_Add(pNotification);
 
-	if ( cl_notifications_show_ingame.GetInt() == 0 )
+	if(cl_notifications_show_ingame.GetInt() == 0)
 	{
-		// player has turned off the in-game notifications so let's throw a chat 
+		// player has turned off the in-game notifications so let's throw a chat
 		// message to see if they will check their notifications in the main menu
 		C_TFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
-		CBaseHudChat *pHUDChat = (CBaseHudChat *)GET_HUDELEMENT( CHudChat );
-		if ( pPlayer && pHUDChat )
+		CBaseHudChat *pHUDChat = (CBaseHudChat *)GET_HUDELEMENT(CHudChat);
+		if(pPlayer && pHUDChat)
 		{
 			char szLocalized[100];
-			g_pVGuiLocalize->ConvertUnicodeToANSI(g_pVGuiLocalize->Find( "#TF_AutoBalanceVolunteer_ChatText" ), szLocalized, sizeof( szLocalized ) );
-			pHUDChat->ChatPrintf( pPlayer->entindex(), CHAT_FILTER_NONE, "%s ", szLocalized );
+			g_pVGuiLocalize->ConvertUnicodeToANSI(g_pVGuiLocalize->Find("#TF_AutoBalanceVolunteer_ChatText"),
+												  szLocalized, sizeof(szLocalized));
+			pHUDChat->ChatPrintf(pPlayer->entindex(), CHAT_FILTER_NONE, "%s ", szLocalized);
 		}
 	}
 }
 
-void __MsgFunc_AutoBalanceVolunteer_Cancel( bf_read &msg )
+void __MsgFunc_AutoBalanceVolunteer_Cancel(bf_read &msg)
 {
-	NotificationQueue_Remove( &CAutobalanceVolunteerNotification::IsNotificationType );
+	NotificationQueue_Remove(&CAutobalanceVolunteerNotification::IsNotificationType);
 }
 
-void __MsgFunc_QuestObjectiveCompleted( bf_read &msg )
+void __MsgFunc_QuestObjectiveCompleted(bf_read &msg)
 {
-	tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ );
+	tmZone(TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__);
 
 	itemid_t itemID = (itemid_t)msg.ReadLongLong();
 	uint16 nStandardPoints = msg.ReadWord();
 	uint16 nBonusPoints = msg.ReadWord();
 	uint32 nObjectiveDefIndex = msg.ReadWord();
 
-	QuestObjectiveManager()->UpdateFromServer( itemID, nStandardPoints, nBonusPoints );
-	QuestObjectiveManager()->EnsureTrackersForPlayer( steamapicontext->SteamUser()->GetSteamID() );
+	QuestObjectiveManager()->UpdateFromServer(itemID, nStandardPoints, nBonusPoints);
+	QuestObjectiveManager()->EnsureTrackersForPlayer(steamapicontext->SteamUser()->GetSteamID());
 
 	// Passing a -1 means this is a ninja update where we don't want the fanfare
-	if ( nObjectiveDefIndex != (uint32)-1 )
+	if(nObjectiveDefIndex != (uint32)-1)
 	{
-		IGameEvent *pEvent = gameeventmanager->CreateEvent( "quest_objective_completed" );
-		if ( pEvent )
+		IGameEvent *pEvent = gameeventmanager->CreateEvent("quest_objective_completed");
+		if(pEvent)
 		{
-			pEvent->SetInt( "quest_item_id_low", itemID & 0xFFFFFFFF );
-			pEvent->SetInt( "quest_item_id_hi", itemID >> 32 );
-			pEvent->SetInt( "quest_objective_id", nObjectiveDefIndex );
-			gameeventmanager->FireEventClientSide( pEvent );
-		}	
+			pEvent->SetInt("quest_item_id_low", itemID & 0xFFFFFFFF);
+			pEvent->SetInt("quest_item_id_hi", itemID >> 32);
+			pEvent->SetInt("quest_objective_id", nObjectiveDefIndex);
+			gameeventmanager->FireEventClientSide(pEvent);
+		}
 	}
 }
 
-float PlaySoundEntry( const char* pszSoundEntryName )
+float PlaySoundEntry(const char *pszSoundEntryName)
 {
-	const char *pszSoundName = UTIL_GetRandomSoundFromEntry( pszSoundEntryName );
-	if ( pszSoundName && pszSoundName[0] )
+	const char *pszSoundName = UTIL_GetRandomSoundFromEntry(pszSoundEntryName);
+	if(pszSoundName && pszSoundName[0])
 	{
-		vgui::surface()->PlaySound( pszSoundName );
-		return enginesound->GetSoundDuration( pszSoundName );
+		vgui::surface()->PlaySound(pszSoundName);
+		return enginesound->GetSoundDuration(pszSoundName);
 	}
 
 	return 0.f;
@@ -2287,15 +2297,15 @@ float PlaySoundEntry( const char* pszSoundEntryName )
 #ifdef _WIN32
 
 #include "winlite.h"
-#pragma warning (push)
-#pragma warning(disable:4201)	// nameless struct/union
+#pragma warning(push)
+#pragma warning(disable : 4201) // nameless struct/union
 #include <mmsystem.h>
-#pragma warning (pop) 
+#pragma warning(pop)
 #endif
 //
-void PlayOutOfGameSound( const char *pszSound )
+void PlayOutOfGameSound(const char *pszSound)
 {
 #ifdef _WIN32
-	PlaySound( pszSound, NULL, SND_FILENAME | SND_ASYNC );
+	PlaySound(pszSound, NULL, SND_FILENAME | SND_ASYNC);
 #endif
 }

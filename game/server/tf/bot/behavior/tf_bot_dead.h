@@ -8,13 +8,16 @@
 
 #include "Path/NextBotChasePath.h"
 
-class CTFBotDead : public Action< CTFBot >
+class CTFBotDead : public Action<CTFBot>
 {
 public:
-	virtual ActionResult< CTFBot >	OnStart( CTFBot *me, Action< CTFBot > *priorAction );
-	virtual ActionResult< CTFBot >	Update( CTFBot *me, float interval );
+	virtual ActionResult<CTFBot> OnStart(CTFBot *me, Action<CTFBot> *priorAction);
+	virtual ActionResult<CTFBot> Update(CTFBot *me, float interval);
 
-	virtual const char *GetName( void ) const	{ return "Dead"; };
+	virtual const char *GetName(void) const
+	{
+		return "Dead";
+	};
 
 private:
 	IntervalTimer m_deadTimer;

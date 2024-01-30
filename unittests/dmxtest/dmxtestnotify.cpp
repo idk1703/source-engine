@@ -18,17 +18,17 @@ class CNotifyTest : public IDmNotify
 public:
 	CNotifyTest() : m_nValueCount(0), m_nTopologyCount(0), m_nArrayCount(0) {}
 
-	virtual void NotifyDataChanged( const char *pReason, int nNotifySource, int nNotifyFlags )
+	virtual void NotifyDataChanged(const char *pReason, int nNotifySource, int nNotifyFlags)
 	{
-		if ( nNotifyFlags & NOTIFY_CHANGE_ATTRIBUTE_VALUE )
+		if(nNotifyFlags & NOTIFY_CHANGE_ATTRIBUTE_VALUE)
 		{
 			m_nValueCount++;
 		}
-		if ( nNotifyFlags & NOTIFY_CHANGE_ATTRIBUTE_ARRAY_SIZE )
+		if(nNotifyFlags & NOTIFY_CHANGE_ATTRIBUTE_ARRAY_SIZE)
 		{
 			m_nArrayCount++;
 		}
-		if ( nNotifyFlags & NOTIFY_CHANGE_TOPOLOGICAL )
+		if(nNotifyFlags & NOTIFY_CHANGE_TOPOLOGICAL)
 		{
 			m_nTopologyCount++;
 		}
@@ -39,73 +39,72 @@ public:
 	int m_nValueCount;
 };
 
-
-DEFINE_TESTCASE_NOSUITE( DmxNotifyTest )
+DEFINE_TESTCASE_NOSUITE(DmxNotifyTest)
 {
-	Msg( "Running dmx notify tests...\n" );
+	Msg("Running dmx notify tests...\n");
 
 	CNotifyTest test1, test2;
 
-	DmFileId_t fileid = g_pDataModel->FindOrCreateFileId( "<RunNotifyTests>" );
+	DmFileId_t fileid = g_pDataModel->FindOrCreateFileId("<RunNotifyTests>");
 
-	g_pDataModel->InstallNotificationCallback( &test1 );
+	g_pDataModel->InstallNotificationCallback(&test1);
 
 	CDmElement *element = NULL;
 
 	{
-		CUndoScopeGuard guard( NOTIFY_SOURCE_APPLICATION, 0, "create" );
-		element = CreateElement< CDmElement >( "test", fileid );
+		CUndoScopeGuard guard(NOTIFY_SOURCE_APPLICATION, 0, "create");
+		element = CreateElement<CDmElement>("test", fileid);
 	}
-	
-	Shipping_Assert( test1.m_nTopologyCount == 1 );
-	Shipping_Assert( test1.m_nArrayCount == 0 );
+
+	Shipping_Assert(test1.m_nTopologyCount == 1);
+	Shipping_Assert(test1.m_nArrayCount == 0);
 
 	g_pDataModel->Undo();
 
-	Shipping_Assert( test1.m_nTopologyCount == 2 );
-	Shipping_Assert( test1.m_nArrayCount == 0 );
+	Shipping_Assert(test1.m_nTopologyCount == 2);
+	Shipping_Assert(test1.m_nArrayCount == 0);
 
 	{
-		CNotifyScopeGuard notify( "test1", NOTIFY_SOURCE_APPLICATION, 0, &test2 );
+		CNotifyScopeGuard notify("test1", NOTIFY_SOURCE_APPLICATION, 0, &test2);
 		CDisableUndoScopeGuard guard;
-		element = CreateElement< CDmElement >( "test", fileid );
+		element = CreateElement<CDmElement>("test", fileid);
 	}
 
-	Shipping_Assert( test1.m_nTopologyCount == 3 );
-	Shipping_Assert( test1.m_nArrayCount == 0 );
-	Shipping_Assert( test2.m_nTopologyCount == 1 );
-	Shipping_Assert( test2.m_nArrayCount == 0 );
+	Shipping_Assert(test1.m_nTopologyCount == 3);
+	Shipping_Assert(test1.m_nArrayCount == 0);
+	Shipping_Assert(test2.m_nTopologyCount == 1);
+	Shipping_Assert(test2.m_nArrayCount == 0);
 
 	{
 		CDisableUndoScopeGuard guard;
 
 		// NOTE: Nested scope guards referring to the same callback shouldn't double call it
-		CNotifyScopeGuard notify( "test2", NOTIFY_SOURCE_APPLICATION, 0, &test2 );
+		CNotifyScopeGuard notify("test2", NOTIFY_SOURCE_APPLICATION, 0, &test2);
 		{
-			CNotifyScopeGuard notify( "test3", NOTIFY_SOURCE_APPLICATION, 0, &test2 );
-			DestroyElement( element );
+			CNotifyScopeGuard notify("test3", NOTIFY_SOURCE_APPLICATION, 0, &test2);
+			DestroyElement(element);
 		}
 	}
 
-	Shipping_Assert( test1.m_nTopologyCount == 4 );
-	Shipping_Assert( test1.m_nArrayCount == 0 );
-	Shipping_Assert( test2.m_nTopologyCount == 2 );
-	Shipping_Assert( test2.m_nArrayCount == 0 );
+	Shipping_Assert(test1.m_nTopologyCount == 4);
+	Shipping_Assert(test1.m_nArrayCount == 0);
+	Shipping_Assert(test2.m_nTopologyCount == 2);
+	Shipping_Assert(test2.m_nArrayCount == 0);
 
 	{
-		CUndoScopeGuard guard( NOTIFY_SOURCE_APPLICATION, 0, "create" );
+		CUndoScopeGuard guard(NOTIFY_SOURCE_APPLICATION, 0, "create");
 		{
-			element = CreateElement< CDmElement >( "test", fileid );
-			element->SetValue( "test", 1.0f );
+			element = CreateElement<CDmElement>("test", fileid);
+			element->SetValue("test", 1.0f);
 		}
 		guard.Abort();
 	}
 
-	Shipping_Assert( test1.m_nTopologyCount == 4 );
-	Shipping_Assert( test1.m_nArrayCount == 0 );
-	Shipping_Assert( test2.m_nTopologyCount == 2 );
-	Shipping_Assert( test2.m_nArrayCount == 0 );
+	Shipping_Assert(test1.m_nTopologyCount == 4);
+	Shipping_Assert(test1.m_nArrayCount == 0);
+	Shipping_Assert(test2.m_nTopologyCount == 2);
+	Shipping_Assert(test2.m_nArrayCount == 0);
 
-	g_pDataModel->RemoveNotificationCallback( &test1 );
-	g_pDataModel->RemoveFileId( fileid );
+	g_pDataModel->RemoveNotificationCallback(&test1);
+	g_pDataModel->RemoveFileId(fileid);
 }

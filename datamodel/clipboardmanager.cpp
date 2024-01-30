@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -12,39 +12,36 @@
 #define USE_WINDOWS_CLIPBOARD
 #endif
 
-#if defined( USE_WINDOWS_CLIPBOARD )
+#if defined(USE_WINDOWS_CLIPBOARD)
 #include <windows.h>
 #endif
 
-CClipboardManager::CClipboardManager( ) :
-	m_pfnCleanup( NULL )
-{
-}
+CClipboardManager::CClipboardManager() : m_pfnCleanup(NULL) {}
 
 CClipboardManager::~CClipboardManager()
 {
-	EmptyClipboard( false );
+	EmptyClipboard(false);
 }
 
-void CClipboardManager::EmptyClipboard( bool bClearWindowsClipboard )
+void CClipboardManager::EmptyClipboard(bool bClearWindowsClipboard)
 {
 	// Call optional cleanup function if there is one...
-	if ( m_pfnCleanup )
+	if(m_pfnCleanup)
 	{
-		m_pfnCleanup->ReleaseClipboardData( m_Data );
+		m_pfnCleanup->ReleaseClipboardData(m_Data);
 	}
 	int c = m_Data.Count();
-	for ( int i = 0; i < c; ++i )
+	for(int i = 0; i < c; ++i)
 	{
-		m_Data[ i ]->deleteThis();
+		m_Data[i]->deleteThis();
 	}
 	m_Data.RemoveAll();
 	m_pfnCleanup = NULL;
 
-#if defined( USE_WINDOWS_CLIPBOARD )
-	if ( bClearWindowsClipboard )
+#if defined(USE_WINDOWS_CLIPBOARD)
+	if(bClearWindowsClipboard)
 	{
-		if ( ::OpenClipboard( ::GetDesktopWindow() ) )
+		if(::OpenClipboard(::GetDesktopWindow()))
 		{
 			::EmptyClipboard();
 			::CloseClipboard();
@@ -53,34 +50,34 @@ void CClipboardManager::EmptyClipboard( bool bClearWindowsClipboard )
 #endif
 }
 
-void CClipboardManager::SetClipboardData( CUtlVector< KeyValues * >& data, IClipboardCleanup *pfnOptionalCleanuFunction )
+void CClipboardManager::SetClipboardData(CUtlVector<KeyValues *> &data, IClipboardCleanup *pfnOptionalCleanuFunction)
 {
-	EmptyClipboard( true );
+	EmptyClipboard(true);
 	m_Data = data;
 	m_pfnCleanup = pfnOptionalCleanuFunction;
 
-#if defined( USE_WINDOWS_CLIPBOARD )
-	if ( m_Data.Count() >= 0 )
+#if defined(USE_WINDOWS_CLIPBOARD)
+	if(m_Data.Count() >= 0)
 	{
 		// Only stick the first item's data into the clipboard
-		char const *text = m_Data[ 0 ]->GetString( "text", "" );
-		if ( text && text[ 0 ] )
+		char const *text = m_Data[0]->GetString("text", "");
+		if(text && text[0])
 		{
-			int textLen = Q_strlen( text );
+			int textLen = Q_strlen(text);
 
-			if ( ::OpenClipboard( ::GetDesktopWindow() ) )
+			if(::OpenClipboard(::GetDesktopWindow()))
 			{
 				HANDLE hmem = ::GlobalAlloc(GMEM_MOVEABLE, textLen + 1);
-				if (hmem)
+				if(hmem)
 				{
-					void *ptr = ::GlobalLock( hmem );
-					if ( ptr  )
+					void *ptr = ::GlobalLock(hmem);
+					if(ptr)
 					{
-						Q_memset( ptr, 0, textLen + 1 );
-						Q_memcpy( ptr, text, textLen );
-						::GlobalUnlock( hmem );
+						Q_memset(ptr, 0, textLen + 1);
+						Q_memcpy(ptr, text, textLen);
+						::GlobalUnlock(hmem);
 
-						::SetClipboardData( CF_TEXT, hmem );
+						::SetClipboardData(CF_TEXT, hmem);
 					}
 				}
 				::CloseClipboard();
@@ -90,34 +87,33 @@ void CClipboardManager::SetClipboardData( CUtlVector< KeyValues * >& data, IClip
 #endif
 }
 
-void CClipboardManager::AddToClipboardData( KeyValues *add )
+void CClipboardManager::AddToClipboardData(KeyValues *add)
 {
-	m_Data.AddToTail( add );
-#if defined( USE_WINDOWS_CLIPBOARD )
-	if ( m_Data.Count() >= 0 )
+	m_Data.AddToTail(add);
+#if defined(USE_WINDOWS_CLIPBOARD)
+	if(m_Data.Count() >= 0)
 	{
 		// Only stick the first item's data into the clipboard
-		char const *text = m_Data[ 0 ]->GetString( "text", "" );
-		if ( text && text[ 0 ] )
+		char const *text = m_Data[0]->GetString("text", "");
+		if(text && text[0])
 		{
-			int textLen = Q_strlen( text );
+			int textLen = Q_strlen(text);
 
-
-			if ( ::OpenClipboard( ::GetDesktopWindow() ) )
+			if(::OpenClipboard(::GetDesktopWindow()))
 			{
 				::EmptyClipboard();
 
 				HANDLE hmem = ::GlobalAlloc(GMEM_MOVEABLE, textLen + 1);
-				if (hmem)
+				if(hmem)
 				{
-					void *ptr = ::GlobalLock( hmem );
-					if ( ptr  )
+					void *ptr = ::GlobalLock(hmem);
+					if(ptr)
 					{
-						Q_memset( ptr, 0, textLen + 1 );
-						Q_memcpy( ptr, text, textLen );
-						::GlobalUnlock( hmem );
+						Q_memset(ptr, 0, textLen + 1);
+						Q_memcpy(ptr, text, textLen);
+						::GlobalUnlock(hmem);
 
-						::SetClipboardData( CF_TEXT, hmem );
+						::SetClipboardData(CF_TEXT, hmem);
 					}
 				}
 				::CloseClipboard();
@@ -127,33 +123,33 @@ void CClipboardManager::AddToClipboardData( KeyValues *add )
 #endif
 }
 
-void CClipboardManager::GetClipboardData( CUtlVector< KeyValues * >& data )
+void CClipboardManager::GetClipboardData(CUtlVector<KeyValues *> &data)
 {
 	data.RemoveAll();
 	data = m_Data;
-#if defined( USE_WINDOWS_CLIPBOARD )
-	if ( data.Count() == 0 )
+#if defined(USE_WINDOWS_CLIPBOARD)
+	if(data.Count() == 0)
 	{
 		// See if windows has some text since we didn't have any internally
-		if ( ::OpenClipboard( ::GetDesktopWindow() ) )
+		if(::OpenClipboard(::GetDesktopWindow()))
 		{
-			HANDLE hmem = ::GetClipboardData( CF_TEXT );
-			if ( hmem )
+			HANDLE hmem = ::GetClipboardData(CF_TEXT);
+			if(hmem)
 			{
-				int len = GlobalSize( hmem );
-				if ( len > 0 )
+				int len = GlobalSize(hmem);
+				if(len > 0)
 				{
 					void *ptr = GlobalLock(hmem);
-					if ( ptr )
+					if(ptr)
 					{
-						char buf[ 8192 ];
-						len = min( len, 8191 );
-						Q_memcpy( buf, ( char * )ptr, len );
-						buf[ 8191 ] = 0;
+						char buf[8192];
+						len = min(len, 8191);
+						Q_memcpy(buf, (char *)ptr, len);
+						buf[8191] = 0;
 						GlobalUnlock(hmem);
 
-						KeyValues *newData = new KeyValues( "ClipBoard", "text", buf );
-						data.AddToTail( newData );
+						KeyValues *newData = new KeyValues("ClipBoard", "text", buf);
+						data.AddToTail(newData);
 					}
 				}
 			}

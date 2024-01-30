@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -16,15 +16,12 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 static BOOL CountObject(CMapClass *pobj);
-
 
 BEGIN_MESSAGE_MAP(CMapInfoDlg, CDialog)
 	//{{AFX_MSG_MAP(CMapInfoDlg)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Callback for enumerating map objects while gathering statistics for
@@ -37,13 +34,13 @@ static BOOL CountObject(CMapClass *pobj, unsigned int dwParam)
 {
 	CMapInfoDlg *pdlg = (CMapInfoDlg *)dwParam;
 
-	if (pdlg != NULL)
+	if(pdlg != NULL)
 	{
-		if (pobj->IsMapClass(MAPCLASS_TYPE(CMapSolid)))
+		if(pobj->IsMapClass(MAPCLASS_TYPE(CMapSolid)))
 		{
 			pdlg->CountSolid((CMapSolid *)pobj);
 		}
-		else if (pobj->IsMapClass(MAPCLASS_TYPE(CMapEntity)))
+		else if(pobj->IsMapClass(MAPCLASS_TYPE(CMapEntity)))
 		{
 			pdlg->CountEntity((CMapEntity *)pobj);
 		}
@@ -52,21 +49,18 @@ static BOOL CountObject(CMapClass *pobj, unsigned int dwParam)
 	return TRUE;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Constructor.
-// Input  : pWorld - 
+// Input  : pWorld -
 //			pParent
 //-----------------------------------------------------------------------------
-CMapInfoDlg::CMapInfoDlg(CMapWorld *pWorld, CWnd* pParent /*=NULL*/)
-	: CDialog(CMapInfoDlg::IDD, pParent)
+CMapInfoDlg::CMapInfoDlg(CMapWorld *pWorld, CWnd *pParent /*=NULL*/) : CDialog(CMapInfoDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CMapInfoDlg)
-		// NOTE: the ClassWizard will add member initialization here
+	// NOTE: the ClassWizard will add member initialization here
 	//}}AFX_DATA_INIT
 	this->pWorld = pWorld;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Gathers statistics about an entity.
@@ -74,7 +68,7 @@ CMapInfoDlg::CMapInfoDlg(CMapWorld *pWorld, CWnd* pParent /*=NULL*/)
 //-----------------------------------------------------------------------------
 void CMapInfoDlg::CountEntity(CMapEntity *pEntity)
 {
-	if (pEntity->IsPlaceholder())
+	if(pEntity->IsPlaceholder())
 	{
 		m_uPointEntityCount++;
 	}
@@ -84,19 +78,17 @@ void CMapInfoDlg::CountEntity(CMapEntity *pEntity)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Gathers statistics about a face.
 // Input  : *pFace - Face to count.
 //-----------------------------------------------------------------------------
 void CMapInfoDlg::CountFace(CMapFace *pFace)
 {
-	if (pFace->GetTexture() != NULL)
+	if(pFace->GetTexture() != NULL)
 	{
 		CountTexture(pFace->GetTexture());
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Gathers statistics about a brush.
@@ -109,16 +101,15 @@ void CMapInfoDlg::CountSolid(CMapSolid *pSolid)
 	UINT uFaceCount = pSolid->GetFaceCount();
 	m_uFaceCount += uFaceCount;
 
-	for (UINT uFace = 0; uFace < uFaceCount; uFace++)
+	for(UINT uFace = 0; uFace < uFaceCount; uFace++)
 	{
 		CMapFace *pFace = pSolid->GetFace(uFace);
-		if (pFace != NULL)
+		if(pFace != NULL)
 		{
 			CountFace(pFace);
 		}
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Gathers statistics about this texture. Increments the count of
@@ -131,9 +122,9 @@ void CMapInfoDlg::CountTexture(IEditorTexture *pTex)
 	//
 	// If this texture is in our list, don't do anything - it has been tallied.
 	//
-	for (UINT uTexture = 0; uTexture < m_uUniqueTextures; uTexture++)
+	for(UINT uTexture = 0; uTexture < m_uUniqueTextures; uTexture++)
 	{
-		if (m_pTextures[uTexture] == pTex)
+		if(m_pTextures[uTexture] == pTex)
 		{
 			return;
 		}
@@ -157,19 +148,18 @@ void CMapInfoDlg::CountTexture(IEditorTexture *pTex)
 	// Add the filename to the list box if it isn't already there.
 	//
 	const char *pszFileName = pTex->GetFileName();
-	if (pszFileName[0] != '\0')
+	if(pszFileName[0] != '\0')
 	{
-		if (m_WadsUsed.FindStringExact(0, pszFileName) == LB_ERR)
+		if(m_WadsUsed.FindStringExact(0, pszFileName) == LB_ERR)
 		{
 			m_WadsUsed.AddString(pszFileName);
 		}
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Sets up child windows.
-// Input  : pDX - 
+// Input  : pDX -
 //-----------------------------------------------------------------------------
 void CMapInfoDlg::DoDataExchange(CDataExchange *pDX)
 {
@@ -185,7 +175,6 @@ void CMapInfoDlg::DoDataExchange(CDataExchange *pDX)
 	//}}AFX_DATA_MAP
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Tallies up statistics about this map and puts it in the dialog
 //			controls for display.
@@ -193,7 +182,7 @@ void CMapInfoDlg::DoDataExchange(CDataExchange *pDX)
 BOOL CMapInfoDlg::OnInitDialog(void)
 {
 	CDialog::OnInitDialog();
-	
+
 	m_uSolidCount = 0;
 	m_uPointEntityCount = 0;
 	m_uSolidEntityCount = 0;
@@ -213,7 +202,7 @@ BOOL CMapInfoDlg::OnInitDialog(void)
 
 	ultoa(m_uPointEntityCount, szBuf, 10);
 	m_PointEntities.SetWindowText(szBuf);
-	
+
 	ultoa(m_uFaceCount, szBuf, 10);
 	m_Faces.SetWindowText(szBuf);
 
@@ -223,7 +212,6 @@ BOOL CMapInfoDlg::OnInitDialog(void)
 	ultoa(m_uTextureMemory, szBuf, 10);
 	sprintf(szBuf, "%u bytes (%.2f MB)", m_uTextureMemory, (float)m_uTextureMemory / 1024000.0);
 	m_TextureMemory.SetWindowText(szBuf);
-	
+
 	return TRUE;
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "movieobjects/dmeinput.h"
@@ -9,23 +9,17 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
+//-----------------------------------------------------------------------------
+// Expose this class to the scene database
+//-----------------------------------------------------------------------------
+IMPLEMENT_ABSTRACT_ELEMENT(DmeInput, CDmeInput);
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Purpose:
 //-----------------------------------------------------------------------------
-IMPLEMENT_ABSTRACT_ELEMENT( DmeInput, CDmeInput );
+void CDmeInput::OnConstruction() {}
 
-
-//-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-void CDmeInput::OnConstruction()
-{
-}
-
-void CDmeInput::OnDestruction()
-{
-}
+void CDmeInput::OnDestruction() {}
 
 //-----------------------------------------------------------------------------
 // IsDirty - ie needs to operate

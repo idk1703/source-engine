@@ -11,145 +11,139 @@
 #pragma once
 #endif
 
-
 #include "IEditorTexture.h"
-
 
 enum
 {
 	TEXTURE_HAS_ALPHA = 0x01
 };
 
-
 class CTexture : public IEditorTexture
 {
-	public:
+public:
+	CTexture(void);
+	virtual ~CTexture(void);
 
-		CTexture( void );
-		virtual ~CTexture( void );
+	bool Allocate(int nWidth, int nHeight, int nFlags);
 
-		bool Allocate( int nWidth, int nHeight, int nFlags );
+	void Draw(CDC *pDC, RECT &rect, int iFontHeight, int iIconHeight, DrawTexData_t &DrawTexData);
 
-		void Draw(CDC *pDC, RECT &rect, int iFontHeight, int iIconHeight, DrawTexData_t &DrawTexData);
+	inline void *GetImageDataPtr(void)
+	{
+		return (m_pImageData);
+	}
 
-		inline void *GetImageDataPtr( void )
-		{
-			return( m_pImageData );
-		}
+	const char *GetFileName(void) const;
 
-		const char *GetFileName(void) const;
+	inline const char *GetName(void) const
+	{
+		return (m_szName);
+	}
+	int GetShortName(char *pszName) const;
 
-		inline const char *GetName(void) const
-		{
-			return(m_szName);
-		}
-		int GetShortName(char *pszName) const;
+	int GetKeywords(char *pszKeywords) const;
 
-		int GetKeywords(char *pszKeywords) const;
-		
-		int GetImageDataRGB( void *pData = NULL );
-		int GetImageDataRGBA( void *pData = NULL );
+	int GetImageDataRGB(void *pData = NULL);
+	int GetImageDataRGBA(void *pData = NULL);
 
-		inline int GetImageWidth( void ) const
-		{
-			return( m_nWidth );
-		}
+	inline int GetImageWidth(void) const
+	{
+		return (m_nWidth);
+	}
 
-		inline int GetImageHeight( void ) const
-		{
-			return( m_nHeight );
-		}
+	inline int GetImageHeight(void) const
+	{
+		return (m_nHeight);
+	}
 
-		inline int GetWidth( void ) const
-		{
-			return( m_nWidth );
-		}
+	inline int GetWidth(void) const
+	{
+		return (m_nWidth);
+	}
 
-		inline int GetHeight( void ) const
-		{
-			return( m_nHeight );
-		}
+	inline int GetHeight(void) const
+	{
+		return (m_nHeight);
+	}
 
-		inline float GetDecalScale( void ) const
-		{
-			return( 1.0f );
-		}
-		
-		inline CPalette *GetPalette( void ) const
-		{
-			return( NULL );
-		}
+	inline float GetDecalScale(void) const
+	{
+		return (1.0f);
+	}
 
-		inline int GetSurfaceAttributes( void ) const
-		{
-			return(0);
-		}
+	inline CPalette *GetPalette(void) const
+	{
+		return (NULL);
+	}
 
-		inline int GetSurfaceContents(void ) const
-		{
-			return(0);
-		}
+	inline int GetSurfaceAttributes(void) const
+	{
+		return (0);
+	}
 
-		inline int GetSurfaceValue( void ) const
-		{
-			return(0);
-		}
+	inline int GetSurfaceContents(void) const
+	{
+		return (0);
+	}
 
-		inline TEXTUREFORMAT GetTextureFormat( void ) const
-		{
-			return(tfSprite);
-		}
+	inline int GetSurfaceValue(void) const
+	{
+		return (0);
+	}
 
-		inline int GetTextureID( void ) const
-		{
-			return( m_nTextureID );
-		}
+	inline TEXTUREFORMAT GetTextureFormat(void) const
+	{
+		return (tfSprite);
+	}
 
-		inline bool HasAlpha( void ) const
-		{
-			return( m_bHasAlpha );
-		}
+	inline int GetTextureID(void) const
+	{
+		return (m_nTextureID);
+	}
 
-		inline bool HasData( void ) const
-		{
-			return( m_pImageData != NULL );
-		}
+	inline bool HasAlpha(void) const
+	{
+		return (m_bHasAlpha);
+	}
 
-		inline bool HasPalette( void ) const
-		{
-			return( false );
-		}
+	inline bool HasData(void) const
+	{
+		return (m_pImageData != NULL);
+	}
 
-		inline bool IsDummy( void ) const
-		{
-			return(( m_nWidth == 0) || ( m_nHeight == 0) || ( m_pImageData == NULL ));
-		}
+	inline bool HasPalette(void) const
+	{
+		return (false);
+	}
 
-		bool Load( void );
+	inline bool IsDummy(void) const
+	{
+		return ((m_nWidth == 0) || (m_nHeight == 0) || (m_pImageData == NULL));
+	}
 
-		inline bool IsLoaded() const
-		{
-			return true;
-		}
+	bool Load(void);
 
-		inline void SetTextureID( int nTextureID )
-		{
-			m_nTextureID = nTextureID;
-		}
+	inline bool IsLoaded() const
+	{
+		return true;
+	}
 
-	protected:
+	inline void SetTextureID(int nTextureID)
+	{
+		m_nTextureID = nTextureID;
+	}
 
-		int m_nTextureID;			// Uniquely identifies this texture in all 3D renderers.
+protected:
+	int m_nTextureID; // Uniquely identifies this texture in all 3D renderers.
 
-		int m_nWidth;
-		int m_nHeight;
+	int m_nWidth;
+	int m_nHeight;
 
-		bool m_bHasAlpha;
+	bool m_bHasAlpha;
 
-		char m_szName[MAX_PATH];
+	char m_szName[MAX_PATH];
 
-		void *m_pImageData;
+	void *m_pImageData;
 };
-
 
 #endif // TEXTURE_H

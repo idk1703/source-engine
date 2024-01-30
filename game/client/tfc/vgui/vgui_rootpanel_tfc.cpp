@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,57 +15,52 @@
 
 C_TFCRootPanel *g_pRootPanel = NULL;
 
-
 //-----------------------------------------------------------------------------
 // Global functions.
 //-----------------------------------------------------------------------------
-void VGUI_CreateClientDLLRootPanel( void )
+void VGUI_CreateClientDLLRootPanel(void)
 {
-	g_pRootPanel = new C_TFCRootPanel( enginevgui->GetPanel( PANEL_CLIENTDLL ) );
+	g_pRootPanel = new C_TFCRootPanel(enginevgui->GetPanel(PANEL_CLIENTDLL));
 }
 
-void VGUI_DestroyClientDLLRootPanel( void )
+void VGUI_DestroyClientDLLRootPanel(void)
 {
 	delete g_pRootPanel;
 	g_pRootPanel = NULL;
 }
 
-vgui::VPANEL VGui_GetClientDLLRootPanel( void )
+vgui::VPANEL VGui_GetClientDLLRootPanel(void)
 {
 	return g_pRootPanel->GetVPanel();
 }
 
-
 //-----------------------------------------------------------------------------
 // C_TFCRootPanel implementation.
 //-----------------------------------------------------------------------------
-C_TFCRootPanel::C_TFCRootPanel( vgui::VPANEL parent )
-	: BaseClass( NULL, "TFC Root Panel" )
+C_TFCRootPanel::C_TFCRootPanel(vgui::VPANEL parent) : BaseClass(NULL, "TFC Root Panel")
 {
-	SetParent( parent );
-	SetPaintEnabled( false );
-	SetPaintBorderEnabled( false );
-	SetPaintBackgroundEnabled( false );
+	SetParent(parent);
+	SetPaintEnabled(false);
+	SetPaintBorderEnabled(false);
+	SetPaintBackgroundEnabled(false);
 
 	// This panel does post child painting
-	SetPostChildPaintEnabled( true );
+	SetPostChildPaintEnabled(true);
 
 	// Make it screen sized
-	SetBounds( 0, 0, ScreenWidth(), ScreenHeight() );
+	SetBounds(0, 0, ScreenWidth(), ScreenHeight());
 
 	// Ask for OnTick messages
-	vgui::ivgui()->AddTickSignal( GetVPanel() );
+	vgui::ivgui()->AddTickSignal(GetVPanel());
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-C_TFCRootPanel::~C_TFCRootPanel( void )
-{
-}
+C_TFCRootPanel::~C_TFCRootPanel(void) {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TFCRootPanel::PostChildPaint()
 {
@@ -79,28 +74,19 @@ void C_TFCRootPanel::PostChildPaint()
 // Purpose: For each panel effect, check if it wants to draw and draw it on
 //  this panel/surface if so
 //-----------------------------------------------------------------------------
-void C_TFCRootPanel::RenderPanelEffects( void )
-{
-}
+void C_TFCRootPanel::RenderPanelEffects(void) {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_TFCRootPanel::OnTick( void )
-{
-}
+void C_TFCRootPanel::OnTick(void) {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Reset effects on level load/shutdown
 //-----------------------------------------------------------------------------
-void C_TFCRootPanel::LevelInit( void )
-{
-}
+void C_TFCRootPanel::LevelInit(void) {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_TFCRootPanel::LevelShutdown( void )
-{
-}
-
+void C_TFCRootPanel::LevelShutdown(void) {}

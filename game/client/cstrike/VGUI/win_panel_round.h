@@ -26,19 +26,19 @@ using namespace vgui;
 class WinPanel_Round : public BorderedPanel, public CHudElement
 {
 private:
-	DECLARE_CLASS_SIMPLE( WinPanel_Round, BorderedPanel );
+	DECLARE_CLASS_SIMPLE(WinPanel_Round, BorderedPanel);
 
 public:
 	WinPanel_Round(const char *pElementName);
-    ~WinPanel_Round();
+	~WinPanel_Round();
 
 	virtual void Reset();
 	virtual void Init();
 	virtual void VidInit();
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void FireGameEvent( IGameEvent * event );
-	virtual bool ShouldDraw( void );
-	virtual void Paint( void ) {};
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void FireGameEvent(IGameEvent *event);
+	virtual bool ShouldDraw(void);
+	virtual void Paint(void) {};
 	virtual void OnScreenSizeChanged(int nOldWide, int nOldTall);
 
 	virtual void OnThink();
@@ -48,8 +48,8 @@ public:
 	void Hide();
 
 protected:
-	void SetMVP( C_CSPlayer* pPlayer, CSMvpReason_t reason );
-	void SetFunFactLabel( const wchar *szFunFact );
+	void SetMVP(C_CSPlayer *pPlayer, CSMvpReason_t reason);
+	void SetFunFactLabel(const wchar *szFunFact);
 
 private:
 	bool m_bShowTimerDefend;
@@ -62,4 +62,4 @@ private:
 	float m_fFadeBeginTime;
 };
 
-#endif //CSWINPANEL_ROUND_H
+#endif // CSWINPANEL_ROUND_H

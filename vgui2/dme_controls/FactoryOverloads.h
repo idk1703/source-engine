@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -19,31 +19,23 @@ class IAttributeElementChoiceList;
 class CFactoryOverloads : public IFactoryOverloads
 {
 public:
-	virtual void				AddOverload
-								( 
-									char const *attributeName, 
-									IAttributeWidgetFactory *newFactory,
-									IAttributeElementChoiceList *newChoiceList 
-								);
-	int							Count();
-	char const					*Name( int index );
-	IAttributeWidgetFactory		*Factory( int index );
-	IAttributeElementChoiceList *ChoiceList( int index );
+	virtual void AddOverload(char const *attributeName, IAttributeWidgetFactory *newFactory,
+							 IAttributeElementChoiceList *newChoiceList);
+	int Count();
+	char const *Name(int index);
+	IAttributeWidgetFactory *Factory(int index);
+	IAttributeElementChoiceList *ChoiceList(int index);
 
 private:
 	struct Entry_t
 	{
-		Entry_t() : 
-			factory( 0 ),
-			choices( 0 )
-		{
-		}
+		Entry_t() : factory(0), choices(0) {}
 
-		IAttributeWidgetFactory			*factory;
-		IAttributeElementChoiceList		*choices;
+		IAttributeWidgetFactory *factory;
+		IAttributeElementChoiceList *choices;
 	};
 
-	CUtlDict< Entry_t, int >	m_Overloads;
+	CUtlDict<Entry_t, int> m_Overloads;
 };
 
 #endif // FACTORYOVERLOADS_H

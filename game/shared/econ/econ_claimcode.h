@@ -16,25 +16,23 @@
 //---------------------------------------------------------------------------------
 // Purpose: All the account-level information that the GC tracks for TF
 //---------------------------------------------------------------------------------
-class CEconClaimCode : public GCSDK::CProtoBufSharedObject< CSOEconClaimCode, k_EEconTypeClaimCode >
+class CEconClaimCode : public GCSDK::CProtoBufSharedObject<CSOEconClaimCode, k_EEconTypeClaimCode>
 {
 #ifdef GC
-	DECLARE_CLASS_MEMPOOL( CEconClaimCode );
+	DECLARE_CLASS_MEMPOOL(CEconClaimCode);
 #endif
 
 public:
-
 #ifdef GC
-	virtual bool BYieldingAddInsertToTransaction( GCSDK::CSQLAccess & sqlAccess );
+	virtual bool BYieldingAddInsertToTransaction(GCSDK::CSQLAccess &sqlAccess);
 
-	void WriteToRecord( CSchAssignedClaimCode *pClaimCode );
-	void ReadFromRecord( const CSchAssignedClaimCode & mapContribution );
+	void WriteToRecord(CSchAssignedClaimCode *pClaimCode);
+	void ReadFromRecord(const CSchAssignedClaimCode &mapContribution);
 #endif
 };
 
 #ifdef GC
-bool BBuildRedemptionURL( CEconClaimCode *pClaimCode, CUtlString &redemptionURL );
+bool BBuildRedemptionURL(CEconClaimCode *pClaimCode, CUtlString &redemptionURL);
 #endif
 
 #endif // ECON_CLAIMCODE_H
-

@@ -18,20 +18,20 @@
 //
 // Weapon Tranq tables.
 //
-IMPLEMENT_NETWORKCLASS_ALIASED( TFTranq, DT_WeaponTranq )
+IMPLEMENT_NETWORKCLASS_ALIASED(TFTranq, DT_WeaponTranq)
 
-BEGIN_NETWORK_TABLE( CTFTranq, DT_WeaponTranq )
+BEGIN_NETWORK_TABLE(CTFTranq, DT_WeaponTranq)
 END_NETWORK_TABLE()
 
-BEGIN_PREDICTION_DATA( CTFTranq )
+BEGIN_PREDICTION_DATA(CTFTranq)
 END_PREDICTION_DATA()
 
-LINK_ENTITY_TO_CLASS( tf_weapon_tranq, CTFTranq );
-PRECACHE_WEAPON_REGISTER( tf_weapon_tranq );
+LINK_ENTITY_TO_CLASS(tf_weapon_tranq, CTFTranq);
+PRECACHE_WEAPON_REGISTER(tf_weapon_tranq);
 
 // Server specific.
 #ifndef CLIENT_DLL
-BEGIN_DATADESC( CTFTranq )
+BEGIN_DATADESC(CTFTranq)
 END_DATADESC()
 #endif
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -26,25 +26,20 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNCREATE(CPakFrame, CMDIChildWnd)
 
-CPakFrame::CPakFrame()
-{
-}
+CPakFrame::CPakFrame() {}
 
-CPakFrame::~CPakFrame()
-{
-}
-
+CPakFrame::~CPakFrame() {}
 
 BEGIN_MESSAGE_MAP(CPakFrame, CMDIChildWnd)
 	//{{AFX_MSG_MAP(CPakFrame)
-		// NOTE - the ClassWizard will add and remove mapping macros here.
+	// NOTE - the ClassWizard will add and remove mapping macros here.
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CPakFrame message handlers
 
-BOOL CPakFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext) 
+BOOL CPakFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext *pContext)
 {
 	if(!SplitWnd.CreateStatic(this, 1, 2))
 		return FALSE;
@@ -53,10 +48,8 @@ BOOL CPakFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext)
 	GetClientRect(&r);
 
 	// create panes
-	SplitWnd.CreateView(0, 0, RUNTIME_CLASS(CPakViewDirec), 
-		CSize(150, r.bottom), pContext);
-	SplitWnd.CreateView(0, 1, RUNTIME_CLASS(CPakViewFiles), 
-		CSize(300, r.bottom), pContext);
+	SplitWnd.CreateView(0, 0, RUNTIME_CLASS(CPakViewDirec), CSize(150, r.bottom), pContext);
+	SplitWnd.CreateView(0, 1, RUNTIME_CLASS(CPakViewFiles), CSize(300, r.bottom), pContext);
 
 	return TRUE;
 }

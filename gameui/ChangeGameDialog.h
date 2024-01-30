@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,7 +22,7 @@ public:
 	CChangeGameDialog(vgui::Panel *parent);
 	~CChangeGameDialog();
 
-	virtual void OnCommand( const char *command );
+	virtual void OnCommand(const char *command);
 
 private:
 	void LoadModList();
@@ -31,6 +31,5 @@ private:
 
 	typedef vgui::Frame BaseClass;
 };
-
 
 #endif // CHANGEGAMEDIALOG_H

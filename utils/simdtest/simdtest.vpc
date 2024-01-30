@@ -52,7 +52,7 @@ $Project "Simdtest"
 	{
 		$File	"simdtest.cpp"
 	}
-	
+
 	$Folder	"Link Libraries"
 	{
 		$Lib mathlib

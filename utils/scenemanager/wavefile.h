@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -22,67 +22,83 @@ class CWaveFile : public ITreeItem
 {
 public:
 	// One or both may be valid
-	CWaveFile( CVCDFile *vcd, CSoundEntry *se, char const *filename );
+	CWaveFile(CVCDFile *vcd, CSoundEntry *se, char const *filename);
 
 	~CWaveFile();
 
 	static int GetLanguageId();
 
-	CVCDFile	*GetOwnerVCDFile();
-	CSoundEntry	*GetOwnerSoundEntry();
+	CVCDFile *GetOwnerVCDFile();
+	CSoundEntry *GetOwnerSoundEntry();
 
-	void		SetName( char const *filename );
+	void SetName(char const *filename);
 
-	char const	*GetName() const;
-	char const	*GetFileName() const;
+	char const *GetName() const;
+	char const *GetFileName() const;
 
-	char const	*GetSentenceText();
-	void		SetSentenceText( char const *newText );
+	char const *GetSentenceText();
+	void SetSentenceText(char const *newText);
 
-	void		ValidateTree( mxTreeView *tree, mxTreeViewItem* parent );
+	void ValidateTree(mxTreeView *tree, mxTreeViewItem *parent);
 
-	bool		HasLoadedSentenceInfo() const;
-	void				EnsureSentence();
+	bool HasLoadedSentenceInfo() const;
+	void EnsureSentence();
 
+	virtual CWorkspace *GetWorkspace()
+	{
+		return NULL;
+	}
+	virtual CProject *GetProject()
+	{
+		return NULL;
+	}
+	virtual CScene *GetScene()
+	{
+		return NULL;
+	}
+	virtual CVCDFile *GetVCDFile()
+	{
+		return NULL;
+	}
+	virtual CSoundEntry *GetSoundEntry()
+	{
+		return NULL;
+	}
+	virtual CWaveFile *GetWaveFile()
+	{
+		return this;
+	}
 
-	virtual CWorkspace	*GetWorkspace() { return NULL; }
-	virtual CProject	*GetProject() { return NULL; }
-	virtual CScene		*GetScene() { return NULL; }
-	virtual CVCDFile	*GetVCDFile() { return NULL; }
-	virtual CSoundEntry	*GetSoundEntry() { return NULL; }
-	virtual CWaveFile	*GetWaveFile() { return this; }
+	void Play();
 
-	void		Play();
+	bool GetVoiceDuck();
+	void SetVoiceDuck(bool duck);
+	void ToggleVoiceDucking();
 
-	bool		GetVoiceDuck();
-	void		SetVoiceDuck( bool duck );
-	void		ToggleVoiceDucking();
+	virtual void Checkout(bool updatestateicons = true);
+	virtual void Checkin(bool updatestateicons = true);
 
-	virtual void Checkout( bool updatestateicons = true );
-	virtual void Checkin( bool updatestateicons = true );
+	bool IsCheckedOut() const;
+	int GetIconIndex() const;
 
-	bool		IsCheckedOut() const;
-	int			GetIconIndex() const;
+	virtual void MoveChildUp(ITreeItem *child);
+	virtual void MoveChildDown(ITreeItem *child);
 
-	virtual void MoveChildUp( ITreeItem *child );
-	virtual void MoveChildDown( ITreeItem *child );
+	virtual void SetDirty(bool dirty);
 
-	virtual void		SetDirty( bool dirty );
+	virtual bool IsChildFirst(ITreeItem *child);
+	virtual bool IsChildLast(ITreeItem *child);
 
-	virtual bool		IsChildFirst( ITreeItem *child );
-	virtual bool		IsChildLast( ITreeItem *child );
+	void SetThreadLoadedSentence(CSentence &sentence);
 
-	void				SetThreadLoadedSentence( CSentence& sentence );
+	void ExportValveDataChunk(char const *tempfile);
+	void ImportValveDataChunk(char const *tempfile);
 
-	void				ExportValveDataChunk( char const *tempfile );
-	void				ImportValveDataChunk( char const *tempfile );
-
-	void				GetPhonemeExportFile( char *path, int maxlen );
+	void GetPhonemeExportFile(char *path, int maxlen);
 
 private:
-
-	CAudioSource		*m_pWaveFile;
-	CSentence			m_Sentence;
+	CAudioSource *m_pWaveFile;
+	CSentence m_Sentence;
 
 	enum
 	{
@@ -91,13 +107,13 @@ private:
 		MAX_SOUND_FILENAME = 128,
 	};
 
-	char				m_szName[ MAX_SOUND_FILENAME ];
-	char				m_szFileName[ MAX_SOUND_FILENAME ];
+	char m_szName[MAX_SOUND_FILENAME];
+	char m_szFileName[MAX_SOUND_FILENAME];
 
-	CVCDFile			*m_pOwner;
-	CSoundEntry			*m_pOwnerSE;
+	CVCDFile *m_pOwner;
+	CSoundEntry *m_pOwnerSE;
 
-	bool				m_bSentenceLoaded;
+	bool m_bSentenceLoaded;
 };
 
 #endif // WAVEFILE_H

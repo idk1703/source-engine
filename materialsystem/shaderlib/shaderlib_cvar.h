@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,11 +10,8 @@
 #pragma once
 #endif
 
-
 #include "interface.h"
 
-
-void InitShaderLibCVars( CreateInterfaceFn cvarFactory );
-
+void InitShaderLibCVars(CreateInterfaceFn cvarFactory);
 
 #endif // SHADERLIB_CVAR_H

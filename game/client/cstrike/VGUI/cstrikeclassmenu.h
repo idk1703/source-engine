@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,7 +22,6 @@
 
 using namespace vgui;
 
-
 //-----------------------------------------------------------------------------
 // These are maintained in a list so the renderer can draw a 3D character
 // model on top of them.
@@ -31,21 +30,18 @@ using namespace vgui;
 class CCSClassImagePanel : public vgui::ImagePanel
 {
 public:
-
 	typedef vgui::ImagePanel BaseClass;
 
-	CCSClassImagePanel( vgui::Panel *pParent, const char *pName );
+	CCSClassImagePanel(vgui::Panel *pParent, const char *pName);
 	virtual ~CCSClassImagePanel();
-	virtual void ApplySettings( KeyValues *inResourceData );
+	virtual void ApplySettings(KeyValues *inResourceData);
 	virtual void Paint();
-
 
 public:
 	char m_ModelName[128];
 };
 
-extern CUtlVector<CCSClassImagePanel*> g_ClassImagePanels;
-
+extern CUtlVector<CCSClassImagePanel *> g_ClassImagePanels;
 
 //-----------------------------------------------------------------------------
 // Purpose: Draws the Terrorist class menu
@@ -54,27 +50,26 @@ extern CUtlVector<CCSClassImagePanel*> g_ClassImagePanels;
 class CClassMenu_TER : public CClassMenu
 {
 private:
-	DECLARE_CLASS_SIMPLE( CClassMenu_TER, CClassMenu );
+	DECLARE_CLASS_SIMPLE(CClassMenu_TER, CClassMenu);
 
 	// Background panel -------------------------------------------------------
 
 public:
 	virtual void PaintBackground();
 	virtual void PerformLayout();
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 	bool m_backgroundLayoutFinished;
 
 	// End background panel ---------------------------------------------------
-	
+
 public:
 	CClassMenu_TER(IViewPort *pViewPort);
-	virtual Panel* CreateControlByName(const char *controlName);
-	const char *GetName( void );
+	virtual Panel *CreateControlByName(const char *controlName);
+	const char *GetName(void);
 	void ShowPanel(bool bShow);
 	void Update();
 	virtual void SetVisible(bool state);
 };
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Draws the Counter-Terrorist class menu
@@ -83,22 +78,22 @@ public:
 class CClassMenu_CT : public CClassMenu
 {
 private:
-	DECLARE_CLASS_SIMPLE( CClassMenu_CT, CClassMenu );
+	DECLARE_CLASS_SIMPLE(CClassMenu_CT, CClassMenu);
 
 	// Background panel -------------------------------------------------------
 
 public:
 	virtual void PaintBackground();
 	virtual void PerformLayout();
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 	bool m_backgroundLayoutFinished;
 
 	// End background panel ---------------------------------------------------
-	
+
 public:
 	CClassMenu_CT(IViewPort *pViewPort);
 	virtual Panel *CreateControlByName(const char *controlName);
-	const char *GetName( void );
+	const char *GetName(void);
 	void ShowPanel(bool bShow);
 	void Update();
 	virtual void SetVisible(bool state);

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -40,8 +40,14 @@ namespace vgui
 		virtual SurfacePlat *Plat();
 		virtual void SetPlat(SurfacePlat *pl);
 
-		virtual HPanel GetHPanel() { return _hPanel; } // safe pointer handling
-		virtual void SetHPanel(HPanel hPanel) { _hPanel = hPanel; }
+		virtual HPanel GetHPanel()
+		{
+			return _hPanel;
+		} // safe pointer handling
+		virtual void SetHPanel(HPanel hPanel)
+		{
+			_hPanel = hPanel;
+		}
 
 		virtual bool IsPopup();
 		virtual void SetPopup(bool state);
@@ -49,12 +55,12 @@ namespace vgui
 
 		virtual void SetPos(int x, int y);
 		virtual void GetPos(int &x, int &y);
-		virtual void SetSize(int wide,int tall);
-		virtual void GetSize(int& wide,int& tall);
-		virtual void SetMinimumSize(int wide,int tall);
-		virtual void GetMinimumSize(int& wide,int& tall);
+		virtual void SetSize(int wide, int tall);
+		virtual void GetSize(int &wide, int &tall);
+		virtual void SetMinimumSize(int wide, int tall);
+		virtual void GetMinimumSize(int &wide, int &tall);
 		virtual void SetZPos(int z);
-		virtual int  GetZPos();
+		virtual int GetZPos();
 
 		virtual void GetAbsPos(int &x, int &y);
 		virtual void GetClipRect(int &x0, int &y0, int &x1, int &y1);
@@ -75,7 +81,7 @@ namespace vgui
 		virtual void MoveToBack();
 		virtual bool HasParent(VPanel *potentialParent);
 
-		virtual CUtlVector< VPanel * > &GetChildren();
+		virtual CUtlVector<VPanel *> &GetChildren();
 
 		// gets names of the object (for debugging purposes)
 		virtual const char *GetName();
@@ -87,7 +93,10 @@ namespace vgui
 		virtual void SendMessage(KeyValues *params, VPANEL ifromPanel);
 
 		// wrapper to get Client panel interface
-		virtual IClientPanel *Client() { return _clientPanel; }
+		virtual IClientPanel *Client()
+		{
+			return _clientPanel;
+		}
 
 		// input interest
 		virtual void SetKeyBoardInputEnabled(bool state);
@@ -96,19 +105,19 @@ namespace vgui
 		virtual bool IsMouseInputEnabled();
 
 		virtual bool IsTopmostPopup() const;
-		virtual void SetTopmostPopup( bool bEnable );
+		virtual void SetTopmostPopup(bool bEnable);
 
 		// sibling pins
-		virtual void SetSiblingPin(VPanel *newSibling, byte iMyCornerToPin = 0, byte iSiblingCornerToPinTo = 0 );
+		virtual void SetSiblingPin(VPanel *newSibling, byte iMyCornerToPin = 0, byte iSiblingCornerToPinTo = 0);
 
 	public:
 		virtual void GetInternalAbsPos(int &x, int &y);
-		virtual void TraverseLevel( int val );
+		virtual void TraverseLevel(int val);
 
 	private:
-		Dar<VPanel*> _childDar;
+		Dar<VPanel *> _childDar;
 		VPanel *_parent;
-		SurfacePlat	*_plat;	// platform-specific data
+		SurfacePlat *_plat; // platform-specific data
 		HPanel _hPanel;
 
 		// our companion Client panel
@@ -122,7 +131,7 @@ namespace vgui
 		short _clipRect[4];
 		short _absPos[2];
 
-		short _zpos;	// z-order position
+		short _zpos; // z-order position
 
 		bool _visible : 1;
 		bool _enabled : 1;
@@ -131,16 +140,15 @@ namespace vgui
 		bool _kbInput : 1;
 		bool _isTopmostPopup : 1;
 
-		VPanel  *_pinsibling;
-		byte	_pinsibling_my_corner;
-		byte	_pinsibling_their_corner;
+		VPanel *_pinsibling;
+		byte _pinsibling_my_corner;
+		byte _pinsibling_their_corner;
 
-		int	 m_nMessageContextId;
+		int m_nMessageContextId;
 		int m_nThinkTraverseLevel;
 		HPanel _clientPanelHandle; // Temp to check if _clientPanel is valid.
 	};
 
-}
-
+} // namespace vgui
 
 #endif // VPANEL_H

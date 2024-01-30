@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,7 +15,7 @@
 
 #ifdef _WIN32
 #pragma warning(push, 1)
-#pragma warning(disable:4701 4702 4530)
+#pragma warning(disable : 4701 4702 4530)
 #endif
 
 #undef min
@@ -29,7 +29,6 @@
 
 #include <assert.h>
 
-
 typedef enum
 {
 	TOKENSTRINGTOOLONG = -4,
@@ -42,18 +41,15 @@ typedef enum
 	IDENT
 } trtoken_t;
 
+#define IsToken(s1, s2) !strcmpi(s1, s2)
 
-#define IsToken(s1, s2)	!strcmpi(s1, s2)
-
-#define MAX_TOKEN 128 + 1
-#define MAX_IDENT 64 + 1
+#define MAX_TOKEN  128 + 1
+#define MAX_IDENT  64 + 1
 #define MAX_STRING 128 + 1
-
 
 class TokenReader : private std::ifstream
 {
 public:
-
 	TokenReader();
 
 	bool Open(const char *pszFilename);
@@ -65,7 +61,7 @@ public:
 	void Stuff(trtoken_t ttype, const char *pszToken);
 	bool Expecting(trtoken_t ttype, const char *pszToken);
 	const char *Error(char *error, ...);
-	trtoken_t PeekTokenType(char* = NULL, int maxlen = 0);
+	trtoken_t PeekTokenType(char * = NULL, int maxlen = 0);
 
 	inline int GetErrorCount(void);
 
@@ -86,14 +82,12 @@ private:
 	trtoken_t m_eStuffed;
 };
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Returns the total number of parsing errors since this file was opened.
 //-----------------------------------------------------------------------------
 int TokenReader::GetErrorCount(void)
 {
-	return(m_nErrorCount);
+	return (m_nErrorCount);
 }
-
 
 #endif // TOKENREADER_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -12,31 +12,27 @@
 
 #include <vgui_controls/Frame.h>
 
-
 class CBaseBudgetPanel;
-
 
 class CBudgetBarGraphPanel : public vgui::Panel
 {
 	typedef vgui::Panel BaseClass;
 
 public:
-	CBudgetBarGraphPanel( CBaseBudgetPanel *pParent, const char *pPanelName );
+	CBudgetBarGraphPanel(CBaseBudgetPanel *pParent, const char *pPanelName);
 	~CBudgetBarGraphPanel();
-	virtual void Paint( void );
+	virtual void Paint(void);
 
 private:
-
 	void DrawInstantaneous();
 	void DrawPeaks();
 	void DrawAverages();
-	void DrawTimeLines( void );
-	void GetBudgetGroupTopAndBottom( int id, int &top, int &bottom );
-	void DrawBarAtIndex( int id, float percent );
-	void DrawTickAtIndex( int id, float percent, int red, int green, int blue, int alpha );
+	void DrawTimeLines(void);
+	void GetBudgetGroupTopAndBottom(int id, int &top, int &bottom);
+	void DrawBarAtIndex(int id, float percent);
+	void DrawTickAtIndex(int id, float percent, int red, int green, int blue, int alpha);
 
 private:
-	
 	CBaseBudgetPanel *m_pBudgetPanel;
 };
 

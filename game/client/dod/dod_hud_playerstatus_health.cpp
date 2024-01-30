@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -27,73 +27,73 @@
 #include "dod_hud_playerstatus_health.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CDoDHudHealthBar::CDoDHudHealthBar( vgui::Panel *parent, const char *name ) : vgui::ImagePanel( parent, name )
+CDoDHudHealthBar::CDoDHudHealthBar(vgui::Panel *parent, const char *name) : vgui::ImagePanel(parent, name)
 {
 	m_flPercentage = 1.0f;
 
-	m_iMaterialIndex = vgui::surface()->DrawGetTextureId( "vgui/white" );
-	if ( m_iMaterialIndex == -1 ) // we didn't find it, so create a new one
+	m_iMaterialIndex = vgui::surface()->DrawGetTextureId("vgui/white");
+	if(m_iMaterialIndex == -1) // we didn't find it, so create a new one
 	{
-		m_iMaterialIndex = vgui::surface()->CreateNewTextureID();	
+		m_iMaterialIndex = vgui::surface()->CreateNewTextureID();
 	}
 
-	vgui::surface()->DrawSetTextureFile( m_iMaterialIndex, "vgui/white", true, false );
+	vgui::surface()->DrawSetTextureFile(m_iMaterialIndex, "vgui/white", true, false);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudHealthBar::OnThink()
 {
 	BaseClass::OnThink();
 
 	C_DODPlayer *pPlayer = GetHealthDelegatePlayer();
-	if ( pPlayer )
+	if(pPlayer)
 	{
-		// m_nHealth >= 0 
-		int nHealth = MAX( pPlayer->GetHealth(), 0 );
+		// m_nHealth >= 0
+		int nHealth = MAX(pPlayer->GetHealth(), 0);
 		m_flPercentage = nHealth / 100.0f;
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CDoDHudHealthBar::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CDoDHudHealthBar::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
-	m_clrHealthHigh = pScheme->GetColor( "HudHealthGreen", GetFgColor() );
-	m_clrHealthMed = pScheme->GetColor( "HudHealthYellow", GetFgColor() );
-	m_clrHealthLow = pScheme->GetColor( "HudHealthRed", GetFgColor() );
-	m_clrBackground = pScheme->GetColor( "HudHealthBG", GetBgColor() );
-	m_clrBorder = pScheme->GetColor( "HudHealthBorder", GetBgColor() );
+	m_clrHealthHigh = pScheme->GetColor("HudHealthGreen", GetFgColor());
+	m_clrHealthMed = pScheme->GetColor("HudHealthYellow", GetFgColor());
+	m_clrHealthLow = pScheme->GetColor("HudHealthRed", GetFgColor());
+	m_clrBackground = pScheme->GetColor("HudHealthBG", GetBgColor());
+	m_clrBorder = pScheme->GetColor("HudHealthBorder", GetBgColor());
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CDoDHudHealthBar::Paint( void )
+void CDoDHudHealthBar::Paint(void)
 {
 	BaseClass::Paint();
 
 	int x, y, w, h;
-	GetBounds( x, y, w, h );
+	GetBounds(x, y, w, h);
 
 	int xpos = 0, ypos = 0;
-	float flDamageY = h * ( 1.0f - m_flPercentage );
+	float flDamageY = h * (1.0f - m_flPercentage);
 
 	Color *pclrHealth;
 
-	if ( m_flPercentage > m_flFirstWarningLevel )
+	if(m_flPercentage > m_flFirstWarningLevel)
 	{
-		pclrHealth = &m_clrHealthHigh; 
+		pclrHealth = &m_clrHealthHigh;
 	}
-	else if ( m_flPercentage > m_flSecondWarningLevel )
+	else if(m_flPercentage > m_flSecondWarningLevel)
 	{
-		pclrHealth = &m_clrHealthMed; 
+		pclrHealth = &m_clrHealthMed;
 	}
 	else
 	{
@@ -104,129 +104,129 @@ void CDoDHudHealthBar::Paint( void )
 	float uv1 = 0.0f;
 	float uv2 = 1.0f;
 
-	vgui::surface()->DrawSetTexture( m_iMaterialIndex );
+	vgui::surface()->DrawSetTexture(m_iMaterialIndex);
 
-	Vector2D uv11( uv1, uv1 );
-	Vector2D uv21( uv2, uv1 );
-	Vector2D uv22( uv2, uv2 );
-	Vector2D uv12( uv1, uv2 );
+	Vector2D uv11(uv1, uv1);
+	Vector2D uv21(uv2, uv1);
+	Vector2D uv22(uv2, uv2);
+	Vector2D uv12(uv1, uv2);
 
-	vgui::Vertex_t vert[4];	
+	vgui::Vertex_t vert[4];
 
 	// background
-	vert[0].Init( Vector2D( xpos, ypos ), uv11 );
-	vert[1].Init( Vector2D( xpos + w, ypos ), uv21 );
-	vert[2].Init( Vector2D( xpos + w, ypos + h ), uv22 );				
-	vert[3].Init( Vector2D( xpos, ypos + h ), uv12 );
+	vert[0].Init(Vector2D(xpos, ypos), uv11);
+	vert[1].Init(Vector2D(xpos + w, ypos), uv21);
+	vert[2].Init(Vector2D(xpos + w, ypos + h), uv22);
+	vert[3].Init(Vector2D(xpos, ypos + h), uv12);
 
-	if ( m_flPercentage <= 0.01 )
+	if(m_flPercentage <= 0.01)
 	{
-		vgui::surface()->DrawSetColor( m_clrHealthLow );
+		vgui::surface()->DrawSetColor(m_clrHealthLow);
 	}
 	else
 	{
-		vgui::surface()->DrawSetColor( m_clrBackground );
+		vgui::surface()->DrawSetColor(m_clrBackground);
 	}
-	vgui::surface()->DrawTexturedPolygon( 4, vert );
+	vgui::surface()->DrawTexturedPolygon(4, vert);
 
 	// damage part
-	vert[0].Init( Vector2D( xpos, flDamageY ), uv11 );
-	vert[1].Init( Vector2D( xpos + w, flDamageY ), uv21 );
-	vert[2].Init( Vector2D( xpos + w, ypos + h ), uv22 );				
-	vert[3].Init( Vector2D( xpos, ypos + h ), uv12 );
+	vert[0].Init(Vector2D(xpos, flDamageY), uv11);
+	vert[1].Init(Vector2D(xpos + w, flDamageY), uv21);
+	vert[2].Init(Vector2D(xpos + w, ypos + h), uv22);
+	vert[3].Init(Vector2D(xpos, ypos + h), uv12);
 
-	vgui::surface()->DrawSetColor( *pclrHealth );
-	vgui::surface()->DrawTexturedPolygon( 4, vert );
+	vgui::surface()->DrawSetColor(*pclrHealth);
+	vgui::surface()->DrawTexturedPolygon(4, vert);
 
 	// outline
-	vert[0].Init( Vector2D( xpos, ypos ), uv11 );
-	vert[1].Init( Vector2D( xpos + w - 1, ypos ), uv21 );
-	vert[2].Init( Vector2D( xpos + w - 1, ypos + h - 1 ), uv22 );				
-	vert[3].Init( Vector2D( xpos, ypos + h - 1 ), uv12 );
+	vert[0].Init(Vector2D(xpos, ypos), uv11);
+	vert[1].Init(Vector2D(xpos + w - 1, ypos), uv21);
+	vert[2].Init(Vector2D(xpos + w - 1, ypos + h - 1), uv22);
+	vert[3].Init(Vector2D(xpos, ypos + h - 1), uv12);
 
-	vgui::surface()->DrawSetColor( m_clrBorder );
-	vgui::surface()->DrawTexturedPolyLine( vert, 4 );
+	vgui::surface()->DrawSetColor(m_clrBorder);
+	vgui::surface()->DrawTexturedPolyLine(vert, 4);
 }
 
 // Show the health / class for a player other than the local player
-void CDoDHudHealthBar::SetHealthDelegatePlayer( C_DODPlayer *pPlayer )
+void CDoDHudHealthBar::SetHealthDelegatePlayer(C_DODPlayer *pPlayer)
 {
 	m_hHealthDelegatePlayer = pPlayer;
 }
 
-C_DODPlayer *CDoDHudHealthBar::GetHealthDelegatePlayer( void )
+C_DODPlayer *CDoDHudHealthBar::GetHealthDelegatePlayer(void)
 {
-	if ( m_hHealthDelegatePlayer.Get() )
+	if(m_hHealthDelegatePlayer.Get())
 	{
-		C_DODPlayer *pPlayer = dynamic_cast<C_DODPlayer *>( m_hHealthDelegatePlayer.Get() );
-		if ( pPlayer )
+		C_DODPlayer *pPlayer = dynamic_cast<C_DODPlayer *>(m_hHealthDelegatePlayer.Get());
+		if(pPlayer)
 			return pPlayer;
 	}
 
 	return C_DODPlayer::GetLocalDODPlayer();
 }
 
-DECLARE_BUILD_FACTORY( CDoDHudHealth );
+DECLARE_BUILD_FACTORY(CDoDHudHealth);
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CDoDHudHealth::CDoDHudHealth( vgui::Panel *parent, const char *name ) : vgui::EditablePanel( parent, name )
+CDoDHudHealth::CDoDHudHealth(vgui::Panel *parent, const char *name) : vgui::EditablePanel(parent, name)
 {
-	SetProportional( true );
+	SetProportional(true);
 
-	m_pHealthBar = new CDoDHudHealthBar( this, "HealthBar" );
-	m_pClassImageBG = new vgui::ImagePanel( this, "HealthClassImageBG" );
-	m_pClassImage = new vgui::ImagePanel( this, "HealthClassImage" );
-	
+	m_pHealthBar = new CDoDHudHealthBar(this, "HealthBar");
+	m_pClassImageBG = new vgui::ImagePanel(this, "HealthClassImageBG");
+	m_pClassImage = new vgui::ImagePanel(this, "HealthClassImage");
+
 	m_nPrevClass = PLAYERCLASS_UNDEFINED;
 	m_nPrevTeam = TEAM_INVALID;
 
 	// load control settings...
-	LoadControlSettings( "resource/UI/HudPlayerStatusHealth.res" );
+	LoadControlSettings("resource/UI/HudPlayerStatusHealth.res");
 
 	m_hHealthDelegatePlayer = NULL;
 }
 
 void CDoDHudHealth::OnScreenSizeChanged(int iOldWide, int iOldTall)
 {
-	LoadControlSettings( "resource/UI/HudPlayerStatusHealth.res" );
+	LoadControlSettings("resource/UI/HudPlayerStatusHealth.res");
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudHealth::OnThink()
 {
 	BaseClass::OnThink();
 
 	C_DODPlayer *pPlayer = GetHealthDelegatePlayer();
-	if ( pPlayer )
+	if(pPlayer)
 	{
 		int nTeam = pPlayer->GetTeamNumber();
 
-		if ( nTeam == TEAM_ALLIES || nTeam == TEAM_AXIS )
+		if(nTeam == TEAM_ALLIES || nTeam == TEAM_AXIS)
 		{
-			C_DODTeam *pTeam = dynamic_cast<C_DODTeam *>( GetGlobalTeam( nTeam ) );
-			C_DOD_PlayerResource *dod_PR = dynamic_cast<C_DOD_PlayerResource *>( g_PR );
-			int nClass = dod_PR->GetPlayerClass( pPlayer->entindex() );
+			C_DODTeam *pTeam = dynamic_cast<C_DODTeam *>(GetGlobalTeam(nTeam));
+			C_DOD_PlayerResource *dod_PR = dynamic_cast<C_DOD_PlayerResource *>(g_PR);
+			int nClass = dod_PR->GetPlayerClass(pPlayer->entindex());
 
-			if ( nClass != PLAYERCLASS_UNDEFINED )
+			if(nClass != PLAYERCLASS_UNDEFINED)
 			{
-				if ( ( nClass != m_nPrevClass ) ||
-					( nTeam != TEAM_INVALID && ( nTeam == TEAM_AXIS || nTeam == TEAM_ALLIES ) && nTeam != m_nPrevTeam ) )
+				if((nClass != m_nPrevClass) ||
+				   (nTeam != TEAM_INVALID && (nTeam == TEAM_AXIS || nTeam == TEAM_ALLIES) && nTeam != m_nPrevTeam))
 				{
 					m_nPrevClass = nClass;
 					m_nPrevTeam = nTeam;
 
-					if ( m_pClassImage )
+					if(m_pClassImage)
 					{
-						m_pClassImage->SetImage( ( pTeam->GetPlayerClassInfo( nClass ) ).m_szClassHealthImage );
+						m_pClassImage->SetImage((pTeam->GetPlayerClassInfo(nClass)).m_szClassHealthImage);
 					}
 
-					if ( m_pClassImageBG )
+					if(m_pClassImageBG)
 					{
-						m_pClassImageBG->SetImage( ( pTeam->GetPlayerClassInfo( nClass ) ).m_szClassHealthImageBG );
+						m_pClassImageBG->SetImage((pTeam->GetPlayerClassInfo(nClass)).m_szClassHealthImageBG);
 					}
 				}
 			}
@@ -235,19 +235,19 @@ void CDoDHudHealth::OnThink()
 }
 
 // Show the health / class for a player other than the local player
-void CDoDHudHealth::SetHealthDelegatePlayer( C_DODPlayer *pPlayer )
+void CDoDHudHealth::SetHealthDelegatePlayer(C_DODPlayer *pPlayer)
 {
 	m_hHealthDelegatePlayer = pPlayer;
 
-	m_pHealthBar->SetHealthDelegatePlayer( pPlayer );
+	m_pHealthBar->SetHealthDelegatePlayer(pPlayer);
 }
 
-C_DODPlayer *CDoDHudHealth::GetHealthDelegatePlayer( void )
+C_DODPlayer *CDoDHudHealth::GetHealthDelegatePlayer(void)
 {
-	if ( m_hHealthDelegatePlayer.Get() )
+	if(m_hHealthDelegatePlayer.Get())
 	{
-		C_DODPlayer *pPlayer = dynamic_cast<C_DODPlayer *>( m_hHealthDelegatePlayer.Get() );
-		if ( pPlayer )
+		C_DODPlayer *pPlayer = dynamic_cast<C_DODPlayer *>(m_hHealthDelegatePlayer.Get());
+		if(pPlayer)
 			return pPlayer;
 	}
 

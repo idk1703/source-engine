@@ -1,6 +1,6 @@
-//===== Copyright © 1996-2005, Valve Corporation, All rights reserved. ======//
+//===== Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ======//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -10,8 +10,7 @@
 #pragma once
 #endif
 
-
-// Normally, the runtime libraries like to mess with the memory returned by malloc(), 
+// Normally, the runtime libraries like to mess with the memory returned by malloc(),
 // which can create problems trying to repro bugs in debug builds or in the debugger.
 //
 // If the debugger is present, it initializes data to 0xbaadf00d, which makes floating
@@ -25,8 +24,14 @@
 // In here, we make sure the memory is either random garbage, or it's set to
 // 0xffeeffee, which casts to a NAN.
 extern bool g_bInitMemory;
-#define ApplyMemoryInitializations( pMem, nSize ) if ( !g_bInitMemory ) ; else { DoApplyMemoryInitializations( pMem, nSize ); }
-void DoApplyMemoryInitializations( void *pMem, size_t nSize );
+#define ApplyMemoryInitializations(pMem, nSize)    \
+	if(!g_bInitMemory)                             \
+		;                                          \
+	else                                           \
+	{                                              \
+		DoApplyMemoryInitializations(pMem, nSize); \
+	}
+void DoApplyMemoryInitializations(void *pMem, size_t nSize);
 
 size_t CalcHeapUsed();
 

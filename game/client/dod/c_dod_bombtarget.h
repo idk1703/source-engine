@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -14,25 +14,25 @@
 
 class C_DODBombTarget : public C_BaseAnimating
 {
-	DECLARE_CLASS( C_DODBombTarget, C_BaseAnimating );
+	DECLARE_CLASS(C_DODBombTarget, C_BaseAnimating);
 
 	DECLARE_NETWORKCLASS();
 
 public:
-	virtual int DrawModel( int flags );
-	virtual void NotifyShouldTransmit( ShouldTransmitState_t state );
-	virtual void ClientThink( void );
+	virtual int DrawModel(int flags);
+	virtual void NotifyShouldTransmit(ShouldTransmitState_t state);
+	virtual void ClientThink(void);
 
 	// play the hint telling them how to defuse
-	bool ShouldPlayDefuseHint( int team );
-	bool ShouldPlayPlantHint( int team );
+	bool ShouldPlayDefuseHint(int team);
+	bool ShouldPlayPlantHint(int team);
 
 private:
-	CNetworkVar( int, m_iState );
-	CNetworkVar( int, m_iBombingTeam );
+	CNetworkVar(int, m_iState);
+	CNetworkVar(int, m_iBombingTeam);
 
-	CNetworkVar( int, m_iTargetModel );
-	CNetworkVar( int, m_iUnavailableModel );
+	CNetworkVar(int, m_iTargetModel);
+	CNetworkVar(int, m_iUnavailableModel);
 };
 
-#endif //C_DOD_BOMBTARGET_H
+#endif // C_DOD_BOMBTARGET_H

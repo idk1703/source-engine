@@ -21,7 +21,10 @@
 
 static bool s_bRunsCommands = false;
 
-bool IsRunningCommands() { return s_bRunsCommands; }
+bool IsRunningCommands()
+{
+	return s_bRunsCommands;
+}
 
 static char *pszDocPath, *pszDocName, *pszDocExt;
 
@@ -34,20 +37,20 @@ void FixGameVars(char *pszSrc, char *pszDst, BOOL bUseQuotes)
 	char *pSrc = pszSrc, *pDst = pszDst;
 	BOOL bInQuote = FALSE;
 	while(pSrc[0])
-	{	
-		if(pSrc[0] == '$')	// found a parm
+	{
+		if(pSrc[0] == '$') // found a parm
 		{
-			if(pSrc[1] == '$')	// nope, it's a single symbol
+			if(pSrc[1] == '$') // nope, it's a single symbol
 			{
 				*pDst++ = '$';
 				++pSrc;
 			}
 			else
 			{
-				// figure out which parm it is .. 
+				// figure out which parm it is ..
 				++pSrc;
-				
-				if (!bInQuote && bUseQuotes)
+
+				if(!bInQuote && bUseQuotes)
 				{
 					// not in quote, and subbing a variable.. start quote
 					*pDst++ = '\"';
@@ -108,7 +111,7 @@ void FixGameVars(char *pszSrc, char *pszDst, BOOL bUseQuotes)
 					strcpy(pDst, g_pGameConfig->szExecutable);
 					pDst += strlen(pDst);
 				}
-				else if (!strnicmp(pSrc, "gamedir", 7))
+				else if(!strnicmp(pSrc, "gamedir", 7))
 				{
 					pSrc += 7;
 					strcpy(pDst, g_pGameConfig->m_szModDir);
@@ -121,7 +124,7 @@ void FixGameVars(char *pszSrc, char *pszDst, BOOL bUseQuotes)
 			if(*pSrc == ' ' && bInQuote)
 			{
 				bInQuote = FALSE;
-				*pDst++ = '\"';	// close quotes
+				*pDst++ = '\"'; // close quotes
 			}
 
 			// just copy the char into the destination buffer
@@ -132,7 +135,7 @@ void FixGameVars(char *pszSrc, char *pszDst, BOOL bUseQuotes)
 	if(bInQuote)
 	{
 		bInQuote = FALSE;
-		*pDst++ = '\"';	// close quotes
+		*pDst++ = '\"'; // close quotes
 	}
 
 	pDst[0] = 0;
@@ -141,22 +144,22 @@ void FixGameVars(char *pszSrc, char *pszDst, BOOL bUseQuotes)
 static void RemoveQuotes(char *pBuf)
 {
 	if(pBuf[0] == '\"')
-		strcpy(pBuf, pBuf+1);
-	if(pBuf[strlen(pBuf)-1] == '\"')
-		pBuf[strlen(pBuf)-1] = 0;
+		strcpy(pBuf, pBuf + 1);
+	if(pBuf[strlen(pBuf) - 1] == '\"')
+		pBuf[strlen(pBuf) - 1] = 0;
 }
 
 LPCTSTR GetErrorString()
 {
 	static char szBuf[200];
-	FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, GetLastError(), 0, 
-		szBuf, 200, NULL);
-	char *p = strchr(szBuf, '\r');	// get rid of \r\n
-	if(p) p[0] = 0;
+	FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, GetLastError(), 0, szBuf, 200, NULL);
+	char *p = strchr(szBuf, '\r'); // get rid of \r\n
+	if(p)
+		p[0] = 0;
 	return szBuf;
 }
 
-bool RunCommands(CCommandArray& Commands, LPCTSTR pszOrigDocName)
+bool RunCommands(CCommandArray &Commands, LPCTSTR pszOrigDocName)
 {
 	s_bRunsCommands = true;
 
@@ -169,10 +172,8 @@ bool RunCommands(CCommandArray& Commands, LPCTSTR pszOrigDocName)
 	//  create two sets of buffers - one set with the long filename
 	//  and one set with the 8.3 format.
 
-	char szDocLongPath[MAX_PATH] = {0}, szDocLongName[MAX_PATH] = {0}, 
-		szDocLongExt[MAX_PATH] = {0};
-	char szDocShortPath[MAX_PATH] = {0}, szDocShortName[MAX_PATH] = {0}, 
-		szDocShortExt[MAX_PATH] = {0};
+	char szDocLongPath[MAX_PATH] = {0}, szDocLongName[MAX_PATH] = {0}, szDocLongExt[MAX_PATH] = {0};
+	char szDocShortPath[MAX_PATH] = {0}, szDocShortName[MAX_PATH] = {0}, szDocShortExt[MAX_PATH] = {0};
 
 	GetFullPathName(pszOrigDocName, MAX_PATH, szDocLongPath, NULL);
 	GetShortPathName(pszOrigDocName, szDocShortPath, MAX_PATH);
@@ -182,7 +183,7 @@ bool RunCommands(CCommandArray& Commands, LPCTSTR pszOrigDocName)
 	if(p && strrchr(szDocLongPath, '\\') < p && strrchr(szDocLongPath, '/') < p)
 	{
 		// got the extension
-		strcpy(szDocLongExt, p+1);
+		strcpy(szDocLongExt, p + 1);
 		p[0] = 0;
 	}
 
@@ -192,7 +193,7 @@ bool RunCommands(CCommandArray& Commands, LPCTSTR pszOrigDocName)
 	if(p)
 	{
 		// got the filepart
-		strcpy(szDocLongName, p+1);
+		strcpy(szDocLongName, p + 1);
 		p[0] = 0;
 	}
 
@@ -201,7 +202,7 @@ bool RunCommands(CCommandArray& Commands, LPCTSTR pszOrigDocName)
 	if(p && strrchr(szDocShortPath, '\\') < p && strrchr(szDocShortPath, '/') < p)
 	{
 		// got the extension
-		strcpy(szDocShortExt, p+1);
+		strcpy(szDocShortExt, p + 1);
 		p[0] = 0;
 	}
 
@@ -211,7 +212,7 @@ bool RunCommands(CCommandArray& Commands, LPCTSTR pszOrigDocName)
 	if(p)
 	{
 		// got the filepart
-		strcpy(szDocShortName, p+1);
+		strcpy(szDocShortName, p + 1);
 		p[0] = 0;
 	}
 
@@ -229,11 +230,11 @@ bool RunCommands(CCommandArray& Commands, LPCTSTR pszOrigDocName)
 		pszDocExt = szDocLongExt;
 		pszDocName = szDocLongName;
 		pszDocPath = szDocLongPath;
-		
-		char szNewParms[MAX_PATH*5], szNewRun[MAX_PATH*5];
+
+		char szNewParms[MAX_PATH * 5], szNewRun[MAX_PATH * 5];
 
 		// HACK: force the spawnv call for launching the game
-		if (!Q_stricmp(cmd.szRun, "$game_exe"))
+		if(!Q_stricmp(cmd.szRun, "$game_exe"))
 		{
 			cmd.bUseProcessWnd = FALSE;
 		}
@@ -243,11 +244,12 @@ bool RunCommands(CCommandArray& Commands, LPCTSTR pszOrigDocName)
 
 		CString strTmp;
 		strTmp.Format("\r\n"
-			"** Executing...\r\n"
-			"** Command: %s\r\n"
-			"** Parameters: %s\r\n\r\n", szNewRun, szNewParms);
+					  "** Executing...\r\n"
+					  "** Command: %s\r\n"
+					  "** Parameters: %s\r\n\r\n",
+					  szNewRun, szNewParms);
 		procWnd.Append(strTmp);
-		
+
 		// create a parameter list (not always required)
 		if(!cmd.bUseProcessWnd || cmd.iSpecialCmd)
 		{
@@ -268,7 +270,7 @@ bool RunCommands(CCommandArray& Commands, LPCTSTR pszOrigDocName)
 						p++;
 
 						// skip remaining white space
-						while (*p == ' ')
+						while(*p == ' ')
 							p++;
 
 						break;
@@ -285,11 +287,11 @@ bool RunCommands(CCommandArray& Commands, LPCTSTR pszOrigDocName)
 								// found the end
 								if(p[1] == 0)
 									bDone = TRUE;
-								p[1] = 0;	// kick its ass
+								p[1] = 0; // kick its ass
 								p += 2;
 
 								// skip remaining white space
-								while (*p == ' ')
+								while(*p == ' ')
 									p++;
 
 								break;
@@ -303,7 +305,7 @@ bool RunCommands(CCommandArray& Commands, LPCTSTR pszOrigDocName)
 				}
 
 				if(!p[0] || bDone)
-					break;	// done.
+					break; // done.
 			}
 
 			ppParms[iArg] = NULL;
@@ -317,10 +319,9 @@ bool RunCommands(CCommandArray& Commands, LPCTSTR pszOrigDocName)
 				{
 					RemoveQuotes(ppParms[1]);
 					RemoveQuotes(ppParms[2]);
-					
+
 					// don't copy if we're already there
-					if (stricmp(ppParms[1], ppParms[2]) && 					
-							(!CopyFile(ppParms[1], ppParms[2], FALSE)))
+					if(stricmp(ppParms[1], ppParms[2]) && (!CopyFile(ppParms[1], ppParms[2], FALSE)))
 					{
 						bError = TRUE;
 						pszError = GetErrorString();
@@ -359,7 +360,8 @@ bool RunCommands(CCommandArray& Commands, LPCTSTR pszOrigDocName)
 				{
 					CString str;
 					str.Format("The command failed. Windows reported the error:\r\n"
-						"  \"%s\"\r\n", pszError);
+							   "  \"%s\"\r\n",
+							   pszError);
 					procWnd.Append(str);
 					procWnd.SetForegroundWindow();
 					str += "\r\nDo you want to continue?";
@@ -382,8 +384,7 @@ bool RunCommands(CCommandArray& Commands, LPCTSTR pszOrigDocName)
 				//  exit???  Seems to work.
 				// spawnv doesn't like quotes
 				RemoveQuotes(szNewRun);
-				_spawnv(/*cmd.bNoWait ?*/ _P_NOWAIT /*: P_WAIT*/, szNewRun, 
-					(const char *const *)ppParms);
+				_spawnv(/*cmd.bNoWait ?*/ _P_NOWAIT /*: P_WAIT*/, szNewRun, (const char *const *)ppParms);
 			}
 		}
 		else
@@ -401,10 +402,11 @@ bool RunCommands(CCommandArray& Commands, LPCTSTR pszOrigDocName)
 				// not there!
 				CString str;
 				str.Format("The file '%s' was not built.\n"
-					"Do you want to continue?", szFile);
+						   "Do you want to continue?",
+						   szFile);
 				procWnd.SetForegroundWindow();
 				if(AfxMessageBox(str, MB_YESNO) == IDNO)
-					break;	// outta here
+					break; // outta here
 			}
 		}
 	}
@@ -415,4 +417,3 @@ bool RunCommands(CCommandArray& Commands, LPCTSTR pszOrigDocName)
 
 	return TRUE;
 }
-

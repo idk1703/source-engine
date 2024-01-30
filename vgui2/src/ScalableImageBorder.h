@@ -41,17 +41,20 @@ public:
 	virtual void SetName(const char *name);
 	virtual backgroundtype_e GetBackgroundType();
 
-	virtual bool PaintFirst( void ) { return m_bPaintFirst; }
+	virtual bool PaintFirst(void)
+	{
+		return m_bPaintFirst;
+	}
 
 protected:
-	void		 SetImage(const char *imageName);
+	void SetImage(const char *imageName);
 
 protected:
 	int _inset[4];
 
 private:
 	// protected copy constructor to prevent use
-	ScalableImageBorder(ScalableImageBorder&);
+	ScalableImageBorder(ScalableImageBorder &);
 
 	char *_name;
 
@@ -59,15 +62,15 @@ private:
 
 	friend class VPanel;
 
-	int m_iSrcCornerHeight;	// in pixels, how tall is the corner inside the image
-	int m_iSrcCornerWidth; // same for width
+	int m_iSrcCornerHeight; // in pixels, how tall is the corner inside the image
+	int m_iSrcCornerWidth;	// same for width
 	int m_iCornerHeight;	// output size of the corner height in pixels
 	int m_iCornerWidth;		// same for width
 
 	int m_iTextureID;
 
-	float m_flCornerWidthPercent;	// corner width as percentage of image width
-	float m_flCornerHeightPercent;	// same for height
+	float m_flCornerWidthPercent;  // corner width as percentage of image width
+	float m_flCornerHeightPercent; // same for height
 
 	char *m_pszImageName;
 	bool m_bPaintFirst;

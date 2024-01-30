@@ -14,46 +14,47 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 class CBaseLobbyPanel;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CLobbyPanel_Casual : public CBaseLobbyPanel
 {
-	DECLARE_CLASS_SIMPLE( CLobbyPanel_Casual, CBaseLobbyPanel );
+	DECLARE_CLASS_SIMPLE(CLobbyPanel_Casual, CBaseLobbyPanel);
 
 public:
-	CLobbyPanel_Casual( vgui::Panel *pParent, CBaseLobbyContainerFrame* pLobbyContainer );
+	CLobbyPanel_Casual(vgui::Panel *pParent, CBaseLobbyContainerFrame *pLobbyContainer);
 	virtual ~CLobbyPanel_Casual();
 
 	//
 	// Panel overrides
 	//
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
-	virtual void PerformLayout( void ) OVERRIDE;
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme) OVERRIDE;
+	virtual void PerformLayout(void) OVERRIDE;
 
-	virtual EMatchGroup GetMatchGroup( void ) const OVERRIDE;
+	virtual EMatchGroup GetMatchGroup(void) const OVERRIDE;
 
 	virtual void OnThink() OVERRIDE;
 
-	virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
+	virtual void FireGameEvent(IGameEvent *event) OVERRIDE;
 
 private:
+	MESSAGE_FUNC_PTR(OnCheckButtonChecked, "CheckButtonChecked", panel);
 
-	MESSAGE_FUNC_PTR( OnCheckButtonChecked, "CheckButtonChecked", panel );
-
-	CPanelAnimationVarAliasType( int, m_iCategorySpacer, "category_spacer", "4", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iCategoryNameWidth, "category_name_width", "190", "proportional_int" );
+	CPanelAnimationVarAliasType(int, m_iCategorySpacer, "category_spacer", "4", "proportional_int");
+	CPanelAnimationVarAliasType(int, m_iCategoryNameWidth, "category_name_width", "190", "proportional_int");
 
 	virtual bool ShouldShowLateJoin() const OVERRIDE;
-	virtual void ApplyChatUserSettings( const LobbyPlayerInfo &player,KeyValues *pKV ) const OVERRIDE;
-	virtual const char* GetResFile() const OVERRIDE { return "Resource/UI/LobbyPanel_Casual.res"; }
+	virtual void ApplyChatUserSettings(const LobbyPlayerInfo &player, KeyValues *pKV) const OVERRIDE;
+	virtual const char *GetResFile() const OVERRIDE
+	{
+		return "Resource/UI/LobbyPanel_Casual.res";
+	}
 
 	void WriteGameSettingsControls() OVERRIDE;
 
-	void WriteCategories( void );
+	void WriteCategories(void);
 
 	CUtlVector<vgui::Label *> m_vecSearchCriteriaLabels;
 
@@ -68,10 +69,10 @@ private:
 
 	bool m_bHasAMapSelected;
 
-	CUtlMap< EMatchmakingGroupType, Panel* > m_mapGroupPanels;
-	CUtlMap< EGameCategory, Panel* > m_mapCategoryPanels;
+	CUtlMap<EMatchmakingGroupType, Panel *> m_mapGroupPanels;
+	CUtlMap<EGameCategory, Panel *> m_mapCategoryPanels;
 
-	bool					m_bCriteriaDirty;
+	bool m_bCriteriaDirty;
 };
 
-#endif //TF_LOBBYPANEL_COMP_H
+#endif // TF_LOBBYPANEL_COMP_H

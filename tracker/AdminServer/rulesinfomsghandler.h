@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -21,7 +21,6 @@ class CRulesInfo;
 #include <VGUI_ListPanel.h>
 #include <VGUI_KeyValues.h>
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Socket handler for pinging internet servers
 //-----------------------------------------------------------------------------
@@ -37,8 +36,5 @@ private:
 	CRulesInfo *m_pRulesInfo;
 	CUtlVector<vgui::KeyValues *> *m_vRules;
 };
-
-
-
 
 #endif // RULESINFOMSGHANDLERDETAILS_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -20,27 +20,30 @@
 
 class CModelCheckInDlg : public CDialog
 {
-// Construction
+	// Construction
 public:
-	CModelCheckInDlg(CWnd* pParent = NULL);	// standard constructor
+	CModelCheckInDlg(CWnd *pParent = NULL); // standard constructor
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CModelCheckInDlg)
-	enum { IDD = IDD_MODELCHECKIN_DIALOG };
-	CString	m_HL2GameDirectory;
-	CString	m_TF2GameDirectory;
-	CString	m_UserName;
-	int		m_HL2Radio;
-	int		m_TF2Radio;
+	enum
+	{
+		IDD = IDD_MODELCHECKIN_DIALOG
+	};
+	CString m_HL2GameDirectory;
+	CString m_TF2GameDirectory;
+	CString m_UserName;
+	int m_HL2Radio;
+	int m_TF2Radio;
 	//}}AFX_DATA
 
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CModelCheckInDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
-	//}}AFX_VIRTUAL
+protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
+													 //}}AFX_VIRTUAL
 
-// Implementation
+	// Implementation
 protected:
 	HICON m_hIcon;
 
@@ -51,9 +54,9 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	//}}AFX_MSG
 
-	afx_msg  void OnFileCheckIn();
-	afx_msg  void OnFileCheckOut();
-	afx_msg  void OnFileExit();
+	afx_msg void OnFileCheckIn();
+	afx_msg void OnFileCheckOut();
+	afx_msg void OnFileExit();
 
 	DECLARE_MESSAGE_MAP()
 
@@ -66,32 +69,30 @@ private:
 	};
 
 	bool CheckInfo();
-	bool SetCurrentSSProject( ProjectType_t project, char const* pRelativeDir );
-	ProjectType_t ComputeRelativeFileName( char const* pInFile, char* pRelativeFile );
+	bool SetCurrentSSProject(ProjectType_t project, char const *pRelativeDir);
+	ProjectType_t ComputeRelativeFileName(char const *pInFile, char *pRelativeFile);
 
-	void StoreStateIntoRegistry( );
-	void RestoreStateFromRegistry( );
+	void StoreStateIntoRegistry();
+	void RestoreStateFromRegistry();
 
-	ProjectType_t GetFileNames( char const* pTitle, char*& pRelativePath,
-									char*& pFileName, char*& pDestPath );
+	ProjectType_t GetFileNames(char const *pTitle, char *&pRelativePath, char *&pFileName, char *&pDestPath);
 
-	void ResetDirectoryEntry( CString &fullPath, char *pRegEntry );
-	void PerformCheckoutCommand( ProjectType_t project, 
-		char const* pRelativeDir, char const* pDestPath, char const* pFileName );
-	void PerformCheckinCommand( ProjectType_t project, 
-		char const* pRelativeDir, char const* pDestPath, char const* pFileName );
+	void ResetDirectoryEntry(CString &fullPath, char *pRegEntry);
+	void PerformCheckoutCommand(ProjectType_t project, char const *pRelativeDir, char const *pDestPath,
+								char const *pFileName);
+	void PerformCheckinCommand(ProjectType_t project, char const *pRelativeDir, char const *pDestPath,
+							   char const *pFileName);
 };
 
 //-----------------------------------------------------------------------------
 // registry info
 //-----------------------------------------------------------------------------
 
-#define  MDL_CHECKOUT_REG_CLASS "HKEY_CURRENT_USER\\SOFTWARE\\Valve\\MDLCheckOut"
-#define  MDL_CHECKOUT_REG_LAST_PATH "Path"
-#define  MDL_CHECKOUT_REG_USER		"User"
-#define  MDL_CHECKOUT_REG_HL2_PATH	"HL2"
-#define  MDL_CHECKOUT_REG_TF2_PATH	"TF2"
-
+#define MDL_CHECKOUT_REG_CLASS	   "HKEY_CURRENT_USER\\SOFTWARE\\Valve\\MDLCheckOut"
+#define MDL_CHECKOUT_REG_LAST_PATH "Path"
+#define MDL_CHECKOUT_REG_USER	   "User"
+#define MDL_CHECKOUT_REG_HL2_PATH  "HL2"
+#define MDL_CHECKOUT_REG_TF2_PATH  "TF2"
 
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.

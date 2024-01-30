@@ -14,18 +14,12 @@
 #ifndef INCLUDED_MXMENUBAR
 #define INCLUDED_MXMENUBAR
 
-
-
 #ifndef INCLUDED_MXWIDGET
 #include "mxtk/mxWidget.h"
 #endif
 
-
-
 class mxWindow;
 class mxMenu;
-
-
 
 class mxMenuBar_i;
 class mxMenuBar : public mxWidget
@@ -34,26 +28,24 @@ class mxMenuBar : public mxWidget
 
 public:
 	// CREATORS
-	mxMenuBar (mxWindow *parent);
-	virtual ~mxMenuBar ();
+	mxMenuBar(mxWindow *parent);
+	virtual ~mxMenuBar();
 
 	// MANIPULATORS
-	void addMenu (const char *item, mxMenu *menu);
-	void setEnabled (int id, bool b);
-	void setChecked (int id, bool b);
-	void modify (int id, int newId, const char *newItem);
+	void addMenu(const char *item, mxMenu *menu);
+	void setEnabled(int id, bool b);
+	void setChecked(int id, bool b);
+	void modify(int id, int newId, const char *newItem);
 
 	// ACCESSORS
-	bool isEnabled (int id) const;
-	bool isChecked (int id) const;
-	int getHeight () const;
+	bool isEnabled(int id) const;
+	bool isChecked(int id) const;
+	int getHeight() const;
 
 private:
 	// NOT IMPLEMENTED
-	mxMenuBar (const mxMenuBar&);
-	mxMenuBar& operator= (const mxMenuBar&);
+	mxMenuBar(const mxMenuBar &);
+	mxMenuBar &operator=(const mxMenuBar &);
 };
-
-
 
 #endif // INCLUDED_MXMENUBAR

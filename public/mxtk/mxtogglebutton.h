@@ -14,17 +14,11 @@
 #ifndef INCLUDED_MXTOGGLEBUTTON
 #define INCLUDED_MXTOGGLEBUTTON
 
-
-
 #ifndef INCLUDED_MXWIDEGT
 #include "mxtk/mxWidget.h"
 #endif
 
-
-
 class mxWindow;
-
-
 
 class mxToggleButton_i;
 class mxToggleButton : public mxWidget
@@ -33,21 +27,19 @@ class mxToggleButton : public mxWidget
 
 public:
 	// CREATORS
-	mxToggleButton (mxWindow *parent, int x, int y, int w, int h, const char *label = 0, int id = 0);
-	virtual ~mxToggleButton ();
+	mxToggleButton(mxWindow *parent, int x, int y, int w, int h, const char *label = 0, int id = 0);
+	virtual ~mxToggleButton();
 
 	// MANIPULATORS
-	void setChecked (bool b);
+	void setChecked(bool b);
 
 	// ACCESSORS
-	bool isChecked () const;
+	bool isChecked() const;
 
 private:
 	// NOT IMPLEMENTED
-	mxToggleButton (const mxToggleButton&);
-	mxToggleButton& operator= (const mxToggleButton&);
+	mxToggleButton(const mxToggleButton &);
+	mxToggleButton &operator=(const mxToggleButton &);
 };
-
-
 
 #endif // INCLUDED_MXTOGGLEBUTTON

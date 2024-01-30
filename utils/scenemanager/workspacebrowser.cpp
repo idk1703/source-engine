@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -24,10 +24,10 @@ enum
 class CBrowserTree : public mxTreeView
 {
 public:
-	CBrowserTree( mxWindow *parent, int id = 0 ) 
-		: mxTreeView( parent, 0, 0, 0, 0, id )
+	CBrowserTree(mxWindow *parent, int id = 0) : mxTreeView(parent, 0, 0, 0, 0, id)
 	{
-		// SendMessage ( (HWND)getHandle(), WM_SETFONT, (WPARAM) (HFONT) GetStockObject (ANSI_FIXED_FONT), MAKELPARAM (TRUE, 0));
+		// SendMessage ( (HWND)getHandle(), WM_SETFONT, (WPARAM) (HFONT) GetStockObject (ANSI_FIXED_FONT), MAKELPARAM
+		// (TRUE, 0));
 	}
 };
 
@@ -36,80 +36,80 @@ int CALLBACK CWorkspaceBrowser::CompareFunc(LPARAM lParam1, LPARAM lParam2, LPAR
 	ITreeItem const *item1 = (ITreeItem *)lParam1;
 	ITreeItem const *item2 = (ITreeItem *)lParam2;
 
-	Assert( item1 && item2 );
+	Assert(item1 && item2);
 
-	if ( item1->GetOrdinal() < item2->GetOrdinal() )
+	if(item1->GetOrdinal() < item2->GetOrdinal())
 		return -1;
-	else if ( item1->GetOrdinal() > item2->GetOrdinal() )
+	else if(item1->GetOrdinal() > item2->GetOrdinal())
 		return 1;
-	
+
 	// Ok, just compare pointers... sigh
-	return ( item1 < item2 ) ? -1 : 1;
+	return (item1 < item2) ? -1 : 1;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
+// Purpose:
+// Input  : *parent -
 //-----------------------------------------------------------------------------
-CWorkspaceBrowser::CWorkspaceBrowser( mxWindow *parent, CWorkspaceManager *manager, int id ) :
-	BaseClass( parent, 0, 0, 0, 0, "Workspace Browser", id )
+CWorkspaceBrowser::CWorkspaceBrowser(mxWindow *parent, CWorkspaceManager *manager, int id)
+	: BaseClass(parent, 0, 0, 0, 0, "Workspace Browser", id)
 {
 	m_pManager = manager;
 
-	SceneManager_MakeToolWindow( this, false );
+	SceneManager_MakeToolWindow(this, false);
 
 	m_pLastSelected = NULL;
 
 	m_pCurrentWorkspace = NULL;
-	m_pTree = new CBrowserTree( this, IDC_WSB_TREE );
+	m_pTree = new CBrowserTree(this, IDC_WSB_TREE);
 
 	HIMAGELIST list = GetWorkspaceManager()->CreateImageList();
 
-	// Associate the image list with the tree-view control. 
-    m_pTree->setImageList( (void *)list ); 
+	// Associate the image list with the tree-view control.
+	m_pTree->setImageList((void *)list);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *event - 
+// Purpose:
+// Input  : *event -
 // Output : int
 //-----------------------------------------------------------------------------
-int CWorkspaceBrowser::handleEvent( mxEvent *event )
+int CWorkspaceBrowser::handleEvent(mxEvent *event)
 {
 	int iret = 0;
-	switch ( event->event )
+	switch(event->event)
 	{
-	default:
-		break;
-	case mxEvent::Action:
+		default:
+			break;
+		case mxEvent::Action:
 		{
-			switch ( event->action )
+			switch(event->action)
 			{
-			default:
-				break;
-			case IDC_WSB_TREE:
+				default:
+					break;
+				case IDC_WSB_TREE:
 				{
 					iret = 1;
 
-					bool rightmouse = ( event->flags == mxEvent::RightClicked ) ? true : false;
-					bool doubleclicked = ( event->flags == mxEvent::DoubleClicked ) ? true : false;
+					bool rightmouse = (event->flags == mxEvent::RightClicked) ? true : false;
+					bool doubleclicked = (event->flags == mxEvent::DoubleClicked) ? true : false;
 
-					OnTreeItemSelected( event->x, event->y, rightmouse, doubleclicked );
+					OnTreeItemSelected(event->x, event->y, rightmouse, doubleclicked);
 				}
 				break;
 			}
 		}
 		break;
-	case mxEvent::Size:
+		case mxEvent::Size:
 		{
-			m_pTree->setBounds( 0, 0, w2(), h2() );
+			m_pTree->setBounds(0, 0, w2(), h2());
 
 			GetWorkspaceManager()->SetWorkspaceDirty();
 
 			iret = 1;
 		}
 		break;
-	case mxEvent::Close:
+		case mxEvent::Close:
 		{
 			iret = 1;
 		}
@@ -120,7 +120,7 @@ int CWorkspaceBrowser::handleEvent( mxEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CWorkspace
 //-----------------------------------------------------------------------------
 CWorkspace *CWorkspaceBrowser::GetWorkspace()
@@ -129,7 +129,7 @@ CWorkspace *CWorkspaceBrowser::GetWorkspace()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWorkspaceBrowser::PopulateTree()
 {
@@ -137,45 +137,44 @@ void CWorkspaceBrowser::PopulateTree()
 
 	CWorkspace *w = m_pCurrentWorkspace;
 
-	if ( !w )
+	if(!w)
 		return;
 
 	// Add root element
-	char sz[ 128 ];
-	if ( w->GetProjectCount() == 1 )
+	char sz[128];
+	if(w->GetProjectCount() == 1)
 	{
-		Q_snprintf( sz, sizeof( sz ), "Workspace '%s': %i project", w->GetName(), w->GetProjectCount() );
+		Q_snprintf(sz, sizeof(sz), "Workspace '%s': %i project", w->GetName(), w->GetProjectCount());
 	}
 	else
 	{
-		Q_snprintf( sz, sizeof( sz ), "Workspace '%s': %i projects", w->GetName(), w->GetProjectCount() );
+		Q_snprintf(sz, sizeof(sz), "Workspace '%s': %i projects", w->GetName(), w->GetProjectCount());
 	}
 
-
-	mxTreeViewItem *root = w->FindItem( m_pTree, NULL );
-	if ( !root )
+	mxTreeViewItem *root = w->FindItem(m_pTree, NULL);
+	if(!root)
 	{
-		root = m_pTree->add( NULL, sz );
+		root = m_pTree->add(NULL, sz);
 	}
 
 	// Reset the label
-	m_pTree->setLabel( root, sz );
+	m_pTree->setLabel(root, sz);
 
-	m_pTree->setImages( root, w->GetIconIndex(), w->GetIconIndex() );
-	m_pTree->setUserData( root, w );
+	m_pTree->setImages(root, w->GetIconIndex(), w->GetIconIndex());
+	m_pTree->setUserData(root, w);
 
-	w->ValidateTree( m_pTree, root );
+	w->ValidateTree(m_pTree, root);
 
-	m_pTree->setOpen( root, true );
+	m_pTree->setOpen(root, true);
 
-	m_pTree->sortTree( root, true, CompareFunc, 0 );
+	m_pTree->sortTree(root, true, CompareFunc, 0);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *w - 
+// Purpose:
+// Input  : *w -
 //-----------------------------------------------------------------------------
-void CWorkspaceBrowser::SetWorkspace( CWorkspace *w )
+void CWorkspaceBrowser::SetWorkspace(CWorkspace *w)
 {
 	m_pCurrentWorkspace = w;
 
@@ -183,15 +182,15 @@ void CWorkspaceBrowser::SetWorkspace( CWorkspace *w )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *project - 
+// Purpose:
+// Input  : *project -
 //-----------------------------------------------------------------------------
-void CWorkspaceBrowser::AddProject( CProject *project )
+void CWorkspaceBrowser::AddProject(CProject *project)
 {
-	if ( !m_pCurrentWorkspace )
+	if(!m_pCurrentWorkspace)
 		return;
 
-	m_pCurrentWorkspace->AddProject( project );
+	m_pCurrentWorkspace->AddProject(project);
 
 	PopulateTree();
 }
@@ -206,19 +205,19 @@ CWorkspaceManager *CWorkspaceBrowser::GetManager()
 	return m_pManager;
 }
 
-void CWorkspaceBrowser::OnTreeItemSelected( int x, int y, bool rightmouse, bool doubleclick )
+void CWorkspaceBrowser::OnTreeItemSelected(int x, int y, bool rightmouse, bool doubleclick)
 {
 	mxTreeViewItem *item = m_pTree->getSelectedItem();
-	if ( !item )
+	if(!item)
 	{
-		Con_Printf( "No item selected\n" );
+		Con_Printf("No item selected\n");
 		return;
 	}
 
-	ITreeItem *p = (ITreeItem *)m_pTree->getUserData( item );
-	if ( !p )
+	ITreeItem *p = (ITreeItem *)m_pTree->getUserData(item);
+	if(!p)
 	{
-		Con_Printf( "No userdata for item\n" );
+		Con_Printf("No userdata for item\n");
 		return;
 	}
 
@@ -226,33 +225,33 @@ void CWorkspaceBrowser::OnTreeItemSelected( int x, int y, bool rightmouse, bool 
 
 	GetManager()->UpdateMenus();
 
-	if ( p->GetSoundEntry() || p->GetWaveFile() )
+	if(p->GetSoundEntry() || p->GetWaveFile())
 	{
 		GetManager()->OnSoundShowInBrowsers();
 	}
 
-	if ( !rightmouse )
+	if(!rightmouse)
 	{
-		if ( doubleclick )
+		if(doubleclick)
 		{
-			GetManager()->OnDoubleClicked( GetSelectedItem() );
+			GetManager()->OnDoubleClicked(GetSelectedItem());
 		}
 		return;
 	}
 
 	POINT pt;
-	GetCursorPos( &pt );
+	GetCursorPos(&pt);
 
-	ScreenToClient( (HWND)GetManager()->getHandle(), &pt );
+	ScreenToClient((HWND)GetManager()->getHandle(), &pt);
 
-	GetManager()->ShowContextMenu( pt.x, pt.y, GetSelectedItem() );
+	GetManager()->ShowContextMenu(pt.x, pt.y, GetSelectedItem());
 }
 
-void CWorkspaceBrowser::JumpTo( ITreeItem *item )
+void CWorkspaceBrowser::JumpTo(ITreeItem *item)
 {
-	mxTreeViewItem *found = item->FindItem( m_pTree, NULL, true );
-	if ( found )
+	mxTreeViewItem *found = item->FindItem(m_pTree, NULL, true);
+	if(found)
 	{
-		m_pTree->scrollTo( found );
+		m_pTree->scrollTo(found);
 	}
 }

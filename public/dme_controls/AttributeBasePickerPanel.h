@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -15,7 +15,6 @@
 
 #include "dme_controls/AttributeTextPanel.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
@@ -26,27 +25,25 @@ namespace vgui
 	class Button;
 }
 
-
 //-----------------------------------------------------------------------------
 // CAttributeBasePickerPanel
 //-----------------------------------------------------------------------------
 class CAttributeBasePickerPanel : public CAttributeTextPanel
 {
-	DECLARE_CLASS_SIMPLE( CAttributeBasePickerPanel, CAttributeTextPanel );
+	DECLARE_CLASS_SIMPLE(CAttributeBasePickerPanel, CAttributeTextPanel);
 
 public:
-	CAttributeBasePickerPanel( vgui::Panel *parent, const AttributeWidgetInfo_t &info );
+	CAttributeBasePickerPanel(vgui::Panel *parent, const AttributeWidgetInfo_t &info);
 
 	// Inherited from Panel
-	virtual void	OnCommand( const char *cmd );
-	virtual void	PerformLayout();
+	virtual void OnCommand(const char *cmd);
+	virtual void PerformLayout();
 
 private:
 	// Inherited classes must implement this
-	virtual void	ShowPickerDialog() = 0;
+	virtual void ShowPickerDialog() = 0;
 
-	vgui::Button	*m_pOpen;
+	vgui::Button *m_pOpen;
 };
-
 
 #endif // ATTRIBUTEBASEPICKERPANEL_H

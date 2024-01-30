@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,24 +10,22 @@
 #pragma once
 #endif
 
-
-
 //-----------------------------------------------------------------------------
 // Do we have the super-phys gun?
 //-----------------------------------------------------------------------------
 bool PlayerHasMegaPhysCannon();
 
 // force the physcannon to drop an object (if carried)
-void PhysCannonForceDrop( CBaseCombatWeapon *pActiveWeapon, CBaseEntity *pOnlyIfHoldingThis );
-void PhysCannonBeginUpgrade( CBaseAnimating *pAnim );
+void PhysCannonForceDrop(CBaseCombatWeapon *pActiveWeapon, CBaseEntity *pOnlyIfHoldingThis);
+void PhysCannonBeginUpgrade(CBaseAnimating *pAnim);
 
-bool PlayerPickupControllerIsHoldingEntity( CBaseEntity *pPickupController, CBaseEntity *pHeldEntity );
-float PlayerPickupGetHeldObjectMass( CBaseEntity *pPickupControllerEntity, IPhysicsObject *pHeldObject );
-float PhysCannonGetHeldObjectMass( CBaseCombatWeapon *pActiveWeapon, IPhysicsObject *pHeldObject );
+bool PlayerPickupControllerIsHoldingEntity(CBaseEntity *pPickupController, CBaseEntity *pHeldEntity);
+float PlayerPickupGetHeldObjectMass(CBaseEntity *pPickupControllerEntity, IPhysicsObject *pHeldObject);
+float PhysCannonGetHeldObjectMass(CBaseCombatWeapon *pActiveWeapon, IPhysicsObject *pHeldObject);
 
-CBaseEntity *PhysCannonGetHeldEntity( CBaseCombatWeapon *pActiveWeapon );
-CBaseEntity *GetPlayerHeldEntity( CBasePlayer *pPlayer );
+CBaseEntity *PhysCannonGetHeldEntity(CBaseCombatWeapon *pActiveWeapon);
+CBaseEntity *GetPlayerHeldEntity(CBasePlayer *pPlayer);
 
-bool PhysCannonAccountableForObject( CBaseCombatWeapon *pPhysCannon, CBaseEntity *pObject );
+bool PhysCannonAccountableForObject(CBaseCombatWeapon *pPhysCannon, CBaseEntity *pObject);
 
 #endif // WEAPON_PHYSCANNON_H

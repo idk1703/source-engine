@@ -12,34 +12,32 @@
 
 #include "dme_controls/particlesystempropertiespanel.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
 class CPetDoc;
 
-
 //-----------------------------------------------------------------------------
 // Panel used to edit a particle system	definition
 //-----------------------------------------------------------------------------
-class CParticleSystemPropertiesContainer : public CParticleSystemPropertiesPanel, public IParticleSystemPropertiesPanelQuery
+class CParticleSystemPropertiesContainer : public CParticleSystemPropertiesPanel,
+										   public IParticleSystemPropertiesPanelQuery
 {
-	DECLARE_CLASS_SIMPLE( CParticleSystemPropertiesContainer, CParticleSystemPropertiesPanel );
+	DECLARE_CLASS_SIMPLE(CParticleSystemPropertiesContainer, CParticleSystemPropertiesPanel);
 
 public:
-	CParticleSystemPropertiesContainer( CPetDoc *pDoc, vgui::Panel* pParent );   // standard constructor
+	CParticleSystemPropertiesContainer(CPetDoc *pDoc, vgui::Panel *pParent); // standard constructor
 
 	// Inherited from IParticleSystemPropertiesPanelQuery
-	virtual void GetKnownParticleDefinitions( CUtlVector< CDmeParticleSystemDefinition* > &definitions );
+	virtual void GetKnownParticleDefinitions(CUtlVector<CDmeParticleSystemDefinition *> &definitions);
 
 private:
-	MESSAGE_FUNC_PARAMS( OnParticleFunctionSelChanged, "ParticleFunctionSelChanged", params );
+	MESSAGE_FUNC_PARAMS(OnParticleFunctionSelChanged, "ParticleFunctionSelChanged", params);
 
 	// For inheriting classes to get notified without having to listen to messages
 	virtual void OnParticleSystemModified();
 
 	CPetDoc *m_pDoc;
 };
-
 
 #endif // PARTICLESYSTEMPROPERTIESCONTAINER_H

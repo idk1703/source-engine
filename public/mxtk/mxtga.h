@@ -14,17 +14,11 @@
 #ifndef INCLUDED_MXTGA
 #define INCLUDED_MXTGA
 
-
-
 #ifndef INCLUDED_MXIMAGE
 #include "mxtk/mxImage.h"
 #endif
 
-
-
-mxImage *mxTgaRead (const char *filename);
-bool mxTgaWrite (const char *filename, mxImage *image);
-
-
+mxImage *mxTgaRead(const char *filename);
+bool mxTgaWrite(const char *filename, mxImage *image);
 
 #endif // INCLUDED_MXTGA

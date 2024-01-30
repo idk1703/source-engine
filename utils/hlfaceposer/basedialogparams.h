@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,13 +17,13 @@
 struct CBaseDialogParams
 {
 	// i dialog title
-	char		m_szDialogTitle[ 128 ];
+	char m_szDialogTitle[128];
 
-	bool		m_bPositionDialog;
-	int			m_nLeft;
-	int			m_nTop;
+	bool m_bPositionDialog;
+	int m_nLeft;
+	int m_nTop;
 
-	void		PositionSelf( void * self );
+	void PositionSelf(void *self);
 };
 
 #endif // BASEDIALOGPARAMS_H

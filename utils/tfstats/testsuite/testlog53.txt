@@ -506,7 +506,7 @@ L 07/22/1999 - 18:45:57: "[S.S.]Stud*Pvt.<46>" killed "Mikef<48>" with "timer"
 L 07/22/1999 - 18:46:00: "Mikef<48>" say "ok "
 L 07/22/1999 - 18:46:01: "Mikef<48>" activated the goal "i_p_t"
 L 07/22/1999 - 18:46:03: =------= MATCH RESULTS =------=
-L 07/22/1999 - 18:46:03: "blue" defeated "red" 
+L 07/22/1999 - 18:46:03: "blue" defeated "red"
 L 07/22/1999 - 18:46:03: "blue" RESULTS: "4" players. "100" frags, "4" unaccounted for. "146" team score. Allies:
 L 07/22/1999 - 18:46:03: "red" RESULTS: "4" players. "53" frags, "4" unaccounted for. "81" team score. Allies:
 L 07/22/1999 - 18:46:06: "Mikef<48>" say "gg"

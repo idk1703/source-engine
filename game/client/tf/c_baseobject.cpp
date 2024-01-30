@@ -37,50 +37,38 @@
 #include "tier0/memdbgon.h"
 
 // forward declarations
-void ToolFramework_RecordMaterialParams( IMaterial *pMaterial );
+void ToolFramework_RecordMaterialParams(IMaterial *pMaterial);
 
-#define MAX_VISIBLE_BUILDPOINT_DISTANCE		(400 * 400)
+#define MAX_VISIBLE_BUILDPOINT_DISTANCE (400 * 400)
 
 // Remove aliasing of name due to shared code
 #undef CBaseObject
 
-IMPLEMENT_AUTO_LIST( IBaseObjectAutoList );
+IMPLEMENT_AUTO_LIST(IBaseObjectAutoList);
 
 IMPLEMENT_CLIENTCLASS_DT(C_BaseObject, DT_BaseObject, CBaseObject)
-	RecvPropInt(RECVINFO(m_iHealth)),
-	RecvPropInt(RECVINFO(m_iMaxHealth)),
-	RecvPropInt(RECVINFO(m_bHasSapper)),
-	RecvPropInt(RECVINFO(m_iObjectType)),
-	RecvPropBool(RECVINFO(m_bBuilding)),
-	RecvPropBool(RECVINFO(m_bPlacing)),
-	RecvPropBool(RECVINFO(m_bCarried)),
-	RecvPropBool(RECVINFO(m_bCarryDeploy)),
-	RecvPropBool(RECVINFO(m_bMiniBuilding)),
-	RecvPropFloat(RECVINFO(m_flPercentageConstructed)),
-	RecvPropInt(RECVINFO(m_fObjectFlags)),
-	RecvPropEHandle(RECVINFO(m_hBuiltOnEntity)),
-	RecvPropInt( RECVINFO( m_bDisabled ) ),
-	RecvPropEHandle( RECVINFO( m_hBuilder ) ),
-	RecvPropVector( RECVINFO( m_vecBuildMaxs ) ),
-	RecvPropVector( RECVINFO( m_vecBuildMins ) ),
-	RecvPropInt( RECVINFO( m_iDesiredBuildRotations ) ),
-	RecvPropInt( RECVINFO( m_bServerOverridePlacement ) ),
-	RecvPropInt( RECVINFO(m_iUpgradeLevel) ),
-	RecvPropInt( RECVINFO(m_iUpgradeMetal) ),
-	RecvPropInt( RECVINFO(m_iUpgradeMetalRequired) ),
-	RecvPropInt( RECVINFO(m_iHighestUpgradeLevel) ),
-	RecvPropInt( RECVINFO(m_iObjectMode) ),
-	RecvPropBool( RECVINFO( m_bDisposableBuilding ) ),
-	RecvPropBool( RECVINFO( m_bWasMapPlaced ) ),
-	RecvPropBool( RECVINFO( m_bPlasmaDisable ) ),
-END_RECV_TABLE()
+RecvPropInt(RECVINFO(m_iHealth)), RecvPropInt(RECVINFO(m_iMaxHealth)), RecvPropInt(RECVINFO(m_bHasSapper)),
+	RecvPropInt(RECVINFO(m_iObjectType)), RecvPropBool(RECVINFO(m_bBuilding)), RecvPropBool(RECVINFO(m_bPlacing)),
+	RecvPropBool(RECVINFO(m_bCarried)), RecvPropBool(RECVINFO(m_bCarryDeploy)), RecvPropBool(RECVINFO(m_bMiniBuilding)),
+	RecvPropFloat(RECVINFO(m_flPercentageConstructed)), RecvPropInt(RECVINFO(m_fObjectFlags)),
+	RecvPropEHandle(RECVINFO(m_hBuiltOnEntity)), RecvPropInt(RECVINFO(m_bDisabled)),
+	RecvPropEHandle(RECVINFO(m_hBuilder)), RecvPropVector(RECVINFO(m_vecBuildMaxs)),
+	RecvPropVector(RECVINFO(m_vecBuildMins)), RecvPropInt(RECVINFO(m_iDesiredBuildRotations)),
+	RecvPropInt(RECVINFO(m_bServerOverridePlacement)), RecvPropInt(RECVINFO(m_iUpgradeLevel)),
+	RecvPropInt(RECVINFO(m_iUpgradeMetal)), RecvPropInt(RECVINFO(m_iUpgradeMetalRequired)),
+	RecvPropInt(RECVINFO(m_iHighestUpgradeLevel)), RecvPropInt(RECVINFO(m_iObjectMode)),
+	RecvPropBool(RECVINFO(m_bDisposableBuilding)), RecvPropBool(RECVINFO(m_bWasMapPlaced)),
+	RecvPropBool(RECVINFO(m_bPlasmaDisable)),
+END_RECV_TABLE
+()
 
-ConVar cl_obj_test_building_damage( "cl_obj_test_building_damage", "-1", FCVAR_CHEAT, "debug building damage", true, -1, true, BUILDING_DAMAGE_LEVEL_CRITICAL );
+	ConVar cl_obj_test_building_damage("cl_obj_test_building_damage", "-1", FCVAR_CHEAT, "debug building damage", true,
+									   -1, true, BUILDING_DAMAGE_LEVEL_CRITICAL);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-C_BaseObject::C_BaseObject(  )
+C_BaseObject::C_BaseObject()
 {
 	m_YawPreviewState = YAW_PREVIEW_OFF;
 	m_bBuilding = false;
@@ -116,46 +104,44 @@ C_BaseObject::C_BaseObject(  )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-C_BaseObject::~C_BaseObject( void )
-{
-}
+C_BaseObject::~C_BaseObject(void) {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_BaseObject::Spawn( void )
+void C_BaseObject::Spawn(void)
 {
 	BaseClass::Spawn();
 
-	m_bServerOverridePlacement = true;	// assume valid at the start
+	m_bServerOverridePlacement = true; // assume valid at the start
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_BaseObject::UpdateOnRemove( void )
+void C_BaseObject::UpdateOnRemove(void)
 {
 	StopAnimGeneratedSounds();
 
 	DestroyBoneAttachments();
 
-	CTFHudSpectatorExtras *pSpectatorExtras = GET_HUDELEMENT( CTFHudSpectatorExtras );
-	if ( pSpectatorExtras )
- 	{
-		pSpectatorExtras->RemoveEntity( entindex() );
- 	}
+	CTFHudSpectatorExtras *pSpectatorExtras = GET_HUDELEMENT(CTFHudSpectatorExtras);
+	if(pSpectatorExtras)
+	{
+		pSpectatorExtras->RemoveEntity(entindex());
+	}
 
 	BaseClass::UpdateOnRemove();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_BaseObject::PreDataUpdate( DataUpdateType_t updateType )
+void C_BaseObject::PreDataUpdate(DataUpdateType_t updateType)
 {
-	BaseClass::PreDataUpdate( updateType );
+	BaseClass::PreDataUpdate(updateType);
 
 	m_iOldHealth = m_iHealth;
 	m_hOldOwner = GetOwner();
@@ -168,52 +154,52 @@ void C_BaseObject::PreDataUpdate( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_BaseObject::OnDataChanged( DataUpdateType_t updateType )
+void C_BaseObject::OnDataChanged(DataUpdateType_t updateType)
 {
-	if (updateType == DATA_UPDATE_CREATED)
+	if(updateType == DATA_UPDATE_CREATED)
 	{
 		CreateBuildPoints();
 		// NVNT if the local player created this send a created effect
-		if(IsOwnedByLocalPlayer() &&haptics)
+		if(IsOwnedByLocalPlayer() && haptics)
 		{
 			haptics->ProcessHapticEvent(3, "Game", "Build", GetClassname());
 		}
 	}
 
-	BaseClass::OnDataChanged( updateType );
+	BaseClass::OnDataChanged(updateType);
 
 	// did we just pick up the object?
-	if ( !m_bWasPlacing && m_bPlacing )
+	if(!m_bWasPlacing && m_bPlacing)
 	{
 		m_iLastPlacementPosValid = -1;
 	}
 
 	// Did we just finish building?
-	if ( m_bWasBuilding && !m_bBuilding )
+	if(m_bWasBuilding && !m_bBuilding)
 	{
 		FinishedBuilding();
 	}
-	else if ( !m_bWasBuilding && m_bBuilding )
+	else if(!m_bWasBuilding && m_bBuilding)
 	{
 		ResetClientsideFrame();
 	}
 
 	// Did we just go active?
 	bool bShouldBeActive = ShouldBeActive();
-	if ( !m_bWasActive && bShouldBeActive )
+	if(!m_bWasActive && bShouldBeActive)
 	{
 		OnGoActive();
 	}
-	else if ( m_bWasActive && !bShouldBeActive )
+	else if(m_bWasActive && !bShouldBeActive)
 	{
 		OnGoInactive();
 	}
 
-	if ( m_bDisabled != m_bOldDisabled )
+	if(m_bDisabled != m_bOldDisabled)
 	{
-		if ( m_bDisabled )
+		if(m_bDisabled)
 		{
 			OnStartDisabled();
 		}
@@ -223,61 +209,64 @@ void C_BaseObject::OnDataChanged( DataUpdateType_t updateType )
 		}
 	}
 
-	if ( !IsBuilding() && m_iHealth != m_iOldHealth )
+	if(!IsBuilding() && m_iHealth != m_iOldHealth)
 	{
 		// recalc our damage particle state
 		BuildingDamageLevel_t damageLevel = CalculateDamageLevel();
 
-		if ( damageLevel != m_damageLevel )
+		if(damageLevel != m_damageLevel)
 		{
-			UpdateDamageEffects( damageLevel );
+			UpdateDamageEffects(damageLevel);
 
 			m_damageLevel = damageLevel;
 		}
 	}
 
-	if ( m_bCarryDeploy != m_bOldCarryDeploy )
+	if(m_bCarryDeploy != m_bOldCarryDeploy)
 	{
 		m_bOldCarryDeploy = m_bCarryDeploy;
-		if ( !m_bCarryDeploy )
+		if(!m_bCarryDeploy)
 		{
 			// Update our damage effects when we're done redeploying.
-			UpdateDamageEffects( CalculateDamageLevel() );
+			UpdateDamageEffects(CalculateDamageLevel());
 		}
 	}
 
-	if ( m_iHealth > m_iOldHealth && m_iHealth == m_iMaxHealth )
+	if(m_iHealth > m_iOldHealth && m_iHealth == m_iMaxHealth)
 	{
 		// If we were just fully healed, remove all decals
 		RemoveAllDecals();
 	}
 
-	if ( GetOwner() == C_TFPlayer::GetLocalTFPlayer() )
+	if(GetOwner() == C_TFPlayer::GetLocalTFPlayer())
 	{
-		IGameEvent *event = gameeventmanager->CreateEvent( "building_info_changed" );
-		if ( event )
+		IGameEvent *event = gameeventmanager->CreateEvent("building_info_changed");
+		if(event)
 		{
-			event->SetInt( "building_type", GetType() );
-			event->SetInt( "object_mode", GetObjectMode() );
-			gameeventmanager->FireEventClientSide( event );
+			event->SetInt("building_type", GetType());
+			event->SetInt("object_mode", GetObjectMode());
+			gameeventmanager->FireEventClientSide(event);
 		}
 	}
 
-	if ( IsPlacing() && GetSequence() != m_nObjectOldSequence )
+	if(IsPlacing() && GetSequence() != m_nObjectOldSequence)
 	{
 		// Ignore server sequences while placing
-		OnPlacementStateChanged( m_iLastPlacementPosValid > 0 );
+		OnPlacementStateChanged(m_iLastPlacementPosValid > 0);
 	}
 
-	if ( m_iOldUpgradeLevel != m_iUpgradeLevel )
+	if(m_iOldUpgradeLevel != m_iUpgradeLevel)
 	{
 		UpgradeLevelChanged();
 		m_iOldUpgradeLevel = m_iUpgradeLevel;
 	}
 	// NVNT building status
-	if(IsOwnedByLocalPlayer()) {
-		if(m_bWasBuilding!=m_bBuilding) {
-			if(m_bBuilding && haptics) {
+	if(IsOwnedByLocalPlayer())
+	{
+		if(m_bWasBuilding != m_bBuilding)
+		{
+			if(m_bBuilding && haptics)
+			{
 				haptics->ProcessHapticEvent(3, "Game", "Building", GetClassname());
 			}
 		}
@@ -285,75 +274,74 @@ void C_BaseObject::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_BaseObject::SetDormant( bool bDormant )
+void C_BaseObject::SetDormant(bool bDormant)
 {
-	BaseClass::SetDormant( bDormant );
-	//ENTITY_PANEL_ACTIVATE( "analyzed_object", !bDormant );
+	BaseClass::SetDormant(bDormant);
+	// ENTITY_PANEL_ACTIVATE( "analyzed_object", !bDormant );
 }
 
-#define TF_OBJ_BODYGROUPTURNON			1
-#define TF_OBJ_BODYGROUPTURNOFF			0
+#define TF_OBJ_BODYGROUPTURNON	1
+#define TF_OBJ_BODYGROUPTURNOFF 0
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : origin - 
-//			angles - 
-//			event - 
-//			*options - 
+// Purpose:
+// Input  : origin -
+//			angles -
+//			event -
+//			*options -
 //-----------------------------------------------------------------------------
-void C_BaseObject::FireEvent( const Vector& origin, const QAngle& angles, int event, const char *options )
+void C_BaseObject::FireEvent(const Vector &origin, const QAngle &angles, int event, const char *options)
 {
-	switch ( event )
+	switch(event)
 	{
-	default:
+		default:
 		{
-			BaseClass::FireEvent( origin, angles, event, options );
+			BaseClass::FireEvent(origin, angles, event, options);
 		}
 		break;
-	case TF_OBJ_PLAYBUILDSOUND:
+		case TF_OBJ_PLAYBUILDSOUND:
 		{
-			EmitSound( options );
+			EmitSound(options);
 		}
 		break;
-	case TF_OBJ_ENABLEBODYGROUP:
+		case TF_OBJ_ENABLEBODYGROUP:
 		{
-			int index_ = FindBodygroupByName( options );
-			if ( index_ >= 0 )
+			int index_ = FindBodygroupByName(options);
+			if(index_ >= 0)
 			{
-				SetBodygroup( index_, TF_OBJ_BODYGROUPTURNON );
+				SetBodygroup(index_, TF_OBJ_BODYGROUPTURNON);
 			}
 		}
 		break;
-	case TF_OBJ_DISABLEBODYGROUP:
+		case TF_OBJ_DISABLEBODYGROUP:
 		{
-			int index_ = FindBodygroupByName( options );
-			if ( index_ >= 0 )
+			int index_ = FindBodygroupByName(options);
+			if(index_ >= 0)
 			{
-				SetBodygroup( index_, TF_OBJ_BODYGROUPTURNOFF );
+				SetBodygroup(index_, TF_OBJ_BODYGROUPTURNOFF);
 			}
 		}
 		break;
-	case TF_OBJ_ENABLEALLBODYGROUPS:
-	case TF_OBJ_DISABLEALLBODYGROUPS:
+		case TF_OBJ_ENABLEALLBODYGROUPS:
+		case TF_OBJ_DISABLEALLBODYGROUPS:
 		{
 			// Start at 1, because body 0 is the main .mdl body...
 			// Is this the way we want to do this?
 			int count = GetNumBodyGroups();
-			for ( int i = 1; i < count; i++ )
+			for(int i = 1; i < count; i++)
 			{
-				int subpartcount = GetBodygroupCount( i );
-				if ( subpartcount == 2 )
+				int subpartcount = GetBodygroupCount(i);
+				if(subpartcount == 2)
 				{
-					SetBodygroup( i, 
-						( event == TF_OBJ_ENABLEALLBODYGROUPS ) ?
-						TF_OBJ_BODYGROUPTURNON : TF_OBJ_BODYGROUPTURNOFF );
+					SetBodygroup(i, (event == TF_OBJ_ENABLEALLBODYGROUPS) ? TF_OBJ_BODYGROUPTURNON
+																		  : TF_OBJ_BODYGROUPTURNOFF);
 				}
 				else
 				{
-					DevMsg( "TF_OBJ_ENABLE/DISABLEBODY GROUP:  %s has a group with %i subparts, should be exactly 2\n",
-						GetClassname(), subpartcount );
+					DevMsg("TF_OBJ_ENABLE/DISABLEBODY GROUP:  %s has a group with %i subparts, should be exactly 2\n",
+						   GetClassname(), subpartcount);
 				}
 			}
 		}
@@ -361,72 +349,71 @@ void C_BaseObject::FireEvent( const Vector& origin, const QAngle& angles, int ev
 	}
 }
 
-
-const char* C_BaseObject::GetStatusName() const
+const char *C_BaseObject::GetStatusName() const
 {
-	return GetObjectInfo( GetType() )->m_AltModes[GetObjectMode()].pszStatusName;
+	return GetObjectInfo(GetType())->m_AltModes[GetObjectMode()].pszStatusName;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: placement state has changed, update the model
 //-----------------------------------------------------------------------------
-void C_BaseObject::OnPlacementStateChanged( bool bValidPlacement )
+void C_BaseObject::OnPlacementStateChanged(bool bValidPlacement)
 {
-	if ( bValidPlacement )
+	if(bValidPlacement)
 	{
 		// NVNT if the local player placed this send a created effect
-		if(IsOwnedByLocalPlayer()&&haptics)
+		if(IsOwnedByLocalPlayer() && haptics)
 		{
 			haptics->ProcessHapticEvent(3, "Game", "Placed", GetClassname());
 		}
-		SetActivity( ACT_OBJ_PLACING );
+		SetActivity(ACT_OBJ_PLACING);
 	}
 	else
 	{
-		SetActivity( ACT_OBJ_IDLE );
+		SetActivity(ACT_OBJ_IDLE);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_BaseObject::Simulate( void )
+void C_BaseObject::Simulate(void)
 {
-	if ( IsPlacing() && !MustBeBuiltOnAttachmentPoint() )
+	if(IsPlacing() && !MustBeBuiltOnAttachmentPoint())
 	{
-		int iValidPlacement = ( IsPlacementPosValid() && ServerValidPlacement() ) ? 1 : 0;
+		int iValidPlacement = (IsPlacementPosValid() && ServerValidPlacement()) ? 1 : 0;
 
-		if ( m_iLastPlacementPosValid != iValidPlacement )
+		if(m_iLastPlacementPosValid != iValidPlacement)
 		{
 			m_iLastPlacementPosValid = iValidPlacement;
-			OnPlacementStateChanged( m_iLastPlacementPosValid > 0 );
+			OnPlacementStateChanged(m_iLastPlacementPosValid > 0);
 		}
 
-		// We figure out our own placement pos, but we still leave it to the server to 
-		// do collision with other entities and nobuild triggers, so that sets the 
+		// We figure out our own placement pos, but we still leave it to the server to
+		// do collision with other entities and nobuild triggers, so that sets the
 		// placement animation
 
-		SetLocalOrigin( m_vecBuildOrigin );
+		SetLocalOrigin(m_vecBuildOrigin);
 		InvalidateBoneCache();
 
 		// Clear out our origin and rotation interpolation history
 		// so we don't pop when we teleport in the actual position from the server
 
-		CInterpolatedVar< Vector > &interpolator = GetOriginInterpolator();
+		CInterpolatedVar<Vector> &interpolator = GetOriginInterpolator();
 		interpolator.ClearHistory();
 
 		CInterpolatedVar<QAngle> &rotInterpolator = GetRotationInterpolator();
 		rotInterpolator.ClearHistory();
 	}
-	else if ( !IsPlacing() && !IsCarried() && m_iLastPlacementPosValid == 0 )
+	else if(!IsPlacing() && !IsCarried() && m_iLastPlacementPosValid == 0)
 	{
 		// HACK HACK: This sentry has been placed, but was placed on the server before the client updated
 		// from the carry position to see that was a valid placement.
 		// It missed its chance to set the correct activity, so we're doing it now.
-		SetActivity( ACT_OBJ_RUNNING );
+		SetActivity(ACT_OBJ_RUNNING);
 
 		// Check if the activity was valid because it might have still been using the older placement model
-		if ( GetActivity() != ACT_INVALID )
+		if(GetActivity() != ACT_INVALID)
 		{
 			// Remember to retest our placement, but don't keep forcing the running activity
 			m_iLastPlacementPosValid = -1;
@@ -440,30 +427,30 @@ void C_BaseObject::Simulate( void )
 // Purpose: Return false if the server is telling us we can't place right now
 // could be due to placing in a nobuild or respawn room
 //-----------------------------------------------------------------------------
-bool C_BaseObject::ServerValidPlacement( void )
+bool C_BaseObject::ServerValidPlacement(void)
 {
 	return m_bServerOverridePlacement;
 }
 
-bool C_BaseObject::WasLastPlacementPosValid( void )
+bool C_BaseObject::WasLastPlacementPosValid(void)
 {
-	if ( MustBeBuiltOnAttachmentPoint() )
+	if(MustBeBuiltOnAttachmentPoint())
 	{
-		return ( !IsEffectActive(EF_NODRAW) );
+		return (!IsEffectActive(EF_NODRAW));
 	}
-	
-	return ( m_iLastPlacementPosValid > 0 );
+
+	return (m_iLastPlacementPosValid > 0);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int C_BaseObject::DrawModel( int flags )
+int C_BaseObject::DrawModel(int flags)
 {
 	int drawn;
 
 	// If we're a brush-built, map-defined object chain up to baseentity draw
-	if ( modelinfo->GetModelType( GetModel() ) == mod_brush )
+	if(modelinfo->GetModelType(GetModel()) == mod_brush)
 	{
 		drawn = CBaseEntity::DrawModel(flags);
 	}
@@ -472,17 +459,17 @@ int C_BaseObject::DrawModel( int flags )
 		drawn = BaseClass::DrawModel(flags);
 	}
 
-	HighlightBuildPoints( flags );
+	HighlightBuildPoints(flags);
 
 	return drawn;
 }
 
-float C_BaseObject::GetReversesBuildingConstructionSpeed( void )
+float C_BaseObject::GetReversesBuildingConstructionSpeed(void)
 {
-	if ( HasSapper() )
+	if(HasSapper())
 	{
-		C_ObjectSapper *pSapper = dynamic_cast< C_ObjectSapper* >( FirstMoveChild() );
-		if ( pSapper )
+		C_ObjectSapper *pSapper = dynamic_cast<C_ObjectSapper *>(FirstMoveChild());
+		if(pSapper)
 		{
 			return pSapper->GetReversesBuildingConstructionSpeed();
 		}
@@ -492,101 +479,92 @@ float C_BaseObject::GetReversesBuildingConstructionSpeed( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_BaseObject::HighlightBuildPoints( int flags )
+void C_BaseObject::HighlightBuildPoints(int flags)
 {
 	C_TFPlayer *pLocal = C_TFPlayer::GetLocalTFPlayer();
-	if ( !pLocal )
+	if(!pLocal)
 		return;
 
-	if ( !GetNumBuildPoints() || !InLocalTeam() )
+	if(!GetNumBuildPoints() || !InLocalTeam())
 		return;
 
-	C_TFWeaponBuilder *pBuilderWpn = dynamic_cast< C_TFWeaponBuilder * >( pLocal->GetActiveWeaponForSelection() );
-	if ( !pBuilderWpn )
+	C_TFWeaponBuilder *pBuilderWpn = dynamic_cast<C_TFWeaponBuilder *>(pLocal->GetActiveWeaponForSelection());
+	if(!pBuilderWpn)
 		return;
-	if ( !pBuilderWpn->IsPlacingObject() )
+	if(!pBuilderWpn->IsPlacingObject())
 		return;
 	C_BaseObject *pPlacementObj = pBuilderWpn->GetPlacementModel();
-	if ( !pPlacementObj || pPlacementObj == this )
+	if(!pPlacementObj || pPlacementObj == this)
 		return;
 
 	// Near enough?
-	if ( (GetAbsOrigin() - pLocal->GetAbsOrigin()).LengthSqr() < MAX_VISIBLE_BUILDPOINT_DISTANCE )
+	if((GetAbsOrigin() - pLocal->GetAbsOrigin()).LengthSqr() < MAX_VISIBLE_BUILDPOINT_DISTANCE)
 	{
 		bool bRestoreModel = false;
 		Vector vecPrevAbsOrigin = pPlacementObj->GetAbsOrigin();
 		QAngle vecPrevAbsAngles = pPlacementObj->GetAbsAngles();
 
 		Vector orgColor;
-		render->GetColorModulation( orgColor.Base() );
+		render->GetColorModulation(orgColor.Base());
 		float orgBlend = render->GetBlend();
 
-		bool bSameTeam = ( pPlacementObj->GetTeamNumber() == GetTeamNumber() );
+		bool bSameTeam = (pPlacementObj->GetTeamNumber() == GetTeamNumber());
 
-		if ( pPlacementObj->IsHostileUpgrade() && bSameTeam )
+		if(pPlacementObj->IsHostileUpgrade() && bSameTeam)
 		{
 			// Don't hilight hostile upgrades on friendly objects
 			return;
 		}
-		else if ( !bSameTeam )
+		else if(!bSameTeam)
 		{
 			// Don't hilight upgrades on enemy objects
 			return;
 		}
 
 		// Any empty buildpoints?
-		for ( int i = 0; i < GetNumBuildPoints(); i++ )
+		for(int i = 0; i < GetNumBuildPoints(); i++)
 		{
 			// Can this object build on this point?
-			if ( CanBuildObjectOnBuildPoint( i, pPlacementObj->GetType() ) )
+			if(CanBuildObjectOnBuildPoint(i, pPlacementObj->GetType()))
 			{
 				Vector vecBPOrigin;
 				QAngle vecBPAngles;
-				if ( GetBuildPoint(i, vecBPOrigin, vecBPAngles) )
+				if(GetBuildPoint(i, vecBPOrigin, vecBPAngles))
 				{
 					pPlacementObj->InvalidateBoneCaches();
 
-					Vector color( 0, 255, 0 );
-					render->SetColorModulation(	color.Base() );
-					float frac = fmod( gpGlobals->curtime, 3 );
+					Vector color(0, 255, 0);
+					render->SetColorModulation(color.Base());
+					float frac = fmod(gpGlobals->curtime, 3);
 					frac *= 2 * M_PI;
-					frac = cos( frac );
-					render->SetBlend( (175 + (int)( frac * 75.0f )) / 255.0 );
+					frac = cos(frac);
+					render->SetBlend((175 + (int)(frac * 75.0f)) / 255.0);
 
 					// FIXME: This truly sucks! The bone cache should use
 					// render location for this computation instead of directly accessing AbsAngles
 					// Necessary for bone cache computations to work
-					pPlacementObj->SetAbsOrigin( vecBPOrigin );
-					pPlacementObj->SetAbsAngles( vecBPAngles );
+					pPlacementObj->SetAbsOrigin(vecBPOrigin);
+					pPlacementObj->SetAbsAngles(vecBPAngles);
 
-					modelrender->DrawModel( 
-						flags, 
-						pPlacementObj,
-						pPlacementObj->GetModelInstance(),
-						pPlacementObj->index, 
-						pPlacementObj->GetModel(),
-						vecBPOrigin,
-						vecBPAngles,
-						pPlacementObj->m_nSkin,
-						pPlacementObj->m_nBody,
-						pPlacementObj->m_nHitboxSet
-						);
+					modelrender->DrawModel(flags, pPlacementObj, pPlacementObj->GetModelInstance(),
+										   pPlacementObj->index, pPlacementObj->GetModel(), vecBPOrigin, vecBPAngles,
+										   pPlacementObj->m_nSkin, pPlacementObj->m_nBody, pPlacementObj->m_nHitboxSet);
 
 					bRestoreModel = true;
 				}
 			}
 		}
 
-		if ( bRestoreModel )
+		if(bRestoreModel)
 		{
 			pPlacementObj->SetAbsOrigin(vecPrevAbsOrigin);
 			pPlacementObj->SetAbsAngles(vecPrevAbsAngles);
 			pPlacementObj->InvalidateBoneCaches();
 
-			render->SetColorModulation( orgColor.Base() );
-			render->SetBlend( orgBlend );
+			render->SetColorModulation(orgColor.Base());
+			render->SetBlend(orgBlend);
 		}
 	}
 }
@@ -594,21 +572,21 @@ void C_BaseObject::HighlightBuildPoints( int flags )
 //-----------------------------------------------------------------------------
 // Builder preview...
 //-----------------------------------------------------------------------------
-void C_BaseObject::ActivateYawPreview( bool enable )
+void C_BaseObject::ActivateYawPreview(bool enable)
 {
 	m_YawPreviewState = enable ? YAW_PREVIEW_ON : YAW_PREVIEW_WAITING_FOR_UPDATE;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_BaseObject::PreviewYaw( float yaw )
+void C_BaseObject::PreviewYaw(float yaw)
 {
 	m_fYawPreview = yaw;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_BaseObject::IsPreviewingYaw() const
 {
@@ -616,32 +594,32 @@ bool C_BaseObject::IsPreviewingYaw() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-BuildingDamageLevel_t C_BaseObject::CalculateDamageLevel( void )
+BuildingDamageLevel_t C_BaseObject::CalculateDamageLevel(void)
 {
 	float flPercentHealth = (float)m_iHealth / (float)m_iMaxHealth;
 
 	BuildingDamageLevel_t damageLevel = BUILDING_DAMAGE_LEVEL_NONE;
 
-	if ( flPercentHealth < 0.25 )
+	if(flPercentHealth < 0.25)
 	{
 		damageLevel = BUILDING_DAMAGE_LEVEL_CRITICAL;
 	}
-	else if ( flPercentHealth < 0.45 )
+	else if(flPercentHealth < 0.45)
 	{
 		damageLevel = BUILDING_DAMAGE_LEVEL_HEAVY;
 	}
-	else if ( flPercentHealth < 0.65 )
+	else if(flPercentHealth < 0.65)
 	{
 		damageLevel = BUILDING_DAMAGE_LEVEL_MEDIUM;
 	}
-	else if ( flPercentHealth < 0.85 )
+	else if(flPercentHealth < 0.85)
 	{
 		damageLevel = BUILDING_DAMAGE_LEVEL_LIGHT;
 	}
 
-	if ( cl_obj_test_building_damage.GetInt() >= 0 )
+	if(cl_obj_test_building_damage.GetInt() >= 0)
 	{
 		damageLevel = (BuildingDamageLevel_t)cl_obj_test_building_damage.GetInt();
 	}
@@ -651,7 +629,7 @@ BuildingDamageLevel_t C_BaseObject::CalculateDamageLevel( void )
 
 /*
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseObject::Release( void )
 {
@@ -667,7 +645,7 @@ void C_BaseObject::Release( void )
 */
 
 //-----------------------------------------------------------------------------
-// Ownership: 
+// Ownership:
 //-----------------------------------------------------------------------------
 C_TFPlayer *C_BaseObject::GetOwner()
 {
@@ -675,47 +653,47 @@ C_TFPlayer *C_BaseObject::GetOwner()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_BaseObject::IsOwnedByLocalPlayer() const
 {
-	if ( !m_hBuilder )
+	if(!m_hBuilder)
 		return false;
 
-	return ( m_hBuilder == C_TFPlayer::GetLocalTFPlayer() );
+	return (m_hBuilder == C_TFPlayer::GetLocalTFPlayer());
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Add entity to visibile entities list
 //-----------------------------------------------------------------------------
-void C_BaseObject::AddEntity( void )
+void C_BaseObject::AddEntity(void)
 {
-	// If set to invisible, skip. Do this before resetting the entity pointer so it has 
+	// If set to invisible, skip. Do this before resetting the entity pointer so it has
 	// valid data to decide whether it's visible.
-	if ( !ShouldDraw() )
+	if(!ShouldDraw())
 	{
 		return;
 	}
 
 	// Update the entity position
-	//UpdatePosition();
+	// UpdatePosition();
 
 	// Yaw preview
-	if (m_YawPreviewState != YAW_PREVIEW_OFF)
+	if(m_YawPreviewState != YAW_PREVIEW_OFF)
 	{
 		// This piece of code makes it so we keep using the preview
 		// until we get a network update which matches the update value
-		if (m_YawPreviewState == YAW_PREVIEW_WAITING_FOR_UPDATE)
+		if(m_YawPreviewState == YAW_PREVIEW_WAITING_FOR_UPDATE)
 		{
-			if (fmod( fabs(GetLocalAngles().y - m_fYawPreview), 360.0f) < 1.0f)
+			if(fmod(fabs(GetLocalAngles().y - m_fYawPreview), 360.0f) < 1.0f)
 			{
 				m_YawPreviewState = YAW_PREVIEW_OFF;
 			}
 		}
 
-		if (GetLocalOrigin().y != m_fYawPreview)
+		if(GetLocalOrigin().y != m_fYawPreview)
 		{
-			SetLocalAnglesDim( Y_INDEX, m_fYawPreview );
+			SetLocalAnglesDim(Y_INDEX, m_fYawPreview);
 			InvalidateBoneCache();
 		}
 	}
@@ -724,36 +702,34 @@ void C_BaseObject::AddEntity( void )
 	CreateLightEffects();
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_BaseObject::Select( void )
+void C_BaseObject::Select(void)
 {
 	C_TFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
-	pPlayer->SetSelectedObject( this );
+	pPlayer->SetSelectedObject(this);
 }
 
-void C_BaseObject::ResetClientsideFrame( void )
+void C_BaseObject::ResetClientsideFrame(void)
 {
-	SetCycle( GetReversesBuildingConstructionSpeed() != 0.0f ? 1.0f : 0.0f );
+	SetCycle(GetReversesBuildingConstructionSpeed() != 0.0f ? 1.0f : 0.0f);
 }
 
 //-----------------------------------------------------------------------------
-// Sends client commands back to the server: 
+// Sends client commands back to the server:
 //-----------------------------------------------------------------------------
-void C_BaseObject::SendClientCommand( const char *pCmd )
+void C_BaseObject::SendClientCommand(const char *pCmd)
 {
 	char szbuf[128];
-	Q_snprintf( szbuf, sizeof( szbuf ), "objcmd %d %s", entindex(), pCmd );
-  	engine->ClientCmd(szbuf);
+	Q_snprintf(szbuf, sizeof(szbuf), "objcmd %d %s", entindex(), pCmd);
+	engine->ClientCmd(szbuf);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Get a text description for the object target
 //-----------------------------------------------------------------------------
-const char *C_BaseObject::GetTargetDescription( void ) const
+const char *C_BaseObject::GetTargetDescription(void) const
 {
 	return GetStatusName();
 }
@@ -761,95 +737,95 @@ const char *C_BaseObject::GetTargetDescription( void ) const
 //-----------------------------------------------------------------------------
 // Purpose: Get a text description for the object target (more verbose)
 //-----------------------------------------------------------------------------
-const char *C_BaseObject::GetIDString( void )
+const char *C_BaseObject::GetIDString(void)
 {
 	m_szIDString[0] = 0;
 	RecalculateIDString();
 	return m_szIDString;
 }
 
-
 //-----------------------------------------------------------------------------
-// It's a valid ID target when it's building 
+// It's a valid ID target when it's building
 //-----------------------------------------------------------------------------
-bool C_BaseObject::IsValidIDTarget( void )
+bool C_BaseObject::IsValidIDTarget(void)
 {
-	return InSameTeam( C_TFPlayer::GetLocalTFPlayer() ) && m_bBuilding;
+	return InSameTeam(C_TFPlayer::GetLocalTFPlayer()) && m_bBuilding;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_BaseObject::RecalculateIDString( void )
+void C_BaseObject::RecalculateIDString(void)
 {
 	// Subclasses may have filled this out with a string
-	if ( !m_szIDString[0] )
+	if(!m_szIDString[0])
 	{
-		Q_strncpy( m_szIDString, GetTargetDescription(), sizeof(m_szIDString) );
+		Q_strncpy(m_szIDString, GetTargetDescription(), sizeof(m_szIDString));
 	}
 
 	// Have I taken damage?
-	if ( m_iHealth < m_iMaxHealth )
+	if(m_iHealth < m_iMaxHealth)
 	{
-		char szHealth[ MAX_ID_STRING ];
-		if ( m_bBuilding )
+		char szHealth[MAX_ID_STRING];
+		if(m_bBuilding)
 		{
-			Q_snprintf( szHealth, sizeof(szHealth), "\nConstruction at %.0f percent\nHealth at %.0f percent", (m_flPercentageConstructed * 100), ceil(((float)m_iHealth / (float)m_iMaxHealth) * 100) );
+			Q_snprintf(szHealth, sizeof(szHealth), "\nConstruction at %.0f percent\nHealth at %.0f percent",
+					   (m_flPercentageConstructed * 100), ceil(((float)m_iHealth / (float)m_iMaxHealth) * 100));
 		}
 		else
 		{
-			Q_snprintf( szHealth, sizeof(szHealth), "\nHealth at %.0f percent", ceil(((float)m_iHealth / (float)m_iMaxHealth) * 100) );
+			Q_snprintf(szHealth, sizeof(szHealth), "\nHealth at %.0f percent",
+					   ceil(((float)m_iHealth / (float)m_iMaxHealth) * 100));
 		}
-		Q_strncat( m_szIDString, szHealth, sizeof(m_szIDString), COPY_ALL_CHARACTERS );
+		Q_strncat(m_szIDString, szHealth, sizeof(m_szIDString), COPY_ALL_CHARACTERS);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Player has waved his crosshair over this entity. Display appropriate hints.
 //-----------------------------------------------------------------------------
-void C_BaseObject::DisplayHintTo( C_BasePlayer *pPlayer )
+void C_BaseObject::DisplayHintTo(C_BasePlayer *pPlayer)
 {
 	bool bHintPlayed = false;
 
 	C_TFPlayer *pTFPlayer = ToTFPlayer(pPlayer);
-	if ( InSameTeam( pPlayer ) )
+	if(InSameTeam(pPlayer))
 	{
-		// We're looking at a friendly object. 
+		// We're looking at a friendly object.
 
-		if ( HasSapper() )
+		if(HasSapper())
 		{
-			bHintPlayed = pPlayer->HintMessage( HINT_OBJECT_HAS_SAPPER, true, true );
+			bHintPlayed = pPlayer->HintMessage(HINT_OBJECT_HAS_SAPPER, true, true);
 		}
 
-		if ( pTFPlayer->IsPlayerClass( TF_CLASS_ENGINEER ) )
+		if(pTFPlayer->IsPlayerClass(TF_CLASS_ENGINEER))
 		{
 			// I'm an engineer.
 
-			// If I'm looking at a constructing object, let me know I can help build it (but not 
+			// If I'm looking at a constructing object, let me know I can help build it (but not
 			// if I built it myself, since I've already got that hint from the wrench).
-			if ( !bHintPlayed && IsBuilding() && GetBuilder() != pTFPlayer )
+			if(!bHintPlayed && IsBuilding() && GetBuilder() != pTFPlayer)
 			{
-				bHintPlayed = pPlayer->HintMessage( HINT_ENGINEER_USE_WRENCH_ONOTHER, false, true );
+				bHintPlayed = pPlayer->HintMessage(HINT_ENGINEER_USE_WRENCH_ONOTHER, false, true);
 			}
 
 			// If it's damaged, I can repair it
-			if ( !bHintPlayed && !IsBuilding() && GetHealth() < GetMaxHealth() )
+			if(!bHintPlayed && !IsBuilding() && GetHealth() < GetMaxHealth())
 			{
-				bHintPlayed = pPlayer->HintMessage( HINT_ENGINEER_REPAIR_OBJECT, false, true );
+				bHintPlayed = pPlayer->HintMessage(HINT_ENGINEER_REPAIR_OBJECT, false, true);
 			}
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_BaseObject::GetGlowEffectColor( float *r, float *g, float *b )
+void C_BaseObject::GetGlowEffectColor(float *r, float *g, float *b)
 {
-	if ( TFGameRules() )
+	if(TFGameRules())
 	{
-		TFGameRules()->GetTeamGlowColor( GetTeamNumber(), *r, *g, *b );
+		TFGameRules()->GetTeamGlowColor(GetTeamNumber(), *r, *g, *b);
 	}
 	else
 	{
@@ -862,75 +838,72 @@ void C_BaseObject::GetGlowEffectColor( float *r, float *g, float *b )
 //-----------------------------------------------------------------------------
 // Purpose: Does this object have a sapper on it
 //-----------------------------------------------------------------------------
-bool C_BaseObject::HasSapper( void )
+bool C_BaseObject::HasSapper(void)
 {
 	return m_bHasSapper;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool C_BaseObject::IsPlasmaDisabled( void )
+bool C_BaseObject::IsPlasmaDisabled(void)
 {
 	return m_bPlasmaDisable;
 }
 
-void C_BaseObject::OnStartDisabled()
-{
-}
+void C_BaseObject::OnStartDisabled() {}
 
-void C_BaseObject::OnEndDisabled()
-{
-}
+void C_BaseObject::OnEndDisabled() {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void C_BaseObject::GetTargetIDString( OUT_Z_BYTECAP( iMaxLenInBytes ) wchar_t *sIDString, int iMaxLenInBytes, bool bSpectator )
+void C_BaseObject::GetTargetIDString(OUT_Z_BYTECAP(iMaxLenInBytes) wchar_t *sIDString, int iMaxLenInBytes,
+									 bool bSpectator)
 {
-	Assert( iMaxLenInBytes >= sizeof(sIDString[0]) );
+	Assert(iMaxLenInBytes >= sizeof(sIDString[0]));
 	sIDString[0] = '\0';
 
 	C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
 
-	if ( !pLocalPlayer )
+	if(!pLocalPlayer)
 		return;
-	
-	if ( pLocalPlayer->InSameDisguisedTeam( this ) || pLocalPlayer->IsPlayerClass( TF_CLASS_SPY ) || bSpectator )
+
+	if(pLocalPlayer->InSameDisguisedTeam(this) || pLocalPlayer->IsPlayerClass(TF_CLASS_SPY) || bSpectator)
 	{
-		wchar_t wszBuilderName[ MAX_PLAYER_NAME_LENGTH ];
+		wchar_t wszBuilderName[MAX_PLAYER_NAME_LENGTH];
 
 		const char *pszStatusName = GetStatusName();
-		const wchar_t *wszObjectName = g_pVGuiLocalize->Find( pszStatusName );
+		const wchar_t *wszObjectName = g_pVGuiLocalize->Find(pszStatusName);
 
 		bool bHasMode = false;
 		const char *printFormatString = "#TF_playerid_object";
 
-		if ( IsMiniBuilding() && !IsDisposableBuilding() )
+		if(IsMiniBuilding() && !IsDisposableBuilding())
 		{
 			printFormatString = "#TF_playerid_object_mini";
 		}
 
 		const wchar_t *wszModeName = L"";
-		const CObjectInfo* pObjectInfo = GetObjectInfo( GetType() );
-		if ( pObjectInfo && (pObjectInfo->m_iNumAltModes > 0) )
+		const CObjectInfo *pObjectInfo = GetObjectInfo(GetType());
+		if(pObjectInfo && (pObjectInfo->m_iNumAltModes > 0))
 		{
 			const char *pszModeName = pObjectInfo->m_AltModes[GetObjectMode()].pszModeName;
-			wszModeName = g_pVGuiLocalize->Find( pszModeName );
+			wszModeName = g_pVGuiLocalize->Find(pszModeName);
 			printFormatString = "TF_playerid_object_mode";
 			bHasMode = true;
 		}
 
-		if ( !wszObjectName )
+		if(!wszObjectName)
 		{
 			wszObjectName = L"";
 		}
 
 		C_BasePlayer *pBuilder = GetOwner();
 
-		if ( pBuilder )
+		if(pBuilder)
 		{
-			g_pVGuiLocalize->ConvertANSIToUnicode( pBuilder->GetPlayerName(), wszBuilderName, sizeof(wszBuilderName) );
+			g_pVGuiLocalize->ConvertANSIToUnicode(pBuilder->GetPlayerName(), wszBuilderName, sizeof(wszBuilderName));
 		}
 		else
 		{
@@ -938,68 +911,66 @@ void C_BaseObject::GetTargetIDString( OUT_Z_BYTECAP( iMaxLenInBytes ) wchar_t *s
 		}
 
 		// building or live, show health
-		wchar_t * localizedString = g_pVGuiLocalize->Find( printFormatString );
-		if ( localizedString )
+		wchar_t *localizedString = g_pVGuiLocalize->Find(printFormatString);
+		if(localizedString)
 		{
-			if ( bHasMode )
+			if(bHasMode)
 			{
-				g_pVGuiLocalize->ConstructString( sIDString, iMaxLenInBytes, localizedString,
-					3, wszObjectName, wszBuilderName, wszModeName );
+				g_pVGuiLocalize->ConstructString(sIDString, iMaxLenInBytes, localizedString, 3, wszObjectName,
+												 wszBuilderName, wszModeName);
 			}
 			else
 			{
-				g_pVGuiLocalize->ConstructString( sIDString, iMaxLenInBytes, localizedString,
-					2, wszObjectName, wszBuilderName );
+				g_pVGuiLocalize->ConstructString(sIDString, iMaxLenInBytes, localizedString, 2, wszObjectName,
+												 wszBuilderName);
 			}
 		}
-
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_BaseObject::GetTargetIDDataString( OUT_Z_BYTECAP(iMaxLenInBytes) wchar_t *sDataString, int iMaxLenInBytes )
+void C_BaseObject::GetTargetIDDataString(OUT_Z_BYTECAP(iMaxLenInBytes) wchar_t *sDataString, int iMaxLenInBytes)
 {
-	Assert( iMaxLenInBytes >= sizeof(sDataString[0]) );
+	Assert(iMaxLenInBytes >= sizeof(sDataString[0]));
 	sDataString[0] = '\0';
 
 	C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
-	if ( !pLocalPlayer )
+	if(!pLocalPlayer)
 		return;
 
 	// Sentryguns have models for each level, so we don't show it in their target ID.
-	bool bShowLevel = ( GetType() != OBJ_SENTRYGUN );
+	bool bShowLevel = (GetType() != OBJ_SENTRYGUN);
 
 	wchar_t wszLevel[32];
-	if ( bShowLevel )
+	if(bShowLevel)
 	{
-		_snwprintf( wszLevel, ARRAYSIZE(wszLevel) - 1, L"%d", m_iUpgradeLevel );
-		wszLevel[ ARRAYSIZE(wszLevel)-1 ] = '\0';
+		_snwprintf(wszLevel, ARRAYSIZE(wszLevel) - 1, L"%d", m_iUpgradeLevel);
+		wszLevel[ARRAYSIZE(wszLevel) - 1] = '\0';
 	}
 
-	if ( m_iUpgradeLevel >= 3 )
+	if(m_iUpgradeLevel >= 3)
 	{
-		if ( bShowLevel )
+		if(bShowLevel)
 		{
-			g_pVGuiLocalize->ConstructString( sDataString, iMaxLenInBytes, g_pVGuiLocalize->Find("#TF_playerid_object_level"),
-				1,
-				wszLevel );
+			g_pVGuiLocalize->ConstructString(sDataString, iMaxLenInBytes,
+											 g_pVGuiLocalize->Find("#TF_playerid_object_level"), 1, wszLevel);
 		}
 		return;
 	}
 
-	wchar_t wszBuilderName[ MAX_PLAYER_NAME_LENGTH ];
-	wchar_t wszObjectName[ 32 ];
-	wchar_t wszUpgradeProgress[ 32 ];
+	wchar_t wszBuilderName[MAX_PLAYER_NAME_LENGTH];
+	wchar_t wszObjectName[32];
+	wchar_t wszUpgradeProgress[32];
 
-	g_pVGuiLocalize->ConvertANSIToUnicode( GetStatusName(), wszObjectName, sizeof(wszObjectName) );
+	g_pVGuiLocalize->ConvertANSIToUnicode(GetStatusName(), wszObjectName, sizeof(wszObjectName));
 
 	C_BasePlayer *pBuilder = GetOwner();
 
-	if ( pBuilder )
+	if(pBuilder)
 	{
-		g_pVGuiLocalize->ConvertANSIToUnicode( pBuilder->GetPlayerName(), wszBuilderName, sizeof(wszBuilderName) );
+		g_pVGuiLocalize->ConvertANSIToUnicode(pBuilder->GetPlayerName(), wszBuilderName, sizeof(wszBuilderName));
 	}
 	else
 	{
@@ -1007,22 +978,22 @@ void C_BaseObject::GetTargetIDDataString( OUT_Z_BYTECAP(iMaxLenInBytes) wchar_t 
 	}
 
 	// level 1 and 2 show upgrade progress
-	if ( !IsMiniBuilding() && !IsDisposableBuilding() )
+	if(!IsMiniBuilding() && !IsDisposableBuilding())
 	{
-		_snwprintf( wszUpgradeProgress, ARRAYSIZE(wszUpgradeProgress) - 1, L"%d / %d", m_iUpgradeMetal, GetUpgradeMetalRequired() );
-		wszUpgradeProgress[ ARRAYSIZE(wszUpgradeProgress)-1 ] = '\0';
-		if ( bShowLevel )
+		_snwprintf(wszUpgradeProgress, ARRAYSIZE(wszUpgradeProgress) - 1, L"%d / %d", m_iUpgradeMetal,
+				   GetUpgradeMetalRequired());
+		wszUpgradeProgress[ARRAYSIZE(wszUpgradeProgress) - 1] = '\0';
+		if(bShowLevel)
 		{
-			g_pVGuiLocalize->ConstructString( sDataString, iMaxLenInBytes, g_pVGuiLocalize->Find("#TF_playerid_object_upgrading_level"),
-				2,
-				wszLevel,
-				wszUpgradeProgress );
+			g_pVGuiLocalize->ConstructString(sDataString, iMaxLenInBytes,
+											 g_pVGuiLocalize->Find("#TF_playerid_object_upgrading_level"), 2, wszLevel,
+											 wszUpgradeProgress);
 		}
 		else
 		{
-			g_pVGuiLocalize->ConstructString( sDataString, iMaxLenInBytes, g_pVGuiLocalize->Find("#TF_playerid_object_upgrading"),
-				1,
-				wszUpgradeProgress );
+			g_pVGuiLocalize->ConstructString(sDataString, iMaxLenInBytes,
+											 g_pVGuiLocalize->Find("#TF_playerid_object_upgrading"), 1,
+											 wszUpgradeProgress);
 		}
 	}
 }
@@ -1030,47 +1001,47 @@ void C_BaseObject::GetTargetIDDataString( OUT_Z_BYTECAP(iMaxLenInBytes) wchar_t 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-int C_BaseObject::GetDisplayPriority( void )
+int C_BaseObject::GetDisplayPriority(void)
 {
-	return GetObjectInfo( GetType() )->m_iDisplayPriority;	
+	return GetObjectInfo(GetType())->m_iDisplayPriority;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-const char *C_BaseObject::GetHudStatusIcon( void )
+const char *C_BaseObject::GetHudStatusIcon(void)
 {
-	return GetObjectInfo( GetType() )->m_pHudStatusIcon;	
+	return GetObjectInfo(GetType())->m_pHudStatusIcon;
 }
 
-ConVar cl_obj_fake_alert( "cl_obj_fake_alert", "0", 0, "", true, BUILDING_HUD_ALERT_NONE, true, MAX_BUILDING_HUD_ALERT_LEVEL-1 );
+ConVar cl_obj_fake_alert("cl_obj_fake_alert", "0", 0, "", true, BUILDING_HUD_ALERT_NONE, true,
+						 MAX_BUILDING_HUD_ALERT_LEVEL - 1);
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-BuildingHudAlert_t C_BaseObject::GetBuildingAlertLevel( void )
+BuildingHudAlert_t C_BaseObject::GetBuildingAlertLevel(void)
 {
 	float flHealthPercent = GetHealth() / GetMaxHealth();
 
 	BuildingHudAlert_t alertLevel = BUILDING_HUD_ALERT_NONE;
 
-	if ( HasSapper() )
+	if(HasSapper())
 	{
 		alertLevel = BUILDING_HUD_ALERT_SAPPER;
 	}
-	else if ( !IsBuilding() && flHealthPercent < 0.33 )
+	else if(!IsBuilding() && flHealthPercent < 0.33)
 	{
 		alertLevel = BUILDING_HUD_ALERT_VERY_LOW_HEALTH;
 	}
-	else if ( !IsBuilding() && flHealthPercent < 0.66 )
+	else if(!IsBuilding() && flHealthPercent < 0.66)
 	{
 		alertLevel = BUILDING_HUD_ALERT_LOW_HEALTH;
 	}
 
 	BuildingHudAlert_t iFakeAlert = (BuildingHudAlert_t)cl_obj_fake_alert.GetInt();
 
-	if ( iFakeAlert > BUILDING_HUD_ALERT_NONE &&
-		iFakeAlert < MAX_BUILDING_HUD_ALERT_LEVEL )
+	if(iFakeAlert > BUILDING_HUD_ALERT_NONE && iFakeAlert < MAX_BUILDING_HUD_ALERT_LEVEL)
 	{
 		alertLevel = iFakeAlert;
 	}
@@ -1079,25 +1050,25 @@ BuildingHudAlert_t C_BaseObject::GetBuildingAlertLevel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-ShadowType_t C_BaseObject::ShadowCastType( void ) 
+ShadowType_t C_BaseObject::ShadowCastType(void)
 {
-	if ( GetInvisibilityLevel() == 1.f )
+	if(GetInvisibilityLevel() == 1.f)
 		return SHADOWS_NONE;
 
 	return BaseClass::ShadowCastType();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-float C_BaseObject::GetInvisibilityLevel( void )
+float C_BaseObject::GetInvisibilityLevel(void)
 {
 #ifdef STAGING_ONLY
 	C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
 	C_TFPlayer *pOwner = GetOwner();
-	if ( pLocalPlayer && pLocalPlayer->m_Shared.InCond( TF_COND_STEALTHED_PHASE ) && pLocalPlayer != pOwner )
+	if(pLocalPlayer && pLocalPlayer->m_Shared.InCond(TF_COND_STEALTHED_PHASE) && pLocalPlayer != pOwner)
 		return 1.f;
 #endif // STAGING_ONLY
 
@@ -1105,39 +1076,39 @@ float C_BaseObject::GetInvisibilityLevel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_BaseObject::SetInvisibilityLevel( float flValue )
+void C_BaseObject::SetInvisibilityLevel(float flValue)
 {
 	m_flPrevInvisibilityPercent = m_flInvisibilityPercent;
-	m_flInvisibilityPercent = clamp( flValue, 0.f, 1.f );
+	m_flInvisibilityPercent = clamp(flValue, 0.f, 1.f);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: find the anim events that may have started sounds, and stop them.
 //-----------------------------------------------------------------------------
-void C_BaseObject::StopAnimGeneratedSounds( void )
+void C_BaseObject::StopAnimGeneratedSounds(void)
 {
 	MDLCACHE_CRITICAL_SECTION();
 
 	CStudioHdr *pStudioHdr = GetModelPtr();
-	if ( !pStudioHdr )
+	if(!pStudioHdr)
 		return;
 
-	mstudioseqdesc_t &seqdesc = pStudioHdr->pSeqdesc( GetSequence() );
-	if ( seqdesc.numevents == 0 )
+	mstudioseqdesc_t &seqdesc = pStudioHdr->pSeqdesc(GetSequence());
+	if(seqdesc.numevents == 0)
 		return;
 
 	float flCurrentCycle = GetCycle();
-	mstudioevent_t *pevent = GetEventIndexForSequence( seqdesc );
+	mstudioevent_t *pevent = GetEventIndexForSequence(seqdesc);
 
-	for (int i = 0; i < (int)seqdesc.numevents; i++)
+	for(int i = 0; i < (int)seqdesc.numevents; i++)
 	{
-		if ( pevent[i].cycle < flCurrentCycle )
+		if(pevent[i].cycle < flCurrentCycle)
 		{
-			if ( pevent[i].event == CL_EVENT_SOUND || pevent[i].event == AE_CL_PLAYSOUND )
+			if(pevent[i].event == CL_EVENT_SOUND || pevent[i].event == AE_CL_PLAYSOUND)
 			{
-				StopSound( entindex(), pevent[i].options );
+				StopSound(entindex(), pevent[i].options);
 			}
 		}
 	}
@@ -1149,66 +1120,63 @@ void C_BaseObject::StopAnimGeneratedSounds( void )
 class CObjectPowerProxy : public CResultProxy
 {
 public:
-	bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
-	void OnBind( void *pC_BaseEntity );
+	bool Init(IMaterial *pMaterial, KeyValues *pKeyValues);
+	void OnBind(void *pC_BaseEntity);
 
 private:
-	CFloatInput	m_Factor;
+	CFloatInput m_Factor;
 };
 
-bool CObjectPowerProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
+bool CObjectPowerProxy::Init(IMaterial *pMaterial, KeyValues *pKeyValues)
 {
-	if (!CResultProxy::Init( pMaterial, pKeyValues ))
+	if(!CResultProxy::Init(pMaterial, pKeyValues))
 		return false;
 
-	if (!m_Factor.Init( pMaterial, pKeyValues, "scale", 1 ))
+	if(!m_Factor.Init(pMaterial, pKeyValues, "scale", 1))
 		return false;
 
 	return true;
 }
 
-void CObjectPowerProxy::OnBind( void *pRenderable )
+void CObjectPowerProxy::OnBind(void *pRenderable)
 {
 	// Find the view angle between the player and this entity....
 	IClientRenderable *pRend = (IClientRenderable *)pRenderable;
 	C_BaseEntity *pEntity = pRend->GetIClientUnknown()->GetBaseEntity();
-	C_BaseObject *pObject = dynamic_cast<C_BaseObject*>(pEntity);
-	if (!pObject)
+	C_BaseObject *pObject = dynamic_cast<C_BaseObject *>(pEntity);
+	if(!pObject)
 		return;
 
-	SetFloatResult(  m_Factor.GetFloat() );
+	SetFloatResult(m_Factor.GetFloat());
 
-	if ( ToolsEnabled() )
+	if(ToolsEnabled())
 	{
-		ToolFramework_RecordMaterialParams( GetMaterial() );
+		ToolFramework_RecordMaterialParams(GetMaterial());
 	}
 }
 
-EXPOSE_INTERFACE( CObjectPowerProxy, IMaterialProxy, "ObjectPower" IMATERIAL_PROXY_INTERFACE_VERSION );
+EXPOSE_INTERFACE(CObjectPowerProxy, IMaterialProxy, "ObjectPower" IMATERIAL_PROXY_INTERFACE_VERSION);
 
 //-----------------------------------------------------------------------------
-// Control screen 
+// Control screen
 //-----------------------------------------------------------------------------
 class CBasicControlPanel : public CObjectControlPanel
 {
-	DECLARE_CLASS( CBasicControlPanel, CObjectControlPanel );
+	DECLARE_CLASS(CBasicControlPanel, CObjectControlPanel);
 
 public:
-	CBasicControlPanel( vgui::Panel *parent, const char *panelName );
+	CBasicControlPanel(vgui::Panel *parent, const char *panelName);
 };
 
-
-DECLARE_VGUI_SCREEN_FACTORY( CBasicControlPanel, "basic_control_panel" );
-
+DECLARE_VGUI_SCREEN_FACTORY(CBasicControlPanel, "basic_control_panel");
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
-CBasicControlPanel::CBasicControlPanel( vgui::Panel *parent, const char *panelName )
-	: BaseClass( parent, "CBasicControlPanel" ) 
+CBasicControlPanel::CBasicControlPanel(vgui::Panel *parent, const char *panelName)
+	: BaseClass(parent, "CBasicControlPanel")
 {
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Used for spy invisiblity material
@@ -1216,33 +1184,33 @@ CBasicControlPanel::CBasicControlPanel( vgui::Panel *parent, const char *panelNa
 class CBuildingInvisProxy : public CBaseInvisMaterialProxy
 {
 public:
-	virtual void OnBind( C_BaseEntity *pBaseEntity ) OVERRIDE;
+	virtual void OnBind(C_BaseEntity *pBaseEntity) OVERRIDE;
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input :
 //-----------------------------------------------------------------------------
-void CBuildingInvisProxy::OnBind( C_BaseEntity *pBaseEntity )
+void CBuildingInvisProxy::OnBind(C_BaseEntity *pBaseEntity)
 {
-	if ( !m_pPercentInvisible )
+	if(!m_pPercentInvisible)
 		return;
 
-	if ( !pBaseEntity->IsBaseObject() )
+	if(!pBaseEntity->IsBaseObject())
 		return;
 
-	C_BaseObject *pObject = static_cast< C_BaseObject* >( pBaseEntity );
-	if ( !pObject )
+	C_BaseObject *pObject = static_cast<C_BaseObject *>(pBaseEntity);
+	if(!pObject)
 		return;
 
-	CTFPlayer *pOwner = ToTFPlayer( pObject->GetOwner() );
-	if ( !pOwner )
+	CTFPlayer *pOwner = ToTFPlayer(pObject->GetOwner());
+	if(!pOwner)
 	{
-		m_pPercentInvisible->SetFloatValue( 0.0f );
+		m_pPercentInvisible->SetFloatValue(0.0f);
 		return;
 	}
 
-	m_pPercentInvisible->SetFloatValue( pObject->GetInvisibilityLevel() );
+	m_pPercentInvisible->SetFloatValue(pObject->GetInvisibilityLevel());
 }
 
-EXPOSE_INTERFACE( CBuildingInvisProxy, IMaterialProxy, "building_invis" IMATERIAL_PROXY_INTERFACE_VERSION );
+EXPOSE_INTERFACE(CBuildingInvisProxy, IMaterialProxy, "building_invis" IMATERIAL_PROXY_INTERFACE_VERSION);

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,35 +23,38 @@
 class CDODTeamMenu : public CTeamMenu
 {
 private:
-	DECLARE_CLASS_SIMPLE( CDODTeamMenu, CTeamMenu );
-		
+	DECLARE_CLASS_SIMPLE(CDODTeamMenu, CTeamMenu);
+
 public:
 	CDODTeamMenu(IViewPort *pViewPort);
 	~CDODTeamMenu();
 
 	virtual void Update();
 	virtual void OnTick();
-	void ShowPanel( bool bShow );
-	virtual void SetVisible( bool state );
+	void ShowPanel(bool bShow);
+	virtual void SetVisible(bool state);
 
 	virtual void PaintBackground();
-	virtual Panel *CreateControlByName( const char *controlName );
+	virtual Panel *CreateControlByName(const char *controlName);
 
-	virtual void ApplySchemeSettings( IScheme *pScheme );
+	virtual void ApplySchemeSettings(IScheme *pScheme);
 
 	virtual void OnKeyCodePressed(KeyCode code);
 
 private:
-	enum { NUM_TEAMS = 3 };
+	enum
+	{
+		NUM_TEAMS = 3
+	};
 
-	MESSAGE_FUNC_CHARPTR( OnShowPage, "ShowPage", page );
+	MESSAGE_FUNC_CHARPTR(OnShowPage, "ShowPage", page);
 
 	// VGUI2 override
-	void OnCommand( const char *command);
+	void OnCommand(const char *command);
 	// helper functions
 	void SetVisibleButton(const char *textEntryName, bool state);
 
-	CDODMenuBackground   *m_pBackground;
+	CDODMenuBackground *m_pBackground;
 
 	vgui::EditablePanel *m_pPanel;
 

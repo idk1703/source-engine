@@ -8,21 +8,23 @@
 
 #include "Path/NextBotPathFollow.h"
 
-class CCryBabyBossEscape : public Action< CHeadlessHatman >
+class CCryBabyBossEscape : public Action<CHeadlessHatman>
 {
 public:
-	virtual ActionResult< CHeadlessHatman >	OnStart( CHeadlessHatman *me, Action< CHeadlessHatman > *priorAction );
-	virtual ActionResult< CHeadlessHatman >	Update( CHeadlessHatman *me, float interval );
+	virtual ActionResult<CHeadlessHatman> OnStart(CHeadlessHatman *me, Action<CHeadlessHatman> *priorAction);
+	virtual ActionResult<CHeadlessHatman> Update(CHeadlessHatman *me, float interval);
 
-	virtual EventDesiredResult< CHeadlessHatman > OnMoveToSuccess( CHeadlessHatman *me, const Path *path );
+	virtual EventDesiredResult<CHeadlessHatman> OnMoveToSuccess(CHeadlessHatman *me, const Path *path);
 
-	virtual const char *GetName( void ) const	{ return "CryBabyBossEscape"; };
+	virtual const char *GetName(void) const
+	{
+		return "CryBabyBossEscape";
+	};
 
 private:
 	PathFollower m_path;
 	CountdownTimer m_repathTimer;
 	CountdownTimer m_footfallTimer;
 };
-
 
 #endif // CRYBABY_ESCAPE_H

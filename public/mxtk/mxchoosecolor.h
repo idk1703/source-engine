@@ -14,21 +14,17 @@
 #ifndef INCLUDED_MXCHOOSECOLOR
 #define INCLUDED_MXCHOOSECOLOR
 
-
-
 class mxWindow;
 
-
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-bool mxChooseColor (mxWindow *parent, int *r, int *g, int *b);
+	bool mxChooseColor(mxWindow *parent, int *r, int *g, int *b);
 
 #ifdef __cplusplus
 }
 #endif
-
-
 
 #endif // INCLUDED_MXCHOOSECOLOR

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -14,7 +14,6 @@
 
 #include <vgui_controls/Frame.h>
 
-
 namespace vgui
 {
 	class Button;
@@ -24,33 +23,33 @@ namespace vgui
 	class FileOpenDialog;
 	class Slider;
 	class ListViewPanel;
-};
+}; // namespace vgui
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class TxViewPanel : public vgui::Frame
 {
-	DECLARE_CLASS_SIMPLE( TxViewPanel, vgui::Frame );
+	DECLARE_CLASS_SIMPLE(TxViewPanel, vgui::Frame);
 
 public:
-	TxViewPanel( vgui::Panel *parent );
+	TxViewPanel(vgui::Panel *parent);
 	~TxViewPanel();
 
 	virtual void OnTick();
 
 	// Command issued
-	virtual void OnCommand( const char *command );
-	virtual void OnMessage( const KeyValues *params,  vgui::VPANEL fromPanel );
+	virtual void OnCommand(const char *command);
+	virtual void OnMessage(const KeyValues *params, vgui::VPANEL fromPanel);
 
-	static	void	Install( vgui::Panel *parent );
-
-protected:
-	MESSAGE_FUNC_CHARPTR( OnFileSelected, "FileSelected", fullpath );
+	static void Install(vgui::Panel *parent);
 
 protected:
-	vgui::Button		*m_pRefresh;
-	vgui::ListViewPanel	*m_pView;
+	MESSAGE_FUNC_CHARPTR(OnFileSelected, "FileSelected", fullpath);
+
+protected:
+	vgui::Button *m_pRefresh;
+	vgui::ListViewPanel *m_pView;
 };
 
 extern TxViewPanel *g_pTxViewPanel;

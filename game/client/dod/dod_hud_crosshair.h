@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,39 +20,37 @@ namespace vgui
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudDODCrosshair : public CHudElement, public vgui::Panel
 {
 public:
-	DECLARE_CLASS_SIMPLE( CHudDODCrosshair, vgui::Panel );
+	DECLARE_CLASS_SIMPLE(CHudDODCrosshair, vgui::Panel);
 
-	CHudDODCrosshair( const char *name );
+	CHudDODCrosshair(const char *name);
 
 	virtual void Paint();
 	virtual void Init();
 	virtual bool ShouldDraw();
-	virtual void ApplySchemeSettings( vgui::IScheme *scheme );
+	virtual void ApplySchemeSettings(vgui::IScheme *scheme);
 
-	virtual void LevelShutdown( void );
+	virtual void LevelShutdown(void);
 
-	//stub
-	void SetCrosshair( CHudTexture *texture, Color& clr ) {}
+	// stub
+	void SetCrosshair(CHudTexture *texture, Color &clr) {}
 	void ResetCrosshair() {}
 
 private:
-	int					m_iCrosshairTextureID;
-	IVguiMatInfo		*m_pCrosshair;
-	IVguiMatInfoVar		*m_pFrameVar;				// interface for material frame
-	int					m_nNumFrames;				// how many frames this crosshair has
+	int m_iCrosshairTextureID;
+	IVguiMatInfo *m_pCrosshair;
+	IVguiMatInfoVar *m_pFrameVar; // interface for material frame
+	int m_nNumFrames;			  // how many frames this crosshair has
 
-	char				m_szPreviousCrosshair[256];	// name of the current crosshair
-	float				m_flAccuracy;
+	char m_szPreviousCrosshair[256]; // name of the current crosshair
+	float m_flAccuracy;
 };
-
 
 // Enable/disable crosshair rendering.
 extern ConVar crosshair;
-
 
 #endif // HUD_DOD_CROSSHAIR_H

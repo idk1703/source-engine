@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,22 +13,23 @@
 
 #define STRING_HASH_TABLE_SIZE 701
 
-template <class T> class CStringHash
+template<class T>
+class CStringHash
 {
 public:
-	CStringHash() 
+	CStringHash()
 	{
-		memset( m_HashTable, 0, sizeof( StringHashNode_t * ) * STRING_HASH_TABLE_SIZE );
+		memset(m_HashTable, 0, sizeof(StringHashNode_t *) * STRING_HASH_TABLE_SIZE);
 	}
 	~CStringHash()
 	{
 		int i;
 
-		for( i = 0; i < STRING_HASH_TABLE_SIZE; i++ )
+		for(i = 0; i < STRING_HASH_TABLE_SIZE; i++)
 		{
 			StringHashNode_t *curEntry;
 			curEntry = m_HashTable[i];
-			if( curEntry )
+			if(curEntry)
 			{
 				StringHashNode_t *next;
 				next = curEntry->next;
@@ -39,11 +40,11 @@ public:
 	}
 	// return false if it already exists
 	// there can only be one entry for each string.
-	bool Insert( const char *string, T val )
+	bool Insert(const char *string, T val)
 	{
-		unsigned int hashID = HashString( string );
+		unsigned int hashID = HashString(string);
 		StringHashNode_t *newEntry;
-		if( !m_HashTable[hashID] )
+		if(!m_HashTable[hashID])
 		{
 			// first on at this hashID
 			// fixme: need to make the allocation function configurable.
@@ -54,9 +55,9 @@ public:
 		{
 			StringHashNode_t *curEntry;
 			curEntry = m_HashTable[hashID];
-			while( curEntry )
+			while(curEntry)
 			{
-				if( stricmp( curEntry->string, string ) == 0 )
+				if(stricmp(curEntry->string, string) == 0)
 				{
 					// replace the data at the current entry with the enw data.
 					curEntry->data = val;
@@ -68,21 +69,21 @@ public:
 			newEntry->next = m_HashTable[hashID];
 			m_HashTable[hashID] = newEntry;
 		}
-		int len = strlen( string ) + 1;
+		int len = strlen(string) + 1;
 		newEntry->string = new char[len];
-		Q_strncpy( newEntry->string, string, len );
+		Q_strncpy(newEntry->string, string, len);
 		newEntry->data = val;
 		return true;
 	}
 
-	T Find( const char *string )
+	T Find(const char *string)
 	{
-		int hashID = HashString( string );
+		int hashID = HashString(string);
 		StringHashNode_t *curEntry;
 		curEntry = m_HashTable[hashID];
-		while( curEntry )
+		while(curEntry)
 		{
-			if( stricmp( curEntry->string, string ) == 0 )
+			if(stricmp(curEntry->string, string) == 0)
 			{
 				return curEntry->data;
 			}
@@ -92,14 +93,14 @@ public:
 	}
 
 private:
-	unsigned int HashString( const char *string )
+	unsigned int HashString(const char *string)
 	{
 		const char *s = string;
 		unsigned int result = 0;
 
-		while( *s )
+		while(*s)
 		{
-			result += tolower( ( int )*s ) * 6029;
+			result += tolower((int)*s) * 6029;
 			result *= 5749;
 			s++;
 		}

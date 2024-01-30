@@ -14,7 +14,7 @@ $Configuration
 	$Compiler
 	{
 		$AdditionalIncludeDirectories		"$BASE;$SRCDIR\thirdparty\SDL2"	[!$SDL] // If $SDL, then we already have this from source_video_base.vpc.
-		$PreprocessorDefinitions			"$BASE;VERSION_SAFE_STEAM_API_INTERFACES" 
+		$PreprocessorDefinitions			"$BASE;VERSION_SAFE_STEAM_API_INTERFACES"
 	}
 	$Linker
 	{

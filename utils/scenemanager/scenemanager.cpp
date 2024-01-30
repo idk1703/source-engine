@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -31,30 +31,30 @@ IUniformRandomStream *random = &g_Random;
 
 IFileSystem *filesystem = NULL;
 
-SpewRetval_t SceneManagerSpewFunc( SpewType_t spewType, char const *pMsg )
+SpewRetval_t SceneManagerSpewFunc(SpewType_t spewType, char const *pMsg)
 {
-	switch (spewType)
+	switch(spewType)
 	{
-	case SPEW_ERROR:
+		case SPEW_ERROR:
 		{
 			MessageBox(NULL, pMsg, "FATAL ERROR", MB_OK);
 		}
-		return SPEW_ABORT;
-	case SPEW_WARNING:
+			return SPEW_ABORT;
+		case SPEW_WARNING:
 		{
-			Con_ColorPrintf( 255, 0, 0, pMsg );
+			Con_ColorPrintf(255, 0, 0, pMsg);
 		}
 		break;
-	case SPEW_ASSERT:
+		case SPEW_ASSERT:
 		{
-			Con_ColorPrintf( 255, 0, 0, pMsg );
+			Con_ColorPrintf(255, 0, 0, pMsg);
 		}
 #ifdef _DEBUG
-		return SPEW_DEBUGGER;
+			return SPEW_DEBUGGER;
 #else
-		return SPEW_CONTINUE;
+			return SPEW_CONTINUE;
 #endif
-	default:
+		default:
 		{
 			Con_Printf(pMsg);
 		}
@@ -63,7 +63,6 @@ SpewRetval_t SceneManagerSpewFunc( SpewType_t spewType, char const *pMsg )
 
 	return SPEW_CONTINUE;
 }
-
 
 //-----------------------------------------------------------------------------
 // The application object
@@ -85,66 +84,61 @@ private:
 	bool SetupSearchPaths();
 };
 
-
 bool CHLSceneManagerApp::Create()
 {
-	SpewOutputFunc( SceneManagerSpewFunc );
+	SpewOutputFunc(SceneManagerSpewFunc);
 
-	AppSystemInfo_t appSystems[] = 
-	{
-		{ "vgui2.dll",				VGUI_IVGUI_INTERFACE_VERSION },
-		{ "soundemittersystem.dll",	SOUNDEMITTERSYSTEM_INTERFACE_VERSION },
+	AppSystemInfo_t appSystems[] = {
+		{"vgui2.dll", VGUI_IVGUI_INTERFACE_VERSION},
+		{"soundemittersystem.dll", SOUNDEMITTERSYSTEM_INTERFACE_VERSION},
 
-		{ "", "" }	// Required to terminate the list
+		{"", ""} // Required to terminate the list
 	};
 
-	return AddSystems( appSystems );
+	return AddSystems(appSystems);
 }
 
-void CHLSceneManagerApp::Destroy()
-{
-}
+void CHLSceneManagerApp::Destroy() {}
 
 //-----------------------------------------------------------------------------
 // Sets up the game path
 //-----------------------------------------------------------------------------
 bool CHLSceneManagerApp::SetupSearchPaths()
 {
-	if ( !BaseClass::SetupSearchPaths( NULL, false, true ) )
+	if(!BaseClass::SetupSearchPaths(NULL, false, true))
 		return false;
 
 	// Set gamedir.
-	Q_MakeAbsolutePath( gamedir, sizeof( gamedir ), GetGameInfoPath() );
-	Q_AppendSlash( gamedir, sizeof( gamedir ) );
+	Q_MakeAbsolutePath(gamedir, sizeof(gamedir), GetGameInfoPath());
+	Q_AppendSlash(gamedir, sizeof(gamedir));
 
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Init, shutdown
 //-----------------------------------------------------------------------------
-bool CHLSceneManagerApp::PreInit( )
+bool CHLSceneManagerApp::PreInit()
 {
-	MathLib_Init( 2.2f, 2.2f, 0.0f, 2.0f, false, false, false, false );
+	MathLib_Init(2.2f, 2.2f, 0.0f, 2.0f, false, false, false, false);
 
-	if ( !BaseClass::PreInit() )
+	if(!BaseClass::PreInit())
 		return false;
 
 	g_pFileSystem = filesystem = g_pFullFileSystem;
-	if ( !g_pSoundEmitterSystem || !g_pVGuiLocalize || !g_pFileSystem  )
+	if(!g_pSoundEmitterSystem || !g_pVGuiLocalize || !g_pFileSystem)
 	{
 		Error("Unable to load required library interface!\n");
 		return false;
 	}
 
-	filesystem->SetWarningFunc( Warning );
+	filesystem->SetWarningFunc(Warning);
 
 	// Add paths...
-	if ( !SetupSearchPaths() )
+	if(!SetupSearchPaths())
 		return false;
 
-	return true; 
+	return true;
 }
 
 void CHLSceneManagerApp::PostShutdown()
@@ -152,7 +146,6 @@ void CHLSceneManagerApp::PostShutdown()
 	g_pFileSystem = filesystem = NULL;
 	BaseClass::PostShutdown();
 }
-
 
 //-----------------------------------------------------------------------------
 // main application
@@ -166,29 +159,29 @@ int CHLSceneManagerApp::Main()
 	CWorkspaceManager *sm = new CWorkspaceManager();
 
 	bool workspace_loaded = false;
-	for ( int i = 1; i < CommandLine()->ParmCount(); i++ )
+	for(int i = 1; i < CommandLine()->ParmCount(); i++)
 	{
-		char const *argv = CommandLine()->GetParm( i );
+		char const *argv = CommandLine()->GetParm(i);
 
-		if ( !workspace_loaded && strstr (argv, ".vsw") )
+		if(!workspace_loaded && strstr(argv, ".vsw"))
 		{
 			workspace_loaded = true;
 
 			// Strip game directory and slash
-			char workspace_name[ 512 ];
-			filesystem->FullPathToRelativePath( argv, workspace_name, sizeof( workspace_name ) );
+			char workspace_name[512];
+			filesystem->FullPathToRelativePath(argv, workspace_name, sizeof(workspace_name));
 
-			sm->AutoLoad( workspace_name );
+			sm->AutoLoad(workspace_name);
 		}
 	}
 
-	if ( !workspace_loaded )
+	if(!workspace_loaded)
 	{
-		sm->AutoLoad( NULL );
+		sm->AutoLoad(NULL);
 	}
-	
-	int retval = mx::run ();
-	
+
+	int retval = mx::run();
+
 	sound->Shutdown();
 
 	g_pSoundEmitterSystem->ModShutdown();
@@ -196,22 +189,22 @@ int CHLSceneManagerApp::Main()
 	return retval;
 }
 
-int main (int argc, char *argv[])
+int main(int argc, char *argv[])
 {
-	CommandLine()->CreateCmdLine( argc, argv );
+	CommandLine()->CreateCmdLine(argc, argv);
 	CoInitialize(NULL);
 
 	// make sure, we start in the right directory
 	char szName[256];
-	strcpy (szName, mx::getApplicationPath() );
-	mx::init (argc, argv);
+	strcpy(szName, mx::getApplicationPath());
+	mx::init(argc, argv);
 
-	char workingdir[ 256 ];
+	char workingdir[256];
 	workingdir[0] = 0;
-	Q_getwd( workingdir, sizeof( workingdir ) );
+	Q_getwd(workingdir, sizeof(workingdir));
 
- 	CHLSceneManagerApp sceneManagerApp;
-	CSteamApplication steamApplication( &sceneManagerApp );
+	CHLSceneManagerApp sceneManagerApp;
+	CSteamApplication steamApplication(&sceneManagerApp);
 	int nRetVal = steamApplication.Run();
 
 	CoUninitialize();

@@ -12,8 +12,8 @@
 #include "tier1/tier1.h"
 
 // Should be the first function that the linker 'sees' as an export
-void* CreateInterfaceThunk( const char *pName, int *pReturnCode )
+void *CreateInterfaceThunk(const char *pName, int *pReturnCode)
 {
 	// descend into the real function
-	return CreateInterface( pName, pReturnCode );
+	return CreateInterface(pName, pReturnCode);
 }

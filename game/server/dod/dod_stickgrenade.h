@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -15,36 +15,28 @@
 class CDODStickGrenade : public CDODBaseGrenade
 {
 public:
-	DECLARE_CLASS( CDODStickGrenade, CDODBaseGrenade );
+	DECLARE_CLASS(CDODStickGrenade, CDODBaseGrenade);
 
-
-// Overrides.
+	// Overrides.
 public:
 	CDODStickGrenade() {}
 	virtual void Spawn();
 	virtual void Precache();
-	virtual void BounceSound( void );
+	virtual void BounceSound(void);
 
-// Grenade stuff.
+	// Grenade stuff.
 public:
+	static CDODStickGrenade *Create(const Vector &position, const QAngle &angles, const Vector &velocity,
+									const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, float timer,
+									DODWeaponID weaponID);
 
-	static CDODStickGrenade* Create( 
-		const Vector &position, 
-		const QAngle &angles, 
-		const Vector &velocity, 
-		const AngularImpulse &angVelocity, 
-		CBaseCombatCharacter *pOwner, 
-		float timer,
-		DODWeaponID weaponID );
-
-	void SetTimer( float timer );
+	void SetTimer(float timer);
 
 	virtual char *GetExplodingClassname();
 
 private:
 	float m_flDetonateTime;
-	CDODStickGrenade( const CDODStickGrenade & );
+	CDODStickGrenade(const CDODStickGrenade &);
 };
-
 
 #endif // DOD_STICKGRENADE_H

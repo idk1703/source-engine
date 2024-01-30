@@ -11,7 +11,7 @@ $Include "$SRCDIR\game\server\server_base.vpc"
 
 $Linux
 {
-        $BuildForLinux 1
+	$BuildForLinux 1
 }
 
 $Configuration
@@ -28,13 +28,13 @@ $Project "Server (DoD)"
 	$Folder	"Source Files"
 	{
 		-$File	"ai_concommands.cpp"
-		
+
 		$File	"$SRCDIR\game\shared\playerclass_info_parse.cpp"
 		$File	"$SRCDIR\game\shared\playerclass_info_parse.h"
 		$File	"$SRCDIR\game\shared\hl2\survival_gamerules.cpp"
 		$File	"team_spawnpoint.cpp"
 		$File	"team_spawnpoint.h"
-		
+
 		$Folder	"Day of Defeat DLL"
 		{
 			$File	"$SRCDIR\game\shared\dod\achievements_dod.cpp"

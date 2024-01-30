@@ -19,19 +19,21 @@
 class CObjectVehicleBoost : public CBaseObjectUpgrade
 {
 
-	DECLARE_CLASS( CObjectVehicleBoost, CBaseObjectUpgrade );
+	DECLARE_CLASS(CObjectVehicleBoost, CBaseObjectUpgrade);
 
 public:
-
 	DECLARE_DATADESC();
 	DECLARE_SERVERCLASS();
 
 	CObjectVehicleBoost();
 
-	void	Spawn( void );
-	void	Precache( void );
-	bool	CanTakeEMPDamage( void ) { return true; }
-	void	FinishedBuilding( void );
+	void Spawn(void);
+	void Precache(void);
+	bool CanTakeEMPDamage(void)
+	{
+		return true;
+	}
+	void FinishedBuilding(void);
 };
 
 #endif // TF_OBJ_VEHICLEBOOST_H

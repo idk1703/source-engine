@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,10 +10,8 @@
 #pragma once
 #endif
 
-
-void VGui_CreateDrawTreePanel( vgui::Panel *parent );
+void VGui_CreateDrawTreePanel(vgui::Panel *parent);
 void VGui_MoveDrawTreePanelToFront();
 void VGui_UpdateDrawTreePanel();
-
 
 #endif // VGUI_DRAWTREEPANEL_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -12,7 +12,7 @@
 //
 // Author: Michael S. Booth (mike@turtlerockstudios.com), 2003
 //
-// NOTE: The Navigation code uses Doxygen-style comments. If you run Doxygen over this code, it will 
+// NOTE: The Navigation code uses Doxygen-style comments. If you run Doxygen over this code, it will
 // auto-generate documentation.  Visit www.doxygen.org to download the system for free.
 //
 
@@ -29,7 +29,7 @@
 
 class CNavArea;
 class CCSNavArea;
-class CBaseEntity; 
+class CBaseEntity;
 
 //--------------------------------------------------------------------------------------------------------
 /**
@@ -39,27 +39,30 @@ class CBaseEntity;
 class CSNavMesh : public CNavMesh
 {
 public:
-	CSNavMesh( void );
+	CSNavMesh(void);
 	virtual ~CSNavMesh();
 
-	virtual CNavArea *CreateArea( void ) const;							// CNavArea factory
+	virtual CNavArea *CreateArea(void) const; // CNavArea factory
 
-	virtual unsigned int GetSubVersionNumber( void ) const;									// returns sub-version number of data format used by derived classes
-	virtual void SaveCustomData( CUtlBuffer &fileBuffer ) const;							// store custom mesh data for derived classes
-	virtual void LoadCustomData( CUtlBuffer &fileBuffer, unsigned int subVersion );			// load custom mesh data for derived classes
+	virtual unsigned int GetSubVersionNumber(
+		void) const; // returns sub-version number of data format used by derived classes
+	virtual void SaveCustomData(CUtlBuffer &fileBuffer) const; // store custom mesh data for derived classes
+	virtual void LoadCustomData(CUtlBuffer &fileBuffer,
+								unsigned int subVersion); // load custom mesh data for derived classes
 
-	virtual void Reset( void );											///< destroy Navigation Mesh data and revert to initial state
-	virtual void Update( void );										///< invoked on each game frame
+	virtual void Reset(void);  ///< destroy Navigation Mesh data and revert to initial state
+	virtual void Update(void); ///< invoked on each game frame
 
-	virtual NavErrorType Load( void );									// load navigation data from a file
-	virtual NavErrorType PostLoad( unsigned int version );				// (EXTEND) invoked after all areas have been loaded - for pointer binding, etc
-	virtual bool Save( void ) const;									///< store Navigation Mesh to a file
+	virtual NavErrorType Load(void); // load navigation data from a file
+	virtual NavErrorType PostLoad(
+		unsigned int version);	   // (EXTEND) invoked after all areas have been loaded - for pointer binding, etc
+	virtual bool Save(void) const; ///< store Navigation Mesh to a file
 
-	void ClearPlayerCounts( void );										///< zero player counts in all areas
+	void ClearPlayerCounts(void); ///< zero player counts in all areas
 
 protected:
-	virtual void BeginCustomAnalysis( bool bIncremental );
-	virtual void PostCustomAnalysis( void );							// invoked when custom analysis step is complete
+	virtual void BeginCustomAnalysis(bool bIncremental);
+	virtual void PostCustomAnalysis(void); // invoked when custom analysis step is complete
 	virtual void EndCustomAnalysis();
 
 private:

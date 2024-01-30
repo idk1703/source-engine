@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -15,7 +15,7 @@
 #include "mapdata.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ControlZone::C_ControlZone()
 {
@@ -25,11 +25,9 @@ C_ControlZone::C_ControlZone()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-C_ControlZone::~C_ControlZone()
-{
-}
+C_ControlZone::~C_ControlZone() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Are we using showtriggers?
@@ -37,7 +35,7 @@ C_ControlZone::~C_ControlZone()
 //-----------------------------------------------------------------------------
 bool C_ControlZone::ShouldDraw()
 {
-	if ( !m_pShowTriggers )
+	if(!m_pShowTriggers)
 		return false;
 
 	return m_pShowTriggers->GetInt() != 0 ? true : false;
@@ -45,23 +43,21 @@ bool C_ControlZone::ShouldDraw()
 
 //-----------------------------------------------------------------------------
 // Purpose: Update global map state based on data received
-// Input  : bnewentity - 
+// Input  : bnewentity -
 //-----------------------------------------------------------------------------
-void C_ControlZone::OnDataChanged( DataUpdateType_t updateType )
+void C_ControlZone::OnDataChanged(DataUpdateType_t updateType)
 {
-	BaseClass::OnDataChanged( updateType );
+	BaseClass::OnDataChanged(updateType);
 
 	CMapZones *zone;
-	if ( m_nZoneNumber < 1 ||
-		 m_nZoneNumber > MAX_ZONES )
-		 return;
+	if(m_nZoneNumber < 1 || m_nZoneNumber > MAX_ZONES)
+		return;
 
-	zone = &MapData().m_Zones[ m_nZoneNumber -1 ];
+	zone = &MapData().m_Zones[m_nZoneNumber - 1];
 	zone->m_nControllingTeam = GetTeamNumber();
 }
 
 IMPLEMENT_CLIENTCLASS_DT(C_ControlZone, DT_ControlZone, CControlZone)
-	RecvPropInt( RECVINFO(m_nZoneNumber )),
-END_RECV_TABLE()
-
-
+RecvPropInt(RECVINFO(m_nZoneNumber)),
+END_RECV_TABLE
+()

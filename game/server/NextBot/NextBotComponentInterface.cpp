@@ -11,14 +11,12 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-INextBotComponent::INextBotComponent( INextBot *bot )
+INextBotComponent::INextBotComponent(INextBot *bot)
 {
 	m_curInterval = TICK_INTERVAL;
 	m_lastUpdateTime = 0;
 	m_bot = bot;
-	
+
 	// register this component with the bot
-	bot->RegisterComponent( this );
+	bot->RegisterComponent(this);
 }
-
-

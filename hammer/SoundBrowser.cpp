@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -19,8 +19,7 @@ int CSoundBrowser::m_nFilterHistory;
 /////////////////////////////////////////////////////////////////////////////
 // CSoundBrowser dialog
 
-
-CSoundBrowser::CSoundBrowser( const char *pCurrentSoundName, CWnd* pParent /*=NULL*/ )
+CSoundBrowser::CSoundBrowser(const char *pCurrentSoundName, CWnd *pParent /*=NULL*/)
 	: CDialog(CSoundBrowser::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CSoundBrowser)
@@ -32,10 +31,10 @@ CSoundBrowser::CSoundBrowser( const char *pCurrentSoundName, CWnd* pParent /*=NU
 	m_SoundNameSelected = pCurrentSoundName;
 	m_SoundType = AfxGetApp()->GetProfileInt(s_pszSection, "Sound Type", 0);
 	m_Autoplay = AfxGetApp()->GetProfileInt(s_pszSection, "Sound Autoplay", 0);
-	Q_strncpy(m_szFilter, (LPCSTR)(AfxGetApp()->GetProfileString(s_pszSection, "Sound Filter", "")), 256 ); 
+	Q_strncpy(m_szFilter, (LPCSTR)(AfxGetApp()->GetProfileString(s_pszSection, "Sound Filter", "")), 256);
 	m_nSelectedSoundIndex = -1;
 
-//	m_bSoundPlayed = false;
+	//	m_bSoundPlayed = false;
 }
 
 void CSoundBrowser::SaveValues()
@@ -45,7 +44,7 @@ void CSoundBrowser::SaveValues()
 	AfxGetApp()->WriteProfileString(s_pszSection, "Sound Filter", m_szFilter);
 }
 
-void CSoundBrowser::DoDataExchange(CDataExchange* pDX)
+void CSoundBrowser::DoDataExchange(CDataExchange *pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CSoundBrowser)
@@ -57,7 +56,6 @@ void CSoundBrowser::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_SOUND_SOURCE_FILE, m_SoundSource);
 	//}}AFX_DATA_MAP
 }
-
 
 BEGIN_MESSAGE_MAP(CSoundBrowser, CDialog)
 	//{{AFX_MSG_MAP(CSoundBrowser)
@@ -79,31 +77,31 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CSoundBrowser message handlers
 
-BOOL CSoundBrowser::OnInitDialog() 
+BOOL CSoundBrowser::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
 	m_cFilter.SubclassDlgItem(IDC_SOUND_FILTER, this);
-	for ( int i = 0; i < m_nFilterHistory; ++i )
+	for(int i = 0; i < m_nFilterHistory; ++i)
 	{
-		m_cFilter.AddString( m_FilterHistory[i] );
+		m_cFilter.AddString(m_FilterHistory[i]);
 	}
 
 	m_cFilter.SetWindowText(m_szFilter);
 
 	CString temp = m_szFilter;
-	OnFilterChanged( temp );
+	OnFilterChanged(temp);
 
 	// Select an entry in the list that has the same name as the one passed in
-	int nIndex = m_SoundList.FindString( -1, m_SoundNameSelected );
-	if ( nIndex != LB_ERR)
+	int nIndex = m_SoundList.FindString(-1, m_SoundNameSelected);
+	if(nIndex != LB_ERR)
 	{
-		m_SoundList.SetCurSel( nIndex );
+		m_SoundList.SetCurSel(nIndex);
 		m_nSelectedSoundIndex = nIndex;
 		int nSoundIndex = m_SoundList.GetItemData(nIndex);
-		m_SoundFile = g_Sounds.SoundFile( GetSoundType(), nSoundIndex ); 
-		m_SoundSource = g_Sounds.SoundSourceFile( GetSoundType(), nSoundIndex ); 
-		UpdateData( FALSE );
+		m_SoundFile = g_Sounds.SoundFile(GetSoundType(), nSoundIndex);
+		m_SoundSource = g_Sounds.SoundSourceFile(GetSoundType(), nSoundIndex);
+		UpdateData(FALSE);
 	}
 
 	SetTimer(1, 500, NULL);
@@ -117,36 +115,34 @@ void CSoundBrowser::OnClose(void)
 	CDialog::OnClose();
 }
 
-
 //-----------------------------------------------------------------------------
 // Shutdown
 //-----------------------------------------------------------------------------
 void CSoundBrowser::Shutdown()
 {
 	SaveValues();
-	PlaySound( NULL, NULL, SND_FILENAME | SND_NODEFAULT); 
+	PlaySound(NULL, NULL, SND_FILENAME | SND_NODEFAULT);
 
 	// save current filter string
 	int i;
-	for (i = 0; i < m_nFilterHistory; i++)
+	for(i = 0; i < m_nFilterHistory; i++)
 	{
-		if (!m_FilterHistory[i].CompareNoCase(m_szFilter))
+		if(!m_FilterHistory[i].CompareNoCase(m_szFilter))
 			break;
 	}
 
-	if(i != m_nFilterHistory)	// delete first
+	if(i != m_nFilterHistory) // delete first
 	{
 		m_FilterHistory.RemoveAt(i);
 		--m_nFilterHistory;
 	}
-	
-	if ( m_szFilter[0] )
+
+	if(m_szFilter[0])
 	{
 		m_FilterHistory.InsertAt(0, m_szFilter);
 		++m_nFilterHistory;
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Clears, fills sound list
@@ -159,11 +155,11 @@ void CSoundBrowser::ClearSoundList()
 //-----------------------------------------------------------------------------
 // Sound filter
 //-----------------------------------------------------------------------------
-bool CSoundBrowser::ShowSoundInList( const char *pSoundName )
+bool CSoundBrowser::ShowSoundInList(const char *pSoundName)
 {
-	for (int i = 0; i < m_nFilters; i++)
+	for(int i = 0; i < m_nFilters; i++)
 	{
-		if ( Q_stristr(pSoundName, m_Filters[i]) == NULL )
+		if(Q_stristr(pSoundName, m_Filters[i]) == NULL)
 			return false;
 	}
 
@@ -172,96 +168,91 @@ bool CSoundBrowser::ShowSoundInList( const char *pSoundName )
 
 void CSoundBrowser::PopulateSoundList()
 {
-	m_SoundList.SetRedraw( FALSE );
+	m_SoundList.SetRedraw(FALSE);
 
 	ClearSoundList();
 
 	SoundType_t type = GetSoundType();
-	for ( int i = g_Sounds.SoundCount( type ); --i >= 0; )
+	for(int i = g_Sounds.SoundCount(type); --i >= 0;)
 	{
-		const char *pSoundName = g_Sounds.SoundName( type, i );
-		if ( ShowSoundInList( pSoundName ) )
+		const char *pSoundName = g_Sounds.SoundName(type, i);
+		if(ShowSoundInList(pSoundName))
 		{
 			CString str;
-			str.Format( _T(pSoundName) );
-			int nIndex = m_SoundList.AddString( str );
-			m_SoundList.SetItemDataPtr( nIndex, (PVOID)i );
+			str.Format(_T(pSoundName));
+			int nIndex = m_SoundList.AddString(str);
+			m_SoundList.SetItemDataPtr(nIndex, (PVOID)i);
 		}
 	}
 
-	m_SoundList.SetRedraw( TRUE );
+	m_SoundList.SetRedraw(TRUE);
 }
 
-
 //-----------------------------------------------------------------------------
-// Sound type 
+// Sound type
 //-----------------------------------------------------------------------------
 SoundType_t CSoundBrowser::GetSoundType() const
 {
-	if ( m_SoundType == 0 )
+	if(m_SoundType == 0)
 		return SOUND_TYPE_GAMESOUND;
-	else if ( m_SoundType == 1 )
+	else if(m_SoundType == 1)
 		return SOUND_TYPE_RAW;
 	else
 		return SOUND_TYPE_SCENE;
 }
 
-
-
 //-----------------------------------------------------------------------------
-// Sound name 
+// Sound name
 //-----------------------------------------------------------------------------
 void CSoundBrowser::CopySoundNameToSelected()
 {
-	UpdateData( TRUE );
+	UpdateData(TRUE);
 
 	int nIndex = m_SoundList.GetCurSel();
-	if ( nIndex != LB_ERR )
+	if(nIndex != LB_ERR)
 	{
 		int nSoundIndex = m_SoundList.GetItemData(nIndex);
-		m_SoundNameSelected = g_Sounds.SoundName( GetSoundType(), nSoundIndex );
-		m_SoundFile = g_Sounds.SoundFile( GetSoundType(), nSoundIndex ); 
-		m_SoundSource = g_Sounds.SoundSourceFile( GetSoundType(), nSoundIndex ); 
+		m_SoundNameSelected = g_Sounds.SoundName(GetSoundType(), nSoundIndex);
+		m_SoundFile = g_Sounds.SoundFile(GetSoundType(), nSoundIndex);
+		m_SoundSource = g_Sounds.SoundSourceFile(GetSoundType(), nSoundIndex);
 		m_nSelectedSoundIndex = nSoundIndex;
-		UpdateData( FALSE );
+		UpdateData(FALSE);
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Update the filter: 
+// Update the filter:
 //-----------------------------------------------------------------------------
-void CSoundBrowser::OnFilterChanged( const char *pFilter )
+void CSoundBrowser::OnFilterChanged(const char *pFilter)
 {
-	Q_strncpy( m_szFilter, pFilter, 256 );
+	Q_strncpy(m_szFilter, pFilter, 256);
 	m_nFilters = 0;
 	char *p = strtok(m_szFilter, " ,;");
-	while (p != NULL)
-	{	
+	while(p != NULL)
+	{
 		m_Filters[m_nFilters++] = p;
 		p = strtok(NULL, " ,;");
 	}
-	PopulateSoundList();	
+	PopulateSoundList();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Timer used to control updates when the filter terms change.
-// Input  : nIDEvent - 
+// Input  : nIDEvent -
 //-----------------------------------------------------------------------------
-void CSoundBrowser::OnTimer(UINT nIDEvent) 
+void CSoundBrowser::OnTimer(UINT nIDEvent)
 {
-	if (!m_bFilterChanged)
+	if(!m_bFilterChanged)
 		return;
 
-	if ((time(NULL) - m_uLastFilterChange) > 0)
+	if((time(NULL) - m_uLastFilterChange) > 0)
 	{
 		KillTimer(nIDEvent);
 		m_bFilterChanged = FALSE;
 
 		CString str;
 		m_cFilter.GetWindowText(str);
-		OnFilterChanged( str );
+		OnFilterChanged(str);
 
 		SetTimer(nIDEvent, 500, NULL);
 	}
@@ -272,18 +263,17 @@ void CSoundBrowser::OnTimer(UINT nIDEvent)
 //-----------------------------------------------------------------------------
 // Purpose: Called when either the filter combo or the keywords combo text changes.
 //-----------------------------------------------------------------------------
-void CSoundBrowser::OnChangeFilter() 
+void CSoundBrowser::OnChangeFilter()
 {
 	// Start a timer to repaint the texture window using the new filters.
 	m_uLastFilterChange = time(NULL);
 	m_bFilterChanged = true;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CSoundBrowser::OnUpdateFilterNOW() 
+void CSoundBrowser::OnUpdateFilterNOW()
 {
 	m_uLastFilterChange = time(NULL);
 	m_bFilterChanged = FALSE;
@@ -291,88 +281,85 @@ void CSoundBrowser::OnUpdateFilterNOW()
 	CString str;
 	int iSel = m_cFilter.GetCurSel();
 	m_cFilter.GetLBText(iSel, str);
-	OnFilterChanged( str );
+	OnFilterChanged(str);
 }
-
 
 //-----------------------------------------------------------------------------
 // Sound type changed
 //-----------------------------------------------------------------------------
-void CSoundBrowser::OnSelchangeSoundType() 
+void CSoundBrowser::OnSelchangeSoundType()
 {
-	UpdateData( TRUE );
-	PopulateSoundList();	
+	UpdateData(TRUE);
+	PopulateSoundList();
 }
 
-
 //-----------------------------------------------------------------------------
-// Selected sound 
+// Selected sound
 //-----------------------------------------------------------------------------
 const char *CSoundBrowser::GetSelectedSound()
 {
 	return m_SoundNameSelected;
 }
 
-
-void CSoundBrowser::OnSelchangeSoundList() 
+void CSoundBrowser::OnSelchangeSoundList()
 {
 	CopySoundNameToSelected();
-	if ( m_Autoplay )
+	if(m_Autoplay)
 	{
 		OnPreview();
 	}
 }
 
-void CSoundBrowser::OnDblclkSoundList() 
+void CSoundBrowser::OnDblclkSoundList()
 {
 	CopySoundNameToSelected();
 	OnOK();
 }
 
-void CSoundBrowser::OnPreview() 
+void CSoundBrowser::OnPreview()
 {
-	if ( m_nSelectedSoundIndex >= 0 )
+	if(m_nSelectedSoundIndex >= 0)
 	{
-		g_Sounds.Play( GetSoundType(), m_nSelectedSoundIndex );
+		g_Sounds.Play(GetSoundType(), m_nSelectedSoundIndex);
 	}
 }
 
-void CSoundBrowser::OnAutoplay() 
+void CSoundBrowser::OnAutoplay()
 {
-	UpdateData( TRUE );
+	UpdateData(TRUE);
 }
 
 void CSoundBrowser::OnRefreshSounds()
 {
 	// Set the title to "refreshing sounds..."
 	CString oldTitle, newTitle;
-	newTitle.LoadString( IDS_REFRESHING_SOUNDS );
-	GetWindowText( oldTitle );
-	SetWindowText( newTitle );
-	
+	newTitle.LoadString(IDS_REFRESHING_SOUNDS);
+	GetWindowText(oldTitle);
+	SetWindowText(newTitle);
+
 	g_Sounds.Initialize();
 	PopulateSoundList();
-	
+
 	// Restore the title.
-	SetWindowText( oldTitle );
+	SetWindowText(oldTitle);
 }
 
-int CSoundBrowser::DoModal() 
-{	
+int CSoundBrowser::DoModal()
+{
 	int nRet = CDialog::DoModal();
 	Shutdown();
 	return nRet;
 }
 
-void CSoundBrowser::OnOpenSource() 
+void CSoundBrowser::OnOpenSource()
 {
-	if ( m_nSelectedSoundIndex >= 0 )
+	if(m_nSelectedSoundIndex >= 0)
 	{
-		g_Sounds.OpenSource( GetSoundType(), m_nSelectedSoundIndex );
+		g_Sounds.OpenSource(GetSoundType(), m_nSelectedSoundIndex);
 	}
 }
 
 void CSoundBrowser::OnBnClickedStopsound()
 {
-	g_Sounds.StopSound(); 
+	g_Sounds.StopSound();
 }

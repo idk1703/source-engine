@@ -18,14 +18,13 @@ class CUtlBuffer;
 // classes for keeping a dictionary of sheet files in memory.  A sheet is a bunch of frames packewd
 // within one texture. Each sheet has 1 or more frame sequences stored for it.
 
-
 // for fast lookups to retrieve sequence data, we store the sequence information discretized into
 // a fixed # of frames. If this discretenesss is a visual problem, you can lerp the blend values to get it
 // perfect.
 #define SEQUENCE_SAMPLE_COUNT 1024
 
-#define MAX_SEQUENCES 64
-#define MAX_IMAGES_PER_FRAME_ON_DISK 4
+#define MAX_SEQUENCES				   64
+#define MAX_IMAGES_PER_FRAME_ON_DISK   4
 #define MAX_IMAGES_PER_FRAME_IN_MEMORY 2
 
 struct SequenceSampleTextureCoords_t
@@ -52,21 +51,20 @@ struct SheetSequenceSample_t
 	void CopyFirstFrameToOthers(void)
 	{
 		// for old format files only supporting one image per frame
-		for(int i=1; i < MAX_IMAGES_PER_FRAME_IN_MEMORY; i++)
+		for(int i = 1; i < MAX_IMAGES_PER_FRAME_IN_MEMORY; i++)
 		{
 			m_TextureCoordData[i] = m_TextureCoordData[0];
 		}
 	}
-
 };
 
 class CSheet
 {
 public:
 	// read form a .sht file. This is the usual thing to do
-	CSheet( CUtlBuffer &buf );
-	CSheet( void );
-	~CSheet( void );
+	CSheet(CUtlBuffer &buf);
+	CSheet(void);
+	~CSheet(void);
 
 	// references for smart ptrs
 	CUtlReferenceList<CSheet> m_References;
@@ -74,11 +72,8 @@ public:
 	SheetSequenceSample_t *m_pSamples[MAX_SEQUENCES];
 	bool m_bClamp[MAX_SEQUENCES];
 	bool m_bSequenceIsCopyOfAnotherSequence[MAX_SEQUENCES];
-	int	m_nNumFrames[MAX_SEQUENCES];
+	int m_nNumFrames[MAX_SEQUENCES];
 	float m_flFrameSpan[MAX_SEQUENCES];
-
 };
 
-
-#endif   // PSHEET_H
-
+#endif // PSHEET_H

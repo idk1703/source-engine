@@ -7,7 +7,6 @@
 #ifndef TF_LOBBY_CONTAINER_FRAME_H
 #define TF_LOBBY_CONTAINER_FRAME_H
 
-
 #include "cbase.h"
 #include "vgui_controls/PropertyDialog.h"
 #include "GameEventListener.h"
@@ -17,51 +16,51 @@
 
 bool BIsPartyLeader();
 bool BIsPartyInUIState();
-CSteamID SteamIDFromDecimalString( const char *pszUint64InDecimal );
+CSteamID SteamIDFromDecimalString(const char *pszUint64InDecimal);
 
 class CBaseLobbyPanel;
 
 // This is a big fat kludge so I can use the PropertyPage
 class CBaseLobbyContainerFrame : public vgui::PropertyDialog, public CGameEventListener
 {
-	DECLARE_CLASS_SIMPLE( CBaseLobbyContainerFrame, PropertyDialog );
+	DECLARE_CLASS_SIMPLE(CBaseLobbyContainerFrame, PropertyDialog);
+
 public:
-	CBaseLobbyContainerFrame( const char *pszPanelName );
+	CBaseLobbyContainerFrame(const char *pszPanelName);
 	virtual ~CBaseLobbyContainerFrame();
 
 	//
 	// PropertyDialog overrides
 	//
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
-	virtual void PerformLayout( void ) OVERRIDE;
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme) OVERRIDE;
+	virtual void PerformLayout(void) OVERRIDE;
 	virtual void OnKeyCodeTyped(vgui::KeyCode code) OVERRIDE;
 	virtual void OnKeyCodePressed(vgui::KeyCode code) OVERRIDE;
-	virtual void OnCommand( const char *command ) OVERRIDE;
+	virtual void OnCommand(const char *command) OVERRIDE;
 
 	//
 	// CGameEventListener overrides
 	//
-	virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
+	virtual void FireGameEvent(IGameEvent *event) OVERRIDE;
 
-	void StartSearch( void );
+	void StartSearch(void);
 	virtual void ShowPanel(bool bShow);
-	void SetNextButtonEnabled( bool bValue );
+	void SetNextButtonEnabled(bool bValue);
 
 	virtual void OnThink() OVERRIDE;
 
-	static void LeaveLobbyPanel( bool bConfirmed, void *pContext )
+	static void LeaveLobbyPanel(bool bConfirmed, void *pContext)
 	{
-		CBaseLobbyContainerFrame* pCaller = (CBaseLobbyContainerFrame*)pContext;
-		if ( bConfirmed && pCaller )
+		CBaseLobbyContainerFrame *pCaller = (CBaseLobbyContainerFrame *)pContext;
+		if(bConfirmed && pCaller)
 		{
-			pCaller->OnCommand( "back" );
+			pCaller->OnCommand("back");
 		}
 	}
 
-	MESSAGE_FUNC( OpenPingOptions, "Context_Ping" );
+	MESSAGE_FUNC(OpenPingOptions, "Context_Ping");
 
 protected:
-	
 	bool ShouldShowPartyButton() const;
 	virtual void WriteControls();
 	virtual void HandleBackPressed();
@@ -72,8 +71,7 @@ protected:
 	vgui::Button *m_pBackButton;
 
 private:
-	
-	virtual const char* GetResFile() const = 0;
+	virtual const char *GetResFile() const = 0;
 	virtual TF_MatchmakingMode GetHandledMode() const = 0;
 	virtual bool VerifyPartyAuthorization() const = 0;
 
@@ -82,7 +80,7 @@ private:
 
 	bool m_bNextButtonEnabled;
 
-	vgui::DHANDLE< vgui::Panel > m_hPingPanel;
+	vgui::DHANDLE<vgui::Panel> m_hPingPanel;
 };
 
-#endif //TF_LOBBY_CONTAINER_FRAME_H
+#endif // TF_LOBBY_CONTAINER_FRAME_H

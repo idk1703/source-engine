@@ -8,25 +8,29 @@
 
 #include "Path/NextBotPathFollow.h"
 
-class CTFBotMissionReprogrammed : public Action< CTFBot >
+class CTFBotMissionReprogrammed : public Action<CTFBot>
 {
 #ifdef STAGING_ONLY
 public:
-	CTFBotMissionReprogrammed( void );
+	CTFBotMissionReprogrammed(void);
 
-	virtual ActionResult< CTFBot >	OnStart( CTFBot *me, Action< CTFBot > *priorAction );
-	virtual ActionResult< CTFBot >	Update( CTFBot *me, float interval );
-	virtual void					OnEnd( CTFBot *me, Action< CTFBot > *nextAction );
+	virtual ActionResult<CTFBot> OnStart(CTFBot *me, Action<CTFBot> *priorAction);
+	virtual ActionResult<CTFBot> Update(CTFBot *me, float interval);
+	virtual void OnEnd(CTFBot *me, Action<CTFBot> *nextAction);
 
-	virtual EventDesiredResult< CTFBot > OnStuck( CTFBot *me );
-	virtual EventDesiredResult< CTFBot > OnKilled( CTFBot *me, const CTakeDamageInfo &info );
+	virtual EventDesiredResult<CTFBot> OnStuck(CTFBot *me);
+	virtual EventDesiredResult<CTFBot> OnKilled(CTFBot *me, const CTakeDamageInfo &info);
 
-	virtual QueryResultType ShouldAttack( const INextBot *me, const CKnownEntity *them ) const;	// should we attack "them"?
+	virtual QueryResultType ShouldAttack(const INextBot *me,
+										 const CKnownEntity *them) const; // should we attack "them"?
 
-	virtual const char *GetName( void ) const	{ return "MissionReprogrammed"; };
+	virtual const char *GetName(void) const
+	{
+		return "MissionReprogrammed";
+	};
 
 private:
-	CHandle< CBaseEntity > m_victim;	// the victim we are trying to destroy
+	CHandle<CBaseEntity> m_victim; // the victim we are trying to destroy
 	Vector m_lastKnownVictimPosition;
 
 	PathFollower m_path;
@@ -37,9 +41,9 @@ private:
 	CountdownTimer m_detonateSeekTimer;
 	CountdownTimer m_reprogrammedTimer;
 
-	void StartDetonate( CTFBot *me, bool wasSuccessful = false );
-	void Detonate( CTFBot *me );
-	CTFPlayer *FindNearestEnemy( CTFBot *me );
+	void StartDetonate(CTFBot *me, bool wasSuccessful = false);
+	void Detonate(CTFBot *me);
+	CTFPlayer *FindNearestEnemy(CTFBot *me);
 	bool m_hasDetonated;
 	bool m_wasSuccessful;
 
@@ -48,6 +52,5 @@ private:
 	Vector m_vecDetLocation;
 #endif // STAGING_ONLY
 };
-
 
 #endif // TF_BOT_MISSION_REPROGRAMMED_H

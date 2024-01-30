@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -55,13 +55,13 @@ R_TimeRefresh_f
 For program optimization
 ====================
 */
-void R_TimeRefresh_f (void)
+void R_TimeRefresh_f(void)
 {
-	int			i;
-	float		start, stop, time;
-	CViewSetup		view;
+	int i;
+	float start, stop, time;
+	CViewSetup view;
 
-	materials->Flush( true );
+	materials->Flush(true);
 
 	Q_memset(&view, 0, sizeof(view));
 	view.origin = MainViewOrigin();
@@ -81,37 +81,37 @@ void R_TimeRefresh_f (void)
 	view.zFarViewmodel = MAX_COORD_FLOAT;
 
 	int savedeveloper = developer.GetInt();
-	developer.SetValue( 0 );
+	developer.SetValue(0);
 
-	start = Sys_FloatTime ();
-	for (i=0 ; i<128 ; i++)
+	start = Sys_FloatTime();
+	for(i = 0; i < 128; i++)
 	{
-		view.angles[1] = i/128.0*360.0;
-		g_ClientDLL->RenderView( view, VIEW_CLEAR_COLOR, RENDERVIEW_DRAWVIEWMODEL | RENDERVIEW_DRAWHUD );
+		view.angles[1] = i / 128.0 * 360.0;
+		g_ClientDLL->RenderView(view, VIEW_CLEAR_COLOR, RENDERVIEW_DRAWVIEWMODEL | RENDERVIEW_DRAWHUD);
 		Shader_SwapBuffers();
 	}
 
-	materials->Flush( true );
+	materials->Flush(true);
 	Shader_SwapBuffers();
-	stop = Sys_FloatTime ();
-	time = stop-start;
+	stop = Sys_FloatTime();
+	time = stop - start;
 
-	developer.SetValue( savedeveloper );
+	developer.SetValue(savedeveloper);
 
-	ConMsg ("%f seconds (%f fps)\n", time, 128/time);
+	ConMsg("%f seconds (%f fps)\n", time, 128 / time);
 }
 
-ConCommand timerefresh("timerefresh", R_TimeRefresh_f, "Profile the renderer.", FCVAR_CHEAT );	
-ConCommand linefile("linefile", Linefile_Read_f, "Parses map leak data from .lin file", FCVAR_CHEAT );	
+ConCommand timerefresh("timerefresh", R_TimeRefresh_f, "Profile the renderer.", FCVAR_CHEAT);
+ConCommand linefile("linefile", Linefile_Read_f, "Parses map leak data from .lin file", FCVAR_CHEAT);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void R_Init (void)
-{	
+void R_Init(void)
+{
 	extern byte *hunk_base;
 
-	extern void InitMathlib( void );
+	extern void InitMathlib(void);
 
 	InitMathlib();
 
@@ -119,18 +119,16 @@ void R_Init (void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void R_Shutdown( void )
-{
-}
+void R_Shutdown(void) {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void R_ResetLightStyles( void )
+void R_ResetLightStyles(void)
 {
-	for ( int i=0 ; i<256 ; i++ )
+	for(int i = 0; i < 256; i++)
 	{
 		d_lightstylevalue[i] = 264;
 		d_lightstyleframe[i] = r_framecount;
@@ -139,34 +137,32 @@ void R_ResetLightStyles( void )
 
 void R_RemoveAllDecalsFromAllModels();
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CON_COMMAND_F( r_cleardecals, "Usage r_cleardecals <permanent>.", FCVAR_CLIENTCMD_CAN_EXECUTE | FCVAR_SERVER_CAN_EXECUTE  )
+CON_COMMAND_F(r_cleardecals, "Usage r_cleardecals <permanent>.", FCVAR_CLIENTCMD_CAN_EXECUTE | FCVAR_SERVER_CAN_EXECUTE)
 {
-	if ( host_state.worldmodel  )
+	if(host_state.worldmodel)
 	{
 		bool bPermanent = false;
-		if ( args.ArgC() == 2 )
+		if(args.ArgC() == 2)
 		{
-			if ( !Q_stricmp( args[1], "permanent" ) )
+			if(!Q_stricmp(args[1], "permanent"))
 			{
 				bPermanent = true;
 			}
 		}
 
-		R_DecalTerm( host_state.worldmodel->brush.pShared, bPermanent );
+		R_DecalTerm(host_state.worldmodel->brush.pShared, bPermanent);
 	}
 
 	R_RemoveAllDecalsFromAllModels();
 }
 
-
 //-----------------------------------------------------------------------------
 // Loads world geometry. Called when map changes or dx level changes
 //-----------------------------------------------------------------------------
-void R_LoadWorldGeometry( bool bDXChange )
+void R_LoadWorldGeometry(bool bDXChange)
 {
 	// Recreate the sortinfo arrays ( ack, uses new/delete right now ) because doing it with Hunk_AllocName will
 	//  leak through every connect that doesn't wipe the hunk ( "reconnect" )
@@ -181,36 +177,36 @@ void R_LoadWorldGeometry( bool bDXChange )
 	// If this is the first time we've tried to render this map, create a few one-time data structures
 	// These all get cleared out if Map_UnloadModel is ever called by the modelloader interface ( and that happens
 	//  any time we free the Hunk down to the low mark since these things all use the Hunk for their data ).
-	if ( !bDXChange )
+	if(!bDXChange)
 	{
-		if ( !modelloader->Map_GetRenderInfoAllocated() )
+		if(!modelloader->Map_GetRenderInfoAllocated())
 		{
 			// create the displacement surfaces for the map
-			modelloader->Map_LoadDisplacements( host_state.worldmodel, false );
-			//if( !DispInfo_CreateStaticBuffers( host_state.worldmodel, materialSortInfoArray, false ) )
+			modelloader->Map_LoadDisplacements(host_state.worldmodel, false);
+			// if( !DispInfo_CreateStaticBuffers( host_state.worldmodel, materialSortInfoArray, false ) )
 			//	Sys_Error( "Can't create static meshes for displacements" );
-			
-			modelloader->Map_SetRenderInfoAllocated( true );
+
+			modelloader->Map_SetRenderInfoAllocated(true);
 		}
 	}
 	else
 	{
 		// create the displacement surfaces for the map
-		modelloader->Map_LoadDisplacements( host_state.worldmodel, true );
+		modelloader->Map_LoadDisplacements(host_state.worldmodel, true);
 	}
 
-	if ( bDXChange )
+	if(bDXChange)
 	{
 		// Must be done before MarkWaterSurfaces
-		modelloader->RecomputeSurfaceFlags( host_state.worldmodel ); 
+		modelloader->RecomputeSurfaceFlags(host_state.worldmodel);
 	}
 
-	Mod_MarkWaterSurfaces( host_state.worldmodel );
+	Mod_MarkWaterSurfaces(host_state.worldmodel);
 
 	// make sure and rebuild lightmaps when the level gets started.
 	GL_RebuildLightmaps();
 
-	if ( bDXChange )
+	if(bDXChange)
 	{
 		R_BrushBatchInit();
 		R_DecalReSortMaterials();
@@ -218,52 +214,51 @@ void R_LoadWorldGeometry( bool bDXChange )
 	}
 }
 
-
 /*
 ===============
 R_LevelInit
 ===============
 */
-void R_LevelInit( void )
+void R_LevelInit(void)
 {
-	ConDMsg( "Initializing renderer...\n" );
+	ConDMsg("Initializing renderer...\n");
 
-	COM_TimestampedLog( "R_LevelInit: Start" );
+	COM_TimestampedLog("R_LevelInit: Start");
 
-	Assert( g_ClientDLL );
+	Assert(g_ClientDLL);
 
-	r_framecount = 1; 
+	r_framecount = 1;
 	R_ResetLightStyles();
 	R_DecalInit();
 	R_LoadSkys();
 	R_InitStudio();
 
 	// FIXME: Is this the best place to initialize the kd tree when we're client-only?
-	if ( !sv.IsActive() )
+	if(!sv.IsActive())
 	{
 		g_pShadowMgr->LevelShutdown();
 		StaticPropMgr()->LevelShutdown();
-		SpatialPartition()->Init( host_state.worldmodel->mins, host_state.worldmodel->maxs );
+		SpatialPartition()->Init(host_state.worldmodel->mins, host_state.worldmodel->maxs);
 		StaticPropMgr()->LevelInit();
-		g_pShadowMgr->LevelInit( host_state.worldbrush->numsurfaces );
+		g_pShadowMgr->LevelInit(host_state.worldbrush->numsurfaces);
 	}
 
 	// We've fully loaded the new level, unload any models that we don't care about any more
 	modelloader->UnloadUnreferencedModels();
 
-	if ( host_state.worldmodel->brush.pShared->numworldlights == 0 )
+	if(host_state.worldmodel->brush.pShared->numworldlights == 0)
 	{
-		ConDMsg( "Level unlit, setting 'mat_fullbright 1'\n" );
-		mat_fullbright.SetValue( 1 );
+		ConDMsg("Level unlit, setting 'mat_fullbright 1'\n");
+		mat_fullbright.SetValue(1);
 	}
 
 	UpdateMaterialSystemConfig();
-	
+
 	// FIXME: E3 2003 HACK
-	if ( IsPC() && mat_levelflush.GetBool() )
+	if(IsPC() && mat_levelflush.GetBool())
 	{
 		bool bOnLevelShutdown = false;
-		materials->ResetTempHWMemory( bOnLevelShutdown );
+		materials->ResetTempHWMemory(bOnLevelShutdown);
 	}
 
 	// precache any textures that are used in this map.
@@ -275,7 +270,7 @@ void R_LevelInit( void )
 
 	R_Surface_LevelInit();
 	R_Areaportal_LevelInit();
-	
+
 	// Build the overlay fragments.
 	OverlayMgr()->CreateFragments();
 
@@ -284,7 +279,7 @@ void R_LevelInit( void )
 	CompactTextureHeap();
 #endif
 
-	COM_TimestampedLog( "R_LevelInit: Finish" );
+	COM_TimestampedLog("R_LevelInit: Finish");
 }
 
 void R_LevelShutdown()
@@ -293,6 +288,3 @@ void R_LevelShutdown()
 	R_Areaportal_LevelShutdown();
 	g_DispLightmapSamplePositions.Purge();
 }
-
-
-

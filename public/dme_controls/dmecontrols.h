@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -14,7 +14,6 @@
 
 #include "tier1/interface.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
@@ -26,35 +25,33 @@ class IElementPropertiesChoices;
 namespace vgui
 {
 
-//-----------------------------------------------------------------------------
-// handles the initialization of the vgui interfaces.
-// NOTE: Calls into VGui_InitMatSysInterfacesList
-// interfaces (listed below) are first attempted to be loaded from primaryProvider, then secondaryProvider
-// moduleName should be the name of the module that this instance of the vgui_controls has been compiled into
-//-----------------------------------------------------------------------------
-bool VGui_InitDmeInterfacesList( const char *moduleName, CreateInterfaceFn *factoryList, int numFactories );
+	//-----------------------------------------------------------------------------
+	// handles the initialization of the vgui interfaces.
+	// NOTE: Calls into VGui_InitMatSysInterfacesList
+	// interfaces (listed below) are first attempted to be loaded from primaryProvider, then secondaryProvider
+	// moduleName should be the name of the module that this instance of the vgui_controls has been compiled into
+	//-----------------------------------------------------------------------------
+	bool VGui_InitDmeInterfacesList(const char *moduleName, CreateInterfaceFn *factoryList, int numFactories);
 
+	//-----------------------------------------------------------------------------
+	// set of accessor functions to matsys interfaces
+	// the appropriate header file for each is listed above the item
+	//-----------------------------------------------------------------------------
 
-//-----------------------------------------------------------------------------
-// set of accessor functions to matsys interfaces
-// the appropriate header file for each is listed above the item
-//-----------------------------------------------------------------------------
+	// #include "soundemittersystem/isoundemittersystembase.h"
+	ISoundEmitterSystemBase *SoundEmitterSystem();
 
-// #include "soundemittersystem/isoundemittersystembase.h"
-ISoundEmitterSystemBase *SoundEmitterSystem();
+	// #include "toolsframework/ienginetool.h"
+	IEngineTool *EngineTool();
 
-// #include "toolsframework/ienginetool.h"
-IEngineTool *EngineTool();
+	// #include "vphysics_interface.h"
+	IPhysicsCollision *PhysicsCollision();
 
-// #include "vphysics_interface.h"
-IPhysicsCollision *PhysicsCollision();
-
-// #include "dme_controls/INotifyUI.h"
-IElementPropertiesChoices *ElementPropertiesChoices();
-void SetElementPropertiesChoices( IElementPropertiesChoices *pChoices );
+	// #include "dme_controls/INotifyUI.h"
+	IElementPropertiesChoices *ElementPropertiesChoices();
+	void SetElementPropertiesChoices(IElementPropertiesChoices *pChoices);
 
 } // end namespace vgui
-
 
 //-----------------------------------------------------------------------------
 // predeclare all the matsys control class names
@@ -67,6 +64,5 @@ class CDmePicker;
 class CSoundPicker;
 class CFilterComboBox;
 class CGameFileTreeView;
-
 
 #endif // DMECONTROLS_H

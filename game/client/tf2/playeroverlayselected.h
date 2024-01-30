@@ -1,12 +1,12 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
 // $NoKeywords: $
 //=============================================================================//
-#if !defined( PLAYEROLVERLAYSELECTED_H )
+#if !defined(PLAYEROLVERLAYSELECTED_H)
 #define PLAYEROLVERLAYSELECTED_H
 #ifdef _WIN32
 #pragma once
@@ -20,20 +20,19 @@ class CHudPlayerOverlay;
 class CHudPlayerOverlaySelected : public CBasePanel
 {
 public:
-	DECLARE_CLASS( CHudPlayerOverlaySelected, CBasePanel );
+	DECLARE_CLASS(CHudPlayerOverlaySelected, CBasePanel);
 
-	CHudPlayerOverlaySelected( CHudPlayerOverlay *baseOverlay );
-	virtual ~CHudPlayerOverlaySelected( void );
+	CHudPlayerOverlaySelected(CHudPlayerOverlay *baseOverlay);
+	virtual ~CHudPlayerOverlaySelected(void);
 
-	bool Init( KeyValues* pInitData );
+	bool Init(KeyValues *pInitData);
 
-	void SetImages( BitmapImage *pImage[4] );
+	void SetImages(BitmapImage *pImage[4]);
 
-	virtual void Paint( void );
+	virtual void Paint(void);
 
 	virtual void OnCursorEntered();
 	virtual void OnCursorExited();
-
 
 private:
 	BitmapImage *m_pImages[4];

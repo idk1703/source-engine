@@ -61,8 +61,8 @@ noinst_HEADERS = lsp.h \
 	ltp_sse.h \
 	filters_sse.h \
 	math_approx.h
-	
-	
+
+
 libspeex_la_LDFLAGS = -version-info @SPEEX_LT_CURRENT@:@SPEEX_LT_REVISION@:@SPEEX_LT_AGE@
 
 noinst_PROGRAMS = testenc testenc_wb testenc_uwb

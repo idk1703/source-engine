@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,15 +20,16 @@ class C_TFPlayer;
 //-----------------------------------------------------------------------------
 class CTFHudPasstimeOffscreenArrow : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CTFHudPasstimeOffscreenArrow, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CTFHudPasstimeOffscreenArrow, vgui::EditablePanel);
+
 public:
-	CTFHudPasstimeOffscreenArrow( vgui::Panel *pParent, const char *name );
+	CTFHudPasstimeOffscreenArrow(vgui::Panel *pParent, const char *name);
 	~CTFHudPasstimeOffscreenArrow();
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme) OVERRIDE;
 	virtual void PaintBackground() OVERRIDE;
-	
+
 protected:
-	virtual C_BaseEntity *PreparePaint( vgui::ImagePanel *pImage, C_TFPlayer *pLocalPlayer ) = 0;
+	virtual C_BaseEntity *PreparePaint(vgui::ImagePanel *pImage, C_TFPlayer *pLocalPlayer) = 0;
 
 private:
 	IMaterial *m_pArrowMaterial;
@@ -38,23 +39,27 @@ private:
 //-----------------------------------------------------------------------------
 class CTFHudPasstimeBallOffscreenArrow : public CTFHudPasstimeOffscreenArrow
 {
-	DECLARE_CLASS_SIMPLE( CTFHudPasstimeBallOffscreenArrow, CTFHudPasstimeOffscreenArrow );
+	DECLARE_CLASS_SIMPLE(CTFHudPasstimeBallOffscreenArrow, CTFHudPasstimeOffscreenArrow);
+
 public:
-	CTFHudPasstimeBallOffscreenArrow( vgui::Panel *pParent );
+	CTFHudPasstimeBallOffscreenArrow(vgui::Panel *pParent);
+
 private:
-	virtual C_BaseEntity *PreparePaint( vgui::ImagePanel *pImage, C_TFPlayer *pLocalPlayer ) OVERRIDE;
+	virtual C_BaseEntity *PreparePaint(vgui::ImagePanel *pImage, C_TFPlayer *pLocalPlayer) OVERRIDE;
 };
 
 //-----------------------------------------------------------------------------
 class CTFHudPasstimePlayerOffscreenArrow : public CTFHudPasstimeOffscreenArrow
 {
-	DECLARE_CLASS_SIMPLE( CTFHudPasstimePlayerOffscreenArrow, CTFHudPasstimeOffscreenArrow );
+	DECLARE_CLASS_SIMPLE(CTFHudPasstimePlayerOffscreenArrow, CTFHudPasstimeOffscreenArrow);
+
 public:
-	CTFHudPasstimePlayerOffscreenArrow( vgui::Panel *pParent, int iPlayerIndex );
+	CTFHudPasstimePlayerOffscreenArrow(vgui::Panel *pParent, int iPlayerIndex);
+
 private:
-	virtual C_BaseEntity *PreparePaint( vgui::ImagePanel *pImage, C_TFPlayer *pLocalPlayer ) OVERRIDE;
+	virtual C_BaseEntity *PreparePaint(vgui::ImagePanel *pImage, C_TFPlayer *pLocalPlayer) OVERRIDE;
 
 	int m_iPlayerIndex;
 };
 
-#endif // TF_HUD_PASSTIME_BALL_OFFSCREEN_ARROW_H  
+#endif // TF_HUD_PASSTIME_BALL_OFFSCREEN_ARROW_H

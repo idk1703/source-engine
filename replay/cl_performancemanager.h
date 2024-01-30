@@ -27,16 +27,16 @@ public:
 	CReplayPerformanceManager();
 	~CReplayPerformanceManager();
 
-	void						Init();
+	void Init();
 
 	//
 	// IReplayPerformanceManager
 	//
-	virtual const char			*GetRelativePath() const;
-	virtual const char			*GetFullPath() const;
-	virtual CReplayPerformance	*CreatePerformance( CReplay *pReplay );
-	virtual void				DeletePerformance( CReplayPerformance *pPerformance );
-	virtual const char			*GeneratePerformanceFilename( CReplay *pReplay );
+	virtual const char *GetRelativePath() const;
+	virtual const char *GetFullPath() const;
+	virtual CReplayPerformance *CreatePerformance(CReplay *pReplay);
+	virtual void DeletePerformance(CReplayPerformance *pPerformance);
+	virtual const char *GeneratePerformanceFilename(CReplay *pReplay);
 };
 
 //----------------------------------------------------------------------------------------

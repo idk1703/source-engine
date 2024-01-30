@@ -19,25 +19,24 @@ class CUtlBuffer;
 class KeyValuesJSONParser
 {
 public:
-	KeyValuesJSONParser( const CUtlBuffer &buf );
-	KeyValuesJSONParser( const char *pszText, int cbSize = -1 );
+	KeyValuesJSONParser(const CUtlBuffer &buf);
+	KeyValuesJSONParser(const char *pszText, int cbSize = -1);
 	~KeyValuesJSONParser();
 
-	/// Parse the whole string.  If there's a problem, returns NULL and sets m_nLine,m_szErrMsg with more info. 
+	/// Parse the whole string.  If there's a problem, returns NULL and sets m_nLine,m_szErrMsg with more info.
 	KeyValues *ParseFile();
 
 	/// Error message is returned here, if there is one.
-	char m_szErrMsg[ 1024 ];
+	char m_szErrMsg[1024];
 
 	/// Line number of current token during parsing, or of the error, of pasring fails
 	int m_nLine;
 
 private:
-
-	bool ParseObject( KeyValues *pObject );
-	bool ParseArray( KeyValues *pArray );
-	bool ParseValue( KeyValues *pValue );
-	void Init( const char *pszText, int cbSize );
+	bool ParseObject(KeyValues *pObject);
+	bool ParseArray(KeyValues *pArray);
+	bool ParseValue(KeyValues *pValue);
+	void Init(const char *pszText, int cbSize);
 
 	const char *m_cur;
 	const char *m_end;
@@ -55,7 +54,7 @@ private:
 	};
 
 	int m_eToken;
-	CUtlVectorFixedGrowable<char,1024> m_vecTokenChars;
+	CUtlVectorFixedGrowable<char, 1024> m_vecTokenChars;
 
 	void NextToken();
 	void ParseNumberToken();

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -9,12 +9,11 @@
 #include "paneleffect.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
-//			*panelName - 
+// Purpose:
+// Input  : *parent -
+//			*panelName -
 //-----------------------------------------------------------------------------
-CHintItemOrderBase::CHintItemOrderBase( vgui::Panel *parent, const char *panelName )
-: BaseClass( parent, panelName )
+CHintItemOrderBase::CHintItemOrderBase(vgui::Panel *parent, const char *panelName) : BaseClass(parent, panelName)
 {
 	m_bEffects = false;
 	m_LineEffect = EFFECT_INVALID_HANDLE;
@@ -24,48 +23,48 @@ CHintItemOrderBase::CHintItemOrderBase( vgui::Panel *parent, const char *panelNa
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CHintItemOrderBase::DrawAxialLineToOrder( void )
+void CHintItemOrderBase::DrawAxialLineToOrder(void)
 {
 	// Derived class already set up effects
-	if ( m_bEffects )
+	if(m_bEffects)
 		return;
 
 	m_bEffects = true;
 
 	// Flash for vote order
-	m_FlashEffect = CreateFlashEffect( this, NULL );
+	m_FlashEffect = CreateFlashEffect(this, NULL);
 	// Flash the hint panel itself
-	CreateFlashEffect( this, GetParent() );
+	CreateFlashEffect(this, GetParent());
 	// Point from hint to vote order panel
-	m_LineEffect = CreateAxialLineEffect( this, GetParent(), NULL );
+	m_LineEffect = CreateAxialLineEffect(this, GetParent(), NULL);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *panel - 
+// Purpose:
+// Input  : *panel -
 //-----------------------------------------------------------------------------
-void CHintItemOrderBase::SetHintTarget( vgui::Panel *panel )
+void CHintItemOrderBase::SetHintTarget(vgui::Panel *panel)
 {
-	BaseClass::SetHintTarget( panel );
+	BaseClass::SetHintTarget(panel);
 
-	if ( !m_bEffects )
+	if(!m_bEffects)
 		return;
 
 	// Update effect target
-	if ( !panel || !g_pTF2RootPanel )
+	if(!panel || !g_pTF2RootPanel)
 		return;
-	
-	CPanelEffect *e = g_pTF2RootPanel->FindEffect( m_LineEffect );
-	if ( e )
+
+	CPanelEffect *e = g_pTF2RootPanel->FindEffect(m_LineEffect);
+	if(e)
 	{
-		e->SetPanelOther( panel );
+		e->SetPanelOther(panel);
 	}
-	
-	e = g_pTF2RootPanel->FindEffect( m_FlashEffect );
-	if ( e )
+
+	e = g_pTF2RootPanel->FindEffect(m_FlashEffect);
+	if(e)
 	{
-		e->SetPanel( panel );
+		e->SetPanel(panel);
 	}
 }

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -36,10 +36,9 @@
 #include "serverinfopanel.h"
 
 #define PASSWORD_LEN 64
-#define MOD_LEN 64
+#define MOD_LEN		 64
 
 #include "imanageserver.h" // IManageServer interface
-
 
 class CBudgetPanelContainer;
 
@@ -48,24 +47,28 @@ class CBudgetPanelContainer;
 //-----------------------------------------------------------------------------
 class CGamePanelInfo : public vgui::Frame, public IManageServer
 {
-	DECLARE_CLASS_SIMPLE( CGamePanelInfo, vgui::Frame ); 
+	DECLARE_CLASS_SIMPLE(CGamePanelInfo, vgui::Frame);
+
 public:
 	CGamePanelInfo(vgui::Panel *parent, const char *name, const char *mod);
 	~CGamePanelInfo();
 
 	// IManageServer interface extras
-	void ShowPage() { Activate(); }
+	void ShowPage()
+	{
+		Activate();
+	}
 	void AddToConsole(const char *msg);
 	void SetAsRemoteServer(bool remote);
 
 protected:
 	// message handlers
 	void OnStop();
-	MESSAGE_FUNC( OnHelp, "Help" );
+	MESSAGE_FUNC(OnHelp, "Help");
 	void OnMasterRequestRestart();
-	void OnMasterOutOfDate( const char *msg);
-	MESSAGE_FUNC( OnRestartServer, "RestartServer" );
-	MESSAGE_FUNC( OnUpdateTitle, "UpdateTitle" );
+	void OnMasterOutOfDate(const char *msg);
+	MESSAGE_FUNC(OnRestartServer, "RestartServer");
+	MESSAGE_FUNC(OnUpdateTitle, "UpdateTitle");
 	void SetNewTitle(bool connectionFailed, const char *additional_text); // sets the windows title
 
 	// vgui overrides
@@ -79,7 +82,7 @@ private:
 	// methods
 	vgui::ComboBox *m_pViewCombo;
 	vgui::AnimatingImagePanel *m_pAnimImagePanel;
-	
+
 	// GUI pabels
 	// main property sheet
 	vgui::PropertySheet *m_pDetailsSheet;

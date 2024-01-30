@@ -18,79 +18,73 @@
 
 WeaponsResource gWR;
 
-void FreeHudTextureList( CUtlDict< CHudTexture *, int >& list );
+void FreeHudTextureList(CUtlDict<CHudTexture *, int> &list);
 
-static CHudTexture *FindHudTextureInDict( CUtlDict< CHudTexture *, int >& list, const char *psz )
+static CHudTexture *FindHudTextureInDict(CUtlDict<CHudTexture *, int> &list, const char *psz)
 {
-	int idx = list.Find( psz );
-	if ( idx == list.InvalidIndex() )
+	int idx = list.Find(psz);
+	if(idx == list.InvalidIndex())
 		return NULL;
 
-	return list[ idx ];
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: 
-// Output : 
-//-----------------------------------------------------------------------------
-WeaponsResource::WeaponsResource( void )
-{
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: 
-// Output : 
-//-----------------------------------------------------------------------------
-WeaponsResource::~WeaponsResource( void )
-{
+	return list[idx];
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
+// Output :
 //-----------------------------------------------------------------------------
-void WeaponsResource::Init( void )
+WeaponsResource::WeaponsResource(void) {}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+// Output :
+//-----------------------------------------------------------------------------
+WeaponsResource::~WeaponsResource(void) {}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+void WeaponsResource::Init(void)
 {
 	Reset();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void WeaponsResource::Reset( void )
-{
-}
+void WeaponsResource::Reset(void) {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Load all the sprites needed for all registered weapons
 //-----------------------------------------------------------------------------
-void WeaponsResource::LoadAllWeaponSprites( void )
+void WeaponsResource::LoadAllWeaponSprites(void)
 {
 	C_BasePlayer *player = C_BasePlayer::GetLocalPlayer();
-	if ( !player )
+	if(!player)
 		return;
 
-	for (int i = 0; i < MAX_WEAPONS; i++)
+	for(int i = 0; i < MAX_WEAPONS; i++)
 	{
-		if ( player->GetWeapon(i) )
+		if(player->GetWeapon(i))
 		{
-			LoadWeaponSprites( player->GetWeapon(i)->GetWeaponFileInfoHandle() );
+			LoadWeaponSprites(player->GetWeapon(i)->GetWeaponFileInfoHandle());
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void WeaponsResource::LoadWeaponSprites( WEAPON_FILE_INFO_HANDLE hWeaponFileInfo )
+void WeaponsResource::LoadWeaponSprites(WEAPON_FILE_INFO_HANDLE hWeaponFileInfo)
 {
 	// WeaponsResource is a friend of C_BaseCombatWeapon
-	FileWeaponInfo_t *pWeaponInfo = GetFileWeaponInfoFromHandle( hWeaponFileInfo );
+	FileWeaponInfo_t *pWeaponInfo = GetFileWeaponInfoFromHandle(hWeaponFileInfo);
 
-	if ( !pWeaponInfo )
+	if(!pWeaponInfo)
 		return;
 
 	// Already parsed the hud elements?
-	if ( pWeaponInfo->bLoadedHudElements )
+	if(pWeaponInfo->bLoadedHudElements)
 		return;
 
 	pWeaponInfo->bLoadedHudElements = true;
@@ -104,134 +98,134 @@ void WeaponsResource::LoadWeaponSprites( WEAPON_FILE_INFO_HANDLE hWeaponFileInfo
 	pWeaponInfo->iconSmall = NULL;
 
 	char sz[128];
-	Q_snprintf(sz, sizeof( sz ), "scripts/%s", pWeaponInfo->szClassName);
+	Q_snprintf(sz, sizeof(sz), "scripts/%s", pWeaponInfo->szClassName);
 
-	CUtlDict< CHudTexture *, int > tempList;
+	CUtlDict<CHudTexture *, int> tempList;
 
-	LoadHudTextures( tempList, sz, g_pGameRules->GetEncryptionKey() );
+	LoadHudTextures(tempList, sz, g_pGameRules->GetEncryptionKey());
 
-	if ( !tempList.Count() )
+	if(!tempList.Count())
 	{
 		// no sprite description file for weapon, use default small blocks
-		pWeaponInfo->iconActive = gHUD.GetIcon( "selection" );
-		pWeaponInfo->iconInactive = gHUD.GetIcon( "selection" );
-		pWeaponInfo->iconAmmo = gHUD.GetIcon( "bucket1" );
+		pWeaponInfo->iconActive = gHUD.GetIcon("selection");
+		pWeaponInfo->iconInactive = gHUD.GetIcon("selection");
+		pWeaponInfo->iconAmmo = gHUD.GetIcon("bucket1");
 		return;
 	}
 
 	CHudTexture *p;
-	p = FindHudTextureInDict( tempList, "crosshair" );
-	if ( p )
+	p = FindHudTextureInDict(tempList, "crosshair");
+	if(p)
 	{
-		pWeaponInfo->iconCrosshair = gHUD.AddUnsearchableHudIconToList( *p );
+		pWeaponInfo->iconCrosshair = gHUD.AddUnsearchableHudIconToList(*p);
 	}
 
-	p = FindHudTextureInDict( tempList, "autoaim" );
-	if ( p )
+	p = FindHudTextureInDict(tempList, "autoaim");
+	if(p)
 	{
-		pWeaponInfo->iconAutoaim = gHUD.AddUnsearchableHudIconToList( *p );
+		pWeaponInfo->iconAutoaim = gHUD.AddUnsearchableHudIconToList(*p);
 	}
 
-	p = FindHudTextureInDict( tempList, "zoom" );
-	if ( p )
+	p = FindHudTextureInDict(tempList, "zoom");
+	if(p)
 	{
-		pWeaponInfo->iconZoomedCrosshair = gHUD.AddUnsearchableHudIconToList( *p );
+		pWeaponInfo->iconZoomedCrosshair = gHUD.AddUnsearchableHudIconToList(*p);
 	}
 	else
 	{
-		pWeaponInfo->iconZoomedCrosshair = pWeaponInfo->iconCrosshair; //default to non-zoomed crosshair
+		pWeaponInfo->iconZoomedCrosshair = pWeaponInfo->iconCrosshair; // default to non-zoomed crosshair
 	}
 
-	p = FindHudTextureInDict( tempList, "zoom_autoaim" );
-	if ( p )
+	p = FindHudTextureInDict(tempList, "zoom_autoaim");
+	if(p)
 	{
-		pWeaponInfo->iconZoomedAutoaim = gHUD.AddUnsearchableHudIconToList( *p );
+		pWeaponInfo->iconZoomedAutoaim = gHUD.AddUnsearchableHudIconToList(*p);
 	}
 	else
 	{
-		pWeaponInfo->iconZoomedAutoaim = pWeaponInfo->iconZoomedCrosshair;  //default to zoomed crosshair
+		pWeaponInfo->iconZoomedAutoaim = pWeaponInfo->iconZoomedCrosshair; // default to zoomed crosshair
 	}
 
-	CHudHistoryResource *pHudHR = GET_HUDELEMENT( CHudHistoryResource );	
-	if( pHudHR )
+	CHudHistoryResource *pHudHR = GET_HUDELEMENT(CHudHistoryResource);
+	if(pHudHR)
 	{
-		p = FindHudTextureInDict( tempList, "weapon" );
-		if ( p )
+		p = FindHudTextureInDict(tempList, "weapon");
+		if(p)
 		{
-			pWeaponInfo->iconInactive = gHUD.AddUnsearchableHudIconToList( *p );
-			if ( pWeaponInfo->iconInactive )
+			pWeaponInfo->iconInactive = gHUD.AddUnsearchableHudIconToList(*p);
+			if(pWeaponInfo->iconInactive)
 			{
 				pWeaponInfo->iconInactive->Precache();
-				pHudHR->SetHistoryGap( pWeaponInfo->iconInactive->Height() );
+				pHudHR->SetHistoryGap(pWeaponInfo->iconInactive->Height());
 			}
 		}
 
-		p = FindHudTextureInDict( tempList, "weapon_s" );
-		if ( p )
+		p = FindHudTextureInDict(tempList, "weapon_s");
+		if(p)
 		{
-			pWeaponInfo->iconActive = gHUD.AddUnsearchableHudIconToList( *p );
-			if ( pWeaponInfo->iconActive )
+			pWeaponInfo->iconActive = gHUD.AddUnsearchableHudIconToList(*p);
+			if(pWeaponInfo->iconActive)
 			{
 				pWeaponInfo->iconActive->Precache();
 			}
 		}
 
-		p = FindHudTextureInDict( tempList, "weapon_small" );
-		if ( p )
+		p = FindHudTextureInDict(tempList, "weapon_small");
+		if(p)
 		{
-			pWeaponInfo->iconSmall = gHUD.AddUnsearchableHudIconToList( *p );
-			if ( pWeaponInfo->iconSmall )
+			pWeaponInfo->iconSmall = gHUD.AddUnsearchableHudIconToList(*p);
+			if(pWeaponInfo->iconSmall)
 			{
 				pWeaponInfo->iconSmall->Precache();
 			}
 		}
 
-		p = FindHudTextureInDict( tempList, "ammo" );
-		if ( p )
+		p = FindHudTextureInDict(tempList, "ammo");
+		if(p)
 		{
-			pWeaponInfo->iconAmmo = gHUD.AddUnsearchableHudIconToList( *p );
-			if ( pWeaponInfo->iconAmmo )
+			pWeaponInfo->iconAmmo = gHUD.AddUnsearchableHudIconToList(*p);
+			if(pWeaponInfo->iconAmmo)
 			{
 				pWeaponInfo->iconAmmo->Precache();
-				pHudHR->SetHistoryGap( pWeaponInfo->iconAmmo->Height() );
+				pHudHR->SetHistoryGap(pWeaponInfo->iconAmmo->Height());
 			}
 		}
 
-		p = FindHudTextureInDict( tempList, "ammo2" );
-		if ( p )
+		p = FindHudTextureInDict(tempList, "ammo2");
+		if(p)
 		{
-			pWeaponInfo->iconAmmo2 = gHUD.AddUnsearchableHudIconToList( *p );
-			if ( pWeaponInfo->iconAmmo2 )
+			pWeaponInfo->iconAmmo2 = gHUD.AddUnsearchableHudIconToList(*p);
+			if(pWeaponInfo->iconAmmo2)
 			{
 				pWeaponInfo->iconAmmo2->Precache();
-				pHudHR->SetHistoryGap( pWeaponInfo->iconAmmo2->Height() );
+				pHudHR->SetHistoryGap(pWeaponInfo->iconAmmo2->Height());
 			}
 		}
 	}
 
-	FreeHudTextureList( tempList );
+	FreeHudTextureList(tempList);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Helper function to return a Ammo pointer from id
 //-----------------------------------------------------------------------------
-CHudTexture *WeaponsResource::GetAmmoIconFromWeapon( int iAmmoId )
+CHudTexture *WeaponsResource::GetAmmoIconFromWeapon(int iAmmoId)
 {
 	C_BasePlayer *player = C_BasePlayer::GetLocalPlayer();
-	if ( !player )
+	if(!player)
 		return NULL;
 
-	for ( int i = 0; i < MAX_WEAPONS; i++ )
+	for(int i = 0; i < MAX_WEAPONS; i++)
 	{
-		C_BaseCombatWeapon *weapon = player->GetWeapon( i );
-		if ( !weapon )
+		C_BaseCombatWeapon *weapon = player->GetWeapon(i);
+		if(!weapon)
 			continue;
 
-		if ( weapon->GetPrimaryAmmoType() == iAmmoId )
+		if(weapon->GetPrimaryAmmoType() == iAmmoId)
 		{
 			return weapon->GetWpnData().iconAmmo;
 		}
-		else if ( weapon->GetSecondaryAmmoType() == iAmmoId )
+		else if(weapon->GetSecondaryAmmoType() == iAmmoId)
 		{
 			return weapon->GetWpnData().iconAmmo2;
 		}
@@ -243,23 +237,23 @@ CHudTexture *WeaponsResource::GetAmmoIconFromWeapon( int iAmmoId )
 //-----------------------------------------------------------------------------
 // Purpose: Get a pointer to a weapon using this ammo
 //-----------------------------------------------------------------------------
-const FileWeaponInfo_t *WeaponsResource::GetWeaponFromAmmo( int iAmmoId )
+const FileWeaponInfo_t *WeaponsResource::GetWeaponFromAmmo(int iAmmoId)
 {
 	C_BasePlayer *player = C_BasePlayer::GetLocalPlayer();
-	if ( !player )
+	if(!player)
 		return NULL;
 
-	for ( int i = 0; i < MAX_WEAPONS; i++ )
+	for(int i = 0; i < MAX_WEAPONS; i++)
 	{
-		C_BaseCombatWeapon *weapon = player->GetWeapon( i );
-		if ( !weapon )
+		C_BaseCombatWeapon *weapon = player->GetWeapon(i);
+		if(!weapon)
 			continue;
 
-		if ( weapon->GetPrimaryAmmoType() == iAmmoId )
+		if(weapon->GetPrimaryAmmoType() == iAmmoId)
 		{
 			return &weapon->GetWpnData();
 		}
-		else if ( weapon->GetSecondaryAmmoType() == iAmmoId )
+		else if(weapon->GetSecondaryAmmoType() == iAmmoId)
 		{
 			return &weapon->GetWpnData();
 		}
@@ -267,4 +261,3 @@ const FileWeaponInfo_t *WeaponsResource::GetWeaponFromAmmo( int iAmmoId )
 
 	return NULL;
 }
-

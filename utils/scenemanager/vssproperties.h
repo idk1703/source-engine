@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -13,15 +13,15 @@
 #include "basedialogparams.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 struct CVSSParams : public CBaseDialogParams
 {
 	// Event descriptive name
-	char			m_szUserName[ 256 ];
-	char			m_szProject[ 256 ];
+	char m_szUserName[256];
+	char m_szProject[256];
 };
 
-int VSSProperties( CVSSParams *params );
+int VSSProperties(CVSSParams *params);
 
 #endif // VSSPROPERTIES_H

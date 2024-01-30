@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -10,16 +10,15 @@
 #pragma once
 #endif
 
-
 namespace vgui
 {
 	class ISurface;
 	class IVGui;
 	class IPanel;
-}
+} // namespace vgui
 
 class IFileSystem;
-//class IMaterialSystem;
+// class IMaterialSystem;
 class IMatSystemSurface;
 
 /*

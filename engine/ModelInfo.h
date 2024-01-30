@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
@@ -15,9 +15,7 @@
 
 #include "engine/ivmodelinfo.h"
 
-
-extern IVModelInfo *modelinfo;			// server version
-extern IVModelInfoClient *modelinfoclient;	// client version
-
+extern IVModelInfo *modelinfo;			   // server version
+extern IVModelInfoClient *modelinfoclient; // client version
 
 #endif // MODELINFO_H

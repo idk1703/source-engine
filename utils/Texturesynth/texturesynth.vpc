@@ -22,10 +22,10 @@ $Project "Texturesynth"
 	$Folder "Source Files"
 	{
 		-$File	"$SRCDIR\public\tier0\memoverride.cpp"
-		
+
 		$File	"tsynth.cpp"
 	}
-	
+
 	$Folder	"Link Libraries"
 	{
 		$Lib bitmap

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -11,7 +11,7 @@
 #include "stdafx.h"
 #include "hammer.h"
 #include "OPTView2D.h"
-#include "Options.h"	
+#include "Options.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
@@ -27,11 +27,9 @@ COPTView2D::COPTView2D() : CPropertyPage(COPTView2D::IDD)
 	//}}AFX_DATA_INIT
 }
 
-COPTView2D::~COPTView2D()
-{
-}
+COPTView2D::~COPTView2D() {}
 
-void COPTView2D::DoDataExchange(CDataExchange* pDX)
+void COPTView2D::DoDataExchange(CDataExchange *pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
 
@@ -65,7 +63,7 @@ void COPTView2D::DoDataExchange(CDataExchange* pDX)
 	CString strTemp;
 	strTemp.Format("%d", Options.view2d.iDefaultGrid);
 	DDX_CBString(pDX, IDC_GRID, strTemp);
-	if(pDX->m_bSaveAndValidate)	// converting back
+	if(pDX->m_bSaveAndValidate) // converting back
 	{
 		Options.view2d.iDefaultGrid = atoi(strTemp);
 		Options.view2d.iGridIntensity = m_cGridIntensity.GetPos();
@@ -76,7 +74,6 @@ void COPTView2D::DoDataExchange(CDataExchange* pDX)
 	}
 }
 
-
 BEGIN_MESSAGE_MAP(COPTView2D, CPropertyPage)
 	//{{AFX_MSG_MAP(COPTView2D)
 	//}}AFX_MSG_MAP
@@ -85,10 +82,10 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // COPTView2D message handlers
 
-BOOL COPTView2D::OnInitDialog() 
+BOOL COPTView2D::OnInitDialog()
 {
 	CWnd *pwnd = GetDlgItem(IDC_GRIDHIGH1024);
-	if (pwnd != NULL)
+	if(pwnd != NULL)
 	{
 		pwnd->EnableWindow(FALSE);
 		pwnd->ShowWindow(SW_HIDE);
@@ -98,8 +95,8 @@ BOOL COPTView2D::OnInitDialog()
 	return TRUE;
 }
 
-BOOL COPTView2D::OnApply() 
+BOOL COPTView2D::OnApply()
 {
-	Options.PerformChanges(COptions::secView2D);	
+	Options.PerformChanges(COptions::secView2D);
 	return CPropertyPage::OnApply();
 }

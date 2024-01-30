@@ -4,7 +4,6 @@
 //			this is in its own file to protect it from tier0 PROTECTED_THINGS
 //=============================================================================//
 
-
 #if defined(_WIN32)
 #include "winlite.h"
 extern HMODULE win32DLLHandle;
@@ -27,4 +26,3 @@ void *GetGameModuleHandle()
 #error "GetGameModuleHandle() needs to be implemented"
 #endif
 }
-

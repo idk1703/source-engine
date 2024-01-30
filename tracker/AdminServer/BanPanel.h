@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -27,7 +27,8 @@
 //-----------------------------------------------------------------------------
 class CBanPanel : public vgui::PropertyPage, public IServerDataResponse
 {
-	DECLARE_CLASS_SIMPLE( CBanPanel, vgui::PropertyPage );
+	DECLARE_CLASS_SIMPLE(CBanPanel, vgui::PropertyPage);
+
 public:
 	CBanPanel(vgui::Panel *parent, const char *name);
 	~CBanPanel();
@@ -45,24 +46,24 @@ protected:
 	virtual void OnKeyCodeTyped(vgui::KeyCode code);
 
 private:
-	MESSAGE_FUNC( AddBan, "addban" );
-	MESSAGE_FUNC( RemoveBan, "removeban" );
-	MESSAGE_FUNC( ChangeBan, "changeban" );
+	MESSAGE_FUNC(AddBan, "addban");
+	MESSAGE_FUNC(RemoveBan, "removeban");
+	MESSAGE_FUNC(ChangeBan, "changeban");
 
-	MESSAGE_FUNC_CHARPTR( RemoveBanByID, "removebanbyid", id );
-	MESSAGE_FUNC_CHARPTR_CHARPTR( ChangeBanTimeByID, "AddBanValue", id, time );
-	MESSAGE_FUNC_PARAMS( OnCvarChangeValue, "CvarChangeValue", kv );
+	MESSAGE_FUNC_CHARPTR(RemoveBanByID, "removebanbyid", id);
+	MESSAGE_FUNC_CHARPTR_CHARPTR(ChangeBanTimeByID, "AddBanValue", id, time);
+	MESSAGE_FUNC_PARAMS(OnCvarChangeValue, "CvarChangeValue", kv);
 
 	// returns true if the id string is an IP address, false if it's a WON or STEAM ID
 	bool IsIPAddress(const char *id);
 
 	// msg handlers
-	MESSAGE_FUNC_INT( OnOpenContextMenu, "OpenContextMenu", itemID );
+	MESSAGE_FUNC_INT(OnOpenContextMenu, "OpenContextMenu", itemID);
 	void OnEffectPlayer(KeyValues *data);
-	MESSAGE_FUNC( OnItemSelected, "ItemSelected" );
+	MESSAGE_FUNC(OnItemSelected, "ItemSelected");
 
-	MESSAGE_FUNC( ImportBanList, "importban" );
-	MESSAGE_FUNC_CHARPTR( OnFileSelected, "FileSelected", fullpath );
+	MESSAGE_FUNC(ImportBanList, "importban");
+	MESSAGE_FUNC_CHARPTR(OnFileSelected, "FileSelected", fullpath);
 
 	vgui::ListPanel *m_pBanListPanel;
 	vgui::Button *m_pAddButton;

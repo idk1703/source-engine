@@ -16,15 +16,15 @@
 
 class C_TFPlayerResource : public C_PlayerResource
 {
-	DECLARE_CLASS( C_TFPlayerResource, C_PlayerResource );
+	DECLARE_CLASS(C_TFPlayerResource, C_PlayerResource);
+
 public:
 	DECLARE_CLIENTCLASS();
 
-					C_TFPlayerResource();
-	virtual			~C_TFPlayerResource();
+	C_TFPlayerResource();
+	virtual ~C_TFPlayerResource();
 
 public:
 };
-
 
 #endif // C_TFPLAYERRESOURCE_H

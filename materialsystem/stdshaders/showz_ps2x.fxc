@@ -15,7 +15,7 @@ float4 main( float2 baseTexCoord : TEXCOORD0 ) : COLOR
 #	if (DEPTH_IN_ALPHA == 1)
 	{
 		fDepth = tex2D( DepthTextureSampler, baseTexCoord ).a;
-	
+
 	}
 #	else
 	{
@@ -31,4 +31,3 @@ float4 main( float2 baseTexCoord : TEXCOORD0 ) : COLOR
 
 	return FinalOutput( float4( fDepth, fDepth, fDepth, 1.0f ), 0, PIXEL_FOG_TYPE_NONE, TONEMAP_SCALE_NONE );
 }
-

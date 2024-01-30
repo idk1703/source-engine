@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -23,18 +23,17 @@ struct baseitemcriteria_t
 		iSlot = LOADOUT_POSITION_INVALID;
 	}
 
-	int					iClass;
-	int					iSlot;
+	int iClass;
+	int iSlot;
 };
-
 
 class CTFItemSystem : public CEconItemSystem
 {
 public:
-	// Select and return the base item definition index for a class's load-out slot 
-	virtual item_definition_index_t GenerateBaseItem( baseitemcriteria_t *pCriteria );
+	// Select and return the base item definition index for a class's load-out slot
+	virtual item_definition_index_t GenerateBaseItem(baseitemcriteria_t *pCriteria);
 };
 
-CTFItemSystem *TFItemSystem( void );
+CTFItemSystem *TFItemSystem(void);
 
 #endif // TF_ITEM_SYSTEM_H

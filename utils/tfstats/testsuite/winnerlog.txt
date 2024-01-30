@@ -86,7 +86,7 @@ L 07/21/1999 - 22:15:39: Named Broadcast: "#hunted_target_scores" ("ph0sphex<1>"
 L 07/21/1999 - 22:15:39: "ph0sphex<1>" activated the goal "info_player_teamspawn"
 L 07/21/1999 - 22:15:39: "ph0sphex<1>" activated the goal "The Hunted's Notepad"
 L 07/21/1999 - 22:15:42: =------= MATCH RESULTS =------=
-L 07/21/1999 - 22:15:42: "red" and "blue" defeated "yellow" 
+L 07/21/1999 - 22:15:42: "red" and "blue" defeated "yellow"
 L 07/21/1999 - 22:15:42: "blue" RESULTS: "1" players. "-1" frags, "1" unaccounted for. "100" team score. Allies:"2"
 L 07/21/1999 - 22:15:42: "red" RESULTS: "0" players. "0" frags, "0" unaccounted for. "100" team score. Allies:"1"
 L 07/21/1999 - 22:15:42: "yellow" RESULTS: "0" players. "0" frags, "0" unaccounted for. "25" team score. Allies:

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,18 +24,16 @@ namespace vgui
 }
 
 //-----------------------------------------------------------------------------
-// Purpose:  
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFClassImage : public vgui::ImagePanel
 {
 public:
-	DECLARE_CLASS_SIMPLE( CTFClassImage, vgui::ImagePanel );
+	DECLARE_CLASS_SIMPLE(CTFClassImage, vgui::ImagePanel);
 
-	CTFClassImage( vgui::Panel *parent, const char *name ) : ImagePanel( parent, name )
-	{
-	}
+	CTFClassImage(vgui::Panel *parent, const char *name) : ImagePanel(parent, name) {}
 
-	void SetClass( int iTeam, int iClass, int iCloakstate );
+	void SetClass(int iTeam, int iClass, int iCloakstate);
 };
 
 //-----------------------------------------------------------------------------
@@ -43,52 +41,50 @@ public:
 //-----------------------------------------------------------------------------
 class CTFHudPlayerClass : public vgui::EditablePanel, public CGameEventListener
 {
-	DECLARE_CLASS_SIMPLE( CTFHudPlayerClass, EditablePanel );
+	DECLARE_CLASS_SIMPLE(CTFHudPlayerClass, EditablePanel);
 
 public:
+	CTFHudPlayerClass(Panel *parent, const char *name);
 
-	CTFHudPlayerClass( Panel *parent, const char *name );
-
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 	virtual void Reset();
 
 public: // IGameEventListener Interface
-	virtual void FireGameEvent( IGameEvent * event );
+	virtual void FireGameEvent(IGameEvent *event);
 
 protected:
-
 	virtual void OnThink();
 
 private:
 	void UpdateModelPanel();
 
-	float				m_flNextThink;
+	float m_flNextThink;
 
-	CTFClassImage		*m_pClassImage;
-	CTFImagePanel		*m_pClassImageBG;
-	CTFImagePanel		*m_pSpyImage; // used when spies are disguised
-	CTFImagePanel		*m_pSpyOutlineImage;
-	CTFPlayerModelPanel	*m_pPlayerModelPanel;
-	CTFImagePanel		*m_pPlayerModelPanelBG;
-	EditablePanel		*m_pCarryingWeaponPanel;
-	CExLabel			*m_pCarryingLabel;
-	vgui::Label			*m_pCarryingOwnerLabel;
-	CTFImagePanel		*m_pCarryingBG;
+	CTFClassImage *m_pClassImage;
+	CTFImagePanel *m_pClassImageBG;
+	CTFImagePanel *m_pSpyImage; // used when spies are disguised
+	CTFImagePanel *m_pSpyOutlineImage;
+	CTFPlayerModelPanel *m_pPlayerModelPanel;
+	CTFImagePanel *m_pPlayerModelPanelBG;
+	EditablePanel *m_pCarryingWeaponPanel;
+	CExLabel *m_pCarryingLabel;
+	vgui::Label *m_pCarryingOwnerLabel;
+	CTFImagePanel *m_pCarryingBG;
 
-	int					m_nTeam;
-	int					m_nClass;
-	int					m_nDisguiseTeam;
-	int					m_nDisguiseClass;
-	EHANDLE				m_hDisguiseWeapon;
-	int					m_nCloakLevel;
-	int					m_nLoadoutPosition;
-	int					m_nKillStreak;
+	int m_nTeam;
+	int m_nClass;
+	int m_nDisguiseTeam;
+	int m_nDisguiseClass;
+	EHANDLE m_hDisguiseWeapon;
+	int m_nCloakLevel;
+	int m_nLoadoutPosition;
+	int m_nKillStreak;
 
 #ifdef STAGING_ONLY
-	int					m_nLOD;
+	int m_nLOD;
 #endif // STAGING_ONLY
-	
-	bool				m_bUsePlayerModel;
+
+	bool m_bUsePlayerModel;
 };
 
 //-----------------------------------------------------------------------------
@@ -97,17 +93,19 @@ private:
 class CTFHealthPanel : public vgui::Panel
 {
 public:
-	DECLARE_CLASS_SIMPLE( CTFHealthPanel, vgui::Panel );
+	DECLARE_CLASS_SIMPLE(CTFHealthPanel, vgui::Panel);
 
-	CTFHealthPanel( vgui::Panel *parent, const char *name );
+	CTFHealthPanel(vgui::Panel *parent, const char *name);
 	virtual void Paint();
-	void SetHealth( float flHealth ){ m_flHealth = ( flHealth <= 1.0 ) ? flHealth : 1.0f; }
+	void SetHealth(float flHealth)
+	{
+		m_flHealth = (flHealth <= 1.0) ? flHealth : 1.0f;
+	}
 
 private:
-
-	float	m_flHealth; // percentage from 0.0 -> 1.0
-	int		m_iMaterialIndex;
-	int		m_iDeadMaterialIndex;
+	float m_flHealth; // percentage from 0.0 -> 1.0
+	int m_iMaterialIndex;
+	int m_iDeadMaterialIndex;
 };
 
 enum BuffClass_t
@@ -138,7 +136,8 @@ enum BuffClass_t
 struct CTFBuffInfo
 {
 public:
-	CTFBuffInfo( ETFCond eCond, BuffClass_t eClass, vgui::ImagePanel* pPanel, const char* pzsBlueImage = NULL, const char* pzsRedImage = NULL )
+	CTFBuffInfo(ETFCond eCond, BuffClass_t eClass, vgui::ImagePanel *pPanel, const char *pzsBlueImage = NULL,
+				const char *pzsRedImage = NULL)
 	{
 		m_eCond = eCond;
 		m_eClass = eClass;
@@ -147,13 +146,13 @@ public:
 		m_pzsBlueImage = pzsBlueImage;
 	}
 
-	void Update( C_TFPlayer *pPlayer );
+	void Update(C_TFPlayer *pPlayer);
 
-	ETFCond	m_eCond;
+	ETFCond m_eCond;
 	BuffClass_t m_eClass;
-	vgui::ImagePanel	*m_pImagePanel;
-	const char* m_pzsRedImage;
-	const char* m_pzsBlueImage;
+	vgui::ImagePanel *m_pImagePanel;
+	const char *m_pzsRedImage;
+	const char *m_pzsBlueImage;
 };
 
 //-----------------------------------------------------------------------------
@@ -161,62 +160,69 @@ public:
 //-----------------------------------------------------------------------------
 class CTFHudPlayerHealth : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CTFHudPlayerHealth, EditablePanel );
+	DECLARE_CLASS_SIMPLE(CTFHudPlayerHealth, EditablePanel);
 
 public:
-
-	CTFHudPlayerHealth( Panel *parent, const char *name );
+	CTFHudPlayerHealth(Panel *parent, const char *name);
 	~CTFHudPlayerHealth();
 
-	virtual const char *GetResFilename( void ) { return "resource/UI/HudPlayerHealth.res"; }
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual const char *GetResFilename(void)
+	{
+		return "resource/UI/HudPlayerHealth.res";
+	}
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 	virtual void Reset();
 
-	void	SetHealth( int iNewHealth, int iMaxHealth, int iMaxBuffedHealth );
-	void	SetLevel( int nLevel );
-	void	HideHealthBonusImage( void );
-	void	SetBuilding( bool bBuilding ) { m_bBuilding = bBuilding; }
-	void	SetAllowAnimations( bool bValue ) { m_bAnimate = bValue; }
+	void SetHealth(int iNewHealth, int iMaxHealth, int iMaxBuffedHealth);
+	void SetLevel(int nLevel);
+	void HideHealthBonusImage(void);
+	void SetBuilding(bool bBuilding)
+	{
+		m_bBuilding = bBuilding;
+	}
+	void SetAllowAnimations(bool bValue)
+	{
+		m_bAnimate = bValue;
+	}
 
 protected:
-
 	virtual void OnThink();
 
 protected:
-	float				m_flNextThink;
+	float m_flNextThink;
 
 private:
-	CTFHealthPanel		*m_pHealthImage;
-	vgui::ImagePanel	*m_pHealthBonusImage;
-	vgui::ImagePanel	*m_pHealthImageBG;
-	vgui::ImagePanel	*m_pBuildingHealthImageBG;
-	vgui::ImagePanel	*m_pBleedImage;
-	vgui::ImagePanel	*m_pHookBleedImage;
-	vgui::ImagePanel	*m_pMilkImage;
-	vgui::ImagePanel	*m_pMarkedForDeathImage;
-	vgui::ImagePanel	*m_pMarkedForDeathImageSilent;
-	vgui::ImagePanel	*m_pWheelOfDoomImage;
-	CExLabel			*m_pPlayerLevelLabel;
+	CTFHealthPanel *m_pHealthImage;
+	vgui::ImagePanel *m_pHealthBonusImage;
+	vgui::ImagePanel *m_pHealthImageBG;
+	vgui::ImagePanel *m_pBuildingHealthImageBG;
+	vgui::ImagePanel *m_pBleedImage;
+	vgui::ImagePanel *m_pHookBleedImage;
+	vgui::ImagePanel *m_pMilkImage;
+	vgui::ImagePanel *m_pMarkedForDeathImage;
+	vgui::ImagePanel *m_pMarkedForDeathImageSilent;
+	vgui::ImagePanel *m_pWheelOfDoomImage;
+	CExLabel *m_pPlayerLevelLabel;
 
-	CUtlVector<CTFBuffInfo*> m_vecBuffInfo;
+	CUtlVector<CTFBuffInfo *> m_vecBuffInfo;
 
-	int					m_nHealth;
-	int					m_nMaxHealth;
+	int m_nHealth;
+	int m_nMaxHealth;
 
-	int					m_nBonusHealthOrigX;
-	int					m_nBonusHealthOrigY;
-	int					m_nBonusHealthOrigW;
-	int					m_nBonusHealthOrigH;
-	
-	bool				m_bBuilding;
-	int					m_iAnimState;
-	bool				m_bAnimate;
+	int m_nBonusHealthOrigX;
+	int m_nBonusHealthOrigY;
+	int m_nBonusHealthOrigW;
+	int m_nBonusHealthOrigH;
 
-	CPanelAnimationVar( int, m_nHealthBonusPosAdj, "HealthBonusPosAdj", "25" );
-	CPanelAnimationVar( float, m_flHealthDeathWarning, "HealthDeathWarning", "0.49" );
-	CPanelAnimationVar( Color, m_clrHealthDeathWarningColor, "HealthDeathWarningColor", "HUDDeathWarning" );
+	bool m_bBuilding;
+	int m_iAnimState;
+	bool m_bAnimate;
 
-	void UpdateHalloweenStatus( void );
+	CPanelAnimationVar(int, m_nHealthBonusPosAdj, "HealthBonusPosAdj", "25");
+	CPanelAnimationVar(float, m_flHealthDeathWarning, "HealthDeathWarning", "0.49");
+	CPanelAnimationVar(Color, m_clrHealthDeathWarningColor, "HealthDeathWarningColor", "HUDDeathWarning");
+
+	void UpdateHalloweenStatus(void);
 };
 
 //-----------------------------------------------------------------------------
@@ -224,18 +230,17 @@ private:
 //-----------------------------------------------------------------------------
 class CTFHudPlayerStatus : public CHudElement, public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CTFHudPlayerStatus, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CTFHudPlayerStatus, vgui::EditablePanel);
 
 public:
-	CTFHudPlayerStatus( const char *pElementName );
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	CTFHudPlayerStatus(const char *pElementName);
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 	virtual void Reset();
-	virtual bool ShouldDraw( void ) OVERRIDE;
+	virtual bool ShouldDraw(void) OVERRIDE;
 
 private:
-
-	CTFHudPlayerClass	*m_pHudPlayerClass;
-	CTFHudPlayerHealth	*m_pHudPlayerHealth;
+	CTFHudPlayerClass *m_pHudPlayerClass;
+	CTFHudPlayerHealth *m_pHudPlayerHealth;
 };
 
-#endif	// TF_HUD_PLAYERSTATUS_H
+#endif // TF_HUD_PLAYERSTATUS_H

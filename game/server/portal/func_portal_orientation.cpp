@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //======================================================================================//
@@ -17,9 +17,10 @@
 #include "tier0/memdbgon.h"
 
 CEntityClassList<CFuncPortalOrientation> g_FuncPortalOrientationVolumeList;
-template <> CFuncPortalOrientation *CEntityClassList<CFuncPortalOrientation>::m_pClassList = NULL;
+template<>
+CFuncPortalOrientation *CEntityClassList<CFuncPortalOrientation>::m_pClassList = NULL;
 
-CFuncPortalOrientation* GetPortalOrientationVolumeList()
+CFuncPortalOrientation *GetPortalOrientationVolumeList()
 {
 	return g_FuncPortalOrientationVolumeList.m_pClassList;
 }
@@ -31,32 +32,35 @@ CFuncPortalOrientation* GetPortalOrientationVolumeList()
 //			pPortal - The portal attempting to place
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool UTIL_TestForOrientationVolumes( QAngle& vecCurAngles, const Vector& vecCurOrigin, const CProp_Portal* pPortal )
+bool UTIL_TestForOrientationVolumes(QAngle &vecCurAngles, const Vector &vecCurOrigin, const CProp_Portal *pPortal)
 {
-	if ( !pPortal )
+	if(!pPortal)
 		return false;
 
 	// Walk list of orientation volumes, obb test each with candidate portal
 	CFuncPortalOrientation *pList = g_FuncPortalOrientationVolumeList.m_pClassList;
-	while ( pList )
+	while(pList)
 	{
-		if ( !pList->IsActive() )
+		if(!pList->IsActive())
 		{
 			pList = pList->m_pNext;
 			continue;
 		}
 
-		if ( IsOBBIntersectingOBB( vecCurOrigin, vecCurAngles, CProp_Portal_Shared::vLocalMins, CProp_Portal_Shared::vLocalMaxs, 
-			pList->GetAbsOrigin(), pList->GetCollideable()->GetCollisionAngles(), pList->GetCollideable()->OBBMins(), pList->GetCollideable()->OBBMaxs() ) )
+		if(IsOBBIntersectingOBB(vecCurOrigin, vecCurAngles, CProp_Portal_Shared::vLocalMins,
+								CProp_Portal_Shared::vLocalMaxs, pList->GetAbsOrigin(),
+								pList->GetCollideable()->GetCollisionAngles(), pList->GetCollideable()->OBBMins(),
+								pList->GetCollideable()->OBBMaxs()))
 		{
 			QAngle vecGoalAngles;
 			// Ent is marked to match angles of it's linked partner
-			if ( pList->m_bMatchLinkedAngles )
+			if(pList->m_bMatchLinkedAngles)
 			{
 				// This feature requires a linked portal on a floor or ceiling. Bail without effecting
 				// the placement angles if we fail those requirements.
-				CProp_Portal* pLinked = pPortal->m_hLinkedPortal.Get();
-				if ( !pLinked || !(AnglesAreEqual( vecCurAngles.x, -90.0f, 0.1f ) || AnglesAreEqual( vecCurAngles.x, 90.0f, 0.1f )) )
+				CProp_Portal *pLinked = pPortal->m_hLinkedPortal.Get();
+				if(!pLinked ||
+				   !(AnglesAreEqual(vecCurAngles.x, -90.0f, 0.1f) || AnglesAreEqual(vecCurAngles.x, 90.0f, 0.1f)))
 					return false;
 
 				vecGoalAngles = pLinked->GetAbsAngles();
@@ -78,31 +82,30 @@ bool UTIL_TestForOrientationVolumes( QAngle& vecCurAngles, const Vector& vecCurO
 	return false;
 }
 
-LINK_ENTITY_TO_CLASS( func_portal_orientation, CFuncPortalOrientation ); 
+LINK_ENTITY_TO_CLASS(func_portal_orientation, CFuncPortalOrientation);
 
-BEGIN_DATADESC( CFuncPortalOrientation )
+BEGIN_DATADESC(CFuncPortalOrientation)
 
-	DEFINE_FIELD( m_iListIndex, FIELD_INTEGER ),
+	DEFINE_FIELD(m_iListIndex, FIELD_INTEGER),
 
-	//DEFINE_FIELD ( m_pNext, CFuncPortalOrientation ),
+		// DEFINE_FIELD ( m_pNext, CFuncPortalOrientation ),
 
-	DEFINE_KEYFIELD( m_bDisabled, FIELD_BOOLEAN, "StartDisabled" ),
-	DEFINE_KEYFIELD ( m_bMatchLinkedAngles, FIELD_BOOLEAN, "MatchLinkedAngles" ),
-	DEFINE_KEYFIELD ( m_vecAnglesToFace, FIELD_VECTOR, "AnglesToFace" ),
+		DEFINE_KEYFIELD(m_bDisabled, FIELD_BOOLEAN, "StartDisabled"),
+		DEFINE_KEYFIELD(m_bMatchLinkedAngles, FIELD_BOOLEAN, "MatchLinkedAngles"),
+		DEFINE_KEYFIELD(m_vecAnglesToFace, FIELD_VECTOR, "AnglesToFace"),
 
-	DEFINE_INPUTFUNC( FIELD_VOID, "Enable", InputEnable ),
-	DEFINE_INPUTFUNC( FIELD_VOID, "Disable", InputDisable ),
+		DEFINE_INPUTFUNC(FIELD_VOID, "Enable", InputEnable), DEFINE_INPUTFUNC(FIELD_VOID, "Disable", InputDisable),
 
 END_DATADESC()
 
 CFuncPortalOrientation::CFuncPortalOrientation()
 {
-	g_FuncPortalOrientationVolumeList.Insert( this );
+	g_FuncPortalOrientationVolumeList.Insert(this);
 }
 
 CFuncPortalOrientation::~CFuncPortalOrientation()
 {
-	g_FuncPortalOrientationVolumeList.Remove( this );
+	g_FuncPortalOrientationVolumeList.Remove(this);
 }
 
 void CFuncPortalOrientation::Spawn()
@@ -110,35 +113,37 @@ void CFuncPortalOrientation::Spawn()
 	BaseClass::Spawn();
 
 	// Bind to our model, cause we need the extents for bounds checking
-	SetModel( STRING( GetModelName() ) );
-	SetRenderMode( kRenderNone );	// Don't draw
-	SetSolid( SOLID_VPHYSICS );	// we may want slanted walls, so we'll use OBB
-	AddSolidFlags( FSOLID_NOT_SOLID );
+	SetModel(STRING(GetModelName()));
+	SetRenderMode(kRenderNone); // Don't draw
+	SetSolid(SOLID_VPHYSICS);	// we may want slanted walls, so we'll use OBB
+	AddSolidFlags(FSOLID_NOT_SOLID);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Test for portals inside our volume when we switch on, and forcibly rotate them
 //-----------------------------------------------------------------------------
-void CFuncPortalOrientation::OnActivate( void )
+void CFuncPortalOrientation::OnActivate(void)
 {
-	if ( !GetCollideable() || m_bDisabled )
+	if(!GetCollideable() || m_bDisabled)
 		return;
 
 	int iPortalCount = CProp_Portal_Shared::AllPortals.Count();
-	if( iPortalCount != 0 )
+	if(iPortalCount != 0)
 	{
 		CProp_Portal **pPortals = CProp_Portal_Shared::AllPortals.Base();
-		for( int i = 0; i != iPortalCount; ++i )
+		for(int i = 0; i != iPortalCount; ++i)
 		{
 			CProp_Portal *pTempPortal = pPortals[i];
-			if( IsOBBIntersectingOBB( pTempPortal->GetAbsOrigin(), pTempPortal->GetAbsAngles(), CProp_Portal_Shared::vLocalMins, CProp_Portal_Shared::vLocalMaxs, 
-			GetAbsOrigin(), GetCollideable()->GetCollisionAngles(), GetCollideable()->OBBMins(), GetCollideable()->OBBMaxs() ) )
+			if(IsOBBIntersectingOBB(pTempPortal->GetAbsOrigin(), pTempPortal->GetAbsAngles(),
+									CProp_Portal_Shared::vLocalMins, CProp_Portal_Shared::vLocalMaxs, GetAbsOrigin(),
+									GetCollideable()->GetCollisionAngles(), GetCollideable()->OBBMins(),
+									GetCollideable()->OBBMaxs()))
 			{
 				QAngle angNewAngles;
-				if ( m_bMatchLinkedAngles )
+				if(m_bMatchLinkedAngles)
 				{
-					CProp_Portal* pLinked = pTempPortal->m_hLinkedPortal.Get();
-					if ( !pLinked )
+					CProp_Portal *pLinked = pTempPortal->m_hLinkedPortal.Get();
+					if(!pLinked)
 						return;
 
 					angNewAngles = pTempPortal->m_hLinkedPortal->GetAbsAngles();
@@ -148,20 +153,20 @@ void CFuncPortalOrientation::OnActivate( void )
 					angNewAngles = m_vecAnglesToFace;
 				}
 
-				pTempPortal->PlacePortal( pTempPortal->GetAbsOrigin(), angNewAngles, PORTAL_ANALOG_SUCCESS_NO_BUMP );
+				pTempPortal->PlacePortal(pTempPortal->GetAbsOrigin(), angNewAngles, PORTAL_ANALOG_SUCCESS_NO_BUMP);
 			}
 		}
 	}
 }
 
-void CFuncPortalOrientation::InputEnable( inputdata_t &inputdata )
+void CFuncPortalOrientation::InputEnable(inputdata_t &inputdata)
 {
 	m_bDisabled = false;
 
 	OnActivate();
 }
 
-void CFuncPortalOrientation::InputDisable( inputdata_t &inputdata )
+void CFuncPortalOrientation::InputDisable(inputdata_t &inputdata)
 {
 	m_bDisabled = true;
 }

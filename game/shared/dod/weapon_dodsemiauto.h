@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,31 +10,33 @@
 #pragma once
 #endif
 
-#include "cbase.h"  
-#include "shake.h" 
+#include "cbase.h"
+#include "shake.h"
 #include "weapon_dodbasegun.h"
 
-
-#if defined( CLIENT_DLL )
-	#define CDODSemiAutoWeapon C_DODSemiAutoWeapon
+#if defined(CLIENT_DLL)
+#define CDODSemiAutoWeapon C_DODSemiAutoWeapon
 #endif
 
 class CDODSemiAutoWeapon : public CWeaponDODBaseGun
 {
 public:
-	DECLARE_CLASS( CDODSemiAutoWeapon, CWeaponDODBaseGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_CLASS(CDODSemiAutoWeapon, CWeaponDODBaseGun);
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CDODSemiAutoWeapon();
 
 	virtual void Spawn();
-	virtual void PrimaryAttack( void );
+	virtual void PrimaryAttack(void);
 
-	virtual DODWeaponID GetWeaponID( void ) const { return WEAPON_NONE; }
+	virtual DODWeaponID GetWeaponID(void) const
+	{
+		return WEAPON_NONE;
+	}
 
 private:
-	CDODSemiAutoWeapon( const CDODSemiAutoWeapon & );
+	CDODSemiAutoWeapon(const CDODSemiAutoWeapon &);
 };
 
-#endif //WEAPON_DODSEMIAUTO_H
+#endif // WEAPON_DODSEMIAUTO_H

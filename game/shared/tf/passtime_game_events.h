@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,33 +14,33 @@
 class IGameEvent;
 namespace PasstimeGameEvents
 {
-	// TODO: this was done following valve's style of having different events 
-	// for everything, but these particular events have a lot of overlap and 
-	// might be better implemented as a single "ball event" that has an enum 
-	// specifying what kind it is. It would cut down on the number of strcmp 
-	// calls in the event handling functions. Or maybe we could just not use 
+	// TODO: this was done following valve's style of having different events
+	// for everything, but these particular events have a lot of overlap and
+	// might be better implemented as a single "ball event" that has an enum
+	// specifying what kind it is. It would cut down on the number of strcmp
+	// calls in the event handling functions. Or maybe we could just not use
 	// 1000s of strcmps for each event dispatch and use a lookup table of some kind.
 
 	//-----------------------------------------------------------------------------
 	struct BallGet
 	{
-		BallGet( IGameEvent *pEvent );
-		BallGet( int ownerIndex );
+		BallGet(IGameEvent *pEvent);
+		BallGet(int ownerIndex);
 		void Fire();
-		
+
 		static const char *const s_eventName;
 		static const char *const s_keyOwnerIndex;
 		int ownerIndex;
 	};
-	
+
 	//-----------------------------------------------------------------------------
 	struct Score
 	{
-		Score( IGameEvent *pEvent );
-		Score( int scorerIndex, int assisterIndex, int numPoints );
-		Score( int scorerIndex_, int numPoints_ );
+		Score(IGameEvent *pEvent);
+		Score(int scorerIndex, int assisterIndex, int numPoints);
+		Score(int scorerIndex_, int numPoints_);
 		void Fire();
-		
+
 		static const char *const s_eventName;
 		static const char *const s_keyScorerIndex;
 		static const char *const s_keyAssisterIndex;
@@ -53,10 +53,10 @@ namespace PasstimeGameEvents
 	//-----------------------------------------------------------------------------
 	struct BallFree
 	{
-		BallFree( IGameEvent *pEvent );
+		BallFree(IGameEvent *pEvent);
 		BallFree();
-		BallFree( int ownerIndex );
-		BallFree( int ownerIndex, int attackerIndex );
+		BallFree(int ownerIndex);
+		BallFree(int ownerIndex, int attackerIndex);
 		void Fire();
 
 		static const char *const s_eventName;
@@ -69,9 +69,9 @@ namespace PasstimeGameEvents
 	//-----------------------------------------------------------------------------
 	struct PassCaught
 	{
-		PassCaught( IGameEvent *pEvent );
+		PassCaught(IGameEvent *pEvent);
 		PassCaught();
-		PassCaught( int passerIndex, int catcherIndex, float dist, float duration );
+		PassCaught(int passerIndex, int catcherIndex, float dist, float duration);
 		void Fire();
 
 		static const char *const s_eventName;
@@ -88,9 +88,9 @@ namespace PasstimeGameEvents
 	//-----------------------------------------------------------------------------
 	struct BallStolen
 	{
-		BallStolen( IGameEvent *pEvent );
+		BallStolen(IGameEvent *pEvent);
 		BallStolen();
-		BallStolen( int victimIndex, int attackerIndex );
+		BallStolen(int victimIndex, int attackerIndex);
 		void Fire();
 
 		static const char *const s_eventName;
@@ -103,9 +103,9 @@ namespace PasstimeGameEvents
 	//-----------------------------------------------------------------------------
 	struct BallBlocked
 	{
-		BallBlocked( IGameEvent *pEvent );
+		BallBlocked(IGameEvent *pEvent);
 		BallBlocked();
-		BallBlocked( int ownerIndex, int blockerIndex );
+		BallBlocked(int ownerIndex, int blockerIndex);
 		void Fire();
 
 		static const char *const s_eventName;
@@ -114,6 +114,6 @@ namespace PasstimeGameEvents
 		int ownerIndex;
 		int blockerIndex;
 	};
-}
+} // namespace PasstimeGameEvents
 
-#endif // PASSTIME_GAME_EVENTS_H  
+#endif // PASSTIME_GAME_EVENTS_H

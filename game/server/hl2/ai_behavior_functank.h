@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -14,7 +14,7 @@
 #include "ai_behavior.h"
 #include "func_tank.h"
 
-#define AI_FUNCTANK_BEHAVIOR_BUSYTIME		10.0f
+#define AI_FUNCTANK_BEHAVIOR_BUSYTIME 10.0f
 
 enum
 {
@@ -24,37 +24,39 @@ enum
 	FUNCTANK_SENTENCE_DISMOUNTING,
 };
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CAI_FuncTankBehavior : public CAI_SimpleBehavior
 {
-	DECLARE_CLASS( CAI_FuncTankBehavior, CAI_SimpleBehavior );
+	DECLARE_CLASS(CAI_FuncTankBehavior, CAI_SimpleBehavior);
 	DEFINE_CUSTOM_SCHEDULE_PROVIDER;
 	DECLARE_DATADESC();
-	
+
 public:
 	// Contructor/Deconstructor
 	CAI_FuncTankBehavior();
 	~CAI_FuncTankBehavior();
 
 	void UpdateOnRemove();
-	
-	// Identifier
-	const char *GetName() {	return "FuncTank"; }
-	
-	// Schedule
-	bool 		CanSelectSchedule();
-	void		BeginScheduleSelection();
-	void		EndScheduleSelection();
-	void		PrescheduleThink();
 
-	Activity	NPC_TranslateActivity( Activity activity );
+	// Identifier
+	const char *GetName()
+	{
+		return "FuncTank";
+	}
+
+	// Schedule
+	bool CanSelectSchedule();
+	void BeginScheduleSelection();
+	void EndScheduleSelection();
+	void PrescheduleThink();
+
+	Activity NPC_TranslateActivity(Activity activity);
 
 	// Conditions:
 	virtual void GatherConditions();
-	
+
 	enum
 	{
 		SCHED_MOVE_TO_FUNCTANK = BaseClass::NEXT_SCHEDULE,
@@ -62,11 +64,11 @@ public:
 		SCHED_SCAN_WITH_FUNCTANK,
 		SCHED_FAIL_MOVE_TO_FUNCTANK,
 	};
-	
+
 	// Tasks
-	void		StartTask( const Task_t *pTask );
-	void		RunTask( const Task_t *pTask );
-	
+	void StartTask(const Task_t *pTask);
+	void RunTask(const Task_t *pTask);
+
 	enum
 	{
 		TASK_GET_PATH_TO_FUNCTANK = BaseClass::NEXT_TASK,
@@ -83,38 +85,51 @@ public:
 	{
 		COND_FUNCTANK_DISMOUNT = BaseClass::NEXT_CONDITION,
 		NEXT_CONDITION,
-	};	
+	};
 
 	// Combat.
-	CBaseEntity *BestEnemy( void );
-	void Event_Killed( const CTakeDamageInfo &info );
+	CBaseEntity *BestEnemy(void);
+	void Event_Killed(const CTakeDamageInfo &info);
 
-	bool HasFuncTank( void )							{ return ( m_hFuncTank != NULL ); }
-	void SetFuncTank( CHandle<CFuncTank> hFuncTank );
-	CFuncTank *GetFuncTank() { return m_hFuncTank; }
-	void AimGun( void );
+	bool HasFuncTank(void)
+	{
+		return (m_hFuncTank != NULL);
+	}
+	void SetFuncTank(CHandle<CFuncTank> hFuncTank);
+	CFuncTank *GetFuncTank()
+	{
+		return m_hFuncTank;
+	}
+	void AimGun(void);
 
-	void Dismount( void );
+	void Dismount(void);
 
-	int	 OnTakeDamage_Alive( const CTakeDamageInfo &info );
+	int OnTakeDamage_Alive(const CTakeDamageInfo &info);
 
 	// Time.
-	void SetBusy( float flTime )		{ m_flBusyTime = flTime; }
-	bool IsBusy( void )					{ return ( gpGlobals->curtime < m_flBusyTime ); }
+	void SetBusy(float flTime)
+	{
+		m_flBusyTime = flTime;
+	}
+	bool IsBusy(void)
+	{
+		return (gpGlobals->curtime < m_flBusyTime);
+	}
 
-	bool IsMounted( void )				{ return m_bMounted; }
+	bool IsMounted(void)
+	{
+		return m_bMounted;
+	}
 
 private:
-	
-	// Schedule 
-	int			SelectSchedule();
-	
-private:
+	// Schedule
+	int SelectSchedule();
 
-	CHandle<CFuncTank>	m_hFuncTank;
-	bool				m_bMounted;
-	float				m_flBusyTime;
-	bool				m_bSpottedPlayerOutOfCover;
+private:
+	CHandle<CFuncTank> m_hFuncTank;
+	bool m_bMounted;
+	float m_flBusyTime;
+	bool m_bSpottedPlayerOutOfCover;
 };
 
 #endif // AI_BEHAVIOR_FUNCTANK_H

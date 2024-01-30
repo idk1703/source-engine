@@ -14,7 +14,7 @@ $Configuration
 	$Compiler
 	{
 		$AdditionalIncludeDirectories		"$BASE,$SRCDIR\game\shared"
-	}	
+	}
 }
 
 $Project "vcdimport"

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,33 +16,33 @@ class CChoreoScene;
 #include "basedialogparams.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 struct CGlobalEventParams : public CBaseDialogParams
 {
-	int				m_nType;
+	int m_nType;
 
 	// GlobalEvent descriptive name
-	char			m_szName[ 256 ];
+	char m_szName[256];
 
 	// Pause start time
-	float			m_flStartTime;
+	float m_flStartTime;
 
 	// Pause Scene or Cancel Scene ( pause/cancel )
-	char			m_szAction[ 256 ];
+	char m_szAction[256];
 
-	bool			m_bAutomate;
+	bool m_bAutomate;
 
-	char			m_szType[ 256 ];
+	char m_szType[256];
 
 	// Idle/paused time before action is taken
-	float			m_flWaitTime;
+	float m_flWaitTime;
 
 	// For loop events
-	int				m_nLoopCount;
-	float			m_flLoopTime;
+	int m_nLoopCount;
+	float m_flLoopTime;
 };
 
-int GlobalEventProperties( CGlobalEventParams *params );
+int GlobalEventProperties(CGlobalEventParams *params);
 
 #endif // GLOBALEVENTPROPERTIES_H

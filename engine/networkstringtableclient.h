@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,6 +13,6 @@
 
 class CUtlBuffer;
 
-void CL_PrintStringTables( void );
+void CL_PrintStringTables(void);
 
 #endif // NETWORKSTRINGTABLECLIENT_H

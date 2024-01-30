@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -21,8 +21,7 @@ enum DmeTimeSelectionTimes_t
 };
 
 // NOTE: _side == 0 means left, == 1 means right
-#define TS_FALLOFF( _side ) ( ( TS_TIME_COUNT - (_side) ) & 0x3 )
-#define TS_HOLD( _side ) ( TS_LEFT_HOLD + (_side) )
-
+#define TS_FALLOFF(_side) ((TS_TIME_COUNT - (_side)) & 0x3)
+#define TS_HOLD(_side)	  (TS_LEFT_HOLD + (_side))
 
 #endif // DMETIMESELECTIONTIMES_H

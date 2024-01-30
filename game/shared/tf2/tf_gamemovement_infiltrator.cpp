@@ -27,28 +27,28 @@ CTFGameMovementInfiltrator::CTFGameMovementInfiltrator()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFGameMovementInfiltrator::ProcessClassMovement( CBaseTFPlayer *pPlayer, CTFMoveData *pTFMoveData )
+void CTFGameMovementInfiltrator::ProcessClassMovement(CBaseTFPlayer *pPlayer, CTFMoveData *pTFMoveData)
 {
 	// Get the class specific data from the TFMoveData structure
-	Assert( PlayerClassInfiltratorData_t::PLAYERCLASS_ID == pTFMoveData->m_nClassID );
+	Assert(PlayerClassInfiltratorData_t::PLAYERCLASS_ID == pTFMoveData->m_nClassID);
 	m_pInfiltratorData = &pTFMoveData->InfiltratorData();
 
 	// to test pass it through!!
-	BaseClass::ProcessMovement( (CBasePlayer *)pPlayer, static_cast<CMoveData*>( pTFMoveData ) );
+	BaseClass::ProcessMovement((CBasePlayer *)pPlayer, static_cast<CMoveData *>(pTFMoveData));
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-const Vector &CTFGameMovementInfiltrator::GetPlayerMins( bool bDucked ) const
+const Vector &CTFGameMovementInfiltrator::GetPlayerMins(bool bDucked) const
 {
-	return bDucked ? m_vDuckMins : m_vStandMins; 
+	return bDucked ? m_vDuckMins : m_vStandMins;
 }
-	
+
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-const Vector &CTFGameMovementInfiltrator::GetPlayerMaxs( bool bDucked ) const
+const Vector &CTFGameMovementInfiltrator::GetPlayerMaxs(bool bDucked) const
 {
 	return bDucked ? m_vDuckMaxs : m_vStandMaxs;
 }
@@ -56,7 +56,7 @@ const Vector &CTFGameMovementInfiltrator::GetPlayerMaxs( bool bDucked ) const
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-const Vector &CTFGameMovementInfiltrator::GetPlayerViewOffset( bool bDucked ) const
+const Vector &CTFGameMovementInfiltrator::GetPlayerViewOffset(bool bDucked) const
 {
 	return bDucked ? m_vDuckViewOffset : m_vStandViewOffset;
 }

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -21,23 +21,27 @@ class IPhysicsObject;
 //-----------------------------------------------------------------------------
 class CRagdollShadow : public CBaseProp
 {
-	DECLARE_CLASS( CRagdollShadow, CBaseProp );
+	DECLARE_CLASS(CRagdollShadow, CBaseProp);
+
 public:
 	DECLARE_SERVERCLASS();
 
-	CRagdollShadow( void ) ;
+	CRagdollShadow(void);
 
-	virtual void Spawn( void );
-	virtual void Precache( void );
+	virtual void Spawn(void);
+	virtual void Precache(void);
 
-	virtual int  UpdateTransmitState() { return SetTransmitState( FL_EDICT_FULLCHECK); }
-	virtual int  ShouldTransmit( const CCheckTransmitInfo *pInfo );
+	virtual int UpdateTransmitState()
+	{
+		return SetTransmitState(FL_EDICT_FULLCHECK);
+	}
+	virtual int ShouldTransmit(const CCheckTransmitInfo *pInfo);
 
-	static CRagdollShadow *Create( CBaseTFPlayer *player, const Vector& force );
+	static CRagdollShadow *Create(CBaseTFPlayer *player, const Vector &force);
 
 public:
 	CBaseTFPlayer *m_pPlayer;
-	CNetworkVar( int, m_nPlayer );
+	CNetworkVar(int, m_nPlayer);
 };
 
 #endif // RAGDOLL_SHADOW_H

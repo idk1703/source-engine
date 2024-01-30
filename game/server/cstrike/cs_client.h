@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,10 +10,8 @@
 #pragma once
 #endif
 
+void respawn(CBaseEntity *pEdict, bool fCopyCorpse);
 
-void respawn( CBaseEntity *pEdict, bool fCopyCorpse );
-
-void FinishClientPutInServer( CCSPlayer *pPlayer );
-
+void FinishClientPutInServer(CCSPlayer *pPlayer);
 
 #endif // CS_CLIENT_H

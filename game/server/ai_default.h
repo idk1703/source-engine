@@ -13,7 +13,7 @@
 //=========================================================
 // These are the schedule types
 //=========================================================
-enum 
+enum
 {
 	SCHED_NONE = 0,
 	SCHED_IDLE_STAND,
@@ -115,7 +115,6 @@ enum
 	// IMPORTANT: This must be the last enum
 	// ======================================
 	LAST_SHARED_SCHEDULE
-
 };
 
 #endif // AI_DEFAULT_H

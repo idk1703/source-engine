@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,8 +19,8 @@ struct vcollide_t
 	unsigned short isPacked : 1;
 	unsigned short descSize;
 	// VPhysicsSolids
-	CPhysCollide	**solids;
-	char			*pKeyValues;
+	CPhysCollide **solids;
+	char *pKeyValues;
 };
 
 #endif // VCOLLIDE_H

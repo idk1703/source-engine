@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -14,35 +14,32 @@
 class CHudDefuser : public CHudElement, public vgui::Panel
 {
 public:
-	DECLARE_CLASS_SIMPLE( CHudDefuser, vgui::Panel );
+	DECLARE_CLASS_SIMPLE(CHudDefuser, vgui::Panel);
 
-	CHudDefuser( const char *name );
+	CHudDefuser(const char *name);
 
-	virtual bool ShouldDraw();	
+	virtual bool ShouldDraw();
 	virtual void Paint();
 
 private:
-	CPanelAnimationVar( Color, m_clrIcon, "IconColor", "IconColor" );
+	CPanelAnimationVar(Color, m_clrIcon, "IconColor", "IconColor");
 
 	CHudTexture *m_pIcon;
 };
 
+DECLARE_HUDELEMENT(CHudDefuser);
 
-DECLARE_HUDELEMENT( CHudDefuser );
-
-
-CHudDefuser::CHudDefuser( const char *pName ) :
-	vgui::Panel( NULL, "HudDefuser" ), CHudElement( pName )
+CHudDefuser::CHudDefuser(const char *pName) : vgui::Panel(NULL, "HudDefuser"), CHudElement(pName)
 {
-	SetParent( g_pClientMode->GetViewport() );
+	SetParent(g_pClientMode->GetViewport());
 	m_pIcon = NULL;
 
-	SetHiddenBits( HIDEHUD_PLAYERDEAD );
+	SetHiddenBits(HIDEHUD_PLAYERDEAD);
 	//=============================================================================
 	// HPE_BEGIN:
 	// [tj] Add this to the render group that disappears when the scoreboard is up
 	//=============================================================================
-	RegisterForRenderGroup( "hide_for_scoreboard" );
+	RegisterForRenderGroup("hide_for_scoreboard");
 	//=============================================================================
 	// HPE_END
 	//=============================================================================
@@ -63,17 +60,16 @@ bool CHudDefuser::ShouldDraw()
 
 void CHudDefuser::Paint()
 {
-	if ( !m_pIcon )
+	if(!m_pIcon)
 	{
-		m_pIcon = gHUD.GetIcon( "defuser" );
+		m_pIcon = gHUD.GetIcon("defuser");
 	}
-	
-	if ( m_pIcon )
+
+	if(m_pIcon)
 	{
 		int x, y, w, h;
-		GetBounds( x, y, w, h );
-		
-		m_pIcon->DrawSelf( 0, 0, w, h, m_clrIcon );
+		GetBounds(x, y, w, h);
+
+		m_pIcon->DrawSelf(0, 0, w, h, m_clrIcon);
 	}
 }
-

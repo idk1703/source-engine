@@ -24,16 +24,16 @@
 // TF Napalm Grenade tables.
 //
 
-IMPLEMENT_NETWORKCLASS_ALIASED( TFGrenadeNapalm, DT_TFGrenadeNapalm )
+IMPLEMENT_NETWORKCLASS_ALIASED(TFGrenadeNapalm, DT_TFGrenadeNapalm)
 
-BEGIN_NETWORK_TABLE( CTFGrenadeNapalm, DT_TFGrenadeNapalm )
+BEGIN_NETWORK_TABLE(CTFGrenadeNapalm, DT_TFGrenadeNapalm)
 END_NETWORK_TABLE()
 
-BEGIN_PREDICTION_DATA( CTFGrenadeNapalm )
+BEGIN_PREDICTION_DATA(CTFGrenadeNapalm)
 END_PREDICTION_DATA()
 
-LINK_ENTITY_TO_CLASS( tf_weapon_grenade_napalm, CTFGrenadeNapalm );
-PRECACHE_WEAPON_REGISTER( tf_weapon_grenade_napalm );
+LINK_ENTITY_TO_CLASS(tf_weapon_grenade_napalm, CTFGrenadeNapalm);
+PRECACHE_WEAPON_REGISTER(tf_weapon_grenade_napalm);
 
 //=============================================================================
 //
@@ -43,17 +43,17 @@ PRECACHE_WEAPON_REGISTER( tf_weapon_grenade_napalm );
 // Server specific.
 #ifdef GAME_DLL
 
-BEGIN_DATADESC( CTFGrenadeNapalm )
+BEGIN_DATADESC(CTFGrenadeNapalm)
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFWeaponBaseGrenadeProj *CTFGrenadeNapalm::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, 
-							        AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags )
+CTFWeaponBaseGrenadeProj *CTFGrenadeNapalm::EmitGrenade(Vector vecSrc, QAngle vecAngles, Vector vecVel,
+														AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime,
+														int iflags)
 {
-	return CTFGrenadeNapalmProjectile::Create( vecSrc, vecAngles, vecVel, angImpulse, 
-		                                pPlayer, GetTFWpnData(), flTime );
+	return CTFGrenadeNapalmProjectile::Create(vecSrc, vecAngles, vecVel, angImpulse, pPlayer, GetTFWpnData(), flTime);
 }
 
 #endif
@@ -66,20 +66,24 @@ CTFWeaponBaseGrenadeProj *CTFGrenadeNapalm::EmitGrenade( Vector vecSrc, QAngle v
 
 #define GRENADE_MODEL "models/weapons/w_models/w_grenade_napalm.mdl"
 
-LINK_ENTITY_TO_CLASS( tf_weapon_grenade_napalm_projectile, CTFGrenadeNapalmProjectile );
-PRECACHE_WEAPON_REGISTER( tf_weapon_grenade_napalm_projectile );
+LINK_ENTITY_TO_CLASS(tf_weapon_grenade_napalm_projectile, CTFGrenadeNapalmProjectile);
+PRECACHE_WEAPON_REGISTER(tf_weapon_grenade_napalm_projectile);
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFGrenadeNapalmProjectile* CTFGrenadeNapalmProjectile::Create( const Vector &position, const QAngle &angles, 
-																const Vector &velocity, const AngularImpulse &angVelocity, 
-																CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, float timer, int iFlags )
+CTFGrenadeNapalmProjectile *CTFGrenadeNapalmProjectile::Create(const Vector &position, const QAngle &angles,
+															   const Vector &velocity,
+															   const AngularImpulse &angVelocity,
+															   CBaseCombatCharacter *pOwner,
+															   const CTFWeaponInfo &weaponInfo, float timer, int iFlags)
 {
-	CTFGrenadeNapalmProjectile *pGrenade = static_cast<CTFGrenadeNapalmProjectile*>( CTFWeaponBaseGrenadeProj::Create( "tf_weapon_grenade_napalm_projectile", position, angles, velocity, angVelocity, pOwner, weaponInfo, timer, iFlags ) );
-	if ( pGrenade )
+	CTFGrenadeNapalmProjectile *pGrenade = static_cast<CTFGrenadeNapalmProjectile *>(
+		CTFWeaponBaseGrenadeProj::Create("tf_weapon_grenade_napalm_projectile", position, angles, velocity, angVelocity,
+										 pOwner, weaponInfo, timer, iFlags));
+	if(pGrenade)
 	{
-		pGrenade->ApplyLocalAngularVelocityImpulse( angVelocity );	
+		pGrenade->ApplyLocalAngularVelocityImpulse(angVelocity);
 	}
 
 	return pGrenade;
@@ -90,7 +94,7 @@ CTFGrenadeNapalmProjectile* CTFGrenadeNapalmProjectile::Create( const Vector &po
 //-----------------------------------------------------------------------------
 void CTFGrenadeNapalmProjectile::Spawn()
 {
-	SetModel( GRENADE_MODEL );
+	SetModel(GRENADE_MODEL);
 	BaseClass::Spawn();
 }
 
@@ -99,7 +103,7 @@ void CTFGrenadeNapalmProjectile::Spawn()
 //-----------------------------------------------------------------------------
 void CTFGrenadeNapalmProjectile::Precache()
 {
-	PrecacheModel( GRENADE_MODEL );
+	PrecacheModel(GRENADE_MODEL);
 
 	BaseClass::Precache();
 }
@@ -107,9 +111,9 @@ void CTFGrenadeNapalmProjectile::Precache()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFGrenadeNapalmProjectile::BounceSound( void )
+void CTFGrenadeNapalmProjectile::BounceSound(void)
 {
-	EmitSound( "Weapon_Grenade_Nail.Bounce" );
+	EmitSound("Weapon_Grenade_Nail.Bounce");
 }
 
 //-----------------------------------------------------------------------------
@@ -117,7 +121,7 @@ void CTFGrenadeNapalmProjectile::BounceSound( void )
 //-----------------------------------------------------------------------------
 void CTFGrenadeNapalmProjectile::Detonate()
 {
-	if ( ShouldNotDetonate() )
+	if(ShouldNotDetonate())
 	{
 		RemoveGrenade();
 		return;

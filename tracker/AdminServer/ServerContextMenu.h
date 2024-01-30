@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -24,10 +24,11 @@ public:
 	~CServerContextMenu();
 
 	// call this to activate the menu
-	void ShowMenu(vgui::Panel *target, unsigned int serverID, bool showConnect, bool showRefresh, bool showAddToFavorites,bool manage);
+	void ShowMenu(vgui::Panel *target, unsigned int serverID, bool showConnect, bool showRefresh,
+				  bool showAddToFavorites, bool manage);
+
 private:
 	CServerPage /*vgui::Panel*/ *parent; // so we can send it messages
 };
-
 
 #endif // SERVERCONTEXTMENU_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,7 +19,7 @@
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 
 class CNetworkStringTableItem
@@ -31,38 +31,48 @@ public:
 		MAX_USERDATA_SIZE = (1 << MAX_USERDATA_BITS)
 	};
 
-	struct itemchange_s {
-		int				tick;
-		int				length;
-		unsigned char	*data;
+	struct itemchange_s
+	{
+		int tick;
+		int length;
+		unsigned char *data;
 	};
 
-	CNetworkStringTableItem( void );
-	~CNetworkStringTableItem( void );
+	CNetworkStringTableItem(void);
+	~CNetworkStringTableItem(void);
 
 #ifndef SHARED_NET_STRING_TABLES
-	void			EnableChangeHistory( void );
-	void 			UpdateChangeList( int tick, int length, const void *userData );
-	int				RestoreTick( int tick );
-	inline int		GetTickCreated( void ) const { return m_nTickCreated; }
+	void EnableChangeHistory(void);
+	void UpdateChangeList(int tick, int length, const void *userData);
+	int RestoreTick(int tick);
+	inline int GetTickCreated(void) const
+	{
+		return m_nTickCreated;
+	}
 #endif
-	
-	bool			SetUserData( int tick, int length, const void *userdata );
-	const void		*GetUserData( int *length=0 );
-	inline int		GetUserDataLength() const { return m_nUserDataLength; }
-	
+
+	bool SetUserData(int tick, int length, const void *userdata);
+	const void *GetUserData(int *length = 0);
+	inline int GetUserDataLength() const
+	{
+		return m_nUserDataLength;
+	}
+
 	// Used by server only
 	// void			SetTickCount( int count ) ;
-	inline int		GetTickChanged( void ) const { return m_nTickChanged; }
+	inline int GetTickChanged(void) const
+	{
+		return m_nTickChanged;
+	}
 
 public:
-	unsigned char	*m_pUserData;
-	int				m_nUserDataLength;
-	int				m_nTickChanged;
+	unsigned char *m_pUserData;
+	int m_nUserDataLength;
+	int m_nTickChanged;
 
 #ifndef SHARED_NET_STRING_TABLES
-	int				m_nTickCreated;
-	CUtlVector< itemchange_s > *m_pChangeList;	
+	int m_nTickCreated;
+	CUtlVector<itemchange_s> *m_pChangeList;
 #endif
 };
 

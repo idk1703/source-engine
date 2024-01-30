@@ -1,17 +1,17 @@
 /*
-     File:       CGAffineTransform.h
- 
-     Contains:   CoreGraphics affine transforms
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 2000-2001 by Apple Computer, Inc., all rights reserved.
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+		File:       CGAffineTransform.h
+
+		Contains:   CoreGraphics affine transforms
+
+		Version:    QuickTime 7.3
+
+		Copyright:  (c) 2007 (c) 2000-2001 by Apple Computer, Inc., all rights reserved.
+
+		Bugs?:      For bug reports, consult the following page on
+								the World Wide Web:
+
+										http://developer.apple.com/bugreporter/
+
 */
 #ifndef CGAFFINETRANSFORM_H_
 #define CGAFFINETRANSFORM_H_
@@ -40,26 +40,26 @@ extern "C" {
 #endif
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=mac68k
+		#pragma options align=mac68k
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(push, 2)
+		#pragma pack(push, 2)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack(2)
+		#pragma pack(2)
 #endif
 
 struct CGAffineTransform {
-  float               a;
-  float               b;
-  float               c;
-  float               d;
-  float               tx;
-  float               ty;
+	float               a;
+	float               b;
+	float               c;
+	float               d;
+	float               tx;
+	float               ty;
 };
 typedef struct CGAffineTransform        CGAffineTransform;
 /* The identity transform: [ 1 0 0 1 0 0 ]. */
 /*
  *  CGAffineTransformIdentity
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -69,7 +69,7 @@ extern const CGAffineTransform CGAffineTransformIdentity;
 /* Return the transform [ a b c d tx ty ]. */
 /*
  *  CGAffineTransformMake()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -77,19 +77,19 @@ extern const CGAffineTransform CGAffineTransformIdentity;
  */
 EXTERN_API_C( CGAffineTransform )
 CGAffineTransformMake(
-  float   a,
-  float   b,
-  float   c,
-  float   d,
-  float   tx,
-  float   ty);
+	float   a,
+	float   b,
+	float   c,
+	float   d,
+	float   tx,
+	float   ty);
 
 
 /* Return a transform which translates by `(tx, ty)':
  *   t' = [ 1 0 0 1 tx ty ] */
 /*
  *  CGAffineTransformMakeTranslation()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -97,15 +97,15 @@ CGAffineTransformMake(
  */
 EXTERN_API_C( CGAffineTransform )
 CGAffineTransformMakeTranslation(
-  float   tx,
-  float   ty);
+	float   tx,
+	float   ty);
 
 
 /* Return a transform which scales by `(sx, sy)':
  *   t' = [ sx 0 0 sy 0 0 ] */
 /*
  *  CGAffineTransformMakeScale()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -113,15 +113,15 @@ CGAffineTransformMakeTranslation(
  */
 EXTERN_API_C( CGAffineTransform )
 CGAffineTransformMakeScale(
-  float   sx,
-  float   sy);
+	float   sx,
+	float   sy);
 
 
 /* Return a transform which rotates by `angle' radians:
  *   t' = [ cos(angle) sin(angle) -sin(angle) cos(angle) 0 0 ] */
 /*
  *  CGAffineTransformMakeRotation()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -135,7 +135,7 @@ CGAffineTransformMakeRotation(float angle);
  *   t' = [ 1 0 0 1 tx ty ] * t */
 /*
  *  CGAffineTransformTranslate()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -143,16 +143,16 @@ CGAffineTransformMakeRotation(float angle);
  */
 EXTERN_API_C( CGAffineTransform )
 CGAffineTransformTranslate(
-  CGAffineTransform   t,
-  float               tx,
-  float               ty);
+	CGAffineTransform   t,
+	float               tx,
+	float               ty);
 
 
 /* Scale `t' by `(sx, sy)' and return the result:
  *   t' = [ sx 0 0 sy 0 0 ] * t */
 /*
  *  CGAffineTransformScale()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -160,16 +160,16 @@ CGAffineTransformTranslate(
  */
 EXTERN_API_C( CGAffineTransform )
 CGAffineTransformScale(
-  CGAffineTransform   t,
-  float               sx,
-  float               sy);
+	CGAffineTransform   t,
+	float               sx,
+	float               sy);
 
 
 /* Rotate `t' by `angle' radians and return the result:
  *   t' =  [ cos(angle) sin(angle) -sin(angle) cos(angle) 0 0 ] * t */
 /*
  *  CGAffineTransformRotate()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -177,15 +177,15 @@ CGAffineTransformScale(
  */
 EXTERN_API_C( CGAffineTransform )
 CGAffineTransformRotate(
-  CGAffineTransform   t,
-  float               angle);
+	CGAffineTransform   t,
+	float               angle);
 
 
 /* Invert `t' and return the result.  If `t' has zero determinant, then `t'
  * is returned unchanged. */
 /*
  *  CGAffineTransformInvert()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -199,7 +199,7 @@ CGAffineTransformInvert(CGAffineTransform t);
  *   t' = t1 * t2 */
 /*
  *  CGAffineTransformConcat()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -207,8 +207,8 @@ CGAffineTransformInvert(CGAffineTransform t);
  */
 EXTERN_API_C( CGAffineTransform )
 CGAffineTransformConcat(
-  CGAffineTransform   t1,
-  CGAffineTransform   t2);
+	CGAffineTransform   t1,
+	CGAffineTransform   t2);
 
 
 /* Transform `point' by `t' and return the result:
@@ -216,7 +216,7 @@ CGAffineTransformConcat(
  * where p = [ x y 1 ]. */
 /*
  *  CGPointApplyAffineTransform()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -224,8 +224,8 @@ CGAffineTransformConcat(
  */
 EXTERN_API_C( CGPoint )
 CGPointApplyAffineTransform(
-  CGPoint             point,
-  CGAffineTransform   t);
+	CGPoint             point,
+	CGAffineTransform   t);
 
 
 /* Transform `size' by `t' and return the result:
@@ -233,7 +233,7 @@ CGPointApplyAffineTransform(
  * where s = [ width height 0 ]. */
 /*
  *  CGSizeApplyAffineTransform()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -241,19 +241,19 @@ CGPointApplyAffineTransform(
  */
 EXTERN_API_C( CGSize )
 CGSizeApplyAffineTransform(
-  CGSize              size,
-  CGAffineTransform   t);
+	CGSize              size,
+	CGAffineTransform   t);
 
 
 
 
 
 #if PRAGMA_STRUCT_ALIGN
-    #pragma options align=reset
+		#pragma options align=reset
 #elif PRAGMA_STRUCT_PACKPUSH
-    #pragma pack(pop)
+		#pragma pack(pop)
 #elif PRAGMA_STRUCT_PACK
-    #pragma pack()
+		#pragma pack()
 #endif
 
 #ifdef PRAGMA_IMPORT_OFF
@@ -267,4 +267,3 @@ CGSizeApplyAffineTransform(
 #endif
 
 #endif /* CGAFFINETRANSFORM_H_ */
-

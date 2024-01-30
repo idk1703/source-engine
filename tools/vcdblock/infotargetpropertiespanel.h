@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -13,7 +13,6 @@
 #include "vgui_controls/editablepanel.h"
 #include "tier1/utlstring.h"
 #include "datamodel/dmehandle.h"
-
 
 //-----------------------------------------------------------------------------
 // Forward declarations
@@ -30,35 +29,34 @@ namespace vgui
 	class ListPanel;
 	class CheckButton;
 	class RadioButton;
-}
-
+} // namespace vgui
 
 //-----------------------------------------------------------------------------
 // Panel that shows all entities in the level
 //-----------------------------------------------------------------------------
 class CInfoTargetPropertiesPanel : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CInfoTargetPropertiesPanel, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CInfoTargetPropertiesPanel, vgui::EditablePanel);
 
 public:
-	CInfoTargetPropertiesPanel( CVcdBlockDoc *pDoc, vgui::Panel* pParent );   // standard constructor
+	CInfoTargetPropertiesPanel(CVcdBlockDoc *pDoc, vgui::Panel *pParent); // standard constructor
 
 	// Sets the object to look at
-	void SetObject( CDmeVMFEntity *pEntity );
+	void SetObject(CDmeVMFEntity *pEntity);
 
 private:
 	// Populates the info_target fields
 	void PopulateInfoTargetFields();
 
 	// Text to attribute...
-	void TextEntryToAttribute( vgui::TextEntry *pEntry, const char *pAttributeName );
-	void TextEntriesToVector( vgui::TextEntry *pEntry[3], const char *pAttributeName );
+	void TextEntryToAttribute(vgui::TextEntry *pEntry, const char *pAttributeName);
+	void TextEntriesToVector(vgui::TextEntry *pEntry[3], const char *pAttributeName);
 
 	// Updates entity state when text fields change
 	void UpdateInfoTarget();
 
 	// Messages handled
-	MESSAGE_FUNC_PARAMS( OnTextChanged, "TextChanged", kv );
+	MESSAGE_FUNC_PARAMS(OnTextChanged, "TextChanged", kv);
 
 	CVcdBlockDoc *m_pDoc;
 
@@ -69,8 +67,7 @@ private:
 	vgui::TextEntry *m_pTargetPosition[3];
 	vgui::TextEntry *m_pTargetOrientation[3];
 
-	CDmeHandle< CDmeVMFEntity > m_hEntity;
+	CDmeHandle<CDmeVMFEntity> m_hEntity;
 };
-
 
 #endif // INFOTARGETPROPERTIESPANEL_H

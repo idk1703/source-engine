@@ -9,7 +9,6 @@
 #pragma once
 #endif
 
-
 #include "tf_item_wearable.h"
 
 #ifdef CLIENT_DLL
@@ -23,15 +22,16 @@
 #define CTFWearableLevelableItem C_TFWearableLevelableItem
 #endif
 
-#define LEVELABLE_ITEM_BODYGROUP_NAME	"level"
-							   
+#define LEVELABLE_ITEM_BODYGROUP_NAME "level"
+
 //=============================================================================
 //
-// 
+//
 //
 class CTFWearableLevelableItem : public CTFWearable
 {
-	DECLARE_CLASS( CTFWearableLevelableItem, CTFWearable );
+	DECLARE_CLASS(CTFWearableLevelableItem, CTFWearable);
+
 public:
 	DECLARE_NETWORKCLASS();
 	DECLARE_DATADESC();
@@ -41,11 +41,13 @@ public:
 	void IncrementLevel();
 	void ResetLevel();
 
-	uint GetLevel( void ){ return m_unLevel; }
+	uint GetLevel(void)
+	{
+		return m_unLevel;
+	}
+
 private:
-
-	CNetworkVar( uint, m_unLevel );
+	CNetworkVar(uint, m_unLevel);
 };
-
 
 #endif // TF_WEARABLE_LEVELABLE_ITEM_H

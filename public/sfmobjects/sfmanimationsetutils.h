@@ -13,7 +13,6 @@
 #pragma once
 #endif
 
-
 //-----------------------------------------------------------------------------
 // movieobjects
 //-----------------------------------------------------------------------------
@@ -21,12 +20,10 @@ class CDmeFilmClip;
 class CDmeGameModel;
 class CDmeAnimationSet;
 
-
 //-----------------------------------------------------------------------------
 // Creates an animation set
 //-----------------------------------------------------------------------------
-CDmeAnimationSet *CreateAnimationSet( CDmeFilmClip *pMovie, CDmeFilmClip *pShot, 
-	CDmeGameModel *pGameModel, const char *pAnimationSetName, int nSequenceToUse, bool bAttachToGameRecording );
-
+CDmeAnimationSet *CreateAnimationSet(CDmeFilmClip *pMovie, CDmeFilmClip *pShot, CDmeGameModel *pGameModel,
+									 const char *pAnimationSetName, int nSequenceToUse, bool bAttachToGameRecording);
 
 #endif // SFMANIMATIONSETUTILS_H

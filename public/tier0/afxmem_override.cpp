@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -23,21 +23,20 @@
 #pragma code_seg(AFX_CORE1_SEG)
 #endif
 
-
 /////////////////////////////////////////////////////////////////////////////
 // Debug memory globals and implementation helpers
 
-#ifdef _DEBUG       // most of this file is for debugging
+#ifdef _DEBUG // most of this file is for debugging
 
-void* __cdecl operator new(size_t nSize, int nType, LPCSTR lpszFileName, int nLine);
+void *__cdecl operator new(size_t nSize, int nType, LPCSTR lpszFileName, int nLine);
 #if _MSC_VER >= 1210
-void* __cdecl operator new[](size_t nSize, int nType, LPCSTR lpszFileName, int nLine);
+void *__cdecl operator new[](size_t nSize, int nType, LPCSTR lpszFileName, int nLine);
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
 // test allocation routines
 
-void* PASCAL CObject::operator new(size_t nSize)
+void *PASCAL CObject::operator new(size_t nSize)
 {
 #ifdef _AFX_NO_DEBUG_CRT
 	return ::operator new(nSize);
@@ -46,7 +45,7 @@ void* PASCAL CObject::operator new(size_t nSize)
 #endif // _AFX_NO_DEBUG_CRT
 }
 
-void PASCAL CObject::operator delete(void* p)
+void PASCAL CObject::operator delete(void *p)
 {
 #ifdef _AFX_NO_DEBUG_CRT
 	free(p);
@@ -56,7 +55,7 @@ void PASCAL CObject::operator delete(void* p)
 }
 
 #if _MSC_VER >= 1200
-void PASCAL CObject::operator delete(void* p, void*)
+void PASCAL CObject::operator delete(void *p, void *)
 {
 #ifdef _AFX_NO_DEBUG_CRT
 	free(p);
@@ -68,44 +67,39 @@ void PASCAL CObject::operator delete(void* p, void*)
 
 #ifndef _AFX_NO_DEBUG_CRT
 
-void* __cdecl operator new(size_t nSize, LPCSTR lpszFileName, int nLine)
+void *__cdecl operator new(size_t nSize, LPCSTR lpszFileName, int nLine)
 {
 	return ::operator new(nSize, _NORMAL_BLOCK, lpszFileName, nLine);
 }
 
 #if _MSC_VER >= 1210
-void* __cdecl operator new[](size_t nSize, LPCSTR lpszFileName, int nLine)
+void *__cdecl operator new[](size_t nSize, LPCSTR lpszFileName, int nLine)
 {
 	return ::operator new[](nSize, _NORMAL_BLOCK, lpszFileName, nLine);
 }
 #endif
 
 #if _MSC_VER >= 1200
-void __cdecl operator delete(void* pData, LPCSTR /* lpszFileName */,
-	int /* nLine */)
+void __cdecl operator delete(void *pData, LPCSTR /* lpszFileName */, int /* nLine */)
 {
 	::operator delete(pData);
 }
 #endif
 
 #if _MSC_VER >= 1210
-void __cdecl operator delete[](void* pData, LPCSTR /* lpszFileName */,
-	int /* nLine */)
+void __cdecl operator delete[](void *pData, LPCSTR /* lpszFileName */, int /* nLine */)
 {
 	::operator delete(pData);
 }
 #endif
 
-void* PASCAL
-CObject::operator new(size_t nSize, LPCSTR lpszFileName, int nLine)
+void *PASCAL CObject::operator new(size_t nSize, LPCSTR lpszFileName, int nLine)
 {
 	return ::operator new(nSize, _AFX_CLIENT_BLOCK, lpszFileName, nLine);
 }
 
 #if _MSC_VER >= 1200
-void PASCAL
-CObject::operator delete(void *pObject, LPCSTR /* lpszFileName */,
-	int /* nLine */)
+void PASCAL CObject::operator delete(void *pObject, LPCSTR /* lpszFileName */, int /* nLine */)
 {
 #ifdef _AFX_NO_DEBUG_CRT
 	free(pObject);
@@ -115,13 +109,12 @@ CObject::operator delete(void *pObject, LPCSTR /* lpszFileName */,
 }
 #endif
 
-void* AFXAPI AfxAllocMemoryDebug(size_t nSize, BOOL bIsObject,  LPCSTR lpszFileName, int nLine)
+void *AFXAPI AfxAllocMemoryDebug(size_t nSize, BOOL bIsObject, LPCSTR lpszFileName, int nLine)
 {
-	return _malloc_dbg(nSize, bIsObject ? _AFX_CLIENT_BLOCK : _NORMAL_BLOCK,
-		lpszFileName, nLine);
+	return _malloc_dbg(nSize, bIsObject ? _AFX_CLIENT_BLOCK : _NORMAL_BLOCK, lpszFileName, nLine);
 }
 
-void AFXAPI AfxFreeMemoryDebug(void* pbData, BOOL bIsObject)
+void AFXAPI AfxFreeMemoryDebug(void *pbData, BOOL bIsObject)
 {
 	_free_dbg(pbData, bIsObject ? _AFX_CLIENT_BLOCK : _NORMAL_BLOCK);
 }
@@ -130,40 +123,40 @@ void AFXAPI AfxFreeMemoryDebug(void* pbData, BOOL bIsObject)
 // allocation failure hook, tracking turn on
 
 BOOL AFXAPI _AfxDefaultAllocHook(size_t, BOOL, LONG)
-	{ return TRUE; }
+{
+	return TRUE;
+}
 
 AFX_STATIC_DATA AFX_ALLOC_HOOK pfnAllocHook = _AfxDefaultAllocHook;
 
 AFX_STATIC_DATA _CRT_ALLOC_HOOK pfnCrtAllocHook = NULL;
 #if _MSC_VER >= 1200
-int __cdecl _AfxAllocHookProxy(int nAllocType, void * pvData, size_t nSize,
-	int nBlockUse, long lRequest, const unsigned char * szFilename, int nLine)
+int __cdecl _AfxAllocHookProxy(int nAllocType, void *pvData, size_t nSize, int nBlockUse, long lRequest,
+							   const unsigned char *szFilename, int nLine)
 #else
-int __cdecl _AfxAllocHookProxy(int nAllocType, void * pvData, size_t nSize,
-	int nBlockUse, long lRequest, const char * szFilename, int nLine)
+int __cdecl _AfxAllocHookProxy(int nAllocType, void *pvData, size_t nSize, int nBlockUse, long lRequest,
+							   const char *szFilename, int nLine)
 #endif
 {
 #if _MSC_VER >= 1200
-	if (nAllocType != _HOOK_ALLOC)
-		return (pfnCrtAllocHook)(nAllocType, pvData, nSize,
-			nBlockUse, lRequest, (const unsigned char*) szFilename, nLine);
-	if ((pfnAllocHook)(nSize, _BLOCK_TYPE(nBlockUse) == _AFX_CLIENT_BLOCK, lRequest))
-		return (pfnCrtAllocHook)(nAllocType, pvData, nSize,
-			nBlockUse, lRequest, (const unsigned char*) szFilename, nLine);
+	if(nAllocType != _HOOK_ALLOC)
+		return (pfnCrtAllocHook)(nAllocType, pvData, nSize, nBlockUse, lRequest, (const unsigned char *)szFilename,
+								 nLine);
+	if((pfnAllocHook)(nSize, _BLOCK_TYPE(nBlockUse) == _AFX_CLIENT_BLOCK, lRequest))
+		return (pfnCrtAllocHook)(nAllocType, pvData, nSize, nBlockUse, lRequest, (const unsigned char *)szFilename,
+								 nLine);
 #else
-	if (nAllocType != _HOOK_ALLOC)
-		return (pfnCrtAllocHook)(nAllocType, pvData, nSize,
-			nBlockUse, lRequest, szFilename, nLine);
-	if ((pfnAllocHook)(nSize, _BLOCK_TYPE(nBlockUse) == _AFX_CLIENT_BLOCK, lRequest))
-		return (pfnCrtAllocHook)(nAllocType, pvData, nSize,
-			nBlockUse, lRequest, szFilename, nLine);
+	if(nAllocType != _HOOK_ALLOC)
+		return (pfnCrtAllocHook)(nAllocType, pvData, nSize, nBlockUse, lRequest, szFilename, nLine);
+	if((pfnAllocHook)(nSize, _BLOCK_TYPE(nBlockUse) == _AFX_CLIENT_BLOCK, lRequest))
+		return (pfnCrtAllocHook)(nAllocType, pvData, nSize, nBlockUse, lRequest, szFilename, nLine);
 #endif
 	return FALSE;
 }
 
 AFX_ALLOC_HOOK AFXAPI AfxSetAllocHook(AFX_ALLOC_HOOK pfnNewHook)
 {
-	if (pfnCrtAllocHook == NULL)
+	if(pfnCrtAllocHook == NULL)
 		pfnCrtAllocHook = _CrtSetAllocHook(_AfxAllocHookProxy);
 
 	AFX_ALLOC_HOOK pfnOldHook = pfnAllocHook;
@@ -177,11 +170,11 @@ BOOL _afxMemoryLeakOverride = FALSE;
 
 BOOL AFXAPI AfxEnableMemoryTracking(BOOL bTrack)
 {
-	if (_afxMemoryLeakOverride)
+	if(_afxMemoryLeakOverride)
 		return TRUE;
 
 	int nOldState = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
-	if (bTrack)
+	if(bTrack)
 		_CrtSetDbgFlag(nOldState | _CRTDBG_ALLOC_MEM_DF);
 	else
 		_CrtSetDbgFlag(nOldState & ~_CRTDBG_ALLOC_MEM_DF);
@@ -198,15 +191,14 @@ void AFXAPI AfxSetAllocStop(LONG lRequestNumber)
 }
 
 BOOL AFXAPI AfxCheckMemory()
-  // check all of memory (look for memory tromps)
+// check all of memory (look for memory tromps)
 {
 	return _CrtCheckMemory();
 }
 
 // -- true if block of exact size, allocated on the heap
 // -- set *plRequestNumber to request number (or 0)
-BOOL AFXAPI AfxIsMemoryBlock(const void* pData, UINT nBytes,
-		LONG* plRequestNumber)
+BOOL AFXAPI AfxIsMemoryBlock(const void *pData, UINT nBytes, LONG *plRequestNumber)
 {
 	return _CrtIsMemoryBlock(pData, nBytes, plRequestNumber, NULL, NULL);
 }
@@ -231,8 +223,7 @@ void CMemoryState::UpdateData()
 }
 
 // fills 'this' with the difference, returns TRUE if significant
-BOOL CMemoryState::Difference(const CMemoryState& oldState,
-		const CMemoryState& newState)
+BOOL CMemoryState::Difference(const CMemoryState &oldState, const CMemoryState &newState)
 {
 	int nResult = _CrtMemDifference(&m_memState, &oldState.m_memState, &newState.m_memState);
 	UpdateData();
@@ -265,20 +256,19 @@ void CMemoryState::DumpAllObjectsSince() const
 
 struct _AFX_ENUM_CONTEXT
 {
-	void (*m_pfn)(CObject*,void*);
-	void* m_pContext;
+	void (*m_pfn)(CObject *, void *);
+	void *m_pContext;
 };
 
-AFX_STATIC void _AfxDoForAllObjectsProxy(void* pObject, void* pContext)
+AFX_STATIC void _AfxDoForAllObjectsProxy(void *pObject, void *pContext)
 {
-	_AFX_ENUM_CONTEXT* p = (_AFX_ENUM_CONTEXT*)pContext;
-	(*p->m_pfn)((CObject*)pObject, p->m_pContext);
+	_AFX_ENUM_CONTEXT *p = (_AFX_ENUM_CONTEXT *)pContext;
+	(*p->m_pfn)((CObject *)pObject, p->m_pContext);
 }
 
-void AFXAPI
-AfxDoForAllObjects(void (AFX_CDECL *pfn)(CObject*, void*), void* pContext)
+void AFXAPI AfxDoForAllObjects(void(AFX_CDECL *pfn)(CObject *, void *), void *pContext)
 {
-	if (pfn == NULL)
+	if(pfn == NULL)
 	{
 		AfxThrowInvalidArgException();
 	}
@@ -307,7 +297,7 @@ int AFX_CDECL AfxNewHandler(size_t /* nSize */)
 	AfxThrowMemoryException();
 }
 
-#pragma warning(disable: 4273)
+#pragma warning(disable : 4273)
 
 #ifndef _AFXDLL
 _PNH _afxNewHandler = &AfxNewHandler;
@@ -316,7 +306,7 @@ _PNH _afxNewHandler = &AfxNewHandler;
 _PNH AFXAPI AfxGetNewHandler(void)
 {
 #ifdef _AFXDLL
-	AFX_MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
+	AFX_MODULE_THREAD_STATE *pState = AfxGetModuleThreadState();
 	return pState->m_pfnNewHandler;
 #else
 	return _afxNewHandler;
@@ -326,7 +316,7 @@ _PNH AFXAPI AfxGetNewHandler(void)
 _PNH AFXAPI AfxSetNewHandler(_PNH pfnNewHandler)
 {
 #ifdef _AFXDLL
-	AFX_MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
+	AFX_MODULE_THREAD_STATE *pState = AfxGetModuleThreadState();
 	_PNH pfnOldHandler = pState->m_pfnNewHandler;
 	pState->m_pfnNewHandler = pfnNewHandler;
 	return pfnOldHandler;
@@ -339,54 +329,54 @@ _PNH AFXAPI AfxSetNewHandler(_PNH pfnNewHandler)
 
 AFX_STATIC_DATA const _PNH _pfnUninitialized = (_PNH)-1;
 
-void* __cdecl operator new(size_t nSize)
+void *__cdecl operator new(size_t nSize)
 {
-	void* pResult;
+	void *pResult;
 #ifdef _AFXDLL
 	_PNH pfnNewHandler = _pfnUninitialized;
 #endif
-	for (;;)
+	for(;;)
 	{
 #if !defined(_AFX_NO_DEBUG_CRT) && defined(_DEBUG)
 		pResult = _malloc_dbg(nSize, _NORMAL_BLOCK, NULL, 0);
 #else
 		pResult = malloc(nSize);
 #endif
-		if (pResult != NULL)
+		if(pResult != NULL)
 			return pResult;
 
 #ifdef _AFXDLL
-		if (pfnNewHandler == _pfnUninitialized)
+		if(pfnNewHandler == _pfnUninitialized)
 		{
-			AFX_MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
+			AFX_MODULE_THREAD_STATE *pState = AfxGetModuleThreadState();
 			pfnNewHandler = pState->m_pfnNewHandler;
 		}
-		if (pfnNewHandler == NULL || (*pfnNewHandler)(nSize) == 0)
+		if(pfnNewHandler == NULL || (*pfnNewHandler)(nSize) == 0)
 			break;
 #else
-		if (_afxNewHandler == NULL || (*_afxNewHandler)(nSize) == 0)
+		if(_afxNewHandler == NULL || (*_afxNewHandler)(nSize) == 0)
 			break;
 #endif
 	}
 	return pResult;
 }
 
-void __cdecl operator delete(void* p)
+void __cdecl operator delete(void *p)
 {
 #if !defined(_AFX_NO_DEBUG_CRT) && defined(_DEBUG)
-		_free_dbg(p, _NORMAL_BLOCK);
+	_free_dbg(p, _NORMAL_BLOCK);
 #else
-		free(p);
+	free(p);
 #endif
 }
 
 #if _MSC_VER >= 1210
-void* __cdecl operator new[](size_t nSize)
+void *__cdecl operator new[](size_t nSize)
 {
 	return ::operator new(nSize);
 }
 
-void __cdecl operator delete[](void* p)
+void __cdecl operator delete[](void *p)
 {
 	::operator delete(p);
 }
@@ -394,7 +384,7 @@ void __cdecl operator delete[](void* p)
 
 #ifdef _DEBUG
 
-void* __cdecl operator new(size_t nSize, int nType, LPCSTR lpszFileName, int nLine)
+void *__cdecl operator new(size_t nSize, int nType, LPCSTR lpszFileName, int nLine)
 {
 #ifdef _AFX_NO_DEBUG_CRT
 	UNUSED_ALWAYS(nType);
@@ -402,26 +392,26 @@ void* __cdecl operator new(size_t nSize, int nType, LPCSTR lpszFileName, int nLi
 	UNUSED_ALWAYS(nLine);
 	return ::operator new(nSize);
 #else
-	void* pResult;
+	void *pResult;
 #ifdef _AFXDLL
 	_PNH pfnNewHandler = _pfnUninitialized;
 #endif
-	for (;;)
+	for(;;)
 	{
 		pResult = _malloc_dbg(nSize, nType, lpszFileName, nLine);
-		if (pResult != NULL)
+		if(pResult != NULL)
 			return pResult;
 
 #ifdef _AFXDLL
-		if (pfnNewHandler == _pfnUninitialized)
+		if(pfnNewHandler == _pfnUninitialized)
 		{
-			AFX_MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
+			AFX_MODULE_THREAD_STATE *pState = AfxGetModuleThreadState();
 			pfnNewHandler = pState->m_pfnNewHandler;
 		}
-		if (pfnNewHandler == NULL || (*pfnNewHandler)(nSize) == 0)
+		if(pfnNewHandler == NULL || (*pfnNewHandler)(nSize) == 0)
 			break;
 #else
-		if (_afxNewHandler == NULL || (*_afxNewHandler)(nSize) == 0)
+		if(_afxNewHandler == NULL || (*_afxNewHandler)(nSize) == 0)
 			break;
 #endif
 	}
@@ -430,22 +420,22 @@ void* __cdecl operator new(size_t nSize, int nType, LPCSTR lpszFileName, int nLi
 }
 
 #if _MSC_VER >= 1700
-void __cdecl operator delete(void* p, int nType, LPCSTR /* lpszFileName */, int /* nLine */)
+void __cdecl operator delete(void *p, int nType, LPCSTR /* lpszFileName */, int /* nLine */)
 {
 #if !defined(_AFX_NO_DEBUG_CRT) && defined(_DEBUG)
-		_free_dbg(p, nType);
+	_free_dbg(p, nType);
 #else
-		free(p);
+	free(p);
 #endif
 }
 #endif // _MSC_VER >= 1200
 
 #if _MSC_VER >= 1700
-void* __cdecl operator new[](size_t nSize, int nType, LPCSTR lpszFileName, int nLine)
+void *__cdecl operator new[](size_t nSize, int nType, LPCSTR lpszFileName, int nLine)
 {
 	return ::operator new(nSize, nType, lpszFileName, nLine);
 }
-void __cdecl operator delete[](void* p, int nType, LPCSTR lpszFileName, int nLine)
+void __cdecl operator delete[](void *p, int nType, LPCSTR lpszFileName, int nLine)
 {
 	::operator delete(p, nType, lpszFileName, nLine);
 }

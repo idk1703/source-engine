@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -25,7 +25,7 @@ public:
 	CRemoteServer();
 	~CRemoteServer();
 
-	// setup this object 
+	// setup this object
 	void Initialize();
 
 	// remote connection
@@ -58,7 +58,7 @@ public:
 private:
 	int m_iCurrentRequestID;
 	ra_listener_id m_ListenerID;
-	bool			m_bInitialized;
+	bool m_bInitialized;
 
 	// list of all the currently waiting response handlers
 	struct ResponseHandler_t
@@ -75,7 +75,6 @@ private:
 		IServerDataResponse *handler;
 	};
 	CUtlLinkedList<MessageHandler_t, int> m_MessageHandlers;
-
 };
 
 //-----------------------------------------------------------------------------
@@ -90,6 +89,5 @@ public:
 
 // singleton accessor
 extern CRemoteServer &RemoteServer();
-
 
 #endif // REMOTESERVER_H

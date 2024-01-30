@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,52 +22,42 @@ enum eDisconnectReason
 
 class CTFDisconnectConfirmDialog : public CTFGenericConfirmDialog
 {
-	DECLARE_CLASS_SIMPLE( CTFDisconnectConfirmDialog, CTFGenericConfirmDialog );
+	DECLARE_CLASS_SIMPLE(CTFDisconnectConfirmDialog, CTFGenericConfirmDialog);
+
 public:
-	CTFDisconnectConfirmDialog(	const char *pTitle, 
-								const char *pTextKey, 
-								const char *pConfirmBtnText,
-								const char *pCancelBtnText, 
-								GenericConfirmDialogCallback callback, 
-								vgui::Panel *pParent );
+	CTFDisconnectConfirmDialog(const char *pTitle, const char *pTextKey, const char *pConfirmBtnText,
+							   const char *pCancelBtnText, GenericConfirmDialogCallback callback, vgui::Panel *pParent);
 
 	virtual const char *GetResFile();
 
-	void SetReason( eDisconnectReason reason );
-	virtual void OnCommand( const char *command );
-	void AddConfirmCommand( const char *command );
-	void AddCancelCommand( const char *command );
+	void SetReason(eDisconnectReason reason);
+	virtual void OnCommand(const char *command);
+	void AddConfirmCommand(const char *command);
+	void AddCancelCommand(const char *command);
 
 private:
-	CUtlVector< CUtlString > m_confirmCommands;
-	CUtlVector< CUtlString > m_cancelCommands;
+	CUtlVector<CUtlString> m_confirmCommands;
+	CUtlVector<CUtlString> m_cancelCommands;
 
 	eDisconnectReason m_eReason;
 	EAbandonGameStatus m_eAbandonStatus;
-
 };
-CTFDisconnectConfirmDialog * BuildDisconnectConfirmDialog();
-
+CTFDisconnectConfirmDialog *BuildDisconnectConfirmDialog();
 
 class CTFRejoinConfirmDialog : public CTFGenericConfirmDialog
 {
-	DECLARE_CLASS_SIMPLE( CTFRejoinConfirmDialog, CTFGenericConfirmDialog );
+	DECLARE_CLASS_SIMPLE(CTFRejoinConfirmDialog, CTFGenericConfirmDialog);
+
 public:
-	CTFRejoinConfirmDialog(	const char *pTitle, 
-		const char *pTextKey, 
-		const char *pConfirmBtnText,
-		const char *pCancelBtnText, 
-		GenericConfirmDialogCallback callback, 
-		vgui::Panel *pParent );
+	CTFRejoinConfirmDialog(const char *pTitle, const char *pTextKey, const char *pConfirmBtnText,
+						   const char *pCancelBtnText, GenericConfirmDialogCallback callback, vgui::Panel *pParent);
 
 	virtual const char *GetResFile();
 
 	void CloseRejoinWindow();
 
 private:
-
 	EAbandonGameStatus m_eAbandonStatus;
-
 };
 
 bool HandleDisconnectAttempt();

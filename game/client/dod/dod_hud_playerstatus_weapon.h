@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,15 +14,14 @@
 //-----------------------------------------------------------------------------
 // Purpose: Weapon Selection panel
 //-----------------------------------------------------------------------------
-class CDoDHudCurrentWeapon : public vgui::EditablePanel 
+class CDoDHudCurrentWeapon : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CDoDHudCurrentWeapon, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CDoDHudCurrentWeapon, vgui::EditablePanel);
 
 public:
-	CDoDHudCurrentWeapon( vgui::Panel *parent, const char *name ) : vgui::EditablePanel( parent, name ){}
+	CDoDHudCurrentWeapon(vgui::Panel *parent, const char *name) : vgui::EditablePanel(parent, name) {}
 
 	virtual void Paint();
-
-};	
+};
 
 #endif // DOD_HUD_PLAYERSTATUS_WEAPON_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,14 +10,13 @@
 #pragma once
 #endif
 
-
-#include "cbase.h" 
-#include "shake.h" 
+#include "cbase.h"
+#include "shake.h"
 #include "weapon_dodsemiauto.h"
 #include "dod_shareddefs.h"
 
-#if defined( CLIENT_DLL )
-	#define CDODSniperWeapon C_DODSniperWeapon
+#if defined(CLIENT_DLL)
+#define CDODSniperWeapon C_DODSniperWeapon
 #endif
 
 #define DOD_SNIPER_ZOOM_CHANGE_TIME 0.3
@@ -25,8 +24,8 @@
 class CDODSniperWeapon : public CDODSemiAutoWeapon
 {
 public:
-	DECLARE_CLASS( CDODSniperWeapon, CDODSemiAutoWeapon );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_CLASS(CDODSniperWeapon, CDODSemiAutoWeapon);
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 #ifndef CLIENT_DLL
@@ -35,55 +34,65 @@ public:
 
 	CDODSniperWeapon();
 
-	virtual void Spawn( void );
-	virtual bool Holster( CBaseCombatWeapon *pSwitchingTo );
-	virtual bool Reload( void );
-	virtual void FinishReload( void );
-	virtual void Drop( const Vector &vecVelocity );
-	virtual void ItemPostFrame( void );
+	virtual void Spawn(void);
+	virtual bool Holster(CBaseCombatWeapon *pSwitchingTo);
+	virtual bool Reload(void);
+	virtual void FinishReload(void);
+	virtual void Drop(const Vector &vecVelocity);
+	virtual void ItemPostFrame(void);
 
-	virtual void PrimaryAttack( void );
-	virtual void SecondaryAttack( void );
+	virtual void PrimaryAttack(void);
+	virtual void SecondaryAttack(void);
 
-	void ResetTimers( void );	// reset all the flags, timers that would cause us to re-zoom or unzoom
+	void ResetTimers(void); // reset all the flags, timers that would cause us to re-zoom or unzoom
 
 #ifdef CLIENT_DLL
-	virtual Vector GetDesiredViewModelOffset( C_DODPlayer *pOwner );
-	virtual float GetViewModelSwayScale( void );
+	virtual Vector GetDesiredViewModelOffset(C_DODPlayer *pOwner);
+	virtual float GetViewModelSwayScale(void);
 
-	float GetZoomedPercentage( void );
+	float GetZoomedPercentage(void);
 #endif
 
 	// Is the weapon completely zoomed, finished the raising animation
-	bool IsFullyZoomed( void );
-	
-	virtual bool ShouldDrawCrosshair( void );
+	bool IsFullyZoomed(void);
 
-	virtual bool HideViewModelWhenZoomed( void ) { return true; }
+	virtual bool ShouldDrawCrosshair(void);
 
-	virtual float GetWeaponAccuracy( float flPlayerSpeed );
+	virtual bool HideViewModelWhenZoomed(void)
+	{
+		return true;
+	}
 
-	virtual float GetZoomedFOV( void ) { return 20; }
+	virtual float GetWeaponAccuracy(float flPlayerSpeed);
 
-	bool IsZoomed( void );
+	virtual float GetZoomedFOV(void)
+	{
+		return 20;
+	}
 
-	virtual bool ShouldZoomOutBetweenShots( void ) { return true; }
-	virtual bool ShouldRezoomAfterReload( void ) { return false; }
+	bool IsZoomed(void);
 
-	void ToggleZoom( void );
+	virtual bool ShouldZoomOutBetweenShots(void)
+	{
+		return true;
+	}
+	virtual bool ShouldRezoomAfterReload(void)
+	{
+		return false;
+	}
 
-	void ZoomIn( void );
-	void ZoomOut( void );
+	void ToggleZoom(void);
 
-	void ZoomOutIn( void );
+	void ZoomIn(void);
+	void ZoomOut(void);
 
-	void SetRezoom( bool bRezoom, float flDelay );
+	void ZoomOutIn(void);
 
-	bool IsZoomingIn( void );
+	void SetRezoom(bool bRezoom, float flDelay);
 
-	CNetworkVar( bool, m_bDoViewAnim );
+	bool IsZoomingIn(void);
 
-
+	CNetworkVar(bool, m_bDoViewAnim);
 
 #ifdef CLIENT_DLL
 	bool m_bDoViewAnimCache;
@@ -92,16 +101,16 @@ public:
 #endif
 
 protected:
-	bool m_bShouldRezoomAfterShot;	// if the gun zooms out after a shot, does it zoom back in automatically?
+	bool m_bShouldRezoomAfterShot; // if the gun zooms out after a shot, does it zoom back in automatically?
 
 private:
-	CDODSniperWeapon( const CDODSniperWeapon & );
+	CDODSniperWeapon(const CDODSniperWeapon &);
 
 	float m_flUnzoomTime;
 	float m_flRezoomTime;
 
 	float m_flZoomInTime;
-	float m_flZoomOutTime;	 
+	float m_flZoomOutTime;
 
 	bool m_bRezoomAfterReload;
 	float m_flZoomChangeTime;

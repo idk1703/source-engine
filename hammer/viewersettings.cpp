@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -30,18 +30,13 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
-
 ViewerSettings g_viewerSettings;
 
-
-
-void
-InitViewerSettings (void)
+void InitViewerSettings(void)
 {
-	memset (&g_viewerSettings, 0, sizeof (ViewerSettings));
+	memset(&g_viewerSettings, 0, sizeof(ViewerSettings));
 	g_viewerSettings.rot[0] = -90.0f;
-	//g_viewerSettings.trans[3] = 50.0f;
+	// g_viewerSettings.trans[3] = 50.0f;
 	g_viewerSettings.renderMode = RM_TEXTURED;
 	g_viewerSettings.transparency = 1.0f;
 
@@ -59,34 +54,28 @@ InitViewerSettings (void)
 	g_viewerSettings.textureScale = 1.0f;
 }
 
-
-
-int
-LoadViewerSettings (const char *filename)
+int LoadViewerSettings(const char *filename)
 {
-	FILE *file = fopen (filename, "rb");
+	FILE *file = fopen(filename, "rb");
 
-	if (!file)
+	if(!file)
 		return 0;
 
-	fread (&g_viewerSettings, sizeof (ViewerSettings), 1, file);
-	fclose (file);
+	fread(&g_viewerSettings, sizeof(ViewerSettings), 1, file);
+	fclose(file);
 
 	return 1;
 }
 
-
-
-int
-SaveViewerSettings (const char *filename)
+int SaveViewerSettings(const char *filename)
 {
-	FILE *file = fopen (filename, "wb");
+	FILE *file = fopen(filename, "wb");
 
-	if (!file)
+	if(!file)
 		return 0;
 
-	fwrite (&g_viewerSettings, sizeof (ViewerSettings), 1, file);
-	fclose (file);
+	fwrite(&g_viewerSettings, sizeof(ViewerSettings), 1, file);
+	fclose(file);
 
 	return 1;
 }

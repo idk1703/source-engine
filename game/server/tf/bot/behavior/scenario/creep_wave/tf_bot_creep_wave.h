@@ -11,22 +11,23 @@
 #include "Path/NextBotPathFollow.h"
 #include "Path/NextBotChasePath.h"
 
-
-CTFBot *FindNearestEnemyCreep( CTFBot *me );
-
+CTFBot *FindNearestEnemyCreep(CTFBot *me);
 
 //-----------------------------------------------------------------------------
-class CTFBotCreepWave : public Action< CTFBot >
+class CTFBotCreepWave : public Action<CTFBot>
 {
 public:
-	virtual ActionResult< CTFBot >	OnStart( CTFBot *me, Action< CTFBot > *priorAction );
-	virtual ActionResult< CTFBot >	Update( CTFBot *me, float interval );
+	virtual ActionResult<CTFBot> OnStart(CTFBot *me, Action<CTFBot> *priorAction);
+	virtual ActionResult<CTFBot> Update(CTFBot *me, float interval);
 
-	virtual EventDesiredResult< CTFBot > OnKilled( CTFBot *me, const CTakeDamageInfo &info );
-	virtual EventDesiredResult< CTFBot > OnStuck( CTFBot *me );
-	virtual EventDesiredResult< CTFBot > OnUnStuck( CTFBot *me );
+	virtual EventDesiredResult<CTFBot> OnKilled(CTFBot *me, const CTakeDamageInfo &info);
+	virtual EventDesiredResult<CTFBot> OnStuck(CTFBot *me);
+	virtual EventDesiredResult<CTFBot> OnUnStuck(CTFBot *me);
 
-	virtual const char *GetName( void ) const	{ return "CreepWave"; };
+	virtual const char *GetName(void) const
+	{
+		return "CreepWave";
+	};
 
 private:
 	PathFollower m_path;
@@ -34,23 +35,23 @@ private:
 	IntervalTimer m_stuckTimer;
 };
 
-
-
 //-----------------------------------------------------------------------------
-class CTFBotCreepAttack : public Action< CTFBot >
+class CTFBotCreepAttack : public Action<CTFBot>
 {
 public:
-	CTFBotCreepAttack( CTFPlayer *victim );
+	CTFBotCreepAttack(CTFPlayer *victim);
 
-	virtual ActionResult< CTFBot >	OnStart( CTFBot *me, Action< CTFBot > *priorAction );
-	virtual ActionResult< CTFBot >	Update( CTFBot *me, float interval );
+	virtual ActionResult<CTFBot> OnStart(CTFBot *me, Action<CTFBot> *priorAction);
+	virtual ActionResult<CTFBot> Update(CTFBot *me, float interval);
 
-	virtual const char *GetName( void ) const	{ return "CreepAttack"; };
+	virtual const char *GetName(void) const
+	{
+		return "CreepAttack";
+	};
 
 private:
-	CHandle< CTFPlayer > m_victim;
+	CHandle<CTFPlayer> m_victim;
 };
-
 
 #endif // TF_CREEP_MODE
 

@@ -6,43 +6,42 @@
 //===========================================================================//
 #include "vpc.h"
 
-static ExprTree				mExprTree;							// Tree representation of the expression
-static char					mCurToken;							// Current token read from the input expression
-static const char			*mExpression;						// Array of the expression characters
-static int					mCurPosition;						// Current position in the input expression
-static char					mIdentifier[MAX_IDENTIFIER_LEN];	// Stores the identifier string
-static GetSymbolProc_t		g_pGetSymbolProc;
+static ExprTree mExprTree;					 // Tree representation of the expression
+static char mCurToken;						 // Current token read from the input expression
+static const char *mExpression;				 // Array of the expression characters
+static int mCurPosition;					 // Current position in the input expression
+static char mIdentifier[MAX_IDENTIFIER_LEN]; // Stores the identifier string
+static GetSymbolProc_t g_pGetSymbolProc;
 
 //-----------------------------------------------------------------------------
 //	Sets mCurToken to the next token in the input string. Skips all whitespace.
 //-----------------------------------------------------------------------------
-static char GetNextToken( void )
+static char GetNextToken(void)
 {
 	// while whitespace, Increment CurrentPosition
-	while( mExpression[mCurPosition] == ' ' )
+	while(mExpression[mCurPosition] == ' ')
 		++mCurPosition;
-    
+
 	// CurrentToken = Expression[CurrentPosition]
 	mCurToken = mExpression[mCurPosition++];
-  
+
 	return mCurToken;
 }
-
 
 //-----------------------------------------------------------------------------
 //	Utility funcs
 //-----------------------------------------------------------------------------
-static void FreeNode( ExprNode *node )
+static void FreeNode(ExprNode *node)
 {
 	delete node;
 }
 
-static ExprNode *AllocateNode( void )
+static ExprNode *AllocateNode(void)
 {
 	return new ExprNode;
 }
 
-static void FreeTree( ExprTree& node )
+static void FreeTree(ExprTree &node)
 {
 	if(!node)
 		return;
@@ -53,47 +52,47 @@ static void FreeTree( ExprTree& node )
 	node = 0;
 }
 
-static bool IsConditional( const char token )
+static bool IsConditional(const char token)
 {
 	char nextchar = ' ';
-	if ( token == OR_OP || token == AND_OP )
+	if(token == OR_OP || token == AND_OP)
 	{
 		nextchar = mExpression[mCurPosition++];
-		if ( (token & nextchar) == token )
+		if((token & nextchar) == token)
 		{
 			return true;
 		}
 		else
-			g_pVPC->VPCSyntaxError( "Bad expression token: %c %c", token, nextchar );
+			g_pVPC->VPCSyntaxError("Bad expression token: %c %c", token, nextchar);
 	}
 
 	return false;
 }
 
-static bool IsNotOp( const char token )
+static bool IsNotOp(const char token)
 {
-	if ( token == NOT_OP )
+	if(token == NOT_OP)
 		return true;
 	else
 		return false;
 }
 
-static bool IsIdentifierOrConstant( const char token )
+static bool IsIdentifierOrConstant(const char token)
 {
 	bool success = false;
-	if ( token == '$' )
+	if(token == '$')
 	{
 		// store the entire identifier
 		int i = 0;
 		mIdentifier[i++] = token;
-		while( (isalnum( mExpression[mCurPosition] ) || mExpression[mCurPosition] == '_') && i < MAX_IDENTIFIER_LEN )
+		while((isalnum(mExpression[mCurPosition]) || mExpression[mCurPosition] == '_') && i < MAX_IDENTIFIER_LEN)
 		{
 			mIdentifier[i] = mExpression[mCurPosition];
 			++mCurPosition;
 			++i;
 		}
 
-		if ( i < MAX_IDENTIFIER_LEN - 1 )
+		if(i < MAX_IDENTIFIER_LEN - 1)
 		{
 			mIdentifier[i] = '\0';
 			success = true;
@@ -101,17 +100,17 @@ static bool IsIdentifierOrConstant( const char token )
 	}
 	else
 	{
-		if ( isdigit( token ) )
+		if(isdigit(token))
 		{
 			int i = 0;
 			mIdentifier[i++] = token;
-			while( isdigit( mExpression[mCurPosition] ) && ( i < MAX_IDENTIFIER_LEN ) )
+			while(isdigit(mExpression[mCurPosition]) && (i < MAX_IDENTIFIER_LEN))
 			{
 				mIdentifier[i] = mExpression[mCurPosition];
 				++mCurPosition;
 				++i;
 			}
-			if ( i < MAX_IDENTIFIER_LEN - 1 )
+			if(i < MAX_IDENTIFIER_LEN - 1)
 			{
 				mIdentifier[i] = '\0';
 				success = true;
@@ -122,55 +121,55 @@ static bool IsIdentifierOrConstant( const char token )
 	return success;
 }
 
-static void MakeExprNode( ExprTree &tree, char token, Kind kind, ExprTree left, ExprTree right )
+static void MakeExprNode(ExprTree &tree, char token, Kind kind, ExprTree left, ExprTree right)
 {
 	tree = AllocateNode();
 	tree->left = left;
 	tree->right = right;
 	tree->kind = kind;
 
-	switch ( kind )
+	switch(kind)
 	{
-	case CONDITIONAL:
-		tree->data.cond = token;
-		break;
-	case LITERAL:
-		if ( isdigit( mIdentifier[0] ) )
-		{
-			tree->data.value = atoi( mIdentifier ) != 0;
-		}
-		else
-		{
-			tree->data.value = g_pGetSymbolProc( mIdentifier );
-		}
-		break;
-	case NOT:
-		break;
-	default:
-		g_pVPC->VPCError( "Error in ExpTree" );
+		case CONDITIONAL:
+			tree->data.cond = token;
+			break;
+		case LITERAL:
+			if(isdigit(mIdentifier[0]))
+			{
+				tree->data.value = atoi(mIdentifier) != 0;
+			}
+			else
+			{
+				tree->data.value = g_pGetSymbolProc(mIdentifier);
+			}
+			break;
+		case NOT:
+			break;
+		default:
+			g_pVPC->VPCError("Error in ExpTree");
 	}
 }
 
-static void MakeExpression( ExprTree& tree );
+static void MakeExpression(ExprTree &tree);
 //-----------------------------------------------------------------------------
 //	Makes a factor :: { <expression> } | <identifier>.
 //-----------------------------------------------------------------------------
-static void MakeFactor( ExprTree& tree )
+static void MakeFactor(ExprTree &tree)
 {
-	if ( mCurToken == '(' )
+	if(mCurToken == '(')
 	{
 		// Get the next token
 		GetNextToken();
 
 		// Make an expression, setting Tree to point to it
-		MakeExpression( tree );
+		MakeExpression(tree);
 	}
-	else if ( IsIdentifierOrConstant( mCurToken ) )
+	else if(IsIdentifierOrConstant(mCurToken))
 	{
-		// Make a literal node, set Tree to point to it, set left/right children to NULL. 
-		MakeExprNode( tree, mCurToken, LITERAL, NULL, NULL );
+		// Make a literal node, set Tree to point to it, set left/right children to NULL.
+		MakeExprNode(tree, mCurToken, LITERAL, NULL, NULL);
 	}
-	else if ( IsNotOp( mCurToken ) )
+	else if(IsNotOp(mCurToken))
 	{
 		// do nothing
 		return;
@@ -178,27 +177,26 @@ static void MakeFactor( ExprTree& tree )
 	else
 	{
 		// This must be a bad token
-		g_pVPC->VPCSyntaxError( "Bad expression token: %c", mCurToken );
+		g_pVPC->VPCSyntaxError("Bad expression token: %c", mCurToken);
 	}
 
 	// Get the next token
 	GetNextToken();
 }
 
-
 //-----------------------------------------------------------------------------
 //	Makes a term :: <factor> { <not> }.
 //-----------------------------------------------------------------------------
-static void MakeTerm( ExprTree& tree )
+static void MakeTerm(ExprTree &tree)
 {
 	// Make a factor, setting Tree to point to it
-	MakeFactor( tree );
+	MakeFactor(tree);
 
 	// while the next token is !
-	while( IsNotOp( mCurToken ) )
+	while(IsNotOp(mCurToken))
 	{
 		// Make an operator node, setting left child to Tree and right to NULL. (Tree points to new node)
-		MakeExprNode( tree, mCurToken, NOT, tree, NULL );
+		MakeExprNode(tree, mCurToken, NOT, tree, NULL);
 
 		// Get the next token.
 		GetNextToken();
@@ -208,75 +206,73 @@ static void MakeTerm( ExprTree& tree )
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 //	Makes a complete expression :: <term> { <cond> <term> }.
 //-----------------------------------------------------------------------------
-static void MakeExpression( ExprTree& tree )
+static void MakeExpression(ExprTree &tree)
 {
 	// Make a term, setting Tree to point to it
-	MakeTerm( tree );
+	MakeTerm(tree);
 
 	// while the next token is a conditional
-	while ( IsConditional( mCurToken ) )
+	while(IsConditional(mCurToken))
 	{
 		// Make a conditional node, setting left child to Tree and right to NULL. (Tree points to new node)
-		MakeExprNode( tree, mCurToken, CONDITIONAL, tree, NULL );
+		MakeExprNode(tree, mCurToken, CONDITIONAL, tree, NULL);
 
 		// Get the next token.
 		GetNextToken();
 
 		// Make a term, setting the right child of Tree to point to it.
-		MakeTerm( tree->right );
+		MakeTerm(tree->right);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 //	returns true for success, false for failure
 //-----------------------------------------------------------------------------
-static bool BuildExpression( void )
+static bool BuildExpression(void)
 {
 	// Get the first token, and build the tree.
 	GetNextToken();
 
-	MakeExpression( mExprTree );
+	MakeExpression(mExprTree);
 	return true;
 }
 
 //-----------------------------------------------------------------------------
 //	returns the value of the node after resolving all children
 //-----------------------------------------------------------------------------
-static bool SimplifyNode( ExprTree& node )
+static bool SimplifyNode(ExprTree &node)
 {
-	if( !node )
+	if(!node)
 		return false;
 
 	// Simplify the left and right children of this node
-	bool leftVal	= SimplifyNode(node->left);
-	bool rightVal	= SimplifyNode(node->right);
+	bool leftVal = SimplifyNode(node->left);
+	bool rightVal = SimplifyNode(node->right);
 
 	// Simplify this node
-	switch( node->kind )
+	switch(node->kind)
 	{
-	case NOT:
-		// the child of '!' is always to the right
-		node->data.value = !rightVal;
-		break;
-	
-	case CONDITIONAL:
-		if ( node->data.cond == AND_OP )
-		{
-			node->data.value = leftVal && rightVal;
-		}
-		else // OR_OP
-		{	
-			node->data.value = leftVal || rightVal;
-		}
-		break;
+		case NOT:
+			// the child of '!' is always to the right
+			node->data.value = !rightVal;
+			break;
 
-	default: // LITERAL
-		break;
+		case CONDITIONAL:
+			if(node->data.cond == AND_OP)
+			{
+				node->data.value = leftVal && rightVal;
+			}
+			else // OR_OP
+			{
+				node->data.value = leftVal || rightVal;
+			}
+			break;
+
+		default: // LITERAL
+			break;
 	}
 
 	// This node has beed resolved
@@ -284,41 +280,28 @@ static bool SimplifyNode( ExprTree& node )
 	return node->data.value;
 }
 
-
 //-----------------------------------------------------------------------------
 //	Interface to solve a conditional expression. Returns false on failure.
 //-----------------------------------------------------------------------------
-bool EvaluateExpression( bool &result, const char *InfixExpression, GetSymbolProc_t pGetSymbolProc )
+bool EvaluateExpression(bool &result, const char *InfixExpression, GetSymbolProc_t pGetSymbolProc)
 {
-	if ( !InfixExpression )
+	if(!InfixExpression)
 		return false;
 
 	g_pGetSymbolProc = pGetSymbolProc;
 
-	bool success	= false;
-	mExpression		= InfixExpression;
-	mExprTree		= 0;
-	mCurPosition	= 0;
+	bool success = false;
+	mExpression = InfixExpression;
+	mExprTree = 0;
+	mCurPosition = 0;
 
 	// Building the expression tree will fail on bad syntax
-	if ( BuildExpression() )
+	if(BuildExpression())
 	{
 		success = true;
-		result = SimplifyNode( mExprTree );
+		result = SimplifyNode(mExprTree);
 	}
 
-	FreeTree( mExprTree );
+	FreeTree(mExprTree);
 	return success;
 }
-
-
-
-
-
-
-
-
-
-
-
-

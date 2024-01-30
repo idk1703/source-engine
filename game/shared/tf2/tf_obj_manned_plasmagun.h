@@ -14,7 +14,7 @@
 
 #include "tf_obj_base_manned_gun.h"
 
-#if defined( CLIENT_DLL )
+#if defined(CLIENT_DLL)
 
 #define CObjectMannedPlasmagun C_ObjectMannedPlasmagun
 
@@ -26,41 +26,40 @@
 class CObjectMannedPlasmagun : public CObjectBaseMannedGun
 {
 public:
-#if !defined( CLIENT_DLL )
+#if !defined(CLIENT_DLL)
 	DECLARE_DATADESC();
 #endif
 
 	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	DECLARE_CLASS( CObjectMannedPlasmagun, CObjectBaseMannedGun );
+	DECLARE_CLASS(CObjectMannedPlasmagun, CObjectBaseMannedGun);
 
-	static CObjectMannedPlasmagun* Create(const Vector &vOrigin, const QAngle &vAngles);
+	static CObjectMannedPlasmagun *Create(const Vector &vOrigin, const QAngle &vAngles);
 
-					CObjectMannedPlasmagun();
+	CObjectMannedPlasmagun();
 
-	virtual void	Spawn();
-	virtual void	Precache();
-	virtual void	SetupTeamModel( void );
-	virtual void	FinishedBuilding( void );
+	virtual void Spawn();
+	virtual void Precache();
+	virtual void SetupTeamModel(void);
+	virtual void FinishedBuilding(void);
 
 	// All predicted weapons need to implement and return true
-	virtual bool			IsPredicted( void ) const
-	{ 
+	virtual bool IsPredicted(void) const
+	{
 		return true;
 	}
 
-
-#if defined( CLIENT_DLL )
-	virtual bool	ShouldPredict( void )
+#if defined(CLIENT_DLL)
+	virtual bool ShouldPredict(void)
 	{
-		if ( GetOwner() == C_BasePlayer::GetLocalPlayer() )
+		if(GetOwner() == C_BasePlayer::GetLocalPlayer())
 			return true;
 
 		return BaseClass::ShouldPredict();
 	}
 
-	virtual void	PreDataUpdate( DataUpdateType_t updateType );
-	virtual void	PostDataUpdate( DataUpdateType_t updateType );
+	virtual void PreDataUpdate(DataUpdateType_t updateType);
+	virtual void PostDataUpdate(DataUpdateType_t updateType);
 #endif
 
 protected:
@@ -68,21 +67,20 @@ protected:
 	void RechargeThink();
 
 	// Fire the weapon
-	virtual void Fire( void );
-	
+	virtual void Fire(void);
+
 protected:
-	int		m_nMaxAmmoCount;
-	CNetworkVar( float, m_flNextIdleTime );
+	int m_nMaxAmmoCount;
+	CNetworkVar(float, m_flNextIdleTime);
 
 	// Handling for the multiple barrels
-	int		m_nRightBarrelAttachment;
-	CNetworkVar( bool, m_bFiringLeft );
+	int m_nRightBarrelAttachment;
+	CNetworkVar(bool, m_bFiringLeft);
 
 private:
-	CObjectMannedPlasmagun( const CObjectMannedPlasmagun& src );
+	CObjectMannedPlasmagun(const CObjectMannedPlasmagun &src);
 
-	int		m_nPreviousTeam;
+	int m_nPreviousTeam;
 };
-
 
 #endif // TF_OBJ_MANNED_PLASMAGUN_H

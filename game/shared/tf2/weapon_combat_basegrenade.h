@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,34 +14,38 @@
 #include "weapon_combat_usedwithshieldbase.h"
 #include "basegrenade_shared.h"
 
-#if defined( CLIENT_DLL )
+#if defined(CLIENT_DLL)
 #define CWeaponCombatBaseGrenade C_WeaponCombatBaseGrenade
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CWeaponCombatBaseGrenade : public CWeaponCombatUsedWithShieldBase
 {
-	DECLARE_CLASS( CWeaponCombatBaseGrenade, CWeaponCombatUsedWithShieldBase );
+	DECLARE_CLASS(CWeaponCombatBaseGrenade, CWeaponCombatUsedWithShieldBase);
+
 public:
 	CWeaponCombatBaseGrenade();
 
 	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
-	virtual void	ItemPostFrame( void );
-	virtual void	PrimaryAttack( void );
-	virtual float	GetFireRate( void );
-	virtual void	ThrowGrenade( void );
+	virtual void ItemPostFrame(void);
+	virtual void PrimaryAttack(void);
+	virtual float GetFireRate(void);
+	virtual void ThrowGrenade(void);
 
 	// Custom grenade types
-	virtual CBaseGrenade *CreateGrenade( const Vector &vecOrigin, const Vector &vecAngles, CBasePlayer *pOwner ) { return NULL; }
+	virtual CBaseGrenade *CreateGrenade(const Vector &vecOrigin, const Vector &vecAngles, CBasePlayer *pOwner)
+	{
+		return NULL;
+	}
 
 	/*
 	// All predicted weapons need to implement and return true
 	virtual bool			IsPredicted( void ) const
-	{ 
+	{
 		return true;
 	}
 
@@ -57,10 +61,10 @@ public:
 	*/
 
 public:
-	CNetworkVar( float, m_flStartedThrowAt );
+	CNetworkVar(float, m_flStartedThrowAt);
 
-private:														
-	CWeaponCombatBaseGrenade( const CWeaponCombatBaseGrenade & );						
+private:
+	CWeaponCombatBaseGrenade(const CWeaponCombatBaseGrenade &);
 };
 
 #endif // WEAPON_COMBAT_BASEGRENADE_H

@@ -17,95 +17,96 @@ enum
 #define EMP_WAVE_AMPLITUDE 8.0f
 
 //-----------------------------------------------------------------------------
-// Mobile version of the shield 
+// Mobile version of the shield
 //-----------------------------------------------------------------------------
 
 class C_ShieldMobile;
 class C_ShieldMobileActiveVertList : public IActiveVertList
 {
 public:
-	void			Init( C_ShieldMobile *pShield, unsigned char *pVertList );
+	void Init(C_ShieldMobile *pShield, unsigned char *pVertList);
 
-// IActiveVertList overrides.
+	// IActiveVertList overrides.
 public:
-
-	virtual int		GetActiveVertState( int iVert );
-	virtual void	SetActiveVertState( int iVert, int bOn );
+	virtual int GetActiveVertState(int iVert);
+	virtual void SetActiveVertState(int iVert, int bOn);
 
 private:
-	C_ShieldMobile	*m_pShield;
-	unsigned char	*m_pVertsActive;
+	C_ShieldMobile *m_pShield;
+	unsigned char *m_pVertsActive;
 };
-
 
 class C_ShieldMobile : public C_Shield
 {
-	DECLARE_CLASS( C_ShieldMobile, C_Shield );
+	DECLARE_CLASS(C_ShieldMobile, C_Shield);
+
 public:
 	DECLARE_CLIENTCLASS();
 
 	C_ShieldMobile();
 	~C_ShieldMobile();
 
-	void OnDataChanged( DataUpdateType_t updateType );
-	virtual void GetBounds( Vector& mins, Vector& maxs );
+	void OnDataChanged(DataUpdateType_t updateType);
+	virtual void GetBounds(Vector &mins, Vector &maxs);
 
-	virtual void AddEntity( );
+	virtual void AddEntity();
 
-	// Return true if the panel is active 
-	virtual bool IsPanelActive( int x, int y );
+	// Return true if the panel is active
+	virtual bool IsPanelActive(int x, int y);
 
 	// Gets at the control point data; who knows how it was made?
-	virtual void GetShieldData( Vector const** ppVerts, float* pOpacity, float* pBlend );
-	virtual const Vector& GetPoint( int x, int y ) { return m_ShieldEffect.GetPoint( x, y ); }
+	virtual void GetShieldData(Vector const **ppVerts, float *pOpacity, float *pBlend);
+	virtual const Vector &GetPoint(int x, int y)
+	{
+		return m_ShieldEffect.GetPoint(x, y);
+	}
 
-	virtual void SetThetaPhi( float flTheta, float flPhi ) { m_ShieldEffect.SetThetaPhi(flTheta,flPhi); }
+	virtual void SetThetaPhi(float flTheta, float flPhi)
+	{
+		m_ShieldEffect.SetThetaPhi(flTheta, flPhi);
+	}
 
 public:
 	// networked data
-	unsigned char	m_pVertsActive[SHIELD_VERTEX_BYTES];
-	unsigned char	m_ShieldState;
+	unsigned char m_pVertsActive[SHIELD_VERTEX_BYTES];
+	unsigned char m_ShieldState;
 
 private:
-	C_ShieldMobile( const C_ShieldMobile& );
+	C_ShieldMobile(const C_ShieldMobile &);
 
 	// Is a particular panel an edge?
-	bool IsVertexValid( float s, float t ) const;
-	void PreRender( );
+	bool IsVertexValid(float s, float t) const;
+	void PreRender();
 
 private:
-	CShieldEffect					m_ShieldEffect;
-	C_ShieldMobileActiveVertList	m_VertList;
+	CShieldEffect m_ShieldEffect;
+	C_ShieldMobileActiveVertList m_VertList;
 	float m_flTheta;
 	float m_flPhi;
 };
-
 
 //-----------------------------------------------------------------------------
 // C_ShieldMobileActiveVertList functions
 //-----------------------------------------------------------------------------
 
-void C_ShieldMobileActiveVertList::Init( C_ShieldMobile *pShield, unsigned char *pVertList )
+void C_ShieldMobileActiveVertList::Init(C_ShieldMobile *pShield, unsigned char *pVertList)
 {
 	m_pShield = pShield;
 	m_pVertsActive = pVertList;
 }
 
-
-int C_ShieldMobileActiveVertList::GetActiveVertState( int iVert )
+int C_ShieldMobileActiveVertList::GetActiveVertState(int iVert)
 {
-	return m_pVertsActive[iVert>>3] & (1 << (iVert & 7));
+	return m_pVertsActive[iVert >> 3] & (1 << (iVert & 7));
 }
 
-
-void C_ShieldMobileActiveVertList::SetActiveVertState( int iVert, int bOn )
+void C_ShieldMobileActiveVertList::SetActiveVertState(int iVert, int bOn)
 {
-	if ( bOn )
-		m_pVertsActive[iVert>>3] |= (1 << (iVert & 7));
+	if(bOn)
+		m_pVertsActive[iVert >> 3] |= (1 << (iVert & 7));
 	else
-		m_pVertsActive[iVert>>3] &= ~(1 << (iVert & 7));
+		m_pVertsActive[iVert >> 3] &= ~(1 << (iVert & 7));
 }
-
 
 //-----------------------------------------------------------------------------
 // Data table
@@ -113,36 +114,28 @@ void C_ShieldMobileActiveVertList::SetActiveVertState( int iVert, int bOn )
 
 IMPLEMENT_CLIENTCLASS_DT(C_ShieldMobile, DT_Shield_Mobile, CShieldMobile)
 
-	RecvPropInt( RECVINFO(m_ShieldState) ),
-	RecvPropArray( 
-		RecvPropInt( RECVINFO(m_pVertsActive[0])), 
-		m_pVertsActive 
-	),
-	RecvPropFloat( RECVINFO(m_flTheta) ),
-	RecvPropFloat( RECVINFO(m_flPhi) ),
+RecvPropInt(RECVINFO(m_ShieldState)), RecvPropArray(RecvPropInt(RECVINFO(m_pVertsActive[0])), m_pVertsActive),
+	RecvPropFloat(RECVINFO(m_flTheta)), RecvPropFloat(RECVINFO(m_flPhi)),
 
-END_RECV_TABLE()
+END_RECV_TABLE
+()
 
+	//-----------------------------------------------------------------------------
+	// Various raycasting routines
+	//-----------------------------------------------------------------------------
 
-//-----------------------------------------------------------------------------
-// Various raycasting routines
-//-----------------------------------------------------------------------------
-
-
-void ShieldTraceLine(const Vector &vecStart, const Vector &vecEnd, 
-					 unsigned int mask, int collisionGroup, trace_t *ptr)
+	void ShieldTraceLine(const Vector &vecStart, const Vector &vecEnd, unsigned int mask, int collisionGroup,
+						 trace_t *ptr)
 {
-	UTIL_TraceLine(vecStart, vecEnd, mask, NULL, collisionGroup, ptr );
+	UTIL_TraceLine(vecStart, vecEnd, mask, NULL, collisionGroup, ptr);
 }
 
-void ShieldTraceHull(const Vector &vecStart, const Vector &vecEnd, 
-					 const Vector &hullMin, const Vector &hullMax, 
+void ShieldTraceHull(const Vector &vecStart, const Vector &vecEnd, const Vector &hullMin, const Vector &hullMax,
 					 unsigned int mask, int collisionGroup, trace_t *ptr)
 {
 	CTraceFilterWorldOnly traceFilter;
-	enginetrace->TraceHull( vecStart, vecEnd, hullMin, hullMax, mask, &traceFilter, ptr );
+	enginetrace->TraceHull(vecStart, vecEnd, hullMin, hullMax, mask, &traceFilter, ptr);
 }
-
 
 //-----------------------------------------------------------------------------
 // Constructor, destructor
@@ -150,27 +143,25 @@ void ShieldTraceHull(const Vector &vecStart, const Vector &vecEnd,
 
 C_ShieldMobile::C_ShieldMobile() : m_ShieldEffect(ShieldTraceLine, ShieldTraceHull)
 {
-	m_VertList.Init( this, m_pVertsActive );
-	m_ShieldEffect.SetActiveVertexList( &m_VertList );
+	m_VertList.Init(this, m_pVertsActive);
+	m_ShieldEffect.SetActiveVertexList(&m_VertList);
 	m_ShieldEffect.Spawn(vec3_origin, vec3_angle);
-	InitShield( SHIELD_NUM_HORIZONTAL_POINTS, SHIELD_NUM_VERTICAL_POINTS, NUM_SUBDIVISIONS );
+	InitShield(SHIELD_NUM_HORIZONTAL_POINTS, SHIELD_NUM_VERTICAL_POINTS, NUM_SUBDIVISIONS);
 }
 
-C_ShieldMobile::~C_ShieldMobile()
-{
-}
+C_ShieldMobile::~C_ShieldMobile() {}
 
 //-----------------------------------------------------------------------------
 // Get this after the data changes
 //-----------------------------------------------------------------------------
 
-void C_ShieldMobile::OnDataChanged( DataUpdateType_t updateType )
+void C_ShieldMobile::OnDataChanged(DataUpdateType_t updateType)
 {
-	BaseClass::OnDataChanged( updateType );
+	BaseClass::OnDataChanged(updateType);
 
-	m_ShieldEffect.SetCurrentPosition( GetAbsOrigin() );
-	m_ShieldEffect.SetCurrentAngles( GetAbsAngles() );
-	m_ShieldEffect.SetThetaPhi( m_flTheta, m_flPhi );
+	m_ShieldEffect.SetCurrentPosition(GetAbsOrigin());
+	m_ShieldEffect.SetCurrentAngles(GetAbsAngles());
+	m_ShieldEffect.SetThetaPhi(m_flTheta, m_flPhi);
 
 	// No need to simulate, just compute active panels from network data
 	m_ShieldEffect.ComputeControlPoints();
@@ -181,15 +172,15 @@ void C_ShieldMobile::OnDataChanged( DataUpdateType_t updateType )
 // A little pre-render processing
 //-----------------------------------------------------------------------------
 
-void C_ShieldMobile::PreRender( )
+void C_ShieldMobile::PreRender()
 {
-	if (m_ShieldState & SHIELD_MOBILE_EMP)
+	if(m_ShieldState & SHIELD_MOBILE_EMP)
 	{
 		// Decay fade if we've been EMPed or if we're inactive
-		if (m_FadeValue > 0.0f)
+		if(m_FadeValue > 0.0f)
 		{
 			m_FadeValue -= gpGlobals->frametime / SHIELD_EMP_FADE_TIME;
-			if (m_FadeValue < 0.0f)
+			if(m_FadeValue < 0.0f)
 			{
 				m_FadeValue = 0.0f;
 
@@ -199,13 +190,14 @@ void C_ShieldMobile::PreRender( )
 			else
 			{
 				Vector dir;
-				AngleVectors( m_ShieldEffect.GetCurrentAngles(), & dir );
+				AngleVectors(m_ShieldEffect.GetCurrentAngles(), &dir);
 
 				// Futz with the control points if we've been EMPed
-				for (int i = 0; i < SHIELD_NUM_CONTROL_POINTS; ++i)
+				for(int i = 0; i < SHIELD_NUM_CONTROL_POINTS; ++i)
 				{
 					// Get the direction for the point
-					float factor = -EMP_WAVE_AMPLITUDE * sin( i * M_PI * 0.5f + gpGlobals->curtime * M_PI / SHIELD_EMP_WOBBLE_TIME );
+					float factor =
+						-EMP_WAVE_AMPLITUDE * sin(i * M_PI * 0.5f + gpGlobals->curtime * M_PI / SHIELD_EMP_WOBBLE_TIME);
 					m_ShieldEffect.GetPoint(i) += dir * factor;
 				}
 			}
@@ -214,10 +206,10 @@ void C_ShieldMobile::PreRender( )
 	else
 	{
 		// Fade back in, no longer EMPed
-		if (m_FadeValue < 1.0f)
+		if(m_FadeValue < 1.0f)
 		{
 			m_FadeValue += gpGlobals->frametime / SHIELD_EMP_FADE_TIME;
-			if (m_FadeValue >= 1.0f)
+			if(m_FadeValue >= 1.0f)
 			{
 				m_FadeValue = 1.0f;
 			}
@@ -225,9 +217,9 @@ void C_ShieldMobile::PreRender( )
 	}
 }
 
-void C_ShieldMobile::AddEntity( )
+void C_ShieldMobile::AddEntity()
 {
-	BaseClass::AddEntity( );
+	BaseClass::AddEntity();
 	PreRender();
 }
 
@@ -235,16 +227,16 @@ void C_ShieldMobile::AddEntity( )
 // Bounds computation
 //-----------------------------------------------------------------------------
 
-void C_ShieldMobile::GetBounds( Vector& mins, Vector& maxs )
+void C_ShieldMobile::GetBounds(Vector &mins, Vector &maxs)
 {
-	m_ShieldEffect.ComputeBounds( mins, maxs );
+	m_ShieldEffect.ComputeBounds(mins, maxs);
 }
 
 //-----------------------------------------------------------------------------
-// Return true if the panel is active 
+// Return true if the panel is active
 //-----------------------------------------------------------------------------
 
-bool C_ShieldMobile::IsPanelActive( int x, int y )
+bool C_ShieldMobile::IsPanelActive(int x, int y)
 {
 	return m_ShieldEffect.IsPanelActive(x, y);
 }
@@ -253,15 +245,15 @@ bool C_ShieldMobile::IsPanelActive( int x, int y )
 // Gets at the control point data; who knows how it was made?
 //-----------------------------------------------------------------------------
 
-void C_ShieldMobile::GetShieldData( Vector const** ppVerts, float* pOpacity, float* pBlend )
+void C_ShieldMobile::GetShieldData(Vector const **ppVerts, float *pOpacity, float *pBlend)
 {
-	for ( int i = 0; i < SHIELD_NUM_CONTROL_POINTS; ++i )
+	for(int i = 0; i < SHIELD_NUM_CONTROL_POINTS; ++i)
 	{
 		ppVerts[i] = &m_ShieldEffect.GetControlPoint(i);
 
-		if ( m_pVertsActive[i >> 3] & (1 << (i & 0x7)) )
+		if(m_pVertsActive[i >> 3] & (1 << (i & 0x7)))
 		{
-			pOpacity[i] = m_ShieldEffect.ComputeOpacity( *ppVerts[i], GetAbsOrigin() );
+			pOpacity[i] = m_ShieldEffect.ComputeOpacity(*ppVerts[i], GetAbsOrigin());
 			pBlend[i] = 1.0f;
 		}
 		else
@@ -271,4 +263,3 @@ void C_ShieldMobile::GetShieldData( Vector const** ppVerts, float* pOpacity, flo
 		}
 	}
 }
-

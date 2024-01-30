@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,23 +13,23 @@
 
 #include "collection_crafting_panel.h"
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHalloweenOfferingSelectionPanel : public CCollectionCraftingSelectionPanel
 {
-	DECLARE_CLASS_SIMPLE( CHalloweenOfferingSelectionPanel, CCollectionCraftingSelectionPanel );
+	DECLARE_CLASS_SIMPLE(CHalloweenOfferingSelectionPanel, CCollectionCraftingSelectionPanel);
+
 public:
-	CHalloweenOfferingSelectionPanel( Panel *pParent ) : BaseClass( pParent ) {}
+	CHalloweenOfferingSelectionPanel(Panel *pParent) : BaseClass(pParent) {}
 
 	//-----------------------------------------------------------------------------
-	virtual const char *GetSelectionInvalidReason( const IEconItemInterface *pTestItem, const IEconItemInterface *pSourceItem ) const
+	virtual const char *GetSelectionInvalidReason(const IEconItemInterface *pTestItem,
+												  const IEconItemInterface *pSourceItem) const
 	{
-		return GetHalloweenOfferingInvalidReason( pTestItem, pSourceItem );
+		return GetHalloweenOfferingInvalidReason(pTestItem, pSourceItem);
 	}
 };
-
 
 //-----------------------------------------------------------------------------
 // A panel to let users choose 10 weapons to craft up within collections
@@ -37,17 +37,22 @@ public:
 class CHalloweenOfferingPanel : public CCollectionCraftingPanel
 {
 public:
-	DECLARE_CLASS_SIMPLE( CHalloweenOfferingPanel, CCollectionCraftingPanel );
-	CHalloweenOfferingPanel( vgui::Panel *parent, CItemModelPanelToolTip* pTooltip );
-	~CHalloweenOfferingPanel( void );
+	DECLARE_CLASS_SIMPLE(CHalloweenOfferingPanel, CCollectionCraftingPanel);
+	CHalloweenOfferingPanel(vgui::Panel *parent, CItemModelPanelToolTip *pTooltip);
+	~CHalloweenOfferingPanel(void);
 
-	virtual const char *GetResFile( void ) { return "Resource/UI/econ/HalloweenOfferingDialog.res"; }
-	virtual void OnCommand( const char *command ) OVERRIDE;
+	virtual const char *GetResFile(void)
+	{
+		return "Resource/UI/econ/HalloweenOfferingDialog.res";
+	}
+	virtual void OnCommand(const char *command) OVERRIDE;
 
-	virtual int GetInputItemCount() { return HALLOWEEN_OFFERING_ITEM_COUNT; }
+	virtual int GetInputItemCount()
+	{
+		return HALLOWEEN_OFFERING_ITEM_COUNT;
+	}
 
 protected:
-
 	virtual void CreateSelectionPanel();
 };
 

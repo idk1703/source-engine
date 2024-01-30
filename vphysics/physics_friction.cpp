@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -13,48 +13,46 @@
 #include "ivp_listener_collision.hxx"
 #include "ivp_friction.hxx"
 
-
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
 class CFrictionSnapshot : public IPhysicsFrictionSnapshot
 {
 public:
-	CFrictionSnapshot( IVP_Real_Object *pObject );
+	CFrictionSnapshot(IVP_Real_Object *pObject);
 	~CFrictionSnapshot();
 
 	bool IsValid();
 
 	// Object 0 is this object, Object 1 is the other object
-	IPhysicsObject *GetObject( int index );
-	int GetMaterial( int index );
+	IPhysicsObject *GetObject(int index);
+	int GetMaterial(int index);
 
-	void GetContactPoint( Vector &out );
-	void GetSurfaceNormal( Vector &out );
+	void GetContactPoint(Vector &out);
+	void GetSurfaceNormal(Vector &out);
 	float GetNormalForce();
 	float GetEnergyAbsorbed();
 	void RecomputeFriction();
 	void ClearFrictionForce();
 
 	void MarkContactForDelete();
-	void DeleteAllMarkedContacts( bool wakeObjects );
+	void DeleteAllMarkedContacts(bool wakeObjects);
 	void NextFrictionData();
 	float GetFrictionCoefficient();
 
-
 private:
-	void SetFrictionSynapse( IVP_Synapse_Friction *pSet );
+	void SetFrictionSynapse(IVP_Synapse_Friction *pSet);
 	CUtlVector<IVP_Real_Object *> *m_pDeleteList;
-	IVP_Real_Object			*m_pObject;
-	IVP_Synapse_Friction	*m_pFriction;
-	IVP_Contact_Point		*m_pContactPoint;
-	int						m_synapseIndex;
+	IVP_Real_Object *m_pObject;
+	IVP_Synapse_Friction *m_pFriction;
+	IVP_Contact_Point *m_pContactPoint;
+	int m_synapseIndex;
 };
 
-CFrictionSnapshot::CFrictionSnapshot( IVP_Real_Object *pObject ) : m_pObject(pObject)
+CFrictionSnapshot::CFrictionSnapshot(IVP_Real_Object *pObject) : m_pObject(pObject)
 {
 	m_pDeleteList = NULL;
-	SetFrictionSynapse( pObject->get_first_friction_synapse() );
+	SetFrictionSynapse(pObject->get_first_friction_synapse());
 }
 
 CFrictionSnapshot::~CFrictionSnapshot()
@@ -62,25 +60,25 @@ CFrictionSnapshot::~CFrictionSnapshot()
 	delete m_pDeleteList;
 }
 
-void CFrictionSnapshot::DeleteAllMarkedContacts( bool wakeObjects )
+void CFrictionSnapshot::DeleteAllMarkedContacts(bool wakeObjects)
 {
-	if ( !m_pDeleteList )
+	if(!m_pDeleteList)
 		return;
 
-	for ( int i = 0; i < m_pDeleteList->Count(); i++ )
+	for(int i = 0; i < m_pDeleteList->Count(); i++)
 	{
-		if ( wakeObjects )
+		if(wakeObjects)
 		{
 			m_pDeleteList->Element(i)->ensure_in_simulation();
 		}
-		DeleteAllFrictionPairs( m_pObject, m_pDeleteList->Element(i) );
+		DeleteAllFrictionPairs(m_pObject, m_pDeleteList->Element(i));
 	}
 	m_pFriction = NULL;
 }
 
-void CFrictionSnapshot::SetFrictionSynapse( IVP_Synapse_Friction *pSet )
+void CFrictionSnapshot::SetFrictionSynapse(IVP_Synapse_Friction *pSet)
 {
-	if ( pSet )
+	if(pSet)
 	{
 		m_pFriction = pSet;
 		m_pContactPoint = pSet->get_contact_point();
@@ -99,54 +97,54 @@ bool CFrictionSnapshot::IsValid()
 	return m_pFriction != NULL ? true : false;
 }
 
-IPhysicsObject *CFrictionSnapshot::GetObject( int index )
+IPhysicsObject *CFrictionSnapshot::GetObject(int index)
 {
 	IVP_Synapse_Friction *pFriction = m_pFriction;
-	if ( index == 1 )
+	if(index == 1)
 	{
 		pFriction = m_pContactPoint->get_synapse(!m_synapseIndex);
 	}
 	return static_cast<IPhysicsObject *>(pFriction->get_object()->client_data);
 }
 
-void CFrictionSnapshot::MarkContactForDelete() 
-{ 
+void CFrictionSnapshot::MarkContactForDelete()
+{
 	IVP_Synapse_Friction *pFriction = m_pContactPoint->get_synapse(!m_synapseIndex);
 	IVP_Real_Object *pObject = pFriction->get_object();
 	Assert(pObject != m_pObject);
-	if ( pObject != m_pObject )
+	if(pObject != m_pObject)
 	{
-		if ( !m_pDeleteList )
+		if(!m_pDeleteList)
 		{
 			m_pDeleteList = new CUtlVector<IVP_Real_Object *>;
 		}
-		m_pDeleteList->AddToTail( pObject );
+		m_pDeleteList->AddToTail(pObject);
 	}
 }
 
-int CFrictionSnapshot::GetMaterial( int index )
+int CFrictionSnapshot::GetMaterial(int index)
 {
 	IVP_Material *ivpMats[2];
 
-    m_pContactPoint->get_material_info(ivpMats);
-	
+	m_pContactPoint->get_material_info(ivpMats);
+
 	// index 1 is the other one
 	index ^= m_synapseIndex;
 
-	return physprops->GetIVPMaterialIndex( ivpMats[index] );
+	return physprops->GetIVPMaterialIndex(ivpMats[index]);
 }
 
-void CFrictionSnapshot::GetContactPoint( Vector &out )
+void CFrictionSnapshot::GetContactPoint(Vector &out)
 {
-	ConvertPositionToHL( *m_pContactPoint->get_contact_point_ws(), out ); 
+	ConvertPositionToHL(*m_pContactPoint->get_contact_point_ws(), out);
 }
 
-void CFrictionSnapshot::GetSurfaceNormal( Vector &out )
+void CFrictionSnapshot::GetSurfaceNormal(Vector &out)
 {
-	float sign[2] = {1,-1};
+	float sign[2] = {1, -1};
 	IVP_U_Float_Point normal;
-	IVP_Contact_Point_API::get_surface_normal_ws(const_cast<IVP_Contact_Point *>(m_pContactPoint), &normal );
-	ConvertDirectionToHL( normal, out );
+	IVP_Contact_Point_API::get_surface_normal_ws(const_cast<IVP_Contact_Point *>(m_pContactPoint), &normal);
+	ConvertDirectionToHL(normal, out);
 	out *= sign[m_synapseIndex];
 	VectorNormalize(out);
 }
@@ -158,12 +156,12 @@ float CFrictionSnapshot::GetFrictionCoefficient()
 
 float CFrictionSnapshot::GetNormalForce()
 {
-	return ConvertDistanceToHL( IVP_Contact_Point_API::get_vert_force( m_pContactPoint ) );
+	return ConvertDistanceToHL(IVP_Contact_Point_API::get_vert_force(m_pContactPoint));
 }
 
 float CFrictionSnapshot::GetEnergyAbsorbed()
 {
-	return ConvertEnergyToHL( IVP_Contact_Point_API::get_eliminated_energy( m_pContactPoint ) );
+	return ConvertEnergyToHL(IVP_Contact_Point_API::get_eliminated_energy(m_pContactPoint));
 }
 
 void CFrictionSnapshot::RecomputeFriction()
@@ -178,21 +176,20 @@ void CFrictionSnapshot::ClearFrictionForce()
 
 void CFrictionSnapshot::NextFrictionData()
 {
-	SetFrictionSynapse( m_pFriction->get_next() );
+	SetFrictionSynapse(m_pFriction->get_next());
 }
 
-IPhysicsFrictionSnapshot *CreateFrictionSnapshot( IVP_Real_Object *pObject )
+IPhysicsFrictionSnapshot *CreateFrictionSnapshot(IVP_Real_Object *pObject)
 {
-	return new CFrictionSnapshot( pObject );
+	return new CFrictionSnapshot(pObject);
 }
 
-void DestroyFrictionSnapshot( IPhysicsFrictionSnapshot *pSnapshot )
+void DestroyFrictionSnapshot(IPhysicsFrictionSnapshot *pSnapshot)
 {
 	delete pSnapshot;
 }
 
-
-void DeleteAllFrictionPairs( IVP_Real_Object *pObject0, IVP_Real_Object *pObject1 )
+void DeleteAllFrictionPairs(IVP_Real_Object *pObject0, IVP_Real_Object *pObject1)
 {
-	pObject0->unlink_contact_points_for_object( pObject1 );
+	pObject0->unlink_contact_points_for_object(pObject1);
 }

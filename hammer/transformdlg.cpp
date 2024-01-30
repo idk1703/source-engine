@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -18,9 +18,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // CTransformDlg dialog
 
-
-CTransformDlg::CTransformDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(CTransformDlg::IDD, pParent)
+CTransformDlg::CTransformDlg(CWnd *pParent /*=NULL*/) : CDialog(CTransformDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CTransformDlg)
 	m_iMode = -1;
@@ -30,8 +28,7 @@ CTransformDlg::CTransformDlg(CWnd* pParent /*=NULL*/)
 	//}}AFX_DATA_INIT
 }
 
-
-void CTransformDlg::DoDataExchange(CDataExchange* pDX)
+void CTransformDlg::DoDataExchange(CDataExchange *pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CTransformDlg)
@@ -41,7 +38,6 @@ void CTransformDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_Z, m_Z);
 	//}}AFX_DATA_MAP
 }
-
 
 BEGIN_MESSAGE_MAP(CTransformDlg, CDialog)
 	//{{AFX_MSG_MAP(CTransformDlg)

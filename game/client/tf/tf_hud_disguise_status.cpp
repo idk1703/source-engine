@@ -35,63 +35,63 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CDisguiseStatus : public CHudElement, public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CDisguiseStatus, EditablePanel );
+	DECLARE_CLASS_SIMPLE(CDisguiseStatus, EditablePanel);
 
 public:
-	CDisguiseStatus( const char *pElementName );
+	CDisguiseStatus(const char *pElementName);
 
-	void			Init( void );
-	virtual void	ApplySchemeSettings( IScheme *scheme );
-	virtual void	PerformLayout( void );
-	virtual void	Paint( void );
+	void Init(void);
+	virtual void ApplySchemeSettings(IScheme *scheme);
+	virtual void PerformLayout(void);
+	virtual void Paint(void);
 
-	void			ShowAndUpdateStatus( void );
-	void			HideStatus( void );
-	virtual bool	ShouldDraw( void );
+	void ShowAndUpdateStatus(void);
+	void HideStatus(void);
+	virtual bool ShouldDraw(void);
 
-	void			CheckName( void );
-	void			CheckWeapon( void );
-	void			CheckHealth( void );
+	void CheckName(void);
+	void CheckWeapon(void);
+	void CheckHealth(void);
 
 private:
-	CPanelAnimationVar( HFont, m_hFont, "TextFont", "TargetID" );
+	CPanelAnimationVar(HFont, m_hFont, "TextFont", "TargetID");
 
-	CTFImagePanel			*m_pBGPanel;
-	CEmbeddedItemModelPanel	*m_pModelPanel;
+	CTFImagePanel *m_pBGPanel;
+	CEmbeddedItemModelPanel *m_pModelPanel;
 
-	CTFSpectatorGUIHealth	*m_pDisguiseHealth;
+	CTFSpectatorGUIHealth *m_pDisguiseHealth;
 
-	Label					*m_pDisguiseNameLabel;
-	Label					*m_pWeaponNameLabel;
+	Label *m_pDisguiseNameLabel;
+	Label *m_pWeaponNameLabel;
 
-	bool					m_bDisguised;
-	CTFWeaponBase			*m_pDisguiseWeapon;
-	int						m_iDisguiseTeam;
+	bool m_bDisguised;
+	CTFWeaponBase *m_pDisguiseWeapon;
+	int m_iDisguiseTeam;
 };
 
-DECLARE_HUDELEMENT( CDisguiseStatus );
+DECLARE_HUDELEMENT(CDisguiseStatus);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CDisguiseStatus::CDisguiseStatus( const char *pElementName ) :
-	CHudElement( pElementName ), BaseClass( NULL, "DisguiseStatus" )
+CDisguiseStatus::CDisguiseStatus(const char *pElementName)
+	: CHudElement(pElementName), BaseClass(NULL, "DisguiseStatus")
 {
 	Panel *pParent = g_pClientMode->GetViewport();
-	SetParent( pParent );
+	SetParent(pParent);
 
-	SetHiddenBits( HIDEHUD_MISCSTATUS );
+	SetHiddenBits(HIDEHUD_MISCSTATUS);
 
 	m_pModelPanel = NULL;
 	m_pBGPanel = NULL;
 	m_pDisguiseNameLabel = NULL;
 	m_pWeaponNameLabel = NULL;
 
-	m_pDisguiseHealth = new CTFSpectatorGUIHealth( this, "SpectatorGUIHealth" );
+	m_pDisguiseHealth = new CTFSpectatorGUIHealth(this, "SpectatorGUIHealth");
 
 	m_bDisguised = true;
 	m_pDisguiseWeapon = NULL;
@@ -101,41 +101,40 @@ CDisguiseStatus::CDisguiseStatus( const char *pElementName ) :
 //-----------------------------------------------------------------------------
 // Purpose: Setup
 //-----------------------------------------------------------------------------
-void CDisguiseStatus::Init( void )
+void CDisguiseStatus::Init(void)
 {
 	HideStatus();
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CDisguiseStatus::ApplySchemeSettings( vgui::IScheme *scheme )
+void CDisguiseStatus::ApplySchemeSettings(vgui::IScheme *scheme)
 {
-	BaseClass::ApplySchemeSettings( scheme );
+	BaseClass::ApplySchemeSettings(scheme);
 
-	LoadControlSettings( "Resource/UI/DisguiseStatusPanel.res" );
-	m_pModelPanel	= dynamic_cast<CEmbeddedItemModelPanel*>( FindChildByName("itemmodelpanel") );
-	m_pBGPanel		= dynamic_cast<CTFImagePanel *> ( FindChildByName("DisguiseStatusBG") );
+	LoadControlSettings("Resource/UI/DisguiseStatusPanel.res");
+	m_pModelPanel = dynamic_cast<CEmbeddedItemModelPanel *>(FindChildByName("itemmodelpanel"));
+	m_pBGPanel = dynamic_cast<CTFImagePanel *>(FindChildByName("DisguiseStatusBG"));
 	m_pDisguiseNameLabel = dynamic_cast<Label *>(FindChildByName("DisguiseNameLabel"));
 	m_pWeaponNameLabel = dynamic_cast<Label *>(FindChildByName("WeaponNameLabel"));
 
-	SetPaintBackgroundEnabled( false );
+	SetPaintBackgroundEnabled(false);
 
 	HideStatus();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CDisguiseStatus::ShouldDraw( void )
+bool CDisguiseStatus::ShouldDraw(void)
 {
 	bool bShow = false;
 	CTFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
-	if ( !pPlayer )
+	if(!pPlayer)
 		return false;
 
-	if ( !pPlayer->m_Shared.InCond( TF_COND_DISGUISED ) )
+	if(!pPlayer->m_Shared.InCond(TF_COND_DISGUISED))
 	{
 		bShow = false;
 	}
@@ -144,11 +143,12 @@ bool CDisguiseStatus::ShouldDraw( void )
 		bShow = true;
 	}
 
-	if ( bShow && (!m_bDisguised || (m_pDisguiseWeapon != pPlayer->m_Shared.GetDisguiseWeapon()) || (m_iDisguiseTeam != pPlayer->m_Shared.GetDisguiseTeam()) ) )
+	if(bShow && (!m_bDisguised || (m_pDisguiseWeapon != pPlayer->m_Shared.GetDisguiseWeapon()) ||
+				 (m_iDisguiseTeam != pPlayer->m_Shared.GetDisguiseTeam())))
 	{
 		ShowAndUpdateStatus();
 	}
-	else if ( !bShow && m_bDisguised )
+	else if(!bShow && m_bDisguised)
 	{
 		HideStatus();
 	}
@@ -157,42 +157,42 @@ bool CDisguiseStatus::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CDisguiseStatus::ShowAndUpdateStatus( void )
+void CDisguiseStatus::ShowAndUpdateStatus(void)
 {
 	CTFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
-	if ( !pPlayer )
+	if(!pPlayer)
 		return;
 
 	m_iDisguiseTeam = pPlayer->m_Shared.GetDisguiseTeam();
 
-//	m_pModelPanel->SetVisible( false );
+	//	m_pModelPanel->SetVisible( false );
 
-	if ( m_pBGPanel )
+	if(m_pBGPanel)
 	{
-		m_pBGPanel->SetVisible( true );
-		m_pBGPanel->SetBGTeam( m_iDisguiseTeam );
+		m_pBGPanel->SetVisible(true);
+		m_pBGPanel->SetBGTeam(m_iDisguiseTeam);
 		m_pBGPanel->UpdateBGImage();
 	}
 
-	if ( m_pDisguiseNameLabel )
+	if(m_pDisguiseNameLabel)
 	{
-		m_pDisguiseNameLabel->SetVisible( true );
+		m_pDisguiseNameLabel->SetVisible(true);
 
 		CheckName();
 	}
 
-	if ( m_pWeaponNameLabel )
+	if(m_pWeaponNameLabel)
 	{
-		m_pWeaponNameLabel->SetVisible( true );
+		m_pWeaponNameLabel->SetVisible(true);
 
 		CheckWeapon();
 	}
 
-	if ( m_pDisguiseHealth )
+	if(m_pDisguiseHealth)
 	{
-		m_pDisguiseHealth->SetVisible( true );
+		m_pDisguiseHealth->SetVisible(true);
 
 		CheckHealth();
 	}
@@ -201,111 +201,112 @@ void CDisguiseStatus::ShowAndUpdateStatus( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CDisguiseStatus::HideStatus( void )
+void CDisguiseStatus::HideStatus(void)
 {
-	if ( m_pModelPanel )
+	if(m_pModelPanel)
 	{
-		m_pModelPanel->SetVisible( false );
+		m_pModelPanel->SetVisible(false);
 	}
 
-	if ( m_pBGPanel )
+	if(m_pBGPanel)
 	{
-		m_pBGPanel->SetVisible( false );
+		m_pBGPanel->SetVisible(false);
 	}
 
-	if ( m_pDisguiseNameLabel )
+	if(m_pDisguiseNameLabel)
 	{
-		m_pDisguiseNameLabel->SetVisible( false );
+		m_pDisguiseNameLabel->SetVisible(false);
 	}
 
-	if ( m_pWeaponNameLabel )
+	if(m_pWeaponNameLabel)
 	{
-		m_pWeaponNameLabel->SetVisible( false );
+		m_pWeaponNameLabel->SetVisible(false);
 	}
 
-	if ( m_pDisguiseHealth )
+	if(m_pDisguiseHealth)
 	{
-		m_pDisguiseHealth->SetVisible( false );
+		m_pDisguiseHealth->SetVisible(false);
 	}
 
 	m_bDisguised = false;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CDisguiseStatus::CheckName( void )
+void CDisguiseStatus::CheckName(void)
 {
 	CTFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
-	if ( !pPlayer )
+	if(!pPlayer)
 		return;
 
 	int nIndex = pPlayer->m_Shared.GetDisguiseTargetIndex();
-	if ( nIndex != TF_DISGUISE_TARGET_INDEX_NONE )
+	if(nIndex != TF_DISGUISE_TARGET_INDEX_NONE)
 	{
-		if ( g_PR != NULL )
+		if(g_PR != NULL)
 		{
-			const char *pszName = g_PR->GetPlayerName( nIndex );
-			if ( pszName && pszName[0] )
+			const char *pszName = g_PR->GetPlayerName(nIndex);
+			if(pszName && pszName[0])
 			{
-				SetDialogVariable( "disguisename", pszName );
+				SetDialogVariable("disguisename", pszName);
 				return;
 			}
 		}
 	}
 
-	SetDialogVariable( "disguisename", pPlayer->GetPlayerName() );
+	SetDialogVariable("disguisename", pPlayer->GetPlayerName());
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CDisguiseStatus::CheckWeapon( void )
+void CDisguiseStatus::CheckWeapon(void)
 {
 	CTFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
-	if ( !pPlayer )
+	if(!pPlayer)
 		return;
 
 	m_pDisguiseWeapon = pPlayer->m_Shared.GetDisguiseWeapon();
-	if ( m_pDisguiseWeapon )
+	if(m_pDisguiseWeapon)
 	{
-		const wchar_t *pszDisguiseWeapon = g_pVGuiLocalize->Find( m_pDisguiseWeapon->GetTFWpnData().szPrintName );
+		const wchar_t *pszDisguiseWeapon = g_pVGuiLocalize->Find(m_pDisguiseWeapon->GetTFWpnData().szPrintName);
 
 		CAttributeContainer *pContainer = m_pDisguiseWeapon->GetAttributeContainer();
-		if ( pContainer )
+		if(pContainer)
 		{
 			CEconItemView *pItem = pContainer->GetItem();
-			if ( pItem )
+			if(pItem)
 			{
 				pszDisguiseWeapon = pItem->GetItemName();
 			}
 		}
 
-		SetDialogVariable( "weaponname", pszDisguiseWeapon );
+		SetDialogVariable("weaponname", pszDisguiseWeapon);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CDisguiseStatus::CheckHealth( void )
+void CDisguiseStatus::CheckHealth(void)
 {
 	CTFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
-	if ( !pPlayer )
+	if(!pPlayer)
 		return;
 
-	if ( !m_pDisguiseHealth )
+	if(!m_pDisguiseHealth)
 		return;
 
-	m_pDisguiseHealth->SetHealth( pPlayer->m_Shared.GetDisguiseHealth(), pPlayer->m_Shared.GetDisguiseMaxHealth(), pPlayer->m_Shared.GetDisguiseMaxBuffedHealth() );
+	m_pDisguiseHealth->SetHealth(pPlayer->m_Shared.GetDisguiseHealth(), pPlayer->m_Shared.GetDisguiseMaxHealth(),
+								 pPlayer->m_Shared.GetDisguiseMaxBuffedHealth());
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CDisguiseStatus::PerformLayout( void )
+void CDisguiseStatus::PerformLayout(void)
 {
 	/*
 	int iXIndent = XRES(5);
@@ -323,7 +324,8 @@ void CDisguiseStatus::PerformLayout( void )
 
 		SetSize( iWidth, GetTall() );
 
-		int nOffset = m_bArenaPanelVisible ? YRES (120) : 0; // HACK: move the targetID up a bit so it won't overlap the panel
+		int nOffset = m_bArenaPanelVisible ? YRES (120) : 0; // HACK: move the targetID up a bit so it won't overlap the
+	panel
 
 		SetPos( (ScreenWidth() - iWidth) * 0.5, m_nOriginalY - nOffset );
 
@@ -343,18 +345,18 @@ void CDisguiseStatus::PerformLayout( void )
 void CDisguiseStatus::Paint()
 {
 	C_TFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
-	if ( !pPlayer )
+	if(!pPlayer)
 		return;
 
-	if ( !pPlayer->m_Shared.InCond( TF_COND_DISGUISED ) )
+	if(!pPlayer->m_Shared.InCond(TF_COND_DISGUISED))
 		return;
 
-// 	ConVarRef cl_hud_minmode( "cl_hud_minmode", true );
-// 	if ( cl_hud_minmode.IsValid() && cl_hud_minmode.GetBool() )
-// 	{
-// 		HideStatus();
-// 		return;
-// 	}
+	// 	ConVarRef cl_hud_minmode( "cl_hud_minmode", true );
+	// 	if ( cl_hud_minmode.IsValid() && cl_hud_minmode.GetBool() )
+	// 	{
+	// 		HideStatus();
+	// 		return;
+	// 	}
 
 	CheckName();
 

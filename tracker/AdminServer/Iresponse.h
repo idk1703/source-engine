@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -10,7 +10,6 @@
 #ifdef _WIN32
 #pragma once
 #endif
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Callback interface for server updates
@@ -23,8 +22,6 @@ public:
 
 	// called when a server response has timed out
 	virtual void ServerFailedToRespond() = 0;
-
 };
-
 
 #endif // IRESPONSE_H

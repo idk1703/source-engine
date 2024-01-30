@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,11 +10,6 @@
 #pragma once
 #endif
 
-
-void FX_DOD_BloodSpray( 
-	const Vector &origin,
-	const Vector &normal,
-	float flDamage );
-
+void FX_DOD_BloodSpray(const Vector &origin, const Vector &normal, float flDamage);
 
 #endif // FX_DOD_BLOOD_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -18,7 +18,6 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 typedef struct
 {
 	CVisGroup *pGroup;
@@ -26,11 +25,9 @@ typedef struct
 	SelectMode_t eSelectMode;
 } MARKMEMBERSINFO;
 
-
 static const unsigned int g_uToggleStateMsg = ::RegisterWindowMessage(GROUPLIST_MSG_TOGGLE_STATE);
 static const unsigned int g_uLeftDragDropMsg = ::RegisterWindowMessage(GROUPLIST_MSG_LEFT_DRAG_DROP);
 static const unsigned int g_uRightDragDropMsg = ::RegisterWindowMessage(GROUPLIST_MSG_RIGHT_DRAG_DROP);
-
 
 BEGIN_MESSAGE_MAP(CFilterControl, CHammerBar)
 	//{{AFX_MSG_MAP(CFilterControl)
@@ -44,7 +41,7 @@ BEGIN_MESSAGE_MAP(CFilterControl, CHammerBar)
 	ON_UPDATE_COMMAND_UI(IDC_MARKMEMBERS, UpdateControl)
 	ON_UPDATE_COMMAND_UI(IDC_SHOW_ALL, UpdateControl)
 	ON_UPDATE_COMMAND_UI(IDC_VISGROUP_MOVEUP, UpdateControl)
-	ON_UPDATE_COMMAND_UI(IDC_VISGROUP_MOVEDOWN, UpdateControl)		
+	ON_UPDATE_COMMAND_UI(IDC_VISGROUP_MOVEDOWN, UpdateControl)
 	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB1, OnSelChangeTab)
 	ON_WM_ACTIVATE()
 	ON_WM_SHOWWINDOW()
@@ -52,25 +49,25 @@ BEGIN_MESSAGE_MAP(CFilterControl, CHammerBar)
 	ON_WM_WINDOWPOSCHANGED()
 	ON_REGISTERED_MESSAGE(g_uToggleStateMsg, OnListToggleState)
 	ON_REGISTERED_MESSAGE(g_uLeftDragDropMsg, OnListLeftDragDrop)
-	ON_REGISTERED_MESSAGE(g_uRightDragDropMsg, OnListRightDragDrop)	
+	ON_REGISTERED_MESSAGE(g_uRightDragDropMsg, OnListRightDragDrop)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pParentWnd - 
+// Purpose:
+// Input  : pParentWnd -
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
 BOOL CFilterControl::Create(CWnd *pParentWnd)
 {
-	if (!CHammerBar::Create(pParentWnd, IDD_FILTERCONTROL, CBRS_RIGHT | CBRS_SIZE_DYNAMIC, IDCB_FILTERCONTROL, "Filter Control"))
-		
+	if(!CHammerBar::Create(pParentWnd, IDD_FILTERCONTROL, CBRS_RIGHT | CBRS_SIZE_DYNAMIC, IDCB_FILTERCONTROL,
+						   "Filter Control"))
+
 	{
 		return FALSE;
 	}
 
-	m_cGroupBox.SubclassDlgItem(IDC_GROUPS, this);	
+	m_cGroupBox.SubclassDlgItem(IDC_GROUPS, this);
 	m_cGroupBox.EnableChecks();
 
 	m_cTabControl.SubclassDlgItem(IDC_TAB1, this);
@@ -87,13 +84,13 @@ BOOL CFilterControl::Create(CWnd *pParentWnd)
 	hIcon = pApp->LoadIcon(IDI_MOVE_DOWN);
 	((CButton *)GetDlgItem(IDC_VISGROUP_MOVEDOWN))->SetIcon(hIcon);
 
-    AddControl( IDC_GROUPS, GROUP_BOX );
-	AddControl( IDC_VISGROUP_MOVEUP, BOTTOM_JUSTIFY );
-	AddControl( IDC_VISGROUP_MOVEDOWN, BOTTOM_JUSTIFY );
-	AddControl( IDC_SHOW_ALL, BOTTOM_JUSTIFY );
-	AddControl( IDC_EDITGROUPS, BOTTOM_JUSTIFY );
-	AddControl( IDC_MARKMEMBERS, BOTTOM_JUSTIFY );
-	AddControl( IDC_TAB1, GROUP_BOX );
+	AddControl(IDC_GROUPS, GROUP_BOX);
+	AddControl(IDC_VISGROUP_MOVEUP, BOTTOM_JUSTIFY);
+	AddControl(IDC_VISGROUP_MOVEDOWN, BOTTOM_JUSTIFY);
+	AddControl(IDC_SHOW_ALL, BOTTOM_JUSTIFY);
+	AddControl(IDC_EDITGROUPS, BOTTOM_JUSTIFY);
+	AddControl(IDC_MARKMEMBERS, BOTTOM_JUSTIFY);
+	AddControl(IDC_TAB1, GROUP_BOX);
 
 	// Add all the VisGroups to the list.
 	UpdateGroupList();
@@ -104,17 +101,16 @@ BOOL CFilterControl::Create(CWnd *pParentWnd)
 	return TRUE;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nLength - 
-//			dwMode - 
+// Purpose:
+// Input  : nLength -
+//			dwMode -
 // Output : CSize
 //-----------------------------------------------------------------------------
 CSize CFilterControl::CalcDynamicLayout(int nLength, DWORD dwMode)
 {
 	// TODO: make larger / resizable when floating
-	//if (IsFloating())
+	// if (IsFloating())
 	//{
 	//	return CSize(200, 300);
 	//}
@@ -122,17 +118,16 @@ CSize CFilterControl::CalcDynamicLayout(int nLength, DWORD dwMode)
 	return CHammerBar::CalcDynamicLayout(nLength, dwMode);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nType - 
-//			cx - 
-//			cy - 
+// Purpose:
+// Input  : nType -
+//			cx -
+//			cy -
 //-----------------------------------------------------------------------------
 void CFilterControl::OnSize(UINT nType, int cx, int cy)
 {
 	// TODO: make larger / resizable when floating
-	//if (IsFloating())
+	// if (IsFloating())
 	//{
 	//	CWnd *pwnd = GetDlgItem(IDC_GROUPS);
 	//	if (pwnd && IsWindow(pwnd->GetSafeHwnd()))
@@ -144,14 +139,13 @@ void CFilterControl::OnSize(UINT nType, int cx, int cy)
 	CHammerBar::OnSize(nType, cx, cy);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFilterControl::UpdateGroupList(void)
 {
 	CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
-	if (pDoc == NULL)
+	if(pDoc == NULL)
 	{
 		m_cGroupBox.DeleteAllItems();
 		return;
@@ -166,19 +160,19 @@ void CFilterControl::UpdateGroupList(void)
 
 	int nCount = pDoc->VisGroups_GetRootCount();
 
-	for (int i = 0; i < nCount; i++)
+	for(int i = 0; i < nCount; i++)
 	{
 		CVisGroup *pGroup = pDoc->VisGroups_GetRootVisGroup(i);
-		int compareValue = strcmp( pGroup->GetName(), "Auto" );
-		if ( (compareValue == 0 && m_bShowingAuto) ||(compareValue != 0 && !m_bShowingAuto) )
+		int compareValue = strcmp(pGroup->GetName(), "Auto");
+		if((compareValue == 0 && m_bShowingAuto) || (compareValue != 0 && !m_bShowingAuto))
 		{
 			m_cGroupBox.AddVisGroup(pGroup);
 		}
 	}
 
-	UpdateGroupListChecks();		
+	UpdateGroupListChecks();
 
-	if (pVisGroup)
+	if(pVisGroup)
 	{
 		m_cGroupBox.EnsureVisible(pVisGroup);
 		m_cGroupBox.SelectVisGroup(pVisGroup);
@@ -189,16 +183,14 @@ void CFilterControl::UpdateGroupList(void)
 	m_cGroupBox.Invalidate();
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pCmdUI - 
+// Purpose:
+// Input  : pCmdUI -
 //-----------------------------------------------------------------------------
 void CFilterControl::UpdateControl(CCmdUI *pCmdUI)
 {
 	pCmdUI->Enable(GetActiveWorld() ? TRUE : FALSE);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Disables the group list when there's no active world or when the
@@ -209,25 +201,23 @@ void CFilterControl::UpdateControlGroups(CCmdUI *pCmdUI)
 	pCmdUI->Enable((GetActiveWorld() != NULL) && !CVisGroup::IsShowAllActive());
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pTarget - 
-//			bDisableIfNoHndler - 
+// Purpose:
+// Input  : pTarget -
+//			bDisableIfNoHndler -
 //-----------------------------------------------------------------------------
-void CFilterControl::OnUpdateCmdUI(CFrameWnd* pTarget, BOOL bDisableIfNoHndler)
+void CFilterControl::OnUpdateCmdUI(CFrameWnd *pTarget, BOOL bDisableIfNoHndler)
 {
 	UpdateDialogControls(pTarget, FALSE);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFilterControl::OnShowAllGroups(void)
 {
 	CButton *pButton = (CButton *)GetDlgItem(IDC_SHOW_ALL);
-	if (pButton != NULL)
+	if(pButton != NULL)
 	{
 		UINT uCheck = pButton->GetCheck();
 		CVisGroup::ShowAllVisGroups(uCheck == 1);
@@ -239,25 +229,24 @@ void CFilterControl::OnShowAllGroups(void)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 BOOL CFilterControl::OnMoveUpDown(UINT uCmd)
 {
 	CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
-	if (!pDoc)
+	if(!pDoc)
 	{
 		return TRUE;
 	}
 
 	CVisGroup *pVisGroup = m_cGroupBox.GetSelectedVisGroup();
-	if (pVisGroup == NULL)
+	if(pVisGroup == NULL)
 	{
 		return TRUE;
 	}
 
-	if (uCmd == IDC_VISGROUP_MOVEUP)
+	if(uCmd == IDC_VISGROUP_MOVEUP)
 	{
 		pDoc->VisGroups_MoveUp(pVisGroup);
 	}
@@ -276,9 +265,8 @@ BOOL CFilterControl::OnMoveUpDown(UINT uCmd)
 	return TRUE;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFilterControl::OnEditGroups(void)
 {
@@ -286,7 +274,7 @@ void CFilterControl::OnEditGroups(void)
 	dlg.DoModal();
 
 	CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
-	if (pDoc != NULL)
+	if(pDoc != NULL)
 	{
 		pDoc->SetModifiedFlag();
 	}
@@ -294,24 +282,23 @@ void CFilterControl::OnEditGroups(void)
 	UpdateGroupList();
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pObject - 
-//			pInfo - 
+// Purpose:
+// Input  : pObject -
+//			pInfo -
 // Output : Returns TRUE to continue enumerating, FALSE to stop.
 //-----------------------------------------------------------------------------
 static BOOL MarkMembersOfGroup(CMapClass *pObject, MARKMEMBERSINFO *pInfo)
 {
-	if (pObject->IsInVisGroup(pInfo->pGroup))
+	if(pObject->IsInVisGroup(pInfo->pGroup))
 	{
-		if (!pObject->IsVisible())
+		if(!pObject->IsVisible())
 		{
 			return TRUE;
 		}
 
 		CMapClass *pSelectObject = pObject->PrepareSelection(pInfo->eSelectMode);
-		if (pSelectObject)
+		if(pSelectObject)
 		{
 			pInfo->pDoc->SelectObject(pSelectObject, scSelect);
 		}
@@ -320,22 +307,21 @@ static BOOL MarkMembersOfGroup(CMapClass *pObject, MARKMEMBERSINFO *pInfo)
 	return TRUE;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Selects all objects that belong to the currently selected visgroup.
 //-----------------------------------------------------------------------------
 void CFilterControl::OnMarkMembers(void)
 {
 	CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
-	if (pDoc)
+	if(pDoc)
 	{
 		CVisGroup *pVisGroup = m_cGroupBox.GetSelectedVisGroup();
-		if (pVisGroup)
+		if(pVisGroup)
 		{
 			pDoc->GetSelection()->SetMode(selectObjects);
 
 			// Clear the selection.
-			pDoc->SelectObject(NULL, scClear|scSaveChanges);
+			pDoc->SelectObject(NULL, scClear | scSaveChanges);
 
 			//
 			// Select all objects that belong to the visgroup.
@@ -343,34 +329,33 @@ void CFilterControl::OnMarkMembers(void)
 			CMapWorld *pWorld = pDoc->GetMapWorld();
 			EnumChildrenPos_t pos;
 			CMapClass *pChild = pWorld->GetFirstDescendent(pos);
-			while (pChild)
+			while(pChild)
 			{
-				if (pChild->IsInVisGroup(pVisGroup))
+				if(pChild->IsInVisGroup(pVisGroup))
 				{
-					if (pChild->IsVisible())
+					if(pChild->IsVisible())
 					{
 						CMapClass *pSelectObject = pChild->PrepareSelection(pDoc->GetSelection()->GetMode());
-						if (pSelectObject)
+						if(pSelectObject)
 						{
 							pDoc->SelectObject(pSelectObject, scSelect);
 						}
 					}
 				}
-				
+
 				pChild = pWorld->GetNextDescendent(pos);
 			}
 		}
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pPos - 
+// Purpose:
+// Input  : pPos -
 //-----------------------------------------------------------------------------
 void CFilterControl::OnWindowPosChanged(WINDOWPOS *pPos)
 {
-	if (bInitialized && pPos->flags & SWP_SHOWWINDOW)
+	if(bInitialized && pPos->flags & SWP_SHOWWINDOW)
 	{
 		UpdateGroupList();
 	}
@@ -378,15 +363,14 @@ void CFilterControl::OnWindowPosChanged(WINDOWPOS *pPos)
 	CHammerBar::OnWindowPosChanged(pPos);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bShow - 
-//			nStatus - 
+// Purpose:
+// Input  : bShow -
+//			nStatus -
 //-----------------------------------------------------------------------------
 void CFilterControl::OnShowWindow(BOOL bShow, UINT nStatus)
 {
-	if (bShow)
+	if(bShow)
 	{
 		UpdateGroupList();
 	}
@@ -394,23 +378,21 @@ void CFilterControl::OnShowWindow(BOOL bShow, UINT nStatus)
 	CHammerBar::OnShowWindow(bShow, nStatus);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nState - 
-//			pWnd - 
-//			bMinimized - 
+// Purpose:
+// Input  : nState -
+//			pWnd -
+//			bMinimized -
 //-----------------------------------------------------------------------------
-void CFilterControl::OnActivate(UINT nState, CWnd* pWnd, BOOL bMinimized)
+void CFilterControl::OnActivate(UINT nState, CWnd *pWnd, BOOL bMinimized)
 {
-	if (nState == WA_ACTIVE)
+	if(nState == WA_ACTIVE)
 	{
 		UpdateGroupList();
 	}
 
 	CHammerBar::OnActivate(nState, pWnd, bMinimized);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Called when the visibility of a group is toggled in the groups list.
@@ -421,13 +403,13 @@ void CFilterControl::OnActivate(UINT nState, CWnd* pWnd, BOOL bMinimized)
 LRESULT CFilterControl::OnListToggleState(WPARAM wParam, LPARAM lParam)
 {
 	CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
-	if (pDoc != NULL)
+	if(pDoc != NULL)
 	{
 		//
 		// Update the visibility of the group.
 		//
 		CVisGroup *pVisGroup = (CVisGroup *)wParam;
-		if (pVisGroup != NULL)
+		if(pVisGroup != NULL)
 		{
 			pDoc->VisGroups_ShowVisGroup(pVisGroup, pVisGroup->GetVisible() == VISGROUP_HIDDEN);
 		}
@@ -438,33 +420,33 @@ LRESULT CFilterControl::OnListToggleState(WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : wParam - 
-//			lParam - 
+// Purpose:
+// Input  : wParam -
+//			lParam -
 // Output : LRESULT
 //-----------------------------------------------------------------------------
 LRESULT CFilterControl::OnListLeftDragDrop(WPARAM wParam, LPARAM lParam)
 {
-	if ( m_bShowingAuto == TRUE )
+	if(m_bShowingAuto == TRUE)
 	{
 		UpdateGroupList();
 		return 0;
 	}
 
 	CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
-	if (pDoc != NULL)
+	if(pDoc != NULL)
 	{
 		CVisGroup *pDragGroup = (CVisGroup *)wParam;
 		CVisGroup *pDropGroup = (CVisGroup *)lParam;
 
-		if (pDropGroup != NULL)
+		if(pDropGroup != NULL)
 		{
-			if (pDragGroup->FindDescendent(pDropGroup))
+			if(pDragGroup->FindDescendent(pDropGroup))
 			{
 				CString str;
-				str.Format("Cannot combine the groups because '%s' is a sub-group of '%s'.", pDropGroup->GetName(), pDragGroup->GetName());
+				str.Format("Cannot combine the groups because '%s' is a sub-group of '%s'.", pDropGroup->GetName(),
+						   pDragGroup->GetName());
 				AfxMessageBox(str);
 				UpdateGroupList();
 				return 0;
@@ -472,7 +454,7 @@ LRESULT CFilterControl::OnListLeftDragDrop(WPARAM wParam, LPARAM lParam)
 
 			CString str;
 			str.Format("Combine group '%s' into group '%s'?", pDragGroup->GetName(), pDropGroup->GetName());
-			if (AfxMessageBox(str, MB_YESNO | MB_ICONQUESTION) == IDNO)
+			if(AfxMessageBox(str, MB_YESNO | MB_ICONQUESTION) == IDNO)
 			{
 				UpdateGroupList();
 				return 0;
@@ -484,7 +466,7 @@ LRESULT CFilterControl::OnListLeftDragDrop(WPARAM wParam, LPARAM lParam)
 		{
 			CString str;
 			str.Format("Delete group '%s'?", pDragGroup->GetName());
-			if (AfxMessageBox(str, MB_YESNO | MB_ICONQUESTION) == IDNO)
+			if(AfxMessageBox(str, MB_YESNO | MB_ICONQUESTION) == IDNO)
 			{
 				UpdateGroupList();
 				return 0;
@@ -496,36 +478,36 @@ LRESULT CFilterControl::OnListLeftDragDrop(WPARAM wParam, LPARAM lParam)
 		}
 	}
 
-		UpdateGroupList();
+	UpdateGroupList();
 
 	return 0;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : wParam - 
-//			lParam - 
+// Purpose:
+// Input  : wParam -
+//			lParam -
 // Output : LRESULT
 //-----------------------------------------------------------------------------
 LRESULT CFilterControl::OnListRightDragDrop(WPARAM wParam, LPARAM lParam)
 {
-	if ( m_bShowingAuto == TRUE )
+	if(m_bShowingAuto == TRUE)
 	{
 		UpdateGroupList();
 		return 0;
 	}
 
 	CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
-	if (pDoc != NULL)
+	if(pDoc != NULL)
 	{
 		CVisGroup *pDragGroup = (CVisGroup *)wParam;
 		CVisGroup *pDropGroup = (CVisGroup *)lParam;
 
-		if (pDragGroup->FindDescendent(pDropGroup))
+		if(pDragGroup->FindDescendent(pDropGroup))
 		{
 			CString str;
-			str.Format("Cannot move the group because '%s' is a sub-group of '%s'.", pDropGroup->GetName(), pDragGroup->GetName());
+			str.Format("Cannot move the group because '%s' is a sub-group of '%s'.", pDropGroup->GetName(),
+					   pDragGroup->GetName());
 			AfxMessageBox(str);
 			return 0;
 		}
@@ -537,27 +519,26 @@ LRESULT CFilterControl::OnListRightDragDrop(WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : wParam - 
-//			lParam - 
-//			pResult - 
+// Purpose:
+// Input  : wParam -
+//			lParam -
+//			pResult -
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
 BOOL CFilterControl::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT *pResult)
 {
 	NMHDR *pnmh = (NMHDR *)lParam;
 
-	if (pnmh->idFrom == IDC_GROUPS)
+	if(pnmh->idFrom == IDC_GROUPS)
 	{
-		switch (pnmh->code)
+		switch(pnmh->code)
 		{
 			case TVN_SELCHANGED:
 			{
 				CVisGroup *pGroup = m_cGroupBox.GetSelectedVisGroup();
 				CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
-				if (pGroup && pDoc)
+				if(pGroup && pDoc)
 				{
 					bool bCanMoveUp = pDoc->VisGroups_CanMoveUp(pGroup);
 					bool bCanMoveDown = pDoc->VisGroups_CanMoveDown(pGroup);
@@ -565,38 +546,36 @@ BOOL CFilterControl::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT *pResult)
 					GetDlgItem(IDC_VISGROUP_MOVEDOWN)->EnableWindow(bCanMoveDown);
 				}
 
-				return(TRUE);
+				return (TRUE);
 			}
 		}
 	}
 
-	return(CWnd::OnNotify(wParam, lParam, pResult));
+	return (CWnd::OnNotify(wParam, lParam, pResult));
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 BOOL CFilterControl::OnInitDialog(void)
 {
 	return TRUE;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFilterControl::UpdateGroupListChecks(void)
 {
 	int nCount = m_cGroupBox.GetVisGroupCount();
-	for (int i = 0; i < nCount; i++)
+	for(int i = 0; i < nCount; i++)
 	{
 		CVisGroup *pVisGroup = m_cGroupBox.GetVisGroup(i);
-		if (pVisGroup->GetVisible() == VISGROUP_HIDDEN)
+		if(pVisGroup->GetVisible() == VISGROUP_HIDDEN)
 		{
 			m_cGroupBox.SetCheck(pVisGroup, 0);
 		}
-		else if (pVisGroup->GetVisible() == VISGROUP_SHOWN)
+		else if(pVisGroup->GetVisible() == VISGROUP_SHOWN)
 		{
 			m_cGroupBox.SetCheck(pVisGroup, 1);
 		}
@@ -607,15 +586,15 @@ void CFilterControl::UpdateGroupListChecks(void)
 	}
 }
 
-void CFilterControl::OnSelChangeTab(NMHDR *header, LRESULT *result) 
+void CFilterControl::OnSelChangeTab(NMHDR *header, LRESULT *result)
 {
-	if ( m_cTabControl.GetCurSel() == 0 ) 
+	if(m_cTabControl.GetCurSel() == 0)
 	{
-		m_bShowingAuto = FALSE;				
-	} 
-	else 
-	{
-		m_bShowingAuto = TRUE;		
+		m_bShowingAuto = FALSE;
 	}
-	UpdateGroupList();	
+	else
+	{
+		m_bShowingAuto = TRUE;
+	}
+	UpdateGroupList();
 }

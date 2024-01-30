@@ -11,32 +11,33 @@ namespace vgui
 	class TextEntry;
 	class Splitter;
 	class Button;
-}
+} // namespace vgui
 
 class CModelBrowserPanel;
 class CMDLPicker;
-
 
 class CModelBrowser : public CDialog
 {
 	DECLARE_DYNAMIC(CModelBrowser)
 
 public:
-	CModelBrowser(CWnd* pParent = NULL);   // standard constructor
+	CModelBrowser(CWnd *pParent = NULL); // standard constructor
 	virtual ~CModelBrowser();
 
-	void	SetModelName( const char *pModelName );
-	void	GetModelName( char *pModelName, int length );
-	void	GetSkin( int &nSkin );
-	void	SetSkin( int nSkin );
+	void SetModelName(const char *pModelName);
+	void GetModelName(char *pModelName, int length);
+	void GetSkin(int &nSkin);
+	void SetSkin(int nSkin);
 
-// Dialog Data
-	enum { IDD = IDD_MODEL_BROWSER };
+	// Dialog Data
+	enum
+	{
+		IDD = IDD_MODEL_BROWSER
+	};
 
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	virtual BOOL PreTranslateMessage( MSG* pMsg ); 
-
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
+	virtual BOOL PreTranslateMessage(MSG *pMsg);
 
 	DECLARE_MESSAGE_MAP()
 
@@ -47,17 +48,16 @@ public:
 	virtual BOOL OnInitDialog();
 
 	void UpdateStatusLine();
-	void SaveLoadSettings( bool bSave ); 
-	void Resize( void );
+	void SaveLoadSettings(bool bSave);
+	void Resize(void);
 
-	CVGuiPanelWnd	m_VGuiWindow;
+	CVGuiPanelWnd m_VGuiWindow;
 
-	CMDLPicker		*m_pPicker;
-	vgui::Button	*m_pButtonOK;
-	vgui::Button	*m_pButtonCancel;
-	vgui::TextEntry	*m_pStatusLine;
+	CMDLPicker *m_pPicker;
+	vgui::Button *m_pButtonOK;
+	vgui::Button *m_pButtonCancel;
+	vgui::TextEntry *m_pStatusLine;
 
 	void Show();
 	void Hide();
-	
 };

@@ -1,10 +1,9 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
-
 
 #include "stdafx.h"
 #include "OPTGeneral.h"
@@ -21,19 +20,20 @@
 //-----------------------------------------------------------------------------
 // Purpose: Create a segment using two polygons and a start and end position in
 //			those polygons.
-// Input  : fZMin - 
-//			fZMax - 
-//			fOuterPoints - 
-//			fInnerPoints - 
-//			iStart - 
-//			iEnd - 
-//			bCreateSouthFace - 
-// Output : 
+// Input  : fZMin -
+//			fZMax -
+//			fOuterPoints -
+//			fInnerPoints -
+//			iStart -
+//			iEnd -
+//			bCreateSouthFace -
+// Output :
 //-----------------------------------------------------------------------------
-static CMapSolid *CreateSegment(float fZMin, float fZMax, float fOuterPoints[][2], float fInnerPoints[][2], int iStart, int iEnd, BOOL bCreateSouthFace)
+static CMapSolid *CreateSegment(float fZMin, float fZMax, float fOuterPoints[][2], float fInnerPoints[][2], int iStart,
+								int iEnd, BOOL bCreateSouthFace)
 {
 	CMapFace Face;
-	Vector points[4];	// all sides have four vertices
+	Vector points[4]; // all sides have four vertices
 
 	CMapSolid *pSolid = new CMapSolid;
 
@@ -60,7 +60,7 @@ static CMapSolid *CreateSegment(float fZMin, float fZMax, float fOuterPoints[][2
 	pSolid->AddFace(&Face);
 
 	// bottom face - set other z value and reverse order
-	for (int i = 0; i < 4; i++)
+	for(int i = 0; i < 4; i++)
 	{
 		points[i][2] = fZMax;
 	}
@@ -129,7 +129,7 @@ static CMapSolid *CreateSegment(float fZMin, float fZMax, float fOuterPoints[][2
 	pSolid->AddFace(&Face);
 
 	// south face
-	if (bCreateSouthFace)
+	if(bCreateSouthFace)
 	{
 		points[0][0] = fInnerPoints[iStart][0];
 		points[0][1] = fInnerPoints[iStart][1];
@@ -153,28 +153,26 @@ static CMapSolid *CreateSegment(float fZMin, float fZMax, float fOuterPoints[][2
 
 	pSolid->InitializeTextureAxes(Options.GetTextureAlignment(), INIT_TEXTURE_ALL | INIT_TEXTURE_FORCE);
 
-	return(pSolid);
+	return (pSolid);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Create a segment using two polygons and a start and end position in
 //			those polygons.
-// Input  : fZMin - 
-//			fZMax - 
-//			fOuterPoints - 
-//			fInnerPoints - 
-//			iStart - 
-//			iEnd - 
-//			bCreateSouthFace - 
-// Output : 
+// Input  : fZMin -
+//			fZMax -
+//			fOuterPoints -
+//			fInnerPoints -
+//			iStart -
+//			iEnd -
+//			bCreateSouthFace -
+// Output :
 //-----------------------------------------------------------------------------
-static CMapSolid *CreateSegment(float fStartOuterPoints[][3], float fStartInnerPoints[][3],
-								float fEndOuterPoints[][3], float fEndInnerPoints[][3],
-								int iStart, int iEnd, BOOL bCreateSouthFace)
+static CMapSolid *CreateSegment(float fStartOuterPoints[][3], float fStartInnerPoints[][3], float fEndOuterPoints[][3],
+								float fEndInnerPoints[][3], int iStart, int iEnd, BOOL bCreateSouthFace)
 {
 	CMapFace Face;
-	Vector points[4];	// all sides have four vertices
+	Vector points[4]; // all sides have four vertices
 
 	CMapSolid *pSolid = new CMapSolid;
 
@@ -279,7 +277,7 @@ static CMapSolid *CreateSegment(float fStartOuterPoints[][3], float fStartInnerP
 	pSolid->AddFace(&Face);
 
 	// south face
-	if (bCreateSouthFace)
+	if(bCreateSouthFace)
 	{
 		points[0][0] = fStartInnerPoints[iStart][0];
 		points[0][1] = fStartInnerPoints[iStart][1];
@@ -303,75 +301,75 @@ static CMapSolid *CreateSegment(float fStartOuterPoints[][3], float fStartInnerP
 
 	pSolid->InitializeTextureAxes(Options.GetTextureAlignment(), INIT_TEXTURE_ALL | INIT_TEXTURE_FORCE);
 
-	return(pSolid);
+	return (pSolid);
 }
-
 
 //-----------------------------------------------------------------------------
 // Make a 2d arc
 //-----------------------------------------------------------------------------
-void MakeArcCenterRadius(float xCenter, float yCenter, float xrad, float yrad, int npoints, float start_ang, float fArc, float points[][2])
+void MakeArcCenterRadius(float xCenter, float yCenter, float xrad, float yrad, int npoints, float start_ang, float fArc,
+						 float points[][2])
 {
-    int point;
-    float angle = start_ang;
+	int point;
+	float angle = start_ang;
 	float angle_delta;
 
 	angle_delta = fArc / (float)npoints;
 
 	// Add an additional points if we are not doing a full circle
-	if (fArc != 360.0)
+	if(fArc != 360.0)
 	{
 		++npoints;
 	}
-	
-    for( point = 0; point < npoints; point++ )
-    {
-        if ( angle > 360 )
+
+	for(point = 0; point < npoints; point++)
+	{
+		if(angle > 360)
 		{
-           angle -= 360;
+			angle -= 360;
 		}
 
-        points[point][0] = V_rint(xCenter + (float)cos(DEG2RAD(angle)) * xrad);
-        points[point][1] = V_rint(yCenter + (float)sin(DEG2RAD(angle)) * yrad);
+		points[point][0] = V_rint(xCenter + (float)cos(DEG2RAD(angle)) * xrad);
+		points[point][1] = V_rint(yCenter + (float)sin(DEG2RAD(angle)) * yrad);
 
 		angle += angle_delta;
-    }
+	}
 
 	// Full circle, recopy the first point as the closing point.
-	if (fArc == 360.0)
+	if(fArc == 360.0)
 	{
-	    points[point][0] = points[0][0];
+		points[point][0] = points[0][0];
 		points[point][1] = points[0][1];
 	}
 }
 
 void MakeArc(float x1, float y1, float x2, float y2, int npoints, float start_ang, float fArc, float points[][2])
 {
-    float xrad = (x2 - x1) / 2.0f;
+	float xrad = (x2 - x1) / 2.0f;
 	float yrad = (y2 - y1) / 2.0f;
 
 	// make centerpoint for polygon:
-    float xCenter = x1 + xrad;
-    float yCenter = y1 + yrad;
+	float xCenter = x1 + xrad;
+	float yCenter = y1 + yrad;
 
-	MakeArcCenterRadius( xCenter, yCenter, xrad, yrad, npoints, start_ang, fArc, points );
+	MakeArcCenterRadius(xCenter, yCenter, xrad, yrad, npoints, start_ang, fArc, points);
 }
 
 #define ARC_MAX_POINTS 4096
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pBox - 
-//			fStartAngle - 
-//			iSides - 
-//			fArc - 
-//			iWallWidth - 
-//			iAddHeight - 
-//			bPreview - 
+// Purpose:
+// Input  : pBox -
+//			fStartAngle -
+//			iSides -
+//			fArc -
+//			iWallWidth -
+//			iAddHeight -
+//			bPreview -
 // Output : Returns a group containing the arch solids.
 //-----------------------------------------------------------------------------
-CMapClass *CreateArch(BoundBox *pBox, float fStartAngle, int iSides, float fArc, int iWallWidth, int iAddHeight, BOOL bPreview)
+CMapClass *CreateArch(BoundBox *pBox, float fStartAngle, int iSides, float fArc, int iWallWidth, int iAddHeight,
+					  BOOL bPreview)
 {
 	float fOuterPoints[ARC_MAX_POINTS][2];
 	float fInnerPoints[ARC_MAX_POINTS][2];
@@ -379,30 +377,25 @@ CMapClass *CreateArch(BoundBox *pBox, float fStartAngle, int iSides, float fArc,
 	//
 	// create outer points
 	//
-	MakeArc(pBox->bmins[AXIS_X], pBox->bmins[AXIS_Y],
-		pBox->bmaxs[AXIS_X], pBox->bmaxs[AXIS_Y], iSides,
-		fStartAngle, fArc, fOuterPoints);
+	MakeArc(pBox->bmins[AXIS_X], pBox->bmins[AXIS_Y], pBox->bmaxs[AXIS_X], pBox->bmaxs[AXIS_Y], iSides, fStartAngle,
+			fArc, fOuterPoints);
 
 	//
 	// create inner points
 	//
-	MakeArc(pBox->bmins[AXIS_X] + iWallWidth, 
-		pBox->bmins[AXIS_Y] + iWallWidth, 
-		pBox->bmaxs[AXIS_X] - iWallWidth, 
-		pBox->bmaxs[AXIS_Y] - iWallWidth, iSides, 
-		fStartAngle, fArc, fInnerPoints);
-
+	MakeArc(pBox->bmins[AXIS_X] + iWallWidth, pBox->bmins[AXIS_Y] + iWallWidth, pBox->bmaxs[AXIS_X] - iWallWidth,
+			pBox->bmaxs[AXIS_Y] - iWallWidth, iSides, fStartAngle, fArc, fInnerPoints);
 
 	//
 	// check wall width - if it's half or more of the total,
 	//  set the inner poinst to the center point of the box
 	//  and turn off the CreateSouthFace flag
-	//	
+	//
 	BOOL bCreateSouthFace = TRUE;
 	Vector Center;
 	pBox->GetBoundsCenter(Center);
-	if((iWallWidth*2+8) >= (pBox->bmaxs[AXIS_X] - pBox->bmins[AXIS_X]) ||
-		(iWallWidth*2+8) >= (pBox->bmaxs[AXIS_Y] - pBox->bmins[AXIS_Y]))
+	if((iWallWidth * 2 + 8) >= (pBox->bmaxs[AXIS_X] - pBox->bmins[AXIS_X]) ||
+	   (iWallWidth * 2 + 8) >= (pBox->bmaxs[AXIS_Y] - pBox->bmins[AXIS_Y]))
 	{
 		for(int i = 0; i < ARC_MAX_POINTS; i++)
 		{
@@ -415,30 +408,27 @@ CMapClass *CreateArch(BoundBox *pBox, float fStartAngle, int iSides, float fArc,
 	// create group for segments
 	CMapGroup *pGroup = new CMapGroup;
 
-	Vector MoveAccum( 0.f, 0.f, 0.f );
+	Vector MoveAccum(0.f, 0.f, 0.f);
 
 	float fMinZ, fMaxZ;
 
 	fMinZ = pBox->bmins[2];
 	fMaxZ = pBox->bmaxs[2];
 
-	if ((fMaxZ - fMinZ) < 1.0f)
+	if((fMaxZ - fMinZ) < 1.0f)
 		fMaxZ = fMinZ + 1.0f;
 
-	for (int i = 0; i < iSides; i++)
+	for(int i = 0; i < iSides; i++)
 	{
-		int iNextPoint = i+1;
-		if (iNextPoint >= iSides + 1)
+		int iNextPoint = i + 1;
+		if(iNextPoint >= iSides + 1)
 			iNextPoint = 0;
 
-		CMapSolid *pSolid = CreateSegment(
-			fMinZ, fMaxZ,
-			fOuterPoints, fInnerPoints,
-			i, iNextPoint, bCreateSouthFace);
+		CMapSolid *pSolid = CreateSegment(fMinZ, fMaxZ, fOuterPoints, fInnerPoints, i, iNextPoint, bCreateSouthFace);
 
 		pGroup->AddChild(pSolid);
 
-		if (iAddHeight && i)	// don't move first segment
+		if(iAddHeight && i) // don't move first segment
 		{
 			MoveAccum[2] += iAddHeight;
 			pSolid->TransMove(MoveAccum);
@@ -446,7 +436,7 @@ CMapClass *CreateArch(BoundBox *pBox, float fStartAngle, int iSides, float fArc,
 	}
 
 	pGroup->CalcBounds(TRUE);
-	if (Options.general.bStretchArches)
+	if(Options.general.bStretchArches)
 	{
 		// make sure size of group's bounds are size of original bounds -
 		//  if not, scale up. this can happen when we use rotation.
@@ -454,13 +444,12 @@ CMapClass *CreateArch(BoundBox *pBox, float fStartAngle, int iSides, float fArc,
 		pBox->GetBoundsSize(boundsize);
 		pGroup->GetBoundsSize(objsize);
 
-		if (boundsize[AXIS_X] > objsize[AXIS_X] || 
-			boundsize[AXIS_Y] > objsize[AXIS_Y])
+		if(boundsize[AXIS_X] > objsize[AXIS_X] || boundsize[AXIS_Y] > objsize[AXIS_Y])
 		{
 			Vector scale;
 			scale[AXIS_X] = boundsize[AXIS_X] / objsize[AXIS_X];
 			scale[AXIS_Y] = boundsize[AXIS_Y] / objsize[AXIS_Y];
-			scale[AXIS_Z] = 1.0f;  // xxxYWB scaling by 0 causes veneers, so I changed to 1.0
+			scale[AXIS_Z] = 1.0f; // xxxYWB scaling by 0 causes veneers, so I changed to 1.0
 			Vector center;
 			pBox->GetBoundsCenter(center);
 			pGroup->TransScale(center, scale);
@@ -470,47 +459,47 @@ CMapClass *CreateArch(BoundBox *pBox, float fStartAngle, int iSides, float fArc,
 	return pGroup;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pBox - 
-//			fStartAngle - 
-//			iSides - 
-//			fArc - 
-//			iWallWidth - 
-//			iAddHeight - 
-//			bPreview - 
+// Purpose:
+// Input  : pBox -
+//			fStartAngle -
+//			iSides -
+//			fArc -
+//			iWallWidth -
+//			iAddHeight -
+//			bPreview -
 // Output : Returns a group containing the arch solids.
 //-----------------------------------------------------------------------------
 typedef float TorusPointList_t[ARC_MAX_POINTS][3];
 
-CMapClass *CreateTorus(BoundBox *pBox, float fStartAngle, int iSides, float fArc, int iWallWidth, float flCrossSectionalRadius,
-	float fRotationStartAngle, int iRotationSides, float fRotationArc, int iAddHeight, BOOL bPreview)
+CMapClass *CreateTorus(BoundBox *pBox, float fStartAngle, int iSides, float fArc, int iWallWidth,
+					   float flCrossSectionalRadius, float fRotationStartAngle, int iRotationSides, float fRotationArc,
+					   int iAddHeight, BOOL bPreview)
 {
 	float xCenter = (pBox->bmaxs[AXIS_X] + pBox->bmins[AXIS_X]) * 0.5f;
 	float yCenter = (pBox->bmaxs[AXIS_Y] + pBox->bmins[AXIS_Y]) * 0.5f;
 	float xRad = (pBox->bmaxs[AXIS_X] - xCenter);
 	float yRad = (pBox->bmaxs[AXIS_Y] - yCenter);
-	if (xRad < 0.0f )
+	if(xRad < 0.0f)
 	{
 		xRad = 0.0f;
 	}
 
-	if (yRad < 0.0f )
+	if(yRad < 0.0f)
 	{
 		yRad = 0.0f;
 	}
 
-	if ( flCrossSectionalRadius > (xRad * 0.5f) )
+	if(flCrossSectionalRadius > (xRad * 0.5f))
 	{
 		flCrossSectionalRadius = (xRad * 0.5f);
 	}
-	if ( flCrossSectionalRadius > (yRad * 0.5f) )
+	if(flCrossSectionalRadius > (yRad * 0.5f))
 	{
 		flCrossSectionalRadius = (yRad * 0.5f);
 	}
 
-	if ( iWallWidth < flCrossSectionalRadius )
+	if(iWallWidth < flCrossSectionalRadius)
 	{
 		flCrossSectionalRadius -= iWallWidth;
 	}
@@ -528,20 +517,19 @@ CMapClass *CreateTorus(BoundBox *pBox, float fStartAngle, int iSides, float fArc
 	float fInnerPoints[ARC_MAX_POINTS][2];
 
 	// create outer points (unrotated)
-	MakeArcCenterRadius(0.0f, 0.0f,
-		flCrossSectionalRadius + iWallWidth, flCrossSectionalRadius + iWallWidth, 
-		iSides, fStartAngle, fArc, fOuterPoints);
+	MakeArcCenterRadius(0.0f, 0.0f, flCrossSectionalRadius + iWallWidth, flCrossSectionalRadius + iWallWidth, iSides,
+						fStartAngle, fArc, fOuterPoints);
 
 	BOOL bCreateSouthFace = TRUE;
-	if ( flCrossSectionalRadius != 0.0f )
+	if(flCrossSectionalRadius != 0.0f)
 	{
 		// create inner points (unrotated)
-		MakeArcCenterRadius(0.0f, 0.0f, flCrossSectionalRadius, flCrossSectionalRadius, 
-			iSides, fStartAngle, fArc, fInnerPoints);
+		MakeArcCenterRadius(0.0f, 0.0f, flCrossSectionalRadius, flCrossSectionalRadius, iSides, fStartAngle, fArc,
+							fInnerPoints);
 	}
 	else
 	{
-		for( int i = 0; i < iSides; i++)
+		for(int i = 0; i < iSides; i++)
 		{
 			fInnerPoints[i][0] = fInnerPoints[i][1] = 0.0f;
 		}
@@ -565,20 +553,20 @@ CMapClass *CreateTorus(BoundBox *pBox, float fStartAngle, int iSides, float fArc
 	float flRotationAngle = fRotationStartAngle;
 	float flRotationDeltaAngle = fRotationArc / iRotationSides;
 
-	bool bIsCircle = ( iAddHeight == 0.0f ) && ( fRotationArc == 360.0f );
+	bool bIsCircle = (iAddHeight == 0.0f) && (fRotationArc == 360.0f);
 	++iRotationSides;
-	for ( int i = 0; i != iRotationSides; ++i )
+	for(int i = 0; i != iRotationSides; ++i)
 	{
 		// This eliminates a seam in circular toruses
-		if ( bIsCircle && (i == iRotationSides - 1) )
+		if(bIsCircle && (i == iRotationSides - 1))
 		{
 			flRotationAngle = fRotationStartAngle;
 		}
 
 		float xCurrCenter, yCurrCenter;
 
-		float flCosAngle = cos( DEG2RAD(flRotationAngle) );
-		float flSinAngle = sin( DEG2RAD(flRotationAngle) );
+		float flCosAngle = cos(DEG2RAD(flRotationAngle));
+		float flSinAngle = sin(DEG2RAD(flRotationAngle));
 		xCurrCenter = xCenter + xRad * flCosAngle;
 		yCurrCenter = yCenter + yRad * flSinAngle;
 
@@ -605,24 +593,22 @@ CMapClass *CreateTorus(BoundBox *pBox, float fStartAngle, int iSides, float fArc
 			(*pEndOuterPoints)[j][2] = flCurrentZ + fOuterPoints[j][1];
 
 			// We'll use the j == 0 data when iNextPoint = iSides - 1
-			if (( i != 0 ) && ( jPrevPoint != -1 ))
+			if((i != 0) && (jPrevPoint != -1))
 			{
-				CMapSolid *pSolid = CreateSegment(
-					*pStartOuterPoints, *pStartInnerPoints,
-					*pEndOuterPoints, *pEndInnerPoints,
-					jPrevPoint, j, bCreateSouthFace);
+				CMapSolid *pSolid = CreateSegment(*pStartOuterPoints, *pStartInnerPoints, *pEndOuterPoints,
+												  *pEndInnerPoints, jPrevPoint, j, bCreateSouthFace);
 
 				pGroup->AddChild(pSolid);
 			}
 
 			jPrevPoint = j;
 			++j;
-		} while( jPrevPoint != iSides );
+		} while(jPrevPoint != iSides);
 
 		flRotationAngle += flRotationDeltaAngle;
 		flCurrentZ += flDeltaZ;
 
-		if ( flRotationAngle >= 360.0f )
+		if(flRotationAngle >= 360.0f)
 		{
 			flRotationAngle -= 360.0f;
 		}
@@ -630,7 +616,7 @@ CMapClass *CreateTorus(BoundBox *pBox, float fStartAngle, int iSides, float fArc
 
 	pGroup->CalcBounds(TRUE);
 
-	if (Options.general.bStretchArches)
+	if(Options.general.bStretchArches)
 	{
 		// make sure size of group's bounds are size of original bounds -
 		//  if not, scale up. this can happen when we use rotation.
@@ -638,13 +624,12 @@ CMapClass *CreateTorus(BoundBox *pBox, float fStartAngle, int iSides, float fArc
 		pBox->GetBoundsSize(boundsize);
 		pGroup->GetBoundsSize(objsize);
 
-		if (boundsize[AXIS_X] > objsize[AXIS_X] || 
-			boundsize[AXIS_Y] > objsize[AXIS_Y])
+		if(boundsize[AXIS_X] > objsize[AXIS_X] || boundsize[AXIS_Y] > objsize[AXIS_Y])
 		{
 			Vector scale;
 			scale[AXIS_X] = boundsize[AXIS_X] / objsize[AXIS_X];
 			scale[AXIS_Y] = boundsize[AXIS_Y] / objsize[AXIS_Y];
-			scale[AXIS_Z] = 1.0f;  // xxxYWB scaling by 0 causes veneers, so I changed to 1.0
+			scale[AXIS_Z] = 1.0f; // xxxYWB scaling by 0 causes veneers, so I changed to 1.0
 			Vector center;
 			pBox->GetBoundsCenter(center);
 			pGroup->TransScale(center, scale);
@@ -653,5 +638,3 @@ CMapClass *CreateTorus(BoundBox *pBox, float fStartAngle, int iSides, float fArc
 
 	return pGroup;
 }
-
-

@@ -22,12 +22,17 @@ public:
 	~CIPRateLimit();
 
 	// updates an ip entry, return true if the ip is allowed, false otherwise
-	bool CheckIP( netadr_t ip );
+	bool CheckIP(netadr_t ip);
 
 private:
-	bool CheckIPInternal( netadr_t ip );
+	bool CheckIPInternal(netadr_t ip);
 
-	enum { MAX_TREE_SIZE = 32768, START_TREE_SIZE = 2048, FLUSH_TIMEOUT = 120 };
+	enum
+	{
+		MAX_TREE_SIZE = 32768,
+		START_TREE_SIZE = 2048,
+		FLUSH_TIMEOUT = 120
+	};
 
 	typedef int ip_t;
 	struct iprate_s
@@ -37,9 +42,9 @@ private:
 		int count;
 	};
 
-	static bool LessIP( const struct CIPRateLimit::iprate_s &lhs, const struct CIPRateLimit::iprate_s &rhs );
+	static bool LessIP(const struct CIPRateLimit::iprate_s &lhs, const struct CIPRateLimit::iprate_s &rhs);
 
-	CUtlRBTree< struct iprate_s, ip_t > m_IPTree;
+	CUtlRBTree<struct iprate_s, ip_t> m_IPTree;
 	int m_iGlobalCount;
 	long m_lLastTime;
 	double m_flFlushTime;
@@ -50,6 +55,6 @@ private:
 };
 
 // returns false if this IP exceeds rate limits
-bool CheckConnectionLessRateLimits( netadr_t & adr );
+bool CheckConnectionLessRateLimits(netadr_t &adr);
 
 #endif // SVIPRATELIMIT_H

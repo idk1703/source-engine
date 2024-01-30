@@ -16,15 +16,15 @@
 //--------------------------------
 // CPlayerMatchDialog
 //--------------------------------
-CWelcomeDialog::CWelcomeDialog( vgui::Panel *pParent ) : BaseClass( pParent, "WelcomeDialog" )
+CWelcomeDialog::CWelcomeDialog(vgui::Panel *pParent) : BaseClass(pParent, "WelcomeDialog")
 {
 	// do nothing
-} 
+}
 
 //---------------------------------------------------------
 // Purpose: Set the title and menu positions
 //---------------------------------------------------------
-void CWelcomeDialog::PerformLayout( void )
+void CWelcomeDialog::PerformLayout(void)
 {
 	BaseClass::PerformLayout();
 }
@@ -32,27 +32,27 @@ void CWelcomeDialog::PerformLayout( void )
 //-----------------------------------------------------------------
 // Purpose: Forward commands to the matchmaking base panel
 //-----------------------------------------------------------------
-void CWelcomeDialog::OnCommand( const char *pCommand )
+void CWelcomeDialog::OnCommand(const char *pCommand)
 {
-	BaseClass::OnCommand( pCommand );
+	BaseClass::OnCommand(pCommand);
 }
 
 //-------------------------------------------------------
 // Keyboard input
 //-------------------------------------------------------
-void CWelcomeDialog::OnKeyCodePressed( vgui::KeyCode code )
+void CWelcomeDialog::OnKeyCodePressed(vgui::KeyCode code)
 {
-	switch( code )
+	switch(code)
 	{
-	case KEY_XBUTTON_B:
-		if ( GameUI().IsInLevel() )
-		{
-			m_pParent->OnCommand( "ResumeGame" );
-		}
-		break;
+		case KEY_XBUTTON_B:
+			if(GameUI().IsInLevel())
+			{
+				m_pParent->OnCommand("ResumeGame");
+			}
+			break;
 
-	default:
-		BaseClass::OnKeyCodePressed( code );
-		break;
+		default:
+			BaseClass::OnKeyCodePressed(code);
+			break;
 	}
 }

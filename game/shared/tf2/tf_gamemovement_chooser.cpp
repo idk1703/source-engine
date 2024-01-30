@@ -9,7 +9,7 @@
 #include "tf_movedata.h"
 
 static CTFGameMovementChooser g_GameMovement;
-IGameMovement *g_pGameMovement = ( IGameMovement* )&g_GameMovement;
+IGameMovement *g_pGameMovement = (IGameMovement *)&g_GameMovement;
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -17,7 +17,7 @@ IGameMovement *g_pGameMovement = ( IGameMovement* )&g_GameMovement;
 CTFGameMovementChooser::CTFGameMovementChooser()
 {
 	// Allocate memory for a movement type for each class (0 = undecided)
-	m_Movements.SetSize( TFCLASS_CLASS_COUNT );
+	m_Movements.SetSize(TFCLASS_CLASS_COUNT);
 
 	// NOTE: the order here matches the enum order in tf_shareddefs.h
 	m_Movements[TFCLASS_RECON] = &m_ReconMovement;
@@ -35,42 +35,42 @@ CTFGameMovementChooser::CTFGameMovementChooser()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFGameMovementChooser::ProcessMovement( CBasePlayer *pPlayer, CMoveData *pMoveData )
+void CTFGameMovementChooser::ProcessMovement(CBasePlayer *pPlayer, CMoveData *pMoveData)
 {
 	// Convert CMoveData to CTFMoveData
-	CTFMoveData *pTFMoveData = static_cast<CTFMoveData*>( pMoveData );
-	
+	CTFMoveData *pTFMoveData = static_cast<CTFMoveData *>(pMoveData);
+
 	// Cache the current class id
 	m_nClassID = pTFMoveData->m_nClassID;
 
 	// Player class movement. (If possible)
-	if ( m_nClassID != TFCLASS_UNDECIDED )
+	if(m_nClassID != TFCLASS_UNDECIDED)
 	{
-		m_Movements[m_nClassID]->ProcessClassMovement( (CBaseTFPlayer *)pPlayer, pTFMoveData );
+		m_Movements[m_nClassID]->ProcessClassMovement((CBaseTFPlayer *)pPlayer, pTFMoveData);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-const Vector &CTFGameMovementChooser::GetPlayerMins( bool ducked ) const
+const Vector &CTFGameMovementChooser::GetPlayerMins(bool ducked) const
 {
 	// Player class mins.
-	return m_Movements[m_nClassID]->GetPlayerMins( ducked );
+	return m_Movements[m_nClassID]->GetPlayerMins(ducked);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-const Vector &CTFGameMovementChooser::GetPlayerMaxs( bool ducked ) const
+const Vector &CTFGameMovementChooser::GetPlayerMaxs(bool ducked) const
 {
-	return m_Movements[m_nClassID]->GetPlayerMins( ducked );
+	return m_Movements[m_nClassID]->GetPlayerMins(ducked);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-const Vector &CTFGameMovementChooser::GetPlayerViewOffset( bool ducked ) const
+const Vector &CTFGameMovementChooser::GetPlayerViewOffset(bool ducked) const
 {
-	return m_Movements[m_nClassID]->GetPlayerViewOffset( ducked );
+	return m_Movements[m_nClassID]->GetPlayerViewOffset(ducked);
 }

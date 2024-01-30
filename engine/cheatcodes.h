@@ -1,11 +1,11 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
 //===========================================================================//
-	   
+
 #ifndef CHEATCODES_H
 #define CHEATCODES_H
 
@@ -13,14 +13,11 @@
 #pragma once
 #endif
 
-
 #include "inputsystem/ButtonCode.h"
 
-
-void	ClearCheatCommands( void );
-void	ReadCheatCommandsFromFile( char *pchFileName );
-void	LogKeyPress( ButtonCode_t code );
-void	CheckCheatCodes();
-
+void ClearCheatCommands(void);
+void ReadCheatCommandsFromFile(char *pchFileName);
+void LogKeyPress(ButtonCode_t code);
+void CheckCheatCodes();
 
 #endif // CHEATCODES_H

@@ -69,7 +69,7 @@ $Configuration
 	$CustomBuildStep
 	{
 		// General
-		$CommandLine				"echo Checking Dependency $OUTBINDIR\$(TargetName).xex"			
+		$CommandLine				"echo Checking Dependency $OUTBINDIR\$(TargetName).xex"
 		$Description				" "
 		$Outputs					"$OUTBINDIR\$(TargetName).xex"
 	}
@@ -104,4 +104,3 @@ $Project
 		$File	"$ROOTSCRIPT"
 	}
 }
-

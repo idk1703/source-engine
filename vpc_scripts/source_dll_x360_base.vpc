@@ -30,7 +30,7 @@ $IgnoreRedundancyWarning	"ON"
 
 // Common Configuration
 $Configuration
-{	
+{
 	$Compiler
 	{
 		$PreprocessorDefinitions	"$BASE;_LOWVIOLENCE"	[$LV]
@@ -38,7 +38,7 @@ $Configuration
 		$PreprocessorDefinitions	"$BASE;COMPILER_MSVC;COMPILER_MSVCX360;_DLL_EXT=$_DLL_EXT"
 		$PreprocessorDefinitions	"$BASE;DLLNAME=$OUTBINNAME"
 	}
-	
+
 	$Linker
 	{
 		// This ignores the linker error "export '<symbol>' specified multiple times; using first specification
@@ -53,7 +53,7 @@ $Configuration
 		// DLLs must NOT be signed with the XML used for XEX
 		$ProjectDefaults		"$SRCDIR\common\xlast_$VPCGAME$DLLDEMOSUFFIX\$VPCGAME""_dll.xml"
 	}
-	
+
 	$ConsoleDeployment
 	{
 		$ExcludedFromBuild		"Yes"
@@ -65,7 +65,7 @@ $Configuration
 		$CommandLine		"if EXIST $OUTBINDIR\$(TargetFileName) for /f $QUOTEdelims=$QUOTE %%A in ('attrib $QUOTE$OUTBINDIR\$(TargetFileName)$QUOTE') do set valveTmpIsReadOnly=$QUOTE%%A$QUOTE" "\n" \
 							"set valveTmpIsReadOnlyLetter=%valveTmpIsReadOnly:~6,1%" "\n" \
 							"if $QUOTE%valveTmpIsReadOnlyLetter%$QUOTE==$QUOTER$QUOTE del /q $(TargetDir)$(TargetName)_converted.dll" "\n" \
-							"$CRCCHECK" "\n" 			
+							"$CRCCHECK" "\n"
 	}
 
 	$PostBuildEvent
@@ -81,12 +81,12 @@ $Configuration
 		$CommandLine			"$BASE" \
 								"echo LoadAddressName=$LOADADDRESSNAME > $(TargetDir)$(TargetName).vpcinfo" "\n" \
 								"call $SRCDIR\vpc_scripts\valve_xbcp_wrapper.cmd $(TargetDir)$(TargetName).vpcinfo $(RemoteRoot)\$DEVKITBINDIR\$(TargetName).vpcinfo" "\n" [$VPCINFO]
-								
-								
+
+
 		$Description			"Publishing to $OUTBINDIR"
 		$ExcludedFromBuild		"No"
 	}
-		
+
 
 	// this forces a dependency on the published directory
 	// when the dependency fails (the dll was deleted), the PostBuildEvent will run, thus causing the publish to re-occur
@@ -94,7 +94,7 @@ $Configuration
 	$CustomBuildStep
 	{
 		// General
-		$CommandLine				"echo Checking Dependency $OUTBINDIR\$(TargetFileName)"			
+		$CommandLine				"echo Checking Dependency $OUTBINDIR\$(TargetFileName)"
 		$Description				" "
 		$Outputs					"$OUTBINDIR\$(TargetFileName)"
 	}
@@ -130,4 +130,3 @@ $Project
 		$Lib	"$LIBPUBLIC\interfaces"
 	}
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -34,6 +34,5 @@ private:
 	vgui::IImage *m_pImage, *m_pMouseOverImage;
 	typedef vgui::Button BaseClass;
 };
-
 
 #endif // BACKGROUNDMENUBUTTON_H

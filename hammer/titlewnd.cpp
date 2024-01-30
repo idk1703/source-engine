@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,10 +14,8 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 CFont CTitleWnd::m_FontNormal;
 CFont CTitleWnd::m_FontActive;
-
 
 BEGIN_MESSAGE_MAP(CTitleWnd, CWnd)
 	ON_WM_PAINT()
@@ -26,7 +24,6 @@ BEGIN_MESSAGE_MAP(CTitleWnd, CWnd)
 	ON_WM_MOUSEMOVE()
 	ON_MESSAGE(WM_MOUSELEAVE, OnMouseLeave)
 END_MESSAGE_MAP()
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Factory. Registers the title window class if necessary and creates
@@ -41,43 +38,44 @@ CTitleWnd *CTitleWnd::CreateTitleWnd(CWnd *pwndParent, UINT uID)
 	// Register the window class if we have not done so already.
 	//
 	static CString strTitleWndClass;
-	if (strTitleWndClass.IsEmpty())
+	if(strTitleWndClass.IsEmpty())
 	{
-		strTitleWndClass = AfxRegisterWndClass(CS_BYTEALIGNCLIENT, AfxGetApp()->LoadStandardCursor(IDC_ARROW), HBRUSH(GetStockObject(BLACK_BRUSH)));
+		strTitleWndClass = AfxRegisterWndClass(CS_BYTEALIGNCLIENT, AfxGetApp()->LoadStandardCursor(IDC_ARROW),
+											   HBRUSH(GetStockObject(BLACK_BRUSH)));
 	}
 
 	//
 	// Create the title window.
 	//
 	CTitleWnd *pWnd = new CTitleWnd();
-	if (pWnd != NULL)
+	if(pWnd != NULL)
 	{
 		pWnd->Create(strTitleWndClass, "Title Window", WS_CHILD | WS_VISIBLE, CRect(0, 0, 5, 5), pwndParent, uID);
 	}
 
-	return(pWnd);
+	return (pWnd);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor. Creates fonts the first time it is called.
 //-----------------------------------------------------------------------------
 CTitleWnd::CTitleWnd(void)
 {
-	if (!m_FontNormal.m_hObject)
+	if(!m_FontNormal.m_hObject)
 	{
 		//
 		// Create two fonts, a normal one and a bold one for when we are active.
 		//
-		m_FontNormal.CreateFont(16, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, "MS Sans Serif");
-		m_FontActive.CreateFont(16, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, "MS Sans Serif");
+		m_FontNormal.CreateFont(16, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, ANSI_CHARSET, OUT_DEFAULT_PRECIS,
+								CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, "MS Sans Serif");
+		m_FontActive.CreateFont(16, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE, ANSI_CHARSET, OUT_DEFAULT_PRECIS,
+								CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, "MS Sans Serif");
 	}
 
 	m_bMenuOpen = false;
 	m_bMouseOver = false;
 	m_szTitle[0] = '\0';
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets the text to display in the window. The window size is recalculated
@@ -87,13 +85,13 @@ CTitleWnd::CTitleWnd(void)
 void CTitleWnd::SetTitle(LPCTSTR pszTitle)
 {
 	Assert(pszTitle != NULL);
-	if (pszTitle != NULL)
+	if(pszTitle != NULL)
 	{
 		strcpy(m_szTitle, pszTitle);
-		if (::IsWindow(m_hWnd))
+		if(::IsWindow(m_hWnd))
 		{
 			CDC *pDC = GetDC();
-			if (pDC != NULL)
+			if(pDC != NULL)
 			{
 				pDC->SelectObject(&m_FontActive);
 				CSize TextSize = pDC->GetTextExtent(m_szTitle, strlen(m_szTitle));
@@ -105,7 +103,6 @@ void CTitleWnd::SetTitle(LPCTSTR pszTitle)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Turns off the active font when the mouse leaves our client area.
 // Input  : Per WM_MOUSELEAVE.
@@ -115,9 +112,8 @@ LRESULT CTitleWnd::OnMouseLeave(WPARAM wParam, LPARAM lParam)
 	m_bMouseOver = false;
 	Invalidate();
 	UpdateWindow();
-	return(0);
+	return (0);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Enables mouse tracking so we can render with a special font when
@@ -126,7 +122,7 @@ LRESULT CTitleWnd::OnMouseLeave(WPARAM wParam, LPARAM lParam)
 //-----------------------------------------------------------------------------
 void CTitleWnd::OnMouseMove(UINT nFlags, CPoint point)
 {
-	if (!m_bMouseOver)
+	if(!m_bMouseOver)
 	{
 		TRACKMOUSEEVENT Track;
 		Track.cbSize = sizeof(Track);
@@ -143,21 +139,20 @@ void CTitleWnd::OnMouseMove(UINT nFlags, CPoint point)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Renders the title window. A special font is used if the mouse is
 //			over the title window or if the window's menu is open.
 //-----------------------------------------------------------------------------
 void CTitleWnd::OnPaint(void)
 {
-	if (m_szTitle[0] != '\0')
+	if(m_szTitle[0] != '\0')
 	{
-		if (GetUpdateRect(NULL, TRUE))
+		if(GetUpdateRect(NULL, TRUE))
 		{
 			CPaintDC dc(this);
 			CFont *pFontOld;
 
-			if ((m_bMouseOver) || (m_bMenuOpen))
+			if((m_bMouseOver) || (m_bMenuOpen))
 			{
 				pFontOld = dc.SelectObject(&m_FontActive);
 				dc.SetTextColor(RGB(255, 255, 255));
@@ -175,7 +170,6 @@ void CTitleWnd::OnPaint(void)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Opens the context menu when right-clicked upon.
 // Input  : Per MFC OnRightButtonDown.
@@ -184,7 +178,6 @@ void CTitleWnd::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	OnMouseButton();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Opens the context menu when right-clicked upon.
@@ -195,7 +188,6 @@ void CTitleWnd::OnRButtonDown(UINT nFlags, CPoint point)
 	OnMouseButton();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Opens the context menu when right-clicked upon.
 // Input  : Per MFC OnRightButtonDown.
@@ -205,7 +197,7 @@ void CTitleWnd::OnMouseButton(void)
 	static BOOL bFirstTime = TRUE;
 	static CMenu Menu;
 
-	if (bFirstTime)
+	if(bFirstTime)
 	{
 		Menu.LoadMenu(IDR_POPUPS);
 		bFirstTime = FALSE;
@@ -221,7 +213,7 @@ void CTitleWnd::OnMouseButton(void)
 	ClientToScreen(&MenuLocation);
 
 	m_bMenuOpen = true;
-	pPopupMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, MenuLocation.x, MenuLocation.y, (CWnd *)GetMainWnd(), NULL);
+	pPopupMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, MenuLocation.x, MenuLocation.y, (CWnd *)GetMainWnd(),
+							   NULL);
 	m_bMenuOpen = false;
 }
-

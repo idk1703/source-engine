@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -17,52 +17,52 @@
 
 using namespace vgui;
 
-CCvarNegateCheckButton::CCvarNegateCheckButton( Panel *parent, const char *panelName, const char *text, 
-	const char *cvarname )
- : CheckButton( parent, panelName, text )
+CCvarNegateCheckButton::CCvarNegateCheckButton(Panel *parent, const char *panelName, const char *text,
+											   const char *cvarname)
+	: CheckButton(parent, panelName, text)
 {
-	m_pszCvarName = cvarname ? strdup( cvarname ) : NULL;
+	m_pszCvarName = cvarname ? strdup(cvarname) : NULL;
 	Reset();
-	AddActionSignalTarget( this );
+	AddActionSignalTarget(this);
 }
 
 CCvarNegateCheckButton::~CCvarNegateCheckButton()
 {
-	free( m_pszCvarName );
+	free(m_pszCvarName);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCvarNegateCheckButton::Paint()
 {
-	if ( !m_pszCvarName )
+	if(!m_pszCvarName)
 	{
 		BaseClass::Paint();
 		return;
 	}
 
 	// Look up current value
-//	float value = engine->pfnGetCvarFloat( m_pszCvarName );
-	ConVarRef var( m_pszCvarName );
-	if ( !var.IsValid() )
+	//	float value = engine->pfnGetCvarFloat( m_pszCvarName );
+	ConVarRef var(m_pszCvarName);
+	if(!var.IsValid())
 		return;
 
 	float value = var.GetFloat();
-		
-	if ( value < 0 )
+
+	if(value < 0)
 	{
-		if ( !m_bStartState )
+		if(!m_bStartState)
 		{
-			SetSelected( true );
+			SetSelected(true);
 			m_bStartState = true;
 		}
 	}
 	else
 	{
-		if ( m_bStartState )
+		if(m_bStartState)
 		{
-			SetSelected( false );
+			SetSelected(false);
 			m_bStartState = false;
 		}
 	}
@@ -72,14 +72,14 @@ void CCvarNegateCheckButton::Paint()
 void CCvarNegateCheckButton::Reset()
 {
 	// Look up current value
-//	float value = engine->pfnGetCvarFloat( m_pszCvarName );
-	ConVarRef var( m_pszCvarName );
-	if ( !var.IsValid() )
+	//	float value = engine->pfnGetCvarFloat( m_pszCvarName );
+	ConVarRef var(m_pszCvarName);
+	if(!var.IsValid())
 		return;
 
 	float value = var.GetFloat();
-		
-	if ( value < 0 )
+
+	if(value < 0)
 	{
 		m_bStartState = true;
 	}
@@ -96,24 +96,24 @@ bool CCvarNegateCheckButton::HasBeenModified()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *panel - 
+// Purpose:
+// Input  : *panel -
 //-----------------------------------------------------------------------------
-void CCvarNegateCheckButton::SetSelected( bool state )
+void CCvarNegateCheckButton::SetSelected(bool state)
 {
-	BaseClass::SetSelected( state );
+	BaseClass::SetSelected(state);
 }
 
 void CCvarNegateCheckButton::ApplyChanges()
 {
-	if ( !m_pszCvarName || !m_pszCvarName[ 0 ] ) 
+	if(!m_pszCvarName || !m_pszCvarName[0])
 		return;
 
-	ConVarRef var( m_pszCvarName );
+	ConVarRef var(m_pszCvarName);
 	float value = var.GetFloat();
-	
-	value = (float)fabs( value );
-	if (value < 0.00001)
+
+	value = (float)fabs(value);
+	if(value < 0.00001)
 	{
 		// correct the value if it's not set
 		value = 0.022f;
@@ -123,13 +123,12 @@ void CCvarNegateCheckButton::ApplyChanges()
 	value = -value;
 
 	float ans = m_bStartState ? value : -value;
-	var.SetValue( ans );
+	var.SetValue(ans);
 }
-
 
 void CCvarNegateCheckButton::OnButtonChecked()
 {
-	if (HasBeenModified())
+	if(HasBeenModified())
 	{
 		PostActionSignal(new KeyValues("ControlModified"));
 	}

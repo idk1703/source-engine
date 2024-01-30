@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -14,24 +14,21 @@
 
 using namespace vgui;
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CConsolePage::CConsolePage( Panel *parent, bool bStatusVersion ) : BaseClass( parent, "ToolsConsole", bStatusVersion )
+CConsolePage::CConsolePage(Panel *parent, bool bStatusVersion) : BaseClass(parent, "ToolsConsole", bStatusVersion)
 {
-	AddActionSignalTarget( this );
+	AddActionSignalTarget(this);
 }
-
 
 //-----------------------------------------------------------------------------
 // Submits a command
 //-----------------------------------------------------------------------------
-void CConsolePage::OnCommandSubmitted( const char *pCommand )
+void CConsolePage::OnCommandSubmitted(const char *pCommand)
 {
-	enginetools->Command( pCommand );
+	enginetools->Command(pCommand);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: sets up colors

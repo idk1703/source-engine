@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -15,7 +15,6 @@
 #include "netadr.h"
 #include "serverinfo.h"
 #include "iresponse.h"
-
 
 #include "utlrbtree.h"
 
@@ -33,7 +32,7 @@ struct query_t
 //-----------------------------------------------------------------------------
 // Purpose: Handles a list of servers, and can refresh them
 //-----------------------------------------------------------------------------
-class CServerList: public IResponse
+class CServerList : public IResponse
 {
 public:
 	CServerList(IServerRefreshResponse *gameList);
@@ -41,7 +40,7 @@ public:
 
 	// Handles a frame of networking
 	void RunFrame();
-	
+
 	// gets a server from the list by id, range [0, ServerCount)
 	serveritem_t &GetServer(unsigned int serverID);
 
@@ -76,7 +75,6 @@ public:
 	// called when a server response has timed out
 	virtual void ServerFailedToRespond();
 
-
 private:
 	// Run query logic for this frame
 	void QueryFrame();
@@ -90,7 +88,6 @@ private:
 		MAX_QUERY_SOCKETS = 255,
 	};
 
-
 	// holds the list of all the currently active queries
 	CUtlRBTree<query_t, unsigned short> m_Queries;
 
@@ -100,13 +97,14 @@ private:
 	// list of servers to be refreshed, in order... this would be more optimal as a queue
 	CUtlVector<int> m_RefreshList;
 
-	int	m_iUpdateSerialNumber; // serial number of current update so we don't get results overlapping between different server list updates
-	bool m_bQuerying;	// Is refreshing taking place?
- 	int	m_nMaxActive;	// Max # of simultaneous sockets to use for querying
-	int m_nMaxRampUp;	// increasing number of sockets to use
-	int m_nRampUpSpeed;	// amount to ramp up each frame
-	int	m_nInvalidServers;	// number of servers marked as 'no not refresh'
-	int	m_nRefreshedServers; // count of servers refreshed
+	int m_iUpdateSerialNumber; // serial number of current update so we don't get results overlapping between different
+							   // server list updates
+	bool m_bQuerying;		   // Is refreshing taking place?
+	int m_nMaxActive;		   // Max # of simultaneous sockets to use for querying
+	int m_nMaxRampUp;		   // increasing number of sockets to use
+	int m_nRampUpSpeed;		   // amount to ramp up each frame
+	int m_nInvalidServers;	   // number of servers marked as 'no not refresh'
+	int m_nRefreshedServers;   // count of servers refreshed
 };
 
 #endif // SERVERLIST_H

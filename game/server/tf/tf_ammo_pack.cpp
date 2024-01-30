@@ -17,39 +17,40 @@
 
 //----------------------------------------------
 
-extern void SendProxy_FuncRotatingAngle( const SendProp *pProp, const void *pStruct, const void *pData, DVariant *pOut, int iElement, int objectID);
+extern void SendProxy_FuncRotatingAngle(const SendProp *pProp, const void *pStruct, const void *pData, DVariant *pOut,
+										int iElement, int objectID);
 
 // Network table.
-IMPLEMENT_SERVERCLASS_ST( CTFAmmoPack, DT_AmmoPack )
-	SendPropVector( SENDINFO( m_vecInitialVelocity ), -1, SPROP_NOSCALE ),
-	SendPropExclude( "DT_BaseEntity", "m_angRotation" ),
-	SendPropAngle( SENDINFO_VECTORELEM(m_angRotation, 0), 7, SPROP_CHANGES_OFTEN, SendProxy_FuncRotatingAngle ),
-	SendPropAngle( SENDINFO_VECTORELEM(m_angRotation, 1), 7, SPROP_CHANGES_OFTEN, SendProxy_FuncRotatingAngle ),
-	SendPropAngle( SENDINFO_VECTORELEM(m_angRotation, 2), 7, SPROP_CHANGES_OFTEN, SendProxy_FuncRotatingAngle ),
-END_SEND_TABLE()
+IMPLEMENT_SERVERCLASS_ST(CTFAmmoPack, DT_AmmoPack)
+SendPropVector(SENDINFO(m_vecInitialVelocity), -1, SPROP_NOSCALE), SendPropExclude("DT_BaseEntity", "m_angRotation"),
+	SendPropAngle(SENDINFO_VECTORELEM(m_angRotation, 0), 7, SPROP_CHANGES_OFTEN, SendProxy_FuncRotatingAngle),
+	SendPropAngle(SENDINFO_VECTORELEM(m_angRotation, 1), 7, SPROP_CHANGES_OFTEN, SendProxy_FuncRotatingAngle),
+	SendPropAngle(SENDINFO_VECTORELEM(m_angRotation, 2), 7, SPROP_CHANGES_OFTEN, SendProxy_FuncRotatingAngle),
+END_SEND_TABLE
+()
 
-BEGIN_DATADESC( CTFAmmoPack )
-	DEFINE_THINKFUNC( FlyThink ),
-	DEFINE_ENTITYFUNC( PackTouch ),
-END_DATADESC();
+	BEGIN_DATADESC(CTFAmmoPack) DEFINE_THINKFUNC(FlyThink),
+	DEFINE_ENTITYFUNC(PackTouch),
+END_DATADESC
+();
 
-LINK_ENTITY_TO_CLASS( tf_ammo_pack, CTFAmmoPack );
+LINK_ENTITY_TO_CLASS(tf_ammo_pack, CTFAmmoPack);
 
-PRECACHE_REGISTER( tf_ammo_pack );
+PRECACHE_REGISTER(tf_ammo_pack);
 
 #define HALLOWEEN_MODEL "models/props_halloween/pumpkin_loot.mdl"
 #define CHRISTMAS_MODEL "models/items/tf_gift.mdl"
 
-void CTFAmmoPack::Spawn( void )
+void CTFAmmoPack::Spawn(void)
 {
 	Precache();
-	SetModel( STRING( GetModelName() ) );
+	SetModel(STRING(GetModelName()));
 	BaseClass::Spawn();
 
-	SetNextThink( gpGlobals->curtime + 0.75f );
-	SetThink( &CTFAmmoPack::FlyThink );
+	SetNextThink(gpGlobals->curtime + 0.75f);
+	SetThink(&CTFAmmoPack::FlyThink);
 
-	SetTouch( &CTFAmmoPack::PackTouch );
+	SetTouch(&CTFAmmoPack::PackTouch);
 
 	m_flCreationTime = gpGlobals->curtime;
 
@@ -62,82 +63,85 @@ void CTFAmmoPack::Spawn( void )
 	m_flBonusScale = 1.f;
 
 	// no ammo to start
-	memset( m_iAmmo, 0, sizeof(m_iAmmo) );
+	memset(m_iAmmo, 0, sizeof(m_iAmmo));
 
 	// Die in 30 seconds
-	SetContextThink( &CBaseEntity::SUB_Remove, gpGlobals->curtime + 30, "DieContext" );
+	SetContextThink(&CBaseEntity::SUB_Remove, gpGlobals->curtime + 30, "DieContext");
 
-	if ( IsX360() )
+	if(IsX360())
 	{
-		RemoveEffects( EF_ITEM_BLINK );
+		RemoveEffects(EF_ITEM_BLINK);
 	}
 }
 
-void CTFAmmoPack::Precache( void )
+void CTFAmmoPack::Precache(void)
 {
-	PrecacheModel( "models/items/ammopack_medium.mdl" );
+	PrecacheModel("models/items/ammopack_medium.mdl");
 
-	if ( TFGameRules() )
+	if(TFGameRules())
 	{
-		if ( TFGameRules()->IsHolidayActive( kHoliday_Halloween ) )
+		if(TFGameRules()->IsHolidayActive(kHoliday_Halloween))
 		{
-			PrecacheModel( HALLOWEEN_MODEL );
-			PrecacheScriptSound( "Halloween.PumpkinDrop" );
-			PrecacheScriptSound( "Halloween.PumpkinPickup" );
+			PrecacheModel(HALLOWEEN_MODEL);
+			PrecacheScriptSound("Halloween.PumpkinDrop");
+			PrecacheScriptSound("Halloween.PumpkinPickup");
 		}
-		else if ( TFGameRules()->IsHolidayActive( kHoliday_Christmas ) )
+		else if(TFGameRules()->IsHolidayActive(kHoliday_Christmas))
 		{
-			PrecacheModel( CHRISTMAS_MODEL );
-			PrecacheScriptSound( "Christmas.GiftDrop" );
-			PrecacheScriptSound( "Christmas.GiftPickup" );
+			PrecacheModel(CHRISTMAS_MODEL);
+			PrecacheScriptSound("Christmas.GiftDrop");
+			PrecacheScriptSound("Christmas.GiftPickup");
 		}
 	}
 }
 
-CTFAmmoPack *CTFAmmoPack::Create( const Vector &vecOrigin, const QAngle &vecAngles, CBaseEntity *pOwner, const char *pszModelName )
+CTFAmmoPack *CTFAmmoPack::Create(const Vector &vecOrigin, const QAngle &vecAngles, CBaseEntity *pOwner,
+								 const char *pszModelName)
 {
-	CTFAmmoPack *pAmmoPack = static_cast<CTFAmmoPack*>( CBaseAnimating::CreateNoSpawn( "tf_ammo_pack", vecOrigin, vecAngles, pOwner ) );
-	if ( pAmmoPack )
+	CTFAmmoPack *pAmmoPack =
+		static_cast<CTFAmmoPack *>(CBaseAnimating::CreateNoSpawn("tf_ammo_pack", vecOrigin, vecAngles, pOwner));
+	if(pAmmoPack)
 	{
-		pAmmoPack->SetModelName( AllocPooledString( pszModelName ) );
-		DispatchSpawn( pAmmoPack );
+		pAmmoPack->SetModelName(AllocPooledString(pszModelName));
+		DispatchSpawn(pAmmoPack);
 	}
 
 	return pAmmoPack;
 }
 
-ConVar tf_weapon_ragdoll_velocity_min( "tf_weapon_ragdoll_velocity_min", "100", FCVAR_CHEAT | FCVAR_DEVELOPMENTONLY );
-ConVar tf_weapon_ragdoll_velocity_max( "tf_weapon_ragdoll_velocity_max", "150", FCVAR_CHEAT | FCVAR_DEVELOPMENTONLY );
-ConVar tf_weapon_ragdoll_maxspeed( "tf_weapon_ragdoll_maxspeed", "300", FCVAR_CHEAT | FCVAR_DEVELOPMENTONLY );
+ConVar tf_weapon_ragdoll_velocity_min("tf_weapon_ragdoll_velocity_min", "100", FCVAR_CHEAT | FCVAR_DEVELOPMENTONLY);
+ConVar tf_weapon_ragdoll_velocity_max("tf_weapon_ragdoll_velocity_max", "150", FCVAR_CHEAT | FCVAR_DEVELOPMENTONLY);
+ConVar tf_weapon_ragdoll_maxspeed("tf_weapon_ragdoll_maxspeed", "300", FCVAR_CHEAT | FCVAR_DEVELOPMENTONLY);
 
-void CTFAmmoPack::InitWeaponDrop( CTFPlayer *pPlayer, CTFWeaponBase *pWeapon, int nSkin, bool bEmpty, bool bIsSuicide )
+void CTFAmmoPack::InitWeaponDrop(CTFPlayer *pPlayer, CTFWeaponBase *pWeapon, int nSkin, bool bEmpty, bool bIsSuicide)
 {
-	if ( !bEmpty )
+	if(!bEmpty)
 	{
 		// Might be a holiday pack.
-		if ( !bIsSuicide && ( TFGameRules()->IsHolidayActive( kHoliday_Halloween ) || TFGameRules()->IsHolidayActive( kHoliday_TFBirthday ) ) )
+		if(!bIsSuicide &&
+		   (TFGameRules()->IsHolidayActive(kHoliday_Halloween) || TFGameRules()->IsHolidayActive(kHoliday_TFBirthday)))
 		{
 			float frand = (float)rand() / VALVE_RAND_MAX;
-			if ( frand < 0.3f )
+			if(frand < 0.3f)
 			{
 				MakeHolidayPack();
 			}
 		}
-		else if ( !bIsSuicide && TFGameRules()->IsHolidayActive( kHoliday_Christmas ) )
+		else if(!bIsSuicide && TFGameRules()->IsHolidayActive(kHoliday_Christmas))
 		{
 			MakeHolidayPack();
 		}
 
 		// Fill the ammo pack with unused player ammo, if out add a minimum amount.
-		int iPrimary = Max( 5, pPlayer->GetAmmoCount( TF_AMMO_PRIMARY ) );
-		int iSecondary = Max( 5, pPlayer->GetAmmoCount( TF_AMMO_SECONDARY ) );
-		int iMetal = Clamp( pPlayer->GetAmmoCount( TF_AMMO_METAL ), 5 , 100 );
+		int iPrimary = Max(5, pPlayer->GetAmmoCount(TF_AMMO_PRIMARY));
+		int iSecondary = Max(5, pPlayer->GetAmmoCount(TF_AMMO_SECONDARY));
+		int iMetal = Clamp(pPlayer->GetAmmoCount(TF_AMMO_METAL), 5, 100);
 
 		// Fill up the ammo pack.
-		GiveAmmo( iPrimary, TF_AMMO_PRIMARY );			// Gets recalculated in PackTouch
-		GiveAmmo( iSecondary, TF_AMMO_SECONDARY );		// Gets recalculated in PackTouch
-		GiveAmmo( iMetal, TF_AMMO_METAL );
-		SetHealthInstead( pWeapon->GetWeaponID() == TF_WEAPON_LUNCHBOX && pPlayer->IsPlayerClass( TF_CLASS_HEAVYWEAPONS ) );
+		GiveAmmo(iPrimary, TF_AMMO_PRIMARY);	 // Gets recalculated in PackTouch
+		GiveAmmo(iSecondary, TF_AMMO_SECONDARY); // Gets recalculated in PackTouch
+		GiveAmmo(iMetal, TF_AMMO_METAL);
+		SetHealthInstead(pWeapon->GetWeaponID() == TF_WEAPON_LUNCHBOX && pPlayer->IsPlayerClass(TF_CLASS_HEAVYWEAPONS));
 	}
 	else
 	{
@@ -146,95 +150,93 @@ void CTFAmmoPack::InitWeaponDrop( CTFPlayer *pPlayer, CTFWeaponBase *pWeapon, in
 	}
 
 	Vector vecRight, vecUp;
-	AngleVectors( EyeAngles(), NULL, &vecRight, &vecUp );
+	AngleVectors(EyeAngles(), NULL, &vecRight, &vecUp);
 
 	// Calculate the initial impulse on the weapon.
-	Vector vecImpulse( 0.0f, 0.0f, 0.0f );
-	vecImpulse += vecUp * random->RandomFloat( -0.25, 0.25 );
-	vecImpulse += vecRight * random->RandomFloat( -0.25, 0.25 );
-	VectorNormalize( vecImpulse );
-	vecImpulse *= random->RandomFloat( tf_weapon_ragdoll_velocity_min.GetFloat(), tf_weapon_ragdoll_velocity_max.GetFloat() );
+	Vector vecImpulse(0.0f, 0.0f, 0.0f);
+	vecImpulse += vecUp * random->RandomFloat(-0.25, 0.25);
+	vecImpulse += vecRight * random->RandomFloat(-0.25, 0.25);
+	VectorNormalize(vecImpulse);
+	vecImpulse *=
+		random->RandomFloat(tf_weapon_ragdoll_velocity_min.GetFloat(), tf_weapon_ragdoll_velocity_max.GetFloat());
 	vecImpulse += GetAbsVelocity();
 
 	// Cap the impulse.
 	float flSpeed = vecImpulse.Length();
-	if ( flSpeed > tf_weapon_ragdoll_maxspeed.GetFloat() )
+	if(flSpeed > tf_weapon_ragdoll_maxspeed.GetFloat())
 	{
-		VectorScale( vecImpulse, tf_weapon_ragdoll_maxspeed.GetFloat() / flSpeed, vecImpulse );
+		VectorScale(vecImpulse, tf_weapon_ragdoll_maxspeed.GetFloat() / flSpeed, vecImpulse);
 	}
 
-	if ( VPhysicsGetObject() )
+	if(VPhysicsGetObject())
 	{
 		// We can probably remove this when the mass on the weapons is correct!
-		VPhysicsGetObject()->SetMass( 25.0f );
-		AngularImpulse angImpulse( 0, random->RandomFloat( 0, 100 ), 0 );
-		VPhysicsGetObject()->SetVelocityInstantaneous( &vecImpulse, &angImpulse );
+		VPhysicsGetObject()->SetMass(25.0f);
+		AngularImpulse angImpulse(0, random->RandomFloat(0, 100), 0);
+		VPhysicsGetObject()->SetVelocityInstantaneous(&vecImpulse, &angImpulse);
 	}
 
-	SetInitialVelocity( vecImpulse );
+	SetInitialVelocity(vecImpulse);
 
 	m_nSkin = nSkin; // Copy the skin from the model we're copying
 
 	// Give the ammo pack some health, so that trains can destroy it.
-	SetCollisionGroup( COLLISION_GROUP_DEBRIS );
+	SetCollisionGroup(COLLISION_GROUP_DEBRIS);
 	m_takedamage = DAMAGE_YES;
-	SetHealth( 900 );
+	SetHealth(900);
 
-	SetBodygroup( 1, 1 );
+	SetBodygroup(1, 1);
 }
 
-void CTFAmmoPack::MakeHolidayPack( void )
+void CTFAmmoPack::MakeHolidayPack(void)
 {
 	// don't want special ammo packs during a competitive match
-	if ( TFGameRules()->IsMatchTypeCompetitive() )
+	if(TFGameRules()->IsMatchTypeCompetitive())
 		return;
 
 	// Only do this on the halloween maps.
-	if ( TFGameRules()->IsHolidayActive( kHoliday_Halloween ) 
-		&& TFGameRules()->IsHolidayMap( kHoliday_Halloween ) 
-		&& !TFGameRules()->IsHalloweenScenario( CTFGameRules::HALLOWEEN_SCENARIO_HIGHTOWER ) )
+	if(TFGameRules()->IsHolidayActive(kHoliday_Halloween) && TFGameRules()->IsHolidayMap(kHoliday_Halloween) &&
+	   !TFGameRules()->IsHalloweenScenario(CTFGameRules::HALLOWEEN_SCENARIO_HIGHTOWER))
 	{
 		m_PackType = AP_HALLOWEEN;
-		SetModelIndex( modelinfo->GetModelIndex( HALLOWEEN_MODEL ) );
-		SetContextThink( &CTFAmmoPack::DropSoundThink, gpGlobals->curtime + 0.1f, "DROP_SOUND_THINK" );
+		SetModelIndex(modelinfo->GetModelIndex(HALLOWEEN_MODEL));
+		SetContextThink(&CTFAmmoPack::DropSoundThink, gpGlobals->curtime + 0.1f, "DROP_SOUND_THINK");
 	}
-	else if ( TFGameRules()->ShouldMakeChristmasAmmoPack() )
+	else if(TFGameRules()->ShouldMakeChristmasAmmoPack())
 	{
 		m_PackType = AP_CHRISTMAS;
-		SetModelIndex( modelinfo->GetModelIndex( CHRISTMAS_MODEL ) );
-		SetContextThink( &CTFAmmoPack::DropSoundThink, gpGlobals->curtime + 0.1f, "DROP_SOUND_THINK" );
+		SetModelIndex(modelinfo->GetModelIndex(CHRISTMAS_MODEL));
+		SetContextThink(&CTFAmmoPack::DropSoundThink, gpGlobals->curtime + 0.1f, "DROP_SOUND_THINK");
 	}
 }
 
-
-void CTFAmmoPack::SetBonusScale( float flBonusScale /*= 1.f*/ )
+void CTFAmmoPack::SetBonusScale(float flBonusScale /*= 1.f*/)
 {
 	m_flBonusScale = flBonusScale;
 }
 
-
-void CTFAmmoPack::SetInitialVelocity( Vector &vecVelocity )
-{ 
-	if ( m_PackType != AP_NORMAL )
+void CTFAmmoPack::SetInitialVelocity(Vector &vecVelocity)
+{
+	if(m_PackType != AP_NORMAL)
 	{
 		// Unusual physics for the halloween/christmas packs to make them noticable.
-		SetMoveType( MOVETYPE_FLYGRAVITY );
-		SetAbsVelocity( vecVelocity * 2.f + Vector(0,0,200) );
-		SetAbsAngles( QAngle(0,0,0) );
+		SetMoveType(MOVETYPE_FLYGRAVITY);
+		SetAbsVelocity(vecVelocity * 2.f + Vector(0, 0, 200));
+		SetAbsAngles(QAngle(0, 0, 0));
 		UseClientSideAnimation();
-		ResetSequence( LookupSequence("idle") );
+		ResetSequence(LookupSequence("idle"));
 	}
 	m_vecInitialVelocity = vecVelocity;
 }
 
-void CTFAmmoPack::SetPickupThinkTime( float flNewThinkTime )
+void CTFAmmoPack::SetPickupThinkTime(float flNewThinkTime)
 {
-	SetNextThink( gpGlobals->curtime + flNewThinkTime );
+	SetNextThink(gpGlobals->curtime + flNewThinkTime);
 }
 
-int CTFAmmoPack::GiveAmmo( int iCount, int iAmmoType )
+int CTFAmmoPack::GiveAmmo(int iCount, int iAmmoType)
 {
-	if (iAmmoType == -1 || iAmmoType >= TF_AMMO_COUNT )
+	if(iAmmoType == -1 || iAmmoType >= TF_AMMO_COUNT)
 	{
 		Msg("ERROR: Attempting to give unknown ammo type (%d)\n", iAmmoType);
 		return 0;
@@ -245,203 +247,204 @@ int CTFAmmoPack::GiveAmmo( int iCount, int iAmmoType )
 	return iCount;
 }
 
-void CTFAmmoPack::DropSoundThink( void )
+void CTFAmmoPack::DropSoundThink(void)
 {
-	if ( m_PackType == AP_HALLOWEEN )
+	if(m_PackType == AP_HALLOWEEN)
 	{
-		EmitSound( "Halloween.PumpkinDrop" );
+		EmitSound("Halloween.PumpkinDrop");
 	}
-	else if ( m_PackType == AP_CHRISTMAS )
+	else if(m_PackType == AP_CHRISTMAS)
 	{
-		EmitSound( "Christmas.GiftDrop" );
+		EmitSound("Christmas.GiftDrop");
 	}
 }
 
-void CTFAmmoPack::FlyThink( void )
+void CTFAmmoPack::FlyThink(void)
 {
 	m_bAllowOwnerPickup = true;
 	m_bNoPickup = false;
 }
 
-void CTFAmmoPack::PackTouch( CBaseEntity *pOther )
+void CTFAmmoPack::PackTouch(CBaseEntity *pOther)
 {
-	Assert( pOther );
+	Assert(pOther);
 
-	if ( pOther->IsWorld() && ( m_PackType != AP_NORMAL ) )
+	if(pOther->IsWorld() && (m_PackType != AP_NORMAL))
 	{
 		Vector absVel = GetAbsVelocity();
-		SetAbsVelocity( Vector( 0,0,absVel.z ) );
+		SetAbsVelocity(Vector(0, 0, absVel.z));
 		return;
 	}
 
-	if( !pOther->IsPlayer() )
+	if(!pOther->IsPlayer())
 		return;
 
-	if( !pOther->IsAlive() )
+	if(!pOther->IsAlive())
 		return;
 
-	if ( m_bNoPickup )
+	if(m_bNoPickup)
 		return;
 
-	//Don't let the person who threw this ammo pick it up until it hits the ground.
-	//This way we can throw ammo to people, but not touch it as soon as we throw it ourselves
-	if( GetOwnerEntity() == pOther && m_bAllowOwnerPickup == false )
+	// Don't let the person who threw this ammo pick it up until it hits the ground.
+	// This way we can throw ammo to people, but not touch it as soon as we throw it ourselves
+	if(GetOwnerEntity() == pOther && m_bAllowOwnerPickup == false)
 		return;
 
-	CTFPlayer *pPlayer = ToTFPlayer( pOther );
-	Assert( pPlayer );
+	CTFPlayer *pPlayer = ToTFPlayer(pOther);
+	Assert(pPlayer);
 
-	if ( m_bEmptyPack )
+	if(m_bEmptyPack)
 	{
 		// Since we drop our empty packs as fakeouts, we never pick up our own empties while stealthed.
-		if ( GetOwnerEntity() == pOther && ( pPlayer->m_Shared.IsStealthed() ||
-			pPlayer->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) ) )
+		if(GetOwnerEntity() == pOther &&
+		   (pPlayer->m_Shared.IsStealthed() || pPlayer->m_Shared.InCond(TF_COND_STEALTHED_BLINK)))
 			return;
 
 		// "Empty" packs can be picked up.
 		// Packs that can't be grabbed don't fit the expectations of the player.
-		GiveAmmo( 1, TF_AMMO_PRIMARY );
-		UTIL_Remove( this );
+		GiveAmmo(1, TF_AMMO_PRIMARY);
+		UTIL_Remove(this);
 		return;
 	}
 
 	// The sandwich gives health instead of ammo
-	if ( m_bHealthInstead )
+	if(m_bHealthInstead)
 	{
 		// Let the sandwich fall to the ground for a bit so that people see it
-		if ( !m_bAllowOwnerPickup )
+		if(!m_bAllowOwnerPickup)
 			return;
 
 		// Scouts get a little more, as a reference to the scout movie
-		int iAmount = ( pPlayer->IsPlayerClass(TF_CLASS_SCOUT) ) ? 75 : 50;
-		pPlayer->TakeHealth( iAmount, DMG_GENERIC );
-		IGameEvent *event = gameeventmanager->CreateEvent( "player_healonhit" );
-		if ( event )
+		int iAmount = (pPlayer->IsPlayerClass(TF_CLASS_SCOUT)) ? 75 : 50;
+		pPlayer->TakeHealth(iAmount, DMG_GENERIC);
+		IGameEvent *event = gameeventmanager->CreateEvent("player_healonhit");
+		if(event)
 		{
-			event->SetInt( "amount", iAmount );
-			event->SetInt( "entindex", pPlayer->entindex() );
-			event->SetInt( "weapon_def_index", INVALID_ITEM_DEF_INDEX );
-			gameeventmanager->FireEvent( event );
+			event->SetInt("amount", iAmount);
+			event->SetInt("entindex", pPlayer->entindex());
+			event->SetInt("weapon_def_index", INVALID_ITEM_DEF_INDEX);
+			gameeventmanager->FireEvent(event);
 		}
 
-		event = gameeventmanager->CreateEvent( "player_stealsandvich" );
-		if ( event )
+		event = gameeventmanager->CreateEvent("player_stealsandvich");
+		if(event)
 		{
-			if ( ToTFPlayer( GetOwnerEntity() ) )
+			if(ToTFPlayer(GetOwnerEntity()))
 			{
-				event->SetInt( "owner", ToTFPlayer( GetOwnerEntity() )->GetUserID() );
+				event->SetInt("owner", ToTFPlayer(GetOwnerEntity())->GetUserID());
 			}
-			event->SetInt( "target", pPlayer->GetUserID() );
-			gameeventmanager->FireEvent( event );
+			event->SetInt("target", pPlayer->GetUserID());
+			gameeventmanager->FireEvent(event);
 		}
 
-		UTIL_Remove( this );
+		UTIL_Remove(this);
 		return;
 	}
 
 	float flAmmoRatio = 0.5f;
 
 	int iMaxPrimary = pPlayer->GetMaxAmmo(TF_AMMO_PRIMARY);
-	GiveAmmo( ceil( iMaxPrimary * flAmmoRatio ), TF_AMMO_PRIMARY );
+	GiveAmmo(ceil(iMaxPrimary * flAmmoRatio), TF_AMMO_PRIMARY);
 
 	int iMaxSecondary = pPlayer->GetMaxAmmo(TF_AMMO_SECONDARY);
-	GiveAmmo( ceil( iMaxSecondary * flAmmoRatio ), TF_AMMO_SECONDARY );
+	GiveAmmo(ceil(iMaxSecondary * flAmmoRatio), TF_AMMO_SECONDARY);
 
 	int iAmmoTaken = 0;
 
-	for ( int i=0;i<TF_AMMO_COUNT;i++ )
+	for(int i = 0; i < TF_AMMO_COUNT; i++)
 	{
-		int iAmmoGiven = pPlayer->GiveAmmo( m_iAmmo[i], i );
-		if ( iAmmoGiven > 0 && i == TF_AMMO_METAL && m_bObjGib && pPlayer->IsPlayerClass( TF_CLASS_ENGINEER ) )
+		int iAmmoGiven = pPlayer->GiveAmmo(m_iAmmo[i], i);
+		if(iAmmoGiven > 0 && i == TF_AMMO_METAL && m_bObjGib && pPlayer->IsPlayerClass(TF_CLASS_ENGINEER))
 		{
-			pPlayer->AwardAchievement( ACHIEVEMENT_TF_ENGINEER_WASTE_METAL_GRIND, iAmmoGiven );
+			pPlayer->AwardAchievement(ACHIEVEMENT_TF_ENGINEER_WASTE_METAL_GRIND, iAmmoGiven);
 		}
 		iAmmoTaken += iAmmoGiven;
 	}
 
 	// give them a chunk of cloak power
-	if ( pPlayer->m_Shared.AddToSpyCloakMeter( 100.0f * flAmmoRatio ) )
+	if(pPlayer->m_Shared.AddToSpyCloakMeter(100.0f * flAmmoRatio))
 	{
 		iAmmoTaken++;
 	}
 
-	if ( pPlayer->AddToSpyKnife( 100.0f * flAmmoRatio, false ) )
+	if(pPlayer->AddToSpyKnife(100.0f * flAmmoRatio, false))
 	{
 		iAmmoTaken++;
 	}
 
 	// Add Charge if applicable
 	int iAmmoIsCharge = 0;
-	CALL_ATTRIB_HOOK_INT_ON_OTHER( pPlayer, iAmmoIsCharge, ammo_gives_charge );
-	if ( iAmmoIsCharge )
+	CALL_ATTRIB_HOOK_INT_ON_OTHER(pPlayer, iAmmoIsCharge, ammo_gives_charge);
+	if(iAmmoIsCharge)
 	{
 		float flCurrentCharge = pPlayer->m_Shared.GetDemomanChargeMeter();
-		if ( flCurrentCharge < 100.0f )
+		if(flCurrentCharge < 100.0f)
 		{
-			pPlayer->m_Shared.SetDemomanChargeMeter( flCurrentCharge + flAmmoRatio * 100.0f );
+			pPlayer->m_Shared.SetDemomanChargeMeter(flCurrentCharge + flAmmoRatio * 100.0f);
 			iAmmoTaken++;
 		}
 	}
 
-	if ( pPlayer->IsPlayerClass( TF_CLASS_ENGINEER ) )
+	if(pPlayer->IsPlayerClass(TF_CLASS_ENGINEER))
 	{
-		int iMaxGrenades1 = pPlayer->GetMaxAmmo( TF_AMMO_GRENADES1 );
-		iAmmoTaken += pPlayer->GiveAmmo( ceil(iMaxGrenades1 * flAmmoRatio), TF_AMMO_GRENADES1 );
+		int iMaxGrenades1 = pPlayer->GetMaxAmmo(TF_AMMO_GRENADES1);
+		iAmmoTaken += pPlayer->GiveAmmo(ceil(iMaxGrenades1 * flAmmoRatio), TF_AMMO_GRENADES1);
 	}
 
-	if ( m_PackType == AP_HALLOWEEN )
+	if(m_PackType == AP_HALLOWEEN)
 	{
 		// Send a message for the achievement tracking.
-		IGameEvent *event = gameeventmanager->CreateEvent( "halloween_pumpkin_grab" );
-		if ( event )
+		IGameEvent *event = gameeventmanager->CreateEvent("halloween_pumpkin_grab");
+		if(event)
 		{
-			event->SetInt( "userid", pPlayer->GetUserID() );
-			gameeventmanager->FireEvent( event );
+			event->SetInt("userid", pPlayer->GetUserID());
+			gameeventmanager->FireEvent(event);
 		}
 
 		float flBuffDuration = m_flBonusScale * 3.f;
-		if ( !pPlayer->m_Shared.InCond( TF_COND_CRITBOOSTED_PUMPKIN ) || (pPlayer->m_Shared.GetConditionDuration(TF_COND_CRITBOOSTED_PUMPKIN) < flBuffDuration) )
+		if(!pPlayer->m_Shared.InCond(TF_COND_CRITBOOSTED_PUMPKIN) ||
+		   (pPlayer->m_Shared.GetConditionDuration(TF_COND_CRITBOOSTED_PUMPKIN) < flBuffDuration))
 		{
-			pPlayer->m_Shared.AddCond( TF_COND_CRITBOOSTED_PUMPKIN, flBuffDuration );
+			pPlayer->m_Shared.AddCond(TF_COND_CRITBOOSTED_PUMPKIN, flBuffDuration);
 		}
-		pPlayer->EmitSound( "Halloween.PumpkinPickup" );
+		pPlayer->EmitSound("Halloween.PumpkinPickup");
 		m_PackType = AP_NORMAL; // Touch once.
 		iAmmoTaken++;
 	}
-	else if ( m_PackType == AP_CHRISTMAS )
+	else if(m_PackType == AP_CHRISTMAS)
 	{
 		// Send a message for the achievement tracking.
-		IGameEvent *event = gameeventmanager->CreateEvent( "christmas_gift_grab" );
-		if ( event )
+		IGameEvent *event = gameeventmanager->CreateEvent("christmas_gift_grab");
+		if(event)
 		{
-			event->SetInt( "userid", pPlayer->GetUserID() );
-			gameeventmanager->FireEvent( event );
+			event->SetInt("userid", pPlayer->GetUserID());
+			gameeventmanager->FireEvent(event);
 		}
-		pPlayer->EmitSound( "Christmas.GiftPickup" );
+		pPlayer->EmitSound("Christmas.GiftPickup");
 		m_PackType = AP_NORMAL; // Touch once.
 		iAmmoTaken++;
 	}
 
-	if ( iAmmoTaken > 0 )
+	if(iAmmoTaken > 0)
 	{
-		CTF_GameStats.Event_PlayerAmmokitPickup( pPlayer );
+		CTF_GameStats.Event_PlayerAmmokitPickup(pPlayer);
 
-		IGameEvent * event = gameeventmanager->CreateEvent( "item_pickup" );
-		if( event )
+		IGameEvent *event = gameeventmanager->CreateEvent("item_pickup");
+		if(event)
 		{
-			event->SetInt( "userid", pPlayer->GetUserID() );
-			event->SetString( "item", "tf_ammo_pack" );
-			gameeventmanager->FireEvent( event );
+			event->SetInt("userid", pPlayer->GetUserID());
+			event->SetString("item", "tf_ammo_pack");
+			gameeventmanager->FireEvent(event);
 		}
 
-		UTIL_Remove( this );
+		UTIL_Remove(this);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-unsigned int CTFAmmoPack::PhysicsSolidMaskForEntity( void ) const
-{ 
+unsigned int CTFAmmoPack::PhysicsSolidMaskForEntity(void) const
+{
 	return BaseClass::PhysicsSolidMaskForEntity() | CONTENTS_DEBRIS;
 }

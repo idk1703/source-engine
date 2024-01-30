@@ -13,15 +13,15 @@
 
 #include "tf_gcmessages.h"
 #ifdef CLIENT_DLL
-	#include "vgui_controls/EditablePanel.h"
+#include "vgui_controls/EditablePanel.h"
 #endif
 
 #ifdef GC
-	#include "tf_gc.h"
+#include "tf_gc.h"
 #endif
 
 #ifdef CLIENT_DLL
-	using namespace vgui;
+using namespace vgui;
 #endif
 
 //-----------------------------------------------------------------------------
@@ -29,31 +29,31 @@
 //
 //	m_eType : The type of the survey question
 //	m_pszSurveyQuestionName: Name of the survey type.  Mostly for debugging
-//	m_flWeight: The weight used when randomly choosing which survey question 
+//	m_flWeight: The weight used when randomly choosing which survey question
 //				to ask a user
 //	m_pFnSurveyValidForPlayer: Survey specific function to determine if player
 //							   meets criteria to receive survey
-//	m_bIsActive: Is the survey currently active (asked of players) 
+//	m_bIsActive: Is the survey currently active (asked of players)
 //-----------------------------------------------------------------------------
 struct SurveyQuestion_t
 {
-	SurveyQuestionType	m_eType;
-	const char*			m_pszSurveyQuestionName;
-	float				m_flWeight;
-	bool ( *m_pFnSurveyValidForPlayer ) ( const CMsgGC_Match_Result& msgMatchResult , uint32 nPlayerIndex );
-	bool				m_bIsActive;
+	SurveyQuestionType m_eType;
+	const char *m_pszSurveyQuestionName;
+	float m_flWeight;
+	bool (*m_pFnSurveyValidForPlayer)(const CMsgGC_Match_Result &msgMatchResult, uint32 nPlayerIndex);
+	bool m_bIsActive;
 };
 
-#define UNASWERED_SURVEY_QUESTION ( (int16) -1 )
-#define SEEN_BUT_UNANSWERED_SURVEY_QUESTION ( (int16) -2 )
-#define SEEN_AND_DISMISSED_SURVEY_QUESTION ( (int16) -3 )
-extern const SurveyQuestion_t g_SurveyQuestions[ SurveyQuestionType_ARRAYSIZE ];
+#define UNASWERED_SURVEY_QUESTION			((int16)-1)
+#define SEEN_BUT_UNANSWERED_SURVEY_QUESTION ((int16)-2)
+#define SEEN_AND_DISMISSED_SURVEY_QUESTION	((int16)-3)
+extern const SurveyQuestion_t g_SurveyQuestions[SurveyQuestionType_ARRAYSIZE];
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
 // Purpose: Use CreateSurveyQuestionPanel to create the panel you want
 //-----------------------------------------------------------------------------
-class CSurveyQuestionPanel* CreateSurveyQuestionPanel( Panel* pParent, const CMsgGCSurveyRequest& msgSurveyQuestion );
+class CSurveyQuestionPanel *CreateSurveyQuestionPanel(Panel *pParent, const CMsgGCSurveyRequest &msgSurveyQuestion);
 
 //-----------------------------------------------------------------------------
 // Purpose: Base, abstract survey panel to handle common functionality
@@ -61,18 +61,18 @@ class CSurveyQuestionPanel* CreateSurveyQuestionPanel( Panel* pParent, const CMs
 class CSurveyQuestionPanel : public EditablePanel, public CGameEventListener
 {
 public:
-	DECLARE_CLASS_SIMPLE( CSurveyQuestionPanel, EditablePanel );
-	CSurveyQuestionPanel( Panel* pParent, CMsgGCSurveyRequest msgSurveyQuestion );
+	DECLARE_CLASS_SIMPLE(CSurveyQuestionPanel, EditablePanel);
+	CSurveyQuestionPanel(Panel *pParent, CMsgGCSurveyRequest msgSurveyQuestion);
 	~CSurveyQuestionPanel();
 
-	virtual void OnCommand( const char *command ) OVERRIDE;
-	virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
-	virtual void ApplySchemeSettings( IScheme *pScheme ) OVERRIDE;
+	virtual void OnCommand(const char *command) OVERRIDE;
+	virtual void FireGameEvent(IGameEvent *event) OVERRIDE;
+	virtual void ApplySchemeSettings(IScheme *pScheme) OVERRIDE;
 
 private:
 	virtual void Submit() = 0;
-	virtual const char* GetResFile() const = 0;
-	
+	virtual const char *GetResFile() const = 0;
+
 	bool m_bResponded;
 	CMsgGCSurveyRequest m_msgRequest;
 };
@@ -83,11 +83,10 @@ private:
 class CMultipleChoiceSurveyQuestionPanel : public CSurveyQuestionPanel
 {
 public:
-	DECLARE_CLASS_SIMPLE( CMultipleChoiceSurveyQuestionPanel, CSurveyQuestionPanel );
-	CMultipleChoiceSurveyQuestionPanel( Panel* pParent, CMsgGCSurveyRequest msgSurveyQuestion, uint16 nSurveyResponses );
+	DECLARE_CLASS_SIMPLE(CMultipleChoiceSurveyQuestionPanel, CSurveyQuestionPanel);
+	CMultipleChoiceSurveyQuestionPanel(Panel *pParent, CMsgGCSurveyRequest msgSurveyQuestion, uint16 nSurveyResponses);
 
 private:
-
 	virtual void Think() OVERRIDE;
 	virtual void Submit() OVERRIDE;
 
@@ -101,10 +100,13 @@ private:
 class CMatchQualitySurvey : public CMultipleChoiceSurveyQuestionPanel
 {
 public:
-	CMatchQualitySurvey( Panel* pParent, CMsgGCSurveyRequest msgSurveyQuestion ) : CMultipleChoiceSurveyQuestionPanel( pParent, msgSurveyQuestion, 5 ) {}
-	virtual const char* GetResFile() const OVERRIDE
+	CMatchQualitySurvey(Panel *pParent, CMsgGCSurveyRequest msgSurveyQuestion)
+		: CMultipleChoiceSurveyQuestionPanel(pParent, msgSurveyQuestion, 5)
 	{
-		return  "resource/ui/SurveyPanel_MatchQuality.res";
+	}
+	virtual const char *GetResFile() const OVERRIDE
+	{
+		return "resource/ui/SurveyPanel_MatchQuality.res";
 	}
 };
 
@@ -115,11 +117,14 @@ public:
 class CMapQualitySurvey : public CMultipleChoiceSurveyQuestionPanel
 {
 public:
-	CMapQualitySurvey( Panel* pParent, CMsgGCSurveyRequest msgSurveyQuestion ) : CMultipleChoiceSurveyQuestionPanel( pParent, msgSurveyQuestion, 5 ) {}
-
-	virtual const char* GetResFile() const OVERRIDE
+	CMapQualitySurvey(Panel *pParent, CMsgGCSurveyRequest msgSurveyQuestion)
+		: CMultipleChoiceSurveyQuestionPanel(pParent, msgSurveyQuestion, 5)
 	{
-		return  "resource/ui/SurveyPanel_MapQuality.res";
+	}
+
+	virtual const char *GetResFile() const OVERRIDE
+	{
+		return "resource/ui/SurveyPanel_MapQuality.res";
 	}
 
 	virtual void PerformLayout() OVERRIDE;
@@ -131,11 +136,14 @@ public:
 class CCompInquirySurvey : public CMultipleChoiceSurveyQuestionPanel
 {
 public:
-	CCompInquirySurvey( Panel* pParent, CMsgGCSurveyRequest msgSurveyQuestion ) : CMultipleChoiceSurveyQuestionPanel( pParent, msgSurveyQuestion, 6 ) {}
-
-	virtual const char* GetResFile() const OVERRIDE
+	CCompInquirySurvey(Panel *pParent, CMsgGCSurveyRequest msgSurveyQuestion)
+		: CMultipleChoiceSurveyQuestionPanel(pParent, msgSurveyQuestion, 6)
 	{
-		return  "resource/ui/SurveyPanel_CompInquiry.res";
+	}
+
+	virtual const char *GetResFile() const OVERRIDE
+	{
+		return "resource/ui/SurveyPanel_CompInquiry.res";
 	}
 };
 
@@ -145,11 +153,14 @@ public:
 class CCasualInquirySurvey : public CMultipleChoiceSurveyQuestionPanel
 {
 public:
-	CCasualInquirySurvey( Panel* pParent, CMsgGCSurveyRequest msgSurveyQuestion ) : CMultipleChoiceSurveyQuestionPanel( pParent, msgSurveyQuestion, 6 ) {}
-
-	virtual const char* GetResFile() const OVERRIDE
+	CCasualInquirySurvey(Panel *pParent, CMsgGCSurveyRequest msgSurveyQuestion)
+		: CMultipleChoiceSurveyQuestionPanel(pParent, msgSurveyQuestion, 6)
 	{
-		return  "resource/ui/SurveyPanel_CasualInquiry.res";
+	}
+
+	virtual const char *GetResFile() const OVERRIDE
+	{
+		return "resource/ui/SurveyPanel_CasualInquiry.res";
 	}
 };
 

@@ -24,10 +24,10 @@ struct PS_INPUT
 #if 0
 static float yuvtorgb[] =
 {
-   1.164123535f,  1.595794678f,  0.0f,         -0.87065506f,
-   1.164123535f, -0.813476563f, -0.391448975f,  0.529705048f,
-   1.164123535f,  0.0f,          2.017822266f, -1.081668854f,
-   1.0f, 0.0f, 0.0f, 0.0f
+	1.164123535f,  1.595794678f,  0.0f,         -0.87065506f,
+	1.164123535f, -0.813476563f, -0.391448975f,  0.529705048f,
+	1.164123535f,  0.0f,          2.017822266f, -1.081668854f,
+	1.0f, 0.0f, 0.0f, 0.0f
 };
 " sampler tex0   : register( s0 );      "
 " sampler tex1   : register( s1 );      "
@@ -67,7 +67,7 @@ float4 main( PS_INPUT i ) : COLOR
 	cR = tex2D( cRTextureSampler, i.baseTexCoord.xy );
 	cB = tex2D( cBTextureSampler, i.baseTexCoord.xy );
 //	half a = tex2D( ATextureSampler, i.baseTexCoord.xy );
-	
+
 	HALF4 c;
 	c = float4( y, cR, cB, 1.0f );
 
@@ -76,7 +76,7 @@ float4 main( PS_INPUT i ) : COLOR
 	float4 tob = float4( 1.164123535f,  0.0f,          2.017822266f, -1.081668854f );
 
 	HALF4 rgba;
-	
+
 	rgba.r = dot( c, tor );
 	rgba.g = dot( c, tog );
 	rgba.b = dot( c, tob );

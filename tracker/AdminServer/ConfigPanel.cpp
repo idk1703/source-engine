@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -25,17 +25,18 @@
 
 using namespace vgui;
 
-static const long RETRY_TIME = 10000;		// refresh server every 10 seconds
+static const long RETRY_TIME = 10000; // refresh server every 10 seconds
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CConfigPanel::CConfigPanel(vgui::Panel *parent, bool autorefresh,bool savercon,int refreshtime,
-							bool graphs, int graphsrefreshtime,bool getlogs) : Frame(parent, "ConfigPanel")
+CConfigPanel::CConfigPanel(vgui::Panel *parent, bool autorefresh, bool savercon, int refreshtime, bool graphs,
+						   int graphsrefreshtime, bool getlogs)
+	: Frame(parent, "ConfigPanel")
 {
 	196, 181, 80,
 
-	SetMinimumSize(400,240);
+		SetMinimumSize(400, 240);
 	SetSizeable(false);
 	MakePopup();
 
@@ -46,14 +47,14 @@ CConfigPanel::CConfigPanel(vgui::Panel *parent, bool autorefresh,bool savercon,i
 
 	m_pRconCheckButton = new CheckButton(this, "RconCheckButton", "");
 
-	m_pRefreshTextEntry= new TextEntry(this,"RefreshTextEntry");
+	m_pRefreshTextEntry = new TextEntry(this, "RefreshTextEntry");
 
 	m_pGraphsButton = new CheckButton(this, "GraphsButton", "");
-	m_pGraphsRefreshTimeTextEntry= new TextEntry(this,"GraphsRefreshTimeTextEntry");
+	m_pGraphsRefreshTimeTextEntry = new TextEntry(this, "GraphsRefreshTimeTextEntry");
 
 	m_pLogsButton = new CheckButton(this, "LogsButton", "");
 
-	SetTitle("My servers - Options",true);
+	SetTitle("My servers - Options", true);
 
 	LoadControlSettings("Admin\\ConfigPanel.res", "PLATFORM");
 
@@ -68,24 +69,21 @@ CConfigPanel::CConfigPanel(vgui::Panel *parent, bool autorefresh,bool savercon,i
 	m_pGraphsRefreshTimeTextEntry->SetEditable(m_pGraphsButton->IsSelected());
 
 	char refreshText[20];
-	_snprintf(refreshText,20,"%i",refreshtime);
+	_snprintf(refreshText, 20, "%i", refreshtime);
 
 	m_pRefreshTextEntry->SetText(refreshText);
-	
-	_snprintf(refreshText,20,"%i",graphsrefreshtime);
+
+	_snprintf(refreshText, 20, "%i", graphsrefreshtime);
 
 	m_pGraphsRefreshTimeTextEntry->SetText(refreshText);
 
 	SetVisible(true);
-
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CConfigPanel::~CConfigPanel()
-{
-}
+CConfigPanel::~CConfigPanel() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Activates the dialog
@@ -94,7 +92,6 @@ void CConfigPanel::Run()
 {
 	RequestFocus();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Deletes the dialog when it's closed
@@ -110,23 +107,21 @@ void CConfigPanel::OnClose()
 //-----------------------------------------------------------------------------
 void CConfigPanel::OnButtonToggled(Panel *panel)
 {
-	if (panel == m_pRefreshCheckButton) 
-		// you can only edit the refresh time if you allow auto refresh
+	if(panel == m_pRefreshCheckButton)
+	// you can only edit the refresh time if you allow auto refresh
 	{
 		m_pRefreshTextEntry->SetEnabled(m_pRefreshCheckButton->IsSelected());
 		m_pRefreshTextEntry->SetEditable(m_pRefreshCheckButton->IsSelected());
 	}
-	else if (panel == m_pGraphsButton) 
-		// you can only edit the refresh time if you allow auto refresh
+	else if(panel == m_pGraphsButton)
+	// you can only edit the refresh time if you allow auto refresh
 	{
 		m_pGraphsRefreshTimeTextEntry->SetEnabled(m_pGraphsButton->IsSelected());
 		m_pGraphsRefreshTimeTextEntry->SetEditable(m_pGraphsButton->IsSelected());
 	}
 
-
 	InvalidateLayout();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets the text of a control by name
@@ -134,47 +129,43 @@ void CConfigPanel::OnButtonToggled(Panel *panel)
 void CConfigPanel::SetControlText(const char *textEntryName, const char *text)
 {
 	TextEntry *entry = dynamic_cast<TextEntry *>(FindChildByName(textEntryName));
-	if (entry)
+	if(entry)
 	{
 		entry->SetText(text);
 	}
 }
 
-
-
 //-----------------------------------------------------------------------------
 // Purpose: Parse posted messages
-//			 
+//
 //-----------------------------------------------------------------------------
 void CConfigPanel::OnCommand(const char *command)
 {
 
-	if(!stricmp(command,"okay"))
+	if(!stricmp(command, "okay"))
 	{ // save away the new settings
 		char timeText[20];
-		int time,timeGraphs;
+		int time, timeGraphs;
 
-		m_pRefreshTextEntry->GetText(timeText,20);
-		sscanf(timeText,"%i",&time);
-	
+		m_pRefreshTextEntry->GetText(timeText, 20);
+		sscanf(timeText, "%i", &time);
+
 		memset(timeText, 0x0, sizeof(timeText));
 		m_pGraphsRefreshTimeTextEntry->GetText(timeText, 20);
-		sscanf(timeText,"%i",&timeGraphs);
+		sscanf(timeText, "%i", &timeGraphs);
 
-
-		if(time>0 && time < 9999 && timeGraphs>0 && timeGraphs< 9999) 
+		if(time > 0 && time < 9999 && timeGraphs > 0 && timeGraphs < 9999)
 		{
 
 			OnClose();
-
 		}
 		else
 		{
-			MessageBox *dlg = new MessageBox ("#Config_Panel", "#Config_Time_Error");
+			MessageBox *dlg = new MessageBox("#Config_Panel", "#Config_Time_Error");
 			dlg->DoModal();
 		}
 	}
-	else if(!stricmp(command,"close") )
+	else if(!stricmp(command, "close"))
 	{
 		Close();
 	}

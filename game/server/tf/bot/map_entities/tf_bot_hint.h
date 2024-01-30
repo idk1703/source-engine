@@ -15,10 +15,10 @@ class CTFBotHint : public CBaseEntity
 {
 public:
 	DECLARE_DATADESC();
-	DECLARE_CLASS( CTFBotHint, CBaseEntity );
+	DECLARE_CLASS(CTFBotHint, CBaseEntity);
 
-	CTFBotHint( void );
-	virtual ~CTFBotHint() { }
+	CTFBotHint(void);
+	virtual ~CTFBotHint() {}
 
 	enum HintType
 	{
@@ -26,29 +26,31 @@ public:
 		HINT_SENTRY_SPOT = 1,
 	};
 
-	bool IsA( HintType type ) const;
+	bool IsA(HintType type) const;
 
-	bool IsFor( CTFBot *who ) const;				// return true if this hint applies to the given entity
+	bool IsFor(CTFBot *who) const; // return true if this hint applies to the given entity
 
-	virtual void Spawn( void );
-	virtual void UpdateOnRemove( void );
+	virtual void Spawn(void);
+	virtual void UpdateOnRemove(void);
 
-	void InputEnable( inputdata_t &inputdata );
-	void InputDisable( inputdata_t &inputdata );
-	bool IsEnabled( void ) const { return !m_isDisabled; }
+	void InputEnable(inputdata_t &inputdata);
+	void InputDisable(inputdata_t &inputdata);
+	bool IsEnabled(void) const
+	{
+		return !m_isDisabled;
+	}
 
 protected:
 	int m_team;
 	int m_hint;
 	bool m_isDisabled;
 
-	void UpdateNavDecoration( void );
+	void UpdateNavDecoration(void);
 };
 
-inline bool CTFBotHint::IsA( HintType type ) const
+inline bool CTFBotHint::IsA(HintType type) const
 {
-	return ( m_hint == type );
+	return (m_hint == type);
 }
-
 
 #endif // TF_BOT_HINT_H

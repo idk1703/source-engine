@@ -24,7 +24,7 @@ struct PS_INPUT
 {
 	HALF2 baseTexCoord				: TEXCOORD0;		// Base texture coordinate
 	float4 color					: TEXCOORD2;		// Vertex color (from lighting or unlit)
-	
+
 	float4 worldPos_projPosZ		: TEXCOORD7;		// Necessary for pixel fog
 };
 
@@ -39,7 +39,7 @@ float4 main( PS_INPUT i ) : COLOR
 #if CONSTANTCOLOR
 	sample *= g_Color;
 #endif
-	
+
 #if HDRTYPE && HDRENABLED
 	sample.xyz *= g_HDRColorScale;
 #endif
@@ -58,4 +58,3 @@ float4 main( PS_INPUT i ) : COLOR
 
 	return result;
 }
-

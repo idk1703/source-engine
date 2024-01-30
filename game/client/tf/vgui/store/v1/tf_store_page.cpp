@@ -4,7 +4,6 @@
 //
 //=============================================================================//
 
-
 #include "cbase.h"
 #include "store/v1/tf_store_page.h"
 #include "store/v1/tf_store_preview_item.h"
@@ -15,58 +14,60 @@
 #include <tier0/memdbgon.h>
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CTFStorePage1::CTFStorePage1(Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData, const char *pPreviewItemResFile ) : BaseClass(parent, pPageData, pPreviewItemResFile)
+CTFStorePage1::CTFStorePage1(Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData,
+							 const char *pPreviewItemResFile)
+	: BaseClass(parent, pPageData, pPreviewItemResFile)
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-const char *CTFStorePage1::GetPageResFile( void ) 
-{ 
-	Assert( !"No code should currently reference the old store!" );
+const char *CTFStorePage1::GetPageResFile(void)
+{
+	Assert(!"No code should currently reference the old store!");
 
 	return m_pPageData->m_pchPageRes;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFStorePage1::OnPageShow( void )
+void CTFStorePage1::OnPageShow(void)
 {
 	BaseClass::OnPageShow();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFStorePage1::OnCommand( const char *command )
+void CTFStorePage1::OnCommand(const char *command)
 {
-	BaseClass::OnCommand( command );
+	BaseClass::OnCommand(command);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFStorePage1::OnItemDetails( vgui::Panel *panel )
+void CTFStorePage1::OnItemDetails(vgui::Panel *panel)
 {
-	BaseClass::OnItemDetails( panel );
+	BaseClass::OnItemDetails(panel);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFStorePage1::ShowPreview( int iClass, const econ_store_entry_t* pEntry )
+void CTFStorePage1::ShowPreview(int iClass, const econ_store_entry_t *pEntry)
 {
-	BaseClass::ShowPreview( iClass, pEntry );
+	BaseClass::ShowPreview(iClass, pEntry);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFStorePage1::UpdateFilterComboBox( void )
+void CTFStorePage1::UpdateFilterComboBox(void)
 {
 	BaseClass::UpdateFilterComboBox();
 }
@@ -74,23 +75,23 @@ void CTFStorePage1::UpdateFilterComboBox( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFStorePage1::GetFiltersForDef( GameItemDefinition_t *pDef, CUtlVector<int> *pVecFilters )
+void CTFStorePage1::GetFiltersForDef(GameItemDefinition_t *pDef, CUtlVector<int> *pVecFilters)
 {
-	return BaseClass::GetFiltersForDef( pDef, pVecFilters );
+	return BaseClass::GetFiltersForDef(pDef, pVecFilters);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFStorePage1::OnTick( void )
+void CTFStorePage1::OnTick(void)
 {
 	BaseClass::OnTick();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CStorePreviewItemPanel *CTFStorePage1::CreatePreviewPanel( void )
+CStorePreviewItemPanel *CTFStorePage1::CreatePreviewPanel(void)
 {
-	return new CTFStorePreviewItemPanel1( this, m_pPreviewItemResFile, "storepreviewitem", this );
+	return new CTFStorePreviewItemPanel1(this, m_pPreviewItemResFile, "storepreviewitem", this);
 }

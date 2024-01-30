@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #ifndef TF_BADGE_PANEL_H
@@ -14,19 +14,19 @@
 
 class CTFBadgePanel : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CTFBadgePanel, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CTFBadgePanel, vgui::EditablePanel);
+
 public:
-	CTFBadgePanel( vgui::Panel *pParent, const char *pName );
+	CTFBadgePanel(vgui::Panel *pParent, const char *pName);
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 
-	void SetupBadge( const IProgressionDesc* pProgress, const LevelInfo_t& levelInfo );
-	void SetupBadge( const IProgressionDesc* pProgress, const CSteamID& steamID );
+	void SetupBadge(const IProgressionDesc *pProgress, const LevelInfo_t &levelInfo);
+	void SetupBadge(const IProgressionDesc *pProgress, const CSteamID &steamID);
 
 private:
 	class CModelImagePanel *m_pBadgePanel;
 	uint32 m_nPrevLevel;
 };
-
 
 #endif // TF_BADGE_PANEL_H

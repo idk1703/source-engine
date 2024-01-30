@@ -9,7 +9,7 @@
 #include "tf_obj_manned_plasmagun.h"
 #include "env_laserdesignation.h"
 
-#if !defined( CLIENT_DLL )
+#if !defined(CLIENT_DLL)
 
 #include "tf_vehicle_tank.h"
 #include "tf_obj_manned_missilelauncher.h"
@@ -24,36 +24,36 @@ extern ConVar obj_manned_missilelauncher_range_off;
 //-----------------------------------------------------------------------------
 // Stores a list of all laser designations
 //-----------------------------------------------------------------------------
-CUtlVector< EHANDLE >	CEnvLaserDesignation::m_LaserDesignatorsTeam1;
-CUtlVector< EHANDLE >	CEnvLaserDesignation::m_LaserDesignatorsTeam2;
+CUtlVector<EHANDLE> CEnvLaserDesignation::m_LaserDesignatorsTeam1;
+CUtlVector<EHANDLE> CEnvLaserDesignation::m_LaserDesignatorsTeam2;
 
-IMPLEMENT_NETWORKCLASS_ALIASED( EnvLaserDesignation, DT_EnvLaserDesignation )
+IMPLEMENT_NETWORKCLASS_ALIASED(EnvLaserDesignation, DT_EnvLaserDesignation)
 
-BEGIN_NETWORK_TABLE( CEnvLaserDesignation, DT_EnvLaserDesignation )
-#if !defined( CLIENT_DLL )
-	SendPropInt( SENDINFO( m_bActive ), 1, SPROP_UNSIGNED ),
+BEGIN_NETWORK_TABLE(CEnvLaserDesignation, DT_EnvLaserDesignation)
+#if !defined(CLIENT_DLL)
+	SendPropInt(SENDINFO(m_bActive), 1, SPROP_UNSIGNED),
 #else
-	RecvPropInt( RECVINFO( m_bActive ) ),
+	RecvPropInt(RECVINFO(m_bActive)),
 #endif
 END_NETWORK_TABLE()
 
-BEGIN_PREDICTION_DATA( CEnvLaserDesignation  )
-	DEFINE_PRED_FIELD( m_bActive, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE ),
+BEGIN_PREDICTION_DATA(CEnvLaserDesignation)
+	DEFINE_PRED_FIELD(m_bActive, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE),
 END_PREDICTION_DATA()
 
-LINK_ENTITY_TO_CLASS( env_laserdesignation, CEnvLaserDesignation );
-PRECACHE_REGISTER( env_laserdesignation );
+LINK_ENTITY_TO_CLASS(env_laserdesignation, CEnvLaserDesignation);
+PRECACHE_REGISTER(env_laserdesignation);
 
 //-----------------------------------------------------------------------------
 // Purpose: Create a laser designation
 //-----------------------------------------------------------------------------
-CEnvLaserDesignation *CEnvLaserDesignation::Create( CBasePlayer *pOwner )
+CEnvLaserDesignation *CEnvLaserDesignation::Create(CBasePlayer *pOwner)
 {
-	CEnvLaserDesignation *pDesignation = (CEnvLaserDesignation*)CreateEntityByName("env_laserdesignation"); 
+	CEnvLaserDesignation *pDesignation = (CEnvLaserDesignation *)CreateEntityByName("env_laserdesignation");
 	pDesignation->Spawn();
-	pDesignation->SetOwnerEntity( pOwner );
-	pDesignation->ChangeTeam( pOwner->GetTeamNumber() );
-	pDesignation->SetActive( false );
+	pDesignation->SetOwnerEntity(pOwner);
+	pDesignation->ChangeTeam(pOwner->GetTeamNumber());
+	pDesignation->SetActive(false);
 
 	return pDesignation;
 }
@@ -61,17 +61,17 @@ CEnvLaserDesignation *CEnvLaserDesignation::Create( CBasePlayer *pOwner )
 //-----------------------------------------------------------------------------
 // Purpose: Create a laser designation
 //-----------------------------------------------------------------------------
-CEnvLaserDesignation *CEnvLaserDesignation::CreatePredicted( CBasePlayer *pOwner )
+CEnvLaserDesignation *CEnvLaserDesignation::CreatePredicted(CBasePlayer *pOwner)
 {
-#if !defined( NO_ENTITY_PREDICTION )
-	CEnvLaserDesignation *pDesignation = (CEnvLaserDesignation*)CREATE_PREDICTED_ENTITY("env_laserdesignation"); 
-	if ( pDesignation )
+#if !defined(NO_ENTITY_PREDICTION)
+	CEnvLaserDesignation *pDesignation = (CEnvLaserDesignation *)CREATE_PREDICTED_ENTITY("env_laserdesignation");
+	if(pDesignation)
 	{
 		pDesignation->Spawn();
-		pDesignation->SetOwnerEntity( pOwner );
-		pDesignation->SetPlayerSimulated( pOwner );
-		pDesignation->ChangeTeam( pOwner->GetTeamNumber() );
-		pDesignation->SetActive( false );
+		pDesignation->SetOwnerEntity(pOwner);
+		pDesignation->SetPlayerSimulated(pOwner);
+		pDesignation->ChangeTeam(pOwner->GetTeamNumber());
+		pDesignation->SetActive(false);
 	}
 
 	return pDesignation;
@@ -80,168 +80,167 @@ CEnvLaserDesignation *CEnvLaserDesignation::CreatePredicted( CBasePlayer *pOwner
 #endif
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CEnvLaserDesignation::CEnvLaserDesignation( void )
+CEnvLaserDesignation::CEnvLaserDesignation(void)
 {
-	m_bActive = -1;	// So the first setactive will take effect
+	m_bActive = -1; // So the first setactive will take effect
 	m_bPrevActive = false;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CEnvLaserDesignation::~CEnvLaserDesignation( void )
+CEnvLaserDesignation::~CEnvLaserDesignation(void)
 {
 	EHANDLE hLaser;
 	hLaser = this;
 
-	if ( GetTeamNumber() == 1 )
+	if(GetTeamNumber() == 1)
 	{
-		m_LaserDesignatorsTeam1.FindAndRemove( hLaser );
+		m_LaserDesignatorsTeam1.FindAndRemove(hLaser);
 	}
-	else if ( GetTeamNumber() == 2 )
+	else if(GetTeamNumber() == 2)
 	{
-		m_LaserDesignatorsTeam2.FindAndRemove( hLaser );
+		m_LaserDesignatorsTeam2.FindAndRemove(hLaser);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CEnvLaserDesignation::Spawn( void )
+void CEnvLaserDesignation::Spawn(void)
 {
-	SetModel( "models/projectiles/grenade_limpet.mdl" );
-	SetMoveType( MOVETYPE_NONE );
-	SetSolid( SOLID_NONE );
-	SetSize( vec3_origin, vec3_origin );
+	SetModel("models/projectiles/grenade_limpet.mdl");
+	SetMoveType(MOVETYPE_NONE);
+	SetSolid(SOLID_NONE);
+	SetSize(vec3_origin, vec3_origin);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CEnvLaserDesignation::ChangeTeam( int iTeamNum )
+void CEnvLaserDesignation::ChangeTeam(int iTeamNum)
 {
-	Assert( iTeamNum > 0 && iTeamNum < MAX_TF_TEAMS );
+	Assert(iTeamNum > 0 && iTeamNum < MAX_TF_TEAMS);
 
 	EHANDLE hLaser;
 	hLaser = this;
-	if ( iTeamNum == 1 )
+	if(iTeamNum == 1)
 	{
-		m_LaserDesignatorsTeam1.AddToTail( hLaser );
+		m_LaserDesignatorsTeam1.AddToTail(hLaser);
 	}
-	else if ( iTeamNum == 2 )
+	else if(iTeamNum == 2)
 	{
-		m_LaserDesignatorsTeam2.AddToTail( hLaser );
+		m_LaserDesignatorsTeam2.AddToTail(hLaser);
 	}
 
-	BaseClass::ChangeTeam( iTeamNum );
+	BaseClass::ChangeTeam(iTeamNum);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CEnvLaserDesignation::SetActive( bool bActive )
+void CEnvLaserDesignation::SetActive(bool bActive)
 {
-	if ( bActive == m_bActive )
+	if(bActive == m_bActive)
 		return;
 
-	if ( !bActive )
+	if(!bActive)
 	{
-		AddEffects( EF_NODRAW );
+		AddEffects(EF_NODRAW);
 	}
 	else
 	{
 		IncrementInterpolationFrame();
-		RemoveEffects( EF_NODRAW );
+		RemoveEffects(EF_NODRAW);
 	}
 
-#if defined( CLIENT_DLL )
-	ENTITY_PANEL_ACTIVATE( "laserdesignation", bActive );
+#if defined(CLIENT_DLL)
+	ENTITY_PANEL_ACTIVATE("laserdesignation", bActive);
 #endif
 
 	m_bActive = bActive;
 }
 
-#if !defined( CLIENT_DLL )
-
+#if !defined(CLIENT_DLL)
 
 int CEnvLaserDesignation::UpdateTransmitState()
 {
-	return SetTransmitState( FL_EDICT_FULLCHECK );
+	return SetTransmitState(FL_EDICT_FULLCHECK);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int CEnvLaserDesignation::ShouldTransmit( const CCheckTransmitInfo *pInfo )
+int CEnvLaserDesignation::ShouldTransmit(const CCheckTransmitInfo *pInfo)
 {
-	// Only transmit to players who care about laser designation: 
+	// Only transmit to players who care about laser designation:
 	//	- Player designating
 	//	- Players in tanks
 	//	- Commandos
-	CBaseEntity* pRecipientEntity = CBaseEntity::Instance( pInfo->m_pClientEnt );
-	if ( pRecipientEntity->IsPlayer() )
+	CBaseEntity *pRecipientEntity = CBaseEntity::Instance(pInfo->m_pClientEnt);
+	if(pRecipientEntity->IsPlayer())
 	{
-		CBaseTFPlayer *pPlayer = (CBaseTFPlayer*)pRecipientEntity;
+		CBaseTFPlayer *pPlayer = (CBaseTFPlayer *)pRecipientEntity;
 
 		// Designating player?
-		if ( pPlayer == GetOwnerEntity() )
-			return SetTransmitState( FL_EDICT_ALWAYS );
-					
-		if ( !InSameTeam( pPlayer ) )
+		if(pPlayer == GetOwnerEntity())
+			return SetTransmitState(FL_EDICT_ALWAYS);
+
+		if(!InSameTeam(pPlayer))
 			return FL_EDICT_DONTSEND;
-			
+
 		// In a tank?
-		if ( pPlayer->IsInAVehicle() )
+		if(pPlayer->IsInAVehicle())
 		{
-			CBaseEntity	*pVehicle  = pPlayer->GetVehicle()->GetVehicleEnt();
-			if ( dynamic_cast<CVehicleTank*>(pVehicle) )
+			CBaseEntity *pVehicle = pPlayer->GetVehicle()->GetVehicleEnt();
+			if(dynamic_cast<CVehicleTank *>(pVehicle))
 			{
 				// Make sure it's within range of the tank's fire
 				static float flTankRange = 0;
-				if ( !flTankRange )
+				if(!flTankRange)
 				{
 					flTankRange = vehicle_tank_range.GetFloat() * weapon_grenade_rocket_track_range_mod.GetFloat();
 					flTankRange *= flTankRange;
 				}
 
-				float flDistanceSqr = ( GetAbsOrigin() - pPlayer->GetAbsOrigin() ).LengthSqr();
-				if ( flDistanceSqr < flTankRange )
+				float flDistanceSqr = (GetAbsOrigin() - pPlayer->GetAbsOrigin()).LengthSqr();
+				if(flDistanceSqr < flTankRange)
 					return FL_EDICT_ALWAYS;
 			}
-			else if ( dynamic_cast<CObjectMannedMissileLauncher*>(pVehicle) )
+			else if(dynamic_cast<CObjectMannedMissileLauncher *>(pVehicle))
 			{
 				// Make sure it's within range of the manned missile launcher's fire
 				static float flGunRange = 0;
-				if ( !flGunRange )
+				if(!flGunRange)
 				{
-					flGunRange = obj_manned_missilelauncher_range_off.GetFloat() * weapon_grenade_rocket_track_range_mod.GetFloat();
+					flGunRange = obj_manned_missilelauncher_range_off.GetFloat() *
+								 weapon_grenade_rocket_track_range_mod.GetFloat();
 					flGunRange *= flGunRange;
 				}
 
-				float flDistanceSqr = ( GetAbsOrigin() - pPlayer->GetAbsOrigin() ).LengthSqr();
-				if ( flDistanceSqr < flGunRange )
+				float flDistanceSqr = (GetAbsOrigin() - pPlayer->GetAbsOrigin()).LengthSqr();
+				if(flDistanceSqr < flGunRange)
 					return FL_EDICT_ALWAYS;
 			}
 		}
 
 		// Is the player a commando?
-		if ( pPlayer->PlayerClass() == TFCLASS_COMMANDO )
+		if(pPlayer->PlayerClass() == TFCLASS_COMMANDO)
 		{
 			// Make sure it's within range of the commando's rockets
 			static float flCommandoRange = 0;
-			if ( !flCommandoRange )
+			if(!flCommandoRange)
 			{
-				flCommandoRange = weapon_rocket_launcher_range.GetFloat() * weapon_grenade_rocket_track_range_mod.GetFloat();
+				flCommandoRange =
+					weapon_rocket_launcher_range.GetFloat() * weapon_grenade_rocket_track_range_mod.GetFloat();
 				flCommandoRange *= flCommandoRange;
 			}
 
-			float flDistanceSqr = ( GetAbsOrigin() - pPlayer->GetAbsOrigin() ).LengthSqr();
-			if ( flDistanceSqr < flCommandoRange )
+			float flDistanceSqr = (GetAbsOrigin() - pPlayer->GetAbsOrigin()).LengthSqr();
+			if(flDistanceSqr < flCommandoRange)
 				return FL_EDICT_ALWAYS;
 		}
 	}
@@ -251,78 +250,78 @@ int CEnvLaserDesignation::ShouldTransmit( const CCheckTransmitInfo *pInfo )
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int	CEnvLaserDesignation::GetNumLaserDesignators( int iTeamNumber )
+int CEnvLaserDesignation::GetNumLaserDesignators(int iTeamNumber)
 {
-	Assert( iTeamNumber > 0 && iTeamNumber < MAX_TF_TEAMS );
+	Assert(iTeamNumber > 0 && iTeamNumber < MAX_TF_TEAMS);
 
-	if ( iTeamNumber == 1 )
+	if(iTeamNumber == 1)
 		return m_LaserDesignatorsTeam1.Count();
 
 	return m_LaserDesignatorsTeam2.Count();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CEnvLaserDesignation::GetLaserDesignation( int iTeamNumber, int iDesignator, Vector *vecOrigin )
+bool CEnvLaserDesignation::GetLaserDesignation(int iTeamNumber, int iDesignator, Vector *vecOrigin)
 {
-	Assert( iTeamNumber > 0 && iTeamNumber < MAX_TF_TEAMS );
+	Assert(iTeamNumber > 0 && iTeamNumber < MAX_TF_TEAMS);
 
 	CHandle<CEnvLaserDesignation> hLaser;
-	if ( iTeamNumber == 1 )
+	if(iTeamNumber == 1)
 	{
-		Assert( iDesignator < m_LaserDesignatorsTeam1.Count() );
+		Assert(iDesignator < m_LaserDesignatorsTeam1.Count());
 		hLaser = m_LaserDesignatorsTeam1[iDesignator];
 	}
 	else
 	{
-		Assert( iDesignator < m_LaserDesignatorsTeam2.Count() );
+		Assert(iDesignator < m_LaserDesignatorsTeam2.Count());
 		hLaser = m_LaserDesignatorsTeam2[iDesignator];
 	}
 
 	// Active?
-	if ( !hLaser.Get() || !hLaser->IsActive() )
+	if(!hLaser.Get() || !hLaser->IsActive())
 		return false;
 
 	*vecOrigin = hLaser->GetAbsOrigin();
 	return true;
 }
 
-#if defined( CLIENT_DLL )
+#if defined(CLIENT_DLL)
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int CEnvLaserDesignation::DrawModel( int flags )
+int CEnvLaserDesignation::DrawModel(int flags)
 {
 	return false;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : updateType - 
+// Purpose:
+// Input  : updateType -
 //-----------------------------------------------------------------------------
-void CEnvLaserDesignation::OnDataChanged( DataUpdateType_t updateType )
+void CEnvLaserDesignation::OnDataChanged(DataUpdateType_t updateType)
 {
-	BaseClass::OnDataChanged( updateType );
+	BaseClass::OnDataChanged(updateType);
 
-	if ( m_bActive != m_bPrevActive )
+	if(m_bActive != m_bPrevActive)
 	{
-		ENTITY_PANEL_ACTIVATE( "laserdesignation", m_bActive );
+		ENTITY_PANEL_ACTIVATE("laserdesignation", m_bActive);
 	}
 	m_bPrevActive = m_bActive.Get();
 }
 
 //-----------------------------------------------------------------------------
-// Add, remove object from the panel 
+// Add, remove object from the panel
 //-----------------------------------------------------------------------------
-void CEnvLaserDesignation::SetDormant( bool bDormant )
+void CEnvLaserDesignation::SetDormant(bool bDormant)
 {
-	BaseClass::SetDormant( bDormant );
+	BaseClass::SetDormant(bDormant);
 
-	ENTITY_PANEL_ACTIVATE( "laserdesignation", (!bDormant && m_bActive) );
+	ENTITY_PANEL_ACTIVATE("laserdesignation", (!bDormant && m_bActive));
 }
 
 #endif

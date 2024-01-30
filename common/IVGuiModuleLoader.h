@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,6 +28,5 @@ public:
 };
 
 #define VGUIMODULELOADER_INTERFACE_VERSION "VGuiModuleLoader003"
-
 
 #endif // IVGUIMODULELOADER_H

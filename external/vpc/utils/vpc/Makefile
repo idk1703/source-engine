@@ -83,7 +83,7 @@ TIER0_SRC:= \
 	../../tier0/pch_tier0.cpp \
 	../../tier0/threadtools.cpp \
 	../../tier0/valobject.cpp \
-	../../tier0/vprof.cpp 
+	../../tier0/vprof.cpp
 
 
 TIER1_SRC:= \
@@ -97,7 +97,7 @@ TIER1_SRC:= \
 	../../tier1/memstack.cpp \
 	../../tier1/stringpool.cpp \
 	../../tier1/utlbuffer.cpp \
-	../../tier1/utlsymbol.cpp 
+	../../tier1/utlsymbol.cpp
 
 VSTDLIB_SRC:= \
 	../../vstdlib/cvar.cpp \
@@ -115,7 +115,7 @@ ifeq "$(STEAM_BRANCH)" "1"
 		../../tier0/pme_posix.cpp \
 		../../tier0/testthread.cpp \
 		../../tier0/cpu_posix.cpp \
-		../../tier0/memblockhdr.cpp 
+		../../tier0/memblockhdr.cpp
 
 	VSTDLIB_SRC+= \
 		../../vstdlib/keyvaluessystem.cpp \
@@ -125,9 +125,9 @@ ifeq "$(STEAM_BRANCH)" "1"
 		../../vstdlib/splitstring.cpp \
 		../../vstdlib/commandline.cpp
 
-	INTERFACES_SRC= 
+	INTERFACES_SRC=
 
-	BINLAUNCH_SRC = 
+	BINLAUNCH_SRC =
 
 else
 
@@ -290,9 +290,8 @@ $(OUTDIR)/utils/binlaunch/%.o : ../binlaunch/%.cpp
 
 
 # the tags file) seems like more work than it's worth.  feel free to fix that up
-# if it bugs you. 
+# if it bugs you.
 TAGS:
 	@find . -name '*.cpp' -print0 | xargs -0 etags --declarations --ignore-indentation
 	@find . -name '*.h' -print0 | xargs -0 etags --language=c++ --declarations --ignore-indentation --append
 	@find . -name '*.c' -print0 | xargs -0 etags --declarations --ignore-indentation --append
-

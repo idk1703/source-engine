@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -14,56 +14,50 @@
 // CSequenceTransitioner implementation.
 // -----------------------------------------------------------------------------
 
-void CSequenceTransitioner::CheckForSequenceChange( 
-	CStudioHdr *hdr,
-	int nCurSequence, 
-	bool bForceNewSequence,
-	bool bInterpolate )
+void CSequenceTransitioner::CheckForSequenceChange(CStudioHdr *hdr, int nCurSequence, bool bForceNewSequence,
+												   bool bInterpolate)
 {
 	// sequence may be set before model is initialized
-	if ( hdr == NULL)
+	if(hdr == NULL)
 		return;
 
 	// FIXME?: this should detect that what's been asked to be drawn isn't what was expected
-	// due to not only sequence change, by frame index, rate, or whatever.  When that happens, 
+	// due to not only sequence change, by frame index, rate, or whatever.  When that happens,
 	// it should insert the previous rules.
 
-	if (m_animationQueue.Count() == 0)
+	if(m_animationQueue.Count() == 0)
 	{
 		m_animationQueue.AddToTail();
 	}
 
-	CAnimationLayer *currentblend = &m_animationQueue[m_animationQueue.Count()-1];
+	CAnimationLayer *currentblend = &m_animationQueue[m_animationQueue.Count() - 1];
 
-	if (currentblend->m_flLayerAnimtime && 
-		(currentblend->m_nSequence != nCurSequence || bForceNewSequence ))
+	if(currentblend->m_flLayerAnimtime && (currentblend->m_nSequence != nCurSequence || bForceNewSequence))
 	{
-		mstudioseqdesc_t &seqdesc = hdr->pSeqdesc( nCurSequence );
+		mstudioseqdesc_t &seqdesc = hdr->pSeqdesc(nCurSequence);
 		// sequence changed
-		if ((seqdesc.flags & STUDIO_SNAP) || !bInterpolate )
+		if((seqdesc.flags & STUDIO_SNAP) || !bInterpolate)
 		{
 			// remove all entries
 			m_animationQueue.RemoveAll();
 		}
 		else
 		{
-			mstudioseqdesc_t &prevseqdesc = hdr->pSeqdesc( currentblend->m_nSequence );
-			currentblend->m_flLayerFadeOuttime = MIN( prevseqdesc.fadeouttime, seqdesc.fadeintime );
+			mstudioseqdesc_t &prevseqdesc = hdr->pSeqdesc(currentblend->m_nSequence);
+			currentblend->m_flLayerFadeOuttime = MIN(prevseqdesc.fadeouttime, seqdesc.fadeintime);
 			/*
 			// clip blends to time remaining
 			if ( !IsSequenceLooping(hdr, currentblend->m_nSequence) )
 			{
-				float length = Studio_Duration( hdr, currentblend->m_nSequence, flPoseParameter ) / currentblend->m_flPlaybackRate;
-				float timeLeft = (1.0 - currentblend->m_flCycle) * length;
-				if (timeLeft < currentblend->m_flLayerFadeOuttime)
-					currentblend->m_flLayerFadeOuttime = timeLeft;
+				float length = Studio_Duration( hdr, currentblend->m_nSequence, flPoseParameter ) /
+			currentblend->m_flPlaybackRate; float timeLeft = (1.0 - currentblend->m_flCycle) * length; if (timeLeft <
+			currentblend->m_flLayerFadeOuttime) currentblend->m_flLayerFadeOuttime = timeLeft;
 			}
 			*/
 		}
 		// push previously set sequence
 		m_animationQueue.AddToTail();
-		currentblend = &m_animationQueue[m_animationQueue.Count()-1];
-
+		currentblend = &m_animationQueue[m_animationQueue.Count() - 1];
 	}
 
 	currentblend->m_nSequence = -1;
@@ -71,24 +65,19 @@ void CSequenceTransitioner::CheckForSequenceChange(
 	currentblend->m_flLayerFadeOuttime = 0.0;
 }
 
-
-void CSequenceTransitioner::UpdateCurrent( 
-	CStudioHdr *hdr,
-	int nCurSequence, 
-	float flCurCycle,
-	float flCurPlaybackRate,
-	float flCurTime )
+void CSequenceTransitioner::UpdateCurrent(CStudioHdr *hdr, int nCurSequence, float flCurCycle, float flCurPlaybackRate,
+										  float flCurTime)
 {
 	// sequence may be set before model is initialized
-	if ( hdr == NULL)
+	if(hdr == NULL)
 		return;
 
-	if (m_animationQueue.Count() == 0)
+	if(m_animationQueue.Count() == 0)
 	{
 		m_animationQueue.AddToTail();
 	}
 
-	CAnimationLayer *currentblend = &m_animationQueue[m_animationQueue.Count()-1];
+	CAnimationLayer *currentblend = &m_animationQueue[m_animationQueue.Count() - 1];
 
 	// keep track of current sequence
 	currentblend->m_nSequence = nCurSequence;
@@ -98,18 +87,18 @@ void CSequenceTransitioner::UpdateCurrent(
 
 	// calc blending weights for previous sequences
 	int i;
-	for (i = 0; i < m_animationQueue.Count() - 1;)
+	for(i = 0; i < m_animationQueue.Count() - 1;)
 	{
- 		float s = m_animationQueue[i].GetFadeout( flCurTime );
+		float s = m_animationQueue[i].GetFadeout(flCurTime);
 
-		if (s > 0)
+		if(s > 0)
 		{
 			m_animationQueue[i].m_flWeight = s;
 			i++;
 		}
 		else
 		{
-			m_animationQueue.Remove( i );
+			m_animationQueue.Remove(i);
 		}
 	}
 }

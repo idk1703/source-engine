@@ -1,17 +1,17 @@
 /*
-     File:       OpenScripting.h
- 
-     Contains:   Master include for OpenScripting private framework
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 2000-2001 by Apple Computer, Inc., all rights reserved.
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+	File:       OpenScripting.h
+
+	Contains:   Master include for OpenScripting private framework
+
+	Version:    QuickTime 7.3
+
+	Copyright:  (c) 2007 (c) 2000-2001 by Apple Computer, Inc., all rights reserved.
+
+	Bugs?:      For bug reports, consult the following page on
+			the World Wide Web:
+
+				http://developer.apple.com/bugreporter/
+
 */
 #ifndef __OPENSCRIPTING__
 #define __OPENSCRIPTING__
@@ -20,11 +20,9 @@
 #include <CoreServices.h>
 #endif
 
-
 #ifndef __HITOOLBOX__
 #include <HIToolbox.h>
 #endif
-
 
 #ifndef __OSA__
 #include <OSA.h>
@@ -58,6 +56,4 @@
 #include <DigitalHubRegistry.h>
 #endif
 
-
 #endif /* __OPENSCRIPTING__ */
-

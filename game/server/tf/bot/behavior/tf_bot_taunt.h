@@ -6,21 +6,22 @@
 #ifndef TF_BOT_TAUNT_H
 #define TF_BOT_TAUNT_H
 
-
 //-----------------------------------------------------------------------------
-class CTFBotTaunt : public Action< CTFBot >
+class CTFBotTaunt : public Action<CTFBot>
 {
 public:
-	virtual ActionResult< CTFBot >	OnStart( CTFBot *me, Action< CTFBot > *priorAction );
-	virtual ActionResult< CTFBot >	Update( CTFBot *me, float interval );
+	virtual ActionResult<CTFBot> OnStart(CTFBot *me, Action<CTFBot> *priorAction);
+	virtual ActionResult<CTFBot> Update(CTFBot *me, float interval);
 
-	virtual const char *GetName( void ) const	{ return "Taunt"; };
+	virtual const char *GetName(void) const
+	{
+		return "Taunt";
+	};
 
 private:
 	CountdownTimer m_tauntTimer;
 	CountdownTimer m_tauntEndTimer;
 	bool m_didTaunt;
 };
-
 
 #endif // TF_BOT_TAUNT_H

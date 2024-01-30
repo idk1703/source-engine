@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -16,9 +16,9 @@
 //-----------------------------------------------------------------------------
 // Purpose: Data describing a single player
 //-----------------------------------------------------------------------------
-typedef struct 
+typedef struct
 {
-	
+
 	char name[100];
 	int ping;
 	int userid;
@@ -28,6 +28,5 @@ typedef struct
 	float time;
 	char addr[4];
 } Players_t;
-
 
 #endif // PLAYER_H

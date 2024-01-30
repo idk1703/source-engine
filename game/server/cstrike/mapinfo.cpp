@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -8,26 +8,25 @@
 #include "mapinfo.h"
 #include "cs_gamerules.h"
 
-LINK_ENTITY_TO_CLASS( info_map_parameters, CMapInfo );
+LINK_ENTITY_TO_CLASS(info_map_parameters, CMapInfo);
 
-BEGIN_DATADESC( CMapInfo )
+BEGIN_DATADESC(CMapInfo)
 
-	DEFINE_INPUTFUNC( FIELD_INTEGER, "FireWinCondition", InputFireWinCondition ),
+	DEFINE_INPUTFUNC(FIELD_INTEGER, "FireWinCondition", InputFireWinCondition),
 
 END_DATADESC()
 
 CMapInfo *g_pMapInfo = NULL;
-
 
 CMapInfo::CMapInfo()
 {
 	m_flBombRadius = 500.0f;
 	m_iBuyingStatus = 0;
 
-	if ( g_pMapInfo )
+	if(g_pMapInfo)
 	{
 		// Should only be one of these.
-		Warning( "Warning: Multiple info_map_parameters entities in map!\n" );
+		Warning("Warning: Multiple info_map_parameters entities in map!\n");
 	}
 	else
 	{
@@ -35,42 +34,39 @@ CMapInfo::CMapInfo()
 	}
 }
 
-
 CMapInfo::~CMapInfo()
 {
-	if ( g_pMapInfo == this )
+	if(g_pMapInfo == this)
 		g_pMapInfo = NULL;
 }
- 
 
-bool CMapInfo::KeyValue( const char *szKeyName, const char *szValue )
+bool CMapInfo::KeyValue(const char *szKeyName, const char *szValue)
 {
-	if (FStrEq(szKeyName, "buying"))
+	if(FStrEq(szKeyName, "buying"))
 	{
 		m_iBuyingStatus = atoi(szValue);
 		return true;
 	}
-	else if (FStrEq(szKeyName, "bombradius"))
+	else if(FStrEq(szKeyName, "bombradius"))
 	{
 		m_flBombRadius = (float)(atoi(szValue));
-		if (m_flBombRadius > 2048)
+		if(m_flBombRadius > 2048)
 			m_flBombRadius = 2048;
-		
+
 		return true;
 	}
-	
-	return BaseClass::KeyValue( szKeyName, szValue );
+
+	return BaseClass::KeyValue(szKeyName, szValue);
 }
 
-
-void CMapInfo::Spawn( void )
-{ 
-	SetMoveType( MOVETYPE_NONE );
-	SetSolid( SOLID_NONE );
-	AddEffects( EF_NODRAW );
-}
-
-void CMapInfo::InputFireWinCondition(inputdata_t &inputdata )
+void CMapInfo::Spawn(void)
 {
-	CSGameRules()->TerminateRound( 5, inputdata.value.Int() );
+	SetMoveType(MOVETYPE_NONE);
+	SetSolid(SOLID_NONE);
+	AddEffects(EF_NODRAW);
+}
+
+void CMapInfo::InputFireWinCondition(inputdata_t &inputdata)
+{
+	CSGameRules()->TerminateRound(5, inputdata.value.Int());
 }

@@ -61,7 +61,7 @@ struct VS_INPUT
 
 struct VS_OUTPUT
 {
-    float4 vProjPos					: POSITION;	
+	float4 vProjPos					: POSITION;
 
 #if EFFECT == 0 || EFFECT == 1
 
@@ -109,7 +109,7 @@ VS_OUTPUT main( const VS_INPUT v )
 	float4 vProjPos = mul( float4( vWorldPos, 1 ), cViewProj );
 	o.vProjPos = vProjPos;
 	vProjPos.z = dot( float4( vWorldPos, 1 ), cViewProjZ );
-	
+
 	o.worldPos_projPosZ = float4( vWorldPos, vProjPos.z );
 
 #if 0
@@ -120,7 +120,7 @@ VS_OUTPUT main( const VS_INPUT v )
 #endif
 	vWorldNormal = normalize( vWorldNormal );
 	o.vWorldNormal = vWorldNormal;
-	
+
 	o.vBaseAndSeamlessTexCoord.xy = v.vBaseTexCoord;
 	float flZFactor = vWorldPos.z * g_vCanvasScale.z;
 	o.vBaseAndSeamlessTexCoord.zw = float2( vWorldPos.x + flZFactor, vWorldPos.y - flZFactor ) * g_vCanvasScale.xy;
@@ -147,7 +147,7 @@ VS_OUTPUT main( const VS_INPUT v )
 
 #endif
 
-#if VERTEXCOLOR == 1 
+#if VERTEXCOLOR == 1
 
 	o.vVertexColor = v.vColor;
 

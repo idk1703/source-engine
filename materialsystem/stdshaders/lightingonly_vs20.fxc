@@ -24,23 +24,23 @@ struct VS_INPUT
 	float4 vBoneWeights		: BLENDWEIGHT;
 	float4 vBoneIndices		: BLENDINDICES;
 	float4 vNormal			: NORMAL;
-	
+
 	float3 vSpecular		: COLOR1;
-	
+
 	float2 vTexCoord0		: TEXCOORD0;
 	float2 vTexCoord1		: TEXCOORD1;
 	float2 vTexCoord2		: TEXCOORD2;
-	
+
 };
 
 struct VS_OUTPUT
 {
-	float4 vProjPos		: POSITION;	
+	float4 vProjPos		: POSITION;
 	float3 vColor0		: COLOR0;
-	
+
 	float4 fogFactorW	: COLOR1;
 
-#if !defined( _X360 )    
+#if !defined( _X360 )
 	float  fog			: FOG;
 #endif
 };
@@ -57,7 +57,7 @@ VS_OUTPUT main( const VS_INPUT v )
 	SkinPositionAndNormal( g_bSkinning, v.vPos, vObjNormal, v.vBoneWeights, v.vBoneIndices, worldPos, worldNormal );
 
 	o.vProjPos = mul( float4( worldPos, 1 ), cViewProj );
-	
+
 	o.fogFactorW = CalcFog( worldPos, o.vProjPos, g_FogType );
 #if !defined( _X360 )
 	o.fog = o.fogFactorW;

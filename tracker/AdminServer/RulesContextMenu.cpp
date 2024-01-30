@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -20,15 +20,13 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 CRulesContextMenu::CRulesContextMenu(Panel *parent) : Menu(parent, "RulesContextMenu")
 {
-	CRulesContextMenu::parent=parent;
+	CRulesContextMenu::parent = parent;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CRulesContextMenu::~CRulesContextMenu()
-{
-}
+CRulesContextMenu::~CRulesContextMenu() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Activates the menu
@@ -36,9 +34,8 @@ CRulesContextMenu::~CRulesContextMenu()
 void CRulesContextMenu::ShowMenu(Panel *target, unsigned int cvarID)
 {
 	ClearMenu();
-		
-	AddMenuItem("cvar", "&Change Value", new KeyValues("cvar", "cvarID", cvarID), CRulesContextMenu::parent);
 
+	AddMenuItem("cvar", "&Change Value", new KeyValues("cvar", "cvarID", cvarID), CRulesContextMenu::parent);
 
 	MakePopup();
 	int x, y, gx, gy;

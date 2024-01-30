@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -24,22 +24,21 @@
 #include "dodcornercutpanel.h"
 #include "dod_hud_playerstatus_mgheat.h"
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CDoDHudMGHeatProgressBar::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CDoDHudMGHeatProgressBar::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
-	m_clrActive = pScheme->GetColor( "HudMGHeatBar.Active", GetFgColor() );
-	m_clrActiveLow = pScheme->GetColor( "HudMGHeatBar.ActiveLow", GetFgColor() );
-	m_clrInactive = pScheme->GetColor( "HudMGHeatBar.InActive", GetFgColor() );
-	m_clrInactiveLow = pScheme->GetColor( "HudMGHeatBar.InActiveLow", GetFgColor() );
+	m_clrActive = pScheme->GetColor("HudMGHeatBar.Active", GetFgColor());
+	m_clrActiveLow = pScheme->GetColor("HudMGHeatBar.ActiveLow", GetFgColor());
+	m_clrInactive = pScheme->GetColor("HudMGHeatBar.InActive", GetFgColor());
+	m_clrInactiveLow = pScheme->GetColor("HudMGHeatBar.InActiveLow", GetFgColor());
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudMGHeatProgressBar::Paint()
 {
@@ -47,203 +46,203 @@ void CDoDHudMGHeatProgressBar::Paint()
 
 	int xpos = 0, ypos = 0;
 	int x, y, w, t;
-	GetBounds( x, y, w, t );
+	GetBounds(x, y, w, t);
 
-	if ( m_flPercentage > m_flWarningLevel )
+	if(m_flPercentage > m_flWarningLevel)
 	{
-		vgui::surface()->DrawSetColor( m_clrInactiveLow );
+		vgui::surface()->DrawSetColor(m_clrInactiveLow);
 	}
 	else
 	{
-		vgui::surface()->DrawSetColor( m_clrInactive );
+		vgui::surface()->DrawSetColor(m_clrInactive);
 	}
 
-	int nActiveLimit = w * ( 1.0f - m_flPercentage );
+	int nActiveLimit = w * (1.0f - m_flPercentage);
 
-	while ( xpos + m_flSliceWidth < w )
+	while(xpos + m_flSliceWidth < w)
 	{
-		if ( xpos + m_flSliceWidth > nActiveLimit )
+		if(xpos + m_flSliceWidth > nActiveLimit)
 		{
-			if ( m_flPercentage > m_flWarningLevel )
+			if(m_flPercentage > m_flWarningLevel)
 			{
-				vgui::surface()->DrawSetColor( m_clrActiveLow );
+				vgui::surface()->DrawSetColor(m_clrActiveLow);
 			}
 			else
 			{
-				vgui::surface()->DrawSetColor( m_clrActive );
+				vgui::surface()->DrawSetColor(m_clrActive);
 			}
 		}
 
-		vgui::surface()->DrawFilledRect( xpos, ypos, xpos + m_flSliceWidth, ypos + t );
+		vgui::surface()->DrawFilledRect(xpos, ypos, xpos + m_flSliceWidth, ypos + t);
 		xpos += m_flSliceWidth + m_flSliceSpacer;
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CDoDHudMGHeatIcon::SetType( int nType )
+void CDoDHudMGHeatIcon::SetType(int nType)
 {
 	m_nType = nType;
 
-	switch( nType )
+	switch(nType)
 	{
-//	case WEAPON_30CAL:
-//		m_icon = gHUD.GetIcon( m_szIcon30cal );
-//		break;
-	case WEAPON_MG42:
-	default:
-		m_icon = gHUD.GetIcon( m_szIconMg42 );
-		break;
+			//	case WEAPON_30CAL:
+			//		m_icon = gHUD.GetIcon( m_szIcon30cal );
+			//		break;
+		case WEAPON_MG42:
+		default:
+			m_icon = gHUD.GetIcon(m_szIconMg42);
+			break;
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CDoDHudMGHeatIcon::ApplySettings( KeyValues *inResourceData )
+void CDoDHudMGHeatIcon::ApplySettings(KeyValues *inResourceData)
 {
-//	Q_strncpy( m_szIcon30cal, inResourceData->GetString( "icon_30cal", "mgheat_30cal" ), sizeof( m_szIcon30cal ) );
-	Q_strncpy( m_szIconMg42, inResourceData->GetString( "icon_mg42", "mgheat_mg42" ), sizeof( m_szIconMg42 ) );
-	
-	BaseClass::ApplySettings( inResourceData );
+	//	Q_strncpy( m_szIcon30cal, inResourceData->GetString( "icon_30cal", "mgheat_30cal" ), sizeof( m_szIcon30cal ) );
+	Q_strncpy(m_szIconMg42, inResourceData->GetString("icon_mg42", "mgheat_mg42"), sizeof(m_szIconMg42));
+
+	BaseClass::ApplySettings(inResourceData);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CDoDHudMGHeatIcon::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CDoDHudMGHeatIcon::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
-	m_clrActive = pScheme->GetColor( "HudMGHeatIcon.Active", GetFgColor() );
-	m_clrActiveLow = pScheme->GetColor( "HudMGHeatIcon.ActiveLow", GetFgColor() );
+	m_clrActive = pScheme->GetColor("HudMGHeatIcon.Active", GetFgColor());
+	m_clrActiveLow = pScheme->GetColor("HudMGHeatIcon.ActiveLow", GetFgColor());
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudMGHeatIcon::Paint()
 {
 	BaseClass::Paint();
 
 	int x, y, w, t;
-	GetBounds( x, y, w, t );
+	GetBounds(x, y, w, t);
 
-	if ( m_icon )
+	if(m_icon)
 	{
-		m_icon->DrawSelf( 0, 0, w, t, ( m_flPercentage > m_flWarningLevel ) ? m_clrActiveLow : m_clrActive );
+		m_icon->DrawSelf(0, 0, w, t, (m_flPercentage > m_flWarningLevel) ? m_clrActiveLow : m_clrActive);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CDoDHudMGHeat::CDoDHudMGHeat( vgui::Panel *parent, const char *name ) : vgui::EditablePanel( parent, name )
+CDoDHudMGHeat::CDoDHudMGHeat(vgui::Panel *parent, const char *name) : vgui::EditablePanel(parent, name)
 {
-	m_pBackground = new CDoDCutEditablePanel( this, "MGHeatBackground" );
-	m_pIcon = new CDoDHudMGHeatIcon( this, "MGHeatIcon" );
-	m_pProgressBar = new CDoDHudMGHeatProgressBar( this, "MGHeatProgressBar" );
+	m_pBackground = new CDoDCutEditablePanel(this, "MGHeatBackground");
+	m_pIcon = new CDoDHudMGHeatIcon(this, "MGHeatIcon");
+	m_pProgressBar = new CDoDHudMGHeatProgressBar(this, "MGHeatProgressBar");
 }
 
-void CDoDHudMGHeat::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CDoDHudMGHeat::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
 	// load control settings...
-	LoadControlSettings( "resource/UI/HudPlayerStatusMGHeat.res" );
+	LoadControlSettings("resource/UI/HudPlayerStatusMGHeat.res");
 
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CDoDHudMGHeat::SetVisible( bool state )
+void CDoDHudMGHeat::SetVisible(bool state)
 {
-	if ( m_pBackground && m_pBackground->IsVisible() != state )
+	if(m_pBackground && m_pBackground->IsVisible() != state)
 	{
-		m_pBackground->SetVisible( state );
+		m_pBackground->SetVisible(state);
 	}
 
-	if ( m_pIcon && m_pIcon->IsVisible() != state )
+	if(m_pIcon && m_pIcon->IsVisible() != state)
 	{
-		m_pIcon->SetVisible( state );
+		m_pIcon->SetVisible(state);
 	}
 
-	if ( m_pProgressBar && m_pProgressBar->IsVisible() != state  )
+	if(m_pProgressBar && m_pProgressBar->IsVisible() != state)
 	{
-		m_pProgressBar->SetVisible( state );
+		m_pProgressBar->SetVisible(state);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDoDHudMGHeat::OnThink()
 {
 	BaseClass::OnThink();
 
 	C_DODPlayer *pPlayer = C_DODPlayer::GetLocalDODPlayer();
-	if ( pPlayer )
+	if(pPlayer)
 	{
 		CWeaponDODBase *pWeapon = pPlayer->GetActiveDODWeapon();
-		if ( pWeapon )
+		if(pWeapon)
 		{
-/*			if ( pWeapon->IsA( WEAPON_30CAL ) )
-			{
-				CWeapon30cal *p30Cal = (CWeapon30cal *)pWeapon;
+			/*			if ( pWeapon->IsA( WEAPON_30CAL ) )
+						{
+							CWeapon30cal *p30Cal = (CWeapon30cal *)pWeapon;
 
-				if( p30Cal )
-				{
-					float flPercentage = (float)p30Cal->GetWeaponHeat() / 100.0;
+							if( p30Cal )
+							{
+								float flPercentage = (float)p30Cal->GetWeaponHeat() / 100.0;
 
-					if ( m_pProgressBar )
-					{
-						m_pProgressBar->SetPercentage( flPercentage );
-					}
+								if ( m_pProgressBar )
+								{
+									m_pProgressBar->SetPercentage( flPercentage );
+								}
 
-					if ( m_pIcon )
-					{
-						m_pIcon->SetPercentage( flPercentage );
-					}
-				}
+								if ( m_pIcon )
+								{
+									m_pIcon->SetPercentage( flPercentage );
+								}
+							}
 
-				if ( m_pIcon )
-				{
-					m_pIcon->SetType( WEAPON_30CAL );
-				}
+							if ( m_pIcon )
+							{
+								m_pIcon->SetType( WEAPON_30CAL );
+							}
 
-				SetVisible( true );
-			}
-*/
-			if ( pWeapon->IsA( WEAPON_MG42 ) )
+							SetVisible( true );
+						}
+			*/
+			if(pWeapon->IsA(WEAPON_MG42))
 			{
 				CWeaponMG42 *pMG42 = (CWeaponMG42 *)pWeapon;
-									
-				if( pMG42 )
+
+				if(pMG42)
 				{
 					float flPercentage = (float)pMG42->GetWeaponHeat() / 100.0;
 
-					if ( m_pProgressBar )
+					if(m_pProgressBar)
 					{
-						m_pProgressBar->SetPercentage( flPercentage );
+						m_pProgressBar->SetPercentage(flPercentage);
 					}
 
-					if ( m_pIcon )
+					if(m_pIcon)
 					{
-						m_pIcon->SetPercentage( flPercentage );
+						m_pIcon->SetPercentage(flPercentage);
 					}
 				}
 
-				if ( m_pIcon )
+				if(m_pIcon)
 				{
-					m_pIcon->SetType( WEAPON_MG42 );
+					m_pIcon->SetType(WEAPON_MG42);
 				}
 
-				SetVisible( true );
+				SetVisible(true);
 			}
 			else
 			{
-				SetVisible( false );
+				SetVisible(false);
 			}
 		}
 	}

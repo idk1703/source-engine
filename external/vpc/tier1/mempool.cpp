@@ -1,6 +1,6 @@
 //===== Copyright 1996-2005, Valve Corporation, All rights reserved. ======//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -24,7 +24,7 @@ MemoryPoolReportFunc_t CUtlMemoryPool::g_ReportFunc = 0;
 // Error reporting...  (debug only)
 //-----------------------------------------------------------------------------
 
-void CUtlMemoryPool::SetErrorReportFunc( MemoryPoolReportFunc_t func )
+void CUtlMemoryPool::SetErrorReportFunc(MemoryPoolReportFunc_t func)
 {
 	g_ReportFunc = func;
 }
@@ -32,23 +32,23 @@ void CUtlMemoryPool::SetErrorReportFunc( MemoryPoolReportFunc_t func )
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CUtlMemoryPool::CUtlMemoryPool( int blockSize, int numElements, int growMode, const char *pszAllocOwner, int nAlignment )
+CUtlMemoryPool::CUtlMemoryPool(int blockSize, int numElements, int growMode, const char *pszAllocOwner, int nAlignment)
 {
 #ifdef _X360
-	if( numElements > 0 && growMode != GROW_NONE )
+	if(numElements > 0 && growMode != GROW_NONE)
 	{
 		numElements = 1;
 	}
 #endif
 
-	m_nAlignment = ( nAlignment != 0 ) ? nAlignment : 1;
-	Assert( IsPowerOfTwo( m_nAlignment ) );
-	m_BlockSize = blockSize < sizeof(void*) ? sizeof(void*) : blockSize;
-	m_BlockSize = AlignValue( m_BlockSize, m_nAlignment );
+	m_nAlignment = (nAlignment != 0) ? nAlignment : 1;
+	Assert(IsPowerOfTwo(m_nAlignment));
+	m_BlockSize = blockSize < sizeof(void *) ? sizeof(void *) : blockSize;
+	m_BlockSize = AlignValue(m_BlockSize, m_nAlignment);
 	m_BlocksPerBlob = numElements;
 	m_PeakAlloc = 0;
 	m_GrowMode = growMode;
-	if ( !pszAllocOwner )
+	if(!pszAllocOwner)
 	{
 		pszAllocOwner = __FILE__;
 	}
@@ -64,13 +64,12 @@ CUtlMemoryPool::CUtlMemoryPool( int blockSize, int numElements, int growMode, co
 //-----------------------------------------------------------------------------
 CUtlMemoryPool::~CUtlMemoryPool()
 {
-	if (m_BlocksAllocated > 0)
+	if(m_BlocksAllocated > 0)
 	{
 		ReportLeaks();
 	}
 	Clear();
 }
-
 
 //-----------------------------------------------------------------------------
 // Resets the pool
@@ -83,7 +82,6 @@ void CUtlMemoryPool::Init()
 	m_BlobHead.m_pNext = m_BlobHead.m_pPrev = &m_BlobHead;
 }
 
-
 //-----------------------------------------------------------------------------
 // Frees everything
 //-----------------------------------------------------------------------------
@@ -91,73 +89,71 @@ void CUtlMemoryPool::Clear()
 {
 	// Free everything..
 	CBlob *pNext;
-	for( CBlob *pCur = m_BlobHead.m_pNext; pCur != &m_BlobHead; pCur = pNext )
+	for(CBlob *pCur = m_BlobHead.m_pNext; pCur != &m_BlobHead; pCur = pNext)
 	{
 		pNext = pCur->m_pNext;
-		free( pCur );
+		free(pCur);
 	}
 	Init();
 }
 
-
 //-----------------------------------------------------------------------------
-// Is an allocation within the pool? 
+// Is an allocation within the pool?
 //-----------------------------------------------------------------------------
-bool CUtlMemoryPool::IsAllocationWithinPool( void *pMem ) const
+bool CUtlMemoryPool::IsAllocationWithinPool(void *pMem) const
 {
 	// Free everything..
-	for( CBlob *pCur = m_BlobHead.m_pNext; pCur != &m_BlobHead; pCur = pCur->m_pNext )
+	for(CBlob *pCur = m_BlobHead.m_pNext; pCur != &m_BlobHead; pCur = pCur->m_pNext)
 	{
 		// Is the allocation within the blob?
-		if ( ( pMem < pCur->m_Data ) || ( pMem >= pCur->m_Data + pCur->m_NumBytes ) )
+		if((pMem < pCur->m_Data) || (pMem >= pCur->m_Data + pCur->m_NumBytes))
 			continue;
 
 		// Make sure the allocation is on a block boundary
 		intp nOffset = (intp)pMem - (intp)pCur->m_Data;
-		return ( nOffset % m_BlockSize ) == 0;
+		return (nOffset % m_BlockSize) == 0;
 	}
 
 	return false;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: Reports memory leaks 
+// Purpose: Reports memory leaks
 //-----------------------------------------------------------------------------
 void CUtlMemoryPool::ReportLeaks()
 {
-	if (!g_ReportFunc)
+	if(!g_ReportFunc)
 		return;
 
 	g_ReportFunc("Memory leak: mempool blocks left in memory: %d\n", m_BlocksAllocated);
 
 #ifdef _DEBUG
 	// walk and destroy the free list so it doesn't intefere in the scan
-	while (m_pHeadOfFreeList != NULL)
+	while(m_pHeadOfFreeList != NULL)
 	{
-		void *next = *((void**)m_pHeadOfFreeList);
+		void *next = *((void **)m_pHeadOfFreeList);
 		memset(m_pHeadOfFreeList, 0, m_BlockSize);
 		m_pHeadOfFreeList = next;
 	}
 
 	g_ReportFunc("Dumping memory: \'");
 
-	for( CBlob *pCur=m_BlobHead.m_pNext; pCur != &m_BlobHead; pCur=pCur->m_pNext )
+	for(CBlob *pCur = m_BlobHead.m_pNext; pCur != &m_BlobHead; pCur = pCur->m_pNext)
 	{
 		// scan the memory block and dump the leaks
 		char *scanPoint = (char *)pCur->m_Data;
 		char *scanEnd = pCur->m_Data + pCur->m_NumBytes;
 		bool needSpace = false;
 
-		while (scanPoint < scanEnd)
+		while(scanPoint < scanEnd)
 		{
 			// search for and dump any strings
-			if ((unsigned)(*scanPoint + 1) <= 256 && isprint(*scanPoint))
+			if((unsigned)(*scanPoint + 1) <= 256 && isprint(*scanPoint))
 			{
 				g_ReportFunc("%c", *scanPoint);
 				needSpace = true;
 			}
-			else if (needSpace)
+			else if(needSpace)
 			{
 				needSpace = false;
 				g_ReportFunc(" ");
@@ -171,9 +167,8 @@ void CUtlMemoryPool::ReportLeaks()
 #endif // _DEBUG
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CUtlMemoryPool::AddNewBlob()
 {
@@ -181,22 +176,22 @@ void CUtlMemoryPool::AddNewBlob()
 
 	int sizeMultiplier;
 
-	if( m_GrowMode == GROW_SLOW )
+	if(m_GrowMode == GROW_SLOW)
 	{
 		sizeMultiplier = 1;
 	}
 	else
 	{
-		if ( m_GrowMode == GROW_NONE )
+		if(m_GrowMode == GROW_NONE)
 		{
 			// Can only have one allocation when we're in this mode
-			if( m_NumBlobs != 0 )
+			if(m_NumBlobs != 0)
 			{
-				Assert( !"CUtlMemoryPool::AddNewBlob: mode == GROW_NONE" );
+				Assert(!"CUtlMemoryPool::AddNewBlob: mode == GROW_NONE");
 				return;
 			}
 		}
-		
+
 		// GROW_FAST and GROW_NONE use this.
 		sizeMultiplier = m_NumBlobs + 1;
 	}
@@ -204,9 +199,9 @@ void CUtlMemoryPool::AddNewBlob()
 	// maybe use something other than malloc?
 	int nElements = m_BlocksPerBlob * sizeMultiplier;
 	int blobSize = m_BlockSize * nElements;
-	CBlob *pBlob = (CBlob*)malloc( sizeof(CBlob) - 1 + blobSize + ( m_nAlignment - 1 ) );
-	Assert( pBlob );
-	
+	CBlob *pBlob = (CBlob *)malloc(sizeof(CBlob) - 1 + blobSize + (m_nAlignment - 1));
+	Assert(pBlob);
+
 	// Link it in at the end of the blob list.
 	pBlob->m_NumBytes = blobSize;
 	pBlob->m_pNext = &m_BlobHead;
@@ -214,14 +209,14 @@ void CUtlMemoryPool::AddNewBlob()
 	pBlob->m_pNext->m_pPrev = pBlob->m_pPrev->m_pNext = pBlob;
 
 	// setup the free list
-	m_pHeadOfFreeList = AlignValue( pBlob->m_Data, m_nAlignment );
-	Assert (m_pHeadOfFreeList);
+	m_pHeadOfFreeList = AlignValue(pBlob->m_Data, m_nAlignment);
+	Assert(m_pHeadOfFreeList);
 
-	void **newBlob = (void**)m_pHeadOfFreeList;
-	for (int j = 0; j < nElements-1; j++)
+	void **newBlob = (void **)m_pHeadOfFreeList;
+	for(int j = 0; j < nElements - 1; j++)
 	{
-		newBlob[0] = (char*)newBlob + m_BlockSize;
-		newBlob = (void**)newBlob[0];
+		newBlob[0] = (char *)newBlob + m_BlockSize;
+		newBlob = (void **)newBlob[0];
 	}
 
 	// null terminate list
@@ -229,36 +224,33 @@ void CUtlMemoryPool::AddNewBlob()
 	m_NumBlobs++;
 }
 
-
-void* CUtlMemoryPool::Alloc()
+void *CUtlMemoryPool::Alloc()
 {
-	return Alloc( m_BlockSize );
+	return Alloc(m_BlockSize);
 }
 
-
-void* CUtlMemoryPool::AllocZero()
+void *CUtlMemoryPool::AllocZero()
 {
-	return AllocZero( m_BlockSize );
+	return AllocZero(m_BlockSize);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: Allocs a single block of memory from the pool.  
-// Input  : amount - 
+// Purpose: Allocs a single block of memory from the pool.
+// Input  : amount -
 //-----------------------------------------------------------------------------
-void *CUtlMemoryPool::Alloc( size_t amount )
+void *CUtlMemoryPool::Alloc(size_t amount)
 {
 	void *returnBlock;
 
-	if ( amount > (size_t)m_BlockSize )
+	if(amount > (size_t)m_BlockSize)
 		return NULL;
 
-	if ( !m_pHeadOfFreeList )
+	if(!m_pHeadOfFreeList)
 	{
 		// returning NULL is fine in GROW_NONE
-		if ( m_GrowMode == GROW_NONE && m_NumBlobs > 0 )
+		if(m_GrowMode == GROW_NONE && m_NumBlobs > 0)
 		{
-			//Assert( !"CUtlMemoryPool::Alloc: tried to make new blob with GROW_NONE" );
+			// Assert( !"CUtlMemoryPool::Alloc: tried to make new blob with GROW_NONE" );
 			return NULL;
 		}
 
@@ -266,9 +258,9 @@ void *CUtlMemoryPool::Alloc( size_t amount )
 		AddNewBlob();
 
 		// still failure, error out
-		if ( !m_pHeadOfFreeList )
+		if(!m_pHeadOfFreeList)
 		{
-			Assert( !"CUtlMemoryPool::Alloc: ran out of memory" );
+			Assert(!"CUtlMemoryPool::Alloc: ran out of memory");
 			return NULL;
 		}
 	}
@@ -278,21 +270,21 @@ void *CUtlMemoryPool::Alloc( size_t amount )
 	returnBlock = m_pHeadOfFreeList;
 
 	// move the pointer the next block
-	m_pHeadOfFreeList = *((void**)m_pHeadOfFreeList);
+	m_pHeadOfFreeList = *((void **)m_pHeadOfFreeList);
 
 	return returnBlock;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Allocs a single block of memory from the pool, zeroes the memory before returning
-// Input  : amount - 
+// Input  : amount -
 //-----------------------------------------------------------------------------
-void *CUtlMemoryPool::AllocZero( size_t amount )
+void *CUtlMemoryPool::AllocZero(size_t amount)
 {
-	void *mem = Alloc( amount );
-	if ( mem )
+	void *mem = Alloc(amount);
+	if(mem)
 	{
-		V_memset( mem, 0x00, amount );
+		V_memset(mem, 0x00, amount);
 	}
 	return mem;
 }
@@ -301,36 +293,34 @@ void *CUtlMemoryPool::AllocZero( size_t amount )
 // Purpose: Frees a block of memory
 // Input  : *memBlock - the memory to free
 //-----------------------------------------------------------------------------
-void CUtlMemoryPool::Free( void *memBlock )
+void CUtlMemoryPool::Free(void *memBlock)
 {
-	if ( !memBlock )
-		return;  // trying to delete NULL pointer, ignore
+	if(!memBlock)
+		return; // trying to delete NULL pointer, ignore
 
 #ifdef _DEBUG
 	// check to see if the memory is from the allocated range
 	bool bOK = false;
-	for( CBlob *pCur=m_BlobHead.m_pNext; pCur != &m_BlobHead; pCur=pCur->m_pNext )
+	for(CBlob *pCur = m_BlobHead.m_pNext; pCur != &m_BlobHead; pCur = pCur->m_pNext)
 	{
-		if (memBlock >= pCur->m_Data && (char*)memBlock < (pCur->m_Data + pCur->m_NumBytes))
+		if(memBlock >= pCur->m_Data && (char *)memBlock < (pCur->m_Data + pCur->m_NumBytes))
 		{
 			bOK = true;
 		}
 	}
-	Assert (bOK);
+	Assert(bOK);
 #endif // _DEBUG
 
-#ifdef _DEBUG	
+#ifdef _DEBUG
 	// invalidate the memory
-	memset( memBlock, 0xDD, m_BlockSize );
+	memset(memBlock, 0xDD, m_BlockSize);
 #endif
 
 	m_BlocksAllocated--;
 
 	// make the block point to the first item in the list
-	*((void**)memBlock) = m_pHeadOfFreeList;
+	*((void **)memBlock) = m_pHeadOfFreeList;
 
 	// the list head is now the new block
 	m_pHeadOfFreeList = memBlock;
 }
-
-

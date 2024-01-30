@@ -1,12 +1,12 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
 //=============================================================================//
 
-#if !defined( TE_H )
+#if !defined(TE_H)
 #define TE_H
 #ifdef _WIN32
 #pragma once

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -14,17 +14,14 @@
 #pragma once
 #endif
 
-
 #include "engine/IEngineTrace.h"
 
 extern IEngineTrace *g_pEngineTraceServer;
 extern IEngineTrace *g_pEngineTraceClient;
 
-
 //-----------------------------------------------------------------------------
 // Debugging code to render all ray casts since the last time this call was made
 //-----------------------------------------------------------------------------
 void EngineTraceRenderRayCasts();
-
 
 #endif // ENGINETRACE_H

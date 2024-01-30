@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -16,10 +16,10 @@
 #endif // _MSC_VER > 1000
 
 #ifndef __AFXWIN_H__
-	#error include 'stdafx.h' before including this file for PCH
+#error include 'stdafx.h' before including this file for PCH
 #endif
 
-#include "resource.h"		// main symbols
+#include "resource.h" // main symbols
 
 /////////////////////////////////////////////////////////////////////////////
 // CUIApp:
@@ -70,8 +70,8 @@ public:
 	bool displayStartupInfo;
 	bool elimOldPlayers;
 	int elimDays;
-	list<CTFStatsExec>* m_pLogs;
-	
+	list<CTFStatsExec> *m_pLogs;
+
 	void execTFStats();
 	bool pause;
 	int pauseSecs;
@@ -81,30 +81,28 @@ public:
 public:
 	CUIApp();
 
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CUIApp)
-	public:
+public:
 	virtual BOOL InitInstance();
 	//}}AFX_VIRTUAL
 
-// Implementation
+	// Implementation
 
 	//{{AFX_MSG(CUIApp)
-		// NOTE - the ClassWizard will add and remove member functions here.
-		//    DO NOT EDIT what you see in these blocks of generated code !
+	// NOTE - the ClassWizard will add and remove member functions here.
+	//    DO NOT EDIT what you see in these blocks of generated code !
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
 extern CUIApp theApp;
 
 /////////////////////////////////////////////////////////////////////////////
-string& addSlash(string& tempbuf);
-string& removeSlash(string& tempbuf);
+string &addSlash(string &tempbuf);
+string &removeSlash(string &tempbuf);
 
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
 #endif // !defined(AFX_UI_H__D6AFABCC_5BD5_11D3_A5CF_005004039597__INCLUDED_)
-
-

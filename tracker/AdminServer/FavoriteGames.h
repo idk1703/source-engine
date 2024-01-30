@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -21,9 +21,9 @@ class KeyValues;
 
 namespace vgui
 {
-class ListPanel;
-class MessageBox;
-};
+	class ListPanel;
+	class MessageBox;
+}; // namespace vgui
 
 class CUtlBuffer;
 
@@ -37,12 +37,12 @@ public:
 	~CFavoriteGames();
 
 	// favorites list, loads/saves into keyvalues
-	void LoadFavoritesList(vgui::KeyValues *favoritesData,bool loadrcon);
-	void SaveFavoritesList(vgui::KeyValues *favoritesData,bool savercon);
+	void LoadFavoritesList(vgui::KeyValues *favoritesData, bool loadrcon);
+	void SaveFavoritesList(vgui::KeyValues *favoritesData, bool savercon);
 
 	// property page handlers
-//	virtual void OnPageShow();
-//	virtual void OnPageHide();
+	//	virtual void OnPageShow();
+	//	virtual void OnPageHide();
 
 	// IGameList handlers
 	// returns true if the game list supports the specified ui elements
@@ -61,7 +61,7 @@ public:
 	virtual bool IsRefreshing();
 
 	// gets information about specified server
-//	virtual serveritem_t &GetServer(unsigned int serverID);
+	//	virtual serveritem_t &GetServer(unsigned int serverID);
 
 	// adds a new server to list
 	virtual void AddNewServer(serveritem_t &server);
@@ -94,7 +94,6 @@ public:
 	// updates the rconPassword field for this server
 	void UpdateServer(serveritem_t &serverIn);
 
-
 private:
 	// context menu message handlers
 	void OnOpenContextMenu(int row);
@@ -103,10 +102,10 @@ private:
 	void OnAddServerByName();
 
 	void OnCommand(const char *command);
-	bool LoadAFavoriteServer (CUtlBuffer &buf);
+	bool LoadAFavoriteServer(CUtlBuffer &buf);
 	bool CheckForCorruption(char *data, const char *checkString);
 
-	int m_iServerRefreshCount;	// number of servers refreshed
+	int m_iServerRefreshCount; // number of servers refreshed
 	bool m_bSaveRcon;
 
 	DECLARE_PANELMAP();
@@ -114,8 +113,6 @@ private:
 
 	// message that favorites are being imported
 	vgui::MessageBox *m_pImportFavoritesdlg;
-
 };
-
 
 #endif // FAVORITEGAMES_H

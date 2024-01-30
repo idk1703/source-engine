@@ -13,10 +13,10 @@
 //-----------------------------------------------------------------------------
 // Purpose: Given a quest item, return if the quest is considered "unidentified"
 //-----------------------------------------------------------------------------
-bool IsQuestItemUnidentified( const CEconItem* pQuestItem );
-bool IsQuestItemReadyToTurnIn( const IEconItemInterface* pQuestItem );
-bool IsQuestItemFullyCompleted( const IEconItemInterface* pQuestItem );
-uint32 GetEarnedStandardPoints( const IEconItemInterface* pQuestItem );
-uint32 GetEarnedBonusPoints( const IEconItemInterface* pQuestItem );
+bool IsQuestItemUnidentified(const CEconItem *pQuestItem);
+bool IsQuestItemReadyToTurnIn(const IEconItemInterface *pQuestItem);
+bool IsQuestItemFullyCompleted(const IEconItemInterface *pQuestItem);
+uint32 GetEarnedStandardPoints(const IEconItemInterface *pQuestItem);
+uint32 GetEarnedBonusPoints(const IEconItemInterface *pQuestItem);
 
 #endif // ECON_QUESTS

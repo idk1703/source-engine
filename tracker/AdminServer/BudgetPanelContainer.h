@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -9,7 +9,6 @@
 #ifdef _WIN32
 #pragma once
 #endif
-
 
 #include <KeyValues.h>
 
@@ -20,41 +19,35 @@
 #include "utlvector.h"
 #include "RemoteServer.h"
 
-
 class CBudgetPanelAdmin;
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Dialog for displaying information about a game server
 //-----------------------------------------------------------------------------
 class CBudgetPanelContainer : public vgui::PropertyPage, public IServerDataResponse
 {
-	DECLARE_CLASS_SIMPLE( CBudgetPanelContainer, vgui::PropertyPage );
+	DECLARE_CLASS_SIMPLE(CBudgetPanelContainer, vgui::PropertyPage);
+
 public:
 	CBudgetPanelContainer(vgui::Panel *parent, const char *name);
 	~CBudgetPanelContainer();
 
-
-// Panel overrides.
+	// Panel overrides.
 public:
 	virtual void Paint();
 	virtual void PerformLayout();
 
-
-// PropertyPage overrides.
+	// PropertyPage overrides.
 public:
 	void OnPageShow();
 	void OnPageHide();
 
-
-// IServerDataResponse overrides.
+	// IServerDataResponse overrides.
 public:
 	virtual void OnServerDataResponse(const char *value, const char *response);
-
 
 private:
 	CBudgetPanelAdmin *m_pBudgetPanelAdmin;
 };
-
 
 #endif // BUDGETPANELCONTAINER_H

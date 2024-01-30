@@ -8,6 +8,6 @@ close INFILE;
 open OUTFILE, ">$outfile";
 while( shift @infile )
 {
-	print OUTFILE $_;	
+	print OUTFILE $_;
 }
 close OUTFILE;

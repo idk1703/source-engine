@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -23,23 +23,22 @@ class KeyValues;
 
 namespace vgui
 {
-class Button;
-class ToggleButton;
-class RadioButton;
-class Label;
-class TextEntry;
-class ListPanel;
-class MessageBox;
-class ComboBox;
-class Panel;
-class PropertySheet;
-};
-
+	class Button;
+	class ToggleButton;
+	class RadioButton;
+	class Label;
+	class TextEntry;
+	class ListPanel;
+	class MessageBox;
+	class ComboBox;
+	class Panel;
+	class PropertySheet;
+}; // namespace vgui
 
 //-----------------------------------------------------------------------------
 // Purpose: Dialog for displaying information about a game server
 //-----------------------------------------------------------------------------
-class CMOTDPanel:public vgui::PropertyPage
+class CMOTDPanel : public vgui::PropertyPage
 {
 public:
 	CMOTDPanel(vgui::Panel *parent, const char *name);
@@ -55,7 +54,6 @@ public:
 	virtual void PerformLayout();
 
 private:
-
 	void OnSendMOTD();
 	void OnTextChanged(vgui::Panel *panel, const char *text);
 
@@ -63,7 +61,7 @@ private:
 	vgui::Button *m_pSendMOTDButton;
 
 	CRcon *m_pRcon;
-		
+
 	DECLARE_PANELMAP();
 	typedef vgui::PropertyPage BaseClass;
 };

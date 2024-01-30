@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,14 +14,12 @@
 
 #include "imovehelper.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
 
 class CBasePlayer;
 class CBaseEntity;
-
 
 //-----------------------------------------------------------------------------
 // Implementation of the movehelper on the server
@@ -30,14 +28,13 @@ class CBaseEntity;
 abstract_class IMoveHelperServer : public IMoveHelper
 {
 public:
-	virtual void SetHost( CBasePlayer *host ) = 0;
+	virtual void SetHost(CBasePlayer * host) = 0;
 };
 
 //-----------------------------------------------------------------------------
 // Singleton access
 //-----------------------------------------------------------------------------
 
-IMoveHelperServer* MoveHelperServer();
-
+IMoveHelperServer *MoveHelperServer();
 
 #endif // MOVEHELPER_SERVER_H

@@ -1,10 +1,9 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
-
 
 #include "LoadingDialog.h"
 #include "EngineInterface.h"
@@ -34,17 +33,17 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CLoadingDialog::CLoadingDialog( vgui::Panel *parent ) : Frame(parent, "LoadingDialog")
+CLoadingDialog::CLoadingDialog(vgui::Panel *parent) : Frame(parent, "LoadingDialog")
 {
 	SetDeleteSelfOnClose(true);
 
 	// Use console style
 	m_bConsoleStyle = GameUI().IsConsoleUI();
 
-	if ( !m_bConsoleStyle )
+	if(!m_bConsoleStyle)
 	{
-		SetSize( 416, 100 );
-		SetTitle( "#GameUI_Loading", true );
+		SetSize(416, 100);
+		SetTitle("#GameUI_Loading", true);
 	}
 
 	// center the loading dialog, unless we have another dialog to show in the background
@@ -55,52 +54,52 @@ CLoadingDialog::CLoadingDialog( vgui::Panel *parent ) : Frame(parent, "LoadingDi
 	m_flLastSecondaryProgressUpdateTime = 0.0f;
 	m_flSecondaryProgressStartTime = 0.0f;
 
-	m_pProgress = new ProgressBar( this, "Progress" );
-	m_pProgress2 = new ProgressBar( this, "Progress2" );
-	m_pInfoLabel = new Label( this, "InfoLabel", "" );
-	m_pCancelButton = new Button( this, "CancelButton", "#GameUI_Cancel" );
-	m_pTimeRemainingLabel = new Label( this, "TimeRemainingLabel", "" );
-	m_pCancelButton->SetCommand( "Cancel" );
+	m_pProgress = new ProgressBar(this, "Progress");
+	m_pProgress2 = new ProgressBar(this, "Progress2");
+	m_pInfoLabel = new Label(this, "InfoLabel", "");
+	m_pCancelButton = new Button(this, "CancelButton", "#GameUI_Cancel");
+	m_pTimeRemainingLabel = new Label(this, "TimeRemainingLabel", "");
+	m_pCancelButton->SetCommand("Cancel");
 
-	if ( ModInfo().IsSinglePlayerOnly() == false && m_bConsoleStyle == true )
+	if(ModInfo().IsSinglePlayerOnly() == false && m_bConsoleStyle == true)
 	{
-		m_pLoadingBackground = new Panel( this, "LoadingDialogBG" );
+		m_pLoadingBackground = new Panel(this, "LoadingDialogBG");
 	}
 	else
 	{
 		m_pLoadingBackground = NULL;
 	}
 
-	SetMinimizeButtonVisible( false );
-	SetMaximizeButtonVisible( false );
-	SetCloseButtonVisible( false );
-	SetSizeable( false );
-	SetMoveable( false );
+	SetMinimizeButtonVisible(false);
+	SetMaximizeButtonVisible(false);
+	SetCloseButtonVisible(false);
+	SetSizeable(false);
+	SetMoveable(false);
 
-	if ( m_bConsoleStyle )
+	if(m_bConsoleStyle)
 	{
 		m_bCenter = false;
-		m_pProgress->SetVisible( false );
-		m_pProgress2->SetVisible( false );
-		m_pInfoLabel->SetVisible( false );
-		m_pCancelButton->SetVisible( false );
-		m_pTimeRemainingLabel->SetVisible( false );
-		m_pCancelButton->SetVisible( false );
+		m_pProgress->SetVisible(false);
+		m_pProgress2->SetVisible(false);
+		m_pInfoLabel->SetVisible(false);
+		m_pCancelButton->SetVisible(false);
+		m_pTimeRemainingLabel->SetVisible(false);
+		m_pCancelButton->SetVisible(false);
 
-		SetMinimumSize( 0, 0 );
-		SetTitleBarVisible( false );
+		SetMinimumSize(0, 0);
+		SetTitleBarVisible(false);
 
 		m_flProgressFraction = 0;
 	}
 	else
 	{
 		m_pInfoLabel->SetBounds(20, 32, 392, 24);
-		m_pProgress->SetBounds(20, 64, 300, 24); 
+		m_pProgress->SetBounds(20, 64, 300, 24);
 		m_pCancelButton->SetBounds(330, 64, 72, 24);
 		m_pProgress2->SetVisible(false);
 	}
 
-	SetupControlSettings( false );
+	SetupControlSettings(false);
 }
 
 //-----------------------------------------------------------------------------
@@ -108,15 +107,15 @@ CLoadingDialog::CLoadingDialog( vgui::Panel *parent ) : Frame(parent, "LoadingDi
 //-----------------------------------------------------------------------------
 CLoadingDialog::~CLoadingDialog()
 {
-	if ( input()->GetAppModalSurface() == GetVPanel() )
+	if(input()->GetAppModalSurface() == GetVPanel())
 	{
-		vgui::surface()->RestrictPaintToSinglePanel( NULL );
+		vgui::surface()->RestrictPaintToSinglePanel(NULL);
 	}
 }
 
 void CLoadingDialog::PaintBackground()
 {
-	if ( !m_bConsoleStyle )
+	if(!m_bConsoleStyle)
 	{
 		BaseClass::PaintBackground();
 		return;
@@ -124,57 +123,57 @@ void CLoadingDialog::PaintBackground()
 
 	// draw solid progress bar with curved endcaps
 	int panelWide, panelTall;
-	GetSize( panelWide, panelTall );
+	GetSize(panelWide, panelTall);
 	int barWide, barTall;
-	m_pProgress->GetSize( barWide, barTall );
-	int x = ( panelWide - barWide )/2;
+	m_pProgress->GetSize(barWide, barTall);
+	int x = (panelWide - barWide) / 2;
 	int y = panelTall - barTall;
 
-	if ( m_pLoadingBackground )
+	if(m_pLoadingBackground)
 	{
-		vgui::HScheme scheme = vgui::scheme()->GetScheme( "ClientScheme" );
-		Color color = GetSchemeColor( "TanDarker", Color(255, 255, 255, 255), vgui::scheme()->GetIScheme(scheme) );
+		vgui::HScheme scheme = vgui::scheme()->GetScheme("ClientScheme");
+		Color color = GetSchemeColor("TanDarker", Color(255, 255, 255, 255), vgui::scheme()->GetIScheme(scheme));
 
-		m_pLoadingBackground->SetFgColor( color );
-		m_pLoadingBackground->SetBgColor( color );
+		m_pLoadingBackground->SetFgColor(color);
+		m_pLoadingBackground->SetBgColor(color);
 
-		m_pLoadingBackground->SetPaintBackgroundEnabled( true );
-	}
-	
-	if ( ModInfo().IsSinglePlayerOnly() )
-	{
-		DrawBox( x, y, barWide, barTall, Color( 0, 0, 0, 255 ), 1.0f );
+		m_pLoadingBackground->SetPaintBackgroundEnabled(true);
 	}
 
-	DrawBox( x+2, y+2, barWide-4, barTall-4, Color( 100, 100, 100, 255 ), 1.0f );
+	if(ModInfo().IsSinglePlayerOnly())
+	{
+		DrawBox(x, y, barWide, barTall, Color(0, 0, 0, 255), 1.0f);
+	}
 
-	barWide = m_flProgressFraction * ( barWide - 4 );
-	if ( barWide >= 12 )
+	DrawBox(x + 2, y + 2, barWide - 4, barTall - 4, Color(100, 100, 100, 255), 1.0f);
+
+	barWide = m_flProgressFraction * (barWide - 4);
+	if(barWide >= 12)
 	{
 		// cannot draw a curved box smaller than 12 without artifacts
-		DrawBox( x+2, y+2, barWide, barTall-4, Color( 200, 100, 0, 255 ), 1.0f );
+		DrawBox(x + 2, y + 2, barWide, barTall - 4, Color(200, 100, 0, 255), 1.0f);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: sets up dialog layout
 //-----------------------------------------------------------------------------
-void CLoadingDialog::SetupControlSettings( bool bForceShowProgressText )
+void CLoadingDialog::SetupControlSettings(bool bForceShowProgressText)
 {
 	m_bShowingVACInfo = false;
 
-	if ( GameUI().IsConsoleUI() )
+	if(GameUI().IsConsoleUI())
 	{
-		KeyValues *pControlSettings = BasePanel()->GetConsoleControlSettings()->FindKey( "LoadingDialogNoBanner.res" );
-		LoadControlSettings( "null", NULL, pControlSettings );
+		KeyValues *pControlSettings = BasePanel()->GetConsoleControlSettings()->FindKey("LoadingDialogNoBanner.res");
+		LoadControlSettings("null", NULL, pControlSettings);
 		return;
 	}
 
-	if ( ModInfo().IsSinglePlayerOnly() && !bForceShowProgressText )
+	if(ModInfo().IsSinglePlayerOnly() && !bForceShowProgressText)
 	{
 		LoadControlSettings("Resource/LoadingDialogNoBannerSingle.res");
 	}
-	else if ( gameuifuncs->IsConnectedToVACSecureServer() )
+	else if(gameuifuncs->IsConnectedToVACSecureServer())
 	{
 		LoadControlSettings("Resource/LoadingDialogVAC.res");
 		m_bShowingVACInfo = true;
@@ -190,35 +189,34 @@ void CLoadingDialog::SetupControlSettings( bool bForceShowProgressText )
 //-----------------------------------------------------------------------------
 void CLoadingDialog::Open()
 {
-	if ( !m_bConsoleStyle )
+	if(!m_bConsoleStyle)
 	{
-		SetTitle( "#GameUI_Loading", true );
+		SetTitle("#GameUI_Loading", true);
 	}
 
-	HideOtherDialogs( true );
+	HideOtherDialogs(true);
 	BaseClass::Activate();
 
-	if ( !m_bConsoleStyle )
+	if(!m_bConsoleStyle)
 	{
-		m_pProgress->SetVisible( true );
-		if ( !ModInfo().IsSinglePlayerOnly() )
+		m_pProgress->SetVisible(true);
+		if(!ModInfo().IsSinglePlayerOnly())
 		{
-			m_pInfoLabel->SetVisible( true );
+			m_pInfoLabel->SetVisible(true);
 		}
 		m_pInfoLabel->SetText("");
-		
+
 		m_pCancelButton->SetText("#GameUI_Cancel");
 		m_pCancelButton->SetCommand("Cancel");
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: error display file
 //-----------------------------------------------------------------------------
-void CLoadingDialog::SetupControlSettingsForErrorDisplay( const char *settingsFile )
+void CLoadingDialog::SetupControlSettingsForErrorDisplay(const char *settingsFile)
 {
-	if ( m_bConsoleStyle )
+	if(m_bConsoleStyle)
 	{
 		return;
 	}
@@ -226,11 +224,11 @@ void CLoadingDialog::SetupControlSettingsForErrorDisplay( const char *settingsFi
 	m_bCenter = true;
 	SetTitle("#GameUI_Disconnected", true);
 	m_pInfoLabel->SetText("");
-	LoadControlSettings( settingsFile );
-	HideOtherDialogs( true );
+	LoadControlSettings(settingsFile);
+	HideOtherDialogs(true);
 
 	BaseClass::Activate();
-	
+
 	m_pProgress->SetVisible(false);
 
 	m_pInfoLabel->SetVisible(true);
@@ -242,17 +240,17 @@ void CLoadingDialog::SetupControlSettingsForErrorDisplay( const char *settingsFi
 //-----------------------------------------------------------------------------
 // Purpose: shows or hides other top-level dialogs
 //-----------------------------------------------------------------------------
-void CLoadingDialog::HideOtherDialogs( bool bHide )
+void CLoadingDialog::HideOtherDialogs(bool bHide)
 {
-	if ( bHide )
+	if(bHide)
 	{
-		if ( GameUI().HasLoadingBackgroundDialog() )
+		if(GameUI().HasLoadingBackgroundDialog())
 		{
-			// if we have a loading background dialog, hide any other dialogs by moving the full-screen background dialog to the
-			// front, then moving ourselves in front of it
+			// if we have a loading background dialog, hide any other dialogs by moving the full-screen background
+			// dialog to the front, then moving ourselves in front of it
 			GameUI().ShowLoadingBackgroundDialog();
-			vgui::ipanel()->MoveToFront( GetVPanel() );
-			vgui::input()->SetAppModalSurface( GetVPanel() );
+			vgui::ipanel()->MoveToFront(GetVPanel());
+			vgui::input()->SetAppModalSurface(GetVPanel());
 		}
 		else
 		{
@@ -262,10 +260,10 @@ void CLoadingDialog::HideOtherDialogs( bool bHide )
 	}
 	else
 	{
-		if ( GameUI().HasLoadingBackgroundDialog() )
+		if(GameUI().HasLoadingBackgroundDialog())
 		{
 			GameUI().HideLoadingBackgroundDialog();
-			vgui::input()->SetAppModalSurface( NULL );
+			vgui::input()->SetAppModalSurface(NULL);
 		}
 		else
 		{
@@ -280,39 +278,39 @@ void CLoadingDialog::HideOtherDialogs( bool bHide )
 //-----------------------------------------------------------------------------
 void CLoadingDialog::DisplayGenericError(const char *failureReason, const char *extendedReason)
 {
-	if ( m_bConsoleStyle )
+	if(m_bConsoleStyle)
 	{
 		return;
 	}
 
 	// In certain race conditions, DisplayGenericError can get called AFTER OnClose() has been called.
 	// If that happens and we don't call Activate(), then it'll continue closing when we don't want it to.
-	Activate(); 
-	
+	Activate();
+
 	SetupControlSettingsForErrorDisplay("Resource/LoadingDialogError.res");
 
-	if ( extendedReason && strlen( extendedReason ) > 0 ) 
+	if(extendedReason && strlen(extendedReason) > 0)
 	{
 		wchar_t compositeReason[256], finalMsg[512], formatStr[256];
-		if ( extendedReason[0] == '#' )
+		if(extendedReason[0] == '#')
 		{
-			wcsncpy(compositeReason, g_pVGuiLocalize->Find(extendedReason), sizeof( compositeReason ) / sizeof( wchar_t ) );
+			wcsncpy(compositeReason, g_pVGuiLocalize->Find(extendedReason), sizeof(compositeReason) / sizeof(wchar_t));
 		}
 		else
 		{
-			g_pVGuiLocalize->ConvertANSIToUnicode(extendedReason, compositeReason, sizeof( compositeReason ));
+			g_pVGuiLocalize->ConvertANSIToUnicode(extendedReason, compositeReason, sizeof(compositeReason));
 		}
 
-		if ( failureReason[0] == '#' )
+		if(failureReason[0] == '#')
 		{
-			wcsncpy(formatStr, g_pVGuiLocalize->Find(failureReason), sizeof( formatStr ) / sizeof( wchar_t ) );
+			wcsncpy(formatStr, g_pVGuiLocalize->Find(failureReason), sizeof(formatStr) / sizeof(wchar_t));
 		}
 		else
 		{
-			g_pVGuiLocalize->ConvertANSIToUnicode(failureReason, formatStr, sizeof( formatStr ));
+			g_pVGuiLocalize->ConvertANSIToUnicode(failureReason, formatStr, sizeof(formatStr));
 		}
 
-		g_pVGuiLocalize->ConstructString(finalMsg, sizeof( finalMsg ), formatStr, 1, compositeReason);
+		g_pVGuiLocalize->ConstructString(finalMsg, sizeof(finalMsg), formatStr, 1, compositeReason);
 		m_pInfoLabel->SetText(finalMsg);
 	}
 	else
@@ -321,25 +319,24 @@ void CLoadingDialog::DisplayGenericError(const char *failureReason, const char *
 	}
 
 	int wide, tall;
-	int x,y;
-	m_pInfoLabel->GetContentSize( wide, tall );
-	m_pInfoLabel->GetPos( x, y );
-	SetTall( tall + y + 50 );
+	int x, y;
+	m_pInfoLabel->GetContentSize(wide, tall);
+	m_pInfoLabel->GetPos(x, y);
+	SetTall(tall + y + 50);
 
 	int buttonX, buttonY;
-	m_pCancelButton->GetPos( buttonX, buttonY );
-	m_pCancelButton->SetPos( buttonX, tall + y + 6 );
+	m_pCancelButton->GetPos(buttonX, buttonY);
+	m_pCancelButton->SetPos(buttonX, tall + y + 6);
 
 	m_pCancelButton->RequestFocus();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: explain to the user they can't join secure servers due to a VAC ban
 //-----------------------------------------------------------------------------
 void CLoadingDialog::DisplayVACBannedError()
 {
-	if ( m_bConsoleStyle )
+	if(m_bConsoleStyle)
 	{
 		return;
 	}
@@ -348,15 +345,14 @@ void CLoadingDialog::DisplayVACBannedError()
 	SetTitle("#VAC_ConnectionRefusedTitle", true);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: explain to the user they can't connect to public servers due to 
+// Purpose: explain to the user they can't connect to public servers due to
 //			not having a valid connection to Steam
 //			this should only happen if they are a pirate
 //-----------------------------------------------------------------------------
 void CLoadingDialog::DisplayNoSteamConnectionError()
 {
-	if ( m_bConsoleStyle )
+	if(m_bConsoleStyle)
 	{
 		return;
 	}
@@ -364,15 +360,14 @@ void CLoadingDialog::DisplayNoSteamConnectionError()
 	SetupControlSettingsForErrorDisplay("Resource/LoadingDialogErrorNoSteamConnection.res");
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: explain to the user they got kicked from a server due to that same account 
-//			logging in from another location. This also triggers the refresh login dialog on OK 
+// Purpose: explain to the user they got kicked from a server due to that same account
+//			logging in from another location. This also triggers the refresh login dialog on OK
 //			being pressed.
 //-----------------------------------------------------------------------------
 void CLoadingDialog::DisplayLoggedInElsewhereError()
 {
-	if ( m_bConsoleStyle )
+	if(m_bConsoleStyle)
 	{
 		return;
 	}
@@ -382,13 +377,12 @@ void CLoadingDialog::DisplayLoggedInElsewhereError()
 	m_pCancelButton->SetCommand("Login");
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: sets status info text
 //-----------------------------------------------------------------------------
 void CLoadingDialog::SetStatusText(const char *statusText)
 {
-	if ( m_bConsoleStyle )
+	if(m_bConsoleStyle)
 	{
 		return;
 	}
@@ -399,18 +393,18 @@ void CLoadingDialog::SetStatusText(const char *statusText)
 //-----------------------------------------------------------------------------
 // Purpose: returns the previous state
 //-----------------------------------------------------------------------------
-bool CLoadingDialog::SetShowProgressText( bool show )
+bool CLoadingDialog::SetShowProgressText(bool show)
 {
-	if ( m_bConsoleStyle )
+	if(m_bConsoleStyle)
 	{
 		return false;
 	}
 
 	bool bret = m_pInfoLabel->IsVisible();
-	if ( bret != show )
+	if(bret != show)
 	{
-		SetupControlSettings( show );
-		m_pInfoLabel->SetVisible( show );
+		SetupControlSettings(show);
+		m_pInfoLabel->SetVisible(show);
 	}
 	return bret;
 }
@@ -422,15 +416,17 @@ void CLoadingDialog::OnThink()
 {
 	BaseClass::OnThink();
 
-	if ( !m_bConsoleStyle && m_bShowingSecondaryProgress )
+	if(!m_bConsoleStyle && m_bShowingSecondaryProgress)
 	{
 		// calculate the time remaining string
 		wchar_t unicode[512];
-		if (m_flSecondaryProgress >= 1.0f)
+		if(m_flSecondaryProgress >= 1.0f)
 		{
 			m_pTimeRemainingLabel->SetText("complete");
 		}
-		else if (ProgressBar::ConstructTimeRemainingString(unicode, sizeof(unicode), m_flSecondaryProgressStartTime, (float)system()->GetFrameTime(), m_flSecondaryProgress, m_flLastSecondaryProgressUpdateTime, true))
+		else if(ProgressBar::ConstructTimeRemainingString(unicode, sizeof(unicode), m_flSecondaryProgressStartTime,
+														  (float)system()->GetFrameTime(), m_flSecondaryProgress,
+														  m_flLastSecondaryProgressUpdateTime, true))
 		{
 			m_pTimeRemainingLabel->SetText(unicode);
 		}
@@ -440,38 +436,38 @@ void CLoadingDialog::OnThink()
 		}
 	}
 
-	SetAlpha( 255 );
+	SetAlpha(255);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLoadingDialog::PerformLayout()
 {
-	if ( m_bConsoleStyle )
+	if(m_bConsoleStyle)
 	{
 		// place in lower center
 		int screenWide, screenTall;
-		surface()->GetScreenSize( screenWide, screenTall );
-		int wide,tall;
-		GetSize( wide, tall );
+		surface()->GetScreenSize(screenWide, screenTall);
+		int wide, tall;
+		GetSize(wide, tall);
 		int x = 0;
 		int y = 0;
 
-		if ( ModInfo().IsSinglePlayerOnly() )
+		if(ModInfo().IsSinglePlayerOnly())
 		{
-			x = ( screenWide - wide ) * 0.50f;
-			y = ( screenTall - tall ) * 0.86f;
+			x = (screenWide - wide) * 0.50f;
+			y = (screenTall - tall) * 0.86f;
 		}
 		else
 		{
-			x = ( screenWide - ( wide * 1.30f ) );
-			y = ( ( screenTall * 0.875f ) );
+			x = (screenWide - (wide * 1.30f));
+			y = ((screenTall * 0.875f));
 		}
 
-		SetPos( x, y );
+		SetPos(x, y);
 	}
-	else if ( m_bCenter )
+	else if(m_bCenter)
 	{
 		MoveToCenterOfScreen();
 	}
@@ -479,14 +475,14 @@ void CLoadingDialog::PerformLayout()
 	{
 		// if we're not supposed to be centered, move ourselves to the lower right hand corner of the screen
 		int x, y, screenWide, screenTall;
-		surface()->GetWorkspaceBounds( x, y, screenWide, screenTall );
-		int wide,tall;
-		GetSize( wide, tall );
+		surface()->GetWorkspaceBounds(x, y, screenWide, screenTall);
+		int wide, tall;
+		GetSize(wide, tall);
 
-		if ( IsPC() )
+		if(IsPC())
 		{
-			x = screenWide - ( wide + 10 );
-			y = screenTall - ( tall + 10 );
+			x = screenWide - (wide + 10);
+			y = screenTall - (tall + 10);
 		}
 		else
 		{
@@ -498,28 +494,28 @@ void CLoadingDialog::PerformLayout()
 		x -= m_iAdditionalIndentX;
 		y -= m_iAdditionalIndentY;
 
-		SetPos( x, y );
+		SetPos(x, y);
 	}
-	
+
 	BaseClass::PerformLayout();
-	
-	vgui::ipanel()->MoveToFront( GetVPanel() );
+
+	vgui::ipanel()->MoveToFront(GetVPanel());
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: returns true if the number of ticks has changed
 //-----------------------------------------------------------------------------
-bool CLoadingDialog::SetProgressPoint( float fraction )
+bool CLoadingDialog::SetProgressPoint(float fraction)
 {
-	if ( m_bConsoleStyle )
+	if(m_bConsoleStyle)
 	{
-		if ( fraction >= 0.99f )
+		if(fraction >= 0.99f)
 		{
 			// show the progress artifically completed to fill in 100%
 			fraction = 1.0f;
 		}
-		fraction = clamp( fraction, 0.0f, 1.0f );
-		if ( (int)(fraction * 25) != (int)(m_flProgressFraction * 25) )
+		fraction = clamp(fraction, 0.0f, 1.0f);
+		if((int)(fraction * 25) != (int)(m_flProgressFraction * 25))
 		{
 			m_flProgressFraction = fraction;
 			return true;
@@ -527,13 +523,13 @@ bool CLoadingDialog::SetProgressPoint( float fraction )
 		return IsX360();
 	}
 
-	if ( !m_bShowingVACInfo && gameuifuncs->IsConnectedToVACSecureServer() )
+	if(!m_bShowingVACInfo && gameuifuncs->IsConnectedToVACSecureServer())
 	{
-		SetupControlSettings( false );
+		SetupControlSettings(false);
 	}
 
 	int nOldDrawnSegments = m_pProgress->GetDrawnSegmentCount();
-	m_pProgress->SetProgress( fraction );
+	m_pProgress->SetProgress(fraction);
 	int nNewDrawSegments = m_pProgress->GetDrawnSegmentCount();
 	return (nOldDrawnSegments != nNewDrawSegments) || IsX360();
 }
@@ -541,17 +537,17 @@ bool CLoadingDialog::SetProgressPoint( float fraction )
 //-----------------------------------------------------------------------------
 // Purpose: sets and shows the secondary progress bar
 //-----------------------------------------------------------------------------
-void CLoadingDialog::SetSecondaryProgress( float progress )
+void CLoadingDialog::SetSecondaryProgress(float progress)
 {
-	if ( m_bConsoleStyle )
+	if(m_bConsoleStyle)
 		return;
 
 	// don't show the progress if we've jumped right to completion
-	if (!m_bShowingSecondaryProgress && progress > 0.99f)
+	if(!m_bShowingSecondaryProgress && progress > 0.99f)
 		return;
 
 	// if we haven't yet shown secondary progress then reconfigure the dialog
-	if (!m_bShowingSecondaryProgress)
+	if(!m_bShowingSecondaryProgress)
 	{
 		LoadControlSettings("Resource/LoadingDialogDualProgress.res");
 		m_bShowingSecondaryProgress = true;
@@ -560,7 +556,7 @@ void CLoadingDialog::SetSecondaryProgress( float progress )
 	}
 
 	// if progress has increased then update the progress counters
-	if (progress > m_flSecondaryProgress)
+	if(progress > m_flSecondaryProgress)
 	{
 		m_pProgress2->SetProgress(progress);
 		m_flSecondaryProgress = progress;
@@ -568,7 +564,7 @@ void CLoadingDialog::SetSecondaryProgress( float progress )
 	}
 
 	// if progress has decreased then reset progress counters
-	if (progress < m_flSecondaryProgress)
+	if(progress < m_flSecondaryProgress)
 	{
 		m_pProgress2->SetProgress(progress);
 		m_flSecondaryProgress = progress;
@@ -578,25 +574,25 @@ void CLoadingDialog::SetSecondaryProgress( float progress )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLoadingDialog::SetSecondaryProgressText(const char *statusText)
 {
-	if ( m_bConsoleStyle )
+	if(m_bConsoleStyle)
 	{
 		return;
 	}
 
-	SetControlString( "SecondaryProgressLabel", statusText );
+	SetControlString("SecondaryProgressLabel", statusText);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLoadingDialog::OnClose()
 {
 	// remove any rendering restrictions
-	HideOtherDialogs( false );
+	HideOtherDialogs(false);
 
 	BaseClass::OnClose();
 }
@@ -606,7 +602,7 @@ void CLoadingDialog::OnClose()
 //-----------------------------------------------------------------------------
 void CLoadingDialog::OnCommand(const char *command)
 {
-	if ( !stricmp(command, "Cancel") )
+	if(!stricmp(command, "Cancel"))
 	{
 		// disconnect from the server
 		engine->ClientCmd_Unrestricted("disconnect\n");
@@ -622,12 +618,12 @@ void CLoadingDialog::OnCommand(const char *command)
 
 void CLoadingDialog::OnKeyCodeTyped(KeyCode code)
 {
-	if ( m_bConsoleStyle )
+	if(m_bConsoleStyle)
 	{
 		return;
 	}
 
-	if ( code == KEY_ESCAPE )
+	if(code == KEY_ESCAPE)
 	{
 		OnCommand("Cancel");
 	}
@@ -642,14 +638,15 @@ void CLoadingDialog::OnKeyCodeTyped(KeyCode code)
 //-----------------------------------------------------------------------------
 void CLoadingDialog::OnKeyCodePressed(KeyCode code)
 {
-	if ( m_bConsoleStyle )
+	if(m_bConsoleStyle)
 	{
 		return;
 	}
 
-	ButtonCode_t nButtonCode = GetBaseButtonCode( code );
+	ButtonCode_t nButtonCode = GetBaseButtonCode(code);
 
-	if ( nButtonCode == KEY_XBUTTON_B || nButtonCode == KEY_XBUTTON_A || nButtonCode == STEAMCONTROLLER_A || nButtonCode == STEAMCONTROLLER_B )
+	if(nButtonCode == KEY_XBUTTON_B || nButtonCode == KEY_XBUTTON_A || nButtonCode == STEAMCONTROLLER_A ||
+	   nButtonCode == STEAMCONTROLLER_B)
 	{
 		OnCommand("Cancel");
 	}

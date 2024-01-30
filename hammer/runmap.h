@@ -1,39 +1,41 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
 class CRunMap : public CDialog
 {
-// Construction
+	// Construction
 public:
-	CRunMap(CWnd* pParent = NULL);   // standard constructor
+	CRunMap(CWnd *pParent = NULL); // standard constructor
 	void SaveToIni();
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CRunMap)
-	enum { IDD = IDD_RUNMAP };
-	int		m_iVis;
-	BOOL	m_bNoQuake;
-	CString	m_strQuakeParms;
-	int		m_iLight;
-	int		m_iQBSP;
-	BOOL	m_bHDRLight;
+	enum
+	{
+		IDD = IDD_RUNMAP
+	};
+	int m_iVis;
+	BOOL m_bNoQuake;
+	CString m_strQuakeParms;
+	int m_iLight;
+	int m_iQBSP;
+	BOOL m_bHDRLight;
 	//}}AFX_DATA
 
 	BOOL m_bSwitchMode;
 
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CRunMap)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
 protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
+													 //}}AFX_VIRTUAL
 
+	// Implementation
+protected:
 	// Generated message map functions
 	//{{AFX_MSG(CRunMap)
 	afx_msg void OnExpert();

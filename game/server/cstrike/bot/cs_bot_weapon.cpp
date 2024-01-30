@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,73 +19,74 @@
  * Fire our active weapon towards our current enemy
  * NOTE: Aiming our weapon is handled in RunBotUpkeep()
  */
-void CCSBot::FireWeaponAtEnemy( void )
+void CCSBot::FireWeaponAtEnemy(void)
 {
-	if (cv_bot_dont_shoot.GetBool())
+	if(cv_bot_dont_shoot.GetBool())
 	{
 		return;
 	}
 
 	CBasePlayer *enemy = GetBotEnemy();
-	if (enemy == NULL)
+	if(enemy == NULL)
 	{
 		return;
 	}
 
-	Vector myOrigin = GetCentroid( this );
+	Vector myOrigin = GetCentroid(this);
 
-	if (IsUsingSniperRifle())
+	if(IsUsingSniperRifle())
 	{
-		// if we're using a sniper rifle, don't fire until we are standing still, are zoomed in, and not rapidly moving our view
-		if (!IsNotMoving() || IsWaitingForZoom() || !HasViewBeenSteady( GetProfile()->GetReactionTime() ) )
+		// if we're using a sniper rifle, don't fire until we are standing still, are zoomed in, and not rapidly moving
+		// our view
+		if(!IsNotMoving() || IsWaitingForZoom() || !HasViewBeenSteady(GetProfile()->GetReactionTime()))
 		{
 			return;
 		}
 	}
 
-	if (gpGlobals->curtime > m_fireWeaponTimestamp &&
-		GetTimeSinceAcquiredCurrentEnemy() >= GetProfile()->GetAttackDelay() &&
-		!IsSurprised())
+	if(gpGlobals->curtime > m_fireWeaponTimestamp &&
+	   GetTimeSinceAcquiredCurrentEnemy() >= GetProfile()->GetAttackDelay() && !IsSurprised())
 	{
-		if (!(IsRecognizedEnemyProtectedByShield() && IsPlayerFacingMe( enemy )) &&	// don't shoot at enemies behind shields
-			!IsReloading() && 
-			!IsActiveWeaponClipEmpty() && 
-			//gpGlobals->curtime > m_reacquireTimestamp &&
-			IsEnemyVisible())
+		if(!(IsRecognizedEnemyProtectedByShield() &&
+			 IsPlayerFacingMe(enemy)) && // don't shoot at enemies behind shields
+		   !IsReloading() &&
+		   !IsActiveWeaponClipEmpty() &&
+		   // gpGlobals->curtime > m_reacquireTimestamp &&
+		   IsEnemyVisible())
 		{
 			// we have a clear shot - pull trigger if we are aiming at enemy
 			Vector toAimSpot = m_aimSpot - EyePosition();
 			float rangeToEnemy = toAimSpot.NormalizeInPlace();
 
-			if ( IsUsingSniperRifle() )
+			if(IsUsingSniperRifle())
 			{
 				// check our accuracy versus our target distance
 				float fProjectedSpread = rangeToEnemy * GetActiveCSWeapon()->GetInaccuracy();
-				float fRequiredSpread = IsUsing( WEAPON_AWP ) ? 50.0f : 25.0f;	// AWP will kill with any hit
-				if ( fProjectedSpread > fRequiredSpread )
+				float fRequiredSpread = IsUsing(WEAPON_AWP) ? 50.0f : 25.0f; // AWP will kill with any hit
+				if(fProjectedSpread > fRequiredSpread)
 					return;
 			}
 
 			// get actual view direction vector
 			Vector aimDir = GetViewVector();
 
-			float onTarget = DotProduct( toAimSpot, aimDir );
+			float onTarget = DotProduct(toAimSpot, aimDir);
 
 			// aim more precisely with a sniper rifle
 			// because rifles' bullets spray, don't have to be very precise
 			const float halfSize = (IsUsingSniperRifle()) ? HalfHumanWidth : 2.0f * HalfHumanWidth;
 
 			// aiming tolerance depends on how close the target is - closer targets subtend larger angles
-			float aimTolerance = (float)cos( atan( halfSize / rangeToEnemy ) );
+			float aimTolerance = (float)cos(atan(halfSize / rangeToEnemy));
 
-			if (onTarget > aimTolerance)
+			if(onTarget > aimTolerance)
 			{
 				bool doAttack;
 
 				// if friendly fire is on, don't fire if a teammate is blocking our line of fire
-				if (TheCSBots()->AllowFriendlyFireDamage())
+				if(TheCSBots()->AllowFriendlyFireDamage())
 				{
-					if (IsFriendInLineOfFire())
+					if(IsFriendInLineOfFire())
 						doAttack = false;
 					else
 						doAttack = true;
@@ -96,19 +97,19 @@ void CCSBot::FireWeaponAtEnemy( void )
 					doAttack = true;
 				}
 
-				if (doAttack)
+				if(doAttack)
 				{
 					// if we are using a knife, only swing it if we're close
-					if (IsUsingKnife())
+					if(IsUsingKnife())
 					{
-						const float knifeRange = 75.0f;		// 50
-						if (rangeToEnemy < knifeRange)
+						const float knifeRange = 75.0f; // 50
+						if(rangeToEnemy < knifeRange)
 						{
 							// since we've given ourselves away - run!
-							ForceRun( 5.0f );
+							ForceRun(5.0f);
 
 							// if our prey is facing away, backstab him!
-							if (!IsPlayerFacingMe( enemy ))
+							if(!IsPlayerFacingMe(enemy))
 							{
 								SecondaryAttack();
 							}
@@ -116,7 +117,7 @@ void CCSBot::FireWeaponAtEnemy( void )
 							{
 								// randomly choose primary and secondary attacks with knife
 								const float knifeStabChance = 33.3f;
-								if (RandomFloat( 0, 100 ) < knifeStabChance)
+								if(RandomFloat(0, 100) < knifeStabChance)
 									SecondaryAttack();
 								else
 									PrimaryAttack();
@@ -129,25 +130,25 @@ void CCSBot::FireWeaponAtEnemy( void )
 					}
 				}
 
-				if (IsUsingPistol())
+				if(IsUsingPistol())
 				{
 					// high-skill bots fire their pistols quickly at close range
 					const float closePistolRange = 360.0f;
-					if (GetProfile()->GetSkill() > 0.75f && rangeToEnemy < closePistolRange)
+					if(GetProfile()->GetSkill() > 0.75f && rangeToEnemy < closePistolRange)
 					{
 						// fire as fast as possible
-						m_fireWeaponTimestamp = 0.0f; 
+						m_fireWeaponTimestamp = 0.0f;
 					}
 					else
 					{
 						// fire somewhat quickly
-						m_fireWeaponTimestamp = RandomFloat( 0.15f, 0.4f );
+						m_fireWeaponTimestamp = RandomFloat(0.15f, 0.4f);
 					}
 				}
-				else	// not using a pistol
+				else // not using a pistol
 				{
 					const float sprayRange = 400.0f;
-					if (GetProfile()->GetSkill() < 0.5f || rangeToEnemy < sprayRange || IsUsingMachinegun())
+					if(GetProfile()->GetSkill() < 0.5f || rangeToEnemy < sprayRange || IsUsingMachinegun())
 					{
 						// spray 'n pray if enemy is close, or we're not that good, or we're using the big machinegun
 						m_fireWeaponTimestamp = 0.0f;
@@ -155,15 +156,15 @@ void CCSBot::FireWeaponAtEnemy( void )
 					else
 					{
 						const float distantTargetRange = 800.0f;
-						if (!IsUsingSniperRifle() && rangeToEnemy > distantTargetRange)
+						if(!IsUsingSniperRifle() && rangeToEnemy > distantTargetRange)
 						{
 							// if very far away, fire slowly for better accuracy
-							m_fireWeaponTimestamp = RandomFloat( 0.3f, 0.7f );
+							m_fireWeaponTimestamp = RandomFloat(0.3f, 0.7f);
 						}
 						else
 						{
 							// fire short bursts for accuracy
-							m_fireWeaponTimestamp = RandomFloat( 0.15f, 0.25f );		// 0.15, 0.5
+							m_fireWeaponTimestamp = RandomFloat(0.15f, 0.25f); // 0.15, 0.5
 						}
 					}
 				}
@@ -181,53 +182,53 @@ void CCSBot::FireWeaponAtEnemy( void )
 /**
  * Set the current aim offset using given accuracy (1.0 = perfect aim, 0.0f = terrible aim)
  */
-void CCSBot::SetAimOffset( float accuracy )
+void CCSBot::SetAimOffset(float accuracy)
 {
 	// if our accuracy is less than perfect, it will improve as we "focus in" while not rotating our view
-	if (accuracy < 1.0f)
+	if(accuracy < 1.0f)
 	{
 		// if we moved our view, reset our "focus" mechanism
-		if (IsViewMoving( 100.0f ))
+		if(IsViewMoving(100.0f))
 			m_aimSpreadTimestamp = gpGlobals->curtime;
 
 		// focusTime is the time it takes for a bot to "focus in" for very good aim, from 2 to 5 seconds
-		const float focusTime = MAX( 5.0f * (1.0f - accuracy), 2.0f );
+		const float focusTime = MAX(5.0f * (1.0f - accuracy), 2.0f);
 		float focusInterval = gpGlobals->curtime - m_aimSpreadTimestamp;
 
 		float focusAccuracy = focusInterval / focusTime;
 
 		// limit how much "focus" will help
 		const float maxFocusAccuracy = 0.75f;
-		if (focusAccuracy > maxFocusAccuracy)
+		if(focusAccuracy > maxFocusAccuracy)
 			focusAccuracy = maxFocusAccuracy;
 
-		accuracy = MAX( accuracy, focusAccuracy );
+		accuracy = MAX(accuracy, focusAccuracy);
 	}
 
-	//PrintIfWatched( "Accuracy = %4.3f\n", accuracy );
+	// PrintIfWatched( "Accuracy = %4.3f\n", accuracy );
 
 	// aim error increases with distance, such that actual crosshair error stays about the same
 	float range = (m_lastEnemyPosition - EyePosition()).Length();
-	float maxOffset = (GetFOV()/GetDefaultFOV()) * 0.05f * range;		// 0.1
+	float maxOffset = (GetFOV() / GetDefaultFOV()) * 0.05f * range; // 0.1
 	float error = maxOffset * (1.0f - accuracy);
 
-	m_aimOffsetGoal.x = RandomFloat( -error, error );
-	m_aimOffsetGoal.y = RandomFloat( -error, error );
-	m_aimOffsetGoal.z = RandomFloat( -error, error );
+	m_aimOffsetGoal.x = RandomFloat(-error, error);
+	m_aimOffsetGoal.y = RandomFloat(-error, error);
+	m_aimOffsetGoal.z = RandomFloat(-error, error);
 
 	// define time when aim offset will automatically be updated
-	m_aimOffsetTimestamp = gpGlobals->curtime + RandomFloat( 0.25f, 1.0f ); // 0.25, 1.5f
+	m_aimOffsetTimestamp = gpGlobals->curtime + RandomFloat(0.25f, 1.0f); // 0.25, 1.5f
 }
 
 //--------------------------------------------------------------------------------------------------------------
 /**
  * Wiggle aim error based on GetProfile()->GetSkill()
  */
-void CCSBot::UpdateAimOffset( void )
+void CCSBot::UpdateAimOffset(void)
 {
-	if (gpGlobals->curtime >= m_aimOffsetTimestamp)
+	if(gpGlobals->curtime >= m_aimOffsetTimestamp)
 	{
-		SetAimOffset( GetProfile()->GetSkill() );
+		SetAimOffset(GetProfile()->GetSkill());
 	}
 
 	// move current offset towards goal offset
@@ -238,34 +239,33 @@ void CCSBot::UpdateAimOffset( void )
 	m_aimOffset.z += stiffness * d.z;
 }
 
-
 //--------------------------------------------------------------------------------------------------------------
 /**
  * Change our zoom level to be appropriate for the given range.
  * Return true if the zoom level changed.
  */
-bool CCSBot::AdjustZoom( float range )
+bool CCSBot::AdjustZoom(float range)
 {
 	bool adjustZoom = false;
 
-	if (IsUsingSniperRifle())
+	if(IsUsingSniperRifle())
 	{
-		const float sniperZoomRange = 150.0f;	// NOTE: This must be less than sniperMinRange in AttackState
+		const float sniperZoomRange = 150.0f; // NOTE: This must be less than sniperMinRange in AttackState
 		const float sniperFarZoomRange = 1500.0f;
 
 		// if range is too close, don't zoom
-		if (range <= sniperZoomRange)
+		if(range <= sniperZoomRange)
 		{
 			// zoom out
-			if (GetZoomLevel() != NO_ZOOM)
+			if(GetZoomLevel() != NO_ZOOM)
 			{
 				adjustZoom = true;
 			}
 		}
-		else if (range < sniperFarZoomRange)
+		else if(range < sniperFarZoomRange)
 		{
 			// maintain low zoom
-			if (GetZoomLevel() != LOW_ZOOM)
+			if(GetZoomLevel() != LOW_ZOOM)
 			{
 				adjustZoom = true;
 			}
@@ -273,7 +273,7 @@ bool CCSBot::AdjustZoom( float range )
 		else
 		{
 			// maintain high zoom
-			if (GetZoomLevel() != HIGH_ZOOM)
+			if(GetZoomLevel() != HIGH_ZOOM)
 			{
 				adjustZoom = true;
 			}
@@ -282,19 +282,19 @@ bool CCSBot::AdjustZoom( float range )
 	else
 	{
 		// zoom out
-		if (GetZoomLevel() != NO_ZOOM)
+		if(GetZoomLevel() != NO_ZOOM)
 		{
 			adjustZoom = true;
 		}
 	}
 
-	if (adjustZoom)
+	if(adjustZoom)
 	{
 		SecondaryAttack();
 
 		// pause after zoom to allow "eyes" to refocus
-// 		m_zoomTimer.Start( 0.25f + (1.0f - GetProfile()->GetSkill()) );
-		m_zoomTimer.Start( 0.25f );
+		// 		m_zoomTimer.Start( 0.25f + (1.0f - GetProfile()->GetSkill()) );
+		m_zoomTimer.Start(0.25f);
 	}
 
 	return adjustZoom;
@@ -304,14 +304,14 @@ bool CCSBot::AdjustZoom( float range )
 /**
  * Returns true if using the specific weapon
  */
-bool CCSBot::IsUsing( CSWeaponID weaponID ) const
+bool CCSBot::IsUsing(CSWeaponID weaponID) const
 {
 	CWeaponCSBase *weapon = GetActiveCSWeapon();
 
-	if (weapon == NULL)
+	if(weapon == NULL)
 		return false;
 
-	if (weapon->IsA( weaponID ))
+	if(weapon->IsA(weaponID))
 		return true;
 
 	return false;
@@ -321,14 +321,14 @@ bool CCSBot::IsUsing( CSWeaponID weaponID ) const
 /**
  * Returns true if we are using a weapon with a removable silencer
  */
-bool CCSBot::DoesActiveWeaponHaveSilencer( void ) const
+bool CCSBot::DoesActiveWeaponHaveSilencer(void) const
 {
 	CWeaponCSBase *weapon = GetActiveCSWeapon();
 
-	if (weapon == NULL)
+	if(weapon == NULL)
 		return false;
 
-	if (weapon->IsA( WEAPON_M4A1 ) || weapon->IsA( WEAPON_USP ))
+	if(weapon->IsA(WEAPON_M4A1) || weapon->IsA(WEAPON_USP))
 		return true;
 
 	return false;
@@ -338,11 +338,11 @@ bool CCSBot::DoesActiveWeaponHaveSilencer( void ) const
 /**
  * Return true if we are using a sniper rifle
  */
-bool CCSBot::IsUsingSniperRifle( void ) const
+bool CCSBot::IsUsingSniperRifle(void) const
 {
 	CWeaponCSBase *weapon = GetActiveCSWeapon();
 
-	if (weapon && IsSniperRifle( weapon ))
+	if(weapon && IsSniperRifle(weapon))
 		return true;
 
 	return false;
@@ -352,11 +352,11 @@ bool CCSBot::IsUsingSniperRifle( void ) const
 /**
  * Return true if we have a sniper rifle in our inventory
  */
-bool CCSBot::IsSniper( void ) const
+bool CCSBot::IsSniper(void) const
 {
-	CWeaponCSBase *weapon = static_cast<CWeaponCSBase *>( Weapon_GetSlot( WEAPON_SLOT_RIFLE ) );
+	CWeaponCSBase *weapon = static_cast<CWeaponCSBase *>(Weapon_GetSlot(WEAPON_SLOT_RIFLE));
 
-	if (weapon && IsSniperRifle( weapon ))
+	if(weapon && IsSniperRifle(weapon))
 		return true;
 
 	return false;
@@ -366,9 +366,9 @@ bool CCSBot::IsSniper( void ) const
 /**
  * Return true if we are actively sniping (moving to sniper spot or settled in)
  */
-bool CCSBot::IsSniping( void ) const
+bool CCSBot::IsSniping(void) const
 {
-	if (GetTask() == MOVE_TO_SNIPER_SPOT || GetTask() == SNIPING)
+	if(GetTask() == MOVE_TO_SNIPER_SPOT || GetTask() == SNIPING)
 		return true;
 
 	return false;
@@ -378,11 +378,11 @@ bool CCSBot::IsSniping( void ) const
 /**
  * Return true if we are using a shotgun
  */
-bool CCSBot::IsUsingShotgun( void ) const
+bool CCSBot::IsUsingShotgun(void) const
 {
 	CWeaponCSBase *weapon = GetActiveCSWeapon();
 
-	if (weapon == NULL)
+	if(weapon == NULL)
 		return false;
 
 	return weapon->IsKindOf(WEAPONTYPE_SHOTGUN);
@@ -392,11 +392,11 @@ bool CCSBot::IsUsingShotgun( void ) const
 /**
  * Returns true if using the big 'ol machinegun
  */
-bool CCSBot::IsUsingMachinegun( void ) const
+bool CCSBot::IsUsingMachinegun(void) const
 {
 	CWeaponCSBase *weapon = GetActiveCSWeapon();
 
-	if (weapon && weapon->IsA( WEAPON_M249 ))
+	if(weapon && weapon->IsA(WEAPON_M249))
 		return true;
 
 	return false;
@@ -406,15 +406,15 @@ bool CCSBot::IsUsingMachinegun( void ) const
 /**
  * Return true if primary weapon doesn't exist or is totally out of ammo
  */
-bool CCSBot::IsPrimaryWeaponEmpty( void ) const
+bool CCSBot::IsPrimaryWeaponEmpty(void) const
 {
-	CWeaponCSBase *weapon = static_cast<CWeaponCSBase *>( Weapon_GetSlot( WEAPON_SLOT_RIFLE ) );
+	CWeaponCSBase *weapon = static_cast<CWeaponCSBase *>(Weapon_GetSlot(WEAPON_SLOT_RIFLE));
 
-	if (weapon == NULL)
+	if(weapon == NULL)
 		return true;
 
 	// check if gun has any ammo left
-	if (weapon->HasAnyAmmo())
+	if(weapon->HasAnyAmmo())
 		return false;
 
 	return true;
@@ -424,15 +424,15 @@ bool CCSBot::IsPrimaryWeaponEmpty( void ) const
 /**
  * Return true if pistol doesn't exist or is totally out of ammo
  */
-bool CCSBot::IsPistolEmpty( void ) const
+bool CCSBot::IsPistolEmpty(void) const
 {
-	CWeaponCSBase *weapon = static_cast<CWeaponCSBase *>( Weapon_GetSlot( WEAPON_SLOT_PISTOL ) );
+	CWeaponCSBase *weapon = static_cast<CWeaponCSBase *>(Weapon_GetSlot(WEAPON_SLOT_PISTOL));
 
-	if (weapon == NULL)
+	if(weapon == NULL)
 		return true;
 
 	// check if gun has any ammo left
-	if (weapon->HasAnyAmmo())
+	if(weapon->HasAnyAmmo())
 		return false;
 
 	return true;
@@ -442,59 +442,57 @@ bool CCSBot::IsPistolEmpty( void ) const
 /**
  * Equip the given item
  */
-bool CCSBot::DoEquip( CWeaponCSBase *weapon )
+bool CCSBot::DoEquip(CWeaponCSBase *weapon)
 {
-	if (weapon == NULL)
+	if(weapon == NULL)
 		return false;
 
 	// check if weapon has any ammo left
-	if (!weapon->HasAnyAmmo())
+	if(!weapon->HasAnyAmmo())
 		return false;
 
 	// equip it
-	SelectItem( weapon->GetClassname() );
+	SelectItem(weapon->GetClassname());
 	m_equipTimer.Start();
 
 	return true;
 }
 
-
 // throttle how often equipping is allowed
 const float minEquipInterval = 5.0f;
-
 
 //--------------------------------------------------------------------------------------------------------------
 /**
  * Equip the best weapon we are carrying that has ammo
  */
-void CCSBot::EquipBestWeapon( bool mustEquip )
+void CCSBot::EquipBestWeapon(bool mustEquip)
 {
 	// throttle how often equipping is allowed
-	if (!mustEquip && m_equipTimer.GetElapsedTime() < minEquipInterval)
+	if(!mustEquip && m_equipTimer.GetElapsedTime() < minEquipInterval)
 		return;
 
-	CCSBotManager *ctrl = static_cast<CCSBotManager *>( TheBots );
+	CCSBotManager *ctrl = static_cast<CCSBotManager *>(TheBots);
 
-	CWeaponCSBase *primary = static_cast<CWeaponCSBase *>( Weapon_GetSlot( WEAPON_SLOT_RIFLE ) );
-	if (primary)
+	CWeaponCSBase *primary = static_cast<CWeaponCSBase *>(Weapon_GetSlot(WEAPON_SLOT_RIFLE));
+	if(primary)
 	{
 		CSWeaponType weaponClass = primary->GetCSWpnData().m_WeaponType;
 
-		if ((ctrl->AllowShotguns() && weaponClass == WEAPONTYPE_SHOTGUN) ||
-			(ctrl->AllowMachineGuns() && weaponClass == WEAPONTYPE_MACHINEGUN) || 
-			(ctrl->AllowRifles() && weaponClass == WEAPONTYPE_RIFLE) || 
-			(ctrl->AllowShotguns() && weaponClass == WEAPONTYPE_SHOTGUN) ||
-			(ctrl->AllowSnipers() && weaponClass == WEAPONTYPE_SNIPER_RIFLE) || 
-			(ctrl->AllowSubMachineGuns() && weaponClass == WEAPONTYPE_SUBMACHINEGUN))
+		if((ctrl->AllowShotguns() && weaponClass == WEAPONTYPE_SHOTGUN) ||
+		   (ctrl->AllowMachineGuns() && weaponClass == WEAPONTYPE_MACHINEGUN) ||
+		   (ctrl->AllowRifles() && weaponClass == WEAPONTYPE_RIFLE) ||
+		   (ctrl->AllowShotguns() && weaponClass == WEAPONTYPE_SHOTGUN) ||
+		   (ctrl->AllowSnipers() && weaponClass == WEAPONTYPE_SNIPER_RIFLE) ||
+		   (ctrl->AllowSubMachineGuns() && weaponClass == WEAPONTYPE_SUBMACHINEGUN))
 		{
-			if (DoEquip( primary ))
+			if(DoEquip(primary))
 				return;
 		}
 	}
 
-	if (ctrl->AllowPistols())
+	if(ctrl->AllowPistols())
 	{
-		if (DoEquip( static_cast<CWeaponCSBase *>( Weapon_GetSlot( WEAPON_SLOT_PISTOL ) ) ))
+		if(DoEquip(static_cast<CWeaponCSBase *>(Weapon_GetSlot(WEAPON_SLOT_PISTOL))))
 			return;
 	}
 
@@ -506,16 +504,16 @@ void CCSBot::EquipBestWeapon( bool mustEquip )
 /**
  * Equip our pistol
  */
-void CCSBot::EquipPistol( void )
+void CCSBot::EquipPistol(void)
 {
 	// throttle how often equipping is allowed
-	if (m_equipTimer.GetElapsedTime() < minEquipInterval)
+	if(m_equipTimer.GetElapsedTime() < minEquipInterval)
 		return;
 
-	if (TheCSBots()->AllowPistols() && !IsUsingPistol())
+	if(TheCSBots()->AllowPistols() && !IsUsingPistol())
 	{
-		CWeaponCSBase *pistol = static_cast<CWeaponCSBase *>( Weapon_GetSlot( WEAPON_SLOT_PISTOL ) );
-		DoEquip( pistol );
+		CWeaponCSBase *pistol = static_cast<CWeaponCSBase *>(Weapon_GetSlot(WEAPON_SLOT_PISTOL));
+		DoEquip(pistol);
 	}
 }
 
@@ -523,11 +521,11 @@ void CCSBot::EquipPistol( void )
 /**
  * Equip the knife
  */
-void CCSBot::EquipKnife( void )
+void CCSBot::EquipKnife(void)
 {
-	if (!IsUsingKnife())
+	if(!IsUsingKnife())
 	{
-		SelectItem( "weapon_knife" );
+		SelectItem("weapon_knife");
 	}
 }
 
@@ -535,9 +533,9 @@ void CCSBot::EquipKnife( void )
 /**
  * Return true if we have a grenade in our inventory
  */
-bool CCSBot::HasGrenade( void ) const
+bool CCSBot::HasGrenade(void) const
 {
-	CWeaponCSBase *grenade = static_cast<CWeaponCSBase *>( Weapon_GetSlot( WEAPON_SLOT_GRENADES ) );
+	CWeaponCSBase *grenade = static_cast<CWeaponCSBase *>(Weapon_GetSlot(WEAPON_SLOT_GRENADES));
 	return (grenade) ? true : false;
 }
 
@@ -545,23 +543,23 @@ bool CCSBot::HasGrenade( void ) const
 /**
  * Equip a grenade, return false if we cant
  */
-bool CCSBot::EquipGrenade( bool noSmoke )
+bool CCSBot::EquipGrenade(bool noSmoke)
 {
 	// snipers don't use grenades
-	if (IsSniper())
+	if(IsSniper())
 		return false;
 
-	if (IsUsingGrenade())
+	if(IsUsingGrenade())
 		return true;
 
-	if (HasGrenade())
+	if(HasGrenade())
 	{
-		CWeaponCSBase *grenade = static_cast<CWeaponCSBase *>( Weapon_GetSlot( WEAPON_SLOT_GRENADES ) );
+		CWeaponCSBase *grenade = static_cast<CWeaponCSBase *>(Weapon_GetSlot(WEAPON_SLOT_GRENADES));
 
-		if (noSmoke && grenade->IsA( WEAPON_SMOKEGRENADE ))
+		if(noSmoke && grenade->IsA(WEAPON_SMOKEGRENADE))
 			return false;
 
-		SelectItem( grenade->GetClassname() );
+		SelectItem(grenade->GetClassname());
 
 		return true;
 	}
@@ -573,11 +571,11 @@ bool CCSBot::EquipGrenade( bool noSmoke )
 /**
  * Returns true if we have knife equipped
  */
-bool CCSBot::IsUsingKnife( void ) const
+bool CCSBot::IsUsingKnife(void) const
 {
 	CWeaponCSBase *weapon = GetActiveCSWeapon();
 
-	if (weapon && weapon->IsA( WEAPON_KNIFE ))
+	if(weapon && weapon->IsA(WEAPON_KNIFE))
 		return true;
 
 	return false;
@@ -587,11 +585,11 @@ bool CCSBot::IsUsingKnife( void ) const
 /**
  * Returns true if we have pistol equipped
  */
-bool CCSBot::IsUsingPistol( void ) const
+bool CCSBot::IsUsingPistol(void) const
 {
 	CWeaponCSBase *weapon = GetActiveCSWeapon();
 
-	if (weapon && weapon->IsPistol())
+	if(weapon && weapon->IsPistol())
 		return true;
 
 	return false;
@@ -601,16 +599,14 @@ bool CCSBot::IsUsingPistol( void ) const
 /**
  * Returns true if we have a grenade equipped
  */
-bool CCSBot::IsUsingGrenade( void ) const
+bool CCSBot::IsUsingGrenade(void) const
 {
 	CWeaponCSBase *weapon = GetActiveCSWeapon();
 
-	if (!weapon)
+	if(!weapon)
 		return false;
 
-	if (weapon->IsA( WEAPON_FLASHBANG ) ||
-		weapon->IsA( WEAPON_SMOKEGRENADE ) ||
-		weapon->IsA( WEAPON_HEGRENADE ))
+	if(weapon->IsA(WEAPON_FLASHBANG) || weapon->IsA(WEAPON_SMOKEGRENADE) || weapon->IsA(WEAPON_HEGRENADE))
 		return true;
 
 	return false;
@@ -620,24 +616,24 @@ bool CCSBot::IsUsingGrenade( void ) const
 /**
  * Begin the process of throwing the grenade
  */
-void CCSBot::ThrowGrenade( const Vector &target )
+void CCSBot::ThrowGrenade(const Vector &target)
 {
-	if (IsUsingGrenade() && m_grenadeTossState == NOT_THROWING && !IsOnLadder())
+	if(IsUsingGrenade() && m_grenadeTossState == NOT_THROWING && !IsOnLadder())
 	{
 		m_grenadeTossState = START_THROW;
-		m_tossGrenadeTimer.Start( 2.0f );
+		m_tossGrenadeTimer.Start(2.0f);
 
 		const float angleTolerance = 3.0f;
-		SetLookAt( "GrenadeThrow", target, PRIORITY_UNINTERRUPTABLE, 4.0f, false, angleTolerance ); 
+		SetLookAt("GrenadeThrow", target, PRIORITY_UNINTERRUPTABLE, 4.0f, false, angleTolerance);
 
-		Wait( RandomFloat( 2.0f, 4.0f ) );
+		Wait(RandomFloat(2.0f, 4.0f));
 
-		if (cv_bot_debug.GetBool() && IsLocalPlayerWatchingMe())
+		if(cv_bot_debug.GetBool() && IsLocalPlayerWatchingMe())
 		{
-			NDebugOverlay::Cross3D( target, 25.0f, 255, 125, 0, true, 3.0f );
+			NDebugOverlay::Cross3D(target, 25.0f, 255, 125, 0, true, 3.0f);
 		}
 
-		PrintIfWatched( "%3.2f: Grenade: START_THROW\n", gpGlobals->curtime );
+		PrintIfWatched("%3.2f: Grenade: START_THROW\n", gpGlobals->curtime);
 	}
 }
 
@@ -645,43 +641,43 @@ void CCSBot::ThrowGrenade( const Vector &target )
 /**
  * Returns true if our weapon can attack
  */
-bool CCSBot::CanActiveWeaponFire( void ) const
+bool CCSBot::CanActiveWeaponFire(void) const
 {
-	return ( GetActiveWeapon() && GetActiveWeapon()->m_flNextPrimaryAttack <= gpGlobals->curtime );
+	return (GetActiveWeapon() && GetActiveWeapon()->m_flNextPrimaryAttack <= gpGlobals->curtime);
 }
 
 //--------------------------------------------------------------------------------------------------------------
 /**
  * Find spot to throw grenade ahead of us and "around the corner" along our path
  */
-bool CCSBot::FindGrenadeTossPathTarget( Vector *pos )
+bool CCSBot::FindGrenadeTossPathTarget(Vector *pos)
 {
-	if (!HasPath())
+	if(!HasPath())
 		return false;
 
 	// find farthest point we can see on the path
 	int i;
-	for( i=m_pathIndex; i<m_pathLength; ++i )
+	for(i = m_pathIndex; i < m_pathLength; ++i)
 	{
-		if (!FVisible( m_path[i].pos + Vector( 0, 0, HalfHumanHeight ) ))
+		if(!FVisible(m_path[i].pos + Vector(0, 0, HalfHumanHeight)))
 			break;
 	}
 
-	if (i == m_pathIndex)
+	if(i == m_pathIndex)
 		return false;
 
 	// find exact spot where we lose sight
-	Vector dir = m_path[i].pos - m_path[i-1].pos;
+	Vector dir = m_path[i].pos - m_path[i - 1].pos;
 	float length = dir.NormalizeInPlace();
 
 	const float inc = 25.0f;
 	Vector p;
-	Vector visibleSpot = m_path[i-1].pos;
-	for( float t = 0.0f; t<length; t += inc )
+	Vector visibleSpot = m_path[i - 1].pos;
+	for(float t = 0.0f; t < length; t += inc)
 	{
-		p = m_path[i-1].pos + t * dir;
+		p = m_path[i - 1].pos + t * dir;
 		p.z += HalfHumanHeight;
-		if (!FVisible( p ))
+		if(!FVisible(p))
 			break;
 
 		visibleSpot = p;
@@ -696,117 +692,114 @@ bool CCSBot::FindGrenadeTossPathTarget( Vector *pos )
 	Vector check;
 
 	// check +X
-	check = visibleSpot + Vector( 999.9f, 0, 0 );
-	UTIL_TraceLine( visibleSpot, check, MASK_PLAYERSOLID, this, COLLISION_GROUP_NONE, &result );
+	check = visibleSpot + Vector(999.9f, 0, 0);
+	UTIL_TraceLine(visibleSpot, check, MASK_PLAYERSOLID, this, COLLISION_GROUP_NONE, &result);
 
-	if (result.fraction < 1.0f)
+	if(result.fraction < 1.0f)
 	{
 		float range = result.endpos.x - visibleSpot.x;
-		if (range < bufferRange)
+		if(range < bufferRange)
 		{
 			visibleSpot.x = result.endpos.x - bufferRange;
 		}
 	}
 
 	// check -X
-	check = visibleSpot + Vector( -999.9f, 0, 0 );
-	UTIL_TraceLine( visibleSpot, check, MASK_PLAYERSOLID, this, COLLISION_GROUP_NONE, &result );
+	check = visibleSpot + Vector(-999.9f, 0, 0);
+	UTIL_TraceLine(visibleSpot, check, MASK_PLAYERSOLID, this, COLLISION_GROUP_NONE, &result);
 
-	if (result.fraction < 1.0f)
+	if(result.fraction < 1.0f)
 	{
 		float range = visibleSpot.x - result.endpos.x;
-		if (range < bufferRange)
+		if(range < bufferRange)
 		{
 			visibleSpot.x = result.endpos.x + bufferRange;
 		}
 	}
 
 	// check +Y
-	check = visibleSpot + Vector( 0, 999.9f, 0 );
-	UTIL_TraceLine( visibleSpot, check, MASK_PLAYERSOLID, this, COLLISION_GROUP_NONE, &result );
+	check = visibleSpot + Vector(0, 999.9f, 0);
+	UTIL_TraceLine(visibleSpot, check, MASK_PLAYERSOLID, this, COLLISION_GROUP_NONE, &result);
 
-	if (result.fraction < 1.0f)
+	if(result.fraction < 1.0f)
 	{
 		float range = result.endpos.y - visibleSpot.y;
-		if (range < bufferRange)
+		if(range < bufferRange)
 		{
 			visibleSpot.y = result.endpos.y - bufferRange;
 		}
 	}
 
 	// check -Y
-	check = visibleSpot + Vector( 0, -999.9f, 0 );
-	UTIL_TraceLine( visibleSpot, check, MASK_PLAYERSOLID, this, COLLISION_GROUP_NONE, &result );
+	check = visibleSpot + Vector(0, -999.9f, 0);
+	UTIL_TraceLine(visibleSpot, check, MASK_PLAYERSOLID, this, COLLISION_GROUP_NONE, &result);
 
-	if (result.fraction < 1.0f)
+	if(result.fraction < 1.0f)
 	{
 		float range = visibleSpot.y - result.endpos.y;
-		if (range < bufferRange)
+		if(range < bufferRange)
 		{
 			visibleSpot.y = result.endpos.y + bufferRange;
 		}
 	}
 
 	*pos = visibleSpot;
-	return true;	
+	return true;
 }
-
 
 //--------------------------------------------------------------------------------------------------------------
 /**
  * Look for grenade throw targets and throw the grenade
  */
-void CCSBot::LookForGrenadeTargets( void )
+void CCSBot::LookForGrenadeTargets(void)
 {
-	if (!IsUsingGrenade() || IsThrowingGrenade())
+	if(!IsUsingGrenade() || IsThrowingGrenade())
 	{
 		return;
 	}
 
 	const CNavArea *tossArea = GetInitialEncounterArea();
-	if (tossArea == NULL)
+	if(tossArea == NULL)
 	{
 		return;
 	}
 
-	int enemyTeam = OtherTeam( GetTeamNumber() );
+	int enemyTeam = OtherTeam(GetTeamNumber());
 
 	// check if we should put our grenade away
-	if (tossArea->GetEarliestOccupyTime( enemyTeam ) > gpGlobals->curtime)
+	if(tossArea->GetEarliestOccupyTime(enemyTeam) > gpGlobals->curtime)
 	{
-		EquipBestWeapon( MUST_EQUIP );
+		EquipBestWeapon(MUST_EQUIP);
 		return;
 	}
 
 	// throw grenades at initial encounter area
-	Vector tossTarget = Vector( 0, 0, 0 );
-	if (!tossArea->IsVisible( EyePosition(), &tossTarget ))
+	Vector tossTarget = Vector(0, 0, 0);
+	if(!tossArea->IsVisible(EyePosition(), &tossTarget))
 	{
 		return;
 	}
-
 
 	CWeaponCSBase *weapon = GetActiveCSWeapon();
-	if (weapon && weapon->IsA( WEAPON_SMOKEGRENADE ))
+	if(weapon && weapon->IsA(WEAPON_SMOKEGRENADE))
 	{
 		// don't worry so much about smokes
-		ThrowGrenade( tossTarget );
-		PrintIfWatched( "Throwing smoke grenade!" );
-		SetInitialEncounterArea( NULL );
+		ThrowGrenade(tossTarget);
+		PrintIfWatched("Throwing smoke grenade!");
+		SetInitialEncounterArea(NULL);
 		return;
 	}
-	else	// explosive and flashbang grenades
+	else // explosive and flashbang grenades
 	{
 		// initial encounter area is visible, wait to throw until timing is right
 
 		const float leadTime = 1.5f;
-		float enemyTime = tossArea->GetEarliestOccupyTime( enemyTeam );
-		if (enemyTime - TheCSBots()->GetElapsedRoundTime() > leadTime)
+		float enemyTime = tossArea->GetEarliestOccupyTime(enemyTeam);
+		if(enemyTime - TheCSBots()->GetElapsedRoundTime() > leadTime)
 		{
 			// don't throw yet
 			return;
 		}
-
 
 		Vector to = tossTarget - EyePosition();
 		float range = to.Length();
@@ -815,41 +808,40 @@ void CCSBot::LookForGrenadeTargets( void )
 		float tossHeight = slope * range;
 
 		trace_t result;
-		CTraceFilterNoNPCsOrPlayer traceFilter( this, COLLISION_GROUP_NONE );
+		CTraceFilterNoNPCsOrPlayer traceFilter(this, COLLISION_GROUP_NONE);
 
 		const float heightInc = tossHeight / 10.0f;
 		Vector target;
 		float safeSpace = tossHeight / 2.0f;
 
 		// Build a box to sweep along the ray when looking for obstacles
-		const Vector& eyePosition = EyePosition();
+		const Vector &eyePosition = EyePosition();
 		Vector mins = VEC_HULL_MIN;
 		Vector maxs = VEC_HULL_MAX;
 		mins.z = 0;
 		maxs.z = heightInc;
-
 
 		// find low and high bounds of toss window
 		float low = 0.0f;
 		float high = tossHeight + safeSpace;
 		bool gotLow = false;
 		float lastH = 0.0f;
-		for( float h = 0.0f; h < 3.0f * tossHeight; h += heightInc )
+		for(float h = 0.0f; h < 3.0f * tossHeight; h += heightInc)
 		{
-			target = tossTarget + Vector( 0, 0, h );
+			target = tossTarget + Vector(0, 0, h);
 
 			// make sure toss line is clear
 
-			QAngle angles( 0, 0, 0 );
+			QAngle angles(0, 0, 0);
 			Ray_t ray;
-			ray.Init( eyePosition, target, mins, maxs );
-			enginetrace->TraceRay( ray, MASK_VISIBLE_AND_NPCS | CONTENTS_GRATE, &traceFilter, &result );
-			if (result.fraction == 1.0f)
+			ray.Init(eyePosition, target, mins, maxs);
+			enginetrace->TraceRay(ray, MASK_VISIBLE_AND_NPCS | CONTENTS_GRATE, &traceFilter, &result);
+			if(result.fraction == 1.0f)
 			{
-				//NDebugOverlay::SweptBox( eyePosition, target, mins, maxs, angles, 0, 0, 255, 40, 10.0f );
+				// NDebugOverlay::SweptBox( eyePosition, target, mins, maxs, angles, 0, 0, 255, 40, 10.0f );
 
 				// line is clear
-				if (!gotLow)
+				if(!gotLow)
 				{
 					low = h;
 					gotLow = true;
@@ -857,10 +849,10 @@ void CCSBot::LookForGrenadeTargets( void )
 			}
 			else
 			{
-				//NDebugOverlay::SweptBox( eyePosition, target, mins, maxs, angles, 255, 0, 0, 5, 10.0f );
+				// NDebugOverlay::SweptBox( eyePosition, target, mins, maxs, angles, 255, 0, 0, 5, 10.0f );
 
 				// line is blocked
-				if (gotLow)
+				if(gotLow)
 				{
 					high = lastH;
 					break;
@@ -870,27 +862,27 @@ void CCSBot::LookForGrenadeTargets( void )
 			lastH = h;
 		}
 
-		if (gotLow)
+		if(gotLow)
 		{
 			// throw grenade into toss window
-			if (tossHeight < low)
+			if(tossHeight < low)
 			{
-				if (low + safeSpace > high)
+				if(low + safeSpace > high)
 				{
 					// narrow window
-					tossHeight = (high + low)/2.0f;
+					tossHeight = (high + low) / 2.0f;
 				}
 				else
 				{
 					tossHeight = low + safeSpace;
 				}
 			}
-			else if (tossHeight > high - safeSpace)
+			else if(tossHeight > high - safeSpace)
 			{
-				if (high - safeSpace < low)
+				if(high - safeSpace < low)
 				{
 					// narrow window
-					tossHeight = (high + low)/2.0f;
+					tossHeight = (high + low) / 2.0f;
 				}
 				else
 				{
@@ -898,39 +890,38 @@ void CCSBot::LookForGrenadeTargets( void )
 				}
 			}
 
-			ThrowGrenade( tossTarget + Vector( 0, 0, tossHeight ) );
-			SetInitialEncounterArea( NULL );
+			ThrowGrenade(tossTarget + Vector(0, 0, tossHeight));
+			SetInitialEncounterArea(NULL);
 			return;
 		}
 	}
 }
 
-
 //--------------------------------------------------------------------------------------------------------------
 class FOVClearOfFriends
 {
 public:
-	FOVClearOfFriends( CCSBot *me )
+	FOVClearOfFriends(CCSBot *me)
 	{
 		m_me = me;
 	}
 
-	bool operator() ( CBasePlayer *player )
+	bool operator()(CBasePlayer *player)
 	{
-		if (player == m_me || !player->IsAlive())
+		if(player == m_me || !player->IsAlive())
 			return true;
 
-		if (m_me->InSameTeam( player ))
+		if(m_me->InSameTeam(player))
 		{
 			Vector to = player->EyePosition() - m_me->EyePosition();
 			to.NormalizeInPlace();
 
 			Vector forward;
-			m_me->EyeVectors( &forward );
+			m_me->EyeVectors(&forward);
 
-			if (DotProduct( to, forward ) > 0.95f)
+			if(DotProduct(to, forward) > 0.95f)
 			{
-				if (m_me->IsVisible( (CCSPlayer *)player ))
+				if(m_me->IsVisible((CCSPlayer *)player))
 				{
 					// we see a friend in our FOV
 					return false;
@@ -948,35 +939,35 @@ public:
 /**
  * Process the grenade throw state machine
  */
-void CCSBot::UpdateGrenadeThrow( void )
+void CCSBot::UpdateGrenadeThrow(void)
 {
-	switch( m_grenadeTossState )
+	switch(m_grenadeTossState)
 	{
 		case START_THROW:
 		{
-			if (m_tossGrenadeTimer.IsElapsed())
+			if(m_tossGrenadeTimer.IsElapsed())
 			{
 				// something prevented the throw - give up
-				EquipBestWeapon( MUST_EQUIP );
+				EquipBestWeapon(MUST_EQUIP);
 				ClearLookAt();
 				m_grenadeTossState = NOT_THROWING;
-				PrintIfWatched( "%3.2f: Grenade: THROW FAILED\n", gpGlobals->curtime );
+				PrintIfWatched("%3.2f: Grenade: THROW FAILED\n", gpGlobals->curtime);
 				return;
 			}
 
-			if (m_lookAtSpotState == LOOK_AT_SPOT)
+			if(m_lookAtSpotState == LOOK_AT_SPOT)
 			{
 				// don't throw if there are friends ahead of us
-				FOVClearOfFriends fovClear( this );
-				if (ForEachPlayer( fovClear ))
+				FOVClearOfFriends fovClear(this);
+				if(ForEachPlayer(fovClear))
 				{
 					m_grenadeTossState = FINISH_THROW;
-					m_tossGrenadeTimer.Start( 1.0f );
-					PrintIfWatched( "%3.2f: Grenade: FINISH_THROW\n", gpGlobals->curtime );
+					m_tossGrenadeTimer.Start(1.0f);
+					PrintIfWatched("%3.2f: Grenade: FINISH_THROW\n", gpGlobals->curtime);
 				}
 				else
 				{
-					PrintIfWatched( "%3.2f: Grenade: Friend is in the way...\n", gpGlobals->curtime );
+					PrintIfWatched("%3.2f: Grenade: Friend is in the way...\n", gpGlobals->curtime);
 				}
 			}
 
@@ -989,19 +980,19 @@ void CCSBot::UpdateGrenadeThrow( void )
 		case FINISH_THROW:
 		{
 			// throw the grenade and hold our aiming line for a moment
-			if (m_tossGrenadeTimer.IsElapsed())
+			if(m_tossGrenadeTimer.IsElapsed())
 			{
 				ClearLookAt();
 
 				m_grenadeTossState = NOT_THROWING;
-				PrintIfWatched( "%3.2f: Grenade: THROW COMPLETE\n", gpGlobals->curtime );
+				PrintIfWatched("%3.2f: Grenade: THROW COMPLETE\n", gpGlobals->curtime);
 			}
 			break;
 		}
 
 		default:
 		{
-			if (IsUsingGrenade())
+			if(IsUsingGrenade())
 			{
 				// pull the pin
 				PrimaryAttack();
@@ -1011,26 +1002,25 @@ void CCSBot::UpdateGrenadeThrow( void )
 	}
 }
 
-
 //--------------------------------------------------------------------------------------------------------------
 class GrenadeResponse
 {
 public:
-	GrenadeResponse( CCSBot *me )
+	GrenadeResponse(CCSBot *me)
 	{
 		m_me = me;
 	}
 
-	bool operator() ( ActiveGrenade *ag ) const
+	bool operator()(ActiveGrenade *ag) const
 	{
 		const float retreatRange = 300.0f;
 		const float hideTime = 1.0f;
 
 		// do we see this grenade
-		if (m_me->IsVisible( ag->GetPosition(), CHECK_FOV, (CBaseEntity *)ag->GetEntity() ))
+		if(m_me->IsVisible(ag->GetPosition(), CHECK_FOV, (CBaseEntity *)ag->GetEntity()))
 		{
 			// we see it
-			if (ag->IsSmoke())
+			if(ag->IsSmoke())
 			{
 				// ignore smokes
 				return true;
@@ -1041,58 +1031,57 @@ public:
 			const float atRestSpeed = 50.0f;
 
 			const float aboutToBlow = 0.5f;
-			if (ag->IsFlashbang() && ag->GetEntity()->m_flDetonateTime - gpGlobals->curtime < aboutToBlow)
+			if(ag->IsFlashbang() && ag->GetEntity()->m_flDetonateTime - gpGlobals->curtime < aboutToBlow)
 			{
 				// turn away from flashbangs about to explode
 				QAngle eyeAngles = m_me->EyeAngles();
 
-				float yaw = RandomFloat( 100.0f, 135.0f );
-				eyeAngles.y += (RandomFloat( -1.0f, 1.0f ) < 0.0f) ? (-yaw) : yaw;
+				float yaw = RandomFloat(100.0f, 135.0f);
+				eyeAngles.y += (RandomFloat(-1.0f, 1.0f) < 0.0f) ? (-yaw) : yaw;
 
 				Vector forward;
-				AngleVectors( eyeAngles, &forward );
+				AngleVectors(eyeAngles, &forward);
 
 				Vector away = m_me->EyePosition() - 1000.0f * forward;
 				const float duration = 2.0f;
 
 				m_me->ClearLookAt();
-				m_me->SetLookAt( "Avoid Flashbang", away, PRIORITY_UNINTERRUPTABLE, duration );
+				m_me->SetLookAt("Avoid Flashbang", away, PRIORITY_UNINTERRUPTABLE, duration);
 
 				m_me->StopAiming();
 
 				return false;
 			}
 
-
 			// flee from grenades if close by or thrown towards us
 			const float throwDangerRange = 750.0f;
 			const float nearDangerRange = 300.0f;
 			Vector to = ag->GetPosition() - m_me->GetAbsOrigin();
 			float range = to.NormalizeInPlace();
-			if (range > throwDangerRange)
+			if(range > throwDangerRange)
 			{
 				return true;
 			}
 
-			if (grenadeSpeed > atRestSpeed)
+			if(grenadeSpeed > atRestSpeed)
 			{
 				// grenade is moving
-				if (DotProduct( to, velDir ) >= -0.5f)
+				if(DotProduct(to, velDir) >= -0.5f)
 				{
 					// going away from us
 					return true;
 				}
 
-				m_me->PrintIfWatched( "Retreating from a grenade thrown towards me!\n" );
+				m_me->PrintIfWatched("Retreating from a grenade thrown towards me!\n");
 			}
-			else if (range < nearDangerRange)
+			else if(range < nearDangerRange)
 			{
 				// grenade has come to rest near us
-				m_me->PrintIfWatched( "Retreating from a grenade that landed near me!\n" );
+				m_me->PrintIfWatched("Retreating from a grenade that landed near me!\n");
 			}
 
 			// retreat!
-			m_me->TryToRetreat( retreatRange, hideTime );
+			m_me->TryToRetreat(retreatRange, hideTime);
 
 			return false;
 		}
@@ -1106,57 +1095,56 @@ public:
 /**
  * React to enemy grenades we see
  */
-void CCSBot::AvoidEnemyGrenades( void )
+void CCSBot::AvoidEnemyGrenades(void)
 {
 	// low skill bots dont avoid grenades
-	if (GetProfile()->GetSkill() < 0.5)
+	if(GetProfile()->GetSkill() < 0.5)
 	{
 		return;
 	}
 
-	if (IsAvoidingGrenade())
+	if(IsAvoidingGrenade())
 	{
 		// already avoiding one
 		return;
 	}
 
 	// low skill bots don't avoid grenades
-	if (GetProfile()->GetSkill() < 0.6f)
+	if(GetProfile()->GetSkill() < 0.6f)
 	{
 		return;
 	}
 
-	GrenadeResponse respond( this );	
-	if (TheBots->ForEachGrenade( respond ) == false)
+	GrenadeResponse respond(this);
+	if(TheBots->ForEachGrenade(respond) == false)
 	{
 		const float avoidTime = 4.0f;
-		m_isAvoidingGrenade.Start( avoidTime );
+		m_isAvoidingGrenade.Start(avoidTime);
 	}
 }
-
 
 //--------------------------------------------------------------------------------------------------------------
 /**
  * Reload our weapon if we must
  */
-void CCSBot::ReloadCheck( void )
+void CCSBot::ReloadCheck(void)
 {
 	const float safeReloadWaitTime = 3.0f;
 	const float reloadAmmoRatio = 0.6f;
 
 	// don't bother to reload if there are no enemies left
-	if (GetEnemiesRemaining() == 0)
+	if(GetEnemiesRemaining() == 0)
 		return;
 
-	if (IsDefusingBomb() || IsReloading())
+	if(IsDefusingBomb() || IsReloading())
 		return;
 
-	if (IsActiveWeaponClipEmpty())
+	if(IsActiveWeaponClipEmpty())
 	{
 		// high-skill players switch to pistol instead of reloading during combat
-		if (GetProfile()->GetSkill() > 0.5f && IsAttacking())
+		if(GetProfile()->GetSkill() > 0.5f && IsAttacking())
 		{
-			if (!GetActiveCSWeapon()->IsPistol() && !IsPistolEmpty())
+			if(!GetActiveCSWeapon()->IsPistol() && !IsPistolEmpty())
 			{
 				// switch to pistol instead of reloading
 				EquipPistol();
@@ -1164,10 +1152,10 @@ void CCSBot::ReloadCheck( void )
 			}
 		}
 	}
-	else if (GetTimeSinceLastSawEnemy() > safeReloadWaitTime && GetActiveWeaponAmmoRatio() <= reloadAmmoRatio)
+	else if(GetTimeSinceLastSawEnemy() > safeReloadWaitTime && GetActiveWeaponAmmoRatio() <= reloadAmmoRatio)
 	{
 		// high-skill players use all their ammo and switch to pistol instead of reloading during combat
-		if (GetProfile()->GetSkill() > 0.5f && IsAttacking())
+		if(GetProfile()->GetSkill() > 0.5f && IsAttacking())
 			return;
 	}
 	else
@@ -1177,33 +1165,33 @@ void CCSBot::ReloadCheck( void )
 	}
 
 	// don't reload the AWP until it is totally out of ammo
-	if (IsUsing( WEAPON_AWP ) && !IsActiveWeaponClipEmpty())
+	if(IsUsing(WEAPON_AWP) && !IsActiveWeaponClipEmpty())
 		return;
 
 	Reload();
 
 	// move to cover to reload if there are enemies nearby
-	if (GetNearbyEnemyCount())
+	if(GetNearbyEnemyCount())
 	{
 		// avoid enemies while reloading (above 0.75 skill always hide to reload)
 		const float hideChance = 25.0f + 100.0f * GetProfile()->GetSkill();
 
-		if (!IsHiding() && RandomFloat( 0, 100 ) < hideChance)
+		if(!IsHiding() && RandomFloat(0, 100) < hideChance)
 		{
 			const float safeTime = 5.0f;
-			if (GetTimeSinceLastSawEnemy() < safeTime)
+			if(GetTimeSinceLastSawEnemy() < safeTime)
 			{
-				PrintIfWatched( "Retreating to a safe spot to reload!\n" );
-				const Vector *spot = FindNearbyRetreatSpot( this, 1000.0f );
-				if (spot)
+				PrintIfWatched("Retreating to a safe spot to reload!\n");
+				const Vector *spot = FindNearbyRetreatSpot(this, 1000.0f);
+				if(spot)
 				{
 					// ignore enemies for a second to give us time to hide
 					// reaching our hiding spot clears our disposition
-					IgnoreEnemies( 10.0f );
+					IgnoreEnemies(10.0f);
 
 					Run();
 					StandUp();
-					Hide( *spot, 0.0f );
+					Hide(*spot, 0.0f);
 				}
 			}
 		}
@@ -1214,78 +1202,77 @@ void CCSBot::ReloadCheck( void )
 /**
  * Silence/unsilence our weapon if we must
  */
-void CCSBot::SilencerCheck( void )
+void CCSBot::SilencerCheck(void)
 {
 	const float safeSilencerWaitTime = 3.5f; // longer than reload check because reloading should take precedence
 
-	if (IsDefusingBomb() || IsReloading() || IsAttacking())
+	if(IsDefusingBomb() || IsReloading() || IsAttacking())
 		return;
 
 	// M4A1 and USP are the only weapons with removable silencers
-	if (!DoesActiveWeaponHaveSilencer())
+	if(!DoesActiveWeaponHaveSilencer())
 		return;
 
-	if (GetTimeSinceLastSawEnemy() < safeSilencerWaitTime)
+	if(GetTimeSinceLastSawEnemy() < safeSilencerWaitTime)
 		return;
 
 	// don't touch the silencer if there are enemies nearby
-	if (GetNearbyEnemyCount() == 0)
+	if(GetNearbyEnemyCount() == 0)
 	{
 		CWeaponCSBase *weapon = GetActiveCSWeapon();
-		if (weapon == NULL)
+		if(weapon == NULL)
 			return;
 
 		bool isSilencerOn = weapon->IsSilenced();
 
-		if ( weapon->m_flNextSecondaryAttack >= gpGlobals->curtime )
+		if(weapon->m_flNextSecondaryAttack >= gpGlobals->curtime)
 			return;
 
 		// equip silencer if we want to and we don't have a shield.
-		if ( isSilencerOn != (GetProfile()->PrefersSilencer() || GetProfile()->GetSkill() > 0.7f) && !HasShield() )
+		if(isSilencerOn != (GetProfile()->PrefersSilencer() || GetProfile()->GetSkill() > 0.7f) && !HasShield())
 		{
-			PrintIfWatched( "%s silencer!\n", (isSilencerOn) ? "Unequipping" : "Equipping" );
+			PrintIfWatched("%s silencer!\n", (isSilencerOn) ? "Unequipping" : "Equipping");
 			weapon->SecondaryAttack();
 		}
 	}
 }
 
-
 //--------------------------------------------------------------------------------------------------------------
 /**
  * Invoked when in contact with a CBaseCombatWeapon
  */
-bool CCSBot::BumpWeapon( CBaseCombatWeapon *pWeapon )
+bool CCSBot::BumpWeapon(CBaseCombatWeapon *pWeapon)
 {
-	CWeaponCSBase *droppedGun = dynamic_cast< CWeaponCSBase* >( pWeapon );
+	CWeaponCSBase *droppedGun = dynamic_cast<CWeaponCSBase *>(pWeapon);
 
 	// right now we only care about primary weapons on the ground
-	if ( droppedGun && droppedGun->GetSlot() == WEAPON_SLOT_RIFLE )
+	if(droppedGun && droppedGun->GetSlot() == WEAPON_SLOT_RIFLE)
 	{
-		CWeaponCSBase *myGun = dynamic_cast< CWeaponCSBase* >( Weapon_GetSlot( WEAPON_SLOT_RIFLE ) );
+		CWeaponCSBase *myGun = dynamic_cast<CWeaponCSBase *>(Weapon_GetSlot(WEAPON_SLOT_RIFLE));
 
 		// if the gun on the ground is the same one we have, dont bother
-		if ( myGun && droppedGun->GetWeaponID() != myGun->GetWeaponID() )
+		if(myGun && droppedGun->GetWeaponID() != myGun->GetWeaponID())
 		{
 			// if we don't have a weapon preference, give up
-			if ( GetProfile()->HasPrimaryPreference() )
+			if(GetProfile()->HasPrimaryPreference())
 			{
 				// don't change weapons if we've seen enemies recently
 				const float safeTime = 2.5f;
-				if ( GetTimeSinceLastSawEnemy() >= safeTime )
+				if(GetTimeSinceLastSawEnemy() >= safeTime)
 				{
 					// we have a primary weapon - drop it if the one on the ground is better
-					for( int i = 0; i < GetProfile()->GetWeaponPreferenceCount(); ++i )
+					for(int i = 0; i < GetProfile()->GetWeaponPreferenceCount(); ++i)
 					{
-						CSWeaponID prefID = GetProfile()->GetWeaponPreference( i );
+						CSWeaponID prefID = GetProfile()->GetWeaponPreference(i);
 
-						if (!IsPrimaryWeapon( prefID ))
+						if(!IsPrimaryWeapon(prefID))
 							continue;
 
 						// if the gun we are using is more desirable, give up
-						if ( prefID == myGun->GetWeaponID() )
+						if(prefID == myGun->GetWeaponID())
 							break;
 
-						if ( prefID == droppedGun->GetWeaponID() )
+						if(prefID == droppedGun->GetWeaponID())
 						{
 							// the gun on the ground is better than the one we have - drop our gun
 							DropRifle();
@@ -1297,33 +1284,33 @@ bool CCSBot::BumpWeapon( CBaseCombatWeapon *pWeapon )
 		}
 	}
 
-	return BaseClass::BumpWeapon( droppedGun );
+	return BaseClass::BumpWeapon(droppedGun);
 }
-
 
 //--------------------------------------------------------------------------------------------------------------
 /**
  * Return true if a friend is in our weapon's way
  * @todo Check more rays for safety.
  */
-bool CCSBot::IsFriendInLineOfFire( void )
+bool CCSBot::IsFriendInLineOfFire(void)
 {
 	// compute the unit vector along our view
 	Vector aimDir = GetViewVector();
 
 	// trace the bullet's path
 	trace_t result;
-	UTIL_TraceLine( EyePosition(), EyePosition() + 10000.0f * aimDir, MASK_PLAYERSOLID, this, COLLISION_GROUP_NONE, &result );
+	UTIL_TraceLine(EyePosition(), EyePosition() + 10000.0f * aimDir, MASK_PLAYERSOLID, this, COLLISION_GROUP_NONE,
+				   &result);
 
-	if (result.DidHitNonWorldEntity())
+	if(result.DidHitNonWorldEntity())
 	{
 		CBaseEntity *victim = result.m_pEnt;
 
-		if (victim && victim->IsPlayer() && victim->IsAlive())
+		if(victim && victim->IsPlayer() && victim->IsAlive())
 		{
-			CBasePlayer *player = static_cast<CBasePlayer *>( victim );
+			CBasePlayer *player = static_cast<CBasePlayer *>(victim);
 
-			if (player->InSameTeam( this ))
+			if(player->InSameTeam(this))
 				return true;
 		}
 	}
@@ -1331,33 +1318,31 @@ bool CCSBot::IsFriendInLineOfFire( void )
 	return false;
 }
 
-
 //--------------------------------------------------------------------------------------------------------------
 /**
  * Return line-of-sight distance to obstacle along weapon fire ray
  * @todo Re-use this computation with IsFriendInLineOfFire()
  */
-float CCSBot::ComputeWeaponSightRange( void )
+float CCSBot::ComputeWeaponSightRange(void)
 {
 	// compute the unit vector along our view
 	Vector aimDir = GetViewVector();
 
 	// trace the bullet's path
 	trace_t result;
-	UTIL_TraceLine( EyePosition(), EyePosition() + 10000.0f * aimDir, MASK_PLAYERSOLID, this, COLLISION_GROUP_NONE, &result );
+	UTIL_TraceLine(EyePosition(), EyePosition() + 10000.0f * aimDir, MASK_PLAYERSOLID, this, COLLISION_GROUP_NONE,
+				   &result);
 
 	return (EyePosition() - result.endpos).Length();
 }
-
 
 //--------------------------------------------------------------------------------------------------------------
 /**
  * Return true if the given player just fired their weapon
  */
-bool CCSBot::DidPlayerJustFireWeapon( const CCSPlayer *player ) const
+bool CCSBot::DidPlayerJustFireWeapon(const CCSPlayer *player) const
 {
 	// if this player has just fired his weapon, we notice him
 	CWeaponCSBase *weapon = player->GetActiveCSWeapon();
 	return (weapon && !weapon->IsSilenced() && weapon->m_flNextPrimaryAttack > gpGlobals->curtime);
 }
-

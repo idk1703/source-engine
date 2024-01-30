@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,8 +13,7 @@
 
 using namespace vgui;
 
-vgui::KeyCode g_iCodesForAliases[FM_NUM_KEYREPEAT_ALIASES] = 
-{
+vgui::KeyCode g_iCodesForAliases[FM_NUM_KEYREPEAT_ALIASES] = {
 	KEY_XBUTTON_UP,
 	KEY_XBUTTON_DOWN,
 	KEY_XBUTTON_LEFT,
@@ -22,38 +21,38 @@ vgui::KeyCode g_iCodesForAliases[FM_NUM_KEYREPEAT_ALIASES] =
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CKeyRepeatHandler::KeyDown( vgui::KeyCode code )
+void CKeyRepeatHandler::KeyDown(vgui::KeyCode code)
 {
 	int iIndex = GetIndexForCode(code);
-	if ( iIndex == -1 )
+	if(iIndex == -1)
 		return;
 
-	if ( m_bAliasDown[ iIndex ] )
+	if(m_bAliasDown[iIndex])
 		return;
 
 	Reset();
-	m_bAliasDown[ iIndex ] = true;
+	m_bAliasDown[iIndex] = true;
 	m_flNextKeyRepeat = system()->GetCurrentTime() + 0.4;
 	m_bHaveKeyDown = true;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CKeyRepeatHandler::KeyUp( vgui::KeyCode code )
+void CKeyRepeatHandler::KeyUp(vgui::KeyCode code)
 {
 	int iIndex = GetIndexForCode(code);
-	if ( iIndex == -1 )
+	if(iIndex == -1)
 		return;
 
-	m_bAliasDown[ GetIndexForCode(code) ] = false;
+	m_bAliasDown[GetIndexForCode(code)] = false;
 
 	m_bHaveKeyDown = false;
-	for ( int i = 0; i < FM_NUM_KEYREPEAT_ALIASES; i++ )
+	for(int i = 0; i < FM_NUM_KEYREPEAT_ALIASES; i++)
 	{
-		if ( m_bAliasDown[i] )
+		if(m_bAliasDown[i])
 		{
 			m_bHaveKeyDown = true;
 			break;
@@ -62,21 +61,21 @@ void CKeyRepeatHandler::KeyUp( vgui::KeyCode code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-vgui::KeyCode CKeyRepeatHandler::KeyRepeated( void )
+vgui::KeyCode CKeyRepeatHandler::KeyRepeated(void)
 {
-	if ( IsPC() )
+	if(IsPC())
 		return BUTTON_CODE_NONE;
 
-	if ( !m_bHaveKeyDown )
+	if(!m_bHaveKeyDown)
 		return BUTTON_CODE_NONE;
 
-	if ( m_flNextKeyRepeat < system()->GetCurrentTime() )
+	if(m_flNextKeyRepeat < system()->GetCurrentTime())
 	{
-		for ( int i = 0; i < FM_NUM_KEYREPEAT_ALIASES; i++ )
+		for(int i = 0; i < FM_NUM_KEYREPEAT_ALIASES; i++)
 		{
-			if ( m_bAliasDown[i] )
+			if(m_bAliasDown[i])
 			{
 				m_flNextKeyRepeat = system()->GetCurrentTime() + m_flRepeatTimes[i];
 				return g_iCodesForAliases[i];
@@ -88,11 +87,11 @@ vgui::KeyCode CKeyRepeatHandler::KeyRepeated( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CKeyRepeatHandler::SetKeyRepeatTime( vgui::KeyCode code, float flRepeat )
+void CKeyRepeatHandler::SetKeyRepeatTime(vgui::KeyCode code, float flRepeat)
 {
 	int iIndex = GetIndexForCode(code);
-	Assert( iIndex != -1 );
-	m_flRepeatTimes[ iIndex ] = flRepeat;
+	Assert(iIndex != -1);
+	m_flRepeatTimes[iIndex] = flRepeat;
 }

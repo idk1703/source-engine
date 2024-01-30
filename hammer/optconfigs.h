@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -8,48 +8,47 @@
 #define OPTCONFIGS_H
 #pragma once
 
-
 #include "AutoSelCombo.h"
-
 
 class COPTConfigs : public CPropertyPage
 {
 	DECLARE_DYNCREATE(COPTConfigs)
 
 public:
-
 	COPTConfigs();
 	~COPTConfigs();
 
-	inline CGameConfig *GetCurrentConfig( void );
+	inline CGameConfig *GetCurrentConfig(void);
 
 	// Dialog Data
 	//{{AFX_DATA(COPTConfigs)
-	enum { IDD = IDD_OPTIONS_CONFIGS };
-	CEdit	m_cMapDir;
-	CEdit	m_cGameExeDir;
-	CEdit	m_cModDir;
-	CEdit	m_cCordonTexture;
-	CEdit	m_cDefaultTextureScale;
-	CComboBox	m_cMapFormat;
-	CComboBox	m_cTextureFormat;
+	enum
+	{
+		IDD = IDD_OPTIONS_CONFIGS
+	};
+	CEdit m_cMapDir;
+	CEdit m_cGameExeDir;
+	CEdit m_cModDir;
+	CEdit m_cCordonTexture;
+	CEdit m_cDefaultTextureScale;
+	CComboBox m_cMapFormat;
+	CComboBox m_cTextureFormat;
 	CAutoSelComboBox m_cDefaultPoint;
 	CAutoSelComboBox m_cDefaultSolid;
-	CListBox	m_cGDFiles;
-	CComboBox	m_cConfigs;
+	CListBox m_cGDFiles;
+	CComboBox m_cConfigs;
 	//}}AFX_DATA
-
 
 	// ClassWizard generate virtual function overrides
 	//{{AFX_VIRTUAL(COPTConfigs)
-	public:
+public:
 	virtual BOOL OnApply();
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
 
 protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
+													 //}}AFX_VIRTUAL
 
+protected:
 	// Generated message map functions
 	//{{AFX_MSG(COPTConfigs)
 	afx_msg void OnEditconfigs();
@@ -70,7 +69,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 	BOOL BrowseForFolder(char *pszTitle, char *pszDirectory);
-	void SaveInfo(CGameConfig*);
+	void SaveInfo(CGameConfig *);
 	void UpdateConfigList();
 	void UpdateEntityLists();
 	bool ConfigChanged(CGameConfig *pConfig);
@@ -80,15 +79,13 @@ protected:
 	CString m_strInitialGameDir;
 };
 
-
 //-----------------------------------------------------------------------------
 // Purpose: get the last selected game configuration for this page
 //  Output: return pointer to last selected game configuration
 //-----------------------------------------------------------------------------
-inline CGameConfig *COPTConfigs::GetCurrentConfig( void )
+inline CGameConfig *COPTConfigs::GetCurrentConfig(void)
 {
 	return m_pLastSelConfig;
 }
-
 
 #endif // OPTCONFIGS_H

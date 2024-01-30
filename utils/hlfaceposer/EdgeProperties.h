@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,24 +19,24 @@ class CFlexAnimationTrack;
 #include "basedialogparams.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 struct CEdgePropertiesParams : public CBaseDialogParams
 {
 	// GlobalEvent descriptive name
-	char			m_szName[ 256 ];
+	char m_szName[256];
 
-	void			SetFromFlexTrack( CFlexAnimationTrack *track );
-	void			ApplyToTrack( CFlexAnimationTrack *track );
+	void SetFromFlexTrack(CFlexAnimationTrack *track);
+	void ApplyToTrack(CFlexAnimationTrack *track);
 
-	void			SetFromCurve( CCurveData *ramp );
-	void			ApplyToCurve( CCurveData *ramp );
+	void SetFromCurve(CCurveData *ramp);
+	void ApplyToCurve(CCurveData *ramp);
 
-	bool			m_bActive[ 2 ];
-	int				m_InterpolatorType[ 2 ];
-	float			m_flValue[ 2 ];
+	bool m_bActive[2];
+	int m_InterpolatorType[2];
+	float m_flValue[2];
 };
 
-int EdgeProperties( CEdgePropertiesParams *params );
+int EdgeProperties(CEdgePropertiesParams *params);
 
 #endif // EDGEPROPERTIES_H

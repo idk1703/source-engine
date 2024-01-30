@@ -18,10 +18,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-
-
-mxImage *
-mxBmpRead (const char *filename)
+mxImage *mxBmpRead(const char *filename)
 {
 	int i;
 	FILE *pfile = 0;
@@ -36,62 +33,62 @@ mxBmpRead (const char *filename)
 	mxImage *image = 0;
 
 	// File exists?
-	if ((pfile = fopen (filename, "rb")) == 0)
+	if((pfile = fopen(filename, "rb")) == 0)
 		return 0;
-	
+
 	// Read file header
-	if (fread (&bmfh, sizeof bmfh, 1/*count*/, pfile) != 1)
+	if(fread(&bmfh, sizeof bmfh, 1 /*count*/, pfile) != 1)
 		goto GetOut;
 
 	// Bogus file header check
-	if (!(bmfh.bfReserved1 == 0 && bmfh.bfReserved2 == 0))
+	if(!(bmfh.bfReserved1 == 0 && bmfh.bfReserved2 == 0))
 		goto GetOut;
 
 	// Read info header
-	if (fread (&bmih, sizeof bmih, 1/*count*/, pfile) != 1)
+	if(fread(&bmih, sizeof bmih, 1 /*count*/, pfile) != 1)
 		goto GetOut;
 
 	// Bogus info header check
-	if (!(bmih.biSize == sizeof bmih && bmih.biPlanes == 1))
+	if(!(bmih.biSize == sizeof bmih && bmih.biPlanes == 1))
 		goto GetOut;
 
 	// Bogus bit depth?  Only 8-bit supported.
-	if (bmih.biBitCount != 8)
+	if(bmih.biBitCount != 8)
 		goto GetOut;
 
 	// Bogus compression?  Only non-compressed supported.
-	if (bmih.biCompression != 0) //BI_RGB)
+	if(bmih.biCompression != 0) // BI_RGB)
 		goto GetOut;
 
 	// Figure out how many entires are actually in the table
-	if (bmih.biClrUsed == 0)
+	if(bmih.biClrUsed == 0)
 	{
 		bmih.biClrUsed = 256;
-		cbPalBytes = (1 << bmih.biBitCount) * sizeof (mxBitmapRGBQuad);
+		cbPalBytes = (1 << bmih.biBitCount) * sizeof(mxBitmapRGBQuad);
 	}
-	else 
+	else
 	{
-		cbPalBytes = bmih.biClrUsed * sizeof (mxBitmapRGBQuad);
+		cbPalBytes = bmih.biClrUsed * sizeof(mxBitmapRGBQuad);
 	}
 
 	// Read palette (bmih.biClrUsed entries)
-	if (fread (rgrgbPalette, cbPalBytes, 1/*count*/, pfile) != 1)
+	if(fread(rgrgbPalette, cbPalBytes, 1 /*count*/, pfile) != 1)
 		goto GetOut;
 
-	image = new mxImage ();
-	if (!image)
+	image = new mxImage();
+	if(!image)
 		goto GetOut;
 
-	if (!image->create (bmih.biWidth, bmih.biHeight, 8))
+	if(!image->create(bmih.biWidth, bmih.biHeight, 8))
 	{
 		delete image;
 		goto GetOut;
 	}
 
-	pb = (byte *) image->palette;
+	pb = (byte *)image->palette;
 
 	// Copy over used entries
-	for (i = 0; i < (int) bmih.biClrUsed; i++)
+	for(i = 0; i < (int)bmih.biClrUsed; i++)
 	{
 		*pb++ = rgrgbPalette[i].rgbRed;
 		*pb++ = rgrgbPalette[i].rgbGreen;
@@ -99,7 +96,7 @@ mxBmpRead (const char *filename)
 	}
 
 	// Fill in unused entires will 0,0,0
-	for (i = bmih.biClrUsed; i < 256; i++) 
+	for(i = bmih.biClrUsed; i < 256; i++)
 	{
 		*pb++ = 0;
 		*pb++ = 0;
@@ -107,56 +104,53 @@ mxBmpRead (const char *filename)
 	}
 
 	// Read bitmap bits (remainder of file)
-	cbBmpBits = bmfh.bfSize - ftell (pfile);
-	pb = (byte *) malloc (cbBmpBits * sizeof (byte));
-	if (pb == 0)
+	cbBmpBits = bmfh.bfSize - ftell(pfile);
+	pb = (byte *)malloc(cbBmpBits * sizeof(byte));
+	if(pb == 0)
 	{
-		free (pbPal);
+		free(pbPal);
 		goto GetOut;
 	}
 
-	if (fread (pb, cbBmpBits, 1/*count*/, pfile) != 1)
+	if(fread(pb, cbBmpBits, 1 /*count*/, pfile) != 1)
 	{
-		free (pb);
-		free (pbPal);
+		free(pb);
+		free(pbPal);
 		goto GetOut;
 	}
-/*
-	pbBmpBits = malloc(cbBmpBits);
-	if (pbBmpBits == 0)
-	{
-		free (pb);
-		free (pbPal);
-		goto GetOut;
-	}
-*/
-	pbBmpBits = (byte *) image->data;
+	/*
+		pbBmpBits = malloc(cbBmpBits);
+		if (pbBmpBits == 0)
+		{
+			free (pb);
+			free (pbPal);
+			goto GetOut;
+		}
+	*/
+	pbBmpBits = (byte *)image->data;
 
 	// data is actually stored with the width being rounded up to a multiple of 4
 	biTrueWidth = (bmih.biWidth + 3) & ~3;
-	
+
 	// reverse the order of the data.
 	pb += (bmih.biHeight - 1) * biTrueWidth;
 	for(i = 0; i < bmih.biHeight; i++)
 	{
-		memmove (&pbBmpBits[biTrueWidth * i], pb, biTrueWidth);
+		memmove(&pbBmpBits[biTrueWidth * i], pb, biTrueWidth);
 		pb -= biTrueWidth;
 	}
 
 	pb += biTrueWidth;
-	free (pb);
+	free(pb);
 
 GetOut:
-	if (pfile) 
-		fclose (pfile);
+	if(pfile)
+		fclose(pfile);
 
 	return image;
 }
 
-
-
-bool
-mxBmpWrite (const char *filename, mxImage *image)
+bool mxBmpWrite(const char *filename, mxImage *image)
 {
 	int i;
 	FILE *pfile = 0;
@@ -169,29 +163,29 @@ mxBmpWrite (const char *filename, mxImage *image)
 	int cbPalBytes;
 	int biTrueWidth;
 
-	if (!image || !image->data || !image->palette)
+	if(!image || !image->data || !image->palette)
 		return false;
 
 	// File exists?
-	if ((pfile = fopen(filename, "wb")) == 0)
+	if((pfile = fopen(filename, "wb")) == 0)
 		return false;
 
 	biTrueWidth = ((image->width + 3) & ~3);
 	cbBmpBits = biTrueWidth * image->height;
-	cbPalBytes = 256 * sizeof (mxBitmapRGBQuad);
+	cbPalBytes = 256 * sizeof(mxBitmapRGBQuad);
 
 	// Bogus file header check
-	//bmfh.bfType = MAKEWORD( 'B', 'M' );
-	bmfh.bfType = (word) (('M' << 8) | 'B');
+	// bmfh.bfType = MAKEWORD( 'B', 'M' );
+	bmfh.bfType = (word)(('M' << 8) | 'B');
 	bmfh.bfSize = sizeof bmfh + sizeof bmih + cbBmpBits + cbPalBytes;
 	bmfh.bfReserved1 = 0;
 	bmfh.bfReserved2 = 0;
 	bmfh.bfOffBits = sizeof bmfh + sizeof bmih + cbPalBytes;
 
 	// Write file header
-	if (fwrite (&bmfh, sizeof bmfh, 1/*count*/, pfile) != 1)
+	if(fwrite(&bmfh, sizeof bmfh, 1 /*count*/, pfile) != 1)
 	{
-		fclose (pfile);
+		fclose(pfile);
 		return false;
 	}
 
@@ -201,12 +195,12 @@ mxBmpWrite (const char *filename, mxImage *image)
 	bmih.biWidth = biTrueWidth;
 	// Height
 	bmih.biHeight = image->height;
-	// Only 1 plane 
+	// Only 1 plane
 	bmih.biPlanes = 1;
 	// Only 8-bit supported.
 	bmih.biBitCount = 8;
 	// Only non-compressed supported.
-	bmih.biCompression = 0; //BI_RGB;
+	bmih.biCompression = 0; // BI_RGB;
 	bmih.biSizeImage = 0;
 
 	// huh?
@@ -216,61 +210,60 @@ mxBmpWrite (const char *filename, mxImage *image)
 	// Always full palette
 	bmih.biClrUsed = 256;
 	bmih.biClrImportant = 0;
-	
+
 	// Write info header
-	if (fwrite (&bmih, sizeof bmih, 1/*count*/, pfile) != 1)
+	if(fwrite(&bmih, sizeof bmih, 1 /*count*/, pfile) != 1)
 	{
-		fclose (pfile);
+		fclose(pfile);
 		return false;
 	}
-	
 
 	// convert to expanded palette
-	pb = (byte *) image->palette;
+	pb = (byte *)image->palette;
 
 	// Copy over used entries
-	for (i = 0; i < (int) bmih.biClrUsed; i++)
+	for(i = 0; i < (int)bmih.biClrUsed; i++)
 	{
-		rgrgbPalette[i].rgbRed   = *pb++;
+		rgrgbPalette[i].rgbRed = *pb++;
 		rgrgbPalette[i].rgbGreen = *pb++;
-		rgrgbPalette[i].rgbBlue  = *pb++;
-        rgrgbPalette[i].rgbReserved = 0;
+		rgrgbPalette[i].rgbBlue = *pb++;
+		rgrgbPalette[i].rgbReserved = 0;
 	}
 
 	// Write palette (bmih.biClrUsed entries)
-	cbPalBytes = bmih.biClrUsed * sizeof (mxBitmapRGBQuad);
-	if (fwrite (rgrgbPalette, cbPalBytes, 1/*count*/, pfile) != 1)
+	cbPalBytes = bmih.biClrUsed * sizeof(mxBitmapRGBQuad);
+	if(fwrite(rgrgbPalette, cbPalBytes, 1 /*count*/, pfile) != 1)
 	{
-		fclose (pfile);
+		fclose(pfile);
 		return false;
 	}
 
-	pbBmpBits = (byte *) malloc (cbBmpBits * sizeof (byte));
-	if (!pbBmpBits)
+	pbBmpBits = (byte *)malloc(cbBmpBits * sizeof(byte));
+	if(!pbBmpBits)
 	{
-		fclose (pfile);
+		fclose(pfile);
 		return false;
 	}
 
-	pb = (byte *) image->data;
+	pb = (byte *)image->data;
 	// reverse the order of the data.
 	pb += (image->height - 1) * image->width;
 	for(i = 0; i < bmih.biHeight; i++)
 	{
-		memmove (&pbBmpBits[biTrueWidth * i], pb, image->width);
+		memmove(&pbBmpBits[biTrueWidth * i], pb, image->width);
 		pb -= image->width;
 	}
 
 	// Write bitmap bits (remainder of file)
-	if (fwrite (pbBmpBits, cbBmpBits, 1/*count*/, pfile) != 1)
+	if(fwrite(pbBmpBits, cbBmpBits, 1 /*count*/, pfile) != 1)
 	{
-		free (pbBmpBits);
-		fclose (pfile);
+		free(pbBmpBits);
+		fclose(pfile);
 		return false;
 	}
 
-	free (pbBmpBits);
-	fclose (pfile);
+	free(pbBmpBits);
+	fclose(pfile);
 
 	return true;
 }

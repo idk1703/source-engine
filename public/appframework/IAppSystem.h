@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: An application framework 
+// Purpose: An application framework
 //
 // $Revision: $
 // $NoKeywords: $
@@ -14,7 +14,6 @@
 #endif
 
 #include "tier1/interface.h"
-
 
 //-----------------------------------------------------------------------------
 // Client systems are singleton objects in the client codebase responsible for
@@ -32,53 +31,59 @@ enum InitReturnVal_t
 	INIT_LAST_VAL,
 };
 
-
 abstract_class IAppSystem
 {
 public:
-	// Here's where the app systems get to learn about each other 
-	virtual bool Connect( CreateInterfaceFn factory ) = 0;
+	// Here's where the app systems get to learn about each other
+	virtual bool Connect(CreateInterfaceFn factory) = 0;
 	virtual void Disconnect() = 0;
 
 	// Here's where systems can access other interfaces implemented by this object
 	// Returns NULL if it doesn't implement the requested interface
-	virtual void *QueryInterface( const char *pInterfaceName ) = 0;
+	virtual void *QueryInterface(const char *pInterfaceName) = 0;
 
 	// Init, shutdown
 	virtual InitReturnVal_t Init() = 0;
 	virtual void Shutdown() = 0;
 };
 
-
 //-----------------------------------------------------------------------------
 // Helper empty implementation of an IAppSystem
 //-----------------------------------------------------------------------------
-template< class IInterface > 
+template<class IInterface>
 class CBaseAppSystem : public IInterface
 {
 public:
-	// Here's where the app systems get to learn about each other 
-	virtual bool Connect( CreateInterfaceFn factory ) { return true; }
+	// Here's where the app systems get to learn about each other
+	virtual bool Connect(CreateInterfaceFn factory)
+	{
+		return true;
+	}
 	virtual void Disconnect() {}
 
 	// Here's where systems can access other interfaces implemented by this object
 	// Returns NULL if it doesn't implement the requested interface
-	virtual void *QueryInterface( const char *pInterfaceName ) { return NULL; }
+	virtual void *QueryInterface(const char *pInterfaceName)
+	{
+		return NULL;
+	}
 
 	// Init, shutdown
-	virtual InitReturnVal_t Init() { return INIT_OK; }
+	virtual InitReturnVal_t Init()
+	{
+		return INIT_OK;
+	}
 	virtual void Shutdown() {}
 };
-
 
 //-----------------------------------------------------------------------------
 // Helper implementation of an IAppSystem for tier0
 //-----------------------------------------------------------------------------
-template< class IInterface > 
-class CTier0AppSystem : public CBaseAppSystem< IInterface >
+template<class IInterface>
+class CTier0AppSystem : public CBaseAppSystem<IInterface>
 {
 public:
-	CTier0AppSystem( bool bIsPrimaryAppSystem = true )
+	CTier0AppSystem(bool bIsPrimaryAppSystem = true)
 	{
 		m_bIsPrimaryAppSystem = bIsPrimaryAppSystem;
 	}
@@ -91,12 +96,14 @@ protected:
 
 	// NOTE: We don't do this as a virtual function to avoid
 	// having to up the version on all interfaces
-	bool IsPrimaryAppSystem() { return m_bIsPrimaryAppSystem; }
+	bool IsPrimaryAppSystem()
+	{
+		return m_bIsPrimaryAppSystem;
+	}
 
 private:
 	bool m_bIsPrimaryAppSystem;
 };
-
 
 //-----------------------------------------------------------------------------
 // This is the version of IAppSystem shipped 10/15/04
@@ -105,13 +112,13 @@ private:
 abstract_class IAppSystemV0
 {
 public:
-	// Here's where the app systems get to learn about each other 
-	virtual bool Connect( CreateInterfaceFn factory ) = 0;
+	// Here's where the app systems get to learn about each other
+	virtual bool Connect(CreateInterfaceFn factory) = 0;
 	virtual void Disconnect() = 0;
 
 	// Here's where systems can access other interfaces implemented by this object
 	// Returns NULL if it doesn't implement the requested interface
-	virtual void *QueryInterface( const char *pInterfaceName ) = 0;
+	virtual void *QueryInterface(const char *pInterfaceName) = 0;
 
 	// Init, shutdown
 	virtual InitReturnVal_t Init() = 0;
@@ -119,4 +126,3 @@ public:
 };
 
 #endif // IAPPSYSTEM_H
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -42,7 +42,8 @@
  * If VTPause is called while a VTune Counter Monitor collection is active, Counter Monitor data collection
  * is paused. Counter Monitor data collection can be resumed by calling VTResume.
  *
- * VTPause and VTResume can be safely called when the Sampling, Counter Monitor, and Callgraph collectors are not active.
+ * VTPause and VTResume can be safely called when the Sampling, Counter Monitor, and Callgraph collectors are not
+active.
  * In this case, the VTPause and VTResume do nothing.
  *
  * Note:
@@ -72,44 +73,39 @@
 #define VTUNEAPI __declspec(dllexport)
 #endif
 
-
 #define VTUNEAPICALL __cdecl
 
-
 #ifdef __cplusplus
-extern "C" {
-#endif   // __cplusplus
+extern "C"
+{
+#endif // __cplusplus
 
+	//
+	// Pause and Resume data collection during VTune PC Sampling and Callgraph sessions.
+	// The VTPause and VTResume api's effect
+	// both VTune PC Sampling and VTune Callgraph
+	//
+	VTUNEAPI
+	VOID VTUNEAPICALL VTPause(void);
 
-//
-// Pause and Resume data collection during VTune PC Sampling and Callgraph sessions.
-// The VTPause and VTResume api's effect
-// both VTune PC Sampling and VTune Callgraph
-//
-VTUNEAPI
-VOID VTUNEAPICALL VTPause(void);
+	VTUNEAPI
+	VOID VTUNEAPICALL VTResume(void);
 
-VTUNEAPI
-VOID VTUNEAPICALL VTResume(void);
+	// Preserve VtPauseSampling and VtResumeSampling for backward compatibility...
+	VTUNEAPI
+	void VTUNEAPICALL VTPauseSampling(void);
 
+	VTUNEAPI
+	void VTUNEAPICALL VTResumeSampling(void);
 
-//Preserve VtPauseSampling and VtResumeSampling for backward compatibility...
-VTUNEAPI
-void VTUNEAPICALL VTPauseSampling(void);
+	VTUNEAPI
+	void VTUNEAPICALL CMPause(void);
 
-VTUNEAPI
-void VTUNEAPICALL VTResumeSampling(void);
-
-VTUNEAPI
-void VTUNEAPICALL CMPause(void);
-
-VTUNEAPI
-void VTUNEAPICALL CMResume(void);
+	VTUNEAPI
+	void VTUNEAPICALL CMResume(void);
 
 #ifdef __cplusplus
 }
-#endif   // __cplusplus
+#endif // __cplusplus
 
-#endif  // _VTUNEAPI_H_
-
-
+#endif // _VTUNEAPI_H_

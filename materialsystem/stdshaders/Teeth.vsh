@@ -16,7 +16,7 @@ $WARPPARAM = $SHADER_SPECIFIC_CONST_2;
 $ENTITY_ORIGIN = $SHADER_SPECIFIC_CONST_3;
 
 ;------------------------------------------------------------------------------
-; Vertex blending 
+; Vertex blending
 ;------------------------------------------------------------------------------
 alloc $worldPos
 alloc $worldNormal
@@ -92,6 +92,3 @@ free $tmp
 ;------------------------------------------------------------------------------
 
 mov oT0, $vTexCoord0
-
-
-

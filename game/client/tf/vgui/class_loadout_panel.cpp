@@ -4,7 +4,6 @@
 //
 //=============================================================================//
 
-
 #include "cbase.h"
 #include "class_loadout_panel.h"
 #include "c_tf_player.h"
@@ -23,73 +22,77 @@
 
 extern ConVar tf_respawn_on_loadoutchanges;
 
-ConVar tf_show_preset_explanation_in_class_loadout( "tf_show_preset_explanation_in_class_loadout", "1", FCVAR_HIDDEN | FCVAR_CLIENTDLL | FCVAR_ARCHIVE );
-ConVar tf_show_taunt_explanation_in_class_loadout( "tf_show_taunt_explanation_in_class_loadout", "1", FCVAR_HIDDEN | FCVAR_CLIENTDLL | FCVAR_ARCHIVE );
+ConVar tf_show_preset_explanation_in_class_loadout("tf_show_preset_explanation_in_class_loadout", "1",
+												   FCVAR_HIDDEN | FCVAR_CLIENTDLL | FCVAR_ARCHIVE);
+ConVar tf_show_taunt_explanation_in_class_loadout("tf_show_taunt_explanation_in_class_loadout", "1",
+												  FCVAR_HIDDEN | FCVAR_CLIENTDLL | FCVAR_ARCHIVE);
 
-void ParticleSlider_UpdateRequest( int iLoadoutPosition, float value )
+void ParticleSlider_UpdateRequest(int iLoadoutPosition, float value)
 {
 	CClassLoadoutPanel *pPanel = g_pClassLoadoutPanel;
-	if ( !pPanel )
+	if(!pPanel)
 		return;
 
-	CEconItemView *pHat = pPanel->GetItemInSlot( iLoadoutPosition );
-	if ( !pHat )
+	CEconItemView *pHat = pPanel->GetItemInSlot(iLoadoutPosition);
+	if(!pHat)
 		return;
 
 	// does this hat even have a particle effect
-	static CSchemaAttributeDefHandle pAttrDef_AttachParticleEffect( "attach particle effect" );
+	static CSchemaAttributeDefHandle pAttrDef_AttachParticleEffect("attach particle effect");
 	uint32 iHasEffect = 0;
-	if ( !pHat->FindAttribute( pAttrDef_AttachParticleEffect, &iHasEffect ) )
+	if(!pHat->FindAttribute(pAttrDef_AttachParticleEffect, &iHasEffect))
 		return;
 
 	// Check for use head toggle
-	static CSchemaAttributeDefHandle pAttrDef_UseHeadOrigin( "particle effect use head origin" );
+	static CSchemaAttributeDefHandle pAttrDef_UseHeadOrigin("particle effect use head origin");
 	uint32 iUseHead = 0;
-	if ( !pHat->FindAttribute( pAttrDef_UseHeadOrigin, &iUseHead ) || iUseHead == 0 )
+	if(!pHat->FindAttribute(pAttrDef_UseHeadOrigin, &iUseHead) || iUseHead == 0)
 		return;
 
 	// Look for the attribute and request to change it
-	static CSchemaAttributeDefHandle pAttrDef_VerticalOffset( "particle effect vertical offset" );
+	static CSchemaAttributeDefHandle pAttrDef_VerticalOffset("particle effect vertical offset");
 	uint32 iOffSet = 0;
-	if ( !pHat->FindAttribute( pAttrDef_VerticalOffset, &iOffSet ) && value == 0 )
+	if(!pHat->FindAttribute(pAttrDef_VerticalOffset, &iOffSet) && value == 0)
 	{
 		return;
 	}
 	else
 	{
-		const float& flAttrValue = (float&)iOffSet;
-		if ( value == flAttrValue )
+		const float &flAttrValue = (float &)iOffSet;
+		if(value == flAttrValue)
 			return; // no change do nothing
 	}
 
 	// Send a message to the GC to request a change
-	GCSDK::CProtoBufMsg<CMsgSetItemEffectVerticalOffset> msg( k_EMsgGCSetItemEffectVerticalOffset );
-	msg.Body().set_item_id( pHat->GetItemID() );
-	msg.Body().set_offset( value );
-	GCClientSystem()->BSendMessage( msg );
+	GCSDK::CProtoBufMsg<CMsgSetItemEffectVerticalOffset> msg(k_EMsgGCSetItemEffectVerticalOffset);
+	msg.Body().set_item_id(pHat->GetItemID());
+	msg.Body().set_offset(value);
+	GCClientSystem()->BSendMessage(msg);
 }
 
-void HatOffset_Callback( IConVar *pConVar, char const *pOldString, float flOldValue )
+void HatOffset_Callback(IConVar *pConVar, char const *pOldString, float flOldValue)
 {
-	ConVarRef cVarRef( pConVar );
-	ParticleSlider_UpdateRequest( LOADOUT_POSITION_HEAD, cVarRef.GetFloat() );
+	ConVarRef cVarRef(pConVar);
+	ParticleSlider_UpdateRequest(LOADOUT_POSITION_HEAD, cVarRef.GetFloat());
 }
-ConVar tf_hat_effect_offset( "tf_hat_effect_offset", "0", FCVAR_DEVELOPMENTONLY, "Adjust the position of the unusual effect for your hat.", HatOffset_Callback );
+ConVar tf_hat_effect_offset("tf_hat_effect_offset", "0", FCVAR_DEVELOPMENTONLY,
+							"Adjust the position of the unusual effect for your hat.", HatOffset_Callback);
 
-void Misc1Offset_Callback( IConVar *pConVar, char const *pOldString, float flOldValue )
+void Misc1Offset_Callback(IConVar *pConVar, char const *pOldString, float flOldValue)
 {
-	ConVarRef cVarRef( pConVar );
-	ParticleSlider_UpdateRequest( LOADOUT_POSITION_MISC, cVarRef.GetFloat() );
+	ConVarRef cVarRef(pConVar);
+	ParticleSlider_UpdateRequest(LOADOUT_POSITION_MISC, cVarRef.GetFloat());
 }
-ConVar tf_misc1_effect_offset( "tf_misc1_effect_offset", "0", FCVAR_DEVELOPMENTONLY, "Adjust the position of the unusual effect for your hat.", Misc1Offset_Callback );
+ConVar tf_misc1_effect_offset("tf_misc1_effect_offset", "0", FCVAR_DEVELOPMENTONLY,
+							  "Adjust the position of the unusual effect for your hat.", Misc1Offset_Callback);
 
-void Misc2Offset_Callback( IConVar *pConVar, char const *pOldString, float flOldValue )
+void Misc2Offset_Callback(IConVar *pConVar, char const *pOldString, float flOldValue)
 {
-	ConVarRef cVarRef( pConVar );
-	ParticleSlider_UpdateRequest( LOADOUT_POSITION_MISC2, cVarRef.GetFloat() );
+	ConVarRef cVarRef(pConVar);
+	ParticleSlider_UpdateRequest(LOADOUT_POSITION_MISC2, cVarRef.GetFloat());
 }
-ConVar tf_misc2_effect_offset( "tf_misc2_effect_offset", "0", FCVAR_DEVELOPMENTONLY, "Adjust the position of the unusual effect for your hat.", Misc2Offset_Callback );
-
+ConVar tf_misc2_effect_offset("tf_misc2_effect_offset", "0", FCVAR_DEVELOPMENTONLY,
+							  "Adjust the position of the unusual effect for your hat.", Misc2Offset_Callback);
 
 // Hacky solution to different classes wanting different slots visible in their loadouts, and in different positions
 struct LoadoutPanelPositioningInstance
@@ -97,149 +100,140 @@ struct LoadoutPanelPositioningInstance
 	int m_iPos[NUM_ITEM_PANELS_IN_LOADOUT];
 };
 
-bool IsTauntPanelPosition( int iButtonPos )
+bool IsTauntPanelPosition(int iButtonPos)
 {
 	return iButtonPos >= 9 && iButtonPos <= 16;
 }
 
-const LoadoutPanelPositioningInstance g_DefaultLoadoutPanelPositioning =
-{
-	{
-		1,	// LOADOUT_POSITION_PRIMARY = 0,
-		2,	// LOADOUT_POSITION_SECONDARY,
-		3,	// LOADOUT_POSITION_MELEE,
-		0,	// LOADOUT_POSITION_UTILITY,  // STAGING ONLY
-		0,	// LOADOUT_POSITION_BUILDING,
-		0,	// LOADOUT_POSITION_PDA,
-		0,	// LOADOUT_POSITION_PDA2,
-		5,	// LOADOUT_POSITION_HEAD,
-		6,	// LOADOUT_POSITION_MISC,
-		8,	// LOADOUT_POSITION_ACTION,
-		7,	// LOADOUT_POSITION_MISC2,
-		9,	// LOADOUT_POSITION_TAUNT,
-		10,	// LOADOUT_POSITION_TAUNT2,
-		11,	// LOADOUT_POSITION_TAUNT3,
-		12,	// LOADOUT_POSITION_TAUNT4,
-		13,	// LOADOUT_POSITION_TAUNT5,
-		14,	// LOADOUT_POSITION_TAUNT6,
-		15,	// LOADOUT_POSITION_TAUNT7,
-		16,	// LOADOUT_POSITION_TAUNT8,
+const LoadoutPanelPositioningInstance g_DefaultLoadoutPanelPositioning = {{
+	1,	// LOADOUT_POSITION_PRIMARY = 0,
+	2,	// LOADOUT_POSITION_SECONDARY,
+	3,	// LOADOUT_POSITION_MELEE,
+	0,	// LOADOUT_POSITION_UTILITY,  // STAGING ONLY
+	0,	// LOADOUT_POSITION_BUILDING,
+	0,	// LOADOUT_POSITION_PDA,
+	0,	// LOADOUT_POSITION_PDA2,
+	5,	// LOADOUT_POSITION_HEAD,
+	6,	// LOADOUT_POSITION_MISC,
+	8,	// LOADOUT_POSITION_ACTION,
+	7,	// LOADOUT_POSITION_MISC2,
+	9,	// LOADOUT_POSITION_TAUNT,
+	10, // LOADOUT_POSITION_TAUNT2,
+	11, // LOADOUT_POSITION_TAUNT3,
+	12, // LOADOUT_POSITION_TAUNT4,
+	13, // LOADOUT_POSITION_TAUNT5,
+	14, // LOADOUT_POSITION_TAUNT6,
+	15, // LOADOUT_POSITION_TAUNT7,
+	16, // LOADOUT_POSITION_TAUNT8,
 
 #ifdef STAGING_ONLY
-		0,	// LOADOUT_POSITION_PDA_ADDON1,
-		0,	// LOADOUT_POSITION_PDA_ADDON2,
-		0,  // LOADOUT_POSITION_PDA3,
-		//9,	// LOADOUT_POSITION_MISC3,
-		//10,	// LOADOUT_POSITION_MISC4,
-		//11,	// LOADOUT_POSITION_MISC5,
-		//12,	// LOADOUT_POSITION_MISC6,
-		//13,	// LOADOUT_POSITION_MISC7,
-		//14,	// LOADOUT_POSITION_MISC8,
-		//15,	// LOADOUT_POSITION_MISC9,
-		//16,	// LOADOUT_POSITION_MISC10,
-		0,	// LOADOUT_POSITION_BUILDING2,
+	0, // LOADOUT_POSITION_PDA_ADDON1,
+	0, // LOADOUT_POSITION_PDA_ADDON2,
+	0, // LOADOUT_POSITION_PDA3,
+	// 9,	// LOADOUT_POSITION_MISC3,
+	// 10,	// LOADOUT_POSITION_MISC4,
+	// 11,	// LOADOUT_POSITION_MISC5,
+	// 12,	// LOADOUT_POSITION_MISC6,
+	// 13,	// LOADOUT_POSITION_MISC7,
+	// 14,	// LOADOUT_POSITION_MISC8,
+	// 15,	// LOADOUT_POSITION_MISC9,
+	// 16,	// LOADOUT_POSITION_MISC10,
+	0, // LOADOUT_POSITION_BUILDING2,
 #endif // STAGING_ONLY
-	}
-};
+}};
 
-const LoadoutPanelPositioningInstance g_LoadoutPanelPositioning_Spy =
-{
-	{
-		0,	// LOADOUT_POSITION_PRIMARY = 0,
-		1,	// LOADOUT_POSITION_SECONDARY,
-		2,	// LOADOUT_POSITION_MELEE,
-		0,	// LOADOUT_POSITION_UTILITY,  // STAGING ONLY
-		4,	// LOADOUT_POSITION_BUILDING,		// sapper
-		0,	// LOADOUT_POSITION_PDA,			// disguise kit (Hidden)
-		3,	// LOADOUT_POSITION_PDA2,			// Watch
-		5,	// LOADOUT_POSITION_HEAD,
-		6,	// LOADOUT_POSITION_MISC,
-		8,	// LOADOUT_POSITION_ACTION,
-		7,	// LOADOUT_POSITION_MISC2,
-		9,	// LOADOUT_POSITION_TAUNT,
-		10,	// LOADOUT_POSITION_TAUNT2,
-		11,	// LOADOUT_POSITION_TAUNT3,
-		12,	// LOADOUT_POSITION_TAUNT4,
-		13,	// LOADOUT_POSITION_TAUNT5,
-		14,	// LOADOUT_POSITION_TAUNT6,
-		15,	// LOADOUT_POSITION_TAUNT7,
-		16,	// LOADOUT_POSITION_TAUNT8,
+const LoadoutPanelPositioningInstance g_LoadoutPanelPositioning_Spy = {{
+	0,	// LOADOUT_POSITION_PRIMARY = 0,
+	1,	// LOADOUT_POSITION_SECONDARY,
+	2,	// LOADOUT_POSITION_MELEE,
+	0,	// LOADOUT_POSITION_UTILITY,  // STAGING ONLY
+	4,	// LOADOUT_POSITION_BUILDING,		// sapper
+	0,	// LOADOUT_POSITION_PDA,			// disguise kit (Hidden)
+	3,	// LOADOUT_POSITION_PDA2,			// Watch
+	5,	// LOADOUT_POSITION_HEAD,
+	6,	// LOADOUT_POSITION_MISC,
+	8,	// LOADOUT_POSITION_ACTION,
+	7,	// LOADOUT_POSITION_MISC2,
+	9,	// LOADOUT_POSITION_TAUNT,
+	10, // LOADOUT_POSITION_TAUNT2,
+	11, // LOADOUT_POSITION_TAUNT3,
+	12, // LOADOUT_POSITION_TAUNT4,
+	13, // LOADOUT_POSITION_TAUNT5,
+	14, // LOADOUT_POSITION_TAUNT6,
+	15, // LOADOUT_POSITION_TAUNT7,
+	16, // LOADOUT_POSITION_TAUNT8,
 #ifdef STAGING_ONLY
-		0,	// LOADOUT_POSITION_PDA_ADDON1,
-		0,	// LOADOUT_POSITION_PDA_ADDON2,
-		0,  // LOADOUT_POSITION_PDA3,
-		//9,	// LOADOUT_POSITION_MISC3,
-		//10,	// LOADOUT_POSITION_MISC4,
-		//11,	// LOADOUT_POSITION_MISC5,
-		//12,	// LOADOUT_POSITION_MISC6,
-		//13,	// LOADOUT_POSITION_MISC7,
-		//14,	// LOADOUT_POSITION_MISC8,
-		//15,	// LOADOUT_POSITION_MISC9,
-		//16,	// LOADOUT_POSITION_MISC10,
-		0,	// LOADOUT_POSITION_BUILDING2,
+	0, // LOADOUT_POSITION_PDA_ADDON1,
+	0, // LOADOUT_POSITION_PDA_ADDON2,
+	0, // LOADOUT_POSITION_PDA3,
+	// 9,	// LOADOUT_POSITION_MISC3,
+	// 10,	// LOADOUT_POSITION_MISC4,
+	// 11,	// LOADOUT_POSITION_MISC5,
+	// 12,	// LOADOUT_POSITION_MISC6,
+	// 13,	// LOADOUT_POSITION_MISC7,
+	// 14,	// LOADOUT_POSITION_MISC8,
+	// 15,	// LOADOUT_POSITION_MISC9,
+	// 16,	// LOADOUT_POSITION_MISC10,
+	0, // LOADOUT_POSITION_BUILDING2,
 #endif // STAGING_ONLY
-	}
-};
+}};
 
-const LoadoutPanelPositioningInstance g_LoadoutPanelPositioning_Engineer =
-{
-	{
-		1,	// LOADOUT_POSITION_PRIMARY = 0,
-		2,	// LOADOUT_POSITION_SECONDARY,
-		3,	// LOADOUT_POSITION_MELEE,
-		0,	// LOADOUT_POSITION_UTILITY,  // STAGING ONLY
-		0,	// LOADOUT_POSITION_BUILDING,
-		4,	// LOADOUT_POSITION_PDA,
-		0,	// LOADOUT_POSITION_PDA2,
-		5,	// LOADOUT_POSITION_HEAD,
-		6,	// LOADOUT_POSITION_MISC,
-		8,	// LOADOUT_POSITION_ACTION,
-		7,	// LOADOUT_POSITION_MISC2,
-		9,	// LOADOUT_POSITION_TAUNT,
-		10,	// LOADOUT_POSITION_TAUNT2,
-		11,	// LOADOUT_POSITION_TAUNT3,
-		12,	// LOADOUT_POSITION_TAUNT4,
-		13,	// LOADOUT_POSITION_TAUNT5,
-		14,	// LOADOUT_POSITION_TAUNT6,
-		15,	// LOADOUT_POSITION_TAUNT7,
-		16,	// LOADOUT_POSITION_TAUNT8,
+const LoadoutPanelPositioningInstance g_LoadoutPanelPositioning_Engineer = {{
+	1,	// LOADOUT_POSITION_PRIMARY = 0,
+	2,	// LOADOUT_POSITION_SECONDARY,
+	3,	// LOADOUT_POSITION_MELEE,
+	0,	// LOADOUT_POSITION_UTILITY,  // STAGING ONLY
+	0,	// LOADOUT_POSITION_BUILDING,
+	4,	// LOADOUT_POSITION_PDA,
+	0,	// LOADOUT_POSITION_PDA2,
+	5,	// LOADOUT_POSITION_HEAD,
+	6,	// LOADOUT_POSITION_MISC,
+	8,	// LOADOUT_POSITION_ACTION,
+	7,	// LOADOUT_POSITION_MISC2,
+	9,	// LOADOUT_POSITION_TAUNT,
+	10, // LOADOUT_POSITION_TAUNT2,
+	11, // LOADOUT_POSITION_TAUNT3,
+	12, // LOADOUT_POSITION_TAUNT4,
+	13, // LOADOUT_POSITION_TAUNT5,
+	14, // LOADOUT_POSITION_TAUNT6,
+	15, // LOADOUT_POSITION_TAUNT7,
+	16, // LOADOUT_POSITION_TAUNT8,
 #ifdef STAGING_ONLY
-		17,	// LOADOUT_POSITION_PDA_ADDON1,
-		18,	// LOADOUT_POSITION_PDA_ADDON2,
-		0,  // LOADOUT_POSITION_PDA3,
-		//9,	// LOADOUT_POSITION_MISC3,
-		//10,	// LOADOUT_POSITION_MISC4,
-		//11,	// LOADOUT_POSITION_MISC5,
-		//12,	// LOADOUT_POSITION_MISC6,
-		//13,	// LOADOUT_POSITION_MISC7,
-		//14,	// LOADOUT_POSITION_MISC8,
-		//15,	// LOADOUT_POSITION_MISC9,
-		//16,	// LOADOUT_POSITION_MISC10,
-		0,	// LOADOUT_POSITION_BUILDING2,
+	17, // LOADOUT_POSITION_PDA_ADDON1,
+	18, // LOADOUT_POSITION_PDA_ADDON2,
+	0,	// LOADOUT_POSITION_PDA3,
+	// 9,	// LOADOUT_POSITION_MISC3,
+	// 10,	// LOADOUT_POSITION_MISC4,
+	// 11,	// LOADOUT_POSITION_MISC5,
+	// 12,	// LOADOUT_POSITION_MISC6,
+	// 13,	// LOADOUT_POSITION_MISC7,
+	// 14,	// LOADOUT_POSITION_MISC8,
+	// 15,	// LOADOUT_POSITION_MISC9,
+	// 16,	// LOADOUT_POSITION_MISC10,
+	0, // LOADOUT_POSITION_BUILDING2,
 #endif // STAGING_ONLY
-	}
+}};
+
+const LoadoutPanelPositioningInstance *g_VisibleLoadoutSlotsPerClass[] = {
+	&g_DefaultLoadoutPanelPositioning,	 // TF_CLASS_UNDEFINED
+	&g_DefaultLoadoutPanelPositioning,	 // TF_CLASS_SCOUT
+	&g_DefaultLoadoutPanelPositioning,	 // TF_CLASS_SNIPER
+	&g_DefaultLoadoutPanelPositioning,	 // TF_CLASS_SOLDIER
+	&g_DefaultLoadoutPanelPositioning,	 // TF_CLASS_DEMOMAN
+	&g_DefaultLoadoutPanelPositioning,	 // TF_CLASS_MEDIC
+	&g_DefaultLoadoutPanelPositioning,	 // TF_CLASS_HEAVYWEAPONS
+	&g_DefaultLoadoutPanelPositioning,	 // TF_CLASS_PYRO
+	&g_LoadoutPanelPositioning_Spy,		 // TF_CLASS_SPY
+	&g_LoadoutPanelPositioning_Engineer, // TF_CLASS_ENGINEER
 };
 
-const LoadoutPanelPositioningInstance *g_VisibleLoadoutSlotsPerClass[] =
-{
-	&g_DefaultLoadoutPanelPositioning,			// TF_CLASS_UNDEFINED
-	&g_DefaultLoadoutPanelPositioning,			// TF_CLASS_SCOUT
-	&g_DefaultLoadoutPanelPositioning,			// TF_CLASS_SNIPER
-	&g_DefaultLoadoutPanelPositioning,			// TF_CLASS_SOLDIER
-	&g_DefaultLoadoutPanelPositioning,			// TF_CLASS_DEMOMAN
-	&g_DefaultLoadoutPanelPositioning,			// TF_CLASS_MEDIC
-	&g_DefaultLoadoutPanelPositioning,			// TF_CLASS_HEAVYWEAPONS
-	&g_DefaultLoadoutPanelPositioning,			// TF_CLASS_PYRO
-	&g_LoadoutPanelPositioning_Spy,				// TF_CLASS_SPY
-	&g_LoadoutPanelPositioning_Engineer,		// TF_CLASS_ENGINEER
-};
-
-COMPILE_TIME_ASSERT( ARRAYSIZE( g_VisibleLoadoutSlotsPerClass ) == TF_LAST_NORMAL_CLASS );
+COMPILE_TIME_ASSERT(ARRAYSIZE(g_VisibleLoadoutSlotsPerClass) == TF_LAST_NORMAL_CLASS);
 
 //-----------------------------------------------------------------------------
 // Particle Effect Slider
 //-----------------------------------------------------------------------------
-CLoadoutItemOptionsPanel::CLoadoutItemOptionsPanel( Panel *parent, const char *pName ) : vgui::EditablePanel( parent, pName )
+CLoadoutItemOptionsPanel::CLoadoutItemOptionsPanel(Panel *parent, const char *pName)
+	: vgui::EditablePanel(parent, pName)
 {
 	m_pHatParticleSlider = NULL;
 	m_pHatParticleUseHeadButton = NULL;
@@ -247,63 +241,64 @@ CLoadoutItemOptionsPanel::CLoadoutItemOptionsPanel( Panel *parent, const char *p
 	m_iCurrentClassIndex = -1;
 	m_eItemSlot = LOADOUT_POSITION_INVALID;
 
-	m_pListPanel = new vgui::PanelListPanel( this, "PanelListPanel" );
-	m_pListPanel->SetFirstColumnWidth( 0 );
-	m_pHatParticleSlider = new CCvarSlider( m_pListPanel, "HatParticleSlider" );
-	m_pHatParticleSlider->AddActionSignalTarget( this );
-	m_pHatParticleUseHeadButton = new vgui::CheckButton( m_pListPanel, "HatUseHeadCheckButton", "#GameUI_ParticleHatUseHead" );
-	m_pHatParticleUseHeadButton->AddActionSignalTarget( this );
-	m_pSetStyleButton = new CExButton( m_pListPanel, "SetStyleButton", "#TF_Item_SelectStyle" );
-	m_pSetStyleButton->AddActionSignalTarget( this );
+	m_pListPanel = new vgui::PanelListPanel(this, "PanelListPanel");
+	m_pListPanel->SetFirstColumnWidth(0);
+	m_pHatParticleSlider = new CCvarSlider(m_pListPanel, "HatParticleSlider");
+	m_pHatParticleSlider->AddActionSignalTarget(this);
+	m_pHatParticleUseHeadButton =
+		new vgui::CheckButton(m_pListPanel, "HatUseHeadCheckButton", "#GameUI_ParticleHatUseHead");
+	m_pHatParticleUseHeadButton->AddActionSignalTarget(this);
+	m_pSetStyleButton = new CExButton(m_pListPanel, "SetStyleButton", "#TF_Item_SelectStyle");
+	m_pSetStyleButton->AddActionSignalTarget(this);
 }
 
 //-----------------------------------------------------------------------------
-void CLoadoutItemOptionsPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CLoadoutItemOptionsPanel::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
-	LoadControlSettings( "resource/UI/ItemOptionsPanel.res" );
+	BaseClass::ApplySchemeSettings(pScheme);
+	LoadControlSettings("resource/UI/ItemOptionsPanel.res");
 }
 
 //-----------------------------------------------------------------------------
-void CLoadoutItemOptionsPanel::PerformLayout( void ) 
+void CLoadoutItemOptionsPanel::PerformLayout(void)
 {
 	BaseClass::PerformLayout();
-	m_pHatParticleSlider->SetTickColor( Color( 235, 226, 202, 255 ) ); // tanlight
+	m_pHatParticleSlider->SetTickColor(Color(235, 226, 202, 255)); // tanlight
 }
 
 //-----------------------------------------------------------------------------
-void CLoadoutItemOptionsPanel::OnCommand( const char *command )
+void CLoadoutItemOptionsPanel::OnCommand(const char *command)
 {
-	if ( FStrEq( command, "particle_button_clicked" ) )
+	if(FStrEq(command, "particle_button_clicked"))
 	{
 		UpdateItemOptionsUI();
 		return;
 	}
-	else if ( FStrEq( command, "particle_use_head_clicked" ) )
+	else if(FStrEq(command, "particle_use_head_clicked"))
 	{
 		// Grab current hat
-		CEconItemView *pHat = TFInventoryManager()->GetItemInLoadoutForClass( m_iCurrentClassIndex, m_eItemSlot );
-		if ( !pHat )
+		CEconItemView *pHat = TFInventoryManager()->GetItemInLoadoutForClass(m_iCurrentClassIndex, m_eItemSlot);
+		if(!pHat)
 			return;
 
 		// does this hat even have a particle effect
-		static CSchemaAttributeDefHandle pAttrDef_AttachParticleEffect( "attach particle effect" );
+		static CSchemaAttributeDefHandle pAttrDef_AttachParticleEffect("attach particle effect");
 		uint32 iHasEffect = 0;
-		if ( !pHat->FindAttribute( pAttrDef_AttachParticleEffect, &iHasEffect ) )
+		if(!pHat->FindAttribute(pAttrDef_AttachParticleEffect, &iHasEffect))
 			return;
 
 		// Send a message to the GC to request a change
-		GCSDK::CProtoBufMsg<CMsgSetHatEffectUseHeadOrigin> msg( k_EMsgGCSetHatEffectUseHeadOrigin );
-		msg.Body().set_item_id( pHat->GetItemID() );
-		msg.Body().set_use_head( m_pHatParticleUseHeadButton->IsSelected() );
-		GCClientSystem()->BSendMessage( msg );
+		GCSDK::CProtoBufMsg<CMsgSetHatEffectUseHeadOrigin> msg(k_EMsgGCSetHatEffectUseHeadOrigin);
+		msg.Body().set_item_id(pHat->GetItemID());
+		msg.Body().set_use_head(m_pHatParticleUseHeadButton->IsSelected());
+		GCClientSystem()->BSendMessage(msg);
 		return;
 	}
-	else if ( FStrEq( command, "set_style" ) )
+	else if(FStrEq(command, "set_style"))
 	{
-		CEconItemView *pHat = TFInventoryManager()->GetItemInLoadoutForClass( m_iCurrentClassIndex, m_eItemSlot );
-		CStyleSelectDialog *pStyle = vgui::SETUP_PANEL( new CStyleSelectDialog( GetParent(), pHat ) );
-		if ( pStyle )
+		CEconItemView *pHat = TFInventoryManager()->GetItemInLoadoutForClass(m_iCurrentClassIndex, m_eItemSlot);
+		CStyleSelectDialog *pStyle = vgui::SETUP_PANEL(new CStyleSelectDialog(GetParent(), pHat));
+		if(pStyle)
 		{
 			pStyle->Show();
 		}
@@ -311,54 +306,54 @@ void CLoadoutItemOptionsPanel::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-void CLoadoutItemOptionsPanel::OnMessage( const KeyValues* pParams, vgui::VPANEL hFromPanel )
+void CLoadoutItemOptionsPanel::OnMessage(const KeyValues *pParams, vgui::VPANEL hFromPanel)
 {
-	if ( FStrEq( pParams->GetName(), "SliderDragEnd" ) )
+	if(FStrEq(pParams->GetName(), "SliderDragEnd"))
 	{
 		m_pHatParticleSlider->ApplyChanges();
 	}
 
-	BaseClass::OnMessage( pParams, hFromPanel );
+	BaseClass::OnMessage(pParams, hFromPanel);
 }
 
 //-----------------------------------------------------------------------------
-void CLoadoutItemOptionsPanel::SetItemSlot( loadout_positions_t eItemSlot, int iClassIndex )
+void CLoadoutItemOptionsPanel::SetItemSlot(loadout_positions_t eItemSlot, int iClassIndex)
 {
 	m_eItemSlot = eItemSlot;
 	m_iCurrentClassIndex = iClassIndex;
 	// Init the Slider based on the slot
-	const char * pszConVarName = NULL;
+	const char *pszConVarName = NULL;
 
-	switch ( eItemSlot )
+	switch(eItemSlot)
 	{
-	case LOADOUT_POSITION_HEAD :
-		pszConVarName = "tf_hat_effect_offset";
-		break;
-	case LOADOUT_POSITION_MISC :
-		pszConVarName = "tf_misc1_effect_offset";
-		break;
-	case LOADOUT_POSITION_MISC2 :
-		pszConVarName = "tf_misc2_effect_offset";
-		break;
-	default:
-		break;
+		case LOADOUT_POSITION_HEAD:
+			pszConVarName = "tf_hat_effect_offset";
+			break;
+		case LOADOUT_POSITION_MISC:
+			pszConVarName = "tf_misc1_effect_offset";
+			break;
+		case LOADOUT_POSITION_MISC2:
+			pszConVarName = "tf_misc2_effect_offset";
+			break;
+		default:
+			break;
 	}
-	
-	if ( pszConVarName )
+
+	if(pszConVarName)
 	{
-		m_pHatParticleSlider->SetupSlider( -8, 8, pszConVarName, false );
+		m_pHatParticleSlider->SetupSlider(-8, 8, pszConVarName, false);
 	}
-	
-	m_pHatParticleSlider->SetTickColor( Color( 235, 226, 202, 255 ) ); // tanlight
-	m_pHatParticleSlider->SetTickCaptions( "", "" );
-	
+
+	m_pHatParticleSlider->SetTickColor(Color(235, 226, 202, 255)); // tanlight
+	m_pHatParticleSlider->SetTickCaptions("", "");
+
 	UpdateItemOptionsUI();
 }
 
 //-----------------------------------------------------------------------------
 void CLoadoutItemOptionsPanel::UpdateItemOptionsUI()
 {
-	if ( m_eItemSlot == LOADOUT_POSITION_INVALID )
+	if(m_eItemSlot == LOADOUT_POSITION_INVALID)
 		return;
 
 	m_pListPanel->RemoveAll();
@@ -368,93 +363,92 @@ void CLoadoutItemOptionsPanel::UpdateItemOptionsUI()
 	AddControlsSetStyle();
 
 	// Bail if no controls added
-	if ( m_pListPanel->GetItemCount() == 0 )
+	if(m_pListPanel->GetItemCount() == 0)
 	{
 		// We should have some controls if we get to this point.
-		Assert( 0 );
-		SetVisible( false );
+		Assert(0);
+		SetVisible(false);
 		return;
 	}
 
 	// Resize the background and list panel to contain all the controls
 	int nVertPixels = m_pListPanel->ComputeVPixelsNeeded();
-	int nNewTall = Min( 200, nVertPixels );
-	m_pListPanel->SetTall( nNewTall );
-	SetTall( nNewTall );
-	InvalidateLayout( true, false );
+	int nNewTall = Min(200, nVertPixels);
+	m_pListPanel->SetTall(nNewTall);
+	SetTall(nNewTall);
+	InvalidateLayout(true, false);
 }
 
 //-----------------------------------------------------------------------------
-void CLoadoutItemOptionsPanel::AddControlsParticleEffect( void ) const
+void CLoadoutItemOptionsPanel::AddControlsParticleEffect(void) const
 {
-	m_pHatParticleUseHeadButton->SetVisible( false );
-	m_pHatParticleSlider->SetVisible( false );
+	m_pHatParticleUseHeadButton->SetVisible(false);
+	m_pHatParticleSlider->SetVisible(false);
 
-	CEconItemView *pItem = TFInventoryManager()->GetItemInLoadoutForClass( m_iCurrentClassIndex, m_eItemSlot );
-	if ( pItem )
+	CEconItemView *pItem = TFInventoryManager()->GetItemInLoadoutForClass(m_iCurrentClassIndex, m_eItemSlot);
+	if(pItem)
 	{
 		// does this hat even have a particle effect
-		static CSchemaAttributeDefHandle pAttrDef_AttachParticleEffect( "attach particle effect" );
+		static CSchemaAttributeDefHandle pAttrDef_AttachParticleEffect("attach particle effect");
 		uint32 iValue = 0;
-		if ( pItem->FindAttribute( pAttrDef_AttachParticleEffect, &iValue ) )
+		if(pItem->FindAttribute(pAttrDef_AttachParticleEffect, &iValue))
 		{
-			m_pHatParticleUseHeadButton->SetVisible( true );
-			m_pListPanel->AddItem( NULL, m_pHatParticleUseHeadButton );
-			m_pListPanel->AddItem( NULL, m_pHatParticleSlider );
+			m_pHatParticleUseHeadButton->SetVisible(true);
+			m_pListPanel->AddItem(NULL, m_pHatParticleUseHeadButton);
+			m_pListPanel->AddItem(NULL, m_pHatParticleSlider);
 
 			// Check for use head toggle
-			static CSchemaAttributeDefHandle pAttrDef_UseHeadOrigin( "particle effect use head origin" );
+			static CSchemaAttributeDefHandle pAttrDef_UseHeadOrigin("particle effect use head origin");
 			uint32 iUseHead = 0;
-			if ( pItem->FindAttribute( pAttrDef_UseHeadOrigin, &iUseHead ) && iUseHead > 0 )
+			if(pItem->FindAttribute(pAttrDef_UseHeadOrigin, &iUseHead) && iUseHead > 0)
 			{
-				m_pHatParticleSlider->SetVisible( true );
+				m_pHatParticleSlider->SetVisible(true);
 
-				m_pHatParticleUseHeadButton->SetSelected( true );
-				m_pHatParticleSlider->SetTickColor( Color( 235, 226, 202, 255 ) ); // tanlight
+				m_pHatParticleUseHeadButton->SetSelected(true);
+				m_pHatParticleSlider->SetTickColor(Color(235, 226, 202, 255)); // tanlight
 				m_pHatParticleSlider->Repaint();
 
 				// Get offset if it exists
-				static CSchemaAttributeDefHandle pAttrDef_VerticalOffset( "particle effect vertical offset" );
+				static CSchemaAttributeDefHandle pAttrDef_VerticalOffset("particle effect vertical offset");
 				uint32 iOffset = 0;
-				if ( pItem->FindAttribute( pAttrDef_VerticalOffset, &iOffset ) )
+				if(pItem->FindAttribute(pAttrDef_VerticalOffset, &iOffset))
 				{
-					m_pHatParticleSlider->SetSliderValue( (float&)iOffset );
+					m_pHatParticleSlider->SetSliderValue((float &)iOffset);
 				}
 			}
 			else
 			{
-				m_pHatParticleUseHeadButton->SetSelected( false );
+				m_pHatParticleUseHeadButton->SetSelected(false);
 			}
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-void CLoadoutItemOptionsPanel::AddControlsSetStyle( void ) const
+void CLoadoutItemOptionsPanel::AddControlsSetStyle(void) const
 {
-	m_pSetStyleButton->SetVisible( false );
+	m_pSetStyleButton->SetVisible(false);
 
 	CEconItemView *pItem = GetItem();
-	if ( pItem && pItem->GetStaticData()->GetNumStyles() )
+	if(pItem && pItem->GetStaticData()->GetNumStyles())
 	{
-		m_pSetStyleButton->SetVisible( true );
-		m_pListPanel->AddItem( NULL, m_pSetStyleButton );
+		m_pSetStyleButton->SetVisible(true);
+		m_pListPanel->AddItem(NULL, m_pSetStyleButton);
 	}
 }
 
 //-----------------------------------------------------------------------------
-CEconItemView* CLoadoutItemOptionsPanel::GetItem( void ) const
-{ 
-	return TFInventoryManager()->GetItemInLoadoutForClass( m_iCurrentClassIndex, m_eItemSlot );
+CEconItemView *CLoadoutItemOptionsPanel::GetItem(void) const
+{
+	return TFInventoryManager()->GetItemInLoadoutForClass(m_iCurrentClassIndex, m_eItemSlot);
 }
 
 CClassLoadoutPanel *g_pClassLoadoutPanel = NULL;
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CClassLoadoutPanel::CClassLoadoutPanel( vgui::Panel *parent ) 
-	: CBaseLoadoutPanel( parent, "class_loadout_panel" )
-	, m_pItemOptionPanelKVs( NULL )
+CClassLoadoutPanel::CClassLoadoutPanel(vgui::Panel *parent)
+	: CBaseLoadoutPanel(parent, "class_loadout_panel"), m_pItemOptionPanelKVs(NULL)
 {
 	m_iCurrentClassIndex = TF_CLASS_UNDEFINED;
 	m_iCurrentTeamIndex = TF_TEAM_RED;
@@ -469,7 +463,7 @@ CClassLoadoutPanel::CClassLoadoutPanel( vgui::Panel *parent )
 	m_pPresetsExplanationPopup = NULL;
 	m_pTauntsExplanationPopup = NULL;
 	m_pBuildablesButton = NULL;
-	
+
 	m_pCharacterLoadoutButton = NULL;
 	m_pTauntLoadoutButton = NULL;
 
@@ -477,12 +471,12 @@ CClassLoadoutPanel::CClassLoadoutPanel( vgui::Panel *parent )
 
 	g_pClassLoadoutPanel = this;
 
-	m_pItemOptionPanel = new CLoadoutItemOptionsPanel( this, "ItemOptionsPanel" );
+	m_pItemOptionPanel = new CLoadoutItemOptionsPanel(this, "ItemOptionsPanel");
 }
 
 CClassLoadoutPanel::~CClassLoadoutPanel()
 {
-	if ( m_pItemOptionPanelKVs )
+	if(m_pItemOptionPanelKVs)
 	{
 		m_pItemOptionPanelKVs->deleteThis();
 		m_pItemOptionPanelKVs = NULL;
@@ -490,76 +484,95 @@ CClassLoadoutPanel::~CClassLoadoutPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CClassLoadoutPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CClassLoadoutPanel::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	LoadControlSettings( "Resource/UI/ClassLoadoutPanel.res" );
+	LoadControlSettings("Resource/UI/ClassLoadoutPanel.res");
 
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
-	m_pPlayerModelPanel = dynamic_cast<CTFPlayerModelPanel*>( FindChildByName("classmodelpanel") );
-	m_pTauntHintLabel = dynamic_cast<vgui::Label*>( FindChildByName("TauntHintLabel") );
-	m_pTauntLabel = dynamic_cast<CExLabel*>( FindChildByName("TauntLabel") );
-	m_pTauntCaratLabel = dynamic_cast<CExLabel*>( FindChildByName("TauntCaratLabel") );
-	m_pBuildablesButton = dynamic_cast<CExButton*>( FindChildByName("BuildablesButton") );
-	m_pCharacterLoadoutButton = dynamic_cast<CExImageButton*>( FindChildByName("CharacterLoadoutButton") );
-	m_pTauntLoadoutButton = dynamic_cast<CExImageButton*>( FindChildByName("TauntLoadoutButton") );
-	m_pPassiveAttribsLabel = dynamic_cast<CExLabel*>( FindChildByName("PassiveAttribsLabel") );
-	m_pLoadoutPresetPanel = dynamic_cast<CLoadoutPresetPanel*>( FindChildByName( "loadout_preset_panel" ) );
-	m_pPresetsExplanationPopup = dynamic_cast<CExplanationPopup*>( FindChildByName( "PresetsExplanation" ) );
-	m_pTauntsExplanationPopup = dynamic_cast<CExplanationPopup*>( FindChildByName( "TauntsExplanation" ) );
-	m_pTopLinePanel = FindChildByName( "TopLine" );
-	if ( m_pPassiveAttribsLabel )
+	m_pPlayerModelPanel = dynamic_cast<CTFPlayerModelPanel *>(FindChildByName("classmodelpanel"));
+	m_pTauntHintLabel = dynamic_cast<vgui::Label *>(FindChildByName("TauntHintLabel"));
+	m_pTauntLabel = dynamic_cast<CExLabel *>(FindChildByName("TauntLabel"));
+	m_pTauntCaratLabel = dynamic_cast<CExLabel *>(FindChildByName("TauntCaratLabel"));
+	m_pBuildablesButton = dynamic_cast<CExButton *>(FindChildByName("BuildablesButton"));
+	m_pCharacterLoadoutButton = dynamic_cast<CExImageButton *>(FindChildByName("CharacterLoadoutButton"));
+	m_pTauntLoadoutButton = dynamic_cast<CExImageButton *>(FindChildByName("TauntLoadoutButton"));
+	m_pPassiveAttribsLabel = dynamic_cast<CExLabel *>(FindChildByName("PassiveAttribsLabel"));
+	m_pLoadoutPresetPanel = dynamic_cast<CLoadoutPresetPanel *>(FindChildByName("loadout_preset_panel"));
+	m_pPresetsExplanationPopup = dynamic_cast<CExplanationPopup *>(FindChildByName("PresetsExplanation"));
+	m_pTauntsExplanationPopup = dynamic_cast<CExplanationPopup *>(FindChildByName("TauntsExplanation"));
+	m_pTopLinePanel = FindChildByName("TopLine");
+	if(m_pPassiveAttribsLabel)
 	{
-		m_pPassiveAttribsLabel->SetMouseInputEnabled( false );
+		m_pPassiveAttribsLabel->SetMouseInputEnabled(false);
 	}
 
-	m_pMouseOverTooltip->SetPositioningStrategy( IPTTP_BOTTOM_SIDE );
+	m_pMouseOverTooltip->SetPositioningStrategy(IPTTP_BOTTOM_SIDE);
 
-	m_aDefaultColors[LOADED][FG][DEFAULT] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Econ.Button.PresetDefaultColorFg", Color( 255, 255, 255, 255 ) );
-	m_aDefaultColors[LOADED][FG][ARMED] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Econ.Button.PresetArmedColorFg", Color( 255, 255, 255, 255 ) );
-	m_aDefaultColors[LOADED][FG][DEPRESSED] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Econ.Button.PresetDepressedColorFg", Color( 255, 255, 255, 255 ) );
+	m_aDefaultColors[LOADED][FG][DEFAULT] =
+		vgui::scheme()
+			->GetIScheme(GetScheme())
+			->GetColor("Econ.Button.PresetDefaultColorFg", Color(255, 255, 255, 255));
+	m_aDefaultColors[LOADED][FG][ARMED] =
+		vgui::scheme()->GetIScheme(GetScheme())->GetColor("Econ.Button.PresetArmedColorFg", Color(255, 255, 255, 255));
+	m_aDefaultColors[LOADED][FG][DEPRESSED] =
+		vgui::scheme()
+			->GetIScheme(GetScheme())
+			->GetColor("Econ.Button.PresetDepressedColorFg", Color(255, 255, 255, 255));
 
-	m_aDefaultColors[LOADED][BG][DEFAULT] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Econ.Button.PresetDefaultColorBg", Color( 255, 255, 255, 255 ) );
-	m_aDefaultColors[LOADED][BG][ARMED] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Econ.Button.PresetArmedColorBg", Color( 255, 255, 255, 255 ) );
-	m_aDefaultColors[LOADED][BG][DEPRESSED] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Econ.Button.PresetDepressedColorBg", Color( 255, 255, 255, 255 ) );
+	m_aDefaultColors[LOADED][BG][DEFAULT] =
+		vgui::scheme()
+			->GetIScheme(GetScheme())
+			->GetColor("Econ.Button.PresetDefaultColorBg", Color(255, 255, 255, 255));
+	m_aDefaultColors[LOADED][BG][ARMED] =
+		vgui::scheme()->GetIScheme(GetScheme())->GetColor("Econ.Button.PresetArmedColorBg", Color(255, 255, 255, 255));
+	m_aDefaultColors[LOADED][BG][DEPRESSED] =
+		vgui::scheme()
+			->GetIScheme(GetScheme())
+			->GetColor("Econ.Button.PresetDepressedColorBg", Color(255, 255, 255, 255));
 
-	m_aDefaultColors[NOTLOADED][FG][DEFAULT] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Button.TextColor", Color( 255, 255, 255, 255 ) );
-	m_aDefaultColors[NOTLOADED][FG][ARMED] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Button.ArmedTextColor", Color( 255, 255, 255, 255 ) );
-	m_aDefaultColors[NOTLOADED][FG][DEPRESSED] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Button.DepressedTextColor", Color( 255, 255, 255, 255 ) );
+	m_aDefaultColors[NOTLOADED][FG][DEFAULT] =
+		vgui::scheme()->GetIScheme(GetScheme())->GetColor("Button.TextColor", Color(255, 255, 255, 255));
+	m_aDefaultColors[NOTLOADED][FG][ARMED] =
+		vgui::scheme()->GetIScheme(GetScheme())->GetColor("Button.ArmedTextColor", Color(255, 255, 255, 255));
+	m_aDefaultColors[NOTLOADED][FG][DEPRESSED] =
+		vgui::scheme()->GetIScheme(GetScheme())->GetColor("Button.DepressedTextColor", Color(255, 255, 255, 255));
 
-	m_aDefaultColors[NOTLOADED][BG][DEFAULT] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Button.BgColor", Color( 255, 255, 255, 255 ) );
-	m_aDefaultColors[NOTLOADED][BG][ARMED] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Button.ArmedBgColor", Color( 255, 255, 255, 255 ) );
-	m_aDefaultColors[NOTLOADED][BG][DEPRESSED] = vgui::scheme()->GetIScheme( GetScheme() )->GetColor( "Button.DepressedBgColor", Color( 255, 255, 255, 255 ) );
+	m_aDefaultColors[NOTLOADED][BG][DEFAULT] =
+		vgui::scheme()->GetIScheme(GetScheme())->GetColor("Button.BgColor", Color(255, 255, 255, 255));
+	m_aDefaultColors[NOTLOADED][BG][ARMED] =
+		vgui::scheme()->GetIScheme(GetScheme())->GetColor("Button.ArmedBgColor", Color(255, 255, 255, 255));
+	m_aDefaultColors[NOTLOADED][BG][DEPRESSED] =
+		vgui::scheme()->GetIScheme(GetScheme())->GetColor("Button.DepressedBgColor", Color(255, 255, 255, 255));
 }
 
-
-void CClassLoadoutPanel::ApplySettings( KeyValues *inResourceData )
+void CClassLoadoutPanel::ApplySettings(KeyValues *inResourceData)
 {
-	BaseClass::ApplySettings( inResourceData );
+	BaseClass::ApplySettings(inResourceData);
 
-	KeyValues *pItemKV = inResourceData->FindKey( "itemoptionpanels_kv" );
-	if ( pItemKV )
+	KeyValues *pItemKV = inResourceData->FindKey("itemoptionpanels_kv");
+	if(pItemKV)
 	{
-		if ( m_pItemOptionPanelKVs )
+		if(m_pItemOptionPanelKVs)
 		{
 			m_pItemOptionPanelKVs->deleteThis();
 		}
 		m_pItemOptionPanelKVs = new KeyValues("itemoptionpanels_kv");
-		pItemKV->CopySubkeys( m_pItemOptionPanelKVs );
+		pItemKV->CopySubkeys(m_pItemOptionPanelKVs);
 	}
 
 #ifdef STAGING_ONLY
 	// PDA Panels
-	if ( m_pItemModelPanels.Count() > LOADOUT_POSITION_PDA_ADDON2 )
+	if(m_pItemModelPanels.Count() > LOADOUT_POSITION_PDA_ADDON2)
 	{
-		for ( int i = LOADOUT_POSITION_PDA_ADDON1; i <= LOADOUT_POSITION_PDA_ADDON2; i++ )
+		for(int i = LOADOUT_POSITION_PDA_ADDON1; i <= LOADOUT_POSITION_PDA_ADDON2; i++)
 		{
 			int wide = m_pItemModelPanels[i]->GetWide();
 			int tall = m_pItemModelPanels[i]->GetTall();
 
-			m_pItemModelPanels[i]->SetSize( wide / 2, tall / 2 );
+			m_pItemModelPanels[i]->SetSize(wide / 2, tall / 2);
 			m_pItemModelPanels[i]->InvalidateLayout();
 		}
 	}
@@ -567,9 +580,9 @@ void CClassLoadoutPanel::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CClassLoadoutPanel::PerformLayout( void ) 
+void CClassLoadoutPanel::PerformLayout(void)
 {
 	BaseClass::PerformLayout();
 
@@ -579,65 +592,65 @@ void CClassLoadoutPanel::PerformLayout( void )
 		m_pPassiveAttribsLabel->SetVisible( !m_bInTauntLoadoutMode );
 	}*/
 
-	if ( m_pTauntHintLabel )
+	if(m_pTauntHintLabel)
 	{
-		m_pTauntHintLabel->SetVisible( m_bInTauntLoadoutMode );
-		
-		const char *key = engine->Key_LookupBinding( "taunt" );
-		if ( !key )
+		m_pTauntHintLabel->SetVisible(m_bInTauntLoadoutMode);
+
+		const char *key = engine->Key_LookupBinding("taunt");
+		if(!key)
 		{
 			key = "< not bound >";
 		}
-		SetDialogVariable( "taunt", key );
+		SetDialogVariable("taunt", key);
 	}
 
-	if ( m_pTauntLabel )
+	if(m_pTauntLabel)
 	{
-		m_pTauntLabel->SetVisible( m_bInTauntLoadoutMode );
+		m_pTauntLabel->SetVisible(m_bInTauntLoadoutMode);
 	}
-	if ( m_pTauntCaratLabel )
+	if(m_pTauntCaratLabel)
 	{
-		m_pTauntCaratLabel->SetVisible( m_bInTauntLoadoutMode );
+		m_pTauntCaratLabel->SetVisible(m_bInTauntLoadoutMode);
 	}
-	if ( m_pCharacterLoadoutButton )
+	if(m_pCharacterLoadoutButton)
 	{
-		UpdatePageButtonColor( m_pCharacterLoadoutButton, !m_bInTauntLoadoutMode );
+		UpdatePageButtonColor(m_pCharacterLoadoutButton, !m_bInTauntLoadoutMode);
 	}
-	if ( m_pTauntLoadoutButton )
+	if(m_pTauntLoadoutButton)
 	{
-		UpdatePageButtonColor( m_pTauntLoadoutButton, m_bInTauntLoadoutMode );
+		UpdatePageButtonColor(m_pTauntLoadoutButton, m_bInTauntLoadoutMode);
 	}
 
-	FOR_EACH_VEC( m_vecItemOptionButtons, i )
+	FOR_EACH_VEC(m_vecItemOptionButtons, i)
 	{
-		m_vecItemOptionButtons[i]->SetVisible( false );
+		m_vecItemOptionButtons[i]->SetVisible(false);
 	}
-	
-	for ( int i = 0; i < m_pItemModelPanels.Count(); i++ )
+
+	for(int i = 0; i < m_pItemModelPanels.Count(); i++)
 	{
 		// Viewing a class loadout. Layout the buttons & the class image.
-		if ( i >= NUM_ITEM_PANELS_IN_LOADOUT )
+		if(i >= NUM_ITEM_PANELS_IN_LOADOUT)
 		{
-			m_pItemModelPanels[i]->SetVisible( false );
+			m_pItemModelPanels[i]->SetVisible(false);
 			continue;
 		}
 
 		int iButtonPos = 0;
-		if ( m_iCurrentClassIndex != TF_CLASS_UNDEFINED )
+		if(m_iCurrentClassIndex != TF_CLASS_UNDEFINED)
 		{
 			iButtonPos = g_VisibleLoadoutSlotsPerClass[m_iCurrentClassIndex]->m_iPos[i];
 		}
 
 		bool bIsVisible = false;
-		if ( iButtonPos > 0 )
+		if(iButtonPos > 0)
 		{
-			bIsVisible = m_bInTauntLoadoutMode ? IsTauntPanelPosition( iButtonPos ) : !IsTauntPanelPosition( iButtonPos );
+			bIsVisible = m_bInTauntLoadoutMode ? IsTauntPanelPosition(iButtonPos) : !IsTauntPanelPosition(iButtonPos);
 		}
-		m_pItemModelPanels[i]->SetVisible( bIsVisible );
+		m_pItemModelPanels[i]->SetVisible(bIsVisible);
 
-		if ( bIsVisible )
+		if(bIsVisible)
 		{
-			if ( m_bInTauntLoadoutMode )
+			if(m_bInTauntLoadoutMode)
 			{
 				iButtonPos -= g_VisibleLoadoutSlotsPerClass[m_iCurrentClassIndex]->m_iPos[LOADOUT_POSITION_TAUNT];
 			}
@@ -645,248 +658,231 @@ void CClassLoadoutPanel::PerformLayout( void )
 			{
 				iButtonPos--;
 			}
-			
+
 #ifdef STAGING_ONLY
 			// Override for the PDA AddOnSlots
-			if ( i == LOADOUT_POSITION_PDA_ADDON1 )
+			if(i == LOADOUT_POSITION_PDA_ADDON1)
 			{
 				int iYPos, iXPos;
-				m_pItemModelPanels[ LOADOUT_POSITION_PDA ]->GetPos( iXPos, iYPos );
+				m_pItemModelPanels[LOADOUT_POSITION_PDA]->GetPos(iXPos, iYPos);
 				int iWide, iTall;
-				m_pItemModelPanels[ LOADOUT_POSITION_PDA ]->GetSize( iWide, iTall );
+				m_pItemModelPanels[LOADOUT_POSITION_PDA]->GetSize(iWide, iTall);
 
-				m_pItemModelPanels[i]->SetPos( iXPos + iWide + XRES(1), iYPos );
-				m_pItemModelPanels[i]->SetSize( iWide / 2.1, iTall / 2.1 );
+				m_pItemModelPanels[i]->SetPos(iXPos + iWide + XRES(1), iYPos);
+				m_pItemModelPanels[i]->SetSize(iWide / 2.1, iTall / 2.1);
 				continue;
 			}
-			else if ( i == LOADOUT_POSITION_PDA_ADDON2 )
+			else if(i == LOADOUT_POSITION_PDA_ADDON2)
 			{
 				int iYPos, iXPos;
-				m_pItemModelPanels[LOADOUT_POSITION_PDA]->GetPos( iXPos, iYPos );
+				m_pItemModelPanels[LOADOUT_POSITION_PDA]->GetPos(iXPos, iYPos);
 				int iWide, iTall;
-				m_pItemModelPanels[LOADOUT_POSITION_PDA]->GetSize( iWide, iTall );
+				m_pItemModelPanels[LOADOUT_POSITION_PDA]->GetSize(iWide, iTall);
 
-				m_pItemModelPanels[i]->SetPos( iXPos + iWide + XRES(1), iYPos + iTall - (iTall / 2.1 ) );
-				m_pItemModelPanels[i]->SetSize( iWide / 2.1, iTall / 2.1 );
+				m_pItemModelPanels[i]->SetPos(iXPos + iWide + XRES(1), iYPos + iTall - (iTall / 2.1));
+				m_pItemModelPanels[i]->SetSize(iWide / 2.1, iTall / 2.1);
 				continue;
 			}
 #endif
 
-			m_pItemModelPanels[i]->SetNoItemText( ItemSystem()->GetItemSchema()->GetLoadoutStringsForDisplay( EEquipType_t::EQUIP_TYPE_CLASS )[i] );
+			m_pItemModelPanels[i]->SetNoItemText(
+				ItemSystem()->GetItemSchema()->GetLoadoutStringsForDisplay(EEquipType_t::EQUIP_TYPE_CLASS)[i]);
 
 			int iCenter = GetWide() * 0.5;
 			int iColumnHeight = 4;
 			int iColumn = iButtonPos / iColumnHeight;
 			int iYButtonPos = iButtonPos % iColumnHeight;
-			
+
 			int iOffset = iColumn == 0 ? m_iItemXPosOffcenterA : m_iItemXPosOffcenterB + ((iColumn - 1) * 200);
-			int	iXPos = iCenter + iOffset;
-			int	iYPos = m_iItemYPos + (m_iItemYDelta * iYButtonPos);
-			m_pItemModelPanels[i]->SetPos( iXPos, iYPos );
+			int iXPos = iCenter + iOffset;
+			int iYPos = m_iItemYPos + (m_iItemYDelta * iYButtonPos);
+			m_pItemModelPanels[i]->SetPos(iXPos, iYPos);
 
 			// Update position and visibility of the item option buttons
-			if ( i < m_vecItemOptionButtons.Count() )
+			if(i < m_vecItemOptionButtons.Count())
 			{
 				// Place the button just inside the item model panel
-				CExButton* pItemOptionsPanel = m_vecItemOptionButtons[iButtonPos];
+				CExButton *pItemOptionsPanel = m_vecItemOptionButtons[iButtonPos];
 				int iButtonWide = m_pItemModelPanels[i]->GetWide();
 				int iMyWide = pItemOptionsPanel->GetWide();
-				int iOptionsXPos = iColumn == 0 
-								 ? iXPos + iButtonWide - iMyWide
-								 : iXPos;
-				pItemOptionsPanel->SetPos( iOptionsXPos, iYPos );
+				int iOptionsXPos = iColumn == 0 ? iXPos + iButtonWide - iMyWide : iXPos;
+				pItemOptionsPanel->SetPos(iOptionsXPos, iYPos);
 
-				CEconItemView *pItemData = TFInventoryManager()->GetItemInLoadoutForClass( m_iCurrentClassIndex, i );
+				CEconItemView *pItemData = TFInventoryManager()->GetItemInLoadoutForClass(m_iCurrentClassIndex, i);
 				// Enable or disable the item options button for this item model panel
-				pItemOptionsPanel->SetVisible( !m_bInTauntLoadoutMode && AnyOptionsAvailableForItem( pItemData ) );
-				pItemOptionsPanel->SetCommand( CFmtStr( "options%d", i ) );
+				pItemOptionsPanel->SetVisible(!m_bInTauntLoadoutMode && AnyOptionsAvailableForItem(pItemData));
+				pItemOptionsPanel->SetCommand(CFmtStr("options%d", i));
 			}
 		}
 
-		m_pItemModelPanels[ i ]->SetSelected( false );
+		m_pItemModelPanels[i]->SetSelected(false);
 	}
 
-	if ( m_pLoadoutPresetPanel )
+	if(m_pLoadoutPresetPanel)
 	{
-		m_pLoadoutPresetPanel->SetPos( ( ScreenWidth() - m_pLoadoutPresetPanel->GetWide() ) / 2, m_iItemYPos );
+		m_pLoadoutPresetPanel->SetPos((ScreenWidth() - m_pLoadoutPresetPanel->GetWide()) / 2, m_iItemYPos);
 	}
 
-	LinkModelPanelControllerNavigation( true );
+	LinkModelPanelControllerNavigation(true);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CClassLoadoutPanel::OnKeyCodePressed( vgui::KeyCode code )
+void CClassLoadoutPanel::OnKeyCodePressed(vgui::KeyCode code)
 {
 	// See if the preset control uses this key
-	if( m_pLoadoutPresetPanel->HandlePresetKeyPressed( code ) )
+	if(m_pLoadoutPresetPanel->HandlePresetKeyPressed(code))
 	{
 		return;
 	}
 
-	ButtonCode_t nButtonCode = GetBaseButtonCode( code );
+	ButtonCode_t nButtonCode = GetBaseButtonCode(code);
 
-	if (nButtonCode == KEY_XBUTTON_LEFT || 
-		nButtonCode == KEY_XSTICK1_LEFT ||
-		nButtonCode == KEY_XSTICK2_LEFT ||
-		nButtonCode == STEAMCONTROLLER_DPAD_LEFT ||
-		code == KEY_LEFT ||
-		nButtonCode == KEY_XBUTTON_RIGHT || 
-		nButtonCode == KEY_XSTICK1_RIGHT ||
-		nButtonCode == KEY_XSTICK2_RIGHT ||
-		nButtonCode == STEAMCONTROLLER_DPAD_RIGHT ||
-		code == KEY_RIGHT ||
-		nButtonCode == KEY_XBUTTON_UP || 
-		nButtonCode == KEY_XSTICK1_UP ||
-		nButtonCode == KEY_XSTICK2_UP ||
-		nButtonCode == STEAMCONTROLLER_DPAD_UP ||
-		code == KEY_UP ||
-		nButtonCode == KEY_XBUTTON_DOWN || 
-		nButtonCode == KEY_XSTICK1_DOWN ||
-		nButtonCode == KEY_XSTICK2_DOWN ||
-		nButtonCode == STEAMCONTROLLER_DPAD_DOWN ||
-		code == KEY_DOWN )
+	if(nButtonCode == KEY_XBUTTON_LEFT || nButtonCode == KEY_XSTICK1_LEFT || nButtonCode == KEY_XSTICK2_LEFT ||
+	   nButtonCode == STEAMCONTROLLER_DPAD_LEFT || code == KEY_LEFT || nButtonCode == KEY_XBUTTON_RIGHT ||
+	   nButtonCode == KEY_XSTICK1_RIGHT || nButtonCode == KEY_XSTICK2_RIGHT ||
+	   nButtonCode == STEAMCONTROLLER_DPAD_RIGHT || code == KEY_RIGHT || nButtonCode == KEY_XBUTTON_UP ||
+	   nButtonCode == KEY_XSTICK1_UP || nButtonCode == KEY_XSTICK2_UP || nButtonCode == STEAMCONTROLLER_DPAD_UP ||
+	   code == KEY_UP || nButtonCode == KEY_XBUTTON_DOWN || nButtonCode == KEY_XSTICK1_DOWN ||
+	   nButtonCode == KEY_XSTICK2_DOWN || nButtonCode == STEAMCONTROLLER_DPAD_DOWN || code == KEY_DOWN)
 	{
-		// just eat all navigation keys so we don't 
-		// end up with undesirable navigation behavior bubbling from 
+		// just eat all navigation keys so we don't
+		// end up with undesirable navigation behavior bubbling from
 		// one item model panel to another
 	}
-	else if( nButtonCode == KEY_XBUTTON_A || code == KEY_ENTER || nButtonCode == STEAMCONTROLLER_A )
+	else if(nButtonCode == KEY_XBUTTON_A || code == KEY_ENTER || nButtonCode == STEAMCONTROLLER_A)
 	{
 		// show the current loadout slot
-		int nSelected = GetFirstSelectedItemIndex( true );
-		if( nSelected != -1 )
+		int nSelected = GetFirstSelectedItemIndex(true);
+		if(nSelected != -1)
 		{
-			OnCommand( VarArgs("change%d", nSelected ) );
+			OnCommand(VarArgs("change%d", nSelected));
 		}
 	}
 	else
 	{
-		BaseClass::OnKeyCodePressed( code );
+		BaseClass::OnKeyCodePressed(code);
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CClassLoadoutPanel::OnNavigateTo( const char* panelName )
+void CClassLoadoutPanel::OnNavigateTo(const char *panelName)
 {
-	CItemModelPanel *pChild = dynamic_cast<CItemModelPanel *>( FindChildByName( panelName ) );
-	if( !pChild )
+	CItemModelPanel *pChild = dynamic_cast<CItemModelPanel *>(FindChildByName(panelName));
+	if(!pChild)
 		return;
 
-	pChild->SetSelected( true );
-	SetBorderForItem( pChild, false );
+	pChild->SetSelected(true);
+	SetBorderForItem(pChild, false);
 	pChild->RequestFocus();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CClassLoadoutPanel::OnNavigateFrom( const char* panelName )
+void CClassLoadoutPanel::OnNavigateFrom(const char *panelName)
 {
-	CItemModelPanel *pChild = dynamic_cast<CItemModelPanel *>( FindChildByName( panelName ) );
-	if( !pChild )
+	CItemModelPanel *pChild = dynamic_cast<CItemModelPanel *>(FindChildByName(panelName));
+	if(!pChild)
 		return;
 
-	pChild->SetSelected( false );
-	SetBorderForItem( pChild, false );
+	pChild->SetSelected(false);
+	SetBorderForItem(pChild, false);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CClassLoadoutPanel::OnShowPanel( bool bVisible, bool bReturningFromArmory )
+void CClassLoadoutPanel::OnShowPanel(bool bVisible, bool bReturningFromArmory)
 {
-	if ( bVisible )
+	if(bVisible)
 	{
 		// always start in character loadout page
-		SetLoadoutPage( CHARACTER_LOADOUT_PAGE );
+		SetLoadoutPage(CHARACTER_LOADOUT_PAGE);
 
-		if ( m_pSelectionPanel )
+		if(m_pSelectionPanel)
 		{
-			m_pSelectionPanel->SetVisible( false );
+			m_pSelectionPanel->SetVisible(false);
 			m_pSelectionPanel->MarkForDeletion();
 			m_pSelectionPanel = NULL;
 		}
 
 		m_iCurrentSlotIndex = TF_WPN_TYPE_PRIMARY;
-		if( m_pItemModelPanels.Count() && m_pItemModelPanels[0] )
+		if(m_pItemModelPanels.Count() && m_pItemModelPanels[0])
 		{
-			m_pItemModelPanels[0]->SetSelected( true );
-			SetBorderForItem( m_pItemModelPanels[0], false );
+			m_pItemModelPanels[0]->SetSelected(true);
+			SetBorderForItem(m_pItemModelPanels[0], false);
 		}
 
 		m_bLoadoutHasChanged = false;
 
-		if ( tf_show_preset_explanation_in_class_loadout.GetBool() && m_pPresetsExplanationPopup )
+		if(tf_show_preset_explanation_in_class_loadout.GetBool() && m_pPresetsExplanationPopup)
 		{
 			m_pPresetsExplanationPopup->Popup();
-			tf_show_preset_explanation_in_class_loadout.SetValue( 0 );
+			tf_show_preset_explanation_in_class_loadout.SetValue(0);
 		}
-		else if ( tf_show_taunt_explanation_in_class_loadout.GetBool() && m_pTauntsExplanationPopup )
+		else if(tf_show_taunt_explanation_in_class_loadout.GetBool() && m_pTauntsExplanationPopup)
 		{
 			m_pTauntsExplanationPopup->Popup();
-			tf_show_taunt_explanation_in_class_loadout.SetValue( 0 );
+			tf_show_taunt_explanation_in_class_loadout.SetValue(0);
 		}
 
 		ClearItemOptionsMenu();
 	}
 	else
 	{
-		if ( m_pPlayerModelPanel )
+		if(m_pPlayerModelPanel)
 		{
 			m_pPlayerModelPanel->ClearCarriedItems();
 		}
 	}
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CClassLoadoutPanel::PostShowPanel( bool bVisible )
+void CClassLoadoutPanel::PostShowPanel(bool bVisible)
 {
-	if ( bVisible )
+	if(bVisible)
 	{
-		if ( m_pPlayerModelPanel )
+		if(m_pPlayerModelPanel)
 		{
-			m_pPlayerModelPanel->SetVisible( true );
+			m_pPlayerModelPanel->SetVisible(true);
 		}
 
-		if ( m_pBuildablesButton )
+		if(m_pBuildablesButton)
 		{
-			m_pBuildablesButton->SetVisible( m_iCurrentClassIndex == TF_CLASS_ENGINEER );
+			m_pBuildablesButton->SetVisible(m_iCurrentClassIndex == TF_CLASS_ENGINEER);
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CClassLoadoutPanel::SetClass( int iClass )
+void CClassLoadoutPanel::SetClass(int iClass)
 {
 	m_iCurrentClassIndex = iClass;
 
-	if ( m_pLoadoutPresetPanel )
+	if(m_pLoadoutPresetPanel)
 	{
-		m_pLoadoutPresetPanel->SetClass( m_iCurrentClassIndex );
+		m_pLoadoutPresetPanel->SetClass(m_iCurrentClassIndex);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CClassLoadoutPanel::SetTeam( int iTeam )
+void CClassLoadoutPanel::SetTeam(int iTeam)
 {
-	Assert( IsValidTFTeam( iTeam ) );
+	Assert(IsValidTFTeam(iTeam));
 	m_iCurrentTeamIndex = iTeam;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CClassLoadoutPanel::GetNumRelevantSlots() const
 {
@@ -894,11 +890,11 @@ int CClassLoadoutPanel::GetNumRelevantSlots() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CEconItemView *CClassLoadoutPanel::GetItemInSlot( int iSlot )
+CEconItemView *CClassLoadoutPanel::GetItemInSlot(int iSlot)
 {
-	if( iSlot >= 0 && iSlot < m_pItemModelPanels.Count() )
+	if(iSlot >= 0 && iSlot < m_pItemModelPanels.Count())
 	{
 		return m_pItemModelPanels[iSlot]->GetItem();
 	}
@@ -907,53 +903,50 @@ CEconItemView *CClassLoadoutPanel::GetItemInSlot( int iSlot )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CClassLoadoutPanel::FireGameEvent( IGameEvent *event )
+void CClassLoadoutPanel::FireGameEvent(IGameEvent *event)
 {
 	// If we're not visible, ignore all events
-	if ( !IsVisible() )
+	if(!IsVisible())
 		return;
 
-	BaseClass::FireGameEvent( event );
+	BaseClass::FireGameEvent(event);
 
 	// We need to update ourselves after the base has done it, so our item models have been updated
 	const char *type = event->GetName();
-	if ( Q_strcmp( "inventory_updated", type ) == 0 )
+	if(Q_strcmp("inventory_updated", type) == 0)
 	{
-		if ( m_pPlayerModelPanel )
+		if(m_pPlayerModelPanel)
 		{
-			m_pPlayerModelPanel->HoldItemInSlot( m_iCurrentSlotIndex );
+			m_pPlayerModelPanel->HoldItemInSlot(m_iCurrentSlotIndex);
 		}
 	}
 }
 
-void CClassLoadoutPanel::AddNewItemPanel( int iPanelIndex )
+void CClassLoadoutPanel::AddNewItemPanel(int iPanelIndex)
 {
-	BaseClass::AddNewItemPanel( iPanelIndex );
+	BaseClass::AddNewItemPanel(iPanelIndex);
 
-	m_vecItemOptionButtons[ m_vecItemOptionButtons.AddToTail() ] = new CExButton( this,
-																				  CFmtStr( "item_options_button%d", iPanelIndex ),
-																				  "+",
-																				  this,
-																				  CFmtStr( "options%d", iPanelIndex ) );
+	m_vecItemOptionButtons[m_vecItemOptionButtons.AddToTail()] = new CExButton(
+		this, CFmtStr("item_options_button%d", iPanelIndex), "+", this, CFmtStr("options%d", iPanelIndex));
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CClassLoadoutPanel::UpdateModelPanels( void )
+void CClassLoadoutPanel::UpdateModelPanels(void)
 {
 	// Search for a Robot Costume
 	bool bIsRobot = false;
-	static CSchemaAttributeDefHandle pAttrDef_PlayerRobot( "appear as mvm robot" );
+	static CSchemaAttributeDefHandle pAttrDef_PlayerRobot("appear as mvm robot");
 	// For now, fill them out with the local player's currently wielded items
-	for ( int i = 0; i < m_pItemModelPanels.Count(); i++ )
+	for(int i = 0; i < m_pItemModelPanels.Count(); i++)
 	{
-		CEconItemView *pItemData = TFInventoryManager()->GetItemInLoadoutForClass( m_iCurrentClassIndex, i );
-		if ( !pItemData )
+		CEconItemView *pItemData = TFInventoryManager()->GetItemInLoadoutForClass(m_iCurrentClassIndex, i);
+		if(!pItemData)
 			continue;
-		if ( FindAttribute( pItemData, pAttrDef_PlayerRobot ) )
+		if(FindAttribute(pItemData, pAttrDef_PlayerRobot))
 		{
 			bIsRobot = true;
 			break;
@@ -961,61 +954,61 @@ void CClassLoadoutPanel::UpdateModelPanels( void )
 	}
 
 	// We're showing the loadout for a specific class.
-	TFPlayerClassData_t *pData = GetPlayerClassData( m_iCurrentClassIndex );
-	if ( m_pPlayerModelPanel )
+	TFPlayerClassData_t *pData = GetPlayerClassData(m_iCurrentClassIndex);
+	if(m_pPlayerModelPanel)
 	{
 		m_pPlayerModelPanel->ClearCarriedItems();
-		m_pPlayerModelPanel->SetToPlayerClass( m_iCurrentClassIndex, bIsRobot );
-		m_pPlayerModelPanel->SetTeam( m_iCurrentTeamIndex );
+		m_pPlayerModelPanel->SetToPlayerClass(m_iCurrentClassIndex, bIsRobot);
+		m_pPlayerModelPanel->SetTeam(m_iCurrentTeamIndex);
 	}
 
 	// For now, fill them out with the local player's currently wielded items
-	for ( int i = 0; i < m_pItemModelPanels.Count(); i++ )
+	for(int i = 0; i < m_pItemModelPanels.Count(); i++)
 	{
-		CEconItemView *pItemData = TFInventoryManager()->GetItemInLoadoutForClass( m_iCurrentClassIndex, i );
-		m_pItemModelPanels[i]->SetItem( pItemData );
-		m_pItemModelPanels[i]->SetShowQuantity( true );
-		m_pItemModelPanels[i]->SetSelected( false );
-		SetBorderForItem( m_pItemModelPanels[i], false );
+		CEconItemView *pItemData = TFInventoryManager()->GetItemInLoadoutForClass(m_iCurrentClassIndex, i);
+		m_pItemModelPanels[i]->SetItem(pItemData);
+		m_pItemModelPanels[i]->SetShowQuantity(true);
+		m_pItemModelPanels[i]->SetSelected(false);
+		SetBorderForItem(m_pItemModelPanels[i], false);
 
-		if ( m_pPlayerModelPanel && pItemData && pItemData->IsValid() )
+		if(m_pPlayerModelPanel && pItemData && pItemData->IsValid())
 		{
-			m_pPlayerModelPanel->AddCarriedItem( pItemData );
+			m_pPlayerModelPanel->AddCarriedItem(pItemData);
 		}
 	}
 
-	if ( m_pPlayerModelPanel )
+	if(m_pPlayerModelPanel)
 	{
-		m_pPlayerModelPanel->HoldItemInSlot( m_iCurrentSlotIndex );
+		m_pPlayerModelPanel->HoldItemInSlot(m_iCurrentSlotIndex);
 	}
 
-	SetDialogVariable( "loadoutclass", g_pVGuiLocalize->Find( pData->m_szLocalizableName ) );
+	SetDialogVariable("loadoutclass", g_pVGuiLocalize->Find(pData->m_szLocalizableName));
 
 	UpdatePassiveAttributes();
 
-	// Now layout again to position our item buttons 
+	// Now layout again to position our item buttons
 	InvalidateLayout();
 
-	if ( m_pItemOptionPanel->IsVisible() )
+	if(m_pItemOptionPanel->IsVisible())
 	{
 		m_pItemOptionPanel->UpdateItemOptionsUI();
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CClassLoadoutPanel::OnItemPanelMouseReleased( vgui::Panel *panel )
+void CClassLoadoutPanel::OnItemPanelMouseReleased(vgui::Panel *panel)
 {
-	CItemModelPanel *pItemPanel = dynamic_cast < CItemModelPanel * > ( panel );
+	CItemModelPanel *pItemPanel = dynamic_cast<CItemModelPanel *>(panel);
 
-	if ( pItemPanel && IsVisible() )
+	if(pItemPanel && IsVisible())
 	{
-		for ( int i = 0; i < m_pItemModelPanels.Count(); i++ )
+		for(int i = 0; i < m_pItemModelPanels.Count(); i++)
 		{
-			if ( m_pItemModelPanels[i] == pItemPanel  )
+			if(m_pItemModelPanels[i] == pItemPanel)
 			{
-				OnCommand( VarArgs("change%d", i) );
+				OnCommand(VarArgs("change%d", i));
 				return;
 			}
 		}
@@ -1023,42 +1016,42 @@ void CClassLoadoutPanel::OnItemPanelMouseReleased( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CClassLoadoutPanel::OnSelectionReturned( KeyValues *data )
+void CClassLoadoutPanel::OnSelectionReturned(KeyValues *data)
 {
-	if ( data )
+	if(data)
 	{
-		uint64 ulIndex = data->GetUint64( "itemindex", INVALID_ITEM_ID );
+		uint64 ulIndex = data->GetUint64("itemindex", INVALID_ITEM_ID);
 
 		// ulIndex implies do nothing (escape key)
-		if ( ulIndex != 0 )
+		if(ulIndex != 0)
 		{
-			TFInventoryManager()->EquipItemInLoadout( m_iCurrentClassIndex, m_iCurrentSlotIndex, ulIndex );
+			TFInventoryManager()->EquipItemInLoadout(m_iCurrentClassIndex, m_iCurrentSlotIndex, ulIndex);
 
 			m_bLoadoutHasChanged = true;
 
 			UpdateModelPanels();
 
 			// Send the preset panel a msg so it can save the change
-			KeyValues *pLoadoutChangedMsg = new KeyValues( "LoadoutChanged" );
-			pLoadoutChangedMsg->SetInt( "slot", m_iCurrentSlotIndex );
-			pLoadoutChangedMsg->SetUint64( "itemid", ulIndex );
-			PostMessage( m_pLoadoutPresetPanel, pLoadoutChangedMsg );
+			KeyValues *pLoadoutChangedMsg = new KeyValues("LoadoutChanged");
+			pLoadoutChangedMsg->SetInt("slot", m_iCurrentSlotIndex);
+			pLoadoutChangedMsg->SetUint64("itemid", ulIndex);
+			PostMessage(m_pLoadoutPresetPanel, pLoadoutChangedMsg);
 		}
 	}
 
-	PostMessage( GetParent(), new KeyValues("SelectionEnded") );
+	PostMessage(GetParent(), new KeyValues("SelectionEnded"));
 
 	// It'll have deleted itself, so we don't need to clean it up
 	m_pSelectionPanel = NULL;
 	OnCancelSelection();
 
 	// find the selected item and give it the focus
-	CItemModelPanel *pSelection = GetFirstSelectedItemModelPanel( true );
-	if( !pSelection )
+	CItemModelPanel *pSelection = GetFirstSelectedItemModelPanel(true);
+	if(!pSelection)
 	{
-		m_pItemModelPanels[0]->SetSelected( true );
+		m_pItemModelPanels[0]->SetSelected(true);
 		pSelection = m_pItemModelPanels[0];
 	}
 
@@ -1066,64 +1059,64 @@ void CClassLoadoutPanel::OnSelectionReturned( KeyValues *data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CClassLoadoutPanel::OnCancelSelection( void )
+void CClassLoadoutPanel::OnCancelSelection(void)
 {
-	if ( m_pSelectionPanel )
+	if(m_pSelectionPanel)
 	{
-		m_pSelectionPanel->SetVisible( false );
+		m_pSelectionPanel->SetVisible(false);
 		m_pSelectionPanel->MarkForDeletion();
 		m_pSelectionPanel = NULL;
 	}
 
-	if ( m_pPlayerModelPanel )
+	if(m_pPlayerModelPanel)
 	{
-		m_pPlayerModelPanel->SetVisible( true );
+		m_pPlayerModelPanel->SetVisible(true);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClassLoadoutPanel::RespawnPlayer()
 {
-	if ( tf_respawn_on_loadoutchanges.GetBool() )
+	if(tf_respawn_on_loadoutchanges.GetBool())
 	{
 		// Tell the GC to tell server that we should respawn if we're in a respawn room
-		GCSDK::CGCMsg< MsgGCEmpty_t > msg( k_EMsgGCRespawnPostLoadoutChange );
-		GCClientSystem()->BSendMessage( msg );
+		GCSDK::CGCMsg<MsgGCEmpty_t> msg(k_EMsgGCRespawnPostLoadoutChange);
+		GCClientSystem()->BSendMessage(msg);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Apply KVs to the item option buttons
 //-----------------------------------------------------------------------------
-void CClassLoadoutPanel::ApplyKVsToItemPanels( void )
+void CClassLoadoutPanel::ApplyKVsToItemPanels(void)
 {
 	BaseClass::ApplyKVsToItemPanels();
 
-	if ( m_pItemOptionPanelKVs )
+	if(m_pItemOptionPanelKVs)
 	{
-		for ( int i = 0; i < m_vecItemOptionButtons.Count(); i++ )
+		for(int i = 0; i < m_vecItemOptionButtons.Count(); i++)
 		{
-			m_vecItemOptionButtons[i]->ApplySettings( m_pItemOptionPanelKVs );
+			m_vecItemOptionButtons[i]->ApplySettings(m_pItemOptionPanelKVs);
 			m_vecItemOptionButtons[i]->InvalidateLayout();
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CClassLoadoutPanel::OnClosing( void )
+void CClassLoadoutPanel::OnClosing(void)
 {
-	if ( m_pPlayerModelPanel )
+	if(m_pPlayerModelPanel)
 	{
 		m_pPlayerModelPanel->ClearCarriedItems();
 	}
 
-	if ( m_bLoadoutHasChanged )
+	if(m_bLoadoutHasChanged)
 	{
 		RespawnPlayer();
 
@@ -1134,36 +1127,36 @@ void CClassLoadoutPanel::OnClosing( void )
 extern const char *g_szItemBorders[AE_MAX_TYPES][5];
 extern ConVar cl_showbackpackrarities;
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CClassLoadoutPanel::SetBorderForItem( CItemModelPanel *pItemPanel, bool bMouseOver )
+void CClassLoadoutPanel::SetBorderForItem(CItemModelPanel *pItemPanel, bool bMouseOver)
 {
-	if ( !pItemPanel )
+	if(!pItemPanel)
 		return;
 
 	const char *pszBorder = NULL;
 
-	if ( pItemPanel->IsGreyedOut() )
+	if(pItemPanel->IsGreyedOut())
 	{
 		pszBorder = "EconItemBorder";
 	}
 	else
 	{
 		int iRarity = 0;
-		if ( pItemPanel->HasItem() && cl_showbackpackrarities.GetBool() )
+		if(pItemPanel->HasItem() && cl_showbackpackrarities.GetBool())
 		{
 			iRarity = pItemPanel->GetItem()->GetItemQuality();
 
 			uint8 nRarity = pItemPanel->GetItem()->GetItemDefinition()->GetRarity();
-			if ( ( nRarity != k_unItemRarity_Any ) && ( iRarity != AE_SELFMADE ) )
+			if((nRarity != k_unItemRarity_Any) && (iRarity != AE_SELFMADE))
 			{
 				// translate this quality to rarity
 				iRarity = nRarity + AE_RARITY_DEFAULT;
 			}
 
-			if ( iRarity > 0 )
+			if(iRarity > 0)
 			{
-				if ( bMouseOver || pItemPanel->IsSelected() )
+				if(bMouseOver || pItemPanel->IsSelected())
 				{
 					pszBorder = g_szItemBorders[iRarity][1];
 				}
@@ -1173,11 +1166,10 @@ void CClassLoadoutPanel::SetBorderForItem( CItemModelPanel *pItemPanel, bool bMo
 				}
 			}
 		}
-		
-		
-		if ( iRarity == 0 )
+
+		if(iRarity == 0)
 		{
-			if ( bMouseOver || pItemPanel->IsSelected() )
+			if(bMouseOver || pItemPanel->IsSelected())
 			{
 				pszBorder = "LoadoutItemMouseOverBorder";
 			}
@@ -1188,59 +1180,59 @@ void CClassLoadoutPanel::SetBorderForItem( CItemModelPanel *pItemPanel, bool bMo
 		}
 	}
 
-	vgui::IScheme *pScheme = vgui::scheme()->GetIScheme( GetScheme() );
-	pItemPanel->SetBorder( pScheme->GetBorder( pszBorder ) );
+	vgui::IScheme *pScheme = vgui::scheme()->GetIScheme(GetScheme());
+	pItemPanel->SetBorder(pScheme->GetBorder(pszBorder));
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Clear the item options menu and reset the button that summoned it
 //-----------------------------------------------------------------------------
-void CClassLoadoutPanel::ClearItemOptionsMenu( void )
+void CClassLoadoutPanel::ClearItemOptionsMenu(void)
 {
-	SetOptionsButtonText( m_pItemOptionPanel->GetItemSlot(), "+" );
-	m_pItemOptionPanel->SetItemSlot( LOADOUT_POSITION_INVALID, m_iCurrentClassIndex );
-	m_pItemOptionPanel->SetVisible( false );
+	SetOptionsButtonText(m_pItemOptionPanel->GetItemSlot(), "+");
+	m_pItemOptionPanel->SetItemSlot(LOADOUT_POSITION_INVALID, m_iCurrentClassIndex);
+	m_pItemOptionPanel->SetVisible(false);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Safely set the text for a button
 //-----------------------------------------------------------------------------
-void CClassLoadoutPanel::SetOptionsButtonText( int nIndex, const char* pszText )
+void CClassLoadoutPanel::SetOptionsButtonText(int nIndex, const char *pszText)
 {
-	if ( nIndex >= 0 && nIndex < m_vecItemOptionButtons.Count() )
+	if(nIndex >= 0 && nIndex < m_vecItemOptionButtons.Count())
 	{
-		m_vecItemOptionButtons[ m_pItemOptionPanel->GetItemSlot() ]->SetText( pszText );
+		m_vecItemOptionButtons[m_pItemOptionPanel->GetItemSlot()]->SetText(pszText);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Return if the passed in item has any options
 //-----------------------------------------------------------------------------
-bool CClassLoadoutPanel::AnyOptionsAvailableForItem( const CEconItemView *pItem )
+bool CClassLoadoutPanel::AnyOptionsAvailableForItem(const CEconItemView *pItem)
 {
-	if ( !pItem )
+	if(!pItem)
 		return false;
-		
+
 	// Styles!
-	if ( pItem->GetStaticData()->GetNumSelectableStyles() > 1 )
+	if(pItem->GetStaticData()->GetNumSelectableStyles() > 1)
 		return true;
 
 	// Unusual particle effect! For Cosmetics only
-	static CSchemaAttributeDefHandle pAttrDef_AttachParticleEffect( "attach particle effect" );
-	if ( pItem->FindAttribute( pAttrDef_AttachParticleEffect ) && pItem->GetItemDefinition()->GetLoadoutSlot( 0 ) >= LOADOUT_POSITION_HEAD )
+	static CSchemaAttributeDefHandle pAttrDef_AttachParticleEffect("attach particle effect");
+	if(pItem->FindAttribute(pAttrDef_AttachParticleEffect) &&
+	   pItem->GetItemDefinition()->GetLoadoutSlot(0) >= LOADOUT_POSITION_HEAD)
 		return true;
 
 	return false;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CClassLoadoutPanel::SetLoadoutPage( classloadoutpage_t loadoutPage )
+void CClassLoadoutPanel::SetLoadoutPage(classloadoutpage_t loadoutPage)
 {
 	ClearItemOptionsMenu();
-	switch ( loadoutPage )
+	switch(loadoutPage)
 	{
 		case CHARACTER_LOADOUT_PAGE:
 		{
@@ -1255,114 +1247,113 @@ void CClassLoadoutPanel::SetLoadoutPage( classloadoutpage_t loadoutPage )
 		default:
 		{
 			// Unhandled loadout page
-			Assert( 0 );
+			Assert(0);
 		}
 	}
 	InvalidateLayout();
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CClassLoadoutPanel::OnCommand( const char *command )
+void CClassLoadoutPanel::OnCommand(const char *command)
 {
-	if ( FStrEq( command, "characterloadout" ) )
+	if(FStrEq(command, "characterloadout"))
 	{
-		SetLoadoutPage( CHARACTER_LOADOUT_PAGE );
+		SetLoadoutPage(CHARACTER_LOADOUT_PAGE);
 		return;
 	}
-	else if ( FStrEq( command, "tauntloadout" ) )
+	else if(FStrEq(command, "tauntloadout"))
 	{
-		SetLoadoutPage( TAUNT_LOADOUT_PAGE );
+		SetLoadoutPage(TAUNT_LOADOUT_PAGE);
 		return;
 	}
-	else if ( !V_strnicmp( command, "change", 6 ) )
+	else if(!V_strnicmp(command, "change", 6))
 	{
-		const char *pszNum = command+6;
-		if ( pszNum && pszNum[0] )
+		const char *pszNum = command + 6;
+		if(pszNum && pszNum[0])
 		{
 			int iSlot = atoi(pszNum);
-			if ( iSlot >= 0 && iSlot < CLASS_LOADOUT_POSITION_COUNT && m_iCurrentClassIndex != TF_CLASS_UNDEFINED )
+			if(iSlot >= 0 && iSlot < CLASS_LOADOUT_POSITION_COUNT && m_iCurrentClassIndex != TF_CLASS_UNDEFINED)
 			{
-				if ( m_iCurrentSlotIndex != iSlot )
+				if(m_iCurrentSlotIndex != iSlot)
 				{
 					m_iCurrentSlotIndex = iSlot;
 				}
 
 				// Create the selection screen. It removes itself on close.
-				m_pSelectionPanel = new CEquipSlotItemSelectionPanel( this, m_iCurrentClassIndex, iSlot );
-				m_pSelectionPanel->ShowPanel( 0, true );
+				m_pSelectionPanel = new CEquipSlotItemSelectionPanel(this, m_iCurrentClassIndex, iSlot);
+				m_pSelectionPanel->ShowPanel(0, true);
 
-				if ( m_pPlayerModelPanel )
+				if(m_pPlayerModelPanel)
 				{
-					m_pPlayerModelPanel->SetVisible( false );
+					m_pPlayerModelPanel->SetVisible(false);
 				}
 
 				ClearItemOptionsMenu();
 
-				PostMessage( GetParent(), new KeyValues("SelectionStarted") );
+				PostMessage(GetParent(), new KeyValues("SelectionStarted"));
 			}
 		}
 
 		return;
 	}
-	else if ( !V_strnicmp( command, "options", 7 ) )
+	else if(!V_strnicmp(command, "options", 7))
 	{
 		const char *pszNum = command + 7;
-		if( pszNum && pszNum[0] )
+		if(pszNum && pszNum[0])
 		{
-			int iSlot = atoi( pszNum );
-			//iSlot = g_VisibleLoadoutSlotsPerClass[m_iCurrentClassIndex]->m_iPos[iSlot - 1];
-			if ( iSlot >= 0 && iSlot < m_vecItemOptionButtons.Count() && m_iCurrentClassIndex != TF_CLASS_UNDEFINED )
+			int iSlot = atoi(pszNum);
+			// iSlot = g_VisibleLoadoutSlotsPerClass[m_iCurrentClassIndex]->m_iPos[iSlot - 1];
+			if(iSlot >= 0 && iSlot < m_vecItemOptionButtons.Count() && m_iCurrentClassIndex != TF_CLASS_UNDEFINED)
 			{
 				// Change the button we're coming from to be a "+"
-				SetOptionsButtonText( m_pItemOptionPanel->GetItemSlot(), "+" );
+				SetOptionsButtonText(m_pItemOptionPanel->GetItemSlot(), "+");
 
 				// Update the current slot index for callback from the setstyle button.
 				// It will send us a message to change the item the player model is holding
 				// and we need this to be updated for that.
 				m_iCurrentSlotIndex = iSlot;
-				
 
 				// Did they just toggle?
-				if ( m_pItemOptionPanel->GetItemSlot() == iSlot )
+				if(m_pItemOptionPanel->GetItemSlot() == iSlot)
 				{
-					m_pItemOptionPanel->SetVisible( !m_pItemOptionPanel->IsVisible() );
+					m_pItemOptionPanel->SetVisible(!m_pItemOptionPanel->IsVisible());
 				}
 				else
 				{
 					// Set the options panel to have the data for this slot
-					m_pItemOptionPanel->SetItemSlot( (loadout_positions_t)iSlot, m_iCurrentClassIndex );
-					m_pItemOptionPanel->SetVisible( true );
+					m_pItemOptionPanel->SetItemSlot((loadout_positions_t)iSlot, m_iCurrentClassIndex);
+					m_pItemOptionPanel->SetVisible(true);
 					// Figure out if this is on the left or right
 					int iColumnHeight = 4;
 					int iColumn = iSlot / iColumnHeight;
 					PinCorner_e myCornerToPin = iColumn == 0 ? PIN_TOPLEFT : PIN_TOPRIGHT;
 					PinCorner_e siblingCornerPinTo = iColumn == 0 ? PIN_TOPRIGHT : PIN_TOPLEFT;
 					// Pin to the appropriate side
-					int iButtonPos = g_VisibleLoadoutSlotsPerClass[m_iCurrentClassIndex]->m_iPos[ iSlot ] - 1;
-					m_pItemOptionPanel->PinToSibling( m_vecItemOptionButtons[ iButtonPos ]->GetName(), myCornerToPin, siblingCornerPinTo );
+					int iButtonPos = g_VisibleLoadoutSlotsPerClass[m_iCurrentClassIndex]->m_iPos[iSlot] - 1;
+					m_pItemOptionPanel->PinToSibling(m_vecItemOptionButtons[iButtonPos]->GetName(), myCornerToPin,
+													 siblingCornerPinTo);
 					m_pItemOptionPanel->UpdateItemOptionsUI();
 				}
 
 				// Change the button we're going to to be "-" if we're visible, "+" if we're not
-				SetOptionsButtonText( m_pItemOptionPanel->GetItemSlot(), m_pItemOptionPanel->IsVisible() ? "-" : "+" );
+				SetOptionsButtonText(m_pItemOptionPanel->GetItemSlot(), m_pItemOptionPanel->IsVisible() ? "-" : "+");
 			}
 			return;
 		}
 	}
-	BaseClass::OnCommand( command );
+	BaseClass::OnCommand(command);
 }
 
 //-----------------------------------------------------------------------------
-void CClassLoadoutPanel::OnMessage( const KeyValues* pParams, vgui::VPANEL hFromPanel )
+void CClassLoadoutPanel::OnMessage(const KeyValues *pParams, vgui::VPANEL hFromPanel)
 {
-	BaseClass::OnMessage( pParams, hFromPanel );
+	BaseClass::OnMessage(pParams, hFromPanel);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 struct passive_attrib_to_print_t
 {
@@ -1371,56 +1362,55 @@ struct passive_attrib_to_print_t
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CAttributeIterator_AddPassiveAttribsToPassiveList : public CEconItemSpecificAttributeIterator
 {
 public:
-	CAttributeIterator_AddPassiveAttribsToPassiveList( CUtlVector<passive_attrib_to_print_t> *pList, bool bForceAdd )
-		: m_pList( pList )
-		, m_bForceAdd( bForceAdd )
+	CAttributeIterator_AddPassiveAttribsToPassiveList(CUtlVector<passive_attrib_to_print_t> *pList, bool bForceAdd)
+		: m_pList(pList), m_bForceAdd(bForceAdd)
 	{
-		Assert( m_pList );
+		Assert(m_pList);
 	}
 
-	virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, attrib_value_t value )
+	virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef, attrib_value_t value)
 	{
-		Assert( pAttrDef );
+		Assert(pAttrDef);
 
-		if ( pAttrDef->IsHidden() )
+		if(pAttrDef->IsHidden())
 			return true;
 
-		if ( !m_bForceAdd )
+		if(!m_bForceAdd)
 		{
 			const char *pDesc = pAttrDef->GetArmoryDescString();
-			if ( !pDesc || !pDesc[0] )
+			if(!pDesc || !pDesc[0])
 				return true;
 
 			// If we have the "on_wearer" key, we're a passive attribute
-			if ( !Q_stristr(pDesc, "on_wearer") )
+			if(!Q_stristr(pDesc, "on_wearer"))
 				return true;
 		}
 
 		// Now see if we're already in the list
-		FOR_EACH_VEC( (*m_pList), i )
+		FOR_EACH_VEC((*m_pList), i)
 		{
-			passive_attrib_to_print_t& passiveAttr = (*m_pList)[i];
+			passive_attrib_to_print_t &passiveAttr = (*m_pList)[i];
 
-			Assert( passiveAttr.m_pAttrDef );
+			Assert(passiveAttr.m_pAttrDef);
 
 			// We match if our class is the same -- this is a case-sensitive compare!
-			if ( Q_strcmp( passiveAttr.m_pAttrDef->GetAttributeClass(), pAttrDef->GetAttributeClass() ) )
+			if(Q_strcmp(passiveAttr.m_pAttrDef->GetAttributeClass(), pAttrDef->GetAttributeClass()))
 				continue;
 
 			// We've found a matching attribute. Collate our values and stomp over the earlier value.
-			passiveAttr.m_value = CollateAttributeValues( passiveAttr.m_pAttrDef, passiveAttr.m_value, pAttrDef, value );
+			passiveAttr.m_value = CollateAttributeValues(passiveAttr.m_pAttrDef, passiveAttr.m_value, pAttrDef, value);
 
 			return true;
 		}
 
 		// We didn't find it. Add it to the list.
-		passive_attrib_to_print_t newPassiveAttr = { pAttrDef, value };
-		m_pList->AddToTail( newPassiveAttr );
+		passive_attrib_to_print_t newPassiveAttr = {pAttrDef, value};
+		m_pList->AddToTail(newPassiveAttr);
 
 		return true;
 	}
@@ -1433,9 +1423,9 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-void CClassLoadoutPanel::UpdatePassiveAttributes( void )
+void CClassLoadoutPanel::UpdatePassiveAttributes(void)
 {
-	if ( !m_pPassiveAttribsLabel )
+	if(!m_pPassiveAttribsLabel)
 		return;
 
 	// We build a list of attributes & associated values by looping through all equipped items.
@@ -1443,27 +1433,27 @@ void CClassLoadoutPanel::UpdatePassiveAttributes( void )
 	CUtlVector<passive_attrib_to_print_t> vecAttribsToPrint;
 
 	// Loop through all equipped items
-	for ( int i = 0; i < m_pItemModelPanels.Count(); i++ )
+	for(int i = 0; i < m_pItemModelPanels.Count(); i++)
 	{
-		CEconItemView *pItemData = TFInventoryManager()->GetItemInLoadoutForClass( m_iCurrentClassIndex, i );
-		if ( pItemData && pItemData->IsValid() )
+		CEconItemView *pItemData = TFInventoryManager()->GetItemInLoadoutForClass(m_iCurrentClassIndex, i);
+		if(pItemData && pItemData->IsValid())
 		{
-			CAttributeIterator_AddPassiveAttribsToPassiveList attrItPassives( &vecAttribsToPrint, false );
-			pItemData->IterateAttributes( &attrItPassives );
+			CAttributeIterator_AddPassiveAttribsToPassiveList attrItPassives(&vecAttribsToPrint, false);
+			pItemData->IterateAttributes(&attrItPassives);
 		}
 	}
 
 	// Then add any set bonuses
-	if ( steamapicontext && steamapicontext->SteamUser() )
+	if(steamapicontext && steamapicontext->SteamUser())
 	{
 		CSteamID localSteamID = steamapicontext->SteamUser()->GetSteamID();
 		CUtlVector<const CEconItemSetDefinition *> pActiveSets;
-		TFInventoryManager()->GetActiveSets( &pActiveSets, localSteamID, m_iCurrentClassIndex );
+		TFInventoryManager()->GetActiveSets(&pActiveSets, localSteamID, m_iCurrentClassIndex);
 
-		FOR_EACH_VEC( pActiveSets, set )
+		FOR_EACH_VEC(pActiveSets, set)
 		{
-			CAttributeIterator_AddPassiveAttribsToPassiveList attrItSetPassives( &vecAttribsToPrint, true );
-			pActiveSets[set]->IterateAttributes( &attrItSetPassives );
+			CAttributeIterator_AddPassiveAttribsToPassiveList attrItSetPassives(&vecAttribsToPrint, true);
+			pActiveSets[set]->IterateAttributes(&attrItSetPassives);
 		}
 	}
 
@@ -1472,68 +1462,72 @@ void CClassLoadoutPanel::UpdatePassiveAttributes( void )
 	wszPassiveDesc[0] = '\0';
 	m_pPassiveAttribsLabel->GetTextImage()->ClearColorChangeStream();
 
-	wchar_t *pHeader = g_pVGuiLocalize->Find( "#TF_PassiveAttribs" );
-	if ( pHeader )
+	wchar_t *pHeader = g_pVGuiLocalize->Find("#TF_PassiveAttribs");
+	if(pHeader)
 	{
-		V_wcscpy_safe( wszPassiveDesc, pHeader );
-		V_wcscat_safe( wszPassiveDesc, L"\n" );
+		V_wcscpy_safe(wszPassiveDesc, pHeader);
+		V_wcscat_safe(wszPassiveDesc, L"\n");
 	}
 
-	if ( vecAttribsToPrint.Count() )
+	if(vecAttribsToPrint.Count())
 	{
-		FOR_EACH_VEC( vecAttribsToPrint, i )
+		FOR_EACH_VEC(vecAttribsToPrint, i)
 		{
-			CEconAttributeDescription AttrDesc( GLocalizationProvider(), vecAttribsToPrint[i].m_pAttrDef, vecAttribsToPrint[i].m_value );
-			AddAttribPassiveText( AttrDesc, wszPassiveDesc, ARRAYSIZE(wszPassiveDesc) );
+			CEconAttributeDescription AttrDesc(GLocalizationProvider(), vecAttribsToPrint[i].m_pAttrDef,
+											   vecAttribsToPrint[i].m_value);
+			AddAttribPassiveText(AttrDesc, wszPassiveDesc, ARRAYSIZE(wszPassiveDesc));
 		}
 	}
 	else
 	{
-		vgui::IScheme *pScheme = vgui::scheme()->GetIScheme( GetScheme() );
-		Color col = pScheme->GetColor( GetColorNameForAttribColor( ATTRIB_COL_NEUTRAL ), Color(255,255,255,255) );
-		m_pPassiveAttribsLabel->GetTextImage()->AddColorChange( col, Q_wcslen( wszPassiveDesc ) );
+		vgui::IScheme *pScheme = vgui::scheme()->GetIScheme(GetScheme());
+		Color col = pScheme->GetColor(GetColorNameForAttribColor(ATTRIB_COL_NEUTRAL), Color(255, 255, 255, 255));
+		m_pPassiveAttribsLabel->GetTextImage()->AddColorChange(col, Q_wcslen(wszPassiveDesc));
 
-		wchar_t *pNone = g_pVGuiLocalize->Find( "#TF_PassiveAttribs_None" );
-		if ( pNone )
+		wchar_t *pNone = g_pVGuiLocalize->Find("#TF_PassiveAttribs_None");
+		if(pNone)
 		{
-			V_wcscat_safe( wszPassiveDesc, pNone );
+			V_wcscat_safe(wszPassiveDesc, pNone);
 		}
 	}
 
-	m_pPassiveAttribsLabel->SetText( wszPassiveDesc );
+	m_pPassiveAttribsLabel->SetText(wszPassiveDesc);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CClassLoadoutPanel::AddAttribPassiveText( const CEconAttributeDescription& AttrDesc, INOUT_Z_CAP(iNumPassiveChars) wchar_t *out_wszPassiveDesc, int iNumPassiveChars )
+void CClassLoadoutPanel::AddAttribPassiveText(const CEconAttributeDescription &AttrDesc,
+											  INOUT_Z_CAP(iNumPassiveChars) wchar_t *out_wszPassiveDesc,
+											  int iNumPassiveChars)
 {
-	vgui::IScheme *pScheme = vgui::scheme()->GetIScheme( GetScheme() );
-	Assert( pScheme );
+	vgui::IScheme *pScheme = vgui::scheme()->GetIScheme(GetScheme());
+	Assert(pScheme);
 
-	if ( !AttrDesc.GetDescription().IsEmpty() )
+	if(!AttrDesc.GetDescription().IsEmpty())
 	{
 		// Insert the color change at the current position
-		Color col = pScheme->GetColor( GetColorNameForAttribColor( AttrDesc.GetDefaultColor() ), Color(255,255,255,255) );
-		m_pPassiveAttribsLabel->GetTextImage()->AddColorChange( col, Q_wcslen( out_wszPassiveDesc ) );
+		Color col =
+			pScheme->GetColor(GetColorNameForAttribColor(AttrDesc.GetDefaultColor()), Color(255, 255, 255, 255));
+		m_pPassiveAttribsLabel->GetTextImage()->AddColorChange(col, Q_wcslen(out_wszPassiveDesc));
 
 		// Now append the text of the attribute
-		V_wcsncat( out_wszPassiveDesc, AttrDesc.GetDescription().Get(), iNumPassiveChars );
-		V_wcsncat( out_wszPassiveDesc, L"\n", iNumPassiveChars );
+		V_wcsncat(out_wszPassiveDesc, AttrDesc.GetDescription().Get(), iNumPassiveChars);
+		V_wcsncat(out_wszPassiveDesc, L"\n", iNumPassiveChars);
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CClassLoadoutPanel::UpdatePageButtonColor( CExImageButton *pPageButton, bool bIsActive )
+void CClassLoadoutPanel::UpdatePageButtonColor(CExImageButton *pPageButton, bool bIsActive)
 {
-	if ( pPageButton )
+	if(pPageButton)
 	{
 		int iLoaded = bIsActive ? LOADED : NOTLOADED;
-		pPageButton->SetDefaultColor( m_aDefaultColors[iLoaded][FG][DEFAULT], m_aDefaultColors[iLoaded][BG][DEFAULT] );
-		pPageButton->SetArmedColor( m_aDefaultColors[iLoaded][FG][ARMED], m_aDefaultColors[iLoaded][BG][ARMED] );
-		pPageButton->SetDepressedColor( m_aDefaultColors[iLoaded][FG][DEPRESSED], m_aDefaultColors[iLoaded][BG][DEPRESSED] );
+		pPageButton->SetDefaultColor(m_aDefaultColors[iLoaded][FG][DEFAULT], m_aDefaultColors[iLoaded][BG][DEFAULT]);
+		pPageButton->SetArmedColor(m_aDefaultColors[iLoaded][FG][ARMED], m_aDefaultColors[iLoaded][BG][ARMED]);
+		pPageButton->SetDepressedColor(m_aDefaultColors[iLoaded][FG][DEPRESSED],
+									   m_aDefaultColors[iLoaded][BG][DEPRESSED]);
 	}
 }

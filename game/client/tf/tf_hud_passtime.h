@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,15 +14,18 @@
 #include "tf_controls.h"
 #include "GameEventListener.h"
 
-namespace vgui { class ContinuousProgressBar; }
+namespace vgui
+{
+	class ContinuousProgressBar;
+}
 class CTFHudPasstimePlayerOffscreenArrow;
 
 //-----------------------------------------------------------------------------
 class CTFHudPasstimePanel : public vgui::EditablePanel
 {
 public:
-	DECLARE_CLASS_SIMPLE( CTFHudPasstimePanel, vgui::EditablePanel );
-	CTFHudPasstimePanel( vgui::Panel *pParent, const char *name );
+	DECLARE_CLASS_SIMPLE(CTFHudPasstimePanel, vgui::EditablePanel);
+	CTFHudPasstimePanel(vgui::Panel *pParent, const char *name);
 
 	virtual bool IsVisible() OVERRIDE;
 };
@@ -31,14 +34,14 @@ public:
 class CTFHudTeamScore : public CTFHudPasstimePanel
 {
 public:
-	DECLARE_CLASS_SIMPLE( CTFHudTeamScore, CTFHudPasstimePanel );
-	CTFHudTeamScore( vgui::Panel *pParent );
+	DECLARE_CLASS_SIMPLE(CTFHudTeamScore, CTFHudPasstimePanel);
+	CTFHudTeamScore(vgui::Panel *pParent);
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme) OVERRIDE;
 	virtual void OnTick() OVERRIDE;
 
 private:
-	int GetTeamScore( int iTeam );
+	int GetTeamScore(int iTeam);
 
 	vgui::EditablePanel *m_pPlayingToCluster;
 };
@@ -47,10 +50,11 @@ private:
 class CTFHudPasstimePassNotify : public CTFHudPasstimePanel
 {
 public:
-	DECLARE_CLASS_SIMPLE( CTFHudPasstimePassNotify, CTFHudPasstimePanel );
-	CTFHudPasstimePassNotify( vgui::Panel *pParent );
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
+	DECLARE_CLASS_SIMPLE(CTFHudPasstimePassNotify, CTFHudPasstimePanel);
+	CTFHudPasstimePassNotify(vgui::Panel *pParent);
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme) OVERRIDE;
 	virtual void OnTick() OVERRIDE;
+
 private:
 	vgui::EditablePanel *m_pTextBox;
 	vgui::Label *m_pTextInPassRange;
@@ -72,18 +76,25 @@ public:
 	~CTFHudPasstimeEventText();
 	void Tick();
 	void Clear();
-	void SetControls( vgui::Label *pTitleLabel, vgui::Label *pDetailLabel, vgui::Label *pBonusLabel );
-	void EnqueueSteal( C_TFPlayer *pAttacker, C_TFPlayer *pVictim );
-	void EnqueuePass( C_TFPlayer *pThrower, C_TFPlayer *pCatcher );
-	void EnqueueInterception( C_TFPlayer *pThrower, C_TFPlayer *pCatcher );
-	void EnqueueScore( C_TFPlayer *pThrower, C_TFPlayer *pAssister );
-	void EnqueueGeneric( const char *pTitle, const char *pDetail, const char *pBonus );
+	void SetControls(vgui::Label *pTitleLabel, vgui::Label *pDetailLabel, vgui::Label *pBonusLabel);
+	void EnqueueSteal(C_TFPlayer *pAttacker, C_TFPlayer *pVictim);
+	void EnqueuePass(C_TFPlayer *pThrower, C_TFPlayer *pCatcher);
+	void EnqueueInterception(C_TFPlayer *pThrower, C_TFPlayer *pCatcher);
+	void EnqueueScore(C_TFPlayer *pThrower, C_TFPlayer *pAssister);
+	void EnqueueGeneric(const char *pTitle, const char *pDetail, const char *pBonus);
 
 private:
 	// this would make more sense as a vgui animation but I need more control than that can reliably give me
-	enum class State { Idle, In, Show, Out, Pause };
+	enum class State
+	{
+		Idle,
+		In,
+		Show,
+		Out,
+		Pause
+	};
 
-	struct QueueElement 
+	struct QueueElement
 	{
 		static const size_t STRLEN_MAX = 128;
 		QueueElement();
@@ -92,15 +103,16 @@ private:
 		wchar_t bonus[STRLEN_MAX];
 	};
 
-	void SetPlayerName( C_TFPlayer *pPlayer, const char *pKey );
-	void SetTeam( C_TFPlayer *pPlayer );
-	void EnterState( State state, float duration );
-	void SetAlpha( int ia );
-	static void SetLabelText( vgui::Label *pLabel, const wchar_t *pText );
-	void Enqueue( C_TFPlayer *pSource, C_TFPlayer *pSubject, const char *pTitle, const char *pDetail, const char *pBonus );
+	void SetPlayerName(C_TFPlayer *pPlayer, const char *pKey);
+	void SetTeam(C_TFPlayer *pPlayer);
+	void EnterState(State state, float duration);
+	void SetAlpha(int ia);
+	static void SetLabelText(vgui::Label *pLabel, const wchar_t *pText);
+	void Enqueue(C_TFPlayer *pSource, C_TFPlayer *pSubject, const char *pTitle, const char *pDetail,
+				 const char *pBonus);
 
-	template< int TArraySize >
-	void ConstructNewString( const char *pLocTag, wchar_t (&out)[TArraySize] );
+	template<int TArraySize>
+	void ConstructNewString(const char *pLocTag, wchar_t (&out)[TArraySize]);
 
 	bool m_bValid;
 	CountdownTimer m_displayTimer;
@@ -123,14 +135,14 @@ class C_FuncPasstimeGoal;
 class CTFHudPasstimeBallStatus : public CTFHudPasstimePanel, public CGameEventListener
 {
 public:
-	DECLARE_CLASS_SIMPLE( CTFHudPasstimeBallStatus, CTFHudPasstimePanel );
-	CTFHudPasstimeBallStatus( vgui::Panel *pParent );
+	DECLARE_CLASS_SIMPLE(CTFHudPasstimeBallStatus, CTFHudPasstimePanel);
+	CTFHudPasstimeBallStatus(vgui::Panel *pParent);
 	~CTFHudPasstimeBallStatus();
 
 	void Reset();
-	
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
-	virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
+
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme) OVERRIDE;
+	virtual void FireGameEvent(IGameEvent *event) OVERRIDE;
 	virtual void OnTick() OVERRIDE;
 
 private:
@@ -161,17 +173,17 @@ private:
 	int m_iBallPowerMeterFillWidth;
 	int m_iPrevBallPower;
 
-	void OnBallFreeSelf( C_TFPlayer *pOwner, C_TFPlayer *pAttacker );
-	void OnBallFreeOther( C_TFPlayer *pOwner, C_TFPlayer *pAttacker );
-	void OnBallGetOther( int iPlayer );
-	void OnBallGetSelf( int iPlayer );
+	void OnBallFreeSelf(C_TFPlayer *pOwner, C_TFPlayer *pAttacker);
+	void OnBallFreeOther(C_TFPlayer *pOwner, C_TFPlayer *pAttacker);
+	void OnBallGetOther(int iPlayer);
+	void OnBallGetSelf(int iPlayer);
 	void OnBallScore();
 	bool TryForceBallFree();
 	bool TryForceBallGet();
-	void OnBallGet( int getterIndex );
-	void UpdateGoalIcon( vgui::ImagePanel *pIcon, C_FuncPasstimeGoal *pGoal );
+	void OnBallGet(int getterIndex);
+	void UpdateGoalIcon(vgui::ImagePanel *pIcon, C_FuncPasstimeGoal *pGoal);
 	bool BShouldDraw() const;
-	void OnTickVisible( C_TFPlayer *pLocalPlayer, C_PasstimeBall *pBall);
+	void OnTickVisible(C_TFPlayer *pLocalPlayer, C_PasstimeBall *pBall);
 	void OnTickHidden();
 	void HideGoalIcons();
 };
@@ -180,11 +192,11 @@ private:
 class CTFHudPasstime : public CTFHudPasstimePanel
 {
 public:
-	DECLARE_CLASS_SIMPLE( CTFHudPasstime, CTFHudPasstimePanel );
-	CTFHudPasstime( vgui::Panel *pParent );
+	DECLARE_CLASS_SIMPLE(CTFHudPasstime, CTFHudPasstimePanel);
+	CTFHudPasstime(vgui::Panel *pParent);
 	~CTFHudPasstime();
 	void Reset();
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme) OVERRIDE;
 	virtual void OnTick() OVERRIDE;
 
 private:
@@ -195,4 +207,4 @@ private:
 	CTFHudPasstimePlayerOffscreenArrow *m_pPlayerArrows[MAX_PLAYERS];
 };
 
-#endif // TF_HUD_PASSTIME_H  
+#endif // TF_HUD_PASSTIME_H

@@ -10,17 +10,17 @@
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
-void AddBuiltInParticleOperators( void );
-void AddBuiltInParticleRenderers( void );
-void AddBuiltInParticleInitializers( void );
-void AddBuiltInParticleEmitters( void );
-void AddBuiltInParticleForceGenerators( void );
-void AddBuiltInParticleConstraints( void );
+void AddBuiltInParticleOperators(void);
+void AddBuiltInParticleRenderers(void);
+void AddBuiltInParticleInitializers(void);
+void AddBuiltInParticleEmitters(void);
+void AddBuiltInParticleForceGenerators(void);
+void AddBuiltInParticleConstraints(void);
 
-void CParticleSystemMgr::AddBuiltinSimulationOperators( void )
+void CParticleSystemMgr::AddBuiltinSimulationOperators(void)
 {
 	static bool s_DidAddSim = false;
-	if ( ! s_DidAddSim )
+	if(!s_DidAddSim)
 	{
 		s_DidAddSim = true;
 		AddBuiltInParticleOperators();
@@ -31,10 +31,10 @@ void CParticleSystemMgr::AddBuiltinSimulationOperators( void )
 	}
 }
 
-void CParticleSystemMgr::AddBuiltinRenderingOperators( void )
+void CParticleSystemMgr::AddBuiltinRenderingOperators(void)
 {
 	static bool s_DidAddRenderers = false;
-	if ( ! s_DidAddRenderers )
+	if(!s_DidAddRenderers)
 	{
 		s_DidAddRenderers = true;
 		AddBuiltInParticleRenderers();

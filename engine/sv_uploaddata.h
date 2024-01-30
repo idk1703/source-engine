@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,9 +10,8 @@
 #pragma once
 #endif
 
-
 class KeyValues;
 
-bool UploadData( char const *cserIP, char const *tablename, KeyValues *fields );
+bool UploadData(char const *cserIP, char const *tablename, KeyValues *fields);
 
 #endif // SV_UPLOADDATA_H

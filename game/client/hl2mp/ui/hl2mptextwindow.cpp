@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -36,25 +36,23 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CHL2MPTextWindow::CHL2MPTextWindow(IViewPort *pViewPort) : CTextWindow( pViewPort )
+CHL2MPTextWindow::CHL2MPTextWindow(IViewPort *pViewPort) : CTextWindow(pViewPort)
 {
-	SetProportional( true );
+	SetProportional(true);
 
 	m_iScoreBoardKey = BUTTON_CODE_INVALID; // this is looked up in Activate()
 
-	CreateBackground( this );
+	CreateBackground(this);
 	m_backgroundLayoutFinished = false;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CHL2MPTextWindow::~CHL2MPTextWindow()
-{
-}
+CHL2MPTextWindow::~CHL2MPTextWindow() {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHL2MPTextWindow::Update()
 {
@@ -64,13 +62,13 @@ void CHL2MPTextWindow::Update()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHL2MPTextWindow::SetVisible(bool state)
 {
 	BaseClass::SetVisible(state);
 
-	if ( state )
+	if(state)
 	{
 		m_pOK->RequestFocus();
 	}
@@ -81,40 +79,38 @@ void CHL2MPTextWindow::SetVisible(bool state)
 //-----------------------------------------------------------------------------
 void CHL2MPTextWindow::ShowPanel(bool bShow)
 {
-	if ( bShow )
+	if(bShow)
 	{
 		// get key binding if shown
-		if ( m_iScoreBoardKey == BUTTON_CODE_INVALID ) // you need to lookup the jump key AFTER the engine has loaded
+		if(m_iScoreBoardKey == BUTTON_CODE_INVALID) // you need to lookup the jump key AFTER the engine has loaded
 		{
-			m_iScoreBoardKey = gameuifuncs->GetButtonCodeForBind( "showscores" );
+			m_iScoreBoardKey = gameuifuncs->GetButtonCodeForBind("showscores");
 		}
 	}
 
-	BaseClass::ShowPanel( bShow );
+	BaseClass::ShowPanel(bShow);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHL2MPTextWindow::OnKeyCodePressed(KeyCode code)
 {
-	if ( m_iScoreBoardKey != BUTTON_CODE_INVALID && m_iScoreBoardKey == code )
+	if(m_iScoreBoardKey != BUTTON_CODE_INVALID && m_iScoreBoardKey == code)
 	{
-		gViewPortInterface->ShowPanel( PANEL_SCOREBOARD, true );
-		gViewPortInterface->PostMessageToPanel( PANEL_SCOREBOARD, new KeyValues( "PollHideCode", "code", code ) );
+		gViewPortInterface->ShowPanel(PANEL_SCOREBOARD, true);
+		gViewPortInterface->PostMessageToPanel(PANEL_SCOREBOARD, new KeyValues("PollHideCode", "code", code));
 	}
 	else
 	{
-		BaseClass::OnKeyCodePressed( code );
+		BaseClass::OnKeyCodePressed(code);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: The CS background is painted by image panels, so we should do nothing
 //-----------------------------------------------------------------------------
-void CHL2MPTextWindow::PaintBackground()
-{
-}
+void CHL2MPTextWindow::PaintBackground() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Scale / center the window
@@ -124,39 +120,35 @@ void CHL2MPTextWindow::PerformLayout()
 	BaseClass::PerformLayout();
 
 	// stretch the window to fullscreen
-	if ( !m_backgroundLayoutFinished )
-		LayoutBackgroundPanel( this );
+	if(!m_backgroundLayoutFinished)
+		LayoutBackgroundPanel(this);
 	m_backgroundLayoutFinished = true;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CHL2MPTextWindow::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CHL2MPTextWindow::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
-	ApplyBackgroundSchemeSettings( this, pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
+	ApplyBackgroundSchemeSettings(this, pScheme);
 }
 
-CHL2MPSpectatorGUI::CHL2MPSpectatorGUI(IViewPort *pViewPort) : CSpectatorGUI(pViewPort)
-{
-}
+CHL2MPSpectatorGUI::CHL2MPSpectatorGUI(IViewPort *pViewPort) : CSpectatorGUI(pViewPort) {}
 
-
-bool CHL2MPSpectatorGUI::NeedsUpdate( void )
+bool CHL2MPSpectatorGUI::NeedsUpdate(void)
 {
-	if ( !C_BasePlayer::GetLocalPlayer() )
+	if(!C_BasePlayer::GetLocalPlayer())
 		return false;
 
-	if ( m_nLastSpecMode != C_BasePlayer::GetLocalPlayer()->GetObserverMode() )
+	if(m_nLastSpecMode != C_BasePlayer::GetLocalPlayer()->GetObserverMode())
 		return true;
 
-	if ( m_nLastSpecTarget != C_BasePlayer::GetLocalPlayer()->GetObserverTarget() )
+	if(m_nLastSpecTarget != C_BasePlayer::GetLocalPlayer()->GetObserverTarget())
 		return true;
 
 	return BaseClass::NeedsUpdate();
 }
-
 
 void CHL2MPSpectatorGUI::Update()
 {
@@ -164,11 +156,9 @@ void CHL2MPSpectatorGUI::Update()
 
 	C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
 
-	if( pLocalPlayer )
+	if(pLocalPlayer)
 	{
 		m_nLastSpecMode = pLocalPlayer->GetObserverMode();
 		m_nLastSpecTarget = pLocalPlayer->GetObserverTarget();
 	}
 }
-
-

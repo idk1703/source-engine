@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -23,7 +23,6 @@
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
-
 
 // ********
 // NOTE: Make sure the order matches g_MapErrorStringIDs below!
@@ -59,35 +58,30 @@ typedef enum
 // ********
 struct
 {
-	int	m_StrResourceID;
+	int m_StrResourceID;
 	int m_DescriptionResourceID;
-} g_MapErrorStrings[] =
-{
-	{IDS_NOPLAYERSTART,					IDS_NOPLAYERSTART_DESC},
-	{IDS_MIXEDFACES,					IDS_MIXEDFACES_DESC},
-	{IDS_DUPLICATEPLANES,				IDS_DUPLICATEPLANES_DESC},
-	{IDS_UNMATCHEDTARGET,				IDS_UNMATCHEDTARGET_DESC},
-	{IDS_INVALIDTEXTURE,				IDS_INVALIDTEXTURE_DESC},
-	{IDS_SOLIDSTRUCTURE,				IDS_SOLIDSTRUCTURE_DESC},
-	{IDS_UNUSEDKEYVALUES,				IDS_UNUSEDKEYVALUES_DESC},
-	{IDS_EMPTYENTITY,					IDS_EMPTYENTITY_DESC},
-	{IDS_DUPLICATEKEYS,					IDS_DUPLICATEKEYS_DESC},
-	{IDS_SOLIDCONTENT,					IDS_SOLIDCONTENT_DESC},
-	{IDS_INVALIDTEXTUREAXES,			IDS_INVALIDTEXTUREAXES_DESC},
-	{IDS_DUPLICATEFACEID,				IDS_DUPLICATEFACEID_DESC},
-	{IDS_DUPLICATE_NODE_ID,				IDS_DUPLICATE_NODE_ID_DESC},
-	{IDS_BAD_CONNECTIONS,				IDS_BAD_CONNECTIONS_DESC},
-	{IDS_HIDDEN_GROUP_HIDDEN_CHILDREN,	IDS_HIDDEN_GROUP_HIDDEN_CHILDREN_DESC},
-	{IDS_HIDDEN_GROUP_VISIBLE_CHILDREN, IDS_HIDDEN_GROUP_VISIBLE_CHILDREN_DESC},
-	{IDS_HIDDEN_GROUP_MIXED_CHILDREN,	IDS_HIDDEN_GROUP_MIXED_CHILDREN_DESC},
-	{IDS_HIDDEN_NO_VISGROUP,			IDS_HIDDEN_NO_VISGROUP_DESC},
-	{IDS_HIDDEN_CHILD_OF_ENTITY,		IDS_HIDDEN_CHILD_OF_ENTITY_DESC},
-	{IDS_HIDDEN_ILLEGALLY,				IDS_HIDDEN_ILLEGALLY_DESC},
-	{IDS_KILL_INPUT_RACE_CONDITION,		IDS_KILL_INPUT_RACE_CONDITION_DESC},
-	{IDS_BAD_OVERLAY,					IDS_DAB_OVERLAY_DESC}
-};
-
-
+} g_MapErrorStrings[] = {{IDS_NOPLAYERSTART, IDS_NOPLAYERSTART_DESC},
+						 {IDS_MIXEDFACES, IDS_MIXEDFACES_DESC},
+						 {IDS_DUPLICATEPLANES, IDS_DUPLICATEPLANES_DESC},
+						 {IDS_UNMATCHEDTARGET, IDS_UNMATCHEDTARGET_DESC},
+						 {IDS_INVALIDTEXTURE, IDS_INVALIDTEXTURE_DESC},
+						 {IDS_SOLIDSTRUCTURE, IDS_SOLIDSTRUCTURE_DESC},
+						 {IDS_UNUSEDKEYVALUES, IDS_UNUSEDKEYVALUES_DESC},
+						 {IDS_EMPTYENTITY, IDS_EMPTYENTITY_DESC},
+						 {IDS_DUPLICATEKEYS, IDS_DUPLICATEKEYS_DESC},
+						 {IDS_SOLIDCONTENT, IDS_SOLIDCONTENT_DESC},
+						 {IDS_INVALIDTEXTUREAXES, IDS_INVALIDTEXTUREAXES_DESC},
+						 {IDS_DUPLICATEFACEID, IDS_DUPLICATEFACEID_DESC},
+						 {IDS_DUPLICATE_NODE_ID, IDS_DUPLICATE_NODE_ID_DESC},
+						 {IDS_BAD_CONNECTIONS, IDS_BAD_CONNECTIONS_DESC},
+						 {IDS_HIDDEN_GROUP_HIDDEN_CHILDREN, IDS_HIDDEN_GROUP_HIDDEN_CHILDREN_DESC},
+						 {IDS_HIDDEN_GROUP_VISIBLE_CHILDREN, IDS_HIDDEN_GROUP_VISIBLE_CHILDREN_DESC},
+						 {IDS_HIDDEN_GROUP_MIXED_CHILDREN, IDS_HIDDEN_GROUP_MIXED_CHILDREN_DESC},
+						 {IDS_HIDDEN_NO_VISGROUP, IDS_HIDDEN_NO_VISGROUP_DESC},
+						 {IDS_HIDDEN_CHILD_OF_ENTITY, IDS_HIDDEN_CHILD_OF_ENTITY_DESC},
+						 {IDS_HIDDEN_ILLEGALLY, IDS_HIDDEN_ILLEGALLY_DESC},
+						 {IDS_KILL_INPUT_RACE_CONDITION, IDS_KILL_INPUT_RACE_CONDITION_DESC},
+						 {IDS_BAD_OVERLAY, IDS_DAB_OVERLAY_DESC}};
 
 typedef enum
 {
@@ -96,7 +90,6 @@ typedef enum
 	Fixed,
 } FIXCODE;
 
-
 struct MapError
 {
 	CMapClass *pObjects[3];
@@ -104,7 +97,6 @@ struct MapError
 	DWORD dwExtra;
 	FIXCODE Fix;
 };
-
 
 //
 // Fix functions.
@@ -124,9 +116,7 @@ void FixHiddenObject(MapError *pError);
 static void FixKillInputRaceCondition(MapError *pError);
 static void FixOverlayFaceList(MapError *pError);
 
-
 CMapCheckDlg *s_pDlg = NULL;
-
 
 BEGIN_MESSAGE_MAP(CMapCheckDlg, CDialog)
 	//{{AFX_MSG_MAP(CMapCheckDlg)
@@ -142,41 +132,37 @@ BEGIN_MESSAGE_MAP(CMapCheckDlg, CDialog)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-
 //-----------------------------------------------------------------------------
 // Visibility check
 //-----------------------------------------------------------------------------
-inline bool IsCheckVisible( CMapClass *pClass )
+inline bool IsCheckVisible(CMapClass *pClass)
 {
 	return (Options.general.bCheckVisibleMapErrors == FALSE) || pClass->IsVisible();
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMapCheckDlg::CheckForProblems(CWnd *pwndParent)
 {
-	if (!s_pDlg)
+	if(!s_pDlg)
 	{
 		s_pDlg = new CMapCheckDlg;
 		s_pDlg->Create(IDD, pwndParent);
 	}
 
-	if (!s_pDlg->DoCheck())
+	if(!s_pDlg->DoCheck())
 	{
 		// Found problems.
 		s_pDlg->ShowWindow(SW_SHOW);
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pParent - 
+// Purpose:
+// Input  : pParent -
 //-----------------------------------------------------------------------------
-CMapCheckDlg::CMapCheckDlg(CWnd *pParent)
-	: CDialog(CMapCheckDlg::IDD, pParent)
+CMapCheckDlg::CMapCheckDlg(CWnd *pParent) : CDialog(CMapCheckDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CMapCheckDlg)
 	m_bCheckVisible = FALSE;
@@ -185,12 +171,11 @@ CMapCheckDlg::CMapCheckDlg(CWnd *pParent)
 	m_bCheckVisible = Options.general.bCheckVisibleMapErrors;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pDX - 
+// Purpose:
+// Input  : pDX -
 //-----------------------------------------------------------------------------
-void CMapCheckDlg::DoDataExchange(CDataExchange* pDX)
+void CMapCheckDlg::DoDataExchange(CDataExchange *pDX)
 {
 	CDialog::DoDataExchange(pDX);
 
@@ -203,39 +188,36 @@ void CMapCheckDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CHECK_VISIBLE_ONLY, m_bCheckVisible);
 	//}}AFX_DATA_MAP
 
-	if ( pDX->m_bSaveAndValidate )
+	if(pDX->m_bSaveAndValidate)
 	{
 		Options.general.bCheckVisibleMapErrors = m_bCheckVisible;
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Checkbox indicating whether we should check visible errors
 //-----------------------------------------------------------------------------
 void CMapCheckDlg::OnCheckVisibleOnly()
 {
-	UpdateData( TRUE );
+	UpdateData(TRUE);
 	DoCheck();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Selects the current error objects and centers the views on it.
 //-----------------------------------------------------------------------------
-void CMapCheckDlg::OnGo() 
+void CMapCheckDlg::OnGo()
 {
 	GotoSelectedErrors();
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMapCheckDlg::GotoSelectedErrors()
 {
 	int iSel = m_Errors.GetCurSel();
-	if (iSel == LB_ERR)
+	if(iSel == LB_ERR)
 	{
 		return;
 	}
@@ -243,12 +225,12 @@ void CMapCheckDlg::GotoSelectedErrors()
 	ToolManager()->SetTool(TOOL_POINTER);
 
 	CMapObjectList Objects;
-	for (int i = 0; i < m_Errors.GetCount(); i++)
+	for(int i = 0; i < m_Errors.GetCount(); i++)
 	{
-		if (m_Errors.GetSel(i) > 0)
+		if(m_Errors.GetSel(i) > 0)
 		{
 			MapError *pError = (MapError *)m_Errors.GetItemDataPtr(i);
-			if (pError)
+			if(pError)
 			{
 				Objects.AddToTail(pError->pObjects[0]);
 			}
@@ -261,14 +243,13 @@ void CMapCheckDlg::GotoSelectedErrors()
 	pDoc->CenterViewsOnSelection();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Fixes all the selected errors.
 //-----------------------------------------------------------------------------
-void CMapCheckDlg::OnFix() 
+void CMapCheckDlg::OnFix()
 {
 	int iSel = m_Errors.GetCurSel();
-	if (iSel == LB_ERR)
+	if(iSel == LB_ERR)
 	{
 		return;
 	}
@@ -277,12 +258,12 @@ void CMapCheckDlg::OnFix()
 	CMapObjectList Objects;
 	ub.Objects = &Objects;
 
-	for (int i = 0; i < m_Errors.GetCount(); i++)
+	for(int i = 0; i < m_Errors.GetCount(); i++)
 	{
-		if (m_Errors.GetSel(i) > 0)
+		if(m_Errors.GetSel(i) > 0)
 		{
 			MapError *pError = (MapError *)m_Errors.GetItemDataPtr(i);
-			if (pError)
+			if(pError)
 			{
 				Fix(pError, ub);
 			}
@@ -290,22 +271,21 @@ void CMapCheckDlg::OnFix()
 	}
 
 	OnSelchangeErrors();
-	CMapDoc::GetActiveMapDoc()->UpdateAllViews( MAPVIEW_UPDATE_OBJECTS );
+	CMapDoc::GetActiveMapDoc()->UpdateAllViews(MAPVIEW_UPDATE_OBJECTS);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pError - 
-//			ub - 
+// Purpose:
+// Input  : pError -
+//			ub -
 //-----------------------------------------------------------------------------
 void CMapCheckDlg::Fix(MapError *pError, UpdateBox &ub)
 {
 	CMapDoc::GetActiveMapDoc()->SetModifiedFlag();
 
-	if (pError->Fix != NeedsFix)
+	if(pError->Fix != NeedsFix)
 	{
-		// should never get here because this button is supposed 
+		// should never get here because this button is supposed
 		//  to be disabled if the error cannot be fixed
 		return;
 	}
@@ -313,9 +293,9 @@ void CMapCheckDlg::Fix(MapError *pError, UpdateBox &ub)
 	//
 	// Expand the bounds of the update region to include the broken objects.
 	//
-	for (int i = 0; i < 2; i++)
+	for(int i = 0; i < 2; i++)
 	{
-		if (!pError->pObjects[i])
+		if(!pError->pObjects[i])
 		{
 			continue;
 		}
@@ -331,7 +311,7 @@ void CMapCheckDlg::Fix(MapError *pError, UpdateBox &ub)
 	//
 	// Perform the fix.
 	//
-	switch (pError->Type)
+	switch(pError->Type)
 	{
 		case ErrorDuplicatePlanes:
 		{
@@ -405,7 +385,7 @@ void CMapCheckDlg::Fix(MapError *pError, UpdateBox &ub)
 		}
 		case ErrorOverlayFaceList:
 		{
-			FixOverlayFaceList( pError );
+			FixOverlayFaceList(pError);
 			break;
 		}
 	}
@@ -415,9 +395,9 @@ void CMapCheckDlg::Fix(MapError *pError, UpdateBox &ub)
 	//
 	// Expand the bounds of the update region to include the fixed objects.
 	//
-	for (int i = 0; i < 2; i++)
+	for(int i = 0; i < 2; i++)
 	{
-		if (!pError->pObjects[i])
+		if(!pError->pObjects[i])
 		{
 			continue;
 		}
@@ -429,23 +409,22 @@ void CMapCheckDlg::Fix(MapError *pError, UpdateBox &ub)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CMapCheckDlg::OnFixall() 
+void CMapCheckDlg::OnFixall()
 {
 	int iSel = m_Errors.GetCurSel();
-	if (iSel == LB_ERR)
+	if(iSel == LB_ERR)
 	{
 		return;
 	}
 
-	MapError *pError = (MapError *) m_Errors.GetItemDataPtr(iSel);
+	MapError *pError = (MapError *)m_Errors.GetItemDataPtr(iSel);
 
-	if (pError->Fix == CantFix)
+	if(pError->Fix == CantFix)
 	{
-		// should never get here because this button is supposed 
+		// should never get here because this button is supposed
 		//  to be disabled if the error cannot be fixed
 		return;
 	}
@@ -455,18 +434,18 @@ void CMapCheckDlg::OnFixall()
 	ub.Objects = &Objects;
 
 	// For every selected error...
-	for (int i = 0; i < m_Errors.GetCount(); i++)
+	for(int i = 0; i < m_Errors.GetCount(); i++)
 	{
-		if (m_Errors.GetSel(i) > 0)
+		if(m_Errors.GetSel(i) > 0)
 		{
 			pError = (MapError *)m_Errors.GetItemDataPtr(i);
-			if ((pError) && (pError->Fix == NeedsFix))
+			if((pError) && (pError->Fix == NeedsFix))
 			{
 				// Find and fix every error of the same type.
-				for (int j = 0; j < m_Errors.GetCount(); j++)
+				for(int j = 0; j < m_Errors.GetCount(); j++)
 				{
 					MapError *pError2 = (MapError *)m_Errors.GetItemDataPtr(j);
-					if ((pError2->Type != pError->Type) || (pError2->Fix != NeedsFix))
+					if((pError2->Type != pError->Type) || (pError2->Fix != NeedsFix))
 					{
 						continue;
 					}
@@ -478,14 +457,13 @@ void CMapCheckDlg::OnFixall()
 	}
 
 	OnSelchangeErrors();
-	CMapDoc::GetActiveMapDoc()->UpdateAllViews( MAPVIEW_UPDATE_OBJECTS );
+	CMapDoc::GetActiveMapDoc()->UpdateAllViews(MAPVIEW_UPDATE_OBJECTS);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CMapCheckDlg::OnSelchangeErrors() 
+void CMapCheckDlg::OnSelchangeErrors()
 {
 	// change description to match error
 	int iSel = m_Errors.GetCurSel();
@@ -499,13 +477,13 @@ void CMapCheckDlg::OnSelchangeErrors()
 
 	CString str;
 	MapError *pError;
-	pError = (MapError*) m_Errors.GetItemDataPtr(iSel);
+	pError = (MapError *)m_Errors.GetItemDataPtr(iSel);
 
 	// Figure out which error string we're using.
 	int iErrorStr = (int)pError->Type;
-	iErrorStr = clamp( iErrorStr, 0, ARRAYSIZE( g_MapErrorStrings ) - 1 );
-	Assert( iErrorStr == (int)pError->Type );
-	
+	iErrorStr = clamp(iErrorStr, 0, ARRAYSIZE(g_MapErrorStrings) - 1);
+	Assert(iErrorStr == (int)pError->Type);
+
 	str.LoadString(g_MapErrorStrings[iErrorStr].m_DescriptionResourceID);
 	m_Description.SetWindowText(str);
 
@@ -516,7 +494,7 @@ void CMapCheckDlg::OnSelchangeErrors()
 	m_cFixAll.EnableWindow(pError->Fix != CantFix);
 
 	// set text of fix button
-	switch (pError->Fix)
+	switch(pError->Fix)
 	{
 		case NeedsFix:
 			m_Fix.SetWindowText("&Fix");
@@ -532,37 +510,35 @@ void CMapCheckDlg::OnSelchangeErrors()
 	CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
 
 	pDoc->GetSelection()->SetMode(selectObjects);
-	
-	if (pError->pObjects[0])
+
+	if(pError->pObjects[0])
 	{
-		pDoc->SelectObject(pError->pObjects[0], scClear|scSelect|scSaveChanges );
+		pDoc->SelectObject(pError->pObjects[0], scClear | scSelect | scSaveChanges);
 	}
 	else
 	{
-		pDoc->SelectObject(NULL, scClear|scSaveChanges );
+		pDoc->SelectObject(NULL, scClear | scSaveChanges);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CMapCheckDlg::OnDblClkErrors() 
+void CMapCheckDlg::OnDblClkErrors()
 {
-	GotoSelectedErrors();	
+	GotoSelectedErrors();
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CMapCheckDlg::OnPaint() 
+void CMapCheckDlg::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMapCheckDlg::KillErrorList()
 {
@@ -570,13 +546,12 @@ void CMapCheckDlg::KillErrorList()
 	int iSize = m_Errors.GetCount();
 	for(int i = 0; i < iSize; i++)
 	{
-		MapError *pError = (MapError*) m_Errors.GetItemDataPtr(i);
+		MapError *pError = (MapError *)m_Errors.GetItemDataPtr(i);
 		delete pError;
 	}
 
 	m_Errors.ResetContent();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Builds the listbox string for the given error and adds it to the list.
@@ -587,14 +562,14 @@ static void AddErrorToListBox(CListBox *pList, MapError *pError)
 
 	// Figure out which error string we're using.
 	int iErrorStr = (int)pError->Type;
-	iErrorStr = clamp( iErrorStr, 0, ARRAYSIZE( g_MapErrorStrings ) - 1 );
-	Assert( iErrorStr == (int)pError->Type );
-	
+	iErrorStr = clamp(iErrorStr, 0, ARRAYSIZE(g_MapErrorStrings) - 1);
+	Assert(iErrorStr == (int)pError->Type);
+
 	str.LoadString(g_MapErrorStrings[iErrorStr].m_StrResourceID);
 
-	if (str.Find('%') != -1)
+	if(str.Find('%') != -1)
 	{
-		if (pError->Type == ErrorUnusedKeyvalues)
+		if(pError->Type == ErrorUnusedKeyvalues)
 		{
 			// dwExtra has the name of the string in it
 			CString str2 = str;
@@ -612,13 +587,12 @@ static void AddErrorToListBox(CListBox *pList, MapError *pError)
 	pList->SetItemDataPtr(iIndex, (PVOID)pError);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pList - 
-//			Type - 
-//			dwExtra - 
-//			... - 
+// Purpose:
+// Input  : pList -
+//			Type -
+//			dwExtra -
+//			... -
 //-----------------------------------------------------------------------------
 static void AddError(CListBox *pList, MapErrorType Type, DWORD dwExtra, ...)
 {
@@ -635,7 +609,7 @@ static void AddError(CListBox *pList, MapErrorType Type, DWORD dwExtra, ...)
 	//
 	// Get the object pointer from the variable argument list.
 	//
-	switch (Type)
+	switch(Type)
 	{
 		case ErrorNoPlayerStart:
 		{
@@ -679,7 +653,7 @@ static void AddError(CListBox *pList, MapErrorType Type, DWORD dwExtra, ...)
 	//
 	// Set the can fix flag.
 	//
-	switch (Type)
+	switch(Type)
 	{
 		case ErrorSolidContents:
 		case ErrorDuplicatePlanes:
@@ -712,57 +686,54 @@ static void AddError(CListBox *pList, MapErrorType Type, DWORD dwExtra, ...)
 	AddErrorToListBox(pList, pError);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pObject - 
-//			DWORD - 
-// Output : 
+// Purpose:
+// Input  : pObject -
+//			DWORD -
+// Output :
 //-----------------------------------------------------------------------------
 static BOOL FindPlayer(CMapEntity *pObject, DWORD)
 {
-	if ( !IsCheckVisible( pObject ) )
+	if(!IsCheckVisible(pObject))
 		return TRUE;
 
-	if (pObject->IsPlaceholder() && pObject->IsClass("info_player_start"))
+	if(pObject->IsPlaceholder() && pObject->IsClass("info_player_start"))
 	{
-		return(FALSE);
+		return (FALSE);
 	}
-	return(TRUE);
+	return (TRUE);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pList - 
-//			pWorld - 
+// Purpose:
+// Input  : pList -
+//			pWorld -
 //-----------------------------------------------------------------------------
 static void CheckRequirements(CListBox *pList, CMapWorld *pWorld)
 {
-	// ensure there's a player start .. 
-	if (pWorld->EnumChildren((ENUMMAPCHILDRENPROC)FindPlayer, 0, MAPCLASS_TYPE(CMapEntity)))
+	// ensure there's a player start ..
+	if(pWorld->EnumChildren((ENUMMAPCHILDRENPROC)FindPlayer, 0, MAPCLASS_TYPE(CMapEntity)))
 	{
-		// if rvl is !0, it was not stopped prematurely.. which means there is 
+		// if rvl is !0, it was not stopped prematurely.. which means there is
 		// NO player start.
 		AddError(pList, ErrorNoPlayerStart, 0);
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pSolid - 
-//			pList - 
-// Output : 
+// Purpose:
+// Input  : pSolid -
+//			pList -
+// Output :
 //-----------------------------------------------------------------------------
 static BOOL _CheckMixedFaces(CMapSolid *pSolid, CListBox *pList)
 {
-	if ( !IsCheckVisible( pSolid ) )
+	if(!IsCheckVisible(pSolid))
 		return TRUE;
 
 	// run thru faces..
 	int iFaces = pSolid->GetFaceCount();
-	int iSolid = 2;	// start off ambivalent
+	int iSolid = 2; // start off ambivalent
 	int i;
 	for(i = 0; i < iFaces; i++)
 	{
@@ -773,10 +744,11 @@ static BOOL _CheckMixedFaces(CMapSolid *pSolid, CListBox *pList)
 		{
 			break;
 		}
-		else iSolid = (ch == '*') ? 0 : 1;
+		else
+			iSolid = (ch == '*') ? 0 : 1;
 	}
 
-	if(i == iFaces)	// all ok
+	if(i == iFaces) // all ok
 		return TRUE;
 
 	// NOT ok
@@ -785,45 +757,42 @@ static BOOL _CheckMixedFaces(CMapSolid *pSolid, CListBox *pList)
 	return TRUE;
 }
 
-
 static void CheckMixedFaces(CListBox *pList, CMapWorld *pWorld)
 {
 	pWorld->EnumChildren((ENUMMAPCHILDRENPROC)_CheckMixedFaces, (DWORD)pList, MAPCLASS_TYPE(CMapSolid));
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Returns true if there is another node entity in the world with the
 //			same node ID as the given entity.
-// Input  : pNode - 
-//			pWorld - 
+// Input  : pNode -
+//			pWorld -
 //-----------------------------------------------------------------------------
 bool FindDuplicateNodeID(CMapEntity *pNode, CMapWorld *pWorld)
 {
-	if ( !IsCheckVisible( pNode ) )
+	if(!IsCheckVisible(pNode))
 		return false;
 
 	EnumChildrenPos_t pos;
 	CMapClass *pChild = pWorld->GetFirstDescendent(pos);
-	while (pChild != NULL)
+	while(pChild != NULL)
 	{
 		CMapEntity *pEntity = dynamic_cast<CMapEntity *>(pChild);
-		if (pEntity && IsCheckVisible( pEntity ) && (pEntity != pNode) && pEntity->IsNodeClass())
+		if(pEntity && IsCheckVisible(pEntity) && (pEntity != pNode) && pEntity->IsNodeClass())
 		{
 			int nNodeID1 = pNode->GetNodeID();
 			int nNodeID2 = pEntity->GetNodeID();
-			if ((nNodeID1 != 0) && (nNodeID2 != 0) && (nNodeID1 == nNodeID2))
+			if((nNodeID1 != 0) && (nNodeID2 != 0) && (nNodeID1 == nNodeID2))
 			{
 				return true;
 			}
 		}
-		
+
 		pChild = pWorld->GetNextDescendent(pos);
 	}
 
 	return false;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Checks for node entities with the same node ID.
@@ -832,21 +801,20 @@ static void CheckDuplicateNodeIDs(CListBox *pList, CMapWorld *pWorld)
 {
 	EnumChildrenPos_t pos;
 	CMapClass *pChild = pWorld->GetFirstDescendent(pos);
-	while (pChild != NULL)
+	while(pChild != NULL)
 	{
 		CMapEntity *pEntity = dynamic_cast<CMapEntity *>(pChild);
-		if (pEntity && pEntity->IsNodeClass())
+		if(pEntity && pEntity->IsNodeClass())
 		{
-			if (FindDuplicateNodeID(pEntity, pWorld))
+			if(FindDuplicateNodeID(pEntity, pWorld))
 			{
 				AddError(pList, ErrorDuplicateNodeIDs, (DWORD)pWorld, pEntity);
 			}
 		}
-		
+
 		pChild = pWorld->GetNextDescendent(pos);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Checks for faces with identical face normals in this solid object.
@@ -857,84 +825,80 @@ static void CheckDuplicateNodeIDs(CListBox *pList, CMapWorld *pWorld)
 BOOL DoesContainDuplicates(CMapSolid *pSolid)
 {
 	int iFaces = pSolid->GetFaceCount();
-	for (int i = 0; i < iFaces; i++)
+	for(int i = 0; i < iFaces; i++)
 	{
 		CMapFace *pFace = pSolid->GetFace(i);
-		Vector& pts1 = pFace->plane.normal;
+		Vector &pts1 = pFace->plane.normal;
 
-		for (int j = 0; j < iFaces; j++)
+		for(int j = 0; j < iFaces; j++)
 		{
 			// Don't check self.
-			if (j == i)
+			if(j == i)
 			{
 				continue;
 			}
 
 			CMapFace *pFace2 = pSolid->GetFace(j);
-			Vector& pts2 = pFace2->plane.normal;
+			Vector &pts2 = pFace2->plane.normal;
 
-			if (pts1 == pts2)
+			if(pts1 == pts2)
 			{
-				return(TRUE);
+				return (TRUE);
 			}
 		}
 	}
-	
-	return(FALSE);
+
+	return (FALSE);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pSolid - 
-//			pList - 
-// Output : 
+// Purpose:
+// Input  : pSolid -
+//			pList -
+// Output :
 //-----------------------------------------------------------------------------
 static BOOL _CheckDuplicatePlanes(CMapSolid *pSolid, CListBox *pList)
 {
-	if ( !IsCheckVisible( pSolid ) )
+	if(!IsCheckVisible(pSolid))
 		return TRUE;
 
-	if (DoesContainDuplicates(pSolid))
+	if(DoesContainDuplicates(pSolid))
 	{
 		AddError(pList, ErrorDuplicatePlanes, 0, pSolid);
 	}
 
-	return(TRUE);
+	return (TRUE);
 }
-
 
 static void CheckDuplicatePlanes(CListBox *pList, CMapWorld *pWorld)
 {
 	pWorld->EnumChildren((ENUMMAPCHILDRENPROC)_CheckDuplicatePlanes, (DWORD)pList, MAPCLASS_TYPE(CMapSolid));
 }
 
-
 struct FindDuplicateFaceIDs_t
 {
-	CMapFaceList All;					// Collects all the face IDs in this map.
-	CMapFaceList Duplicates;			// Collects the duplicate face IDs in this map.
+	CMapFaceList All;		 // Collects all the face IDs in this map.
+	CMapFaceList Duplicates; // Collects the duplicate face IDs in this map.
 };
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pSolid - 
-//			pData - 
+// Purpose:
+// Input  : pSolid -
+//			pData -
 // Output : Returns TRUE to continue enumerating.
 //-----------------------------------------------------------------------------
 static BOOL _CheckDuplicateFaceIDs(CMapSolid *pSolid, FindDuplicateFaceIDs_t *pData)
 {
-	if ( !IsCheckVisible( pSolid ) )
+	if(!IsCheckVisible(pSolid))
 		return TRUE;
 
 	int nFaceCount = pSolid->GetFaceCount();
-	for (int i = 0; i < nFaceCount; i++)
+	for(int i = 0; i < nFaceCount; i++)
 	{
 		CMapFace *pFace = pSolid->GetFace(i);
-		if (pData->All.FindFaceID(pFace->GetFaceID()) != -1)
+		if(pData->All.FindFaceID(pFace->GetFaceID()) != -1)
 		{
-			if (pData->Duplicates.FindFaceID(pFace->GetFaceID()) != -1)
+			if(pData->Duplicates.FindFaceID(pFace->GetFaceID()) != -1)
 			{
 				pData->Duplicates.AddToTail(pFace);
 			}
@@ -945,14 +909,13 @@ static BOOL _CheckDuplicateFaceIDs(CMapSolid *pSolid, FindDuplicateFaceIDs_t *pD
 		}
 	}
 
-	return(TRUE);
+	return (TRUE);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Reports errors for all faces with duplicate face IDs.
-// Input  : pList - 
-//			pWorld -  
+// Input  : pList -
+//			pWorld -
 //-----------------------------------------------------------------------------
 static void CheckDuplicateFaceIDs(CListBox *pList, CMapWorld *pWorld)
 {
@@ -962,24 +925,25 @@ static void CheckDuplicateFaceIDs(CListBox *pList, CMapWorld *pWorld)
 
 	pWorld->EnumChildren((ENUMMAPCHILDRENPROC)_CheckDuplicateFaceIDs, (DWORD)&Lists, MAPCLASS_TYPE(CMapSolid));
 
-	for (int i = 0; i < Lists.Duplicates.Count(); i++)
+	for(int i = 0; i < Lists.Duplicates.Count(); i++)
 	{
 		CMapFace *pFace = Lists.Duplicates.Element(i);
 		AddError(pList, ErrorDuplicateFaceIDs, (DWORD)pFace, (CMapSolid *)pFace->GetParent());
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Checks if a particular target is valid.
 //-----------------------------------------------------------------------------
-static void CheckValidTarget(CMapEntity *pEntity, const char *pFieldName, const char *pTargetName, CListBox *pList, bool bCheckClassNames)
+static void CheckValidTarget(CMapEntity *pEntity, const char *pFieldName, const char *pTargetName, CListBox *pList,
+							 bool bCheckClassNames)
 {
-	if (!pTargetName)
+	if(!pTargetName)
 		return;
 
 	// These procedural names are always assumed to exist.
-	if (!stricmp(pTargetName, "!activator") || !stricmp(pTargetName, "!caller") || !stricmp(pTargetName, "!player") || !stricmp(pTargetName, "!self"))
+	if(!stricmp(pTargetName, "!activator") || !stricmp(pTargetName, "!caller") || !stricmp(pTargetName, "!player") ||
+	   !stricmp(pTargetName, "!self"))
 		return;
 
 	CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
@@ -987,33 +951,32 @@ static void CheckValidTarget(CMapEntity *pEntity, const char *pFieldName, const 
 	// Search by name first.
 	CMapEntityList Found;
 	bool bFound = pDoc->FindEntitiesByName(Found, pTargetName, (Options.general.bCheckVisibleMapErrors == TRUE));
-	if (!bFound && bCheckClassNames)
+	if(!bFound && bCheckClassNames)
 	{
 		// Not found, search by classname.
 		bFound = pDoc->FindEntitiesByClassName(Found, pTargetName, (Options.general.bCheckVisibleMapErrors == TRUE));
 	}
 
-	if (!bFound)
+	if(!bFound)
 	{
 		// No dice, flag it as an error.
 		AddError(pList, ErrorMissingTarget, (DWORD)pFieldName, pEntity);
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Checks the given entity for references by name to nonexistent entities.
-// Input  : pEntity - 
-//			pList - 
+// Input  : pEntity -
+//			pList -
 // Output : Returns TRUE to keep enumerating.
 //-----------------------------------------------------------------------------
 static BOOL _CheckMissingTargets(CMapEntity *pEntity, CListBox *pList)
 {
-	if ( !IsCheckVisible( pEntity ) )
+	if(!IsCheckVisible(pEntity))
 		return TRUE;
 
 	GDclass *pClass = pEntity->GetClass();
-	if (!pClass)
+	if(!pClass)
 	{
 		// Unknown class -- just check for target references.
 		static char *pszTarget = "target";
@@ -1023,10 +986,10 @@ static BOOL _CheckMissingTargets(CMapEntity *pEntity, CListBox *pList)
 	else
 	{
 		// Known class -- check all target_destination and target_name_or_class keyvalues.
-		for (int i = 0; i < pClass->GetVariableCount(); i++)
+		for(int i = 0; i < pClass->GetVariableCount(); i++)
 		{
 			GDinputvariable *pVar = pClass->GetVariableAt(i);
-			if ((pVar->GetType() != ivTargetDest) && (pVar->GetType() != ivTargetNameOrClass))
+			if((pVar->GetType() != ivTargetDest) && (pVar->GetType() != ivTargetNameOrClass))
 				continue;
 
 			const char *pszValue = pEntity->GetKeyValue(pVar->GetName());
@@ -1037,12 +1000,10 @@ static BOOL _CheckMissingTargets(CMapEntity *pEntity, CListBox *pList)
 	return TRUE;
 }
 
-
 static void CheckMissingTargets(CListBox *pList, CMapWorld *pWorld)
 {
 	pWorld->EnumChildren((ENUMMAPCHILDRENPROC)_CheckMissingTargets, (DWORD)pList, MAPCLASS_TYPE(CMapEntity));
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Determines whether a solid is good or bad.
@@ -1052,12 +1013,12 @@ static void CheckMissingTargets(CListBox *pList, CMapWorld *pWorld)
 //-----------------------------------------------------------------------------
 static BOOL _CheckSolidIntegrity(CMapSolid *pSolid, CListBox *pList)
 {
-	if ( !IsCheckVisible( pSolid ) )
+	if(!IsCheckVisible(pSolid))
 		return TRUE;
 
 	CCheckFaceInfo cfi;
 	int nFaces = pSolid->GetFaceCount();
-	for (int i = 0; i < nFaces; i++)
+	for(int i = 0; i < nFaces; i++)
 	{
 		CMapFace *pFace = pSolid->GetFace(i);
 
@@ -1069,32 +1030,30 @@ static BOOL _CheckSolidIntegrity(CMapSolid *pSolid, CListBox *pList)
 		//
 		// Check the face.
 		//
-		if (!pFace->CheckFace(&cfi))
+		if(!pFace->CheckFace(&cfi))
 		{
 			AddError(pList, ErrorSolidStructure, 0, pSolid);
 			break;
 		}
 	}
 
-	return(TRUE);
+	return (TRUE);
 }
-
 
 static void CheckSolidIntegrity(CListBox *pList, CMapWorld *pWorld)
 {
 	pWorld->EnumChildren((ENUMMAPCHILDRENPROC)_CheckSolidIntegrity, (DWORD)pList, MAPCLASS_TYPE(CMapSolid));
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pSolid - 
-//			pList - 
-// Output : 
+// Purpose:
+// Input  : pSolid -
+//			pList -
+// Output :
 //-----------------------------------------------------------------------------
 static BOOL _CheckSolidContents(CMapSolid *pSolid, CListBox *pList)
 {
-	if ( !IsCheckVisible( pSolid ) )
+	if(!IsCheckVisible(pSolid))
 		return TRUE;
 
 	CCheckFaceInfo cfi;
@@ -1102,10 +1061,10 @@ static BOOL _CheckSolidContents(CMapSolid *pSolid, CListBox *pList)
 	CMapFace *pFace = pSolid->GetFace(0);
 	DWORD dwContents = pFace->texture.q2contents;
 
-	for (int i = 1; i < nFaces; i++)
+	for(int i = 1; i < nFaces; i++)
 	{
 		pFace = pSolid->GetFace(i);
-		if (pFace->texture.q2contents == dwContents)
+		if(pFace->texture.q2contents == dwContents)
 		{
 			continue;
 		}
@@ -1116,10 +1075,10 @@ static BOOL _CheckSolidContents(CMapSolid *pSolid, CListBox *pList)
 	return TRUE;
 }
 
-
 static void CheckSolidContents(CListBox *pList, CMapWorld *pWorld)
 {
-	if (CMapDoc::GetActiveMapDoc() && CMapDoc::GetActiveMapDoc()->GetGame() && CMapDoc::GetActiveMapDoc()->GetGame()->mapformat == mfQuake2)
+	if(CMapDoc::GetActiveMapDoc() && CMapDoc::GetActiveMapDoc()->GetGame() &&
+	   CMapDoc::GetActiveMapDoc()->GetGame()->mapformat == mfQuake2)
 	{
 		pWorld->EnumChildren((ENUMMAPCHILDRENPROC)_CheckSolidContents, (DWORD)pList, MAPCLASS_TYPE(CMapSolid));
 	}
@@ -1135,7 +1094,7 @@ static void CheckSolidContents(CListBox *pList, CMapWorld *pWorld)
 //-----------------------------------------------------------------------------
 static BOOL _CheckInvalidTextures(CMapSolid *pSolid, CListBox *pList)
 {
-	if ( !IsCheckVisible( pSolid ) )
+	if(!IsCheckVisible(pSolid))
 		return TRUE;
 
 	int nFaces = pSolid->GetFaceCount();
@@ -1144,91 +1103,85 @@ static BOOL _CheckInvalidTextures(CMapSolid *pSolid, CListBox *pList)
 		const CMapFace *pFace = pSolid->GetFace(i);
 
 		IEditorTexture *pTex = pFace->GetTexture();
-		if (pTex->IsDummy())
+		if(pTex->IsDummy())
 		{
 			AddError(pList, ErrorInvalidTexture, (DWORD)pFace->texture.texture, pSolid);
 			return TRUE;
 		}
 
-		if (!pFace->IsTextureAxisValid())
+		if(!pFace->IsTextureAxisValid())
 		{
 			AddError(pList, ErrorInvalidTextureAxes, i, pSolid);
-			return(TRUE);
+			return (TRUE);
 		}
 	}
-	
-	return(TRUE);
-}
 
+	return (TRUE);
+}
 
 static void CheckInvalidTextures(CListBox *pList, CMapWorld *pWorld)
 {
 	pWorld->EnumChildren((ENUMMAPCHILDRENPROC)_CheckInvalidTextures, (DWORD)pList, MAPCLASS_TYPE(CMapSolid));
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pEntity - 
-//			pList - 
-// Output : 
+// Purpose:
+// Input  : pEntity -
+//			pList -
+// Output :
 //-----------------------------------------------------------------------------
 static BOOL _CheckUnusedKeyvalues(CMapEntity *pEntity, CListBox *pList)
 {
-	if ( !IsCheckVisible( pEntity ) )
+	if(!IsCheckVisible(pEntity))
 		return TRUE;
 
-	if (!pEntity->IsClass() || pEntity->IsClass("multi_manager"))
+	if(!pEntity->IsClass() || pEntity->IsClass("multi_manager"))
 	{
-		return(TRUE);	// can't check if no class associated
+		return (TRUE); // can't check if no class associated
 	}
 
 	GDclass *pClass = pEntity->GetClass();
 
-	for (int i = pEntity->GetFirstKeyValue(); i != pEntity->GetInvalidKeyValue(); i=pEntity->GetNextKeyValue( i ) )
+	for(int i = pEntity->GetFirstKeyValue(); i != pEntity->GetInvalidKeyValue(); i = pEntity->GetNextKeyValue(i))
 	{
-		if (pClass->VarForName(pEntity->GetKey(i)) == NULL)
+		if(pClass->VarForName(pEntity->GetKey(i)) == NULL)
 		{
 			AddError(pList, ErrorUnusedKeyvalues, (DWORD)pEntity->GetKey(i), pEntity);
-			return(TRUE);
+			return (TRUE);
 		}
 	}
-	
-	return(TRUE);
-}
 
+	return (TRUE);
+}
 
 static void CheckUnusedKeyvalues(CListBox *pList, CMapWorld *pWorld)
 {
 	pWorld->EnumChildren((ENUMMAPCHILDRENPROC)_CheckUnusedKeyvalues, (DWORD)pList, MAPCLASS_TYPE(CMapEntity));
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pEntity - 
-//			pList - 
-// Output : 
+// Purpose:
+// Input  : pEntity -
+//			pList -
+// Output :
 //-----------------------------------------------------------------------------
 static BOOL _CheckEmptyEntities(CMapEntity *pEntity, CListBox *pList)
 {
-	if ( !IsCheckVisible( pEntity ) )
+	if(!IsCheckVisible(pEntity))
 		return TRUE;
 
 	if(!pEntity->IsPlaceholder() && !pEntity->GetChildCount())
 	{
 		AddError(pList, ErrorEmptyEntity, (DWORD)pEntity->GetClassName(), pEntity);
 	}
-	
-	return(TRUE);
-}
 
+	return (TRUE);
+}
 
 static void CheckEmptyEntities(CListBox *pList, CMapWorld *pWorld)
 {
 	pWorld->EnumChildren((ENUMMAPCHILDRENPROC)_CheckEmptyEntities, (DWORD)pList, MAPCLASS_TYPE(CMapEntity));
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Checks the entity for bad I/O connections.
@@ -1238,61 +1191,58 @@ static void CheckEmptyEntities(CListBox *pList, CMapWorld *pWorld)
 //-----------------------------------------------------------------------------
 static BOOL _CheckBadConnections(CMapEntity *pEntity, CListBox *pList)
 {
-	if ( !IsCheckVisible( pEntity ) )
+	if(!IsCheckVisible(pEntity))
 		return TRUE;
 
-	if (CEntityConnection::ValidateOutputConnections(pEntity, (Options.general.bCheckVisibleMapErrors == TRUE)) == CONNECTION_BAD)
+	if(CEntityConnection::ValidateOutputConnections(pEntity, (Options.general.bCheckVisibleMapErrors == TRUE)) ==
+	   CONNECTION_BAD)
 	{
 		AddError(pList, ErrorBadConnections, (DWORD)pEntity->GetClassName(), pEntity);
 	}
 
 	// TODO: Check for a "Kill" input with the same output, target, and delay as another input. This
 	//		 creates a race condition in the game where the order of arrival is not guaranteed
-	//int nConnCount = pEntity->Connections_GetCount();
-	//for (int i = 0; i < nConnCount; i++)
+	// int nConnCount = pEntity->Connections_GetCount();
+	// for (int i = 0; i < nConnCount; i++)
 	//{
 	//	CEntityConnection *pConn = pEntity->Connections_Get(i);
 	//	if (!stricmp(pConn->GetInputName(), "kill"))
 	//	{
 	//	}
 	//}
-	
+
 	return TRUE;
 }
-
 
 static void CheckBadConnections(CListBox *pList, CMapWorld *pWorld)
 {
 	pWorld->EnumChildren((ENUMMAPCHILDRENPROC)_CheckBadConnections, (DWORD)pList, MAPCLASS_TYPE(CMapEntity));
 }
 
-
 static bool HasVisGroupHiddenChildren(CMapClass *pObject)
 {
 	const CMapObjectList *pChildren = pObject->GetChildren();
 
-	FOR_EACH_OBJ( *pChildren, pos )
+	FOR_EACH_OBJ(*pChildren, pos)
 	{
-		if (!pChildren->Element(pos)->IsVisGroupShown())
+		if(!pChildren->Element(pos)->IsVisGroupShown())
 			return true;
 	}
 
 	return false;
 }
-
 
 static bool HasVisGroupShownChildren(CMapClass *pObject)
 {
 	const CMapObjectList *pChildren = pObject->GetChildren();
-	FOR_EACH_OBJ( *pChildren, pos )
+	FOR_EACH_OBJ(*pChildren, pos)
 	{
-		if (pChildren->Element(pos)->IsVisGroupShown())
+		if(pChildren->Element(pos)->IsVisGroupShown())
 			return true;
 	}
 
 	return false;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Makes sure that the visgroup assignments are valid.
@@ -1303,27 +1253,27 @@ static BOOL _CheckVisGroups(CMapClass *pObject, CListBox *pList)
 
 	// dvs: FIXME: not working yet, revisit
 	// Entities cannot have hidden children.
-	//CMapEntity *pEntity = dynamic_cast<CMapEntity *>(pObject);
-	//if (pEntity && HasVisGroupHiddenChildren(pEntity))
+	// CMapEntity *pEntity = dynamic_cast<CMapEntity *>(pObject);
+	// if (pEntity && HasVisGroupHiddenChildren(pEntity))
 	//{
 	//	AddError(pList, ErrorHiddenChildOfEntity, 0, pEntity);
 	//	return TRUE;
 	//}
 
 	// Check the validity of any object that claims to be hidden by visgroups.
-	if (!pObject->IsVisGroupShown())
+	if(!pObject->IsVisGroupShown())
 	{
 		// Groups cannot be hidden by visgroups.
-		if (pObject->IsGroup())
+		if(pObject->IsGroup())
 		{
 			bool bHidden = HasVisGroupHiddenChildren(pObject);
 			bool bVisible = HasVisGroupShownChildren(pObject);
 
-			if (bHidden && !bVisible)
+			if(bHidden && !bVisible)
 			{
 				AddError(pList, ErrorHiddenGroupHiddenChildren, 0, pObject);
 			}
-			else if (!bHidden && bVisible)
+			else if(!bHidden && bVisible)
 			{
 				AddError(pList, ErrorHiddenGroupVisibleChildren, 0, pObject);
 			}
@@ -1336,14 +1286,14 @@ static BOOL _CheckVisGroups(CMapClass *pObject, CListBox *pList)
 		}
 
 		// Check for unanticipated objects that are hidden but forbidden from visgroup membership.
-		if (!pDoc->VisGroups_ObjectCanBelongToVisGroup(pObject))
+		if(!pDoc->VisGroups_ObjectCanBelongToVisGroup(pObject))
 		{
 			AddError(pList, ErrorIllegallyHiddenObject, 0, pObject);
 			return TRUE;
 		}
-		
+
 		// Hidden objects must belong to at least one visgroup.
-		if (pObject->GetVisGroupCount() == 0)
+		if(pObject->GetVisGroupCount() == 0)
 		{
 			AddError(pList, ErrorHiddenObjectNoVisGroup, 0, pObject);
 			return TRUE;
@@ -1353,7 +1303,6 @@ static BOOL _CheckVisGroups(CMapClass *pObject, CListBox *pList)
 	return TRUE;
 }
 
-
 static void CheckVisGroups(CListBox *pList, CMapWorld *pWorld)
 {
 	pWorld->EnumChildrenRecurseGroupsOnly((ENUMMAPCHILDRENPROC)_CheckVisGroups, (DWORD)pList);
@@ -1362,22 +1311,22 @@ static void CheckVisGroups(CListBox *pList, CMapWorld *pWorld)
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-static BOOL _CheckOverlayFaceList( CMapEntity *pEntity, CListBox *pList )
+static BOOL _CheckOverlayFaceList(CMapEntity *pEntity, CListBox *pList)
 {
-	if ( !IsCheckVisible( pEntity ) )
+	if(!IsCheckVisible(pEntity))
 		return TRUE;
 
 	const CMapObjectList *pChildren = pEntity->GetChildren();
 
-	FOR_EACH_OBJ( *pChildren, pos )
+	FOR_EACH_OBJ(*pChildren, pos)
 	{
-		CMapOverlay *pOverlay = dynamic_cast<CMapOverlay*>( pChildren->Element(pos) );
-		if ( pOverlay )
+		CMapOverlay *pOverlay = dynamic_cast<CMapOverlay *>(pChildren->Element(pos));
+		if(pOverlay)
 		{
 			// Check to see if the overlay has assigned faces.
-			if ( pOverlay->GetFaceCount() <= 0 )
+			if(pOverlay->GetFaceCount() <= 0)
 			{
-				AddError( pList, ErrorOverlayFaceList, 0, pEntity );
+				AddError(pList, ErrorOverlayFaceList, 0, pEntity);
 				return TRUE;
 			}
 		}
@@ -1389,9 +1338,9 @@ static BOOL _CheckOverlayFaceList( CMapEntity *pEntity, CListBox *pList )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-static void CheckOverlayFaceList( CListBox *pList, CMapWorld *pWorld )
+static void CheckOverlayFaceList(CListBox *pList, CMapWorld *pWorld)
 {
-	pWorld->EnumChildren( ( ENUMMAPCHILDRENPROC )_CheckOverlayFaceList, ( DWORD )pList, MAPCLASS_TYPE( CMapEntity ));
+	pWorld->EnumChildren((ENUMMAPCHILDRENPROC)_CheckOverlayFaceList, (DWORD)pList, MAPCLASS_TYPE(CMapEntity));
 }
 
 //
@@ -1402,25 +1351,25 @@ static void FixDuplicatePlanes(MapError *pError)
 	// duplicate planes in pObjects[0]
 	// run thru faces..
 
-	CMapSolid *pSolid = (CMapSolid*) pError->pObjects[0];
+	CMapSolid *pSolid = (CMapSolid *)pError->pObjects[0];
 
 ReStart:
 	int iFaces = pSolid->GetFaceCount();
 	for(int i = 0; i < iFaces; i++)
 	{
 		CMapFace *pFace = pSolid->GetFace(i);
-		Vector& pts1 = pFace->plane.normal;
-		for (int j = 0; j < iFaces; j++)
+		Vector &pts1 = pFace->plane.normal;
+		for(int j = 0; j < iFaces; j++)
 		{
 			// Don't check self
-			if (j == i)
+			if(j == i)
 			{
 				continue;
 			}
 
 			CMapFace *pFace2 = pSolid->GetFace(j);
-			Vector& pts2 = pFace2->plane.normal;
-			if (pts1 == pts2)
+			Vector &pts2 = pFace2->plane.normal;
+			if(pts1 == pts2)
 			{
 				pSolid->DeleteFace(j);
 				goto ReStart;
@@ -1428,7 +1377,6 @@ ReStart:
 		}
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Repairs an invalid solid.
@@ -1442,17 +1390,17 @@ static void FixSolidStructure(MapError *pError)
 	// First make sure all the faces are good.
 	//
 	int nFaces = pSolid->GetFaceCount();
-	for (int i = nFaces - 1; i >= 0; i--)
+	for(int i = nFaces - 1; i >= 0; i--)
 	{
 		CMapFace *pFace = pSolid->GetFace(i);
-		if (!pFace->CheckFace(NULL))
+		if(!pFace->CheckFace(NULL))
 		{
 			pFace->Fix();
 		}
 		//
 		// If the face has no points, just remove it from the solid.
 		//
-		if (pFace->GetPointCount() == 0)
+		if(pFace->GetPointCount() == 0)
 		{
 			pSolid->DeleteFace(i);
 		}
@@ -1465,28 +1413,26 @@ static void FixSolidStructure(MapError *pError)
 	pSolid->PostUpdate(Notify_Changed);
 }
 
-
 LPCTSTR GetDefaultTextureName(); // dvs: BAD!
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Replaces any missing textures with the default texture.
-// Input  : pError - 
+// Input  : pError -
 //-----------------------------------------------------------------------------
 static void FixInvalidTexture(MapError *pError)
 {
 	CMapSolid *pSolid = (CMapSolid *)pError->pObjects[0];
 
 	int nFaces = pSolid->GetFaceCount();
-	for (int i = 0; i < nFaces; i++)
+	for(int i = 0; i < nFaces; i++)
 	{
 		CMapFace *pFace = pSolid->GetFace(i);
-		if (pFace != NULL)
+		if(pFace != NULL)
 		{
 			IEditorTexture *pTex = pFace->GetTexture();
-			if (pTex != NULL)
+			if(pTex != NULL)
 			{
-				if (pTex->IsDummy())
+				if(pTex->IsDummy())
 				{
 					pFace->SetTexture(GetDefaultTextureName());
 				}
@@ -1495,22 +1441,20 @@ static void FixInvalidTexture(MapError *pError)
 	}
 }
 
-
 static void FixInvalidTextureAxes(MapError *pError)
 {
 	CMapSolid *pSolid = (CMapSolid *)pError->pObjects[0];
 
 	int nFaces = pSolid->GetFaceCount();
-	for (int i = 0; i < nFaces; i++)
+	for(int i = 0; i < nFaces; i++)
 	{
 		CMapFace *pFace = pSolid->GetFace(i);
-		if (!pFace->IsTextureAxisValid())
+		if(!pFace->IsTextureAxisValid())
 		{
 			pFace->InitializeTextureAxes(Options.GetTextureAlignment(), INIT_TEXTURE_FORCE | INIT_TEXTURE_AXES);
 		}
 	}
 }
-
 
 static void FixInvalidContents(MapError *pError)
 {
@@ -1520,13 +1464,12 @@ static void FixInvalidContents(MapError *pError)
 	DWORD dwContents = pFace->texture.q2contents;
 
 	int nFaces = pSolid->GetFaceCount();
-	for (int i = 1; i < nFaces; i++)
+	for(int i = 1; i < nFaces; i++)
 	{
 		pFace = pSolid->GetFace(i);
 		pFace->texture.q2contents = dwContents;
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Fixes duplicate face IDs by assigning the face a unique ID within
@@ -1542,34 +1485,33 @@ static void FixDuplicateFaceIDs(MapError *pError)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pError - 
+// Purpose:
+// Input  : pError -
 //-----------------------------------------------------------------------------
 static void FixUnusedKeyvalues(MapError *pError)
 {
-	CMapEntity *pEntity = (CMapEntity*) pError->pObjects[0];
+	CMapEntity *pEntity = (CMapEntity *)pError->pObjects[0];
 
 	GDclass *pClass = pEntity->GetClass();
-	if (!pClass)
+	if(!pClass)
 	{
 		return;
 	}
 
 	int iNext;
-	for ( int i=pEntity->GetFirstKeyValue(); i != pEntity->GetInvalidKeyValue(); i = iNext )
+	for(int i = pEntity->GetFirstKeyValue(); i != pEntity->GetInvalidKeyValue(); i = iNext)
 	{
-		iNext = pEntity->GetNextKeyValue( i );
-		if (pClass->VarForName(pEntity->GetKey(i)) == NULL)
+		iNext = pEntity->GetNextKeyValue(i);
+		if(pClass->VarForName(pEntity->GetKey(i)) == NULL)
 		{
 			pEntity->DeleteKeyValue(pEntity->GetKey(i));
 		}
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Removes any bad connections from the entity associated with the error.
-// Input  : pError - 
+// Input  : pError -
 //-----------------------------------------------------------------------------
 static void FixBadConnections(MapError *pError)
 {
@@ -1577,11 +1519,10 @@ static void FixBadConnections(MapError *pError)
 	CEntityConnection::FixBadConnections(pEntity, (Options.general.bCheckVisibleMapErrors == TRUE));
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Fixes a race condition caused by a Kill input being triggered at the
 //			same instant as another input.
-// Input  : pError - 
+// Input  : pError -
 //-----------------------------------------------------------------------------
 static void FixKillInputRaceCondition(MapError *pError)
 {
@@ -1593,46 +1534,45 @@ static void FixKillInputRaceCondition(MapError *pError)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pError - 
+// Purpose:
+// Input  : pError -
 //-----------------------------------------------------------------------------
-static void FixOverlayFaceList( MapError *pError )
+static void FixOverlayFaceList(MapError *pError)
 {
-	CMapEntity *pEntity = static_cast<CMapEntity*>( pError->pObjects[0] );
-	if ( !pEntity )
+	CMapEntity *pEntity = static_cast<CMapEntity *>(pError->pObjects[0]);
+	if(!pEntity)
 		return;
 
 	const CMapObjectList *pChildren = pEntity->GetChildren();
 
-	FOR_EACH_OBJ( *pChildren, pos )
+	FOR_EACH_OBJ(*pChildren, pos)
 	{
-		CMapOverlay *pOverlay = dynamic_cast<CMapOverlay*>( pChildren->Element(pos) );
-		if ( pOverlay )
+		CMapOverlay *pOverlay = dynamic_cast<CMapOverlay *>(pChildren->Element(pos));
+		if(pOverlay)
 		{
 			// Destroy itself.
 			CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
-			pDoc->RemoveObjectFromWorld( pEntity, true );
-			GetHistory()->KeepForDestruction( pEntity );
+			pDoc->RemoveObjectFromWorld(pEntity, true);
+			GetHistory()->KeepForDestruction(pEntity);
 			return;
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pError - 
+// Purpose:
+// Input  : pError -
 //-----------------------------------------------------------------------------
 static void FixEmptyEntity(MapError *pError)
 {
 	CMapClass *pKillMe = pError->pObjects[0];
 
-	if (pKillMe->GetParent() != NULL)
+	if(pKillMe->GetParent() != NULL)
 	{
 		GetHistory()->KeepForDestruction(pKillMe);
 		pKillMe->GetParent()->RemoveChild(pKillMe);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Fixes duplicate node IDs by assigning the entity a unique node ID.
@@ -1644,10 +1584,9 @@ static void FixDuplicateNodeIDs(MapError *pError)
 	pEntity->AssignNodeID();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Clears a bad target reference from the given entity.
-// Input  : pError - 
+// Input  : pError -
 //-----------------------------------------------------------------------------
 static void FixMissingTarget(MapError *pError)
 {
@@ -1655,7 +1594,6 @@ static void FixMissingTarget(MapError *pError)
 	const char *pszKey = (const char *)pError->dwExtra;
 	pEntity->SetKeyValue(pszKey, NULL);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Fix a an invalid visgroup state. This is either:
@@ -1677,13 +1615,12 @@ void FixHiddenObject(MapError *pError)
 	Objects.AddToTail(pObject);
 	CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
 
-	if ((pError->Type == ErrorHiddenGroupHiddenChildren) ||
-		(pError->Type == ErrorHiddenObjectNoVisGroup))
+	if((pError->Type == ErrorHiddenGroupHiddenChildren) || (pError->Type == ErrorHiddenObjectNoVisGroup))
 	{
 		// The objects aren't in the compile, so just hide them.
 		pDoc->VisGroups_CreateNamedVisGroup(Objects, "_hidden by Check for Problems", true, false);
 	}
-	else if (pError->Type == ErrorIllegallyHiddenObject)
+	else if(pError->Type == ErrorIllegallyHiddenObject)
 	{
 		// Do nothing, the object is now shown.
 	}
@@ -1698,7 +1635,6 @@ void FixHiddenObject(MapError *pError)
 		pDoc->VisGroups_CreateNamedVisGroup(Objects, "found by Check for Problems", false, false);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Checks the map for problems. Returns true if the map is okay,
@@ -1716,7 +1652,7 @@ bool CMapCheckDlg::DoCheck(void)
 
 	// Solid validation
 	CheckMixedFaces(&m_Errors, pWorld);
-	//CheckDuplicatePlanes(&m_Errors, pWorld);
+	// CheckDuplicatePlanes(&m_Errors, pWorld);
 	CheckDuplicateFaceIDs(&m_Errors, pWorld);
 	CheckDuplicateNodeIDs(&m_Errors, pWorld);
 	CheckSolidIntegrity(&m_Errors, pWorld);
@@ -1733,7 +1669,7 @@ bool CMapCheckDlg::DoCheck(void)
 
 	CheckOverlayFaceList(&m_Errors, pWorld);
 
-	if (!m_Errors.GetCount())
+	if(!m_Errors.GetCount())
 	{
 		AfxMessageBox("No errors were found.");
 		EndDialog(IDOK);
@@ -1743,24 +1679,21 @@ bool CMapCheckDlg::DoCheck(void)
 	return false;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMapCheckDlg::OnOK()
 {
 	DestroyWindow();
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMapCheckDlg::OnClose()
 {
 	DestroyWindow();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Called when our window is being destroyed.

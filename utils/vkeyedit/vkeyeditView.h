@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -25,49 +25,50 @@ protected: // create from serialization only
 	CVkeyeditView();
 	DECLARE_DYNCREATE(CVkeyeditView)
 
-// Attributes
+	// Attributes
 public:
-	CVkeyeditDoc* GetDocument();
+	CVkeyeditDoc *GetDocument();
 
-// Operations
+	// Operations
 public:
-
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CVkeyeditView)
-	public:
-	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	protected:
-	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
-	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
-	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
+public:
+	virtual void OnDraw(CDC *pDC); // overridden to draw this view
+	virtual BOOL PreCreateWindow(CREATESTRUCT &cs);
+
+protected:
+	virtual BOOL OnPreparePrinting(CPrintInfo *pInfo);
+	virtual void OnBeginPrinting(CDC *pDC, CPrintInfo *pInfo);
+	virtual void OnEndPrinting(CDC *pDC, CPrintInfo *pInfo);
 	virtual void CalcWindowRect(LPRECT lpClientRect, UINT nAdjustType = adjustBorder);
-	virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
+	virtual void OnUpdate(CView *pSender, LPARAM lHint, CObject *pHint);
 	//}}AFX_VIRTUAL
 
-// Implementation
+	// Implementation
 public:
 	bool InsertKeyValues(KeyValues *kv, HTREEITEM hParent);
 	virtual ~CVkeyeditView();
 #ifdef _DEBUG
 	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+	virtual void Dump(CDumpContext &dc) const;
 #endif
 
 protected:
-
-// Generated message map functions
+	// Generated message map functions
 protected:
 	//{{AFX_MSG(CVkeyeditView)
-	afx_msg void OnSelchanged(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnSelchanged(NMHDR *pNMHDR, LRESULT *pResult);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
 
-#ifndef _DEBUG  // debug version in vkeyeditView.cpp
-inline CVkeyeditDoc* CVkeyeditView::GetDocument()
-   { return (CVkeyeditDoc*)m_pDocument; }
+#ifndef _DEBUG // debug version in vkeyeditView.cpp
+inline CVkeyeditDoc *CVkeyeditView::GetDocument()
+{
+	return (CVkeyeditDoc *)m_pDocument;
+}
 #endif
 
 /////////////////////////////////////////////////////////////////////////////

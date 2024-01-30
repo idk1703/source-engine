@@ -18,7 +18,7 @@ This tool was written as an example on how to use the classes:
 CMPAFile, CMPAHeader, CVBRHeader and CMPAException.
 
 The article MPEG Audio Frame Header on Sourceproject
-[http://www.codeproject.com/audio/MPEGAudioInfo.asp] 
+[http://www.codeproject.com/audio/MPEGAudioInfo.asp]
 provides additional information about these classes and the frame header
 in general.
 
@@ -43,7 +43,6 @@ statically linked.
 class CMPAException
 {
 public:
-	
 	enum ErrorIDs
 	{
 		ErrOpenFile,
@@ -56,12 +55,15 @@ public:
 		NoFrame
 	};
 
-	CMPAException( ErrorIDs ErrorID, const char *szFile, const char *szFunction = NULL, bool bGetLastError=false );
+	CMPAException(ErrorIDs ErrorID, const char *szFile, const char *szFunction = NULL, bool bGetLastError = false);
 	// copy constructor (necessary because of LPSTR members)
-	CMPAException(const CMPAException& Source);
+	CMPAException(const CMPAException &Source);
 	~CMPAException(void);
 
-	ErrorIDs GetErrorID() { return m_ErrorID; }
+	ErrorIDs GetErrorID()
+	{
+		return m_ErrorID;
+	}
 
 	void ShowError();
 
@@ -72,15 +74,17 @@ private:
 	const char *m_szFile;
 };
 
-
 class CMPAFile
 {
 public:
-	CMPAFile( const char *szFile, uint32 dwFileOffset, FileHandle_t hFile = FILESYSTEM_INVALID_HANDLE );
+	CMPAFile(const char *szFile, uint32 dwFileOffset, FileHandle_t hFile = FILESYSTEM_INVALID_HANDLE);
 	~CMPAFile(void);
 
-	uint32 ExtractBytes( uint32 &dwOffset, uint32 dwNumBytes, bool bMoveOffset = true );
-	const char *GetFilename() const { return m_szFile; };
+	uint32 ExtractBytes(uint32 &dwOffset, uint32 dwNumBytes, bool bMoveOffset = true);
+	const char *GetFilename() const
+	{
+		return m_szFile;
+	};
 
 	bool GetNextFrame();
 	bool GetPrevFrame();
@@ -91,11 +95,11 @@ private:
 	static const uint32 m_dwInitBufferSize;
 
 	// methods for file access
-	void Open( const char *szFilename );
-	void SetPosition( int offset );
-	uint32 Read( void *pData, uint32 dwSize, uint32 dwOffset );
+	void Open(const char *szFilename);
+	void SetPosition(int offset);
+	uint32 Read(void *pData, uint32 dwSize, uint32 dwOffset);
 
-	void FillBuffer( uint32 dwOffsetToRead );
+	void FillBuffer(uint32 dwOffsetToRead);
 
 	static uint32 m_dwBufferSizes[MAXTIMESREAD];
 
@@ -104,17 +108,17 @@ private:
 	const char *m_szFile;
 	bool m_bMustReleaseFile;
 
-public:	
-	uint32 m_dwBegin;	// offset of first MPEG Audio frame
-	uint32 m_dwEnd;		// offset of last MPEG Audio frame (estimated)
+public:
+	uint32 m_dwBegin; // offset of first MPEG Audio frame
+	uint32 m_dwEnd;	  // offset of last MPEG Audio frame (estimated)
 	bool m_bVBRFile;
 
 	uint32 m_dwBytesPerSec;
 
-	CMPAHeader* m_pMPAHeader;
+	CMPAHeader *m_pMPAHeader;
 	uint32 m_dwFrameNo;
 
-	CVBRHeader* m_pVBRHeader;		// XING or VBRI
+	CVBRHeader *m_pVBRHeader; // XING or VBRI
 
 	// concerning read-buffer
 	uint32 m_dwNumTimesRead;

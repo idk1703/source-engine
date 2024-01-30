@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -15,46 +15,40 @@
 
 class CDODFreezePanel;
 
-class ClientModeDODNormal : public ClientModeShared 
+class ClientModeDODNormal : public ClientModeShared
 {
-DECLARE_CLASS( ClientModeDODNormal, ClientModeShared );
+	DECLARE_CLASS(ClientModeDODNormal, ClientModeShared);
 
 private:
-
-// IClientMode overrides.
+	// IClientMode overrides.
 public:
+	ClientModeDODNormal();
 
-					ClientModeDODNormal();
+	virtual void Init();
+	virtual void InitViewport();
 
-	virtual void	Init();
-	virtual void	InitViewport();
+	virtual float GetViewModelFOV(void);
 
-	virtual float	GetViewModelFOV( void );
+	int GetDeathMessageStartHeight(void);
 
-	int				GetDeathMessageStartHeight( void );
+	virtual void FireGameEvent(IGameEvent *event);
+	virtual void PostRenderVGui();
 
-	virtual void	FireGameEvent( IGameEvent * event);
-	virtual void	PostRenderVGui();
+	virtual bool ShouldDrawViewModel(void);
 
-	virtual bool	ShouldDrawViewModel( void );
+	virtual int HudElementKeyInput(int down, ButtonCode_t keynum, const char *pszCurrentBinding);
 
-	virtual int		HudElementKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
-
-	
 private:
-	
 	//	void	UpdateSpectatorMode( void );
 
-	void RadioMessage( const char *pszSoundName, const char *pszSubtitle, const char *pszSender = NULL, int iSenderIndex = 0 );
+	void RadioMessage(const char *pszSoundName, const char *pszSubtitle, const char *pszSender = NULL,
+					  int iSenderIndex = 0);
 	char m_szLastRadioSound[128];
 
-	CDODFreezePanel		*m_pFreezePanel;
-
+	CDODFreezePanel *m_pFreezePanel;
 };
 
-
 extern IClientMode *GetClientModeNormal();
-extern ClientModeDODNormal* GetClientModeDODNormal();
-
+extern ClientModeDODNormal *GetClientModeDODNormal();
 
 #endif // DOD_CLIENTMODE_H

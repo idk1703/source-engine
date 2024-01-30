@@ -20,19 +20,19 @@ class CTeam;
 class CTeamSpawnPoint : public CPointEntity
 {
 public:
-	DECLARE_CLASS( CTeamSpawnPoint, CPointEntity );
+	DECLARE_CLASS(CTeamSpawnPoint, CPointEntity);
 
-	void	Activate( void );
-	virtual bool	IsValid( CBasePlayer *pPlayer );
+	void Activate(void);
+	virtual bool IsValid(CBasePlayer *pPlayer);
 
 	COutputEvent m_OnPlayerSpawn;
 
-protected:	
-	int		m_iDisabled;
+protected:
+	int m_iDisabled;
 
 	// Input handlers
-	void InputEnable( inputdata_t &inputdata );
-	void InputDisable( inputdata_t &inputdata );
+	void InputEnable(inputdata_t &inputdata);
+	void InputDisable(inputdata_t &inputdata);
 
 	DECLARE_DATADESC();
 };
@@ -42,15 +42,15 @@ protected:
 //-----------------------------------------------------------------------------
 class CTeamVehicleSpawnPoint : public CTeamSpawnPoint
 {
-	DECLARE_CLASS( CTeamVehicleSpawnPoint, CTeamSpawnPoint );
+	DECLARE_CLASS(CTeamVehicleSpawnPoint, CTeamSpawnPoint);
+
 public:
-	void	Activate( void );
-	bool	IsValid( void );
+	void Activate(void);
+	bool IsValid(void);
 
 	COutputEvent m_OnVehicleSpawn;
 
 	DECLARE_DATADESC();
 };
-
 
 #endif // TF_TEAMSPAWNPOINT_H

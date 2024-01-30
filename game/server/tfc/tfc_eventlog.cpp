@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -18,30 +18,28 @@ public:
 	virtual ~CTFCEventLog() {};
 
 public:
-	bool PrintEvent( KeyValues * event )	// override virtual function
+	bool PrintEvent(KeyValues *event) // override virtual function
 	{
-		if ( BaseClass::PrintEvent( event ) )
+		if(BaseClass::PrintEvent(event))
 		{
 			return true;
 		}
-	
-		if ( Q_strcmp(event->GetName(), "cstrike_") == 0 )
+
+		if(Q_strcmp(event->GetName(), "cstrike_") == 0)
 		{
-			return PrintCStrikeEvent( event );
+			return PrintCStrikeEvent(event);
 		}
 
 		return false;
 	}
 
 protected:
-
-	bool PrintCStrikeEvent( KeyValues * event )	// print Mod specific logs
+	bool PrintCStrikeEvent(KeyValues *event) // print Mod specific logs
 	{
-	//	const char * name = event->GetName() + Q_strlen("cstrike_"); // remove prefix
+		//	const char * name = event->GetName() + Q_strlen("cstrike_"); // remove prefix
 
 		return false;
 	}
-
 };
 
 CTFCEventLog g_TFCEventLog;
@@ -49,8 +47,7 @@ CTFCEventLog g_TFCEventLog;
 //-----------------------------------------------------------------------------
 // Singleton access
 //-----------------------------------------------------------------------------
-IGameSystem* GameLogSystem()
+IGameSystem *GameLogSystem()
 {
 	return &g_TFCEventLog;
 }
-

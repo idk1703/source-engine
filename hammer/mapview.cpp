@@ -24,9 +24,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
-#pragma warning(disable:4244 4305)
-
+#pragma warning(disable : 4244 4305)
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor, sets to inactive.
@@ -47,21 +45,19 @@ bool CMapView::IsOrthographic()
 	return m_pCamera->IsOrthographic();
 }
 
-void CMapView::UpdateView( int nFlags )
+void CMapView::UpdateView(int nFlags)
 {
 	m_bUpdateView = true;
 
-	if ( nFlags & MAPVIEW_RENDER_NOW )
+	if(nFlags & MAPVIEW_RENDER_NOW)
 	{
 		RenderView();
 	}
 }
 
-
-
 void CMapView::ActivateView(bool bActivate)
 {
-	if ( bActivate != m_bActive )
+	if(bActivate != m_bActive)
 	{
 		m_bActive = bActivate;
 		m_bUpdateView = true;
@@ -77,16 +73,16 @@ bool CMapView::ShouldRender()
 {
 	DWORD dwTimeNow = timeGetTime();
 
-	if (m_dwTimeLastRender != 0)
+	if(m_dwTimeLastRender != 0)
 	{
 		DWORD dwTimeElapsed = dwTimeNow - m_dwTimeLastRender;
-	
-		if ( dwTimeElapsed <= 0 )
+
+		if(dwTimeElapsed <= 0)
 			return false;
-	
+
 		float flFrameRate = (1000.0f / dwTimeElapsed);
 
-		if (flFrameRate > 100.0f)
+		if(flFrameRate > 100.0f)
 		{
 			// never update view faster then 100Hz
 			return false;
@@ -94,7 +90,7 @@ bool CMapView::ShouldRender()
 	}
 
 	// update view if needed
-	if ( m_bUpdateView )
+	if(m_bUpdateView)
 	{
 		m_dwTimeLastRender = dwTimeNow;
 		m_nRenderedFrames++;
@@ -105,9 +101,9 @@ bool CMapView::ShouldRender()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  : point - Point in client coordinates.
-//			bMakeFirst - 
+//			bMakeFirst -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CMapView::SelectAt(const Vector2D &ptClient, bool bMakeFirst, bool bFace)
@@ -126,16 +122,16 @@ bool CMapView::SelectAt(const Vector2D &ptClient, bool bMakeFirst, bool bFace)
 
 	HitInfo_t HitData[MAX_PICK_HITS];
 	int nHits = ObjectsAt(ptClient, HitData, MAX_PICK_HITS);
-	
+
 	//
 	// If there were no hits at the given point, clear selection.
 	//
-	if ( nHits == 0 )
+	if(nHits == 0)
 	{
-		if (bMakeFirst)
+		if(bMakeFirst)
 		{
-			pDoc->SelectFace(NULL, 0, scClear|scSaveChanges );
-			pDoc->SelectObject(NULL, scClear|scSaveChanges );
+			pDoc->SelectFace(NULL, 0, scClear | scSaveChanges);
+			pDoc->SelectObject(NULL, scClear | scSaveChanges);
 		}
 
 		return false;
@@ -143,12 +139,12 @@ bool CMapView::SelectAt(const Vector2D &ptClient, bool bMakeFirst, bool bFace)
 
 	SelectMode_t eSelectMode = pSelection->GetMode();
 
-	for ( int i=0; i<nHits; i++ )
+	for(int i = 0; i < nHits; i++)
 	{
-		if ( HitData[i].pObject )
+		if(HitData[i].pObject)
 		{
-			CMapClass *pSelObject = HitData[i].pObject->PrepareSelection( eSelectMode );
-			if (pSelObject)
+			CMapClass *pSelObject = HitData[i].pObject->PrepareSelection(eSelectMode);
+			if(pSelObject)
 			{
 				pSelection->AddHit(pSelObject);
 			}
@@ -158,15 +154,15 @@ bool CMapView::SelectAt(const Vector2D &ptClient, bool bMakeFirst, bool bFace)
 	//
 	// If we're selecting faces, mark all faces on the first solid we hit.
 	//
-	if ( bFace )
+	if(bFace)
 	{
 		const CMapObjectList *pList = pSelection->GetHitList();
-		FOR_EACH_OBJ( *pList, pos )
+		FOR_EACH_OBJ(*pList, pos)
 		{
 			CMapClass *pObject = pList->Element(pos);
-			if (pObject->IsMapClass(MAPCLASS_TYPE(CMapSolid)))
+			if(pObject->IsMapClass(MAPCLASS_TYPE(CMapSolid)))
 			{
-				pDoc->SelectFace((CMapSolid*)pObject, -1, scSelect | (bMakeFirst ? scClear : 0));
+				pDoc->SelectFace((CMapSolid *)pObject, -1, scSelect | (bMakeFirst ? scClear : 0));
 				break;
 			}
 		}
@@ -177,10 +173,10 @@ bool CMapView::SelectAt(const Vector2D &ptClient, bool bMakeFirst, bool bFace)
 	//
 	// Select a single object.
 	//
-	if ( bMakeFirst )
+	if(bMakeFirst)
 	{
-		pDoc->SelectFace(NULL, 0, scClear|scSaveChanges);
-		pDoc->SelectObject(NULL, scClear|scSaveChanges);
+		pDoc->SelectFace(NULL, 0, scClear | scSaveChanges);
+		pDoc->SelectObject(NULL, scClear | scSaveChanges);
 	}
 
 	pSelection->SetCurrentHit(hitFirst);
@@ -188,9 +184,9 @@ bool CMapView::SelectAt(const Vector2D &ptClient, bool bMakeFirst, bool bFace)
 	return true;
 }
 
-void CMapView::BuildRay( const Vector2D &vView, Vector& vStart, Vector& vEnd )
+void CMapView::BuildRay(const Vector2D &vView, Vector &vStart, Vector &vEnd)
 {
-	m_pCamera->BuildRay( vView, vStart, vEnd );
+	m_pCamera->BuildRay(vView, vStart, vEnd);
 }
 
 const Vector &CMapView::GetViewAxis()
@@ -199,5 +195,3 @@ const Vector &CMapView::GetViewAxis()
 	m_pCamera->GetViewForward(vForward);
 	return vForward;
 }
-
-

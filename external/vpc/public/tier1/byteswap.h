@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2006, Valve LLC, All rights reserved. ============
+//========= Copyright ï¿½ 1996-2006, Valve LLC, All rights reserved. ============
 //
 // Purpose: Low level byte swapping routines.
 //
@@ -11,45 +11,47 @@
 #endif
 
 #include "tier0/dbg.h"
-#include "datamap.h"	// needed for typedescription_t.  note datamap.h is tier1 as well.
+#include "datamap.h" // needed for typedescription_t.  note datamap.h is tier1 as well.
 
 class CByteswap
 {
 public:
-	CByteswap() 
+	CByteswap()
 	{
 		// Default behavior sets the target endian to match the machine native endian (no swap).
-		SetTargetBigEndian( IsMachineBigEndian() );
+		SetTargetBigEndian(IsMachineBigEndian());
 	}
 
 	//-----------------------------------------------------------------------------
 	// Write a single field.
 	//-----------------------------------------------------------------------------
-	void SwapFieldToTargetEndian( void* pOutputBuffer, void *pData, typedescription_t *pField );
+	void SwapFieldToTargetEndian(void *pOutputBuffer, void *pData, typedescription_t *pField);
 
 	//-----------------------------------------------------------------------------
-	// Write a block of fields.  Works a bit like the saverestore code.  
+	// Write a block of fields.  Works a bit like the saverestore code.
 	//-----------------------------------------------------------------------------
-	void SwapFieldsToTargetEndian( void *pOutputBuffer, void *pBaseData, datamap_t *pDataMap );
+	void SwapFieldsToTargetEndian(void *pOutputBuffer, void *pBaseData, datamap_t *pDataMap);
 
 	// Swaps fields for the templated type to the output buffer.
-	template<typename T> inline void SwapFieldsToTargetEndian( T* pOutputBuffer, void *pBaseData, unsigned int objectCount = 1 )
+	template<typename T>
+	inline void SwapFieldsToTargetEndian(T *pOutputBuffer, void *pBaseData, unsigned int objectCount = 1)
 	{
-		for ( unsigned int i = 0; i < objectCount; ++i, ++pOutputBuffer )
+		for(unsigned int i = 0; i < objectCount; ++i, ++pOutputBuffer)
 		{
-			SwapFieldsToTargetEndian( (void*)pOutputBuffer, pBaseData, &T::m_DataMap );
-			pBaseData = (byte*)pBaseData + sizeof(T);
+			SwapFieldsToTargetEndian((void *)pOutputBuffer, pBaseData, &T::m_DataMap);
+			pBaseData = (byte *)pBaseData + sizeof(T);
 		}
 	}
 
 	// Swaps fields for the templated type in place.
-	template<typename T> inline void SwapFieldsToTargetEndian( T* pOutputBuffer, unsigned int objectCount = 1 )
+	template<typename T>
+	inline void SwapFieldsToTargetEndian(T *pOutputBuffer, unsigned int objectCount = 1)
 	{
-		SwapFieldsToTargetEndian<T>( pOutputBuffer, (void*)pOutputBuffer, objectCount );
+		SwapFieldsToTargetEndian<T>(pOutputBuffer, (void *)pOutputBuffer, objectCount);
 	}
 
 	//-----------------------------------------------------------------------------
-	// True if the current machine is detected as big endian. 
+	// True if the current machine is detected as big endian.
 	// (Endienness is effectively detected at compile time when optimizations are
 	// enabled)
 	//-----------------------------------------------------------------------------
@@ -58,7 +60,7 @@ public:
 		short nIsBigEndian = 1;
 
 		// if we are big endian, the first byte will be a 0, if little endian, it will be a one.
-		return (bool)(0 ==  *(char *)&nIsBigEndian );
+		return (bool)(0 == *(char *)&nIsBigEndian);
 	}
 
 	//-----------------------------------------------------------------------------
@@ -68,23 +70,23 @@ public:
 	//		x86 is LITTLE Endian
 	//		PowerPC is BIG Endian
 	//-----------------------------------------------------------------------------
-	inline void SetTargetBigEndian( bool bigEndian )
+	inline void SetTargetBigEndian(bool bigEndian)
 	{
 		m_bBigEndian = bigEndian;
 		m_bSwapBytes = IsMachineBigEndian() != bigEndian;
 	}
 
 	// Changes target endian
-	inline void FlipTargetEndian( void )	
+	inline void FlipTargetEndian(void)
 	{
 		m_bSwapBytes = !m_bSwapBytes;
 		m_bBigEndian = !m_bBigEndian;
 	}
 
 	// Forces byte swapping state, regardless of endianess
-	inline void ActivateByteSwapping( bool bActivate )	
+	inline void ActivateByteSwapping(bool bActivate)
 	{
-		SetTargetBigEndian( IsMachineBigEndian() != bActivate );
+		SetTargetBigEndian(IsMachineBigEndian() != bActivate);
 	}
 
 	//-----------------------------------------------------------------------------
@@ -92,12 +94,12 @@ public:
 	//
 	// Used to determine when a byteswap needs to take place.
 	//-----------------------------------------------------------------------------
-	inline bool IsSwappingBytes( void )	// Are bytes being swapped?
+	inline bool IsSwappingBytes(void) // Are bytes being swapped?
 	{
 		return m_bSwapBytes;
 	}
 
-	inline bool IsTargetBigEndian( void )	// What is the current target endian?
+	inline bool IsTargetBigEndian(void) // What is the current target endian?
 	{
 		return m_bBigEndian;
 	}
@@ -114,21 +116,22 @@ public:
 	//		0  if input is byteswapped relative to nativeConstant.
 	//		-1 if input is not the same as nativeConstant and not byteswapped either.
 	//
-	// ( This is useful for detecting byteswapping in magic numbers in structure 
+	// ( This is useful for detecting byteswapping in magic numbers in structure
 	// headers for example. )
 	//-----------------------------------------------------------------------------
-	template<typename T> inline int SourceIsNativeEndian( T input, T nativeConstant )
+	template<typename T>
+	inline int SourceIsNativeEndian(T input, T nativeConstant)
 	{
 		// If it's the same, it isn't byteswapped:
-		if( input == nativeConstant )
+		if(input == nativeConstant)
 			return 1;
 
 		int output;
-		LowLevelByteSwap<T>( &output, &input );
-		if( output == nativeConstant )
+		LowLevelByteSwap<T>(&output, &input);
+		if(output == nativeConstant)
 			return 0;
 
-		Assert( 0 );		// if we get here, input is neither a swapped nor unswapped version of nativeConstant.
+		Assert(0); // if we get here, input is neither a swapped nor unswapped version of nativeConstant.
 		return -1;
 	}
 
@@ -139,25 +142,26 @@ public:
 	// If inputBuffer is omitted or NULL, then it is assumed to be the same as
 	// outputBuffer - effectively swapping the contents of the buffer in place.
 	//-----------------------------------------------------------------------------
-	template<typename T> inline void SwapBuffer( T* outputBuffer, T* inputBuffer = NULL, int count = 1 )
+	template<typename T>
+	inline void SwapBuffer(T *outputBuffer, T *inputBuffer = NULL, int count = 1)
 	{
-		Assert( count >= 0 );
-		Assert( outputBuffer );
+		Assert(count >= 0);
+		Assert(outputBuffer);
 
 		// Fail gracefully in release:
-		if( count <=0 || !outputBuffer )
+		if(count <= 0 || !outputBuffer)
 			return;
 
 		// Optimization for the case when we are swapping in place.
-		if( inputBuffer == NULL )
+		if(inputBuffer == NULL)
 		{
 			inputBuffer = outputBuffer;
 		}
 
 		// Swap everything in the buffer:
-		for( int i = 0; i < count; i++ )
+		for(int i = 0; i < count; i++)
 		{
-			LowLevelByteSwap<T>( &outputBuffer[i], &inputBuffer[i] );
+			LowLevelByteSwap<T>(&outputBuffer[i], &inputBuffer[i]);
 		}
 	}
 
@@ -168,96 +172,98 @@ public:
 	// If inputBuffer is omitted or NULL, then it is assumed to be the same as
 	// outputBuffer - effectively swapping the contents of the buffer in place.
 	//-----------------------------------------------------------------------------
-	template<typename T> inline void SwapBufferToTargetEndian( T* outputBuffer, T* inputBuffer = NULL, int count = 1 )
+	template<typename T>
+	inline void SwapBufferToTargetEndian(T *outputBuffer, T *inputBuffer = NULL, int count = 1)
 	{
-		Assert( count >= 0 );
-		Assert( outputBuffer );
+		Assert(count >= 0);
+		Assert(outputBuffer);
 
 		// Fail gracefully in release:
-		if( count <=0 || !outputBuffer )
+		if(count <= 0 || !outputBuffer)
 			return;
 
 		// Optimization for the case when we are swapping in place.
-		if( inputBuffer == NULL )
+		if(inputBuffer == NULL)
 		{
 			inputBuffer = outputBuffer;
 		}
 
 		// Are we already the correct endienness? ( or are we swapping 1 byte items? )
-		if( !m_bSwapBytes || ( sizeof(T) == 1 ) )
+		if(!m_bSwapBytes || (sizeof(T) == 1))
 		{
 			// If we were just going to swap in place then return.
-			if( !inputBuffer )
+			if(!inputBuffer)
 				return;
-		
-			// Otherwise copy the inputBuffer to the outputBuffer:
-			if ( outputBuffer != inputBuffer )
-				memcpy( outputBuffer, inputBuffer, count * sizeof( T ) );
-			return;
 
+			// Otherwise copy the inputBuffer to the outputBuffer:
+			if(outputBuffer != inputBuffer)
+				memcpy(outputBuffer, inputBuffer, count * sizeof(T));
+			return;
 		}
 
 		// Swap everything in the buffer:
-		for( int i = 0; i < count; i++ )
+		for(int i = 0; i < count; i++)
 		{
-			LowLevelByteSwap<T>( &outputBuffer[i], &inputBuffer[i] );
+			LowLevelByteSwap<T>(&outputBuffer[i], &inputBuffer[i]);
 		}
 	}
 
 private:
 	//-----------------------------------------------------------------------------
-	// The lowest level byte swapping workhorse of doom.  output always contains the 
+	// The lowest level byte swapping workhorse of doom.  output always contains the
 	// swapped version of input.  ( Doesn't compare machine to target endianness )
 	//-----------------------------------------------------------------------------
-	template<typename T> static void LowLevelByteSwap( T *output, T *input )
+	template<typename T>
+	static void LowLevelByteSwap(T *output, T *input)
 	{
 		T temp = *output;
-#if defined( _X360 )
+#if defined(_X360)
 		// Intrinsics need the source type to be fixed-point
-		DWORD* word = (DWORD*)input;
-		switch( sizeof(T) )
+		DWORD *word = (DWORD *)input;
+		switch(sizeof(T))
 		{
-		case 8:
+			case 8:
 			{
-			__storewordbytereverse( *(word+1), 0, &temp );
-			__storewordbytereverse( *(word+0), 4, &temp );
+				__storewordbytereverse(*(word + 1), 0, &temp);
+				__storewordbytereverse(*(word + 0), 4, &temp);
 			}
 			break;
 
-		case 4:
-			__storewordbytereverse( *word, 0, &temp );
-			break;
+			case 4:
+				__storewordbytereverse(*word, 0, &temp);
+				break;
 
-		case 2:
-			__storeshortbytereverse( *input, 0, &temp );
-			break;
+			case 2:
+				__storeshortbytereverse(*input, 0, &temp);
+				break;
 
-		case 1:
-			V_memcpy( &temp, input, 1 );
-			break;
+			case 1:
+				V_memcpy(&temp, input, 1);
+				break;
 
-		default:
-			Assert( "Invalid size in CByteswap::LowLevelByteSwap" && 0 );
+			default:
+				Assert("Invalid size in CByteswap::LowLevelByteSwap" && 0);
 		}
 #else
-		for( unsigned int i = 0; i < sizeof(T); i++ )
+		for(unsigned int i = 0; i < sizeof(T); i++)
 		{
-			((unsigned char* )&temp)[i] = ((unsigned char*)input)[sizeof(T)-(i+1)]; 
+			((unsigned char *)&temp)[i] = ((unsigned char *)input)[sizeof(T) - (i + 1)];
 		}
 #endif
-		V_memcpy( output, &temp, sizeof(T) );
+		V_memcpy(output, &temp, sizeof(T));
 	}
 
-#if defined( _X360 )
+#if defined(_X360)
 	// specialized for void * to get 360 XDK compile working despite changelist 281331
 	//-----------------------------------------------------------------------------
-	// The lowest level byte swapping workhorse of doom.  output always contains the 
+	// The lowest level byte swapping workhorse of doom.  output always contains the
 	// swapped version of input.  ( Doesn't compare machine to target endianness )
 	//-----------------------------------------------------------------------------
-	template<> static void LowLevelByteSwap( void **output, void **input )
+	template<>
+	static void LowLevelByteSwap(void **output, void **input)
 	{
-		AssertMsgOnce( sizeof(void *) == sizeof(unsigned int) , "void *'s on this platform are not four bytes!" );	
-		__storewordbytereverse( *reinterpret_cast<unsigned int *>(input), 0, output );
+		AssertMsgOnce(sizeof(void *) == sizeof(unsigned int), "void *'s on this platform are not four bytes!");
+		__storewordbytereverse(*reinterpret_cast<unsigned int *>(input), 0, output);
 	}
 #endif
 

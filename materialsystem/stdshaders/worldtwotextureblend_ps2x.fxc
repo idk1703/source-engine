@@ -1,6 +1,6 @@
-//====== Copyright © 1996-2007, Valve Corporation, All rights reserved. =======//
+//====== Copyright ï¿½ 1996-2007, Valve Corporation, All rights reserved. =======//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -65,8 +65,8 @@ sampler NormalizeSampler			: register( s6 );
 struct PS_INPUT
 {
 	HALF2 baseTexCoord				: TEXCOORD0;
-	HALF4 detailOrBumpTexCoord		: TEXCOORD1;	
-	HALF4 lightmapTexCoord1And2		: TEXCOORD2;	// CENTROID: TEXCOORD2	
+	HALF4 detailOrBumpTexCoord		: TEXCOORD1;
+	HALF4 lightmapTexCoord1And2		: TEXCOORD2;	// CENTROID: TEXCOORD2
 	HALF2 lightmapTexCoord3			: TEXCOORD3;	// CENTROID: TEXCOORD3
 	HALF4 worldPos_projPosZ			: TEXCOORD4;
 	HALF3x3 tangentSpaceTranspose	: TEXCOORD5;
@@ -96,7 +96,7 @@ float4 main( PS_INPUT i ) : COLOR
 		HALF2 bumpCoord3;
 		ComputeBumpedLightmapCoordinates( i.lightmapTexCoord1And2, i.lightmapTexCoord3.xy,
 			bumpCoord1, bumpCoord2, bumpCoord3 );
-		
+
 		HALF4 lightmapSample1 = tex2D( LightmapSampler, bumpCoord1 );
 		lightmapColor1 = lightmapSample1.rgb;
 		lightmapColor2 = tex2D( LightmapSampler, bumpCoord2 );
@@ -130,7 +130,7 @@ float4 main( PS_INPUT i ) : COLOR
 	{
 		baseColor.rgb = lerp( baseColor, detailColor, detailColor.a );
 	}
-	
+
 	HALF3 normal = HALF3( 0.0f, 0.0f, 1.0f );
 	if( bBumpmap )
 	{
@@ -168,7 +168,7 @@ float4 main( PS_INPUT i ) : COLOR
 		float4 flashlightSpacePosition = mul( float4( i.worldPos_projPosZ.xyz, 1.0f ), g_FlashlightWorldToTexture );
 
 		diffuseLighting = DoFlashlight( g_FlashlightPos, i.worldPos_projPosZ.xyz, flashlightSpacePosition,
-			worldSpaceNormal, g_FlashlightAttenuationFactors.xyz, 
+			worldSpaceNormal, g_FlashlightAttenuationFactors.xyz,
 			g_FlashlightAttenuationFactors.w, FlashlightSampler, FlashlightSampler, NormalizeSampler,
 			nShadowSampleLevel,	bDoShadows, false, float2(0, 0), false );
 	}
@@ -214,4 +214,3 @@ float4 main( PS_INPUT i ) : COLOR
 
 	return FinalOutput( float4( result, alpha ), fogFactor, PIXELFOGTYPE, TONEMAP_SCALE_LINEAR, (WRITE_DEPTH_TO_DESTALPHA != 0), i.worldPos_projPosZ.w );
 }
-

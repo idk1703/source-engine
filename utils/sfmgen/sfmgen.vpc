@@ -22,7 +22,7 @@ $Project "sfmgen"
 		$File	"$SRCDIR\public\interpolatortypes.cpp"
 		$File	"$SRCDIR\public\sentence.cpp"
 	}
-	
+
 	$Folder	"External Header Files"
 	{
 		$File	"$SRCDIR\public\sentence.h"

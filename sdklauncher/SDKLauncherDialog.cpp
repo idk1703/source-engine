@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -41,7 +41,7 @@
 using namespace vgui;
 
 CSDKLauncherDialog *g_pSDKLauncherDialog = NULL;
-CGameConfigManager	g_ConfigManager;
+CGameConfigManager g_ConfigManager;
 char g_engineDir[50];
 
 //-----------------------------------------------------------------------------
@@ -49,15 +49,15 @@ char g_engineDir[50];
 //			web browser.
 // Input  : *lpszLocalName - Localized name of the URL to open via shell execution
 //-----------------------------------------------------------------------------
-void OpenLocalizedURL( const char *lpszLocalName )
+void OpenLocalizedURL(const char *lpszLocalName)
 {
 	// Find and convert the localized unicode string
 	char pURLStr[MAX_PATH];
-	wchar_t *pURLUni = g_pVGuiLocalize->Find( lpszLocalName );
-	g_pVGuiLocalize->ConvertUnicodeToANSI( pURLUni, pURLStr, sizeof( pURLStr ) );
+	wchar_t *pURLUni = g_pVGuiLocalize->Find(lpszLocalName);
+	g_pVGuiLocalize->ConvertUnicodeToANSI(pURLUni, pURLStr, sizeof(pURLStr));
 
 	// Open the URL through the shell
-	vgui::system()->ShellExecute( "open", pURLStr );
+	vgui::system()->ShellExecute("open", pURLStr);
 }
 
 class CResetConfirmationMessageBox : public vgui::Frame
@@ -65,31 +65,30 @@ class CResetConfirmationMessageBox : public vgui::Frame
 public:
 	typedef vgui::Frame BaseClass;
 
-	CResetConfirmationMessageBox( Panel *pParent, const char *pPanelName )
-		: BaseClass( pParent, pPanelName )
+	CResetConfirmationMessageBox(Panel *pParent, const char *pPanelName) : BaseClass(pParent, pPanelName)
 	{
-		SetSize( 200, 200 );
-		SetMinimumSize( 250, 100 );
-		SetSizeable( false );
-		LoadControlSettings( "resetconfirmbox.res" );
+		SetSize(200, 200);
+		SetMinimumSize(250, 100);
+		SetSizeable(false);
+		LoadControlSettings("resetconfirmbox.res");
 	}
-	void OnCommand( const char *command )
+	void OnCommand(const char *command)
 	{
-		if ( Q_stricmp( command, "ResetConfigs" ) == 0 )
+		if(Q_stricmp(command, "ResetConfigs") == 0)
 		{
 			Close();
-			
-			if ( GetVParent() )
+
+			if(GetVParent())
 			{
-				PostMessage( GetVParent(), new KeyValues( "Command", "command", "ResetConfigs"));
+				PostMessage(GetVParent(), new KeyValues("Command", "command", "ResetConfigs"));
 			}
 		}
-		else if ( Q_stricmp( command, "MoreInfo" ) == 0 )
+		else if(Q_stricmp(command, "MoreInfo") == 0)
 		{
-			OpenLocalizedURL( "URL_Reset_Config" );
+			OpenLocalizedURL("URL_Reset_Config");
 		}
 
-		BaseClass::OnCommand( command );
+		BaseClass::OnCommand(command);
 	}
 };
 
@@ -98,23 +97,22 @@ class CConversionInfoMessageBox : public vgui::Frame
 public:
 	typedef vgui::Frame BaseClass;
 
-	CConversionInfoMessageBox( Panel *pParent, const char *pPanelName )
-		: BaseClass( pParent, pPanelName )
+	CConversionInfoMessageBox(Panel *pParent, const char *pPanelName) : BaseClass(pParent, pPanelName)
 	{
-		SetSize( 200, 200 );
-		SetMinimumSize( 250, 100 );
-		SetSizeable( false );
-		LoadControlSettings( "convinfobox.res" );
+		SetSize(200, 200);
+		SetMinimumSize(250, 100);
+		SetSizeable(false);
+		LoadControlSettings("convinfobox.res");
 	}
 
-	virtual void OnCommand( const char *command )
+	virtual void OnCommand(const char *command)
 	{
-		BaseClass::OnCommand( command );
+		BaseClass::OnCommand(command);
 
-		// For some weird reason, this dialog can 
-		if ( Q_stricmp( command, "ShowFAQ" ) == 0 )
+		// For some weird reason, this dialog can
+		if(Q_stricmp(command, "ShowFAQ") == 0)
 		{
-			OpenLocalizedURL( "URL_Convert_INI" );
+			OpenLocalizedURL("URL_Convert_INI");
 		}
 	}
 };
@@ -124,28 +122,27 @@ class CGameInfoMessageBox : public vgui::Frame
 public:
 	typedef vgui::Frame BaseClass;
 
-	CGameInfoMessageBox( Panel *pParent, const char *pPanelName )
-		: BaseClass( pParent, pPanelName )
+	CGameInfoMessageBox(Panel *pParent, const char *pPanelName) : BaseClass(pParent, pPanelName)
 	{
-		SetSize( 200, 200 );
-		SetMinimumSize( 250, 100 );
+		SetSize(200, 200);
+		SetMinimumSize(250, 100);
 
-		LoadControlSettings( "hl2infobox.res" );
+		LoadControlSettings("hl2infobox.res");
 	}
 
-	virtual void OnCommand( const char *command )
+	virtual void OnCommand(const char *command)
 	{
-		BaseClass::OnCommand( command );
+		BaseClass::OnCommand(command);
 
-		// For some weird reason, this dialog can 
-		if ( Q_stricmp( command, "RunAnyway" ) == 0 )
+		// For some weird reason, this dialog can
+		if(Q_stricmp(command, "RunAnyway") == 0)
 		{
-			m_pDialog->Launch( m_iActiveItem, true );
+			m_pDialog->Launch(m_iActiveItem, true);
 			MarkForDeletion();
 		}
-		else if ( Q_stricmp( command, "Troubleshooting" ) == 0 )
+		else if(Q_stricmp(command, "Troubleshooting") == 0)
 		{
-			OpenLocalizedURL( "URL_SDK_FAQ" );
+			OpenLocalizedURL("URL_SDK_FAQ");
 			MarkForDeletion();
 		}
 	}
@@ -159,35 +156,34 @@ class CMinFootprintRefreshConfirmationDialog : public vgui::Frame
 public:
 	typedef vgui::Frame BaseClass;
 
-	CMinFootprintRefreshConfirmationDialog( Panel *pParent, const char *pPanelName )
-		: BaseClass( pParent, pPanelName )
+	CMinFootprintRefreshConfirmationDialog(Panel *pParent, const char *pPanelName) : BaseClass(pParent, pPanelName)
 	{
-		SetSizeable( false );
-		LoadControlSettings( "min_footprint_confirm_box.res" );
-		
+		SetSizeable(false);
+		LoadControlSettings("min_footprint_confirm_box.res");
+
 		m_hOldModalSurface = input()->GetAppModalSurface();
-		input()->SetAppModalSurface( GetVPanel() );
+		input()->SetAppModalSurface(GetVPanel());
 	}
 	~CMinFootprintRefreshConfirmationDialog()
 	{
-		input()->SetAppModalSurface( m_hOldModalSurface );
+		input()->SetAppModalSurface(m_hOldModalSurface);
 	}
-	
-	void OnCommand( const char *command )
-	{
-		BaseClass::OnCommand( command );
 
-		if ( Q_stricmp( command, "Continue" ) == 0 )
+	void OnCommand(const char *command)
+	{
+		BaseClass::OnCommand(command);
+
+		if(Q_stricmp(command, "Continue") == 0)
 		{
-			PostMessage( g_pSDKLauncherDialog, new KeyValues( "Command", "command", "RefreshMinFootprint" ) );
+			PostMessage(g_pSDKLauncherDialog, new KeyValues("Command", "command", "RefreshMinFootprint"));
 			MarkForDeletion();
 		}
-		else if ( Q_stricmp( command, "Close" ) == 0 )
+		else if(Q_stricmp(command, "Close") == 0)
 		{
 			MarkForDeletion();
 		}
 	}
-	
+
 	VPANEL m_hOldModalSurface;
 };
 
@@ -196,34 +192,34 @@ public:
 //-----------------------------------------------------------------------------
 CSDKLauncherDialog::CSDKLauncherDialog(vgui::Panel *parent, const char *name) : BaseClass(parent, name)
 {
-	Assert( !g_pSDKLauncherDialog );
+	Assert(!g_pSDKLauncherDialog);
 	g_pSDKLauncherDialog = this;
 
 	SetSize(384, 480);
 	SetMinimumSize(250, 200);
 
-	SetMinimizeButtonVisible( true );
-	m_pImageList = new ImageList( true );
+	SetMinimizeButtonVisible(true);
+	m_pImageList = new ImageList(true);
 
 	m_pMediaList = new SectionedListPanel(this, "MediaList");
-	m_pMediaList->AddActionSignalTarget( this );
-	m_pMediaList->SetImageList( m_pImageList, true );
+	m_pMediaList->AddActionSignalTarget(this);
+	m_pMediaList->SetImageList(m_pImageList, true);
 
-	m_pContextMenu = new Menu( m_pMediaList, "AppsContextMenu" );
-	
-	m_pCurrentGameCombo = new ComboBox( this, "CurrentGameList", 8, false );
-	m_pCurrentGameCombo->AddActionSignalTarget( this );
+	m_pContextMenu = new Menu(m_pMediaList, "AppsContextMenu");
 
-	m_pCurrentEngineCombo = new ComboBox( this, "CurrentEngineList", 4, false );
-	m_pCurrentEngineCombo->AddActionSignalTarget( this );
+	m_pCurrentGameCombo = new ComboBox(this, "CurrentGameList", 8, false);
+	m_pCurrentGameCombo->AddActionSignalTarget(this);
+
+	m_pCurrentEngineCombo = new ComboBox(this, "CurrentEngineList", 4, false);
+	m_pCurrentEngineCombo->AddActionSignalTarget(this);
 
 	PopulateMediaList();
 
-	LoadControlSettings( "SDKLauncherDialog.res" );
+	LoadControlSettings("SDKLauncherDialog.res");
 
-	GetEngineVersion( g_engineDir, sizeof( g_engineDir ) );
+	GetEngineVersion(g_engineDir, sizeof(g_engineDir));
 
-	PopulateCurrentEngineCombo( false );
+	PopulateCurrentEngineCombo(false);
 
 	RefreshConfigs();
 }
@@ -249,42 +245,42 @@ void CSDKLauncherDialog::OnClose()
 void CSDKLauncherDialog::PopulateMediaList()
 {
 	KeyValues *dataFile = new KeyValues("Media");
-	dataFile->UsesEscapeSequences( true );
+	dataFile->UsesEscapeSequences(true);
 
-	if (dataFile->LoadFromFile( g_pFullFileSystem, "MediaList.txt", NULL ) )
+	if(dataFile->LoadFromFile(g_pFullFileSystem, "MediaList.txt", NULL))
 	{
 		// Load all the images.
-		KeyValues *pImages = dataFile->FindKey( "Images" );
-		if ( !pImages )
-			Error( "MediaList.txt missing Images key." );
+		KeyValues *pImages = dataFile->FindKey("Images");
+		if(!pImages)
+			Error("MediaList.txt missing Images key.");
 
-		for ( KeyValues *pCur=pImages->GetFirstTrueSubKey(); pCur; pCur=pCur->GetNextTrueSubKey() )
+		for(KeyValues *pCur = pImages->GetFirstTrueSubKey(); pCur; pCur = pCur->GetNextTrueSubKey())
 		{
-			IImage *pImage = scheme()->GetImage( pCur->GetString( "Image", "" ), false );
-			int iIndex = pCur->GetInt( "Index", -1 );
-			if ( pImage && iIndex != -1 )
+			IImage *pImage = scheme()->GetImage(pCur->GetString("Image", ""), false);
+			int iIndex = pCur->GetInt("Index", -1);
+			if(pImage && iIndex != -1)
 			{
-				m_pImageList->SetImageAtIndex( iIndex, pImage );
+				m_pImageList->SetImageAtIndex(iIndex, pImage);
 			}
 		}
 
 		// Load all the sections.
-		KeyValues *pSections = dataFile->FindKey( "Sections" );
-		if ( !pSections )
-			Error( "MediaList.txt missing Sections key." );
+		KeyValues *pSections = dataFile->FindKey("Sections");
+		if(!pSections)
+			Error("MediaList.txt missing Sections key.");
 
-		for ( KeyValues *pSection=pSections->GetFirstTrueSubKey(); pSection; pSection=pSection->GetNextTrueSubKey() )
+		for(KeyValues *pSection = pSections->GetFirstTrueSubKey(); pSection; pSection = pSection->GetNextTrueSubKey())
 		{
-			int id = pSection->GetInt( "id" );
-			const char *pName = pSection->GetString( "Name" );
-			m_pMediaList->AddSection( id, pName );
-			m_pMediaList->AddColumnToSection( id, "Image", "", SectionedListPanel::COLUMN_IMAGE, 20 );
-			m_pMediaList->AddColumnToSection( id, "Text", pName, 0, 200 );
+			int id = pSection->GetInt("id");
+			const char *pName = pSection->GetString("Name");
+			m_pMediaList->AddSection(id, pName);
+			m_pMediaList->AddColumnToSection(id, "Image", "", SectionedListPanel::COLUMN_IMAGE, 20);
+			m_pMediaList->AddColumnToSection(id, "Text", pName, 0, 200);
 
 			// Set all the rows.
-			for ( KeyValues *kv = pSection->GetFirstTrueSubKey(); kv != NULL; kv=kv->GetNextTrueSubKey() )
+			for(KeyValues *kv = pSection->GetFirstTrueSubKey(); kv != NULL; kv = kv->GetNextTrueSubKey())
 			{
-				m_pMediaList->AddItem( id, kv );
+				m_pMediaList->AddItem(id, kv);
 			}
 		}
 	}
@@ -292,207 +288,204 @@ void CSDKLauncherDialog::PopulateMediaList()
 	dataFile->deleteThis();
 }
 
-void CSDKLauncherDialog::Launch( int hActiveListItem, bool bForce )
+void CSDKLauncherDialog::Launch(int hActiveListItem, bool bForce)
 {
-	if (!m_pMediaList->IsItemIDValid(hActiveListItem))
+	if(!m_pMediaList->IsItemIDValid(hActiveListItem))
 		return;
 
 	// display the file
-	KeyValues *item = m_pMediaList->GetItemData( hActiveListItem );
-	if ( !item )
+	KeyValues *item = m_pMediaList->GetItemData(hActiveListItem);
+	if(!item)
 		return;
 
 	// Is this a ShellExecute or a program they want to run?
-	const char *pStr = item->GetString( "InlineProgram", NULL );
-	if ( pStr )
+	const char *pStr = item->GetString("InlineProgram", NULL);
+	if(pStr)
 	{
-		if ( Q_stricmp( pStr, "CreateMod" ) == 0 )
+		if(Q_stricmp(pStr, "CreateMod") == 0)
 		{
-			if ( !V_stricmp( g_engineDir, "ep1" ) || !V_stricmp( g_engineDir, "source2007" ) )
+			if(!V_stricmp(g_engineDir, "ep1") || !V_stricmp(g_engineDir, "source2007"))
 			{
-				RunCreateModWizard( false );
+				RunCreateModWizard(false);
 			}
 			else
 			{
-				VGUIMessageBox( this, "Unable to Run 'Create A Mod' Wizard", "Support for creating total conversions are not available using this engine versions." );
+				VGUIMessageBox(this, "Unable to Run 'Create A Mod' Wizard",
+							   "Support for creating total conversions are not available using this engine versions.");
 			}
 		}
-		else if ( Q_stricmp( pStr, "refresh_min_footprint" ) == 0 )
+		else if(Q_stricmp(pStr, "refresh_min_footprint") == 0)
 		{
-			CMinFootprintRefreshConfirmationDialog *pDlg = new CMinFootprintRefreshConfirmationDialog( this, "RefreshConfirmation" );
+			CMinFootprintRefreshConfirmationDialog *pDlg =
+				new CMinFootprintRefreshConfirmationDialog(this, "RefreshConfirmation");
 
 			pDlg->RequestFocus();
-			pDlg->SetVisible( true );
+			pDlg->SetVisible(true);
 			pDlg->MoveToCenterOfScreen();
 		}
-		else if ( Q_stricmp( pStr, "reset_configs" ) == 0 )
+		else if(Q_stricmp(pStr, "reset_configs") == 0)
 		{
-			CResetConfirmationMessageBox *pDlg = new CResetConfirmationMessageBox( this, "ResetConfirmation" );
+			CResetConfirmationMessageBox *pDlg = new CResetConfirmationMessageBox(this, "ResetConfirmation");
 
 			pDlg->RequestFocus();
-			pDlg->SetVisible( true );
+			pDlg->SetVisible(true);
 			pDlg->MoveToCenterOfScreen();
-			input()->SetAppModalSurface( pDlg->GetVPanel() );
+			input()->SetAppModalSurface(pDlg->GetVPanel());
 		}
 		else
 		{
-			Error( "Unknown InlineProgram value: %s", pStr );
+			Error("Unknown InlineProgram value: %s", pStr);
 		}
 		return;
 	}
-	
-	pStr = item->GetString( "ShellExecute", NULL );
-	if ( pStr )
+
+	pStr = item->GetString("ShellExecute", NULL);
+	if(pStr)
 	{
 		// Replace tokens we know about like %basedir%.
-		system()->ShellExecute( "open", pStr );
+		system()->ShellExecute("open", pStr);
 		return;
 	}
 
-	pStr = item->GetString( "Program", NULL );
-	if ( pStr )
+	pStr = item->GetString("Program", NULL);
+	if(pStr)
 	{
 		// Get our current config.
 		KeyValues *kv = m_pCurrentGameCombo->GetActiveItemUserData();
-		if ( !kv )
+		if(!kv)
 		{
-			VGUIMessageBox( this, "Error", "No game configurations to run with." );
+			VGUIMessageBox(this, "Error", "No game configurations to run with.");
 			return;
 		}
 
-		const char *pModDir = kv->GetString( "ModDir", NULL );
-		if ( !pModDir )
+		const char *pModDir = kv->GetString("ModDir", NULL);
+		if(!pModDir)
 		{
-			VGUIMessageBox( this, "Error", "Missing 'ModDir' key/value." );
+			VGUIMessageBox(this, "Error", "Missing 'ModDir' key/value.");
 			return;
 		}
 
 		bool bRun = true;
-		if ( !bForce && Q_stristr( pStr, "%gamedir%" ) )
+		if(!bForce && Q_stristr(pStr, "%gamedir%"))
 		{
 			// Make sure the currently-selected gamedir is valid and has a gameinfo.txt in it.
 			char testStr[MAX_PATH];
-			Q_strncpy( testStr, pModDir, sizeof( testStr ) );
-			Q_AppendSlash( testStr, sizeof( testStr ) );
-			Q_strncat( testStr, "gameinfo.txt", sizeof( testStr ), COPY_ALL_CHARACTERS );
-			if ( _access( testStr, 0 ) != 0 )
+			Q_strncpy(testStr, pModDir, sizeof(testStr));
+			Q_AppendSlash(testStr, sizeof(testStr));
+			Q_strncat(testStr, "gameinfo.txt", sizeof(testStr), COPY_ALL_CHARACTERS);
+			if(_access(testStr, 0) != 0)
 			{
-				CGameInfoMessageBox *dlg = new CGameInfoMessageBox( this, "GameInfoMessageBox" );
-				
+				CGameInfoMessageBox *dlg = new CGameInfoMessageBox(this, "GameInfoMessageBox");
+
 				dlg->m_pDialog = this;
 				dlg->m_iActiveItem = hActiveListItem;
 
 				dlg->RequestFocus();
-				dlg->SetVisible( true );
+				dlg->SetVisible(true);
 				dlg->MoveToCenterOfScreen();
-				input()->SetAppModalSurface( dlg->GetVPanel() );
+				input()->SetAppModalSurface(dlg->GetVPanel());
 
 				bRun = false;
 			}
 		}
 
-		if ( bRun )
+		if(bRun)
 		{
 			// Get the program name and its arguments.
 			char programNameTemp[1024], programName[1024], launchDirectory[1024];
 
-			SubstituteBaseDir( pStr, programNameTemp, sizeof( programNameTemp ) );
-			V_StrSubst( programNameTemp, "%gamedir%", pModDir, programName, sizeof( programName ) );
-			V_strncpy( programNameTemp, programName, sizeof( programNameTemp ) );
-			V_StrSubst( programNameTemp, "%enginedir%", g_engineDir , programName, sizeof( programName ) );
-			
-			V_strncpy( launchDirectory, GetSDKLauncherBaseDirectory(), sizeof( launchDirectory ) );
-			V_strncat( launchDirectory, "\\bin\\", sizeof( launchDirectory ) );
-			V_strncat( launchDirectory, g_engineDir, sizeof( launchDirectory ) );
+			SubstituteBaseDir(pStr, programNameTemp, sizeof(programNameTemp));
+			V_StrSubst(programNameTemp, "%gamedir%", pModDir, programName, sizeof(programName));
+			V_strncpy(programNameTemp, programName, sizeof(programNameTemp));
+			V_StrSubst(programNameTemp, "%enginedir%", g_engineDir, programName, sizeof(programName));
+
+			V_strncpy(launchDirectory, GetSDKLauncherBaseDirectory(), sizeof(launchDirectory));
+			V_strncat(launchDirectory, "\\bin\\", sizeof(launchDirectory));
+			V_strncat(launchDirectory, g_engineDir, sizeof(launchDirectory));
 
 			// Check to see if we're running in tools mode
-			if ( NULL != V_strstr( programName, "-tools" ) )
-			{	
-				// We can't run tools mode in engine versions earlier than OB 
-				if ( !V_strcmp( g_engineDir, "ep1" ) )
+			if(NULL != V_strstr(programName, "-tools"))
+			{
+				// We can't run tools mode in engine versions earlier than OB
+				if(!V_strcmp(g_engineDir, "ep1"))
 				{
-					VGUIMessageBox( this, "Error", "Source Engine Tools is not compatible with the selected engine version." );
+					VGUIMessageBox(this, "Error",
+								   "Source Engine Tools is not compatible with the selected engine version.");
 					return;
 				}
 
 				// If we are running the engine tools then change our launch directory to the game directory
-				V_strncpy( launchDirectory, pModDir, sizeof( launchDirectory ) );
-				V_StripLastDir( launchDirectory, sizeof( launchDirectory ) );
-				V_strncat( launchDirectory, "bin", sizeof( launchDirectory ) );
+				V_strncpy(launchDirectory, pModDir, sizeof(launchDirectory));
+				V_StripLastDir(launchDirectory, sizeof(launchDirectory));
+				V_strncat(launchDirectory, "bin", sizeof(launchDirectory));
 			}
 
 			STARTUPINFO si;
-			memset( &si, 0, sizeof( si ) );
-			si.cb = sizeof( si );
+			memset(&si, 0, sizeof(si));
+			si.cb = sizeof(si);
 
 			PROCESS_INFORMATION pi;
-			memset( &pi, 0, sizeof( pi ) );
-
+			memset(&pi, 0, sizeof(pi));
 
 			DWORD dwFlags = 0;
-			if ( !CreateProcess( 
-				0,
-				programName, 
-				NULL,							// security
-				NULL,
-				TRUE,
-				dwFlags,						// flags
-				NULL,							// environment
-				launchDirectory,	// current directory
-				&si,
-				&pi ) )
+			if(!CreateProcess(0, programName,
+							  NULL, // security
+							  NULL, TRUE,
+							  dwFlags,		   // flags
+							  NULL,			   // environment
+							  launchDirectory, // current directory
+							  &si, &pi))
 			{
-				::MessageBoxA( NULL, GetLastWindowsErrorString(), "Error", MB_OK | MB_ICONINFORMATION | MB_APPLMODAL );
+				::MessageBoxA(NULL, GetLastWindowsErrorString(), "Error", MB_OK | MB_ICONINFORMATION | MB_APPLMODAL);
 			}
 		}
 	}
 }
 
-
-void CSDKLauncherDialog::OnCommand( const char *command )
+void CSDKLauncherDialog::OnCommand(const char *command)
 {
-	if ( Q_stricmp( command, "LaunchButton" ) == 0 )
+	if(Q_stricmp(command, "LaunchButton") == 0)
 	{
-		Launch( m_pMediaList->GetSelectedItem(), false );
+		Launch(m_pMediaList->GetSelectedItem(), false);
 	}
-	else if ( Q_stricmp( command, "ResetConfigs" ) == 0 )
+	else if(Q_stricmp(command, "ResetConfigs") == 0)
 	{
 		ResetConfigs();
 	}
-	else if ( Q_stricmp( command, "RefreshMinFootprint" ) == 0 )
+	else if(Q_stricmp(command, "RefreshMinFootprint") == 0)
 	{
-		DumpMinFootprintFiles( true );
+		DumpMinFootprintFiles(true);
 	}
 
-	BaseClass::OnCommand( command );
+	BaseClass::OnCommand(command);
 }
 
-
-void CSDKLauncherDialog::OnItemDoubleLeftClick( int iItem )
+void CSDKLauncherDialog::OnItemDoubleLeftClick(int iItem)
 {
-	Launch( iItem, false );
+	Launch(iItem, false);
 }
 
-
-void CSDKLauncherDialog::OnItemContextMenu( int hActiveListItem )
+void CSDKLauncherDialog::OnItemContextMenu(int hActiveListItem)
 {
-	if (!m_pMediaList->IsItemIDValid(hActiveListItem))
+	if(!m_pMediaList->IsItemIDValid(hActiveListItem))
 		return;
 
 	// display the file
-	KeyValues *item = m_pMediaList->GetItemData( hActiveListItem );
-	if ( !item )
+	KeyValues *item = m_pMediaList->GetItemData(hActiveListItem);
+	if(!item)
 		return;
 
 	// Build the context menu.
 	m_pContextMenu->DeleteAllItems();
 
 	// Is this a ShellExecute or a program they want to run?
-	const char *pStr = item->GetString( "ShellExecute", NULL );
-	if ( pStr )
-		m_pContextMenu->AddMenuItem( "RunGame", "Open In Web Browser", new KeyValues("ItemDoubleLeftClick", "itemID", hActiveListItem), this);
+	const char *pStr = item->GetString("ShellExecute", NULL);
+	if(pStr)
+		m_pContextMenu->AddMenuItem("RunGame", "Open In Web Browser",
+									new KeyValues("ItemDoubleLeftClick", "itemID", hActiveListItem), this);
 	else
-		m_pContextMenu->AddMenuItem( "RunGame", "Launch", new KeyValues("ItemDoubleLeftClick", "itemID", hActiveListItem), this);
+		m_pContextMenu->AddMenuItem("RunGame", "Launch",
+									new KeyValues("ItemDoubleLeftClick", "itemID", hActiveListItem), this);
 
 	int menuWide, menuTall;
 	m_pContextMenu->SetVisible(true);
@@ -506,10 +499,10 @@ void CSDKLauncherDialog::OnItemContextMenu( int hActiveListItem )
 	int cx, cy;
 	input()->GetCursorPos(cx, cy);
 
-	if (wide - menuWide > cx)
+	if(wide - menuWide > cx)
 	{
 		// menu hanging right
-		if (tall - menuTall > cy)
+		if(tall - menuTall > cy)
 		{
 			// menu hanging down
 			m_pContextMenu->SetPos(cx, cy);
@@ -523,7 +516,7 @@ void CSDKLauncherDialog::OnItemContextMenu( int hActiveListItem )
 	else
 	{
 		// menu hanging left
-		if (tall - menuTall > cy)
+		if(tall - menuTall > cy)
 		{
 			// menu hanging down
 			m_pContextMenu->SetPos(cx - menuWide, cy);
@@ -539,174 +532,172 @@ void CSDKLauncherDialog::OnItemContextMenu( int hActiveListItem )
 	m_pContextMenu->MoveToFront();
 }
 
-bool CSDKLauncherDialog::ParseConfigs( CUtlVector<CGameConfig*> &configs )
+bool CSDKLauncherDialog::ParseConfigs(CUtlVector<CGameConfig *> &configs)
 {
-	if ( !g_ConfigManager.IsLoaded() )
+	if(!g_ConfigManager.IsLoaded())
 		return false;
 
 	// Find the games block of the keyvalues
 	KeyValues *gameBlock = g_ConfigManager.GetGameBlock();
-	
-	if ( gameBlock == NULL )
+
+	if(gameBlock == NULL)
 	{
 		return false;
 	}
 
 	// Iterate through all subkeys
-	for ( KeyValues *pGame=gameBlock->GetFirstTrueSubKey(); pGame; pGame=pGame->GetNextTrueSubKey() )
+	for(KeyValues *pGame = gameBlock->GetFirstTrueSubKey(); pGame; pGame = pGame->GetNextTrueSubKey())
 	{
 		const char *pName = pGame->GetName();
-		const char *pDir = pGame->GetString( TOKEN_GAME_DIRECTORY );
+		const char *pDir = pGame->GetString(TOKEN_GAME_DIRECTORY);
 
-		CGameConfig	*newConfig = new CGameConfig();
-		UtlStrcpy( newConfig->m_Name, pName );
-		UtlStrcpy( newConfig->m_ModDir, pDir );
+		CGameConfig *newConfig = new CGameConfig();
+		UtlStrcpy(newConfig->m_Name, pName);
+		UtlStrcpy(newConfig->m_ModDir, pDir);
 
-		configs.AddToTail( newConfig );
+		configs.AddToTail(newConfig);
 	}
 
 	return true;
 }
 
-void CSDKLauncherDialog::PopulateCurrentEngineCombo( bool bSelectLast )
+void CSDKLauncherDialog::PopulateCurrentEngineCombo(bool bSelectLast)
 {
 	int nActiveEngine = 0;
 
 	m_pCurrentEngineCombo->DeleteAllItems();
 
 	// Add ep1 engine
-	KeyValues *kv = new KeyValues( "values" );
-	kv = new KeyValues( "values" );
-	kv->SetString( "EngineVer", "ep1" );
-	m_pCurrentEngineCombo->AddItem( "Source Engine 2006", kv );
+	KeyValues *kv = new KeyValues("values");
+	kv = new KeyValues("values");
+	kv->SetString("EngineVer", "ep1");
+	m_pCurrentEngineCombo->AddItem("Source Engine 2006", kv);
 	kv->deleteThis();
-	if ( !V_strcmp( g_engineDir, "ep1" ) )
+	if(!V_strcmp(g_engineDir, "ep1"))
 	{
 		nActiveEngine = 0;
 	}
 
 	// Add ep2 engine
-	kv = new KeyValues( "values" );
-	kv->SetString( "EngineVer", "source2007" );
-	m_pCurrentEngineCombo->AddItem( "Source Engine 2007", kv );
+	kv = new KeyValues("values");
+	kv->SetString("EngineVer", "source2007");
+	m_pCurrentEngineCombo->AddItem("Source Engine 2007", kv);
 	kv->deleteThis();
-	if ( !V_strcmp( g_engineDir, "source2007" ) )
+	if(!V_strcmp(g_engineDir, "source2007"))
 	{
 		nActiveEngine = 1;
 	}
 
 	// Add SP engine
-	kv = new KeyValues( "values" );
-	kv->SetString( "EngineVer", "source2009" );
-	m_pCurrentEngineCombo->AddItem( "Source Engine 2009", kv );
+	kv = new KeyValues("values");
+	kv->SetString("EngineVer", "source2009");
+	m_pCurrentEngineCombo->AddItem("Source Engine 2009", kv);
 	kv->deleteThis();
-	if ( !V_strcmp( g_engineDir, "source2009" ) )
+	if(!V_strcmp(g_engineDir, "source2009"))
 	{
 		nActiveEngine = 2;
 	}
 
 	// Add MP engine
-	kv = new KeyValues( "values" );
-	kv->SetString( "EngineVer", "orangebox" );
-	m_pCurrentEngineCombo->AddItem( "Source Engine MP", kv );
+	kv = new KeyValues("values");
+	kv->SetString("EngineVer", "orangebox");
+	m_pCurrentEngineCombo->AddItem("Source Engine MP", kv);
 	kv->deleteThis();
-	if ( !V_strcmp( g_engineDir, "orangebox" ) )
+	if(!V_strcmp(g_engineDir, "orangebox"))
 	{
 		nActiveEngine = 3;
 	}
 
 	// Determine active configuration
-	m_pCurrentEngineCombo->ActivateItem( nActiveEngine );
+	m_pCurrentEngineCombo->ActivateItem(nActiveEngine);
 }
 
-void CSDKLauncherDialog::SetCurrentGame( const char* pcCurrentGame )
+void CSDKLauncherDialog::SetCurrentGame(const char *pcCurrentGame)
 {
 	int activeConfig = -1;
 
-	for ( int i=0; i < m_pCurrentGameCombo->GetItemCount(); i++ )
+	for(int i = 0; i < m_pCurrentGameCombo->GetItemCount(); i++)
 	{
-		KeyValues *kv = m_pCurrentGameCombo->GetItemUserData( i );
+		KeyValues *kv = m_pCurrentGameCombo->GetItemUserData(i);
 
 		// Check to see if this is our currently active game
-		if ( Q_stricmp( kv->GetString( "ModDir" ), pcCurrentGame ) == 0 )
+		if(Q_stricmp(kv->GetString("ModDir"), pcCurrentGame) == 0)
 		{
 			activeConfig = i;
 			continue;
 		}
 	}
 
-	if ( activeConfig > -1 )
+	if(activeConfig > -1)
 	{
 		// Activate our currently selected game
-		m_pCurrentGameCombo->ActivateItem( activeConfig );
+		m_pCurrentGameCombo->ActivateItem(activeConfig);
 	}
 	else
 	{
 		// If the VCONFIG value for the game is not found then repopulate
-		PopulateCurrentGameCombo( false );
+		PopulateCurrentGameCombo(false);
 	}
 }
 
-
-void CSDKLauncherDialog::PopulateCurrentGameCombo( bool bSelectLast )
+void CSDKLauncherDialog::PopulateCurrentGameCombo(bool bSelectLast)
 {
 	m_pCurrentGameCombo->DeleteAllItems();
 
-	CUtlVector<CGameConfig*> configs;
+	CUtlVector<CGameConfig *> configs;
 
-	ParseConfigs( configs );
+	ParseConfigs(configs);
 
 	char szGame[MAX_PATH];
-	GetVConfigRegistrySetting( GAMEDIR_TOKEN, szGame, sizeof( szGame ) );
+	GetVConfigRegistrySetting(GAMEDIR_TOKEN, szGame, sizeof(szGame));
 
 	int activeConfig = -1;
 
 	CUtlVector<int> itemIDs;
-	itemIDs.SetSize( configs.Count() );
-	for ( int i=0; i < configs.Count(); i++ )
+	itemIDs.SetSize(configs.Count());
+	for(int i = 0; i < configs.Count(); i++)
 	{
-		KeyValues *kv = new KeyValues( "values" );
-		kv->SetString( "ModDir", configs[i]->m_ModDir.Base() );
-		kv->SetPtr( "panel", m_pCurrentGameCombo );
+		KeyValues *kv = new KeyValues("values");
+		kv->SetString("ModDir", configs[i]->m_ModDir.Base());
+		kv->SetPtr("panel", m_pCurrentGameCombo);
 
-		
 		// Check to see if this is our currently active game
-		if ( Q_stricmp( configs[i]->m_ModDir.Base(), szGame ) == 0 )
+		if(Q_stricmp(configs[i]->m_ModDir.Base(), szGame) == 0)
 		{
 			activeConfig = i;
 		}
 
-		itemIDs[i] = m_pCurrentGameCombo->AddItem( configs[i]->m_Name.Base(), kv );
-		
+		itemIDs[i] = m_pCurrentGameCombo->AddItem(configs[i]->m_Name.Base(), kv);
+
 		kv->deleteThis();
 	}
 
 	// Activate the correct entry if valid
-	if ( itemIDs.Count() > 0 )
+	if(itemIDs.Count() > 0)
 	{
-		m_pCurrentGameCombo->SetEnabled( true );
+		m_pCurrentGameCombo->SetEnabled(true);
 
-		if ( bSelectLast )
+		if(bSelectLast)
 		{
-			m_pCurrentGameCombo->ActivateItem( itemIDs[itemIDs.Count()-1] );
+			m_pCurrentGameCombo->ActivateItem(itemIDs[itemIDs.Count() - 1]);
 		}
 		else
 		{
-			if ( activeConfig > -1 )
+			if(activeConfig > -1)
 			{
 				// Activate our currently selected game
-				m_pCurrentGameCombo->ActivateItem( activeConfig );
+				m_pCurrentGameCombo->ActivateItem(activeConfig);
 			}
 			else
 			{
 				// Always default to the first otherwise
-				m_pCurrentGameCombo->ActivateItem( 0 );
+				m_pCurrentGameCombo->ActivateItem(0);
 			}
 		}
 	}
 	else
 	{
-		m_pCurrentGameCombo->SetEnabled( false );
+		m_pCurrentGameCombo->SetEnabled(false);
 	}
 
 	configs.PurgeAndDeleteElements();
@@ -715,28 +706,28 @@ void CSDKLauncherDialog::PopulateCurrentGameCombo( bool bSelectLast )
 //-----------------------------------------------------------------------------
 // Purpose: Selection has changed in the active config drop-down, set the environment
 //-----------------------------------------------------------------------------
-void CSDKLauncherDialog::OnTextChanged( KeyValues *pkv )
+void CSDKLauncherDialog::OnTextChanged(KeyValues *pkv)
 {
-	const vgui::ComboBox* combo = (vgui::ComboBox*)pkv->GetPtr("panel");
+	const vgui::ComboBox *combo = (vgui::ComboBox *)pkv->GetPtr("panel");
 
-	if ( combo ==  m_pCurrentGameCombo)
+	if(combo == m_pCurrentGameCombo)
 	{
 		KeyValues *kv = m_pCurrentGameCombo->GetActiveItemUserData();
 
-		if ( kv )
+		if(kv)
 		{
-			const char *modDir = kv->GetString( "ModDir" );
-			SetVConfigRegistrySetting( GAMEDIR_TOKEN, modDir, true );
+			const char *modDir = kv->GetString("ModDir");
+			SetVConfigRegistrySetting(GAMEDIR_TOKEN, modDir, true);
 		}
 	}
-	else if ( combo == m_pCurrentEngineCombo )
+	else if(combo == m_pCurrentEngineCombo)
 	{
 		KeyValues *kv = m_pCurrentEngineCombo->GetActiveItemUserData();
 
-		if ( kv )
+		if(kv)
 		{
-			const char *engineDir = kv->GetString( "EngineVer" );
-			SetEngineVersion( engineDir );
+			const char *engineDir = kv->GetString("EngineVer");
+			SetEngineVersion(engineDir);
 			RefreshConfigs();
 		}
 	}
@@ -745,94 +736,93 @@ void CSDKLauncherDialog::OnTextChanged( KeyValues *pkv )
 //-----------------------------------------------------------------------------
 // Purpose: Refresh our configs after a file change outside our process
 //-----------------------------------------------------------------------------
-void CSDKLauncherDialog::RefreshConfigs( void )
+void CSDKLauncherDialog::RefreshConfigs(void)
 {
 	char szGameConfigDir[MAX_PATH];
 
-	V_strcpy_safe( szGameConfigDir, GetSDKLauncherBinDirectory() );
-	V_AppendSlash( szGameConfigDir, MAX_PATH );
-	V_strncat( szGameConfigDir, g_engineDir, MAX_PATH );
-	V_AppendSlash( szGameConfigDir, MAX_PATH );
-	V_strncat( szGameConfigDir, "bin", MAX_PATH );
+	V_strcpy_safe(szGameConfigDir, GetSDKLauncherBinDirectory());
+	V_AppendSlash(szGameConfigDir, MAX_PATH);
+	V_strncat(szGameConfigDir, g_engineDir, MAX_PATH);
+	V_AppendSlash(szGameConfigDir, MAX_PATH);
+	V_strncat(szGameConfigDir, "bin", MAX_PATH);
 
 	// Set directory in which GameConfig.txt is found
-	g_ConfigManager.SetBaseDirectory( szGameConfigDir );
+	g_ConfigManager.SetBaseDirectory(szGameConfigDir);
 
 	// Tell the config manager which games to put in the config by default
-	if ( !stricmp( g_engineDir, "ep1" ) )
+	if(!stricmp(g_engineDir, "ep1"))
 	{
-		g_ConfigManager.SetSDKEpoch( EP1 );
+		g_ConfigManager.SetSDKEpoch(EP1);
 	}
-	else if ( !stricmp( g_engineDir, "source2007" ) )
+	else if(!stricmp(g_engineDir, "source2007"))
 	{
-		g_ConfigManager.SetSDKEpoch( EP2 );
+		g_ConfigManager.SetSDKEpoch(EP2);
 	}
-	else if ( !stricmp( g_engineDir, "source2009" ) )
+	else if(!stricmp(g_engineDir, "source2009"))
 	{
-		g_ConfigManager.SetSDKEpoch( SP2009 );
-	}
-	else 
-	{
-		g_ConfigManager.SetSDKEpoch( MP2009 );
-	}
-
-
-	// Load configurations
-	if ( g_ConfigManager.LoadConfigs( szGameConfigDir ) == false )
-	{
-		m_pCurrentGameCombo->DeleteAllItems();
-		m_pCurrentGameCombo->SetEnabled( false );
+		g_ConfigManager.SetSDKEpoch(SP2009);
 	}
 	else
 	{
-		m_pCurrentGameCombo->SetEnabled( true );
+		g_ConfigManager.SetSDKEpoch(MP2009);
+	}
 
-		if ( g_ConfigManager.WasConvertedOnLoad() )
+	// Load configurations
+	if(g_ConfigManager.LoadConfigs(szGameConfigDir) == false)
+	{
+		m_pCurrentGameCombo->DeleteAllItems();
+		m_pCurrentGameCombo->SetEnabled(false);
+	}
+	else
+	{
+		m_pCurrentGameCombo->SetEnabled(true);
+
+		if(g_ConfigManager.WasConvertedOnLoad())
 		{
 			// Notify of a conversion
-			CConversionInfoMessageBox *pDlg = new CConversionInfoMessageBox( this, "ConversionInfo" );
+			CConversionInfoMessageBox *pDlg = new CConversionInfoMessageBox(this, "ConversionInfo");
 
 			pDlg->RequestFocus();
-			pDlg->SetVisible( true );
+			pDlg->SetVisible(true);
 			pDlg->MoveToCenterOfScreen();
-			input()->SetAppModalSurface( pDlg->GetVPanel() );
+			input()->SetAppModalSurface(pDlg->GetVPanel());
 		}
 	}
 
 	// Dump the current settings and reparse the change
-	PopulateCurrentGameCombo( false );
+	PopulateCurrentGameCombo(false);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Reset our config files
 //-----------------------------------------------------------------------------
-void CSDKLauncherDialog::ResetConfigs( void )
+void CSDKLauncherDialog::ResetConfigs(void)
 {
 	// Reset the configs
 	g_ConfigManager.ResetConfigs();
-	
+
 	// Refresh the listing
-	PopulateCurrentGameCombo( false );
+	PopulateCurrentGameCombo(false);
 
 	// Notify the user
-	VGUIMessageBox( this, "Complete", "Your game configurations have successfully been reset to their default values." );
+	VGUIMessageBox(this, "Complete", "Your game configurations have successfully been reset to their default values.");
 }
 
-void CSDKLauncherDialog::GetEngineVersion(char* pcEngineVer, int nSize)
+void CSDKLauncherDialog::GetEngineVersion(char *pcEngineVer, int nSize)
 {
-	IRegistry *reg = InstanceRegistry( "Source SDK" );
-	Assert( reg );
-	V_strncpy( pcEngineVer, reg->ReadString( "EngineVer", "orangebox" ), nSize );
-	ReleaseInstancedRegistry( reg );
+	IRegistry *reg = InstanceRegistry("Source SDK");
+	Assert(reg);
+	V_strncpy(pcEngineVer, reg->ReadString("EngineVer", "orangebox"), nSize);
+	ReleaseInstancedRegistry(reg);
 }
 
 void CSDKLauncherDialog::SetEngineVersion(const char *pcEngineVer)
 {
-	IRegistry *reg = InstanceRegistry( "Source SDK" );
-	Assert( reg );
-	reg->WriteString( "EngineVer", pcEngineVer );
-	ReleaseInstancedRegistry( reg );
+	IRegistry *reg = InstanceRegistry("Source SDK");
+	Assert(reg);
+	reg->WriteString("EngineVer", pcEngineVer);
+	ReleaseInstancedRegistry(reg);
 
 	// Set the global to the same value as the registry
-	V_strncpy( g_engineDir, pcEngineVer, sizeof( g_engineDir ) );
+	V_strncpy(g_engineDir, pcEngineVer, sizeof(g_engineDir));
 }

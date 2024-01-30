@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,16 +10,13 @@
 #pragma once
 #endif
 
-
 #include "weapon_tfc_nailgun.h"
 
+#if defined(CLIENT_DLL)
 
-#if defined( CLIENT_DLL )
-
-	#define CTFCSuperNailgun C_TFCSuperNailgun
+#define CTFCSuperNailgun C_TFCSuperNailgun
 
 #endif
-
 
 // ----------------------------------------------------------------------------- //
 // CTFCSuperNailgun class definition.
@@ -28,29 +25,23 @@
 class CTFCSuperNailgun : public CTFCNailgun
 {
 public:
-	DECLARE_CLASS( CTFCSuperNailgun, CTFCNailgun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_CLASS(CTFCSuperNailgun, CTFCNailgun);
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
-	#ifndef CLIENT_DLL
-		DECLARE_DATADESC();
-	#endif
 
-	
+#ifndef CLIENT_DLL
+	DECLARE_DATADESC();
+#endif
+
 	CTFCSuperNailgun();
 
-	virtual TFCWeaponID GetWeaponID( void ) const;
+	virtual TFCWeaponID GetWeaponID(void) const;
 	virtual void PrimaryAttack();
 
-
-// Overrideables.
+	// Overrideables.
 public:
-
 private:
-	
-	CTFCSuperNailgun( const CTFCSuperNailgun & ) {}
-
+	CTFCSuperNailgun(const CTFCSuperNailgun &) {}
 };
-
 
 #endif // WEAPON_TFC_SUPER_NAILGUN_H

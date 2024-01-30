@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -27,13 +27,11 @@ class CFaceEditSheet;
 class CMessageWnd;
 class CLightingPreviewResultsWindow;
 
-
 class CMainFrame : public CMDIFrameWnd
 {
-	DECLARE_DYNAMIC( CMainFrame )
+	DECLARE_DYNAMIC(CMainFrame)
 
 public:
-
 	CMainFrame();
 	virtual ~CMainFrame();
 
@@ -43,7 +41,10 @@ public:
 	void EndShellSession(void);
 	bool IsShellSessionActive(void);
 
-	BOOL IsUndoActive() { return m_bUndoActive; }
+	BOOL IsUndoActive()
+	{
+		return m_bUndoActive;
+	}
 	void SetUndoActive(BOOL bActive);
 
 	void SetBrightness(float fBrightness);
@@ -54,14 +55,26 @@ public:
 
 	void LoadWindowStates(std::fstream *pFile = NULL);
 
-	inline CFaceEditSheet *GetFaceEditSheet( void ) { return m_pFaceEditSheet; }
-	inline CStatusBar *GetStatusBar() { return &m_wndStatusBar; }
+	inline CFaceEditSheet *GetFaceEditSheet(void)
+	{
+		return m_pFaceEditSheet;
+	}
+	inline CStatusBar *GetStatusBar()
+	{
+		return &m_wndStatusBar;
+	}
 
 	void ShowSearchReplaceDialog(void);
-	void ShowFaceEditSheetOrTextureBar( bool bShowFaceEditSheet );
-	HACCEL GetAccelTable( void ) { return m_hAccelTable; }
+	void ShowFaceEditSheetOrTextureBar(bool bShowFaceEditSheet);
+	HACCEL GetAccelTable(void)
+	{
+		return m_hAccelTable;
+	}
 
-	CFaceSmoothingVisualDlg *GetSmoothingGroupDialog( void )	{ return &m_SmoothingGroupDlg; }
+	CFaceSmoothingVisualDlg *GetSmoothingGroupDialog(void)
+	{
+		return &m_SmoothingGroupDlg;
+	}
 
 	void ResetAutosaveTimer();
 
@@ -69,7 +82,7 @@ public:
 
 #ifdef _DEBUG
 	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+	virtual void Dump(CDumpContext &dc) const;
 #endif
 
 	void OpenURL(const char *pszURL);
@@ -78,36 +91,36 @@ public:
 	//
 	// Public attributes. FIXME: eliminate!
 	//
-	CTextureBrowser			*pTextureBrowser;
-	CObjectProperties		*pObjectProperties;
+	CTextureBrowser *pTextureBrowser;
+	CObjectProperties *pObjectProperties;
 
-	CFilterControl			m_FilterControl;
-	CObjectBar				m_ObjectBar;
-	CTextureBar				m_TextureBar;
-	CManifestFilter			m_ManifestFilterControl;
-	CFaceEditSheet			*m_pFaceEditSheet;
+	CFilterControl m_FilterControl;
+	CObjectBar m_ObjectBar;
+	CTextureBar m_TextureBar;
+	CManifestFilter m_ManifestFilterControl;
+	CFaceEditSheet *m_pFaceEditSheet;
 	CLightingPreviewResultsWindow *m_pLightingPreviewOutputWindow;
-	bool					m_bLightingPreviewOutputWindowShowing;
+	bool m_bLightingPreviewOutputWindowShowing;
 
-	//CMapAnimationDlg m_AnimationDlg;
+	// CMapAnimationDlg m_AnimationDlg;
 
 	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CMainFrame)
-	public:
+public:
 	virtual void WinHelp(DWORD dwData, UINT nCmd);
-	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	protected:
+	virtual BOOL PreCreateWindow(CREATESTRUCT &cs);
+	virtual BOOL PreTranslateMessage(MSG *pMsg);
+
+protected:
 	//}}AFX_VIRTUAL
 
 protected:
-
 	//{{AFX_MSG(CMainFrame)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnEditProperties();
 	afx_msg void OnViewMessages();
-	afx_msg void OnUpdateViewMessages(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateViewMessages(CCmdUI *pCmdUI);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnClose();
 	afx_msg void OnDestroy();
@@ -119,7 +132,7 @@ protected:
 	afx_msg BOOL OnHelpOpenURL(UINT nID);
 	afx_msg void OnHelpFinder();
 	afx_msg void OnEditUndoredoactive();
-	afx_msg void OnUpdateEditUndoredoactive(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateEditUndoredoactive(CCmdUI *pCmdUI);
 	afx_msg BOOL OnFileNew(UINT);
 	afx_msg void OnSavewindowstate();
 	afx_msg void OnLoadwindowstate();
@@ -132,8 +145,8 @@ protected:
 	afx_msg void OnUpdateToolUI(CCmdUI *pUI);
 	afx_msg BOOL OnView3dChangeBrightness(UINT nID);
 	afx_msg void OnUpdateApplicatorUI(CCmdUI *pUI);
-	afx_msg BOOL OnHelpInfo(HELPINFO*);
-	afx_msg void OnEnterMenuLoop( BOOL bIsTrackPopupMenu );
+	afx_msg BOOL OnHelpInfo(HELPINFO *);
+	afx_msg void OnEnterMenuLoop(BOOL bIsTrackPopupMenu);
 #if _MSC_VER < 1300
 	afx_msg void OnActivateApp(BOOL bActive, HTASK hTask);
 #else
@@ -147,14 +160,13 @@ protected:
 	afx_msg void OnOpaqueMaterials();
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 	afx_msg BOOL OnChangeTool(UINT nID);
-	afx_msg void OnInitMenu( CMenu *pMenu );
-	afx_msg void OnHDR( void );
+	afx_msg void OnInitMenu(CMenu *pMenu);
+	afx_msg void OnHDR(void);
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
 
 private:
-
 	void DockControlBarLeftOf(CControlBar *Bar, CControlBar *LeftOf);
 
 	void SaveWindowStates(std::fstream *pFile = NULL);
@@ -163,39 +175,36 @@ private:
 	CChildFrame *GetNextMDIChildWndRecursive(CWnd *pCurChild);
 
 	void EnableFaceEditMode(bool bEnable);
-	void Autosave( void );
-	void LoadOldestAutosave( void );
+	void Autosave(void);
+	void LoadOldestAutosave(void);
 
-	CMDIClientWnd			wndMDIClient;			// dvs: what in God's name is this for?
+	CMDIClientWnd wndMDIClient; // dvs: what in God's name is this for?
 
-	CSearchReplaceDlg		*m_pSearchReplaceDlg;
+	CSearchReplaceDlg *m_pSearchReplaceDlg;
 
-	BOOL					m_bUndoActive;
+	BOOL m_bUndoActive;
 
-	CStatusBar				m_wndStatusBar;
-	CToolBar				m_wndMapToolBar;
-	CToolBar				m_wndUndoRedoToolBar;
-	CToolBar				m_wndMapEditToolBar;
-	CToolBar				m_wndMapOps;
+	CStatusBar m_wndStatusBar;
+	CToolBar m_wndMapToolBar;
+	CToolBar m_wndUndoRedoToolBar;
+	CToolBar m_wndMapEditToolBar;
+	CToolBar m_wndMapOps;
 
-	CSelectModeDlgBar		m_SelectModeDlg;
+	CSelectModeDlgBar m_SelectModeDlg;
 
-	CFaceSmoothingVisualDlg	m_SmoothingGroupDlg;
+	CFaceSmoothingVisualDlg m_SmoothingGroupDlg;
 
-	bool					m_bMinimized;
-	bool					m_bShellSessionActive;		// Whether a client has initiated a remote shell editing session.
-	CBitmap					m_bmMapEditTools256;
+	bool m_bMinimized;
+	bool m_bShellSessionActive; // Whether a client has initiated a remote shell editing session.
+	CBitmap m_bmMapEditTools256;
 
 	enum
 	{
 		AUTOSAVE_TIMER,
 		FIRST_TIMER
 	};
-
 };
 
-
 CMainFrame *GetMainWnd();
-
 
 #endif // MAINFRM_H

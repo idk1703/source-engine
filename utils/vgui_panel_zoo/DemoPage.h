@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,11 +16,11 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // This class contains the basic layout for every demo panel.
 //-----------------------------------------------------------------------------
-class DemoPage: public PropertyPage
+class DemoPage : public PropertyPage
 {
-	public:
-		DemoPage(Panel *parent, const char *name);
-		~DemoPage();
-		
-	private:
+public:
+	DemoPage(Panel *parent, const char *name);
+	~DemoPage();
+
+private:
 };

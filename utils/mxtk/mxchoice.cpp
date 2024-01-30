@@ -14,88 +14,62 @@
 #include "mxtk/mxChoice.h"
 #include <windows.h>
 
-
-
 class mxChoice_i
 {
 public:
 	int dummy;
 };
 
-
-
-mxChoice::mxChoice (mxWindow *parent, int x, int y, int w, int h, int id)
-: mxWidget (parent, x, y, w, h)
+mxChoice::mxChoice(mxWindow *parent, int x, int y, int w, int h, int id) : mxWidget(parent, x, y, w, h)
 {
-	if (!parent)
+	if(!parent)
 		return;
 
-	HWND hwndParent = (HWND) ((mxWidget *) parent)->getHandle ();
+	HWND hwndParent = (HWND)((mxWidget *)parent)->getHandle();
 
-	void *handle = (void *) CreateWindowEx (0, "COMBOBOX", "", WS_VISIBLE | WS_CHILD | WS_VSCROLL | CBS_DROPDOWNLIST,
-				x, y, w, h + 500, hwndParent,
-				(HMENU) id, (HINSTANCE) GetModuleHandle (NULL), NULL);
-	
-	SendMessage ((HWND) handle, WM_SETFONT, (WPARAM) (HFONT) GetStockObject (ANSI_VAR_FONT), MAKELPARAM (TRUE, 0));
-	SetWindowLong ((HWND) handle, GWL_USERDATA, (LONG) this);
+	void *handle = (void *)CreateWindowEx(0, "COMBOBOX", "", WS_VISIBLE | WS_CHILD | WS_VSCROLL | CBS_DROPDOWNLIST, x,
+										  y, w, h + 500, hwndParent, (HMENU)id, (HINSTANCE)GetModuleHandle(NULL), NULL);
 
-	setHandle (handle);
-	setType (MX_CHOICE);
-	setParent (parent);
-	setId (id);
+	SendMessage((HWND)handle, WM_SETFONT, (WPARAM)(HFONT)GetStockObject(ANSI_VAR_FONT), MAKELPARAM(TRUE, 0));
+	SetWindowLong((HWND)handle, GWL_USERDATA, (LONG)this);
+
+	setHandle(handle);
+	setType(MX_CHOICE);
+	setParent(parent);
+	setId(id);
 }
 
-
-
-mxChoice::~mxChoice ()
+mxChoice::~mxChoice()
 {
-	removeAll ();
+	removeAll();
 }
 
-
-
-void
-mxChoice::add (const char *item)
+void mxChoice::add(const char *item)
 {
-	SendMessage ((HWND) getHandle (), CB_ADDSTRING, 0, (LPARAM) (LPCTSTR) item);
+	SendMessage((HWND)getHandle(), CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)item);
 }
 
-
-
-void
-mxChoice::select (int index)
+void mxChoice::select(int index)
 {
-	SendMessage ((HWND) getHandle (), CB_SETCURSEL, (WPARAM) index, 0L);
+	SendMessage((HWND)getHandle(), CB_SETCURSEL, (WPARAM)index, 0L);
 }
 
-
-
-void
-mxChoice::remove (int index)
+void mxChoice::remove(int index)
 {
-	SendMessage ((HWND) getHandle (), CB_DELETESTRING, (WPARAM) index, 0L);
+	SendMessage((HWND)getHandle(), CB_DELETESTRING, (WPARAM)index, 0L);
 }
 
-
-
-void
-mxChoice::removeAll ()
+void mxChoice::removeAll()
 {
-	SendMessage ((HWND) getHandle (), CB_RESETCONTENT, 0, 0L);
+	SendMessage((HWND)getHandle(), CB_RESETCONTENT, 0, 0L);
 }
 
-
-
-int
-mxChoice::getItemCount () const
+int mxChoice::getItemCount() const
 {
-	return (int) SendMessage ((HWND) getHandle (), CB_GETCOUNT, 0, 0L);
+	return (int)SendMessage((HWND)getHandle(), CB_GETCOUNT, 0, 0L);
 }
 
-
-
-int
-mxChoice::getSelectedIndex () const
+int mxChoice::getSelectedIndex() const
 {
-	return (int) SendMessage ((HWND) getHandle (), CB_GETCURSEL, 0, 0L);
+	return (int)SendMessage((HWND)getHandle(), CB_GETCURSEL, 0, 0L);
 }

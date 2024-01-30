@@ -8,14 +8,17 @@
 
 //---------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------
-class CEyeballBossApproachTarget : public Action< CEyeballBoss >
+class CEyeballBossApproachTarget : public Action<CEyeballBoss>
 {
 public:
-	virtual ActionResult< CEyeballBoss >	OnStart( CEyeballBoss *me, Action< CEyeballBoss > *priorAction );
-	virtual ActionResult< CEyeballBoss >	Update( CEyeballBoss *me, float interval );
-	virtual void OnEnd( CEyeballBoss *me, Action< CEyeballBoss > *nextAction );
+	virtual ActionResult<CEyeballBoss> OnStart(CEyeballBoss *me, Action<CEyeballBoss> *priorAction);
+	virtual ActionResult<CEyeballBoss> Update(CEyeballBoss *me, float interval);
+	virtual void OnEnd(CEyeballBoss *me, Action<CEyeballBoss> *nextAction);
 
-	virtual const char *GetName( void ) const	{ return "ApproachTarget"; }		// return name of this action
+	virtual const char *GetName(void) const
+	{
+		return "ApproachTarget";
+	} // return name of this action
 
 private:
 	CountdownTimer m_lingerTimer;

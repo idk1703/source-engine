@@ -24,34 +24,31 @@ CTFGameMovementEscort::CTFGameMovementEscort()
 	m_vDuckViewOffset = ESCORTCLASS_VIEWOFFSET_DUCK;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFGameMovementEscort::ProcessClassMovement( CBaseTFPlayer *pPlayer, CTFMoveData *pTFMoveData )
+void CTFGameMovementEscort::ProcessClassMovement(CBaseTFPlayer *pPlayer, CTFMoveData *pTFMoveData)
 {
 	// Get the class specific data from the TFMoveData structure
-	Assert( PlayerClassEscortData_t::PLAYERCLASS_ID == pTFMoveData->m_nClassID );
+	Assert(PlayerClassEscortData_t::PLAYERCLASS_ID == pTFMoveData->m_nClassID);
 	m_pEscortData = &pTFMoveData->EscortData();
 
 	// to test pass it through!!
-	BaseClass::ProcessMovement( (CBasePlayer *)pPlayer, static_cast<CMoveData*>( pTFMoveData ) );
+	BaseClass::ProcessMovement((CBasePlayer *)pPlayer, static_cast<CMoveData *>(pTFMoveData));
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-const Vector &CTFGameMovementEscort::GetPlayerMins( bool bDucked ) const
+const Vector &CTFGameMovementEscort::GetPlayerMins(bool bDucked) const
 {
-	return bDucked ? m_vDuckMins : m_vStandMins; 
+	return bDucked ? m_vDuckMins : m_vStandMins;
 }
 
-	
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-const Vector &CTFGameMovementEscort::GetPlayerMaxs( bool bDucked ) const
+const Vector &CTFGameMovementEscort::GetPlayerMaxs(bool bDucked) const
 {
 	return bDucked ? m_vDuckMaxs : m_vStandMaxs;
 }
@@ -59,7 +56,7 @@ const Vector &CTFGameMovementEscort::GetPlayerMaxs( bool bDucked ) const
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-const Vector &CTFGameMovementEscort::GetPlayerViewOffset( bool bDucked ) const
+const Vector &CTFGameMovementEscort::GetPlayerViewOffset(bool bDucked) const
 {
 	return bDucked ? m_vDuckViewOffset : m_vStandViewOffset;
 }

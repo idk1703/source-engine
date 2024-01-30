@@ -88,4 +88,3 @@ float4 main( PS_INPUT i ) : COLOR
 	return color;
 	//return FinalOutput( color, 0, PIXEL_FOG_TYPE_NONE, TONEMAP_SCALE_NONE );
 }
-

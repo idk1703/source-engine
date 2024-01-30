@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,18 +14,22 @@
 #include "store/v1/tf_store_page.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFStorePage_Maps : public CTFStorePage1
 {
-	DECLARE_CLASS_SIMPLE( CTFStorePage_Maps, CTFStorePage1 );
+	DECLARE_CLASS_SIMPLE(CTFStorePage_Maps, CTFStorePage1);
+
 public:
-	CTFStorePage_Maps( Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData );
+	CTFStorePage_Maps(Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData);
 	virtual ~CTFStorePage_Maps() {}
 
-	virtual const char* GetPageResFile() { return "Resource/UI/econ/store/v1/StorePage_Maps.res"; }
+	virtual const char *GetPageResFile()
+	{
+		return "Resource/UI/econ/store/v1/StorePage_Maps.res";
+	}
 
-	virtual void OnPageShow( void );
+	virtual void OnPageShow(void);
 
 protected:
 };

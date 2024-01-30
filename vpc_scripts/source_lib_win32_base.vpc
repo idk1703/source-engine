@@ -42,7 +42,7 @@ $Configuration
 	{
 		$EnableEnhancedInstructionSet	"Streaming SIMD Extensions (/arch:SSE)"
 	}
-	
+
 	$PreBuildEvent
 	{
 		$CommandLine		"if EXIST $OUTLIBDIR\$(TargetName).lib ( for /f $QUOTEdelims=$QUOTE %%A in ('attrib $QUOTE$OUTLIBDIR\$(TargetName).lib$QUOTE') do set valveTmpIsReadOnly=$QUOTE%%A$QUOTE" "\n" \
@@ -53,12 +53,12 @@ $Configuration
 							"    $SRCDIR\devtools\bin\gnu\touch.exe -d $QUOTE1999-01-01$QUOTE $OUTLIBDIR\$(TargetName).lib" "\n" \
 							"    attrib +r $OUTLIBDIR\$(TargetName).lib" "\n" \
 							")" "\n" \
-							"$CRCCHECK" "\n" 			
+							"$CRCCHECK" "\n"
 	}
 
 	$PreLinkEvent [!$ANALYZE && !$SOURCESDK]
 	{
-		$CommandLine		"call $SRCDIR\vpc_scripts\valve_p4_edit.cmd $OUTLIBDIR\$(TargetName).lib $SRCDIR" 
+		$CommandLine		"call $SRCDIR\vpc_scripts\valve_p4_edit.cmd $OUTLIBDIR\$(TargetName).lib $SRCDIR"
 	}
 
 	$Librarian

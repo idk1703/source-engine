@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,27 +10,23 @@
 #pragma once
 #endif
 
-
 #include "MapHelper.h"
 #include "MapFace.h"
 #include "fgdlib/WCKeyValues.h"
 
-
 class CHelperInfo;
 class CRender3D;
-
 
 class CMapFrustum : public CMapHelper
 {
 public:
+	DECLARE_MAPCLASS(CMapFrustum, CMapHelper);
 
-	DECLARE_MAPCLASS(CMapFrustum,CMapHelper);
-	
 	//
 	// Factory for building from a list of string parameters.
 	//
 	static CMapClass *Create(CHelperInfo *pInfo, CMapEntity *pParent);
-	
+
 	//
 	// Construction/destruction:
 	//
@@ -50,24 +46,35 @@ public:
 
 	virtual void PostloadWorld(CMapWorld *pWorld);
 
-	virtual bool IsVisualElement(void) { return(false); } // Only visible when parent entity is selected.
-	virtual bool IsClutter(void) { return true; }
-	virtual bool IsCulledByCordon(const Vector &vecMins, const Vector &vecMaxs) { return false; } // We don't hide unless our parent hides.
+	virtual bool IsVisualElement(void)
+	{
+		return (false);
+	} // Only visible when parent entity is selected.
+	virtual bool IsClutter(void)
+	{
+		return true;
+	}
+	virtual bool IsCulledByCordon(const Vector &vecMins, const Vector &vecMaxs)
+	{
+		return false;
+	} // We don't hide unless our parent hides.
 
-	const char* GetDescription() { return("Frustum helper"); }
+	const char *GetDescription()
+	{
+		return ("Frustum helper");
+	}
 
-	void OnParentKeyChanged( const char* key, const char* value );
-	bool ShouldRenderLast(void) { return(true); }
-	void GetAngles(QAngle& fAngles);
-
+	void OnParentKeyChanged(const char *key, const char *value);
+	bool ShouldRenderLast(void)
+	{
+		return (true);
+	}
+	void GetAngles(QAngle &fAngles);
 
 private:
-
-	CMapFace* CreateMapFace( const Vector &v1, const Vector &v2, const Vector &v3, const Vector &v4, float flAlpha );
-
+	CMapFace *CreateMapFace(const Vector &v1, const Vector &v2, const Vector &v3, const Vector &v4, float flAlpha);
 
 protected:
-
 	CMapFaceList m_Faces;
 
 	float m_flFOV;
@@ -76,7 +83,7 @@ protected:
 	float m_flPitchScale;
 	float m_fBrightness;
 
-	QAngle m_Angles;	
+	QAngle m_Angles;
 	char m_szFOVKeyName[KEYVALUE_MAX_KEY_LENGTH];
 	char m_szColorKeyName[KEYVALUE_MAX_KEY_LENGTH];
 	char m_szNearPlaneKeyName[KEYVALUE_MAX_KEY_LENGTH];

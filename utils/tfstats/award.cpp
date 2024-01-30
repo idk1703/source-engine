@@ -18,9 +18,7 @@
 // Input:	name - the name of the award
 //				pmi - a pointer to the match information
 //------------------------------------------------------------------------------------------------------
-CAward::CAward(char* name)
-:awardName(name),fNoWinner(true),winnerID(-1)
-{}
+CAward::CAward(char *name) : awardName(name), fNoWinner(true), winnerID(-1) {}
 
 //------------------------------------------------------------------------------------------------------
 // Function:	CAward::generate
@@ -30,10 +28,10 @@ CAward::CAward(char* name)
 //------------------------------------------------------------------------------------------------------
 void CAward::generate()
 {
-	winnerName="";
+	winnerName = "";
 	getWinner();
-	if (winnerID!=-1)
-		winnerName=g_pMatchInfo->playerName(winnerID);
+	if(winnerID != -1)
+		winnerName = g_pMatchInfo->playerName(winnerID);
 }
 
 //------------------------------------------------------------------------------------------------------
@@ -41,19 +39,17 @@ void CAward::generate()
 // Purpose:	writes the award to the given html page
 // Input:	html - the page to output the award to
 //------------------------------------------------------------------------------------------------------
-void CAward::writeHTML(CHTMLFile& html)
+void CAward::writeHTML(CHTMLFile &html)
 {
-	if (fNoWinner || (winnerID == -1 && winnerName==""))
+	if(fNoWinner || (winnerID == -1 && winnerName == ""))
 		noWinner(html);
 	else
 	{
-		html.write("The <font class=brightawards>%s</font> award goes to %s!    ",awardName.c_str(),winnerName.c_str());
+		html.write("The <font class=brightawards>%s</font> award goes to %s!    ", awardName.c_str(),
+				   winnerName.c_str());
 		extendedinfo(html);
 	}
 	html.br();
 	html.write("\n");
 }
-CAward::~CAward()
-{
-
-}
+CAward::~CAward() {}

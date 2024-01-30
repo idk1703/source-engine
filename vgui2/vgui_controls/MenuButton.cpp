@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,7 +23,7 @@
 
 using namespace vgui;
 
-DECLARE_BUILD_FACTORY_DEFAULT_TEXT( MenuButton, MenuButton );
+DECLARE_BUILD_FACTORY_DEFAULT_TEXT(MenuButton, MenuButton);
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
@@ -35,17 +35,17 @@ MenuButton::MenuButton(Panel *parent, const char *panelName, const char *text) :
 	m_pDropMenuImage = NULL;
 	m_nImageIndex = -1;
 	_openOffsetY = 0;
-	m_bDropMenuButtonStyle = true;  // set to true so SetDropMenuButtonStyle() forces real init.
+	m_bDropMenuButtonStyle = true; // set to true so SetDropMenuButtonStyle() forces real init.
 
-	SetDropMenuButtonStyle( false );
-	SetUseCaptureMouse( false );
-	SetButtonActivationType( ACTIVATE_ONPRESSED );
+	SetDropMenuButtonStyle(false);
+	SetUseCaptureMouse(false);
+	SetButtonActivationType(ACTIVATE_ONPRESSED);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-MenuButton::~MenuButton() 
+MenuButton::~MenuButton()
 {
 	delete m_pDropMenuImage;
 }
@@ -57,7 +57,7 @@ void MenuButton::SetMenu(Menu *menu)
 {
 	m_pMenu = menu;
 
-	if (menu)
+	if(menu)
 	{
 		m_pMenu->SetVisible(false);
 		m_pMenu->AddActionSignalTarget(this);
@@ -68,9 +68,7 @@ void MenuButton::SetMenu(Menu *menu)
 //-----------------------------------------------------------------------------
 // Purpose: Never draw a focus border
 //-----------------------------------------------------------------------------
-void MenuButton::DrawFocusBorder(int tx0, int ty0, int tx1, int ty1)
-{
-}
+void MenuButton::DrawFocusBorder(int tx0, int ty0, int tx1, int ty1) {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets the direction from the menu button the menu should open
@@ -80,13 +78,12 @@ void MenuButton::SetOpenDirection(Menu::MenuDirection_e direction)
 	m_iDirection = direction;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: hides the menu
 //-----------------------------------------------------------------------------
 void MenuButton::HideMenu(void)
 {
-	if (!m_pMenu)
+	if(!m_pMenu)
 		return;
 
 	// hide the menu
@@ -99,14 +96,13 @@ void MenuButton::HideMenu(void)
 	OnHideMenu(m_pMenu);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Called when the menu button loses focus; hides the menu
 //-----------------------------------------------------------------------------
-void MenuButton::OnKillFocus( KeyValues *pParams )
+void MenuButton::OnKillFocus(KeyValues *pParams)
 {
-	VPANEL hPanel = (VPANEL)pParams->GetPtr( "newPanel" );
-	if ( m_pMenu && !m_pMenu->HasFocus() && hPanel != m_pMenu->GetVPanel() )
+	VPANEL hPanel = (VPANEL)pParams->GetPtr("newPanel");
+	if(m_pMenu && !m_pMenu->HasFocus() && hPanel != m_pMenu->GetVPanel())
 	{
 		HideMenu();
 	}
@@ -132,11 +128,11 @@ void MenuButton::SetOpenOffsetY(int yOffset)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool MenuButton::CanBeDefaultButton(void)
 {
-    return false;
+	return false;
 }
 
 //-----------------------------------------------------------------------------
@@ -144,18 +140,17 @@ bool MenuButton::CanBeDefaultButton(void)
 //-----------------------------------------------------------------------------
 void MenuButton::DoClick()
 {
-	if ( IsDropMenuButtonStyle() && 
-		m_pDropMenuImage )
+	if(IsDropMenuButtonStyle() && m_pDropMenuImage)
 	{
 		int mx, my;
 		// force the menu to appear where the mouse button was pressed
-		input()->GetCursorPos( mx, my );
-		ScreenToLocal( mx, my );
+		input()->GetCursorPos(mx, my);
+		ScreenToLocal(mx, my);
 
 		int contentW, contentH;
-		m_pDropMenuImage->GetContentSize( contentW, contentH );
+		m_pDropMenuImage->GetContentSize(contentW, contentH);
 		int drawX = GetWide() - contentW - 2;
-		if ( mx <= drawX || !OnCheckMenuItemCount() )
+		if(mx <= drawX || !OnCheckMenuItemCount())
 		{
 			// Treat it like a "regular" button click
 			BaseClass::DoClick();
@@ -163,20 +158,20 @@ void MenuButton::DoClick()
 		}
 	}
 
-	if ( !m_pMenu )
+	if(!m_pMenu)
 	{
 		return;
 	}
 
 	// menu is already visible, hide the menu
-	if (m_pMenu->IsVisible())
+	if(m_pMenu->IsVisible())
 	{
 		HideMenu();
 		return;
 	}
 
 	// do nothing if menu is not enabled
-	if (!m_pMenu->IsEnabled())
+	if(!m_pMenu->IsEnabled())
 	{
 		return;
 	}
@@ -184,7 +179,7 @@ void MenuButton::DoClick()
 	m_pMenu->PerformLayout();
 
 	// Now position it so it can fit in the workspace
-	m_pMenu->PositionRelativeToPanel(this, m_iDirection, _openOffsetY );
+	m_pMenu->PositionRelativeToPanel(this, m_iDirection, _openOffsetY);
 
 	// make sure we're at the top of the draw order (and therefore our children as well)
 	MoveToFront();
@@ -203,7 +198,7 @@ void MenuButton::DoClick()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void MenuButton::OnKeyCodeTyped(KeyCode code)
 {
@@ -211,13 +206,13 @@ void MenuButton::OnKeyCodeTyped(KeyCode code)
 	bool ctrl = (input()->IsKeyDown(KEY_LCONTROL) || input()->IsKeyDown(KEY_RCONTROL));
 	bool alt = (input()->IsKeyDown(KEY_LALT) || input()->IsKeyDown(KEY_RALT));
 
-	if (!shift && !ctrl && !alt)
+	if(!shift && !ctrl && !alt)
 	{
-		switch (code)
+		switch(code)
 		{
-		case KEY_ENTER:
+			case KEY_ENTER:
 			{
-				if ( !IsDropMenuButtonStyle() )
+				if(!IsDropMenuButtonStyle())
 				{
 					DoClick();
 				}
@@ -229,36 +224,37 @@ void MenuButton::OnKeyCodeTyped(KeyCode code)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void MenuButton::OnCursorEntered()
 {
 	Button::OnCursorEntered();
 	// post a message to the parent menu.
 	// forward the message on to the parent of this menu.
-	KeyValues *msg = new KeyValues ("CursorEnteredMenuButton");
+	KeyValues *msg = new KeyValues("CursorEnteredMenuButton");
 	// tell the parent this menuitem is the one that was entered so it can open the menu if it wants
 	msg->SetInt("VPanel", GetVPanel());
 	ivgui()->PostMessage(GetVParent(), msg, NULL);
 }
 
-// This style is like the IE "back" button where the left side acts like a regular button, the the right side has a little
+// This style is like the IE "back" button where the left side acts like a regular button, the the right side has a
+// little
 //  combo box dropdown indicator and presents and submenu
-void MenuButton::SetDropMenuButtonStyle( bool state )
+void MenuButton::SetDropMenuButtonStyle(bool state)
 {
 	bool changed = m_bDropMenuButtonStyle != state;
 	m_bDropMenuButtonStyle = state;
-	if ( !changed )
+	if(!changed)
 		return;
 
-	if ( state )
+	if(state)
 	{
-		m_pDropMenuImage = new TextImage( "u" );
-		IScheme *pScheme = scheme()->GetIScheme( GetScheme() );
+		m_pDropMenuImage = new TextImage("u");
+		IScheme *pScheme = scheme()->GetIScheme(GetScheme());
 		m_pDropMenuImage->SetFont(pScheme->GetFont("Marlett", IsProportional()));
 		// m_pDropMenuImage->SetContentAlignment(Label::a_west);
 		// m_pDropMenuImage->SetTextInset(3, 0);
-		m_nImageIndex = AddImage( m_pDropMenuImage, 0 );
+		m_nImageIndex = AddImage(m_pDropMenuImage, 0);
 	}
 	else
 	{
@@ -269,35 +265,34 @@ void MenuButton::SetDropMenuButtonStyle( bool state )
 	}
 }
 
-void MenuButton::ApplySchemeSettings( IScheme *pScheme )
+void MenuButton::ApplySchemeSettings(IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
-	if ( m_pDropMenuImage )
+	if(m_pDropMenuImage)
 	{
-		SetImageAtIndex( 1, m_pDropMenuImage, 0 );
+		SetImageAtIndex(1, m_pDropMenuImage, 0);
 	}
 }
-
 
 void MenuButton::PerformLayout()
 {
 	BaseClass::PerformLayout();
-	if ( !IsDropMenuButtonStyle() )
+	if(!IsDropMenuButtonStyle())
 		return;
 
-	Assert( m_nImageIndex >= 0 );
-	if ( m_nImageIndex < 0 || !m_pDropMenuImage )
+	Assert(m_nImageIndex >= 0);
+	if(m_nImageIndex < 0 || !m_pDropMenuImage)
 		return;
 
 	int w, h;
-	GetSize( w, h );
+	GetSize(w, h);
 
 	int contentW, contentH;
 	m_pDropMenuImage->ResizeImageToContent();
-	m_pDropMenuImage->GetContentSize( contentW, contentH );
+	m_pDropMenuImage->GetContentSize(contentW, contentH);
 
-	SetImageBounds( m_nImageIndex, w - contentW - 2, contentW );
+	SetImageBounds(m_nImageIndex, w - contentW - 2, contentW);
 }
 
 bool MenuButton::IsDropMenuButtonStyle() const
@@ -309,30 +304,30 @@ void MenuButton::Paint(void)
 {
 	BaseClass::Paint();
 
-	if ( !IsDropMenuButtonStyle() )
+	if(!IsDropMenuButtonStyle())
 		return;
 
 	int contentW, contentH;
-	m_pDropMenuImage->GetContentSize( contentW, contentH );
-	m_pDropMenuImage->SetColor( IsEnabled() ? GetButtonFgColor() : GetDisabledFgColor1() );
-	
+	m_pDropMenuImage->GetContentSize(contentW, contentH);
+	m_pDropMenuImage->SetColor(IsEnabled() ? GetButtonFgColor() : GetDisabledFgColor1());
+
 	int drawX = GetWide() - contentW - 2;
 
-	surface()->DrawSetColor(  IsEnabled() ? GetButtonFgColor() : GetDisabledFgColor1() );
-	surface()->DrawFilledRect( drawX, 3, drawX + 1, GetTall() - 3 );
+	surface()->DrawSetColor(IsEnabled() ? GetButtonFgColor() : GetDisabledFgColor1());
+	surface()->DrawFilledRect(drawX, 3, drawX + 1, GetTall() - 3);
 }
 
-void MenuButton::OnCursorMoved( int x, int y )
+void MenuButton::OnCursorMoved(int x, int y)
 {
-	BaseClass::OnCursorMoved( x, y );
+	BaseClass::OnCursorMoved(x, y);
 
-	if ( !IsDropMenuButtonStyle() )
+	if(!IsDropMenuButtonStyle())
 		return;
 
 	int contentW, contentH;
-	m_pDropMenuImage->GetContentSize( contentW, contentH );
+	m_pDropMenuImage->GetContentSize(contentW, contentH);
 	int drawX = GetWide() - contentW - 2;
-	if ( x <= drawX || !OnCheckMenuItemCount() )
+	if(x <= drawX || !OnCheckMenuItemCount())
 	{
 		SetButtonActivationType(ACTIVATE_ONPRESSEDANDRELEASED);
 		SetUseCaptureMouse(true);
@@ -346,6 +341,6 @@ void MenuButton::OnCursorMoved( int x, int y )
 
 Menu *MenuButton::GetMenu()
 {
-	Assert( m_pMenu );
+	Assert(m_pMenu);
 	return m_pMenu;
 }

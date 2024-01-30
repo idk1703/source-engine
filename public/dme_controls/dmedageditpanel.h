@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -15,7 +15,6 @@
 #include "tier1/utlvector.h"
 #include "vgui_controls/EditablePanel.h"
 #include "datamodel/dmehandle.h"
-
 
 //-----------------------------------------------------------------------------
 // Forward declarations
@@ -39,47 +38,45 @@ namespace vgui
 	class PropertySheet;
 	class PropertyPage;
 	class ScrollableEditablePanel;
-}
-
-
+} // namespace vgui
 
 //-----------------------------------------------------------------------------
 // Dag editor panel
 //-----------------------------------------------------------------------------
 class CDmeDagEditPanel : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CDmeDagEditPanel, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CDmeDagEditPanel, vgui::EditablePanel);
 
 public:
 	// constructor, destructor
-	CDmeDagEditPanel( vgui::Panel *pParent, const char *pName );
+	CDmeDagEditPanel(vgui::Panel *pParent, const char *pName);
 	virtual ~CDmeDagEditPanel();
 
 	// Overriden methods of vgui::Panel
 	virtual void Paint();
 
 	// Sets the current scene + animation list
-	void SetDmeElement( CDmeDag *pScene );
-	void SetAnimationList( CDmeAnimationList *pAnimationList );
-	void SetVertexAnimationList( CDmeAnimationList *pAnimationList );
-	void SetCombinationOperator( CDmeCombinationOperator *pComboOp );
+	void SetDmeElement(CDmeDag *pScene);
+	void SetAnimationList(CDmeAnimationList *pAnimationList);
+	void SetVertexAnimationList(CDmeAnimationList *pAnimationList);
+	void SetCombinationOperator(CDmeCombinationOperator *pComboOp);
 	void RefreshCombinationOperator();
 
 	CDmeDag *GetDmeElement();
 
 	// Other methods which hook into DmePanel
-	void SetDmeElement( CDmeSourceSkin *pSkin );
-	void SetDmeElement( CDmeSourceAnimation *pAnimation );
-	void SetDmeElement( CDmeDCCMakefile *pDCCMakefile );
+	void SetDmeElement(CDmeSourceSkin *pSkin);
+	void SetDmeElement(CDmeSourceAnimation *pAnimation);
+	void SetDmeElement(CDmeDCCMakefile *pDCCMakefile);
 
 private:
 	// Called when the selection changes moves
-	MESSAGE_FUNC( OnPageChanged, "PageChanged" );
-	MESSAGE_FUNC_PARAMS( OnAnimationSelected, "AnimationSelected", kv );
-	MESSAGE_FUNC_PARAMS( OnAnimationDeselected, "AnimationDeselected", kv );
+	MESSAGE_FUNC(OnPageChanged, "PageChanged");
+	MESSAGE_FUNC_PARAMS(OnAnimationSelected, "AnimationSelected", kv);
+	MESSAGE_FUNC_PARAMS(OnAnimationDeselected, "AnimationDeselected", kv);
 
 	// Sets up the various panels in the dag editor
-	void SetMakefileRootElement( CDmElement *pRoot );
+	void SetMakefileRootElement(CDmElement *pRoot);
 
 	vgui::PropertySheet *m_pEditorSheet;
 	vgui::PropertyPage *m_pAnimationPage;
@@ -91,6 +88,5 @@ private:
 	CDmeAnimationListPanel *m_pVertexAnimationListPanel;
 	CDmeCombinationOperatorPanel *m_pCombinationPanel;
 };
-
 
 #endif // DMEDAGEDITPANEL_H

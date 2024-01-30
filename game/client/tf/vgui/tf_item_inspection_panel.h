@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,25 +24,25 @@ class CItemModelPanel;
 
 class CTFItemInspectionPanel : public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CTFItemInspectionPanel, EditablePanel )
+	DECLARE_CLASS_SIMPLE(CTFItemInspectionPanel, EditablePanel)
 public:
-	CTFItemInspectionPanel( Panel* pPanel, const char *pszName );
+	CTFItemInspectionPanel(Panel *pPanel, const char *pszName);
 
-	virtual void ApplySchemeSettings( IScheme *pScheme ) OVERRIDE;
+	virtual void ApplySchemeSettings(IScheme *pScheme) OVERRIDE;
 	virtual void PerformLayout() OVERRIDE;
-	virtual void OnCommand( const char *command ) OVERRIDE;
-	void SetItemCopy ( CEconItemView *pItem );
+	virtual void OnCommand(const char *command) OVERRIDE;
+	void SetItemCopy(CEconItemView *pItem);
 	void Reset();
-	void SetSpecialAttributesOnly( bool bSpecialOnly );
+	void SetSpecialAttributesOnly(bool bSpecialOnly);
 
 private:
 	// we always want to copy item with SetItemCopy to make sure that we use high res skin
-	void SetItem( CEconItemView *pItem );
+	void SetItem(CEconItemView *pItem);
 	void RecompositeItem();
-	CNavigationPanel* m_pTeamColorNavPanel;
+	CNavigationPanel *m_pTeamColorNavPanel;
 
-	MESSAGE_FUNC_PARAMS( OnNavButtonSelected, "NavButtonSelected", pData );
-	MESSAGE_FUNC_PTR( OnRadioButtonChecked, "RadioButtonChecked", panel );
+	MESSAGE_FUNC_PARAMS(OnNavButtonSelected, "NavButtonSelected", pData);
+	MESSAGE_FUNC_PTR(OnRadioButtonChecked, "RadioButtonChecked", panel);
 
 	CEmbeddedItemModelPanel *m_pModelInspectPanel;
 	CItemModelPanel *m_pItemNamePanel;

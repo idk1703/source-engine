@@ -16,24 +16,25 @@ extern IEngineReplay *g_pEngine;
 
 //----------------------------------------------------------------------------------------
 
-void CThinkManager::AddThinker( IThinker *pThinker )
+void CThinkManager::AddThinker(IThinker *pThinker)
 {
-	Assert( m_lstManagers.Find( pThinker ) == m_lstManagers.InvalidIndex() );
-	m_lstManagers.AddToTail( pThinker );
+	Assert(m_lstManagers.Find(pThinker) == m_lstManagers.InvalidIndex());
+	m_lstManagers.AddToTail(pThinker);
 }
 
-void CThinkManager::RemoveThinker( IThinker *pThinker )
+void CThinkManager::RemoveThinker(IThinker *pThinker)
 {
-	int it = m_lstManagers.Find( pThinker );		Assert( it != m_lstManagers.InvalidIndex() );
-	m_lstManagers.Remove( it );
+	int it = m_lstManagers.Find(pThinker);
+	Assert(it != m_lstManagers.InvalidIndex());
+	m_lstManagers.Remove(it);
 }
 
 void CThinkManager::Think()
 {
-	FOR_EACH_LL( m_lstManagers, i )
+	FOR_EACH_LL(m_lstManagers, i)
 	{
-		IThinker *pCurThinker = m_lstManagers[ i ];
-		if ( !pCurThinker->ShouldThink() )
+		IThinker *pCurThinker = m_lstManagers[i];
+		if(!pCurThinker->ShouldThink())
 			continue;
 
 		pCurThinker->Think();

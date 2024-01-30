@@ -25,7 +25,6 @@
 #include "hl1_npc_hornet.h"
 #endif
 
-
 //-----------------------------------------------------------------------------
 // CWeaponHgun
 //-----------------------------------------------------------------------------
@@ -36,85 +35,81 @@
 
 class CWeaponHgun : public CBaseHL1MPCombatWeapon
 {
-	DECLARE_CLASS( CWeaponHgun, CBaseHL1MPCombatWeapon );
-public:
+	DECLARE_CLASS(CWeaponHgun, CBaseHL1MPCombatWeapon);
 
-	DECLARE_NETWORKCLASS(); 
+public:
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
-	CWeaponHgun( void );
+	CWeaponHgun(void);
 
-	void	Precache( void );
-	void	PrimaryAttack( void );
-	void	SecondaryAttack( void );
-	void	WeaponIdle( void );
-	bool	Holster( CBaseCombatWeapon *pSwitchingTo = NULL );
-	bool	Reload( void );
+	void Precache(void);
+	void PrimaryAttack(void);
+	void SecondaryAttack(void);
+	void WeaponIdle(void);
+	bool Holster(CBaseCombatWeapon *pSwitchingTo = NULL);
+	bool Reload(void);
 
-	virtual void ItemPostFrame( void );
+	virtual void ItemPostFrame(void);
 
-//	DECLARE_SERVERCLASS();
+	//	DECLARE_SERVERCLASS();
 	DECLARE_DATADESC();
 
 private:
+	//	float	m_flRechargeTime;
+	//	int		m_iFirePhase;
 
-//	float	m_flRechargeTime;
-//	int		m_iFirePhase;
-
-	CNetworkVar( float,	m_flRechargeTime );
-	CNetworkVar( int,	m_iFirePhase );
+	CNetworkVar(float, m_flRechargeTime);
+	CNetworkVar(int, m_iFirePhase);
 };
 
-IMPLEMENT_NETWORKCLASS_ALIASED( WeaponHgun, DT_WeaponHgun );
+IMPLEMENT_NETWORKCLASS_ALIASED(WeaponHgun, DT_WeaponHgun);
 
-BEGIN_NETWORK_TABLE( CWeaponHgun, DT_WeaponHgun )
+BEGIN_NETWORK_TABLE(CWeaponHgun, DT_WeaponHgun)
 #ifdef CLIENT_DLL
-	RecvPropFloat( RECVINFO( m_flRechargeTime ) ),
-	RecvPropInt( RECVINFO( m_iFirePhase ) ),
+	RecvPropFloat(RECVINFO(m_flRechargeTime)), RecvPropInt(RECVINFO(m_iFirePhase)),
 #else
-	SendPropFloat( SENDINFO( m_flRechargeTime ) ),
-	SendPropInt( SENDINFO( m_iFirePhase ) ),
+	SendPropFloat(SENDINFO(m_flRechargeTime)), SendPropInt(SENDINFO(m_iFirePhase)),
 #endif
 END_NETWORK_TABLE()
 
-BEGIN_PREDICTION_DATA( CWeaponHgun )
+BEGIN_PREDICTION_DATA(CWeaponHgun)
 #ifdef CLIENT_DLL
-	DEFINE_PRED_FIELD( m_flRechargeTime, FIELD_FLOAT, FTYPEDESC_INSENDTABLE ),
-	DEFINE_PRED_FIELD( m_iFirePhase, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),
+	DEFINE_PRED_FIELD(m_flRechargeTime, FIELD_FLOAT, FTYPEDESC_INSENDTABLE),
+		DEFINE_PRED_FIELD(m_iFirePhase, FIELD_INTEGER, FTYPEDESC_INSENDTABLE),
 #endif
 END_PREDICTION_DATA()
 
-LINK_ENTITY_TO_CLASS( weapon_hornetgun, CWeaponHgun );
+LINK_ENTITY_TO_CLASS(weapon_hornetgun, CWeaponHgun);
 
-PRECACHE_WEAPON_REGISTER( weapon_hornetgun );
+PRECACHE_WEAPON_REGISTER(weapon_hornetgun);
 
-//IMPLEMENT_SERVERCLASS_ST( CWeaponHgun, DT_WeaponHgun )
-//END_SEND_TABLE()
+// IMPLEMENT_SERVERCLASS_ST( CWeaponHgun, DT_WeaponHgun )
+// END_SEND_TABLE()
 
-BEGIN_DATADESC( CWeaponHgun )
-	DEFINE_FIELD( m_flRechargeTime,	FIELD_TIME ),
-	DEFINE_FIELD( m_iFirePhase,		FIELD_INTEGER ),
+BEGIN_DATADESC(CWeaponHgun)
+	DEFINE_FIELD(m_flRechargeTime, FIELD_TIME), DEFINE_FIELD(m_iFirePhase, FIELD_INTEGER),
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CWeaponHgun::CWeaponHgun( void )
+CWeaponHgun::CWeaponHgun(void)
 {
-	m_bReloadsSingly	= false;
-	m_bFiresUnderwater	= true;
+	m_bReloadsSingly = false;
+	m_bFiresUnderwater = true;
 
 	m_flRechargeTime = 0.0;
 	m_iFirePhase = 0;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CWeaponHgun::Precache( void )
+void CWeaponHgun::Precache(void)
 {
 #ifndef CLIENT_DLL
-	UTIL_PrecacheOther( "hornet" );
+	UTIL_PrecacheOther("hornet");
 #endif
 
 	BaseClass::Precache();
@@ -123,150 +118,151 @@ void CWeaponHgun::Precache( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CWeaponHgun::PrimaryAttack( void )
+void CWeaponHgun::PrimaryAttack(void)
 {
-	CHL1_Player *pPlayer = ToHL1Player( GetOwner() );
-	if ( !pPlayer )
+	CHL1_Player *pPlayer = ToHL1Player(GetOwner());
+	if(!pPlayer)
 	{
 		return;
 	}
 
-	if ( pPlayer->GetAmmoCount( m_iPrimaryAmmoType ) <= 0 )
+	if(pPlayer->GetAmmoCount(m_iPrimaryAmmoType) <= 0)
 	{
 		return;
 	}
 
-	WeaponSound( SINGLE );
+	WeaponSound(SINGLE);
 #if !defined(CLIENT_DLL)
-	CSoundEnt::InsertSound( SOUND_COMBAT, GetAbsOrigin(), 200, 0.2 );
+	CSoundEnt::InsertSound(SOUND_COMBAT, GetAbsOrigin(), 200, 0.2);
 #endif
 	pPlayer->DoMuzzleFlash();
 
-	SendWeaponAnim( ACT_VM_PRIMARYATTACK );
-	pPlayer->SetAnimation( PLAYER_ATTACK1 );
+	SendWeaponAnim(ACT_VM_PRIMARYATTACK);
+	pPlayer->SetAnimation(PLAYER_ATTACK1);
 
-	Vector	vForward, vRight, vUp;
-	QAngle	vecAngles;
+	Vector vForward, vRight, vUp;
+	QAngle vecAngles;
 
-	pPlayer->EyeVectors( &vForward, &vRight, &vUp );
-	VectorAngles( vForward, vecAngles );
+	pPlayer->EyeVectors(&vForward, &vRight, &vUp);
+	VectorAngles(vForward, vecAngles);
 
 #if !defined(CLIENT_DLL)
-	CBaseEntity *pHornet = CBaseEntity::Create( "hornet", pPlayer->Weapon_ShootPosition() + vForward * 16 + vRight * 8 + vUp * -12, vecAngles, pPlayer );
-	pHornet->SetAbsVelocity( vForward * 300 );
+	CBaseEntity *pHornet = CBaseEntity::Create(
+		"hornet", pPlayer->Weapon_ShootPosition() + vForward * 16 + vRight * 8 + vUp * -12, vecAngles, pPlayer);
+	pHornet->SetAbsVelocity(vForward * 300);
 #endif
 
 	m_flRechargeTime = gpGlobals->curtime + 0.5;
-	
-	pPlayer->RemoveAmmo( 1, m_iPrimaryAmmoType );
 
-	pPlayer->ViewPunch( QAngle( -2, 0, 0 ) );
+	pPlayer->RemoveAmmo(1, m_iPrimaryAmmoType);
+
+	pPlayer->ViewPunch(QAngle(-2, 0, 0));
 
 	m_flNextPrimaryAttack = m_flNextPrimaryAttack + 0.25;
 
-	if (m_flNextPrimaryAttack < gpGlobals->curtime )
+	if(m_flNextPrimaryAttack < gpGlobals->curtime)
 	{
 		m_flNextPrimaryAttack = gpGlobals->curtime + 0.25;
 	}
 
-	SetWeaponIdleTime( random->RandomFloat( 10, 15 ) );
+	SetWeaponIdleTime(random->RandomFloat(10, 15));
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CWeaponHgun::SecondaryAttack( void )
+void CWeaponHgun::SecondaryAttack(void)
 {
-	CHL1_Player *pPlayer = ToHL1Player( GetOwner() );
-	if ( !pPlayer )
+	CHL1_Player *pPlayer = ToHL1Player(GetOwner());
+	if(!pPlayer)
 	{
 		return;
 	}
 
-	if ( pPlayer->GetAmmoCount( m_iPrimaryAmmoType ) <= 0 )
+	if(pPlayer->GetAmmoCount(m_iPrimaryAmmoType) <= 0)
 	{
 		return;
 	}
 
-	WeaponSound( SINGLE );
+	WeaponSound(SINGLE);
 #if !defined(CLIENT_DLL)
-	CSoundEnt::InsertSound( SOUND_COMBAT, GetAbsOrigin(), 200, 0.2 );
+	CSoundEnt::InsertSound(SOUND_COMBAT, GetAbsOrigin(), 200, 0.2);
 #endif
 	pPlayer->DoMuzzleFlash();
 
-	SendWeaponAnim( ACT_VM_PRIMARYATTACK );
-	pPlayer->SetAnimation( PLAYER_ATTACK1 );
+	SendWeaponAnim(ACT_VM_PRIMARYATTACK);
+	pPlayer->SetAnimation(PLAYER_ATTACK1);
 
 	CBaseEntity *pHornet;
 	Vector vecSrc;
 
-	Vector	vForward, vRight, vUp;
-	QAngle	vecAngles;
+	Vector vForward, vRight, vUp;
+	QAngle vecAngles;
 
-	pPlayer->EyeVectors( &vForward, &vRight, &vUp );
-	VectorAngles( vForward, vecAngles );
+	pPlayer->EyeVectors(&vForward, &vRight, &vUp);
+	VectorAngles(vForward, vecAngles);
 
 	vecSrc = pPlayer->Weapon_ShootPosition() + vForward * 16 + vRight * 8 + vUp * -12;
 
 	m_iFirePhase++;
-	switch ( m_iFirePhase )
+	switch(m_iFirePhase)
 	{
-	case 1:
-		vecSrc = vecSrc + vUp * 8;
-		break;
-	case 2:
-		vecSrc = vecSrc + vUp * 8;
-		vecSrc = vecSrc + vRight * 8;
-		break;
-	case 3:
-		vecSrc = vecSrc + vRight * 8;
-		break;
-	case 4:
-		vecSrc = vecSrc + vUp * -8;
-		vecSrc = vecSrc + vRight * 8;
-		break;
-	case 5:
-		vecSrc = vecSrc + vUp * -8;
-		break;
-	case 6:
-		vecSrc = vecSrc + vUp * -8;
-		vecSrc = vecSrc + vRight * -8;
-		break;
-	case 7:
-		vecSrc = vecSrc + vRight * -8;
-		break;
-	case 8:
-		vecSrc = vecSrc + vUp * 8;
-		vecSrc = vecSrc + vRight * -8;
-		m_iFirePhase = 0;
-		break;
+		case 1:
+			vecSrc = vecSrc + vUp * 8;
+			break;
+		case 2:
+			vecSrc = vecSrc + vUp * 8;
+			vecSrc = vecSrc + vRight * 8;
+			break;
+		case 3:
+			vecSrc = vecSrc + vRight * 8;
+			break;
+		case 4:
+			vecSrc = vecSrc + vUp * -8;
+			vecSrc = vecSrc + vRight * 8;
+			break;
+		case 5:
+			vecSrc = vecSrc + vUp * -8;
+			break;
+		case 6:
+			vecSrc = vecSrc + vUp * -8;
+			vecSrc = vecSrc + vRight * -8;
+			break;
+		case 7:
+			vecSrc = vecSrc + vRight * -8;
+			break;
+		case 8:
+			vecSrc = vecSrc + vUp * 8;
+			vecSrc = vecSrc + vRight * -8;
+			m_iFirePhase = 0;
+			break;
 	}
 
 #ifdef CLIENT_DLL
 	pHornet = NULL;
 #else
-	pHornet = CBaseEntity::Create( "hornet", vecSrc, vecAngles, pPlayer );
-	pHornet->SetAbsVelocity( vForward * 1200 );
-	pHornet->SetThink( &CNPC_Hornet::StartDart );
+	pHornet = CBaseEntity::Create("hornet", vecSrc, vecAngles, pPlayer);
+	pHornet->SetAbsVelocity(vForward * 1200);
+	pHornet->SetThink(&CNPC_Hornet::StartDart);
 #endif
 
 	m_flRechargeTime = gpGlobals->curtime + 0.5;
 
-	pPlayer->ViewPunch( QAngle( -2, 0, 0 ) );
-	pPlayer->RemoveAmmo( 1, m_iPrimaryAmmoType );
+	pPlayer->ViewPunch(QAngle(-2, 0, 0));
+	pPlayer->RemoveAmmo(1, m_iPrimaryAmmoType);
 
 	m_flNextPrimaryAttack = m_flNextSecondaryAttack = gpGlobals->curtime + 0.1;
-	SetWeaponIdleTime( random->RandomFloat( 10, 15 ) );
+	SetWeaponIdleTime(random->RandomFloat(10, 15));
 }
 
-void CWeaponHgun::WeaponIdle( void )
+void CWeaponHgun::WeaponIdle(void)
 {
-	if ( !HasWeaponIdleTimeElapsed() )
+	if(!HasWeaponIdleTimeElapsed())
 		return;
 
 	int iAnim;
-	float flRand = random->RandomFloat( 0, 1 );
-	if ( flRand <= 0.75 )
+	float flRand = random->RandomFloat(0, 1);
+	if(flRand <= 0.75)
 	{
 		iAnim = ACT_VM_IDLE;
 	}
@@ -275,55 +271,55 @@ void CWeaponHgun::WeaponIdle( void )
 		iAnim = ACT_VM_FIDGET;
 	}
 
-	SendWeaponAnim( iAnim );
+	SendWeaponAnim(iAnim);
 }
 
-bool CWeaponHgun::Holster( CBaseCombatWeapon *pSwitchingTo )
+bool CWeaponHgun::Holster(CBaseCombatWeapon *pSwitchingTo)
 {
 	bool bRet;
 
-	bRet = BaseClass::Holster( pSwitchingTo );
+	bRet = BaseClass::Holster(pSwitchingTo);
 
-	if ( bRet )
+	if(bRet)
 	{
-		CHL1_Player *pPlayer = ToHL1Player( GetOwner() );
-		if ( pPlayer )
+		CHL1_Player *pPlayer = ToHL1Player(GetOwner());
+		if(pPlayer)
 		{
-#if !defined(CLIENT_DLL)            
+#if !defined(CLIENT_DLL)
 			//!!!HACKHACK - can't select hornetgun if it's empty! no way to get ammo for it, either.
-            int iCount = pPlayer->GetAmmoCount( m_iPrimaryAmmoType );
-            if ( iCount <= 0 )
-            {
-                pPlayer->GiveAmmo( iCount+1, m_iPrimaryAmmoType, true );
-            }
-#endif            
+			int iCount = pPlayer->GetAmmoCount(m_iPrimaryAmmoType);
+			if(iCount <= 0)
+			{
+				pPlayer->GiveAmmo(iCount + 1, m_iPrimaryAmmoType, true);
+			}
+#endif
 		}
 	}
 
 	return bRet;
 }
 
-bool CWeaponHgun::Reload( void )
+bool CWeaponHgun::Reload(void)
 {
-	if ( m_flRechargeTime >= gpGlobals->curtime )
+	if(m_flRechargeTime >= gpGlobals->curtime)
 	{
 		return true;
 	}
 
-	CHL1_Player *pPlayer = ToHL1Player( GetOwner() );
-	if ( !pPlayer )
+	CHL1_Player *pPlayer = ToHL1Player(GetOwner());
+	if(!pPlayer)
 	{
 		return true;
 	}
 
 #ifdef CLIENT_DLL
 #else
-	if ( !g_pGameRules->CanHaveAmmo( pPlayer, m_iPrimaryAmmoType ) )
+	if(!g_pGameRules->CanHaveAmmo(pPlayer, m_iPrimaryAmmoType))
 		return true;
 
-	while ( ( m_flRechargeTime < gpGlobals->curtime ) && g_pGameRules->CanHaveAmmo( pPlayer, m_iPrimaryAmmoType ) )
+	while((m_flRechargeTime < gpGlobals->curtime) && g_pGameRules->CanHaveAmmo(pPlayer, m_iPrimaryAmmoType))
 	{
-		pPlayer->GiveAmmo( 1, m_iPrimaryAmmoType, true );
+		pPlayer->GiveAmmo(1, m_iPrimaryAmmoType, true);
 		m_flRechargeTime += 0.5;
 	}
 #endif
@@ -331,7 +327,7 @@ bool CWeaponHgun::Reload( void )
 	return true;
 }
 
-void CWeaponHgun::ItemPostFrame( void )
+void CWeaponHgun::ItemPostFrame(void)
 {
 	Reload();
 

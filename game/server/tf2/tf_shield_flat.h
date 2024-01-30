@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,46 +23,53 @@
 
 class CShieldFlat : public CShield
 {
-	DECLARE_CLASS( CShieldFlat, CShield );
+	DECLARE_CLASS(CShieldFlat, CShield);
 	DECLARE_SERVERCLASS();
 
 public:
-	void SetSize( float w, float h );
+	void SetSize(float w, float h);
 
-	virtual void	Spawn( void );
+	virtual void Spawn(void);
 
-	virtual void	SetEMPed( bool isEmped );
+	virtual void SetEMPed(bool isEmped);
 
-	void Activate( bool active );
+	void Activate(bool active);
 
-	virtual int Width() { return 2; }
-	virtual int Height() { return 2; }
-	virtual bool IsPanelActive( int x, int y ) { return true; }
-	virtual const Vector& GetPoint( int x, int y );
-	virtual void ComputeWorldSpaceSurroundingBox( Vector *pWorldMins, Vector *pWorldMaxs );
+	virtual int Width()
+	{
+		return 2;
+	}
+	virtual int Height()
+	{
+		return 2;
+	}
+	virtual bool IsPanelActive(int x, int y)
+	{
+		return true;
+	}
+	virtual const Vector &GetPoint(int x, int y);
+	virtual void ComputeWorldSpaceSurroundingBox(Vector *pWorldMins, Vector *pWorldMaxs);
 
 public:
 	// Think methods
 	void ShieldMoved();
 
 public:
-	
 	// networked data
-	CNetworkVar( unsigned char, m_ShieldState );
-	CNetworkVar( float, m_Width );
-	CNetworkVar( float, m_Height );
+	CNetworkVar(unsigned char, m_ShieldState);
+	CNetworkVar(float, m_Width);
+	CNetworkVar(float, m_Height);
 
 private:
-	QAngle	m_LastAngles;
-	Vector	m_LastPosition;
-	Vector	m_Pos[4];
+	QAngle m_LastAngles;
+	Vector m_LastPosition;
+	Vector m_Pos[4];
 };
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Create a mobile version of the shield
 //-----------------------------------------------------------------------------
 
-CShieldFlat* CreateFlatShield( CBaseEntity *pOwner, float w, float h, const Vector& relOrigin, const QAngle &relAngles );
+CShieldFlat *CreateFlatShield(CBaseEntity *pOwner, float w, float h, const Vector &relOrigin, const QAngle &relAngles);
 
 #endif TF_SHIELD_FLAT_H

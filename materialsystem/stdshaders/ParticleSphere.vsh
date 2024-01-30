@@ -114,7 +114,7 @@ rsq		r2, r2
 mul		r1, r1, r2
 
 								; r2 (right) = r1 x r5
-mul		r2,  r1.yzxw, r5.zxyw	
+mul		r2,  r1.yzxw, r5.zxyw
 mad		r2, -r1.zxyw, r5.yzxw, r2
 
 sub		r3, c[45 + a0.x], $vPos    ; r3 = L - P
@@ -150,7 +150,7 @@ mul		r9,  r7, c[46 + a0.x]	; r9 = r / Length(L - P)^2
 
 ; If the light intensity scales the color > 1
 	sge		r10, r9.xxxx, $cOne	; r10.x = 1 if the color's max component > 1
-	rcp		r6,  r9.xxxx			
+	rcp		r6,  r9.xxxx
 	mul		r6,  r6, r10.xxxx		; r6 = 1 / max_component or [0,0,0,0] if max_component < 1
 	mul		r2,  r8, r6				; rescaled color (all zeros if no component was > 1)
 ; else
@@ -159,5 +159,3 @@ mul		r9,  r7, c[46 + a0.x]	; r9 = r / Length(L - P)^2
 									; if not, then r8*r11 = the original color
 
 mov		oD0.a, $vColor.a				; Pass in vertex alpha so the pixel shader can use it.
-
-

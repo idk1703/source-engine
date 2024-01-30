@@ -14,17 +14,11 @@
 #ifndef INCLUDED_MXPROGRESSBAR
 #define INCLUDED_MXPROGRESSBAR
 
-
-
 #ifndef INCLUDED_MXWIDGET
 #include "mxtk/mxWidget.h"
 #endif
 
-
-
 class mxWindow;
-
-
 
 class mxProgressBar_i;
 class mxProgressBar : public mxWidget
@@ -33,26 +27,28 @@ class mxProgressBar : public mxWidget
 
 public:
 	// ENUMS
-	enum { Normal, Smooth };
+	enum
+	{
+		Normal,
+		Smooth
+	};
 
 	// CREATORS
-	mxProgressBar (mxWindow *parent, int x, int y, int w, int h, int style = 0);
-	virtual ~mxProgressBar ();
+	mxProgressBar(mxWindow *parent, int x, int y, int w, int h, int style = 0);
+	virtual ~mxProgressBar();
 
 	// MANIPULATORS
-	void setValue (int value);
-	void setTotalSteps (int steps);
+	void setValue(int value);
+	void setTotalSteps(int steps);
 
 	// ACCESSORS
-	int getValue () const;
-	int getTotalSteps () const;
+	int getValue() const;
+	int getTotalSteps() const;
 
 private:
 	// NOT IMPLEMENTED
-	mxProgressBar (const mxProgressBar&);
-	mxProgressBar& operator= (const mxProgressBar&);
+	mxProgressBar(const mxProgressBar &);
+	mxProgressBar &operator=(const mxProgressBar &);
 };
-
-
 
 #endif // INCLUDED_MXPROGRESSBAR

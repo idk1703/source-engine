@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -31,19 +31,21 @@ private:
 public:
 	CCSBuyEquipMenu_CT(IViewPort *pViewPort);
 
-	virtual const char *GetName( void ) { return PANEL_BUY_EQUIP_CT; }
+	virtual const char *GetName(void)
+	{
+		return PANEL_BUY_EQUIP_CT;
+	}
 
 	// Background panel -------------------------------------------------------
 
 public:
 	virtual void PaintBackground();
 	virtual void PerformLayout();
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 	bool m_backgroundLayoutFinished;
 
 	// End background panel ---------------------------------------------------
 };
-
 
 //============================
 // Terrorist Equipment menu
@@ -57,14 +59,17 @@ private:
 public:
 	CCSBuyEquipMenu_TER(IViewPort *pViewPort);
 
-	virtual const char *GetName( void ) { return PANEL_BUY_EQUIP_TER; }
+	virtual const char *GetName(void)
+	{
+		return PANEL_BUY_EQUIP_TER;
+	}
 
 	// Background panel -------------------------------------------------------
 
 public:
 	virtual void PaintBackground();
 	virtual void PerformLayout();
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 	bool m_backgroundLayoutFinished;
 
 	// End background panel ---------------------------------------------------

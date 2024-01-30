@@ -18,11 +18,9 @@
 #pragma once
 #endif
 
-
 #include "appframework/tier2app.h"
 #include "tier3/tier3.h"
 #include "vgui_controls/Controls.h"
-
 
 //-----------------------------------------------------------------------------
 // The application object for apps that use tier3
@@ -35,12 +33,12 @@ public:
 	// Methods of IApplication
 	virtual bool PreInit()
 	{
-		if ( !BaseClass::PreInit() )
+		if(!BaseClass::PreInit())
 			return false;
 
 		CreateInterfaceFn factory = GetFactory();
-		ConnectTier3Libraries( &factory, 1 );
-		return true;			
+		ConnectTier3Libraries(&factory, 1);
+		return true;
 	}
 
 	virtual void PostShutdown()
@@ -49,7 +47,6 @@ public:
 		BaseClass::PostShutdown();
 	}
 };
-
 
 //-----------------------------------------------------------------------------
 // The application object for apps that use tier3
@@ -62,12 +59,12 @@ public:
 	// Methods of IApplication
 	virtual bool PreInit()
 	{
-		if ( !BaseClass::PreInit() )
+		if(!BaseClass::PreInit())
 			return false;
 
 		CreateInterfaceFn factory = GetFactory();
-		ConnectTier3Libraries( &factory, 1 );
-		return true;			
+		ConnectTier3Libraries(&factory, 1);
+		return true;
 	}
 
 	virtual void PostShutdown()
@@ -76,7 +73,6 @@ public:
 		BaseClass::PostShutdown();
 	}
 };
-
 
 //-----------------------------------------------------------------------------
 // The application object for apps that use vgui
@@ -89,14 +85,13 @@ public:
 	// Methods of IApplication
 	virtual bool PreInit()
 	{
-		if ( !BaseClass::PreInit() )
+		if(!BaseClass::PreInit())
 			return false;
 
 		CreateInterfaceFn factory = GetFactory();
-		return vgui::VGui_InitInterfacesList( "CVguiSteamApp", &factory, 1 );
+		return vgui::VGui_InitInterfacesList("CVguiSteamApp", &factory, 1);
 	}
 };
-
 
 //-----------------------------------------------------------------------------
 // The application object for apps that use vgui
@@ -109,13 +104,12 @@ public:
 	// Methods of IApplication
 	virtual bool PreInit()
 	{
-		if ( !BaseClass::PreInit() )
+		if(!BaseClass::PreInit())
 			return false;
 
 		CreateInterfaceFn factory = GetFactory();
-		return vgui::VGui_InitInterfacesList( "CVguiSteamApp", &factory, 1 );
+		return vgui::VGui_InitInterfacesList("CVguiSteamApp", &factory, 1);
 	}
 };
-
 
 #endif // TIER3APP_H

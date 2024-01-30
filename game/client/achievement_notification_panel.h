@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,24 +18,27 @@ using namespace vgui;
 
 class CAchievementNotificationPanel : public CHudElement, public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CAchievementNotificationPanel, EditablePanel );
+	DECLARE_CLASS_SIMPLE(CAchievementNotificationPanel, EditablePanel);
 
 public:
-	CAchievementNotificationPanel( const char *pElementName );
+	CAchievementNotificationPanel(const char *pElementName);
 
-	virtual void	Init();
-	virtual void	ApplySchemeSettings( IScheme *scheme );
-	virtual bool	ShouldDraw( void );
-	virtual void	PerformLayout( void );
-	virtual void	LevelInit( void ) { m_flHideTime = 0; }
-	virtual void	FireGameEvent( IGameEvent * event );
-	virtual void	OnTick( void );
+	virtual void Init();
+	virtual void ApplySchemeSettings(IScheme *scheme);
+	virtual bool ShouldDraw(void);
+	virtual void PerformLayout(void);
+	virtual void LevelInit(void)
+	{
+		m_flHideTime = 0;
+	}
+	virtual void FireGameEvent(IGameEvent *event);
+	virtual void OnTick(void);
 
-	void AddNotification( const char *szIconBaseName, const wchar_t *pHeading, const wchar_t *pTitle );
+	void AddNotification(const char *szIconBaseName, const wchar_t *pHeading, const wchar_t *pTitle);
 
 private:
 	void ShowNextNotification();
-	void SetXAndWide( Panel *pPanel, int x, int wide );
+	void SetXAndWide(Panel *pPanel, int x, int wide);
 
 	float m_flHideTime;
 
@@ -54,4 +57,4 @@ private:
 	CUtlLinkedList<Notification_t> m_queueNotification;
 };
 
-#endif	// ACHIEVEMENT_NOTIFICATION_PANEL_H
+#endif // ACHIEVEMENT_NOTIFICATION_PANEL_H

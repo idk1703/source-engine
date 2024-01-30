@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -20,22 +20,19 @@
 
 IMPLEMENT_DYNAMIC(COptionProperties, CPropertySheet)
 
-COptionProperties::COptionProperties(UINT nIDCaption, CWnd* pParentWnd, UINT iSelectPage)
-	:CPropertySheet(nIDCaption, pParentWnd, iSelectPage)
+COptionProperties::COptionProperties(UINT nIDCaption, CWnd *pParentWnd, UINT iSelectPage)
+	: CPropertySheet(nIDCaption, pParentWnd, iSelectPage)
 {
 	DoStandardInit();
 }
 
-COptionProperties::COptionProperties(LPCTSTR pszCaption, CWnd* pParentWnd, UINT iSelectPage)
-	:CPropertySheet(pszCaption, pParentWnd, iSelectPage)
+COptionProperties::COptionProperties(LPCTSTR pszCaption, CWnd *pParentWnd, UINT iSelectPage)
+	: CPropertySheet(pszCaption, pParentWnd, iSelectPage)
 {
 	DoStandardInit();
 }
 
-COptionProperties::~COptionProperties()
-{
-}
-
+COptionProperties::~COptionProperties() {}
 
 BEGIN_MESSAGE_MAP(COptionProperties, CPropertySheet)
 	//{{AFX_MSG_MAP(COptionProperties)
@@ -56,7 +53,7 @@ void COptionProperties::DoStandardInit()
 	AddPage(&Build);
 }
 
-void COptionProperties::OnClose() 
+void COptionProperties::OnClose()
 {
 	CPropertySheet::OnClose();
 }

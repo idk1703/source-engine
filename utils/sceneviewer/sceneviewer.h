@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -10,26 +10,23 @@
 #pragma once
 #endif
 
-
 namespace vgui
 {
 	class ISurface;
 	class IVGui;
 	class IPanel;
-}
+} // namespace vgui
 
 class IMatSystemSurface;
 class IStudioRender;
 struct MaterialSystem_Config_t;
 
-
 extern IMatSystemSurface *g_pMatSystemSurface;
 extern IStudioRender *g_pStudioRender;
 extern const MaterialSystem_Config_t *g_pMaterialSystemConfig;
 extern vgui::ISurface *g_pVGuiSurface;
-extern vgui::IVGui	*g_pVGui;
-extern vgui::IPanel	*g_pVGuiPanel;
-
+extern vgui::IVGui *g_pVGui;
+extern vgui::IPanel *g_pVGuiPanel;
 
 // temporary HACK
 class _Window_t;

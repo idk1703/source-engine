@@ -14,17 +14,11 @@
 #ifndef INCLUDED_MXLINEEDIT
 #define INCLUDED_MXLINEEDIT
 
-
-
 #ifndef INCLUDED_MXWIDGET
 #include "mxtk/mxWidget.h"
 #endif
 
-
-
 class mxWindow;
-
-
 
 class mxLineEdit_i;
 class mxLineEdit : public mxWidget
@@ -33,28 +27,31 @@ class mxLineEdit : public mxWidget
 
 public:
 	// ENUMS
-	enum { Normal, ReadOnly, Password };
+	enum
+	{
+		Normal,
+		ReadOnly,
+		Password
+	};
 
 	// CREATORS
-	mxLineEdit (mxWindow *parent, int x, int y, int w, int h, const char *label = 0, int id = 0, int style = 0);
-	virtual ~mxLineEdit ();
+	mxLineEdit(mxWindow *parent, int x, int y, int w, int h, const char *label = 0, int id = 0, int style = 0);
+	virtual ~mxLineEdit();
 
 	// MANIPULATORS
-	void setMaxLength (int max);
+	void setMaxLength(int max);
 
 	// ACCESSORS
-	int getMaxLength () const;
+	int getMaxLength() const;
 
-	void	clear();
-	void	getText( char *buf, size_t bufsize );
-	void setText( const char *pText );
+	void clear();
+	void getText(char *buf, size_t bufsize);
+	void setText(const char *pText);
+
 private:
 	// NOT IMPLEMENTED
-	mxLineEdit (const mxLineEdit&);
-	mxLineEdit& operator= (const mxLineEdit&);
+	mxLineEdit(const mxLineEdit &);
+	mxLineEdit &operator=(const mxLineEdit &);
 };
 
-
-
 #endif // INCLUDED_MXLINEEDIT
-

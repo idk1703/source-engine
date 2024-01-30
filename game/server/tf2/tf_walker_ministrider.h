@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,60 +10,49 @@
 #pragma once
 #endif
 
-
 #include "tf_walker_base.h"
 
-
 class CBeam;
-
 
 class CWalkerMiniStrider : public CWalkerBase
 {
 public:
-	DECLARE_CLASS( CWalkerMiniStrider, CWalkerBase );
+	DECLARE_CLASS(CWalkerMiniStrider, CWalkerBase);
 	DECLARE_SERVERCLASS();
 
 	CWalkerMiniStrider();
 	virtual ~CWalkerMiniStrider();
 
-
-// CWalkerBase.
+	// CWalkerBase.
 protected:
 	virtual void WalkerThink();
 	virtual Vector GetWalkerLocalMovement();
 
-
-// CBaseObject.
+	// CBaseObject.
 public:
-	virtual bool StartBuilding( CBaseEntity *pBuilder );
-	
+	virtual bool StartBuilding(CBaseEntity *pBuilder);
 
-// CBaseEntity.
-public:	
+	// CBaseEntity.
+public:
 	virtual void Precache();
 	virtual void Spawn();
-	virtual void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
 
-
-// CBaseAnimating.
+	// CBaseAnimating.
 public:
+	virtual void HandleAnimEvent(animevent_t *pEvent);
 
-	virtual void HandleAnimEvent( animevent_t *pEvent );
-
-
-// IServerVehicle.
-public:	
-	virtual bool IsPassengerVisible( int nRole );
-	virtual void SetPassenger( int nRole, CBasePlayer *pPassenger );
-
-
-// IVehicle overrides.
+	// IServerVehicle.
 public:
-	virtual void SetupMove( CBasePlayer *pPlayer, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move );
+	virtual bool IsPassengerVisible(int nRole);
+	virtual void SetPassenger(int nRole, CBasePlayer *pPassenger);
 
+	// IVehicle overrides.
+public:
+	virtual void SetupMove(CBasePlayer *pPlayer, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move);
 
 private:
-	void FootHit( const char *pFootName );
+	void FootHit(const char *pFootName);
 
 	void StartFiringMachineGun();
 	void StopFiringMachineGun();
@@ -78,12 +67,10 @@ private:
 	void UnCrouch();
 	void UpdateCrouch();
 
-
 private:
-	
 	enum
 	{
-		STATE_CROUCHING=0,
+		STATE_CROUCHING = 0,
 		STATE_CROUCHED,
 		STATE_UNCROUCHING,
 		STATE_UNCROUCHED,
@@ -94,16 +81,16 @@ private:
 
 	float m_flCrouchTimer;
 
-	CNetworkVar( bool, m_bFiringMachineGun );
-	CNetworkVar( bool, m_bFiringLargeGun );
-	CNetworkVector( m_vLargeGunTargetPos );
+	CNetworkVar(bool, m_bFiringMachineGun);
+	CNetworkVar(bool, m_bFiringLargeGun);
+	CNetworkVector(m_vLargeGunTargetPos);
 	float m_flLargeGunCountdown;
 	Vector m_vLargeGunForward;
 	CHandle<CBeam> m_pEnergyBeam;
 
 	// Firing
-	float	m_flNextShootTime;
-	bool	m_bFiringLeftGun;
+	float m_flNextShootTime;
+	bool m_bFiringLeftGun;
 
 	// Used to keep him on the ground.
 	float m_flOriginToLowestLegHeight;
@@ -111,7 +98,6 @@ private:
 
 	// Used to get around an anim event bug where it triggers events a bunch of times when an animation loops.
 	float m_flNextFootstepSoundTime;
-};	
-
+};
 
 #endif // TF_WALKER_MINISTRIDER_H

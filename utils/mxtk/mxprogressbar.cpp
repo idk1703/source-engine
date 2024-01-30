@@ -15,8 +15,6 @@
 #include <windows.h>
 #include <commctrl.h>
 
-
-
 class mxProgressBar_i
 {
 public:
@@ -24,66 +22,49 @@ public:
 	int d_steps;
 };
 
-
-
-mxProgressBar::mxProgressBar (mxWindow *parent, int x, int y, int w, int h, int style)
-: mxWidget (parent, x, y, w, h)
+mxProgressBar::mxProgressBar(mxWindow *parent, int x, int y, int w, int h, int style) : mxWidget(parent, x, y, w, h)
 {
 	d_this = new mxProgressBar_i;
 
 	DWORD dwStyle = WS_VISIBLE | WS_CHILD;
-	HWND hwndParent = parent ? (HWND) ((mxWidget *) parent)->getHandle () : NULL;
+	HWND hwndParent = parent ? (HWND)((mxWidget *)parent)->getHandle() : NULL;
 
-	if (style == Smooth)
+	if(style == Smooth)
 		dwStyle |= PBS_SMOOTH;
 
-	void *handle = (void *) CreateWindowEx (0, PROGRESS_CLASS, "", dwStyle,
-				x, y, w, h, hwndParent,
-				(HMENU) NULL, (HINSTANCE) GetModuleHandle (NULL), NULL);
-	
-	SendMessage ((HWND) handle, WM_SETFONT, (WPARAM) (HFONT) GetStockObject (ANSI_VAR_FONT), MAKELPARAM (TRUE, 0));
+	void *handle = (void *)CreateWindowEx(0, PROGRESS_CLASS, "", dwStyle, x, y, w, h, hwndParent, (HMENU)NULL,
+										  (HINSTANCE)GetModuleHandle(NULL), NULL);
 
-	setHandle (handle);
-	setType (MX_PROGRESSBAR);
-	setParent (parent);
+	SendMessage((HWND)handle, WM_SETFONT, (WPARAM)(HFONT)GetStockObject(ANSI_VAR_FONT), MAKELPARAM(TRUE, 0));
+
+	setHandle(handle);
+	setType(MX_PROGRESSBAR);
+	setParent(parent);
 }
 
-
-
-mxProgressBar::~mxProgressBar ()
+mxProgressBar::~mxProgressBar()
 {
 	delete d_this;
 }
 
-
-
-void
-mxProgressBar::setValue (int value)
+void mxProgressBar::setValue(int value)
 {
 	d_this->d_value = value;
-	SendMessage ((HWND) getHandle (), PBM_SETPOS, (WPARAM) value, 0L);
+	SendMessage((HWND)getHandle(), PBM_SETPOS, (WPARAM)value, 0L);
 }
 
-
-void
-mxProgressBar::setTotalSteps (int steps)
+void mxProgressBar::setTotalSteps(int steps)
 {
 	d_this->d_steps = steps;
-	SendMessage ((HWND) getHandle (), PBM_SETRANGE, 0, MAKELPARAM (0, steps));
+	SendMessage((HWND)getHandle(), PBM_SETRANGE, 0, MAKELPARAM(0, steps));
 }
 
-
-
-int
-mxProgressBar::getValue () const
+int mxProgressBar::getValue() const
 {
 	return d_this->d_value;
 }
 
-
-
-int
-mxProgressBar::getTotalSteps () const
+int mxProgressBar::getTotalSteps() const
 {
 	return d_this->d_steps;
 }

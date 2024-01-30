@@ -4,7 +4,6 @@
 //
 //=============================================================================//
 
-
 #include "cbase.h"
 #include "character_info_panel.h"
 #include "tf_statsummary.h"
@@ -33,63 +32,64 @@
 #include <tier0/memdbgon.h>
 
 static vgui::DHANDLE<CCharacterInfoPanel> g_CharInfoPanel;
-IEconRootUI* EconUI( void )
+IEconRootUI *EconUI(void)
 {
-	if (!g_CharInfoPanel.Get())
+	if(!g_CharInfoPanel.Get())
 	{
-		g_CharInfoPanel = new CCharacterInfoPanel( NULL );
+		g_CharInfoPanel = new CCharacterInfoPanel(NULL);
 		g_CharInfoPanel->MakeReadyForUse();
-		g_CharInfoPanel->InvalidateLayout( false, true );
+		g_CharInfoPanel->InvalidateLayout(false, true);
 	}
 	return g_CharInfoPanel;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CServerNotConnectedToSteamDialog *OpenServerNotConnectedToSteamDialog( vgui::Panel *pParent );
+CServerNotConnectedToSteamDialog *OpenServerNotConnectedToSteamDialog(vgui::Panel *pParent);
 
 //-----------------------------------------------------------------------------
 // Purpose: Basic help dialog
 //-----------------------------------------------------------------------------
-CCharacterInfoPanel::CCharacterInfoPanel( Panel *parent ) : PropertyDialog(parent, "character_info")
+CCharacterInfoPanel::CCharacterInfoPanel(Panel *parent) : PropertyDialog(parent, "character_info")
 {
 	// Character info is parented to the game UI panel
-	vgui::VPANEL gameuiPanel = enginevgui->GetPanel( PANEL_GAMEUIDLL );
-	SetParent( gameuiPanel );
+	vgui::VPANEL gameuiPanel = enginevgui->GetPanel(PANEL_GAMEUIDLL);
+	SetParent(gameuiPanel);
 
 	// We don't want the gameui to delete us, or things get messy
-	SetAutoDelete( false );
+	SetAutoDelete(false);
 
-	SetMoveable( false );
-	SetSizeable( false );
+	SetMoveable(false);
+	SetSizeable(false);
 
-	vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/ClientScheme.res", "ClientScheme");
+	vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx(enginevgui->GetPanel(PANEL_CLIENTDLL),
+																"resource/ClientScheme.res", "ClientScheme");
 	SetScheme(scheme);
-	SetProportional( true );
+	SetProportional(true);
 
 	// Character loadouts
 	m_pLoadoutPanel = new CCharInfoLoadoutSubPanel(this);
-	m_pLoadoutPanel->AddActionSignalTarget( this );
-	AddPage( m_pLoadoutPanel, "#Loadout");
+	m_pLoadoutPanel->AddActionSignalTarget(this);
+	AddPage(m_pLoadoutPanel, "#Loadout");
 
 	// Stat summary
 	CTFStatsSummaryPanel *pStatSummaryPanel = new CTFStatsSummaryPanel(this);
 	pStatSummaryPanel->SetupForEmbedded();
-	AddPage( pStatSummaryPanel, "#Stats");
-	CTFStatPanel *pStatPanel = GET_HUDELEMENT( CTFStatPanel );
-	if ( pStatPanel )
+	AddPage(pStatSummaryPanel, "#Stats");
+	CTFStatPanel *pStatPanel = GET_HUDELEMENT(CTFStatPanel);
+	if(pStatPanel)
 	{
 		// Ask for our embedded stat summary be updated immediately
 		pStatPanel->UpdateStatSummaryPanel();
 	}
 
 	// Achievements
-	//AddPage(new CCharacterInfoSubAchievements(this), "#Achievements");
+	// AddPage(new CCharacterInfoSubAchievements(this), "#Achievements");
 
-	ListenForGameEvent( "gameui_hidden" );
+	ListenForGameEvent("gameui_hidden");
 
-	m_pLoadoutPanel->SetVisible( false );
+	m_pLoadoutPanel->SetVisible(false);
 
 	m_pNotificationsPresentPanel = NULL;
 	m_bPreventClosure = false;
@@ -98,79 +98,78 @@ CCharacterInfoPanel::CCharacterInfoPanel( Panel *parent ) : PropertyDialog(paren
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CCharacterInfoPanel::~CCharacterInfoPanel()
-{
-}
+CCharacterInfoPanel::~CCharacterInfoPanel() {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CCharacterInfoPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CCharacterInfoPanel::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
-	LoadControlSettings( "Resource/UI/CharInfoPanel.res" );
+	LoadControlSettings("Resource/UI/CharInfoPanel.res");
 
 	SetOKButtonVisible(false);
 	SetCancelButtonVisible(false);
 
-	m_pNotificationsPresentPanel = FindChildByName( "NotificationsPresentPanel" );
+	m_pNotificationsPresentPanel = FindChildByName("NotificationsPresentPanel");
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CCharacterInfoPanel::PerformLayout( void ) 
+void CCharacterInfoPanel::PerformLayout(void)
 {
-	if ( GetVParent() )
+	if(GetVParent())
 	{
-		int w,h;
-		vgui::ipanel()->GetSize( GetVParent(), w, h );
-		SetBounds(0,0,w,h);
+		int w, h;
+		vgui::ipanel()->GetSize(GetVParent(), w, h);
+		SetBounds(0, 0, w, h);
 	}
 
 	BaseClass::PerformLayout();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharacterInfoPanel::ShowPanel(bool bShow)
 {
 	m_bPreventClosure = false;
 
 	// Keep the MM dashboard on top of us
-	bShow ? GetMMDashboardParentManager()->PushModalFullscreenPopup( this ) 
-		  : GetMMDashboardParentManager()->PopModalFullscreenPopup( this );
+	bShow ? GetMMDashboardParentManager()->PushModalFullscreenPopup(this)
+		  : GetMMDashboardParentManager()->PopModalFullscreenPopup(this);
 
-	if ( bShow )
+	if(bShow)
 	{
-		if ( GetPropertySheet()->GetActivePage() != m_pLoadoutPanel )
+		if(GetPropertySheet()->GetActivePage() != m_pLoadoutPanel)
 		{
-			GetPropertySheet()->SetActivePage( m_pLoadoutPanel );
+			GetPropertySheet()->SetActivePage(m_pLoadoutPanel);
 		}
 		else
 		{
 			// VGUI doesn't tell the starting active page that it's active, so we post a pageshow to it
-			ivgui()->PostMessage( m_pLoadoutPanel->GetVPanel(), new KeyValues("PageShow"), GetPropertySheet()->GetVPanel() );
+			ivgui()->PostMessage(m_pLoadoutPanel->GetVPanel(), new KeyValues("PageShow"),
+								 GetPropertySheet()->GetVPanel());
 		}
 
-		//InvalidateLayout( false, true );
+		// InvalidateLayout( false, true );
 		Activate();
 
 		int iClass = m_pLoadoutPanel->GetCurrentClassIndex();
-		OpenLoadoutToClass( iClass, false );
+		OpenLoadoutToClass(iClass, false);
 	}
 	else
 	{
-		PostMessage( m_pLoadoutPanel, new KeyValues("CancelSelection") );
+		PostMessage(m_pLoadoutPanel, new KeyValues("CancelSelection"));
 	}
 
 	bool bWasVisible = IsVisible() && m_pLoadoutPanel->IsVisible();
-	SetVisible( bShow );
-	if ( bWasVisible && !bShow )
+	SetVisible(bShow);
+	if(bWasVisible && !bShow)
 	{
 		m_pLoadoutPanel->OnCharInfoClosing();
 
@@ -178,65 +177,66 @@ void CCharacterInfoPanel::ShowPanel(bool bShow)
 		m_iClosePanel = ECONUI_BASEUI;
 		m_iDefaultTeam = TF_TEAM_RED;
 	}
-	m_pLoadoutPanel->SetVisible( bShow );
+	m_pLoadoutPanel->SetVisible(bShow);
 
 	// When we first appear, if we're on a server that couldn't get our loadout, show the failure dialog.
-	if ( !bWasVisible && bShow )
+	if(!bWasVisible && bShow)
 	{
-		if ( engine->IsInGame() )
+		if(engine->IsInGame())
 		{
 			C_TFPlayer *pLocal = C_TFPlayer::GetLocalTFPlayer();
-			if ( pLocal && pLocal->m_Shared.IsLoadoutUnavailable() )
+			if(pLocal && pLocal->m_Shared.IsLoadoutUnavailable())
 			{
-				OpenServerNotConnectedToSteamDialog( this );
+				OpenServerNotConnectedToSteamDialog(this);
 			}
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CCharacterInfoPanel::FireGameEvent( IGameEvent *event )
+void CCharacterInfoPanel::FireGameEvent(IGameEvent *event)
 {
-	const char * type = event->GetName();
+	const char *type = event->GetName();
 
-	if ( Q_strcmp(type, "gameui_hidden") == 0 )
+	if(Q_strcmp(type, "gameui_hidden") == 0)
 	{
-		if ( m_bPreventClosure )
+		if(m_bPreventClosure)
 		{
-			engine->ClientCmd_Unrestricted( "gameui_activate" );
+			engine->ClientCmd_Unrestricted("gameui_activate");
 		}
 		else
 		{
-			ShowPanel( false );
+			ShowPanel(false);
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharacterInfoPanel::Close()
 {
-	ShowPanel( false );
+	ShowPanel(false);
 
-	PostMessage( m_pLoadoutPanel, new KeyValues("CharInfoClosing") );
+	PostMessage(m_pLoadoutPanel, new KeyValues("CharInfoClosing"));
 
 	// If we're connected to a game server, we also close the game UI.
-	if ( engine->IsInGame() )
+	if(engine->IsInGame())
 	{
 		bool bClose = true;
-		if ( m_bCheckForRoomOnExit )
+		if(m_bCheckForRoomOnExit)
 		{
-			// Check to make sure the player has room for all his items. If not, bring up the discard panel. Otherwise, go away.
-			// We need to do this to catch players who used the "Change Loadout" button in the pickup panel, and may be out of room.
+			// Check to make sure the player has room for all his items. If not, bring up the discard panel. Otherwise,
+			// go away. We need to do this to catch players who used the "Change Loadout" button in the pickup panel,
+			// and may be out of room.
 			bClose = !TFInventoryManager()->CheckForRoomAndForceDiscard();
 		}
 
-		if ( bClose )
+		if(bClose)
 		{
-			engine->ClientCmd_Unrestricted( "gameui_hide" );
+			engine->ClientCmd_Unrestricted("gameui_hide");
 		}
 	}
 
@@ -245,15 +245,15 @@ void CCharacterInfoPanel::Close()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharacterInfoPanel::NotifyListenersOfCloseEvent()
 {
-	FOR_EACH_VEC( m_vecOnCloseListeners, i )
+	FOR_EACH_VEC(m_vecOnCloseListeners, i)
 	{
-		if ( m_vecOnCloseListeners[i].Get() )
+		if(m_vecOnCloseListeners[i].Get())
 		{
-			PostMessage( m_vecOnCloseListeners[i].Get(), new KeyValues( "EconUIClosed" ) );
+			PostMessage(m_vecOnCloseListeners[i].Get(), new KeyValues("EconUIClosed"));
 		}
 	}
 
@@ -262,254 +262,255 @@ void CCharacterInfoPanel::NotifyListenersOfCloseEvent()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CCharacterInfoPanel::OnCommand( const char *command )
+void CCharacterInfoPanel::OnCommand(const char *command)
 {
-	if ( FStrEq( command, "back" ) )
+	if(FStrEq(command, "back"))
 	{
 		// If we're at the base loadout page, or if we want to force it, close the dialog completely...
 		// NOTE: Right now we don't support closing from the item selection screen.
 		const int iShowingPanel = m_pLoadoutPanel->GetShowingPanel();
 		const int iCurrentClassIndex = m_pLoadoutPanel->GetCurrentClassIndex();
-		const bool bIsInSelectionPanel = iShowingPanel == CHAP_LOADOUT && m_pLoadoutPanel->GetClassLoadoutPanel()->IsInSelectionPanel();
+		const bool bIsInSelectionPanel =
+			iShowingPanel == CHAP_LOADOUT && m_pLoadoutPanel->GetClassLoadoutPanel()->IsInSelectionPanel();
 		const bool bNoClass = iCurrentClassIndex == TF_CLASS_UNDEFINED;
-		const bool bAtClosePanel = !bIsInSelectionPanel &&
-			( ( iShowingPanel == m_iClosePanel && bNoClass ) || ( iShowingPanel == CHAP_LOADOUT && -m_iClosePanel == iCurrentClassIndex ) );
+		const bool bAtClosePanel =
+			!bIsInSelectionPanel && ((iShowingPanel == m_iClosePanel && bNoClass) ||
+									 (iShowingPanel == CHAP_LOADOUT && -m_iClosePanel == iCurrentClassIndex));
 		const bool bAtBaseLoadoutPage = iShowingPanel == CHAP_LOADOUT && bNoClass;
-		if ( bAtClosePanel || bAtBaseLoadoutPage )
+		if(bAtClosePanel || bAtBaseLoadoutPage)
 		{
 			Close();
 		}
 		// In the item selection panel?
-		else if ( bIsInSelectionPanel )
+		else if(bIsInSelectionPanel)
 		{
 			m_pLoadoutPanel->GetClassLoadoutPanel()->GetItemSelectionPanel()->OnBackPressed();
 		}
 		// In any other panel, just go back.
 		else
 		{
-			ShowPanel( true );
+			ShowPanel(true);
 		}
 	}
 	else
 	{
-		engine->ClientCmd( const_cast<char *>( command ) );
+		engine->ClientCmd(const_cast<char *>(command));
 	}
 
-	BaseClass::OnCommand( command );
+	BaseClass::OnCommand(command);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CCharacterInfoPanel::OpenLoadoutToClass( int iClassIndex, bool bOpenClassLoadout ) 
-{ 
-	Assert(iClassIndex >= TF_CLASS_UNDEFINED && iClassIndex < TF_CLASS_COUNT); 
-	m_pLoadoutPanel->SetClassIndex( iClassIndex, bOpenClassLoadout );
-	m_pLoadoutPanel->SetTeamIndex( m_iDefaultTeam );
+void CCharacterInfoPanel::OpenLoadoutToClass(int iClassIndex, bool bOpenClassLoadout)
+{
+	Assert(iClassIndex >= TF_CLASS_UNDEFINED && iClassIndex < TF_CLASS_COUNT);
+	m_pLoadoutPanel->SetClassIndex(iClassIndex, bOpenClassLoadout);
+	m_pLoadoutPanel->SetTeamIndex(m_iDefaultTeam);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CCharacterInfoPanel::OpenLoadoutToBackpack( void ) 
-{ 
+void CCharacterInfoPanel::OpenLoadoutToBackpack(void)
+{
 	m_pLoadoutPanel->OpenToBackpack();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CCharacterInfoPanel::OpenLoadoutToCrafting( void ) 
-{ 
+void CCharacterInfoPanel::OpenLoadoutToCrafting(void)
+{
 	m_pLoadoutPanel->OpenToCrafting();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CCharacterInfoPanel::OpenLoadoutToArmory( void ) 
-{ 
+void CCharacterInfoPanel::OpenLoadoutToArmory(void)
+{
 	m_pLoadoutPanel->OpenToArmory();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CCharacterInfoPanel::OnOpenArmoryDirect( KeyValues *data )
+void CCharacterInfoPanel::OnOpenArmoryDirect(KeyValues *data)
 {
-	int iItemDef = data->GetInt( "itemdef", 0 );
-	m_pLoadoutPanel->OpenToArmory( iItemDef );
+	int iItemDef = data->GetInt("itemdef", 0);
+	m_pLoadoutPanel->OpenToArmory(iItemDef);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharacterInfoPanel::OnKeyCodeTyped(vgui::KeyCode code)
 {
-	if ( code == KEY_ESCAPE )
+	if(code == KEY_ESCAPE)
 	{
-		if ( !m_bPreventClosure )
+		if(!m_bPreventClosure)
 		{
-			OnCommand( "back" );
+			OnCommand("back");
 		}
 	}
 	else
 	{
-		BaseClass::OnKeyCodeTyped( code );
+		BaseClass::OnKeyCodeTyped(code);
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharacterInfoPanel::OnKeyCodePressed(vgui::KeyCode code)
 {
-	ButtonCode_t nButtonCode = GetBaseButtonCode( code );
+	ButtonCode_t nButtonCode = GetBaseButtonCode(code);
 
-	if ( nButtonCode == KEY_XBUTTON_B )
+	if(nButtonCode == KEY_XBUTTON_B)
 	{
-		if ( !m_bPreventClosure )
+		if(!m_bPreventClosure)
 		{
-			OnCommand( "back" );
+			OnCommand("back");
 		}
 	}
 	else
 	{
-		BaseClass::OnKeyCodePressed( code );
+		BaseClass::OnKeyCodePressed(code);
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCharacterInfoPanel::OnThink()
 {
 	bool bShouldBeVisible = NotificationQueue_GetNumNotifications() != 0;
-	if ( m_pNotificationsPresentPanel != NULL && m_pNotificationsPresentPanel->IsVisible() != bShouldBeVisible )
+	if(m_pNotificationsPresentPanel != NULL && m_pNotificationsPresentPanel->IsVisible() != bShouldBeVisible)
 	{
-		m_pNotificationsPresentPanel->SetVisible( bShouldBeVisible );
-		if ( bShouldBeVisible )
+		m_pNotificationsPresentPanel->SetVisible(bShouldBeVisible);
+		if(bShouldBeVisible)
 		{
-			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "NotificationsPresentBlink" );
+			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence(this, "NotificationsPresentBlink");
 		}
 		else
 		{
-			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "NotificationsPresentBlinkStop" );
+			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence(this,
+																					"NotificationsPresentBlinkStop");
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-IEconRootUI	*CCharacterInfoPanel::OpenEconUI( int iDirectToPage, bool bCheckForInventorySpaceOnExit )
+IEconRootUI *CCharacterInfoPanel::OpenEconUI(int iDirectToPage, bool bCheckForInventorySpaceOnExit)
 {
-	engine->ClientCmd_Unrestricted( "gameui_activate" );
-	ShowPanel( true );
+	engine->ClientCmd_Unrestricted("gameui_activate");
+	ShowPanel(true);
 
-	if ( iDirectToPage == ECONUI_BACKPACK )
+	if(iDirectToPage == ECONUI_BACKPACK)
 	{
 		OpenLoadoutToBackpack();
 	}
-	else if ( iDirectToPage == ECONUI_CRAFTING )
+	else if(iDirectToPage == ECONUI_CRAFTING)
 	{
 		OpenLoadoutToCrafting();
 	}
-	else if ( iDirectToPage == ECONUI_ARMORY )
+	else if(iDirectToPage == ECONUI_ARMORY)
 	{
 		OpenLoadoutToArmory();
 	}
-	else if ( iDirectToPage < 0 )
+	else if(iDirectToPage < 0)
 	{
 		// Negative numbers go directly to the class loadout
-		OpenLoadoutToClass( -(iDirectToPage), true );
+		OpenLoadoutToClass(-(iDirectToPage), true);
 	}
 
-	SetCheckForRoomOnExit( bCheckForInventorySpaceOnExit );
+	SetCheckForRoomOnExit(bCheckForInventorySpaceOnExit);
 
 	return this;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CCharacterInfoPanel::CloseEconUI( void )
+void CCharacterInfoPanel::CloseEconUI(void)
 {
-	if ( IsVisible() )
+	if(IsVisible())
 	{
-		ShowPanel( false );
+		ShowPanel(false);
 		NotifyListenersOfCloseEvent();
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CCharacterInfoPanel::IsUIPanelVisible( EconBaseUIPanels_t iPanel )
+bool CCharacterInfoPanel::IsUIPanelVisible(EconBaseUIPanels_t iPanel)
 {
-	if ( !IsVisible() )
+	if(!IsVisible())
 		return false;
 
-	switch ( iPanel )
+	switch(iPanel)
 	{
-	case ECONUI_BACKPACK:
-		return (GetBackpackPanel() && GetBackpackPanel()->IsVisible());
+		case ECONUI_BACKPACK:
+			return (GetBackpackPanel() && GetBackpackPanel()->IsVisible());
 
-	case ECONUI_CRAFTING:
-		return (GetCraftingPanel() && GetCraftingPanel()->IsVisible());
+		case ECONUI_CRAFTING:
+			return (GetCraftingPanel() && GetCraftingPanel()->IsVisible());
 
-	case ECONUI_ARMORY:
-		return (GetArmoryPanel() && GetArmoryPanel()->IsVisible());
+		case ECONUI_ARMORY:
+			return (GetArmoryPanel() && GetArmoryPanel()->IsVisible());
 
-	case ECONUI_TRADING:
-		break;
+		case ECONUI_TRADING:
+			break;
 
-	default:
-		Assert(0);
-		break;
+		default:
+			Assert(0);
+			break;
 	}
 
 	return false;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void Open_CharInfo( const CCommand &args )
+void Open_CharInfo(const CCommand &args)
 {
 	EconUI()->OpenEconUI();
 }
-ConCommand open_charinfo( "open_charinfo", Open_CharInfo, "Open the character info panel", FCVAR_NONE );
+ConCommand open_charinfo("open_charinfo", Open_CharInfo, "Open the character info panel", FCVAR_NONE);
 
-void CCharacterInfoPanel::SetPreventClosure( bool bPrevent )
-{ 
+void CCharacterInfoPanel::SetPreventClosure(bool bPrevent)
+{
 	m_bPreventClosure = bPrevent;
 
-	Panel* pBackButton = FindChildByName( "BackButton" );
-	if ( pBackButton )
+	Panel *pBackButton = FindChildByName("BackButton");
+	if(pBackButton)
 	{
-		pBackButton->SetEnabled( !bPrevent );
+		pBackButton->SetEnabled(!bPrevent);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void Open_CharInfoDirect( const CCommand &args )
+void Open_CharInfoDirect(const CCommand &args)
 {
 	// If we're in-game, start by opening the class we're currently playing
 	int iClass = TF_CLASS_UNDEFINED;
-	if ( engine->IsInGame() )
+	if(engine->IsInGame())
 	{
 		C_TFPlayer *pLocal = C_TFPlayer::GetLocalTFPlayer();
-		if ( pLocal )
+		if(pLocal)
 		{
 			iClass = -(pLocal->m_Shared.GetDesiredPlayerClassIndex());
-			if ( iClass == TF_CLASS_UNDEFINED )
+			if(iClass == TF_CLASS_UNDEFINED)
 			{
 				iClass = -(pLocal->GetPlayerClass()->GetClassIndex());
 			}
@@ -517,42 +518,46 @@ void Open_CharInfoDirect( const CCommand &args )
 	}
 
 	// override with command arg
-	if ( args.ArgC() > 1 )
+	if(args.ArgC() > 1)
 	{
-		iClass = -atoi( args.Arg( 1 ) );
+		iClass = -atoi(args.Arg(1));
 	}
 
-	EconUI()->OpenEconUI( iClass );	
+	EconUI()->OpenEconUI(iClass);
 }
-ConCommand open_charinfo_direct( "open_charinfo_direct", Open_CharInfoDirect, "Open the character info panel directly to the class you're currently playing.", FCVAR_NONE );
+ConCommand open_charinfo_direct("open_charinfo_direct", Open_CharInfoDirect,
+								"Open the character info panel directly to the class you're currently playing.",
+								FCVAR_NONE);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void Open_CharInfoBackpack( const CCommand &args )
+void Open_CharInfoBackpack(const CCommand &args)
 {
-	EconUI()->OpenEconUI( ECONUI_BACKPACK );	
+	EconUI()->OpenEconUI(ECONUI_BACKPACK);
 }
-ConCommand open_charinfo_backpack( "open_charinfo_backpack", Open_CharInfoBackpack, "Open the character info panel directly to backpack.", FCVAR_NONE );
+ConCommand open_charinfo_backpack("open_charinfo_backpack", Open_CharInfoBackpack,
+								  "Open the character info panel directly to backpack.", FCVAR_NONE);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void Open_CharInfoCrafting( const CCommand &args )
+void Open_CharInfoCrafting(const CCommand &args)
 {
-	EconUI()->OpenEconUI( ECONUI_CRAFTING );	
+	EconUI()->OpenEconUI(ECONUI_CRAFTING);
 }
-ConCommand open_charinfo_crafting( "open_charinfo_crafting", Open_CharInfoCrafting, "Open the character info panel directly to crafting screen.", FCVAR_NONE );
+ConCommand open_charinfo_crafting("open_charinfo_crafting", Open_CharInfoCrafting,
+								  "Open the character info panel directly to crafting screen.", FCVAR_NONE);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void Open_CharInfoArmory( const CCommand &args )
+void Open_CharInfoArmory(const CCommand &args)
 {
-	EconUI()->OpenEconUI( ECONUI_ARMORY );	
+	EconUI()->OpenEconUI(ECONUI_ARMORY);
 }
-ConCommand open_charinfo_armory( "open_charinfo_armory", Open_CharInfoArmory, "Open the character info panel directly to armory.", FCVAR_NONE );
-
+ConCommand open_charinfo_armory("open_charinfo_armory", Open_CharInfoArmory,
+								"Open the character info panel directly to armory.", FCVAR_NONE);
 
 //================================================================================================================================
 // NOT CONNECTED TO STEAM WARNING DIALOG
@@ -560,138 +565,142 @@ ConCommand open_charinfo_armory( "open_charinfo_armory", Open_CharInfoArmory, "O
 static vgui::DHANDLE<CServerNotConnectedToSteamDialog> g_ServerNotConnectedPanel;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CServerNotConnectedToSteamDialog::CServerNotConnectedToSteamDialog( vgui::Panel *pParent, const char *pElementName ) : BaseClass( pParent, "ServerNotConnectedToSteamDialog" )
+CServerNotConnectedToSteamDialog::CServerNotConnectedToSteamDialog(vgui::Panel *pParent, const char *pElementName)
+	: BaseClass(pParent, "ServerNotConnectedToSteamDialog")
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CServerNotConnectedToSteamDialog::ApplySchemeSettings( IScheme *pScheme )
+void CServerNotConnectedToSteamDialog::ApplySchemeSettings(IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
 	// load control settings...
-	LoadControlSettings( "resource/UI/ServerNotConnectedToSteam.res" );
+	LoadControlSettings("resource/UI/ServerNotConnectedToSteam.res");
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CServerNotConnectedToSteamDialog::OnCommand( const char *command )
+void CServerNotConnectedToSteamDialog::OnCommand(const char *command)
 {
-	if ( !Q_stricmp( command, "close" ) )
+	if(!Q_stricmp(command, "close"))
 	{
-		TFModalStack()->PopModal( this );
-		SetVisible( false );
+		TFModalStack()->PopModal(this);
+		SetVisible(false);
 		return;
 	}
 
-	BaseClass::OnCommand( command );
+	BaseClass::OnCommand(command);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CServerNotConnectedToSteamDialog *OpenServerNotConnectedToSteamDialog( vgui::Panel *pParent )
+CServerNotConnectedToSteamDialog *OpenServerNotConnectedToSteamDialog(vgui::Panel *pParent)
 {
-	if (!g_ServerNotConnectedPanel.Get())
+	if(!g_ServerNotConnectedPanel.Get())
 	{
-		g_ServerNotConnectedPanel = vgui::SETUP_PANEL( new CServerNotConnectedToSteamDialog( pParent, NULL ) );
+		g_ServerNotConnectedPanel = vgui::SETUP_PANEL(new CServerNotConnectedToSteamDialog(pParent, NULL));
 	}
-	g_ServerNotConnectedPanel->InvalidateLayout( false, true );
+	g_ServerNotConnectedPanel->InvalidateLayout(false, true);
 
-	g_ServerNotConnectedPanel->SetVisible( true );
+	g_ServerNotConnectedPanel->SetVisible(true);
 	g_ServerNotConnectedPanel->MakePopup();
 	g_ServerNotConnectedPanel->MoveToFront();
 	g_ServerNotConnectedPanel->SetKeyBoardInputEnabled(true);
 	g_ServerNotConnectedPanel->SetMouseInputEnabled(true);
-	TFModalStack()->PushModal( g_ServerNotConnectedPanel );
+	TFModalStack()->PushModal(g_ServerNotConnectedPanel);
 	return g_ServerNotConnectedPanel;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CBackpackPanel *CCharacterInfoPanel::GetBackpackPanel( void ) 
-{ 
-	return m_pLoadoutPanel->GetBackpackPanel(); 
+CBackpackPanel *CCharacterInfoPanel::GetBackpackPanel(void)
+{
+	return m_pLoadoutPanel->GetBackpackPanel();
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CCraftingPanel *CCharacterInfoPanel::GetCraftingPanel( void ) 
-{ 
-	return m_pLoadoutPanel->GetCraftingPanel(); 
+CCraftingPanel *CCharacterInfoPanel::GetCraftingPanel(void)
+{
+	return m_pLoadoutPanel->GetCraftingPanel();
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CArmoryPanel *CCharacterInfoPanel::GetArmoryPanel( void ) 
-{ 
-	return m_pLoadoutPanel->GetArmoryPanel(); 
+CArmoryPanel *CCharacterInfoPanel::GetArmoryPanel(void)
+{
+	return m_pLoadoutPanel->GetArmoryPanel();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CCharacterInfoPanel::Gamestats_ItemTransaction( int eventID, CEconItemView *item, const char *pszReason, int iQuality )
+void CCharacterInfoPanel::Gamestats_ItemTransaction(int eventID, CEconItemView *item, const char *pszReason,
+													int iQuality)
 {
-	C_CTF_GameStats.Event_ItemTransaction( eventID, item, pszReason, iQuality );
+	C_CTF_GameStats.Event_ItemTransaction(eventID, item, pszReason, iQuality);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CCharacterInfoPanel::Gamestats_Store( int eventID, CEconItemView* item, const char* panelName, int classId, 
-			const cart_item_t* cartItem, int checkoutAttempts, const char* storeError, int totalPrice, int currencyCode )
+void CCharacterInfoPanel::Gamestats_Store(int eventID, CEconItemView *item, const char *panelName, int classId,
+										  const cart_item_t *cartItem, int checkoutAttempts, const char *storeError,
+										  int totalPrice, int currencyCode)
 {
-	C_CTF_GameStats.Event_Store( eventID, item, panelName, classId, cartItem, checkoutAttempts, storeError, totalPrice, currencyCode );
+	C_CTF_GameStats.Event_Store(eventID, item, panelName, classId, cartItem, checkoutAttempts, storeError, totalPrice,
+								currencyCode);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CCharacterInfoPanel::SetExperimentValue( uint64 experimentValue )
+void CCharacterInfoPanel::SetExperimentValue(uint64 experimentValue)
 {
-	C_CTF_GameStats.SetExperimentValue( experimentValue );
+	C_CTF_GameStats.SetExperimentValue(experimentValue);
 }
 
 static vgui::DHANDLE<CTFItemPickupPanel> g_TFItemPickupPanel;
 static vgui::DHANDLE<CTFItemDiscardPanel> g_TFItemDiscardPanel;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CItemPickupPanel *CCharacterInfoPanel::OpenItemPickupPanel( void )
+CItemPickupPanel *CCharacterInfoPanel::OpenItemPickupPanel(void)
 {
-	if (!g_TFItemPickupPanel.Get())
+	if(!g_TFItemPickupPanel.Get())
 	{
-		g_TFItemPickupPanel = vgui::SETUP_PANEL( new CTFItemPickupPanel( NULL ) );
-		g_TFItemPickupPanel->InvalidateLayout( false, true );
+		g_TFItemPickupPanel = vgui::SETUP_PANEL(new CTFItemPickupPanel(NULL));
+		g_TFItemPickupPanel->InvalidateLayout(false, true);
 	}
 
-	engine->ClientCmd_Unrestricted( "gameui_activate" );
-	g_TFItemPickupPanel->ShowPanel( true );
+	engine->ClientCmd_Unrestricted("gameui_activate");
+	g_TFItemPickupPanel->ShowPanel(true);
 
 	return g_TFItemPickupPanel;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CItemDiscardPanel *CCharacterInfoPanel::OpenItemDiscardPanel( void )
+CItemDiscardPanel *CCharacterInfoPanel::OpenItemDiscardPanel(void)
 {
-	if (!g_TFItemDiscardPanel.Get())
+	if(!g_TFItemDiscardPanel.Get())
 	{
-		g_TFItemDiscardPanel = vgui::SETUP_PANEL( new CTFItemDiscardPanel( NULL ) );
-		g_TFItemDiscardPanel->InvalidateLayout( false, true );
+		g_TFItemDiscardPanel = vgui::SETUP_PANEL(new CTFItemDiscardPanel(NULL));
+		g_TFItemDiscardPanel->InvalidateLayout(false, true);
 	}
 
-	engine->ClientCmd_Unrestricted( "gameui_activate" );
-	g_TFItemDiscardPanel->ShowPanel( true );
+	engine->ClientCmd_Unrestricted("gameui_activate");
+	g_TFItemDiscardPanel->ShowPanel(true);
 
 	return g_TFItemDiscardPanel;
 }
@@ -699,108 +708,107 @@ CItemDiscardPanel *CCharacterInfoPanel::OpenItemDiscardPanel( void )
 static vgui::DHANDLE<CTFBaseStorePanel> g_StorePanel;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CCharacterInfoPanel::CreateStorePanel( void )
+void CCharacterInfoPanel::CreateStorePanel(void)
 {
 	// Clean up previous store panel?
-	if ( g_StorePanel.Get() != NULL )
+	if(g_StorePanel.Get() != NULL)
 	{
 		g_StorePanel->MarkForDeletion();
 	}
 
 	// Create the store panel
 	CTFBaseStorePanel *pStorePanel = NULL;
-	if ( ShouldUseNewStore() )
+	if(ShouldUseNewStore())
 	{
-		pStorePanel = new CTFStorePanel2( NULL );
+		pStorePanel = new CTFStorePanel2(NULL);
 	}
 	else
 	{
-		pStorePanel = new CTFStorePanel1( NULL );
+		pStorePanel = new CTFStorePanel1(NULL);
 	}
 
-	g_StorePanel = vgui::SETUP_PANEL( pStorePanel );
+	g_StorePanel = vgui::SETUP_PANEL(pStorePanel);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CStorePanel	*CCharacterInfoPanel::OpenStorePanel( int iItemDef, bool bAddToCart )
+CStorePanel *CCharacterInfoPanel::OpenStorePanel(int iItemDef, bool bAddToCart)
 {
 	// Make sure we've got the appropriate connections to Steam
-	if ( !steamapicontext || !steamapicontext->SteamUtils() )
+	if(!steamapicontext || !steamapicontext->SteamUtils())
 	{
-		OpenStoreStatusDialog( NULL, "#StoreUpdate_SteamRequired", true, false );
+		OpenStoreStatusDialog(NULL, "#StoreUpdate_SteamRequired", true, false);
 		return NULL;
 	}
 
-	if ( !steamapicontext->SteamUtils()->IsOverlayEnabled() )
+	if(!steamapicontext->SteamUtils()->IsOverlayEnabled())
 	{
-		OpenStoreStatusDialog( NULL, "#StoreUpdate_OverlayRequired", true, false );
+		OpenStoreStatusDialog(NULL, "#StoreUpdate_OverlayRequired", true, false);
 		return NULL;
 	}
 
-	if ( !CStorePanel::IsPricesheetLoaded() )
+	if(!CStorePanel::IsPricesheetLoaded())
 	{
-		OpenStoreStatusDialog( NULL, "#StoreUpdate_Loading", false, false );
+		OpenStoreStatusDialog(NULL, "#StoreUpdate_Loading", false, false);
 
-		CStorePanel::SetShouldShowWarnings( true );
+		CStorePanel::SetShouldShowWarnings(true);
 		CStorePanel::RequestPricesheet();
 		return NULL;
 	}
 
-	if ( !g_StorePanel )
+	if(!g_StorePanel)
 		return NULL;
 
-	engine->ClientCmd_Unrestricted( "gameui_activate" );
+	engine->ClientCmd_Unrestricted("gameui_activate");
 
-	if ( iItemDef )
+	if(iItemDef)
 	{
-		g_StorePanel->StartAtItemDef( iItemDef, bAddToCart );
+		g_StorePanel->StartAtItemDef(iItemDef, bAddToCart);
 	}
 
-	g_StorePanel->ShowPanel( true );
+	g_StorePanel->ShowPanel(true);
 
 	return g_StorePanel;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CStorePanel	*CCharacterInfoPanel::GetStorePanel( void )
+CStorePanel *CCharacterInfoPanel::GetStorePanel(void)
 {
 	return g_StorePanel;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CCharacterInfoPanel::AddPanelCloseListener( vgui::Panel *pListener )
+void CCharacterInfoPanel::AddPanelCloseListener(vgui::Panel *pListener)
 {
-	if ( !pListener )
+	if(!pListener)
 		return;
 
 	VPanelHandle hPanel;
-	hPanel.Set( pListener->GetVPanel() );
-	m_vecOnCloseListeners.AddToHead( hPanel );
+	hPanel.Set(pListener->GetVPanel());
+	m_vecOnCloseListeners.AddToHead(hPanel);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CCharacterInfoPanel::SetClosePanel( int iPanel )
+void CCharacterInfoPanel::SetClosePanel(int iPanel)
 {
-	AssertMsg( ( iPanel < 0 && IsValidTFPlayerClass( -iPanel ) ) ||
-		( iPanel >= ECONUI_FIRST_PANEL && iPanel <= ECONUI_LAST_PANEL ),
-		"Panel out of range!"
-	);
+	AssertMsg((iPanel < 0 && IsValidTFPlayerClass(-iPanel)) ||
+				  (iPanel >= ECONUI_FIRST_PANEL && iPanel <= ECONUI_LAST_PANEL),
+			  "Panel out of range!");
 	m_iClosePanel = iPanel;
 }
 
-void CCharacterInfoPanel::SetDefaultTeam( int iTeam )
+void CCharacterInfoPanel::SetDefaultTeam(int iTeam)
 {
-	AssertMsg( iTeam == TF_TEAM_RED || iTeam == TF_TEAM_BLUE, "Invalid team" );
+	AssertMsg(iTeam == TF_TEAM_RED || iTeam == TF_TEAM_BLUE, "Invalid team");
 	m_iDefaultTeam = iTeam;
 }
 
@@ -810,55 +818,56 @@ void CCharacterInfoPanel::SetDefaultTeam( int iTeam )
 static vgui::DHANDLE<CCheatDetectionDialog> g_CheatDetectionDialog;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CCheatDetectionDialog::CCheatDetectionDialog( vgui::Panel *pParent, const char *pElementName ) : BaseClass( pParent, "CheatDetectionDialog" )
+CCheatDetectionDialog::CCheatDetectionDialog(vgui::Panel *pParent, const char *pElementName)
+	: BaseClass(pParent, "CheatDetectionDialog")
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CCheatDetectionDialog::ApplySchemeSettings( IScheme *pScheme )
+void CCheatDetectionDialog::ApplySchemeSettings(IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
 	// load control settings...
-	LoadControlSettings( "resource/UI/CheatDetectionDialog.res" );
+	LoadControlSettings("resource/UI/CheatDetectionDialog.res");
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CCheatDetectionDialog::OnCommand( const char *command )
+void CCheatDetectionDialog::OnCommand(const char *command)
 {
-	if ( !Q_stricmp( command, "close" ) )
+	if(!Q_stricmp(command, "close"))
 	{
-		TFModalStack()->PopModal( this );
-		SetVisible( false );
+		TFModalStack()->PopModal(this);
+		SetVisible(false);
 		return;
 	}
 
-	BaseClass::OnCommand( command );
+	BaseClass::OnCommand(command);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CCheatDetectionDialog *OpenCheatDetectionDialog( vgui::Panel *pParent, const char *pszCheatMessage )
+CCheatDetectionDialog *OpenCheatDetectionDialog(vgui::Panel *pParent, const char *pszCheatMessage)
 {
-	if (!g_CheatDetectionDialog.Get())
+	if(!g_CheatDetectionDialog.Get())
 	{
-		g_CheatDetectionDialog = vgui::SETUP_PANEL( new CCheatDetectionDialog( pParent, NULL ) );
+		g_CheatDetectionDialog = vgui::SETUP_PANEL(new CCheatDetectionDialog(pParent, NULL));
 	}
-	g_CheatDetectionDialog->InvalidateLayout( false, true );
+	g_CheatDetectionDialog->InvalidateLayout(false, true);
 
-	g_CheatDetectionDialog->SetVisible( true );
+	g_CheatDetectionDialog->SetVisible(true);
 	g_CheatDetectionDialog->MakePopup();
 	g_CheatDetectionDialog->MoveToFront();
 	g_CheatDetectionDialog->SetKeyBoardInputEnabled(true);
 	g_CheatDetectionDialog->SetMouseInputEnabled(true);
-	TFModalStack()->PushModal( g_CheatDetectionDialog );
-	g_CheatDetectionDialog->SetDialogVariable( "reason", g_pVGuiLocalize->Find( pszCheatMessage ) );
+	TFModalStack()->PushModal(g_CheatDetectionDialog);
+	g_CheatDetectionDialog->SetDialogVariable("reason", g_pVGuiLocalize->Find(pszCheatMessage));
 	return g_CheatDetectionDialog;
 }

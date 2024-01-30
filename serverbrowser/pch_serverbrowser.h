@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -73,14 +73,14 @@
 #include "replay/ienginereplay.h"
 
 extern bool GameSupportsReplay();
-extern bool IsReplayServer( gameserveritem_t &server );
+extern bool IsReplayServer(gameserveritem_t &server);
 
-#pragma warning( disable: 4355 )  //  warning C4355: 'this' : used in base member initializer list
+#pragma warning(disable : 4355) //  warning C4355: 'this' : used in base member initializer list
 
-#if defined( STEAM )
-#define IsSteam()	true
+#if defined(STEAM)
+#define IsSteam() true
 #else
-#define IsSteam()	false
+#define IsSteam() false
 #endif
 
 using namespace vgui;

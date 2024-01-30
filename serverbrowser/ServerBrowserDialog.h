@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -14,21 +14,21 @@
 extern class IRunGameEngine *g_pRunGameEngine;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CServerBrowserDialog : public vgui::Frame
 {
-	DECLARE_CLASS_SIMPLE( CServerBrowserDialog, vgui::Frame ); 
+	DECLARE_CLASS_SIMPLE(CServerBrowserDialog, vgui::Frame);
 
 public:
 	// Construction/destruction
-	CServerBrowserDialog( vgui::Panel *parent );
-	~CServerBrowserDialog( void );
+	CServerBrowserDialog(vgui::Panel *parent);
+	~CServerBrowserDialog(void);
 
-	void		Initialize( void );
+	void Initialize(void);
 
 	// displays the dialog, moves it into focus, updates if it has to
-	void		Open( void );
+	void Open(void);
 
 	// gets server info
 	gameserveritem_t *GetServer(unsigned int serverID);
@@ -37,12 +37,12 @@ public:
 
 	// updates status text at bottom of window
 	void UpdateStatusText(PRINTF_FORMAT_STRING const char *format, ...);
-	
+
 	// updates status text at bottom of window
 	void UpdateStatusText(wchar_t *unicode);
 
 	// context menu access
-	CServerContextMenu *GetContextMenu(vgui::Panel *pParent);		
+	CServerContextMenu *GetContextMenu(vgui::Panel *pParent);
 
 	// returns a pointer to a static instance of this dialog
 	// valid for use only in sort functions
@@ -52,7 +52,7 @@ public:
 	void AddServerToFavorites(gameserveritem_t &server);
 	// Adds a server to our list of blacklisted servers
 	void AddServerToBlacklist(gameserveritem_t &server);
-	bool IsServerBlacklisted(gameserveritem_t &server); 
+	bool IsServerBlacklisted(gameserveritem_t &server);
 
 	// begins the process of joining a server from a game list
 	// the game info dialog it opens will also update the game list
@@ -65,11 +65,11 @@ public:
 	CDialogGameInfo *OpenGameInfoDialog(IGameList *gameList, unsigned int serverIndex);
 
 	// opens a game info dialog by a specified IP, not attached to any game list
-	CDialogGameInfo *OpenGameInfoDialog( int serverIP, uint16 connPort, uint16 queryPort, const char *pszConnectCode );
+	CDialogGameInfo *OpenGameInfoDialog(int serverIP, uint16 connPort, uint16 queryPort, const char *pszConnectCode);
 
 	// closes all the game info dialogs
 	void CloseAllGameInfoDialogs();
-	CDialogGameInfo *GetDialogGameInfoForFriend( uint64 ulSteamIDFriend );
+	CDialogGameInfo *GetDialogGameInfoForFriend(uint64 ulSteamIDFriend);
 
 	// accessor to the filter save data
 	KeyValues *GetFilterSaveData(const char *filterSet);
@@ -80,48 +80,50 @@ public:
 	const char *GetActiveGameName();
 
 	// load/saves filter & favorites settings from disk
-	void		LoadUserData();
-	void		SaveUserData();
+	void LoadUserData();
+	void SaveUserData();
 
 	// forces the currently active page to refresh
-	void		RefreshCurrentPage();
+	void RefreshCurrentPage();
 
 	virtual gameserveritem_t *GetCurrentConnectedServer()
 	{
 		return &m_CurrentConnection;
 	}
 
-	void		BlacklistsChanged();
-	CBlacklistedServers *GetBlacklistPage( void ) { return m_pBlacklist; }
+	void BlacklistsChanged();
+	CBlacklistedServers *GetBlacklistPage(void)
+	{
+		return m_pBlacklist;
+	}
 
 private:
-
 	// current game list change
-	MESSAGE_FUNC( OnGameListChanged, "PageChanged" );
+	MESSAGE_FUNC(OnGameListChanged, "PageChanged");
 	void ReloadFilterSettings();
 
 	// receives a specified game is active, so no other game types can be displayed in server list
-	MESSAGE_FUNC_PARAMS( OnActiveGameName, "ActiveGameName", name );
+	MESSAGE_FUNC_PARAMS(OnActiveGameName, "ActiveGameName", name);
 
 	// notification that we connected / disconnected
-	MESSAGE_FUNC_PARAMS( OnConnectToGame, "ConnectedToGame", kv );
-	MESSAGE_FUNC( OnDisconnectFromGame, "DisconnectedFromGame" );
-	MESSAGE_FUNC( OnLoadingStarted, "LoadingStarted" );
+	MESSAGE_FUNC_PARAMS(OnConnectToGame, "ConnectedToGame", kv);
+	MESSAGE_FUNC(OnDisconnectFromGame, "DisconnectedFromGame");
+	MESSAGE_FUNC(OnLoadingStarted, "LoadingStarted");
 
 	virtual bool GetDefaultScreenPosition(int &x, int &y, int &wide, int &tall);
 	virtual void ActivateBuildMode();
 
-	void OnKeyCodePressed( vgui::KeyCode code );
+	void OnKeyCodePressed(vgui::KeyCode code);
 
 private:
 	// list of all open game info dialogs
-	CUtlVector<vgui::DHANDLE<CDialogGameInfo> > m_GameInfoDialogs;
+	CUtlVector<vgui::DHANDLE<CDialogGameInfo>> m_GameInfoDialogs;
 
 	// pointer to current game list
 	IGameList *m_pGameList;
 
 	// Status text
-	vgui::Label	*m_pStatusLabel;
+	vgui::Label *m_pStatusLabel;
 
 	// property sheet
 	vgui::PropertySheet *m_pTabPanel;
@@ -154,6 +156,6 @@ extern CServerBrowserDialog &ServerBrowserDialog();
 
 // Used by the LAN tab and the add server dialog when trying to find servers without having
 // been given any ports to look for servers on.
-void GetMostCommonQueryPorts( CUtlVector<uint16> &ports );
+void GetMostCommonQueryPorts(CUtlVector<uint16> &ports);
 
 #endif // SERVERBROWSERDIALOG_H

@@ -14,21 +14,18 @@
 #ifndef INCLUDED_MXSTRING
 #define INCLUDED_MXSTRING
 
-
-
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-int mx_strncasecmp (const char *s1, const char *s2, int count);
-int mx_strcasecmp (const char *s1, const char *s2);
+	int mx_strncasecmp(const char *s1, const char *s2, int count);
+	int mx_strcasecmp(const char *s1, const char *s2);
 
-char *mx_strlower (char *str);
+	char *mx_strlower(char *str);
 
 #ifdef __cplusplus
 }
 #endif
-
-
 
 #endif // INCLUDED_MXPATH

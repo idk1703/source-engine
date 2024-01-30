@@ -1,22 +1,21 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
 //=============================================================================//
- //========= Copyright © 1996-2003, Valve LLC, All rights reserved. ============
+//========= Copyright ï¿½ 1996-2003, Valve LLC, All rights reserved. ============
 //
 // The copyright to the contents herein is the property of Valve, L.L.C.
 // The contents may be used and/or copied only with the written permission of
 // Valve, L.L.C., or in accordance with the terms and conditions stipulated in
 // the agreement/contract under which the contents have been supplied.
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
-
 
 #include <stdio.h>
 #define PROTECTED_THINGS_DISABLE
@@ -42,50 +41,49 @@
 #include "tier0/icommandline.h"
 #include "const.h"
 
-#if defined( _X360 )
+#if defined(_X360)
 #include "xbox/xbox_win32stubs.h"
 #endif
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-ConVar vgui_cache_res_files( "vgui_cache_res_files", "1" );
+ConVar vgui_cache_res_files("vgui_cache_res_files", "1");
 
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
 // Handle table
 //-----------------------------------------------------------------------------
-IMPLEMENT_HANDLES( BuildGroup, 20 )
+IMPLEMENT_HANDLES(BuildGroup, 20)
 
-CUtlDict< KeyValues* > BuildGroup::m_dictCachedResFiles;
+CUtlDict<KeyValues *> BuildGroup::m_dictCachedResFiles;
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
 BuildGroup::BuildGroup(Panel *parentPanel, Panel *contextPanel)
 {
-	CONSTRUCT_HANDLE( );
+	CONSTRUCT_HANDLE();
 
-	_enabled=false;
-	_snapX=1;
-	_snapY=1;
+	_enabled = false;
+	_snapX = 1;
+	_snapY = 1;
 	_cursor_sizenwse = dc_sizenwse;
 	_cursor_sizenesw = dc_sizenesw;
 	_cursor_sizewe = dc_sizewe;
 	_cursor_sizens = dc_sizens;
 	_cursor_sizeall = dc_sizeall;
-	_currentPanel=null;
-	_dragging=false;
-	m_pResourceName=NULL;
+	_currentPanel = null;
+	_dragging = false;
+	m_pResourceName = NULL;
 	m_pResourcePathID = NULL;
-	m_hBuildDialog=NULL;
-	m_pParentPanel=parentPanel;
-	for (int i=0; i<4; ++i)
+	m_hBuildDialog = NULL;
+	m_pParentPanel = parentPanel;
+	for(int i = 0; i < 4; ++i)
 		_rulerNumber[i] = NULL;
 	SetContextPanel(contextPanel);
 	_showRulers = false;
-
 }
 
 //-----------------------------------------------------------------------------
@@ -93,22 +91,22 @@ BuildGroup::BuildGroup(Panel *parentPanel, Panel *contextPanel)
 //-----------------------------------------------------------------------------
 BuildGroup::~BuildGroup()
 {
-	if (m_hBuildDialog)
+	if(m_hBuildDialog)
 		delete m_hBuildDialog.Get();
 	m_hBuildDialog = NULL;
 
-	delete [] m_pResourceName;
-	delete [] m_pResourcePathID;
+	delete[] m_pResourceName;
+	delete[] m_pResourcePathID;
 
-	for (int i=0; i <4; ++i)
+	for(int i = 0; i < 4; ++i)
 	{
-		if (_rulerNumber[i])
+		if(_rulerNumber[i])
 		{
 			delete _rulerNumber[i];
-			_rulerNumber[i]= NULL;
+			_rulerNumber[i] = NULL;
 		}
 	}
-	
+
 	DESTRUCT_HANDLE();
 }
 
@@ -123,14 +121,14 @@ void BuildGroup::SetEnabled(bool state)
 		_enabled = state;
 		_currentPanel = NULL;
 
-		if ( state )
+		if(state)
 		{
 			ActivateBuildDialog();
 		}
 		else
 		{
 			// hide the build dialog
-			if ( m_hBuildDialog )
+			if(m_hBuildDialog)
 			{
 				m_hBuildDialog->OnCommand("Close");
 			}
@@ -154,7 +152,7 @@ bool BuildGroup::IsEnabled()
 //-----------------------------------------------------------------------------
 CUtlVector<PHandle> *BuildGroup::GetControlGroup()
 {
-   return &_controlGroup;
+	return &_controlGroup;
 }
 
 //-----------------------------------------------------------------------------
@@ -162,28 +160,27 @@ CUtlVector<PHandle> *BuildGroup::GetControlGroup()
 //-----------------------------------------------------------------------------
 bool BuildGroup::HasRulersOn()
 {
-   return _showRulers;
+	return _showRulers;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose:	Toggle ruler display 
+// Purpose:	Toggle ruler display
 //-----------------------------------------------------------------------------
 void BuildGroup::ToggleRulerDisplay()
 {
 	_showRulers = !_showRulers;
 
-	if (_rulerNumber[0] == NULL) // rulers haven't been initialized
+	if(_rulerNumber[0] == NULL) // rulers haven't been initialized
 	{
 		_rulerNumber[0] = new Label(m_pBuildContext, NULL, "");
 		_rulerNumber[1] = new Label(m_pBuildContext, NULL, "");
 		_rulerNumber[2] = new Label(m_pBuildContext, NULL, "");
 		_rulerNumber[3] = new Label(m_pBuildContext, NULL, "");
 	}
-    SetRulerLabelsVisible(_showRulers);
+	SetRulerLabelsVisible(_showRulers);
 
-   m_pBuildContext->Repaint();
+	m_pBuildContext->Repaint();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:	Tobble visibility of ruler number labels
@@ -196,7 +193,7 @@ void BuildGroup::SetRulerLabelsVisible(bool state)
 	_rulerNumber[3]->SetVisible(state);
 }
 
-void BuildGroup::ApplySchemeSettings( IScheme *pScheme )
+void BuildGroup::ApplySchemeSettings(IScheme *pScheme)
 {
 	DrawRulers();
 }
@@ -205,77 +202,76 @@ void BuildGroup::ApplySchemeSettings( IScheme *pScheme )
 // Purpose:	Draw Rulers on screen if conditions are right
 //-----------------------------------------------------------------------------
 void BuildGroup::DrawRulers()
-{		
+{
 	// don't draw if visibility is off
-	if (!_showRulers)
+	if(!_showRulers)
 	{
 		return;
 	}
-	
+
 	// no drawing if we selected the context panel
-	if (m_pBuildContext == _currentPanel)
+	if(m_pBuildContext == _currentPanel)
 	{
 		SetRulerLabelsVisible(false);
 		return;
 	}
 	else
 		SetRulerLabelsVisible(true);
-	
+
 	int x, y, wide, tall;
 	// get base panel's postition
 	m_pBuildContext->GetBounds(x, y, wide, tall);
-	m_pBuildContext->ScreenToLocal(x,y);
-	
+	m_pBuildContext->ScreenToLocal(x, y);
+
 	int cx, cy, cwide, ctall;
-	_currentPanel->GetBounds (cx, cy, cwide, ctall);
-	
-	surface()->PushMakeCurrent(m_pBuildContext->GetVPanel(), false);	
-	
+	_currentPanel->GetBounds(cx, cy, cwide, ctall);
+
+	surface()->PushMakeCurrent(m_pBuildContext->GetVPanel(), false);
+
 	// draw rulers
-	surface()->DrawSetColor(255, 255, 255, 255);	// white color
-	
-	surface()->DrawFilledRect(0, cy, cx, cy+1);           //top horiz left
-	surface()->DrawFilledRect(cx+cwide, cy, wide, cy+1);  //top horiz right
-	
-	surface()->DrawFilledRect(0, cy+ctall-1, cx, cy+ctall);   //bottom horiz left
-	surface()->DrawFilledRect(cx+cwide, cy+ctall-1, wide, cy+ctall);   //bottom	 horiz right
-	
-	surface()->DrawFilledRect(cx,0,cx+1,cy);         //top vert left
-	surface()->DrawFilledRect(cx+cwide-1,0, cx+cwide, cy);  //top vert right
-	
-	surface()->DrawFilledRect(cx,cy+ctall, cx+1, tall); //bottom vert left
-	surface()->DrawFilledRect(cx+cwide-1, cy+ctall, cx+cwide, tall); //bottom vert right   
-	
+	surface()->DrawSetColor(255, 255, 255, 255); // white color
+
+	surface()->DrawFilledRect(0, cy, cx, cy + 1);			 // top horiz left
+	surface()->DrawFilledRect(cx + cwide, cy, wide, cy + 1); // top horiz right
+
+	surface()->DrawFilledRect(0, cy + ctall - 1, cx, cy + ctall);			 // bottom horiz left
+	surface()->DrawFilledRect(cx + cwide, cy + ctall - 1, wide, cy + ctall); // bottom	 horiz right
+
+	surface()->DrawFilledRect(cx, 0, cx + 1, cy);				  // top vert left
+	surface()->DrawFilledRect(cx + cwide - 1, 0, cx + cwide, cy); // top vert right
+
+	surface()->DrawFilledRect(cx, cy + ctall, cx + 1, tall);				 // bottom vert left
+	surface()->DrawFilledRect(cx + cwide - 1, cy + ctall, cx + cwide, tall); // bottom vert right
+
 	surface()->PopMakeCurrent(m_pBuildContext->GetVPanel());
-	
+
 	// now let's put numbers with the rulers
 	char textstring[20];
-	Q_snprintf (textstring, sizeof( textstring ), "%d", cx);
+	Q_snprintf(textstring, sizeof(textstring), "%d", cx);
 	_rulerNumber[0]->SetText(textstring);
 	int twide, ttall;
-	_rulerNumber[0]->GetContentSize(twide,ttall);
-	_rulerNumber[0]->SetSize(twide,ttall);
-	_rulerNumber[0]->SetPos(cx/2-twide/2, cy-ttall+3);
-	
-	Q_snprintf (textstring, sizeof( textstring ), "%d", cy);
+	_rulerNumber[0]->GetContentSize(twide, ttall);
+	_rulerNumber[0]->SetSize(twide, ttall);
+	_rulerNumber[0]->SetPos(cx / 2 - twide / 2, cy - ttall + 3);
+
+	Q_snprintf(textstring, sizeof(textstring), "%d", cy);
 	_rulerNumber[1]->SetText(textstring);
-	_rulerNumber[1]->GetContentSize(twide,ttall);
-	_rulerNumber[1]->SetSize(twide,ttall);
-	_rulerNumber[1]->GetSize(twide,ttall);
-	_rulerNumber[1]->SetPos(cx-twide + 3, cy/2-ttall/2);
-	
-	Q_snprintf (textstring, sizeof( textstring ), "%d", cy);
+	_rulerNumber[1]->GetContentSize(twide, ttall);
+	_rulerNumber[1]->SetSize(twide, ttall);
+	_rulerNumber[1]->GetSize(twide, ttall);
+	_rulerNumber[1]->SetPos(cx - twide + 3, cy / 2 - ttall / 2);
+
+	Q_snprintf(textstring, sizeof(textstring), "%d", cy);
 	_rulerNumber[2]->SetText(textstring);
-	_rulerNumber[2]->GetContentSize(twide,ttall);
-	_rulerNumber[2]->SetSize(twide,ttall);
-	_rulerNumber[2]->SetPos(cx+cwide+(wide-cx-cwide)/2 - twide/2,  cy+ctall-3);
-	
-	Q_snprintf (textstring, sizeof( textstring ), "%d", cy);
+	_rulerNumber[2]->GetContentSize(twide, ttall);
+	_rulerNumber[2]->SetSize(twide, ttall);
+	_rulerNumber[2]->SetPos(cx + cwide + (wide - cx - cwide) / 2 - twide / 2, cy + ctall - 3);
+
+	Q_snprintf(textstring, sizeof(textstring), "%d", cy);
 	_rulerNumber[3]->SetText(textstring);
-	_rulerNumber[3]->GetContentSize(twide,ttall);
-	_rulerNumber[3]->SetSize(twide,ttall);
-	_rulerNumber[3]->SetPos(cx+cwide, cy+ctall+(tall-cy-ctall)/2 - ttall/2);
-	
+	_rulerNumber[3]->GetContentSize(twide, ttall);
+	_rulerNumber[3]->SetSize(twide, ttall);
+	_rulerNumber[3]->SetPos(cx + cwide, cy + ctall + (tall - cy - ctall) / 2 - ttall / 2);
 }
 
 //-----------------------------------------------------------------------------
@@ -285,17 +281,17 @@ bool BuildGroup::CursorMoved(int x, int y, Panel *panel)
 {
 	Assert(panel);
 
-	if ( !m_hBuildDialog.Get() )
+	if(!m_hBuildDialog.Get())
 	{
-		if ( panel->GetParent() )
+		if(panel->GetParent())
 		{
-			EditablePanel *ep = dynamic_cast< EditablePanel * >( panel->GetParent() );
-			if ( ep )
+			EditablePanel *ep = dynamic_cast<EditablePanel *>(panel->GetParent());
+			if(ep)
 			{
 				BuildGroup *bg = ep->GetBuildGroup();
-				if ( bg && bg != this )
+				if(bg && bg != this)
 				{
-					bg->CursorMoved( x, y, panel );
+					bg->CursorMoved(x, y, panel);
 				}
 			}
 		}
@@ -303,57 +299,58 @@ bool BuildGroup::CursorMoved(int x, int y, Panel *panel)
 	}
 
 	// no moving uneditable panels
-	// commented out because this has issues with panels moving 
+	// commented out because this has issues with panels moving
 	// to front and obscuring other panels
-	//if (!panel->IsBuildModeEditable())
+	// if (!panel->IsBuildModeEditable())
 	//	return;
 
-	if (_dragging)
+	if(_dragging)
 	{
 		input()->GetCursorPos(x, y);
-		
-		if (_dragMouseCode == MOUSE_RIGHT)
+
+		if(_dragMouseCode == MOUSE_RIGHT)
 		{
-			int newW = max( 1, _dragStartPanelSize[ 0 ] + x - _dragStartCursorPos[0] );
-			int newH = max( 1, _dragStartPanelSize[ 1 ] + y - _dragStartCursorPos[1] );
+			int newW = max(1, _dragStartPanelSize[0] + x - _dragStartCursorPos[0]);
+			int newH = max(1, _dragStartPanelSize[1] + y - _dragStartCursorPos[1]);
 
-			bool shift = ( input()->IsKeyDown(KEY_LSHIFT) || input()->IsKeyDown(KEY_RSHIFT) );
-			bool ctrl = ( input()->IsKeyDown(KEY_LCONTROL) || input()->IsKeyDown(KEY_RCONTROL) );
+			bool shift = (input()->IsKeyDown(KEY_LSHIFT) || input()->IsKeyDown(KEY_RSHIFT));
+			bool ctrl = (input()->IsKeyDown(KEY_LCONTROL) || input()->IsKeyDown(KEY_RCONTROL));
 
-			if ( shift )
+			if(shift)
 			{
-				newW = _dragStartPanelSize[ 0 ];
+				newW = _dragStartPanelSize[0];
 			}
-			if ( ctrl )
+			if(ctrl)
 			{
-				newH = _dragStartPanelSize[ 1 ];
+				newH = _dragStartPanelSize[1];
 			}
 
-			panel->SetSize( newW, newH );
+			panel->SetSize(newW, newH);
 			ApplySnap(panel);
 		}
 		else
 		{
-			for (int i=0; i < _controlGroup.Count(); ++i)
+			for(int i = 0; i < _controlGroup.Count(); ++i)
 			{
 				// now fix offset of member panels with respect to the one we are dragging
 				Panel *groupMember = _controlGroup[i].Get();
-			   	groupMember->SetPos(_dragStartPanelPos[0] + _groupDeltaX[i] +(x-_dragStartCursorPos[0]), _dragStartPanelPos[1] + _groupDeltaY[i] +(y-_dragStartCursorPos[1]));
-				ApplySnap(groupMember);				
+				groupMember->SetPos(_dragStartPanelPos[0] + _groupDeltaX[i] + (x - _dragStartCursorPos[0]),
+									_dragStartPanelPos[1] + _groupDeltaY[i] + (y - _dragStartCursorPos[1]));
+				ApplySnap(groupMember);
 			}
 		}
 
 		// update the build dialog
-		if (m_hBuildDialog)
+		if(m_hBuildDialog)
 		{
 			KeyValues *keyval = new KeyValues("UpdateControlData");
 			keyval->SetPtr("panel", GetCurrentPanel());
 			ivgui()->PostMessage(m_hBuildDialog->GetVPanel(), keyval, NULL);
 
-			keyval = new KeyValues("EnableSaveButton");	
-			ivgui()->PostMessage(m_hBuildDialog->GetVPanel(), keyval, NULL);	
+			keyval = new KeyValues("EnableSaveButton");
+			ivgui()->PostMessage(m_hBuildDialog->GetVPanel(), keyval, NULL);
 		}
-		
+
 		panel->Repaint();
 		panel->CallParentFunction(new KeyValues("Repaint"));
 	}
@@ -368,17 +365,17 @@ bool BuildGroup::MousePressed(MouseCode code, Panel *panel)
 {
 	Assert(panel);
 
-	if ( !m_hBuildDialog.Get() )
+	if(!m_hBuildDialog.Get())
 	{
-		if ( panel->GetParent() )
+		if(panel->GetParent())
 		{
-			EditablePanel *ep = dynamic_cast< EditablePanel * >( panel->GetParent() );
-			if ( ep )
+			EditablePanel *ep = dynamic_cast<EditablePanel *>(panel->GetParent());
+			if(ep)
 			{
 				BuildGroup *bg = ep->GetBuildGroup();
-				if ( bg && bg != this )
+				if(bg && bg != this)
 				{
-					bg->MousePressed( code, panel );
+					bg->MousePressed(code, panel);
 				}
 			}
 		}
@@ -386,7 +383,7 @@ bool BuildGroup::MousePressed(MouseCode code, Panel *panel)
 	}
 
 	// if people click on the base build dialog panel.
-	if (panel == m_hBuildDialog)
+	if(panel == m_hBuildDialog)
 	{
 		// hide the click menu if its up
 		ivgui()->PostMessage(m_hBuildDialog->GetVPanel(), new KeyValues("HideNewControlMenu"), NULL);
@@ -394,29 +391,29 @@ bool BuildGroup::MousePressed(MouseCode code, Panel *panel)
 	}
 
 	// don't select unnamed items
-	if (strlen(panel->GetName()) < 1)
+	if(strlen(panel->GetName()) < 1)
 		return true;
-	
-	bool shift = ( input()->IsKeyDown(KEY_LSHIFT) || input()->IsKeyDown(KEY_RSHIFT) );	
-	if (!shift)
+
+	bool shift = (input()->IsKeyDown(KEY_LSHIFT) || input()->IsKeyDown(KEY_RSHIFT));
+	if(!shift)
 	{
-		_controlGroup.RemoveAll();	
+		_controlGroup.RemoveAll();
 	}
 
 	// Show new ctrl menu if they click on the bg (not on a subcontrol)
-	if ( code == MOUSE_RIGHT && panel == GetContextPanel())
-	{		
+	if(code == MOUSE_RIGHT && panel == GetContextPanel())
+	{
 		// trigger a drop down menu to create new controls
-		ivgui()->PostMessage (m_hBuildDialog->GetVPanel(), new KeyValues("ShowNewControlMenu"), NULL);	
-	}	
+		ivgui()->PostMessage(m_hBuildDialog->GetVPanel(), new KeyValues("ShowNewControlMenu"), NULL);
+	}
 	else
-	{	
+	{
 		// don't respond if we click on ruler numbers
-		if (_showRulers) // rulers are visible
+		if(_showRulers) // rulers are visible
 		{
-			for ( int i=0; i < 4; i++)
+			for(int i = 0; i < 4; i++)
 			{
-				if ( panel == _rulerNumber[i])
+				if(panel == _rulerNumber[i])
 					return true;
 			}
 		}
@@ -424,16 +421,15 @@ bool BuildGroup::MousePressed(MouseCode code, Panel *panel)
 		_dragging = true;
 		_dragMouseCode = code;
 		ivgui()->PostMessage(m_hBuildDialog->GetVPanel(), new KeyValues("HideNewControlMenu"), NULL);
-		
+
 		int x, y;
 		input()->GetCursorPos(x, y);
-		
+
 		_dragStartCursorPos[0] = x;
 		_dragStartCursorPos[1] = y;
-	
-		
+
 		input()->SetMouseCapture(panel->GetVPanel());
-		
+
 		_groupDeltaX.RemoveAll();
 		_groupDeltaY.RemoveAll();
 
@@ -443,54 +439,54 @@ bool BuildGroup::MousePressed(MouseCode code, Panel *panel)
 		Panel *basePanel = NULL;
 		// find the panel we clicked in, that is the base panel
 		// it might already be in the group
-		for (int i=0; i< _controlGroup.Count(); ++i)	
+		for(int i = 0; i < _controlGroup.Count(); ++i)
 		{
-			if (panel == _controlGroup[i].Get())
+			if(panel == _controlGroup[i].Get())
 			{
 				basePanel = panel;
 				break;
 			}
 		}
 
-		// if its not in the group we just added this panel. get it in the group 
-		if (basePanel == NULL)
+		// if its not in the group we just added this panel. get it in the group
+		if(basePanel == NULL)
 		{
 			PHandle temp;
 			temp = panel;
 			_controlGroup.AddToTail(temp);
 			basePanel = panel;
 		}
-		
-		basePanel->GetPos(x,y);
-		_dragStartPanelPos[0]=x;
-		_dragStartPanelPos[1]=y;
 
-		basePanel->GetSize( _dragStartPanelSize[ 0 ], _dragStartPanelSize[ 1 ] );
+		basePanel->GetPos(x, y);
+		_dragStartPanelPos[0] = x;
+		_dragStartPanelPos[1] = y;
+
+		basePanel->GetSize(_dragStartPanelSize[0], _dragStartPanelSize[1]);
 
 		// figure out the deltas of the other panels from the base panel
-		for (int i=0; i<_controlGroup.Count(); ++i)
+		for(int i = 0; i < _controlGroup.Count(); ++i)
 		{
 			int cx, cy;
 			_controlGroup[i].Get()->GetPos(cx, cy);
 			_groupDeltaX.AddToTail(cx - x);
 			_groupDeltaY.AddToTail(cy - y);
 		}
-						
+
 		// if this panel wasn't already selected update the buildmode dialog controls to show its info
 		if(_currentPanel != panel)
-		{			
+		{
 			_currentPanel = panel;
-			
-			if ( m_hBuildDialog )
+
+			if(m_hBuildDialog)
 			{
 				// think this is taken care of by SetActiveControl.
-				//ivgui()->PostMessage(m_hBuildDialog->GetVPanel(), new KeyValues("ApplyDataToControls"), NULL);
-				
+				// ivgui()->PostMessage(m_hBuildDialog->GetVPanel(), new KeyValues("ApplyDataToControls"), NULL);
+
 				KeyValues *keyval = new KeyValues("SetActiveControl");
 				keyval->SetPtr("PanelPtr", GetCurrentPanel());
 				ivgui()->PostMessage(m_hBuildDialog->GetVPanel(), keyval, NULL);
-			}		
-		}		
+			}
+		}
 
 		// store undo information upon panel selection.
 		ivgui()->PostMessage(m_hBuildDialog->GetVPanel(), new KeyValues("StoreUndo"), NULL);
@@ -506,17 +502,17 @@ bool BuildGroup::MousePressed(MouseCode code, Panel *panel)
 //-----------------------------------------------------------------------------
 bool BuildGroup::MouseReleased(MouseCode code, Panel *panel)
 {
-	if ( !m_hBuildDialog.Get() )
+	if(!m_hBuildDialog.Get())
 	{
-		if ( panel->GetParent() )
+		if(panel->GetParent())
 		{
-			EditablePanel *ep = dynamic_cast< EditablePanel * >( panel->GetParent() );
-			if ( ep )
+			EditablePanel *ep = dynamic_cast<EditablePanel *>(panel->GetParent());
+			if(ep)
 			{
 				BuildGroup *bg = ep->GetBuildGroup();
-				if ( bg && bg != this )
+				if(bg && bg != this)
 				{
-					bg->MouseReleased( code, panel );
+					bg->MouseReleased(code, panel);
 				}
 			}
 		}
@@ -525,7 +521,7 @@ bool BuildGroup::MouseReleased(MouseCode code, Panel *panel)
 
 	Assert(panel);
 
-	_dragging=false;
+	_dragging = false;
 	input()->SetMouseCapture(null);
 	return true;
 }
@@ -536,22 +532,22 @@ bool BuildGroup::MouseReleased(MouseCode code, Panel *panel)
 bool BuildGroup::MouseDoublePressed(MouseCode code, Panel *panel)
 {
 	Assert(panel);
-	return MousePressed( code, panel );
+	return MousePressed(code, panel);
 }
 
-bool BuildGroup::KeyTyped( wchar_t unichar, Panel *panel )
+bool BuildGroup::KeyTyped(wchar_t unichar, Panel *panel)
 {
-	if ( !m_hBuildDialog.Get() )
+	if(!m_hBuildDialog.Get())
 	{
-		if ( panel->GetParent() )
+		if(panel->GetParent())
 		{
-			EditablePanel *ep = dynamic_cast< EditablePanel * >( panel->GetParent() );
-			if ( ep )
+			EditablePanel *ep = dynamic_cast<EditablePanel *>(panel->GetParent());
+			if(ep)
 			{
 				BuildGroup *bg = ep->GetBuildGroup();
-				if ( bg && bg != this )
+				if(bg && bg != this)
 				{
-					bg->KeyTyped( unichar, panel );
+					bg->KeyTyped(unichar, panel);
 				}
 			}
 		}
@@ -561,23 +557,22 @@ bool BuildGroup::KeyTyped( wchar_t unichar, Panel *panel )
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 bool BuildGroup::KeyCodeTyped(KeyCode code, Panel *panel)
 {
-	if ( !m_hBuildDialog.Get() )
+	if(!m_hBuildDialog.Get())
 	{
-		if ( panel->GetParent() )
+		if(panel->GetParent())
 		{
-			EditablePanel *ep = dynamic_cast< EditablePanel * >( panel->GetParent() );
-			if ( ep )
+			EditablePanel *ep = dynamic_cast<EditablePanel *>(panel->GetParent());
+			if(ep)
 			{
 				BuildGroup *bg = ep->GetBuildGroup();
-				if ( bg && bg != this )
+				if(bg && bg != this)
 				{
-					bg->KeyCodeTyped( code, panel );
+					bg->KeyCodeTyped(code, panel);
 				}
 			}
 		}
@@ -586,72 +581,70 @@ bool BuildGroup::KeyCodeTyped(KeyCode code, Panel *panel)
 
 	Assert(panel);
 
-	int dx=0;
-	int dy=0;
+	int dx = 0;
+	int dy = 0;
 
-	bool shift = ( input()->IsKeyDown(KEY_LSHIFT) || input()->IsKeyDown(KEY_RSHIFT) );
-	bool ctrl = ( input()->IsKeyDown(KEY_LCONTROL) || input()->IsKeyDown(KEY_RCONTROL) );
+	bool shift = (input()->IsKeyDown(KEY_LSHIFT) || input()->IsKeyDown(KEY_RSHIFT));
+	bool ctrl = (input()->IsKeyDown(KEY_LCONTROL) || input()->IsKeyDown(KEY_RCONTROL));
 	bool alt = (input()->IsKeyDown(KEY_LALT) || input()->IsKeyDown(KEY_RALT));
 
-	
-	if ( ctrl && shift && alt && code == KEY_B)
+	if(ctrl && shift && alt && code == KEY_B)
 	{
 		// enable build mode
-		EditablePanel *ep = dynamic_cast< EditablePanel * >( panel );
-		if ( ep )
+		EditablePanel *ep = dynamic_cast<EditablePanel *>(panel);
+		if(ep)
 		{
 			ep->ActivateBuildMode();
 		}
 		return true;
 	}
 
-	switch (code)
+	switch(code)
 	{
 		case KEY_LEFT:
 		{
-			dx-=_snapX;
+			dx -= _snapX;
 			break;
 		}
 		case KEY_RIGHT:
 		{
-			dx+=_snapX;
+			dx += _snapX;
 			break;
 		}
 		case KEY_UP:
 		{
-			dy-=_snapY;
+			dy -= _snapY;
 			break;
 		}
 		case KEY_DOWN:
 		{
-			dy+=_snapY;
+			dy += _snapY;
 			break;
 		}
 		case KEY_DELETE:
 		{
-			// delete the panel we have selected 
-			ivgui()->PostMessage (m_hBuildDialog->GetVPanel(), new KeyValues ("DeletePanel"), NULL);
+			// delete the panel we have selected
+			ivgui()->PostMessage(m_hBuildDialog->GetVPanel(), new KeyValues("DeletePanel"), NULL);
 			break;
 		}
-
 	}
 
-	if (ctrl)
+	if(ctrl)
 	{
-		switch (code)
+		switch(code)
 		{
-		case KEY_Z:
+			case KEY_Z:
 			{
 				ivgui()->PostMessage(m_hBuildDialog->GetVPanel(), new KeyValues("Undo"), NULL);
 				break;
 			}
 
-		case KEY_C:
+			case KEY_C:
 			{
 				ivgui()->PostMessage(m_hBuildDialog->GetVPanel(), new KeyValues("Copy"), NULL);
 				break;
 			}
-		case KEY_V:
+			case KEY_V:
 			{
 				ivgui()->PostMessage(m_hBuildDialog->GetVPanel(), new KeyValues("Paste"), NULL);
 				break;
@@ -659,34 +652,33 @@ bool BuildGroup::KeyCodeTyped(KeyCode code, Panel *panel)
 		}
 	}
 
-	if(dx||dy)
+	if(dx || dy)
 	{
-		//TODO: make this stuff actually snap
+		// TODO: make this stuff actually snap
 
-		int x,y,wide,tall;
+		int x, y, wide, tall;
 
-		panel->GetBounds(x,y,wide,tall);
+		panel->GetBounds(x, y, wide, tall);
 
 		if(shift)
 		{
-			panel->SetSize(wide+dx,tall+dy);
+			panel->SetSize(wide + dx, tall + dy);
 		}
 		else
 		{
-			panel->SetPos(x+dx,y+dy);
+			panel->SetPos(x + dx, y + dy);
 		}
 
 		ApplySnap(panel);
 
 		panel->Repaint();
-		if (panel->GetVParent() != 0)
+		if(panel->GetVParent() != 0)
 		{
 			panel->PostMessage(panel->GetVParent(), new KeyValues("Repaint"));
 		}
 
-
 		// update the build dialog
-		if (m_hBuildDialog)
+		if(m_hBuildDialog)
 		{
 			// post that it's active
 			KeyValues *keyval = new KeyValues("SetActiveControl");
@@ -699,29 +691,29 @@ bool BuildGroup::KeyCodeTyped(KeyCode code, Panel *panel)
 	}
 
 	// If holding key while dragging, simulate moving cursor so shift/ctrl key changes take effect
-	if ( _dragging && panel != GetContextPanel() )
+	if(_dragging && panel != GetContextPanel())
 	{
 		int x, y;
-		input()->GetCursorPos( x, y );
-		CursorMoved( x, y, panel );
+		input()->GetCursorPos(x, y);
+		CursorMoved(x, y, panel);
 	}
 
 	return true;
 }
 
-bool BuildGroup::KeyCodeReleased(KeyCode code, Panel *panel )
+bool BuildGroup::KeyCodeReleased(KeyCode code, Panel *panel)
 {
-	if ( !m_hBuildDialog.Get() )
+	if(!m_hBuildDialog.Get())
 	{
-		if ( panel->GetParent() )
+		if(panel->GetParent())
 		{
-			EditablePanel *ep = dynamic_cast< EditablePanel * >( panel->GetParent() );
-			if ( ep )
+			EditablePanel *ep = dynamic_cast<EditablePanel *>(panel->GetParent());
+			if(ep)
 			{
 				BuildGroup *bg = ep->GetBuildGroup();
-				if ( bg && bg != this )
+				if(bg && bg != this)
 				{
-					bg->KeyCodeTyped( code, panel );
+					bg->KeyCodeTyped(code, panel);
 				}
 			}
 		}
@@ -729,33 +721,32 @@ bool BuildGroup::KeyCodeReleased(KeyCode code, Panel *panel )
 	}
 
 	// If holding key while dragging, simulate moving cursor so shift/ctrl key changes take effect
-	if ( _dragging && panel != GetContextPanel() )
+	if(_dragging && panel != GetContextPanel())
 	{
 		int x, y;
-		input()->GetCursorPos( x, y );
-		CursorMoved( x, y, panel );
+		input()->GetCursorPos(x, y);
+		CursorMoved(x, y, panel);
 	}
 
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Searches for a BuildModeDialog in the hierarchy
 //-----------------------------------------------------------------------------
-Panel *BuildGroup::CreateBuildDialog( void )
+Panel *BuildGroup::CreateBuildDialog(void)
 {
 	// request the panel
 	Panel *buildDialog = NULL;
 	KeyValues *data = new KeyValues("BuildDialog");
 	data->SetPtr("BuildGroupPtr", this);
-	if (m_pBuildContext->RequestInfo(data))
+	if(m_pBuildContext->RequestInfo(data))
 	{
 		buildDialog = (Panel *)data->GetPtr("PanelPtr");
 	}
 
 	// initialize the build dialog if found
-	if ( buildDialog )
+	if(buildDialog)
 	{
 		input()->ReleaseAppModalSurface();
 	}
@@ -766,18 +757,18 @@ Panel *BuildGroup::CreateBuildDialog( void )
 //-----------------------------------------------------------------------------
 // Purpose: Activates the build mode settings dialog
 //-----------------------------------------------------------------------------
-void BuildGroup::ActivateBuildDialog( void )
+void BuildGroup::ActivateBuildDialog(void)
 {
 	// create the build mode dialog first time through
-	if (!m_hBuildDialog.Get())
+	if(!m_hBuildDialog.Get())
 	{
 		m_hBuildDialog = CreateBuildDialog();
 
-		if (!m_hBuildDialog.Get())
+		if(!m_hBuildDialog.Get())
 			return;
 	}
 
-	m_hBuildDialog->SetVisible( true );
+	m_hBuildDialog->SetVisible(true);
 
 	// send a message to set the initial dialog controls info
 	_currentPanel = m_pParentPanel;
@@ -792,11 +783,11 @@ void BuildGroup::ActivateBuildDialog( void )
 HCursor BuildGroup::GetCursor(Panel *panel)
 {
 	Assert(panel);
-	
-	int x,y,wide,tall;
-	input()->GetCursorPos(x,y);
-	panel->ScreenToLocal(x,y);
-	panel->GetSize(wide,tall);
+
+	int x, y, wide, tall;
+	input()->GetCursorPos(x, y);
+	panel->ScreenToLocal(x, y);
+	panel->GetSize(wide, tall);
 
 	if(x < 2)
 	{
@@ -804,8 +795,7 @@ HCursor BuildGroup::GetCursor(Panel *panel)
 		{
 			return _cursor_sizenwse;
 		}
-		else
-		if(y<(tall-4))
+		else if(y < (tall - 4))
 		{
 			return _cursor_sizewe;
 		}
@@ -819,26 +809,26 @@ HCursor BuildGroup::GetCursor(Panel *panel)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void BuildGroup::ApplySnap(Panel *panel)
 {
 	Assert(panel);
-	
-	int x,y,wide,tall;
-	panel->GetBounds(x,y,wide,tall);
 
-	x=(x/_snapX)*_snapX;
-	y=(y/_snapY)*_snapY;
-	panel->SetPos(x,y);
-	
-	int xx,yy;
-	xx=x+wide;
-	yy=y+tall;
-	
-	xx=(xx/_snapX)*_snapX;
-	yy=(yy/_snapY)*_snapY;
-	panel->SetSize(xx-x,yy-y);
+	int x, y, wide, tall;
+	panel->GetBounds(x, y, wide, tall);
+
+	x = (x / _snapX) * _snapX;
+	y = (y / _snapY) * _snapY;
+	panel->SetPos(x, y);
+
+	int xx, yy;
+	xx = x + wide;
+	yy = y + tall;
+
+	xx = (xx / _snapX) * _snapX;
+	yy = (yy / _snapY) * _snapY;
+	panel->SetSize(xx - x, yy - y);
 }
 
 //-----------------------------------------------------------------------------
@@ -859,9 +849,9 @@ void BuildGroup::PanelAdded(Panel *panel)
 	PHandle temp;
 	temp = panel;
 	int c = _panelDar.Count();
-	for ( int i = 0; i < c; ++i )
+	for(int i = 0; i < c; ++i)
 	{
-		if ( _panelDar[ i ] == temp )
+		if(_panelDar[i] == temp)
 		{
 			return;
 		}
@@ -872,7 +862,8 @@ void BuildGroup::PanelAdded(Panel *panel)
 //-----------------------------------------------------------------------------
 // Purpose: loads the control settings from file
 //-----------------------------------------------------------------------------
-void BuildGroup::LoadControlSettings(const char *controlResourceName, const char *pathID, KeyValues *pPreloadedKeyValues, KeyValues *pConditions)
+void BuildGroup::LoadControlSettings(const char *controlResourceName, const char *pathID,
+									 KeyValues *pPreloadedKeyValues, KeyValues *pConditions)
 {
 	// make sure the file is registered
 	RegisterControlSettingsFile(controlResourceName, pathID);
@@ -885,12 +876,12 @@ void BuildGroup::LoadControlSettings(const char *controlResourceName, const char
 	bool bShouldCacheKeys = true;
 	bool bDeleteKeys = false;
 
-	while ( !rDat )
+	while(!rDat)
 	{
-		if ( bUsePrecaching )
+		if(bUsePrecaching)
 		{
-			int nIndex = m_dictCachedResFiles.Find( controlResourceName );
-			if ( nIndex != m_dictCachedResFiles.InvalidIndex() )
+			int nIndex = m_dictCachedResFiles.Find(controlResourceName);
+			if(nIndex != m_dictCachedResFiles.InvalidIndex())
 			{
 				rDat = m_dictCachedResFiles[nIndex];
 				bUsingPrecachedSourceKeys = true;
@@ -901,55 +892,55 @@ void BuildGroup::LoadControlSettings(const char *controlResourceName, const char
 		}
 
 		// load the resource data from the file
-		rDat = new KeyValues( controlResourceName );
+		rDat = new KeyValues(controlResourceName);
 
 		// check the skins directory first, if an explicit pathID hasn't been set
 		bool bSuccess = false;
-		if ( !pathID )
+		if(!pathID)
 		{
-			bSuccess = rDat->LoadFromFile( g_pFullFileSystem, controlResourceName, "SKIN" );
+			bSuccess = rDat->LoadFromFile(g_pFullFileSystem, controlResourceName, "SKIN");
 		}
 
-		if ( !V_stricmp( CommandLine()->ParmValue( "-game", "hl2" ), "tf" ) )
+		if(!V_stricmp(CommandLine()->ParmValue("-game", "hl2"), "tf"))
 		{
-			if ( !bSuccess )
+			if(!bSuccess)
 			{
-				bSuccess = rDat->LoadFromFile( g_pFullFileSystem, controlResourceName, "custom_mod" );
+				bSuccess = rDat->LoadFromFile(g_pFullFileSystem, controlResourceName, "custom_mod");
 			}
-			if ( !bSuccess )
+			if(!bSuccess)
 			{
-				bSuccess = rDat->LoadFromFile( g_pFullFileSystem, controlResourceName, "vgui" );
+				bSuccess = rDat->LoadFromFile(g_pFullFileSystem, controlResourceName, "vgui");
 			}
-			if ( !bSuccess )
+			if(!bSuccess)
 			{
-				bSuccess = rDat->LoadFromFile( g_pFullFileSystem, controlResourceName, "BSP" );
+				bSuccess = rDat->LoadFromFile(g_pFullFileSystem, controlResourceName, "BSP");
 			}
 			// only allow to load loose files when using insecure mode
-			if ( !bSuccess && CommandLine()->FindParm( "-insecure" ) )
+			if(!bSuccess && CommandLine()->FindParm("-insecure"))
 			{
-				bSuccess = rDat->LoadFromFile( g_pFullFileSystem, controlResourceName, pathID );
+				bSuccess = rDat->LoadFromFile(g_pFullFileSystem, controlResourceName, pathID);
 			}
 		}
 		else
 		{
-			if ( !bSuccess )
+			if(!bSuccess)
 			{
-				bSuccess = rDat->LoadFromFile( g_pFullFileSystem, controlResourceName, pathID );
+				bSuccess = rDat->LoadFromFile(g_pFullFileSystem, controlResourceName, pathID);
 			}
 		}
 
-		if ( bSuccess )
+		if(bSuccess)
 		{
-			if ( IsX360() )
+			if(IsX360())
 			{
-				rDat->ProcessResolutionKeys( surface()->GetResolutionKey() );
+				rDat->ProcessResolutionKeys(surface()->GetResolutionKey());
 			}
-			if ( IsPC() )
+			if(IsPC())
 			{
-				ConVarRef cl_hud_minmode( "cl_hud_minmode", true );
-				if ( cl_hud_minmode.IsValid() && cl_hud_minmode.GetBool() )
+				ConVarRef cl_hud_minmode("cl_hud_minmode", true);
+				if(cl_hud_minmode.IsValid() && cl_hud_minmode.GetBool())
 				{
-					rDat->ProcessResolutionKeys( "_minmode" );
+					rDat->ProcessResolutionKeys("_minmode");
 				}
 			}
 			bDeleteKeys = true;
@@ -957,14 +948,14 @@ void BuildGroup::LoadControlSettings(const char *controlResourceName, const char
 		}
 		else
 		{
-			Warning( "Failed to load %s\n", controlResourceName );
+			Warning("Failed to load %s\n", controlResourceName);
 		}
 		break;
 	}
 
-	if ( pConditions && pConditions->GetFirstSubKey() )
+	if(pConditions && pConditions->GetFirstSubKey())
 	{
-		if ( bUsingPrecachedSourceKeys )
+		if(bUsingPrecachedSourceKeys)
 		{
 			// ProcessConditionalKeys modifies the KVs in place.  We dont want
 			// that to happen to our cached keys
@@ -977,13 +968,13 @@ void BuildGroup::LoadControlSettings(const char *controlResourceName, const char
 	}
 
 	// save off the resource name
-	delete [] m_pResourceName;
+	delete[] m_pResourceName;
 	m_pResourceName = new char[strlen(controlResourceName) + 1];
 	strcpy(m_pResourceName, controlResourceName);
 
-	if (pathID)
+	if(pathID)
 	{
-		delete [] m_pResourcePathID;
+		delete[] m_pResourcePathID;
 		m_pResourcePathID = new char[strlen(pathID) + 1];
 		strcpy(m_pResourcePathID, pathID);
 	}
@@ -994,67 +985,69 @@ void BuildGroup::LoadControlSettings(const char *controlResourceName, const char
 	// loop through the resource data sticking info into controls
 	ApplySettings(rDat);
 
-	if (m_pParentPanel)
+	if(m_pParentPanel)
 	{
 		m_pParentPanel->InvalidateLayout();
 		m_pParentPanel->Repaint();
 	}
 
-	if ( bShouldCacheKeys && bUsePrecaching )
+	if(bShouldCacheKeys && bUsePrecaching)
 	{
-		Assert( m_dictCachedResFiles.Find( controlResourceName ) == m_dictCachedResFiles.InvalidIndex() );
-		m_dictCachedResFiles.Insert( controlResourceName, rDat );
+		Assert(m_dictCachedResFiles.Find(controlResourceName) == m_dictCachedResFiles.InvalidIndex());
+		m_dictCachedResFiles.Insert(controlResourceName, rDat);
 	}
-	else if ( bDeleteKeys )
+	else if(bDeleteKeys)
 	{
-		Assert( m_dictCachedResFiles.Find( controlResourceName ) != m_dictCachedResFiles.InvalidIndex() || pConditions || pPreloadedKeyValues );
+		Assert(m_dictCachedResFiles.Find(controlResourceName) != m_dictCachedResFiles.InvalidIndex() || pConditions ||
+			   pPreloadedKeyValues);
 		rDat->deleteThis();
 	}
 }
 
-void BuildGroup::ProcessConditionalKeys( KeyValues *pData, KeyValues *pConditions )
+void BuildGroup::ProcessConditionalKeys(KeyValues *pData, KeyValues *pConditions)
 {
 	// for each condition, look for it in keys
 	// if its a positive condition, promote all of its children, replacing values
 
-	if ( pData )
+	if(pData)
 	{
 		KeyValues *pSubKey = pData->GetFirstSubKey();
-		if ( !pSubKey )
+		if(!pSubKey)
 		{
 			// not a block
 			return;
 		}
 
-		for ( ; pSubKey != NULL; pSubKey = pSubKey->GetNextKey() )
+		for(; pSubKey != NULL; pSubKey = pSubKey->GetNextKey())
 		{
 			// recursively descend each sub block
-			ProcessConditionalKeys( pSubKey, pConditions );
+			ProcessConditionalKeys(pSubKey, pConditions);
 
 			KeyValues *pCondition = pConditions->GetFirstSubKey();
-			for ( ; pCondition != NULL; pCondition = pCondition->GetNextKey() )
+			for(; pCondition != NULL; pCondition = pCondition->GetNextKey())
 			{
 				// if we match any conditions in this sub block, copy up
-				KeyValues *pConditionBlock = pSubKey->FindKey( pCondition->GetName() );
-				if ( pConditionBlock )
+				KeyValues *pConditionBlock = pSubKey->FindKey(pCondition->GetName());
+				if(pConditionBlock)
 				{
 					KeyValues *pOverridingKey;
-					for ( pOverridingKey = pConditionBlock->GetFirstSubKey(); pOverridingKey != NULL; pOverridingKey = pOverridingKey->GetNextKey() )
+					for(pOverridingKey = pConditionBlock->GetFirstSubKey(); pOverridingKey != NULL;
+						pOverridingKey = pOverridingKey->GetNextKey())
 					{
-						KeyValues *pExistingKey = pSubKey->FindKey( pOverridingKey->GetName() );
-						if ( pExistingKey )
+						KeyValues *pExistingKey = pSubKey->FindKey(pOverridingKey->GetName());
+						if(pExistingKey)
 						{
-							pExistingKey->SetStringValue( pOverridingKey->GetString() );
+							pExistingKey->SetStringValue(pOverridingKey->GetString());
 						}
 						else
 						{
 							KeyValues *copy = pOverridingKey->MakeCopy();
-							pSubKey->AddSubKey( copy );
+							pSubKey->AddSubKey(copy);
 						}
-					}				
+					}
 				}
-			}			
-		}		
+			}
+		}
 	}
 }
 
@@ -1066,7 +1059,7 @@ void BuildGroup::RegisterControlSettingsFile(const char *controlResourceName, co
 {
 	// add the file into a list for build mode
 	CUtlSymbol sym(controlResourceName);
-	if (!m_RegisteredControlSettingsFiles.IsValidIndex(m_RegisteredControlSettingsFiles.Find(sym)))
+	if(!m_RegisteredControlSettingsFiles.IsValidIndex(m_RegisteredControlSettingsFiles.Find(sym)))
 	{
 		m_RegisteredControlSettingsFiles.AddToTail(sym);
 	}
@@ -1093,34 +1086,34 @@ const char *BuildGroup::GetRegisteredControlSettingsFileByIndex(int index)
 //-----------------------------------------------------------------------------
 void BuildGroup::ReloadControlSettings()
 {
-	delete m_hBuildDialog.Get(); 
+	delete m_hBuildDialog.Get();
 	m_hBuildDialog = NULL;
 
 	// loop though objects in the current control group and remove them all
-	// the 0th panel is always the contextPanel which is not deletable 
-	for( int i = 1; i < _panelDar.Count(); i++ )
-	{	
-		if (!_panelDar[i].Get()) // this can happen if we had two of the same handle in the list
+	// the 0th panel is always the contextPanel which is not deletable
+	for(int i = 1; i < _panelDar.Count(); i++)
+	{
+		if(!_panelDar[i].Get()) // this can happen if we had two of the same handle in the list
 		{
 			_panelDar.Remove(i);
 			--i;
 			continue;
 		}
-		
+
 		// only delete deletable panels, as the only deletable panels
 		// are the ones created using the resource file
-		if ( _panelDar[i].Get()->IsBuildModeDeletable())
+		if(_panelDar[i].Get()->IsBuildModeDeletable())
 		{
 			delete _panelDar[i].Get();
 			_panelDar.Remove(i);
 			--i;
-		}		
-	}	
+		}
+	}
 
-	if (m_pResourceName)
+	if(m_pResourceName)
 	{
 		EditablePanel *edit = dynamic_cast<EditablePanel *>(m_pParentPanel);
-		if (edit)
+		if(edit)
 		{
 			edit->LoadControlSettings(m_pResourceName, m_pResourcePathID);
 		}
@@ -1130,9 +1123,9 @@ void BuildGroup::ReloadControlSettings()
 		}
 	}
 
-	_controlGroup.RemoveAll();	
+	_controlGroup.RemoveAll();
 
-	ActivateBuildDialog();	
+	ActivateBuildDialog();
 }
 
 //-----------------------------------------------------------------------------
@@ -1146,7 +1139,7 @@ void BuildGroup::ChangeControlSettingsFile(const char *controlResourceName)
 
 	// load the new state, via the dialog if possible
 	EditablePanel *edit = dynamic_cast<EditablePanel *>(m_pParentPanel);
-	if (edit)
+	if(edit)
 	{
 		edit->LoadControlSettings(controlResourceName, m_pResourcePathID);
 	}
@@ -1164,24 +1157,25 @@ void BuildGroup::ChangeControlSettingsFile(const char *controlResourceName)
 //-----------------------------------------------------------------------------
 // Purpose: saves control settings to file
 //-----------------------------------------------------------------------------
-bool BuildGroup::SaveControlSettings( void )
+bool BuildGroup::SaveControlSettings(void)
 {
 	bool bSuccess = false;
-	if ( m_pResourceName )
+	if(m_pResourceName)
 	{
-		KeyValues *rDat = new KeyValues( m_pResourceName );
+		KeyValues *rDat = new KeyValues(m_pResourceName);
 
 		// get the data from our controls
-		GetSettings( rDat );
-		
-		char fullpath[ 512 ];
-		g_pFullFileSystem->RelativePathToFullPath( m_pResourceName, m_pResourcePathID, fullpath, sizeof( fullpath ) );
+		GetSettings(rDat);
+
+		char fullpath[512];
+		g_pFullFileSystem->RelativePathToFullPath(m_pResourceName, m_pResourcePathID, fullpath, sizeof(fullpath));
 
 		// save the data out to a file
-		bSuccess = rDat->SaveToFile( g_pFullFileSystem, fullpath, NULL );
-		if (!bSuccess)
+		bSuccess = rDat->SaveToFile(g_pFullFileSystem, fullpath, NULL);
+		if(!bSuccess)
 		{
-			MessageBox *dlg = new MessageBox("BuildMode - Error saving file", "Error: Could not save changes.  File is most likely read only.");
+			MessageBox *dlg = new MessageBox("BuildMode - Error saving file",
+											 "Error: Could not save changes.  File is most likely read only.");
 			dlg->DoModal();
 		}
 
@@ -1197,68 +1191,68 @@ bool BuildGroup::SaveControlSettings( void )
 void BuildGroup::DeleteAllControlsCreatedByControlSettingsFile()
 {
 	// loop though objects in the current control group and remove them all
-	// the 0th panel is always the contextPanel which is not deletable 
-	for ( int i = 1; i < _panelDar.Count(); i++ )
-	{	
-		if (!_panelDar[i].Get()) // this can happen if we had two of the same handle in the list
+	// the 0th panel is always the contextPanel which is not deletable
+	for(int i = 1; i < _panelDar.Count(); i++)
+	{
+		if(!_panelDar[i].Get()) // this can happen if we had two of the same handle in the list
 		{
 			_panelDar.Remove(i);
 			--i;
 			continue;
 		}
-		
+
 		// only delete deletable panels, as the only deletable panels
 		// are the ones created using the resource file
-		if ( _panelDar[i].Get()->IsBuildModeDeletable())
+		if(_panelDar[i].Get()->IsBuildModeDeletable())
 		{
 			delete _panelDar[i].Get();
 			_panelDar.Remove(i);
 			--i;
-		}		
+		}
 	}
 
 	_currentPanel = m_pBuildContext;
 	_currentPanel->InvalidateLayout();
-    m_pBuildContext->Repaint();
+	m_pBuildContext->Repaint();
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: serializes settings from a resource data container
 //-----------------------------------------------------------------------------
-void BuildGroup::ApplySettings( KeyValues *resourceData )
+void BuildGroup::ApplySettings(KeyValues *resourceData)
 {
-	tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ );
+	tmZone(TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__);
 
 	// loop through all the keys, applying them wherever
-	for (KeyValues *controlKeys = resourceData->GetFirstSubKey(); controlKeys != NULL; controlKeys = controlKeys->GetNextKey())
+	for(KeyValues *controlKeys = resourceData->GetFirstSubKey(); controlKeys != NULL;
+		controlKeys = controlKeys->GetNextKey())
 	{
 		bool bFound = false;
 
 		// Skip keys that are atomic..
-		if (controlKeys->GetDataType() != KeyValues::TYPE_NONE)
+		if(controlKeys->GetDataType() != KeyValues::TYPE_NONE)
 			continue;
 
 		char const *keyName = controlKeys->GetName();
 
 		// check to see if any buildgroup panels have this name
-		for ( int i = 0; i < _panelDar.Count(); i++ )
+		for(int i = 0; i < _panelDar.Count(); i++)
 		{
 			Panel *panel = _panelDar[i].Get();
 
-			if (!panel) // this can happen if we had two of the same handle in the list
+			if(!panel) // this can happen if we had two of the same handle in the list
 			{
 				_panelDar.Remove(i);
 				--i;
 				continue;
 			}
 
-
-			Assert (panel);
+			Assert(panel);
 
 			// make the control name match CASE INSENSITIVE!
 			char const *panelName = panel->GetName();
 
-			if (!Q_stricmp(panelName, keyName))
+			if(!Q_stricmp(panelName, keyName))
 			{
 				// apply the settings
 				panel->ApplySettings(controlKeys);
@@ -1267,13 +1261,13 @@ void BuildGroup::ApplySettings( KeyValues *resourceData )
 			}
 		}
 
-		if ( !bFound )
+		if(!bFound)
 		{
 			// the key was not found in the registered list, check to see if we should create it
-			if ( keyName /*controlKeys->GetInt("AlwaysCreate", false)*/ )
+			if(keyName /*controlKeys->GetInt("AlwaysCreate", false)*/)
 			{
 				// create the control even though it wasn't registered
-				NewControl( controlKeys );
+				NewControl(controlKeys);
 			}
 		}
 	}
@@ -1283,36 +1277,36 @@ void BuildGroup::ApplySettings( KeyValues *resourceData )
 // Purpose: Create a new control in the context panel
 // Input:	name: class name of control to create
 //			controlKeys: keyvalues of settings for the panel.
-//			name OR controlKeys should be set, not both.  
+//			name OR controlKeys should be set, not both.
 //			x,y position relative to base panel
 // Output: Panel *newPanel, NULL if failed to create new control.
 //-----------------------------------------------------------------------------
-Panel *BuildGroup::NewControl( const char *name, int x, int y)
+Panel *BuildGroup::NewControl(const char *name, int x, int y)
 {
-	Assert (name);
-	
+	Assert(name);
+
 	Panel *newPanel = NULL;
 	// returns NULL on failure
 	newPanel = static_cast<EditablePanel *>(m_pParentPanel)->CreateControlByName(name);
-	
-	if (newPanel)
+
+	if(newPanel)
 	{
 		// panel successfully created
-		newPanel->SetParent(m_pParentPanel);	
+		newPanel->SetParent(m_pParentPanel);
 		newPanel->SetBuildGroup(this);
 		newPanel->SetPos(x, y);
 
 		char newFieldName[255];
 		GetNewFieldName(newFieldName, sizeof(newFieldName), newPanel);
 		newPanel->SetName(newFieldName);
-		
+
 		newPanel->AddActionSignalTarget(m_pParentPanel);
 		newPanel->SetBuildModeEditable(true);
-		newPanel->SetBuildModeDeletable(true);	
-		
+		newPanel->SetBuildModeDeletable(true);
+
 		// make sure it gets freed
 		newPanel->SetAutoDelete(true);
-	}	
+	}
 
 	return newPanel;
 }
@@ -1322,14 +1316,15 @@ Panel *BuildGroup::NewControl( const char *name, int x, int y)
 // Input:	controlKeys: keyvalues of settings for the panel only works when applying initial settings.
 // Output:	Panel *newPanel, NULL if failed to create new control.
 //-----------------------------------------------------------------------------
-Panel *BuildGroup::NewControl( KeyValues *controlKeys, int x, int y)
+Panel *BuildGroup::NewControl(KeyValues *controlKeys, int x, int y)
 {
-	Assert (controlKeys);
-	
+	Assert(controlKeys);
+
 	Panel *newPanel = NULL;
-	if (controlKeys)
+	if(controlKeys)
 	{
-//		Warning( "Creating new control \"%s\" of type \"%s\"\n", controlKeys->GetString( "fieldName" ), controlKeys->GetString( "ControlName" ) );
+		//		Warning( "Creating new control \"%s\" of type \"%s\"\n", controlKeys->GetString( "fieldName" ),
+		//controlKeys->GetString( "ControlName" ) );
 		KeyValues *keyVal = new KeyValues("ControlFactory", "ControlName", controlKeys->GetString("ControlName"));
 		m_pBuildContext->RequestInfo(keyVal);
 		// returns NULL on failure
@@ -1341,10 +1336,10 @@ Panel *BuildGroup::NewControl( KeyValues *controlKeys, int x, int y)
 		return NULL;
 	}
 
-	if (newPanel)
+	if(newPanel)
 	{
 		// panel successfully created
-		newPanel->SetParent(m_pParentPanel);	
+		newPanel->SetParent(m_pParentPanel);
 		newPanel->SetBuildGroup(this);
 		newPanel->SetPos(x, y);
 
@@ -1353,11 +1348,11 @@ Panel *BuildGroup::NewControl( KeyValues *controlKeys, int x, int y)
 
 		newPanel->AddActionSignalTarget(m_pParentPanel);
 		newPanel->SetBuildModeEditable(true);
-		newPanel->SetBuildModeDeletable(true);	
-		
+		newPanel->SetBuildModeDeletable(true);
+
 		// make sure it gets freed
 		newPanel->SetAutoDelete(true);
-	}	
+	}
 
 	return newPanel;
 }
@@ -1367,18 +1362,18 @@ Panel *BuildGroup::NewControl( KeyValues *controlKeys, int x, int y)
 //-----------------------------------------------------------------------------
 void BuildGroup::GetNewFieldName(char *newFieldName, int newFieldNameSize, Panel *newPanel)
 {
-	int fieldNameNumber=1;
+	int fieldNameNumber = 1;
 	char defaultName[25];
-	
-	Q_strncpy( defaultName, newPanel->GetClassName(), sizeof( defaultName ) );
 
-	while (1)
+	Q_strncpy(defaultName, newPanel->GetClassName(), sizeof(defaultName));
+
+	while(1)
 	{
-		Q_snprintf (newFieldName, newFieldNameSize, "%s%d", defaultName, fieldNameNumber);
-		if ( FieldNameTaken(newFieldName) == NULL)
+		Q_snprintf(newFieldName, newFieldNameSize, "%s%d", defaultName, fieldNameNumber);
+		if(FieldNameTaken(newFieldName) == NULL)
 			break;
 		++fieldNameNumber;
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -1387,14 +1382,14 @@ void BuildGroup::GetNewFieldName(char *newFieldName, int newFieldNameSize, Panel
 // Output : ptr to a panel that has the name if it is taken
 //-----------------------------------------------------------------------------
 Panel *BuildGroup::FieldNameTaken(const char *fieldName)
-{	 	
-	for ( int i = 0; i < _panelDar.Count(); i++ )
+{
+	for(int i = 0; i < _panelDar.Count(); i++)
 	{
 		Panel *panel = _panelDar[i].Get();
-		if ( !panel )
+		if(!panel)
 			continue;
 
-		if (!stricmp(panel->GetName(), fieldName) )
+		if(!stricmp(panel->GetName(), fieldName))
 		{
 			return panel;
 		}
@@ -1405,28 +1400,28 @@ Panel *BuildGroup::FieldNameTaken(const char *fieldName)
 //-----------------------------------------------------------------------------
 // Purpose: serializes settings to a resource data container
 //-----------------------------------------------------------------------------
-void BuildGroup::GetSettings( KeyValues *resourceData )
+void BuildGroup::GetSettings(KeyValues *resourceData)
 {
 	// loop through all the objects getting their settings
-	for( int i = 0; i < _panelDar.Count(); i++ )
+	for(int i = 0; i < _panelDar.Count(); i++)
 	{
 		Panel *panel = _panelDar[i].Get();
-		if (!panel)
+		if(!panel)
 			continue;
 
 		bool isRuler = false;
 		// do not get setting for ruler labels.
-		if (_showRulers) // rulers are visible
+		if(_showRulers) // rulers are visible
 		{
-			for (int j = 0; j < 4; j++)
+			for(int j = 0; j < 4; j++)
 			{
-				if (panel == _rulerNumber[j])
+				if(panel == _rulerNumber[j])
 				{
 					isRuler = true;
 					break;
 				}
 			}
-			if (isRuler)
+			if(isRuler)
 			{
 				isRuler = false;
 				continue;
@@ -1434,11 +1429,11 @@ void BuildGroup::GetSettings( KeyValues *resourceData )
 		}
 
 		// Don't save the setting of the buildmodedialog
-		if (!stricmp(panel->GetName(), "BuildDialog"))
+		if(!stricmp(panel->GetName(), "BuildDialog"))
 			continue;
 
 		// get the keys section from the data file
-		if (panel->GetName() && *panel->GetName())
+		if(panel->GetName() && *panel->GetName())
 		{
 			KeyValues *datKey = resourceData->FindKey(panel->GetName(), true);
 
@@ -1452,33 +1447,33 @@ void BuildGroup::GetSettings( KeyValues *resourceData )
 // Purpose: loop though objects in the current control group and remove them all
 //-----------------------------------------------------------------------------
 void BuildGroup::RemoveSettings()
-{	
+{
 	// loop though objects in the current control group and remove them all
 	int i;
-	for( i = 0; i < _controlGroup.Count(); i++ )
-	{		
+	for(i = 0; i < _controlGroup.Count(); i++)
+	{
 		// only delete delatable panels
-		if ( _controlGroup[i].Get()->IsBuildModeDeletable())
+		if(_controlGroup[i].Get()->IsBuildModeDeletable())
 		{
 			delete _controlGroup[i].Get();
 			_controlGroup.Remove(i);
 			--i;
-		}		
+		}
 	}
-	
+
 	// remove deleted panels from the handle list
-	for( i = 0; i < _panelDar.Count(); i++ )
+	for(i = 0; i < _panelDar.Count(); i++)
 	{
-		if ( !_panelDar[i].Get() )	
-		{	
-		  _panelDar.Remove(i);
-		  --i;
+		if(!_panelDar[i].Get())
+		{
+			_panelDar.Remove(i);
+			--i;
 		}
 	}
 
 	_currentPanel = m_pBuildContext;
 	_currentPanel->InvalidateLayout();
-    m_pBuildContext->Repaint();
+	m_pBuildContext->Repaint();
 }
 
 //-----------------------------------------------------------------------------
@@ -1492,7 +1487,7 @@ void BuildGroup::SetContextPanel(Panel *contextPanel)
 //-----------------------------------------------------------------------------
 // Purpose: gets the panel from which the build group gets all it's object creation info
 //-----------------------------------------------------------------------------
-Panel *BuildGroup::GetContextPanel() 
+Panel *BuildGroup::GetContextPanel()
 {
 	return m_pBuildContext;
 }
@@ -1500,7 +1495,7 @@ Panel *BuildGroup::GetContextPanel()
 //-----------------------------------------------------------------------------
 // Purpose: get the list of panels in the buildgroup
 //-----------------------------------------------------------------------------
-CUtlVector<PHandle> *BuildGroup::GetPanelList() 
+CUtlVector<PHandle> *BuildGroup::GetPanelList()
 {
 	return &_panelDar;
 }
@@ -1511,7 +1506,7 @@ CUtlVector<PHandle> *BuildGroup::GetPanelList()
 KeyValues *BuildGroup::GetDialogVariables()
 {
 	EditablePanel *edit = dynamic_cast<EditablePanel *>(m_pParentPanel);
-	if (edit)
+	if(edit)
 	{
 		return edit->GetDialogVariables();
 	}
@@ -1519,13 +1514,13 @@ KeyValues *BuildGroup::GetDialogVariables()
 	return NULL;
 }
 
-bool BuildGroup::PrecacheResFile( const char* pszResFileName )
+bool BuildGroup::PrecacheResFile(const char *pszResFileName)
 {
-	KeyValues *pkvResFile = new KeyValues( pszResFileName );
-	if ( pkvResFile->LoadFromFile( g_pFullFileSystem, pszResFileName, "GAME" ) )
+	KeyValues *pkvResFile = new KeyValues(pszResFileName);
+	if(pkvResFile->LoadFromFile(g_pFullFileSystem, pszResFileName, "GAME"))
 	{
-		Assert( m_dictCachedResFiles.Find( pszResFileName ) == m_dictCachedResFiles.InvalidIndex() );
-		m_dictCachedResFiles.Insert( pszResFileName, pkvResFile );
+		Assert(m_dictCachedResFiles.Find(pszResFileName) == m_dictCachedResFiles.InvalidIndex());
+		m_dictCachedResFiles.Insert(pszResFileName, pkvResFile);
 		return true;
 	}
 
@@ -1535,10 +1530,10 @@ bool BuildGroup::PrecacheResFile( const char* pszResFileName )
 void BuildGroup::ClearResFileCache()
 {
 	int nIndex = m_dictCachedResFiles.First();
-	while( m_dictCachedResFiles.IsValidIndex( nIndex ) )
+	while(m_dictCachedResFiles.IsValidIndex(nIndex))
 	{
-		m_dictCachedResFiles[ nIndex ]->deleteThis();
-		nIndex = m_dictCachedResFiles.Next( nIndex );
+		m_dictCachedResFiles[nIndex]->deleteThis();
+		nIndex = m_dictCachedResFiles.Next(nIndex);
 	}
 	m_dictCachedResFiles.Purge();
 }

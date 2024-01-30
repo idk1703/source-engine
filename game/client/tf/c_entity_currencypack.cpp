@@ -4,11 +4,12 @@
 #include "c_entity_currencypack.h"
 #include "c_tf_player.h"
 
-IMPLEMENT_CLIENTCLASS_DT( C_CurrencyPack, DT_CurrencyPack, CCurrencyPack )
-	RecvPropBool( RECVINFO( m_bDistributed ) ),
-END_RECV_TABLE()
+IMPLEMENT_CLIENTCLASS_DT(C_CurrencyPack, DT_CurrencyPack, CCurrencyPack)
+RecvPropBool(RECVINFO(m_bDistributed)),
+END_RECV_TABLE
+()
 
-C_CurrencyPack::C_CurrencyPack()
+	C_CurrencyPack::C_CurrencyPack()
 {
 	m_bDistributed = false;
 
@@ -17,43 +18,41 @@ C_CurrencyPack::C_CurrencyPack()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_CurrencyPack::~C_CurrencyPack()
 {
 	DestroyGlowEffect();
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_CurrencyPack::OnDataChanged( DataUpdateType_t updateType )
+void C_CurrencyPack::OnDataChanged(DataUpdateType_t updateType)
 {
-	BaseClass::OnDataChanged( updateType );
+	BaseClass::OnDataChanged(updateType);
 
-	if ( updateType == DATA_UPDATE_CREATED )
+	if(updateType == DATA_UPDATE_CREATED)
 	{
-		SetNextClientThink( CLIENT_THINK_ALWAYS );
+		SetNextClientThink(CLIENT_THINK_ALWAYS);
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_CurrencyPack::ClientThink()
 {
 #ifdef STAGING_ONLY
 	int iSeeCashThroughWall = 0;
 	C_TFPlayer *pTFPlayer = C_TFPlayer::GetLocalTFPlayer();
-	if ( pTFPlayer && pTFPlayer->IsAlive() )
+	if(pTFPlayer && pTFPlayer->IsAlive())
 	{
-		CALL_ATTRIB_HOOK_INT_ON_OTHER( pTFPlayer, iSeeCashThroughWall, mvm_see_cash_through_wall );
+		CALL_ATTRIB_HOOK_INT_ON_OTHER(pTFPlayer, iSeeCashThroughWall, mvm_see_cash_through_wall);
 	}
 
-	bool bShouldGlowForLocalPlayer =  iSeeCashThroughWall != 0;
-	if ( m_bShouldGlowForLocalPlayer != bShouldGlowForLocalPlayer )
+	bool bShouldGlowForLocalPlayer = iSeeCashThroughWall != 0;
+	if(m_bShouldGlowForLocalPlayer != bShouldGlowForLocalPlayer)
 	{
 		m_bShouldGlowForLocalPlayer = bShouldGlowForLocalPlayer;
 		UpdateGlowEffect();
@@ -62,30 +61,30 @@ void C_CurrencyPack::ClientThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_CurrencyPack::UpdateGlowEffect( void )
+void C_CurrencyPack::UpdateGlowEffect(void)
 {
 	// destroy the existing effect
-	if ( m_pGlowEffect )
+	if(m_pGlowEffect)
 	{
 		DestroyGlowEffect();
 	}
 
 	// create a new effect if we have a cart
-	if ( m_bShouldGlowForLocalPlayer )
+	if(m_bShouldGlowForLocalPlayer)
 	{
-		Vector color = m_bDistributed ? Vector( 150, 0, 0 ) : Vector( 0, 150, 0 );
-		m_pGlowEffect = new CGlowObject( this, color, 1.0, true );
+		Vector color = m_bDistributed ? Vector(150, 0, 0) : Vector(0, 150, 0);
+		m_pGlowEffect = new CGlowObject(this, color, 1.0, true);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_CurrencyPack::DestroyGlowEffect( void )
+void C_CurrencyPack::DestroyGlowEffect(void)
 {
-	if ( m_pGlowEffect )
+	if(m_pGlowEffect)
 	{
 		delete m_pGlowEffect;
 		m_pGlowEffect = NULL;

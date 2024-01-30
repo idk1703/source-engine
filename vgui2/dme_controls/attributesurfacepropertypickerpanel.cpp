@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -11,43 +11,38 @@
 #include "tier1/KeyValues.h"
 #include "filesystem.h"
 
-
 using namespace vgui;
 
-
 const char *SURFACEPROP_MANIFEST_FILE = "scripts/surfaceproperties_manifest.txt";
-
 
 //-----------------------------------------------------------------------------
 // Constructor
 //-----------------------------------------------------------------------------
-CAttributeSurfacePropertyPickerPanel::CAttributeSurfacePropertyPickerPanel( vgui::Panel *parent, const AttributeWidgetInfo_t &info ) :
-	BaseClass( parent, info )
+CAttributeSurfacePropertyPickerPanel::CAttributeSurfacePropertyPickerPanel(vgui::Panel *parent,
+																		   const AttributeWidgetInfo_t &info)
+	: BaseClass(parent, info)
 {
 }
 
-CAttributeSurfacePropertyPickerPanel::~CAttributeSurfacePropertyPickerPanel()
-{
-}
-
+CAttributeSurfacePropertyPickerPanel::~CAttributeSurfacePropertyPickerPanel() {}
 
 //-----------------------------------------------------------------------------
 // Reads the surface properties
 //-----------------------------------------------------------------------------
-void CAttributeSurfacePropertyPickerPanel::AddSurfacePropertiesToList( PickerList_t &list )
+void CAttributeSurfacePropertyPickerPanel::AddSurfacePropertiesToList(PickerList_t &list)
 {
-	KeyValues *manifest = new KeyValues( SURFACEPROP_MANIFEST_FILE );
-	if ( manifest->LoadFromFile( g_pFullFileSystem, SURFACEPROP_MANIFEST_FILE, "GAME" ) )
+	KeyValues *manifest = new KeyValues(SURFACEPROP_MANIFEST_FILE);
+	if(manifest->LoadFromFile(g_pFullFileSystem, SURFACEPROP_MANIFEST_FILE, "GAME"))
 	{
-		for ( KeyValues *sub = manifest->GetFirstSubKey(); sub != NULL; sub = sub->GetNextKey() )
+		for(KeyValues *sub = manifest->GetFirstSubKey(); sub != NULL; sub = sub->GetNextKey())
 		{
-			if ( Q_stricmp( sub->GetName(), "file" ) )
+			if(Q_stricmp(sub->GetName(), "file"))
 				continue;
-							  
-			KeyValues *file = new KeyValues( SURFACEPROP_MANIFEST_FILE );
-			if ( file->LoadFromFile( g_pFullFileSystem, sub->GetString(), "GAME" ) )
+
+			KeyValues *file = new KeyValues(SURFACEPROP_MANIFEST_FILE);
+			if(file->LoadFromFile(g_pFullFileSystem, sub->GetString(), "GAME"))
 			{
-				for ( KeyValues *pTrav = file; pTrav; pTrav = pTrav->GetNextKey() )
+				for(KeyValues *pTrav = file; pTrav; pTrav = pTrav->GetNextKey())
 				{
 					int i = list.AddToTail();
 					list[i].m_pChoiceString = pTrav->GetName();
@@ -56,47 +51,46 @@ void CAttributeSurfacePropertyPickerPanel::AddSurfacePropertiesToList( PickerLis
 			}
 			else
 			{
-				Warning( "Unable to load surface properties file '%s'\n", sub->GetString() );
+				Warning("Unable to load surface properties file '%s'\n", sub->GetString());
 			}
 			file->deleteThis();
 		}
 	}
 	else
 	{
-		Warning( "Unable to load manifest file '%s'\n", SURFACEPROP_MANIFEST_FILE );
+		Warning("Unable to load manifest file '%s'\n", SURFACEPROP_MANIFEST_FILE);
 	}
 
 	manifest->deleteThis();
 }
-
 
 //-----------------------------------------------------------------------------
 // Called when it's time to show the picker
 //-----------------------------------------------------------------------------
 void CAttributeSurfacePropertyPickerPanel::ShowPickerDialog()
 {
-	CPickerFrame *pSurfacePropPickerDialog = new CPickerFrame( this, "Select Surface Property", "Surface Property", "surfacePropertyName" );
+	CPickerFrame *pSurfacePropPickerDialog =
+		new CPickerFrame(this, "Select Surface Property", "Surface Property", "surfacePropertyName");
 	PickerList_t surfacePropList;
-	AddSurfacePropertiesToList( surfacePropList );
-	pSurfacePropPickerDialog->AddActionSignalTarget( this );
-	pSurfacePropPickerDialog->DoModal( surfacePropList );
+	AddSurfacePropertiesToList(surfacePropList);
+	pSurfacePropPickerDialog->AddActionSignalTarget(this);
+	pSurfacePropPickerDialog->DoModal(surfacePropList);
 }
-
 
 //-----------------------------------------------------------------------------
 // Called by the picker dialog if a asset was selected
 //-----------------------------------------------------------------------------
-void CAttributeSurfacePropertyPickerPanel::OnPicked( KeyValues *pKeyValues )
+void CAttributeSurfacePropertyPickerPanel::OnPicked(KeyValues *pKeyValues)
 {
 	// Get the asset name back
-	const char *pSurfacePropertyName = pKeyValues->GetString( "choice", NULL );
-	if ( !pSurfacePropertyName || !pSurfacePropertyName[ 0 ] )
+	const char *pSurfacePropertyName = pKeyValues->GetString("choice", NULL);
+	if(!pSurfacePropertyName || !pSurfacePropertyName[0])
 		return;
 
 	// Apply to text panel
-	m_pData->SetText( pSurfacePropertyName );
+	m_pData->SetText(pSurfacePropertyName);
 	SetDirty(true);
-	if ( IsAutoApply() )
+	if(IsAutoApply())
 	{
 		Apply();
 	}

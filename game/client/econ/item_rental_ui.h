@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,9 +24,12 @@
 class CEconPreviewNotification : public CEconNotification
 {
 public:
-	CEconPreviewNotification( uint64 ulSteamID, uint32 iItemDef );
+	CEconPreviewNotification(uint64 ulSteamID, uint32 iItemDef);
 
-	virtual EType NotificationType() { return eType_Trigger; }
+	virtual EType NotificationType()
+	{
+		return eType_Trigger;
+	}
 
 	virtual void Trigger() {}
 
@@ -42,9 +45,14 @@ public:
 class CEconPreviewExpiredNotification : public CEconPreviewNotification
 {
 public:
-	CEconPreviewExpiredNotification( uint64 ulSteamID, uint32 iItemDef ) : CEconPreviewNotification( ulSteamID, iItemDef ) {}
+	CEconPreviewExpiredNotification(uint64 ulSteamID, uint32 iItemDef) : CEconPreviewNotification(ulSteamID, iItemDef)
+	{
+	}
 
-	virtual EType NotificationType() { return eType_Trigger; }
+	virtual EType NotificationType()
+	{
+		return eType_Trigger;
+	}
 
 	virtual void Trigger();
 };
@@ -52,13 +60,19 @@ public:
 class CEconPreviewItemBoughtNotification : public CEconPreviewNotification
 {
 public:
-	CEconPreviewItemBoughtNotification( uint64 ulSteamID, uint32 iItemDef ) : CEconPreviewNotification( ulSteamID, iItemDef ) {}
+	CEconPreviewItemBoughtNotification(uint64 ulSteamID, uint32 iItemDef)
+		: CEconPreviewNotification(ulSteamID, iItemDef)
+	{
+	}
 
-	virtual EType NotificationType() { return eType_Trigger; }
+	virtual EType NotificationType()
+	{
+		return eType_Trigger;
+	}
 
 	virtual void Trigger()
 	{
-		EconUI()->OpenEconUI( ECONUI_BACKPACK );
+		EconUI()->OpenEconUI(ECONUI_BACKPACK);
 		MarkForDeletion();
 	}
 };

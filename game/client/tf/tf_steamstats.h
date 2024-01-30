@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,12 +23,12 @@ public:
 	virtual void UploadStats();
 
 private:
-	void FireGameEvent( IGameEvent *event );
+	void FireGameEvent(IGameEvent *event);
 	void SetNextForceUploadTime();
-	void ReportLiveStats();	// Xbox 360
+	void ReportLiveStats(); // Xbox 360
 	float m_flTimeNextForceUpload;
 };
 
 extern CTFSteamStats g_TFSteamStats;
 
-#endif //TF_STEAMSTATS_H
+#endif // TF_STEAMSTATS_H

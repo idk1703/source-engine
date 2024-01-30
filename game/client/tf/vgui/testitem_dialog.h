@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -45,55 +45,56 @@ enum testitem_bodygroups_to_hide_t
 //-----------------------------------------------------------------------------
 class CTestItemDialog : public vgui::EditablePanel, public CGameEventListener
 {
-	DECLARE_CLASS_SIMPLE( CTestItemDialog, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CTestItemDialog, vgui::EditablePanel);
+
 public:
-	CTestItemDialog( vgui::Panel *parent, testitem_itemtypes_t iItemType, int iClassUsage, KeyValues *pExistingKVs );
-	~CTestItemDialog( void );
+	CTestItemDialog(vgui::Panel *parent, testitem_itemtypes_t iItemType, int iClassUsage, KeyValues *pExistingKVs);
+	~CTestItemDialog(void);
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void PerformLayout( void );
-	virtual void OnCommand( const char *command );
-	virtual void FireGameEvent( IGameEvent *event );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void PerformLayout(void);
+	virtual void OnCommand(const char *command);
+	virtual void FireGameEvent(IGameEvent *event);
 
-	void	Close( void );
-	void	CloseAndUpdateItem( void );
+	void Close(void);
+	void CloseAndUpdateItem(void);
 
-	MESSAGE_FUNC_PARAMS( OnTextChanged, "TextChanged", data );
-	MESSAGE_FUNC_CHARPTR( OnFileSelected, "FileSelected", fullpath );
-
-private:
-	void	InitializeFromExistingKVs( KeyValues *pExistingKVs );
-	void	SetEntryStep( testitem_entrysteps_t iStep );
-	void	OpenSelectModelDialog( void );
-	void	SetupItemComboBox( vgui::ComboBox *pComboBox );
-	void	SetupPaintColorComboBox( void );
-	void	SetupUnusualEffectComboBox( void );
-	void	HandleClassCheckbuttonChecked( vgui::Panel *pPanel );
+	MESSAGE_FUNC_PARAMS(OnTextChanged, "TextChanged", data);
+	MESSAGE_FUNC_CHARPTR(OnFileSelected, "FileSelected", fullpath);
 
 private:
-	testitem_entrysteps_t	m_iEntryStep;
-	testitem_itemtypes_t	m_iItemType;
-	int						m_iClassUsage;
+	void InitializeFromExistingKVs(KeyValues *pExistingKVs);
+	void SetEntryStep(testitem_entrysteps_t iStep);
+	void OpenSelectModelDialog(void);
+	void SetupItemComboBox(vgui::ComboBox *pComboBox);
+	void SetupPaintColorComboBox(void);
+	void SetupUnusualEffectComboBox(void);
+	void HandleClassCheckbuttonChecked(vgui::Panel *pPanel);
 
-	vgui::FileOpenDialog	*m_hImportModelDialog;
-	char					m_szRelativePath[MAX_PATH];
+private:
+	testitem_entrysteps_t m_iEntryStep;
+	testitem_itemtypes_t m_iItemType;
+	int m_iClassUsage;
 
-	CExLabel				*m_pModelLabel;
-	CExLabel				*m_pSelectModelLabel;
-	CExLabel				*m_pNoItemsToReplaceLabel;
-	CExButton				*m_pSelectModelButton;
-	CExButton				*m_pOkButton;
-	vgui::ComboBox			*m_pItemReplacedComboBox;
-	vgui::EditablePanel		*m_pBodygroupPanel;
-	vgui::EditablePanel		*m_pItemReplacedPanel;
-	vgui::CheckButton		*m_pBodygroupCheckButtons[TI_HIDEBG_COUNT];
+	vgui::FileOpenDialog *m_hImportModelDialog;
+	char m_szRelativePath[MAX_PATH];
 
-	vgui::EditablePanel		*m_pCustomizationsPanel;
-	vgui::ComboBox			*m_pPaintColorComboBox;
-	vgui::ComboBox			*m_pUnusualEffectComboBox;
+	CExLabel *m_pModelLabel;
+	CExLabel *m_pSelectModelLabel;
+	CExLabel *m_pNoItemsToReplaceLabel;
+	CExButton *m_pSelectModelButton;
+	CExButton *m_pOkButton;
+	vgui::ComboBox *m_pItemReplacedComboBox;
+	vgui::EditablePanel *m_pBodygroupPanel;
+	vgui::EditablePanel *m_pItemReplacedPanel;
+	vgui::CheckButton *m_pBodygroupCheckButtons[TI_HIDEBG_COUNT];
 
-	vgui::EditablePanel		*m_pExistingItemToTestPanel;
-	vgui::ComboBox			*m_pExistingItemComboBox;
+	vgui::EditablePanel *m_pCustomizationsPanel;
+	vgui::ComboBox *m_pPaintColorComboBox;
+	vgui::ComboBox *m_pUnusualEffectComboBox;
+
+	vgui::EditablePanel *m_pExistingItemToTestPanel;
+	vgui::ComboBox *m_pExistingItemComboBox;
 };
 
 #endif // TESTITEM_DIALOG_H

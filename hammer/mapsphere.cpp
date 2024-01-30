@@ -23,9 +23,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 IMPLEMENT_MAPCLASS(CMapSphere)
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Factory function. Used for creating a CMapSphere helper from a
@@ -37,14 +35,14 @@ IMPLEMENT_MAPCLASS(CMapSphere)
 CMapClass *CMapSphere::Create(CHelperInfo *pHelperInfo, CMapEntity *pParent)
 {
 	CMapSphere *pSphere = new CMapSphere;
-	if (pSphere != NULL)
+	if(pSphere != NULL)
 	{
 		//
 		// The first parameter should be the key name to represent. If it isn't
 		// there we assume "radius".
 		//
 		const char *pszKeyName = pHelperInfo->GetParameter(0);
-		if (pszKeyName != NULL)
+		if(pszKeyName != NULL)
 		{
 			strcpy(pSphere->m_szKeyName, pszKeyName);
 		}
@@ -61,19 +59,19 @@ CMapClass *CMapSphere::Create(CHelperInfo *pHelperInfo, CMapEntity *pParent)
 		unsigned char chBlue = 255;
 
 		const char *pszParam = pHelperInfo->GetParameter(1);
-		if (pszParam != NULL)
+		if(pszParam != NULL)
 		{
 			chRed = atoi(pszParam);
 		}
 
 		pszParam = pHelperInfo->GetParameter(2);
-		if (pszParam != NULL)
+		if(pszParam != NULL)
 		{
 			chGreen = atoi(pszParam);
 		}
 
 		pszParam = pHelperInfo->GetParameter(3);
-		if (pszParam != NULL)
+		if(pszParam != NULL)
 		{
 			chBlue = atoi(pszParam);
 		}
@@ -83,7 +81,6 @@ CMapClass *CMapSphere::Create(CHelperInfo *pHelperInfo, CMapEntity *pParent)
 
 	return pSphere;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor.
@@ -99,18 +96,14 @@ CMapSphere::CMapSphere(void)
 	b = 0;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Destructor.
 //-----------------------------------------------------------------------------
-CMapSphere::~CMapSphere(void)
-{
-}
-
+CMapSphere::~CMapSphere(void) {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bFullUpdate - 
+// Purpose:
+// Input  : bFullUpdate -
 //-----------------------------------------------------------------------------
 void CMapSphere::CalcBounds(BOOL bFullUpdate)
 {
@@ -134,23 +127,21 @@ void CMapSphere::CalcBounds(BOOL bFullUpdate)
 	m_BoundingBox.ResetBounds(); // we don't want to use the bounds of the sphere for our bounding box
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CMapClass
 //-----------------------------------------------------------------------------
 CMapClass *CMapSphere::Copy(bool bUpdateDependencies)
 {
 	CMapSphere *pCopy = new CMapSphere;
 
-	if (pCopy != NULL)
+	if(pCopy != NULL)
 	{
 		pCopy->CopyFrom(this, bUpdateDependencies);
 	}
 
-	return(pCopy);
+	return (pCopy);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Makes this an exact duplicate of pObject.
@@ -167,9 +158,8 @@ CMapClass *CMapSphere::CopyFrom(CMapClass *pObject, bool bUpdateDependencies)
 	m_flRadius = pFrom->m_flRadius;
 	strcpy(m_szKeyName, pFrom->m_szKeyName);
 
-	return(this);
+	return (this);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets the radius of the sphere helper and updates our parent
@@ -179,15 +169,14 @@ void CMapSphere::SetRadius(float flRadius)
 {
 	m_flRadius = V_rint(flRadius);
 
-	CMapEntity *pEntity = dynamic_cast <CMapEntity *>(m_pParent);
-	if (pEntity != NULL)
+	CMapEntity *pEntity = dynamic_cast<CMapEntity *>(m_pParent);
+	if(pEntity != NULL)
 	{
 		char szValue[80];
 		sprintf(szValue, "%g", m_flRadius);
 		pEntity->NotifyChildKeyChanged(this, m_szKeyName, szValue);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Gets the tool object for a given context data from HitTest2D.
@@ -196,22 +185,21 @@ CBaseTool *CMapSphere::GetToolObject(int nHitData, bool bAttachObject)
 {
 	CToolSphere *pTool = (CToolSphere *)ToolManager()->GetToolForID(TOOL_SPHERE);
 
-	if ( bAttachObject )
+	if(bAttachObject)
 		pTool->Attach(this);
 
 	return pTool;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pView - 
+// Purpose:
+// Input  : pView -
 //			point - point in client coordinates
-// Output : 
+// Output :
 //-----------------------------------------------------------------------------
 bool CMapSphere::HitTest2D(CMapView2D *pView, const Vector2D &point, HitInfo_t &HitData)
 {
-	if (!IsVisible() || m_flRadius <= 0 || !IsSelected() )
+	if(!IsVisible() || m_flRadius <= 0 || !IsSelected())
 	{
 		return NULL;
 	}
@@ -242,7 +230,7 @@ bool CMapSphere::HitTest2D(CMapView2D *pView, const Vector2D &point, HitInfo_t &
 	//
 	Vector2D vecTemp(vecClientOrigin.x, vecClientMin.y - HANDLE_OFFSET);
 
-	if (pView->CheckDistance(point, vecTemp, 6))
+	if(pView->CheckDistance(point, vecTemp, 6))
 	{
 		// Top handle
 		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZENS));
@@ -251,7 +239,7 @@ bool CMapSphere::HitTest2D(CMapView2D *pView, const Vector2D &point, HitInfo_t &
 
 	vecTemp.x = vecClientOrigin.x;
 	vecTemp.y = vecClientMax.y + HANDLE_OFFSET;
-	if (pView->CheckDistance(point, vecTemp, HANDLE_RADIUS))
+	if(pView->CheckDistance(point, vecTemp, HANDLE_RADIUS))
 	{
 		// Bottom handle
 		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZENS));
@@ -260,7 +248,7 @@ bool CMapSphere::HitTest2D(CMapView2D *pView, const Vector2D &point, HitInfo_t &
 
 	vecTemp.x = vecClientMin.x - HANDLE_OFFSET;
 	vecTemp.y = vecClientOrigin.y;
-	if (pView->CheckDistance(point, vecTemp, HANDLE_RADIUS))
+	if(pView->CheckDistance(point, vecTemp, HANDLE_RADIUS))
 	{
 		// Left handle
 		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZEWE));
@@ -269,7 +257,7 @@ bool CMapSphere::HitTest2D(CMapView2D *pView, const Vector2D &point, HitInfo_t &
 
 	vecTemp.x = vecClientMax.x + HANDLE_OFFSET;
 	vecTemp.y = vecClientOrigin.y;
-	if (pView->CheckDistance(point, vecTemp, HANDLE_RADIUS))
+	if(pView->CheckDistance(point, vecTemp, HANDLE_RADIUS))
 	{
 		// Right handle
 		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZEWE));
@@ -280,7 +268,6 @@ bool CMapSphere::HitTest2D(CMapView2D *pView, const Vector2D &point, HitInfo_t &
 	return false;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Notifies that this object's parent entity has had a key value change.
 // Input  : szKey - The key that changed.
@@ -288,63 +275,59 @@ bool CMapSphere::HitTest2D(CMapView2D *pView, const Vector2D &point, HitInfo_t &
 //-----------------------------------------------------------------------------
 void CMapSphere::OnParentKeyChanged(const char *szKey, const char *szValue)
 {
-	if (!stricmp(szKey, m_szKeyName))
+	if(!stricmp(szKey, m_szKeyName))
 	{
 		m_flRadius = atof(szValue);
 		PostUpdate(Notify_Changed);
 	}
 }
 
-
-
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pRender - 
+// Purpose:
+// Input  : pRender -
 //-----------------------------------------------------------------------------
 void CMapSphere::Render2D(CRender2D *pRender)
 {
-	if (m_pParent->IsSelected() && (m_flRadius > 0) )
+	if(m_pParent->IsSelected() && (m_flRadius > 0))
 	{
-		pRender->SetDrawColor( 255, 255, 0 );
+		pRender->SetDrawColor(255, 255, 0);
 
 		Vector2D ptClientRadius;
-		pRender->TransformNormal(ptClientRadius, Vector(m_flRadius,m_flRadius,m_flRadius) );
+		pRender->TransformNormal(ptClientRadius, Vector(m_flRadius, m_flRadius, m_flRadius));
 
 		int radius = ptClientRadius.x;
-        
-		pRender->DrawCircle( m_Origin, m_flRadius );
+
+		pRender->DrawCircle(m_Origin, m_flRadius);
 
 		bool bPopMode = pRender->BeginClientSpace();
-		
+
 		//
 		// Draw the four resize handles.
 		//
-		pRender->SetHandleStyle( HANDLE_RADIUS, CRender::HANDLE_SQUARE );
-		pRender->SetHandleColor( 255,255,255 );
+		pRender->SetHandleStyle(HANDLE_RADIUS, CRender::HANDLE_SQUARE);
+		pRender->SetHandleColor(255, 255, 255);
 
 		Vector2D offset;
 		offset.x = 0;
 		offset.y = -(radius + HANDLE_OFFSET);
-		pRender->DrawHandle( m_Origin, &offset );
+		pRender->DrawHandle(m_Origin, &offset);
 
 		offset.x = 0;
 		offset.y = radius + HANDLE_OFFSET;
-		pRender->DrawHandle( m_Origin, &offset );
+		pRender->DrawHandle(m_Origin, &offset);
 
 		offset.x = -(radius + HANDLE_OFFSET);
 		offset.y = 0;
-		pRender->DrawHandle( m_Origin, &offset );
+		pRender->DrawHandle(m_Origin, &offset);
 
 		offset.x = radius + HANDLE_OFFSET;
 		offset.y = 0;
-		pRender->DrawHandle( m_Origin, &offset );
+		pRender->DrawHandle(m_Origin, &offset);
 
-		if ( bPopMode )
+		if(bPopMode)
 			pRender->EndClientSpace();
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Renders the wireframe sphere.
@@ -352,10 +335,8 @@ void CMapSphere::Render2D(CRender2D *pRender)
 //-----------------------------------------------------------------------------
 void CMapSphere::Render3D(CRender3D *pRender)
 {
-	if (m_pParent->IsSelected() && (m_flRadius > 0))
+	if(m_pParent->IsSelected() && (m_flRadius > 0))
 	{
 		pRender->RenderWireframeSphere(m_Origin, m_flRadius, 12, 12, 255, 255, 0);
 	}
 }
-
-

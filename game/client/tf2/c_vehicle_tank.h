@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -9,6 +9,5 @@
 #ifdef _WIN32
 #pragma once
 #endif
-
 
 #endif // C_VEHICLE_TANK_H

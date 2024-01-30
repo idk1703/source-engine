@@ -7,14 +7,14 @@
 #ifndef WEAPON_PROFICIENCY_H
 #define WEAPON_PROFICIENCY_H
 
-#if defined( _WIN32 )
+#if defined(_WIN32)
 #pragma once
 #endif
 
 struct WeaponProficiencyInfo_t
 {
-	float	spreadscale;
-	float	bias;
+	float spreadscale;
+	float bias;
 };
 
 enum WeaponProficiency_t
@@ -26,7 +26,6 @@ enum WeaponProficiency_t
 	WEAPON_PROFICIENCY_PERFECT,
 };
 
-const char *GetWeaponProficiencyName( WeaponProficiency_t proficiency );
-
+const char *GetWeaponProficiencyName(WeaponProficiency_t proficiency);
 
 #endif // WEAPON_PROFICIENCY_H

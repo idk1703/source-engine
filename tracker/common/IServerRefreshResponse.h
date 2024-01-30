@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -28,7 +28,5 @@ public:
 	// called when the current refresh list is complete
 	virtual void RefreshComplete() = 0;
 };
-
-
 
 #endif // ISERVERREFRESHRESPONSE_H

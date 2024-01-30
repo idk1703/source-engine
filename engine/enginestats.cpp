@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -31,15 +31,14 @@ public:
 	}
 };
 
-CStatTime	g_StatTime;
+CStatTime g_StatTime;
 
-
-CEngineStats::CEngineStats() : m_InFrame( false )
+CEngineStats::CEngineStats() : m_InFrame(false)
 {
 	m_bInRun = false;
 }
 
-void CEngineStats::BeginRun( void )
+void CEngineStats::BeginRun(void)
 {
 	m_bInRun = true;
 	m_totalNumFrames = 0;
@@ -48,59 +47,52 @@ void CEngineStats::BeginRun( void )
 	m_runStartTime = Sys_FloatTime();
 }
 
-
-void CEngineStats::EndRun( void )
+void CEngineStats::EndRun(void)
 {
 	m_runEndTime = Sys_FloatTime();
 	m_bInRun = false;
 }
 
-void CEngineStats::BeginFrame( void )
+void CEngineStats::BeginFrame(void)
 {
 	m_bPaused = false;
 	m_InFrame = false;
 }
 
-
-void CEngineStats::ComputeFrameTimeStats( void )
+void CEngineStats::ComputeFrameTimeStats(void)
 {
 	m_StatGroup.m_StatFrameTime[ENGINE_STATS_FRAME_TIME] = m_flFrameTime / 1000.0f;
 	m_StatGroup.m_StatFrameTime[ENGINE_STATS_FPS_VARIABILITY] = m_flFPSVariability / 1000.0f;
-	m_StatGroup.m_StatFrameTime[ENGINE_STATS_FPS] = (m_flFrameTime != 0.0f) ? ( 1.0f / (1000.0f * m_flFrameTime) ) : 0.0f;
+	m_StatGroup.m_StatFrameTime[ENGINE_STATS_FPS] = (m_flFrameTime != 0.0f) ? (1.0f / (1000.0f * m_flFrameTime)) : 0.0f;
 }
 
-
-void CEngineStats::EndFrame( void )
+void CEngineStats::EndFrame(void)
 {
-	if (!m_InFrame)
+	if(!m_InFrame)
 		return;
 }
-
 
 //-----------------------------------------------------------------------------
 // Advances the next frame for the stats...
 //-----------------------------------------------------------------------------
-void CEngineStats::NextFrame() 
-{
-}
-
+void CEngineStats::NextFrame() {}
 
 //-----------------------------------------------------------------------------
 // Pause those stats!
 //-----------------------------------------------------------------------------
-void CEngineStats::PauseStats( bool bPaused )
+void CEngineStats::PauseStats(bool bPaused)
 {
-	if (bPaused)
+	if(bPaused)
 	{
-		if (m_InFrame)
+		if(m_InFrame)
 		{
 			m_bPaused = true;
 			m_InFrame = false;
 		}
 	}
-	else	// !bPaused
+	else // !bPaused
 	{
-		if (m_bPaused)
+		if(m_bPaused)
 		{
 			m_InFrame = true;
 			m_bPaused = false;
@@ -108,24 +100,21 @@ void CEngineStats::PauseStats( bool bPaused )
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // returns timed stats
 //-----------------------------------------------------------------------------
 
-double CEngineStats::TimedStatInFrame( EngineTimedStatId_t stat ) const
+double CEngineStats::TimedStatInFrame(EngineTimedStatId_t stat) const
 {
 	return m_StatGroup.m_StatFrameTime[stat];
 }
 
-double CEngineStats::TotalTimedStat( EngineTimedStatId_t stat ) const
+double CEngineStats::TotalTimedStat(EngineTimedStatId_t stat) const
 {
 	return m_StatGroup.m_TotalStatTime[stat];
 }
 
-
-double CEngineStats::GetRunTime( void )
+double CEngineStats::GetRunTime(void)
 {
 	return m_runEndTime - m_runStartTime;
 }
-

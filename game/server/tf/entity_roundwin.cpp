@@ -15,23 +15,22 @@
 //
 // CTeamplayRoundWin tables.
 //
-BEGIN_DATADESC( CTeamplayRoundWin )
+BEGIN_DATADESC(CTeamplayRoundWin)
 
-	DEFINE_KEYFIELD( m_bForceMapReset, FIELD_BOOLEAN, "force_map_reset" ),
-	DEFINE_KEYFIELD( m_bSwitchTeamsOnWin, FIELD_BOOLEAN, "switch_teams" ),
-	DEFINE_KEYFIELD( m_iWinReason, FIELD_INTEGER, "win_reason" ),
+	DEFINE_KEYFIELD(m_bForceMapReset, FIELD_BOOLEAN, "force_map_reset"),
+		DEFINE_KEYFIELD(m_bSwitchTeamsOnWin, FIELD_BOOLEAN, "switch_teams"),
+		DEFINE_KEYFIELD(m_iWinReason, FIELD_INTEGER, "win_reason"),
 
-	// Inputs.
-	DEFINE_INPUTFUNC( FIELD_INTEGER, "SetTeam", InputSetTeam ),
-	DEFINE_INPUTFUNC( FIELD_VOID, "RoundWin", InputRoundWin ),
+		// Inputs.
+		DEFINE_INPUTFUNC(FIELD_INTEGER, "SetTeam", InputSetTeam),
+		DEFINE_INPUTFUNC(FIELD_VOID, "RoundWin", InputRoundWin),
 
-	// Outputs.
-	DEFINE_OUTPUT( m_outputOnRoundWin, "OnRoundWin" ),
+		// Outputs.
+		DEFINE_OUTPUT(m_outputOnRoundWin, "OnRoundWin"),
 
 END_DATADESC()
 
-
-LINK_ENTITY_TO_CLASS( game_round_win, CTeamplayRoundWin );
+LINK_ENTITY_TO_CLASS(game_round_win, CTeamplayRoundWin);
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor.
@@ -39,46 +38,47 @@ LINK_ENTITY_TO_CLASS( game_round_win, CTeamplayRoundWin );
 CTeamplayRoundWin::CTeamplayRoundWin()
 {
 	// default win reason for map-fired event (map may change it)
-	m_iWinReason = WINREASON_DEFEND_UNTIL_TIME_LIMIT;	
+	m_iWinReason =
+WINREASON_DEFEND_UNTIL_TIME_LIMIT
+;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTeamplayRoundWin::RoundWin( void )
+void CTeamplayRoundWin::RoundWin(void)
 {
-    CTeamplayRoundBasedRules *pGameRules = dynamic_cast<CTeamplayRoundBasedRules *>( GameRules() );
+	CTeamplayRoundBasedRules *pGameRules = dynamic_cast<CTeamplayRoundBasedRules *>(GameRules());
 
-	if ( pGameRules )
+	if(pGameRules)
 	{
 		int iTeam = GetTeamNumber();
 
-		if ( iTeam > LAST_SHARED_TEAM )
+		if(iTeam > LAST_SHARED_TEAM)
 		{
-			if ( !m_bForceMapReset )
+			if(!m_bForceMapReset)
 			{
-				pGameRules->SetWinningTeam( iTeam, m_iWinReason, m_bForceMapReset );
+				pGameRules->SetWinningTeam(iTeam, m_iWinReason, m_bForceMapReset);
 			}
 			else
 			{
-				pGameRules->SetWinningTeam( iTeam, m_iWinReason, m_bForceMapReset, m_bSwitchTeamsOnWin );
+				pGameRules->SetWinningTeam(iTeam, m_iWinReason, m_bForceMapReset, m_bSwitchTeamsOnWin);
 			}
 		}
 		else
 		{
-			pGameRules->SetStalemate( STALEMATE_TIMER, m_bForceMapReset, m_bSwitchTeamsOnWin );
+			pGameRules->SetStalemate(STALEMATE_TIMER, m_bForceMapReset, m_bSwitchTeamsOnWin);
 		}
 	}
 
 	// Output.
-	m_outputOnRoundWin.FireOutput( this, this );
+	m_outputOnRoundWin.FireOutput(this, this);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTeamplayRoundWin::InputRoundWin( inputdata_t &inputdata )
+void CTeamplayRoundWin::InputRoundWin(inputdata_t &inputdata)
 {
 	RoundWin();
 }
-

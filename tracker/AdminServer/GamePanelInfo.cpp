@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -41,17 +41,16 @@
 
 using namespace vgui;
 
-static const long RETRY_TIME = 10000;		// refresh server every 10 seconds
-static const long MAP_CHANGE_TIME = 20000;		// refresh 20 seconds after a map change 
-static const long RESTART_TIME = 60000;		// refresh 60 seconds after a "_restart"
+static const long RETRY_TIME = 10000;	   // refresh server every 10 seconds
+static const long MAP_CHANGE_TIME = 20000; // refresh 20 seconds after a map change
+static const long RESTART_TIME = 60000;	   // refresh 60 seconds after a "_restart"
 
 #include "IManageServer.h"
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CGamePanelInfo::CGamePanelInfo(vgui::Panel *parent, const char *name, const char *mod) :  Frame(parent, name)
+CGamePanelInfo::CGamePanelInfo(vgui::Panel *parent, const char *name, const char *mod) : Frame(parent, name)
 {
 	SetSize(560, 420);
 	SetMinimumSize(560, 420);
@@ -64,9 +63,9 @@ CGamePanelInfo::CGamePanelInfo(vgui::Panel *parent, const char *name, const char
 	// Each image file is named ss1, ss2, ss3... ss20, one image for each frame of the animation.
 	// This loads the 20 images in to the Animation class.
 	m_pAnimImagePanel->LoadAnimation("resource\\steam\\g", 12);
-	
+
 	//!! animation temporarily disabled until UI pass done
-	//m_pAnimImagePanel->StartAnimation();
+	// m_pAnimImagePanel->StartAnimation();
 	m_pAnimImagePanel->SetVisible(false);
 
 	// the main container for the various sub panels
@@ -76,31 +75,31 @@ CGamePanelInfo::CGamePanelInfo(vgui::Panel *parent, const char *name, const char
 	m_pPlayerListPanel = new CPlayerPanel(this, "Player List");
 	m_pBanListPanel = new CBanPanel(this, "Ban List");
 	m_pServerLogPanel = new CRawLogPanel(this, "ServerLog");
-// chat panel disabled until we get the parsing done
-//	m_pServerChatPanel = new CChatPanel(this, "ChatPanel");
+	// chat panel disabled until we get the parsing done
+	//	m_pServerChatPanel = new CChatPanel(this, "ChatPanel");
 	m_pServerConfigPanel = new CServerConfigPanel(this, "ServerConfigPanel", mod);
-	m_pGraphsPanel = new CGraphPanel(this,"GraphsPanel");
+	m_pGraphsPanel = new CGraphPanel(this, "GraphsPanel");
 	m_pServerInfoPanel = new CServerInfoPanel(this, "ServerInfo");
-	
-	if ( CommandLine()->CheckParm( "-BudgetPanel" ) )
-		m_pBudgetPanel = new CBudgetPanelContainer( this, "BudgetPanel" );
+
+	if(CommandLine()->CheckParm("-BudgetPanel"))
+		m_pBudgetPanel = new CBudgetPanelContainer(this, "BudgetPanel");
 	else
 		m_pBudgetPanel = NULL;
 
 	m_pServerInfoPanel->AddActionSignalTarget(this);
 
-	m_pDetailsSheet->AddPage(m_pServerInfoPanel,"#Game_Main_Settings");
-	m_pDetailsSheet->AddPage(m_pServerConfigPanel,"#Game_Configure");
-	m_pDetailsSheet->AddPage(m_pGraphsPanel,"#Game_Server_Statistics");
-	m_pDetailsSheet->AddPage(m_pPlayerListPanel,"#Game_Current_Players");
-	m_pDetailsSheet->AddPage(m_pBanListPanel,"#Game_Bans");
-	
-	if ( m_pBudgetPanel )
-		m_pDetailsSheet->AddPage(m_pBudgetPanel,"#Game_Budgets");
+	m_pDetailsSheet->AddPage(m_pServerInfoPanel, "#Game_Main_Settings");
+	m_pDetailsSheet->AddPage(m_pServerConfigPanel, "#Game_Configure");
+	m_pDetailsSheet->AddPage(m_pGraphsPanel, "#Game_Server_Statistics");
+	m_pDetailsSheet->AddPage(m_pPlayerListPanel, "#Game_Current_Players");
+	m_pDetailsSheet->AddPage(m_pBanListPanel, "#Game_Bans");
 
-// chat panel disabled until we get the parsing done
-//	m_pDetailsSheet->AddPage(m_pServerChatPanel,"#Game_Chat");
-	m_pDetailsSheet->AddPage(m_pServerLogPanel,"#Game_Console");
+	if(m_pBudgetPanel)
+		m_pDetailsSheet->AddPage(m_pBudgetPanel, "#Game_Budgets");
+
+	// chat panel disabled until we get the parsing done
+	//	m_pDetailsSheet->AddPage(m_pServerChatPanel,"#Game_Chat");
+	m_pDetailsSheet->AddPage(m_pServerLogPanel, "#Game_Console");
 
 	// let us be ticked every frame
 	ivgui()->AddTickSignal(this->GetVPanel());
@@ -108,13 +107,13 @@ CGamePanelInfo::CGamePanelInfo(vgui::Panel *parent, const char *name, const char
 	LoadControlSettingsAndUserConfig("Admin\\DialogGamePanelInfo.res");
 
 	SetNewTitle(false, name);
-	SetVisible(true);	
-	
+	SetVisible(true);
+
 	MoveToCenterOfScreen();
 	RequestFocus();
 	MoveToFront();
 
-	//!! hack, force the server info panel to refresh fast 
+	//!! hack, force the server info panel to refresh fast
 	// because the info it receives while loading the server is wrong
 	PostMessage(m_pServerInfoPanel, new KeyValues("ResetData"), 0.1f);
 }
@@ -122,9 +121,7 @@ CGamePanelInfo::CGamePanelInfo(vgui::Panel *parent, const char *name, const char
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CGamePanelInfo::~CGamePanelInfo()
-{
-}
+CGamePanelInfo::~CGamePanelInfo() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets the title of the dialog
@@ -132,11 +129,11 @@ CGamePanelInfo::~CGamePanelInfo()
 void CGamePanelInfo::SetNewTitle(bool connectionFailed, const char *additional_text)
 {
 	const char *localized_title = "#Game_RemoteTitle";
-	if (!m_bRemoteServer)
-{
+	if(!m_bRemoteServer)
+	{
 		localized_title = "Game_LocalTitle";
 	}
-	else if (connectionFailed)
+	else if(connectionFailed)
 	{
 		localized_title = "#Game_RemoteTitle_Failed";
 	}
@@ -145,7 +142,7 @@ void CGamePanelInfo::SetNewTitle(bool connectionFailed, const char *additional_t
 	g_pVGuiLocalize->ConvertANSIToUnicode(additional_text, serverName, sizeof(serverName));
 	wchar_t title[256];
 	g_pVGuiLocalize->ConstructString(title, sizeof(title), g_pVGuiLocalize->Find(localized_title), 1, serverName);
-	
+
 	SetTitle(title, true);
 }
 
@@ -188,7 +185,7 @@ void CGamePanelInfo::OnTick()
 //-----------------------------------------------------------------------------
 void CGamePanelInfo::OnCommand(const char *command)
 {
-	if (!stricmp(command, "stop2")) 
+	if(!stricmp(command, "stop2"))
 	{
 		RemoteServer().SendCommand("quit");
 		m_bShuttingDown = true;
@@ -204,7 +201,7 @@ void CGamePanelInfo::OnCommand(const char *command)
 // Purpose: produces a dialog asking a player to enter a new ban
 //-----------------------------------------------------------------------------
 void CGamePanelInfo::OnStop()
-{	
+{
 	QueryBox *box = new QueryBox("#Game_Stop_Server_Title", "#Game_Restart_Server");
 	box->AddActionSignalTarget(this);
 	box->SetOKButtonText("#Game_Stop_Server");
@@ -225,7 +222,7 @@ void CGamePanelInfo::OnHelp()
 //-----------------------------------------------------------------------------
 void CGamePanelInfo::OnClose()
 {
-	if (m_bRemoteServer || m_bShuttingDown)
+	if(m_bRemoteServer || m_bShuttingDown)
 	{
 		BaseClass::OnClose();
 		return;
@@ -240,11 +237,11 @@ void CGamePanelInfo::OnClose()
 //-----------------------------------------------------------------------------
 void CGamePanelInfo::ActivateBuildMode()
 {
-//	BaseClass::ActivateBuildMode();
-//	return;
+	//	BaseClass::ActivateBuildMode();
+	//	return;
 	// no subpanel, no build mode
 	EditablePanel *pg = dynamic_cast<EditablePanel *>(m_pDetailsSheet->GetActivePage());
-	if (pg)
+	if(pg)
 	{
 		pg->ActivateBuildMode();
 	}
@@ -255,17 +252,17 @@ void CGamePanelInfo::ActivateBuildMode()
 //-----------------------------------------------------------------------------
 void CGamePanelInfo::AddToConsole(const char *msg)
 {
-	if (m_pServerLogPanel)
+	if(m_pServerLogPanel)
 	{
 		// hack, look for restart message
-		if (*msg == 3 && !strncmp(msg + 1, "MasterRequestRestart", strlen("MasterRequestRestart")))
+		if(*msg == 3 && !strncmp(msg + 1, "MasterRequestRestart", strlen("MasterRequestRestart")))
 		{
 			OnMasterRequestRestart();
 		}
-		else if (*msg == 3 && !strncmp(msg + 1, "MasterOutOfDate", strlen("MasterOutOfDate")))
+		else if(*msg == 3 && !strncmp(msg + 1, "MasterOutOfDate", strlen("MasterOutOfDate")))
 		{
-			const char *details = strstr( msg, "MasterOutOfDate" );
-			if ( details )
+			const char *details = strstr(msg, "MasterOutOfDate");
+			if(details)
 			{
 				OnMasterOutOfDate(details + strlen("MasterOutOfDate"));
 			}
@@ -278,16 +275,17 @@ void CGamePanelInfo::AddToConsole(const char *msg)
 	}
 }
 
-void CGamePanelInfo::OnMasterOutOfDate( const char *msg)
+void CGamePanelInfo::OnMasterOutOfDate(const char *msg)
 {
 #if !defined(_DEBUG)
 
 	// open a dialog informing user that they need to restart the server
-	if (!m_hOutOfDateQueryBox.Get())
+	if(!m_hOutOfDateQueryBox.Get())
 	{
-		char *fullmsg = (char *) _alloca( strlen(msg) + strlen( "\n\nDo you wish to shutdown now?\n") + 1 );
+		char *fullmsg = (char *)_alloca(strlen(msg) + strlen("\n\nDo you wish to shutdown now?\n") + 1);
 
-		_snprintf( fullmsg, strlen(msg) + strlen( "\n\nDo you wish to shutdown now?\n") + 1 , "%s\n\nDo you wish to shutdown now?\n", msg );
+		_snprintf(fullmsg, strlen(msg) + strlen("\n\nDo you wish to shutdown now?\n") + 1,
+				  "%s\n\nDo you wish to shutdown now?\n", msg);
 		m_hOutOfDateQueryBox = new QueryBox("Server restart pending", fullmsg);
 		m_hOutOfDateQueryBox->AddActionSignalTarget(this);
 		m_hOutOfDateQueryBox->SetOKCommand(new KeyValues("RestartServer"));
@@ -310,9 +308,11 @@ void CGamePanelInfo::OnMasterRequestRestart()
 #if !defined(_DEBUG)
 
 	// open a dialog informing user that they need to restart the server
-	if (!m_hRestartQueryBox.Get())
+	if(!m_hRestartQueryBox.Get())
 	{
-		m_hRestartQueryBox = new QueryBox("Server restart needed", "Your server is out of date, and will not be listed\non the master server until you restart.\n\nDo you wish to shutdown now?\n");
+		m_hRestartQueryBox =
+			new QueryBox("Server restart needed", "Your server is out of date, and will not be listed\non the master "
+												  "server until you restart.\n\nDo you wish to shutdown now?\n");
 		m_hRestartQueryBox->AddActionSignalTarget(this);
 		m_hRestartQueryBox->SetOKCommand(new KeyValues("RestartServer"));
 		m_hRestartQueryBox->ShowWindow();

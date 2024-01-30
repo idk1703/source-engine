@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -41,7 +41,7 @@ void RadioImage::Paint()
 	DrawSetTextFont(GetFont());
 
 	// draw background
-	if (_radioButton->IsEnabled())
+	if(_radioButton->IsEnabled())
 	{
 		DrawSetTextColor(_bgColor);
 	}
@@ -58,21 +58,21 @@ void RadioImage::Paint()
 	DrawPrintChar(0, 1, 'k');
 
 	// draw selected check
-	if (_radioButton->IsSelected())
+	if(_radioButton->IsSelected())
 	{
 		DrawSetTextColor(_checkColor);
 		DrawPrintChar(0, 1, 'h');
 	}
 }
 
-DECLARE_BUILD_FACTORY_DEFAULT_TEXT( RadioButton, RadioButton );
+DECLARE_BUILD_FACTORY_DEFAULT_TEXT(RadioButton, RadioButton);
 
 //-----------------------------------------------------------------------------
 // Purpose: Create a radio button.
 //-----------------------------------------------------------------------------
 RadioButton::RadioButton(Panel *parent, const char *panelName, const char *text) : ToggleButton(parent, panelName, text)
 {
- 	SetContentAlignment(a_west);
+	SetContentAlignment(a_west);
 
 	// create the image
 	_radioBoxImage = new RadioImage(this);
@@ -108,20 +108,20 @@ void RadioButton::ApplySchemeSettings(IScheme *pScheme)
 	SetFgColor(GetSchemeColor("RadioButton.TextColor", pScheme));
 	_selectedFgColor = GetSchemeColor("RadioButton.SelectedTextColor", GetSchemeColor("ControlText", pScheme), pScheme);
 
-	SetDefaultColor( GetFgColor(), GetBgColor() );
+	SetDefaultColor(GetFgColor(), GetBgColor());
 
-	SetArmedColor( GetSchemeColor("RadioButton.ArmedTextColor", pScheme), GetButtonArmedBgColor() );
+	SetArmedColor(GetSchemeColor("RadioButton.ArmedTextColor", pScheme), GetButtonArmedBgColor());
 
 	SetContentAlignment(a_west);
 
 	//  reloading the scheme wipes out lists of images
 	HFont hFont = pScheme->GetFont("MarlettSmall", IsProportional());
-	if ( hFont == INVALID_FONT )
+	if(hFont == INVALID_FONT)
 	{
 		// fallback to Marlett if MarlettSmall isn't found
 		hFont = pScheme->GetFont("Marlett", IsProportional());
 	}
-	_radioBoxImage->SetFont( hFont );
+	_radioBoxImage->SetFont(hFont);
 	_radioBoxImage->ResizeImageToContent();
 	SetImageAtIndex(0, _radioBoxImage, 0);
 
@@ -130,7 +130,7 @@ void RadioButton::ApplySchemeSettings(IScheme *pScheme)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Get the border style of the button, Radio buttons have no border			
+// Purpose: Get the border style of the button, Radio buttons have no border
 //-----------------------------------------------------------------------------
 IBorder *RadioButton::GetBorder(bool depressed, bool armed, bool selected, bool keyfocus)
 {
@@ -164,42 +164,42 @@ int RadioButton::GetRadioTabPosition()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Set the radio button checked. When a radio button is checked, a 
+// Purpose: Set the radio button checked. When a radio button is checked, a
 //			message is sent to all other radio buttons in the same group so
 //			they will become unchecked.
 //-----------------------------------------------------------------------------
 void RadioButton::SetSelected(bool state)
 {
-	InternalSetSelected( state, true );
+	InternalSetSelected(state, true);
 }
 
 void RadioButton::InternalSetSelected(bool state, bool bFireEvents)
 {
-	if (state == true)
+	if(state == true)
 	{
-		if (!IsEnabled())
+		if(!IsEnabled())
 			return;
 
 		// restore our tab position
 		SetTabPosition(_oldTabPosition);
 
 		// Should we send notifications?
-		if ( bFireEvents )
+		if(bFireEvents)
 		{
 			// send a message
 			KeyValues *msg = new KeyValues("RadioButtonChecked");
 			msg->SetPtr("panel", this);
 			msg->SetInt("tabposition", _oldTabPosition);
 
-			// send a message to all other panels on the same level as heirarchy, 
+			// send a message to all other panels on the same level as heirarchy,
 			// so that other radio buttons know to shut off
 			VPANEL radioParent = GetVParent();
-			if (radioParent)
+			if(radioParent)
 			{
-				for (int i = 0; i < ipanel()->GetChildCount(radioParent); i++)
+				for(int i = 0; i < ipanel()->GetChildCount(radioParent); i++)
 				{
 					VPANEL child = ipanel()->GetChild(radioParent, i);
-					if (child != GetVPanel())
+					if(child != GetVPanel())
 					{
 						ivgui()->PostMessage(child, msg->MakeCopy(), GetVPanel());
 					}
@@ -213,7 +213,7 @@ void RadioButton::InternalSetSelected(bool state, bool bFireEvents)
 	else
 	{
 		// remove ourselves from the tab order
-		if (GetTabPosition())
+		if(GetTabPosition())
 		{
 			_oldTabPosition = GetTabPosition();
 		}
@@ -231,7 +231,7 @@ void RadioButton::InternalSetSelected(bool state, bool bFireEvents)
 //-----------------------------------------------------------------------------
 void RadioButton::SilentSetSelected(bool state)
 {
-	InternalSetSelected( state, false );
+	InternalSetSelected(state, false);
 }
 
 //-----------------------------------------------------------------------------
@@ -239,7 +239,7 @@ void RadioButton::SilentSetSelected(bool state)
 //-----------------------------------------------------------------------------
 void RadioButton::PerformLayout()
 {
-	if (IsSelected())
+	if(IsSelected())
 	{
 		SetFgColor(_selectedFgColor);
 	}
@@ -277,7 +277,7 @@ void RadioButton::GetSettings(KeyValues *outResourceData)
 //-----------------------------------------------------------------------------
 // Purpose: Describe editing details
 //-----------------------------------------------------------------------------
-const char *RadioButton::GetDescription( void )
+const char *RadioButton::GetDescription(void)
 {
 	static char buf[1024];
 	Q_snprintf(buf, sizeof(buf), "%s, int SubTabPosition", BaseClass::GetDescription());
@@ -291,7 +291,7 @@ const char *RadioButton::GetDescription( void )
 void RadioButton::OnRadioButtonChecked(int tabPosition)
 {
 	// make sure we're in the same tab group
-	if (tabPosition != _oldTabPosition)
+	if(tabPosition != _oldTabPosition)
 		return;
 
 	// wouldn't be sent to us from ourselves, so another radio button has taken over
@@ -317,7 +317,7 @@ void RadioButton::Paint()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void RadioButton::DoClick()
 {
@@ -329,12 +329,12 @@ void RadioButton::DoClick()
 //-----------------------------------------------------------------------------
 void RadioButton::OnKeyCodeTyped(KeyCode code)
 {
-	switch (code)
+	switch(code)
 	{
 		case KEY_ENTER:
 		case KEY_SPACE:
 		{
-			if (!IsSelected())
+			if(!IsSelected())
 			{
 				SetSelected(true);
 			}
@@ -347,24 +347,24 @@ void RadioButton::OnKeyCodeTyped(KeyCode code)
 
 		case KEY_DOWN:
 		case KEY_RIGHT:
+		{
+			RadioButton *bestRadio = FindBestRadioButton(DOWN);
+			if(bestRadio)
 			{
-				RadioButton *bestRadio = FindBestRadioButton( DOWN );
-				if (bestRadio)
-				{
-					bestRadio->SetSelected(true);
-				}	
+				bestRadio->SetSelected(true);
 			}
-			break;
+		}
+		break;
 		case KEY_UP:
 		case KEY_LEFT:
+		{
+			RadioButton *bestRadio = FindBestRadioButton(UP);
+			if(bestRadio)
 			{
-				RadioButton *bestRadio = FindBestRadioButton( UP );
-				if (bestRadio)
-				{
-					bestRadio->SetSelected(true);
-				}	
+				bestRadio->SetSelected(true);
 			}
-			break;
+		}
+		break;
 
 		default:
 			BaseClass::OnKeyCodeTyped(code);
@@ -374,49 +374,49 @@ void RadioButton::OnKeyCodeTyped(KeyCode code)
 
 //-----------------------------------------------------------------------------
 // Purpose: Find the correct radio button to move to.
-// Input  : direction - the direction we are moving, up or down. 
+// Input  : direction - the direction we are moving, up or down.
 //-----------------------------------------------------------------------------
 RadioButton *RadioButton::FindBestRadioButton(int direction)
 {
 	RadioButton *bestRadio = NULL;
 	int highestRadio = 0;
 	Panel *pr = GetParent();
-	if (pr)
+	if(pr)
 	{
 		// find the radio button to go to next
-		for (int i = 0; i < pr->GetChildCount(); i++)
+		for(int i = 0; i < pr->GetChildCount(); i++)
 		{
 			RadioButton *child = dynamic_cast<RadioButton *>(pr->GetChild(i));
-			if (child && child->GetRadioTabPosition() == _oldTabPosition)
+			if(child && child->GetRadioTabPosition() == _oldTabPosition)
 			{
-				if (child->GetSubTabPosition() == _subTabPosition + direction)
+				if(child->GetSubTabPosition() == _subTabPosition + direction)
 				{
 					bestRadio = child;
 					break;
 				}
-				if ( (child->GetSubTabPosition() == 0)  && (direction == DOWN) )
+				if((child->GetSubTabPosition() == 0) && (direction == DOWN))
 				{
 					bestRadio = child;
 					continue;
 				}
-				else if ( (child->GetSubTabPosition() > highestRadio) && (direction == UP) )
+				else if((child->GetSubTabPosition() > highestRadio) && (direction == UP))
 				{
 					bestRadio = child;
 					highestRadio = bestRadio->GetSubTabPosition();
 					continue;
 				}
-				if (!bestRadio)
+				if(!bestRadio)
 				{
 					bestRadio = child;
 				}
 			}
 		}
-		
-		if (bestRadio)
+
+		if(bestRadio)
 		{
 			bestRadio->RequestFocus();
 		}
-		
+
 		InvalidateLayout();
 		Repaint();
 	}

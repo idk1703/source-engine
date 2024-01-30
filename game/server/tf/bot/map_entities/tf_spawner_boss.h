@@ -15,21 +15,21 @@ class CBotNPC;
 class CTFSpawnerBoss : public CPointEntity
 {
 public:
-	DECLARE_CLASS( CTFSpawnerBoss, CPointEntity );
+	DECLARE_CLASS(CTFSpawnerBoss, CPointEntity);
 	DECLARE_DATADESC();
 
-	CTFSpawnerBoss( void );
-	virtual ~CTFSpawnerBoss() { }
+	CTFSpawnerBoss(void);
+	virtual ~CTFSpawnerBoss() {}
 
-	void SpawnerThink( void );
+	void SpawnerThink(void);
 
 	// Input.
-	void InputEnable( inputdata_t &inputdata );
-	void InputDisable( inputdata_t &inputdata );
+	void InputEnable(inputdata_t &inputdata);
+	void InputDisable(inputdata_t &inputdata);
 
 	// Output
-	void OnBotKilled( CBotNPC *pBot );
-	void OnBotStunned( CBotNPC *pBot );
+	void OnBotKilled(CBotNPC *pBot);
+	void OnBotStunned(CBotNPC *pBot);
 
 private:
 	bool m_isExpended;
@@ -44,7 +44,7 @@ private:
 	COutputEvent m_onBotKilled;
 	COutputEvent m_onBotStunned;
 
-	CUtlVector< CHandle< CBotNPC > > m_spawnedBotVector;
+	CUtlVector<CHandle<CBotNPC>> m_spawnedBotVector;
 };
 
 #endif // TF_RAID_MODE

@@ -10,29 +10,28 @@
 #include "player_vs_environment/boss_alpha/boss_alpha.h"
 #include "player_vs_environment/boss_alpha/behavior/boss_alpha_launch_rockets.h"
 
-ConVar tf_boss_alpha_dont_shoot( "tf_boss_alpha_dont_shoot", "0"/*, FCVAR_CHEAT*/ );
-
+ConVar tf_boss_alpha_dont_shoot("tf_boss_alpha_dont_shoot", "0" /*, FCVAR_CHEAT*/);
 
 //---------------------------------------------------------------------------------------------
-ActionResult< CBossAlpha >	CBossAlphaLaunchRockets::OnStart( CBossAlpha *me, Action< CBossAlpha > *priorAction )
+ActionResult<CBossAlpha> CBossAlphaLaunchRockets::OnStart(CBossAlpha *me, Action<CBossAlpha> *priorAction)
 {
 	// start animation
-	me->GetBodyInterface()->StartActivity( ACT_MP_STAND_SECONDARY );
+	me->GetBodyInterface()->StartActivity(ACT_MP_STAND_SECONDARY);
 
-	m_animLayer = me->AddLayeredSequence( me->LookupSequence( "taunt02" ), 0 );
+	m_animLayer = me->AddLayeredSequence(me->LookupSequence("taunt02"), 0);
 
-	m_timer.Start( 1.0f );
+	m_timer.Start(1.0f);
 
 	m_rocketsLeft = me->GetRocketLaunchCount();
 
-	me->AddCondition( CBossAlpha::BUSY );
+	me->AddCondition(CBossAlpha::BUSY);
 	me->LockAttackTarget();
 
-	me->EmitSound( "RobotBoss.LaunchRockets" );
+	me->EmitSound("RobotBoss.LaunchRockets");
 
-	if ( me->GetAttackTarget() == NULL )
+	if(me->GetAttackTarget() == NULL)
 	{
-		return Done( "No target" );
+		return Done("No target");
 	}
 
 	m_target = me->GetAttackTarget();
@@ -41,37 +40,36 @@ ActionResult< CBossAlpha >	CBossAlphaLaunchRockets::OnStart( CBossAlpha *me, Act
 	return Continue();
 }
 
-
 //---------------------------------------------------------------------------------------------
-ActionResult< CBossAlpha >	CBossAlphaLaunchRockets::Update( CBossAlpha *me, float interval )
+ActionResult<CBossAlpha> CBossAlphaLaunchRockets::Update(CBossAlpha *me, float interval)
 {
-	if ( m_target != NULL )
+	if(m_target != NULL)
 	{
 		m_lastTargetPosition = m_target->WorldSpaceCenter();
 	}
 
-	me->GetLocomotionInterface()->FaceTowards( m_lastTargetPosition );
+	me->GetLocomotionInterface()->FaceTowards(m_lastTargetPosition);
 
-	if ( m_timer.IsElapsed() && m_launchTimer.IsElapsed() )
+	if(m_timer.IsElapsed() && m_launchTimer.IsElapsed())
 	{
-		if ( !m_rocketsLeft )
+		if(!m_rocketsLeft)
 		{
 			return Done();
 		}
 
 		--m_rocketsLeft;
-		m_launchTimer.Start( me->GetRocketInterval() );
+		m_launchTimer.Start(me->GetRocketInterval());
 
 		QAngle launchAngles = me->GetAbsAngles();
 
-		if ( m_target == NULL )
+		if(m_target == NULL)
 		{
 			Vector to = m_lastTargetPosition - me->WorldSpaceCenter();
-			VectorAngles( to, launchAngles );
+			VectorAngles(to, launchAngles);
 		}
 		else
 		{
-			float range = me->GetRangeTo( m_target->EyePosition() );
+			float range = me->GetRangeTo(m_target->EyePosition());
 
 			const float rocketSpeed = me->GetRocketAimError() * 1100.0f; // 2000.0f; // 1100.0f;  nerfing accuracy
 			float flightTime = range / rocketSpeed;
@@ -79,25 +77,26 @@ ActionResult< CBossAlpha >	CBossAlphaLaunchRockets::Update( CBossAlpha *me, floa
 			Vector aimSpot = m_target->EyePosition() + m_target->GetAbsVelocity() * flightTime;
 
 			Vector to = aimSpot - me->WorldSpaceCenter();
-			VectorAngles( to, launchAngles );
+			VectorAngles(to, launchAngles);
 		}
 
-		if ( !tf_boss_alpha_dont_shoot.GetBool() )
+		if(!tf_boss_alpha_dont_shoot.GetBool())
 		{
-			CTFProjectile_Rocket *pRocket = CTFProjectile_Rocket::Create( me, me->WorldSpaceCenter(), launchAngles, me, me );
-			if ( pRocket )
+			CTFProjectile_Rocket *pRocket =
+				CTFProjectile_Rocket::Create(me, me->WorldSpaceCenter(), launchAngles, me, me);
+			if(pRocket)
 			{
-				if ( me->IsInCondition( CBossAlpha::ENRAGED ) )
+				if(me->IsInCondition(CBossAlpha::ENRAGED))
 				{
-					pRocket->SetCritical( true );
-					pRocket->EmitSound( "Weapon_RPG.SingleCrit" );
+					pRocket->SetCritical(true);
+					pRocket->EmitSound("Weapon_RPG.SingleCrit");
 				}
 				else
 				{
-					me->EmitSound( me->GetRocketSoundEffect() );
+					me->EmitSound(me->GetRocketSoundEffect());
 				}
 
-				pRocket->SetDamage( me->GetRocketDamage() );
+				pRocket->SetDamage(me->GetRocketDamage());
 			}
 		}
 	}
@@ -105,15 +104,13 @@ ActionResult< CBossAlpha >	CBossAlphaLaunchRockets::Update( CBossAlpha *me, floa
 	return Continue();
 }
 
-
 //---------------------------------------------------------------------------------------------
-void CBossAlphaLaunchRockets::OnEnd( CBossAlpha *me, Action< CBossAlpha > *nextAction )
+void CBossAlphaLaunchRockets::OnEnd(CBossAlpha *me, Action<CBossAlpha> *nextAction)
 {
-	me->RemoveCondition( CBossAlpha::ENRAGED );
-	me->RemoveCondition( CBossAlpha::BUSY );
-	me->FastRemoveLayer( m_animLayer );
+	me->RemoveCondition(CBossAlpha::ENRAGED);
+	me->RemoveCondition(CBossAlpha::BUSY);
+	me->FastRemoveLayer(m_animLayer);
 	me->UnlockAttackTarget();
 }
-
 
 #endif // TF_RAID_MODE

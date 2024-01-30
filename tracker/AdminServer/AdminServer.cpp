@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -32,48 +32,46 @@ IVProfExport *g_pVProfExport = NULL;
 CAdminServer::CAdminServer()
 {
 	// fill in the 0-based element of the manage servers list
-	OpenedManageDialog_t empty = { 0, NULL };
+	OpenedManageDialog_t empty = {0, NULL};
 	m_OpenedManageDialog.AddToTail(empty);
-	m_hParent=0;
+	m_hParent = 0;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CAdminServer::~CAdminServer()
-{
-}
+CAdminServer::~CAdminServer() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: links to vgui and engine interfaces
 //-----------------------------------------------------------------------------
 bool CAdminServer::Initialize(CreateInterfaceFn *factorylist, int factoryCount)
 {
-	ConnectTier1Libraries( factorylist, factoryCount );
+	ConnectTier1Libraries(factorylist, factoryCount);
 	ConVar_Register();
-	ConnectTier2Libraries( factorylist, factoryCount );
-	ConnectTier3Libraries( factorylist, factoryCount );
+	ConnectTier2Libraries(factorylist, factoryCount);
+	ConnectTier3Libraries(factorylist, factoryCount);
 
 	// find our interfaces
-	for (int i = 0; i < factoryCount; i++)
+	for(int i = 0; i < factoryCount; i++)
 	{
 		// if we're running locally we can get this direct interface to the game engine
-		if (!g_pGameServerData)
+		if(!g_pGameServerData)
 		{
 			g_pGameServerData = (IGameServerData *)(factorylist[i])(GAMESERVERDATA_INTERFACE_VERSION, NULL);
 		}
-		if ( !g_pVProfExport )
+		if(!g_pVProfExport)
 		{
-			g_pVProfExport = (IVProfExport*)(factorylist[i])( VPROF_EXPORT_INTERFACE_VERSION, NULL );
+			g_pVProfExport = (IVProfExport *)(factorylist[i])(VPROF_EXPORT_INTERFACE_VERSION, NULL);
 		}
 	}
 
 	RemoteServer().Initialize(); // now we have the game date interface, initialize the engine connection
 
-	if ( vgui::VGui_InitInterfacesList("AdminServer", factorylist, factoryCount) )
+	if(vgui::VGui_InitInterfacesList("AdminServer", factorylist, factoryCount))
 	{
 		// load localization file
-		g_pVGuiLocalize->AddFile( "admin/admin_%language%.txt");
+		g_pVGuiLocalize->AddFile("admin/admin_%language%.txt");
 		return true;
 	}
 
@@ -89,7 +87,7 @@ bool CAdminServer::PostInitialize(CreateInterfaceFn *modules, int factoryCount)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CAdminServer::IsValid()
 {
@@ -97,7 +95,7 @@ bool CAdminServer::IsValid()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CAdminServer::Activate()
 {
@@ -125,27 +123,23 @@ void CAdminServer::Shutdown()
 
 void CAdminServer::SetParent(vgui::VPANEL parent)
 {
-/*	if (m_hServerPage.Get())
-	{
-		m_hServerPage->SetParent(parent);
-	}
-	*/
+	/*	if (m_hServerPage.Get())
+		{
+			m_hServerPage->SetParent(parent);
+		}
+		*/
 	m_hParent = parent;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Called when the user enters the game
 //-----------------------------------------------------------------------------
-void CAdminServer::Deactivate()
-{
-}
+void CAdminServer::Deactivate() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Called when the user returns from the game to the outside UI
 //-----------------------------------------------------------------------------
-void CAdminServer::Reactivate()
-{
-}
+void CAdminServer::Reactivate() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: opens a manage server dialog for a local server
@@ -166,7 +160,8 @@ ManageServerUIHandle_t CAdminServer::OpenManageServerDialog(const char *serverNa
 //-----------------------------------------------------------------------------
 // Purpose: opens a manage server dialog to a remote server
 //-----------------------------------------------------------------------------
-ManageServerUIHandle_t CAdminServer::OpenManageServerDialog(unsigned int gameIP, unsigned int gamePort, const char *password)
+ManageServerUIHandle_t CAdminServer::OpenManageServerDialog(unsigned int gameIP, unsigned int gamePort,
+															const char *password)
 {
 	Assert(false);
 	return (ManageServerUIHandle_t)0;
@@ -186,12 +181,12 @@ void CAdminServer::CloseManageServerDialog(ManageServerUIHandle_t gameDialog)
 IManageServer *CAdminServer::GetManageServerInterface(ManageServerUIHandle_t handle)
 {
 	// make sure it's safe
-	if ((int)handle < 1 || (int)handle > m_OpenedManageDialog.Count())
+	if((int)handle < 1 || (int)handle > m_OpenedManageDialog.Count())
 		return NULL;
 
 	vgui::VPANEL panel = vgui::ivgui()->HandleToPanel(m_OpenedManageDialog[handle].handle);
-	if (!panel)
+	if(!panel)
 		return NULL;
-	
+
 	return m_OpenedManageDialog[handle].manageInterface;
 }

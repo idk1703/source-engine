@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2006, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2006, Valve Corporation, All rights reserved. ============//
 // Includes =======================================================================================
 // STATIC: "CONVERT_TO_SRGB" "0..1"	[ps20b][= g_pHardwareConfig->NeedsShaderSRGBConversion()] [PC]
 // STATIC: "CONVERT_TO_SRGB" "0..0"	[= 0] [XBOX]
@@ -37,11 +37,11 @@ struct PS_INPUT
 float4 main( PS_INPUT i ) : COLOR
 {
 	// Color texture
-    float4 cBaseColor = tex2D( g_tBaseSampler, i.vTexCoord0.xy );
+	float4 cBaseColor = tex2D( g_tBaseSampler, i.vTexCoord0.xy );
 	float flFleshMaskFromTexture = cBaseColor.a;
 
 	// Subsurface colors
-    float4 cSubsurfaceColor = tex2D( g_tSubsurfaceSampler, i.vTexCoord0.xy );
+	float4 cSubsurfaceColor = tex2D( g_tSubsurfaceSampler, i.vTexCoord0.xy );
 	cBaseColor.rgb += cBaseColor.rgb * cSubsurfaceColor.rgb * g_cSubsurfaceTint.rgb;
 
 	// Scroll noise textures to ripple border of opening
@@ -122,6 +122,6 @@ float4 main( PS_INPUT i ) : COLOR
 	// Set alpha for blending
 	result.a = flOpacity;
 	//result.a = 1.0f;
-	
+
 	return FinalOutput( result, 0, PIXEL_FOG_TYPE_NONE, TONEMAP_SCALE_LINEAR );
 }

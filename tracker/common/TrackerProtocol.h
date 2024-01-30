@@ -12,7 +12,7 @@
 #endif
 
 // failed return versions of the messages are the TMSG_FAIL_OFFSET + 10000
-#define TMSG_FAIL_OFFSET	10000
+#define TMSG_FAIL_OFFSET 10000
 
 //-----------------------------------------------------------------------------
 // Purpose: List of all the tracker messages used
@@ -21,8 +21,8 @@
 enum TrackerMsgID_t
 {
 	// generic messages
-	TMSG_NONE = 0,		// no message id
-	TMSG_ACK = 1,		// packet acknowledgement
+	TMSG_NONE = 0, // no message id
+	TMSG_ACK = 1,  // packet acknowledgement
 
 	// server -> Client messages
 	TSVC_BASE = 1000,
@@ -34,41 +34,41 @@ enum TrackerMsgID_t
 	TSVC_FRIENDS,
 	TSVC_FRIENDUPDATE,
 	TSVC_HEARTBEAT,
-	TSVC_PINGACK,		// acknowledgement of TCLS_PING packet
+	TSVC_PINGACK, // acknowledgement of TCLS_PING packet
 	TSVC_FRIENDINFO,
 	TSVC_USERVALID,
 	TSVC_FRIENDSFOUND,
 	TSVC_NOFRIENDS,
-	TSVC_MESSAGE,				// message passed through from another client
-	TSVC_GAMEINFO,				// information about a friends' game
-	TSVC_AUTHREQUEST,			// a user requesting auth from the receiving user
-	TSVC_CONNECTIONKEEPALIVE,	// information that an attemption connect is taking time, and the user should wait
-	TSVC_ROUTEMESSAGEFAILED,	// chat message failed to be routed through the servers
-	TSVC_REDIRECTLOGIN,			// tells the client to redirect their login attempt to a different server
+	TSVC_MESSAGE,			  // message passed through from another client
+	TSVC_GAMEINFO,			  // information about a friends' game
+	TSVC_AUTHREQUEST,		  // a user requesting auth from the receiving user
+	TSVC_CONNECTIONKEEPALIVE, // information that an attemption connect is taking time, and the user should wait
+	TSVC_ROUTEMESSAGEFAILED,  // chat message failed to be routed through the servers
+	TSVC_REDIRECTLOGIN,		  // tells the client to redirect their login attempt to a different server
 
 	// Client -> server messages
 	TCLS_BASE = 2000,
-	
-	TCLS_LOGIN,			// login message
-	TCLS_RESPONSE,		// response to login challenge
+
+	TCLS_LOGIN,	   // login message
+	TCLS_RESPONSE, // response to login challenge
 	TCLS_PING,
 	TCLS_FRIENDSEARCH,
 	TCLS_HEARTBEAT,
 	TCLS_AUTHUSER,
 	TCLS_REQAUTH,
-	TCLS_FRIENDINFO,	// friend info request
+	TCLS_FRIENDINFO, // friend info request
 	TCLS_SETINFO,
 	TCLS_ROUTETOFRIEND, // generic reroute of a message to a friend
 
 	// Client -> Client messages
 	TCL_BASE = 3000,
-	TCL_MESSAGE,		// chat text message
-	TCL_USERBLOCK,		// soon to be obselete
+	TCL_MESSAGE,   // chat text message
+	TCL_USERBLOCK, // soon to be obselete
 	TCL_ADDEDTOCHAT,
 	TCL_CHATADDUSER,
 	TCL_CHATUSERLEAVE,
 	TCL_TYPINGMESSAGE,
-    TCL_FRIENDNETMESSAGE,
+	TCL_FRIENDNETMESSAGE,
 
 	// server -> server messages
 	TSV_BASE = 4000,
@@ -101,7 +101,6 @@ enum TrackerMsgID_t
 	TCLS_HEARTBEAT_FAIL = TCLS_HEARTBEAT + TMSG_FAIL_OFFSET,
 
 	TCL_MESSAGE_FAIL = TCL_MESSAGE + TMSG_FAIL_OFFSET,
-
 };
 
 //-----------------------------------------------------------------------------
@@ -113,36 +112,35 @@ enum TrackerLogoffReason_t
 	TRACKER_LOGOFF_NOREASON,
 
 	// server reasons for disconnecting user
-	TRACKER_LOGOFF_LOGGEDINELSEWHERE,	// user has logged into friends at a different location
-	TRACKER_LOGOFF_SERVERWORK,			// server needs to do work (like lock the user range)
-	TRACKER_LOGOFF_SERVERSHUTDOWN,		// server has been shutdown
-	TRACKER_LOGOFF_TIMEDOUT,			// user hasn't heartbeat'd to server recently enough
-	TRACKER_LOGOFF_REQUESTED,			// user has requested to logoff
-	TRACKER_LOGOFF_FIREWALL,			// users' firewall won't allow enough packets through
-	TRACKER_LOGOFF_NOTCONNECTED,		// user sent server a packet that implied they think they're logged in but they're not
-	TRACKER_LOGOFF_INVALIDSTEAMTICKET,	// users steam ticket is invalid
+	TRACKER_LOGOFF_LOGGEDINELSEWHERE, // user has logged into friends at a different location
+	TRACKER_LOGOFF_SERVERWORK,		  // server needs to do work (like lock the user range)
+	TRACKER_LOGOFF_SERVERSHUTDOWN,	  // server has been shutdown
+	TRACKER_LOGOFF_TIMEDOUT,		  // user hasn't heartbeat'd to server recently enough
+	TRACKER_LOGOFF_REQUESTED,		  // user has requested to logoff
+	TRACKER_LOGOFF_FIREWALL,		  // users' firewall won't allow enough packets through
+	TRACKER_LOGOFF_NOTCONNECTED, // user sent server a packet that implied they think they're logged in but they're not
+	TRACKER_LOGOFF_INVALIDSTEAMTICKET, // users steam ticket is invalid
 
 	// client reasons for being disconnected
-	TRACKER_LOGOFF_JOINEDGAME,			// user has logged off because they joined a game
-	TRACKER_LOGOFF_CONNECTIONTIMEOUT,	// user connection has timed out
-	TRACKER_LOGOFF_SERVERMESSAGEFAIL,   // a message to the server was not successfully transmitted
+	TRACKER_LOGOFF_JOINEDGAME,		  // user has logged off because they joined a game
+	TRACKER_LOGOFF_CONNECTIONTIMEOUT, // user connection has timed out
+	TRACKER_LOGOFF_SERVERMESSAGEFAIL, // a message to the server was not successfully transmitted
 
-	TRACKER_LOGOFF_TOOMANYATTEMPTS,		// too many login attempts have been performed
-	TRACKER_LOGOFF_OFFLINE,				// steam is in offline mode so don't try to connect
+	TRACKER_LOGOFF_TOOMANYATTEMPTS, // too many login attempts have been performed
+	TRACKER_LOGOFF_OFFLINE,			// steam is in offline mode so don't try to connect
 };
-
 
 //-----------------------------------------------------------------------------
 // Purpose: List of all the reasons a login attempt may fail
 //-----------------------------------------------------------------------------
 enum TrackerLoginFailReason_t
 {
-	TRACKER_LOGINFAIL_NOREASON			= 0,
-	TRACKER_LOGINFAIL_NOSUCHUSER		= -2,
-	TRACKER_LOGINFAIL_ALREADLOGGEDIN	= -3,
+	TRACKER_LOGINFAIL_NOREASON = 0,
+	TRACKER_LOGINFAIL_NOSUCHUSER = -2,
+	TRACKER_LOGINFAIL_ALREADLOGGEDIN = -3,
 	TRACKER_LOGINFAIL_INVALIDSTEAMTICKET = -4,
-	TRACKER_LOGINFAIL_BUILDOUTOFDATE	= -5,
-	TRACKER_LOGINFAIL_PLATFORMOUTOFDATE	= -6,
+	TRACKER_LOGINFAIL_BUILDOUTOFDATE = -5,
+	TRACKER_LOGINFAIL_PLATFORMOUTOFDATE = -6,
 };
 
 //-----------------------------------------------------------------------------

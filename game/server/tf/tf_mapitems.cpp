@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -11,7 +11,6 @@
 #include "tf_gamerules.h"
 #include "tf_timer.h"
 #include "tf_team.h"
-
 
 #if 0
 
@@ -141,7 +140,7 @@ void TeamFortress_TeamIncreaseScore(int tno, int scoretoadd)
 {
 	if ( tno == 0 )
 		return;
-	
+
 	CTeam *pTeam = GetGlobalTeam( tno );
 	if ( !pTeam )
 		return;
@@ -159,7 +158,7 @@ bool HasItemFromGroup( CBaseEntity *AP, int iGroupNo )
 		CTFGoalItem *pGoal = dynamic_cast<CTFGoalItem*>( pEnt );
 		if ( (pGoal->group_no == iGroupNo) && (pGoal->GetOwnerEntity() == AP) )
 			return true;
-		
+
 		pEnt = gEntList.FindEntityByClassname( pEnt, "item_tfgoal" );
 	}
 
@@ -183,8 +182,8 @@ bool AllGoalsInState( int iGroupNo, int iState )
 				if (pGoal->goal_state != iState)
 					return false;
 			}
-		}		
-	
+		}
+
 		pEnt = gEntList.FindEntityByClassname( pEnt, "info_tfgoal" );
 	}
 
@@ -335,7 +334,7 @@ bool APMeetsCriteria(CTFGoal *Goal, CTFPlayer *AP)
 		if (!pGoal)
 			return false;
 		if (pGoal->goal_state != TFGS_ACTIVE)
-			return false; 
+			return false;
 		MDEBUG(Warning("passed.\n"));
 	}
 
@@ -537,7 +536,7 @@ BOOL IsAffectedBy(CTFGoal *Goal, CTFPlayer *Player, CTFPlayer *AP)
 				return TRUE;
 			}
 		}
-	}	
+	}
 
 	if ( Goal->Classify() != CLASS_TFGOAL_TIMER && AP != NULL )
 	{
@@ -547,7 +546,7 @@ BOOL IsAffectedBy(CTFGoal *Goal, CTFPlayer *Player, CTFPlayer *AP)
 
 		if ((Goal->goal_effects & TFGE_AP) && (Player == AP))
 			return TRUE;
-	
+
 		if ((Goal->goal_effects & TFGE_AP_TEAM) && (AP->GetTeamNumber() == Player->GetTeamNumber()))
 			return TRUE;
 	}
@@ -650,7 +649,7 @@ void DoItemGroupWork(CTFGoalItem *Item, CTFPlayer *AP)
 //=========================================================================
 // Remove any results applied to this player by the Goal
 // Used when a GoalItem is dropped/removed
-void RemoveResults(CTFGoal *Goal, CTFPlayer *pPlayer) 
+void RemoveResults(CTFGoal *Goal, CTFPlayer *pPlayer)
 {
 	// Only remove the stats if the player has been affected
 	// by this item. This is needed because the player may have
@@ -675,7 +674,7 @@ void RemoveResults(CTFGoal *Goal, CTFPlayer *pPlayer)
 //	pPlayer->armortype -= Goal->armortype;
 	pPlayer->SetArmorValue( pPlayer->ArmorValue() - Goal->armorvalue );
 //	pPlayer->armorclass &= ~(Goal->armorclass);
-	
+
 	if (Goal->frags)
 	{
 		pPlayer->TF_AddFrags(Goal->frags);
@@ -687,16 +686,16 @@ void RemoveResults(CTFGoal *Goal, CTFPlayer *pPlayer)
 	pPlayer->RemoveAmmo( Goal->ammo_cells, TF_AMMO_CELLS );
 	pPlayer->RemoveAmmo( Goal->ammo_medikit, TF_AMMO_MEDIKIT );
 	pPlayer->RemoveAmmo( Goal->ammo_detpack, TF_AMMO_DETPACK );
-	
+
 	// Detpacks
 //TFTODO: this should be handled in the GiveAmmo functions..
 //	if (pPlayer->ammo_detpack > pPlayer->maxammo_detpack)
 //		pPlayer->ammo_detpack = pPlayer->maxammo_detpack;
-	
+
 	// Grenades
 	pPlayer->RemoveAmmo( Goal->no_grenades_1, TF_AMMO_GRENADES1 );
 	pPlayer->RemoveAmmo( Goal->no_grenades_2, TF_AMMO_GRENADES2 );
-	
+
 	// If they had a primed grenade, and they don't have any more of
 	// that type of grenade, unprime it and remove it.
 	if (pPlayer->m_Shared.GetStateFlags() & TFSTATE_GRENPRIMED)
@@ -771,7 +770,7 @@ void RemoveResults(CTFGoal *Goal, CTFPlayer *pPlayer)
 
 
 //=========================================================================
-// Give the GoalItem to a Player. 
+// Give the GoalItem to a Player.
 void tfgoalitem_GiveToPlayer(CTFGoalItem *Item, CTFPlayer *AP, CTFGoal *Goal)
 {
 	MDEBUG(Warning( "Giving %s to %s\n", Item->GetEntityName().ToCStr(), AP->GetPlayerName()));
@@ -847,7 +846,7 @@ void tfgoalitem_GiveToPlayer(CTFGoalItem *Item, CTFPlayer *AP, CTFGoal *Goal)
 
 
 //=========================================================================
-// Drop the item 
+// Drop the item
 void tfgoalitem_drop(CTFGoalItem *Item, BOOL PAlive, CTFPlayer *P)
 {
 	CBaseEntity *pOwner = Item->GetOwnerEntity();
@@ -881,8 +880,8 @@ void tfgoalitem_drop(CTFGoalItem *Item, BOOL PAlive, CTFPlayer *P)
 
 
 //=========================================================================
-// Remove the GoalItem from a Player. 
-void tfgoalitem_RemoveFromPlayer(CTFGoalItem *Item, CTFPlayer *AP, int iMethod) 
+// Remove the GoalItem from a Player.
+void tfgoalitem_RemoveFromPlayer(CTFGoalItem *Item, CTFPlayer *AP, int iMethod)
 {
 	MDEBUG(Warning("Removing %s from %s\n", STRING(Item->pev->netname), STRING(AP->pev->netname)));
 
@@ -1036,7 +1035,7 @@ void tfgoalitem_RemoveFromPlayer(CTFGoalItem *Item, CTFPlayer *AP, int iMethod)
 			pTimer->m_flNextThink = gpGlobals->curtime + 0.5f;
 			if (iMethod == GI_DROP_PLAYERDEATH)
 				pTimer->weapon = GI_RET_DROP_DEAD;
-			else 
+			else
 				pTimer->weapon = GI_RET_DROP_LIVING;
 		}
 		else if (Item->goal_activation & TFGI_DROP)
@@ -1062,7 +1061,7 @@ void tfgoalitem_RemoveFromPlayer(CTFGoalItem *Item, CTFPlayer *AP, int iMethod)
 
 		AP->TeamFortress_SetSpeed();
 	}
-	else if (iMethod == GI_DROP_REMOVEGOAL)		
+	else if (iMethod == GI_DROP_REMOVEGOAL)
 	{
 		Item->SetOwnerEntity( NULL );
 
@@ -1118,7 +1117,7 @@ void Apply_Results(CTFGoal *Goal, CTFPlayer *Player, CTFPlayer *AP, BOOL bAddBon
 				Player->TakeHealth(Goal->GetHealth(), 0);
 			if (Goal->GetHealth() < 0)
 			{
-				// Make sure we don't gib them, because it creates too many entities if 
+				// Make sure we don't gib them, because it creates too many entities if
 				// a lot of players are affected by this Goal.
 				Player->TakeDamage( CTakeDamageInfo( Goal, Goal, (0 - Goal->GetHealth()), DMG_IGNOREARMOR | DMG_NEVERGIB ) );
 			}
@@ -1153,7 +1152,7 @@ void Apply_Results(CTFGoal *Goal, CTFPlayer *Player, CTFPlayer *AP, BOOL bAddBon
 			// that type of grenade, unprime it and remove it.
 			if (Player->tfstate & TFSTATE_GRENPRIMED)
 			{
-				if ( (Player->m_iPrimedGrenType == 1 && Player->no_grenades_1 <= 0 && Goal->no_grenades_1 < 0) || 
+				if ( (Player->m_iPrimedGrenType == 1 && Player->no_grenades_1 <= 0 && Goal->no_grenades_1 < 0) ||
 					 (Player->m_iPrimedGrenType == 2 && Player->no_grenades_2 <= 0 && Goal->no_grenades_2 < 0) )
 				{
 					Player->tfstate &= ~TFSTATE_GRENPRIMED;
@@ -1162,7 +1161,7 @@ void Apply_Results(CTFGoal *Goal, CTFPlayer *Player, CTFPlayer *AP, BOOL bAddBon
 				}
 			}
 #endif
-		
+
 			// Apply any powerups
 			if (Goal->invincible_finished > 0)
 			{
@@ -1231,7 +1230,7 @@ void Apply_Results(CTFGoal *Goal, CTFPlayer *Player, CTFPlayer *AP, BOOL bAddBon
 #endif
 
 	// If the Goal resets Spy skin/color then do it
-	CTFPlayerClass *pPlayerClass = Player->GetPlayerClass();	
+	CTFPlayerClass *pPlayerClass = Player->GetPlayerClass();
 	if ( pPlayerClass && pPlayerClass->IsClass( TF_CLASS_SPY ) && Goal->goal_result & TFGR_REMOVE_DISGUISE )
 	{
 		pPlayerClass->Spy_RemoveDisguise();
@@ -1269,7 +1268,7 @@ void Apply_Results(CTFGoal *Goal, CTFPlayer *Player, CTFPlayer *AP, BOOL bAddBon
 			{
 				if ( (pItem->group_no == Goal->remove_item_group) && (pItem->GetOwnerEntity() == Player) )
 					pItemToRemove = pItem;
-				
+
 				// need to cycle before removing it from the player, because it may be destroyed
 				pEnt = gEntList.FindEntityByClassname( pEnt, "item_tfgoal" );
 				if (pItemToRemove)
@@ -1375,7 +1374,7 @@ void EndRound( CTFGoal *pGoal )
 
 	// Send out the messages
 	CTFPlayer *client = NULL;
-	while ( ((client = (CTFPlayer*)gEntList.FindEntityByClassname( client, "player" )) != NULL) && (!FNullEnt(client->edict())) ) 
+	while ( ((client = (CTFPlayer*)gEntList.FindEntityByClassname( client, "player" )) != NULL) && (!FNullEnt(client->edict())) )
 	{
 		if ( !client )
 			continue;
@@ -1390,7 +1389,7 @@ void EndRound( CTFGoal *pGoal )
 			//TFTODO: implement HIDEHUD_WEAPONS, or is it the same as HIDEHUD_WEAPONSELECTION?
 			//client->m_Local.m_iHideHUD |= (HIDEHUD_HEALTH | HIDEHUD_WEAPONS);
 			client->m_Local.m_iHideHUD |= (HIDEHUD_HEALTH | HIDEHUD_WEAPONSELECTION);
-			
+
 			client->m_Shared.AddStateFlags( TFSTATE_CANT_MOVE );
 		}
 		client->TeamFortress_SetSpeed();
@@ -1552,12 +1551,12 @@ void DoGroupWork(CTFGoal *Goal, CTFPlayer *AP)
 				if (pGoal)
 					DoResults(pGoal, AP, (Goal->goal_result & TFGR_ADD_BONUSES));
 			}
-		#ifdef MAP_DEBUG
+#ifdef MAP_DEBUG
 			else
 			{
 				Warning("Not all Active.\n");
 			}
-		#endif
+#endif
 		}
 	}
 
@@ -1614,7 +1613,7 @@ void DoGroupWork(CTFGoal *Goal, CTFPlayer *AP)
 			pEnt = gEntList.FindEntityByClassname( pEnt, "info_tfgoal" );
 		}
 	}
-	
+
 	// Check Restore all in the group flag
 	if (Goal->restore_group_no != 0)
 	{
@@ -1755,7 +1754,7 @@ void DoTriggerWork(CTFGoal *Goal, CTFPlayer *AP)
 		while ( pentTarget )
 		{
 			CBaseEntity *pTarget = pentTarget;
-			if ( !(pTarget->GetFlags() & FL_KILLME) ) 
+			if ( !(pTarget->GetFlags() & FL_KILLME) )
 				pTarget->Use( AP, Goal, USE_TOGGLE, 0 );
 			pentTarget = gEntList.FindEntityByName( pentTarget, STRING(Goal->target) );
 		}
@@ -1806,7 +1805,7 @@ void SetupRespawn(CTFGoal *pGoal)
 
 //=========================================================================
 // Do the results for the Timer/Goal/Item
-void DoResults(CTFGoal *Goal, CTFPlayer *AP, BOOL bAddBonuses) 
+void DoResults(CTFGoal *Goal, CTFPlayer *AP, BOOL bAddBonuses)
 {
 	// Can't activate during PreMatch time
 	if ( (TFGameRules()->IsInPreMatch()) && (Goal->Classify() != CLASS_TFGOAL_TIMER) )
@@ -1836,7 +1835,7 @@ void DoResults(CTFGoal *Goal, CTFPlayer *AP, BOOL bAddBonuses)
 		Goal->owned_by = GetTeamCheckTeam( STRING(Goal->owned_by_teamcheck) );
 
 	Goal->goal_state = TFGS_INACTIVE;
-	
+
 
 	// if it's a TF goal, removes it's model
 	if ( Goal->Classify() == CLASS_TFGOAL || Goal->Classify() == CLASS_TFGOAL_TIMER )
@@ -1898,7 +1897,7 @@ void DoResults(CTFGoal *Goal, CTFPlayer *AP, BOOL bAddBonuses)
 					else
 						ClientPrint( pPlayer, HUD_PRINTCENTER, "Your team GOT the ENEMY flag!!");
 				}
-				else if (Goal->goal_no == CTF_FLAG1 || Goal->goal_no == CTF_FLAG2) 
+				else if (Goal->goal_no == CTF_FLAG1 || Goal->goal_no == CTF_FLAG2)
 				{
 					ClientPrint( pPlayer, HUD_PRINTCENTER, "Your flag has been TAKEN!!");
 				}
@@ -1909,7 +1908,7 @@ void DoResults(CTFGoal *Goal, CTFPlayer *AP, BOOL bAddBonuses)
 					else
 						ClientPrint( pPlayer, HUD_PRINTCENTER, "Your flag was CAPTURED!!");
 				}
-				else if (Goal->goal_no == CTF_DROPOFF1 || Goal->goal_no == CTF_DROPOFF2) 
+				else if (Goal->goal_no == CTF_DROPOFF1 || Goal->goal_no == CTF_DROPOFF2)
 				{
 					ClientPrint( pPlayer, HUD_PRINTCENTER, "Your team CAPTURED the flag!!");
 				}
@@ -1929,7 +1928,7 @@ void DoResults(CTFGoal *Goal, CTFPlayer *AP, BOOL bAddBonuses)
 			case CTF_FLAG1:
 				UTIL_ClientPrintAll( HUD_PRINTNOTIFY, UTIL_VarArgs("%s GOT the BLUE flag!", AP->GetPlayerName()) );
 
-				UTIL_LogPrintf("\"%s<%i><%s>\" triggered \"Stole_Blue_Flag\"\n", 
+				UTIL_LogPrintf("\"%s<%i><%s>\" triggered \"Stole_Blue_Flag\"\n",
 					AP->GetPlayerName(),
 					AP->GetUserID(),
 					pTeamName );
@@ -1939,7 +1938,7 @@ void DoResults(CTFGoal *Goal, CTFPlayer *AP, BOOL bAddBonuses)
 			case CTF_FLAG2:
 				UTIL_ClientPrintAll( HUD_PRINTNOTIFY, UTIL_VarArgs("%s GOT the RED flag!", AP->GetPlayerName()) );
 
-				UTIL_LogPrintf("\"%s<%i><%s>\" triggered \"Stole_Red_Flag\"\n", 
+				UTIL_LogPrintf("\"%s<%i><%s>\" triggered \"Stole_Red_Flag\"\n",
 					AP->GetPlayerName(),
 					AP->GetUserID(),
 					pTeamName );
@@ -1949,7 +1948,7 @@ void DoResults(CTFGoal *Goal, CTFPlayer *AP, BOOL bAddBonuses)
 			case CTF_DROPOFF1:
 				UTIL_ClientPrintAll( HUD_PRINTNOTIFY, UTIL_VarArgs("%s CAPTURED the RED flag!", AP->GetPlayerName()) );
 
-				UTIL_LogPrintf("\"%s<%i><%s>\" triggered \"Captured_Red_Flag\"\n", 
+				UTIL_LogPrintf("\"%s<%i><%s>\" triggered \"Captured_Red_Flag\"\n",
 					AP->GetPlayerName(),
 					AP->GetUserID(),
 					pTeamName );
@@ -1959,7 +1958,7 @@ void DoResults(CTFGoal *Goal, CTFPlayer *AP, BOOL bAddBonuses)
 			case CTF_DROPOFF2:
 				UTIL_ClientPrintAll( HUD_PRINTNOTIFY, UTIL_VarArgs("%s CAPTURED the BLUE flag!", AP->GetPlayerName()) );
 
-				UTIL_LogPrintf("\"%s<%i><%s>\" triggered \"Captured_Blue_Flag\"\n", 
+				UTIL_LogPrintf("\"%s<%i><%s>\" triggered \"Captured_Blue_Flag\"\n",
 					AP->GetPlayerName(),
 					AP->GetUserID(),
 					pTeamName );
@@ -2018,13 +2017,13 @@ void DoResults(CTFGoal *Goal, CTFPlayer *AP, BOOL bAddBonuses)
 	}
 	if ( Goal->netname_broadcast != NULL_STRING && TFGameRules()->CTF_Map == FALSE && AP != NULL )
 	{
-		UTIL_LogPrintf("\"%s<%i><%s>\" triggered \"%s\"\n", 
+		UTIL_LogPrintf("\"%s<%i><%s>\" triggered \"%s\"\n",
 				AP->GetPlayerName(),
 				AP->GetUserID(),
 				( AP->GetTeamNumber() != 0 ) ? GetTeamName( AP->GetTeamNumber() ) : "Spectator",
 				STRING(Goal->netname_broadcast) );
 	}
-	
+
 	BOOL bGotOne = FALSE;
 	for ( i = 1; i <= gpGlobals->maxClients; i++ )
 	{
@@ -2073,7 +2072,7 @@ void DoResults(CTFGoal *Goal, CTFPlayer *AP, BOOL bAddBonuses)
 				ClientPrint( pPlayer, HUD_PRINTCENTER, STRING(Goal->org_non_owners_team_broadcast) );
 			else if (Goal->org_team_broadcast!= NULL_STRING )
 				ClientPrint( pPlayer, HUD_PRINTCENTER, STRING(Goal->org_team_broadcast) );
-				
+
 
 			// VOX
 			if (Goal->owners_team_speak != NULL_STRING && pPlayer->GetTeamNumber() == Goal->owned_by)
@@ -2148,7 +2147,7 @@ void DoResults(CTFGoal *Goal, CTFPlayer *AP, BOOL bAddBonuses)
 	if ( Goal->Classify() == CLASS_TFGOAL_TIMER || Goal->Classify() == CLASS_TFGOAL )
 		Goal->goal_state = TFGS_ACTIVE;
 
-	// EndGame checking 
+	// EndGame checking
 	if (Goal->goal_result & TFGR_ENDGAME)
 	{
 		// Display Long TeamScores to everyone
@@ -2242,7 +2241,7 @@ bool CTFBaseItem::CheckExistence()
 		return FALSE;
 	else if (ex_skill_max == -1 && g_iSkillLevel > 0)
 		return FALSE;
-	
+
 	if ( (ex_skill_min != 0) && (ex_skill_min != -1) && (g_iSkillLevel < ex_skill_min) )
 		return FALSE;
 	else if ( (ex_skill_max != 0) && (ex_skill_max != -1) && (g_iSkillLevel > ex_skill_max) )
@@ -2333,10 +2332,10 @@ void CTFGoal::tfgoal_timer_tick()
 	// Check criteria
 	if (goal_state != TFGS_REMOVED)
 	{
-	#ifdef MAP_DEBUG
+#ifdef MAP_DEBUG
 		Warning("==========================\n");
 		Warning("Timer Tick for: %s\nChecking Criteria...", GetEntityName().ToCStr());
-	#endif
+#endif
 
 		// Timers don't fire during prematch.
 		// Instead, they setup to fire the correct amount of time past the prematch
@@ -2405,7 +2404,7 @@ void CTFGoal::SetObjectCollisionBox( void )
 	else
 	{
 // Do we even need to do this? The bmodel should be setup correctly at this point anyway.
-#ifdef TFTODO		
+#ifdef TFTODO
 		// Ripped from ::SetObjectCollisionBox
 		float		max, v;
 		int			i;
@@ -2437,7 +2436,7 @@ void CTFGoal::SetObjectCollisionBox( void )
 }
 
 //===========================================
-// Start the Goal 
+// Start the Goal
 void CTFGoal::StartGoal( void )
 {
 	m_bAddBonuses = false;
@@ -2474,7 +2473,7 @@ void CTFGoal::PlaceGoal( void )
 // Is this right?
 #ifdef TFTODO
 		SetMoveType( MOVETYPE_TOSS );
-#else		
+#else
 		SetMoveType( MOVETYPE_FLYGRAVITY );
 #endif
 		SetAbsOrigin( GetAbsOrigin() + Vector( 0, 0, 6 ) );
@@ -2597,7 +2596,7 @@ void CTFGoalItem::Spawn( void )
 	if (goal_activation & TFGI_SOLID)
 	{
 		SetSolid( SOLID_BBOX );
-		// Solid goalitems need a bbox 
+		// Solid goalitems need a bbox
 		if (goal_min == vec3_origin)
 			goal_min = Vector(-16, -16, -24);
 		if (goal_max == vec3_origin)
@@ -2735,7 +2734,7 @@ void CTFGoalItem::item_tfgoal_touch( CBaseEntity *pOther )
 				if (goal_no == CTF_FLAG1)
 				{
 					UTIL_ClientPrintAll( HUD_PRINTNOTIFY, UTIL_VarArgs("%s RETURNED the BLUE flag!", pPlayer->GetPlayerName()) );
-					UTIL_LogPrintf("\"%s<%i><%s>\" triggered \"Returned_Blue_Flag\"\n", 
+					UTIL_LogPrintf("\"%s<%i><%s>\" triggered \"Returned_Blue_Flag\"\n",
 						pPlayer->GetPlayerName(),
 						pPlayer->GetUserID(),
 						GetTeamName( pOther->GetTeamNumber() ) );
@@ -2743,7 +2742,7 @@ void CTFGoalItem::item_tfgoal_touch( CBaseEntity *pOther )
 				else
 				{
 					UTIL_ClientPrintAll( HUD_PRINTNOTIFY, UTIL_VarArgs("%s RETURNED the RED flag!", pPlayer->GetPlayerName()) );
-					UTIL_LogPrintf("\"%s<%i><%s>\" triggered \"Returned_Red_Flag\"\n", 
+					UTIL_LogPrintf("\"%s<%i><%s>\" triggered \"Returned_Red_Flag\"\n",
 						pPlayer->GetPlayerName(),
 						pPlayer->GetUserID(),
 						GetTeamName( pOther->GetTeamNumber() ) );
@@ -2769,7 +2768,7 @@ void CTFGoalItem::item_tfgoal_touch( CBaseEntity *pOther )
 				SetSolidFlags( FSOLID_TRIGGER );
 				SetTouch( &CTFGoalItem::item_tfgoal_touch );
 				SetAbsOrigin( oldorigin );
-				
+
 				EmitSound( "GoalItem.Touch" );
 				//EMIT_SOUND_DYN( ENT(pev), CHAN_WEAPON, "items/itembk2.wav", 1, ATTN_NORM, 0, 150 );
 				return;
@@ -2816,7 +2815,7 @@ void CTFGoalItem::DoDrop( Vector vecOrigin )
 		vVel.y = RandomFloat(-50, 50);
 	}
 	SetAbsVelocity( vVel );
-	
+
 	goal_state = TFGS_INACTIVE;
 	SetAbsAngles( QAngle( 0, 0, 0 ) );
 	if (goal_activation & TFGI_SOLID)
@@ -2858,11 +2857,11 @@ void CTFGoalItem::tfgoalitem_dropthink()
 
 	StopFollowingEntity();
 	SetMoveType( MOVETYPE_FLYGRAVITY );
-	
+
 	if (drop_time != 0)
 	{
 		int iEnviron = UTIL_PointContents( GetAbsOrigin() );
-	
+
 		if (iEnviron == CONTENTS_SLIME)
 		{
 			SetNextThink( gpGlobals->curtime + (drop_time / 4) );
@@ -2895,7 +2894,7 @@ void CTFGoalItem::tfgoalitem_dropthink()
 		{
 			SetNextThink( gpGlobals->curtime + drop_time );
 		}
-		
+
 		SetThink( &CTFGoalItem::tfgoalitem_remove );
 	}
 }
@@ -2971,7 +2970,7 @@ void CTFSpawn::Activate( void )
 	{
 		if ( !strcmp( pTarget->GetClassname(), "info_tf_teamcheck" ) )
 			m_pTeamCheck = pTarget;
-	}		
+	}
 }
 
 BOOL CTFSpawn::CheckTeam( int iTeamNo )
@@ -3026,7 +3025,7 @@ void CBaseDelay::SUB_UseTargets( CBaseEntity *pActivator, USE_TYPE useType, floa
 
 		pTemp->SetNextThink( gpGlobals->curtime + m_flDelay );
 		pTemp->SetThink( &CBaseDelay::DelayThink );
-		
+
 		// Save the useType
 		pTemp->button = (int)useType;
 		pTemp->m_iszKillTarget = m_iszKillTarget;
@@ -3048,13 +3047,13 @@ void CBaseDelay::SUB_UseTargets( CBaseEntity *pActivator, USE_TYPE useType, floa
 		while ( pentKillTarget )
 		{
 			Msg( "killing %s\n", pentKillTarget->GetClassname() );
-			
+
 			CBaseEntity *pNext = gEntList.FindEntityByName( pentKillTarget, STRING(m_iszKillTarget) );
 			UTIL_Remove( pentKillTarget );
 			pentKillTarget = pNext;
 		}
 	}
-	
+
 	//
 	// fire targets
 	//
@@ -3109,7 +3108,7 @@ void CTeamCheck::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE us
 	{
 		if ( GetTeamNumber() == 1 )
 			ChangeTeam( 2 );
-		else 
+		else
 			ChangeTeam( 1 );
 	}
 	else if ( useType == USE_SET )

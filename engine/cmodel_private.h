@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -38,7 +38,7 @@ struct TraceInfo_t
 {
 	TraceInfo_t()
 	{
-		memset( this, 0, offsetof( TraceInfo_t, m_BrushCounters ) );
+		memset(this, 0, offsetof(TraceInfo_t, m_BrushCounters));
 		m_nCheckDepth = -1;
 	}
 
@@ -61,8 +61,8 @@ struct TraceInfo_t
 	CCollisionBSPData *m_pBSPData;
 
 	// Displacement Data
-	Vector m_DispStabDir;		// the direction to stab in
-	int m_bDispHit;				// hit displacement surface last
+	Vector m_DispStabDir; // the direction to stab in
+	int m_bDispHit;		  // hit displacement surface last
 
 	bool m_bCheckPrimary;
 	int m_nCheckDepth;
@@ -71,20 +71,29 @@ struct TraceInfo_t
 	CTraceCounterVec m_BrushCounters[MAX_CHECK_COUNT_DEPTH];
 	CTraceCounterVec m_DispCounters[MAX_CHECK_COUNT_DEPTH];
 
-	TraceCounter_t GetCount()				{ return m_Count[m_nCheckDepth]; }
-	TraceCounter_t *GetBrushCounters()		{ return m_BrushCounters[m_nCheckDepth].Base(); }
-	TraceCounter_t *GetDispCounters()		{ return m_DispCounters[m_nCheckDepth].Base(); }
+	TraceCounter_t GetCount()
+	{
+		return m_Count[m_nCheckDepth];
+	}
+	TraceCounter_t *GetBrushCounters()
+	{
+		return m_BrushCounters[m_nCheckDepth].Base();
+	}
+	TraceCounter_t *GetDispCounters()
+	{
+		return m_DispCounters[m_nCheckDepth].Base();
+	}
 
-	bool Visit( cbrush_t *pBrush, int ndxBrush );
-	bool Visit( int dispIndex );
+	bool Visit(cbrush_t *pBrush, int ndxBrush);
+	bool Visit(int dispIndex);
 
-	bool Visit( cbrush_t *pBrush, int ndxBrush, TraceCounter_t cachedCount, TraceCounter_t *pCachedCounters );
-	bool Visit( int dispIndex, TraceCounter_t cachedCount, TraceCounter_t *pCachedCounters );
+	bool Visit(cbrush_t *pBrush, int ndxBrush, TraceCounter_t cachedCount, TraceCounter_t *pCachedCounters);
+	bool Visit(int dispIndex, TraceCounter_t cachedCount, TraceCounter_t *pCachedCounters);
 };
 
 extern TraceInfo_t g_PrimaryTraceInfo;
 
-#define		NEVER_UPDATED		-99999
+#define NEVER_UPDATED -99999
 
 //=============================================================================
 //
@@ -93,86 +102,89 @@ extern TraceInfo_t g_PrimaryTraceInfo;
 
 struct cbrushside_t
 {
-	cplane_t	*plane;
+	cplane_t *plane;
 	unsigned short surfaceIndex;
-	unsigned short bBevel;							// is the side a bevel plane?
+	unsigned short bBevel; // is the side a bevel plane?
 };
 
-#define NUMSIDES_BOXBRUSH	0xFFFF
+#define NUMSIDES_BOXBRUSH 0xFFFF
 
 struct cbrush_t
 {
-	int				contents;
-	unsigned short	numsides;
-	unsigned short	firstbrushside;
+	int contents;
+	unsigned short numsides;
+	unsigned short firstbrushside;
 
-	inline int GetBox() const { return firstbrushside; }
-	inline void SetBox( int boxID )
+	inline int GetBox() const
+	{
+		return firstbrushside;
+	}
+	inline void SetBox(int boxID)
 	{
 		numsides = NUMSIDES_BOXBRUSH;
 		firstbrushside = boxID;
 	}
-	inline bool IsBox() const { return numsides == NUMSIDES_BOXBRUSH ? true : false; }
+	inline bool IsBox() const
+	{
+		return numsides == NUMSIDES_BOXBRUSH ? true : false;
+	}
 };
 
 // 48-bytes, aligned to 16-byte boundary
 // this is a brush that is an AABB.  It's encoded this way instead of with 6 brushsides
 struct cboxbrush_t
 {
-	VectorAligned	mins;
-	VectorAligned	maxs;
+	VectorAligned mins;
+	VectorAligned maxs;
 
-	unsigned short	surfaceIndex[6];
-	unsigned short	pad2[2];
+	unsigned short surfaceIndex[6];
+	unsigned short pad2[2];
 };
 
 struct cleaf_t
 {
-	int			    contents;
-	short			cluster;
-	short			area : 9;
-	short			flags : 7;
-	unsigned short	firstleafbrush;
-	unsigned short	numleafbrushes;
-	unsigned short	dispListStart;
-	unsigned short	dispCount;
+	int contents;
+	short cluster;
+	short area : 9;
+	short flags : 7;
+	unsigned short firstleafbrush;
+	unsigned short numleafbrushes;
+	unsigned short dispListStart;
+	unsigned short dispCount;
 };
 
 struct carea_t
 {
-	int		numareaportals;
-	int		firstareaportal;
-	int		floodnum;							// if two areas have equal floodnums, they are connected
-	int		floodvalid;
+	int numareaportals;
+	int firstareaportal;
+	int floodnum; // if two areas have equal floodnums, they are connected
+	int floodvalid;
 };
-
 
 struct cnode_t
 {
-	cplane_t	*plane;
-	int			children[2];		// negative numbers are leafs
+	cplane_t *plane;
+	int children[2]; // negative numbers are leafs
 };
-
 
 // global collision checkcount
 TraceInfo_t *BeginTrace();
-void PushTraceVisits( TraceInfo_t *pTraceInfo );
-void PopTraceVisits( TraceInfo_t *pTraceInfo );
-void EndTrace( TraceInfo_t *&pTraceInfo );
-
+void PushTraceVisits(TraceInfo_t *pTraceInfo);
+void PopTraceVisits(TraceInfo_t *pTraceInfo);
+void EndTrace(TraceInfo_t *&pTraceInfo);
 
 //-----------------------------------------------------------------------------
 // We keep running into overflow errors here. This is to avoid that problem
 //-----------------------------------------------------------------------------
-template <class T>
+template<class T>
 class CRangeValidatedArray
 {
 public:
-	void Attach( int nCount, T* pData );
+	void Attach(int nCount, T *pData);
 	void Detach();
 
-	T &operator[]( int i );
-	const T &operator[]( int i ) const;
+	T &operator[](int i);
+	const T &operator[](int i) const;
 
 	T *Base();
 
@@ -184,22 +196,22 @@ private:
 #endif
 };
 
-template <class T>
-inline T &CRangeValidatedArray<T>::operator[]( int i )
+template<class T>
+inline T &CRangeValidatedArray<T>::operator[](int i)
 {
-	Assert( (i >= 0) && (i < m_nCount) );
+	Assert((i >= 0) && (i < m_nCount));
 	return m_pArray[i];
 }
 
-template <class T>
-inline const T &CRangeValidatedArray<T>::operator[]( int i ) const
+template<class T>
+inline const T &CRangeValidatedArray<T>::operator[](int i) const
 {
-	Assert( (i >= 0) && (i < m_nCount) );
+	Assert((i >= 0) && (i < m_nCount));
 	return m_pArray[i];
 }
 
-template <class T>
-inline void CRangeValidatedArray<T>::Attach( int nCount, T* pData )
+template<class T>
+inline void CRangeValidatedArray<T>::Attach(int nCount, T *pData)
 {
 	m_pArray = pData;
 
@@ -208,7 +220,7 @@ inline void CRangeValidatedArray<T>::Attach( int nCount, T* pData )
 #endif
 }
 
-template <class T>
+template<class T>
 inline void CRangeValidatedArray<T>::Detach()
 {
 	m_pArray = NULL;
@@ -218,7 +230,7 @@ inline void CRangeValidatedArray<T>::Detach()
 #endif
 }
 
-template <class T>
+template<class T>
 inline T *CRangeValidatedArray<T>::Base()
 {
 	return m_pArray;
@@ -228,47 +240,45 @@ inline T *CRangeValidatedArray<T>::Base()
 // A dumpable version of RangeValidatedArray
 //-----------------------------------------------------------------------------
 #include "tier0/memdbgon.h"
-template <class T> 
-class CDiscardableArray 
+template<class T>
+class CDiscardableArray
 {
 public:
 	CDiscardableArray()
 	{
 		m_nCount = 0;
 		m_nOffset = -1;
-		memset( m_pFilename, 0, sizeof( m_pFilename ) );
+		memset(m_pFilename, 0, sizeof(m_pFilename));
 	}
 
-	~CDiscardableArray()
-	{
-	}
+	~CDiscardableArray() {}
 
-	void Init( char* pFilename, int nOffset, int nCount, void *pData = NULL )
+	void Init(char *pFilename, int nOffset, int nCount, void *pData = NULL)
 	{
-		if ( m_buf.TellPut() )
+		if(m_buf.TellPut())
 		{
 			m_buf.Purge();
 		}
 
 		m_nCount = nCount;
-		V_strcpy_safe( m_pFilename, pFilename );
+		V_strcpy_safe(m_pFilename, pFilename);
 		m_nOffset = nOffset;
 
 		// can preload as required
-		if ( pData )
+		if(pData)
 		{
-			m_buf.Put( pData, nCount );
+			m_buf.Put(pData, nCount);
 		}
 	}
 
 	// Either get or load the array as needed:
-	T* Get()
+	T *Get()
 	{
-		if ( !m_buf.TellPut() )
+		if(!m_buf.TellPut())
 		{
 			MEM_ALLOC_CREDIT();
 
-			if ( !g_pFileSystem->ReadFile( m_pFilename, NULL, m_buf, sizeof(T) * m_nCount, m_nOffset ) )
+			if(!g_pFileSystem->ReadFile(m_pFilename, NULL, m_buf, sizeof(T) * m_nCount, m_nOffset))
 			{
 				return NULL;
 			}
@@ -287,10 +297,10 @@ public:
 	}
 
 protected:
-	int			m_nCount;
-	CUtlBuffer	m_buf;
-	char		m_pFilename[256];
-	int			m_nOffset;
+	int m_nCount;
+	CUtlBuffer m_buf;
+	char m_pFilename[256];
+	int m_nOffset;
 };
 #include "tier0/memdbgoff.h"
 
@@ -306,53 +316,53 @@ public:
 	// This is sort of a hack, but it was a little too painful to do this any other way
 	// The goal of this dude is to allow us to override the tree with some
 	// other tree (or a subtree)
-	cnode_t*					map_rootnode;
+	cnode_t *map_rootnode;
 
-	char						map_name[MAX_QPATH];
-	static csurface_t			nullsurface;
+	char map_name[MAX_QPATH];
+	static csurface_t nullsurface;
 
-	int									numbrushsides;
-	CRangeValidatedArray<cbrushside_t>	map_brushsides;
-	int									numboxbrushes;
-	CRangeValidatedArray<cboxbrush_t>	map_boxbrushes;
-	int									numplanes;
-	CRangeValidatedArray<cplane_t>		map_planes;
-	int									numnodes;
-	CRangeValidatedArray<cnode_t>		map_nodes;
-	int									numleafs;				// allow leaf funcs to be called without a map
-	CRangeValidatedArray<cleaf_t>		map_leafs;
-	int									emptyleaf, solidleaf;
-	int									numleafbrushes;
+	int numbrushsides;
+	CRangeValidatedArray<cbrushside_t> map_brushsides;
+	int numboxbrushes;
+	CRangeValidatedArray<cboxbrush_t> map_boxbrushes;
+	int numplanes;
+	CRangeValidatedArray<cplane_t> map_planes;
+	int numnodes;
+	CRangeValidatedArray<cnode_t> map_nodes;
+	int numleafs; // allow leaf funcs to be called without a map
+	CRangeValidatedArray<cleaf_t> map_leafs;
+	int emptyleaf, solidleaf;
+	int numleafbrushes;
 	CRangeValidatedArray<unsigned short> map_leafbrushes;
-	int									numcmodels;
-	CRangeValidatedArray<cmodel_t>		map_cmodels;
-	int									numbrushes;
-	CRangeValidatedArray<cbrush_t>		map_brushes;
-	int									numdisplist;
+	int numcmodels;
+	CRangeValidatedArray<cmodel_t> map_cmodels;
+	int numbrushes;
+	CRangeValidatedArray<cbrush_t> map_brushes;
+	int numdisplist;
 	CRangeValidatedArray<unsigned short> map_dispList;
-	
+
 	// this points to the whole block of memory for vis data, but it is used to
 	// reference the header at the top of the block.
-	int									numvisibility;
-	dvis_t								*map_vis;
+	int numvisibility;
+	dvis_t *map_vis;
 
-	int									numentitychars;
-	CDiscardableArray<char>				map_entitystring;
+	int numentitychars;
+	CDiscardableArray<char> map_entitystring;
 
-	int									numareas;
-	CRangeValidatedArray<carea_t>		map_areas;
-	int									numareaportals;
-	CRangeValidatedArray<dareaportal_t>	map_areaportals;
-	int									numclusters;
-	char								*map_nullname;
-	int									numtextures;
-	char								*map_texturenames;
-	CRangeValidatedArray<csurface_t>	map_surfaces;
-	int									floodvalid;
-	int									numportalopen;
-	CRangeValidatedArray<bool>			portalopen;
+	int numareas;
+	CRangeValidatedArray<carea_t> map_areas;
+	int numareaportals;
+	CRangeValidatedArray<dareaportal_t> map_areaportals;
+	int numclusters;
+	char *map_nullname;
+	int numtextures;
+	char *map_texturenames;
+	CRangeValidatedArray<csurface_t> map_surfaces;
+	int floodvalid;
+	int numportalopen;
+	CRangeValidatedArray<bool> portalopen;
 
-	csurface_t							*GetSurfaceAtIndex( unsigned short surfaceIndex );
+	csurface_t *GetSurfaceAtIndex(unsigned short surfaceIndex);
 };
 
 //=============================================================================
@@ -362,8 +372,8 @@ public:
 class IPhysicsSurfaceProps;
 class IPhysicsCollision;
 
-extern IPhysicsSurfaceProps	*physprop;
-extern IPhysicsCollision	*physcollision;
+extern IPhysicsSurfaceProps *physprop;
+extern IPhysicsCollision *physcollision;
 
 //=============================================================================
 //
@@ -374,25 +384,25 @@ extern csurface_t nullsurface;
 
 extern bool bStartSolidDisp;
 
-bool CollisionBSPData_Init( CCollisionBSPData *pBSPData );
-void CollisionBSPData_Destroy( CCollisionBSPData *pBSPData );
-void CollisionBSPData_LinkPhysics( void );
+bool CollisionBSPData_Init(CCollisionBSPData *pBSPData);
+void CollisionBSPData_Destroy(CCollisionBSPData *pBSPData);
+void CollisionBSPData_LinkPhysics(void);
 
-void CollisionBSPData_PreLoad( CCollisionBSPData *pBSPData );
-bool CollisionBSPData_Load( const char *pName, CCollisionBSPData *pBSPData );
-void CollisionBSPData_PostLoad( void );
+void CollisionBSPData_PreLoad(CCollisionBSPData *pBSPData);
+bool CollisionBSPData_Load(const char *pName, CCollisionBSPData *pBSPData);
+void CollisionBSPData_PostLoad(void);
 
 //-----------------------------------------------------------------------------
 // Returns the collision tree associated with the ith displacement
 //-----------------------------------------------------------------------------
 
-CDispCollTree* CollisionBSPData_GetCollisionTree( int i );
+CDispCollTree *CollisionBSPData_GetCollisionTree(int i);
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-inline CCollisionBSPData *GetCollisionBSPData( void /*int ndxBSP*/ )
+inline CCollisionBSPData *GetCollisionBSPData(void /*int ndxBSP*/)
 {
-	extern CCollisionBSPData g_BSPData;								// the global collision bsp
+	extern CCollisionBSPData g_BSPData; // the global collision bsp
 	return &g_BSPData;
 }
 
@@ -404,18 +414,17 @@ inline CCollisionBSPData *GetCollisionBSPData( void /*int ndxBSP*/ )
 class CCollisionCounts
 {
 public:
-	int		m_PointContents;
-	int		m_Traces;
-	int		m_BrushTraces;
-	int		m_DispTraces;
-	int		m_Stabs;
+	int m_PointContents;
+	int m_Traces;
+	int m_BrushTraces;
+	int m_DispTraces;
+	int m_Stabs;
 };
 
-void CollisionCounts_Init( CCollisionCounts *pCounts );
+void CollisionCounts_Init(CCollisionCounts *pCounts);
 
 extern CCollisionCounts g_CollisionCounts;
 #endif
-
 
 //=============================================================================
 //
@@ -430,11 +439,11 @@ extern CCollisionCounts g_CollisionCounts;
 // UNDONE: Find a way to overlap the counter/contents bits with mins.w/maxs.w without hosing performance
 struct alignedbbox_t
 {
-	VectorAligned	mins;
-	VectorAligned	maxs;
-	int				dispCounter;
-	int				dispContents;
-	int				pad[2];
+	VectorAligned mins;
+	VectorAligned maxs;
+	int dispCounter;
+	int dispContents;
+	int pad[2];
 	void SetCounter(int counter)
 	{
 		dispCounter = counter;
@@ -451,7 +460,7 @@ struct alignedbbox_t
 	{
 		return dispContents;
 	}
-	void Init( const Vector &minsIn, const Vector &maxsIn, int counterIn, int contentsIn )
+	void Init(const Vector &minsIn, const Vector &maxsIn, int counterIn, int contentsIn)
 	{
 		mins = minsIn;
 		SetCounter(counterIn);
@@ -465,35 +474,35 @@ extern alignedbbox_t *g_pDispBounds;
 extern csurface_t dispSurf;
 
 // memory allocation/de-allocation
-void DispCollTrees_FreeLeafList( CCollisionBSPData *pBSPData );
+void DispCollTrees_FreeLeafList(CCollisionBSPData *pBSPData);
 
 // setup
-void CM_DispTreeLeafnum( CCollisionBSPData *pBSPData );
+void CM_DispTreeLeafnum(CCollisionBSPData *pBSPData);
 
 // collision
-void CM_TestInDispTree( TraceInfo_t *pTraceInfo, cleaf_t *pLeaf, Vector const &traceStart, 
-				Vector const &boxMin, Vector const &boxMax, int collisionMask, trace_t *pTrace );
-template <bool IS_POINT>
-void FASTCALL CM_TraceToDispTree( TraceInfo_t *pTraceInfo, CDispCollTree *pDispTree, float startFrac, float endFrac );
-void CM_PostTraceToDispTree( TraceInfo_t *pTraceInfo );
+void CM_TestInDispTree(TraceInfo_t *pTraceInfo, cleaf_t *pLeaf, Vector const &traceStart, Vector const &boxMin,
+					   Vector const &boxMax, int collisionMask, trace_t *pTrace);
+template<bool IS_POINT>
+void FASTCALL CM_TraceToDispTree(TraceInfo_t *pTraceInfo, CDispCollTree *pDispTree, float startFrac, float endFrac);
+void CM_PostTraceToDispTree(TraceInfo_t *pTraceInfo);
 
 //=============================================================================
 //
 // profiling purposes only -- remove when done!!!
 //
 
-void CM_TestBoxInBrush ( const Vector& mins, const Vector& maxs, const Vector& p1,
-					  trace_t *trace, cbrush_t *brush, BOOL bDispSurf );
-void FASTCALL CM_RecursiveHullCheck ( TraceInfo_t *pTraceInfo, int num, const float p1f, const float p2f );
-
+void CM_TestBoxInBrush(const Vector &mins, const Vector &maxs, const Vector &p1, trace_t *trace, cbrush_t *brush,
+					   BOOL bDispSurf);
+void FASTCALL CM_RecursiveHullCheck(TraceInfo_t *pTraceInfo, int num, const float p1f, const float p2f);
 
 //=============================================================================
 
-inline bool TraceInfo_t::Visit( cbrush_t *pBrush, int ndxBrush, TraceCounter_t cachedCount, TraceCounter_t *pCachedCounters )
+inline bool TraceInfo_t::Visit(cbrush_t *pBrush, int ndxBrush, TraceCounter_t cachedCount,
+							   TraceCounter_t *pCachedCounters)
 {
-	TraceCounter_t * RESTRICT pCounter = pCachedCounters + ndxBrush;
+	TraceCounter_t *RESTRICT pCounter = pCachedCounters + ndxBrush;
 
-	if ( *pCounter == cachedCount )
+	if(*pCounter == cachedCount)
 	{
 		return false;
 	}
@@ -502,11 +511,11 @@ inline bool TraceInfo_t::Visit( cbrush_t *pBrush, int ndxBrush, TraceCounter_t c
 	return true;
 }
 
-FORCEINLINE bool TraceInfo_t::Visit( int dispCounter, TraceCounter_t cachedCount, TraceCounter_t *pCachedCounters )
+FORCEINLINE bool TraceInfo_t::Visit(int dispCounter, TraceCounter_t cachedCount, TraceCounter_t *pCachedCounters)
 {
-	TraceCounter_t * RESTRICT pCounter = pCachedCounters + dispCounter;
+	TraceCounter_t *RESTRICT pCounter = pCachedCounters + dispCounter;
 
-	if ( *pCounter == cachedCount )
+	if(*pCounter == cachedCount)
 	{
 		return false;
 	}
@@ -515,14 +524,14 @@ FORCEINLINE bool TraceInfo_t::Visit( int dispCounter, TraceCounter_t cachedCount
 	return true;
 }
 
-FORCEINLINE bool TraceInfo_t::Visit( cbrush_t *pBrush, int ndxBrush )
+FORCEINLINE bool TraceInfo_t::Visit(cbrush_t *pBrush, int ndxBrush)
 {
-	return Visit( pBrush, ndxBrush, GetCount(), GetBrushCounters() );
+	return Visit(pBrush, ndxBrush, GetCount(), GetBrushCounters());
 }
 
-FORCEINLINE bool TraceInfo_t::Visit( int dispIndex )
+FORCEINLINE bool TraceInfo_t::Visit(int dispIndex)
 {
-	return Visit( dispIndex, GetCount(), GetDispCounters() );
+	return Visit(dispIndex, GetCount(), GetDispCounters());
 }
 
 #endif // CMODEL_PRIVATE_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -13,13 +13,12 @@
 
 #include <VGUI_Frame.h>
 
-
 namespace vgui
 {
-class TextEntry;
-class Label;
-class Button;
-};
+	class TextEntry;
+	class Label;
+	class Button;
+}; // namespace vgui
 
 //-----------------------------------------------------------------------------
 // Purpose: Prompt for user to enter a password to be able to connect to the server
@@ -31,10 +30,10 @@ public:
 	~CDialogKickPlayer();
 
 	// initializes the dialog and brings it to the foreground
-	void Activate(const char *playerName, const char *question,const char *type);
+	void Activate(const char *playerName, const char *question, const char *type);
 
 	/* message returned:
-		"KickPlayer" 
+		"KickPlayer"
 			"player"
 			"type"
 	*/
@@ -50,8 +49,6 @@ private:
 
 	typedef vgui::Frame BaseClass;
 	const char *m_cType;
-
 };
-
 
 #endif // DIALOGKICKPLAYER_H

@@ -16,7 +16,6 @@
 #pragma once
 #endif
 
-
 //-----------------------------------------------------------------------------
 // Important enumerations
 //-----------------------------------------------------------------------------
@@ -51,7 +50,6 @@ enum ShaderTexWrapMode_t
 	SHADER_TEXWRAPMODE_BORDER
 	// MIRROR? - probably don't need it.
 };
-
 
 //-----------------------------------------------------------------------------
 // Sampler + texture stage identifiers
@@ -95,17 +93,15 @@ enum VertexTextureSampler_t
 	SHADER_VERTEXTEXTURE_SAMPLER3,
 };
 
-
-#if defined( _X360 )
-#define REVERSE_DEPTH_ON_X360 //uncomment to use D3DFMT_D24FS8 with an inverted depth viewport for better performance. Keep this in sync with the same named #define in materialsystem/stdshaders/common_fxc.h
+#if defined(_X360)
+#define REVERSE_DEPTH_ON_X360 // uncomment to use D3DFMT_D24FS8 with an inverted depth viewport for better performance.
+							  // Keep this in sync with the same named #define in materialsystem/stdshaders/common_fxc.h
 #endif
 
-#if defined( REVERSE_DEPTH_ON_X360 )
+#if defined(REVERSE_DEPTH_ON_X360)
 #define ReverseDepthOnX360() true
 #else
 #define ReverseDepthOnX360() false
 #endif
-
-
 
 #endif // SHADERAPI_SHAREDDEFS_H

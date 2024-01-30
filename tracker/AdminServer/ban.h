@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -11,18 +11,23 @@
 #pragma once
 #endif
 
-enum Bans { ID, WONID,AUTHID,IP };
+enum Bans
+{
+	ID,
+	WONID,
+	AUTHID,
+	IP
+};
 
 //-----------------------------------------------------------------------------
 // Purpose: Data describing a single player
 //-----------------------------------------------------------------------------
-typedef struct 
+typedef struct
 {
-	
+
 	char name[20]; // id of the band
 	float time;
-	Bans type; 
+	Bans type;
 } Bans_t;
-
 
 #endif // BAN_H

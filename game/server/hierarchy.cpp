@@ -15,31 +15,31 @@
 
 //-----------------------------------------------------------------------------
 // Purpose: Does the linked list work of removing a child object from the hierarchy.
-// Input  : pParent - 
-//			pChild - 
+// Input  : pParent -
+//			pChild -
 //-----------------------------------------------------------------------------
-void UnlinkChild( CBaseEntity *pParent, CBaseEntity *pChild )
+void UnlinkChild(CBaseEntity *pParent, CBaseEntity *pChild)
 {
 	CBaseEntity *pList;
 	EHANDLE *pPrev;
 
 	pList = pParent->m_hMoveChild;
 	pPrev = &pParent->m_hMoveChild;
-	while ( pList )
+	while(pList)
 	{
 		CBaseEntity *pNext = pList->m_hMovePeer;
-		if ( pList == pChild )
+		if(pList == pChild)
 		{
 			// patch up the list
-			pPrev->Set( pNext );
+			pPrev->Set(pNext);
 
 			// Clear hierarchy bits for this guy
-			pList->m_hMoveParent.Set( NULL );
-			pList->m_hMovePeer.Set( NULL );
-			pList->NetworkProp()->SetNetworkParent( CBaseHandle() );
-			pList->DispatchUpdateTransmitState();	
-			pList->OnEntityEvent( ENTITY_EVENT_PARENT_CHANGED, NULL );
-			
+			pList->m_hMoveParent.Set(NULL);
+			pList->m_hMovePeer.Set(NULL);
+			pList->NetworkProp()->SetNetworkParent(CBaseHandle());
+			pList->DispatchUpdateTransmitState();
+			pList->OnEntityEvent(ENTITY_EVENT_PARENT_CHANGED, NULL);
+
 			pParent->RecalcHasPlayerChildBit();
 			return;
 		}
@@ -54,116 +54,115 @@ void UnlinkChild( CBaseEntity *pParent, CBaseEntity *pChild )
 	Assert(0);
 }
 
-void LinkChild( CBaseEntity *pParent, CBaseEntity *pChild )
+void LinkChild(CBaseEntity *pParent, CBaseEntity *pChild)
 {
 	EHANDLE hParent;
-	hParent.Set( pParent );
-	pChild->m_hMovePeer.Set( pParent->FirstMoveChild() );
-	pParent->m_hMoveChild.Set( pChild );
+	hParent.Set(pParent);
+	pChild->m_hMovePeer.Set(pParent->FirstMoveChild());
+	pParent->m_hMoveChild.Set(pChild);
 	pChild->m_hMoveParent = hParent;
-	pChild->NetworkProp()->SetNetworkParent( hParent );
+	pChild->NetworkProp()->SetNetworkParent(hParent);
 	pChild->DispatchUpdateTransmitState();
-	pChild->OnEntityEvent( ENTITY_EVENT_PARENT_CHANGED, NULL );
+	pChild->OnEntityEvent(ENTITY_EVENT_PARENT_CHANGED, NULL);
 	pParent->RecalcHasPlayerChildBit();
 }
 
-void TransferChildren( CBaseEntity *pOldParent, CBaseEntity *pNewParent )
+void TransferChildren(CBaseEntity *pOldParent, CBaseEntity *pNewParent)
 {
 	CBaseEntity *pChild = pOldParent->FirstMoveChild();
-	while ( pChild )
+	while(pChild)
 	{
 		// NOTE: Have to do this before the unlink to ensure local coords are valid
 		Vector vecAbsOrigin = pChild->GetAbsOrigin();
 		QAngle angAbsRotation = pChild->GetAbsAngles();
 		Vector vecAbsVelocity = pChild->GetAbsVelocity();
-//		QAngle vecAbsAngVelocity = pChild->GetAbsAngularVelocity();
+		//		QAngle vecAbsAngVelocity = pChild->GetAbsAngularVelocity();
 
-		UnlinkChild( pOldParent, pChild );
-		LinkChild( pNewParent, pChild );
+		UnlinkChild(pOldParent, pChild);
+		LinkChild(pNewParent, pChild);
 
 		// FIXME: This is a hack to guarantee update of the local origin, angles, etc.
-		pChild->m_vecAbsOrigin.Init( FLT_MAX, FLT_MAX, FLT_MAX );
-		pChild->m_angAbsRotation.Init( FLT_MAX, FLT_MAX, FLT_MAX );
-		pChild->m_vecAbsVelocity.Init( FLT_MAX, FLT_MAX, FLT_MAX );
+		pChild->m_vecAbsOrigin.Init(FLT_MAX, FLT_MAX, FLT_MAX);
+		pChild->m_angAbsRotation.Init(FLT_MAX, FLT_MAX, FLT_MAX);
+		pChild->m_vecAbsVelocity.Init(FLT_MAX, FLT_MAX, FLT_MAX);
 
 		pChild->SetAbsOrigin(vecAbsOrigin);
 		pChild->SetAbsAngles(angAbsRotation);
 		pChild->SetAbsVelocity(vecAbsVelocity);
-//		pChild->SetAbsAngularVelocity(vecAbsAngVelocity);
+		//		pChild->SetAbsAngularVelocity(vecAbsAngVelocity);
 
-		pChild  = pOldParent->FirstMoveChild();
+		pChild = pOldParent->FirstMoveChild();
 	}
 }
 
-void UnlinkFromParent( CBaseEntity *pRemove )
+void UnlinkFromParent(CBaseEntity *pRemove)
 {
-	if ( pRemove->GetMoveParent() )
+	if(pRemove->GetMoveParent())
 	{
 		// NOTE: Have to do this before the unlink to ensure local coords are valid
 		Vector vecAbsOrigin = pRemove->GetAbsOrigin();
 		QAngle angAbsRotation = pRemove->GetAbsAngles();
 		Vector vecAbsVelocity = pRemove->GetAbsVelocity();
-//		QAngle vecAbsAngVelocity = pRemove->GetAbsAngularVelocity();
+		//		QAngle vecAbsAngVelocity = pRemove->GetAbsAngularVelocity();
 
-		UnlinkChild( pRemove->GetMoveParent(), pRemove );
+		UnlinkChild(pRemove->GetMoveParent(), pRemove);
 
 		pRemove->SetLocalOrigin(vecAbsOrigin);
 		pRemove->SetLocalAngles(angAbsRotation);
 		pRemove->SetLocalVelocity(vecAbsVelocity);
-//		pRemove->SetLocalAngularVelocity(vecAbsAngVelocity);
+		//		pRemove->SetLocalAngularVelocity(vecAbsAngVelocity);
 		pRemove->UpdateWaterState();
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Clears the parent of all the children of the given object.
 //-----------------------------------------------------------------------------
-void UnlinkAllChildren( CBaseEntity *pParent )
+void UnlinkAllChildren(CBaseEntity *pParent)
 {
 	CBaseEntity *pChild = pParent->FirstMoveChild();
-	while ( pChild )
+	while(pChild)
 	{
 		CBaseEntity *pNext = pChild->NextMovePeer();
-		UnlinkFromParent( pChild );
-		pChild  = pNext;
+		UnlinkFromParent(pChild);
+		pChild = pNext;
 	}
 }
 
-bool EntityIsParentOf( CBaseEntity *pParent, CBaseEntity *pEntity )
+bool EntityIsParentOf(CBaseEntity *pParent, CBaseEntity *pEntity)
 {
-	while ( pEntity->GetMoveParent() )
+	while(pEntity->GetMoveParent())
 	{
 		pEntity = pEntity->GetMoveParent();
-		if ( pParent == pEntity )
+		if(pParent == pEntity)
 			return true;
 	}
 
 	return false;
 }
 
-static void GetAllChildren_r( CBaseEntity *pEntity, CUtlVector<CBaseEntity *> &list )
+static void GetAllChildren_r(CBaseEntity *pEntity, CUtlVector<CBaseEntity *> &list)
 {
-	for ( ; pEntity != NULL; pEntity = pEntity->NextMovePeer() )
+	for(; pEntity != NULL; pEntity = pEntity->NextMovePeer())
 	{
-		list.AddToTail( pEntity );
-		GetAllChildren_r( pEntity->FirstMoveChild(), list );
+		list.AddToTail(pEntity);
+		GetAllChildren_r(pEntity->FirstMoveChild(), list);
 	}
 }
 
-int GetAllChildren( CBaseEntity *pParent, CUtlVector<CBaseEntity *> &list )
+int GetAllChildren(CBaseEntity *pParent, CUtlVector<CBaseEntity *> &list)
 {
-	if ( !pParent )
+	if(!pParent)
 		return 0;
 
-	GetAllChildren_r( pParent->FirstMoveChild(), list );
+	GetAllChildren_r(pParent->FirstMoveChild(), list);
 	return list.Count();
 }
 
-int	GetAllInHierarchy( CBaseEntity *pParent, CUtlVector<CBaseEntity *> &list )
+int GetAllInHierarchy(CBaseEntity *pParent, CUtlVector<CBaseEntity *> &list)
 {
-	if (!pParent)
+	if(!pParent)
 		return 0;
-	list.AddToTail( pParent );
-	return GetAllChildren( pParent, list ) + 1;
+	list.AddToTail(pParent);
+	return GetAllChildren(pParent, list) + 1;
 }

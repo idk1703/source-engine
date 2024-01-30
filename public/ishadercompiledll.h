@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -9,7 +9,6 @@
 #ifdef _WIN32
 #pragma once
 #endif
-
 
 #include "interface.h"
 
@@ -20,7 +19,7 @@ abstract_class IShaderCompileDLL
 {
 public:
 	// All vrad.exe does is load the VRAD DLL and run this.
-	virtual int			main( int argc, char **argv ) = 0;
+	virtual int main(int argc, char **argv) = 0;
 };
 
 #endif // ISHADERCOMPILEDLL_H

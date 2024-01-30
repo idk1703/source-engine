@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,16 +10,13 @@
 #pragma once
 #endif
 
-
 #include "weapon_csbase.h"
 
+#if defined(CLIENT_DLL)
 
-#if defined( CLIENT_DLL )
-
-	#define CKnife C_Knife
+#define CKnife C_Knife
 
 #endif
-
 
 // ----------------------------------------------------------------------------- //
 // CKnife class definition.
@@ -28,54 +25,54 @@
 class CKnife : public CWeaponCSBase
 {
 public:
-	DECLARE_CLASS( CKnife, CWeaponCSBase );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_CLASS(CKnife, CWeaponCSBase);
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
-	#ifndef CLIENT_DLL
-		DECLARE_DATADESC();
-	#endif
 
-	
+#ifndef CLIENT_DLL
+	DECLARE_DATADESC();
+#endif
+
 	CKnife();
 
 	// We say yes to this so the weapon system lets us switch to it.
 	virtual bool HasPrimaryAmmo();
 	virtual bool CanBeSelected();
-	
+
 	virtual void Precache();
 
 	void Spawn();
 	void Smack();
-	//void Smack( trace_t *pTr, float delay );
-	bool SwingOrStab( bool bStab );
+	// void Smack( trace_t *pTr, float delay );
+	bool SwingOrStab(bool bStab);
 	void PrimaryAttack();
 	void SecondaryAttack();
-	void WeaponAnimation( int iAnimation );
+	void WeaponAnimation(int iAnimation);
 
-	virtual void ItemPostFrame( void );
+	virtual void ItemPostFrame(void);
 
-// 	virtual float GetSpread() const;
+	// 	virtual float GetSpread() const;
 
 	bool Deploy();
-	void Holster( int skiplocal = 0 );
+	void Holster(int skiplocal = 0);
 	bool CanDrop();
 
 	void WeaponIdle();
 
-	virtual CSWeaponID GetWeaponID( void ) const		{ return WEAPON_KNIFE; }
+	virtual CSWeaponID GetWeaponID(void) const
+	{
+		return WEAPON_KNIFE;
+	}
 
 public:
-	
 	trace_t m_trHit;
 	EHANDLE m_pTraceHitEnt;
 
-	CNetworkVar( float, m_flSmackTime );
-	bool	m_bStab;
+	CNetworkVar(float, m_flSmackTime);
+	bool m_bStab;
 
 private:
-	CKnife( const CKnife & ) {}
+	CKnife(const CKnife &) {}
 };
-
 
 #endif // WEAPON_KNIFE_H

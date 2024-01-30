@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -13,8 +13,8 @@
 #include "GameEventListener.h"
 #include <igamesystem.h>
 
-// Structure that holds all information related to how a player related to a 
-// 
+// Structure that holds all information related to how a player related to a
+//
 typedef struct
 {
 	// shots taken
@@ -50,12 +50,12 @@ typedef struct
 
 // Can be used to represent a victim and how many times we killed him,
 // or as an attacker, how many times we were killed by this person
-typedef struct 
+typedef struct
 {
-	char m_szPlayerName[MAX_PLAYER_NAME_LENGTH];	// when we add this player, store the player name
-	int m_iUserID;		// player that did the killing
-	int m_iKills;			// number of kills
-	int m_iTotalDamage;	// amount of damage
+	char m_szPlayerName[MAX_PLAYER_NAME_LENGTH]; // when we add this player, store the player name
+	int m_iUserID;								 // player that did the killing
+	int m_iKills;								 // number of kills
+	int m_iTotalDamage;							 // amount of damage
 } playerstat_t;
 
 class CDODStatManager : public CGameEventListener, public CAutoGameSystem
@@ -67,12 +67,11 @@ public:
 	CDODStatManager();
 
 public: // IGameEventListener Interface
-	virtual void FireGameEvent( IGameEvent * event );
+	virtual void FireGameEvent(IGameEvent *event);
 
 public: // CBaseGameSystem overrides
-	virtual bool Init();	
-	//virtual void Shutdown() {}
+	virtual bool Init();
+	// virtual void Shutdown() {}
 };
-
 
 #endif // DOD_STATMGR_H

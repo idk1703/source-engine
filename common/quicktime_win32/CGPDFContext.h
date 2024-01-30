@@ -1,17 +1,17 @@
 /*
-     File:       CGPDFContext.h
- 
-     Contains:   CoreGraphics PDF context
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 2000-2001 by Apple Computer, Inc., all rights reserved.
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+		File:       CGPDFContext.h
+
+		Contains:   CoreGraphics PDF context
+
+		Version:    QuickTime 7.3
+
+		Copyright:  (c) 2007 (c) 2000-2001 by Apple Computer, Inc., all rights reserved.
+
+		Bugs?:      For bug reports, consult the following page on
+								the World Wide Web:
+
+										http://developer.apple.com/bugreporter/
+
 */
 #ifndef CGPDFCONTEXT_H_
 #define CGPDFCONTEXT_H_
@@ -58,11 +58,11 @@ extern "C" {
  *   Author    The name of the person who created the document.
  *   Creator   If the document was converted to PDF from another format,
  *             the name of the application that created the original
- *             document from which it was converted. 
+ *             document from which it was converted.
  */
 /*
  *  CGPDFContextCreate()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -70,15 +70,15 @@ extern "C" {
  */
 EXTERN_API_C( CGContextRef )
 CGPDFContextCreate(
-  CGDataConsumerRef   consumer,
-  const CGRect *      mediaBox,
-  CFDictionaryRef     auxiliaryInfo);
+	CGDataConsumerRef   consumer,
+	const CGRect *      mediaBox,
+	CFDictionaryRef     auxiliaryInfo);
 
 
 /* Convenience function: create a PDF context, writing to `url'. */
 /*
  *  CGPDFContextCreateWithURL()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -86,9 +86,9 @@ CGPDFContextCreate(
  */
 EXTERN_API_C( CGContextRef )
 CGPDFContextCreateWithURL(
-  CFURLRef          url,
-  const CGRect *    mediaBox,
-  CFDictionaryRef   auxiliaryInfo);
+	CFURLRef          url,
+	const CGRect *    mediaBox,
+	CFDictionaryRef   auxiliaryInfo);
 
 
 
@@ -103,4 +103,3 @@ CGPDFContextCreateWithURL(
 #endif
 
 #endif /* CGPDFCONTEXT_H_ */
-

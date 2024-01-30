@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -17,15 +17,13 @@
 
 #include "FactoryOverloads.h"
 
-void CFactoryOverloads::AddOverload( 
-	char const *attributeName, 
-	IAttributeWidgetFactory *newFactory,
-	IAttributeElementChoiceList *newChoiceList )
+void CFactoryOverloads::AddOverload(char const *attributeName, IAttributeWidgetFactory *newFactory,
+									IAttributeElementChoiceList *newChoiceList)
 {
-	Assert( attributeName );
-	Assert( newFactory || newChoiceList );
+	Assert(attributeName);
+	Assert(newFactory || newChoiceList);
 
-	if ( !newFactory )
+	if(!newFactory)
 	{
 		return;
 	}
@@ -34,7 +32,7 @@ void CFactoryOverloads::AddOverload(
 	e.factory = newFactory;
 	e.choices = newChoiceList;
 
-	m_Overloads.Insert( attributeName, e );
+	m_Overloads.Insert(attributeName, e);
 }
 
 int CFactoryOverloads::Count()
@@ -42,17 +40,17 @@ int CFactoryOverloads::Count()
 	return m_Overloads.Count();
 }
 
-char const *CFactoryOverloads::Name( int index )
+char const *CFactoryOverloads::Name(int index)
 {
-	return m_Overloads.GetElementName( index );
+	return m_Overloads.GetElementName(index);
 }
 
-IAttributeWidgetFactory *CFactoryOverloads::Factory( int index )
+IAttributeWidgetFactory *CFactoryOverloads::Factory(int index)
 {
-	return m_Overloads[ index ].factory;
+	return m_Overloads[index].factory;
 }
 
-IAttributeElementChoiceList *CFactoryOverloads::ChoiceList( int index )
+IAttributeElementChoiceList *CFactoryOverloads::ChoiceList(int index)
 {
-	return m_Overloads[ index ].choices;
+	return m_Overloads[index].choices;
 }

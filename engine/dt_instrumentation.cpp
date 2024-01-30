@@ -1,11 +1,11 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
 
-#if (defined(_WIN32) && (!defined(_X360) ) )
+#if(defined(_WIN32) && (!defined(_X360)))
 #include <windows.h>
 #endif
 #include "tier0/platform.h"
@@ -30,7 +30,6 @@
 bool g_bDTIEnabled = false;
 const char *g_pDTIFilename;
 
-
 class CDTIProp
 {
 public:
@@ -45,7 +44,6 @@ public:
 	int m_nIndexBits;
 };
 
-
 class CDTIRecvTable
 {
 public:
@@ -59,37 +57,33 @@ public:
 	bool m_bSawAction;
 };
 
-
-CUtlLinkedList<CDTIRecvTable*, int> g_DTIRecvTables;
-
+CUtlLinkedList<CDTIRecvTable *, int> g_DTIRecvTables;
 
 void DTI_Init()
 {
-#if ( defined( IS_WINDOWS_PC ) && (! defined( SWDS ) ) )
+#if(defined(IS_WINDOWS_PC) && (!defined(SWDS)))
 	extern IVEngineClient *engineClient;
-	if ( CommandLine()->FindParm( "-dti" ) && !g_bDTIEnabled )
+	if(CommandLine()->FindParm("-dti") && !g_bDTIEnabled)
 	{
 		g_bDTIEnabled = true;
 
 		SYSTEMTIME systemTime;
-		GetLocalTime( &systemTime );
+		GetLocalTime(&systemTime);
 
 		char dtiFileName[MAX_PATH];
 		char dtiLevelName[MAX_PATH];
-		V_FileBase( engineClient->GetLevelName(), dtiLevelName, ARRAYSIZE( dtiLevelName ) );
-		V_snprintf( dtiFileName, ARRAYSIZE( dtiFileName ), "dti_client_%s_%02d%02d%02d-%02d%02d%02d.csv", 
-					dtiLevelName,
-					systemTime.wYear % 100, systemTime.wMonth, systemTime.wDay,
-					systemTime.wHour, systemTime.wMinute, systemTime.wSecond );
-		g_pDTIFilename = COM_StringCopy( dtiFileName );
+		V_FileBase(engineClient->GetLevelName(), dtiLevelName, ARRAYSIZE(dtiLevelName));
+		V_snprintf(dtiFileName, ARRAYSIZE(dtiFileName), "dti_client_%s_%02d%02d%02d-%02d%02d%02d.csv", dtiLevelName,
+				   systemTime.wYear % 100, systemTime.wMonth, systemTime.wDay, systemTime.wHour, systemTime.wMinute,
+				   systemTime.wSecond);
+		g_pDTIFilename = COM_StringCopy(dtiFileName);
 	}
 #endif
 }
 
-
 void DTI_Term()
 {
-	if ( g_bDTIEnabled )
+	if(g_bDTIEnabled)
 	{
 		DTI_Flush();
 		g_DTIRecvTables.PurgeAndDeleteElements();
@@ -99,132 +93,123 @@ void DTI_Term()
 	}
 }
 
-
 void DTI_Flush()
 {
-	if ( !g_bDTIEnabled )
+	if(!g_bDTIEnabled)
 		return;
 
-	FileHandle_t fp = g_pFileSystem->Open( g_pDTIFilename, "wt" );
-	if( fp != FILESYSTEM_INVALID_HANDLE )
+	FileHandle_t fp = g_pFileSystem->Open(g_pDTIFilename, "wt");
+	if(fp != FILESYSTEM_INVALID_HANDLE)
 	{
 		// Write the header.
-		g_pFileSystem->FPrintf( fp,
-			"Class"
-			",Prop"
-			",Decode Count"
-			",Total Bits"
-			",Avg Bits"
-			",Total Index Bits"
-			",Avg Index Bits"
-			",=SUM(D:D)"
-			"\n" );
-	
+		g_pFileSystem->FPrintf(fp, "Class"
+								   ",Prop"
+								   ",Decode Count"
+								   ",Total Bits"
+								   ",Avg Bits"
+								   ",Total Index Bits"
+								   ",Avg Index Bits"
+								   ",=SUM(D:D)"
+								   "\n");
+
 		int row = 2;
 
-		FOR_EACH_LL( g_DTIRecvTables, iTable )
+		FOR_EACH_LL(g_DTIRecvTables, iTable)
 		{
 			CDTIRecvTable *pTable = g_DTIRecvTables[iTable];
-			
-			if ( !pTable->m_bSawAction )
+
+			if(!pTable->m_bSawAction)
 				continue;
-			
-			for ( int iProp=0; iProp < pTable->m_Props.Count(); iProp++ )
+
+			for(int iProp = 0; iProp < pTable->m_Props.Count(); iProp++)
 			{
 				CDTIProp *pProp = &pTable->m_Props[iProp];
 
-				if ( pProp->m_nDecodes == 0 )
+				if(pProp->m_nDecodes == 0)
 					continue;
-			
-				g_pFileSystem->FPrintf( fp,
-					// Class/Prop names
-					"%s"
-					",%s"
-					
-					// Decode count
-					",%d"
 
-					// Total/Avg bits
-					",%d"
-					",%.3f"
+				g_pFileSystem->FPrintf(fp,
+									   // Class/Prop names
+									   "%s"
+									   ",%s"
 
-					// Total/Avg index bits
-					",%d"
-					",%.3f"
-					",=D%d/H$1"
+									   // Decode count
+									   ",%d"
 
-					"\n",
-					
-					// Class/Prop names
-					pTable->m_Name.String(),
-					pProp->m_Name.String(),
+									   // Total/Avg bits
+									   ",%d"
+									   ",%.3f"
 
-					// Decode count
-					pProp->m_nDecodes,
+									   // Total/Avg index bits
+									   ",%d"
+									   ",%.3f"
+									   ",=D%d/H$1"
 
-					// Total/Avg bits
-					pProp->m_nDataBits,
-					(float)pProp->m_nDataBits / pProp->m_nDecodes,
+									   "\n",
 
-					// Total/Avg index bits
-					pProp->m_nIndexBits,
-					(float)pProp->m_nIndexBits / pProp->m_nDecodes,
-					row++
-					);
+									   // Class/Prop names
+									   pTable->m_Name.String(), pProp->m_Name.String(),
+
+									   // Decode count
+									   pProp->m_nDecodes,
+
+									   // Total/Avg bits
+									   pProp->m_nDataBits, (float)pProp->m_nDataBits / pProp->m_nDecodes,
+
+									   // Total/Avg index bits
+									   pProp->m_nIndexBits, (float)pProp->m_nIndexBits / pProp->m_nDecodes, row++);
 			}
 		}
 
-		g_pFileSystem->Close( fp );
+		g_pFileSystem->Close(fp);
 
-		Msg( "DTI: wrote client stats into %s.\n", g_pDTIFilename );
+		Msg("DTI: wrote client stats into %s.\n", g_pDTIFilename);
 	}
 }
 
-
-void DTI_HookRecvDecoder( CRecvDecoder *pDecoder )
+void DTI_HookRecvDecoder(CRecvDecoder *pDecoder)
 {
-	if ( !g_bDTIEnabled )
+	if(!g_bDTIEnabled)
 		return;
 
-	bool dtiEnabled = CommandLine()->FindParm("-dti" ) > 0;
+	bool dtiEnabled = CommandLine()->FindParm("-dti") > 0;
 
 	CDTIRecvTable *pTable = new CDTIRecvTable;
-	pTable->m_Name.Set( pDecoder->GetName() );
-	
-	pTable->m_Props.SetSize( pDecoder->GetNumProps() );
-	for ( int i=0; i < pTable->m_Props.Count(); i++ )
+	pTable->m_Name.Set(pDecoder->GetName());
+
+	pTable->m_Props.SetSize(pDecoder->GetNumProps());
+	for(int i = 0; i < pTable->m_Props.Count(); i++)
 	{
-		const SendProp *pSendProp = pDecoder->GetSendProp( i );
-		if ( !dtiEnabled )
+		const SendProp *pSendProp = pDecoder->GetSendProp(i);
+		if(!dtiEnabled)
 		{
-			pTable->m_Props[i].m_Name.Set( pSendProp->GetName() );
+			pTable->m_Props[i].m_Name.Set(pSendProp->GetName());
 		}
 		else
 		{
-			char *parentArrayPropName = const_cast< char * >(const_cast< SendProp * >(pSendProp)->GetParentArrayPropName());
-			if ( parentArrayPropName )
+			char *parentArrayPropName = const_cast<char *>(const_cast<SendProp *>(pSendProp)->GetParentArrayPropName());
+			if(parentArrayPropName)
 			{
 				char temp[256];
-				V_snprintf( temp, sizeof( temp ), "%s:%s", parentArrayPropName, pSendProp->GetName() );
-				pTable->m_Props[i].m_Name.Set( temp );
+				V_snprintf(temp, sizeof(temp), "%s:%s", parentArrayPropName, pSendProp->GetName());
+				pTable->m_Props[i].m_Name.Set(temp);
 			}
 			else
 			{
-				pTable->m_Props[i].m_Name.Set( pSendProp->GetName() );
+				pTable->m_Props[i].m_Name.Set(pSendProp->GetName());
 			}
 		}
 	}
-	
-	g_DTIRecvTables.AddToTail( pTable );
+
+	g_DTIRecvTables.AddToTail(pTable);
 
 	pDecoder->m_pDTITable = pTable;
 }
 
-
-void _DTI_HookDeltaBits( CRecvDecoder *pDecoder, int iProp, int nDataBits, int nIndexBits )
+void _DTI_HookDeltaBits(CRecvDecoder *pDecoder, int iProp, int nDataBits, int nIndexBits)
 {
 	CDTIRecvTable *pTable = pDecoder->m_pDTITable;
-	if ( !pTable )
+	if(!pTable)
 		return;
 
 	CDTIProp *pProp = &pTable->m_Props[iProp];
@@ -234,6 +219,3 @@ void _DTI_HookDeltaBits( CRecvDecoder *pDecoder, int iProp, int nDataBits, int n
 
 	pTable->m_bSawAction = true;
 }
-
-
-

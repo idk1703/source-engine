@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -18,7 +18,7 @@
  * Below are several constants used by the navigation system.
  * @todo Move these into TheNavMesh singleton.
  */
-const float BotRadius = 10.0f;				///< circular extent that contains bot
+const float BotRadius = 10.0f; ///< circular extent that contains bot
 
 class CNavArea;
 class CSNavNode;
@@ -28,10 +28,10 @@ class CSNavNode;
 /**
  * Return true if given entity can be ignored when moving
  */
-#define WALK_THRU_DOORS				0x01
-#define WALK_THRU_BREAKABLES		0x02
-#define WALK_THRU_TOGGLE_BRUSHES	0x04
-#define WALK_THRU_EVERYTHING		(WALK_THRU_DOORS | WALK_THRU_BREAKABLES | WALK_THRU_TOGGLE_BRUSHES)
+#define WALK_THRU_DOORS			 0x01
+#define WALK_THRU_BREAKABLES	 0x02
+#define WALK_THRU_TOGGLE_BRUSHES 0x04
+#define WALK_THRU_EVERYTHING	 (WALK_THRU_DOORS | WALK_THRU_BREAKABLES | WALK_THRU_TOGGLE_BRUSHES)
 inline bool IsEntityWalkable( CBaseEntity *entity, unsigned int flags )
 {
 	if (FClassnameIs( entity, "worldspawn" ))

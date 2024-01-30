@@ -14,61 +14,46 @@
 #include "mxtk/mxRadioButton.h"
 #include <windows.h>
 
-
-
 class mxRadioButton_i
 {
 public:
 	int dummy;
 };
 
-
-
-mxRadioButton::mxRadioButton (mxWindow *parent, int x, int y, int w, int h, const char *label, int id, bool newGroup)
-: mxWidget (parent, x, y, w, h, label)
+mxRadioButton::mxRadioButton(mxWindow *parent, int x, int y, int w, int h, const char *label, int id, bool newGroup)
+	: mxWidget(parent, x, y, w, h, label)
 {
-	if (!parent)
+	if(!parent)
 		return;
 
 	DWORD dwStyle = WS_VISIBLE | WS_CHILD | BS_AUTORADIOBUTTON;
-	HWND hwndParent = (HWND) ((mxWidget *) parent)->getHandle ();
+	HWND hwndParent = (HWND)((mxWidget *)parent)->getHandle();
 
-	if (newGroup)
+	if(newGroup)
 		dwStyle |= WS_GROUP;
 
-	void *handle = (void *) CreateWindowEx (0, "BUTTON", label, dwStyle,
-				x, y, w, h, hwndParent,
-				(HMENU) id, (HINSTANCE) GetModuleHandle (NULL), NULL);
-	
-	SendMessage ((HWND) handle, WM_SETFONT, (WPARAM) (HFONT) GetStockObject (ANSI_VAR_FONT), MAKELPARAM (TRUE, 0));
-	SetWindowLong ((HWND) handle, GWL_USERDATA, (LONG) this);
+	void *handle = (void *)CreateWindowEx(0, "BUTTON", label, dwStyle, x, y, w, h, hwndParent, (HMENU)id,
+										  (HINSTANCE)GetModuleHandle(NULL), NULL);
 
-	setHandle (handle);
-	setType (MX_RADIOBUTTON);
-	setParent (parent);
-	setId (id);
+	SendMessage((HWND)handle, WM_SETFONT, (WPARAM)(HFONT)GetStockObject(ANSI_VAR_FONT), MAKELPARAM(TRUE, 0));
+	SetWindowLong((HWND)handle, GWL_USERDATA, (LONG)this);
 
-	setChecked (newGroup);
+	setHandle(handle);
+	setType(MX_RADIOBUTTON);
+	setParent(parent);
+	setId(id);
+
+	setChecked(newGroup);
 }
 
+mxRadioButton::~mxRadioButton() {}
 
-
-mxRadioButton::~mxRadioButton ()
+void mxRadioButton::setChecked(bool b)
 {
+	SendMessage((HWND)getHandle(), BM_SETCHECK, (WPARAM)b ? BST_CHECKED : BST_UNCHECKED, 0L);
 }
 
-
-
-void
-mxRadioButton::setChecked (bool b)
+bool mxRadioButton::isChecked() const
 {
-	SendMessage ((HWND) getHandle (), BM_SETCHECK, (WPARAM) b ? BST_CHECKED:BST_UNCHECKED, 0L);
-}
-
-
-
-bool
-mxRadioButton::isChecked () const
-{
-	return (SendMessage ((HWND) getHandle (), BM_GETCHECK, 0, 0L) == BST_CHECKED);
+	return (SendMessage((HWND)getHandle(), BM_GETCHECK, 0, 0L) == BST_CHECKED);
 }

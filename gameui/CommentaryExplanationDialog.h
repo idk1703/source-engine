@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -19,7 +19,7 @@
 //-----------------------------------------------------------------------------
 class CCommentaryExplanationDialog : public vgui::Frame
 {
-	DECLARE_CLASS_SIMPLE( CCommentaryExplanationDialog, vgui::Frame );
+	DECLARE_CLASS_SIMPLE(CCommentaryExplanationDialog, vgui::Frame);
 
 public:
 	CCommentaryExplanationDialog(vgui::Panel *parent, char *pszFinishCommand);
@@ -27,11 +27,11 @@ public:
 
 	virtual void OnKeyCodeTyped(vgui::KeyCode code);
 	virtual void OnKeyCodePressed(vgui::KeyCode code);
-	virtual void OnCommand( const char *command );
-	virtual void OnClose( void );
+	virtual void OnCommand(const char *command);
+	virtual void OnClose(void);
 
 private:
-	char m_pszFinishCommand[ 512 ];
+	char m_pszFinishCommand[512];
 };
 
 #endif // COMMENTARYEXPLANATIONDIALOG_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,25 +16,28 @@
 // ------------------------------------------------------------------------ //
 class CObjectRallyFlag : public CBaseObject
 {
-DECLARE_CLASS( CObjectRallyFlag, CBaseObject );
+	DECLARE_CLASS(CObjectRallyFlag, CBaseObject);
 
 public:
 	DECLARE_DATADESC();
 	DECLARE_SERVERCLASS();
 
-	static CObjectRallyFlag* Create(const Vector &vOrigin, const QAngle &vAngles);
+	static CObjectRallyFlag *Create(const Vector &vOrigin, const QAngle &vAngles);
 
-					CObjectRallyFlag();
+	CObjectRallyFlag();
 
-	virtual void	Spawn();
-	virtual void	Precache();
-	virtual bool	CanTakeEMPDamage( void ) { return true; }
+	virtual void Spawn();
+	virtual void Precache();
+	virtual bool CanTakeEMPDamage(void)
+	{
+		return true;
+	}
 
 	// Rally
-	virtual void	RallyThink( void );
+	virtual void RallyThink(void);
 
 private:
-	float		m_flExpiresAt;
+	float m_flExpiresAt;
 };
 
 #endif // TF_OBJ_RALLYFLAG_H

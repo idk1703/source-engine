@@ -1,6 +1,6 @@
 //====== Copyright 1996-2010, Valve Corporation, All rights reserved. =======
 //
-// Purpose: The file defines our Google Protocol Buffers which are used in over 
+// Purpose: The file defines our Google Protocol Buffers which are used in over
 // the wire messages between servers as well as between the TF GC and TF gameservers
 // and clients.
 //
@@ -13,15 +13,15 @@ option optimize_for = SPEED;
 option cc_generic_services = false;
 
 
-// 
+//
 // STYLE NOTES:
 //
 // Use CamelCase CMsgMyMessageName style names for messages.
-// 
+//
 // Use lowercase _ delimited names like my_steam_id for field names, this is non-standard for Steam,
-// but plays nice with the Google formatted code generation.  
-// 
-// Try not to use required fields ever. Only do so if you are really really sure you'll never want them removed. 
+// but plays nice with the Google formatted code generation.
+//
+// Try not to use required fields ever. Only do so if you are really really sure you'll never want them removed.
 // Optional should be preffered as it will make versioning easier and cleaner in the future if someone refactors
 // your message and wants to remove or rename fields.
 //
@@ -31,7 +31,7 @@ option cc_generic_services = false;
 //
 // Similar to fixed64, use fixed32 for RTime32 or other 32 bit values that are frequently larger than
 // 2^28.  It will save space in those cases, otherwise use int32 which will safe space for smaller values.
-// An exception to this rule for RTime32 is if the value will frequently be zero rather than set to an actual 
+// An exception to this rule for RTime32 is if the value will frequently be zero rather than set to an actual
 // time.
 //
 
@@ -304,10 +304,10 @@ enum EGCItemMsg
 
 	k_EMsgGCServerVersionUpdated =					2522;		// Sent when the active version of a server changes so servers can restart
 
-	k_EMsgGCApplyAutograph	=						2523; // 
+	k_EMsgGCApplyAutograph	=						2523; //
 	k_EMsgGCToGCWebAPIAccountChanged =				2524;
-	k_EMsgGCRequestAnnouncements	=				2525; // 
-	k_EMsgGCRequestAnnouncementsResponse	=		2526; // 
+	k_EMsgGCRequestAnnouncements	=				2525; //
+	k_EMsgGCRequestAnnouncementsResponse	=		2526; //
 	k_EMsgGCRequestPassportItemGrant =				2527;
 
 	k_EMsgGCClientVersionUpdated =					2528;		// Sent when the client doesn't match the appropriate version
@@ -522,10 +522,10 @@ message CMsgGCToGCGetUserSessionServerResponse
 	optional fixed64	server_steam_id = 1;		// zero if this user is not online or not on a server
 };
 
-// k_EMsgGCToGCGetUserServerMembers		
+// k_EMsgGCToGCGetUserServerMembers
 message CMsgGCToGCGetUserServerMembers
 {
-	optional uint32		account_id = 1;				// the account ID to look up the server and spectators from	
+	optional uint32		account_id = 1;				// the account ID to look up the server and spectators from
 	optional uint32		max_spectators = 2;			// do you want spectators? If so what is the limit of how many will be returned (otherwise specify zero)
 };
 
@@ -641,4 +641,3 @@ message CMsgGCQuestDiscard_Request
 }
 
 // Do not remove this comment due to a bug on the Mac OS X protobuf compiler - lol
-

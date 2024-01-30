@@ -271,12 +271,12 @@ $Project "FileSystemOpenDialog"
 
 $Project "filesystem_stdio"
 {
-        "filesystem\filesystem_stdio.vpc" [$WINDOWS||$X360||$POSIX]
+	"filesystem\filesystem_stdio.vpc" [$WINDOWS||$X360||$POSIX]
 }
 
 $Project "filesystem_steam"
 {
-        "filesystem\filesystem_steam.vpc" [$WIN32||$POSIX]
+	"filesystem\filesystem_steam.vpc" [$WIN32||$POSIX]
 }
 
 $Project "finddbgdll"
@@ -1783,5 +1783,5 @@ $Project "socketlib"
 
 $Project "zlib"
 {
-    "thirdparty\zlib-1.2.5\zlib.vpc" [$WINDOWS]
+	"thirdparty\zlib-1.2.5\zlib.vpc" [$WINDOWS]
 }

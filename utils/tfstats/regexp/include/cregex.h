@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -8,4 +8,3 @@
 #ifndef CREGEX_H
 #include <jm/cregex.h>
 #endif
-

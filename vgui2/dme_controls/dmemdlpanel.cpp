@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -15,33 +15,27 @@
 
 using namespace vgui;
 
-
-IMPLEMENT_DMEPANEL_FACTORY( CDmeMDLPanel, DmeMDLMakefile, "DmeMakeFileOutputPreview", "MDL MakeFile Output Preview", false );
-
+IMPLEMENT_DMEPANEL_FACTORY(CDmeMDLPanel, DmeMDLMakefile, "DmeMakeFileOutputPreview", "MDL MakeFile Output Preview",
+						   false);
 
 //-----------------------------------------------------------------------------
 // Constructor, destructor
 //-----------------------------------------------------------------------------
-CDmeMDLPanel::CDmeMDLPanel( vgui::Panel *pParent, const char *pName ) : BaseClass( pParent, pName )
-{
-}
+CDmeMDLPanel::CDmeMDLPanel(vgui::Panel *pParent, const char *pName) : BaseClass(pParent, pName) {}
 
-CDmeMDLPanel::~CDmeMDLPanel()
-{
-}
-
+CDmeMDLPanel::~CDmeMDLPanel() {}
 
 //-----------------------------------------------------------------------------
 // DMEPanel..
 //-----------------------------------------------------------------------------
-void CDmeMDLPanel::SetDmeElement( CDmeMDLMakefile *pMDLMakefile )
+void CDmeMDLPanel::SetDmeElement(CDmeMDLMakefile *pMDLMakefile)
 {
-	if ( pMDLMakefile != NULL )
+	if(pMDLMakefile != NULL)
 	{
-		CDmeMDL *pMDL = CastElement< CDmeMDL >( pMDLMakefile->GetOutputElement( true ) );
-		if ( pMDL )
+		CDmeMDL *pMDL = CastElement<CDmeMDL>(pMDLMakefile->GetOutputElement(true));
+		if(pMDL)
 		{
-			SetMDL( pMDL->GetMDL() );
+			SetMDL(pMDL->GetMDL());
 		}
 	}
 }

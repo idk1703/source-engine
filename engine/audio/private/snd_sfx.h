@@ -8,7 +8,7 @@
 #ifndef SND_SFX_H
 #define SND_SFX_H
 
-#if defined( _WIN32 )
+#if defined(_WIN32)
 #pragma once
 #endif
 
@@ -20,25 +20,25 @@ public:
 	CSfxTable();
 
 	// gets sound name, possible decoracted with prefixes
-	virtual const char	*getname();
+	virtual const char *getname();
 	// gets the filename, the part after the optional prefixes
-	const char			*GetFileName();
-	FileNameHandle_t	GetFileNameHandle();
+	const char *GetFileName();
+	FileNameHandle_t GetFileNameHandle();
 
-	void				SetNamePoolIndex( int index );
-	bool				IsPrecachedSound();
-	void				OnNameChanged( const char *pName );
+	void SetNamePoolIndex(int index);
+	bool IsPrecachedSound();
+	void OnNameChanged(const char *pName);
 
-	int					m_namePoolIndex;
-	CAudioSource		*pSource;
+	int m_namePoolIndex;
+	CAudioSource *pSource;
 
-	bool				m_bUseErrorFilename : 1;
-	bool				m_bIsUISound : 1;
-	bool				m_bIsLateLoad : 1;
-	bool				m_bMixGroupsCached : 1;
-	byte				m_mixGroupCount;
+	bool m_bUseErrorFilename : 1;
+	bool m_bIsUISound : 1;
+	bool m_bIsLateLoad : 1;
+	bool m_bMixGroupsCached : 1;
+	byte m_mixGroupCount;
 	// UNDONE: Use a fixed bit vec here?
-	byte				m_mixGroupList[8];
+	byte m_mixGroupList[8];
 
 private:
 	// Only set in debug mode so you can see the name.

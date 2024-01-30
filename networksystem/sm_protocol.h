@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -39,11 +39,10 @@ enum NetworkMessageGroup_t
 // Networksystem internal messages for use during valid connection
 enum SystemNetworkMessageType_t
 {
-	net_nop 		= 0,			// nop command used for padding
-	net_disconnect	= 1,			// disconnect, last message in connection
+	net_nop = 0,		// nop command used for padding
+	net_disconnect = 1, // disconnect, last message in connection
 
 	net_num_messages
 };
-
 
 #endif // SM_PROTOCOL_H

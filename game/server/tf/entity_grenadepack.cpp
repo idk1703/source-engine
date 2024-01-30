@@ -17,12 +17,12 @@
 // CTF GrenadePack defines.
 //
 
-#define TF_GRENADEPACK_MODEL			"models/items/grenade_pack.mdl"
-#define TF_GRENADEPACK_PICKUP_SOUND		"GrenadePack.Touch"
-#define TF_GRENADEPACK_GRENADES1		4
-#define TF_GRENADEPACK_GRENADES2		4
+#define TF_GRENADEPACK_MODEL		"models/items/grenade_pack.mdl"
+#define TF_GRENADEPACK_PICKUP_SOUND "GrenadePack.Touch"
+#define TF_GRENADEPACK_GRENADES1	4
+#define TF_GRENADEPACK_GRENADES2	4
 
-LINK_ENTITY_TO_CLASS( item_grenadepack, CGrenadePack );
+LINK_ENTITY_TO_CLASS(item_grenadepack, CGrenadePack);
 
 //=============================================================================
 //
@@ -32,10 +32,10 @@ LINK_ENTITY_TO_CLASS( item_grenadepack, CGrenadePack );
 //-----------------------------------------------------------------------------
 // Purpose: Spawn function for the grenadepack
 //-----------------------------------------------------------------------------
-void CGrenadePack::Spawn( void )
+void CGrenadePack::Spawn(void)
 {
 	Precache();
-	SetModel( TF_GRENADEPACK_MODEL );
+	SetModel(TF_GRENADEPACK_MODEL);
 
 	BaseClass::Spawn();
 
@@ -46,38 +46,38 @@ void CGrenadePack::Spawn( void )
 //-----------------------------------------------------------------------------
 // Purpose: Precache function for the grenadepack
 //-----------------------------------------------------------------------------
-void CGrenadePack::Precache( void )
+void CGrenadePack::Precache(void)
 {
-	PrecacheModel( TF_GRENADEPACK_MODEL );
-	PrecacheScriptSound( TF_GRENADEPACK_PICKUP_SOUND );
+	PrecacheModel(TF_GRENADEPACK_MODEL);
+	PrecacheScriptSound(TF_GRENADEPACK_PICKUP_SOUND);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: MyTouch function for the grenadepack
 //-----------------------------------------------------------------------------
-bool CGrenadePack::MyTouch( CBasePlayer *pPlayer )
+bool CGrenadePack::MyTouch(CBasePlayer *pPlayer)
 {
 	bool bSuccess = false;
 
-	if ( ValidTouch( pPlayer ) )
+	if(ValidTouch(pPlayer))
 	{
 		// try to give primary grenades
-		if ( pPlayer->GiveAmmo( TF_GRENADEPACK_GRENADES1, TF_AMMO_GRENADES1, true ) )
+		if(pPlayer->GiveAmmo(TF_GRENADEPACK_GRENADES1, TF_AMMO_GRENADES1, true))
 		{
 			bSuccess = true;
 		}
 
 		// try to give secondary grenades
-		if ( pPlayer->GiveAmmo( TF_GRENADEPACK_GRENADES2, TF_AMMO_GRENADES2, true ) )
+		if(pPlayer->GiveAmmo(TF_GRENADEPACK_GRENADES2, TF_AMMO_GRENADES2, true))
 		{
 			bSuccess = true;
 		}
 
 		// did we give them anything?
-		if ( bSuccess )
+		if(bSuccess)
 		{
-			CSingleUserRecipientFilter filter( pPlayer );
-			EmitSound( filter, entindex(), TF_GRENADEPACK_PICKUP_SOUND );
+			CSingleUserRecipientFilter filter(pPlayer);
+			EmitSound(filter, entindex(), TF_GRENADEPACK_PICKUP_SOUND);
 		}
 	}
 

@@ -33,7 +33,7 @@ struct VS_INPUT
 struct VS_OUTPUT
 {
 	// Stuff that isn't seen by the pixel shader
-	float4 projPosSetup	: POSITION;	
+	float4 projPosSetup	: POSITION;
 	float  fog			: FOG;
 	// Stuff that is seen by the pixel shader
 	float2 baseTexCoord	: TEXCOORD0;
@@ -64,7 +64,7 @@ VS_OUTPUT main( const VS_INPUT v )
 	o.projPos = vProjPos.xyz;
 	o.fog = CalcFog( worldPos, vProjPos.xyz, g_FogType );
 
-	// Needed for water fog alpha and diffuse lighting 
+	// Needed for water fog alpha and diffuse lighting
 	o.worldPos = worldPos;
 	o.worldNormal = normalize( worldNormal );
 

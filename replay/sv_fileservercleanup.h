@@ -16,7 +16,7 @@
 
 //----------------------------------------------------------------------------------------
 
-bool		SV_DoFileserverCleanup( bool bForceCleanAll, ISpewer *pSpewer/*=g_pDefaultSpewer*/ );
+bool SV_DoFileserverCleanup(bool bForceCleanAll, ISpewer *pSpewer /*=g_pDefaultSpewer*/);
 CBaseJob *SV_CreateDeleteFileJob();
 
 //----------------------------------------------------------------------------------------
@@ -26,11 +26,11 @@ class IFileserverCleanerJob
 public:
 	virtual ~IFileserverCleanerJob() {}
 
-	virtual void		AddFileForDelete( const char *pFilename ) = 0;
-	virtual int			GetNumFilesDeleted() const = 0;
+	virtual void AddFileForDelete(const char *pFilename) = 0;
+	virtual int GetNumFilesDeleted() const = 0;
 };
 
-IFileserverCleanerJob *SV_CastJobToIFileserverCleanerJob( CBaseJob *pJob );
+IFileserverCleanerJob *SV_CastJobToIFileserverCleanerJob(CBaseJob *pJob);
 
 //----------------------------------------------------------------------------------------
 
@@ -39,38 +39,46 @@ class CFileserverCleaner : public CBaseThinker
 public:
 	CFileserverCleaner();
 
-	void				MarkFileForDelete( const char *pFilename );
+	void MarkFileForDelete(const char *pFilename);
 
-	int					GetNumFilesDeleted() const		{ return m_nNumFilesDeleted; }
-	bool				HasFilesQueuedForDelete() const	{ return m_pCleanerJob != NULL; }
+	int GetNumFilesDeleted() const
+	{
+		return m_nNumFilesDeleted;
+	}
+	bool HasFilesQueuedForDelete() const
+	{
+		return m_pCleanerJob != NULL;
+	}
 
-	void				BlockForCompletion();
-	void				DoCleanAsynchronous( bool bPrintResult = false, ISpewer *pSpewer = g_pDefaultSpewer );
+	void BlockForCompletion();
+	void DoCleanAsynchronous(bool bPrintResult = false, ISpewer *pSpewer = g_pDefaultSpewer);
 
 private:
-	void				Clear();
-	void				PrintResult();
+	void Clear();
+	void PrintResult();
 
-	virtual void		Think();
-	virtual float		GetNextThinkTime() const;
+	virtual void Think();
+	virtual float GetNextThinkTime() const;
 
-	CBaseJob			*m_pCleanerJob;
-	bool				m_bRunning;
-	bool				m_bPrintResult;
-	int					m_nNumFilesDeleted;
-	ISpewer				*m_pSpewer;
+	CBaseJob *m_pCleanerJob;
+	bool m_bRunning;
+	bool m_bPrintResult;
+	int m_nNumFilesDeleted;
+	ISpewer *m_pSpewer;
 };
 
 //----------------------------------------------------------------------------------------
 
-class CLocalFileDeleterJob : public CBaseJob,
-							 public IFileserverCleanerJob
+class CLocalFileDeleterJob : public CBaseJob, public IFileserverCleanerJob
 {
 public:
 	CLocalFileDeleterJob();
 
-	virtual void		AddFileForDelete( const char *pFilename );
-	virtual int			GetNumFilesDeleted() const	{ return m_nNumDeleted; }
+	virtual void AddFileForDelete(const char *pFilename);
+	virtual int GetNumFilesDeleted() const
+	{
+		return m_nNumDeleted;
+	}
 
 	enum DeleteError_t
 	{
@@ -78,14 +86,14 @@ public:
 	};
 
 private:
-	virtual JobStatus_t	DoExecute();
+	virtual JobStatus_t DoExecute();
 
-	CUtlStringList		m_vecFiles;
-	int					m_nNumDeleted;
+	CUtlStringList m_vecFiles;
+	int m_nNumDeleted;
 };
 
 CLocalFileDeleterJob *SV_CreateLocalFileDeleterJob();
 
 //----------------------------------------------------------------------------------------
 
-#endif	// SV_FILESERVERCLEANUP_H
+#endif // SV_FILESERVERCLEANUP_H

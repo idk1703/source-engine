@@ -14,7 +14,7 @@ class IClientReplayContext;
 
 //----------------------------------------------------------------------------------------
 
-bool ReplayLib_Init( const char *pGameDir, IClientReplayContext *pClientReplayContext );
+bool ReplayLib_Init(const char *pGameDir, IClientReplayContext *pClientReplayContext);
 
 //----------------------------------------------------------------------------------------
 

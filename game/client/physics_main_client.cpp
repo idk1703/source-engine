@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,167 +14,162 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-
 //-----------------------------------------------------------------------------
 // helper method for trace hull as used by physics...
 //-----------------------------------------------------------------------------
-static void Physics_TraceHull( C_BaseEntity* pBaseEntity, const Vector &vecStart,
-	const Vector &vecEnd, const Vector &hullMin, const Vector &hullMax,	
-	unsigned int mask, trace_t *ptr )
+static void Physics_TraceHull(C_BaseEntity *pBaseEntity, const Vector &vecStart, const Vector &vecEnd,
+							  const Vector &hullMin, const Vector &hullMax, unsigned int mask, trace_t *ptr)
 {
 	// FIXME: I really am not sure the best way of doing this
 	// The TraceHull code below for shots will make sure the object passes
-	// through shields which do not block that damage type. It will also 
+	// through shields which do not block that damage type. It will also
 	// send messages to the shields that they've been hit.
 #if 0
 	if (pBaseEntity->GetDamageType() != DMG_GENERIC)
 	{
-		GameRules()->WeaponTraceHull( vecStart, vecEnd, hullMin, hullMax, 
-			mask, pBaseEntity, pBaseEntity->GetCollisionGroup(), 
+		GameRules()->WeaponTraceHull( vecStart, vecEnd, hullMin, hullMax,
+			mask, pBaseEntity, pBaseEntity->GetCollisionGroup(),
 			pBaseEntity, ptr );
 	}
 	else
 #endif
 	{
-		UTIL_TraceHull( vecStart, vecEnd, hullMin, hullMax, mask, 
-			pBaseEntity, pBaseEntity->GetCollisionGroup(), ptr );
+		UTIL_TraceHull(vecStart, vecEnd, hullMin, hullMax, mask, pBaseEntity, pBaseEntity->GetCollisionGroup(), ptr);
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Does not change the entities velocity at all
-// Input  : push - 
+// Input  : push -
 // Output : trace_t
 //-----------------------------------------------------------------------------
-void C_BaseEntity::PhysicsCheckSweep( const Vector& vecAbsStart, const Vector &vecAbsDelta, trace_t *pTrace )
+void C_BaseEntity::PhysicsCheckSweep(const Vector &vecAbsStart, const Vector &vecAbsDelta, trace_t *pTrace)
 {
 	unsigned int mask = PhysicsSolidMaskForEntity();
 
 	Vector vecAbsEnd;
-	VectorAdd( vecAbsStart, vecAbsDelta, vecAbsEnd );
+	VectorAdd(vecAbsStart, vecAbsDelta, vecAbsEnd);
 
 	// Set collision type
-	if ( !IsSolid() || IsSolidFlagSet( FSOLID_VOLUME_CONTENTS ) )
+	if(!IsSolid() || IsSolidFlagSet(FSOLID_VOLUME_CONTENTS))
 	{
 		// don't collide with monsters
 		mask &= ~CONTENTS_MONSTER;
 	}
 
-	Physics_TraceHull( this, vecAbsStart, vecAbsEnd, WorldAlignMins(), WorldAlignMaxs(), mask, pTrace );
+	Physics_TraceHull(this, vecAbsStart, vecAbsEnd, WorldAlignMins(), WorldAlignMaxs(), mask, pTrace);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : push - 
+// Purpose:
+// Input  : push -
 // Output : trace_t
 //-----------------------------------------------------------------------------
-void C_BaseEntity::PhysicsPushEntity( const Vector& push, trace_t *pTrace )
+void C_BaseEntity::PhysicsPushEntity(const Vector &push, trace_t *pTrace)
 {
-/*
-	if ( m_pMoveParent )
-	{
-		Warning( "pushing entity (%s) that has m_pMoveParent!\n", STRING( pev->classname ) );
-		Assert(0);
-	}
-*/
+	/*
+		if ( m_pMoveParent )
+		{
+			Warning( "pushing entity (%s) that has m_pMoveParent!\n", STRING( pev->classname ) );
+			Assert(0);
+		}
+	*/
 
 	// NOTE: absorigin and origin must be equal because there is no moveparent
 	Vector prevOrigin;
-	VectorCopy( GetAbsOrigin(), prevOrigin );
+	VectorCopy(GetAbsOrigin(), prevOrigin);
 
-	trace_t		trace;
-	PhysicsCheckSweep( prevOrigin, push, pTrace );
+	trace_t trace;
+	PhysicsCheckSweep(prevOrigin, push, pTrace);
 
-	if ( pTrace->fraction )
+	if(pTrace->fraction)
 	{
-		SetAbsOrigin( pTrace->endpos );
+		SetAbsOrigin(pTrace->endpos);
 	}
 
 	// CLIENT DLL HACKS
 	m_vecNetworkOrigin = GetLocalOrigin();
 	m_angNetworkAngles = GetLocalAngles();
 
-//	InvalidatePhysicsRecursive( POSITION_CHANGED | ANGLES_CHANGED );
+	//	InvalidatePhysicsRecursive( POSITION_CHANGED | ANGLES_CHANGED );
 
-	if ( pTrace->m_pEnt )
+	if(pTrace->m_pEnt)
 	{
-		PhysicsImpact( pTrace->m_pEnt, *pTrace );
+		PhysicsImpact(pTrace->m_pEnt, *pTrace);
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pNewPosition - 
-//			*pNewVelocity - 
-//			*pNewAngles - 
-//			*pNewAngVelocity - 
+// Purpose:
+// Input  : *pNewPosition -
+//			*pNewVelocity -
+//			*pNewAngles -
+//			*pNewAngVelocity -
 //-----------------------------------------------------------------------------
-void C_BaseEntity::PerformCustomPhysics( Vector *pNewPosition, Vector *pNewVelocity, QAngle *pNewAngles, QAngle *pNewAngVelocity )
+void C_BaseEntity::PerformCustomPhysics(Vector *pNewPosition, Vector *pNewVelocity, QAngle *pNewAngles,
+										QAngle *pNewAngVelocity)
 {
 	// If you're going to use custom physics, you need to implement this!
 	Assert(0);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseEntity::PhysicsCustom()
 {
 	PhysicsCheckWater();
 
 	// regular thinking
-	if ( !PhysicsRunThink() )
+	if(!PhysicsRunThink())
 		return;
 
 	// Moving upward, off the ground, or  resting on something that isn't ground
-	if ( m_vecVelocity[2] > 0 || !GetGroundEntity() || !GetGroundEntity()->IsStandable() )
+	if(m_vecVelocity[2] > 0 || !GetGroundEntity() || !GetGroundEntity()->IsStandable())
 	{
-		SetGroundEntity( NULL );
+		SetGroundEntity(NULL);
 	}
 
 	// NOTE: The entity must set the position, angles, velocity in its custom movement
 	Vector vecNewPosition = GetAbsOrigin();
 
-	if ( vecNewPosition == vec3_origin )
+	if(vecNewPosition == vec3_origin)
 	{
 		// Shouldn't be at world origin
-		Assert( 0 );
+		Assert(0);
 	}
 
 	Vector vecNewVelocity = m_vecVelocity;
 	QAngle angNewAngles = GetAbsAngles();
 	QAngle angNewAngVelocity = m_vecAngVelocity;
 
-	PerformCustomPhysics( &vecNewPosition, &vecNewVelocity, &angNewAngles, &angNewAngVelocity );
+	PerformCustomPhysics(&vecNewPosition, &vecNewVelocity, &angNewAngles, &angNewAngVelocity);
 
 	// Store off all of the new state information...
 	m_vecVelocity = vecNewVelocity;
-	SetAbsAngles( angNewAngles );
+	SetAbsAngles(angNewAngles);
 	m_vecAngVelocity = angNewAngVelocity;
 
 	Vector move;
-	VectorSubtract( vecNewPosition, GetAbsOrigin(), move );
+	VectorSubtract(vecNewPosition, GetAbsOrigin(), move);
 
 	// move origin
 	trace_t trace;
-	PhysicsPushEntity( move, &trace );
+	PhysicsPushEntity(move, &trace);
 
 	PhysicsCheckVelocity();
 
-	if (trace.allsolid)
-	{	
+	if(trace.allsolid)
+	{
 		// entity is trapped in another solid
 		// UNDONE: does this entity needs to be removed?
-		VectorCopy (vec3_origin, m_vecVelocity);
-		VectorCopy (vec3_angle, m_vecAngVelocity);
+		VectorCopy(vec3_origin, m_vecVelocity);
+		VectorCopy(vec3_angle, m_vecAngVelocity);
 		return;
 	}
-	
-#if !defined( CLIENT_DLL )
-	if (pev->free)
+
+#if !defined(CLIENT_DLL)
+	if(pev->free)
 		return;
 #endif
 
@@ -183,107 +178,107 @@ void C_BaseEntity::PhysicsCustom()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseEntity::PhysicsStep()
 {
 	// Run all but the base think function
-	PhysicsRunThink( THINK_FIRE_ALL_BUT_BASE );
-PhysicsRunThink( THINK_FIRE_BASE_ONLY );
+	PhysicsRunThink(THINK_FIRE_ALL_BUT_BASE);
+	PhysicsRunThink(THINK_FIRE_BASE_ONLY);
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_BaseEntity::PhysicsNoclip( void )
+void C_BaseEntity::PhysicsNoclip(void)
 {
 	PhysicsRunThink();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_BaseEntity::PhysicsNone( void )
+void C_BaseEntity::PhysicsNone(void)
 {
 	PhysicsRunThink();
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_BaseEntity::PhysicsPusher( void )
+void C_BaseEntity::PhysicsPusher(void)
 {
 	PhysicsRunThink();
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_BaseEntity::PhysicsParent( void )
+void C_BaseEntity::PhysicsParent(void)
 {
 	PhysicsRunThink();
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Not yet supported on client .dll
-// Input  : *pOther - 
+// Input  : *pOther -
 //-----------------------------------------------------------------------------
-void C_BaseEntity::StartTouch( C_BaseEntity *pOther )
+void C_BaseEntity::StartTouch(C_BaseEntity *pOther)
 {
 	// notify parent
-//	if ( m_pParent != NULL )
-//		m_pParent->StartTouch( pOther );
+	//	if ( m_pParent != NULL )
+	//		m_pParent->StartTouch( pOther );
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Call touch function if one is set
-// Input  : *pOther - 
+// Input  : *pOther -
 //-----------------------------------------------------------------------------
-void C_BaseEntity::Touch( C_BaseEntity *pOther )
-{ 
-	if ( m_pfnTouch ) 
-		(this->*m_pfnTouch)( pOther );
+void C_BaseEntity::Touch(C_BaseEntity *pOther)
+{
+	if(m_pfnTouch)
+		(this->*m_pfnTouch)(pOther);
 
 	// notify parent of touch
-//	if ( m_pParent != NULL )
-//		m_pParent->Touch( pOther );
+	//	if ( m_pParent != NULL )
+	//		m_pParent->Touch( pOther );
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Call end touch
-// Input  : *pOther - 
+// Input  : *pOther -
 //-----------------------------------------------------------------------------
-void C_BaseEntity::EndTouch( C_BaseEntity *pOther )
+void C_BaseEntity::EndTouch(C_BaseEntity *pOther)
 {
 	// notify parent
-//	if ( m_pParent != NULL )
-//	{
-//		m_pParent->EndTouch( pOther );
-//	}
+	//	if ( m_pParent != NULL )
+	//	{
+	//		m_pParent->EndTouch( pOther );
+	//	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : check - 
+// Purpose:
+// Input  : check -
 //-----------------------------------------------------------------------------
-void C_BaseEntity::SetCheckUntouch( bool check )
+void C_BaseEntity::SetCheckUntouch(bool check)
 {
 	// Invalidate touchstamp
-	if ( check )
+	if(check)
 	{
 		touchStamp++;
-		AddEFlags( EFL_CHECK_UNTOUCH );
+		AddEFlags(EFL_CHECK_UNTOUCH);
 	}
 	else
 	{
-		RemoveEFlags( EFL_CHECK_UNTOUCH );
+		RemoveEFlags(EFL_CHECK_UNTOUCH);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool C_BaseEntity::GetCheckUntouch() const
 {
-	return IsEFlagSet( EFL_CHECK_UNTOUCH );
+	return IsEFlagSet(EFL_CHECK_UNTOUCH);
 }
 
 extern ConVar think_limit;
@@ -293,7 +288,7 @@ extern ConVar think_limit;
 //			to run it's game code.
 //			All other entity thinking is done during worldspawn's think
 //-----------------------------------------------------------------------------
-void C_BaseEntity::PhysicsDispatchThink( BASEPTR thinkFunc )
+void C_BaseEntity::PhysicsDispatchThink(BASEPTR thinkFunc)
 {
 	float thinkLimit = think_limit.GetFloat();
 	float startTime = 0.0;
@@ -307,21 +302,21 @@ void C_BaseEntity::PhysicsDispatchThink( BASEPTR thinkFunc )
 	}
 	*/
 
-	if ( thinkLimit )
+	if(thinkLimit)
 	{
 		startTime = engine->Time();
 	}
-	
-	if ( thinkFunc )
+
+	if(thinkFunc)
 	{
 		(this->*thinkFunc)();
 	}
 
-	if ( thinkLimit )
+	if(thinkLimit)
 	{
 		// calculate running time of the AI in milliseconds
-		float time = ( engine->Time() - startTime ) * 1000.0f;
-		if ( time > thinkLimit )
+		float time = (engine->Time() - startTime) * 1000.0f;
+		if(time > thinkLimit)
 		{
 #if 0
 			// If its an NPC print out the shedule/task that took so long
@@ -334,9 +329,9 @@ void C_BaseEntity::PhysicsDispatchThink( BASEPTR thinkFunc )
 #endif
 			{
 #ifdef WIN32
-				Msg( "CLIENT:  %s(%s) thinking for %.02f ms!!!\n", GetClassname(), typeid(this).raw_name(), time );
+				Msg("CLIENT:  %s(%s) thinking for %.02f ms!!!\n", GetClassname(), typeid(this).raw_name(), time);
 #else
-				Msg( "CLIENT:  %s(%s) thinking for %.02f ms!!!\n", GetClassname(), typeid(this).name(), time );				
+				Msg("CLIENT:  %s(%s) thinking for %.02f ms!!!\n", GetClassname(), typeid(this).name(), time);
 #endif
 			}
 		}

@@ -28,7 +28,7 @@ if( $g_dx9 )
 	{
 		dcl_position $vPos;
 	}
-	
+
 	if( $g_usesBoneWeights )
 	{
 		dcl_blendweight $vBoneWeights;
@@ -277,7 +277,7 @@ sub Cross
 sub RangeFog
 {
 	local( $projPos ) = shift;
-	
+
 	;------------------------------
 	; Regular range fog
 	;------------------------------
@@ -358,7 +358,7 @@ sub WaterRangeFog
 	; only $worldPos.z is used out of worldPos
 	local( $worldPos ) = shift;
 	local( $projPos ) = shift;
-	
+
 	local( $tmp );
 	&AllocateRegister( \$tmp );
 
@@ -387,7 +387,7 @@ sub WaterRangeFog
 
 	; Now we have d/h
 	rcp $tmp.w, $tmp.z
-	
+
 	; We finally have d * hw / h
 	; $tmp.w is now the distance that we see through water.
 	mul $tmp.w, $tmp.x, $tmp.w
@@ -417,12 +417,12 @@ sub WaterDepthFog
 	local( $worldPos ) = shift;
 	local( $projPos ) = shift;
 	local( $dest ) = shift;
-	
+
 	if ( $dest eq "" )
 	{
 		$dest = "oFog";
 	}
-	
+
 	local( $tmp );
 	&AllocateRegister( \$tmp );
 
@@ -481,7 +481,7 @@ sub CalcFog
 	my $fogType;
 	if( $DOWATERFOG == 0 )
 	{
-		$fogType = "rangefog";		
+		$fogType = "rangefog";
 	}
 	else
 	{
@@ -511,7 +511,7 @@ sub CalcFog
 	else
 	{
 		die;
-	}	
+	}
 }
 
 sub CalcRangeFog
@@ -531,7 +531,7 @@ sub CalcRangeFog
 	else
 	{
 		die;
-	}	
+	}
 }
 
 sub GammaToLinear
@@ -612,7 +612,7 @@ sub ComputeSphereMapTexCoords
 	; r1 = r2/|r2| + 1
 	mad $tmp.xy, $tmp.w, $tmp, $cOne
 	mul $sphereMapTexCoords.xy, $tmp.xy, $cHalf
-	
+
 	&FreeRegister( \$tmp );
 }
 
@@ -620,12 +620,12 @@ sub SkinPosition
 {
 #	print "\$SKINNING = $SKINNING\n";
 	local( $worldPos ) = shift;
-	
+
 	if( !defined $SKINNING )
 	{
 		die "using \$SKINNING without defining.\n";
 	}
-		
+
 	if( $SKINNING == 0 )
 	{
 		;
@@ -637,7 +637,7 @@ sub SkinPosition
 		dp4 $worldPos.y, $vPos, $cModel1
 		dp4 $worldPos.z, $vPos, $cModel2
 		mov $worldPos.w, $cOne
-	} 
+	}
 	else
 	{
 		;
@@ -660,7 +660,7 @@ sub SkinPosition
 		{
 			mov $boneIndices, $boneIndices.zyxw
 		}
-		
+
 		; r11 = boneindices at this point
 		; first matrix
 		mov a0.x, $boneIndices.z
@@ -684,7 +684,7 @@ sub SkinPosition
 		mad $blendedMatrix0, $boneIndices.w, c[a0.x], $blendedMatrix0
 		mad $blendedMatrix1, $boneIndices.w, c[a0.x+1], $blendedMatrix1
 		mad $blendedMatrix2, $boneIndices.w, c[a0.x+2], $blendedMatrix2
-		
+
 		dp4 $worldPos.x, $vPos, $blendedMatrix0
 		dp4 $worldPos.y, $vPos, $blendedMatrix1
 		dp4 $worldPos.z, $vPos, $blendedMatrix2
@@ -771,7 +771,7 @@ sub SkinPositionAndNormal
 		mad $blendedMatrix0, $boneIndices.w, c[a0.x], $blendedMatrix0
 		mad $blendedMatrix1, $boneIndices.w, c[a0.x+1], $blendedMatrix1
 		mad $blendedMatrix2, $boneIndices.w, c[a0.x+2], $blendedMatrix2
-		
+
 		dp4 $worldPos.x, $vPos, $blendedMatrix0
 		dp4 $worldPos.y, $vPos, $blendedMatrix1
 		dp4 $worldPos.z, $vPos, $blendedMatrix2
@@ -786,7 +786,7 @@ sub SkinPositionAndNormal
 		&FreeRegister( \$blendedMatrix0 );
 		&FreeRegister( \$blendedMatrix1 );
 		&FreeRegister( \$blendedMatrix2 );
-	}	
+	}
 }
 
 sub SkinPositionNormalAndTangentSpace
@@ -801,7 +801,7 @@ sub SkinPositionNormalAndTangentSpace
 	local( $localNormal );
 	local( $normalLength );
 	local( $ooNormalLength );
-	
+
 	if( !defined $SKINNING )
 	{
 		die "using \$SKINNING without defining.\n";
@@ -897,7 +897,7 @@ sub SkinPositionNormalAndTangentSpace
 		mad $blendedMatrix0, $boneIndices.w, c[a0.x], $blendedMatrix0
 		mad $blendedMatrix1, $boneIndices.w, c[a0.x+1], $blendedMatrix1
 		mad $blendedMatrix2, $boneIndices.w, c[a0.x+2], $blendedMatrix2
-		
+
 		; position
 		dp4 $worldPos.x, $vPos, $blendedMatrix0
 		dp4 $worldPos.y, $vPos, $blendedMatrix1
@@ -1005,7 +1005,7 @@ sub DirectionalLight
 	; DIRECTIONAL LIGHT
 	; compute n dot l
 	dp3 $nDotL.x, -c[a0.x + 1], $worldNormal
-	
+
 	if ( $HALF_LAMBERT == 0 )
 	{
 		; lambert
@@ -1021,7 +1021,7 @@ sub DirectionalLight
 	{
 		die "\$HALF_LAMBERT is hosed\n";
 	}
-  
+
 	if( $add )
 	{
 		mad $linearColor.xyz, c[a0.x], $nDotL.x, $linearColor
@@ -1043,11 +1043,11 @@ sub PointLight
 
 	local( $lightDir );
 	&AllocateRegister( \$lightDir );
-	
+
 	; POINT LIGHT
 	; compute light direction
 	sub $lightDir, c[a0.x+2], $worldPos
-	
+
 	local( $lightDistSquared );
 	local( $ooLightDist );
 	&AllocateRegister( \$lightDistSquared );
@@ -1057,7 +1057,7 @@ sub PointLight
 	dp3 $lightDistSquared, $lightDir, $lightDir
 	rsq $ooLightDist, $lightDistSquared.x
 	mul $lightDir, $lightDir, $ooLightDist.x
-	
+
 	local( $attenuationFactors );
 	&AllocateRegister( \$attenuationFactors );
 
@@ -1073,7 +1073,7 @@ sub PointLight
 
 	&FreeRegister( \$attenuationFactors );
 	&FreeRegister( \$attenuation );
-	
+
 	local( $tmp );
 	&AllocateRegister( \$tmp ); # FIXME : really only needs to be a scalar
 
@@ -1095,7 +1095,7 @@ sub PointLight
 	{
 		die "\$HALF_LAMBERT is hosed\n";
 	}
-	
+
 	mul $tmp.x, $tmp.x, $lightDir.w
 	if( $add )
 	{
@@ -1116,14 +1116,14 @@ sub SpotLight
 	local( $worldNormal ) = shift;
 	local( $linearColor ) = shift;
 	local( $add ) = shift;
-	
+
 	local( $lightDir );
 	&AllocateRegister( \$lightDir );
 
 	; SPOTLIGHT
 	; compute light direction
 	sub $lightDir, c[a0.x+2], $worldPos
-	
+
 	local( $lightDistSquared );
 	local( $ooLightDist );
 	&AllocateRegister( \$lightDistSquared );
@@ -1133,7 +1133,7 @@ sub SpotLight
 	dp3 $lightDistSquared, $lightDir, $lightDir
 	rsq $ooLightDist, $lightDistSquared.x
 	mul $lightDir, $lightDir, $ooLightDist.x
-	
+
 	local( $attenuationFactors );
 	&AllocateRegister( \$attenuationFactors );
 
@@ -1149,13 +1149,13 @@ sub SpotLight
 
 	&FreeRegister( \$attenuationFactors );
 	&FreeRegister( \$attenuation );
-	
+
 	local( $litSrc ); &AllocateRegister( \$litSrc );
 	local( $tmp ); &AllocateRegister( \$tmp ); # FIXME - only needs to be scalar
 
 	; compute n dot l
 	dp3 $litSrc.x, $worldNormal, $lightDir
-	
+
 	if ( $HALF_LAMBERT == 0 )
 	{
 		; lambert
@@ -1183,7 +1183,7 @@ sub SpotLight
 	&FreeRegister( \$litSrc );
 													; r3.z = pow((dot - stopdot2) / (stopdot - stopdot2), exponent)
 	min $litDst.z, $litDst.z, $cOne		 			; clamp pow() to 1
-	
+
 	local( $tmp1 ); &AllocateRegister( \$tmp1 );
 	local( $tmp2 ); &AllocateRegister( \$tmp2 );  # FIXME - could be scalar
 

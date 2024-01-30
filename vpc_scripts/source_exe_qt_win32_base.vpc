@@ -37,7 +37,7 @@ $Project
 		$Lib								"$QT_ROOT\lib\qtcored4"
 		$Lib								"$QT_ROOT\lib\qtguid4"
 	}
-	
+
 	$Folder "Link Libraries" [!$QTDEBUG]
 	{
 		$Lib								"$QT_ROOT\lib\qtmain"
@@ -45,4 +45,3 @@ $Project
 		$Lib								"$QT_ROOT\lib\qtgui4"
 	}
 }
-

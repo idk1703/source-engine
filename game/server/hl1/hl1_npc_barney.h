@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -14,57 +14,57 @@
 //=========================================================
 class CNPC_Barney : public CHL1NPCTalker
 {
-	DECLARE_CLASS( CNPC_Barney, CHL1NPCTalker );
+	DECLARE_CLASS(CNPC_Barney, CHL1NPCTalker);
+
 public:
-	
 	DECLARE_DATADESC();
 
-	virtual void ModifyOrAppendCriteria( AI_CriteriaSet& set );
+	virtual void ModifyOrAppendCriteria(AI_CriteriaSet &set);
 
-	void	Precache( void );
-	void	Spawn( void );
-	void	TalkInit( void );
+	void Precache(void);
+	void Spawn(void);
+	void TalkInit(void);
 
-	void	StartTask( const Task_t *pTask );
-	void	RunTask( const Task_t *pTask );
+	void StartTask(const Task_t *pTask);
+	void RunTask(const Task_t *pTask);
 
-	int		GetSoundInterests ( void );
-	Class_T  Classify ( void );
-	void	AlertSound( void );
-	void    SetYawSpeed ( void );
+	int GetSoundInterests(void);
+	Class_T Classify(void);
+	void AlertSound(void);
+	void SetYawSpeed(void);
 
-	bool    CheckRangeAttack1 ( float flDot, float flDist );
-	void    BarneyFirePistol ( void );
-	
-	int		OnTakeDamage_Alive( const CTakeDamageInfo &inputInfo );
-	void	TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr, CDmgAccumulator *pAccumulator );
-	void	Event_Killed( const CTakeDamageInfo &info );
+	bool CheckRangeAttack1(float flDot, float flDist);
+	void BarneyFirePistol(void);
 
-	void    PainSound( const CTakeDamageInfo &info );
-	void	DeathSound( const CTakeDamageInfo &info );
+	int OnTakeDamage_Alive(const CTakeDamageInfo &inputInfo);
+	void TraceAttack(const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr, CDmgAccumulator *pAccumulator);
+	void Event_Killed(const CTakeDamageInfo &info);
 
-	void	HandleAnimEvent( animevent_t *pEvent );
-	int		TranslateSchedule( int scheduleType );
-	int		SelectSchedule( void );
+	void PainSound(const CTakeDamageInfo &info);
+	void DeathSound(const CTakeDamageInfo &info);
 
-	void	DeclineFollowing( void );
+	void HandleAnimEvent(animevent_t *pEvent);
+	int TranslateSchedule(int scheduleType);
+	int SelectSchedule(void);
 
-	bool	CanBecomeRagdoll( void );
-	bool	ShouldGib( const CTakeDamageInfo &info );
+	void DeclineFollowing(void);
 
-	int		RangeAttack1Conditions( float flDot, float flDist );
+	bool CanBecomeRagdoll(void);
+	bool ShouldGib(const CTakeDamageInfo &info);
 
-	void	SUB_StartLVFadeOut( float delay = 10.0f, bool bNotSolid = true );
-	void	SUB_LVFadeOut( void  );
+	int RangeAttack1Conditions(float flDot, float flDist);
 
-	NPC_STATE SelectIdealState ( void );
+	void SUB_StartLVFadeOut(float delay = 10.0f, bool bNotSolid = true);
+	void SUB_LVFadeOut(void);
 
-	bool	m_fGunDrawn;
-	float	m_flPainTime;
-	float	m_flCheckAttackTime;
-	bool	m_fLastAttackCheck;
-	
-	int		m_iAmmoType;
+	NPC_STATE SelectIdealState(void);
+
+	bool m_fGunDrawn;
+	float m_flPainTime;
+	float m_flCheckAttackTime;
+	bool m_fLastAttackCheck;
+
+	int m_iAmmoType;
 
 	enum
 	{
@@ -78,4 +78,4 @@ public:
 	DEFINE_CUSTOM_AI;
 };
 
-#endif	//NPC_BARNEY_H
+#endif // NPC_BARNEY_H

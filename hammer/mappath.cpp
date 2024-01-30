@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,12 +14,10 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 float GetFileVersion(void);
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMapPath::CMapPath(void)
 {
@@ -28,17 +26,13 @@ CMapPath::CMapPath(void)
 	SetClass("path_corner");
 }
 
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+CMapPath::~CMapPath(void) {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-CMapPath::~CMapPath(void)
-{
-}
-
-
-//-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMapPathNode::CMapPathNode(void)
 {
@@ -46,25 +40,23 @@ CMapPathNode::CMapPathNode(void)
 	szName[0] = 0;
 }
 
-CMapPathNode::CMapPathNode(const CMapPathNode& src)
+CMapPathNode::CMapPathNode(const CMapPathNode &src)
 {
 	*this = src;
 }
 
-
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : src - 
+// Purpose:
+// Input  : src -
 // Output : CMapPathNode
 //-----------------------------------------------------------------------------
 CMapPathNode &CMapPathNode::operator=(const CMapPathNode &src)
 {
 	// we don't care.
-	Q_strncpy( szName, src.szName, sizeof(szName) );
+	Q_strncpy(szName, src.szName, sizeof(szName));
 	bSelected = src.bSelected;
 	kv.RemoveAll();
-	for ( int i=src.kv.GetFirst(); i != src.kv.GetInvalidIndex(); i=src.kv.GetNext( i ) )
+	for(int i = src.kv.GetFirst(); i != src.kv.GetInvalidIndex(); i = src.kv.GetNext(i))
 	{
 		MDkeyvalue KeyValue = src.kv.GetKeyValue(i);
 		kv.SetValue(KeyValue.szKey, KeyValue.szValue);
@@ -75,14 +67,13 @@ CMapPathNode &CMapPathNode::operator=(const CMapPathNode &src)
 	return *this;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dwID - 
-//			piIndex - 
+// Purpose:
+// Input  : dwID -
+//			piIndex -
 // Output : CMapPathNode *
 //-----------------------------------------------------------------------------
-CMapPathNode *CMapPath::NodeForID(DWORD dwID, int* piIndex)
+CMapPathNode *CMapPath::NodeForID(DWORD dwID, int *piIndex)
 {
 	for(int iNode = 0; iNode < m_Nodes.Count(); iNode++)
 	{
@@ -97,9 +88,8 @@ CMapPathNode *CMapPath::NodeForID(DWORD dwID, int* piIndex)
 	return NULL;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : DWORD
 //-----------------------------------------------------------------------------
 DWORD CMapPath::GetNewNodeID(void)
@@ -121,12 +111,11 @@ DWORD CMapPath::GetNewNodeID(void)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dwAfterID - 
-//			vecPos - 
-// Output : 
+// Purpose:
+// Input  : dwAfterID -
+//			vecPos -
+// Output :
 //-----------------------------------------------------------------------------
 DWORD CMapPath::AddNode(DWORD dwAfterID, const Vector &vecPos)
 {
@@ -137,7 +126,7 @@ DWORD CMapPath::AddNode(DWORD dwAfterID, const Vector &vecPos)
 	else if(dwAfterID == ADD_END)
 		iPos = m_Nodes.Count();
 	else if(!NodeForID(dwAfterID, &iPos))
-		return 0;	// not found!
+		return 0; // not found!
 
 	CMapPathNode node;
 	node.pos = vecPos;
@@ -151,19 +140,18 @@ DWORD CMapPath::AddNode(DWORD dwAfterID, const Vector &vecPos)
 	}
 	else
 	{
-		m_Nodes.InsertBefore( iPos, node );
+		m_Nodes.InsertBefore(iPos, node);
 	}
 
 	return node.dwID;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dwID - 
-//			*pt - 
+// Purpose:
+// Input  : dwID -
+//			*pt -
 //-----------------------------------------------------------------------------
-void CMapPath::SetNodePosition(DWORD dwID, Vector& pt)
+void CMapPath::SetNodePosition(DWORD dwID, Vector &pt)
 {
 	int iIndex;
 	NodeForID(dwID, &iIndex);
@@ -171,27 +159,25 @@ void CMapPath::SetNodePosition(DWORD dwID, Vector& pt)
 	m_Nodes[iIndex].pos = pt;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dwID - 
+// Purpose:
+// Input  : dwID -
 //-----------------------------------------------------------------------------
 void CMapPath::DeleteNode(DWORD dwID)
 {
 	int iIndex;
-	if ( NodeForID(dwID, &iIndex) )
+	if(NodeForID(dwID, &iIndex))
 	{
 		m_Nodes.Remove(iIndex);
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : file - 
-//			fIsStoring - 
+// Purpose:
+// Input  : file -
+//			fIsStoring -
 //-----------------------------------------------------------------------------
-void CMapPath::SerializeRMF(std::fstream& file, BOOL fIsStoring)
+void CMapPath::SerializeRMF(std::fstream &file, BOOL fIsStoring)
 {
 	int iSize;
 
@@ -200,36 +186,36 @@ void CMapPath::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 		// save!!
 		file.write(m_szName, 128);
 		file.write(m_szClass, 128);
-		file.write((char*) &m_iDirection, sizeof(m_iDirection));
-	
+		file.write((char *)&m_iDirection, sizeof(m_iDirection));
+
 		iSize = m_Nodes.Count();
-		file.write((char*) &iSize, sizeof iSize);
+		file.write((char *)&iSize, sizeof iSize);
 		for(int i = 0; i < m_Nodes.Count(); i++)
 		{
-			CMapPathNode& node = m_Nodes[i];
+			CMapPathNode &node = m_Nodes[i];
 			// store each node
-			file.write((char*) &node.pos[0], 3 * sizeof(float));
-			file.write((char*) &node.dwID, sizeof(node.dwID));
-			file.write((char*) &node.szName, sizeof(node.szName));
-			
+			file.write((char *)&node.pos[0], 3 * sizeof(float));
+			file.write((char *)&node.dwID, sizeof(node.dwID));
+			file.write((char *)&node.szName, sizeof(node.szName));
+
 			//
 			// Write keyvalue count.
 			//
 			WCKeyValues &kv = node.kv;
 			iSize = 0;
-			for ( int z=kv.GetFirst(); z != kv.GetInvalidIndex(); z=kv.GetNext( z ) )
+			for(int z = kv.GetFirst(); z != kv.GetInvalidIndex(); z = kv.GetNext(z))
 			{
 				++iSize;
 			}
-			file.write((char*) &iSize, sizeof(iSize));
+			file.write((char *)&iSize, sizeof(iSize));
 
 			//
 			// Write keyvalues.
 			//
-			for (int k = kv.GetFirst(); k != kv.GetInvalidIndex(); k=kv.GetNext( k ) )
+			for(int k = kv.GetFirst(); k != kv.GetInvalidIndex(); k = kv.GetNext(k))
 			{
 				MDkeyvalue &KeyValue = kv.GetKeyValue(k);
-				if (KeyValue.szKey[0] != '\0')
+				if(KeyValue.szKey[0] != '\0')
 				{
 					KeyValue.SerializeRMF(file, TRUE);
 				}
@@ -241,9 +227,9 @@ void CMapPath::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 		// load!!
 		file.read(m_szName, 128);
 		file.read(m_szClass, 128);
-		file.read((char*) &m_iDirection, sizeof m_iDirection);
+		file.read((char *)&m_iDirection, sizeof m_iDirection);
 
-		file.read((char*) &iSize, sizeof iSize);
+		file.read((char *)&iSize, sizeof iSize);
 		int nNodes = iSize;
 		m_Nodes.RemoveAll();
 
@@ -252,20 +238,20 @@ void CMapPath::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 		{
 			CMapPathNode node;
 			// store each node
-			file.read((char*) &node.pos[0], 3 * sizeof(float));
-			file.read((char*) &node.dwID, sizeof(node.dwID));
+			file.read((char *)&node.pos[0], 3 * sizeof(float));
+			file.read((char *)&node.dwID, sizeof(node.dwID));
 			if(GetFileVersion() >= 1.6f)
 			{
-				file.read((char*) &node.szName, sizeof(node.szName));
+				file.read((char *)&node.szName, sizeof(node.szName));
 
 				// read keyvalues
-				file.read((char*) &iSize, sizeof(iSize));
+				file.read((char *)&iSize, sizeof(iSize));
 				WCKeyValues &kv = node.kv;
-				for (int k = 0; k < iSize; k++)
+				for(int k = 0; k < iSize; k++)
 				{
 					MDkeyvalue KeyValue;
 					KeyValue.SerializeRMF(file, FALSE);
-					kv.SetValue( KeyValue.szKey, KeyValue.szValue );
+					kv.SetValue(KeyValue.szKey, KeyValue.szValue);
 				}
 			}
 
@@ -274,14 +260,13 @@ void CMapPath::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : iIndex - 
-//			iName - 
-//			str - 
+// Purpose:
+// Input  : iIndex -
+//			iName -
+//			str -
 //-----------------------------------------------------------------------------
-void CMapPath::GetNodeName(int iIndex, int iName, CString& str)
+void CMapPath::GetNodeName(int iIndex, int iName, CString &str)
 {
 	if(m_Nodes[iIndex].szName[0])
 		str = m_Nodes[iIndex].szName;
@@ -294,31 +279,29 @@ void CMapPath::GetNodeName(int iIndex, int iName, CString& str)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : file - 
-//			fIsStoring - 
-//			*pIntersecting - 
+// Purpose:
+// Input  : file -
+//			fIsStoring -
+//			*pIntersecting -
 //-----------------------------------------------------------------------------
-void CMapPath::SerializeMAP(std::fstream& file, BOOL fIsStoring, BoundBox *pIntersecting)
+void CMapPath::SerializeMAP(std::fstream &file, BOOL fIsStoring, BoundBox *pIntersecting)
 {
-	if( m_Nodes.Count() == 0)
+	if(m_Nodes.Count() == 0)
 		return;
 
-	// if saving WITHIN a box, check all nodes to see if they all 
+	// if saving WITHIN a box, check all nodes to see if they all
 	//  fit within that box. if not, don't save ANY of the path.
 	if(pIntersecting)
 	{
 		for(int i = 0; i < m_Nodes.Count(); i++)
 		{
-			if (!pIntersecting->ContainsPoint(m_Nodes[i].pos))
+			if(!pIntersecting->ContainsPoint(m_Nodes[i].pos))
 			{
-				return;	// doesn't intersect - don't save path
+				return; // doesn't intersect - don't save path
 			}
 		}
 	}
-
 
 	Assert(fIsStoring);
 
@@ -333,10 +316,10 @@ void CMapPath::SerializeMAP(std::fstream& file, BOOL fIsStoring, BoundBox *pInte
 
 	int iDirec = 1;
 	int iCurNode = 0;
-	int iMax = m_Nodes.Count()-1;
+	int iMax = m_Nodes.Count() - 1;
 	int iName = 0;
 
-	// resolve targets 
+	// resolve targets
 	int iLastNodeIndex = -1;
 	BOOL bFirstPass = TRUE;
 
@@ -367,11 +350,11 @@ ResolveNamesAgain:
 		// redo loop
 		bFirstPass = FALSE;
 		iDirec = -1;
-		iCurNode = m_Nodes.Count()-2;
+		iCurNode = m_Nodes.Count() - 2;
 		iMax = 0;
 		goto ResolveNamesAgain;
 	}
-	else if (m_iDirection == dirCircular)
+	else if(m_iDirection == dirCircular)
 	{
 		//
 		// Connect the last node to the first node.
@@ -384,13 +367,14 @@ ResolveNamesAgain:
 
 	iDirec = 1;
 	iCurNode = 0;
-	iMax = m_Nodes.Count()-1;
+	iMax = m_Nodes.Count() - 1;
 	iName = 0;
 
 SaveAgain:
 	while(1)
 	{
-		file << "{" << "\r\n";
+		file << "{"
+			 << "\r\n";
 
 		// store name
 		kvTemp.Set("classname", m_szClass);
@@ -399,8 +383,7 @@ SaveAgain:
 		CMapPathNode &node = m_Nodes[iCurNode];
 
 		// store location
-		strTemp.Format("%.0f %.0f %.0f", node.pos[0], node.pos[1], 
-			node.pos[2]);
+		strTemp.Format("%.0f %.0f %.0f", node.pos[0], node.pos[1], node.pos[2]);
 		kvTemp.Set("origin", strTemp);
 		kvTemp.SerializeMAP(file, TRUE);
 
@@ -414,7 +397,7 @@ SaveAgain:
 		if(iCurNode == iMax && m_iDirection == dirOneway)
 			bStoreTarget = FALSE;
 
-		if (bStoreTarget)
+		if(bStoreTarget)
 		{
 			kvTemp.Set("target", (iDirec == 1) ? node.szTargets[0] : node.szTargets[1]);
 			kvTemp.SerializeMAP(file, TRUE);
@@ -422,16 +405,17 @@ SaveAgain:
 
 		// other keyvalues
 		WCKeyValues &kv = node.kv;
-		for (int k = kv.GetFirst(); k != kv.GetInvalidIndex(); k=kv.GetNext( k ) )
+		for(int k = kv.GetFirst(); k != kv.GetInvalidIndex(); k = kv.GetNext(k))
 		{
 			MDkeyvalue &KeyValue = kv.GetKeyValue(k);
-			if (KeyValue.szKey[0] != '\0')
+			if(KeyValue.szKey[0] != '\0')
 			{
 				KeyValue.SerializeMAP(file, TRUE);
 			}
 		}
 
-		file << "}" << "\r\n";
+		file << "}"
+			 << "\r\n";
 
 		++iName;
 		iLastNodeIndex = iCurNode;
@@ -445,7 +429,7 @@ SaveAgain:
 	{
 		// redo loop
 		iDirec = -1;
-		iCurNode = m_Nodes.Count()-2;
+		iCurNode = m_Nodes.Count() - 2;
 		iMax = 1;
 		goto SaveAgain;
 	}
@@ -459,7 +443,7 @@ void CMapPath::EditInfo()
 	dlg.m_strName = m_szName;
 	dlg.m_strClass = m_szClass;
 	dlg.m_iDirection = m_iDirection;
-	
+
 	if(dlg.DoModal() != IDOK)
 		return;
 
@@ -468,28 +452,27 @@ void CMapPath::EditInfo()
 	m_iDirection = dlg.m_iDirection;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dwNodeID - 
+// Purpose:
+// Input  : dwNodeID -
 // Output : CMapEntity *
 //-----------------------------------------------------------------------------
 CMapEntity *CMapPath::CreateEntityForNode(DWORD dwNodeID)
 {
 	int iIndex;
 	CMapPathNode *pNode = NodeForID(dwNodeID, &iIndex);
-	if (pNode == NULL)
+	if(pNode == NULL)
 	{
-		return NULL;	// no node, no entity!
+		return NULL; // no node, no entity!
 	}
 
 	CMapEntity *pEntity = new CMapEntity;
 
-	for (int k = pNode->kv.GetFirst(); k != pNode->kv.GetInvalidIndex(); k=pNode->kv.GetNext( k ) )
+	for(int k = pNode->kv.GetFirst(); k != pNode->kv.GetInvalidIndex(); k = pNode->kv.GetNext(k))
 	{
 		pEntity->SetKeyValue(pNode->kv.GetKey(k), pNode->kv.GetValue(k));
 	}
-	
+
 	// store target/targetname properties:
 	CString str;
 	str.Format("%s%02d", m_szName, iIndex);
@@ -507,18 +490,17 @@ CMapEntity *CMapPath::CreateEntityForNode(DWORD dwNodeID)
 	return pEntity;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dwNodeID - 
-//			*pEntity - 
+// Purpose:
+// Input  : dwNodeID -
+//			*pEntity -
 //-----------------------------------------------------------------------------
 void CMapPath::CopyNodeFromEntity(DWORD dwNodeID, CMapEntity *pEntity)
 {
 	CMapPathNode *pNode = NodeForID(dwNodeID);
-	if (!pNode)
+	if(!pNode)
 	{
-		return;	// no node, no copy!
+		return; // no node, no copy!
 	}
 
 	pNode->kv.RemoveAll();
@@ -526,9 +508,9 @@ void CMapPath::CopyNodeFromEntity(DWORD dwNodeID, CMapEntity *pEntity)
 	//
 	// Copy all the keys except target and targetname from the entity to the pathnode.
 	//
-	for ( int i=pEntity->GetFirstKeyValue(); i != pEntity->GetInvalidKeyValue(); i=pEntity->GetNextKeyValue( i ) )
+	for(int i = pEntity->GetFirstKeyValue(); i != pEntity->GetInvalidKeyValue(); i = pEntity->GetNextKeyValue(i))
 	{
-		if (!strcmp(pEntity->GetKey(i), "target") || !strcmp(pEntity->GetKey(i), "targetname"))
+		if(!strcmp(pEntity->GetKey(i), "target") || !strcmp(pEntity->GetKey(i), "targetname"))
 		{
 			continue;
 		}
@@ -537,13 +519,12 @@ void CMapPath::CopyNodeFromEntity(DWORD dwNodeID, CMapEntity *pEntity)
 	}
 }
 
-
 /*
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *szKey - 
-//			*szValue - 
-//			*pNode - 
+// Purpose:
+// Input  : *szKey -
+//			*szValue -
+//			*pNode -
 // Output : CChunkFileResult_t
 //-----------------------------------------------------------------------------
 
@@ -568,8 +549,8 @@ CChunkFileResult_t CMapPathNode::LoadKeyCallback(const char *szKey, const char *
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pFile - 
+// Purpose:
+// Input  : *pFile -
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CMapPathNode::SaveVMF(CChunkFile *pFile, CSaveInfo *pSaveInfo)
@@ -590,7 +571,7 @@ ChunkFileResult_t CMapPathNode::SaveVMF(CChunkFile *pFile, CSaveInfo *pSaveInfo)
 	{
 		eResult = pFile->WriteKeyValue("name", node.szName);
 	}
-	
+
 	if (eResult == ChunkFile_Ok)
 	{
 		eResult = pFile->BeginChunk("keys");
@@ -628,10 +609,10 @@ ChunkFileResult_t CMapPathNode::SaveVMF(CChunkFile *pFile, CSaveInfo *pSaveInfo)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *szKey - 
-//			*szValue - 
-//			*pPath - 
+// Purpose:
+// Input  : *szKey -
+//			*szValue -
+//			*pPath -
 // Output : CChunkFileResult_t
 //-----------------------------------------------------------------------------
 CChunkFileResult_t CMapPath::LoadKeyCallback(const char *szKey, const char *szValue, CMapPath *pPath)
@@ -652,8 +633,8 @@ CChunkFileResult_t CMapPath::LoadKeyCallback(const char *szKey, const char *szVa
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pFile - 
+// Purpose:
+// Input  : *pFile -
 //-----------------------------------------------------------------------------
 void CMapPath::LoadVMF(CChunkFile *pFile)
 {
@@ -680,8 +661,8 @@ void CMapPath::LoadVMF(CChunkFile *pFile)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pFile - 
+// Purpose:
+// Input  : *pFile -
 //-----------------------------------------------------------------------------
 void CMapPath::SaveVMF(CChunkFile *pFile, CSaveInfo *pSaveInfo)
 {

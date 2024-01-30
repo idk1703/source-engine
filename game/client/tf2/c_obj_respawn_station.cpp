@@ -15,24 +15,22 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-
 IMPLEMENT_CLIENTCLASS_DT(C_ObjectRespawnStation, DT_ObjectRespawnStation, CObjectRespawnStation)
-END_RECV_TABLE()
+END_RECV_TABLE
+()
 
-
-//-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-C_ObjectRespawnStation::C_ObjectRespawnStation( void )
+	//-----------------------------------------------------------------------------
+	// Purpose:
+	//-----------------------------------------------------------------------------
+	C_ObjectRespawnStation::C_ObjectRespawnStation(void)
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_ObjectRespawnStation::SetDormant( bool bDormant )
+void C_ObjectRespawnStation::SetDormant(bool bDormant)
 {
-	BaseClass::SetDormant( bDormant );
-	ENTITY_PANEL_ACTIVATE( "respawn_station", !bDormant );
+	BaseClass::SetDormant(bDormant);
+	ENTITY_PANEL_ACTIVATE("respawn_station", !bDormant);
 }
-

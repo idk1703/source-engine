@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -10,8 +10,6 @@
 #pragma once
 #endif
 
-
 #include "tier3/tier3.h"
-
 
 #endif // ELEMENTVIEWER_H

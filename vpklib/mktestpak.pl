@@ -11,13 +11,13 @@ $ndatoffset=0;
 $nullbyte = pack("C",0);
 
 foreach $ext ("txt","vtf")
-  {
+	{
 	$dirout.=$ext.$nullbyte;
 	foreach $dir("dir1","dir2")
-	  {
+		{
 		$dirout.=$dir.$nullbyte;
 		foreach $file("test1","test2")
-		  {
+			{
 			$fdata=$file x 5;
 			$dirout.=$dir.$nullbyte;
 			$dirout.=pack("V",0); # fake crc
@@ -27,10 +27,10 @@ foreach $ext ("txt","vtf")
 			$dirout.=pack("V",length($dataout));
 			$dataout.=$fdata;
 			$dirout.=pack("V",-1);
-		  }
-	  }
+			}
+		}
 	$dirout.=$nullbyte;
-  }
+	}
 $dirout.=$nullbyte;
 
 open(DIROUT,">test.dir") || die;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 #ifndef SV_RCON_H
@@ -32,72 +32,74 @@
 class CRConServer : public ISocketCreatorListener
 {
 public:
-	CRConServer( const char *netAddress );
+	CRConServer(const char *netAddress);
 	CRConServer();
 	~CRConServer();
 
-	void SetAddress( const char *netAddress );
-	void SetPassword( const char *pPassword );
+	void SetAddress(const char *netAddress);
+	void SetPassword(const char *pPassword);
 	bool HasPassword() const;
-	bool IsPassword( const char *pPassword ) const;
+	bool IsPassword(const char *pPassword) const;
 	bool CreateSocket();
 	void RunFrame();
 	bool IsConnected();
-	void FinishRedirect( const char *msg, const netadr_t &adr );
-	bool HandleFailedRconAuth( const netadr_t &adr );
-	void SetRequestID( ra_listener_id listener, int iRequestID );
-	bool BCloseAcceptedSocket( ra_listener_id nIndex );
+	void FinishRedirect(const char *msg, const netadr_t &adr);
+	bool HandleFailedRconAuth(const netadr_t &adr);
+	void SetRequestID(ra_listener_id listener, int iRequestID);
+	bool BCloseAcceptedSocket(ra_listener_id nIndex);
 
 	// Allows a server to request a listening client to connect to it
-	bool ConnectToListeningClient( const netadr_t &adr, bool bSingleSocket );
+	bool ConnectToListeningClient(const netadr_t &adr, bool bSingleSocket);
 
 	// Inherited from ISocketCreatorListener
-	virtual bool ShouldAcceptSocket( SocketHandle_t hSocket, const netadr_t & netAdr ); 
-	virtual void OnSocketAccepted( SocketHandle_t hSocket, const netadr_t & netAdr, void** ppData ); 
-	virtual void OnSocketClosed( SocketHandle_t hSocket, const netadr_t & netAdr, void* pData );
+	virtual bool ShouldAcceptSocket(SocketHandle_t hSocket, const netadr_t &netAdr);
+	virtual void OnSocketAccepted(SocketHandle_t hSocket, const netadr_t &netAdr, void **ppData);
+	virtual void OnSocketClosed(SocketHandle_t hSocket, const netadr_t &netAdr, void *pData);
 
 private:
 	struct ConnectedRConSocket_t
 	{
-		bool			authed;
-		int				lastRequestID;
-		ra_listener_id	listenerID;
-		CUtlBuffer		packetbuffer; // data buffer containing pending incoming data for this connection
-		CUtlLinkedList< CUtlBuffer > m_OutstandingSends; // packets pending to be send (queued because of WSAEWOULDBLOCK )
+		bool authed;
+		int lastRequestID;
+		ra_listener_id listenerID;
+		CUtlBuffer packetbuffer; // data buffer containing pending incoming data for this connection
+		CUtlLinkedList<CUtlBuffer> m_OutstandingSends; // packets pending to be send (queued because of WSAEWOULDBLOCK )
 	};
 
 	struct FailedRCon_t
 	{
-		int								badPasswordCount;
-		netadr_t						adr;
-		CUtlLinkedList< float >			badPasswordTimes;
-		bool operator==( const FailedRCon_t &rhs ) const { return ( adr.CompareAdr( rhs.adr) == 0 ); }
-		bool operator<( const FailedRCon_t &rhs ) const;
+		int badPasswordCount;
+		netadr_t adr;
+		CUtlLinkedList<float> badPasswordTimes;
+		bool operator==(const FailedRCon_t &rhs) const
+		{
+			return (adr.CompareAdr(rhs.adr) == 0);
+		}
+		bool operator<(const FailedRCon_t &rhs) const;
 	};
 
-	ConnectedRConSocket_t* GetSocketData( int nIndex );
+	ConnectedRConSocket_t *GetSocketData(int nIndex);
 	void ProcessAccept();
 
 	// NOTE: This function can remove elements. If calling it from a loop,
 	// always iterate over accepted sockets backwards to avoid problems.
-	bool SendRCONResponse( int nIndex, const void *data, int len, bool fromQueue = false );	
+	bool SendRCONResponse(int nIndex, const void *data, int len, bool fromQueue = false);
 
 	CSocketCreator m_Socket;
-	CUtlVector< FailedRCon_t >	m_failedRcons;
+	CUtlVector<FailedRCon_t> m_failedRcons;
 	CUtlString m_Password;
 	netadr_t m_Address;
 	bool m_bSocketDeleted;
 };
 
-
-inline CRConServer::ConnectedRConSocket_t* CRConServer::GetSocketData( int nIndex )
+inline CRConServer::ConnectedRConSocket_t *CRConServer::GetSocketData(int nIndex)
 {
-	return (ConnectedRConSocket_t*)m_Socket.GetAcceptedSocketData( nIndex );
+	return (ConnectedRConSocket_t *)m_Socket.GetAcceptedSocketData(nIndex);
 }
 
-CRConServer & RCONServer();
+CRConServer &RCONServer();
 #ifdef ENABLE_RPT
-CRConServer & RPTServer();
+CRConServer &RPTServer();
 #endif // ENABLE_RPT
 
 #endif // SV_RCON_H

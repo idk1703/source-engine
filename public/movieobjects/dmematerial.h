@@ -12,23 +12,21 @@
 
 #include "datamodel/dmelement.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
 class IMaterial;
-
 
 //-----------------------------------------------------------------------------
 // A class representing a material
 //-----------------------------------------------------------------------------
 class CDmeMaterial : public CDmElement
 {
-	DEFINE_ELEMENT( CDmeMaterial, CDmElement );
+	DEFINE_ELEMENT(CDmeMaterial, CDmElement);
 
 public:
 	IMaterial *GetCachedMTL();
-	void SetMaterial( const char *pMaterialName );
+	void SetMaterial(const char *pMaterialName);
 	const char *GetMaterialName() const;
 
 	virtual void Resolve();

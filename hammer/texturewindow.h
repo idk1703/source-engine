@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -13,32 +13,28 @@
 #include "IEditorTexture.h"
 #include "utlvector.h"
 
-
 struct TextureWindowTex_t
 {
 	IEditorTexture *pTex;
 	int nUsageCount;
 };
 
-
 class TextureWindowTexList : public CUtlVector<TextureWindowTex_t>
 {
 public:
-
 	inline int Find(IEditorTexture *pTex)
 	{
-		for (int i = 0; i < Count(); i++)
+		for(int i = 0; i < Count(); i++)
 		{
-			if (Element(i).pTex == pTex)
+			if(Element(i).pTex == pTex)
 			{
 				return i;
 			}
-		}	
+		}
 
 		return -1;
 	}
 };
-
 
 class CTextureWindow : public CWnd
 {
@@ -46,7 +42,7 @@ public:
 	CTextureWindow();
 	virtual ~CTextureWindow();
 
-	void Create(CWnd *pParentWnd, RECT& rect);
+	void Create(CWnd *pParentWnd, RECT &rect);
 
 	struct TWENUMPOS
 	{
@@ -56,7 +52,7 @@ public:
 		RECT clientrect;
 		int largest_y;
 		int iTexIndex;
-		int nUsageCount;		// The number of times this texture is used in the map. Only set in "Used Textures Only" mode.
+		int nUsageCount; // The number of times this texture is used in the map. Only set in "Used Textures Only" mode.
 	};
 
 	enum
@@ -66,7 +62,7 @@ public:
 		TYPEFILTER_SELFILLUM = 0x4,
 		TYPEFILTER_ENVMASK = 0x8,
 
-		TYPEFILTER_ALL = (TYPEFILTER_OPAQUE|TYPEFILTER_TRANSLUCENT|TYPEFILTER_SELFILLUM|TYPEFILTER_ENVMASK),
+		TYPEFILTER_ALL = (TYPEFILTER_OPAQUE | TYPEFILTER_TRANSLUCENT | TYPEFILTER_SELFILLUM | TYPEFILTER_ENVMASK),
 	};
 
 	void EnableUpdate(bool bEnable);
@@ -79,8 +75,11 @@ public:
 	void SetTextureFormat(TEXTUREFORMAT eTextureFormat);
 	void SelectTexture(LPCTSTR pszTexture, BOOL bAllowRedraw = TRUE);
 	void SetSpecificList(TextureWindowTexList *pList);
-	void SetTypeFilter( int filter, bool enable );
-	void ShowErrors( bool enable )	{ m_bShowErrors = true; }
+	void SetTypeFilter(int filter, bool enable);
+	void ShowErrors(bool enable)
+	{
+		m_bShowErrors = true;
+	}
 
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CTextureWindow)
@@ -89,7 +88,6 @@ public:
 	char szCurTexture[128];
 
 protected:
-
 	bool MatchKeywords(const char *pszSearch, char **pszKeyword, int nKeywords);
 
 	int total_x;
@@ -100,17 +98,17 @@ protected:
 	CFont TexFont;
 	TextureWindowTexList *m_pSpecificList;
 	CRect rectHighlight;
-	int	m_nTypeFilter;
+	int m_nTypeFilter;
 
-	char m_szFilter[128];			// Name filter, space, comma, or semicolon delimited.
-	int m_nFilters;					// The number of names that were parsed out of the name filter.
-	char *m_Filters[64];			// The individual name filters.
+	char m_szFilter[128]; // Name filter, space, comma, or semicolon delimited.
+	int m_nFilters;		  // The number of names that were parsed out of the name filter.
+	char *m_Filters[64];  // The individual name filters.
 
-	char m_szKeywords[128];			// Keyword filter, space, comma, or semicolon delimited.
-	int m_nKeywords;				// The number of keywords that were parsed out of the name filter.
-	char *m_Keyword[64];			// The individual keywords.
+	char m_szKeywords[128]; // Keyword filter, space, comma, or semicolon delimited.
+	int m_nKeywords;		// The number of keywords that were parsed out of the name filter.
+	char *m_Keyword[64];	// The individual keywords.
 
-	bool m_bEnableUpdate;			// Locks GUI updates to control repaints.
+	bool m_bEnableUpdate; // Locks GUI updates to control repaints.
 	bool m_bShowErrors;
 
 	TEXTUREFORMAT m_eTextureFormat;
@@ -118,8 +116,8 @@ protected:
 	//{{AFX_MSG(CTextureWindow)
 	afx_msg void OnPaint();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
-	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
-	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar *pScrollBar);
+	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar *pScrollBar);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
 	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
@@ -128,6 +126,5 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
-
 
 #endif // TEXTUREWINDOW_H

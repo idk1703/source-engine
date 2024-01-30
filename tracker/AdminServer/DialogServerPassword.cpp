@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -42,9 +42,7 @@ CDialogServerPassword::CDialogServerPassword() : Frame(NULL, "DialogServerPasswo
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CDialogServerPassword::~CDialogServerPassword()
-{
-}
+CDialogServerPassword::~CDialogServerPassword() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: initializes the dialog and brings it to the foreground
@@ -62,25 +60,25 @@ void CDialogServerPassword::Activate(const char *serverName, unsigned int server
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *command - 
+// Purpose:
+// Input  : *command -
 //-----------------------------------------------------------------------------
 void CDialogServerPassword::OnCommand(const char *command)
 {
 	bool bClose = false;
 
-	if (!stricmp(command, "Connect"))
+	if(!stricmp(command, "Connect"))
 	{
 		KeyValues *msg = new KeyValues("JoinServerWithPassword");
 		char buf[64];
-		m_pPasswordEntry->GetText(0, buf, sizeof(buf)-1);
+		m_pPasswordEntry->GetText(0, buf, sizeof(buf) - 1);
 		msg->SetString("password", buf);
 		msg->SetInt("serverID", m_iServerID);
 		PostActionSignal(msg);
 
 		bClose = true;
 	}
-	else if (!stricmp(command, "Close"))
+	else if(!stricmp(command, "Close"))
 	{
 		bClose = true;
 	}
@@ -89,16 +87,15 @@ void CDialogServerPassword::OnCommand(const char *command)
 		BaseClass::OnCommand(command);
 	}
 
-	if (bClose)
+	if(bClose)
 	{
 		PostMessage(this, new KeyValues("Close"));
 		MarkForDeletion();
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDialogServerPassword::PerformLayout()
 {
@@ -113,7 +110,3 @@ void CDialogServerPassword::OnClose()
 	BaseClass::OnClose();
 	MarkForDeletion();
 }
-
-
-
-

@@ -1,17 +1,17 @@
 /*
-     File:       Patches.h
- 
-     Contains:   Patch Manager Interfaces.
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 1994-2001 by Apple Computer, Inc., all rights reserved
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+		File:       Patches.h
+
+		Contains:   Patch Manager Interfaces.
+
+		Version:    QuickTime 7.3
+
+		Copyright:  (c) 2007 (c) 1994-2001 by Apple Computer, Inc., all rights reserved
+
+		Bugs?:      For bug reports, consult the following page on
+								the World Wide Web:
+
+										http://developer.apple.com/bugreporter/
+
 */
 
 #ifndef __PATCHES__
@@ -21,15 +21,13 @@
 #include <MacTypes.h>
 #endif
 
-
-
-
 #if PRAGMA_ONCE
 #pragma once
 #endif
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 #if PRAGMA_IMPORT
@@ -37,29 +35,31 @@ extern "C" {
 #endif
 
 #if CALL_NOT_IN_CARBON
-enum {
-  kOSTrapType                   = 0,
-  kToolboxTrapType              = 1
-};
+	enum
+	{
+		kOSTrapType = 0,
+		kToolboxTrapType = 1
+	};
 
-typedef SignedByte                      TrapType;
-enum {
-  OSTrap                        = kOSTrapType, /* old name */
-  ToolTrap                      = kToolboxTrapType /* old name */
-};
+	typedef SignedByte TrapType;
+	enum
+	{
+		OSTrap = kOSTrapType,		/* old name */
+		ToolTrap = kToolboxTrapType /* old name */
+	};
 
-#endif  /* CALL_NOT_IN_CARBON */
+#endif /* CALL_NOT_IN_CARBON */
 
 /*
-    GetTrapAddress and SetTrapAddress are obsolete and should not
-    be used. Always use NGetTrapAddress and NSetTrapAddress instead.
-    The old routines will not be supported for PowerPC apps.
+		GetTrapAddress and SetTrapAddress are obsolete and should not
+		be used. Always use NGetTrapAddress and NSetTrapAddress instead.
+		The old routines will not be supported for PowerPC apps.
 */
 #if TARGET_CPU_68K && !TARGET_RT_MAC_CFM
 #if CALL_NOT_IN_CARBON
 /*
  *  GetTrapAddress()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -68,13 +68,12 @@ enum {
 #if TARGET_OS_MAC && TARGET_CPU_68K && !TARGET_RT_MAC_CFM
 #pragma parameter __A0 GetTrapAddress(__D0)
 #endif
-EXTERN_API( UniversalProcPtr )
-GetTrapAddress(UInt16 trapNum)                                ONEWORDINLINE(0xA146);
-
+	EXTERN_API(UniversalProcPtr)
+	GetTrapAddress(UInt16 trapNum) ONEWORDINLINE(0xA146);
 
 /*
  *  SetTrapAddress()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -83,52 +82,42 @@ GetTrapAddress(UInt16 trapNum)                                ONEWORDINLINE(0xA1
 #if TARGET_OS_MAC && TARGET_CPU_68K && !TARGET_RT_MAC_CFM
 #pragma parameter SetTrapAddress(__A0, __D0)
 #endif
-EXTERN_API( void )
-SetTrapAddress(
-  UniversalProcPtr   trapAddr,
-  UInt16             trapNum)                                 ONEWORDINLINE(0xA047);
+	EXTERN_API(void)
+	SetTrapAddress(UniversalProcPtr trapAddr, UInt16 trapNum) ONEWORDINLINE(0xA047);
 
+#endif /* CALL_NOT_IN_CARBON */
 
-#endif  /* CALL_NOT_IN_CARBON */
-
-#endif  /* TARGET_CPU_68K && !TARGET_RT_MAC_CFM */
+#endif /* TARGET_CPU_68K && !TARGET_RT_MAC_CFM */
 
 #if CALL_NOT_IN_CARBON
-/*
- *  NGetTrapAddress()
- *  
- *  Availability:
- *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
- *    CarbonLib:        not available
- *    Mac OS X:         not available
- */
-EXTERN_API( UniversalProcPtr )
-NGetTrapAddress(
-  UInt16     trapNum,
-  TrapType   tTyp);
+	/*
+	 *  NGetTrapAddress()
+	 *
+	 *  Availability:
+	 *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
+	 *    CarbonLib:        not available
+	 *    Mac OS X:         not available
+	 */
+	EXTERN_API(UniversalProcPtr)
+	NGetTrapAddress(UInt16 trapNum, TrapType tTyp);
 
+	/*
+	 *  NSetTrapAddress()
+	 *
+	 *  Availability:
+	 *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
+	 *    CarbonLib:        not available
+	 *    Mac OS X:         not available
+	 */
+	EXTERN_API(void)
+	NSetTrapAddress(UniversalProcPtr trapAddr, UInt16 trapNum, TrapType tTyp);
 
-/*
- *  NSetTrapAddress()
- *  
- *  Availability:
- *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
- *    CarbonLib:        not available
- *    Mac OS X:         not available
- */
-EXTERN_API( void )
-NSetTrapAddress(
-  UniversalProcPtr   trapAddr,
-  UInt16             trapNum,
-  TrapType           tTyp);
-
-
-#endif  /* CALL_NOT_IN_CARBON */
+#endif /* CALL_NOT_IN_CARBON */
 
 #if CALL_NOT_IN_CARBON
 /*
  *  GetOSTrapAddress()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -137,13 +126,12 @@ NSetTrapAddress(
 #if TARGET_OS_MAC && TARGET_CPU_68K && !TARGET_RT_MAC_CFM
 #pragma parameter __A0 GetOSTrapAddress(__D0)
 #endif
-EXTERN_API( UniversalProcPtr )
-GetOSTrapAddress(UInt16 trapNum)                              ONEWORDINLINE(0xA346);
-
+	EXTERN_API(UniversalProcPtr)
+	GetOSTrapAddress(UInt16 trapNum) ONEWORDINLINE(0xA346);
 
 /*
  *  SetOSTrapAddress()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -152,15 +140,12 @@ GetOSTrapAddress(UInt16 trapNum)                              ONEWORDINLINE(0xA3
 #if TARGET_OS_MAC && TARGET_CPU_68K && !TARGET_RT_MAC_CFM
 #pragma parameter SetOSTrapAddress(__A0, __D0)
 #endif
-EXTERN_API( void )
-SetOSTrapAddress(
-  UniversalProcPtr   trapAddr,
-  UInt16             trapNum)                                 ONEWORDINLINE(0xA247);
-
+	EXTERN_API(void)
+	SetOSTrapAddress(UniversalProcPtr trapAddr, UInt16 trapNum) ONEWORDINLINE(0xA247);
 
 /*
  *  GetToolTrapAddress()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -169,13 +154,12 @@ SetOSTrapAddress(
 #if TARGET_OS_MAC && TARGET_CPU_68K && !TARGET_RT_MAC_CFM
 #pragma parameter __A0 GetToolTrapAddress(__D0)
 #endif
-EXTERN_API( UniversalProcPtr )
-GetToolTrapAddress(UInt16 trapNum)                            ONEWORDINLINE(0xA746);
-
+	EXTERN_API(UniversalProcPtr)
+	GetToolTrapAddress(UInt16 trapNum) ONEWORDINLINE(0xA746);
 
 /*
  *  SetToolTrapAddress()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -184,15 +168,12 @@ GetToolTrapAddress(UInt16 trapNum)                            ONEWORDINLINE(0xA7
 #if TARGET_OS_MAC && TARGET_CPU_68K && !TARGET_RT_MAC_CFM
 #pragma parameter SetToolTrapAddress(__A0, __D0)
 #endif
-EXTERN_API( void )
-SetToolTrapAddress(
-  UniversalProcPtr   trapAddr,
-  UInt16             trapNum)                                 ONEWORDINLINE(0xA647);
-
+	EXTERN_API(void)
+	SetToolTrapAddress(UniversalProcPtr trapAddr, UInt16 trapNum) ONEWORDINLINE(0xA647);
 
 /*
  *  GetToolboxTrapAddress()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -201,13 +182,12 @@ SetToolTrapAddress(
 #if TARGET_OS_MAC && TARGET_CPU_68K && !TARGET_RT_MAC_CFM
 #pragma parameter __A0 GetToolboxTrapAddress(__D0)
 #endif
-EXTERN_API( UniversalProcPtr )
-GetToolboxTrapAddress(UInt16 trapNum)                         ONEWORDINLINE(0xA746);
-
+	EXTERN_API(UniversalProcPtr)
+	GetToolboxTrapAddress(UInt16 trapNum) ONEWORDINLINE(0xA746);
 
 /*
  *  SetToolboxTrapAddress()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
  *    CarbonLib:        not available
@@ -216,34 +196,27 @@ GetToolboxTrapAddress(UInt16 trapNum)                         ONEWORDINLINE(0xA7
 #if TARGET_OS_MAC && TARGET_CPU_68K && !TARGET_RT_MAC_CFM
 #pragma parameter SetToolboxTrapAddress(__A0, __D0)
 #endif
-EXTERN_API( void )
-SetToolboxTrapAddress(
-  UniversalProcPtr   trapAddr,
-  UInt16             trapNum)                                 ONEWORDINLINE(0xA647);
+	EXTERN_API(void)
+	SetToolboxTrapAddress(UniversalProcPtr trapAddr, UInt16 trapNum) ONEWORDINLINE(0xA647);
 
-
-#endif  /* CALL_NOT_IN_CARBON */
+#endif /* CALL_NOT_IN_CARBON */
 
 #if TARGET_CPU_PPC
 #if CALL_NOT_IN_CARBON
-/*
- *  GetTrapVector()
- *  
- *  Availability:
- *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
- *    CarbonLib:        not available
- *    Mac OS X:         not available
- */
-EXTERN_API( UniversalProcHandle )
-GetTrapVector(UInt16 trapNumber);
+	/*
+	 *  GetTrapVector()
+	 *
+	 *  Availability:
+	 *    Non-Carbon CFM:   in InterfaceLib 7.1 and later
+	 *    CarbonLib:        not available
+	 *    Mac OS X:         not available
+	 */
+	EXTERN_API(UniversalProcHandle)
+	GetTrapVector(UInt16 trapNumber);
 
+#endif /* CALL_NOT_IN_CARBON */
 
-#endif  /* CALL_NOT_IN_CARBON */
-
-#endif  /* TARGET_CPU_PPC */
-
-
-
+#endif /* TARGET_CPU_PPC */
 
 #ifdef PRAGMA_IMPORT_OFF
 #pragma import off
@@ -256,4 +229,3 @@ GetTrapVector(UInt16 trapNumber);
 #endif
 
 #endif /* __PATCHES__ */
-

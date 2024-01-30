@@ -19,30 +19,30 @@
 void CSentryRebuildAward::getWinner()
 {
 	CEventListIterator it;
-	
-	for (it=g_pMatchInfo->eventList()->begin(); it != g_pMatchInfo->eventList()->end(); ++it)
+
+	for(it = g_pMatchInfo->eventList()->begin(); it != g_pMatchInfo->eventList()->end(); ++it)
 	{
-		if ((*it)->getType()==CLogEvent::BUILD)
+		if((*it)->getType() == CLogEvent::BUILD)
 		{
-			string built=(*it)->getArgument(1)->getStringValue();
-			
-			if (stricmp(built.c_str(),"sentry") == 0)
+			string built = (*it)->getArgument(1)->getStringValue();
+
+			if(stricmp(built.c_str(), "sentry") == 0)
 			{
-				PID builder=(*it)->getArgument(0)->asPlayerGetPID();
+				PID builder = (*it)->getArgument(0)->asPlayerGetPID();
 				numbuilds[builder]++;
-				winnerID=builder;
-				fNoWinner=false;
+				winnerID = builder;
+				fNoWinner = false;
 			}
 		}
 	}
-	
-	map<PID,int>::iterator builditer;
 
-	for (builditer=numbuilds.begin();builditer!=numbuilds.end();++builditer)
+	map<PID, int>::iterator builditer;
+
+	for(builditer = numbuilds.begin(); builditer != numbuilds.end(); ++builditer)
 	{
-		int currID=(*builditer).first;
-		if (numbuilds[currID]>numbuilds[winnerID])
-			winnerID=currID;
+		int currID = (*builditer).first;
+		if(numbuilds[currID] > numbuilds[winnerID])
+			winnerID = currID;
 	}
 }
 
@@ -51,7 +51,7 @@ void CSentryRebuildAward::getWinner()
 // Purpose:	writes html indicating that no one built any sentries
 // Input:	html - the html file to write to
 //------------------------------------------------------------------------------------------------------
-void CSentryRebuildAward::noWinner(CHTMLFile& html)
+void CSentryRebuildAward::noWinner(CHTMLFile &html)
 {
 	html.write("No sentries were built during this match.");
 }
@@ -61,12 +61,11 @@ void CSentryRebuildAward::noWinner(CHTMLFile& html)
 // Purpose:	reports how many times the winner had to rebuild their sentry
 // Input:	html - the html file to write to
 //------------------------------------------------------------------------------------------------------
-void CSentryRebuildAward::extendedinfo(CHTMLFile& html)
+void CSentryRebuildAward::extendedinfo(CHTMLFile &html)
 {
-	
-	if (numbuilds[winnerID] == 1)
-		html.write("No one had to rebuild a sentry gun in this match.!",winnerName.c_str());
-	else
-		html.write("%s had to build a sentry gun %li times!",winnerName.c_str(),numbuilds[winnerID]);
-}
 
+	if(numbuilds[winnerID] == 1)
+		html.write("No one had to rebuild a sentry gun in this match.!", winnerName.c_str());
+	else
+		html.write("%s had to build a sentry gun %li times!", winnerName.c_str(), numbuilds[winnerID]);
+}

@@ -535,7 +535,7 @@ L 07/22/1999 - 16:44:51: "Snickmonsta<11>" activated the goal "blue_pak8"
 L 07/22/1999 - 16:44:52: "Snickmonsta<11>" activated the goal "blue_pak7"
 L 07/22/1999 - 16:44:55: "DarkRaven<9>" activated the goal "func_button 2"
 L 07/22/1999 - 16:45:13: =------= MATCH RESULTS =------=
-L 07/22/1999 - 16:45:13: "red" defeated "blue" 
+L 07/22/1999 - 16:45:13: "red" defeated "blue"
 L 07/22/1999 - 16:45:13: "blue" RESULTS: "2" players. "12" frags, "2" unaccounted for. "0" team score. Allies:
 L 07/22/1999 - 16:45:13: "red" RESULTS: "2" players. "62" frags, "2" unaccounted for. "50" team score. Allies:
 L 07/22/1999 - 16:45:14: "DarkRaven<9>" activated the goal "trigger_multiple 10"

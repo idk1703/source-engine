@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -16,13 +16,14 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CServerConfigPanel::CServerConfigPanel(vgui::Panel *parent, const char *name, const char *mod) : CVarListPropertyPage(parent, name)
+CServerConfigPanel::CServerConfigPanel(vgui::Panel *parent, const char *name, const char *mod)
+	: CVarListPropertyPage(parent, name)
 {
 	SetBounds(0, 0, 500, 170);
 	LoadControlSettings("Admin\\ServerConfigPanel.res", "PLATFORM");
 
 	// load our rules
-	if (!LoadVarList("scripts/GameServerConfig.vdf"))
+	if(!LoadVarList("scripts/GameServerConfig.vdf"))
 	{
 		//!! no local mod info, need to load from server
 		//!! always load from server if on a remote connection
@@ -34,10 +35,7 @@ CServerConfigPanel::CServerConfigPanel(vgui::Panel *parent, const char *name, co
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CServerConfigPanel::~CServerConfigPanel()
-{
-
-}
+CServerConfigPanel::~CServerConfigPanel() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Reset data
@@ -54,7 +52,7 @@ void CServerConfigPanel::OnResetData()
 //-----------------------------------------------------------------------------
 void CServerConfigPanel::OnThink()
 {
-	if (m_flUpdateTime < system()->GetFrameTime())
+	if(m_flUpdateTime < system()->GetFrameTime())
 	{
 		OnResetData();
 	}

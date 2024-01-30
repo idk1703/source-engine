@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,28 +22,29 @@ class CPhysicsObject;
 class CPhysicsFluidController : public IPhysicsFluidController
 {
 public:
-	CPhysicsFluidController( CBuoyancyAttacher *pBuoy, IVP_Liquid_Surface_Descriptor *pLiquid, CPhysicsObject *pObject, int nContents );
-	~CPhysicsFluidController( void );
+	CPhysicsFluidController(CBuoyancyAttacher *pBuoy, IVP_Liquid_Surface_Descriptor *pLiquid, CPhysicsObject *pObject,
+							int nContents);
+	~CPhysicsFluidController(void);
 
-	virtual void SetGameData( void *pGameData );
-	virtual void *GetGameData( void ) const;
-	virtual void GetSurfacePlane( Vector *pNormal, float *pDist ) const;
+	virtual void SetGameData(void *pGameData);
+	virtual void *GetGameData(void) const;
+	virtual void GetSurfacePlane(Vector *pNormal, float *pDist) const;
 	virtual float GetDensity() const;
-	virtual void WakeAllSleepingObjects(); 
-	virtual int	GetContents() const;
+	virtual void WakeAllSleepingObjects();
+	virtual int GetContents() const;
 
 	class IVP_Real_Object *GetIVPObject();
 	const class IVP_Real_Object *GetIVPObject() const;
 
 private:
-	CBuoyancyAttacher				*m_pBuoyancy;
-	IVP_Liquid_Surface_Descriptor	*m_pLiquidSurface;
-	CPhysicsObject					*m_pObject;
-	int								m_nContents;
-	void							*m_pGameData;
+	CBuoyancyAttacher *m_pBuoyancy;
+	IVP_Liquid_Surface_Descriptor *m_pLiquidSurface;
+	CPhysicsObject *m_pObject;
+	int m_nContents;
+	void *m_pGameData;
 };
 
-extern CPhysicsFluidController *CreateFluidController( IVP_Environment *pEnvironment, CPhysicsObject *pFluidObject, fluidparams_t *pParams );
-
+extern CPhysicsFluidController *CreateFluidController(IVP_Environment *pEnvironment, CPhysicsObject *pFluidObject,
+													  fluidparams_t *pParams);
 
 #endif // PHYSICS_FLUID_H

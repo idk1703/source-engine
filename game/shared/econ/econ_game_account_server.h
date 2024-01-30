@@ -13,9 +13,9 @@
 
 enum eGameServerOrigin
 {
-	kGSAOrigin_Player		= 0,
-	kGSAOrigin_Support		= 1,
-	kGSAOrigin_AutoRegister	= 2, // for valve-owned servers
+	kGSAOrigin_Player = 0,
+	kGSAOrigin_Support = 1,
+	kGSAOrigin_AutoRegister = 2, // for valve-owned servers
 };
 
 enum eGameServerScoreStanding
@@ -37,60 +37,60 @@ enum eGameServerScoreStandingTrend
 #include "gcsdk/schemasharedobject.h"
 
 //---------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //---------------------------------------------------------------------------------
-class CEconGameServerAccount : public GCSDK::CSchemaSharedObject< CSchGameServerAccount, k_EEconTypeGameServerAccount >
+class CEconGameServerAccount : public GCSDK::CSchemaSharedObject<CSchGameServerAccount, k_EEconTypeGameServerAccount>
 {
 #ifdef GC_DLL
-	DECLARE_CLASS_MEMPOOL( CEconGameServerAccount );
+	DECLARE_CLASS_MEMPOOL(CEconGameServerAccount);
 #endif
 
 public:
 	CEconGameServerAccount() {}
-	CEconGameServerAccount( uint32 unAccountID ) 
+	CEconGameServerAccount(uint32 unAccountID)
 	{
 		Obj().m_unAccountID = unAccountID;
 	}
 };
 
-void GameServerAccount_GenerateIdentityToken( char* pIdentityToken, uint32 unMaxChars );
+void GameServerAccount_GenerateIdentityToken(char *pIdentityToken, uint32 unMaxChars);
 #endif // GC
 
-inline const char *GameServerAccount_GetStandingString( eGameServerScoreStanding standing )
+inline const char *GameServerAccount_GetStandingString(eGameServerScoreStanding standing)
 {
 	const char *pStanding = "Good";
-	switch ( standing )
+	switch(standing)
 	{
-	case kGSStanding_Good:
-		pStanding = "Good";
-		break;
-	case kGSStanding_Bad:
-		pStanding = "Bad";
-		break;
+		case kGSStanding_Good:
+			pStanding = "Good";
+			break;
+		case kGSStanding_Bad:
+			pStanding = "Bad";
+			break;
 	} // switch
 	return pStanding;
 }
 
-inline const char *GameServerAccount_GetStandingTrendString( eGameServerScoreStandingTrend trend )
+inline const char *GameServerAccount_GetStandingTrendString(eGameServerScoreStandingTrend trend)
 {
 	const char *pStandingTrend = "Steady";
-	switch ( trend )
+	switch(trend)
 	{
-	case kGSStandingTrend_Up:
-		pStandingTrend = "Upward Fast";
-		break;
-	case kGSStandingTrend_SteadyUp:
-		pStandingTrend = "Slightly Upward";
-		break;
-	case kGSStandingTrend_Steady:
-		pStandingTrend = "Steady";
-		break;
-	case kGSStandingTrend_SteadyDown:
-		pStandingTrend = "Slightly Downward";
-		break;
-	case kGSStandingTrend_Down:
-		pStandingTrend = "Downward Fast";
-		break;
+		case kGSStandingTrend_Up:
+			pStandingTrend = "Upward Fast";
+			break;
+		case kGSStandingTrend_SteadyUp:
+			pStandingTrend = "Slightly Upward";
+			break;
+		case kGSStandingTrend_Steady:
+			pStandingTrend = "Steady";
+			break;
+		case kGSStandingTrend_SteadyDown:
+			pStandingTrend = "Slightly Downward";
+			break;
+		case kGSStandingTrend_Down:
+			pStandingTrend = "Downward Fast";
+			break;
 	} // switch
 	return pStandingTrend;
 }
@@ -98,13 +98,18 @@ inline const char *GameServerAccount_GetStandingTrendString( eGameServerScoreSta
 //---------------------------------------------------------------------------------
 // Purpose: Selective account-level data for game servers
 //---------------------------------------------------------------------------------
-class CEconGameAccountForGameServers : public GCSDK::CProtoBufSharedObject < CSOEconGameAccountForGameServers, k_EEconTypeGameAccountForGameServers >
+class CEconGameAccountForGameServers
+	: public GCSDK::CProtoBufSharedObject<CSOEconGameAccountForGameServers, k_EEconTypeGameAccountForGameServers>
 {
 #ifdef GC
-	DECLARE_CLASS_MEMPOOL( CEconGameAccountForGameServers );
+	DECLARE_CLASS_MEMPOOL(CEconGameAccountForGameServers);
+
 public:
-	virtual bool BIsDatabaseBacked() const { return false; }
+	virtual bool BIsDatabaseBacked() const
+	{
+		return false;
+	}
 #endif
 };
 
-#endif //ECON_GAME_SERVER_ACCOUNT_H
+#endif // ECON_GAME_SERVER_ACCOUNT_H

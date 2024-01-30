@@ -1,19 +1,19 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
 
 #include "stdafx.h"
 #include "History.h"
-#include "MainFrm.h"			// For ObjectProperties
+#include "MainFrm.h" // For ObjectProperties
 #include "MapDoc.h"
 #include "MapSweptPlayerHull.h"
 #include "MapPointHandle.h"
 #include "MapView2D.h"
 #include "Render2D.h"
-#include "StatusBarIDs.h"		// For SetStatusText
+#include "StatusBarIDs.h" // For SetStatusText
 #include "ToolManager.h"
 #include "ToolSweptHull.h"
 #include "ToolPointHandle.h"
@@ -21,7 +21,6 @@
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor.
@@ -32,19 +31,17 @@ CToolSweptPlayerHull::CToolSweptPlayerHull(void)
 	m_nPointIndex = 0;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Attaches the point to the tool for manipulation.
 //-----------------------------------------------------------------------------
 void CToolSweptPlayerHull::Attach(CMapSweptPlayerHull *pSweptHull, int nPointIndex)
 {
-	if ((pSweptHull != NULL) && (nPointIndex < 2))
+	if((pSweptHull != NULL) && (nPointIndex < 2))
 	{
 		m_pSweptHull = pSweptHull;
 		m_nPointIndex = nPointIndex;
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles left button down events in the 2D view.
@@ -66,7 +63,6 @@ bool CToolSweptPlayerHull::OnLMouseDown2D(CMapView2D *pView, UINT nFlags, const 
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Handles left button up events in the 2D view.
 // Input  : Per CWnd::OnLButtonUp.
@@ -80,11 +76,10 @@ bool CToolSweptPlayerHull::OnLMouseUp2D(CMapView2D *pView, UINT nFlags, const Ve
 	ReleaseCapture();
 
 	CMapDoc *pDoc = pView->GetMapDoc();
-	pDoc->UpdateAllViews( MAPVIEW_UPDATE_TOOL );
-		
+	pDoc->UpdateAllViews(MAPVIEW_UPDATE_TOOL);
+
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles mouse move events in the 2D view.
@@ -116,7 +111,7 @@ bool CToolSweptPlayerHull::OnMouseMove2D(CMapView2D *pView, UINT nFlags, const V
 
 	vecPos[m_nPointIndex][pView->axHorz] = vecWorld[pView->axHorz];
 	vecPos[m_nPointIndex][pView->axVert] = vecWorld[pView->axVert];
-	
+
 	m_pSweptHull->UpdateEndPoint(vecPos[m_nPointIndex], m_nPointIndex);
 
 	int nOtherIndex = (m_nPointIndex == 0);
@@ -129,11 +124,10 @@ bool CToolSweptPlayerHull::OnMouseMove2D(CMapView2D *pView, UINT nFlags, const V
 	sprintf(szBuf, " (%.0f %.0f %0.f) ", vecPos[m_nPointIndex][0], vecPos[m_nPointIndex][1], vecPos[m_nPointIndex][2]);
 	SetStatusText(SBI_COORDS, szBuf);
 
-	pDoc->UpdateAllViews( MAPVIEW_UPDATE_TOOL );
+	pDoc->UpdateAllViews(MAPVIEW_UPDATE_TOOL);
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Renders the tool in the 2D view.
@@ -145,5 +139,3 @@ void CToolSweptPlayerHull::RenderTool2D(CRender2D *pRender)
 	m_pSweptHull->Render2D(pRender);
 	m_pSweptHull->SetSelectionState(eState);
 }
-
-

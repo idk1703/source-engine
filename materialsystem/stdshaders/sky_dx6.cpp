@@ -10,6 +10,5 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-DEFINE_FALLBACK_SHADER( Sky, UnlitGeneric )
-DEFINE_FALLBACK_SHADER( Sky_dx6, UnlitGeneric )
-
+DEFINE_FALLBACK_SHADER(Sky, UnlitGeneric)
+DEFINE_FALLBACK_SHADER(Sky_dx6, UnlitGeneric)

@@ -21,14 +21,15 @@
 // Purpose: CSurvivalistAward is an award given to the player who died the least
 // while playing as a scout
 //------------------------------------------------------------------------------------------------------
-class CSurvivalistAward: public CAward
+class CSurvivalistAward : public CAward
 {
 protected:
-	map <PID,int> numdeaths;
-	void noWinner(CHTMLFile& html);
-	void extendedinfo(CHTMLFile& html);
+	map<PID, int> numdeaths;
+	void noWinner(CHTMLFile &html);
+	void extendedinfo(CHTMLFile &html);
+
 public:
-	explicit CSurvivalistAward():CAward("Survivalist"){}
+	explicit CSurvivalistAward() : CAward("Survivalist") {}
 	void getWinner();
 };
 #endif // SURVIVALISTAWARD_H

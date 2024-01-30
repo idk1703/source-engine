@@ -14,48 +14,45 @@
 //-----------------------------------------------------------------------------
 class CTrigger3DSkyboxToWorld : public CBaseTrigger
 {
-	DECLARE_CLASS( CTrigger3DSkyboxToWorld, CBaseTrigger );
+	DECLARE_CLASS(CTrigger3DSkyboxToWorld, CBaseTrigger);
 
 public:
-
 	CTrigger3DSkyboxToWorld();
 
 	DECLARE_DATADESC();
 
-	void Spawn( void );
-	void ImpactTouch( CBaseEntity *pOther );
+	void Spawn(void);
+	void ImpactTouch(CBaseEntity *pOther);
 };
 
-BEGIN_DATADESC( CTrigger3DSkyboxToWorld )
+BEGIN_DATADESC(CTrigger3DSkyboxToWorld)
 
 	// Function Pointers
-	DEFINE_FUNCTION( ImpactTouch ),
+	DEFINE_FUNCTION(ImpactTouch),
 
 END_DATADESC()
 
-LINK_ENTITY_TO_CLASS( trigger_skybox2world, CTrigger3DSkyboxToWorld );
+LINK_ENTITY_TO_CLASS(trigger_skybox2world, CTrigger3DSkyboxToWorld);
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTrigger3DSkyboxToWorld::CTrigger3DSkyboxToWorld()
-{
-}
+CTrigger3DSkyboxToWorld::CTrigger3DSkyboxToWorld() {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTrigger3DSkyboxToWorld::Spawn( void )
+void CTrigger3DSkyboxToWorld::Spawn(void)
 {
 	BaseClass::Spawn();
 	InitTrigger();
-//	SetTouch( ImpactTouch );
+	//	SetTouch( ImpactTouch );
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Not handling transitions with a touch function currently!!
 //-----------------------------------------------------------------------------
-void CTrigger3DSkyboxToWorld::ImpactTouch( CBaseEntity *pOther )
+void CTrigger3DSkyboxToWorld::ImpactTouch(CBaseEntity *pOther)
 {
 #if 0
 	if ( FClassnameIs( pOther, "meteor" ) )

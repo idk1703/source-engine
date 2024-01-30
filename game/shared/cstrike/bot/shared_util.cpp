@@ -15,38 +15,38 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-static char s_shared_token[ 1500 ];
+static char s_shared_token[1500];
 static char s_shared_quote = '\"';
 
 //--------------------------------------------------------------------------------------------------------------
-char * SharedVarArgs(const char *format, ...)
+char *SharedVarArgs(const char *format, ...)
 {
 	va_list argptr;
 	const int BufLen = 1024;
 	const int NumBuffers = 4;
 	static char string[NumBuffers][BufLen];
 	static int curstring = 0;
-	
-	curstring = ( curstring + 1 ) % NumBuffers;
 
-	va_start (argptr, format);
-	V_vsprintf_safe( string[curstring], format, argptr );
-	va_end (argptr);
+	curstring = (curstring + 1) % NumBuffers;
 
-	return string[curstring];  
+	va_start(argptr, format);
+	V_vsprintf_safe(string[curstring], format, argptr);
+	va_end(argptr);
+
+	return string[curstring];
 }
 
 //--------------------------------------------------------------------------------------------------------------
-char * BufPrintf(char *buf, int& len, const char *fmt, ...)
+char *BufPrintf(char *buf, int &len, const char *fmt, ...)
 {
-	if (len <= 0)
+	if(len <= 0)
 		return NULL;
 
 	va_list argptr;
 
 	va_start(argptr, fmt);
 	_vsnprintf(buf, len, fmt, argptr);
-	buf[ len - 1 ] = 0;
+	buf[len - 1] = 0;
 	va_end(argptr);
 
 	len -= strlen(buf);
@@ -54,9 +54,9 @@ char * BufPrintf(char *buf, int& len, const char *fmt, ...)
 }
 
 //--------------------------------------------------------------------------------------------------------------
-wchar_t * BufWPrintf(wchar_t *buf, int& len, const wchar_t *fmt, ...)
+wchar_t *BufWPrintf(wchar_t *buf, int &len, const wchar_t *fmt, ...)
 {
-	if (len <= 0)
+	if(len <= 0)
 		return NULL;
 
 	va_list argptr;
@@ -65,9 +65,9 @@ wchar_t * BufWPrintf(wchar_t *buf, int& len, const wchar_t *fmt, ...)
 #ifdef WIN32
 	_vsnwprintf(buf, len, fmt, argptr);
 #else
-	vswprintf( buf, len, fmt, argptr );
+	vswprintf(buf, len, fmt, argptr);
 #endif
-	buf[ len - 1 ] = 0;
+	buf[len - 1] = 0;
 	va_end(argptr);
 
 	len -= wcslen(buf);
@@ -75,22 +75,22 @@ wchar_t * BufWPrintf(wchar_t *buf, int& len, const wchar_t *fmt, ...)
 }
 
 //--------------------------------------------------------------------------------------------------------------
-const wchar_t * NumAsWString( int val )
+const wchar_t *NumAsWString(int val)
 {
 	const int BufLen = 16;
 	static wchar_t buf[BufLen];
 	int len = BufLen;
-	BufWPrintf( buf, len, L"%d", val );
+	BufWPrintf(buf, len, L"%d", val);
 	return buf;
 }
 
 //--------------------------------------------------------------------------------------------------------------
-const char * NumAsString( int val )
+const char *NumAsString(int val)
 {
 	const int BufLen = 16;
 	static char buf[BufLen];
 	int len = BufLen;
-	BufPrintf( buf, len, "%d", val );
+	BufPrintf(buf, len, "%d", val);
 	return buf;
 }
 
@@ -98,7 +98,7 @@ const char * NumAsString( int val )
 /**
  * Returns the token parsed by SharedParse()
  */
-char *SharedGetToken( void )
+char *SharedGetToken(void)
 {
 	return s_shared_token;
 }
@@ -107,7 +107,7 @@ char *SharedGetToken( void )
 /**
  * Returns the token parsed by SharedParse()
  */
-void SharedSetQuoteChar( char c )
+void SharedSetQuoteChar(char c)
 {
 	s_shared_quote = c;
 }
@@ -116,43 +116,42 @@ void SharedSetQuoteChar( char c )
 /**
  * Parse a token out of a string
  */
-const char *SharedParse( const char *data )
+const char *SharedParse(const char *data)
 {
-	int             c;
-	int             len;
-	
+	int c;
+	int len;
+
 	len = 0;
 	s_shared_token[0] = 0;
-	
-	if (!data)
+
+	if(!data)
 		return NULL;
-		
+
 // skip whitespace
 skipwhite:
-	while ( (c = *data) <= ' ')
+	while((c = *data) <= ' ')
 	{
-		if (c == 0)
-			return NULL;                    // end of file;
+		if(c == 0)
+			return NULL; // end of file;
 		data++;
 	}
-	
-// skip // comments
-	if (c=='/' && data[1] == '/')
+
+	// skip // comments
+	if(c == '/' && data[1] == '/')
 	{
-		while (*data && *data != '\n')
+		while(*data && *data != '\n')
 			data++;
 		goto skipwhite;
 	}
-	
 
-// handle quoted strings specially
-	if (c == s_shared_quote)
+	// handle quoted strings specially
+	if(c == s_shared_quote)
 	{
 		data++;
-		while (1)
+		while(1)
 		{
 			c = *data++;
-			if (c==s_shared_quote || !c)
+			if(c == s_shared_quote || !c)
 			{
 				s_shared_token[len] = 0;
 				return data;
@@ -162,26 +161,26 @@ skipwhite:
 		}
 	}
 
-// parse single characters
-	if (c=='{' || c=='}'|| c==')'|| c=='(' || c=='\'' || c == ',' )
+	// parse single characters
+	if(c == '{' || c == '}' || c == ')' || c == '(' || c == '\'' || c == ',')
 	{
 		s_shared_token[len] = c;
 		len++;
 		s_shared_token[len] = 0;
-		return data+1;
+		return data + 1;
 	}
 
-// parse a regular word
+	// parse a regular word
 	do
 	{
 		s_shared_token[len] = c;
 		data++;
 		len++;
 		c = *data;
-	if (c=='{' || c=='}'|| c==')'|| c=='(' || c=='\'' || c == ',' )
+		if(c == '{' || c == '}' || c == ')' || c == '(' || c == '\'' || c == ',')
 			break;
-	} while (c>32);
-	
+	} while(c > 32);
+
 	s_shared_token[len] = 0;
 	return data;
 }
@@ -190,14 +189,14 @@ skipwhite:
 /**
  * Returns true if additional data is waiting to be processed on this line
  */
-bool SharedTokenWaiting( const char *buffer )
+bool SharedTokenWaiting(const char *buffer)
 {
 	const char *p;
 
 	p = buffer;
-	while ( *p && *p!='\n')
+	while(*p && *p != '\n')
 	{
-		if ( !isspace( *p ) || isalnum( *p ) )
+		if(!isspace(*p) || isalnum(*p))
 			return true;
 
 		p++;

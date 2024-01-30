@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -35,17 +35,15 @@ using namespace vgui;
 CRawLogPanel::CRawLogPanel(vgui::Panel *parent, const char *name) : vgui::PropertyPage(parent, name)
 {
 	SetSize(200, 100);
-	m_pConsole = new CConsolePanel( this, "Console", false );
-	
+	m_pConsole = new CConsolePanel(this, "Console", false);
+
 	LoadControlSettings("Admin\\RawLogPanel.res", "PLATFORM");
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CRawLogPanel::~CRawLogPanel()
-{
-}
+CRawLogPanel::~CRawLogPanel() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Activates the page
@@ -66,22 +64,22 @@ void CRawLogPanel::OnPageHide()
 //-----------------------------------------------------------------------------
 // Purpose: inserts a new string into the main chat panel
 //-----------------------------------------------------------------------------
-void CRawLogPanel::DoInsertString(const char *str) 
+void CRawLogPanel::DoInsertString(const char *str)
 {
-	if ( str )
+	if(str)
 	{
-		m_pConsole->Print( str );
+		m_pConsole->Print(str);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: run when the send button is pressed, execs a command on the server
 //-----------------------------------------------------------------------------
-void CRawLogPanel::OnCommandSubmitted( char const *pchCommand )
+void CRawLogPanel::OnCommandSubmitted(char const *pchCommand)
 {
-	if ( !pchCommand || !*pchCommand )
+	if(!pchCommand || !*pchCommand)
 		return;
 
 	// execute the typed command
-	RemoteServer().SendCommand( pchCommand );
+	RemoteServer().SendCommand(pchCommand);
 }

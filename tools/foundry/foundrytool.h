@@ -25,12 +25,10 @@ namespace vgui
 	class Panel;
 }
 
-
 //-----------------------------------------------------------------------------
 // Singleton interfaces
 //-----------------------------------------------------------------------------
 extern CDmeEditorTypeDictionary *g_pEditorTypeDict;
-
 
 //-----------------------------------------------------------------------------
 // Allows the doc to call back into the Foundry editor tool
@@ -39,9 +37,8 @@ abstract_class IFoundryDocCallback
 {
 public:
 	// Called by the doc when the data changes
-	virtual void OnDocChanged( const char *pReason, int nNotifySource, int nNotifyFlags ) = 0;
+	virtual void OnDocChanged(const char *pReason, int nNotifySource, int nNotifyFlags) = 0;
 };
-
 
 //-----------------------------------------------------------------------------
 // Global methods of the foundry tool
@@ -56,10 +53,9 @@ public:
 	virtual const char *GetRegistryName() = 0;
 
 	// Shows a particular entity in the entity properties dialog
-	virtual void ShowEntityInEntityProperties( CDmeVMFEntity *pEntity ) = 0;
+	virtual void ShowEntityInEntityProperties(CDmeVMFEntity * pEntity) = 0;
 };
 
 extern IFoundryTool *g_pFoundryTool;
-
 
 #endif // FOUNDRYTOOL_H

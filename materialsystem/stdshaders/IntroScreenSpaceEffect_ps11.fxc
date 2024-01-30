@@ -31,7 +31,7 @@ HALF4 main( PS_INPUT i ) : COLOR
 
 	return float4( scene * gman, g_Alpha );
 #endif
-	
+
 #if MODE == 1
 	if( Grey( gman ) < 0.3 )
 	{

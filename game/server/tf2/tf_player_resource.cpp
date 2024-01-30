@@ -11,25 +11,26 @@
 
 // Datatable
 IMPLEMENT_SERVERCLASS_ST(CTFPlayerResource, DT_TFPlayerResource)
-END_SEND_TABLE()
+END_SEND_TABLE
+()
 
-LINK_ENTITY_TO_CLASS( tf_player_manager, CTFPlayerResource );
+	LINK_ENTITY_TO_CLASS(tf_player_manager, CTFPlayerResource);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFPlayerResource::Spawn( void )
+void CTFPlayerResource::Spawn(void)
 {
 	BaseClass::Spawn();
 
 	// Use autodetect, but only once every second.
-	NetworkProp()->SetUpdateInterval( 2.0f );
+	NetworkProp()->SetUpdateInterval(2.0f);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFPlayerResource::UpdatePlayerData( void )
+void CTFPlayerResource::UpdatePlayerData(void)
 {
 	BaseClass::UpdatePlayerData();
 }

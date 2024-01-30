@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -21,9 +21,7 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CCustom1Dlg dialog
 
-
-CCustom1Dlg::CCustom1Dlg()
-	: CAppWizStepDlg(CCustom1Dlg::IDD)
+CCustom1Dlg::CCustom1Dlg() : CAppWizStepDlg(CCustom1Dlg::IDD)
 {
 	//{{AFX_DATA_INIT(CCustom1Dlg)
 	m_RootPath = _T("");
@@ -42,25 +40,24 @@ CCustom1Dlg::CCustom1Dlg()
 	m_SrcPath = "src";
 }
 
-
-void CCustom1Dlg::DoDataExchange(CDataExchange* pDX)
+void CCustom1Dlg::DoDataExchange(CDataExchange *pDX)
 {
-	if (pDX->m_bSaveAndValidate == 0)
+	if(pDX->m_bSaveAndValidate == 0)
 	{
 		// Refresh the paths based on project information...
-		if (m_RootPath.GetLength() == 0)
+		if(m_RootPath.GetLength() == 0)
 		{
-			if (!Valvelibaw.m_Dictionary.Lookup("FULL_DIR_PATH", m_RootPath))
+			if(!Valvelibaw.m_Dictionary.Lookup("FULL_DIR_PATH", m_RootPath))
 				m_RootPath = "u:\\hl2\\";
 
 			m_RootPath.MakeLower();
 
-			m_ToolProject = (m_RootPath.Find( "util" ) >= 0);
+			m_ToolProject = (m_RootPath.Find("util") >= 0);
 
-			int idx = m_RootPath.Find( m_SrcPath );	// look for src tree
-			if (idx >= 0)
+			int idx = m_RootPath.Find(m_SrcPath); // look for src tree
+			if(idx >= 0)
 			{
-				m_RootPath = m_RootPath.Left( idx );
+				m_RootPath = m_RootPath.Left(idx);
 			}
 
 			m_TargetPath = m_RootPath;
@@ -86,76 +83,77 @@ void CCustom1Dlg::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-static void FixupPath( CString& path )
+static void FixupPath(CString &path)
 {
 	int idx;
 	idx = path.Find("/");
-	while (idx >= 0)
+	while(idx >= 0)
 	{
-		path.SetAt(idx, '\\' );
+		path.SetAt(idx, '\\');
 		idx = path.Find("/");
 	}
 
-	bool hasTerminatingSlash = ( path.Right(1).Find("\\") >= 0 );
-	if (!hasTerminatingSlash)
+	bool hasTerminatingSlash = (path.Right(1).Find("\\") >= 0);
+	if(!hasTerminatingSlash)
 		path += '\\';
 
 	path.MakeLower();
 }
 
-static int CountSlashes( CString& path )
+static int CountSlashes(CString &path)
 {
 	int count = 0;
 
 	int idx = path.Find("\\", 0);
-	while (idx >= 0)
+	while(idx >= 0)
 	{
 		++count;
-		idx = path.Find("\\", idx+1 );
+		idx = path.Find("\\", idx + 1);
 	}
 
 	return count;
 }
 
-bool CCustom1Dlg::ComputeRelativePath( )
+bool CCustom1Dlg::ComputeRelativePath()
 {
-	if ( m_RootPath.GetAt(1) != ':' )
+	if(m_RootPath.GetAt(1) != ':')
 	{
-		MessageBox( "Error! The root path must specify a drive!", "Bogus Root Path!", MB_ICONERROR | MB_OK );
+		MessageBox("Error! The root path must specify a drive!", "Bogus Root Path!", MB_ICONERROR | MB_OK);
 		return false;
 	}
 
-	if ( m_TargetPath.GetAt(1) != ':' )
+	if(m_TargetPath.GetAt(1) != ':')
 	{
-		MessageBox( "Error! The target path must specify a drive!", "Bogus Target Path!", MB_ICONERROR | MB_OK );
+		MessageBox("Error! The target path must specify a drive!", "Bogus Target Path!", MB_ICONERROR | MB_OK);
 		return false;
 	}
 
 	CString sourcePath;
-	if (!Valvelibaw.m_Dictionary.Lookup("FULL_DIR_PATH", sourcePath ))
+	if(!Valvelibaw.m_Dictionary.Lookup("FULL_DIR_PATH", sourcePath))
 	{
-		MessageBox( "I can't seem to find the source path!??!", "Umm... Get Brian", MB_ICONERROR | MB_OK );
+		MessageBox("I can't seem to find the source path!??!", "Umm... Get Brian", MB_ICONERROR | MB_OK);
 		return false;
 	}
 
-	FixupPath( m_RootPath );
-	FixupPath( m_TargetPath );
-	FixupPath( sourcePath );
+	FixupPath(m_RootPath);
+	FixupPath(m_TargetPath);
+	FixupPath(sourcePath);
 
 	CString srcRootPath = m_RootPath;
 	srcRootPath += m_SrcPath;
 	srcRootPath += "\\";
-	FixupPath( srcRootPath );
+	FixupPath(srcRootPath);
 
-	if (sourcePath.Find( srcRootPath ) != 0)
+	if(sourcePath.Find(srcRootPath) != 0)
 	{
-		MessageBox( "Error! The source path must lie under the root source path!", "Bogus Root Path!", MB_ICONERROR | MB_OK );
+		MessageBox("Error! The source path must lie under the root source path!", "Bogus Root Path!",
+				   MB_ICONERROR | MB_OK);
 		return false;
 	}
 
-	if (m_TargetPath.Find( m_RootPath ) != 0)
+	if(m_TargetPath.Find(m_RootPath) != 0)
 	{
-		MessageBox( "Error! The target path must lie under the root path!", "Bogus Target Path!", MB_ICONERROR | MB_OK );
+		MessageBox("Error! The target path must lie under the root path!", "Bogus Target Path!", MB_ICONERROR | MB_OK);
 		return false;
 	}
 
@@ -163,27 +161,27 @@ bool CCustom1Dlg::ComputeRelativePath( )
 	int rootSrcLen = srcRootPath.GetLength();
 	int sourceLen = sourcePath.GetLength();
 	int targetLen = m_TargetPath.GetLength();
-	CString relativePath = m_TargetPath.Right( targetLen - rootLen );
+	CString relativePath = m_TargetPath.Right(targetLen - rootLen);
 
-	// Now that we've got the relative source path, 
+	// Now that we've got the relative source path,
 	// find out how many slashes are in it;
 	// that'll tell us how many paths to back up....
 	int i;
-	CString relativeSourcePath = sourcePath.Right( sourceLen - rootLen );
+	CString relativeSourcePath = sourcePath.Right(sourceLen - rootLen);
 	int numSlashes = CountSlashes(relativeSourcePath);
 	CString targetRelativePath;
-	for ( i = 0; i < numSlashes; ++i )
+	for(i = 0; i < numSlashes; ++i)
 	{
 		targetRelativePath += "..\\";
 	}
 
-	// Now that we've got the relative source path, 
+	// Now that we've got the relative source path,
 	// find out how many slashes are in it;
 	// that'll tell us how many paths to back up....
-	CString rootSrcToProj = sourcePath.Right( sourceLen - rootSrcLen );
+	CString rootSrcToProj = sourcePath.Right(sourceLen - rootSrcLen);
 	numSlashes = CountSlashes(rootSrcToProj);
 	CString projToRootSrc;
-	for ( i = 0; i < numSlashes; ++i )
+	for(i = 0; i < numSlashes; ++i)
 	{
 		projToRootSrc += "..\\";
 	}
@@ -196,33 +194,35 @@ bool CCustom1Dlg::ComputeRelativePath( )
 	Valvelibaw.m_Dictionary["VALVE_TARGET_PATH"] = m_TargetPath;
 	Valvelibaw.m_Dictionary["VALVE_RELATIVE_PATH"] = targetRelativePath;
 
-	if (m_ToolProject)
+	if(m_ToolProject)
 		Valvelibaw.m_Dictionary["VALVE_TOOL"] = "1";
-	if (m_PublicProject && (m_ProjectType != 2))
+	if(m_PublicProject && (m_ProjectType != 2))
 		Valvelibaw.m_Dictionary["VALVE_PUBLIC_PROJECT"] = "1";
-	if (m_PublishImportLib && (m_ProjectType == 1))
+	if(m_PublishImportLib && (m_ProjectType == 1))
 		Valvelibaw.m_Dictionary["VALVE_PUBLISH_IMPORT_LIB"] = "1";
 
 	// Import libraries
-	if (m_ProjectType == 1)
+	if(m_ProjectType == 1)
 	{
-		if ( m_ImplibPath.GetAt(1) != ':' )
+		if(m_ImplibPath.GetAt(1) != ':')
 		{
-			MessageBox( "Error! The import library path must specify a drive!", "Bogus Import Library Path!", MB_ICONERROR | MB_OK );
+			MessageBox("Error! The import library path must specify a drive!", "Bogus Import Library Path!",
+					   MB_ICONERROR | MB_OK);
 			return false;
 		}
 
-		if (m_ImplibPath.Find( srcRootPath ) != 0)
+		if(m_ImplibPath.Find(srcRootPath) != 0)
 		{
-			MessageBox( "Error! The import library path must lie under the root src path!", "Bogus Target Path!", MB_ICONERROR | MB_OK );
+			MessageBox("Error! The import library path must lie under the root src path!", "Bogus Target Path!",
+					   MB_ICONERROR | MB_OK);
 			return false;
 		}
 
 		int implibLen = m_ImplibPath.GetLength();
-		relativePath = m_ImplibPath.Right( implibLen - rootSrcLen );
+		relativePath = m_ImplibPath.Right(implibLen - rootSrcLen);
 		int numSlashes = CountSlashes(rootSrcToProj);
 		CString implibRelativePath;
-		for (int i = 0; i < numSlashes; ++i )
+		for(int i = 0; i < numSlashes; ++i)
 		{
 			implibRelativePath += "..\\";
 		}
@@ -239,37 +239,36 @@ bool CCustom1Dlg::ComputeRelativePath( )
 //  present.  Do all validation & data exchange from the dialog in this function.
 BOOL CCustom1Dlg::OnDismiss()
 {
-	if (!UpdateData(TRUE))
+	if(!UpdateData(TRUE))
 		return FALSE;
 
-	if (!ComputeRelativePath())
+	if(!ComputeRelativePath())
 		return FALSE;
 
-	switch( m_ProjectType )
+	switch(m_ProjectType)
 	{
-	case 0:
-		Valvelibaw.m_Dictionary["VALVE_TARGET_TYPE"] = "lib"; 
-		Valvelibaw.m_Dictionary["PROJTYPE_LIB"]	= "1";
-		break;
+		case 0:
+			Valvelibaw.m_Dictionary["VALVE_TARGET_TYPE"] = "lib";
+			Valvelibaw.m_Dictionary["PROJTYPE_LIB"] = "1";
+			break;
 
-	case 1:
-		Valvelibaw.m_Dictionary["VALVE_TARGET_TYPE"] = "dll"; 
-		Valvelibaw.m_Dictionary["PROJTYPE_DLL"]	= "1";
-		break;
+		case 1:
+			Valvelibaw.m_Dictionary["VALVE_TARGET_TYPE"] = "dll";
+			Valvelibaw.m_Dictionary["PROJTYPE_DLL"] = "1";
+			break;
 
-	case 2:
-		Valvelibaw.m_Dictionary["VALVE_TARGET_TYPE"] = "exe"; 
+		case 2:
+			Valvelibaw.m_Dictionary["VALVE_TARGET_TYPE"] = "exe";
 
-		if (m_ConsoleApp)
-		{
-			Valvelibaw.m_Dictionary["PROJTYPE_CON"]	= "1";
-		}
-		break;
+			if(m_ConsoleApp)
+			{
+				Valvelibaw.m_Dictionary["PROJTYPE_CON"] = "1";
+			}
+			break;
 	}
-   
-	return TRUE;	// return FALSE if the dialog shouldn't be dismissed
-}
 
+	return TRUE; // return FALSE if the dialog shouldn't be dismissed
+}
 
 BEGIN_MESSAGE_MAP(CCustom1Dlg, CAppWizStepDlg)
 	//{{AFX_MSG_MAP(CCustom1Dlg)
@@ -282,38 +281,37 @@ BEGIN_MESSAGE_MAP(CCustom1Dlg, CAppWizStepDlg)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-
 /////////////////////////////////////////////////////////////////////////////
 // CCustom1Dlg message handlers
 
-void CCustom1Dlg::RecomputeTargetPath() 
+void CCustom1Dlg::RecomputeTargetPath()
 {
-	bool hasTerminatingSlash = ( m_RootPath.Right(1).FindOneOf("\\/") >= 0 );
+	bool hasTerminatingSlash = (m_RootPath.Right(1).FindOneOf("\\/") >= 0);
 
 	m_TargetPath = m_RootPath;
-	if (!hasTerminatingSlash)
+	if(!hasTerminatingSlash)
 		m_TargetPath += '\\';
 	m_ImplibPath = m_TargetPath;
 
-	switch( m_ProjectType )
+	switch(m_ProjectType)
 	{
-	case 0:
-		// static library
-		m_TargetPath += m_SrcPath;
-		m_TargetPath += m_PublicProject ? "\\lib\\public\\" : "\\lib\\common\\";
-		m_ImplibPath = "unused";
-		break;
+		case 0:
+			// static library
+			m_TargetPath += m_SrcPath;
+			m_TargetPath += m_PublicProject ? "\\lib\\public\\" : "\\lib\\common\\";
+			m_ImplibPath = "unused";
+			break;
 
-	case 1:
-		m_TargetPath += "bin\\";
-		m_ImplibPath += m_SrcPath;
-		m_ImplibPath += m_PublicProject ? "\\lib\\public\\" : "\\lib\\common\\";
-		break;
+		case 1:
+			m_TargetPath += "bin\\";
+			m_ImplibPath += m_SrcPath;
+			m_ImplibPath += m_PublicProject ? "\\lib\\public\\" : "\\lib\\common\\";
+			break;
 
-	case 2:
-		m_TargetPath += "bin\\";
-		m_ImplibPath = "unused";
-		break;
+		case 2:
+			m_TargetPath += "bin\\";
+			m_ImplibPath = "unused";
+			break;
 	}
 
 	UpdateData(FALSE);
@@ -321,75 +319,75 @@ void CCustom1Dlg::RecomputeTargetPath()
 
 void CCustom1Dlg::EnableCheckboxes()
 {
-	CWnd* pConsoleApp = GetDlgItem(IDC_CHECK_CONSOLE_APP);
-	CWnd* pPublishImport = GetDlgItem(IDC_CHECK_PUBLISH_IMPORT);
-	CWnd* pImportLib = GetDlgItem(IDC_EDIT_IMPLIB_PATH);
-	switch (m_ProjectType)
+	CWnd *pConsoleApp = GetDlgItem(IDC_CHECK_CONSOLE_APP);
+	CWnd *pPublishImport = GetDlgItem(IDC_CHECK_PUBLISH_IMPORT);
+	CWnd *pImportLib = GetDlgItem(IDC_EDIT_IMPLIB_PATH);
+	switch(m_ProjectType)
 	{
-	case 0:
-		pConsoleApp->EnableWindow( false );
-		pPublishImport->EnableWindow( false );
-		pImportLib->EnableWindow( false );
-		break;
+		case 0:
+			pConsoleApp->EnableWindow(false);
+			pPublishImport->EnableWindow(false);
+			pImportLib->EnableWindow(false);
+			break;
 
-	case 1:
-		pConsoleApp->EnableWindow( false );
-		pPublishImport->EnableWindow( true );
-		pImportLib->EnableWindow( m_PublishImportLib );
-		break;
+		case 1:
+			pConsoleApp->EnableWindow(false);
+			pPublishImport->EnableWindow(true);
+			pImportLib->EnableWindow(m_PublishImportLib);
+			break;
 
-	case 2:
-		pConsoleApp->EnableWindow( true );
-		pPublishImport->EnableWindow( false );
-		pImportLib->EnableWindow( false );
-		break;
+		case 2:
+			pConsoleApp->EnableWindow(true);
+			pPublishImport->EnableWindow(false);
+			pImportLib->EnableWindow(false);
+			break;
 	}
 }
 
-void CCustom1Dlg::OnSelchangeSelectProjectType() 
+void CCustom1Dlg::OnSelchangeSelectProjectType()
 {
-	if (!UpdateData(TRUE))
+	if(!UpdateData(TRUE))
 		return;
 
 	RecomputeTargetPath();
 	EnableCheckboxes();
 }
 
-void CCustom1Dlg::OnChangeEditRootPath() 
-{	
-	if (!UpdateData(TRUE))
+void CCustom1Dlg::OnChangeEditRootPath()
+{
+	if(!UpdateData(TRUE))
 		return;
 
 	RecomputeTargetPath();
 }
 
-void CCustom1Dlg::OnCheckPublic() 
+void CCustom1Dlg::OnCheckPublic()
 {
-	if (!UpdateData(TRUE))
+	if(!UpdateData(TRUE))
 		return;
 
 	RecomputeTargetPath();
 }
 
-void CCustom1Dlg::OnCheckTool() 
+void CCustom1Dlg::OnCheckTool()
 {
-	if (!UpdateData(TRUE))
+	if(!UpdateData(TRUE))
 		return;
 
 	RecomputeTargetPath();
 }
 
-void CCustom1Dlg::OnCheckPublishImport() 
+void CCustom1Dlg::OnCheckPublishImport()
 {
-	if (!UpdateData(TRUE))
+	if(!UpdateData(TRUE))
 		return;
-	
+
 	EnableCheckboxes();
 }
 
-void CCustom1Dlg::OnChangeEditSrcPath() 
+void CCustom1Dlg::OnChangeEditSrcPath()
 {
-	if (!UpdateData(TRUE))
+	if(!UpdateData(TRUE))
 		return;
 
 	RecomputeTargetPath();

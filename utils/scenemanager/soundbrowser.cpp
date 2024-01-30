@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -30,10 +30,10 @@
 #include "drawhelper.h"
 #include "utlbuffer.h"
 
-#define ENTRY_ALLSOUNDS			"AllSounds"
-#define ENTRY_ALL_INDEX			0
-#define ENTRY_SEARCHRESULTS		"Search results"
-#define ENTRY_SEARCH_INDEX		1
+#define ENTRY_ALLSOUNDS		"AllSounds"
+#define ENTRY_ALL_INDEX		0
+#define ENTRY_SEARCHRESULTS "Search results"
+#define ENTRY_SEARCH_INDEX	1
 
 enum
 {
@@ -67,29 +67,29 @@ enum
 class CSoundList : public mxListView
 {
 public:
-	CSoundList( mxWindow *parent, int id = 0 ) 
-		: mxListView( parent, 0, 0, 0, 0, id )
+	CSoundList(mxWindow *parent, int id = 0) : mxListView(parent, 0, 0, 0, 0, id)
 	{
-		// SendMessage ( (HWND)getHandle(), WM_SETFONT, (WPARAM) (HFONT) GetStockObject (ANSI_FIXED_FONT), MAKELPARAM (TRUE, 0));
+		// SendMessage ( (HWND)getHandle(), WM_SETFONT, (WPARAM) (HFONT) GetStockObject (ANSI_FIXED_FONT), MAKELPARAM
+		// (TRUE, 0));
 
-		//HWND wnd = (HWND)getHandle();
-		//DWORD style = GetWindowLong( wnd, GWL_STYLE );
-		//style |= LVS_SORTASCENDING;
-		//SetWindowLong( wnd, GWL_STYLE, style );
+		// HWND wnd = (HWND)getHandle();
+		// DWORD style = GetWindowLong( wnd, GWL_STYLE );
+		// style |= LVS_SORTASCENDING;
+		// SetWindowLong( wnd, GWL_STYLE, style );
 
-		//SceneManager_AddWindowStyle( this, LVS_SORTASCENDING );
+		// SceneManager_AddWindowStyle( this, LVS_SORTASCENDING );
 
 		// Add column headers
-		insertTextColumn( COL_SOUND, 200, "Sound" );
-		insertTextColumn( COL_COUNT, 20, "#" );
-		insertTextColumn( COL_WAV, 220, "WAV Filename" );
-		insertTextColumn( COL_SENTENCE, 300, "Sentence Text" );
-		insertTextColumn( COL_CHANNEL, 100, "Channel" );
-		insertTextColumn( COL_VOLUME, 100, "Volume" );
-		insertTextColumn( COL_SOUNDLEVEL, 120, "Soundlevel" );
-		insertTextColumn( COL_PITCH, 100, "Pitch" );
-		insertTextColumn( COL_SCRIPT, 150, "Script File" );
-		insertTextColumn( COL_CC, 300, "CC Text" );
+		insertTextColumn(COL_SOUND, 200, "Sound");
+		insertTextColumn(COL_COUNT, 20, "#");
+		insertTextColumn(COL_WAV, 220, "WAV Filename");
+		insertTextColumn(COL_SENTENCE, 300, "Sentence Text");
+		insertTextColumn(COL_CHANNEL, 100, "Channel");
+		insertTextColumn(COL_VOLUME, 100, "Volume");
+		insertTextColumn(COL_SOUNDLEVEL, 120, "Soundlevel");
+		insertTextColumn(COL_PITCH, 100, "Pitch");
+		insertTextColumn(COL_SCRIPT, 150, "Script File");
+		insertTextColumn(COL_CC, 300, "CC Text");
 	}
 };
 
@@ -98,183 +98,181 @@ class CSoundFilterTab : public CTabWindow
 public:
 	typedef CTabWindow BaseClass;
 
-	CSoundFilterTab( mxWindow *parent, int x, int y, int w, int h, int id = 0, int style = 0 ) :
-		CTabWindow( parent, x, y, w, h, id, style )
+	CSoundFilterTab(mxWindow *parent, int x, int y, int w, int h, int id = 0, int style = 0)
+		: CTabWindow(parent, x, y, w, h, id, style)
 	{
-		SetInverted( true );
-		SetRowHeight( 20 );
+		SetInverted(true);
+		SetRowHeight(20);
 	}
 
-	virtual void ShowRightClickMenu( int mx, int my )
+	virtual void ShowRightClickMenu(int mx, int my)
 	{
 		// Nothing
 	}
 
-	void	Init( CUtlSymbolTable& table, CUtlVector< CUtlSymbol >& scripts )
+	void Init(CUtlSymbolTable &table, CUtlVector<CUtlSymbol> &scripts)
 	{
-		add( ENTRY_ALLSOUNDS );
-		add( ENTRY_SEARCHRESULTS );
+		add(ENTRY_ALLSOUNDS);
+		add(ENTRY_SEARCHRESULTS);
 
 		int c = scripts.Count();
-		for ( int i = 0; i < c; i++ )
+		for(int i = 0; i < c; i++)
 		{
-			CUtlSymbol& sym = scripts[ i ];
-			add( table.String( sym ) );
+			CUtlSymbol &sym = scripts[i];
+			add(table.String(sym));
 		}
-		select( 0 );
+		select(0);
 	}
 
 	void UpdatePrefixes()
 	{
 		int c = getItemCount();
 		// Skip All and search results
-		for ( int i = 2; i < c; i++ )
+		for(int i = 2; i < c; i++)
 		{
-			setPrefix( i, "" );
+			setPrefix(i, "");
 
-			char const *script = getLabel( i );
-			if ( !script )
+			char const *script = getLabel(i);
+			if(!script)
 				continue;
 
-			int scriptindex = g_pSoundEmitterSystem->FindSoundScript( va( "scripts/%s.txt", script ) );
-			if ( scriptindex < 0 )
+			int scriptindex = g_pSoundEmitterSystem->FindSoundScript(va("scripts/%s.txt", script));
+			if(scriptindex < 0)
 				continue;
 
-			if ( g_pSoundEmitterSystem->IsSoundScriptDirty( scriptindex ) )
+			if(g_pSoundEmitterSystem->IsSoundScriptDirty(scriptindex))
 			{
-				setPrefix( i, "* " );
+				setPrefix(i, "* ");
 			}
 		}
 
-		RecomputeLayout( w2() );
+		RecomputeLayout(w2());
 		redraw();
 	}
 };
 
-
 class COptionsWindow : public mxWindow
 {
 	typedef mxWindow BaseClass;
+
 public:
 	enum
 	{
 		IDC_VOICE_ONLY = 1000,
-			IDC_PLAY_SOUND,
-			IDC_STOP_SOUNDS,
-			IDC_SEARCH,
+		IDC_PLAY_SOUND,
+		IDC_STOP_SOUNDS,
+		IDC_SEARCH,
 	};
-	
-	COptionsWindow( CSoundBrowser *browser ) : BaseClass( browser, 0, 0, 0, 0 ), m_pBrowser( browser )
+
+	COptionsWindow(CSoundBrowser *browser) : BaseClass(browser, 0, 0, 0, 0), m_pBrowser(browser)
 	{
-		SceneManager_AddWindowStyle( this, WS_CLIPSIBLINGS | WS_CLIPCHILDREN );
+		SceneManager_AddWindowStyle(this, WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
 
-		m_szSearchString[0]=0;
+		m_szSearchString[0] = 0;
 
-		m_pChanVoiceOnly = new mxCheckBox( this, 0, 0, 0, 0, "CHAN_VOICE only", IDC_VOICE_ONLY );
-		m_pChanVoiceOnly->setChecked( true );
-		
-		m_pPlay = new mxButton( this, 0, 0, 0, 0, "Play", IDC_PLAY_SOUND );
-		
-		m_pStopSounds = new mxButton( this, 0, 0, 0, 0, "Stop Sounds", IDC_STOP_SOUNDS );
-		
-		m_pSearch = new mxButton( this, 0, 0, 0, 0, "Search...", IDC_SEARCH );
+		m_pChanVoiceOnly = new mxCheckBox(this, 0, 0, 0, 0, "CHAN_VOICE only", IDC_VOICE_ONLY);
+		m_pChanVoiceOnly->setChecked(true);
 
-		m_pSearchString = new mxLabel( this, 0, 0, 0, 0, "" );
+		m_pPlay = new mxButton(this, 0, 0, 0, 0, "Play", IDC_PLAY_SOUND);
+
+		m_pStopSounds = new mxButton(this, 0, 0, 0, 0, "Stop Sounds", IDC_STOP_SOUNDS);
+
+		m_pSearch = new mxButton(this, 0, 0, 0, 0, "Search...", IDC_SEARCH);
+
+		m_pSearchString = new mxLabel(this, 0, 0, 0, 0, "");
 	}
-	
-	bool PaintBackground( void )
+
+	bool PaintBackground(void)
 	{
 		redraw();
 		return false;
 	}
 
-
 	virtual void redraw()
 	{
-		CDrawHelper drawHelper( this, GetSysColor( COLOR_BTNFACE ) );
+		CDrawHelper drawHelper(this, GetSysColor(COLOR_BTNFACE));
 	}
 
-	virtual int handleEvent( mxEvent *event )
+	virtual int handleEvent(mxEvent *event)
 	{
 		int iret = 0;
-		switch ( event->event )
+		switch(event->event)
 		{
-		default:
-			break;
-		case mxEvent::Size:
+			default:
+				break;
+			case mxEvent::Size:
 			{
 				iret = 1;
-				
+
 				int split = 120;
-				
+
 				int x = 1;
-				
-				m_pPlay->setBounds( x, 1, split, h2() - 2 );
-				
-				x += split + 10;
-				
-				m_pStopSounds->setBounds( x, 1, split, h2()-2 );
-				
-				x += split + 10;
-				
-				m_pChanVoiceOnly->setBounds( x, 1, split, h2() - 2 );
-								
-				x += split + 10;
-				
-				m_pSearch->setBounds( x, 1, split, h2() - 2 );
+
+				m_pPlay->setBounds(x, 1, split, h2() - 2);
 
 				x += split + 10;
 
-				m_pSearchString->setBounds( x, 2, split * 2, h2() - 4 );
+				m_pStopSounds->setBounds(x, 1, split, h2() - 2);
+
+				x += split + 10;
+
+				m_pChanVoiceOnly->setBounds(x, 1, split, h2() - 2);
+
+				x += split + 10;
+
+				m_pSearch->setBounds(x, 1, split, h2() - 2);
+
+				x += split + 10;
+
+				m_pSearchString->setBounds(x, 2, split * 2, h2() - 4);
 
 				x += split * 2 + 10;
-
 			}
 			break;
-		case mxEvent::Action:
+			case mxEvent::Action:
 			{
-				switch ( event->action )
+				switch(event->action)
 				{
-				case IDC_STOP_SOUNDS:
+					case IDC_STOP_SOUNDS:
 					{
 						iret = 1;
 						sound->StopAll();
 					}
 					break;
-				case IDC_PLAY_SOUND:
+					case IDC_PLAY_SOUND:
 					{
 						iret = 1;
 						m_pBrowser->OnPlay();
 					}
 					break;
-				case IDC_VOICE_ONLY:
+					case IDC_VOICE_ONLY:
 					{
 						iret = 1;
 						m_pBrowser->RepopulateTree();
 					};
 					break;
-				case IDC_SEARCH:
+					case IDC_SEARCH:
 					{
 						iret = 1;
 						OnSearch();
 					};
 					break;
-				default:
-					break;
+					default:
+						break;
 				}
 			}
 			break;
 		}
-		
+
 		return iret;
 	}
-	
+
 	bool IsChanVoiceOnly() const
 	{
 		return m_pChanVoiceOnly->isChecked();
 	}
-	
-	char const	*GetSearchString()
+
+	char const *GetSearchString()
 	{
 		return m_szSearchString;
 	}
@@ -282,62 +280,61 @@ public:
 	void OnSearch()
 	{
 		CInputParams params;
-		memset( &params, 0, sizeof( params ) );
-		Q_snprintf( params.m_szDialogTitle, sizeof( params.m_szDialogTitle ), "Search" );
-		Q_strcpy( params.m_szPrompt, "Find:" );
-		Q_strcpy( params.m_szInputText, m_szSearchString );
+		memset(&params, 0, sizeof(params));
+		Q_snprintf(params.m_szDialogTitle, sizeof(params.m_szDialogTitle), "Search");
+		Q_strcpy(params.m_szPrompt, "Find:");
+		Q_strcpy(params.m_szInputText, m_szSearchString);
 
-		if ( !InputProperties( &params ) )
+		if(!InputProperties(&params))
 			return;
 
-		Q_strcpy( m_szSearchString, params.m_szInputText );
+		Q_strcpy(m_szSearchString, params.m_szInputText);
 
-		m_pSearchString->setLabel( va( "Search:  '%s'", GetSearchString() ) );
+		m_pSearchString->setLabel(va("Search:  '%s'", GetSearchString()));
 
 		m_pBrowser->OnSearch();
 	}
-	
-private:
-	
-	mxCheckBox		*m_pChanVoiceOnly;
-	mxButton		*m_pStopSounds;
-	mxButton		*m_pPlay;
-	mxButton		*m_pSearch;
-	mxLabel			*m_pSearchString;
-	
-	CSoundBrowser	*m_pBrowser;
 
-	char			m_szSearchString[ 256 ];
+private:
+	mxCheckBox *m_pChanVoiceOnly;
+	mxButton *m_pStopSounds;
+	mxButton *m_pPlay;
+	mxButton *m_pSearch;
+	mxLabel *m_pSearchString;
+
+	CSoundBrowser *m_pBrowser;
+
+	char m_szSearchString[256];
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
+// Purpose:
+// Input  : *parent -
 //-----------------------------------------------------------------------------
-CSoundBrowser::CSoundBrowser( mxWindow *parent, CWorkspaceManager *manager, int id ) :
-	BaseClass( parent, 0, 0, 0, 0, "Sound Browser", id )
+CSoundBrowser::CSoundBrowser(mxWindow *parent, CWorkspaceManager *manager, int id)
+	: BaseClass(parent, 0, 0, 0, 0, "Sound Browser", id)
 {
 	m_pManager = manager;
-	
-	SceneManager_MakeToolWindow( this, false );
 
-	m_pListView = new CSoundList( this, IDC_SB_LISTVIEW );
-	m_pFilter = new CSoundFilterTab( this, 0, 0, 0, 0, IDC_SB_FILTERTAB );
-	m_pOptions = new COptionsWindow( this );
+	SceneManager_MakeToolWindow(this, false);
+
+	m_pListView = new CSoundList(this, IDC_SB_LISTVIEW);
+	m_pFilter = new CSoundFilterTab(this, 0, 0, 0, 0, IDC_SB_FILTERTAB);
+	m_pOptions = new COptionsWindow(this);
 
 	HIMAGELIST list = GetWorkspaceManager()->CreateImageList();
 
-	// Associate the image list with the tree-view control. 
-    m_pListView->setImageList( (void *)list ); 
+	// Associate the image list with the tree-view control.
+	m_pListView->setImageList((void *)list);
 
 	LoadAllSounds();
 
-	m_pFilter->select( 0 );
+	m_pFilter->select(0);
 	RepopulateTree();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSoundBrowser::OnDelete()
 {
@@ -345,61 +342,61 @@ void CSoundBrowser::OnDelete()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *event - 
+// Purpose:
+// Input  : *event -
 // Output : int
 //-----------------------------------------------------------------------------
-int CSoundBrowser::handleEvent( mxEvent *event )
+int CSoundBrowser::handleEvent(mxEvent *event)
 {
 	int iret = 0;
-	switch ( event->event )
+	switch(event->event)
 	{
-	default:
-		break;
-	case mxEvent::Action:
+		default:
+			break;
+		case mxEvent::Action:
 		{
 			iret = 1;
-			switch ( event->action )
+			switch(event->action)
 			{
-			default:
+				default:
 				{
 					iret = 0;
 				}
 				break;
-			case IDC_SB_FILTERTAB:
+				case IDC_SB_FILTERTAB:
 				{
 					RepopulateTree();
 				}
 				break;
-			case IDC_SB_LISTVIEW:
+				case IDC_SB_LISTVIEW:
 				{
-					bool rightmouse = ( event->flags == mxEvent::RightClicked ) ? true : false;
-					bool doubleclicked = ( event->flags == mxEvent::DoubleClicked ) ? true : false;
+					bool rightmouse = (event->flags == mxEvent::RightClicked) ? true : false;
+					bool doubleclicked = (event->flags == mxEvent::DoubleClicked) ? true : false;
 
-					if ( rightmouse )
+					if(rightmouse)
 					{
 						ShowContextMenu();
 					}
-					else if ( doubleclicked )
+					else if(doubleclicked)
 					{
-						if ( m_pListView->getNumSelected() == 1 )
+						if(m_pListView->getNumSelected() == 1)
 						{
-							int index = m_pListView->getNextSelectedItem( -1 );
-							if ( index >= 0 )
+							int index = m_pListView->getNextSelectedItem(-1);
+							if(index >= 0)
 							{
-								CSoundEntry *se = (CSoundEntry *)m_pListView->getUserData( index, 0 );
-								if ( se )
+								CSoundEntry *se = (CSoundEntry *)m_pListView->getUserData(index, 0);
+								if(se)
 								{
 									se->Play();
 
 									CWaveBrowser *wb = GetWorkspaceManager()->GetWaveBrowser();
-									if ( wb && se->GetWaveCount() > 0 )
+									if(wb && se->GetWaveCount() > 0)
 									{
-										CWaveFile *firstwave = se->GetWave( 0 );
-										Assert( firstwave );
-										if ( firstwave )
+										CWaveFile *firstwave = se->GetWave(0);
+										Assert(firstwave);
+										if(firstwave)
 										{
-											wb->JumpToItem( firstwave );
+											wb->JumpToItem(firstwave);
 										}
 									}
 								}
@@ -408,32 +405,32 @@ int CSoundBrowser::handleEvent( mxEvent *event )
 					}
 				}
 				break;
-			case IDC_SB_PLAY:
+				case IDC_SB_PLAY:
 				{
 					OnPlay();
 				}
 				break;
-			case IDC_SB_GETSENTENCE:
+				case IDC_SB_GETSENTENCE:
 				{
 					OnGetSentence();
 				}
 				break;
-			case IDC_SB_SOUNDPROPERTIES:
+				case IDC_SB_SOUNDPROPERTIES:
 				{
 					OnSoundProperties();
 				}
 				break;
-			case IDC_SB_SHOWINWAVEBROWSER:
+				case IDC_SB_SHOWINWAVEBROWSER:
 				{
 					OnShowInWaveBrowser();
 				}
 				break;
-			case IDC_SB_ADDSOUND:
+				case IDC_SB_ADDSOUND:
 				{
 					OnAddSound();
 				}
 				break;
-			case IDC_SB_REMOVESOUND:
+				case IDC_SB_REMOVESOUND:
 				{
 					OnRemoveSound();
 				}
@@ -441,21 +438,21 @@ int CSoundBrowser::handleEvent( mxEvent *event )
 			}
 		}
 		break;
-	case mxEvent::Size:
+		case mxEvent::Size:
 		{
 			int optionsh = 20;
-			int filterh = m_pFilter->GetBestHeight( w2() );
+			int filterh = m_pFilter->GetBestHeight(w2());
 
-			m_pOptions->setBounds( 0, 0, w2(), optionsh );
-			m_pListView->setBounds( 0, optionsh, w2(), h2() - filterh - optionsh );
-			m_pFilter->setBounds( 0, h2() - filterh, w2(), filterh );
+			m_pOptions->setBounds(0, 0, w2(), optionsh);
+			m_pListView->setBounds(0, optionsh, w2(), h2() - filterh - optionsh);
+			m_pFilter->setBounds(0, h2() - filterh, w2(), filterh);
 
 			GetWorkspaceManager()->SetWorkspaceDirty();
 
 			iret = 1;
 		}
 		break;
-	case mxEvent::Close:
+		case mxEvent::Close:
 		{
 			iret = 1;
 		}
@@ -465,9 +462,9 @@ int CSoundBrowser::handleEvent( mxEvent *event )
 	return iret;
 }
 
-static bool NameLessFunc( CSoundEntry *const& name1, CSoundEntry *const& name2 )
+static bool NameLessFunc(CSoundEntry *const &name1, CSoundEntry *const &name2)
 {
-	if ( Q_stricmp( name1->GetName(), name2->GetName() ) < 0 )
+	if(Q_stricmp(name1->GetName(), name2->GetName()) < 0)
 		return true;
 	return false;
 }
@@ -480,40 +477,41 @@ void CSoundBrowser::LoadAllSounds()
 	int added = 0;
 
 	int i;
-	for ( i = g_pSoundEmitterSystem->First(); i != g_pSoundEmitterSystem->InvalidIndex(); i = g_pSoundEmitterSystem->Next( i ) )
+	for(i = g_pSoundEmitterSystem->First(); i != g_pSoundEmitterSystem->InvalidIndex();
+		i = g_pSoundEmitterSystem->Next(i))
 	{
-		char const *name = g_pSoundEmitterSystem->GetSoundName( i );
-		CSoundEntry *se = new CSoundEntry( NULL, name );
-		m_AllSounds.AddToTail( se );
+		char const *name = g_pSoundEmitterSystem->GetSoundName(i);
+		CSoundEntry *se = new CSoundEntry(NULL, name);
+		m_AllSounds.AddToTail(se);
 
-		char filebase [ 512 ];
-		Q_FileBase( g_pSoundEmitterSystem->GetSourceFileForSound( i ), filebase, sizeof( filebase ) );
+		char filebase[512];
+		Q_FileBase(g_pSoundEmitterSystem->GetSourceFileForSound(i), filebase, sizeof(filebase));
 
 		// Add script file symbol
-		CUtlSymbol script_sym = m_ScriptTable.AddString( filebase );
+		CUtlSymbol script_sym = m_ScriptTable.AddString(filebase);
 
-		if ( m_Scripts.Find( script_sym ) == m_Scripts.InvalidIndex() )
+		if(m_Scripts.Find(script_sym) == m_Scripts.InvalidIndex())
 		{
-			m_Scripts.AddToTail( script_sym );
+			m_Scripts.AddToTail(script_sym);
 		}
 
 		++added;
 
-		if ( !( added % 500 ) )
+		if(!(added % 500))
 		{
-		//	Con_Printf( "CSoundBrowser:  loaded %i sounds\n", added );
+			//	Con_Printf( "CSoundBrowser:  loaded %i sounds\n", added );
 		}
 	}
 
-	m_pFilter->Init( m_ScriptTable, m_Scripts );
+	m_pFilter->Init(m_ScriptTable, m_Scripts);
 }
 
 void CSoundBrowser::RemoveAllSounds()
 {
 	int c = m_AllSounds.Count();
-	for ( int i = 0; i < c; i++ )
+	for(int i = 0; i < c; i++)
 	{
-		CSoundEntry *se = m_AllSounds[ i ];
+		CSoundEntry *se = m_AllSounds[i];
 		delete se;
 	}
 
@@ -523,24 +521,24 @@ void CSoundBrowser::RemoveAllSounds()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CSoundBrowser::PopulateTree( bool voiceonly, char const *scriptonly )
+void CSoundBrowser::PopulateTree(bool voiceonly, char const *scriptonly)
 {
 	int i;
 
-	CUtlRBTree< CSoundEntry *, int >		m_Sorted( 0, 0, NameLessFunc );
+	CUtlRBTree<CSoundEntry *, int> m_Sorted(0, 0, NameLessFunc);
 
 	bool textsearch = false;
 	char const *texttofind = NULL;
 
-	if ( scriptonly )
+	if(scriptonly)
 	{
-		if ( !Q_stricmp( scriptonly, ENTRY_ALLSOUNDS ) )
+		if(!Q_stricmp(scriptonly, ENTRY_ALLSOUNDS))
 		{
 			scriptonly = NULL;
 		}
-		else if ( !Q_stricmp( scriptonly, ENTRY_SEARCHRESULTS ) )
+		else if(!Q_stricmp(scriptonly, ENTRY_SEARCHRESULTS))
 		{
 			scriptonly = NULL;
 			textsearch = true;
@@ -549,48 +547,48 @@ void CSoundBrowser::PopulateTree( bool voiceonly, char const *scriptonly )
 	}
 
 	int c = m_AllSounds.Count();
-	for ( i = 0; i < c; i++ )
+	for(i = 0; i < c; i++)
 	{
-		CSoundEntry *se = m_AllSounds[ i ];
+		CSoundEntry *se = m_AllSounds[i];
 		char const *name = se->GetName();
 
 		CSoundParametersInternal *params = se->GetSoundParameters();
-		if ( !params )
+		if(!params)
 			continue;
 
-		if ( voiceonly && params->GetChannel() != CHAN_VOICE )
+		if(voiceonly && params->GetChannel() != CHAN_VOICE)
 			continue;
 
-		if ( scriptonly )
+		if(scriptonly)
 		{
-			if ( Q_stricmp( scriptonly, se->GetScriptFile() ) )
+			if(Q_stricmp(scriptonly, se->GetScriptFile()))
 				continue;
 		}
 
-		if ( textsearch && texttofind )
+		if(textsearch && texttofind)
 		{
 			bool keep = false;
-			if ( Q_stristr( name, texttofind ) )
+			if(Q_stristr(name, texttofind))
 			{
 				keep = true;
 			}
 			else
 			{
 				int waveCount = se->GetWaveCount();
-				for ( int wave = 0; wave < waveCount; wave++ )
+				for(int wave = 0; wave < waveCount; wave++)
 				{
-					CWaveFile *w = se->GetWave( wave );
-					if ( !w )
+					CWaveFile *w = se->GetWave(wave);
+					if(!w)
 						continue;
 
 					char const *wavename = w->GetFileName();
-					if ( !wavename )
+					if(!wavename)
 					{
-						Assert( 0 );
+						Assert(0);
 						continue;
 					}
 
-					if ( !Q_stristr( wavename, texttofind ) )
+					if(!Q_stristr(wavename, texttofind))
 					{
 						continue;
 					}
@@ -600,69 +598,67 @@ void CSoundBrowser::PopulateTree( bool voiceonly, char const *scriptonly )
 				}
 			}
 
-
-			if ( !keep )
+			if(!keep)
 			{
 				continue;
 			}
 		}
 
-		m_Sorted.Insert( se );
+		m_Sorted.Insert(se);
 	}
 
-
-// Repopulate tree
+	// Repopulate tree
 	m_pListView->removeAll();
 
 	int loadcount = 0;
 
-	m_pListView->setDrawingEnabled( false );
+	m_pListView->setDrawingEnabled(false);
 
-	for ( i = m_Sorted.FirstInorder(); i != m_Sorted.InvalidIndex(); i = m_Sorted.NextInorder( i ) )
+	for(i = m_Sorted.FirstInorder(); i != m_Sorted.InvalidIndex(); i = m_Sorted.NextInorder(i))
 	{
-		CSoundEntry *se = m_Sorted[ i ];
+		CSoundEntry *se = m_Sorted[i];
 		char const *name = se->GetName();
 		CSoundParametersInternal *params = se->GetSoundParameters();
-		if ( !params )
+		if(!params)
 			continue;
 
-		int slot = m_pListView->add( name );
+		int slot = m_pListView->add(name);
 
-		m_pListView->setUserData( slot, COL_SOUND, (void *)se );
+		m_pListView->setUserData(slot, COL_SOUND, (void *)se);
 
-		m_pListView->setImage( slot, COL_SOUND, se->GetIconIndex() );
+		m_pListView->setImage(slot, COL_SOUND, se->GetIconIndex());
 
 		int waveCount = params->NumSoundNames();
 
-		if ( waveCount >= 1 )
+		if(waveCount >= 1)
 		{
-			m_pListView->setLabel( slot, COL_COUNT, waveCount > 1 ? va( "%i", waveCount ) : "" );
-			m_pListView->setLabel( slot, COL_WAV, g_pSoundEmitterSystem->GetWaveName( params->GetSoundNames()[ 0 ].symbol ) );
+			m_pListView->setLabel(slot, COL_COUNT, waveCount > 1 ? va("%i", waveCount) : "");
+			m_pListView->setLabel(slot, COL_WAV, g_pSoundEmitterSystem->GetWaveName(params->GetSoundNames()[0].symbol));
 		}
 
-		m_pListView->setLabel( slot, COL_SENTENCE, se->GetSentenceText( 0 ) );
+		m_pListView->setLabel(slot, COL_SENTENCE, se->GetSentenceText(0));
 
-		m_pListView->setLabel( slot, COL_CHANNEL, params->ChannelToString() );
-		m_pListView->setLabel( slot, COL_VOLUME, params->VolumeToString() );
-		m_pListView->setLabel( slot, COL_SOUNDLEVEL, params->SoundLevelToString() );
-		m_pListView->setLabel( slot, COL_PITCH, params->PitchToString() );
+		m_pListView->setLabel(slot, COL_CHANNEL, params->ChannelToString());
+		m_pListView->setLabel(slot, COL_VOLUME, params->VolumeToString());
+		m_pListView->setLabel(slot, COL_SOUNDLEVEL, params->SoundLevelToString());
+		m_pListView->setLabel(slot, COL_PITCH, params->PitchToString());
 
-		wchar_t buf[ 1024 ];
-		se->GetCCText( buf, 1024 );
-		m_pListView->setLabel( slot, COL_CC, buf );
+		wchar_t buf[1024];
+		se->GetCCText(buf, 1024);
+		m_pListView->setLabel(slot, COL_CC, buf);
 
-		char filebase [ 512 ];
-		
-		int soundIndex = g_pSoundEmitterSystem->GetSoundIndex( name );
+		char filebase[512];
 
-		Q_FileBase( g_pSoundEmitterSystem->GetSourceFileForSound( soundIndex ), filebase, sizeof( filebase ) );
+		int soundIndex = g_pSoundEmitterSystem->GetSoundIndex(name);
 
-		m_pListView->setLabel( slot, COL_SCRIPT, filebase );
+		Q_FileBase(g_pSoundEmitterSystem->GetSourceFileForSound(soundIndex), filebase, sizeof(filebase));
+
+		m_pListView->setLabel(slot, COL_SCRIPT, filebase);
 
 		++loadcount;
 	}
 
-	m_pListView->setDrawingEnabled( true );
+	m_pListView->setDrawingEnabled(true);
 
 	// Con_Printf( "CSoundBrowser:  selected %i sounds\n", loadcount );
 }
@@ -678,171 +674,170 @@ void CSoundBrowser::RepopulateTree()
 
 	int slot = m_pFilter->getSelectedIndex();
 
-	if ( 0 >= slot )
+	if(0 >= slot)
 	{
-		PopulateTree( voiceonly, NULL );
+		PopulateTree(voiceonly, NULL);
 	}
 	else
 	{
-		PopulateTree( voiceonly, m_pFilter->getLabel( slot ) );
+		PopulateTree(voiceonly, m_pFilter->getLabel(slot));
 	}
 
 	m_pFilter->UpdatePrefixes();
 }
 
-void CSoundBrowser::BuildSelectionList( CUtlVector< CSoundEntry * >& selected )
+void CSoundBrowser::BuildSelectionList(CUtlVector<CSoundEntry *> &selected)
 {
 	selected.RemoveAll();
 
 	int idx = -1;
-	do 
+	do
 	{
-		idx = m_pListView->getNextSelectedItem( idx );
-		if ( idx != -1 )
+		idx = m_pListView->getNextSelectedItem(idx);
+		if(idx != -1)
 		{
-			CSoundEntry *se = (CSoundEntry *)m_pListView->getUserData( idx, 0 );
-			if ( se )
+			CSoundEntry *se = (CSoundEntry *)m_pListView->getUserData(idx, 0);
+			if(se)
 			{
-				selected.AddToTail( se );
+				selected.AddToTail(se);
 			}
 		}
-	} while ( idx != -1 );
-	
+	} while(idx != -1);
 }
 
-void CSoundBrowser::ShowContextMenu( void )
+void CSoundBrowser::ShowContextMenu(void)
 {
-	BuildSelectionList( m_CurrentSelection );
-	if ( m_CurrentSelection.Count() <= 0 )
+	BuildSelectionList(m_CurrentSelection);
+	if(m_CurrentSelection.Count() <= 0)
 		return;
 
 	POINT pt;
-	GetCursorPos( &pt );
-	ScreenToClient( (HWND)getHandle(), &pt );
+	GetCursorPos(&pt);
+	ScreenToClient((HWND)getHandle(), &pt);
 
 	// New scene, edit comments
 	mxPopupMenu *pop = new mxPopupMenu();
 
-	if ( m_CurrentSelection.Count() == 1 )
+	if(m_CurrentSelection.Count() == 1)
 	{
-		pop->add ("&Play", IDC_SB_PLAY );
+		pop->add("&Play", IDC_SB_PLAY);
 		pop->addSeparator();
 	}
 
-	pop->add( "Refresh sentence data", IDC_SB_GETSENTENCE );
+	pop->add("Refresh sentence data", IDC_SB_GETSENTENCE);
 
-	pop->add( "Add sound entry...", IDC_SB_ADDSOUND );
-	if ( m_CurrentSelection.Count() >= 1 )
+	pop->add("Add sound entry...", IDC_SB_ADDSOUND);
+	if(m_CurrentSelection.Count() >= 1)
 	{
-		pop->add( "Remove sound(s)", IDC_SB_REMOVESOUND );
+		pop->add("Remove sound(s)", IDC_SB_REMOVESOUND);
 	}
 
 	pop->addSeparator();
 
-	pop->add( "Show in Wave Browser", IDC_SB_SHOWINWAVEBROWSER );
+	pop->add("Show in Wave Browser", IDC_SB_SHOWINWAVEBROWSER);
 
-	pop->add( "&Properties...", IDC_SB_SOUNDPROPERTIES );
+	pop->add("&Properties...", IDC_SB_SOUNDPROPERTIES);
 
-	pop->popup( this, pt.x, pt.y );
+	pop->popup(this, pt.x, pt.y);
 }
 
 void CSoundBrowser::OnPlay()
 {
-	BuildSelectionList( m_CurrentSelection );
-	if ( m_CurrentSelection.Count() == 1 )
+	BuildSelectionList(m_CurrentSelection);
+	if(m_CurrentSelection.Count() == 1)
 	{
-		CSoundEntry *se = m_CurrentSelection[ 0 ];
-		if ( se )
+		CSoundEntry *se = m_CurrentSelection[0];
+		if(se)
 		{
 			se->Play();
 		}
 	}
 }
 
-void CSoundBrowser::JumpToItem( CSoundEntry *se )
+void CSoundBrowser::JumpToItem(CSoundEntry *se)
 {
 	char const *script = se->GetScriptFile();
-	
+
 	bool voiceonly = m_pOptions->IsChanVoiceOnly();
 
-	if ( !script || !script[ 0 ] )
+	if(!script || !script[0])
 	{
-		PopulateTree( voiceonly, NULL );
+		PopulateTree(voiceonly, NULL);
 	}
 	else
 	{
-		PopulateTree( voiceonly, script );
+		PopulateTree(voiceonly, script);
 	}
 
 	int idx = 0;
 	int c = m_pListView->getItemCount();
-	for ( ; idx < c; idx++ )
+	for(; idx < c; idx++)
 	{
-		CSoundEntry *item = (CSoundEntry *)m_pListView->getUserData( idx, 0 );
-		if ( !Q_stricmp( item->GetName(), se->GetName() ) )
+		CSoundEntry *item = (CSoundEntry *)m_pListView->getUserData(idx, 0);
+		if(!Q_stricmp(item->GetName(), se->GetName()))
 		{
 			break;
 		}
 	}
 
-	if ( idx < c )
+	if(idx < c)
 	{
-		m_pListView->scrollToItem( idx );
+		m_pListView->scrollToItem(idx);
 	}
 }
 
 void CSoundBrowser::OnSoundProperties()
 {
-	BuildSelectionList( m_CurrentSelection );
-	if ( m_CurrentSelection.Count() < 1 )
+	BuildSelectionList(m_CurrentSelection);
+	if(m_CurrentSelection.Count() < 1)
 	{
-		Con_Printf( "No selection\n" );
+		Con_Printf("No selection\n");
 		return;
 	}
 
 	CSoundParams params;
-	memset( &params, 0, sizeof( params ) );
+	memset(&params, 0, sizeof(params));
 
-	Q_snprintf( params.m_szDialogTitle, sizeof( params.m_szDialogTitle ), "Sound Properties" );
+	Q_snprintf(params.m_szDialogTitle, sizeof(params.m_szDialogTitle), "Sound Properties");
 
 	int c = m_CurrentSelection.Count();
-	for ( int i = 0 ; i < c; i++ )
+	for(int i = 0; i < c; i++)
 	{
-		CSoundEntry *entry = m_CurrentSelection[ i ];
-		if ( !entry )
+		CSoundEntry *entry = m_CurrentSelection[i];
+		if(!entry)
 			continue;
 
-		params.items.AddToTail( entry );
+		params.items.AddToTail(entry);
 	}
 
-	if ( params.items.Count() > 1 )
+	if(params.items.Count() > 1)
 	{
-		SoundProperties_Multiple( &params );
+		SoundProperties_Multiple(&params);
 	}
 	else
 	{
-		SoundProperties( &params );
+		SoundProperties(&params);
 	}
 }
 
 void CSoundBrowser::OnShowInWaveBrowser()
 {
-	if ( m_pListView->getNumSelected() == 1 )
+	if(m_pListView->getNumSelected() == 1)
 	{
-		int index = m_pListView->getNextSelectedItem( -1 );
-		if ( index >= 0 )
+		int index = m_pListView->getNextSelectedItem(-1);
+		if(index >= 0)
 		{
-			CSoundEntry *se = (CSoundEntry *)m_pListView->getUserData( index, 0 );
-			if ( se )
+			CSoundEntry *se = (CSoundEntry *)m_pListView->getUserData(index, 0);
+			if(se)
 			{
 				CWaveBrowser *wb = GetWorkspaceManager()->GetWaveBrowser();
-				if ( wb && se->GetWaveCount() > 0 )
+				if(wb && se->GetWaveCount() > 0)
 				{
-					CWaveFile *firstwave = se->GetWave( 0 );
-					Assert( firstwave );
-					if ( firstwave )
+					CWaveFile *firstwave = se->GetWave(0);
+					Assert(firstwave);
+					if(firstwave)
 					{
-						wb->JumpToItem( firstwave );
+						wb->JumpToItem(firstwave);
 					}
 				}
 			}
@@ -852,7 +847,7 @@ void CSoundBrowser::OnShowInWaveBrowser()
 
 void CSoundBrowser::OnSearch()
 {
-	m_pFilter->select( ENTRY_SEARCH_INDEX );
+	m_pFilter->select(ENTRY_SEARCH_INDEX);
 	RepopulateTree();
 }
 
@@ -864,38 +859,38 @@ char const *CSoundBrowser::GetSearchString()
 void CSoundBrowser::OnAddSound()
 {
 	CSoundParams params;
-	memset( &params, 0, sizeof( params ) );
+	memset(&params, 0, sizeof(params));
 	params.addsound = true;
 
-	Q_snprintf( params.m_szDialogTitle, sizeof( params.m_szDialogTitle ), "New Sound" );
+	Q_snprintf(params.m_szDialogTitle, sizeof(params.m_szDialogTitle), "New Sound");
 
-	if ( !SoundProperties( &params ) )
+	if(!SoundProperties(&params))
 		return;
 
-	if ( params.items.Count() == 1 )
+	if(params.items.Count() == 1)
 	{
-		CSoundEntry *newItem = params.items[ 0 ];
-		m_AllSounds.AddToTail( newItem );
+		CSoundEntry *newItem = params.items[0];
+		m_AllSounds.AddToTail(newItem);
 
-		int slot = g_pSoundEmitterSystem->GetSoundIndex( newItem->GetName() );
-		if ( g_pSoundEmitterSystem->IsValidIndex( slot ) )
+		int slot = g_pSoundEmitterSystem->GetSoundIndex(newItem->GetName());
+		if(g_pSoundEmitterSystem->IsValidIndex(slot))
 		{
-			CSoundParametersInternal *p = g_pSoundEmitterSystem->InternalGetParametersForSound( slot );
-			if ( p )
+			CSoundParametersInternal *p = g_pSoundEmitterSystem->InternalGetParametersForSound(slot);
+			if(p)
 			{
 				CWaveBrowser *wb = GetWorkspaceManager()->GetWaveBrowser();
-				Assert( wb );
+				Assert(wb);
 
 				int waveCount = p->NumSoundNames();
-				for ( int wave = 0; wave < waveCount; wave++ )
+				for(int wave = 0; wave < waveCount; wave++)
 				{
-					char const *wavname = g_pSoundEmitterSystem->GetWaveName( p->GetSoundNames()[ wave ].symbol );
-					if ( wavname )
+					char const *wavname = g_pSoundEmitterSystem->GetWaveName(p->GetSoundNames()[wave].symbol);
+					if(wavname)
 					{
-						CWaveFile *wavefile = wb->FindEntry( wavname, true );
-						if ( wavefile )
+						CWaveFile *wavefile = wb->FindEntry(wavname, true);
+						if(wavefile)
 						{
-							newItem->AddWave( wavefile );
+							newItem->AddWave(wavefile);
 						}
 					}
 				}
@@ -909,23 +904,23 @@ void CSoundBrowser::OnAddSound()
 
 void CSoundBrowser::OnRemoveSound()
 {
-	BuildSelectionList( m_CurrentSelection );
-	if ( m_CurrentSelection.Count() < 1 )
+	BuildSelectionList(m_CurrentSelection);
+	if(m_CurrentSelection.Count() < 1)
 	{
-		Con_Printf( "No selection\n" );
+		Con_Printf("No selection\n");
 		return;
 	}
 
 	int c = m_CurrentSelection.Count();
-	for ( int i = c - 1; i >= 0 ; i-- )
+	for(int i = c - 1; i >= 0; i--)
 	{
-		CSoundEntry *se = m_CurrentSelection[ i ];
-		Assert( se );
+		CSoundEntry *se = m_CurrentSelection[i];
+		Assert(se);
 
 		// FIXME: See if still referenced by a vcd?
 
-		g_pSoundEmitterSystem->RemoveSound( se->GetName() );
-		m_AllSounds.FindAndRemove( se );
+		g_pSoundEmitterSystem->RemoveSound(se->GetName());
+		m_AllSounds.FindAndRemove(se);
 		delete se;
 	}
 
@@ -935,24 +930,24 @@ void CSoundBrowser::OnRemoveSound()
 
 void CSoundBrowser::OnGetSentence()
 {
-	BuildSelectionList( m_CurrentSelection );
-	if ( m_CurrentSelection.Count() < 1 )
+	BuildSelectionList(m_CurrentSelection);
+	if(m_CurrentSelection.Count() < 1)
 	{
-		Con_Printf( "No selection\n" );
+		Con_Printf("No selection\n");
 		return;
 	}
 
 	int c = m_CurrentSelection.Count();
-	for ( int i = c - 1; i >= 0 ; i-- )
+	for(int i = c - 1; i >= 0; i--)
 	{
-		CSoundEntry *se = m_CurrentSelection[ i ];
-		Assert( se );
+		CSoundEntry *se = m_CurrentSelection[i];
+		Assert(se);
 
 		int c = se->GetWaveCount();
-		for ( int i = 0; i < c; ++i )
+		for(int i = 0; i < c; ++i)
 		{
-			CWaveFile *wav = se->GetWave( i );
-			if ( !wav->HasLoadedSentenceInfo() )
+			CWaveFile *wav = se->GetWave(i);
+			if(!wav->HasLoadedSentenceInfo())
 			{
 				wav->EnsureSentence();
 			}

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -61,43 +61,40 @@ enum PerformanceTool_t
 	DEFAULT_PERF_TOOL = PERF_TOOL_NONE,
 };
 
-static const char *s_pPerfToolNames[PERF_TOOL_COUNT] = 
-{
+static const char *s_pPerfToolNames[PERF_TOOL_COUNT] = {
 	"No Tool Active",
 	"Prop Fade Distance Tool",
 	"Area Portal Tool",
 	"Occlusion Tool",
 };
 
-
 //-----------------------------------------------------------------------------
-// Base class for all perf tool panels 
+// Base class for all perf tool panels
 //-----------------------------------------------------------------------------
 class CPerfUIChildPanel : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CPerfUIChildPanel, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CPerfUIChildPanel, vgui::EditablePanel);
 
 public:
-	CPerfUIChildPanel( vgui::Panel *parent, const char *pName )  : BaseClass( parent, pName ) 
+	CPerfUIChildPanel(vgui::Panel *parent, const char *pName) : BaseClass(parent, pName)
 	{
-		SetVisible( false );
+		SetVisible(false);
 	}
 	virtual void Activate() {}
 	virtual void Deactivate() {}
 };
 
-
 //-----------------------------------------------------------------------------
 //
-// The prop fade distance helper tool 
+// The prop fade distance helper tool
 //
 //-----------------------------------------------------------------------------
 class CPropFadeUIPanel : public CPerfUIChildPanel
 {
-	DECLARE_CLASS_SIMPLE( CPropFadeUIPanel, CPerfUIChildPanel );
+	DECLARE_CLASS_SIMPLE(CPropFadeUIPanel, CPerfUIChildPanel);
 
 public:
-	CPropFadeUIPanel( vgui::Panel *parent );
+	CPropFadeUIPanel(vgui::Panel *parent);
 	~CPropFadeUIPanel() {}
 	void Activate();
 	void Deactivate();
@@ -113,179 +110,165 @@ protected:
 	};
 
 	void OnVisualizationSelected();
-	MESSAGE_FUNC_PARAMS( OnTextChanged, "TextChanged", data );
+	MESSAGE_FUNC_PARAMS(OnTextChanged, "TextChanged", data);
 
 	vgui::ComboBox *m_pVisualization;
 	vgui::TextEntry *m_pMinScreenArea;
 	vgui::TextEntry *m_pMaxScreenArea;
 
-	static const char *s_pFadeVisualizeLabel[VISUALIZE_TYPE_COUNT]; 
+	static const char *s_pFadeVisualizeLabel[VISUALIZE_TYPE_COUNT];
 };
 
-const char *CPropFadeUIPanel::s_pFadeVisualizeLabel[CPropFadeUIPanel::VISUALIZE_TYPE_COUNT] = 
-{
-	"No visualization",
-	"Show Fade Distance",
-	"Show Fade Screen Width"
-};
-
+const char *CPropFadeUIPanel::s_pFadeVisualizeLabel[CPropFadeUIPanel::VISUALIZE_TYPE_COUNT] = {
+	"No visualization", "Show Fade Distance", "Show Fade Screen Width"};
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CPropFadeUIPanel::CPropFadeUIPanel( vgui::Panel *parent ) : BaseClass( parent, "PropFadeUIPanel")
+CPropFadeUIPanel::CPropFadeUIPanel(vgui::Panel *parent) : BaseClass(parent, "PropFadeUIPanel")
 {
 	m_pVisualization = new ComboBox(this, "VisualizeMode", VISUALIZE_TYPE_COUNT, false);
 	int i;
-	for ( i = 0; i < ARRAYSIZE(s_pFadeVisualizeLabel); i++ )
+	for(i = 0; i < ARRAYSIZE(s_pFadeVisualizeLabel); i++)
 	{
-		m_pVisualization->AddItem( s_pFadeVisualizeLabel[i], NULL );
+		m_pVisualization->AddItem(s_pFadeVisualizeLabel[i], NULL);
 	}
-	m_pVisualization->AddActionSignalTarget( this );
-	m_pVisualization->ActivateItem( 0 );
+	m_pVisualization->AddActionSignalTarget(this);
+	m_pVisualization->ActivateItem(0);
 
-	m_pMinScreenArea = new vgui::TextEntry( this, "MinFadeSize" );
-	m_pMaxScreenArea = new vgui::TextEntry( this, "MaxFadeSize" );
+	m_pMinScreenArea = new vgui::TextEntry(this, "MinFadeSize");
+	m_pMaxScreenArea = new vgui::TextEntry(this, "MaxFadeSize");
 
 	LoadControlSettings("Resource\\PerfPropFadeUIPanel.res");
 }
 
-
 //-----------------------------------------------------------------------------
-// Visualization changed 
+// Visualization changed
 //-----------------------------------------------------------------------------
-void CPropFadeUIPanel::OnTextChanged( KeyValues *data )
+void CPropFadeUIPanel::OnTextChanged(KeyValues *data)
 {
-	Panel *pPanel = reinterpret_cast<vgui::Panel *>( data->GetPtr("panel") );
-	vgui::ComboBox *pBox = dynamic_cast<vgui::ComboBox *>( pPanel );
+	Panel *pPanel = reinterpret_cast<vgui::Panel *>(data->GetPtr("panel"));
+	vgui::ComboBox *pBox = dynamic_cast<vgui::ComboBox *>(pPanel);
 
-	if( pBox == m_pVisualization ) 
+	if(pBox == m_pVisualization)
 	{
 		OnVisualizationSelected();
 		return;
 	}
 
-	vgui::TextEntry *pText = dynamic_cast<vgui::TextEntry *>( pPanel );
-	if (( pText == m_pMinScreenArea ) || ( pText == m_pMaxScreenArea )) 
+	vgui::TextEntry *pText = dynamic_cast<vgui::TextEntry *>(pPanel);
+	if((pText == m_pMinScreenArea) || (pText == m_pMaxScreenArea))
 	{
 		char buf[256];
 		float flMinArea, flMaxArea;
 
-		m_pMinScreenArea->GetText( buf, 256 );
-		int nReadMin = sscanf( buf, "%f", &flMinArea );
+		m_pMinScreenArea->GetText(buf, 256);
+		int nReadMin = sscanf(buf, "%f", &flMinArea);
 
-		m_pMaxScreenArea->GetText( buf, 256 );
-		int nReadMax = sscanf( buf, "%f", &flMaxArea );
+		m_pMaxScreenArea->GetText(buf, 256);
+		int nReadMax = sscanf(buf, "%f", &flMaxArea);
 
-		if ( nReadMin && nReadMax )
+		if(nReadMin && nReadMax)
 		{
-			modelinfoclient->SetLevelScreenFadeRange( flMinArea, flMaxArea );
+			modelinfoclient->SetLevelScreenFadeRange(flMinArea, flMaxArea);
 		}
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Activate, deactivate: 
+// Activate, deactivate:
 //-----------------------------------------------------------------------------
 void CPropFadeUIPanel::OnVisualizationSelected()
 {
 	int tool = m_pVisualization->GetActiveItem();
-	switch( tool )
+	switch(tool)
 	{
-	case VISUALIZE_NONE:
-		r_staticpropinfo.SetValue( 0 );
-		break;
+		case VISUALIZE_NONE:
+			r_staticpropinfo.SetValue(0);
+			break;
 
-	case VISUALIZE_FADE_DISTANCE:
-		r_staticpropinfo.SetValue( 3 );
-		break;
+		case VISUALIZE_FADE_DISTANCE:
+			r_staticpropinfo.SetValue(3);
+			break;
 
-	case VISUALIZE_FADE_SCREEN_WIDTH:
-		r_staticpropinfo.SetValue( 4 );
-		break;
+		case VISUALIZE_FADE_SCREEN_WIDTH:
+			r_staticpropinfo.SetValue(4);
+			break;
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Activate, deactivate: 
+// Activate, deactivate:
 //-----------------------------------------------------------------------------
 void CPropFadeUIPanel::Activate()
 {
 	float flMinArea, flMaxArea;
-	modelinfoclient->GetLevelScreenFadeRange( &flMinArea, &flMaxArea );
+	modelinfoclient->GetLevelScreenFadeRange(&flMinArea, &flMaxArea);
 
 	char buf[256];
-	Q_snprintf( buf, 256, "%.2f", flMinArea );
-	m_pMinScreenArea->SetText( buf );
-	Q_snprintf( buf, 256, "%.2f", flMaxArea );
-	m_pMaxScreenArea->SetText( buf );
+	Q_snprintf(buf, 256, "%.2f", flMinArea);
+	m_pMinScreenArea->SetText(buf);
+	Q_snprintf(buf, 256, "%.2f", flMaxArea);
+	m_pMaxScreenArea->SetText(buf);
 
 	OnVisualizationSelected();
 }
 
 void CPropFadeUIPanel::Deactivate()
 {
-	r_staticpropinfo.SetValue( 0 );
+	r_staticpropinfo.SetValue(0);
 }
 
-	
 //-----------------------------------------------------------------------------
-// The areaportals helper tool 
+// The areaportals helper tool
 //-----------------------------------------------------------------------------
 class CAreaPortalsUIPanel : public CPerfUIChildPanel
 {
-	DECLARE_CLASS_SIMPLE( CAreaPortalsUIPanel, CPerfUIChildPanel );
+	DECLARE_CLASS_SIMPLE(CAreaPortalsUIPanel, CPerfUIChildPanel);
 
 public:
-	CAreaPortalsUIPanel( vgui::Panel *parent );
+	CAreaPortalsUIPanel(vgui::Panel *parent);
 	~CAreaPortalsUIPanel() {}
 	void Activate();
 	void Deactivate();
 };
 
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+CAreaPortalsUIPanel::CAreaPortalsUIPanel(vgui::Panel *parent) : BaseClass(parent, "AreaPortalUIPanel") {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-CAreaPortalsUIPanel::CAreaPortalsUIPanel( vgui::Panel *parent ) : BaseClass( parent, "AreaPortalUIPanel")
-{
-}
-
-
-//-----------------------------------------------------------------------------
-// Activate, deactivate: 
+// Activate, deactivate:
 //-----------------------------------------------------------------------------
 void CAreaPortalsUIPanel::Activate()
 {
-	r_DrawPortals.SetValue( 1 );
-	mat_wireframe.SetValue( 3 );
+	r_DrawPortals.SetValue(1);
+	mat_wireframe.SetValue(3);
 }
 
 void CAreaPortalsUIPanel::Deactivate()
 {
-	r_DrawPortals.SetValue( 0 );
-	mat_wireframe.SetValue( 0 );
+	r_DrawPortals.SetValue(0);
+	mat_wireframe.SetValue(0);
 }
 
-
 //-----------------------------------------------------------------------------
-// The occlusion helper tool 
+// The occlusion helper tool
 //-----------------------------------------------------------------------------
 class COcclusionUIPanel : public CPerfUIChildPanel
 {
-	DECLARE_CLASS_SIMPLE( COcclusionUIPanel, CPerfUIChildPanel );
+	DECLARE_CLASS_SIMPLE(COcclusionUIPanel, CPerfUIChildPanel);
 
 public:
-	COcclusionUIPanel( vgui::Panel *parent );
+	COcclusionUIPanel(vgui::Panel *parent);
 	~COcclusionUIPanel() {}
 	void Activate();
 	void Deactivate();
 
 protected:
-	MESSAGE_FUNC_PARAMS( OnTextChanged, "TextChanged", data );
-	MESSAGE_FUNC_PTR( OnCheckButtonChecked, "CheckButtonChecked", panel );
+	MESSAGE_FUNC_PARAMS(OnTextChanged, "TextChanged", data);
+	MESSAGE_FUNC_PTR(OnCheckButtonChecked, "CheckButtonChecked", panel);
 
 private:
 	enum
@@ -304,43 +287,39 @@ private:
 	vgui::TextEntry *m_pMaxOccludeeArea;
 	vgui::CheckButton *m_pDeactivateOcclusion;
 
-	static const char *s_pOccVisualizeLabel[VISUALIZE_TYPE_COUNT]; 
+	static const char *s_pOccVisualizeLabel[VISUALIZE_TYPE_COUNT];
 };
 
-
-const char *COcclusionUIPanel::s_pOccVisualizeLabel[COcclusionUIPanel::VISUALIZE_TYPE_COUNT] = 
-{
+const char *COcclusionUIPanel::s_pOccVisualizeLabel[COcclusionUIPanel::VISUALIZE_TYPE_COUNT] = {
 	"No visualization",
 	"View occluders",
 };
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-COcclusionUIPanel::COcclusionUIPanel( vgui::Panel *parent ) : BaseClass( parent, "AreaPortalUIPanel")
+COcclusionUIPanel::COcclusionUIPanel(vgui::Panel *parent) : BaseClass(parent, "AreaPortalUIPanel")
 {
 	m_pVisualization = new ComboBox(this, "VisualizeMode", VISUALIZE_TYPE_COUNT, false);
 	int i;
-	for ( i = 0; i < VISUALIZE_TYPE_COUNT; i++ )
+	for(i = 0; i < VISUALIZE_TYPE_COUNT; i++)
 	{
-		m_pVisualization->AddItem( s_pOccVisualizeLabel[i], NULL );
+		m_pVisualization->AddItem(s_pOccVisualizeLabel[i], NULL);
 	}
-	m_pVisualization->AddActionSignalTarget( this );
-	m_pVisualization->ActivateItem( 0 );
+	m_pVisualization->AddActionSignalTarget(this);
+	m_pVisualization->ActivateItem(0);
 
-	m_pMinOccluderArea = new vgui::TextEntry( this, "MinOccluderSize" );
-	m_pMaxOccludeeArea = new vgui::TextEntry( this, "MaxOccludeeSize" );
+	m_pMinOccluderArea = new vgui::TextEntry(this, "MinOccluderSize");
+	m_pMaxOccludeeArea = new vgui::TextEntry(this, "MaxOccludeeSize");
 
-	m_pDeactivateOcclusion = new vgui::CheckButton( this, "DeactivateOcclusion", "" );	
-	m_pDeactivateOcclusion->AddActionSignalTarget( this );
+	m_pDeactivateOcclusion = new vgui::CheckButton(this, "DeactivateOcclusion", "");
+	m_pDeactivateOcclusion->AddActionSignalTarget(this);
 
 	LoadControlSettings("Resource\\PerfOcclusionUIPanel.res");
 }
 
-
 //-----------------------------------------------------------------------------
-// Activate, deactivate: 
+// Activate, deactivate:
 //-----------------------------------------------------------------------------
 void COcclusionUIPanel::Activate()
 {
@@ -348,168 +327,162 @@ void COcclusionUIPanel::Activate()
 	OnDeactivateOcclusion();
 
 	char buf[256];
-	Q_snprintf( buf, 256, "%.2f", r_occluderminarea.GetFloat() );
-	m_pMinOccluderArea->SetText( buf );
-	Q_snprintf( buf, 256, "%.2f", r_occludeemaxarea.GetFloat() );
-	m_pMaxOccludeeArea->SetText( buf );
+	Q_snprintf(buf, 256, "%.2f", r_occluderminarea.GetFloat());
+	m_pMinOccluderArea->SetText(buf);
+	Q_snprintf(buf, 256, "%.2f", r_occludeemaxarea.GetFloat());
+	m_pMaxOccludeeArea->SetText(buf);
 }
 
 void COcclusionUIPanel::Deactivate()
 {
-	r_visocclusion.SetValue( 0 );
-	mat_wireframe.SetValue( 0 );
+	r_visocclusion.SetValue(0);
+	mat_wireframe.SetValue(0);
 }
 
-
 //-----------------------------------------------------------------------------
-// Visualization changed 
+// Visualization changed
 //-----------------------------------------------------------------------------
-void COcclusionUIPanel::OnTextChanged( KeyValues *data )
+void COcclusionUIPanel::OnTextChanged(KeyValues *data)
 {
-	Panel *pPanel = reinterpret_cast<vgui::Panel *>( data->GetPtr("panel") );
-	vgui::ComboBox *pBox = dynamic_cast<vgui::ComboBox *>( pPanel );
+	Panel *pPanel = reinterpret_cast<vgui::Panel *>(data->GetPtr("panel"));
+	vgui::ComboBox *pBox = dynamic_cast<vgui::ComboBox *>(pPanel);
 
-	if( pBox == m_pVisualization ) 
+	if(pBox == m_pVisualization)
 	{
 		OnVisualizationSelected();
 		return;
 	}
 
-	vgui::TextEntry *pText = dynamic_cast<vgui::TextEntry *>( pPanel );
-	if (( pText == m_pMinOccluderArea ) || ( pText == m_pMaxOccludeeArea )) 
+	vgui::TextEntry *pText = dynamic_cast<vgui::TextEntry *>(pPanel);
+	if((pText == m_pMinOccluderArea) || (pText == m_pMaxOccludeeArea))
 	{
 		char buf[256];
 		float flMinArea, flMaxArea;
 
-		m_pMinOccluderArea->GetText( buf, 256 );
-		int nReadMin = sscanf( buf, "%f", &flMinArea );
-		if ( nReadMin )
+		m_pMinOccluderArea->GetText(buf, 256);
+		int nReadMin = sscanf(buf, "%f", &flMinArea);
+		if(nReadMin)
 		{
-			r_occluderminarea.SetValue( flMinArea );
+			r_occluderminarea.SetValue(flMinArea);
 		}
 
-		m_pMaxOccludeeArea->GetText( buf, 256 );
-		int nReadMax = sscanf( buf, "%f", &flMaxArea );
-		if ( nReadMax )
+		m_pMaxOccludeeArea->GetText(buf, 256);
+		int nReadMax = sscanf(buf, "%f", &flMaxArea);
+		if(nReadMax)
 		{
-			r_occludeemaxarea.SetValue( flMaxArea );
+			r_occludeemaxarea.SetValue(flMaxArea);
 		}
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Activate, deactivate: 
+// Activate, deactivate:
 //-----------------------------------------------------------------------------
 void COcclusionUIPanel::OnVisualizationSelected()
 {
 	int tool = m_pVisualization->GetActiveItem();
-	switch( tool )
+	switch(tool)
 	{
-	case VISUALIZE_NONE:
-		r_visocclusion.SetValue( 0 );
-		mat_wireframe.SetValue( 0 );
-		break;
+		case VISUALIZE_NONE:
+			r_visocclusion.SetValue(0);
+			mat_wireframe.SetValue(0);
+			break;
 
-	case VISUALIZE_ON:
-		r_visocclusion.SetValue( 1 );
-		mat_wireframe.SetValue( 3 );
-		break;
+		case VISUALIZE_ON:
+			r_visocclusion.SetValue(1);
+			mat_wireframe.SetValue(3);
+			break;
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Activate, deactivate: 
+// Activate, deactivate:
 //-----------------------------------------------------------------------------
 void COcclusionUIPanel::OnDeactivateOcclusion()
 {
-	r_occlusion.SetValue( m_pDeactivateOcclusion->IsSelected() ? 0 : 1 );
+	r_occlusion.SetValue(m_pDeactivateOcclusion->IsSelected() ? 0 : 1);
 }
 
 void COcclusionUIPanel::OnCheckButtonChecked(Panel *panel)
 {
-	if ( panel == m_pDeactivateOcclusion )
+	if(panel == m_pDeactivateOcclusion)
 	{
 		OnDeactivateOcclusion();
 	}
 }
 
-
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CPerfUIPanel : public vgui::Frame
 {
-	DECLARE_CLASS_SIMPLE( CPerfUIPanel, vgui::Frame );
+	DECLARE_CLASS_SIMPLE(CPerfUIPanel, vgui::Frame);
 
 public:
-	CPerfUIPanel( vgui::Panel *parent );
+	CPerfUIPanel(vgui::Panel *parent);
 	~CPerfUIPanel();
 
 	// Command issued
-	virtual void	OnCommand(const char *command);
+	virtual void OnCommand(const char *command);
 
-	virtual void	Activate();
+	virtual void Activate();
 
-	void			Init();
-	void			Shutdown();
+	void Init();
+	void Shutdown();
 
-	virtual void	OnKeyCodeTyped(KeyCode code);
+	virtual void OnKeyCodeTyped(KeyCode code);
 
-	virtual void	OnTick();
+	virtual void OnTick();
 
 protected:
 	vgui::ComboBox *m_pPerformanceTool;
 
-	MESSAGE_FUNC_PARAMS( OnTextChanged, "TextChanged", data );
+	MESSAGE_FUNC_PARAMS(OnTextChanged, "TextChanged", data);
 
 private:
-	void	PopulateControls();
-	void	OnPerfToolSelected();
+	void PopulateControls();
+	void OnPerfToolSelected();
 
 	PerformanceTool_t m_nPerfTool;
 	CPerfUIChildPanel *m_pToolPanel[PERF_TOOL_COUNT];
 	CPerfUIChildPanel *m_pCurrentToolPanel;
 };
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Basic help dialog
 //-----------------------------------------------------------------------------
-CPerfUIPanel::CPerfUIPanel( vgui::Panel *parent ) : BaseClass( parent, "PerfUIPanel")
+CPerfUIPanel::CPerfUIPanel(vgui::Panel *parent) : BaseClass(parent, "PerfUIPanel")
 {
 	SetTitle("Level Performance Tools", true);
 
 	m_pPerformanceTool = new ComboBox(this, "PerformanceTool", 10, false);
 
-	vgui::ivgui()->AddTickSignal( GetVPanel(), 0 );
+	vgui::ivgui()->AddTickSignal(GetVPanel(), 0);
 
 	LoadControlSettings("Resource\\PerfUIPanel.res");
 
 	// Hidden by default
-	SetVisible( false );
+	SetVisible(false);
 
-	SetSizeable( false );
-	SetMoveable( true );
+	SetSizeable(false);
+	SetMoveable(true);
 
 	int w = 250;
 	int h = 400;
 
 	int x = videomode->GetModeStereoWidth() - w - 10;
-	int y = ( videomode->GetModeStereoHeight() - h ) / 2 + videomode->GetModeStereoHeight() * 0.2;
-	SetBounds( x, y, w, h );
+	int y = (videomode->GetModeStereoHeight() - h) / 2 + videomode->GetModeStereoHeight() * 0.2;
+	SetBounds(x, y, w, h);
 
 	// Create the child tool panels
-	m_pToolPanel[PERF_TOOL_NONE] = new CPerfUIChildPanel( this, "PerfNone" );
-	m_pToolPanel[PERF_TOOL_PROP_FADES] = new CPropFadeUIPanel( this );
-	m_pToolPanel[PERF_TOOL_AREA_PORTALS] = new CAreaPortalsUIPanel( this );
-	m_pToolPanel[PERF_TOOL_OCCLUSION] = new COcclusionUIPanel( this );
+	m_pToolPanel[PERF_TOOL_NONE] = new CPerfUIChildPanel(this, "PerfNone");
+	m_pToolPanel[PERF_TOOL_PROP_FADES] = new CPropFadeUIPanel(this);
+	m_pToolPanel[PERF_TOOL_AREA_PORTALS] = new CAreaPortalsUIPanel(this);
+	m_pToolPanel[PERF_TOOL_OCCLUSION] = new COcclusionUIPanel(this);
 
-	for ( int i = 0; i < PERF_TOOL_COUNT; ++i )
+	for(int i = 0; i < PERF_TOOL_COUNT; ++i)
 	{
-		m_pToolPanel[i]->SetBounds( 0, 75, w, h - 75 );
+		m_pToolPanel[i]->SetBounds(0, 75, w, h - 75);
 	}
 
 	m_nPerfTool = PERF_TOOL_COUNT;
@@ -517,10 +490,7 @@ CPerfUIPanel::CPerfUIPanel( vgui::Panel *parent ) : BaseClass( parent, "PerfUIPa
 	PopulateControls();
 }
 
-CPerfUIPanel::~CPerfUIPanel()
-{
-}
-
+CPerfUIPanel::~CPerfUIPanel() {}
 
 //-----------------------------------------------------------------------------
 // Init, shutdown
@@ -529,16 +499,16 @@ void CPerfUIPanel::Init()
 {
 	// Center the cursor on the panel
 	int x, y, w, h;
-	GetBounds( x, y, w, h );
-	vgui::input()->SetCursorPos( x + w/2, y + h/2 );
+	GetBounds(x, y, w, h);
+	vgui::input()->SetCursorPos(x + w / 2, y + h / 2);
 }
 
 void CPerfUIPanel::Shutdown()
 {
-	if ( m_pCurrentToolPanel )
+	if(m_pCurrentToolPanel)
 	{
 		m_pCurrentToolPanel->Deactivate();
-		m_pCurrentToolPanel->SetVisible( false );
+		m_pCurrentToolPanel->SetVisible(false);
 	}
 }
 
@@ -546,12 +516,12 @@ void CPerfUIPanel::PopulateControls()
 {
 	m_pPerformanceTool->DeleteAllItems();
 	int i;
-	for ( i = 0; i < PERF_TOOL_COUNT; i++ )
+	for(i = 0; i < PERF_TOOL_COUNT; i++)
 	{
-		m_pPerformanceTool->AddItem( s_pPerfToolNames[i], NULL );
+		m_pPerformanceTool->AddItem(s_pPerfToolNames[i], NULL);
 	}
-	m_pPerformanceTool->AddActionSignalTarget( this );
-	m_pPerformanceTool->ActivateItem( 0 );
+	m_pPerformanceTool->AddActionSignalTarget(this);
+	m_pPerformanceTool->ActivateItem(0);
 }
 
 //-----------------------------------------------------------------------------
@@ -560,7 +530,7 @@ void CPerfUIPanel::PopulateControls()
 void CPerfUIPanel::OnTick()
 {
 	// Go away if we were on and sv_cheats is now on.
- 	if ( !CanCheat() )
+	if(!CanCheat())
 	{
 		Shutdown();
 	}
@@ -569,14 +539,14 @@ void CPerfUIPanel::OnTick()
 }
 
 //-----------------------------------------------------------------------------
-// A new performance tool was selected 
+// A new performance tool was selected
 //-----------------------------------------------------------------------------
-void CPerfUIPanel::OnTextChanged( KeyValues *data )
+void CPerfUIPanel::OnTextChanged(KeyValues *data)
 {
-	Panel *pPanel = reinterpret_cast<vgui::Panel *>( data->GetPtr("panel") );
-	vgui::ComboBox *pBox = dynamic_cast<vgui::ComboBox *>( pPanel );
+	Panel *pPanel = reinterpret_cast<vgui::Panel *>(data->GetPtr("panel"));
+	vgui::ComboBox *pBox = dynamic_cast<vgui::ComboBox *>(pPanel);
 
-	if( pBox == m_pPerformanceTool ) // don't change the text in the config setting combo
+	if(pBox == m_pPerformanceTool) // don't change the text in the config setting combo
 	{
 		OnPerfToolSelected();
 	}
@@ -585,105 +555,100 @@ void CPerfUIPanel::OnTextChanged( KeyValues *data )
 void CPerfUIPanel::OnPerfToolSelected()
 {
 	int tool = m_pPerformanceTool->GetActiveItem();
-	if ( tool == m_nPerfTool )
+	if(tool == m_nPerfTool)
 		return;
 
-	if ( m_pCurrentToolPanel )
+	if(m_pCurrentToolPanel)
 	{
 		m_pCurrentToolPanel->Deactivate();
-		m_pCurrentToolPanel->SetVisible( false );
+		m_pCurrentToolPanel->SetVisible(false);
 	}
 	m_nPerfTool = (PerformanceTool_t)tool;
 	m_pCurrentToolPanel = m_pToolPanel[tool];
-	m_pCurrentToolPanel->SetVisible( true );
+	m_pCurrentToolPanel->SetVisible(true);
 	m_pCurrentToolPanel->Activate();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Shows the panel
 //-----------------------------------------------------------------------------
 void CPerfUIPanel::Activate()
 {
-	if ( !CanCheat() )
+	if(!CanCheat())
 		return;
 
 	Init();
 	BaseClass::Activate();
 }
 
-void CPerfUIPanel::OnCommand( char const *command )
+void CPerfUIPanel::OnCommand(char const *command)
 {
-	if ( !Q_strcasecmp( command, "submit" ) )
+	if(!Q_strcasecmp(command, "submit"))
 	{
-//		OnSubmit();
+		//		OnSubmit();
 	}
-	else if ( !Q_strcasecmp( command, "cancel" ) )
+	else if(!Q_strcasecmp(command, "cancel"))
 	{
-//		Close();
+		//		Close();
 	}
 	else
 	{
-		BaseClass::OnCommand( command );
+		BaseClass::OnCommand(command);
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPerfUIPanel::OnKeyCodeTyped(KeyCode code)
 {
-	switch( code )
+	switch(code)
 	{
-	case KEY_ESCAPE:
-		Close();
-		break;
+		case KEY_ESCAPE:
+			Close();
+			break;
 
-	default:
-		BaseClass::OnKeyCodeTyped( code );
-		break;
+		default:
+			BaseClass::OnKeyCodeTyped(code);
+			break;
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Main interface to the performance tools 
+// Main interface to the performance tools
 //-----------------------------------------------------------------------------
 static CPerfUIPanel *g_pPerfUI = NULL;
 
 class CEnginePerfTools : public IEnginePerfTools
 {
 public:
-	virtual void		Init( void );
-	virtual void		Shutdown( void );
+	virtual void Init(void);
+	virtual void Shutdown(void);
 
-	virtual void		InstallPerformanceToolsUI( vgui::Panel *parent );
-	virtual bool		ShouldPause() const;
+	virtual void InstallPerformanceToolsUI(vgui::Panel *parent);
+	virtual bool ShouldPause() const;
 };
 
 static CEnginePerfTools g_PerfTools;
 IEnginePerfTools *perftools = &g_PerfTools;
 
-void CEnginePerfTools::Init( void )
-{
-}
+void CEnginePerfTools::Init(void) {}
 
-void CEnginePerfTools::Shutdown( void )
+void CEnginePerfTools::Shutdown(void)
 {
-	if ( g_pPerfUI )
+	if(g_pPerfUI)
 	{
 		g_pPerfUI->Shutdown();
 	}
 }
 
-void CEnginePerfTools::InstallPerformanceToolsUI( vgui::Panel *parent )
+void CEnginePerfTools::InstallPerformanceToolsUI(vgui::Panel *parent)
 {
-	if ( g_pPerfUI )
+	if(g_pPerfUI)
 		return;
 
-	g_pPerfUI = new CPerfUIPanel( parent );
-	Assert( g_pPerfUI );
+	g_pPerfUI = new CPerfUIPanel(parent);
+	Assert(g_pPerfUI);
 }
 
 bool CEnginePerfTools::ShouldPause() const
@@ -693,12 +658,12 @@ bool CEnginePerfTools::ShouldPause() const
 
 void ShowHidePerfUI()
 {
-	if ( !g_pPerfUI )
+	if(!g_pPerfUI)
 		return;
 
 	bool wasvisible = g_pPerfUI->IsVisible();
 
-	if ( wasvisible )
+	if(wasvisible)
 	{
 		// hide
 		g_pPerfUI->Close();
@@ -709,5 +674,4 @@ void ShowHidePerfUI()
 	}
 }
 
-
-static ConCommand perfui( "perfui", ShowHidePerfUI, "Show/hide the level performance tools UI.", FCVAR_CHEAT );
+static ConCommand perfui("perfui", ShowHidePerfUI, "Show/hide the level performance tools UI.", FCVAR_CHEAT);

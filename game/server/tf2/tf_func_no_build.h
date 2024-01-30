@@ -18,13 +18,12 @@ class Vector;
 //-----------------------------------------------------------------------------
 // Is a given point contained within any construction yard?
 //-----------------------------------------------------------------------------
-bool PointInNoBuild( const Vector &vecBuildOrigin );
+bool PointInNoBuild(const Vector &vecBuildOrigin);
 
 //-----------------------------------------------------------------------------
 // Does a construction yard (or lack of one) prevent us from building?
 //-----------------------------------------------------------------------------
 
-bool NoBuildPreventsBuild( CBaseObject *pObject, const Vector &vecBuildOrigin );
-
+bool NoBuildPreventsBuild(CBaseObject *pObject, const Vector &vecBuildOrigin);
 
 #endif // TF_FUNC_NO_BUILD_H

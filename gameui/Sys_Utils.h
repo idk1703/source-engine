@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -40,10 +40,5 @@ void Sys_DestroyWindow(WHANDLE wnd);
 
 // mouse
 void Sys_SetCursorPos(int x, int y);
-
-
-
-
-
 
 #endif // SYS_UTILS_H

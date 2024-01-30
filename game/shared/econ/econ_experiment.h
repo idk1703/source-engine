@@ -14,14 +14,13 @@
 #include "gcsdk/schemasharedobject.h"
 
 //---------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //---------------------------------------------------------------------------------
-class CEconExperiment : public GCSDK::CSchemaSharedObject< CSchExperiment, k_EEconTypeExperiment >
+class CEconExperiment : public GCSDK::CSchemaSharedObject<CSchExperiment, k_EEconTypeExperiment>
 {
 #ifdef GC_DLL
-	DECLARE_CLASS_MEMPOOL( CEconExperiment );
+	DECLARE_CLASS_MEMPOOL(CEconExperiment);
 #endif
-
 };
 
 #endif // TFEXPERIMENT_H

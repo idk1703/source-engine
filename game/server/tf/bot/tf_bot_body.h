@@ -12,13 +12,13 @@
 class CTFBotBody : public PlayerBody
 {
 public:
-	CTFBotBody( INextBot *bot ) : PlayerBody( bot )
-	{
-	}
+	CTFBotBody(INextBot *bot) : PlayerBody(bot) {}
 
-	virtual ~CTFBotBody() { }
+	virtual ~CTFBotBody() {}
 
-	virtual float GetHeadAimTrackingInterval( void ) const;			// return how often we should sample our target's position and velocity to update our aim tracking, to allow realistic slop in tracking
+	virtual float GetHeadAimTrackingInterval(
+		void) const; // return how often we should sample our target's position and velocity to update our aim tracking,
+					 // to allow realistic slop in tracking
 };
 
 #endif // TF_BOT_BODY_H

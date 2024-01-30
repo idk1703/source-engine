@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -10,7 +10,7 @@
 //
 // $NoKeywords: $
 //=============================================================================//
-#if !defined( ICONSOLE_H )
+#if !defined(ICONSOLE_H)
 #define ICONSOLE_H
 #ifdef _WIN32
 #pragma once
@@ -26,8 +26,8 @@ namespace vgui
 abstract_class IConsole
 {
 public:
-	virtual void		Create( vgui::VPANEL parent ) = 0;
-	virtual void		Destroy( void ) = 0;
+	virtual void Create(vgui::VPANEL parent) = 0;
+	virtual void Destroy(void) = 0;
 };
 
 extern IConsole *console;

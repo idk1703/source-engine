@@ -101,19 +101,19 @@ init() {
 		shift
 	done
 
-        # Ensure we have a game specified - if none is then default to CSS
-        if test -z "$GAME"; then
-                GAME="cstrike"
-                PARAMS="$PARAMS -game $GAME"
-        fi
+	# Ensure we have a game specified - if none is then default to CSS
+	if test -z "$GAME"; then
+		GAME="cstrike"
+		PARAMS="$PARAMS -game $GAME"
+	fi
 
-        # If the game exists in the 'orangebox' directory then run that version instead
-        # of the one in ./
-        if test -f "orangebox/$GAME/gameinfo.txt"; then
-                HL_LOCATION=./orangebox/
-        else
-                HL_LOCATION=./
-        fi
+	# If the game exists in the 'orangebox' directory then run that version instead
+	# of the one in ./
+	if test -f "orangebox/$GAME/gameinfo.txt"; then
+		HL_LOCATION=./orangebox/
+	else
+		HL_LOCATION=./
+	fi
 
 	# Ensure that the game directory exists at all
 	if test ! -d "$HL_LOCATION$GAME"; then
@@ -191,8 +191,8 @@ syntax () {
 	echo "			a failed server."
 	echo "-gdb <gdb>          	Use <dbg> as the debugger of failed servers."
 	echo "-steamerr     	  	Quit on steam update failure."
-	echo "-steamuser <username>	Use this username for steam updates."  
-	echo "-steampass <password>	Use this password for steam updates" 
+	echo "-steamuser <username>	Use this username for steam updates."
+	echo "-steampass <password>	Use this password for steam updates"
 	echo "			(-steamuser must be specified as well)."
 	echo "-ignoresigint       	Ignore signal INT ( prevents CTRL+C quitting"
 	echo "			the script )."
@@ -210,7 +210,7 @@ debugcore () {
 	exitcode=$1
 
 	if test $exitcode -ne 0; then
-		if test -n "$DEBUG" ; then 
+		if test -n "$DEBUG" ; then
 			echo "bt" > debug.cmds;
 			echo "info locals" >> debug.cmds;
 			echo "info sharedlibrary" >> debug.cmds
@@ -227,11 +227,11 @@ debugcore () {
 			elif test -f "$HL_LOCATION$HL.core" ; then
 				CORE="$HL_LOCATION$HL.core"
 			fi
-			
+
 			if test -n "$CORE"; then
 				$GDB $HL_LOCATION$HL $CORE -x debug.cmds -batch >> $DEBUG_LOG
 			fi
-		
+
 			echo "End of Source crash report" >> $DEBUG_LOG
 			echo "----------------------------------------------" >> $DEBUG_LOG
 			echo $CRASH_DEBUG_MSG
@@ -278,7 +278,7 @@ detectcpu() {
 				HL=./srcds_i686
 			else
 				echo "Using default binary."
-			fi		
+			fi
 		else
 			echo "Using default binary."
 		fi
@@ -314,7 +314,7 @@ updatesingle() {
 	if test -n "$AUTO_UPDATE"; then
 		if test -f "$STEAM"; then
 			echo "Updating server using Steam."
-		
+
 			if test "$GAME" = "cstrike"; then
 				GAME="Counter-Strike Source";
 			fi
@@ -322,13 +322,13 @@ updatesingle() {
 				GAME="dods";
 			fi
 
-			CMD="$STEAM -command update -dir ."; 
+			CMD="$STEAM -command update -dir .";
 			if test -n "$STEAM_USER"; then
 				CMD="$CMD -username $STEAM_USER";
-			fi 
+			fi
 			if test -n "$STEAM_PASSWORD"; then
 				CMD="$CMD -password $STEAM_PASSWORD";
-			fi 
+			fi
 
 			$CMD -game "$GAME"
 			if test $? -ne 0; then
@@ -353,7 +353,7 @@ updatesingle() {
 
 	return 1
 }
-	
+
 run() {
 	# Runs the steam update and server
 	# Loops if RESTART is set
@@ -386,7 +386,7 @@ run() {
 
 			# don't thrash the hard disk if the server dies, wait a little
 			sleep $TIMEOUT
-		done # while true 
+		done # while true
 	else
 		# Update if needed
 		update
@@ -442,4 +442,3 @@ run
 
 # Quit normally
 quit 0
-

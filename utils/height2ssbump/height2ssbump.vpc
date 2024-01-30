@@ -37,7 +37,7 @@ $Project "Height2ssbump"
 		-$File	"$SRCDIR\public\tier0\memoverride.cpp"
 		$File	"height2ssbump.cpp"
 	}
-	
+
 	$Folder	"Link Libraries"
 	{
 		$Lib bitmap

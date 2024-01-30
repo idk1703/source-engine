@@ -13,9 +13,9 @@
 
 //=============================================================================//
 
-DECLARE_BUILD_FACTORY( CMouseMessageForwardingPanel );
- 
-CMouseMessageForwardingPanel::CMouseMessageForwardingPanel( Panel *parent, const char *name ) : BaseClass( parent, name )
+DECLARE_BUILD_FACTORY(CMouseMessageForwardingPanel);
+
+CMouseMessageForwardingPanel::CMouseMessageForwardingPanel(Panel *parent, const char *name) : BaseClass(parent, name)
 {
 	// don't draw an
 	SetPaintEnabled(false);
@@ -33,7 +33,7 @@ void CMouseMessageForwardingPanel::PerformLayout()
 
 void CMouseMessageForwardingPanel::OnCursorEntered()
 {
-	if ( GetParent() )
+	if(GetParent())
 	{
 		GetParent()->OnCursorEntered();
 	}
@@ -41,41 +41,40 @@ void CMouseMessageForwardingPanel::OnCursorEntered()
 
 void CMouseMessageForwardingPanel::OnCursorExited()
 {
-	if ( GetParent() )
+	if(GetParent())
 	{
 		GetParent()->OnCursorExited();
 	}
 }
 
-void CMouseMessageForwardingPanel::OnMousePressed( vgui::MouseCode code )
+void CMouseMessageForwardingPanel::OnMousePressed(vgui::MouseCode code)
 {
-	if ( GetParent() )
+	if(GetParent())
 	{
-		GetParent()->OnMousePressed( code );
+		GetParent()->OnMousePressed(code);
 	}
 }
 
-void CMouseMessageForwardingPanel::OnMouseReleased( vgui::MouseCode code )
+void CMouseMessageForwardingPanel::OnMouseReleased(vgui::MouseCode code)
 {
-	if ( GetParent() )
+	if(GetParent())
 	{
-		GetParent()->OnMouseReleased( code );
+		GetParent()->OnMouseReleased(code);
 	}
 }
 
-void CMouseMessageForwardingPanel::OnMouseDoublePressed( vgui::MouseCode code )
+void CMouseMessageForwardingPanel::OnMouseDoublePressed(vgui::MouseCode code)
 {
-	if ( GetParent() )
+	if(GetParent())
 	{
-		GetParent()->OnMouseDoublePressed( code );
+		GetParent()->OnMouseDoublePressed(code);
 	}
 }
 
 void CMouseMessageForwardingPanel::OnMouseWheeled(int delta)
 {
-	if ( GetParent() )
+	if(GetParent())
 	{
-		GetParent()->OnMouseWheeled( delta );
+		GetParent()->OnMouseWheeled(delta);
 	}
 }
-

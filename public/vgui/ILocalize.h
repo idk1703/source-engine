@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -16,8 +16,10 @@
 
 namespace vgui
 {
-	class ILocalize : public ::ILocalize { };		// backwards compatability with vgui::ILocalize declarations
-}
+	class ILocalize : public ::ILocalize
+	{
+	}; // backwards compatability with vgui::ILocalize declarations
+} // namespace vgui
 
 #define VGUI_LOCALIZE_INTERFACE_VERSION "VGUI_Localize005"
 

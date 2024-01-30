@@ -59,82 +59,78 @@
 #include "tf_vehicle_teleport_station.h"
 #include "globals.h"
 
-#define MAX_EXPLOSIVE_VELOCITY	600.0f
+#define MAX_EXPLOSIVE_VELOCITY 600.0f
 
 extern ConVar tf_knockdowntime;
 
 extern ConVar inv_demo;
 
-ConVar tf_autoteam( "tf_autoteam", "1", 0, "Automatically place players on the team with the least players." );
-ConVar tf_destroyobjects( "tf_destroyobjects", "1", FCVAR_CHEAT, "Destroy objects when players change class or team." );
+ConVar tf_autoteam("tf_autoteam", "1", 0, "Automatically place players on the team with the least players.");
+ConVar tf_destroyobjects("tf_destroyobjects", "1", FCVAR_CHEAT, "Destroy objects when players change class or team.");
 
 IMPLEMENT_SERVERCLASS_ST(CBaseTFPlayer, DT_BaseTFPlayer)
-	SendPropDataTable(SENDINFO_DT(m_TFLocal), &REFERENCE_SEND_TABLE(DT_TFLocal), SendProxy_SendLocalDataTable),
+SendPropDataTable(SENDINFO_DT(m_TFLocal), &REFERENCE_SEND_TABLE(DT_TFLocal), SendProxy_SendLocalDataTable),
 
 	SendPropInt(SENDINFO(m_iPlayerClass), 4, SPROP_UNSIGNED),
-	
-	// Class Data Tables
-	SendPropDataTable( SENDINFO_DT( m_PlayerClasses ), &REFERENCE_SEND_TABLE( DT_AllPlayerClasses ), SendProxy_SendLocalDataTable ),
 
-	SendPropEHandle( SENDINFO( m_hSelectedMCV ) ),
-	SendPropInt( SENDINFO(m_iCurrentZoneState ), 3 ),
-	SendPropInt( SENDINFO(m_iMaxHealth ), 8, SPROP_UNSIGNED ),
-	SendPropInt( SENDINFO(m_TFPlayerFlags), TF_PLAYER_NUMFLAGS, SPROP_UNSIGNED ),
-	SendPropInt( SENDINFO( m_bUnderAttack ), 1, SPROP_UNSIGNED ),
-	SendPropInt( SENDINFO( m_bIsBlocking ), 1, SPROP_UNSIGNED ),
+	// Class Data Tables
+	SendPropDataTable(SENDINFO_DT(m_PlayerClasses), &REFERENCE_SEND_TABLE(DT_AllPlayerClasses),
+					  SendProxy_SendLocalDataTable),
+
+	SendPropEHandle(SENDINFO(m_hSelectedMCV)), SendPropInt(SENDINFO(m_iCurrentZoneState), 3),
+	SendPropInt(SENDINFO(m_iMaxHealth), 8, SPROP_UNSIGNED),
+	SendPropInt(SENDINFO(m_TFPlayerFlags), TF_PLAYER_NUMFLAGS, SPROP_UNSIGNED),
+	SendPropInt(SENDINFO(m_bUnderAttack), 1, SPROP_UNSIGNED), SendPropInt(SENDINFO(m_bIsBlocking), 1, SPROP_UNSIGNED),
 
 	// Sniper - will get moved to a class data table
-	SendPropVector( SENDINFO(m_vecDeployedAngles), -1, SPROP_COORD ),
-	SendPropInt( SENDINFO( m_bDeployed ), 1, SPROP_UNSIGNED ),
-	SendPropInt( SENDINFO( m_bDeploying ), 1, SPROP_UNSIGNED ),
-	SendPropInt( SENDINFO( m_bUnDeploying ), 1, SPROP_UNSIGNED ),
+	SendPropVector(SENDINFO(m_vecDeployedAngles), -1, SPROP_COORD),
+	SendPropInt(SENDINFO(m_bDeployed), 1, SPROP_UNSIGNED), SendPropInt(SENDINFO(m_bDeploying), 1, SPROP_UNSIGNED),
+	SendPropInt(SENDINFO(m_bUnDeploying), 1, SPROP_UNSIGNED),
 
 	// Infiltrator - will get moved to a class data table
-	SendPropFloat( SENDINFO( m_flCamouflageAmount ), 7, SPROP_ROUNDDOWN, 0.0f, 100.0f ),
+	SendPropFloat(SENDINFO(m_flCamouflageAmount), 7, SPROP_ROUNDDOWN, 0.0f, 100.0f),
 
 	SendPropEHandle(SENDINFO(m_hSpawnPoint)),
 
-	SendPropExclude( "DT_BaseAnimating" , "m_flPoseParameter" ),
-	SendPropExclude( "DT_BaseAnimating" , "m_flPlaybackRate" ),
+	SendPropExclude("DT_BaseAnimating", "m_flPoseParameter"), SendPropExclude("DT_BaseAnimating", "m_flPlaybackRate"),
 
-END_SEND_TABLE()
+END_SEND_TABLE
+()
 
-LINK_ENTITY_TO_CLASS( player, CBaseTFPlayer );
+	LINK_ENTITY_TO_CLASS(player, CBaseTFPlayer);
 PRECACHE_REGISTER(player);
 
-BEGIN_DATADESC( CBaseTFPlayer )
+BEGIN_DATADESC(CBaseTFPlayer)
 
-	DEFINE_INPUTFUNC( FIELD_VOID, "Respawn", InputRespawn ),
+	DEFINE_INPUTFUNC(FIELD_VOID, "Respawn", InputRespawn),
 
-	// Function Pointers
-	DEFINE_THINKFUNC( TFPlayerDeathThink ),
+		// Function Pointers
+		DEFINE_THINKFUNC(TFPlayerDeathThink),
 
 END_DATADESC()
 
-
-BEGIN_PREDICTION_DATA_NO_BASE( CTFPlayerLocalData )
+BEGIN_PREDICTION_DATA_NO_BASE(CTFPlayerLocalData)
 END_PREDICTION_DATA()
 
-BEGIN_PREDICTION_DATA( CBaseTFPlayer )
+BEGIN_PREDICTION_DATA(CBaseTFPlayer)
 END_PREDICTION_DATA()
 
-
-bool IsSpawnPointValid( CBaseEntity *pPlayer, CBaseEntity *pSpot );
-void respawn( CBaseEntity *pEdict, bool fCopyCorpse );
+bool IsSpawnPointValid(CBaseEntity *pPlayer, CBaseEntity *pSpot);
+void respawn(CBaseEntity *pEdict, bool fCopyCorpse);
 int TrainSpeed(int iSpeed, int iMax);
-void BulletWizz( Vector vecSrc, Vector vecEndPos, edict_t *pShooter, bool isTracer );
+void BulletWizz(Vector vecSrc, Vector vecEndPos, edict_t *pShooter, bool isTracer);
 
-extern float	g_flNextReinforcementTime;
-extern short	g_sModelIndexFireball;
-extern CBaseEntity	*g_pLastSpawn;
+extern float g_flNextReinforcementTime;
+extern short g_sModelIndexFireball;
+extern CBaseEntity *g_pLastSpawn;
 
 //-----------------------------------------------------------------------------
 // Purpose: Don't do anything for now
-// Input  : *pFormat - 
-//			... - 
+// Input  : *pFormat -
+//			... -
 // Output : static void
 //-----------------------------------------------------------------------------
-void StatusPrintf( bool clear, int destination, char *pFormat, ... )
+void StatusPrintf(bool clear, int destination, char *pFormat, ...)
 {
 	return;
 
@@ -144,27 +140,26 @@ void StatusPrintf( bool clear, int destination, char *pFormat, ... )
 
 	va_start(marker, pFormat);
 	Q_vsnprintf(msg, sizeof( msg ), pFormat, marker);
-	va_end(marker);	
-	
+	va_end(marker);
+
 	Msg( msg );
 	*/
 }
 
-#pragma warning( disable : 4355 )
+#pragma warning(disable : 4355)
 
 //=====================================================================
 // PLAYER HANDLING
 //=====================================================================
-CBaseTFPlayer::CBaseTFPlayer() :
-	m_PlayerClasses( this ), m_PlayerAnimState( this )
+CBaseTFPlayer::CBaseTFPlayer() : m_PlayerClasses(this), m_PlayerAnimState(this)
 {
 	// HACK because player's have pev set in baseclass constructor
 	// which triggers an assert that we want to keep.
 	{
 		edict_t *savepev = edict();
-		NetworkProp()->SetEdict( NULL );
+		NetworkProp()->SetEdict(NULL);
 		UseClientSideAnimation();
-		NetworkProp()->SetEdict( savepev );
+		NetworkProp()->SetEdict(savepev);
 	}
 
 	m_bWasMoving = false;
@@ -174,17 +169,17 @@ CBaseTFPlayer::CBaseTFPlayer() :
 	m_TFLocal.m_pPlayer = this;
 	m_bSwitchingView = false;
 	ClearActiveWeapon();
-	
+
 	m_iPlayerClass = TFCLASS_UNDECIDED;
-	SetPlayerClass( TFCLASS_UNDECIDED );
+	SetPlayerClass(TFCLASS_UNDECIDED);
 	m_pCurrentMenu = NULL;
 	m_TFPlayerFlags = 0;
 	m_bDeploying = false;
 	m_bDeployed = false;
 	m_bUnDeploying = false;
 	m_flFinishedDeploying = 0;
-	SetOrder( NULL );
-	
+	SetOrder(NULL);
+
 	m_nPreferredTechnology = -1;
 	m_nMedicDamageBoosts = 0;
 
@@ -192,23 +187,23 @@ CBaseTFPlayer::CBaseTFPlayer() :
 	m_flLastTimeDamagedByEnemy = -1000;
 
 	int i;
-	for ( i = 0; i < MOMENTUM_MAXSIZE; i++ )
+	for(i = 0; i < MOMENTUM_MAXSIZE; i++)
 	{
-		m_aMomentum[ i ] = 1.0f;
+		m_aMomentum[i] = 1.0f;
 	}
 }
 
-void CBaseTFPlayer::UpdateOnRemove( void )
+void CBaseTFPlayer::UpdateOnRemove(void)
 {
-	if ( m_hSelectedOrder )
+	if(m_hSelectedOrder)
 	{
-		GetTFTeam()->RemoveOrdersToPlayer( this );
-		Assert( !m_hSelectedOrder.Get() );
+		GetTFTeam()->RemoveOrdersToPlayer(this);
+		Assert(!m_hSelectedOrder.Get());
 	}
 
 	ClearPlayerClass();
 
-	ClearClientRagdoll( false );
+	ClearClientRagdoll(false);
 
 	// Chain at end to mimic destructor unwind order
 	BaseClass::UpdateOnRemove();
@@ -216,7 +211,7 @@ void CBaseTFPlayer::UpdateOnRemove( void )
 
 CBaseTFPlayer::~CBaseTFPlayer()
 {
-	SetPlayerClass( (TFClass)-1 );
+	SetPlayerClass((TFClass)-1);
 }
 
 bool CBaseTFPlayer::IsHidden() const
@@ -224,9 +219,9 @@ bool CBaseTFPlayer::IsHidden() const
 	return (m_TFPlayerFlags & TF_PLAYER_HIDDEN) != 0;
 }
 
-void CBaseTFPlayer::SetHidden( bool bHidden )
+void CBaseTFPlayer::SetHidden(bool bHidden)
 {
-	if ( bHidden )
+	if(bHidden)
 		m_TFPlayerFlags |= TF_PLAYER_HIDDEN;
 	else
 		m_TFPlayerFlags &= ~TF_PLAYER_HIDDEN;
@@ -235,77 +230,77 @@ void CBaseTFPlayer::SetHidden( bool bHidden )
 //-----------------------------------------------------------------------------
 // Purpose: Called everytime the player's respawned
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::Spawn( void )
+void CBaseTFPlayer::Spawn(void)
 {
 	m_bUnderAttack = false;
 	m_pCurrentZone = NULL;
-	ClearClientRagdoll( false );
+	ClearClientRagdoll(false);
 
-	g_pNotify->ReportNamedEvent( this, "PlayerSpawned" );
+	g_pNotify->ReportNamedEvent(this, "PlayerSpawned");
 
 	DeactivateMovementConstraint();
 
-	if ( IsInAVehicle() )
+	if(IsInAVehicle())
 	{
 		LeaveVehicle();
 	}
 
 	// If the player doesn't have a spawn station set, find one
-	if ( m_hSpawnPoint == NULL || !InSameTeam( m_hSpawnPoint ) )
+	if(m_hSpawnPoint == NULL || !InSameTeam(m_hSpawnPoint))
 	{
 		m_hSpawnPoint = GetInitialSpawnPoint();
 	}
 
-	if ( inv_demo.GetBool() )
+	if(inv_demo.GetBool())
 	{
-		if ( !GetPlayerClass() )
+		if(!GetPlayerClass())
 		{
-			ChangeClass( TFCLASS_MEDIC );
+			ChangeClass(TFCLASS_MEDIC);
 			m_Local.m_iHideHUD |= HIDEHUD_MISCSTATUS;
 			engine->ServerCommand("r_DispEnableLOD 0\n");
 		}
 	}
 
 	// Must be done before baseclass spawn, so it's correct for when we find a spawnpoint
-	if ( GetPlayerClass()  )
+	if(GetPlayerClass())
 	{
 		GetPlayerClass()->SetPlayerHull();
 	}
 
 	// Use human commando model until we know our class
-	SetModel( "models/player/human_commando.mdl" );
+	SetModel("models/player/human_commando.mdl");
 
 	BaseClass::Spawn();
 
 	m_flFractionalBoost = 0.0f;
 
 	// Create second view model ( for support/commando, etc )
-	CreateViewModel( 1 );
+	CreateViewModel(1);
 
 	// Tell the PlayerClass that this player's just respawned
-	if ( GetPlayerClass()  )
+	if(GetPlayerClass())
 	{
-		RemoveFlag( FL_NOTARGET );
-		RemoveSolidFlags( FSOLID_NOT_SOLID );
+		RemoveFlag(FL_NOTARGET);
+		RemoveSolidFlags(FSOLID_NOT_SOLID);
 
 		GetPlayerClass()->RespawnClass();
-		if ( GetActiveWeapon() )
+		if(GetActiveWeapon())
 		{
 			// Holster weapon immediately, to allow it to cleanup
-//			GetActiveWeapon()->Holster( ); // NJS: test
+			//			GetActiveWeapon()->Holster( ); // NJS: test
 
-			if (GetActiveWeapon()->HasAnyAmmo())
+			if(GetActiveWeapon()->HasAnyAmmo())
 			{
-				Weapon_Switch( GetActiveWeapon() );
+				Weapon_Switch(GetActiveWeapon());
 			}
 			else
 			{
-				SwitchToNextBestWeapon( GetActiveWeapon() );
+				SwitchToNextBestWeapon(GetActiveWeapon());
 			}
 		}
 		else
 		{
-			SwitchToNextBestWeapon( NULL );
+			SwitchToNextBestWeapon(NULL);
 		}
 
 		SetPlayerModel();
@@ -314,9 +309,9 @@ void CBaseTFPlayer::Spawn( void )
 		FinishUnDeploying();
 
 		// Remove my personal orders
-		if ( GetTFTeam() )
+		if(GetTFTeam())
 		{
-			GetTFTeam()->RemoveOrdersToPlayer( this );
+			GetTFTeam()->RemoveOrdersToPlayer(this);
 		}
 
 		RemoveAllDecals();
@@ -324,23 +319,23 @@ void CBaseTFPlayer::Spawn( void )
 	else
 	{
 		// No class? can't target this dude
-		AddFlag( FL_NOTARGET );
+		AddFlag(FL_NOTARGET);
 
 		// Remove everything
-		RemoveAllItems( false );
+		RemoveAllItems(false);
 
 		// Set/unset m_bHidden instead to hide the tf player
-		SetHidden( true );
+		SetHidden(true);
 
-		AddSolidFlags( FSOLID_NOT_SOLID );
-		SetMoveType( MOVETYPE_NONE );
+		AddSolidFlags(FSOLID_NOT_SOLID);
+		SetMoveType(MOVETYPE_NONE);
 
-		SetModel( "models/player/human_commando.mdl" );
+		SetModel("models/player/human_commando.mdl");
 
 		// If they're not in a team, bring up the Team Menu
-		if ( !IsInAnyTeam() )
+		if(!IsInAnyTeam())
 		{
-			if ( tf_autoteam.GetFloat() )
+			if(tf_autoteam.GetFloat())
 			{
 				// Autoteam the player
 				PlacePlayerInTeam();
@@ -358,136 +353,134 @@ void CBaseTFPlayer::Spawn( void )
 		}
 
 		m_MenuRefreshTime = gpGlobals->curtime;
-		
+
 		m_nPreferredTechnology = -1;
 	}
 
-	SetCantMove( false );
-
+	SetCantMove(false);
 
 	m_TFLocal.m_nInTacticalView = 0;
 	m_flLastTimeDamagedByEnemy = -1000;
 
 	// Purge resource chunks
-	for ( int i=0; i < m_TFLocal.m_iResourceAmmo.Count(); i++ )
-		m_TFLocal.m_iResourceAmmo.Set( i, 0 );
+	for(int i = 0; i < m_TFLocal.m_iResourceAmmo.Count(); i++)
+		m_TFLocal.m_iResourceAmmo.Set(i, 0);
 
 	ResetKnockdown();
-	SetGagged( false );
-	SetUsingThermalVision( false );
+	SetGagged(false);
+	SetUsingThermalVision(false);
 	ClearCamouflage();
-	SetIDEnt( NULL );
+	SetIDEnt(NULL);
 	m_iPowerups = 0;
 
 	// MUST set the right player hull before placing the player somewhere.
-	if ( GetPlayerClass() )
+	if(GetPlayerClass())
 		GetPlayerClass()->SetPlayerHull();
 
-	g_pGameRules->GetPlayerSpawnSpot( this );
+	g_pGameRules->GetPlayerSpawnSpot(this);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::CleanupOnActStart( void )
+void CBaseTFPlayer::CleanupOnActStart(void)
 {
 	// Tell all our weapons
-	for ( int i = 0; i < WeaponCount(); i++ ) 
+	for(int i = 0; i < WeaponCount(); i++)
 	{
-		if ( GetWeapon(i) ) 
+		if(GetWeapon(i))
 		{
-			((CBaseTFCombatWeapon*)GetWeapon(i))->CleanupOnActStart();
+			((CBaseTFCombatWeapon *)GetWeapon(i))->CleanupOnActStart();
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::RecalculateSpeed( void )
+void CBaseTFPlayer::RecalculateSpeed(void)
 {
-	if ( GetPlayerClass()  )
+	if(GetPlayerClass())
 	{
-		GetPlayerClass()->SetMaxSpeed( GetPlayerClass()->GetMaxSpeed() );
+		GetPlayerClass()->SetMaxSpeed(GetPlayerClass()->GetMaxSpeed());
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: I just killed another player
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::KilledPlayer( CBaseTFPlayer *pVictim )
+void CBaseTFPlayer::KilledPlayer(CBaseTFPlayer *pVictim)
 {
-	TFStats()->IncrementPlayerStat( this, TF_PLAYER_STAT_KILL_COUNT, 1 );
-	TFStats()->IncrementTeamStat( GetTeamNumber(), TF_TEAM_STAT_KILL_COUNT, 1 );
+	TFStats()->IncrementPlayerStat(this, TF_PLAYER_STAT_KILL_COUNT, 1);
+	TFStats()->IncrementTeamStat(GetTeamNumber(), TF_TEAM_STAT_KILL_COUNT, 1);
 
 	// Am I in a rampage?
-	if ( HasPowerup( POWERUP_RUSH ) && IsInRampage() )
+	if(HasPowerup(POWERUP_RUSH) && IsInRampage())
 	{
 		// Extend my rush
-		AttemptToPowerup( POWERUP_RUSH, ADRENALIN_RAMPAGE_EXTEND );
+		AttemptToPowerup(POWERUP_RUSH, ADRENALIN_RAMPAGE_EXTEND);
 
 		// Let 'em know
-		EmitSound( "BaseTFPlayer.BloodSportKiller" );
+		EmitSound("BaseTFPlayer.BloodSportKiller");
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Called only the first time a player's placed in the map
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::InitialSpawn( void )
+void CBaseTFPlayer::InitialSpawn(void)
 {
 	BaseClass::InitialSpawn();
-	SetWeaponBuilder( NULL );
+	SetWeaponBuilder(NULL);
 
 	m_bFirstTeamSpawn = true;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::Precache( void )
+void CBaseTFPlayer::Precache(void)
 {
 	//!! hack for radar
 	BaseClass::Precache();
 
-	PrecacheScriptSound( "BaseTFPlayer.BloodSportKiller" );
-	PrecacheScriptSound( "Humans.Death" );
-	PrecacheScriptSound( "AlienCommando.Death" );
-	PrecacheScriptSound( "AlienMedic.Death" );
-	PrecacheScriptSound( "AlienDefender.Death" );
-	PrecacheScriptSound( "AlienEscort.Death" );
-	PrecacheScriptSound( "BaseTFPlayer.StartDeploying" );
-	PrecacheScriptSound( "BaseTFPlayer.StartUnDeploying" );
-	PrecacheScriptSound( "BaseTFPlayer.KnockedDown" );
-	PrecacheScriptSound( "BaseTFPlayer.ThermalOn" );
-	PrecacheScriptSound( "BaseTFPlayer.ThermalOff" );
-	PrecacheScriptSound( "BaseTFPlayer.PickupResources" );
-	PrecacheScriptSound( "BaseTFPlayer.DonateResources" );
+	PrecacheScriptSound("BaseTFPlayer.BloodSportKiller");
+	PrecacheScriptSound("Humans.Death");
+	PrecacheScriptSound("AlienCommando.Death");
+	PrecacheScriptSound("AlienMedic.Death");
+	PrecacheScriptSound("AlienDefender.Death");
+	PrecacheScriptSound("AlienEscort.Death");
+	PrecacheScriptSound("BaseTFPlayer.StartDeploying");
+	PrecacheScriptSound("BaseTFPlayer.StartUnDeploying");
+	PrecacheScriptSound("BaseTFPlayer.KnockedDown");
+	PrecacheScriptSound("BaseTFPlayer.ThermalOn");
+	PrecacheScriptSound("BaseTFPlayer.ThermalOff");
+	PrecacheScriptSound("BaseTFPlayer.PickupResources");
+	PrecacheScriptSound("BaseTFPlayer.DonateResources");
 
 	// Class specific sounds
-	PrecacheScriptSound( "Commando.BootHit" );
-	PrecacheScriptSound( "Commando.BootSwing" );
-	PrecacheScriptSound( "Commando.BullRushScream" );
-	PrecacheScriptSound( "Commando.BullRushFlesh" );
-
+	PrecacheScriptSound("Commando.BootHit");
+	PrecacheScriptSound("Commando.BootSwing");
+	PrecacheScriptSound("Commando.BullRushScream");
+	PrecacheScriptSound("Commando.BullRushFlesh");
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::UpdateClientData( void )
+void CBaseTFPlayer::UpdateClientData(void)
 {
 	CTeam *pTeam = GetTeam();
-	if ( pTeam )
-		pTeam->UpdateClientData( this );
+	if(pTeam)
+		pTeam->UpdateClientData(this);
 
 	BaseClass::UpdateClientData();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::ForceClientDllUpdate( void )
+void CBaseTFPlayer::ForceClientDllUpdate(void)
 {
 	BaseClass::ForceClientDllUpdate();
 
@@ -498,110 +491,110 @@ void CBaseTFPlayer::ForceClientDllUpdate( void )
 //-----------------------------------------------------------------------------
 // Purpose: Forces an immediate respawn of the player
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::ForceRespawn( void )
+void CBaseTFPlayer::ForceRespawn(void)
 {
 	Spawn();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Input handler that forces a respawn of the player.
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::InputRespawn( inputdata_t &inputdata )
+void CBaseTFPlayer::InputRespawn(inputdata_t &inputdata)
 {
 	ForceRespawn();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::InitHUD( void )
+void CBaseTFPlayer::InitHUD(void)
 {
-	CSingleUserRecipientFilter user( this );
+	CSingleUserRecipientFilter user(this);
 	user.MakeReliable();
 
 	// If we're in an act, tell it to update the client
-	if ( g_hCurrentAct )
+	if(g_hCurrentAct)
 	{
-		g_hCurrentAct->UpdateClient( this );
+		g_hCurrentAct->UpdateClient(this);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Player has just tried to switch to a new weapon
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::SelectItem( const char *pstr, int iSubType )
+void CBaseTFPlayer::SelectItem(const char *pstr, int iSubType)
 {
 	// can't change weapon while deployed
-	if ( IsPlayerLockedInPlace() || IsDeployed() || IsDeploying() )
+	if(IsPlayerLockedInPlace() || IsDeployed() || IsDeploying())
 		return;
 
 	// Pass through to CBaseCombatWeapon code
-	BaseClass::SelectItem( pstr, iSubType );
+	BaseClass::SelectItem(pstr, iSubType);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Put the player in the specified team
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::ChangeTeam( int iTeamNum )
+void CBaseTFPlayer::ChangeTeam(int iTeamNum)
 {
 	// If we're changing team, clear my order
-	if ( iTeamNum != GetTeamNumber() )
+	if(iTeamNum != GetTeamNumber())
 	{
 		SetOrder(NULL);
-		if ( tf_destroyobjects.GetFloat() )
+		if(tf_destroyobjects.GetFloat())
 		{
-			RemoveAllObjects( false );
+			RemoveAllObjects(false);
 		}
 	}
 
 	// Force full tech tree update
-	for ( int i = 0 ; i < MAX_TECHNOLOGIES; i++ )
+	for(int i = 0; i < MAX_TECHNOLOGIES; i++)
 	{
-		m_rgClientTechAvail[ i ].m_nAvailable = -1;
+		m_rgClientTechAvail[i].m_nAvailable = -1;
 	}
 
-	BaseClass::ChangeTeam( iTeamNum );
+	BaseClass::ChangeTeam(iTeamNum);
 
 	// Now handle resources:
 	//  - If it's the first spawn ever, give the player the team's currently calculated resource amount
-	//  - If the player has more resources than the team's joining amount, drop his resources to that amount. Otherwise, he can keep his current.
-	if ( GetGlobalTFTeam( iTeamNum ) )
+	//  - If the player has more resources than the team's joining amount, drop his resources to that amount. Otherwise,
+	//  he can keep his current.
+	if(GetGlobalTFTeam(iTeamNum))
 	{
-		float flJoiningResources = GetGlobalTFTeam( iTeamNum )->GetJoiningPlayerResources();
-		if ( m_bFirstTeamSpawn )
+		float flJoiningResources = GetGlobalTFTeam(iTeamNum)->GetJoiningPlayerResources();
+		if(m_bFirstTeamSpawn)
 		{
 			m_bFirstTeamSpawn = false;
-			SetBankResources( flJoiningResources );
+			SetBankResources(flJoiningResources);
 		}
 		else
 		{
-			if ( flJoiningResources < GetBankResources() )
+			if(flJoiningResources < GetBankResources())
 			{
-				SetBankResources( flJoiningResources );
+				SetBankResources(flJoiningResources);
 			}
 		}
 	}
 
 	// Clear the client ragdoll, when changing teams.
-	ClearClientRagdoll( false );
+	ClearClientRagdoll(false);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Automatically place the player in the most appropriate team
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::PlacePlayerInTeam( void )
+void CBaseTFPlayer::PlacePlayerInTeam(void)
 {
 	CTFTeam *pTargetTeam = NULL;
 
 	// Find the team with the least players in it
-	for ( int i = 0; i < MAX_TF_TEAMS; i++ )
+	for(int i = 0; i < MAX_TF_TEAMS; i++)
 	{
 		CTFTeam *pTeam = GetGlobalTFTeam(i);
 
-		if ( pTargetTeam )
+		if(pTargetTeam)
 		{
-			if ( pTeam->GetNumPlayers() < pTargetTeam->GetNumPlayers() )
+			if(pTeam->GetNumPlayers() < pTargetTeam->GetNumPlayers())
 				pTargetTeam = pTeam;
 		}
 		else
@@ -610,48 +603,48 @@ void CBaseTFPlayer::PlacePlayerInTeam( void )
 		}
 	}
 
-	ChangeTeam( pTargetTeam->GetTeamNumber() );
+	ChangeTeam(pTargetTeam->GetTeamNumber());
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Return true if the specified class is available to this player
 //-----------------------------------------------------------------------------
-bool CBaseTFPlayer::IsClassAvailable( TFClass iClass )
+bool CBaseTFPlayer::IsClassAvailable(TFClass iClass)
 {
 	char str[128];
-	Q_snprintf( str, sizeof( str ), "class_%s", GetTFClassInfo( iClass )->m_pClassName );
-	return HasNamedTechnology( str );
+	Q_snprintf(str, sizeof(str), "class_%s", GetTFClassInfo(iClass)->m_pClassName);
+	return HasNamedTechnology(str);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::ChangeClass( TFClass iClass )
+void CBaseTFPlayer::ChangeClass(TFClass iClass)
 {
 	// If they've got a playerclass, kill it
-	if ( GetPlayerClass()  )
+	if(GetPlayerClass())
 	{
-		if ( tf_destroyobjects.GetFloat() )
+		if(tf_destroyobjects.GetFloat())
 		{
-			RemoveAllObjects( false, iClass );
+			RemoveAllObjects(false, iClass);
 		}
 
 		ClearPlayerClass();
 	}
 
 	// can't change class if we have no team
-	if ( !IsInAnyTeam() )
+	if(!IsInAnyTeam())
 		return;
 
 	// Make sure client .dll can find out about it.
-	SetPlayerClass( iClass );
+	SetPlayerClass(iClass);
 
 	// Clear out current vote....
 	CTFTeam *pTFTeam = GetTFTeam();
-	SetPreferredTechnology( pTFTeam->m_pTechnologyTree, -1 );
+	SetPreferredTechnology(pTFTeam->m_pTechnologyTree, -1);
 
 	// Force a respawn if they're alive
-	if ( IsAlive() )
+	if(IsAlive())
 	{
 		ForceRespawn();
 	}
@@ -660,126 +653,125 @@ void CBaseTFPlayer::ChangeClass( TFClass iClass )
 //-----------------------------------------------------------------------------
 // Purpose: Reset player class
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::ClearPlayerClass( void )
+void CBaseTFPlayer::ClearPlayerClass(void)
 {
 	// Remove all weapons & items
-	if ( GetPlayerClass() )
+	if(GetPlayerClass())
 	{
-		RemoveAllItems( false );
+		RemoveAllItems(false);
 		m_hWeaponCombatShield = NULL;
 	}
 
 	m_iPowerups = 0;
-	SetPlayerClass( TFCLASS_UNDECIDED );
+	SetPlayerClass(TFCLASS_UNDECIDED);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Set the player's model to the correct one, taking into account
 //			class, gender, team, and disguise.
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::SetPlayerModel( void )
+void CBaseTFPlayer::SetPlayerModel(void)
 {
-	if (!GetPlayerClass())
+	if(!GetPlayerClass())
 	{
-		SetHidden( true );
+		SetHidden(true);
 		return;
 	}
 
-	string_t sModel = GetPlayerClass()->GetClassModel( GetTeamNumber() );
+	string_t sModel = GetPlayerClass()->GetClassModel(GetTeamNumber());
 
 	// If they don't have a model, make the player invisible
-	if ( !sModel )
+	if(!sModel)
 	{
-		SetHidden( true );
+		SetHidden(true);
 		return;
 	}
 
 	// Make the player visible
-	SetHidden( false );
+	SetHidden(false);
 
 	// Set the model
-	SetModel( STRING( sModel ) );
+	SetModel(STRING(sModel));
 
-	if ( GetFlags() & FL_DUCKING ) 
+	if(GetFlags() & FL_DUCKING)
 		UTIL_SetSize(this, VEC_DUCK_HULL_MIN, VEC_DUCK_HULL_MAX);
 	else
 		UTIL_SetSize(this, VEC_HULL_MIN, VEC_HULL_MAX);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::PlayerRespawn( void )
+void CBaseTFPlayer::PlayerRespawn(void)
 {
 	m_nButtons = 0;
 	m_iRespawnFrames = 0;
 
 	// don't copy a corpse if we're in deathcam.
-	respawn( this, !IsObserver() );
-	SetThink( NULL );
+	respawn(this, !IsObserver());
+	SetThink(NULL);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Play a sound when we die
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::DeathSound( const CTakeDamageInfo &info )
+void CBaseTFPlayer::DeathSound(const CTakeDamageInfo &info)
 {
-	if ( GetTeamNumber() == TEAM_HUMANS )
+	if(GetTeamNumber() == TEAM_HUMANS)
 	{
-		EmitSound( "Humans.Death" );
+		EmitSound("Humans.Death");
 	}
-	else if ( GetTeamNumber() == TEAM_ALIENS )
+	else if(GetTeamNumber() == TEAM_ALIENS)
 	{
-		switch( PlayerClass() )
+		switch(PlayerClass())
 		{
-		case TFCLASS_COMMANDO:
-			EmitSound( "AlienCommando.Death" );
-			break;
+			case TFCLASS_COMMANDO:
+				EmitSound("AlienCommando.Death");
+				break;
 
-		case TFCLASS_MEDIC:
-			EmitSound( "AlienMedic.Death" );
-			break;
+			case TFCLASS_MEDIC:
+				EmitSound("AlienMedic.Death");
+				break;
 
-		case TFCLASS_DEFENDER:
-			EmitSound( "AlienDefender.Death" );
-			break;
+			case TFCLASS_DEFENDER:
+				EmitSound("AlienDefender.Death");
+				break;
 
-		case TFCLASS_ESCORT:
-			EmitSound( "AlienEscort.Death" );
-			break;
+			case TFCLASS_ESCORT:
+				EmitSound("AlienEscort.Death");
+				break;
 
-		default:
-			break;
+			default:
+				break;
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::ItemPostFrame()
 {
 	// Don't process items while in a vehicle.
-	if ( IsInAVehicle() )
+	if(IsInAVehicle())
 	{
 		IServerVehicle *pVehicle = GetVehicle();
-		Assert( pVehicle );
+		Assert(pVehicle);
 
 		// NOTE: We *have* to do this before ItemPostFrame because ItemPostFrame
 		// may dump us out of the vehicle
-		int nRole = pVehicle->GetPassengerRole( this );
-		bool bUsingStandardWeapons = pVehicle->IsPassengerUsingStandardWeapons( nRole );
+		int nRole = pVehicle->GetPassengerRole(this);
+		bool bUsingStandardWeapons = pVehicle->IsPassengerUsingStandardWeapons(nRole);
 
-		pVehicle->ItemPostFrame( this );
+		pVehicle->ItemPostFrame(this);
 
-		// Fall through and check weapons, etc. if we're using them 
-		if (!bUsingStandardWeapons || !IsInAVehicle())
+		// Fall through and check weapons, etc. if we're using them
+		if(!bUsingStandardWeapons || !IsInAVehicle())
 			return;
 	}
 
 	// If we're attaching a sapper, handle player use only
-	if ( m_TFLocal.m_bAttachingSapper )
+	if(m_TFLocal.m_bAttachingSapper)
 	{
 		PlayerUse();
 		return;
@@ -787,28 +779,26 @@ void CBaseTFPlayer::ItemPostFrame()
 
 	BaseClass::ItemPostFrame();
 
-	if ( GetPlayerClass()  )
+	if(GetPlayerClass())
 	{
-		GetPlayerClass()->ItemPostFrame();	// Let the player class handle it.
+		GetPlayerClass()->ItemPostFrame(); // Let the player class handle it.
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::Jump( void )
-{
-}
+void CBaseTFPlayer::Jump(void) {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::PreThink(void)
 {
 	CheckBuffs();
 
 	// Riding a vehicle?
-	if ( IsInAVehicle() )
+	if(IsInAVehicle())
 	{
 		BaseClass::PreThink();
 		return;
@@ -820,14 +810,14 @@ void CBaseTFPlayer::PreThink(void)
 	CheckSapperAttaching();
 
 	// Update reinforcement state
-	if (m_lifeState >= LIFE_DYING)
+	if(m_lifeState >= LIFE_DYING)
 	{
 		// After 3 seconds, move them to the Tactical Map
-		if ( (gpGlobals->curtime - m_flTimeOfDeath) > 3.0 )
+		if((gpGlobals->curtime - m_flTimeOfDeath) > 3.0)
 		{
-			if ( m_TFLocal.m_nInTacticalView == false )
+			if(m_TFLocal.m_nInTacticalView == false)
 			{
-				ShowTacticalView( 1 );
+				ShowTacticalView(1);
 			}
 		}
 
@@ -840,7 +830,8 @@ void CBaseTFPlayer::PreThink(void)
 			if ( iSecondsToGo != m_iLastSecondsToGo && iSecondsToGo >= 1 )
 			{
 				m_iLastSecondsToGo = iSecondsToGo;
-				ClientPrint( this, HUD_PRINTCENTER, UTIL_VarArgs("\nReinforcing in %d %s\n", iSecondsToGo, iSecondsToGo > 1 ? "seconds" : "second" ) );
+				ClientPrint( this, HUD_PRINTCENTER, UTIL_VarArgs("\nReinforcing in %d %s\n", iSecondsToGo, iSecondsToGo
+		> 1 ? "seconds" : "second" ) );
 			}
 		}
 		*/
@@ -849,13 +840,13 @@ void CBaseTFPlayer::PreThink(void)
 	}
 
 	// Update zone state
-	if ( m_pCurrentZone )
+	if(m_pCurrentZone)
 	{
 		m_iCurrentZoneState = m_pCurrentZone->GetControllingTeam();
-		if ( m_iCurrentZoneState != ZONE_CONTESTED )
+		if(m_iCurrentZoneState != ZONE_CONTESTED)
 		{
 			// Set the Zone state to the correct one
-			if ( m_iCurrentZoneState == GetTeamNumber() )
+			if(m_iCurrentZoneState == GetTeamNumber())
 				m_iCurrentZoneState = ZONE_FRIENDLY;
 			else
 				m_iCurrentZoneState = ZONE_ENEMY;
@@ -870,7 +861,7 @@ void CBaseTFPlayer::PreThink(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTFPlayer::PostThink()
 {
@@ -878,19 +869,19 @@ void CBaseTFPlayer::PostThink()
 
 	// Make sure we have a valid MCV id.
 	CVehicleTeleportStation *pMCV = GetSelectedMCV();
-	if ( !pMCV || !pMCV->IsDeployed() )
+	if(!pMCV || !pMCV->IsDeployed())
 	{
-		m_hSelectedMCV = CVehicleTeleportStation::GetFirstDeployedMCV( GetTeamNumber() );
+		m_hSelectedMCV = CVehicleTeleportStation::GetFirstDeployedMCV(GetTeamNumber());
 	}
 
 	// Tell the client if our damage is boosted so it can do a smurfy effect on the weapon.
-	if ( GetAttackDamageScale( NULL ) == 1 )
+	if(GetAttackDamageScale(NULL) == 1)
 		m_TFPlayerFlags &= ~TF_PLAYER_DAMAGE_BOOST;
 	else
 		m_TFPlayerFlags |= TF_PLAYER_DAMAGE_BOOST;
 
 	m_PlayerAnimState.Update();
-//	SetLocalAngles( m_PlayerAnimState.GetRenderAngles() );
+	//	SetLocalAngles( m_PlayerAnimState.GetRenderAngles() );
 
 	float flTimeSinceAttacked = gpGlobals->curtime - LastTimeDamagedByEnemy();
 	m_bUnderAttack = ((flTimeSinceAttacked >= 0.0f) && (flTimeSinceAttacked < 1.0f));
@@ -898,7 +889,7 @@ void CBaseTFPlayer::PostThink()
 	// TODO: This collision hull is set in the base class PostThink (so this is
 	// redundant), but I don't wanna re-write the whole thing at this point.
 	// We will just have to deal with a little redundancy for now.
-	if ( GetPlayerClass()  )
+	if(GetPlayerClass())
 	{
 		GetPlayerClass()->SetPlayerHull();
 	}
@@ -907,15 +898,15 @@ void CBaseTFPlayer::PostThink()
 	MenuDisplay();
 
 	// Player class Think
-	if (GetPlayerClass())
+	if(GetPlayerClass())
 	{
 		GetPlayerClass()->ClassThink();
 	}
 
-	if ( m_bSwitchingView )
+	if(m_bSwitchingView)
 	{
 		m_bSwitchingView = false;
-		SetMoveType( m_TFLocal.m_nInTacticalView ? MOVETYPE_ISOMETRIC : MOVETYPE_WALK );
+		SetMoveType(m_TFLocal.m_nInTacticalView ? MOVETYPE_ISOMETRIC : MOVETYPE_WALK);
 	}
 
 	FollowClientRagdoll();
@@ -925,32 +916,32 @@ void CBaseTFPlayer::PostThink()
 // Purpose: selects a valid point that the player can spawn at
 // Output : edict_t - the point in the world to spawn at
 //-----------------------------------------------------------------------------
-CBaseEntity *CBaseTFPlayer::EntSelectSpawnPoint( void )
+CBaseEntity *CBaseTFPlayer::EntSelectSpawnPoint(void)
 {
 	// If we're in a team, ask the team for a spawnpoint
-	if ( GetTeam() )
+	if(GetTeam())
 	{
 		CBaseEntity *entity = NULL;
-		if ( GetPlayerClass()  )
+		if(GetPlayerClass())
 		{
 			// Let individual player classes override the respawn point
 			entity = GetPlayerClass()->SelectSpawnPoint();
-			if ( entity )
+			if(entity)
 			{
 				return entity;
 			}
 
 			// Do we have a selected spawn point (from a respawn station)?
 			entity = m_hSpawnPoint;
-			if (entity && (entity->GetTeam() == GetTeam()))
+			if(entity && (entity->GetTeam() == GetTeam()))
 			{
-				PlayRespawnEffect( entity );
+				PlayRespawnEffect(entity);
 				return entity;
 			}
 		}
 
-		entity = GetTeam()->SpawnPlayer( this );
-		if ( entity )
+		entity = GetTeam()->SpawnPlayer(this);
+		if(entity)
 			return entity;
 	}
 
@@ -959,95 +950,94 @@ CBaseEntity *CBaseTFPlayer::EntSelectSpawnPoint( void )
 	return BaseClass::EntSelectSpawnPoint();
 }
 
-void CBaseTFPlayer::RemoveShieldOverlays( void )
+void CBaseTFPlayer::RemoveShieldOverlays(void)
 {
-	RemoveGesture( ACT_OVERLAY_SHIELD_UP );
-	RemoveGesture( ACT_OVERLAY_SHIELD_DOWN );
-	RemoveGesture( ACT_OVERLAY_SHIELD_UP_IDLE );
-	RemoveGesture( ACT_OVERLAY_SHIELD_ATTACK );
-	RemoveGesture( ACT_OVERLAY_SHIELD_KNOCKBACK );
+	RemoveGesture(ACT_OVERLAY_SHIELD_UP);
+	RemoveGesture(ACT_OVERLAY_SHIELD_DOWN);
+	RemoveGesture(ACT_OVERLAY_SHIELD_UP_IDLE);
+	RemoveGesture(ACT_OVERLAY_SHIELD_ATTACK);
+	RemoveGesture(ACT_OVERLAY_SHIELD_KNOCKBACK);
 }
 
-static bool IsShieldOverlay( Activity activity )
+static bool IsShieldOverlay(Activity activity)
 {
-	switch ( activity )
+	switch(activity)
 	{
-	default:
-		return false;
-	case ACT_OVERLAY_SHIELD_UP:
-	case ACT_OVERLAY_SHIELD_DOWN:
-	case ACT_OVERLAY_SHIELD_UP_IDLE:
-	case ACT_OVERLAY_SHIELD_ATTACK:
-	case ACT_OVERLAY_SHIELD_KNOCKBACK:
-		return true;
+		default:
+			return false;
+		case ACT_OVERLAY_SHIELD_UP:
+		case ACT_OVERLAY_SHIELD_DOWN:
+		case ACT_OVERLAY_SHIELD_UP_IDLE:
+		case ACT_OVERLAY_SHIELD_ATTACK:
+		case ACT_OVERLAY_SHIELD_KNOCKBACK:
+			return true;
 	}
 	return false;
 }
 
-int CBaseTFPlayer::RemoveShieldOverlaysExcept( Activity activity, bool addifnotpresent /*= true */ )
+int CBaseTFPlayer::RemoveShieldOverlaysExcept(Activity activity, bool addifnotpresent /*= true */)
 {
-	int skip = FindGestureLayer( activity );
+	int skip = FindGestureLayer(activity);
 
 	int i;
-	for ( i = 0; i < CBaseAnimatingOverlay::MAX_OVERLAYS; i++ )
+	for(i = 0; i < CBaseAnimatingOverlay::MAX_OVERLAYS; i++)
 	{
-		if ( i == skip )
+		if(i == skip)
 			continue;
 
-		if ( IsShieldOverlay( GetLayerActivity( i ) ) )
+		if(IsShieldOverlay(GetLayerActivity(i)))
 		{
-			RemoveLayer( i, 0.0, 0.0f );
+			RemoveLayer(i, 0.0, 0.0f);
 		}
 	}
-	
+
 	// Add it in if it's not present already
-	if ( addifnotpresent && ( skip == -1 ) )
+	if(addifnotpresent && (skip == -1))
 	{
-		return AddGesture( activity );
+		return AddGesture(activity);
 	}
 	else
 	{
 		return skip;
 	}
-}	
+}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  : activity - i/o :  can be changed to a new activity
 //			overlayindex - o:  if an overlay is picked, this gets changed
 // Rest of paramters are input only
 //			moving - is player moving
 //			ducked - is player ducking
-//			overlay - animation choices for this state (either full body crouch/stand, or overlay on top of base crouch/stand )
-//			crouch - 
-//			normal - 
+//			overlay - animation choices for this state (either full body crouch/stand, or overlay on top of base
+//crouch/stand ) 			crouch - 			normal -
 // Overlay parameters
 //			autokill - if false, overlay will loop indefinitely
 //			blendin - amount of time over which to blend in (0.0f for snap)
 //			blendout - same but for blending out instead
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::PickShieldAnimation( Activity& activity, int& overlayindex, bool moving, bool ducked, 
-	Activity overlay, Activity crouch, Activity normal, 
-	bool autokill /*=true*/, float blendin /*=0.0f*/, float blendout /*=0.0f*/ )
+void CBaseTFPlayer::PickShieldAnimation(Activity &activity, int &overlayindex, bool moving, bool ducked,
+										Activity overlay, Activity crouch, Activity normal, bool autokill /*=true*/,
+										float blendin /*=0.0f*/, float blendout /*=0.0f*/)
 {
-	if ( moving )
+	if(moving)
 	{
-		overlayindex = RemoveShieldOverlaysExcept( overlay );
-		if ( overlayindex != -1 )
+		overlayindex = RemoveShieldOverlaysExcept(overlay);
+		if(overlayindex != -1)
 		{
-			if ( blendin > 0.0f )
+			if(blendin > 0.0f)
 			{
-				SetLayerBlendIn( overlayindex, blendin );
-			}	
-
-			if ( blendout > 0.0f )
-			{
-				SetLayerBlendOut( overlayindex, blendout );
+				SetLayerBlendIn(overlayindex, blendin);
 			}
 
-			if ( !autokill )
+			if(blendout > 0.0f)
 			{
-				SetLayerAutokill( overlayindex, false );
+				SetLayerBlendOut(overlayindex, blendout);
+			}
+
+			if(!autokill)
+			{
+				SetLayerAutokill(overlayindex, false);
 			}
 		}
 	}
@@ -1057,17 +1047,17 @@ void CBaseTFPlayer::PickShieldAnimation( Activity& activity, int& overlayindex, 
 	}
 }
 
-Activity CBaseTFPlayer::ShieldTranslateActivity( Activity activity )
+Activity CBaseTFPlayer::ShieldTranslateActivity(Activity activity)
 {
-	CWeaponTwoHandedContainer *container = dynamic_cast< CWeaponTwoHandedContainer * >( GetActiveWeapon() );
-	if ( !container )
+	CWeaponTwoHandedContainer *container = dynamic_cast<CWeaponTwoHandedContainer *>(GetActiveWeapon());
+	if(!container)
 		return activity;
 
-	CWeaponCombatShield *pShield = dynamic_cast< CWeaponCombatShield * >( container->GetLeftWeapon() );
-	if ( !pShield )
+	CWeaponCombatShield *pShield = dynamic_cast<CWeaponCombatShield *>(container->GetLeftWeapon());
+	if(!pShield)
 	{
-		pShield =  dynamic_cast< CWeaponCombatShield * >( container->GetRightWeapon() );
-		if ( !pShield )
+		pShield = dynamic_cast<CWeaponCombatShield *>(container->GetRightWeapon());
+		if(!pShield)
 		{
 			return activity;
 		}
@@ -1075,24 +1065,24 @@ Activity CBaseTFPlayer::ShieldTranslateActivity( Activity activity )
 
 	float speed = GetAbsVelocity().Length2D();
 	bool isMoving = speed != 0 ? true : false;
-	//bool isRunning = speed > 75 ? true : false;
-	bool isDucked = ( GetFlags() & FL_DUCKING ) ? true : false;
+	// bool isRunning = speed > 75 ? true : false;
+	bool isDucked = (GetFlags() & FL_DUCKING) ? true : false;
 
 	int shieldState = pShield->GetShieldState();
 
 	float startframe = 0.0f;
 
 	bool movechanged = isMoving ^ m_bWasMoving;
-	if ( movechanged)
+	if(movechanged)
 	{
 		// Grab frame from overlay
-		if ( !isMoving )
+		if(!isMoving)
 		{
-			for ( int i = 0; i < MAX_OVERLAYS; i++ )
+			for(int i = 0; i < MAX_OVERLAYS; i++)
 			{
-				if ( IsShieldOverlay( GetLayerActivity( i ) ) )
+				if(IsShieldOverlay(GetLayerActivity(i)))
 				{
-					startframe = GetLayerCycle( i );
+					startframe = GetLayerCycle(i);
 				}
 			}
 
@@ -1100,22 +1090,22 @@ Activity CBaseTFPlayer::ShieldTranslateActivity( Activity activity )
 		}
 		else
 		{
-			switch ( GetActivity() )
+			switch(GetActivity())
 			{
-			case ACT_SHIELD_UP:
-			case ACT_SHIELD_DOWN:
-			case ACT_SHIELD_UP_IDLE:
-			case ACT_SHIELD_ATTACK:
-			//case ACT_SHIELD_KNOCKBACK:
-			case ACT_CROUCHING_SHIELD_UP:
-			case ACT_CROUCHING_SHIELD_DOWN:
-			case ACT_CROUCHING_SHIELD_UP_IDLE:
-			case ACT_CROUCHING_SHIELD_ATTACK:
-			//case ACT_CROUCHING_SHIELD_KNOCKBACK:
-				startframe = GetCycle();
-				break;
-			default:
-				break;
+				case ACT_SHIELD_UP:
+				case ACT_SHIELD_DOWN:
+				case ACT_SHIELD_UP_IDLE:
+				case ACT_SHIELD_ATTACK:
+				// case ACT_SHIELD_KNOCKBACK:
+				case ACT_CROUCHING_SHIELD_UP:
+				case ACT_CROUCHING_SHIELD_DOWN:
+				case ACT_CROUCHING_SHIELD_UP_IDLE:
+				case ACT_CROUCHING_SHIELD_ATTACK:
+					// case ACT_CROUCHING_SHIELD_KNOCKBACK:
+					startframe = GetCycle();
+					break;
+				default:
+					break;
 			}
 		}
 	}
@@ -1125,53 +1115,49 @@ Activity CBaseTFPlayer::ShieldTranslateActivity( Activity activity )
 	// Assume no overlay
 	int idx = -1;
 
-	switch ( shieldState )
+	switch(shieldState)
 	{
-	default:
-	case SS_DOWN:
-	case SS_UNAVAILABLE:
-		RemoveShieldOverlays();
-		// By default, remove shield overlays and don't do fixup
-		fixup = false;
-		break;
-	case SS_LOWERING:
+		default:
+		case SS_DOWN:
+		case SS_UNAVAILABLE:
+			RemoveShieldOverlays();
+			// By default, remove shield overlays and don't do fixup
+			fixup = false;
+			break;
+		case SS_LOWERING:
 		{
-			PickShieldAnimation( activity, idx, isMoving, isDucked,
-				ACT_OVERLAY_SHIELD_DOWN, ACT_CROUCHING_SHIELD_DOWN, ACT_SHIELD_DOWN,
-				true, 0.0f, 0.2f );
+			PickShieldAnimation(activity, idx, isMoving, isDucked, ACT_OVERLAY_SHIELD_DOWN, ACT_CROUCHING_SHIELD_DOWN,
+								ACT_SHIELD_DOWN, true, 0.0f, 0.2f);
 		}
 		break;
-	case SS_RAISING:
+		case SS_RAISING:
 		{
-			PickShieldAnimation( activity, idx, isMoving, isDucked,
-				ACT_OVERLAY_SHIELD_UP, ACT_CROUCHING_SHIELD_UP, ACT_SHIELD_UP,
-				true, 0.2f, 0.0f );
+			PickShieldAnimation(activity, idx, isMoving, isDucked, ACT_OVERLAY_SHIELD_UP, ACT_CROUCHING_SHIELD_UP,
+								ACT_SHIELD_UP, true, 0.2f, 0.0f);
 		}
 		break;
-	case SS_UP:
+		case SS_UP:
 		{
-			PickShieldAnimation( activity, idx, isMoving, isDucked,
-				ACT_OVERLAY_SHIELD_UP_IDLE, ACT_CROUCHING_SHIELD_UP_IDLE, ACT_SHIELD_UP_IDLE,
-				false );
+			PickShieldAnimation(activity, idx, isMoving, isDucked, ACT_OVERLAY_SHIELD_UP_IDLE,
+								ACT_CROUCHING_SHIELD_UP_IDLE, ACT_SHIELD_UP_IDLE, false);
 		}
 		break;
-	case SS_PARRYING:
+		case SS_PARRYING:
 		{
-			PickShieldAnimation( activity, idx, isMoving, isDucked,
-				ACT_OVERLAY_SHIELD_ATTACK, ACT_CROUCHING_SHIELD_ATTACK, ACT_SHIELD_ATTACK,
-				true, 0.1f, 0.1f );
+			PickShieldAnimation(activity, idx, isMoving, isDucked, ACT_OVERLAY_SHIELD_ATTACK,
+								ACT_CROUCHING_SHIELD_ATTACK, ACT_SHIELD_ATTACK, true, 0.1f, 0.1f);
 		}
 		break;
 	}
 
 	// If started or stopped moving and still using shield, match the cycle to/from the overlay/base animation
 	//  being used beforehand
-	if ( movechanged && fixup )
+	if(movechanged && fixup)
 	{
 		// Fixup overlay frame
-		if ( idx != -1 )
+		if(idx != -1)
 		{
-			SetLayerCycle( idx, startframe );
+			SetLayerCycle(idx, startframe);
 		}
 		else
 		{
@@ -1179,7 +1165,7 @@ Activity CBaseTFPlayer::ShieldTranslateActivity( Activity activity )
 			ResetSequenceInfo();
 
 			// Match start frame
-			SetCycle( startframe );
+			SetCycle(startframe);
 		}
 	}
 
@@ -1190,26 +1176,26 @@ Activity CBaseTFPlayer::ShieldTranslateActivity( Activity activity )
 	return activity;
 }
 
-void CBaseTFPlayer::StoreCycle( void )
+void CBaseTFPlayer::StoreCycle(void)
 {
 	m_flStoredCycle = GetCycle(); // !!!!!
 }
 
-float CBaseTFPlayer::RetrieveCycle( void )
+float CBaseTFPlayer::RetrieveCycle(void)
 {
 	return m_flStoredCycle;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Certain activities have matched cycles
-// Input  : newActivity - 
-//			currentActivity - 
+// Input  : newActivity -
+//			currentActivity -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CBaseTFPlayer::ShouldMatchCycles( Activity newActivity, Activity currentActivity )
+bool CBaseTFPlayer::ShouldMatchCycles(Activity newActivity, Activity currentActivity)
 {
-	if ( ( newActivity == ACT_WALK || newActivity == ACT_RUN ) &&
-		 ( currentActivity == ACT_WALK || currentActivity == ACT_RUN ) )
+	if((newActivity == ACT_WALK || newActivity == ACT_RUN) &&
+	   (currentActivity == ACT_WALK || currentActivity == ACT_RUN))
 	{
 		// Don't blend either
 		IncrementInterpolationFrame();
@@ -1223,7 +1209,7 @@ bool CBaseTFPlayer::ShouldMatchCycles( Activity newActivity, Activity currentAct
 //-----------------------------------------------------------------------------
 // Purpose: Set the activity based on an event or current state
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::SetAnimation( PLAYER_ANIM playerAnim )
+void CBaseTFPlayer::SetAnimation(PLAYER_ANIM playerAnim)
 {
 	// Assume no change
 	Activity idealActivity = GetActivity();
@@ -1231,128 +1217,128 @@ void CBaseTFPlayer::SetAnimation( PLAYER_ANIM playerAnim )
 
 	float speed = GetAbsVelocity().Length2D();
 
-	bool isMoving = ( speed != 0.0f ) ? true : false;
+	bool isMoving = (speed != 0.0f) ? true : false;
 	bool isRunning = false;
-	
-	if ( GetPlayerClass()  )
+
+	if(GetPlayerClass())
 	{
-// FIXME: TF2 makes no distinction between walking and running for now,
-//  use the run animation always
-		if ( speed > 10.0f )
+		// FIXME: TF2 makes no distinction between walking and running for now,
+		//  use the run animation always
+		if(speed > 10.0f)
 		{
 			isRunning = true;
 		}
 	}
 	else
 	{
-		if ( speed > ARBITRARY_RUN_SPEED )
+		if(speed > ARBITRARY_RUN_SPEED)
 		{
 			isRunning = true;
 		}
 	}
 
-	bool isDucked = ( GetFlags() & FL_DUCKING ) ? true : false;
-	bool isStillJumping = !( GetFlags() & FL_ONGROUND ) && ( GetActivity() == ACT_HOP );
+	bool isDucked = (GetFlags() & FL_DUCKING) ? true : false;
+	bool isStillJumping = !(GetFlags() & FL_ONGROUND) && (GetActivity() == ACT_HOP);
 
 	StoreCycle();
 
 	// Decide upon an animation activity based upon the desired Player animation
-	switch ( playerAnim )
+	switch(playerAnim)
 	{
-	default:
-	case PLAYER_RELOAD:
-	case PLAYER_ATTACK1:
-	case PLAYER_IDLE:
-	case PLAYER_WALK:
-		// Are we still jumping?
-		// If so, keep playing the jump animation.
-		if ( !isStillJumping )
-		{
-			idealActivity = ACT_WALK;
-
-			if ( isDucked )
+		default:
+		case PLAYER_RELOAD:
+		case PLAYER_ATTACK1:
+		case PLAYER_IDLE:
+		case PLAYER_WALK:
+			// Are we still jumping?
+			// If so, keep playing the jump animation.
+			if(!isStillJumping)
 			{
-				idealActivity = !isMoving ? ACT_CROUCHIDLE : ACT_CROUCH;
-			}
-			else
-			{
+				idealActivity = ACT_WALK;
 
-				if ( isRunning )
+				if(isDucked)
 				{
-					idealActivity = ACT_RUN;
+					idealActivity = !isMoving ? ACT_CROUCHIDLE : ACT_CROUCH;
 				}
 				else
 				{
-					idealActivity = isMoving ? ACT_WALK : ACT_IDLE;
+
+					if(isRunning)
+					{
+						idealActivity = ACT_RUN;
+					}
+					else
+					{
+						idealActivity = isMoving ? ACT_WALK : ACT_IDLE;
+					}
 				}
+
+				// Allow shield to override
+				idealActivity = ShieldTranslateActivity(idealActivity);
+				// Allow body yaw to override for standing and turning in place
+				idealActivity = m_PlayerAnimState.BodyYawTranslateActivity(idealActivity);
 			}
+			break;
 
-			// Allow shield to override
-			idealActivity = ShieldTranslateActivity( idealActivity );
-			// Allow body yaw to override for standing and turning in place
-			idealActivity = m_PlayerAnimState.BodyYawTranslateActivity( idealActivity );
-		}
-		break;
+		case PLAYER_IN_VEHICLE:
+			// For now, use manned gun pose for all vehicles
+			idealActivity = ACT_RIDE_MANNED_GUN;
+			break;
 
-	case PLAYER_IN_VEHICLE:
-		// For now, use manned gun pose for all vehicles
-		idealActivity = ACT_RIDE_MANNED_GUN;
-		break;
+		case PLAYER_JUMP:
+			idealActivity = ACT_HOP;
+			break;
 
-	case PLAYER_JUMP:
-		idealActivity = ACT_HOP;
-		break;
+		case PLAYER_DIE:
+			// Uses Ragdoll now???
+			idealActivity = ACT_DIESIMPLE;
+			break;
 
-	case PLAYER_DIE:
-		// Uses Ragdoll now???
-		idealActivity = ACT_DIESIMPLE;
-		break;
-
-	// FIXME:  Use overlays for reload, start/leave aiming, attacking
-	case PLAYER_START_AIMING:
-	case PLAYER_LEAVE_AIMING:
-		idealActivity = ACT_WALK;
-		break;
+		// FIXME:  Use overlays for reload, start/leave aiming, attacking
+		case PLAYER_START_AIMING:
+		case PLAYER_LEAVE_AIMING:
+			idealActivity = ACT_WALK;
+			break;
 	}
 
 	// No change requested?
-	if ( ( GetActivity() == idealActivity ) && ( GetSequence() != -1 ) )
+	if((GetActivity() == idealActivity) && (GetSequence() != -1))
 		return;
 
-	bool useStoredCycle = ShouldMatchCycles( idealActivity, GetActivity() );
+	bool useStoredCycle = ShouldMatchCycles(idealActivity, GetActivity());
 
-	animDesired = SelectWeightedSequence( idealActivity );
+	animDesired = SelectWeightedSequence(idealActivity);
 
-	SetActivity( idealActivity );
+	SetActivity(idealActivity);
 
 	// Already using the desired animation?
-	if ( GetSequence() == animDesired )
+	if(GetSequence() == animDesired)
 		return;
 
-	ResetSequence( animDesired );
+	ResetSequence(animDesired);
 
 	// Reset to first frame of desired animation or match previous animation if activities are
 	//  meant to synchronize
-	SetCycle( useStoredCycle ? RetrieveCycle() : 0 );
+	SetCycle(useStoredCycle ? RetrieveCycle() : 0);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::CheatImpulseCommands( int iImpulse )
+void CBaseTFPlayer::CheatImpulseCommands(int iImpulse)
 {
 	switch(iImpulse)
 	{
 		case 101:
-			if ( GetPlayerClass() )
+			if(GetPlayerClass())
 			{
-				GetPlayerClass()->ResupplyAmmo( 1.0f, RESUPPLY_ALL_FROM_STATION );
+				GetPlayerClass()->ResupplyAmmo(1.0f, RESUPPLY_ALL_FROM_STATION);
 			}
 			break;
 
 		case 150:
-			if ( GetTFTeam() )
-				GetTFTeam()->PostMessage( TEAMMSG_REINFORCEMENTS_ARRIVED );
+			if(GetTFTeam())
+				GetTFTeam()->PostMessage(TEAMMSG_REINFORCEMENTS_ARRIVED);
 			break;
 
 		default:
@@ -1362,21 +1348,21 @@ void CBaseTFPlayer::CheatImpulseCommands( int iImpulse )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::SetRespawnStation( CBaseEntity* pRespawnStation )
+void CBaseTFPlayer::SetRespawnStation(CBaseEntity *pRespawnStation)
 {
 	// This can happen because the object may get killed and its index reused
-	// between time the message was sent and the 
-	if( !pRespawnStation || !FClassnameIs( pRespawnStation, "obj_respawn_station" ) )
+	// between time the message was sent and the
+	if(!pRespawnStation || !FClassnameIs(pRespawnStation, "obj_respawn_station"))
 		return;
 
 	// Team could have changed (stolen object)
-	if ( GetTeam() != pRespawnStation->GetTeam() )
+	if(GetTeam() != pRespawnStation->GetTeam())
 		return;
 
 	// If the respawn station is the same one, then unselect!
-	if ( pRespawnStation != m_hSpawnPoint )
+	if(pRespawnStation != m_hSpawnPoint)
 	{
 		// Make sure the respawn station is a respawn station; it could be some
 		m_hSpawnPoint = pRespawnStation;
@@ -1387,31 +1373,30 @@ void CBaseTFPlayer::SetRespawnStation( CBaseEntity* pRespawnStation )
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Find a starting respawn station
 //-----------------------------------------------------------------------------
-CBaseEntity *CBaseTFPlayer::GetInitialSpawnPoint( void )
+CBaseEntity *CBaseTFPlayer::GetInitialSpawnPoint(void)
 {
-	if ( !GetTFTeam() )
+	if(!GetTFTeam())
 		return NULL;
 
 	CBaseEntity *pFirstStation = NULL;
 
 	// Cycle through all the respawn stations on my team
-	for ( int i = 0; i < GetTFTeam()->GetNumObjects(); i++ )
+	for(int i = 0; i < GetTFTeam()->GetNumObjects(); i++)
 	{
 		CBaseObject *pObject = GetTFTeam()->GetObject(i);
-		if ( pObject->GetType() == OBJ_RESPAWN_STATION )
+		if(pObject->GetType() == OBJ_RESPAWN_STATION)
 		{
 			// Store off the first station we find
-			if ( !pFirstStation )
+			if(!pFirstStation)
 			{
 				pFirstStation = pObject;
 			}
 
 			// Map specified initial spawnpoint?
-			if ( ((CObjectRespawnStation*)pObject)->IsInitialSpawnPoint() )
+			if(((CObjectRespawnStation *)pObject)->IsInitialSpawnPoint())
 				return pObject;
 		}
 	}
@@ -1419,313 +1404,309 @@ CBaseEntity *CBaseTFPlayer::GetInitialSpawnPoint( void )
 	return pFirstStation;
 }
 
-
-
-CBaseEntity *FindEntityForward( CBasePlayer *pMe, bool fHull );
+CBaseEntity *FindEntityForward(CBasePlayer *pMe, bool fHull);
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CBaseTFPlayer::ClientCommand( const CCommand &args )
+bool CBaseTFPlayer::ClientCommand(const CCommand &args)
 {
-	if( HasClass() )
+	if(HasClass())
 	{
-		if ( GetPlayerClass()->ClientCommand( args ) )
+		if(GetPlayerClass()->ClientCommand(args))
 			return true;
 
 		const char *cmd = args[0];
-		if ( FStrEq( cmd, "emp" ) )
+		if(FStrEq(cmd, "emp"))
 		{
-			Msg( "Self-inflicted EMP:  testing\n" );
+			Msg("Self-inflicted EMP:  testing\n");
 			float flTime = 10;
-			if ( args.ArgC() == 2 )
+			if(args.ArgC() == 2)
 			{
-				flTime = atof( args[ 1 ] );
+				flTime = atof(args[1]);
 			}
 
-			AttemptToPowerup( POWERUP_EMP, flTime );
+			AttemptToPowerup(POWERUP_EMP, flTime);
 			return true;
 		}
 
-		if ( FStrEq( cmd, "emp_target" ) )
+		if(FStrEq(cmd, "emp_target"))
 		{
-			CBaseEntity *pEntity = FindEntityForward( this, true );
-			if ( pEntity && pEntity->CanBePoweredUp() )
+			CBaseEntity *pEntity = FindEntityForward(this, true);
+			if(pEntity && pEntity->CanBePoweredUp())
 			{
 				float flTime = 10;
-				if ( args.ArgC() == 2 )
+				if(args.ArgC() == 2)
 				{
-					flTime = atof( args[ 1 ] );
+					flTime = atof(args[1]);
 				}
-				pEntity->AttemptToPowerup( POWERUP_EMP, flTime );
+				pEntity->AttemptToPowerup(POWERUP_EMP, flTime);
 			}
 			return true;
 		}
 
-		if ( FStrEq( cmd, "dmg_target" ) )
+		if(FStrEq(cmd, "dmg_target"))
 		{
-			CBaseEntity *pEntity = FindEntityForward( this, true );
-			if ( pEntity && pEntity->m_takedamage )
+			CBaseEntity *pEntity = FindEntityForward(this, true);
+			if(pEntity && pEntity->m_takedamage)
 			{
 				float flDamage = 1;
-				if ( args.ArgC() == 2 )
+				if(args.ArgC() == 2)
 				{
-					flDamage = atof( args[ 1 ] );
+					flDamage = atof(args[1]);
 				}
-				CBaseEntity *world = CBaseEntity::Instance( engine->PEntityOfEntIndex( 0 ) );
-				if ( world )
+				CBaseEntity *world = CBaseEntity::Instance(engine->PEntityOfEntIndex(0));
+				if(world)
 				{
-					pEntity->OnTakeDamage( CTakeDamageInfo( world, world, flDamage, DMG_GENERIC ) );
+					pEntity->OnTakeDamage(CTakeDamageInfo(world, world, flDamage, DMG_GENERIC));
 				}
 			}
 			return true;
 		}
 	}
 
-	if ( !stricmp( cmd, "kd" ) )
+	if(!stricmp(cmd, "kd"))
 	{
-		Vector force( 0, 0, 0 );
-		if ( args.ArgC() == 1 )
+		Vector force(0, 0, 0);
+		if(args.ArgC() == 1)
 		{
-			force.x = random->RandomFloat( 0.5, 1.0 );
-			force.y = random->RandomFloat( 0.5, 1.0 );
+			force.x = random->RandomFloat(0.5, 1.0);
+			force.y = random->RandomFloat(0.5, 1.0);
 
-			if ( random->RandomFloat( 0, 1 ) > 0.5 )
+			if(random->RandomFloat(0, 1) > 0.5)
 			{
 				force.x *= -1.0f;
 			}
-			if ( random->RandomFloat( 0, 1 ) > 0.5 )
+			if(random->RandomFloat(0, 1) > 0.5)
 			{
 				force.y *= -1.0f;
 			}
-			force.z = random->RandomFloat( 0.5, 1.0 );
+			force.z = random->RandomFloat(0.5, 1.0);
 		}
 		else
 		{
 			Vector fwd;
 			Vector right;
-			AngleVectors( GetAbsAngles(), &fwd, &right, NULL );
+			AngleVectors(GetAbsAngles(), &fwd, &right, NULL);
 
-			if ( !stricmp( args[ 1 ], "f" ) )
+			if(!stricmp(args[1], "f"))
 			{
 				force = fwd * -1.0f;
 			}
-			else if ( !stricmp( args[ 1 ], "b" ) )
+			else if(!stricmp(args[1], "b"))
 			{
 				force = fwd;
 			}
-			else if ( !stricmp( args[ 1 ], "r" ) )
+			else if(!stricmp(args[1], "r"))
 			{
 				force = right * -1.0f;
-			}			
-			else if ( !stricmp( args[ 1 ], "l" ) )
+			}
+			else if(!stricmp(args[1], "l"))
 			{
 				force = right;
 			}
-			else if ( !stricmp( args[ 1 ], "fr" ) )
+			else if(!stricmp(args[1], "fr"))
 			{
 				force = fwd * -1.0f;
 				force += right * -1.0f;
 			}
-			else if ( !stricmp( args[ 1 ], "br" ) )
+			else if(!stricmp(args[1], "br"))
 			{
 				force = fwd;
 				force += right * -1.0f;
 			}
-			else if ( !stricmp( args[ 1 ], "fl" ) )
+			else if(!stricmp(args[1], "fl"))
 			{
 				force = fwd * -1.0f;
 				force += right;
-			}			
-			else if ( !stricmp( args[ 1 ], "bl" ) )
+			}
+			else if(!stricmp(args[1], "bl"))
 			{
 				force = fwd;
 				force += right;
 			}
 
 			force.z = 0.8f;
-			VectorNormalize( force );
+			VectorNormalize(force);
 		}
 
-		KnockDownPlayer( force, 500.0f, 3.0f );
+		KnockDownPlayer(force, 500.0f, 3.0f);
 		return true;
 	}
 
-	if ( FStrEq( cmd, "veryweak" ) )
+	if(FStrEq(cmd, "veryweak"))
 	{
 		int ouch = m_iHealth - 1;
 
-		CBaseEntity *world = CBaseEntity::Instance( engine->PEntityOfEntIndex( 0 ) );
-		if ( world )
+		CBaseEntity *world = CBaseEntity::Instance(engine->PEntityOfEntIndex(0));
+		if(world)
 		{
-			OnTakeDamage( CTakeDamageInfo( world, world, (float)ouch, DMG_GENERIC ) );
+			OnTakeDamage(CTakeDamageInfo(world, world, (float)ouch, DMG_GENERIC));
 		}
 
 		return true;
 	}
 
-	if ( FStrEq( cmd, "ragdoll" ) )
+	if(FStrEq(cmd, "ragdoll"))
 	{
 		bool on = true;
-		
-		if ( args.ArgC() >= 2 )
+
+		if(args.ArgC() >= 2)
 		{
-			on = atoi( args[ 1 ] ) ? true : false;
+			on = atoi(args[1]) ? true : false;
 		}
 
-		if ( on )
+		if(on)
 		{
-			Vector force = RandomVector( -500, 500 );
-			force.z = fabs( force.z );
-			force.z = MIN( 200.0f, force.z );
+			Vector force = RandomVector(-500, 500);
+			force.z = fabs(force.z);
+			force.z = MIN(200.0f, force.z);
 
-			BecomeRagdollOnClient( force );
+			BecomeRagdollOnClient(force);
 		}
 		else
 		{
-			ClearClientRagdoll( true );
+			ClearClientRagdoll(true);
 		}
 		return true;
 	}
 
-	if ( FStrEq( cmd, "hbset" ) )
+	if(FStrEq(cmd, "hbset"))
 	{
-		if ( args.ArgC() >= 2 )
+		if(args.ArgC() >= 2)
 		{
-			SetHitboxSet( atoi( args[ 1 ] ) );
-			Msg( "Hitboxset forced to %i %s\n", GetHitboxSet(), GetHitboxSetName() );
+			SetHitboxSet(atoi(args[1]));
+			Msg("Hitboxset forced to %i %s\n", GetHitboxSet(), GetHitboxSetName());
 		}
 
 		return true;
 	}
 
-	return BaseClass::ClientCommand( args );
+	return BaseClass::ClientCommand(args);
 }
-
 
 //=========================================================
 // Purpose: Override base TraceAttack
 //=========================================================
-void CBaseTFPlayer::TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr )
+void CBaseTFPlayer::TraceAttack(const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr)
 {
-	if ( m_takedamage )
+	if(m_takedamage)
 	{
 		// Prevent team damage here so blood doesn't appear
-		if ( info.GetAttacker() )
+		if(info.GetAttacker())
 		{
 			// Take damage from myself
-			if ( InSameTeam( info.GetAttacker() ) && info.GetAttacker() != this )
+			if(InSameTeam(info.GetAttacker()) && info.GetAttacker() != this)
 				return;
 		}
 
 		// If we hit our shield, ignore the damage
 		float flDamage = info.GetDamage();
-		if ( IsHittingShield( vecDir, &flDamage ))
+		if(IsHittingShield(vecDir, &flDamage))
 			return;
 
 		// Shield may have blocked some
 		CTakeDamageInfo subInfo = info;
-		subInfo.SetDamage( flDamage );
+		subInfo.SetDamage(flDamage);
 
-		SetLastHitGroup( ptr->hitgroup );
+		SetLastHitGroup(ptr->hitgroup);
 
 		// Hit groups aren't evaluated here, like base TraceAttack.
 		// Weapons factor hit location into flDamage before it gets here
-/*		//SpawnBlood( ptr->endpos - (vecDir * 5), BloodColor(), subInfo.GetDamage() );
-		//TraceBleed( subInfo.GetDamage(), vecDir, ptr, subInfo.GetDamageType() );
+		/*		//SpawnBlood( ptr->endpos - (vecDir * 5), BloodColor(), subInfo.GetDamage() );
+				//TraceBleed( subInfo.GetDamage(), vecDir, ptr, subInfo.GetDamageType() );
 
-		// Show the personal shield effect.
-		// What we do here is collide the trace line with an ellipse that is slightly larger
-		// than the player and put the effect there.
-		
-		// Translate the line so the player's (and the ellipse's) center is at the origin.
-		Vector vCenter = Center();
-		Vector vStart = ptr->startpos - vCenter;
-		Vector vEnd = ptr->endpos - vCenter;
+				// Show the personal shield effect.
+				// What we do here is collide the trace line with an ellipse that is slightly larger
+				// than the player and put the effect there.
 
-		// Figure out the ellipse dimensions.
-		Vector vDims = (WorldAlignMaxs() - WorldAlignMins()) * 0.5f;
-		Vector vEllipse = vDims * 1.5;
-		
-		// Squash the line we're testing so we're testing against a sphere of radius 1 at the origin.
-		vStart /= vEllipse;
-		vEnd /= vEllipse;
+				// Translate the line so the player's (and the ellipse's) center is at the origin.
+				Vector vCenter = Center();
+				Vector vStart = ptr->startpos - vCenter;
+				Vector vEnd = ptr->endpos - vCenter;
 
-		// See where the line hits the sphere.
-		Vector vLineDir = vEnd - vStart;
-		float f1, f2;
-		if ( IntersectInfiniteRayWithSphere( vStart, vLineDir, vec3_origin, 1, &f1, &f2 ) )
-		{
-			// Use the closest hit point on the sphere.
-			float fMin = MIN( f1, f2 );
-			Vector vPos = vStart + vLineDir * fMin;
+				// Figure out the ellipse dimensions.
+				Vector vDims = (WorldAlignMaxs() - WorldAlignMins()) * 0.5f;
+				Vector vEllipse = vDims * 1.5;
 
-			// Unsquash back to the ellipse's dimensions.
-			vPos *= vEllipse;
+				// Squash the line we're testing so we're testing against a sphere of radius 1 at the origin.
+				vStart /= vEllipse;
+				vEnd /= vEllipse;
 
-			ShowPersonalShieldEffect( vPos, vecDir, subInfo.GetDamage() );
-		}
-*/
-		
-		AddMultiDamage( subInfo, this );
+				// See where the line hits the sphere.
+				Vector vLineDir = vEnd - vStart;
+				float f1, f2;
+				if ( IntersectInfiniteRayWithSphere( vStart, vLineDir, vec3_origin, 1, &f1, &f2 ) )
+				{
+					// Use the closest hit point on the sphere.
+					float fMin = MIN( f1, f2 );
+					Vector vPos = vStart + vLineDir * fMin;
+
+					// Unsquash back to the ellipse's dimensions.
+					vPos *= vEllipse;
+
+					ShowPersonalShieldEffect( vPos, vecDir, subInfo.GetDamage() );
+				}
+		*/
+
+		AddMultiDamage(subInfo, this);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Applies a force on the player when he takes damage
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::ApplyDamageForce( const CTakeDamageInfo &info, int nDamageToDo )
+void CBaseTFPlayer::ApplyDamageForce(const CTakeDamageInfo &info, int nDamageToDo)
 {
-	if (nDamageToDo <= 0)
+	if(nDamageToDo <= 0)
 		return;
 
-	if ( (info.GetDamageType() & (DMG_ENERGYBEAM | DMG_BLAST)) == 0 )
+	if((info.GetDamageType() & (DMG_ENERGYBEAM | DMG_BLAST)) == 0)
 		return;
 
-	if ( !info.GetInflictor() || (info.GetInflictor() == this) || info.GetAttacker()->IsSolidFlagSet(FSOLID_TRIGGER) )
+	if(!info.GetInflictor() || (info.GetInflictor() == this) || info.GetAttacker()->IsSolidFlagSet(FSOLID_TRIGGER))
 		return;
 
 	// Don't blow ragdolls around
-	if ( IsClientRagdoll() )
+	if(IsClientRagdoll())
 		return;
 
 	// Don't bother with crouched players, or classes that have other rules about it
-	if ( GetFlags() & FL_DUCKING )
+	if(GetFlags() & FL_DUCKING)
 		return;
 
-	if (!GetPlayerClass() || !GetPlayerClass()->ShouldApplyDamageForce( info ))
+	if(!GetPlayerClass() || !GetPlayerClass()->ShouldApplyDamageForce(info))
 		return;
 
 	Vector vecDir;
 	// If the inflictor isn't moving, use the delta between it & me. If it's moving, use it's velocity.
 	Vector vecInflictorVelocity;
-	info.GetInflictor()->GetVelocity( &vecInflictorVelocity, NULL );
+	info.GetInflictor()->GetVelocity(&vecInflictorVelocity, NULL);
 
 	// Explosives never use the velocity of the inflictor
-	if ( !(info.GetDamageType() & DMG_BLAST) && vecInflictorVelocity != vec3_origin )
+	if(!(info.GetDamageType() & DMG_BLAST) && vecInflictorVelocity != vec3_origin)
 	{
 		vecDir = vecInflictorVelocity;
 	}
 	else
 	{
-		vecDir = WorldSpaceCenter( );
-		vecDir -= info.GetInflictor()->WorldSpaceCenter( );
+		vecDir = WorldSpaceCenter();
+		vecDir -= info.GetInflictor()->WorldSpaceCenter();
 	}
-	VectorNormalize( vecDir );
+	VectorNormalize(vecDir);
 
 	float flForce = (nDamageToDo * 2) + 20;
-	if (flForce > 1000.0) 
+	if(flForce > 1000.0)
 		flForce = 1000.0;
 
 	// Escorts get knocked half as far
-	if ( PlayerClass() == TFCLASS_ESCORT )
+	if(PlayerClass() == TFCLASS_ESCORT)
 	{
 		flForce *= 0.5;
 	}
-	
+
 	vecDir *= flForce;
 
-	if ( (GetMoveType() != MOVETYPE_FLY) && (GetMoveType() != MOVETYPE_FLYGRAVITY) && ((GetFlags() & FL_ONGROUND) != 0) )
+	if((GetMoveType() != MOVETYPE_FLY) && (GetMoveType() != MOVETYPE_FLYGRAVITY) && ((GetFlags() & FL_ONGROUND) != 0))
 	{
 		// Need large x-y component to overcome walking	friction
 		vecDir.x *= 3;
@@ -1736,60 +1717,57 @@ void CBaseTFPlayer::ApplyDamageForce( const CTakeDamageInfo &info, int nDamageTo
 	vecNewVelocity += vecDir;
 
 	Vector vecTestVel = vecNewVelocity;
-	float flLen = VectorNormalize( vecTestVel );
-	if (flLen > MAX_EXPLOSIVE_VELOCITY)
-		VectorMultiply( vecTestVel, MAX_EXPLOSIVE_VELOCITY, vecNewVelocity );
+	float flLen = VectorNormalize(vecTestVel);
+	if(flLen > MAX_EXPLOSIVE_VELOCITY)
+		VectorMultiply(vecTestVel, MAX_EXPLOSIVE_VELOCITY, vecNewVelocity);
 
-	SetAbsVelocity( vecNewVelocity );
+	SetAbsVelocity(vecNewVelocity);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Deal damage to the player
 //-----------------------------------------------------------------------------
-int CBaseTFPlayer::OnTakeDamage( const CTakeDamageInfo &info )
+int CBaseTFPlayer::OnTakeDamage(const CTakeDamageInfo &info)
 {
-	if ( !IsAlive() )
+	if(!IsAlive())
 		return 0;
 
-	//if ( GetFlags() & FL_GODMODE )
-		//return 0;
+	// if ( GetFlags() & FL_GODMODE )
+	// return 0;
 
 	// Generate a global order event.
 	COrderEvent_PlayerDamaged event;
 	event.m_pPlayerDamaged = this;
 	event.m_TakeDamageInfo = info;
-	GlobalOrderEvent( &event );	
+	GlobalOrderEvent(&event);
 
 	// Don't do damage if the player's in a vehicle, in a non-damagable spot.
-	if ( IsInAVehicle() && m_hVehicle.Get() )
+	if(IsInAVehicle() && m_hVehicle.Get())
 	{
-		IServerVehicle* pVehicle = m_hVehicle.Get()->GetServerVehicle();
-		Assert( pVehicle );
+		IServerVehicle *pVehicle = m_hVehicle.Get()->GetServerVehicle();
+		Assert(pVehicle);
 		int nRole = pVehicle->GetPassengerRole(this);
 
-		if( ( nRole < 0 ) 
-		 || !pVehicle->IsPassengerVisible(nRole)
-		 || !pVehicle->IsPassengerDamagable(nRole) )
+		if((nRole < 0) || !pVehicle->IsPassengerVisible(nRole) || !pVehicle->IsPassengerDamagable(nRole))
 		{
 			return 0;
 		}
 	}
 
 	// Check teams
-	CBaseTFPlayer *pPlayer = (CBaseTFPlayer*)info.GetAttacker();
-	if ( pPlayer )
+	CBaseTFPlayer *pPlayer = (CBaseTFPlayer *)info.GetAttacker();
+	if(pPlayer)
 	{
 		// Take damage from myself
-		if ( pPlayer != this )
+		if(pPlayer != this)
 		{
-			if ( InSameTeam(pPlayer) )
+			if(InSameTeam(pPlayer))
 			{
 				return 0;
 			}
 			else
 			{
-				// Store off the last time we were damaged by an enemy so commandos can 
+				// Store off the last time we were damaged by an enemy so commandos can
 				// get orders to assist.
 				m_flLastTimeDamagedByEnemy = gpGlobals->curtime;
 			}
@@ -1799,151 +1777,146 @@ int CBaseTFPlayer::OnTakeDamage( const CTakeDamageInfo &info )
 	CTakeDamageInfo subInfo = info;
 
 	// Let the playerclass at it
-	if ( GetPlayerClass()  )
+	if(GetPlayerClass())
 	{
-		subInfo.SetDamage( GetPlayerClass()->OnTakeDamage( subInfo ) );
+		subInfo.SetDamage(GetPlayerClass()->OnTakeDamage(subInfo));
 	}
 
-	if ( !subInfo.GetDamage() )
+	if(!subInfo.GetDamage())
 		return 0;
 
-	//Msg( "Weapon did: %f\n", flDamage );
+	// Msg( "Weapon did: %f\n", flDamage );
 
-	int iDamageToDo = Ceil2Int( subInfo.GetDamage() );
+	int iDamageToDo = Ceil2Int(subInfo.GetDamage());
 
-	if ( !(GetFlags() & FL_GODMODE) )
+	if(!(GetFlags() & FL_GODMODE))
 	{
 		// Only certain damage types knock players around
-		ApplyDamageForce( info, iDamageToDo );
+		ApplyDamageForce(info, iDamageToDo);
 
 		m_iHealth = MAX(0, m_iHealth - iDamageToDo);
 	}
 
-	//Msg( "m_iHealth: %d\n\n", m_iHealth );
+	// Msg( "m_iHealth: %d\n\n", m_iHealth );
 
 	// Dead?
-	if ( m_iHealth < 1 )
+	if(m_iHealth < 1)
 	{
-		Event_Killed( subInfo );
+		Event_Killed(subInfo);
 	}
 
 	// Let the client know
 	// Try and figure out where the damage is coming from
 	Vector vecDamageOrigin = info.GetReportedPosition();
 	// If we didn't get an origin to use, try using the attacker's origin
-	if ( vecDamageOrigin == vec3_origin && info.GetAttacker() )
+	if(vecDamageOrigin == vec3_origin && info.GetAttacker())
 	{
 		vecDamageOrigin = info.GetAttacker()->GetAbsOrigin();
 	}
 
-	CSingleUserRecipientFilter user( this );
-	UserMessageBegin( user, "Damage" );
-		WRITE_BYTE( clamp( iDamageToDo, 0, 255 ) );
-		WRITE_FLOAT( vecDamageOrigin.x );	// BUG: Should be fixed point (to hud) not floats
-		WRITE_FLOAT( vecDamageOrigin.y );	// BUG: However, the HUD does _not_ implement bitfield messages (yet)
-		WRITE_FLOAT( vecDamageOrigin.z );	// BUG: We use WRITE_VEC3COORD for everything else
+	CSingleUserRecipientFilter user(this);
+	UserMessageBegin(user, "Damage");
+	WRITE_BYTE(clamp(iDamageToDo, 0, 255));
+	WRITE_FLOAT(vecDamageOrigin.x); // BUG: Should be fixed point (to hud) not floats
+	WRITE_FLOAT(vecDamageOrigin.y); // BUG: However, the HUD does _not_ implement bitfield messages (yet)
+	WRITE_FLOAT(vecDamageOrigin.z); // BUG: We use WRITE_VEC3COORD for everything else
 	MessageEnd();
 
 	// Do special explosion damage effect
-	if ( info.GetDamageType() & DMG_BLAST )
+	if(info.GetDamageType() & DMG_BLAST)
 	{
-		OnDamagedByExplosion( info );
+		OnDamagedByExplosion(info);
 	}
 
 	return iDamageToDo;
 }
 
-
-void CBaseTFPlayer::ShowPersonalShieldEffect( 
-	const Vector &vOffsetFromEnt, 
-	const Vector &vIncomingDirection, 
-	float flDamage )
+void CBaseTFPlayer::ShowPersonalShieldEffect(const Vector &vOffsetFromEnt, const Vector &vIncomingDirection,
+											 float flDamage)
 {
 	Vector vNormalized = vIncomingDirection;
-	VectorNormalize( vNormalized );
+	VectorNormalize(vNormalized);
 
-	EntityMessageBegin( this );
-		WRITE_BYTE( PLAYER_MSG_PERSONAL_SHIELD );
-		WRITE_VEC3COORD( vOffsetFromEnt );
-		WRITE_VEC3NORMAL( vNormalized );
-		WRITE_SHORT( (short)flDamage );
+	EntityMessageBegin(this);
+	WRITE_BYTE(PLAYER_MSG_PERSONAL_SHIELD);
+	WRITE_VEC3COORD(vOffsetFromEnt);
+	WRITE_VEC3NORMAL(vNormalized);
+	WRITE_SHORT((short)flDamage);
 	MessageEnd();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Player is being healed
 //-----------------------------------------------------------------------------
-int CBaseTFPlayer::TakeHealth( float flHealth, int bitsDamageType )
+int CBaseTFPlayer::TakeHealth(float flHealth, int bitsDamageType)
 {
-	if ( m_iHealth == m_iMaxHealth )
+	if(m_iHealth == m_iMaxHealth)
 		return 0;
 
 	// Heal the location
 	float flAmountToHeal = flHealth;
-	if ( flAmountToHeal > (m_iMaxHealth - m_iHealth) )
+	if(flAmountToHeal > (m_iMaxHealth - m_iHealth))
 		flAmountToHeal = (m_iMaxHealth - m_iHealth);
 	m_iHealth += flAmountToHeal;
 
-	//Msg( "Health: %d\n", m_iHealth );
+	// Msg( "Health: %d\n", m_iHealth );
 
 	return flAmountToHeal;
 }
 
-
 //=====================================================================
 // MENU HANDLING
 //=====================================================================
-void CBaseTFPlayer::MenuDisplay( void )	
+void CBaseTFPlayer::MenuDisplay(void)
 {
-	if ( !m_pCurrentMenu )
+	if(!m_pCurrentMenu)
 	{
 		m_MenuRefreshTime = 0;
 		return;
 	}
 
-	if ( m_MenuRefreshTime > gpGlobals->curtime )
+	if(m_MenuRefreshTime > gpGlobals->curtime)
 	{
 		// guard against sudden clock changes
-		m_MenuRefreshTime = MIN( m_MenuRefreshTime, gpGlobals->curtime + MENU_UPDATETIME );
+		m_MenuRefreshTime = MIN(m_MenuRefreshTime, gpGlobals->curtime + MENU_UPDATETIME);
 		return;
 	}
 
 	m_MenuRefreshTime = gpGlobals->curtime + MENU_UPDATETIME;
 
-	if ( m_pCurrentMenu )
-		m_pCurrentMenu->Display( this );
+	if(m_pCurrentMenu)
+		m_pCurrentMenu->Display(this);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CBaseTFPlayer::MenuInput( int iInput )
+bool CBaseTFPlayer::MenuInput(int iInput)
 {
-	if ( m_pCurrentMenu )
+	if(m_pCurrentMenu)
 	{
-		return m_pCurrentMenu->Input( this, iInput );
+		return m_pCurrentMenu->Input(this, iInput);
 	}
 
 	return false;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::MenuReset( void )
+void CBaseTFPlayer::MenuReset(void)
 {
-	CSingleUserRecipientFilter user( this );
+	CSingleUserRecipientFilter user(this);
 	user.MakeReliable();
 
-	UserMessageBegin( user, "ShowMenu" );
-		WRITE_SHORT( 0 );  
-		WRITE_CHAR( 0 );		// display time (-1 means unlimited)
-		WRITE_BYTE( false );	// is there more message to come? no
-		WRITE_STRING( "" );
+	UserMessageBegin(user, "ShowMenu");
+	WRITE_SHORT(0);
+	WRITE_CHAR(0);	   // display time (-1 means unlimited)
+	WRITE_BYTE(false); // is there more message to come? no
+	WRITE_STRING("");
 	MessageEnd();
 
-	Q_strncpy( m_MenuStringBuffer, "" ,  sizeof(m_MenuStringBuffer) );
+	Q_strncpy(m_MenuStringBuffer, "", sizeof(m_MenuStringBuffer));
 	m_MenuRefreshTime = m_MenuDisplayTime = 0;
 
 	m_pCurrentMenu = NULL;
@@ -1953,61 +1926,61 @@ void CBaseTFPlayer::MenuReset( void )
 // Purpose: Enables/disables tactical/map view for the player
 // Input  : bTactical - true == enable it
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::ShowTacticalView( bool bTactical )
+void CBaseTFPlayer::ShowTacticalView(bool bTactical)
 {
 	// TODO:  Decide if we are going to keep the tactical view in TF2
-	if ( !inv_demo.GetBool() )
+	if(!inv_demo.GetBool())
 		return;
 
-	m_bSwitchingView	= true;
+	m_bSwitchingView = true;
 	m_TFLocal.m_nInTacticalView = bTactical ? 1 : 0;
 }
 
 //-----------------------------------------------------------------------------
 // returns true if we're in tactical view
 //-----------------------------------------------------------------------------
-bool CBaseTFPlayer::IsInTacticalView( void ) const
+bool CBaseTFPlayer::IsInTacticalView(void) const
 {
 	return m_TFLocal.m_nInTacticalView;
 }
 
 int CBaseTFPlayer::UpdateTransmitState()
 {
-	return SetTransmitState( FL_EDICT_FULLCHECK );
+	return SetTransmitState(FL_EDICT_FULLCHECK);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Note, an entity can override the send table ( e.g., to send less data or to send minimal data for
 //  objects ( prob. players ) that are not in the pvs.
-// Input  : **ppSendTable - 
-//			*recipient - 
-//			*pvs - 
+// Input  : **ppSendTable -
+//			*recipient -
+//			*pvs -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-int CBaseTFPlayer::ShouldTransmit( const CCheckTransmitInfo *pInfo )
+int CBaseTFPlayer::ShouldTransmit(const CCheckTransmitInfo *pInfo)
 {
 	// Don't transmit if we have no team or class
-	if ((PlayerClass() == TFCLASS_UNDECIDED) || (GetTeamNumber() == 0))
+	if((PlayerClass() == TFCLASS_UNDECIDED) || (GetTeamNumber() == 0))
 		return FL_EDICT_DONTSEND;
 
 	// Thermal vision in effect, if so, cull some players who are too far away
-	CBaseTFPlayer *pPlayer = ( ( CBaseTFPlayer * )CBaseEntity::Instance( pInfo->m_pClientEnt ) );
-	if ( pPlayer )
+	CBaseTFPlayer *pPlayer = ((CBaseTFPlayer *)CBaseEntity::Instance(pInfo->m_pClientEnt));
+	if(pPlayer)
 	{
-		if ( pPlayer->IsUsingThermalVision() )
+		if(pPlayer->IsUsingThermalVision())
 		{
 			// Do a radius check, and force sending of guys nearby (so we can see them through walls)
 			Vector dist = GetAbsOrigin() - pPlayer->GetAbsOrigin();
-			if ( dist.Length() < THERMAL_VISION_RADIUS )
+			if(dist.Length() < THERMAL_VISION_RADIUS)
 				return FL_EDICT_ALWAYS;
 		}
 
 		// If the player we might see is camouflaged and not on our team, we can preclude based
 		//  on distance
-		if ( IsCamouflaged() && !InSameTeam( pPlayer ) )
+		if(IsCamouflaged() && !InSameTeam(pPlayer))
 		{
 			Vector dist = GetAbsOrigin() - pPlayer->GetAbsOrigin();
-			if ( dist.Length() > CAMO_OUTER_RADIUS )
+			if(dist.Length() > CAMO_OUTER_RADIUS)
 			{
 				return FL_EDICT_ALWAYS;
 			}
@@ -2015,72 +1988,70 @@ int CBaseTFPlayer::ShouldTransmit( const CCheckTransmitInfo *pInfo )
 	}
 
 	// Use default pvs etc. rules
-	return BaseClass::ShouldTransmit( pInfo );
+	return BaseClass::ShouldTransmit(pInfo);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CTechnologyTree *CBaseTFPlayer::GetTechTree( void )
+CTechnologyTree *CBaseTFPlayer::GetTechTree(void)
 {
 	CTFTeam *pTeam = GetTFTeam();
-	if ( pTeam )
+	if(pTeam)
 		return pTeam->m_pTechnologyTree;
 
 	return NULL;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int CBaseTFPlayer::PlayerClass( void )
+int CBaseTFPlayer::PlayerClass(void)
 {
 	return m_iPlayerClass;
 }
 
 CPlayerClass *CBaseTFPlayer::GetPlayerClass()
 {
-	return m_PlayerClasses.GetPlayerClass( PlayerClass() );
+	return m_PlayerClasses.GetPlayerClass(PlayerClass());
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::SetPreferredTechnology( CTechnologyTree *pTechnologyTree, int iTechIndex )
+void CBaseTFPlayer::SetPreferredTechnology(CTechnologyTree *pTechnologyTree, int iTechIndex)
 {
-	Assert( pTechnologyTree );
+	Assert(pTechnologyTree);
 
 	// Have to be on a team to vote for tech
 	CTFTeam *pTeam = GetTFTeam();
-	if ( !pTeam )
+	if(!pTeam)
 		return;
 
-	if ( iTechIndex == -1 )
+	if(iTechIndex == -1)
 	{
 		m_nPreferredTechnology = -1;
 	}
 	else
 	{
-		if ( iTechIndex < 0 || iTechIndex >= pTechnologyTree->GetNumberTechnologies() )
+		if(iTechIndex < 0 || iTechIndex >= pTechnologyTree->GetNumberTechnologies())
 		{
-			Msg( "%s tried to set voting preference to unknown technology index : %d\n",
-				GetPlayerName(), iTechIndex );
+			Msg("%s tried to set voting preference to unknown technology index : %d\n", GetPlayerName(), iTechIndex);
 			return;
 		}
-		CBaseTechnology *tech = pTechnologyTree->GetTechnology( iTechIndex );
-		if ( !tech )
+		CBaseTechnology *tech = pTechnologyTree->GetTechnology(iTechIndex);
+		if(!tech)
 			return;
 
 		// Has the tech got incomplete dependancies?
-		if ( tech->HasInactiveDependencies() )
+		if(tech->HasInactiveDependencies())
 			return;
 		// Already have it?
-		if ( tech->GetAvailable() )
+		if(tech->GetAvailable())
 			return;
 		// Can't prefer a hidden tech
-		if ( tech->IsHidden() )
+		if(tech->IsHidden())
 			return;
 
 		m_nPreferredTechnology = iTechIndex;
@@ -2090,65 +2061,63 @@ void CBaseTFPlayer::SetPreferredTechnology( CTechnologyTree *pTechnologyTree, in
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
-int CBaseTFPlayer::GetPreferredTechnology( void )
+int CBaseTFPlayer::GetPreferredTechnology(void)
 {
 	return m_nPreferredTechnology;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CBaseTFPlayer::HasNamedTechnology( const char *name )
+bool CBaseTFPlayer::HasNamedTechnology(const char *name)
 {
-	if ( GetTFTeam() == NULL )
+	if(GetTFTeam() == NULL)
 		return false;
 
-	return GetTFTeam()->HasNamedTechnology( name );
+	return GetTFTeam()->HasNamedTechnology(name);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Networking is about to update this player, let it override and specify it's own pvs
-// Input  : **pvs - 
-//			**pas - 
+// Input  : **pvs -
+//			**pas -
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::SetupVisibility( CBaseEntity *pViewEntity, unsigned char *pvs, int pvssize )
+void CBaseTFPlayer::SetupVisibility(CBaseEntity *pViewEntity, unsigned char *pvs, int pvssize)
 {
 	// Normal PVS
-	BaseClass::SetupVisibility( pViewEntity, pvs, pvssize );
+	BaseClass::SetupVisibility(pViewEntity, pvs, pvssize);
 
 	// PVS has an additional origin
-	if ( m_vecAdditionalPVSOrigin != vec3_origin )
+	if(m_vecAdditionalPVSOrigin != vec3_origin)
 	{
 		// Add an additional origin to the pvs
-		engine->AddOriginToPVS( m_vecAdditionalPVSOrigin );
+		engine->AddOriginToPVS(m_vecAdditionalPVSOrigin);
 	}
 
-	if ( m_vecCameraPVSOrigin != vec3_origin )
+	if(m_vecCameraPVSOrigin != vec3_origin)
 	{
-		engine->AddOriginToPVS( m_vecCameraPVSOrigin );
+		engine->AddOriginToPVS(m_vecCameraPVSOrigin);
 	}
-	
+
 	// If in tactical mode, merge in pvs from all of our teammates, too
 	// send all the others team info
-	if ( m_TFLocal.m_nInTacticalView )
+	if(m_TFLocal.m_nInTacticalView)
 	{
 		int i;
-		for ( i = 1; i <= gpGlobals->maxClients; i++ )
+		for(i = 1; i <= gpGlobals->maxClients; i++)
 		{
-			CBaseTFPlayer *plr = ToBaseTFPlayer( UTIL_PlayerByIndex(i) );
-			if ( plr && 
-				( plr != this ) && 
-				( plr->TeamID() == TeamID() ) )
+			CBaseTFPlayer *plr = ToBaseTFPlayer(UTIL_PlayerByIndex(i));
+			if(plr && (plr != this) && (plr->TeamID() == TeamID()))
 			{
 				Vector org;
 				org = plr->EyePosition();
 
-				engine->AddOriginToPVS( org );
+				engine->AddOriginToPVS(org);
 			}
 		}
 	}
@@ -2159,81 +2128,78 @@ void CBaseTFPlayer::SetupVisibility( CBaseEntity *pViewEntity, unsigned char *pv
 //-----------------------------------------------------------------------------
 // Purpose: Assign the player to the specified order
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::SetOrder( COrder *pOrder )
+void CBaseTFPlayer::SetOrder(COrder *pOrder)
 {
-	if ( m_hSelectedOrder.Get() && m_hSelectedOrder != pOrder )
+	if(m_hSelectedOrder.Get() && m_hSelectedOrder != pOrder)
 	{
-		m_hSelectedOrder->SetOwner( NULL );	
+		m_hSelectedOrder->SetOwner(NULL);
 	}
 	m_hSelectedOrder = pOrder;
 }
 
-
 int CBaseTFPlayer::GetNumResourceZoneOrders()
 {
-	return GetTFTeam()->CountOrders( COUNTORDERS_TYPE | COUNTORDERS_OWNER, ORDER_ATTACK, 0, this ) +
-		GetTFTeam()->CountOrders( COUNTORDERS_TYPE | COUNTORDERS_OWNER, ORDER_DEFEND, 0, this ) +
-		GetTFTeam()->CountOrders( COUNTORDERS_TYPE | COUNTORDERS_OWNER, ORDER_CAPTURE, 0, this );
+	return GetTFTeam()->CountOrders(COUNTORDERS_TYPE | COUNTORDERS_OWNER, ORDER_ATTACK, 0, this) +
+		   GetTFTeam()->CountOrders(COUNTORDERS_TYPE | COUNTORDERS_OWNER, ORDER_DEFEND, 0, this) +
+		   GetTFTeam()->CountOrders(COUNTORDERS_TYPE | COUNTORDERS_OWNER, ORDER_CAPTURE, 0, this);
 }
-
 
 void CBaseTFPlayer::KillResourceZoneOrders()
 {
-	if( GetNumResourceZoneOrders() )
-		GetTFTeam()->RemoveOrdersToPlayer( this );
+	if(GetNumResourceZoneOrders())
+		GetTFTeam()->RemoveOrdersToPlayer(this);
 }
-
 
 //--------------------------------------------------------------------------------------------------------------
 // DEPLOYMENT
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::StartDeploying( void )
+void CBaseTFPlayer::StartDeploying(void)
 {
-	if ( !GetPlayerClass()  )
+	if(!GetPlayerClass())
 		return;
 
 	m_bDeploying = true;
 	m_vecDeployedAngles = GetLocalAngles();
 
 	// No pitch or roll, though
-	m_vecDeployedAngles.SetX( 0 );
-	m_vecDeployedAngles.SetZ( 0 );
+	m_vecDeployedAngles.SetX(0);
+	m_vecDeployedAngles.SetZ(0);
 
-	SetCantMove( true );
+	SetCantMove(true);
 	m_flFinishedDeploying = gpGlobals->curtime + GetPlayerClass()->GetDeployTime();
 
-	SetAnimation( PLAYER_START_AIMING );
+	SetAnimation(PLAYER_START_AIMING);
 
-	EmitSound( "BaseTFPlayer.StartDeploying" );
+	EmitSound("BaseTFPlayer.StartDeploying");
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::StartUnDeploying( void )
+void CBaseTFPlayer::StartUnDeploying(void)
 {
-	if ( !GetPlayerClass()  )
+	if(!GetPlayerClass())
 		return;
 
 	m_bUnDeploying = true;
-	SetCantMove( true );
+	SetCantMove(true);
 	m_flFinishedDeploying = gpGlobals->curtime + GetPlayerClass()->GetDeployTime();
-	SetAnimation( PLAYER_LEAVE_AIMING );
+	SetAnimation(PLAYER_LEAVE_AIMING);
 
-	EmitSound( "BaseTFPlayer.StartUnDeploying" );
+	EmitSound("BaseTFPlayer.StartUnDeploying");
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::CheckDeployFinish( void )
+void CBaseTFPlayer::CheckDeployFinish(void)
 {
 	// Check to see if deployment has finished
-	if ( m_bDeploying )
+	if(m_bDeploying)
 	{
-		if ( gpGlobals->curtime > m_flFinishedDeploying )
+		if(gpGlobals->curtime > m_flFinishedDeploying)
 		{
 			FinishDeploying();
 		}
@@ -2241,9 +2207,9 @@ void CBaseTFPlayer::CheckDeployFinish( void )
 	}
 
 	// Check to see if un-deployment has finished
-	if ( m_bUnDeploying )
+	if(m_bUnDeploying)
 	{
-		if ( gpGlobals->curtime > m_flFinishedDeploying )
+		if(gpGlobals->curtime > m_flFinishedDeploying)
 		{
 			FinishUnDeploying();
 		}
@@ -2251,9 +2217,9 @@ void CBaseTFPlayer::CheckDeployFinish( void )
 	}
 
 	// Check to see if the player's trying to move while deployed
-	if ( IsAlive() && m_bDeployed )
+	if(IsAlive() && m_bDeployed)
 	{
-		if ( m_nButtons & (IN_FORWARD | IN_BACK | IN_MOVELEFT | IN_MOVERIGHT ) )
+		if(m_nButtons & (IN_FORWARD | IN_BACK | IN_MOVELEFT | IN_MOVERIGHT))
 		{
 			StartUnDeploying();
 		}
@@ -2261,45 +2227,45 @@ void CBaseTFPlayer::CheckDeployFinish( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::FinishDeploying( void )
+void CBaseTFPlayer::FinishDeploying(void)
 {
 	m_bDeploying = false;
 	m_bDeployed = true;
-	SetCantMove( true );
+	SetCantMove(true);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::FinishUnDeploying( void )
+void CBaseTFPlayer::FinishUnDeploying(void)
 {
 	m_bUnDeploying = false;
 	m_bDeployed = false;
-	SetCantMove( false );
+	SetCantMove(false);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CBaseTFPlayer::IsDeployed( void )
+bool CBaseTFPlayer::IsDeployed(void)
 {
 	return m_bDeployed;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CBaseTFPlayer::IsDeploying( void )
+bool CBaseTFPlayer::IsDeploying(void)
 {
 	return (m_bDeploying || m_bUnDeploying);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CBaseTFPlayer::IsUnDeploying( void )
+bool CBaseTFPlayer::IsUnDeploying(void)
 {
 	return m_bUnDeploying;
 }
@@ -2307,45 +2273,45 @@ bool CBaseTFPlayer::IsUnDeploying( void )
 void CBaseTFPlayer::OnVehicleStart()
 {
 	// Do any class-specific stuff
-	if (GetPlayerClass())
+	if(GetPlayerClass())
 	{
 		GetPlayerClass()->OnVehicleStart();
 	}
 
 	IServerVehicle *pVehicle = GetVehicle();
 	CBaseCombatWeapon *weapon = GetActiveWeapon();
-	if ( pVehicle && weapon )
+	if(pVehicle && weapon)
 	{
 		// Get Role for this player
-		int role = pVehicle->GetPassengerRole( this );
-		bool allowweapons = pVehicle->IsPassengerUsingStandardWeapons( role );
-		if ( !allowweapons )
+		int role = pVehicle->GetPassengerRole(this);
+		bool allowweapons = pVehicle->IsPassengerUsingStandardWeapons(role);
+		if(!allowweapons)
 		{
 			weapon->Holster();
 		}
 	}
 }
 
-void CBaseTFPlayer::OnVehicleEnd( Vector &playerDestPosition )
+void CBaseTFPlayer::OnVehicleEnd(Vector &playerDestPosition)
 {
 	// Do any class-specific stuff
-	if (GetPlayerClass())
+	if(GetPlayerClass())
 	{
 		GetPlayerClass()->OnVehicleEnd();
 	}
 
 	Vector vNewPos;
-	if ( !EntityPlacementTest( this, playerDestPosition, vNewPos, true) )
+	if(!EntityPlacementTest(this, playerDestPosition, vNewPos, true))
 	{
 		Warning("Can't find valid place to exit vehicle.\n");
 		return;
 	}
 
 	// Move the player up a bit to be safe
-	playerDestPosition = vNewPos + Vector(0,0,16);
+	playerDestPosition = vNewPos + Vector(0, 0, 16);
 
 	CBaseCombatWeapon *weapon = GetActiveWeapon();
-	if ( weapon )
+	if(weapon)
 	{
 		weapon->Deploy();
 	}
@@ -2354,10 +2320,10 @@ void CBaseTFPlayer::OnVehicleEnd( Vector &playerDestPosition )
 //--------------------------------------------------------------------------------------------------------------
 // Purpose:
 //--------------------------------------------------------------------------------------------------------------
-bool CBaseTFPlayer::CanGetInVehicle( void )
+bool CBaseTFPlayer::CanGetInVehicle(void)
 {
 	// Class-specific?
-	if ( GetPlayerClass() )
+	if(GetPlayerClass())
 	{
 		return GetPlayerClass()->CanGetInVehicle();
 	}
@@ -2365,35 +2331,31 @@ bool CBaseTFPlayer::CanGetInVehicle( void )
 	return true;
 }
 
-
-CVehicleTeleportStation* CBaseTFPlayer::GetSelectedMCV() const
+CVehicleTeleportStation *CBaseTFPlayer::GetSelectedMCV() const
 {
-	return dynamic_cast< CVehicleTeleportStation* >( m_hSelectedMCV.Get() );
+	return dynamic_cast<CVehicleTeleportStation *>(m_hSelectedMCV.Get());
 }
 
-
-void CBaseTFPlayer::SetSelectedMCV( CVehicleTeleportStation *pMCV )
+void CBaseTFPlayer::SetSelectedMCV(CVehicleTeleportStation *pMCV)
 {
 	m_hSelectedMCV = pMCV;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Restore this player's ammo count to it's starting state
 //-----------------------------------------------------------------------------
-bool CBaseTFPlayer::ResupplyAmmo( float flPercentage, ResupplyReason_t reason )
+bool CBaseTFPlayer::ResupplyAmmo(float flPercentage, ResupplyReason_t reason)
 {
-	if ( !GetPlayerClass()  )
+	if(!GetPlayerClass())
 		return false;
 
 	return GetPlayerClass()->ResupplyAmmo(flPercentage, reason);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Medic has provided this player with a health boost
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::TakeHealthBoost( int iHealthBoost, int iTarget, int iDuration )
+void CBaseTFPlayer::TakeHealthBoost(int iHealthBoost, int iTarget, int iDuration)
 {
 	m_iHealth += iHealthBoost;
 	m_iHealthBoostTarget = iTarget;
@@ -2402,7 +2364,7 @@ void CBaseTFPlayer::TakeHealthBoost( int iHealthBoost, int iTarget, int iDuratio
 	// Start the health ticking down
 	m_flHealthBoostTime = gpGlobals->curtime + 1.0;
 
-	if ( iTarget >= m_iMaxHealth )
+	if(iTarget >= m_iMaxHealth)
 	{
 		m_bBuffHealthBoost = true;
 	}
@@ -2411,13 +2373,13 @@ void CBaseTFPlayer::TakeHealthBoost( int iHealthBoost, int iTarget, int iDuratio
 //-----------------------------------------------------------------------------
 // Purpose: Remove health buffs
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::RemoveHealthBoost( void )
+void CBaseTFPlayer::RemoveHealthBoost(void)
 {
 	m_bBuffHealthBoost = false;
 	m_iHealthBoostTarget = 0;
 	m_flHealthBoostTime = 0;
 
-	if ( m_iHealth > m_iMaxHealth )
+	if(m_iHealth > m_iMaxHealth)
 	{
 		m_iHealth = m_iMaxHealth;
 	}
@@ -2426,22 +2388,22 @@ void CBaseTFPlayer::RemoveHealthBoost( void )
 //-----------------------------------------------------------------------------
 // Purpose: Check the state of all buffs on this player
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::CheckBuffs( void )
+void CBaseTFPlayer::CheckBuffs(void)
 {
 	// Health boost?
-	if ( m_bBuffHealthBoost )
+	if(m_bBuffHealthBoost)
 	{
 		// Dropped below normal max health?
-		if ( m_iHealth <= m_iHealthBoostTarget )
+		if(m_iHealth <= m_iHealthBoostTarget)
 		{
 			RemoveHealthBoost();
 		}
 		else
 		{
-			if ( m_flHealthBoostTime < gpGlobals->curtime )
+			if(m_flHealthBoostTime < gpGlobals->curtime)
 			{
 				// Ticking down from a boost? or suffering poison damage?
-				if ( m_iHealth > m_iMaxHealth )
+				if(m_iHealth > m_iMaxHealth)
 				{
 					// Drop back to normal health in 20 seconds
 					m_iHealth -= m_flHealthBoostDecrement;
@@ -2456,35 +2418,35 @@ void CBaseTFPlayer::CheckBuffs( void )
 //-----------------------------------------------------------------------------
 // Purpose: Powerup has just started
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::PowerupStart( int iPowerup, float flAmount, CBaseEntity *pAttacker, CDamageModifier *pDamageModifier )
+void CBaseTFPlayer::PowerupStart(int iPowerup, float flAmount, CBaseEntity *pAttacker, CDamageModifier *pDamageModifier)
 {
-	Assert( iPowerup >= 0 && iPowerup < MAX_POWERUPS );
+	Assert(iPowerup >= 0 && iPowerup < MAX_POWERUPS);
 
-	switch( iPowerup )
+	switch(iPowerup)
 	{
-	case POWERUP_BOOST:
+		case POWERUP_BOOST:
 		{
 			m_hLastBoostEntity = pAttacker;
 
 			// Power up their shield
-			if ( GetCombatShield() )
+			if(GetCombatShield())
 			{
-				GetCombatShield()->AddShieldHealth( 0.06 ); 
+				GetCombatShield()->AddShieldHealth(0.06);
 			}
 
 			// Let their playerclass know
-			GetPlayerClass()->PowerupStart( iPowerup, flAmount, pAttacker, pDamageModifier );
+			GetPlayerClass()->PowerupStart(iPowerup, flAmount, pAttacker, pDamageModifier);
 		}
 		break;
 
-	case POWERUP_EMP:
+		case POWERUP_EMP:
 		{
 			// Let the playerclass know about it
-			GetPlayerClass()->PowerupStart( iPowerup, flAmount, pAttacker, pDamageModifier );
+			GetPlayerClass()->PowerupStart(iPowerup, flAmount, pAttacker, pDamageModifier);
 		}
 		break;
 
-	case POWERUP_RUSH:
+		case POWERUP_RUSH:
 		{
 			// Speed up
 			// We need to set this here so RecalculateSpeed() can check HasPowerup(POWERUP_RUSH)
@@ -2493,38 +2455,38 @@ void CBaseTFPlayer::PowerupStart( int iPowerup, float flAmount, CBaseEntity *pAt
 		}
 		break;
 
-	default:
-		break;
+		default:
+			break;
 	}
 
-	BaseClass::PowerupStart( iPowerup, flAmount, pAttacker, pDamageModifier );
+	BaseClass::PowerupStart(iPowerup, flAmount, pAttacker, pDamageModifier);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Powerup has just started
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::PowerupEnd( int iPowerup )
+void CBaseTFPlayer::PowerupEnd(int iPowerup)
 {
-	switch( iPowerup )
+	switch(iPowerup)
 	{
-	case POWERUP_EMP:
+		case POWERUP_EMP:
 		{
 			GetPlayerClass()->PowerupEnd(iPowerup);
 		}
 		break;
 
-	case POWERUP_RUSH:
+		case POWERUP_RUSH:
 		{
 			// Slow down
 			RecalculateSpeed();
 		}
 		break;
 
-	default:
-		break;
+		default:
+			break;
 	}
 
-	BaseClass::PowerupEnd( iPowerup );
+	BaseClass::PowerupEnd(iPowerup);
 }
 
 //--------------------------------------------------------------------------------------------------------------
@@ -2532,14 +2494,14 @@ void CBaseTFPlayer::PowerupEnd( int iPowerup )
 //-----------------------------------------------------------------------------
 // Purpose: Return true if this player's allowed to build another one of the specified object
 //-----------------------------------------------------------------------------
-int CBaseTFPlayer::CanBuild( int iObjectType )
+int CBaseTFPlayer::CanBuild(int iObjectType)
 {
-	if ( iObjectType < 0 || iObjectType >= OBJ_LAST )
+	if(iObjectType < 0 || iObjectType >= OBJ_LAST)
 		return CB_NOT_RESEARCHED;
 
-	if ( GetPlayerClass()  )
+	if(GetPlayerClass())
 	{
-		return GetPlayerClass()->CanBuild( iObjectType );
+		return GetPlayerClass()->CanBuild(iObjectType);
 	}
 
 	return CB_NOT_RESEARCHED;
@@ -2548,15 +2510,15 @@ int CBaseTFPlayer::CanBuild( int iObjectType )
 //-----------------------------------------------------------------------------
 // Purpose: Get the number of objects of the specified type that this player has
 //-----------------------------------------------------------------------------
-int CBaseTFPlayer::GetNumObjects( int iObjectType )
+int CBaseTFPlayer::GetNumObjects(int iObjectType)
 {
 	int iCount = 0;
-	for (int i = 0; i < GetObjectCount(); i++)
+	for(int i = 0; i < GetObjectCount(); i++)
 	{
-		if ( !GetObject(i) )
+		if(!GetObject(i))
 			continue;
 
-		if ( GetObject(i)->GetType() == iObjectType )
+		if(GetObject(i)->GetType() == iObjectType)
 		{
 			iCount++;
 		}
@@ -2566,17 +2528,17 @@ int CBaseTFPlayer::GetNumObjects( int iObjectType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int	CBaseTFPlayer::GetObjectCount( void )
+int CBaseTFPlayer::GetObjectCount(void)
 {
 	return m_TFLocal.m_aObjects.Count();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CBaseObject	*CBaseTFPlayer::GetObject( int index )
+CBaseObject *CBaseTFPlayer::GetObject(int index)
 {
 	return m_TFLocal.m_aObjects[index].Get();
 }
@@ -2584,10 +2546,10 @@ CBaseObject	*CBaseTFPlayer::GetObject( int index )
 //-----------------------------------------------------------------------------
 // Purpose: Returns true if this player is building something
 //-----------------------------------------------------------------------------
-bool CBaseTFPlayer::IsBuilding( void )
+bool CBaseTFPlayer::IsBuilding(void)
 {
 	CWeaponBuilder *pBuilder = GetWeaponBuilder();
-	if ( pBuilder )
+	if(pBuilder)
 		return pBuilder->IsBuilding();
 
 	return false;
@@ -2596,44 +2558,39 @@ bool CBaseTFPlayer::IsBuilding( void )
 //-----------------------------------------------------------------------------
 // Purpose: Object built by this player has been destroyed
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::OwnedObjectDestroyed( CBaseObject *pObject )
+void CBaseTFPlayer::OwnedObjectDestroyed(CBaseObject *pObject)
 {
-	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CBaseTFPlayer::OwnedObjectDestroyed player %s object %p:%s\n", gpGlobals->curtime, 
-		GetPlayerName(),
-		pObject,
-		pObject->GetClassname() ) );
+	TRACE_OBJECT(UTIL_VarArgs("%0.2f CBaseTFPlayer::OwnedObjectDestroyed player %s object %p:%s\n", gpGlobals->curtime,
+							  GetPlayerName(), pObject, pObject->GetClassname()));
 
-	if ( GetPlayerClass()  )
+	if(GetPlayerClass())
 	{
-		GetPlayerClass()->OwnedObjectDestroyed( pObject );
+		GetPlayerClass()->OwnedObjectDestroyed(pObject);
 	}
 
-	RemoveObject( pObject );
+	RemoveObject(pObject);
 
 	// Tell our builder weapon so it recalculates the state of the build icons
 	CWeaponBuilder *pBuilder = GetWeaponBuilder();
-	if ( pBuilder )
+	if(pBuilder)
 	{
-		pBuilder->GainedNewTechnology( NULL );
+		pBuilder->GainedNewTechnology(NULL);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Removes an object from the player
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::RemoveObject( CBaseObject *pObject )
+void CBaseTFPlayer::RemoveObject(CBaseObject *pObject)
 {
-	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CBaseTFPlayer::RemoveObject %p:%s from player %s\n", gpGlobals->curtime, 
-		pObject,
-		pObject->GetClassname(),
-		GetPlayerName() ) );
+	TRACE_OBJECT(UTIL_VarArgs("%0.2f CBaseTFPlayer::RemoveObject %p:%s from player %s\n", gpGlobals->curtime, pObject,
+							  pObject->GetClassname(), GetPlayerName()));
 
-	Assert( pObject );
-	for (int i = m_TFLocal.m_aObjects.Count(); --i >= 0; )
+	Assert(pObject);
+	for(int i = m_TFLocal.m_aObjects.Count(); --i >= 0;)
 	{
 		// Also, while we're at it, remove all other bogus ones too...
-		if ((!m_TFLocal.m_aObjects[i].Get()) || (m_TFLocal.m_aObjects[i] == pObject))
+		if((!m_TFLocal.m_aObjects[i].Get()) || (m_TFLocal.m_aObjects[i] == pObject))
 		{
 			m_TFLocal.m_aObjects.FastRemove(i);
 		}
@@ -2641,57 +2598,55 @@ void CBaseTFPlayer::RemoveObject( CBaseObject *pObject )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pObject - 
-//			*pNewOwner - 
+// Purpose:
+// Input  : *pObject -
+//			*pNewOwner -
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::OwnedObjectChangeTeam( CBaseObject *pObject, CBaseTFPlayer *pNewOwner )
+void CBaseTFPlayer::OwnedObjectChangeTeam(CBaseObject *pObject, CBaseTFPlayer *pNewOwner)
 {
-	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CBaseTFPlayer::OwnedObjectChangeTeam player %s object %p:%s new player %s\n", gpGlobals->curtime, 
-		GetPlayerName(),
-		pObject,
-		pObject->GetClassname(),
-		pNewOwner->GetPlayerName() ) );
+	TRACE_OBJECT(UTIL_VarArgs("%0.2f CBaseTFPlayer::OwnedObjectChangeTeam player %s object %p:%s new player %s\n",
+							  gpGlobals->curtime, GetPlayerName(), pObject, pObject->GetClassname(),
+							  pNewOwner->GetPlayerName()));
 
-	if ( pNewOwner && pNewOwner->GetPlayerClass() )
+	if(pNewOwner && pNewOwner->GetPlayerClass())
 	{
-		pNewOwner->GetPlayerClass()->OwnedObjectChangeFromTeam( pObject, this );
+		pNewOwner->GetPlayerClass()->OwnedObjectChangeFromTeam(pObject, this);
 	}
 
 	// Remove from my list of objects
-	RemoveObject( pObject );
+	RemoveObject(pObject);
 
 	// Add to new team
-	if ( pNewOwner )
+	if(pNewOwner)
 	{
-		pNewOwner->AddObject( pObject );
+		pNewOwner->AddObject(pObject);
 	}
 
-	if ( GetPlayerClass()  )
+	if(GetPlayerClass())
 	{
-		GetPlayerClass()->OwnedObjectChangeToTeam( pObject, pNewOwner );
+		GetPlayerClass()->OwnedObjectChangeToTeam(pObject, pNewOwner);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pZone - 
+// Purpose:
+// Input  : *pZone -
 // Output : int
 //-----------------------------------------------------------------------------
-int CBaseTFPlayer::NumPumpsOnResourceZone( CResourceZone *pZone )
+int CBaseTFPlayer::NumPumpsOnResourceZone(CResourceZone *pZone)
 {
 	int ret = 0;
 
-	for( int iObj=0; iObj < GetObjectCount(); iObj++ )
+	for(int iObj = 0; iObj < GetObjectCount(); iObj++)
 	{
 		CBaseObject *pObj = GetObject(iObj);
 
-		if( pObj->GetType() == OBJ_RESOURCEPUMP )
+		if(pObj->GetType() == OBJ_RESOURCEPUMP)
 		{
-			CObjectResourcePump *pPump = (CObjectResourcePump*)pObj;
+			CObjectResourcePump *pPump = (CObjectResourcePump *)pObj;
 
 			// Ok, this guy already has a pump here.
-			if( pPump->GetResourceZone() == pZone )
+			if(pPump->GetResourceZone() == pZone)
 				++ret;
 		}
 	}
@@ -2699,77 +2654,75 @@ int CBaseTFPlayer::NumPumpsOnResourceZone( CResourceZone *pZone )
 	return ret;
 }
 
-
-
 //-----------------------------------------------------------------------------
 // Purpose: Remove all the player's objects
 //			If bForceAll is set, remove all of them immediately.
 //			Otherwise, make them all deteriorate over time.
-//			If iClass is passed in, don't remove any objects that can be built 
-//			by that class. If bReturnResources is set, the cost of any destroyed 
+//			If iClass is passed in, don't remove any objects that can be built
+//			by that class. If bReturnResources is set, the cost of any destroyed
 //			objects will be returned to the player.
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::RemoveAllObjects( bool bForceAll, int iClass, bool bReturnResources )
+void CBaseTFPlayer::RemoveAllObjects(bool bForceAll, int iClass, bool bReturnResources)
 {
 	// Remove all the player's objects
 	int iSize = GetObjectCount();
-	for (int i = iSize-1; i >= 0; i--)
+	for(int i = iSize - 1; i >= 0; i--)
 	{
 		CBaseObject *obj = GetObject(i);
-		Assert( obj );
-		if ( !obj )
+		Assert(obj);
+		if(!obj)
 		{
 			continue;
 		}
 
-		if ( !bForceAll )
+		if(!bForceAll)
 		{
-			if ( iClass )
+			if(iClass)
 			{
 				// Can our new class build this object?
-				if ( ClassCanBuild( iClass, obj->GetType() ) )
+				if(ClassCanBuild(iClass, obj->GetType()))
 					continue;
 			}
 
 			// Vehicles don't deteriorate when their owner changes teams/leaves.
 			// They'll deteriorate naturally if they're unused for a while.
-			if ( IsObjectAVehicle(obj->GetType()) )
+			if(IsObjectAVehicle(obj->GetType()))
 			{
-				RemoveObject( obj );
+				RemoveObject(obj);
 
 				// Just remove it from my list
-				obj->SetBuilder( NULL );
+				obj->SetBuilder(NULL);
 				continue;
 			}
 		}
 
 		// Return the cost of the object?
-		if ( bReturnResources )
+		if(bReturnResources)
 		{
-			GetPlayerClass()->PickupObject( obj );
+			GetPlayerClass()->PickupObject(obj);
 		}
 
 		// Remove or deteriorate?
-		if ( bForceAll )
+		if(bForceAll)
 		{
-			UTIL_Remove( obj );
+			UTIL_Remove(obj);
 		}
 		else
 		{
-			OwnedObjectDestroyed( obj );
+			OwnedObjectDestroyed(obj);
 			obj->StartDeteriorating();
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::StopPlacement( void )
+void CBaseTFPlayer::StopPlacement(void)
 {
 	// Tell our builder weapon
 	CWeaponBuilder *pBuilder = GetWeaponBuilder();
-	if ( pBuilder )
+	if(pBuilder)
 	{
 		pBuilder->StopPlacement();
 	}
@@ -2778,11 +2731,11 @@ void CBaseTFPlayer::StopPlacement( void )
 //-----------------------------------------------------------------------------
 // Purpose: Player has started building an object
 //-----------------------------------------------------------------------------
-int	CBaseTFPlayer::StartedBuildingObject( int iObjectType )
+int CBaseTFPlayer::StartedBuildingObject(int iObjectType)
 {
 	// Tell our playerclass
-	if ( GetPlayerClass()  )
-		return GetPlayerClass()->StartedBuildingObject( iObjectType );
+	if(GetPlayerClass())
+		return GetPlayerClass()->StartedBuildingObject(iObjectType);
 
 	return 0;
 }
@@ -2790,38 +2743,38 @@ int	CBaseTFPlayer::StartedBuildingObject( int iObjectType )
 //-----------------------------------------------------------------------------
 // Purpose: Player has aborted building something
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::StoppedBuilding( int iObjectType )
+void CBaseTFPlayer::StoppedBuilding(int iObjectType)
 {
 	// Tell our playerclass
-	if ( GetPlayerClass()  )
+	if(GetPlayerClass())
 	{
-		GetPlayerClass()->StoppedBuilding( iObjectType );
+		GetPlayerClass()->StoppedBuilding(iObjectType);
 	}
 
 	// Tell our builder weapon
 	CWeaponBuilder *pBuilder = GetWeaponBuilder();
-	if ( pBuilder )
+	if(pBuilder)
 	{
-		pBuilder->StoppedBuilding( iObjectType );
+		pBuilder->StoppedBuilding(iObjectType);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Object has been built by this player
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::FinishedObject( CBaseObject *pObject )
+void CBaseTFPlayer::FinishedObject(CBaseObject *pObject)
 {
-	AddObject( pObject );
+	AddObject(pObject);
 
 	// Tell our playerclass
-	if ( GetPlayerClass()  )
+	if(GetPlayerClass())
 	{
-		GetPlayerClass()->FinishedObject( pObject );
+		GetPlayerClass()->FinishedObject(pObject);
 	}
 
 	// Tell our builder weapon
 	CWeaponBuilder *pBuilder = GetWeaponBuilder();
-	if ( pBuilder )
+	if(pBuilder)
 	{
 		pBuilder->FinishedObject();
 	}
@@ -2830,20 +2783,21 @@ void CBaseTFPlayer::FinishedObject( CBaseObject *pObject )
 //-----------------------------------------------------------------------------
 // Purpose: Add the specified object to this player's object list.
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::AddObject( CBaseObject *pObject )
+void CBaseTFPlayer::AddObject(CBaseObject *pObject)
 {
-	TRACE_OBJECT( UTIL_VarArgs( "%0.2f CBaseTFPlayer::AddObject adding object %p:%s to player %s\n", gpGlobals->curtime, pObject, pObject->GetClassname(), GetPlayerName() ) );
+	TRACE_OBJECT(UTIL_VarArgs("%0.2f CBaseTFPlayer::AddObject adding object %p:%s to player %s\n", gpGlobals->curtime,
+							  pObject, pObject->GetClassname(), GetPlayerName()));
 
 	// Make a handle out of it
 	CHandle<CBaseObject> hObject;
 	hObject = pObject;
 
 	// Make sure it's not in the list already
-	bool alreadyInList = (m_TFLocal.m_aObjects.Find( hObject ) != -1);
-	Assert( !alreadyInList );
-	if ( !alreadyInList )
+	bool alreadyInList = (m_TFLocal.m_aObjects.Find(hObject) != -1);
+	Assert(!alreadyInList);
+	if(!alreadyInList)
 	{
-		m_TFLocal.m_aObjects.AddToTail( hObject );
+		m_TFLocal.m_aObjects.AddToTail(hObject);
 	}
 
 	// Stop it deterioating, if it is
@@ -2851,98 +2805,98 @@ void CBaseTFPlayer::AddObject( CBaseObject *pObject )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::SetWeaponBuilder( CWeaponBuilder *pBuilder )
+void CBaseTFPlayer::SetWeaponBuilder(CWeaponBuilder *pBuilder)
 {
 	m_hWeaponBuilder = pBuilder;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CWeaponBuilder *CBaseTFPlayer::GetWeaponBuilder( void )
+CWeaponBuilder *CBaseTFPlayer::GetWeaponBuilder(void)
 {
 	return m_hWeaponBuilder;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *attacker - 
-//			sourceDir - 
-//			duration - 
+// Purpose:
+// Input  : *attacker -
+//			sourceDir -
+//			duration -
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::KnockDownPlayer( const Vector& sourceDir, float magnitude, float duration )
+void CBaseTFPlayer::KnockDownPlayer(const Vector &sourceDir, float magnitude, float duration)
 {
 	// Already knocked down
-	if ( m_TFLocal.m_bKnockedDown )
+	if(m_TFLocal.m_bKnockedDown)
 		return;
 	// In a vehicle
-	if ( IsInAVehicle() )
+	if(IsInAVehicle())
 		return;
 
 	m_TFLocal.m_bKnockedDown = true;
 
 	// Randomize it a bit
-	Vector jitter( 0, 0, 0 );
-	//jitter.Random( -0.1, 0.1 );
+	Vector jitter(0, 0, 0);
+	// jitter.Random( -0.1, 0.1 );
 
 	Vector dir = sourceDir + jitter;
 
-	VectorNormalize( dir );
+	VectorNormalize(dir);
 
 	Vector force = dir * magnitude;
-	ApplyAbsVelocityImpulse( force );
+	ApplyAbsVelocityImpulse(force);
 
-	VectorAngles( dir, m_TFLocal.m_vecKnockDownDir.GetForModify() );
+	VectorAngles(dir, m_TFLocal.m_vecKnockDownDir.GetForModify());
 
 	QAngle ang = GetAbsAngles();
 	Vector forward, right;
-	AngleVectors( ang, &forward, &right, NULL );
+	AngleVectors(ang, &forward, &right, NULL);
 
-	float dotFwd = dir.Dot( forward );
-	float dotRight = dir.Dot( right );
+	float dotFwd = dir.Dot(forward);
+	float dotRight = dir.Dot(right);
 
-	if ( dotFwd >= 0)
+	if(dotFwd >= 0)
 	{
 		// if get hit from behind, pitch down a bit
-		m_TFLocal.m_vecKnockDownDir.SetX( dotFwd * 20.0f );
+		m_TFLocal.m_vecKnockDownDir.SetX(dotFwd * 20.0f);
 		// look in the direction you fell
-		m_TFLocal.m_vecKnockDownDir.SetZ( dotRight * 80.0f );
+		m_TFLocal.m_vecKnockDownDir.SetZ(dotRight * 80.0f);
 	}
 	else
 	{
-		//Invert knock yaw if hit from front, so you are looking straight up at the direction
-		// the hit cam efrom
-		m_TFLocal.m_vecKnockDownDir += QAngle( 0, 180, 0 );
+		// Invert knock yaw if hit from front, so you are looking straight up at the direction
+		//  the hit cam efrom
+		m_TFLocal.m_vecKnockDownDir += QAngle(0, 180, 0);
 		// Look up in the air
-		m_TFLocal.m_vecKnockDownDir.SetX( fabs( dotFwd ) * -60.0f );
+		m_TFLocal.m_vecKnockDownDir.SetX(fabs(dotFwd) * -60.0f);
 		// And a bit to the side the hit came from
-		m_TFLocal.m_vecKnockDownDir.SetZ( dotRight * 20.0f );
+		m_TFLocal.m_vecKnockDownDir.SetZ(dotRight * 20.0f);
 	}
 
 	m_flKnockdownEndTime = gpGlobals->curtime + duration;
 
 	// Play some kind of knockdown sound
-	EmitSound( "BaseTFPlayer.KnockedDown" );
+	EmitSound("BaseTFPlayer.KnockedDown");
 
-	if ( BecomeRagdollOnClient( force ) )
+	if(BecomeRagdollOnClient(force))
 	{
 		// We we are using ragdoll flight, then don't change underlying player
 		//  velocity
-		ApplyAbsVelocityImpulse( -force );
+		ApplyAbsVelocityImpulse(-force);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::ResetKnockdown( void )
+void CBaseTFPlayer::ResetKnockdown(void)
 {
 	// Don't get up if I'm dead
-	if ( IsAlive() )
+	if(IsAlive())
 	{
-		if ( !ClearClientRagdoll( true ) )
+		if(!ClearClientRagdoll(true))
 			return;
 	}
 
@@ -2952,23 +2906,23 @@ void CBaseTFPlayer::ResetKnockdown( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CBaseTFPlayer::IsKnockedDown( void )
+bool CBaseTFPlayer::IsKnockedDown(void)
 {
 	return m_TFLocal.m_bKnockedDown;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::CheckKnockdown( void )
+void CBaseTFPlayer::CheckKnockdown(void)
 {
-	if ( !m_TFLocal.m_bKnockedDown )
+	if(!m_TFLocal.m_bKnockedDown)
 		return;
 
-	if ( gpGlobals->curtime < m_flKnockdownEndTime )
+	if(gpGlobals->curtime < m_flKnockdownEndTime)
 		return;
 
 	// Remove knockdown
@@ -2976,139 +2930,139 @@ void CBaseTFPlayer::CheckKnockdown( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CBaseTFPlayer::IsGagged( void )
+bool CBaseTFPlayer::IsGagged(void)
 {
 	return m_bGagged;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : gag - 
+// Purpose:
+// Input  : gag -
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::SetGagged( bool gag )
+void CBaseTFPlayer::SetGagged(bool gag)
 {
 	m_bGagged = gag;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CBaseTFPlayer::CanSpeak( void )
+bool CBaseTFPlayer::CanSpeak(void)
 {
 	return !IsGagged();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CBaseTFPlayer::IsUsingThermalVision( void )
+bool CBaseTFPlayer::IsUsingThermalVision(void)
 {
 	return m_TFLocal.m_bThermalVision;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::SetIDEnt( CBaseEntity *pEntity )
+void CBaseTFPlayer::SetIDEnt(CBaseEntity *pEntity)
 {
-	if ( pEntity )
+	if(pEntity)
 		m_TFLocal.m_iIDEntIndex = pEntity->entindex();
 	else
 		m_TFLocal.m_iIDEntIndex = 0;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : thermal - 
+// Purpose:
+// Input  : thermal -
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::SetUsingThermalVision( bool thermal )
+void CBaseTFPlayer::SetUsingThermalVision(bool thermal)
 {
 	// Play sounds if we're changing
-	if ( m_TFLocal.m_bThermalVision != thermal )
+	if(m_TFLocal.m_bThermalVision != thermal)
 	{
-		if ( thermal )
+		if(thermal)
 		{
-			EmitSound( "BaseTFPlayer.ThermalOn" );
+			EmitSound("BaseTFPlayer.ThermalOn");
 		}
 		else
 		{
-			EmitSound( "BaseTFPlayer.ThermalOff" );
+			EmitSound("BaseTFPlayer.ThermalOff");
 		}
 	}
 
 	m_TFLocal.m_bThermalVision = thermal;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Add the specified number of resource chunks to the player. Return true if he can carry it all.
 //-----------------------------------------------------------------------------
-bool CBaseTFPlayer::AddResourceChunks( int iChunks, bool bProcessed )
+bool CBaseTFPlayer::AddResourceChunks(int iChunks, bool bProcessed)
 {
 	// Am I allowed to carry any more chunks?
 	int iCurrentCount = GetTotalResourceChunks();
 	// Somewhat hacky
 	int iIndex = GetAmmoDef()->Index("ResourceChunks");
-	int iMax = GetAmmoDef()->MaxCarry( iIndex );
-	if ( iCurrentCount >= iMax )
+	int iMax = GetAmmoDef()->MaxCarry(iIndex);
+	if(iCurrentCount >= iMax)
 	{
 		bool bSwapped = false;
 
 		// If this is a processed chunk, see if we can swap it for an unprocessed chunk
-		if ( bProcessed )
+		if(bProcessed)
 		{
-			if ( m_TFLocal.m_iResourceAmmo[ NORMAL_RESOURCES ] )
+			if(m_TFLocal.m_iResourceAmmo[NORMAL_RESOURCES])
 			{
 				// Drop this unprocessed chunk
-				Vector vecVelocity = Vector( random->RandomFloat( -250,250 ), random->RandomFloat( -250,250 ), random->RandomFloat( 200,450 ) );
-				CResourceChunk::Create( false, GetAbsOrigin() + Vector(0,0,32), vecVelocity );
-				RemoveResourceChunks( 1, false );
+				Vector vecVelocity = Vector(random->RandomFloat(-250, 250), random->RandomFloat(-250, 250),
+											random->RandomFloat(200, 450));
+				CResourceChunk::Create(false, GetAbsOrigin() + Vector(0, 0, 32), vecVelocity);
+				RemoveResourceChunks(1, false);
 				bSwapped = true;
 			}
 		}
 
-		if ( !bSwapped )
+		if(!bSwapped)
 			return false;
 	}
 
-	m_TFLocal.m_iResourceAmmo.Set( bProcessed, MIN( iMax, m_TFLocal.m_iResourceAmmo[ bProcessed ] + iChunks ) );
-	SetAmmoCount( GetTotalResourceChunks(), iIndex );
-	CPASAttenuationFilter filter( this,"BaseTFPlayer.PickupResources" );
-	EmitSound( filter, entindex(),"BaseTFPlayer.PickupResources" );
+	m_TFLocal.m_iResourceAmmo.Set(bProcessed, MIN(iMax, m_TFLocal.m_iResourceAmmo[bProcessed] + iChunks));
+	SetAmmoCount(GetTotalResourceChunks(), iIndex);
+	CPASAttenuationFilter filter(this, "BaseTFPlayer.PickupResources");
+	EmitSound(filter, entindex(), "BaseTFPlayer.PickupResources");
 	return true;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Remove the specified number of resources chunks from the player.
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::RemoveResourceChunks( int iChunks, bool bProcessed )
+void CBaseTFPlayer::RemoveResourceChunks(int iChunks, bool bProcessed)
 {
 	// Remove the amount
-	m_TFLocal.m_iResourceAmmo.Set( bProcessed, MAX( 0, m_TFLocal.m_iResourceAmmo[ bProcessed ] - iChunks ) );
+	m_TFLocal.m_iResourceAmmo.Set(bProcessed, MAX(0, m_TFLocal.m_iResourceAmmo[bProcessed] - iChunks));
 	int iIndex = GetAmmoDef()->Index("ResourceChunks");
-	SetAmmoCount( GetTotalResourceChunks(), iIndex );
+	SetAmmoCount(GetTotalResourceChunks(), iIndex);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Get the number of resource chunks of this type the player's carrying
 //-----------------------------------------------------------------------------
-int CBaseTFPlayer::GetResourceChunkCount( bool bProcessed )
+int CBaseTFPlayer::GetResourceChunkCount(bool bProcessed)
 {
-	return m_TFLocal.m_iResourceAmmo[ bProcessed ];
+	return m_TFLocal.m_iResourceAmmo[bProcessed];
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Get the total number of resource chunks being carried by the player
 //-----------------------------------------------------------------------------
-int CBaseTFPlayer::GetTotalResourceChunks( void )
+int CBaseTFPlayer::GetTotalResourceChunks(void)
 {
 	int iCurrentCount = 0;
-	for ( int i = 0; i < RESOURCE_TYPES; i++ )
+	for(int i = 0; i < RESOURCE_TYPES; i++)
 	{
 		iCurrentCount += m_TFLocal.m_iResourceAmmo[i];
 	}
@@ -3116,127 +3070,127 @@ int CBaseTFPlayer::GetTotalResourceChunks( void )
 	return iCurrentCount;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Drop some resource chunks
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::DropAllResourceChunks( void )
+void CBaseTFPlayer::DropAllResourceChunks(void)
 {
-	Vector vecOrigin = GetAbsOrigin() + Vector(0,0,32);
+	Vector vecOrigin = GetAbsOrigin() + Vector(0, 0, 32);
 
-	TFStats()->IncrementTeamStat( GetTeamNumber(), TF_TEAM_STAT_RESOURCE_CHUNKS_DROPPED, resource_chunk_value.GetFloat() );
+	TFStats()->IncrementTeamStat(GetTeamNumber(), TF_TEAM_STAT_RESOURCE_CHUNKS_DROPPED,
+								 resource_chunk_value.GetFloat());
 
 	// Drop a resource chunk
-	Vector vecVelocity = Vector( random->RandomFloat( -250,250 ), random->RandomFloat( -250,250 ), random->RandomFloat( 200,450 ) );
-	CResourceChunk *pChunk = CResourceChunk::Create( FALSE, vecOrigin, vecVelocity );
-	pChunk->ChangeTeam( GetTeamNumber() );
+	Vector vecVelocity =
+		Vector(random->RandomFloat(-250, 250), random->RandomFloat(-250, 250), random->RandomFloat(200, 450));
+	CResourceChunk *pChunk = CResourceChunk::Create(FALSE, vecOrigin, vecVelocity);
+	pChunk->ChangeTeam(GetTeamNumber());
 }
-
 
 //------------------------------------------------------------------------------------------------------------------
 // RESOURCE BANK
 //-----------------------------------------------------------------------------
 // Purpose: Get the amount of a resource in this player's bank
 //-----------------------------------------------------------------------------
-int CBaseTFPlayer::GetBankResources( void )
+int CBaseTFPlayer::GetBankResources(void)
 {
 	return m_TFLocal.ResourceCount();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::SetBankResources( int iAmount )
+void CBaseTFPlayer::SetBankResources(int iAmount)
 {
 	int nOldAmount = m_TFLocal.ResourceCount();
 
-	TFStats()->IncrementPlayerStat( this, TF_PLAYER_STAT_RESOURCES_ACQUIRED, iAmount - nOldAmount );
+	TFStats()->IncrementPlayerStat(this, TF_PLAYER_STAT_RESOURCES_ACQUIRED, iAmount - nOldAmount);
 
-	m_TFLocal.SetResources( iAmount );
+	m_TFLocal.SetResources(iAmount);
 
 	// Tell the player's builder weapon to update
 	CWeaponBuilder *pBuilder = GetWeaponBuilder();
-	if ( pBuilder )
+	if(pBuilder)
 	{
-		pBuilder->GainedNewTechnology( NULL );
+		pBuilder->GainedNewTechnology(NULL);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Add resources to this player's Bank
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::AddBankResources( int iAmount )
+void CBaseTFPlayer::AddBankResources(int iAmount)
 {
-	m_TFLocal.AddResources( iAmount );
+	m_TFLocal.AddResources(iAmount);
 
 	// Tell the player's builder weapon to update
 	CWeaponBuilder *pBuilder = GetWeaponBuilder();
-	if ( pBuilder )
+	if(pBuilder)
 	{
-		pBuilder->GainedNewTechnology( NULL );
+		pBuilder->GainedNewTechnology(NULL);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Remove resources to this player's Bank
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::RemoveBankResources( int iAmount, bool bSpent )
+void CBaseTFPlayer::RemoveBankResources(int iAmount, bool bSpent)
 {
-	m_TFLocal.RemoveResources( iAmount );
+	m_TFLocal.RemoveResources(iAmount);
 
 	// Tell the player's builder weapon to update
 	CWeaponBuilder *pBuilder = GetWeaponBuilder();
-	if ( pBuilder )
+	if(pBuilder)
 	{
-		pBuilder->GainedNewTechnology( NULL );
+		pBuilder->GainedNewTechnology(NULL);
 	}
 
-	if (bSpent)
+	if(bSpent)
 	{
-		TFStats()->IncrementPlayerStat( this, TF_PLAYER_STAT_RESOURCES_SPENT, iAmount );
+		TFStats()->IncrementPlayerStat(this, TF_PLAYER_STAT_RESOURCES_SPENT, iAmount);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CBaseTFPlayer::IsCamouflaged( void )
+bool CBaseTFPlayer::IsCamouflaged(void)
 {
-	return ( m_flCamouflageAmount > 0.0f ) ? true : false;
+	return (m_flCamouflageAmount > 0.0f) ? true : false;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Change state over time
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::CheckCamouflage( void )
+void CBaseTFPlayer::CheckCamouflage(void)
 {
-	if ( m_flCamouflageAmount == m_flGoalCamouflageAmount )
-		 return;
+	if(m_flCamouflageAmount == m_flGoalCamouflageAmount)
+		return;
 
 	float remaining = m_flGoalCamouflageAmount - m_flCamouflageAmount;
 	float maxstep = m_flGoalCamouflageChangeRate * gpGlobals->frametime;
 
-	if ( remaining > 0.0f )
+	if(remaining > 0.0f)
 	{
-		m_flCamouflageAmount += MIN( remaining, maxstep );
+		m_flCamouflageAmount += MIN(remaining, maxstep);
 	}
 	else
 	{
 		remaining = -remaining;
-		m_flCamouflageAmount -= MIN( remaining, maxstep );
+		m_flCamouflageAmount -= MIN(remaining, maxstep);
 	}
 
-	m_flCamouflageAmount = MAX( 0.0f, m_flCamouflageAmount );
-	m_flCamouflageAmount = MIN( 100.0f, m_flCamouflageAmount );
+	m_flCamouflageAmount = MAX(0.0f, m_flCamouflageAmount);
+	m_flCamouflageAmount = MIN(100.0f, m_flCamouflageAmount);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Goal % and rate in percent/second to achieve the goal
-// Input  : percentage - 
-//			changerate - 
+// Input  : percentage -
+//			changerate -
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::SetCamouflaged( int percentage, float changerate )
+void CBaseTFPlayer::SetCamouflaged(int percentage, float changerate)
 {
 	m_flGoalCamouflageAmount = (float)percentage;
 	m_flGoalCamouflageChangeRate = changerate;
@@ -3245,184 +3199,171 @@ void CBaseTFPlayer::SetCamouflaged( int percentage, float changerate )
 //-----------------------------------------------------------------------------
 // Purpose: Remove the player's camo
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::ClearCamouflage( void )
+void CBaseTFPlayer::ClearCamouflage(void)
 {
-	SetCamouflaged( 0, 1000 );
+	SetCamouflaged(0, 1000);
 
 	// Tell the playerclass
-	if ( GetPlayerClass()  )
+	if(GetPlayerClass())
 	{
 		GetPlayerClass()->ClearCamouflage();
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Confirm powerup durations
 //-----------------------------------------------------------------------------
-float CBaseTFPlayer::PowerupDuration( int iPowerup, float flTime )
+float CBaseTFPlayer::PowerupDuration(int iPowerup, float flTime)
 {
 	// Medics are never EMPed for long
-	if ( PlayerClass() == TFCLASS_MEDIC && iPowerup == POWERUP_EMP )
+	if(PlayerClass() == TFCLASS_MEDIC && iPowerup == POWERUP_EMP)
 		return 0.2;
 
-	return BaseClass::PowerupDuration( iPowerup, flTime );
+	return BaseClass::PowerupDuration(iPowerup, flTime);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Return the player's anim speed multiplier. Used for speeding up viewmodels while rushed.
 //-----------------------------------------------------------------------------
-float CBaseTFPlayer::GetDefaultAnimSpeed( void )
+float CBaseTFPlayer::GetDefaultAnimSpeed(void)
 {
-	if ( HasPowerup( POWERUP_RUSH ) )
+	if(HasPowerup(POWERUP_RUSH))
 		return ADRENALIN_ANIM_SPEED;
 
 	// Weapons may modify animation times
-	if ( GetActiveWeapon() )
+	if(GetActiveWeapon())
 		return GetActiveWeapon()->GetDefaultAnimSpeed();
 
 	return 1.0;
 }
 
-
 //-----------------------------------------------------------------------------
 // Donate resources to a teammate
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::DonateResources( CBaseTFPlayer *pTarget, int pCount )
+void CBaseTFPlayer::DonateResources(CBaseTFPlayer *pTarget, int pCount)
 {
-	Assert( pTarget );
+	Assert(pTarget);
 
 	int nTotalCountDonated = 0;
 	int nDonationCount = GetBankResources();
-	if ( pCount < nDonationCount )
+	if(pCount < nDonationCount)
 		nDonationCount = pCount;
 
-	if (nDonationCount)
+	if(nDonationCount)
 	{
-		RemoveBankResources( nDonationCount, false );
-		pTarget->AddBankResources( nDonationCount );
+		RemoveBankResources(nDonationCount, false);
+		pTarget->AddBankResources(nDonationCount);
 		nTotalCountDonated += nDonationCount;
 	}
 
-	if (nTotalCountDonated > 0)
+	if(nTotalCountDonated > 0)
 	{
 		char buf[1024];
-		Q_snprintf( buf, sizeof( buf ), "%s has donated %d resources to you\n",
-			GetPlayerName(), nTotalCountDonated );
-		ClientPrint( pTarget, HUD_PRINTCENTER, buf );
+		Q_snprintf(buf, sizeof(buf), "%s has donated %d resources to you\n", GetPlayerName(), nTotalCountDonated);
+		ClientPrint(pTarget, HUD_PRINTCENTER, buf);
 
-		CSingleUserRecipientFilter filter( this );
-		EmitSound( filter, entindex(), "BaseTFPlayer.DonateResources" );
+		CSingleUserRecipientFilter filter(this);
+		EmitSound(filter, entindex(), "BaseTFPlayer.DonateResources");
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Infilitrator's can +use a corpse to consume it
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
+void CBaseTFPlayer::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
 {
-	if ( pActivator->IsPlayer() )
+	if(pActivator->IsPlayer())
 	{
-		CBaseTFPlayer *pPlayer = static_cast<CBaseTFPlayer*>(pActivator);
+		CBaseTFPlayer *pPlayer = static_cast<CBaseTFPlayer *>(pActivator);
 
-		if ( InSameTeam( pActivator ))
+		if(InSameTeam(pActivator))
 		{
 			// Resource donation
-			pPlayer->DonateResources( this, 25 );
+			pPlayer->DonateResources(this, 25);
 		}
 	}
 
-	BaseClass::Use( pActivator, pCaller, useType, value );
+	BaseClass::Use(pActivator, pCaller, useType, value);
 }
-
 
 //-----------------------------------------------------------------------------
 // The player's usable...
 //-----------------------------------------------------------------------------
-int CBaseTFPlayer::ObjectCaps( void ) 
-{ 
-	return ( (BaseClass::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_IMPULSE_USE ); 
+int CBaseTFPlayer::ObjectCaps(void)
+{
+	return ((BaseClass::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_IMPULSE_USE);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CBaseTFPlayer::CantMove( void )
+bool CBaseTFPlayer::CantMove(void)
 {
 	return m_bCantMove;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::SetCantMove( bool bCantMove )
+void CBaseTFPlayer::SetCantMove(bool bCantMove)
 {
 	m_bCantMove = bCantMove;
 	RecalculateSpeed();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::ResetViewOffset( void )
+void CBaseTFPlayer::ResetViewOffset(void)
 {
-	if ( GetPlayerClass()  )
+	if(GetPlayerClass())
 	{
 		GetPlayerClass()->ResetViewOffset();
 	}
 	else
 	{
-		SetViewOffset( VEC_VIEW_SCALED( this ) );
+		SetViewOffset(VEC_VIEW_SCALED(this));
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: If ragdolling, move the player along the path that the ragdoll takes
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::FollowClientRagdoll( void )
+void CBaseTFPlayer::FollowClientRagdoll(void)
 {
-	if (( m_hRagdollShadow == NULL ) || ( GetPlayerClass() == NULL ))
+	if((m_hRagdollShadow == NULL) || (GetPlayerClass() == NULL))
 		return;
 
 	Vector vecMin, vecMax;
-	GetPlayerClass()->GetPlayerHull( ( ( GetFlags() & FL_DUCKING ) == 1 ), vecMin, vecMax );
+	GetPlayerClass()->GetPlayerHull(((GetFlags() & FL_DUCKING) == 1), vecMin, vecMax);
 
 	// Follow shadow object
 	trace_t tr;
 
-	UTIL_TraceHull( 
-		m_hRagdollShadow->GetAbsOrigin() + Vector(0,0,18), 
-		m_hRagdollShadow->GetAbsOrigin(), 
-		vecMin,
-		vecMax,
-		MASK_PLAYERSOLID, 
-		m_hRagdollShadow, 
-		COLLISION_GROUP_NONE, 
-		&tr );
+	UTIL_TraceHull(m_hRagdollShadow->GetAbsOrigin() + Vector(0, 0, 18), m_hRagdollShadow->GetAbsOrigin(), vecMin,
+				   vecMax, MASK_PLAYERSOLID, m_hRagdollShadow, COLLISION_GROUP_NONE, &tr);
 
 	// Only move if we can find a valid spot under where shadow rolled
-	if ( !tr.allsolid )
+	if(!tr.allsolid)
 	{
-		UTIL_SetOrigin( this, tr.endpos );
-		VectorCopy( tr.endpos, m_vecLastGoodRagdollPos );
+		UTIL_SetOrigin(this, tr.endpos);
+		VectorCopy(tr.endpos, m_vecLastGoodRagdollPos);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Stop being a ragdoll
-// Input  : moveplayertofinalspot - 
+// Input  : moveplayertofinalspot -
 // Output : return whether or not the ragdoll was cleared
 //-----------------------------------------------------------------------------
-bool CBaseTFPlayer::ClearClientRagdoll( bool moveplayertofinalspot )
+bool CBaseTFPlayer::ClearClientRagdoll(bool moveplayertofinalspot)
 {
-	if ( m_hRagdollShadow )
+	if(m_hRagdollShadow)
 	{
-		if ( GetContainingEntity( edict() ) )
+		if(GetContainingEntity(edict()))
 		{
-			if ( moveplayertofinalspot )
+			if(moveplayertofinalspot)
 			{
 				// Move player to resting spot of shadow object
 				FollowClientRagdoll();
@@ -3430,45 +3371,45 @@ bool CBaseTFPlayer::ClearClientRagdoll( bool moveplayertofinalspot )
 				// Check for a valid standing position.  If an entity is blocking impart some
 				// velocity to them and check again.
 				trace_t trace;
-				if ( CheckRagdollToStand( trace ) )
+				if(CheckRagdollToStand(trace))
 				{
 					// Switch back to normal movement and kill off ragdoll bone setup on client
-					SetMoveType( MOVETYPE_WALK );
+					SetMoveType(MOVETYPE_WALK);
 					m_nRenderFX = kRenderFxNone;
-					//RemoveSolidFlags( FSOLID_NOTSOLID );
-					Assert( GetPlayerClass() != NULL );
+					// RemoveSolidFlags( FSOLID_NOTSOLID );
+					Assert(GetPlayerClass() != NULL);
 					Vector vecMin, vecMax;
-					GetPlayerClass()->GetPlayerHull( ( ( GetFlags() & FL_DUCKING ) == 1 ), vecMin, vecMax );
-					UTIL_SetSize( this, vecMin, vecMax );
+					GetPlayerClass()->GetPlayerHull(((GetFlags() & FL_DUCKING) == 1), vecMin, vecMax);
+					UTIL_SetSize(this, vecMin, vecMax);
 				}
 				else
 				{
 					CBaseEntity *pEntity = trace.m_pEnt;
-					if ( pEntity != GetContainingEntity( INDEXENT( 0 ) ) )
+					if(pEntity != GetContainingEntity(INDEXENT(0)))
 					{
 						// Check for a physics object and apply force!
 						IPhysicsObject *pPhysObject = pEntity->VPhysicsGetObject();
-						if ( pPhysObject )
+						if(pPhysObject)
 						{
-							Vector vecDirection( random->RandomFloat( 0.0f, 1.0f ),
-								random->RandomFloat( 0.0f, 1.0f ),
-								random->RandomFloat( 0.0f, 1.0f ) );
+							Vector vecDirection(random->RandomFloat(0.0f, 1.0f), random->RandomFloat(0.0f, 1.0f),
+												random->RandomFloat(0.0f, 1.0f));
 							vecDirection *= 40000.0f;
-							pPhysObject->ApplyForceCenter( vecDirection );
+							pPhysObject->ApplyForceCenter(vecDirection);
 						}
-						
+
 						return false;
 					}
 					else
 					{
-						UTIL_SetOrigin( this, Vector( m_vecLastGoodRagdollPos.x, m_vecLastGoodRagdollPos.y, m_vecLastGoodRagdollPos.z + 18.0f ) );
+						UTIL_SetOrigin(this, Vector(m_vecLastGoodRagdollPos.x, m_vecLastGoodRagdollPos.y,
+													m_vecLastGoodRagdollPos.z + 18.0f));
 						return false;
 					}
 				}
 			}
 		}
 		// Kill the shadow object
-		UTIL_Remove( m_hRagdollShadow );
+		UTIL_Remove(m_hRagdollShadow);
 		m_hRagdollShadow = NULL;
 	}
 
@@ -3478,24 +3419,17 @@ bool CBaseTFPlayer::ClearClientRagdoll( bool moveplayertofinalspot )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CBaseTFPlayer::CheckRagdollToStand( trace_t &trace )
+bool CBaseTFPlayer::CheckRagdollToStand(trace_t &trace)
 {
-	Assert( GetPlayerClass() != NULL );
+	Assert(GetPlayerClass() != NULL);
 	Vector vecMin, vecMax;
-	GetPlayerClass()->GetPlayerHull( ( ( GetFlags() & FL_DUCKING ) == 1 ), vecMin, vecMax );
+	GetPlayerClass()->GetPlayerHull(((GetFlags() & FL_DUCKING) == 1), vecMin, vecMax);
 
 	// Write this better -- this is just a test to get things started.
-	UTIL_TraceHull( 
-		m_vecLastGoodRagdollPos + Vector( 0, 0, 18 ),
-		m_vecLastGoodRagdollPos,
-		vecMin, 
-		vecMax, 
-		MASK_PLAYERSOLID, 
-		m_hRagdollShadow, 
-		COLLISION_GROUP_NONE, 
-		&trace );
+	UTIL_TraceHull(m_vecLastGoodRagdollPos + Vector(0, 0, 18), m_vecLastGoodRagdollPos, vecMin, vecMax,
+				   MASK_PLAYERSOLID, m_hRagdollShadow, COLLISION_GROUP_NONE, &trace);
 
-	if ( !trace.allsolid )
+	if(!trace.allsolid)
 		return true;
 
 	return false;
@@ -3504,32 +3438,32 @@ bool CBaseTFPlayer::CheckRagdollToStand( trace_t &trace )
 //-----------------------------------------------------------------------------
 // Purpose: Start being a ragdoll, creates client ragdoll object and server
 //  physics shadow object
-// Input  : &force - 
+// Input  : &force -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CBaseTFPlayer::BecomeRagdollOnClient( const Vector &force )
+bool CBaseTFPlayer::BecomeRagdollOnClient(const Vector &force)
 {
 	// Defender doesn't support it yet
-	if ( PlayerClass() == TFCLASS_INFILTRATOR )
+	if(PlayerClass() == TFCLASS_INFILTRATOR)
 		return false;
 
 	// Initialize the good ragdoll position.
-	VectorCopy( GetAbsOrigin(), m_vecLastGoodRagdollPos );
+	VectorCopy(GetAbsOrigin(), m_vecLastGoodRagdollPos);
 
-	bool bret = BaseClass::BecomeRagdollOnClient( force );
+	bool bret = BaseClass::BecomeRagdollOnClient(force);
 
 	// ROBIN: Disabled ragdoll shadows for now.
 	//		  We'll re-enable them if we need to know the end position again
 	//		  If we re-enable them, we need to fix the ragdoll shadow not having the correct mass
 	return bret;
 
-	AddSolidFlags( FSOLID_NOT_SOLID );
+	AddSolidFlags(FSOLID_NOT_SOLID);
 
 	// Clear any old shadow object ( should never occur )
-	ClearClientRagdoll( false );
+	ClearClientRagdoll(false);
 
 	// Create new shadow object
-	m_hRagdollShadow = CRagdollShadow::Create( this, force );
+	m_hRagdollShadow = CRagdollShadow::Create(this, force);
 
 	return bret;
 }
@@ -3537,68 +3471,68 @@ bool CBaseTFPlayer::BecomeRagdollOnClient( const Vector &force )
 //=========================================================
 // AddGesture - add a gesture into the animation queue
 //=========================================================
-int CBaseTFPlayer::AddGesture( Activity activity, bool autokill /*= true*/ )
+int CBaseTFPlayer::AddGesture(Activity activity, bool autokill /*= true*/)
 {
-	int layer = BaseClass::AddGesture( activity, autokill );
-	SetLayerBlendIn( layer, 0.0 );
-	SetLayerBlendOut( layer, 0.0 );
+	int layer = BaseClass::AddGesture(activity, autokill);
+	SetLayerBlendIn(layer, 0.0);
+	SetLayerBlendOut(layer, 0.0);
 	return layer;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Class specific touch functionality!
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::ClassTouch( CBaseEntity *pTouched )
+void CBaseTFPlayer::ClassTouch(CBaseEntity *pTouched)
 {
-	if ( m_pfnClassTouch && HasClass() )
+	if(m_pfnClassTouch && HasClass())
 	{
-		(GetPlayerClass()->*m_pfnClassTouch)( pTouched );
+		(GetPlayerClass()->*m_pfnClassTouch)(pTouched);
 	}
 }
 
-const char* CBaseTFPlayer::GetClassModelString( int iClass, int iTeam )
+const char *CBaseTFPlayer::GetClassModelString(int iClass, int iTeam)
 {
-	return m_PlayerClasses.GetPlayerClass( iClass )->GetClassModelString( iTeam );
+	return m_PlayerClasses.GetPlayerClass(iClass)->GetClassModelString(iTeam);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bRampage - 
+// Purpose:
+// Input  : bRampage -
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::SetRampage( bool bRampage )
-{ 
-	m_bRampage = bRampage; 
+void CBaseTFPlayer::SetRampage(bool bRampage)
+{
+	m_bRampage = bRampage;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CBaseTFPlayer::IsInRampage( void ) 
-{ 
-	return m_bRampage; 
+bool CBaseTFPlayer::IsInRampage(void)
+{
+	return m_bRampage;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::SetPlayerClass( TFClass iClass )
+void CBaseTFPlayer::SetPlayerClass(TFClass iClass)
 {
-	if ( m_iPlayerClass != iClass )
+	if(m_iPlayerClass != iClass)
 	{
 		m_Timer.End();
 
-		if ( m_iPlayerClass >= 0 && m_iPlayerClass < TFCLASS_CLASS_COUNT )
+		if(m_iPlayerClass >= 0 && m_iPlayerClass < TFCLASS_CLASS_COUNT)
 		{
-			void AddPlayerClassTime( int classnum, float seconds );
+			void AddPlayerClassTime(int classnum, float seconds);
 
-			AddPlayerClassTime( m_iPlayerClass, m_Timer.GetDuration().GetSeconds() );
+			AddPlayerClassTime(m_iPlayerClass, m_Timer.GetDuration().GetSeconds());
 		}
 	}
 
-	if ( m_iPlayerClass >= 0 )
+	if(m_iPlayerClass >= 0)
 	{
-		if ( GetPlayerClass() )
+		if(GetPlayerClass())
 		{
 			GetPlayerClass()->ClassDeactivate();
 		}
@@ -3606,13 +3540,13 @@ void CBaseTFPlayer::SetPlayerClass( TFClass iClass )
 
 	m_iPlayerClass = iClass;
 
-	if ( m_iPlayerClass >= 0 )
+	if(m_iPlayerClass >= 0)
 	{
 		SetPlayerModel();
 
 		m_Timer.Start();
-		
-		if ( GetPlayerClass() )
+
+		if(GetPlayerClass())
 		{
 			GetPlayerClass()->ClassActivate();
 			// Setup the class on initial spawn
@@ -3622,13 +3556,13 @@ void CBaseTFPlayer::SetPlayerClass( TFClass iClass )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int CBaseTFPlayer::ClassCostAdjustment( ResupplyBuyType_t nType )
+int CBaseTFPlayer::ClassCostAdjustment(ResupplyBuyType_t nType)
 {
-	if ( m_iPlayerClass >= 0 )
+	if(m_iPlayerClass >= 0)
 	{
-		return GetPlayerClass()->ClassCostAdjustment( nType );
+		return GetPlayerClass()->ClassCostAdjustment(nType);
 	}
 
 	return 0;
@@ -3641,10 +3575,10 @@ int CBaseTFPlayer::ClassCostAdjustment( ResupplyBuyType_t nType )
 class CPhysicsTFPlayerCallback : public IPhysicsPlayerControllerEvent
 {
 public:
-	int ShouldMoveTo( IPhysicsObject *pObject, const Vector &position )
+	int ShouldMoveTo(IPhysicsObject *pObject, const Vector &position)
 	{
-		CBaseTFPlayer *pPlayer = ( CBaseTFPlayer* )pObject->GetGameData();
-		if ( pPlayer->TouchedPhysics() )
+		CBaseTFPlayer *pPlayer = (CBaseTFPlayer *)pObject->GetGameData();
+		if(pPlayer->TouchedPhysics())
 		{
 			return 0;
 		}
@@ -3655,26 +3589,26 @@ public:
 static CPhysicsTFPlayerCallback TFPlayerCallback;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::InitVCollision( void )
+void CBaseTFPlayer::InitVCollision(void)
 {
-	if ( GetPlayerClass() )
+	if(GetPlayerClass())
 	{
 		GetPlayerClass()->InitVCollision();
 	}
 
 	// Setup the HL2 specific callback.
-	if ( GetPhysicsController() )
+	if(GetPhysicsController())
 	{
-		GetPhysicsController()->SetEventHandler( &TFPlayerCallback );
+		GetPhysicsController()->SetEventHandler(&TFPlayerCallback);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Return the entity that should receive the score
 //-----------------------------------------------------------------------------
-CBasePlayer *CBaseTFPlayer::GetScorer( void )
+CBasePlayer *CBaseTFPlayer::GetScorer(void)
 {
 	return this;
 }
@@ -3682,35 +3616,35 @@ CBasePlayer *CBaseTFPlayer::GetScorer( void )
 //-----------------------------------------------------------------------------
 // Purpose: Return the entity that should get assistance credit
 //-----------------------------------------------------------------------------
-CBasePlayer *CBaseTFPlayer::GetAssistant( void )
+CBasePlayer *CBaseTFPlayer::GetAssistant(void)
 {
 	// If I'm in a vehicle, the builder gets credit
-	if ( IsInAVehicle() )
+	if(IsInAVehicle())
 	{
-		CBaseObject *pObject = dynamic_cast<CBaseObject*>( GetVehicle() );
-		if ( pObject )
+		CBaseObject *pObject = dynamic_cast<CBaseObject *>(GetVehicle());
+		if(pObject)
 		{
 			CBasePlayer *pBuilder = pObject->GetBuilder();
-			if ( pBuilder && pBuilder != this )
+			if(pBuilder && pBuilder != this)
 				return pBuilder;
 		}
 	}
 
 	// If I'm boosted, someone's getting the assist
-	if ( HasPowerup( POWERUP_BOOST ) && m_hLastBoostEntity.Get() )
+	if(HasPowerup(POWERUP_BOOST) && m_hLastBoostEntity.Get())
 	{
 		// I may have boosted myself
-		if ( m_hLastBoostEntity.Get() != this )
+		if(m_hLastBoostEntity.Get() != this)
 		{
-			if ( m_hLastBoostEntity->IsPlayer() )
-				return (CBasePlayer*)m_hLastBoostEntity.Get();
+			if(m_hLastBoostEntity->IsPlayer())
+				return (CBasePlayer *)m_hLastBoostEntity.Get();
 
 			// If it's an object, give the builder the assist (i.e. buff station)
-			CBaseObject *pObject = dynamic_cast<CBaseObject*>( m_hLastBoostEntity.Get() );
-			if ( pObject )
+			CBaseObject *pObject = dynamic_cast<CBaseObject *>(m_hLastBoostEntity.Get());
+			if(pObject)
 			{
 				CBasePlayer *pBuilder = pObject->GetBuilder();
-				if ( pBuilder && pBuilder != this )
+				if(pBuilder && pBuilder != this)
 					return pBuilder;
 			}
 		}

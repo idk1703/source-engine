@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,29 +22,43 @@ class CPasstimeBall;
 class CFuncPasstimeGoalShim : public CBaseTrigger
 {
 public:
-	virtual void StartTouch(CBaseEntity *pOther) OVERRIDE { CBaseTrigger::StartTouch(pOther); ShimStartTouch(pOther); }
-	virtual void EndTouch(CBaseEntity *pOther) OVERRIDE { CBaseTrigger::EndTouch(pOther); ShimEndTouch(pOther); }
-	
+	virtual void StartTouch(CBaseEntity *pOther) OVERRIDE
+	{
+		CBaseTrigger::StartTouch(pOther);
+		ShimStartTouch(pOther);
+	}
+	virtual void EndTouch(CBaseEntity *pOther) OVERRIDE
+	{
+		CBaseTrigger::EndTouch(pOther);
+		ShimEndTouch(pOther);
+	}
+
 private:
-	virtual void ShimStartTouch( CBaseEntity* pOther ) = 0;
-	virtual void ShimEndTouch( CBaseEntity* pOther ) = 0;
+	virtual void ShimStartTouch(CBaseEntity *pOther) = 0;
+	virtual void ShimEndTouch(CBaseEntity *pOther) = 0;
 };
 
 //-----------------------------------------------------------------------------
-class CFuncPasstimeGoal : public CFuncPasstimeGoalShim, public TAutoList< CFuncPasstimeGoal >
+class CFuncPasstimeGoal : public CFuncPasstimeGoalShim, public TAutoList<CFuncPasstimeGoal>
 {
 public:
-	DECLARE_CLASS( CFuncPasstimeGoal, CFuncPasstimeGoalShim );
+	DECLARE_CLASS(CFuncPasstimeGoal, CFuncPasstimeGoalShim);
 	DECLARE_SERVERCLASS();
 	DECLARE_DATADESC();
 	CFuncPasstimeGoal();
 	virtual void Spawn() OVERRIDE;
-	virtual int	UpdateTransmitState() OVERRIDE;
-	void OnScore( int team );
-	int Points() const { return m_iPoints; }
-	bool IsDisabled() const { return m_bTriggerDisabled; }
+	virtual int UpdateTransmitState() OVERRIDE;
+	void OnScore(int team);
+	int Points() const
+	{
+		return m_iPoints;
+	}
+	bool IsDisabled() const
+	{
+		return m_bTriggerDisabled;
+	}
 
-	enum SpawnFlags 
+	enum SpawnFlags
 	{
 		WIN_ON_SCORE = 1,
 		DISABLE_BALL_SCORE = 2,
@@ -60,22 +74,34 @@ public:
 		TYPE_TOWER,
 	};
 
-	bool BWinOnScore() const { return (GetSpawnFlags() & (CFuncPasstimeGoal::WIN_ON_SCORE << 24)) != 0; }
-	bool BDisableBallScore() const { return (GetSpawnFlags() & (CFuncPasstimeGoal::DISABLE_BALL_SCORE << 24)) != 0; }
-	bool BEnablePlayerScore() const { return (GetSpawnFlags() & (CFuncPasstimeGoal::ENABLE_PLAYER_SCORE << 24)) != 0; }
-	bool BTowerGoal() const { return (GetSpawnFlags() & (CFuncPasstimeGoal::TYPE_TOWER_GOAL << 24)) != 0; }
+	bool BWinOnScore() const
+	{
+		return (GetSpawnFlags() & (CFuncPasstimeGoal::WIN_ON_SCORE << 24)) != 0;
+	}
+	bool BDisableBallScore() const
+	{
+		return (GetSpawnFlags() & (CFuncPasstimeGoal::DISABLE_BALL_SCORE << 24)) != 0;
+	}
+	bool BEnablePlayerScore() const
+	{
+		return (GetSpawnFlags() & (CFuncPasstimeGoal::ENABLE_PLAYER_SCORE << 24)) != 0;
+	}
+	bool BTowerGoal() const
+	{
+		return (GetSpawnFlags() & (CFuncPasstimeGoal::TYPE_TOWER_GOAL << 24)) != 0;
+	}
 
 private:
-	virtual void ShimStartTouch( CBaseEntity *pOther ) OVERRIDE;
-	virtual void ShimEndTouch( CBaseEntity *pOther ) OVERRIDE; 
-	bool CanTouchMe( CBaseEntity *pOther );
+	virtual void ShimStartTouch(CBaseEntity *pOther) OVERRIDE;
+	virtual void ShimEndTouch(CBaseEntity *pOther) OVERRIDE;
+	bool CanTouchMe(CBaseEntity *pOther);
 	void GoalThink();
 
 	COutputEvent m_onScoreBlu;
 	COutputEvent m_onScoreRed;
 	int m_iPoints;
-	CNetworkVar( bool, m_bTriggerDisabled );
-	CNetworkVar( int, m_iGoalType );
+	CNetworkVar(bool, m_bTriggerDisabled);
+	CNetworkVar(int, m_iGoalType);
 };
 
-#endif // FUNC_PASSTIME_GOAL_H  
+#endif // FUNC_PASSTIME_GOAL_H

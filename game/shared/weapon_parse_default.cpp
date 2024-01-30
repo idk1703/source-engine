@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -11,10 +11,7 @@
 #include "tier0/memdbgon.h"
 
 // Default implementation for games that don't add custom data to the weapon scripts.
-FileWeaponInfo_t* CreateWeaponInfo()
+FileWeaponInfo_t *CreateWeaponInfo()
 {
 	return new FileWeaponInfo_t;
 }
-
-
-

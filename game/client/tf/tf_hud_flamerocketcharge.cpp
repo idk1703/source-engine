@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -24,81 +24,82 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudFlameRocketChargeMeter : public CHudElement, public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CHudFlameRocketChargeMeter, EditablePanel );
+	DECLARE_CLASS_SIMPLE(CHudFlameRocketChargeMeter, EditablePanel);
 
 public:
-	CHudFlameRocketChargeMeter( const char *pElementName );
+	CHudFlameRocketChargeMeter(const char *pElementName);
 
-	virtual void	ApplySchemeSettings( IScheme *scheme );
-	virtual bool	ShouldDraw( void );
-	virtual void	OnTick( void );
+	virtual void ApplySchemeSettings(IScheme *scheme);
+	virtual bool ShouldDraw(void);
+	virtual void OnTick(void);
 
 private:
 	vgui::ContinuousProgressBar *m_pChargeMeter;
 };
 
-DECLARE_HUDELEMENT( CHudFlameRocketChargeMeter );
+DECLARE_HUDELEMENT(CHudFlameRocketChargeMeter);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CHudFlameRocketChargeMeter::CHudFlameRocketChargeMeter( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudFlameRocketCharge" )
+CHudFlameRocketChargeMeter::CHudFlameRocketChargeMeter(const char *pElementName)
+	: CHudElement(pElementName), BaseClass(NULL, "HudFlameRocketCharge")
 {
 	Panel *pParent = g_pClientMode->GetViewport();
-	SetParent( pParent );
+	SetParent(pParent);
 
-	m_pChargeMeter = new ContinuousProgressBar( this, "ChargeMeter" );
+	m_pChargeMeter = new ContinuousProgressBar(this, "ChargeMeter");
 
-	SetHiddenBits( HIDEHUD_MISCSTATUS );
+	SetHiddenBits(HIDEHUD_MISCSTATUS);
 
-	vgui::ivgui()->AddTickSignal( GetVPanel() );
+	vgui::ivgui()->AddTickSignal(GetVPanel());
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CHudFlameRocketChargeMeter::ApplySchemeSettings( IScheme *pScheme )
+void CHudFlameRocketChargeMeter::ApplySchemeSettings(IScheme *pScheme)
 {
 	// load control settings...
-	LoadControlSettings( "resource/UI/HudFlameRocketCharge.res" );
+	LoadControlSettings("resource/UI/HudFlameRocketCharge.res");
 
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CHudFlameRocketChargeMeter::ShouldDraw( void )
+bool CHudFlameRocketChargeMeter::ShouldDraw(void)
 {
 	C_TFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
 
-	if ( !pPlayer || !pPlayer->IsPlayerClass( TF_CLASS_PYRO ) || !pPlayer->IsAlive() )
+	if(!pPlayer || !pPlayer->IsPlayerClass(TF_CLASS_PYRO) || !pPlayer->IsAlive())
 	{
 		return false;
 	}
 
 	CTFWeaponBase *pWpn = pPlayer->GetActiveTFWeapon();
 
-	if ( !pWpn )
+	if(!pWpn)
 	{
 		return false;
 	}
 
 	int iWeaponID = pWpn->GetWeaponID();
 
-	if ( iWeaponID != TF_WEAPON_FLAMETHROWER )
+	if(iWeaponID != TF_WEAPON_FLAMETHROWER)
 	{
 		return false;
 	}
 
 	// @note Tom Bui: This has been co-opted to be a charged airblast and not a charged flame rocket
 	int iChargedAirblast = 0;
-	CALL_ATTRIB_HOOK_INT_ON_OTHER( pWpn, iChargedAirblast, set_charged_airblast );
-	if ( iChargedAirblast == 0 )
+	CALL_ATTRIB_HOOK_INT_ON_OTHER(pWpn, iChargedAirblast, set_charged_airblast);
+	if(iChargedAirblast == 0)
 	{
 		return false;
 	}
@@ -107,39 +108,39 @@ bool CHudFlameRocketChargeMeter::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CHudFlameRocketChargeMeter::OnTick( void )
+void CHudFlameRocketChargeMeter::OnTick(void)
 {
 	C_TFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
 
-	if ( !pPlayer )
+	if(!pPlayer)
 		return;
 
 	CTFWeaponBase *pWpn = pPlayer->GetActiveTFWeapon();
-	ITFChargeUpWeapon *pChargeupWeapon = dynamic_cast< ITFChargeUpWeapon *>( pWpn );
+	ITFChargeUpWeapon *pChargeupWeapon = dynamic_cast<ITFChargeUpWeapon *>(pWpn);
 
-	if ( !pWpn || !pChargeupWeapon )
+	if(!pWpn || !pChargeupWeapon)
 		return;
 
-	if ( m_pChargeMeter )
+	if(m_pChargeMeter)
 	{
 		float flChargeMaxTime = pChargeupWeapon->GetChargeMaxTime();
 
-		if ( flChargeMaxTime != 0 )
+		if(flChargeMaxTime != 0)
 		{
 			float flChargeBeginTime = pChargeupWeapon->GetChargeBeginTime();
 
-			if ( flChargeBeginTime > 0 )
+			if(flChargeBeginTime > 0)
 			{
-				float flTimeCharged = MAX( 0, gpGlobals->curtime - flChargeBeginTime );
-				float flPercentCharged = MIN( 1.0, flTimeCharged / flChargeMaxTime );
+				float flTimeCharged = MAX(0, gpGlobals->curtime - flChargeBeginTime);
+				float flPercentCharged = MIN(1.0, flTimeCharged / flChargeMaxTime);
 
-				m_pChargeMeter->SetProgress( flPercentCharged );
+				m_pChargeMeter->SetProgress(flPercentCharged);
 			}
 			else
 			{
-				m_pChargeMeter->SetProgress( 0.0f );
+				m_pChargeMeter->SetProgress(0.0f);
 			}
 		}
 	}

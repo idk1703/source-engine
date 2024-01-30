@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -11,16 +11,14 @@
 #pragma once
 #endif
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Data describing a single map
 //-----------------------------------------------------------------------------
-typedef struct 
+typedef struct
 {
-	
+
 	char name[100];
 	int type;
 } Maps_t;
-
 
 #endif // MAPS_H

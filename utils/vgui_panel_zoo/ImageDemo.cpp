@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,7 +18,7 @@ using namespace vgui;
 // An Image is an class that handles drawing of a tga image
 // They are not panels.
 //-----------------------------------------------------------------------------
-class ImageDemo: public DemoPage
+class ImageDemo : public DemoPage
 {
 	typedef DemoPage BaseClass;
 
@@ -28,7 +28,7 @@ public:
 
 	virtual void ApplySchemeSettings(IScheme *pScheme);
 	virtual void Paint();
-	
+
 private:
 	IImage *m_pImage;
 };
@@ -45,23 +45,21 @@ ImageDemo::ImageDemo(Panel *parent, const char *name) : DemoPage(parent, name)
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-ImageDemo::~ImageDemo()
-{
-}
+ImageDemo::~ImageDemo() {}
 
 //-----------------------------------------------------------------------------
 // Scheme settings
 //-----------------------------------------------------------------------------
 void ImageDemo::ApplySchemeSettings(IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
 	// now insert an image
 	m_pImage = scheme()->GetImage("Resource/valve_logo", false);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Paint the image on screen. Images are not panels, 
+// Purpose: Paint the image on screen. Images are not panels,
 // You must call the Paint method explicitly for them.
 // and set thier position in the frame every time you draw them.
 //-----------------------------------------------------------------------------
@@ -71,9 +69,7 @@ void ImageDemo::Paint()
 	m_pImage->Paint();
 }
 
-
-Panel* ImageDemo_Create(Panel *parent)
+Panel *ImageDemo_Create(Panel *parent)
 {
 	return new ImageDemo(parent, "ImageDemo");
 }
-

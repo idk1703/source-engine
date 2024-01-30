@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,7 +13,7 @@
 
 #include "AI_BaseNPC.h"
 
-#define	BUG_BUILDER_MODEL		"models/npcs/bugs/bug_builder.mdl"
+#define BUG_BUILDER_MODEL "models/npcs/bugs/bug_builder.mdl"
 
 class CMaker_BugHole;
 
@@ -22,46 +22,53 @@ class CMaker_BugHole;
 //-----------------------------------------------------------------------------
 class CNPC_Bug_Builder : public CAI_BaseNPC
 {
-	DECLARE_CLASS( CNPC_Bug_Builder, CAI_BaseNPC );
+	DECLARE_CLASS(CNPC_Bug_Builder, CAI_BaseNPC);
+
 public:
-	CNPC_Bug_Builder( void );
+	CNPC_Bug_Builder(void);
 
-	virtual void Spawn( void );
-	virtual void Precache( void );
+	virtual void Spawn(void);
+	virtual void Precache(void);
 
-	virtual int SelectSchedule( void );
-	virtual void StartTask( const Task_t *pTask );
-	virtual void RunTask( const Task_t *pTask );
+	virtual int SelectSchedule(void);
+	virtual void StartTask(const Task_t *pTask);
+	virtual void RunTask(const Task_t *pTask);
 
-	virtual float MaxYawSpeed( void );
-	virtual void HandleAnimEvent( animevent_t *pEvent );
-	virtual void IdleSound( void );
-	virtual void PainSound( const CTakeDamageInfo &info );
-	virtual void AlertSound( void );
+	virtual float MaxYawSpeed(void);
+	virtual void HandleAnimEvent(animevent_t *pEvent);
+	virtual void IdleSound(void);
+	virtual void PainSound(const CTakeDamageInfo &info);
+	virtual void AlertSound(void);
 	virtual bool FValidateHintType(CAI_Hint *pHint);
 
-	virtual bool ShouldPlayIdleSound( void );
+	virtual bool ShouldPlayIdleSound(void);
 
-	virtual Class_T	Classify( void ) { return CLASS_ANTLION; }
-	virtual int	GetSoundInterests( void ) { return 0; }
+	virtual Class_T Classify(void)
+	{
+		return CLASS_ANTLION;
+	}
+	virtual int GetSoundInterests(void)
+	{
+		return 0;
+	}
 
 	DECLARE_DATADESC();
 
 	// BugHole handling
-	void	SetBugHole( CMaker_BugHole *pBugHole );
-	void	ReturnToBugHole( void );
+	void SetBugHole(CMaker_BugHole *pBugHole);
+	void ReturnToBugHole(void);
 
 private:
-	virtual Disposition_t	IRelationType( CBaseEntity *pTarget );
+	virtual Disposition_t IRelationType(CBaseEntity *pTarget);
 
-	void	Event_Killed( const CTakeDamageInfo &info );
+	void Event_Killed(const CTakeDamageInfo &info);
 
-	float	m_flIdleDelay;
+	float m_flIdleDelay;
 
-	float	m_flNextDawdle;
+	float m_flNextDawdle;
 
 	// BugHole handling
-	CHandle< CMaker_BugHole >	m_hMyBugHole;
+	CHandle<CMaker_BugHole> m_hMyBugHole;
 
 	DEFINE_CUSTOM_AI;
 };

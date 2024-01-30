@@ -15,25 +15,24 @@
 #include "toolframework/itoolentity.h"
 #include "materialsystem/MaterialSystemUtil.h"
 
-
 //-----------------------------------------------------------------------------
 // Represents an editable entity; draws its helpers
 //-----------------------------------------------------------------------------
 class CDmeCommentaryNodeEntity : public CDmeMdlRenderable<CDmElement>
 {
-	DEFINE_ELEMENT( CDmeCommentaryNodeEntity, CDmeMdlRenderable<CDmElement> );
+	DEFINE_ELEMENT(CDmeCommentaryNodeEntity, CDmeMdlRenderable<CDmElement>);
 
 public:
 	// Inherited from CDmElement
-	virtual	void	OnAttributeChanged( CDmAttribute *pAttribute );
+	virtual void OnAttributeChanged(CDmAttribute *pAttribute);
 
 public:
 	// Inherited from DmeRenderable
-	virtual const Vector &GetRenderOrigin( void );
-	virtual const QAngle &GetRenderAngles( void );
-	virtual int		DrawModel( int flags );
-	virtual void	GetRenderBounds( Vector& mins, Vector& maxs );
-	virtual bool	IsTransparent( void ); 
+	virtual const Vector &GetRenderOrigin(void);
+	virtual const QAngle &GetRenderAngles(void);
+	virtual int DrawModel(int flags);
+	virtual void GetRenderBounds(Vector &mins, Vector &maxs);
+	virtual bool IsTransparent(void);
 
 public:
 	int GetEntityId() const;
@@ -45,21 +44,21 @@ public:
 
 	// Entity Key iteration
 	CDmAttribute *FirstEntityKey();
-	CDmAttribute *NextEntityKey( CDmAttribute *pEntityKey );
+	CDmAttribute *NextEntityKey(CDmAttribute *pEntityKey);
 
 	// Attach/detach from an engine entity with the same editor index
-	void AttachToEngineEntity( HTOOLHANDLE hToolHandle );
+	void AttachToEngineEntity(HTOOLHANDLE hToolHandle);
 
-	void SetRenderOrigin( const Vector &vecOrigin );
-	void SetRenderAngles( const QAngle &angles );
+	void SetRenderOrigin(const Vector &vecOrigin);
+	void SetRenderAngles(const QAngle &angles);
 
-	void MarkDirty( bool bDirty = true );
+	void MarkDirty(bool bDirty = true);
 
 private:
-	bool IsEntityKey( CDmAttribute *pEntityKey );
+	bool IsEntityKey(CDmAttribute *pEntityKey);
 
 	// Draws the helper for the entity
-	void DrawSprite( IMaterial *pMaterial );
+	void DrawSprite(IMaterial *pMaterial);
 
 	CDmaVar<Vector> m_vecLocalOrigin;
 	CDmaVar<Vector> m_vecLocalAngles;
@@ -72,12 +71,11 @@ private:
 	bool m_bIsDirty;
 
 	// The entity it's connected to in the engine
-	HTOOLHANDLE	m_hEngineEntity;
+	HTOOLHANDLE m_hEngineEntity;
 
 	CMaterialReference m_SelectedInfoTarget;
 	CMaterialReference m_InfoTargetSprite;
 };
-
 
 //-----------------------------------------------------------------------------
 // Inline methods

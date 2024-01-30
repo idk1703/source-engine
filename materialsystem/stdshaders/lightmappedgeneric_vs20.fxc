@@ -57,13 +57,13 @@ struct VS_INPUT
 
 struct VS_OUTPUT
 {
-    float4 projPos					: POSITION;	
-#if !defined( _X360 )    
+	float4 projPos					: POSITION;
+#if !defined( _X360 )
 	float  fog						: FOG;
 #endif
 
 #if SEAMLESS
-	float3 SeamlessTexCoord         : TEXCOORD0;            // x y z 
+	float3 SeamlessTexCoord         : TEXCOORD0;            // x y z
 	float4 detailOrBumpAndEnvmapMaskTexCoord : TEXCOORD1;   // envmap mask
 #else
 	float2 baseTexCoord				: TEXCOORD0;
@@ -107,11 +107,11 @@ VS_OUTPUT main( const VS_INPUT v )
 	float4 vProjPos = mul( float4( v.vPos, 1 ), cModelViewProj );
 	o.projPos = vProjPos;
 	vProjPos.z = dot( float4( v.vPos, 1 ), cModelViewProjZ );
-	
+
 	o.worldPos_projPosZ = float4( worldPos, vProjPos.z );
-	
+
 	float3 worldNormal = mul( vObjNormal, ( float3x3 )cModel[0] );
-	
+
 #if TANGENTSPACE || (LIGHTING_PREVIEW) || defined( _X360 )
 	float3 worldTangentS = mul( v.vTangentS, ( const float3x3 )cModel[0] );
 	float3 worldTangentT = mul( v.vTangentT, ( const float3x3 )cModel[0] );
@@ -151,7 +151,7 @@ VS_OUTPUT main( const VS_INPUT v )
 		}
 #if ( RELIEF_MAPPING == 0 )
 		{
-            // calculate detailorbumptexcoord
+			// calculate detailorbumptexcoord
 			if ( FASTPATH )
 				o.detailOrBumpAndEnvmapMaskTexCoord.xy = v.vBaseTexCoord.xy;
 			else
@@ -172,7 +172,7 @@ VS_OUTPUT main( const VS_INPUT v )
 		o.lightmapTexCoord3.z = dot( v.vBaseTexCoord, cBlendMaskTexCoordTransform[0] ) + cBlendMaskTexCoordTransform[0].w;
 		o.lightmapTexCoord3.w = dot( v.vBaseTexCoord, cBlendMaskTexCoordTransform[1] ) + cBlendMaskTexCoordTransform[1].w;
 	}
-	
+
 	//  compute lightmap coordinates
 	if( g_bBumpmap && g_bBumpmapDiffuseLighting )
 	{
@@ -249,6 +249,6 @@ VS_OUTPUT main( const VS_INPUT v )
 	{
 		o.vertexBlendX_fogFactorW.r = v.vColor.a;
 	}
-	
+
 	return o;
 }

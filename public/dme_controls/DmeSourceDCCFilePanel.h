@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -13,7 +13,6 @@
 #include "vgui_controls/EditablePanel.h"
 #include "datamodel/dmehandle.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
@@ -24,23 +23,22 @@ namespace vgui
 
 class CDmeSourceDCCFile;
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Asset builder
 //-----------------------------------------------------------------------------
 class CDmeSourceDCCFilePanel : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CDmeSourceDCCFilePanel, EditablePanel );
+	DECLARE_CLASS_SIMPLE(CDmeSourceDCCFilePanel, EditablePanel);
 
 public:
-	CDmeSourceDCCFilePanel( vgui::Panel *pParent, const char *pPanelName );
+	CDmeSourceDCCFilePanel(vgui::Panel *pParent, const char *pPanelName);
 	virtual ~CDmeSourceDCCFilePanel();
 
 	// Inherited from Panel
-	virtual void OnCommand( const char *pCommand );
-	virtual void OnKeyCodeTyped( vgui::KeyCode code );
+	virtual void OnCommand(const char *pCommand);
+	virtual void OnKeyCodeTyped(vgui::KeyCode code);
 
-	void SetDmeElement( CDmeSourceDCCFile *pSourceDCCFile );
+	void SetDmeElement(CDmeSourceDCCFile *pSourceDCCFile);
 
 	/*
 	messages sent:
@@ -48,22 +46,22 @@ public:
 	*/
 
 private:
-	MESSAGE_FUNC_PARAMS( OnTextNewLine, "TextNewLine", kv );
-	MESSAGE_FUNC_PARAMS( OnInputCompleted, "InputCompleted", kv );
-	MESSAGE_FUNC_PARAMS( OnItemSelected, "ItemSelected", kv );	
-	MESSAGE_FUNC_PARAMS( OnItemDeselected, "ItemDeselected", kv );	
+	MESSAGE_FUNC_PARAMS(OnTextNewLine, "TextNewLine", kv);
+	MESSAGE_FUNC_PARAMS(OnInputCompleted, "InputCompleted", kv);
+	MESSAGE_FUNC_PARAMS(OnItemSelected, "ItemSelected", kv);
+	MESSAGE_FUNC_PARAMS(OnItemDeselected, "ItemDeselected", kv);
 
 	// Shows the DCC object browser (once we have one)
-	void ShowDCCObjectBrowser( const char *pTitle, const char *pPrompt, KeyValues *pDialogKeys );
+	void ShowDCCObjectBrowser(const char *pTitle, const char *pPrompt, KeyValues *pDialogKeys);
 
 	// Called when we're browsing for a DCC object and one was selected
-	void OnDCCObjectAdded( const char *pDCCObjectName, KeyValues *pContextKeys );
+	void OnDCCObjectAdded(const char *pDCCObjectName, KeyValues *pContextKeys);
 
 	// Refresh the source list
-	void RefreshDCCObjectList( );
+	void RefreshDCCObjectList();
 
 	// Called when the source file name changes
-	bool CheckForDuplicateNames( const char *pDCCObjectName, int nDCCObjectSkipIndex = -1 );
+	bool CheckForDuplicateNames(const char *pDCCObjectName, int nDCCObjectSkipIndex = -1);
 
 	void OnBrowseDCCObject();
 	void OnAddDCCObject();
@@ -71,13 +69,13 @@ private:
 	void OnDCCObjectNameChanged();
 
 	// Selects a particular DCC object
-	void SelectDCCObject( int nDCCObjectIndex );
+	void SelectDCCObject(int nDCCObjectIndex);
 
 	// Called when a list panel's selection changes
-	void OnItemSelectionChanged( );
+	void OnItemSelectionChanged();
 
 	// Marks the file as dirty
-	void SetDirty( );
+	void SetDirty();
 
 	vgui::ListPanel *m_pRootDCCObjects;
 	vgui::Button *m_pDCCObjectBrowser;
@@ -86,8 +84,7 @@ private:
 	vgui::Button *m_pApplyChanges;
 	vgui::TextEntry *m_pDCCObjectName;
 
-	CDmeHandle< CDmeSourceDCCFile > m_hSourceDCCFile;
+	CDmeHandle<CDmeSourceDCCFile> m_hSourceDCCFile;
 };
-
 
 #endif // DMESOURCEDCCFILEPANEL_H

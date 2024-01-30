@@ -11,12 +11,9 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 static LPCTSTR pszSection = "Run Map";
 
-
-CRunMap::CRunMap(CWnd* pParent /*=NULL*/)
-	: CDialog(CRunMap::IDD, pParent)
+CRunMap::CRunMap(CWnd *pParent /*=NULL*/) : CDialog(CRunMap::IDD, pParent)
 {
 	m_bSwitchMode = FALSE;
 
@@ -40,8 +37,7 @@ CRunMap::CRunMap(CWnd* pParent /*=NULL*/)
 	m_strQuakeParms = App->GetProfileString(pszSection, "Game Parms", "");
 }
 
-
-void CRunMap::DoDataExchange(CDataExchange* pDX)
+void CRunMap::DoDataExchange(CDataExchange *pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CRunMap)
@@ -54,7 +50,6 @@ void CRunMap::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-
 void CRunMap::SaveToIni(void)
 {
 	CWinApp *App = AfxGetApp();
@@ -66,7 +61,6 @@ void CRunMap::SaveToIni(void)
 	App->WriteProfileString(pszSection, "Game Parms", m_strQuakeParms);
 }
 
-
 BEGIN_MESSAGE_MAP(CRunMap, CDialog)
 	//{{AFX_MSG_MAP(CRunMap)
 	ON_BN_CLICKED(IDC_EXPERT, OnExpert)
@@ -76,13 +70,13 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CRunMap message handlers
 
-void CRunMap::OnExpert() 
+void CRunMap::OnExpert()
 {
 	m_bSwitchMode = TRUE;
 	EndDialog(IDOK);
 }
 
-BOOL CRunMap::OnInitDialog() 
+BOOL CRunMap::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 	return TRUE;

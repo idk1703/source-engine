@@ -29,7 +29,6 @@
 
 using namespace vgui;
 
-
 const char *GetVGuiControlsModuleName()
 {
 	return "SampleTool";
@@ -38,106 +37,115 @@ const char *GetVGuiControlsModuleName()
 //-----------------------------------------------------------------------------
 // Connect, disconnect
 //-----------------------------------------------------------------------------
-bool ConnectTools( CreateInterfaceFn factory )
+bool ConnectTools(CreateInterfaceFn factory)
 {
 	return (materials != NULL) && (g_pMatSystemSurface != NULL);
 }
 
-void DisconnectTools( )
-{
-}
-
+void DisconnectTools() {}
 
 //-----------------------------------------------------------------------------
 // Implementation of the sample tool
 //-----------------------------------------------------------------------------
 class CSampleTool : public CBaseToolSystem, public IFileMenuCallbacks
 {
-	DECLARE_CLASS_SIMPLE( CSampleTool, CBaseToolSystem );
+	DECLARE_CLASS_SIMPLE(CSampleTool, CBaseToolSystem);
 
 public:
 	CSampleTool();
 
 	// Inherited from IToolSystem
-	virtual const char *GetToolName() { return "Sample Tool"; }
-	virtual const char *GetBindingsContextFile() { return "cfg/SampleTool.kb"; }
-	virtual bool	Init( );
-    virtual void	Shutdown();
+	virtual const char *GetToolName()
+	{
+		return "Sample Tool";
+	}
+	virtual const char *GetBindingsContextFile()
+	{
+		return "cfg/SampleTool.kb";
+	}
+	virtual bool Init();
+	virtual void Shutdown();
 
 	// Inherited from IFileMenuCallbacks
-	virtual int		GetFileMenuItemsEnabled( );
-	virtual void	AddRecentFilesToMenu( vgui::Menu *menu );
-	virtual bool	GetPerforceFileName( char *pFileName, int nMaxLen ) { return false; }
-	virtual vgui::Panel* GetRootPanel() { return this; }
+	virtual int GetFileMenuItemsEnabled();
+	virtual void AddRecentFilesToMenu(vgui::Menu *menu);
+	virtual bool GetPerforceFileName(char *pFileName, int nMaxLen)
+	{
+		return false;
+	}
+	virtual vgui::Panel *GetRootPanel()
+	{
+		return this;
+	}
 
 	// Inherited from CBaseToolSystem
 	virtual vgui::HScheme GetToolScheme();
-	virtual vgui::Menu *CreateActionMenu( vgui::Panel *pParent );
-	virtual void OnCommand( const char *cmd );
-	virtual const char *GetRegistryName() { return "SampleTool"; }
-	virtual vgui::MenuBar *CreateMenuBar( CBaseToolSystem *pParent );
+	virtual vgui::Menu *CreateActionMenu(vgui::Panel *pParent);
+	virtual void OnCommand(const char *cmd);
+	virtual const char *GetRegistryName()
+	{
+		return "SampleTool";
+	}
+	virtual vgui::MenuBar *CreateMenuBar(CBaseToolSystem *pParent);
 
 public:
-	MESSAGE_FUNC( OnNew, "OnNew" );
-	MESSAGE_FUNC( OnOpen, "OnOpen" );
-	MESSAGE_FUNC( OnSave, "OnSave" );
-	MESSAGE_FUNC( OnSaveAs, "OnSaveAs" );
-	MESSAGE_FUNC( OnClose, "OnClose" );
-	MESSAGE_FUNC( OnCloseNoSave, "OnCloseNoSave" );
-	MESSAGE_FUNC( OnMarkNotDirty, "OnMarkNotDirty" );
-	MESSAGE_FUNC( OnExit, "OnExit" );
+	MESSAGE_FUNC(OnNew, "OnNew");
+	MESSAGE_FUNC(OnOpen, "OnOpen");
+	MESSAGE_FUNC(OnSave, "OnSave");
+	MESSAGE_FUNC(OnSaveAs, "OnSaveAs");
+	MESSAGE_FUNC(OnClose, "OnClose");
+	MESSAGE_FUNC(OnCloseNoSave, "OnCloseNoSave");
+	MESSAGE_FUNC(OnMarkNotDirty, "OnMarkNotDirty");
+	MESSAGE_FUNC(OnExit, "OnExit");
 
-	void		OpenFileFromHistory( int slot );
-	virtual void SetupFileOpenDialog( vgui::FileOpenDialog *pDialog, bool bOpenFile, const char *pFileFormat, KeyValues *pContextKeyValues );
-	virtual bool OnReadFileFromDisk( const char *pFileName, const char *pFileFormat, KeyValues *pContextKeyValues );
-	virtual bool OnWriteFileToDisk( const char *pFileName, const char *pFileFormat, KeyValues *pContextKeyValues );
-	virtual void OnFileOperationCompleted( const char *pFileType, bool bWroteFile, vgui::FileOpenStateMachine::CompletionState_t state, KeyValues *pContextKeyValues );
+	void OpenFileFromHistory(int slot);
+	virtual void SetupFileOpenDialog(vgui::FileOpenDialog *pDialog, bool bOpenFile, const char *pFileFormat,
+									 KeyValues *pContextKeyValues);
+	virtual bool OnReadFileFromDisk(const char *pFileName, const char *pFileFormat, KeyValues *pContextKeyValues);
+	virtual bool OnWriteFileToDisk(const char *pFileName, const char *pFileFormat, KeyValues *pContextKeyValues);
+	virtual void OnFileOperationCompleted(const char *pFileType, bool bWroteFile,
+										  vgui::FileOpenStateMachine::CompletionState_t state,
+										  KeyValues *pContextKeyValues);
 
 private:
 	// Loads up a new document
-	void LoadDocument( const char *pDocName );
+	void LoadDocument(const char *pDocName);
 
 	// Updates the menu bar based on the current file
-	void UpdateMenuBar( );
+	void UpdateMenuBar();
 
 	// Shows element properties
-	void ShowElementProperties( );
+	void ShowElementProperties();
 
 	virtual const char *GetLogoTextureName();
-
 };
-
 
 //-----------------------------------------------------------------------------
 // Singleton
 //-----------------------------------------------------------------------------
-CSampleTool	*g_pSampleTool = NULL;
+CSampleTool *g_pSampleTool = NULL;
 
 void CreateTools()
 {
 	g_pSampleTool = new CSampleTool();
 }
 
-
 //-----------------------------------------------------------------------------
 // Constructor
 //-----------------------------------------------------------------------------
-CSampleTool::CSampleTool()
-{
-}
-
+CSampleTool::CSampleTool() {}
 
 //-----------------------------------------------------------------------------
 // Init, shutdown
 //-----------------------------------------------------------------------------
-bool CSampleTool::Init( )
+bool CSampleTool::Init()
 {
-	m_RecentFiles.LoadFromRegistry( GetRegistryName() );
+	m_RecentFiles.LoadFromRegistry(GetRegistryName());
 
 	// NOTE: This has to happen before BaseClass::Init
-//	g_pVGuiLocalize->AddFile( "resource/toolsample_%language%.txt" );
+	//	g_pVGuiLocalize->AddFile( "resource/toolsample_%language%.txt" );
 
-	if ( !BaseClass::Init( ) )
+	if(!BaseClass::Init())
 		return false;
 
 	return true;
@@ -145,109 +153,105 @@ bool CSampleTool::Init( )
 
 void CSampleTool::Shutdown()
 {
-	m_RecentFiles.SaveToRegistry( GetRegistryName() );
+	m_RecentFiles.SaveToRegistry(GetRegistryName());
 	BaseClass::Shutdown();
 }
-
 
 //-----------------------------------------------------------------------------
 // Derived classes can implement this to get a new scheme to be applied to this tool
 //-----------------------------------------------------------------------------
-vgui::HScheme CSampleTool::GetToolScheme() 
-{ 
-	return vgui::scheme()->LoadSchemeFromFile( "Resource/BoxRocket.res", "SampleTool" );
+vgui::HScheme CSampleTool::GetToolScheme()
+{
+	return vgui::scheme()->LoadSchemeFromFile("Resource/BoxRocket.res", "SampleTool");
 }
-
 
 //-----------------------------------------------------------------------------
 // Initializes the menu bar
 //-----------------------------------------------------------------------------
-vgui::MenuBar *CSampleTool::CreateMenuBar( CBaseToolSystem *pParent ) 
+vgui::MenuBar *CSampleTool::CreateMenuBar(CBaseToolSystem *pParent)
 {
-	CToolMenuBar *pMenuBar = new CToolMenuBar( pParent, "Main Menu Bar" );
+	CToolMenuBar *pMenuBar = new CToolMenuBar(pParent, "Main Menu Bar");
 
 	// Sets info in the menu bar
-	char title[ 64 ];
-	ComputeMenuBarTitle( title, sizeof( title ) );
-	pMenuBar->SetInfo( title );
-	pMenuBar->SetToolName( GetToolName() );
+	char title[64];
+	ComputeMenuBarTitle(title, sizeof(title));
+	pMenuBar->SetInfo(title);
+	pMenuBar->SetToolName(GetToolName());
 
 	// Add menu buttons
-	CToolMenuButton *pFileButton = CreateToolFileMenuButton( pMenuBar, "File", "&File", GetActionTarget(), this );
-	CToolMenuButton *pSwitchButton = CreateToolSwitchMenuButton( pMenuBar, "Switcher", "&Tools", GetActionTarget() );
+	CToolMenuButton *pFileButton = CreateToolFileMenuButton(pMenuBar, "File", "&File", GetActionTarget(), this);
+	CToolMenuButton *pSwitchButton = CreateToolSwitchMenuButton(pMenuBar, "Switcher", "&Tools", GetActionTarget());
 
-	pMenuBar->AddButton( pFileButton );
-	pMenuBar->AddButton( pSwitchButton );
+	pMenuBar->AddButton(pFileButton);
+	pMenuBar->AddButton(pSwitchButton);
 
 	return pMenuBar;
 }
 
-
 //-----------------------------------------------------------------------------
 // Creates the action menu
 //-----------------------------------------------------------------------------
-vgui::Menu *CSampleTool::CreateActionMenu( vgui::Panel *pParent )
+vgui::Menu *CSampleTool::CreateActionMenu(vgui::Panel *pParent)
 {
-	vgui::Menu *pActionMenu = new Menu( pParent, "ActionMenu" );
-	pActionMenu->AddMenuItem( "#ToolHide", new KeyValues( "Command", "command", "HideActionMenu" ), GetActionTarget() );
+	vgui::Menu *pActionMenu = new Menu(pParent, "ActionMenu");
+	pActionMenu->AddMenuItem("#ToolHide", new KeyValues("Command", "command", "HideActionMenu"), GetActionTarget());
 	return pActionMenu;
 }
 
 //-----------------------------------------------------------------------------
 // Inherited from IFileMenuCallbacks
 //-----------------------------------------------------------------------------
-int	CSampleTool::GetFileMenuItemsEnabled( )
+int CSampleTool::GetFileMenuItemsEnabled()
 {
 	int nFlags = FILE_ALL;
-	if ( m_RecentFiles.IsEmpty() )
+	if(m_RecentFiles.IsEmpty())
 	{
 		nFlags &= ~(FILE_RECENT | FILE_CLEAR_RECENT);
 	}
 	return nFlags;
 }
 
-void CSampleTool::AddRecentFilesToMenu( vgui::Menu *pMenu )
+void CSampleTool::AddRecentFilesToMenu(vgui::Menu *pMenu)
 {
-	m_RecentFiles.AddToMenu( pMenu, GetActionTarget(), "OnRecent" );
+	m_RecentFiles.AddToMenu(pMenu, GetActionTarget(), "OnRecent");
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CSampleTool::OnExit()
 {
-	enginetools->Command( "quit\n" );
+	enginetools->Command("quit\n");
 }
 
 //-----------------------------------------------------------------------------
 // Handle commands from the action menu and other menus
 //-----------------------------------------------------------------------------
-void CSampleTool::OnCommand( const char *cmd )
+void CSampleTool::OnCommand(const char *cmd)
 {
-	if ( !V_stricmp( cmd, "HideActionMenu" ) )
+	if(!V_stricmp(cmd, "HideActionMenu"))
 	{
-		if ( GetActionMenu() )
+		if(GetActionMenu())
 		{
-			GetActionMenu()->SetVisible( false );
+			GetActionMenu()->SetVisible(false);
 		}
 	}
-	else if ( const char *pSuffix = StringAfterPrefix( cmd, "OnRecent" ) )
+	else if(const char *pSuffix = StringAfterPrefix(cmd, "OnRecent"))
 	{
-		int idx = Q_atoi( pSuffix );
-		OpenFileFromHistory( idx );
+		int idx = Q_atoi(pSuffix);
+		OpenFileFromHistory(idx);
 	}
-	else if( const char *pSuffix = StringAfterPrefix( cmd, "OnTool" ) )
+	else if(const char *pSuffix = StringAfterPrefix(cmd, "OnTool"))
 	{
-		int idx = Q_atoi( pSuffix );
-		enginetools->SwitchToTool( idx );
+		int idx = Q_atoi(pSuffix);
+		enginetools->SwitchToTool(idx);
 	}
 	else
 	{
-		BaseClass::OnCommand( cmd );
+		BaseClass::OnCommand(cmd);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Command handlers
@@ -259,14 +263,14 @@ void CSampleTool::OnNew()
 
 void CSampleTool::OnOpen()
 {
-	OpenFile( "txt" );
+	OpenFile("txt");
 }
 
-bool CSampleTool::OnReadFileFromDisk( const char *pFileName, const char *pFileFormat, KeyValues *pContextKeyValues )
+bool CSampleTool::OnReadFileFromDisk(const char *pFileName, const char *pFileFormat, KeyValues *pContextKeyValues)
 {
 	// FIXME: Implement
 
-	m_RecentFiles.Add( pFileName, pFileFormat );
+	m_RecentFiles.Add(pFileName, pFileFormat);
 	return true;
 }
 
@@ -277,14 +281,14 @@ void CSampleTool::OnSave()
 
 void CSampleTool::OnSaveAs()
 {
-	SaveFile( NULL, NULL, 0 );
+	SaveFile(NULL, NULL, 0);
 }
 
-bool CSampleTool::OnWriteFileToDisk( const char *pFileName, const char *pFileFormat, KeyValues *pContextKeyValues )
+bool CSampleTool::OnWriteFileToDisk(const char *pFileName, const char *pFileFormat, KeyValues *pContextKeyValues)
 {
 	// FIXME: Implement
 
-	m_RecentFiles.Add( pFileName, pFileFormat );
+	m_RecentFiles.Add(pFileName, pFileFormat);
 	return true;
 }
 
@@ -303,37 +307,37 @@ void CSampleTool::OnMarkNotDirty()
 	// FIXME: Implement
 }
 
-
 //-----------------------------------------------------------------------------
 // Show the save document query dialog
 //-----------------------------------------------------------------------------
-void CSampleTool::OpenFileFromHistory( int slot )
+void CSampleTool::OpenFileFromHistory(int slot)
 {
-	const char *pFileName = m_RecentFiles.GetFile( slot );
-	OnReadFileFromDisk( pFileName, NULL, 0 );
+	const char *pFileName = m_RecentFiles.GetFile(slot);
+	OnReadFileFromDisk(pFileName, NULL, 0);
 }
-
 
 //-----------------------------------------------------------------------------
 // Called when file operations complete
 //-----------------------------------------------------------------------------
-void CSampleTool::OnFileOperationCompleted( const char *pFileType, bool bWroteFile, vgui::FileOpenStateMachine::CompletionState_t state, KeyValues *pContextKeyValues )
+void CSampleTool::OnFileOperationCompleted(const char *pFileType, bool bWroteFile,
+										   vgui::FileOpenStateMachine::CompletionState_t state,
+										   KeyValues *pContextKeyValues)
 {
 	// FIXME: Implement
 }
 
-
 //-----------------------------------------------------------------------------
 // Show the File browser dialog
 //-----------------------------------------------------------------------------
-void CSampleTool::SetupFileOpenDialog( vgui::FileOpenDialog *pDialog, bool bOpenFile, const char *pFileFormat, KeyValues *pContextKeyValues )
+void CSampleTool::SetupFileOpenDialog(vgui::FileOpenDialog *pDialog, bool bOpenFile, const char *pFileFormat,
+									  KeyValues *pContextKeyValues)
 {
-	char pStartingDir[ MAX_PATH ];
-	GetModSubdirectory( NULL, pStartingDir, sizeof(pStartingDir) );
+	char pStartingDir[MAX_PATH];
+	GetModSubdirectory(NULL, pStartingDir, sizeof(pStartingDir));
 
-	pDialog->SetTitle( "Choose SampleTool .txt file", true );
-	pDialog->SetStartDirectoryContext( "sample_session", pStartingDir );
-	pDialog->AddFilter( "*.txt", "SampleTool (*.txt)", true );
+	pDialog->SetTitle("Choose SampleTool .txt file", true);
+	pDialog->SetStartDirectoryContext("sample_session", pStartingDir);
+	pDialog->AddFilter("*.txt", "SampleTool (*.txt)", true);
 }
 
 const char *CSampleTool::GetLogoTextureName()

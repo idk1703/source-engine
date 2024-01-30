@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -29,46 +29,44 @@ using namespace vgui;
 extern ConVar tf_arena_preround_time;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudArenaCapPointCountdown : public CHudElement, public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CHudArenaCapPointCountdown, EditablePanel );
+	DECLARE_CLASS_SIMPLE(CHudArenaCapPointCountdown, EditablePanel);
 
 public:
-	CHudArenaCapPointCountdown( const char *pElementName );
+	CHudArenaCapPointCountdown(const char *pElementName);
 
-	virtual void	ApplySchemeSettings( IScheme *scheme );
-	virtual void	OnTick( void );
-	virtual bool	ShouldDraw( void );
-	virtual bool	IsVisible( void );
-
+	virtual void ApplySchemeSettings(IScheme *scheme);
+	virtual void OnTick(void);
+	virtual bool ShouldDraw(void);
+	virtual bool IsVisible(void);
 
 private:
-
-	bool			m_bFire5SecRemain;
-	bool			m_bFire4SecRemain;
-	bool			m_bFire3SecRemain;
-	bool			m_bFire2SecRemain;
-	bool			m_bFire1SecRemain;
-	bool			m_bFire0SecRemain;
-
+	bool m_bFire5SecRemain;
+	bool m_bFire4SecRemain;
+	bool m_bFire3SecRemain;
+	bool m_bFire2SecRemain;
+	bool m_bFire1SecRemain;
+	bool m_bFire0SecRemain;
 };
 
-DECLARE_HUDELEMENT( CHudArenaCapPointCountdown );
+DECLARE_HUDELEMENT(CHudArenaCapPointCountdown);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CHudArenaCapPointCountdown::CHudArenaCapPointCountdown( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudArenaCapPointCountdown" )
+CHudArenaCapPointCountdown::CHudArenaCapPointCountdown(const char *pElementName)
+	: CHudElement(pElementName), BaseClass(NULL, "HudArenaCapPointCountdown")
 {
 	Panel *pParent = g_pClientMode->GetViewport();
-	SetParent( pParent );
+	SetParent(pParent);
 
-	SetHiddenBits( HIDEHUD_MISCSTATUS );
+	SetHiddenBits(HIDEHUD_MISCSTATUS);
 
-	vgui::ivgui()->AddTickSignal( GetVPanel() );
-	SetVisible( true );
+	vgui::ivgui()->AddTickSignal(GetVPanel());
+	SetVisible(true);
 
 	m_bFire5SecRemain = true;
 	m_bFire4SecRemain = true;
@@ -77,72 +75,71 @@ CHudArenaCapPointCountdown::CHudArenaCapPointCountdown( const char *pElementName
 	m_bFire1SecRemain = true;
 	m_bFire0SecRemain = true;
 
-	RegisterForRenderGroup( "mid" );
+	RegisterForRenderGroup("mid");
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CHudArenaCapPointCountdown::ApplySchemeSettings( IScheme *pScheme )
+void CHudArenaCapPointCountdown::ApplySchemeSettings(IScheme *pScheme)
 {
 	// load control settings...
-	LoadControlSettings( "resource/UI/HudArenaCapPointCountdown.res" );
+	LoadControlSettings("resource/UI/HudArenaCapPointCountdown.res");
 
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
-	SetVisible( true );
+	SetVisible(true);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CHudArenaCapPointCountdown::IsVisible( void )
+bool CHudArenaCapPointCountdown::IsVisible(void)
 {
-	if ( IsInFreezeCam() == true )
+	if(IsInFreezeCam() == true)
 		return false;
 
-	if ( ShouldDraw() == false )
+	if(ShouldDraw() == false)
 		return false;
 
 	return BaseClass::IsVisible();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CHudArenaCapPointCountdown::OnTick( void )
+void CHudArenaCapPointCountdown::OnTick(void)
 {
 	BaseClass::OnTick();
 
-	if ( TFGameRules() == NULL || ( TFGameRules() && TFGameRules()->IsInArenaMode() == false ) )
+	if(TFGameRules() == NULL || (TFGameRules() && TFGameRules()->IsInArenaMode() == false))
 	{
-		SetVisible( false );
+		SetVisible(false);
 		return;
 	}
 
-	if ( TFGameRules()->State_Get() != GR_STATE_STALEMATE || ShouldDraw() == false )
+	if(TFGameRules()->State_Get() != GR_STATE_STALEMATE || ShouldDraw() == false)
 	{
-		SetVisible( false );
+		SetVisible(false);
 		return;
 	}
 
 	C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
 
-	if ( !pLocalPlayer )
+	if(!pLocalPlayer)
 	{
-		SetVisible( false );
+		SetVisible(false);
 		return;
 	}
 
-	int iTimeLeft = ceil( TFGameRules()->GetCapturePointTime() - gpGlobals->curtime );
-	
+	int iTimeLeft = ceil(TFGameRules()->GetCapturePointTime() - gpGlobals->curtime);
 
-	if ( iTimeLeft > 5 || iTimeLeft <= 0 )
+	if(iTimeLeft > 5 || iTimeLeft <= 0)
 	{
-		if ( iTimeLeft <= 0 && m_bFire0SecRemain )
+		if(iTimeLeft <= 0 && m_bFire0SecRemain)
 		{
 			m_bFire0SecRemain = false;
-			pLocalPlayer->EmitSound( "Announcer.AM_CapEnabledRandom" );
+			pLocalPlayer->EmitSound("Announcer.AM_CapEnabledRandom");
 		}
 
 		m_bFire5SecRemain = true;
@@ -150,48 +147,47 @@ void CHudArenaCapPointCountdown::OnTick( void )
 		m_bFire3SecRemain = true;
 		m_bFire2SecRemain = true;
 		m_bFire1SecRemain = true;
-	
-		SetVisible( false );
+
+		SetVisible(false);
 		return;
 	}
 
-
-	SetVisible( true );
+	SetVisible(true);
 
 	wchar_t wzTimeLeft[128];
-	_snwprintf( wzTimeLeft, ARRAYSIZE( wzTimeLeft ), L"%i", iTimeLeft );
+	_snwprintf(wzTimeLeft, ARRAYSIZE(wzTimeLeft), L"%i", iTimeLeft);
 
-	SetDialogVariable( "capturetime", wzTimeLeft );
+	SetDialogVariable("capturetime", wzTimeLeft);
 
-	if ( iTimeLeft <= 5 && m_bFire5SecRemain )
+	if(iTimeLeft <= 5 && m_bFire5SecRemain)
 	{
 		m_bFire5SecRemain = false;
-		pLocalPlayer->EmitSound( "Announcer.RoundBegins5Seconds" );
+		pLocalPlayer->EmitSound("Announcer.RoundBegins5Seconds");
 	}
-	else if ( iTimeLeft <= 4 && m_bFire4SecRemain )
+	else if(iTimeLeft <= 4 && m_bFire4SecRemain)
 	{
 		m_bFire4SecRemain = false;
-		pLocalPlayer->EmitSound( "Announcer.RoundBegins4Seconds" );
+		pLocalPlayer->EmitSound("Announcer.RoundBegins4Seconds");
 	}
-	else if ( iTimeLeft <= 3 && m_bFire3SecRemain )
+	else if(iTimeLeft <= 3 && m_bFire3SecRemain)
 	{
 		m_bFire3SecRemain = false;
-		pLocalPlayer->EmitSound( "Announcer.RoundBegins3Seconds" );
+		pLocalPlayer->EmitSound("Announcer.RoundBegins3Seconds");
 	}
-	else if ( iTimeLeft <= 2 && m_bFire2SecRemain )
+	else if(iTimeLeft <= 2 && m_bFire2SecRemain)
 	{
 		m_bFire2SecRemain = false;
-		pLocalPlayer->EmitSound( "Announcer.RoundBegins2Seconds" );
+		pLocalPlayer->EmitSound("Announcer.RoundBegins2Seconds");
 	}
-	else if ( iTimeLeft <= 1 && m_bFire1SecRemain )
+	else if(iTimeLeft <= 1 && m_bFire1SecRemain)
 	{
 		m_bFire1SecRemain = false;
 		m_bFire0SecRemain = true;
-		pLocalPlayer->EmitSound( "Announcer.RoundBegins1Seconds" );
+		pLocalPlayer->EmitSound("Announcer.RoundBegins1Seconds");
 	}
 }
 
-bool CHudArenaCapPointCountdown::ShouldDraw( void )
+bool CHudArenaCapPointCountdown::ShouldDraw(void)
 {
 	return CHudElement::ShouldDraw();
 }

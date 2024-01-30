@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -15,6 +15,6 @@
 
 class CSoundEntry;
 
-int SoundProperties_Multiple( CSoundParams *params );
+int SoundProperties_Multiple(CSoundParams *params);
 
 #endif // SOUNDPROPERTIES_MULTIPLE_H

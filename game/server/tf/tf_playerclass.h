@@ -16,9 +16,9 @@
 class CTFPlayerClass : public CTFPlayerClassShared
 {
 public:
-
 	CTFPlayerClass();
 	~CTFPlayerClass();
+
 private:
 };
 

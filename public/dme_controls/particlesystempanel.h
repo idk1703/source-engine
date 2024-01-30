@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -15,7 +15,6 @@
 #include "matsys_controls/PotteryWheelPanel.h"
 #include "datamodel/dmattributetypes.h"
 #include "particles/particles.h"
-
 
 //-----------------------------------------------------------------------------
 // Forward declarations
@@ -38,45 +37,44 @@ namespace vgui
 	class Splitter;
 	class Label;
 	class TextEntry;
-}
-
+} // namespace vgui
 
 //-----------------------------------------------------------------------------
 // Particle System Viewer Panel
 //-----------------------------------------------------------------------------
 class CParticleSystemPanel : public CPotteryWheelPanel
 {
-	DECLARE_CLASS_SIMPLE( CParticleSystemPanel, CPotteryWheelPanel );
+	DECLARE_CLASS_SIMPLE(CParticleSystemPanel, CPotteryWheelPanel);
 
 public:
 	// constructor, destructor
-	CParticleSystemPanel( vgui::Panel *pParent, const char *pName );
+	CParticleSystemPanel(vgui::Panel *pParent, const char *pName);
 	virtual ~CParticleSystemPanel();
 
 	// Set the particle system to draw
-	void SetParticleSystem( CDmeParticleSystemDefinition *pDef );
-	void SetDmeElement( CDmeParticleSystemDefinition *pDef );
+	void SetParticleSystem(CDmeParticleSystemDefinition *pDef);
+	void SetDmeElement(CDmeParticleSystemDefinition *pDef);
 
 	CParticleCollection *GetParticleSystem();
 
 	// Indicates that bounds should be drawn
-	void RenderBounds( bool bEnable );
+	void RenderBounds(bool bEnable);
 
 	// Indicates that cull sphere should be drawn
-	void RenderCullBounds( bool bEnable );
+	void RenderCullBounds(bool bEnable);
 
 	// Indicates that helpers should be drawn
-	void RenderHelpers( bool bEnable );
+	void RenderHelpers(bool bEnable);
 
 	// Indicates which helper to draw
-	void SetRenderedHelper( CDmeParticleFunction *pOp );
+	void SetRenderedHelper(CDmeParticleFunction *pOp);
 
 	virtual void OnTick();
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 
 	// Accessor for control point values
-	const Vector& GetControlPointValue( int nControlPoint ) const;
-	void SetControlPointValue( int nControlPoint, const Vector &value );
+	const Vector &GetControlPointValue(int nControlPoint) const;
+	void SetControlPointValue(int nControlPoint, const Vector &value);
 
 private:
 	// Shutdown, startup particle collection
@@ -86,7 +84,7 @@ private:
 	// Draw bounds
 	void DrawBounds();
 	void DrawCullBounds();
- 
+
 	// paint it!
 	virtual void OnPaint3D();
 
@@ -115,45 +113,43 @@ private:
 	CTextureReference m_DefaultEnvCubemap;
 };
 
-
 //-----------------------------------------------------------------------------
 // Accessor for control point values
 //-----------------------------------------------------------------------------
-inline const Vector& CParticleSystemPanel::GetControlPointValue( int nControlPoint ) const
+inline const Vector &CParticleSystemPanel::GetControlPointValue(int nControlPoint) const
 {
 	return m_pControlPointValue[nControlPoint];
 }
 
-inline void CParticleSystemPanel::SetControlPointValue( int nControlPoint, const Vector &value )
+inline void CParticleSystemPanel::SetControlPointValue(int nControlPoint, const Vector &value)
 {
 	m_pControlPointValue[nControlPoint] = value;
 }
-
 
 //-----------------------------------------------------------------------------
 // This panel has a particle system viewer as well as controls
 //-----------------------------------------------------------------------------
 class CParticleSystemPreviewPanel : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CParticleSystemPreviewPanel, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CParticleSystemPreviewPanel, vgui::EditablePanel);
 
 public:
 	// constructor, destructor
-	CParticleSystemPreviewPanel( vgui::Panel *pParent, const char *pName );
+	CParticleSystemPreviewPanel(vgui::Panel *pParent, const char *pName);
 	virtual ~CParticleSystemPreviewPanel();
 
 	// Set the material to draw
-	void SetParticleSystem( CDmeParticleSystemDefinition *pDef );
-	void SetParticleFunction( CDmeParticleFunction *pFunction );
-	void SetDmeElement( CDmeParticleSystemDefinition *pDef );
+	void SetParticleSystem(CDmeParticleSystemDefinition *pDef);
+	void SetParticleFunction(CDmeParticleFunction *pFunction);
+	void SetDmeElement(CDmeParticleSystemDefinition *pDef);
 	virtual void OnThink();
 
 private:
-	MESSAGE_FUNC_PARAMS( OnCheckButtonChecked, "CheckButtonChecked", params );
-	MESSAGE_FUNC_PARAMS( OnBackgroundColorChanged, "ColorPickerPicked", params );
-	MESSAGE_FUNC_PARAMS( OnBackgroundColorPreview, "ColorPickerPreview", params );
-	MESSAGE_FUNC_PARAMS( OnBackgroundColorCancel, "ColorPickerCancel", params );
-	MESSAGE_FUNC( OnParticleSystemReconstructed, "ParticleSystemReconstructed" );
+	MESSAGE_FUNC_PARAMS(OnCheckButtonChecked, "CheckButtonChecked", params);
+	MESSAGE_FUNC_PARAMS(OnBackgroundColorChanged, "ColorPickerPicked", params);
+	MESSAGE_FUNC_PARAMS(OnBackgroundColorPreview, "ColorPickerPreview", params);
+	MESSAGE_FUNC_PARAMS(OnBackgroundColorCancel, "ColorPickerCancel", params);
+	MESSAGE_FUNC(OnParticleSystemReconstructed, "ParticleSystemReconstructed");
 
 	vgui::Splitter *m_Splitter;
 	CParticleSystemPanel *m_pParticleSystemPanel;
@@ -168,7 +164,4 @@ private:
 	vgui::Label *m_pParticleCount;
 };
 
-
-
 #endif // DMEPARTICLEPANEL_H
-	    

@@ -14,17 +14,11 @@
 #ifndef INCLUDED_MXCHECKBOX
 #define INCLUDED_MXCHECKBOX
 
-
-
 #ifndef INCLUDED_MXWIDGET
 #include "mxtk/mxWidget.h"
 #endif
 
-
-
 class mxWindow;
-
-
 
 class mxCheckBox_i;
 class mxCheckBox : public mxWidget
@@ -33,21 +27,19 @@ class mxCheckBox : public mxWidget
 
 public:
 	// CREATORS
-	mxCheckBox (mxWindow *parent, int x, int y, int w, int h, const char *label = 0, int id = 0);
-	virtual ~mxCheckBox ();
+	mxCheckBox(mxWindow *parent, int x, int y, int w, int h, const char *label = 0, int id = 0);
+	virtual ~mxCheckBox();
 
 	// MANIPULATORS
-	void setChecked (bool b);
+	void setChecked(bool b);
 
 	// ACCESSORS
-	bool isChecked () const;
+	bool isChecked() const;
 
 private:
 	// NOT IMPLEMENTED
-	mxCheckBox (const mxCheckBox&);
-	mxCheckBox& operator= (const mxCheckBox&);
+	mxCheckBox(const mxCheckBox &);
+	mxCheckBox &operator=(const mxCheckBox &);
 };
-
-
 
 #endif // INCLUDED_MXCHECKBOX

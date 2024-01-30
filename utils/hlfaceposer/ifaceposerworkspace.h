@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,16 +23,16 @@ public:
 		NUM_FILE_TYPES
 	};
 
-	virtual void			Init( char const *pchShortName ) = 0;
+	virtual void Init(char const *pchShortName) = 0;
 
 	// Restore
-	virtual int				GetNumStoredFiles( int type ) = 0;
-	virtual const char		*GetStoredFile( int type, int number ) = 0;
+	virtual int GetNumStoredFiles(int type) = 0;
+	virtual const char *GetStoredFile(int type, int number) = 0;
 
 	// Save
-	virtual void			StartStoringFiles( int type ) = 0;
-	virtual void			FinishStoringFiles( int type ) = 0;
-	virtual void			StoreFile( int type, const char *filename ) = 0;
+	virtual void StartStoringFiles(int type) = 0;
+	virtual void FinishStoringFiles(int type) = 0;
+	virtual void StoreFile(int type, const char *filename) = 0;
 };
 
 extern IWorkspaceFiles *workspacefiles;

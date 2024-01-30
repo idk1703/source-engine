@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,13 +15,13 @@
 
 namespace vgui
 {
-class Button;
-class ComboBox;
-class Label;
-class TextEntry;
-class ListPanel;
-class MenuButton;
-};
+	class Button;
+	class ComboBox;
+	class Label;
+	class TextEntry;
+	class ListPanel;
+	class MenuButton;
+}; // namespace vgui
 
 //-----------------------------------------------------------------------------
 // Purpose: Main localization dialog class
@@ -48,7 +48,7 @@ private:
 	virtual void OnFileSave();
 	virtual void OnCreateToken();
 	virtual void OnTokenCreated(const char *tokenName);
-	
+
 	vgui::ListPanel *m_pTokenList;
 	vgui::TextEntry *m_pLanguageEdit;
 	vgui::TextEntry *m_pEnglishEdit;
@@ -65,6 +65,5 @@ private:
 
 	typedef vgui::Frame BaseClass;
 };
-
 
 #endif // LOCALIZATIONDIALOG_H

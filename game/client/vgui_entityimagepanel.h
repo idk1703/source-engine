@@ -26,20 +26,20 @@ class BitmapImage;
 
 class CEntityImagePanel : public CEntityPanel
 {
-	DECLARE_CLASS( CEntityImagePanel, CEntityPanel );
+	DECLARE_CLASS(CEntityImagePanel, CEntityPanel);
 
 public:
 	// constructor
-	CEntityImagePanel( vgui::Panel* pParent, const char *panelName );
+	CEntityImagePanel(vgui::Panel *pParent, const char *panelName);
 	~CEntityImagePanel();
 
 	// initialization
-	virtual bool Init( KeyValues* pInitData, C_BaseEntity* pEntity );
+	virtual bool Init(KeyValues *pInitData, C_BaseEntity *pEntity);
 
 	bool ShouldDraw();
 
-	virtual void Paint( void );
-	virtual void PaintBackground( void ) {}
+	virtual void Paint(void);
+	virtual void PaintBackground(void) {}
 
 private:
 	// The bitmap to render
@@ -49,22 +49,21 @@ protected:
 	int m_r, m_g, m_b, m_a;
 };
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Same as above, but understands how to parse color/material out of
 //  Team1/Team2 sections
 //-----------------------------------------------------------------------------
 class CEntityTeamImagePanel : public CEntityImagePanel
 {
-	DECLARE_CLASS( CEntityTeamImagePanel, CEntityImagePanel );
+	DECLARE_CLASS(CEntityTeamImagePanel, CEntityImagePanel);
 
 public:
-	CEntityTeamImagePanel( vgui::Panel* pParent, const char *panelName );
-	~CEntityTeamImagePanel( void );
+	CEntityTeamImagePanel(vgui::Panel *pParent, const char *panelName);
+	~CEntityTeamImagePanel(void);
 	// initialization
-	virtual bool Init( KeyValues* pInitData, C_BaseEntity* pEntity );
+	virtual bool Init(KeyValues *pInitData, C_BaseEntity *pEntity);
 
-	virtual void Paint( void );
+	virtual void Paint(void);
 
 private:
 	struct TEAMIMAGE
@@ -73,7 +72,7 @@ private:
 		int m_r, m_g, m_b, m_a;
 	};
 
-	TEAMIMAGE m_Images[ MAX_TEAMS ];
+	TEAMIMAGE m_Images[MAX_TEAMS];
 };
 
 #endif //  VGUI_ENTITYIMAGEPANEL_H

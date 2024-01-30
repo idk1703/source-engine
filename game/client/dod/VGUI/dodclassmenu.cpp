@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -32,35 +32,35 @@ using namespace vgui;
 
 extern ConVar hud_classautokill;
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-Panel *CDODClassInfoPanel::CreateControlByName( const char *controlName )
+Panel *CDODClassInfoPanel::CreateControlByName(const char *controlName)
 {
-	if( !Q_stricmp( "ProgressBar", controlName ) )
+	if(!Q_stricmp("ProgressBar", controlName))
 	{
 		return new CDODProgressBar(this);
 	}
-	else if ( !Q_stricmp( "CIconPanel", controlName ) )
+	else if(!Q_stricmp("CIconPanel", controlName))
 	{
 		return new CIconPanel(this, "icon_panel");
 	}
 	else
 	{
-		return BaseClass::CreateControlByName( controlName );
+		return BaseClass::CreateControlByName(controlName);
 	}
 }
 
-void CDODClassInfoPanel::ApplySchemeSettings( IScheme *pScheme )
+void CDODClassInfoPanel::ApplySchemeSettings(IScheme *pScheme)
 {
-	RichText *pClassInfo = dynamic_cast<RichText*>(FindChildByName("classInfo"));
+	RichText *pClassInfo = dynamic_cast<RichText *>(FindChildByName("classInfo"));
 
-	if ( pClassInfo )
+	if(pClassInfo)
 	{
 		pClassInfo->SetBorder(pScheme->GetBorder("NoBorder"));
-		pClassInfo->SetBgColor(pScheme->GetColor("Blank", Color(0,0,0,0)));
+		pClassInfo->SetBgColor(pScheme->GetColor("Blank", Color(0, 0, 0, 0)));
 	}
 
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 }
 
 CDODClassMenu::CDODClassMenu(IViewPort *pViewPort) : CClassMenu(pViewPort)
@@ -69,51 +69,51 @@ CDODClassMenu::CDODClassMenu(IViewPort *pViewPort) : CClassMenu(pViewPort)
 	m_iClassMenuKey = BUTTON_CODE_INVALID;
 	m_pInitialButton = NULL;
 
-	m_pBackground = SETUP_PANEL( new CDODMenuBackground( this ) );
+	m_pBackground = SETUP_PANEL(new CDODMenuBackground(this));
 
-	m_pClassInfoPanel = new CDODClassInfoPanel( this, "ClassInfoPanel" );
-	
-	vgui::ivgui()->AddTickSignal( GetVPanel() );
+	m_pClassInfoPanel = new CDODClassInfoPanel(this, "ClassInfoPanel");
+
+	vgui::ivgui()->AddTickSignal(GetVPanel());
 
 	m_iActivePlayerClass = -1;
 	m_iLastPlayerClassCount = -1;
 
-	m_pClassNumLabel[0] = new Label( this, "class_1_num", "" );
-	m_pClassNumLabel[1] = new Label( this, "class_2_num", "" );
-	m_pClassNumLabel[2] = new Label( this, "class_3_num", "" );
-	m_pClassNumLabel[3] = new Label( this, "class_4_num", "" );
-	m_pClassNumLabel[4] = new Label( this, "class_5_num", "" );
-	m_pClassNumLabel[5] = new Label( this, "class_6_num", "" );
+	m_pClassNumLabel[0] = new Label(this, "class_1_num", "");
+	m_pClassNumLabel[1] = new Label(this, "class_2_num", "");
+	m_pClassNumLabel[2] = new Label(this, "class_3_num", "");
+	m_pClassNumLabel[3] = new Label(this, "class_4_num", "");
+	m_pClassNumLabel[4] = new Label(this, "class_5_num", "");
+	m_pClassNumLabel[5] = new Label(this, "class_6_num", "");
 
-	m_pClassFullLabel[0] = new Label( this, "class_1_full", "" );
-	m_pClassFullLabel[1] = new Label( this, "class_2_full", "" );
-	m_pClassFullLabel[2] = new Label( this, "class_3_full", "" );
-	m_pClassFullLabel[3] = new Label( this, "class_4_full", "" );
-	m_pClassFullLabel[4] = new Label( this, "class_5_full", "" );
-	m_pClassFullLabel[5] = new Label( this, "class_6_full", "" );
+	m_pClassFullLabel[0] = new Label(this, "class_1_full", "");
+	m_pClassFullLabel[1] = new Label(this, "class_2_full", "");
+	m_pClassFullLabel[2] = new Label(this, "class_3_full", "");
+	m_pClassFullLabel[3] = new Label(this, "class_4_full", "");
+	m_pClassFullLabel[4] = new Label(this, "class_5_full", "");
+	m_pClassFullLabel[5] = new Label(this, "class_6_full", "");
 
-	m_pSuicideOption = new CheckButton( this, "suicide_option", "Sky is blue?" );
+	m_pSuicideOption = new CheckButton(this, "suicide_option", "Sky is blue?");
 }
 
-void CDODClassMenu::ShowPanel( bool bShow )
+void CDODClassMenu::ShowPanel(bool bShow)
 {
-	if ( bShow )
+	if(bShow)
 	{
-		engine->CheckPoint( "ClassMenu" );
+		engine->CheckPoint("ClassMenu");
 
-		m_iClassMenuKey = gameuifuncs->GetButtonCodeForBind( "changeclass" );
+		m_iClassMenuKey = gameuifuncs->GetButtonCodeForBind("changeclass");
 
-		m_pSuicideOption->SetSelected( hud_classautokill.GetBool() );
+		m_pSuicideOption->SetSelected(hud_classautokill.GetBool());
 	}
 
-	for( int i = 0; i< GetChildCount(); i++ ) 
+	for(int i = 0; i < GetChildCount(); i++)
 	{
 		CImageMouseOverButton<CDODClassInfoPanel> *button =
 			dynamic_cast<CImageMouseOverButton<CDODClassInfoPanel> *>(GetChild(i));
 
-		if ( button )
+		if(button)
 		{
-			if( button == m_pInitialButton && bShow == true )
+			if(button == m_pInitialButton && bShow == true)
 				button->ShowPage();
 			else
 				button->HidePage();
@@ -121,43 +121,43 @@ void CDODClassMenu::ShowPanel( bool bShow )
 	}
 
 	CDODRandomButton<CDODClassInfoPanel> *pRandom =
-		dynamic_cast<CDODRandomButton<CDODClassInfoPanel> *>( FindChildByName("random") );
+		dynamic_cast<CDODRandomButton<CDODClassInfoPanel> *>(FindChildByName("random"));
 
-	if ( pRandom )
+	if(pRandom)
 		pRandom->HidePage();
 
 	// recalc position of checkbox, since it doesn't do right alignment
 	m_pSuicideOption->SizeToContents();
 
-	int x, y, wide, tall; 
-	m_pSuicideOption->GetBounds( x, y, wide, tall );
+	int x, y, wide, tall;
+	m_pSuicideOption->GetBounds(x, y, wide, tall);
 
 	int parentW, parentH;
-	GetSize( parentW, parentH );
+	GetSize(parentW, parentH);
 
-	x = parentW / 2;	// - wide;
-	m_pSuicideOption->SetPos( x, y );
+	x = parentW / 2; // - wide;
+	m_pSuicideOption->SetPos(x, y);
 
-	BaseClass::ShowPanel( bShow );
+	BaseClass::ShowPanel(bShow);
 }
 
-void CDODClassMenu::OnKeyCodePressed( KeyCode code )
+void CDODClassMenu::OnKeyCodePressed(KeyCode code)
 {
 #ifdef REFRESH_CLASSMENU_TOOL
 
-	if ( code == KEY_PAD_MULTIPLY )
+	if(code == KEY_PAD_MULTIPLY)
 	{
 		OnRefreshClassMenu();
 	}
 #endif
 
-	if ( m_iClassMenuKey != BUTTON_CODE_INVALID && m_iClassMenuKey == code )
+	if(m_iClassMenuKey != BUTTON_CODE_INVALID && m_iClassMenuKey == code)
 	{
-		ShowPanel( false );
+		ShowPanel(false);
 	}
 	else
 	{
-		BaseClass::OnKeyCodePressed( code );
+		BaseClass::OnKeyCodePressed(code);
 	}
 }
 
@@ -165,58 +165,59 @@ void CDODClassMenu::Update()
 {
 	C_DODPlayer *pPlayer = C_DODPlayer::GetLocalDODPlayer();
 
-	if ( pPlayer && pPlayer->m_Shared.DesiredPlayerClass() == PLAYERCLASS_UNDEFINED )
+	if(pPlayer && pPlayer->m_Shared.DesiredPlayerClass() == PLAYERCLASS_UNDEFINED)
 	{
-		SetVisibleButton( "CancelButton", false );
+		SetVisibleButton("CancelButton", false);
 	}
 	else
 	{
-		SetVisibleButton( "CancelButton", true ); 
+		SetVisibleButton("CancelButton", true);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-Panel *CDODClassMenu::CreateControlByName( const char *controlName )
+Panel *CDODClassMenu::CreateControlByName(const char *controlName)
 {
-	if ( !Q_stricmp( "DODMouseOverPanelButton", controlName ) )
+	if(!Q_stricmp("DODMouseOverPanelButton", controlName))
 	{
-		 return new CDODMouseOverButton<CDODClassInfoPanel>( this, NULL, m_pClassInfoPanel );
+		return new CDODMouseOverButton<CDODClassInfoPanel>(this, NULL, m_pClassInfoPanel);
 	}
-	else if( !Q_stricmp( "DODButton", controlName ) )
+	else if(!Q_stricmp("DODButton", controlName))
 	{
 		return new CDODButton(this);
 	}
-	else if( !Q_stricmp( "DODRandomButton", controlName ) )
+	else if(!Q_stricmp("DODRandomButton", controlName))
 	{
-		return new CDODRandomButton<CDODClassInfoPanel>(this, NULL, m_pClassInfoPanel );
+		return new CDODRandomButton<CDODClassInfoPanel>(this, NULL, m_pClassInfoPanel);
 	}
-	else if ( !Q_stricmp( "ImageButton", controlName ) )
+	else if(!Q_stricmp("ImageButton", controlName))
 	{
-		CImageMouseOverButton<CDODClassInfoPanel> *newButton = new CImageMouseOverButton<CDODClassInfoPanel>( this, NULL, m_pClassInfoPanel );
+		CImageMouseOverButton<CDODClassInfoPanel> *newButton =
+			new CImageMouseOverButton<CDODClassInfoPanel>(this, NULL, m_pClassInfoPanel);
 
-		if( !m_pInitialButton )
+		if(!m_pInitialButton)
 		{
 			m_pInitialButton = newButton;
 		}
 
 		return newButton;
 	}
-	else if ( !Q_stricmp( "CIconPanel", controlName ) )
+	else if(!Q_stricmp("CIconPanel", controlName))
 	{
 		return new CIconPanel(this, "icon_panel");
 	}
 	else
 	{
-		return BaseClass::CreateControlByName( controlName );
+		return BaseClass::CreateControlByName(controlName);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Catch the mouseover event and set the active class
 //-----------------------------------------------------------------------------
-void CDODClassMenu::OnShowPage( const char *pagename )
+void CDODClassMenu::OnShowPage(const char *pagename)
 {
 	// change which class we are counting based on class name
 
@@ -224,17 +225,17 @@ void CDODClassMenu::OnShowPage( const char *pagename )
 
 	char buf[64];
 
-	Q_snprintf( buf, sizeof(buf), "cls_%s", pagename );
+	Q_snprintf(buf, sizeof(buf), "cls_%s", pagename);
 
-	C_DODTeam *pTeam = dynamic_cast<C_DODTeam *>( GetGlobalTeam(GetTeamNumber()) );
+	C_DODTeam *pTeam = dynamic_cast<C_DODTeam *>(GetGlobalTeam(GetTeamNumber()));
 
-	if( !pTeam )
+	if(!pTeam)
 		return;
 
 	// Pull the index of this class via IsClassOnTeam
-	if ( !pTeam->IsClassOnTeam( buf, m_iActivePlayerClass ) )
+	if(!pTeam->IsClassOnTeam(buf, m_iActivePlayerClass))
 	{
-		Assert( !"bad class name on class button" );
+		Assert(!"bad class name on class button");
 	}
 
 	UpdateNumClassLabel();
@@ -243,27 +244,25 @@ void CDODClassMenu::OnShowPage( const char *pagename )
 //-----------------------------------------------------------------------------
 // Draw nothing
 //-----------------------------------------------------------------------------
-void CDODClassMenu::PaintBackground( void )
-{
-}
+void CDODClassMenu::PaintBackground(void) {}
 
 //-----------------------------------------------------------------------------
-// Do things that should be done often, eg number of players in the 
+// Do things that should be done often, eg number of players in the
 // selected class
 //-----------------------------------------------------------------------------
-void CDODClassMenu::OnTick( void )
+void CDODClassMenu::OnTick(void)
 {
-	//When a player changes teams, their class and team values don't get here 
-	//necessarily before the command to update the class menu. This leads to the cancel button 
-	//being visible and people cancelling before they have a class. check for class == DOD_CLASS_NONE and if so
-	//hide the cancel button
+	// When a player changes teams, their class and team values don't get here
+	// necessarily before the command to update the class menu. This leads to the cancel button
+	// being visible and people cancelling before they have a class. check for class == DOD_CLASS_NONE and if so
+	// hide the cancel button
 
-	if ( !IsVisible() )
+	if(!IsVisible())
 		return;
 
 	C_DODPlayer *pPlayer = C_DODPlayer::GetLocalDODPlayer();
 
-	if( pPlayer && pPlayer->m_Shared.PlayerClass() == PLAYERCLASS_UNDEFINED )
+	if(pPlayer && pPlayer->m_Shared.PlayerClass() == PLAYERCLASS_UNDEFINED)
 	{
 		SetVisibleButton("CancelButton", false);
 	}
@@ -273,81 +272,81 @@ void CDODClassMenu::OnTick( void )
 	BaseClass::OnTick();
 }
 
-void CDODClassMenu::UpdateNumClassLabel( void )
+void CDODClassMenu::UpdateNumClassLabel(void)
 {
 	int iClassCount[NUM_CLASSES];
 	// Initialize to zero. Was previously used uninitialized.
 	int iClassLimit[NUM_CLASSES] = {};
 
 	// count how many of this class there are
-	C_DODTeam *pTeam = dynamic_cast<C_DODTeam *>( GetGlobalTeam(GetTeamNumber()) );
+	C_DODTeam *pTeam = dynamic_cast<C_DODTeam *>(GetGlobalTeam(GetTeamNumber()));
 
-	if ( !pTeam )
+	if(!pTeam)
 		return;
 
 	char buf[16];
 
-	for( int i=0;i<NUM_CLASSES;i++ )
+	for(int i = 0; i < NUM_CLASSES; i++)
 	{
-		iClassCount[i] = pTeam->CountPlayersOfThisClass( i );
+		iClassCount[i] = pTeam->CountPlayersOfThisClass(i);
 
-		if ( !m_pClassNumLabel[i] || !m_pClassFullLabel[i] )
+		if(!m_pClassNumLabel[i] || !m_pClassFullLabel[i])
 			continue;
 
-		if ( pTeam->IsClassOnTeam( i ) )
+		if(pTeam->IsClassOnTeam(i))
 		{
 			// FIXME - store pointers to these cvars
-			const CDODPlayerClassInfo &pClassInfo = pTeam->GetPlayerClassInfo( i );
-			ConVar *pLimitCvar = ( ConVar * )cvar->FindVar( pClassInfo.m_szLimitCvar );
+			const CDODPlayerClassInfo &pClassInfo = pTeam->GetPlayerClassInfo(i);
+			ConVar *pLimitCvar = (ConVar *)cvar->FindVar(pClassInfo.m_szLimitCvar);
 
-			if ( pLimitCvar )
-				iClassLimit[i] = MIN( 32, pLimitCvar->GetInt() );
-		}	
+			if(pLimitCvar)
+				iClassLimit[i] = MIN(32, pLimitCvar->GetInt());
+		}
 
-		if ( iClassLimit[i] < 0 || iClassCount[i] < iClassLimit[i] )
-			m_pClassFullLabel[i]->SetVisible( false );
+		if(iClassLimit[i] < 0 || iClassCount[i] < iClassLimit[i])
+			m_pClassFullLabel[i]->SetVisible(false);
 		else
-			m_pClassFullLabel[i]->SetVisible( true );
+			m_pClassFullLabel[i]->SetVisible(true);
 
-		if ( iClassLimit[i] > -1 )
+		if(iClassLimit[i] > -1)
 		{
 			// draw "3 / 4"
-			Q_snprintf( buf, sizeof(buf), "%d / %d", iClassCount[i], iClassLimit[i] );
+			Q_snprintf(buf, sizeof(buf), "%d / %d", iClassCount[i], iClassLimit[i]);
 		}
 		else
 		{
 			// just "3"
-			Q_snprintf( buf, sizeof(buf), "x %d", iClassCount[i] );
+			Q_snprintf(buf, sizeof(buf), "x %d", iClassCount[i]);
 		}
 
-		m_pClassNumLabel[i]->SetText( buf );
+		m_pClassNumLabel[i]->SetText(buf);
 	}
 }
 
-void CDODClassMenu::SetVisible( bool state )
+void CDODClassMenu::SetVisible(bool state)
 {
-	BaseClass::SetVisible( state );
+	BaseClass::SetVisible(state);
 }
 
-void CDODClassMenu::OnSuicideOptionChanged( vgui::Panel *Panel )
+void CDODClassMenu::OnSuicideOptionChanged(vgui::Panel *Panel)
 {
-	hud_classautokill.SetValue( m_pSuicideOption->IsSelected() );
+	hud_classautokill.SetValue(m_pSuicideOption->IsSelected());
 }
 
 #ifdef REFRESH_CLASSMENU_TOOL
 
-	void CDODClassMenu::OnRefreshClassMenu( void )
+void CDODClassMenu::OnRefreshClassMenu(void)
+{
+	for(int i = 0; i < GetChildCount(); i++)
 	{
-		for( int i = 0; i< GetChildCount(); i++ ) 
-		{
-			CImageMouseOverButton<CDODClassInfoPanel> *button =
-				dynamic_cast<CImageMouseOverButton<CDODClassInfoPanel> *>(GetChild(i));
+		CImageMouseOverButton<CDODClassInfoPanel> *button =
+			dynamic_cast<CImageMouseOverButton<CDODClassInfoPanel> *>(GetChild(i));
 
-			if ( button )
-			{
-				button->RefreshClassPage();
-			}
-		}		
+		if(button)
+		{
+			button->RefreshClassPage();
+		}
 	}
+}
 
 #endif

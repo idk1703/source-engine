@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,14 +19,14 @@ using namespace vgui;
 // An AnimatingImagePanel is a panel class that handles drawing of Animated Images and gives
 // them all kinds of panel features.
 //-----------------------------------------------------------------------------
-class AnimatingImagePanelDemo: public DemoPage
+class AnimatingImagePanelDemo : public DemoPage
 {
-	public:
-		AnimatingImagePanelDemo(Panel *parent, const char *name);
-		~AnimatingImagePanelDemo();
-		
-	private:
-		AnimatingImagePanel *m_pAnimImagePanel;
+public:
+	AnimatingImagePanelDemo(Panel *parent, const char *name);
+	~AnimatingImagePanelDemo();
+
+private:
+	AnimatingImagePanel *m_pAnimImagePanel;
 };
 
 //-----------------------------------------------------------------------------
@@ -43,20 +43,14 @@ AnimatingImagePanelDemo::AnimatingImagePanelDemo(Panel *parent, const char *name
 
 	// Set the position
 	m_pAnimImagePanel->SetPos(100, 100);
-
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-AnimatingImagePanelDemo::~AnimatingImagePanelDemo()
-{
-}
+AnimatingImagePanelDemo::~AnimatingImagePanelDemo() {}
 
-
-
-Panel* AnimatingImagePanelDemo_Create(Panel *parent)
+Panel *AnimatingImagePanelDemo_Create(Panel *parent)
 {
 	return new AnimatingImagePanelDemo(parent, "AnimatingImagePanelDemo");
 }
-

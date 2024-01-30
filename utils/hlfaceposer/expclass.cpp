@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -25,47 +25,46 @@
 #include "tier1/utlstring.h"
 #include "tier1/utlvector.h"
 
-
 #undef ALIGN4
 #undef ALIGN16
-#define ALIGN4( a ) a = (byte *)((int)((byte *)a + 3) & ~ 3)
-#define ALIGN16( a ) a = (byte *)((int)((byte *)a + 15) & ~ 15)
+#define ALIGN4(a)  a = (byte *)((int)((byte *)a + 3) & ~3)
+#define ALIGN16(a) a = (byte *)((int)((byte *)a + 15) & ~15)
 
-char const *GetGlobalFlexControllerName( int index );
-int GetGlobalFlexControllerCount( void );
+char const *GetGlobalFlexControllerName(int index);
+int GetGlobalFlexControllerCount(void);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *classname - 
+// Purpose:
+// Input  : *classname -
 //-----------------------------------------------------------------------------
-CExpClass::CExpClass( const char *classname ) 
-{ 
-	Q_strncpy( m_szClassName, classname, sizeof( m_szClassName ) ); 
-	Q_FileBase( m_szClassName, m_szBaseName, sizeof( m_szBaseName ) );
-	m_szFileName[ 0 ] = 0;
+CExpClass::CExpClass(const char *classname)
+{
+	Q_strncpy(m_szClassName, classname, sizeof(m_szClassName));
+	Q_FileBase(m_szClassName, m_szBaseName, sizeof(m_szBaseName));
+	m_szFileName[0] = 0;
 	m_bDirty = false;
 	m_nSelectedExpression = -1;
-	m_bIsPhonemeClass = Q_strstr( classname, "phonemes" ) ? true : false;
+	m_bIsPhonemeClass = Q_strstr(classname, "phonemes") ? true : false;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CExpClass::~CExpClass( void )
+CExpClass::~CExpClass(void)
 {
 	m_Expressions.Purge();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *exp - 
+// Purpose:
+// Input  : *exp -
 //-----------------------------------------------------------------------------
-int	CExpClass::FindExpressionIndex( CExpression *exp )
+int CExpClass::FindExpressionIndex(CExpression *exp)
 {
-	for ( int i = 0 ; i < GetNumExpressions(); i++ )
+	for(int i = 0; i < GetNumExpressions(); i++)
 	{
-		CExpression *e = GetExpression( i );
-		if ( e == exp )
+		CExpression *e = GetExpression(i);
+		if(e == exp)
 			return i;
 	}
 
@@ -73,23 +72,23 @@ int	CExpClass::FindExpressionIndex( CExpression *exp )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CExpClass::Save( void )
+void CExpClass::Save(void)
 {
 	CStudioHdr *hdr = models->GetActiveStudioModel()->GetStudioHdr();
-	if ( !hdr )
+	if(!hdr)
 	{
 		return;
 	}
 
 	const char *filename = GetFileName();
-	if ( !filename || !filename[ 0 ] )
+	if(!filename || !filename[0])
 		return;
 
-	Con_Printf( "Saving changes to %s to file %s\n", GetName(), GetFileName() );
+	Con_Printf("Saving changes to %s to file %s\n", GetName(), GetFileName());
 
-	CUtlBuffer buf( 0, 0, CUtlBuffer::TEXT_BUFFER );
+	CUtlBuffer buf(0, 0, CUtlBuffer::TEXT_BUFFER);
 
 	int i, j;
 
@@ -99,108 +98,106 @@ void CExpClass::Save( void )
 	CExpression *expr = NULL;
 	// find all used controllers
 	int fc = GetGlobalFlexControllerCount();
-	for ( j = 0; j < fc; ++j )
+	for(j = 0; j < fc; ++j)
 	{
-		for (i = 0; i < GetNumExpressions(); i++)
+		for(i = 0; i < GetNumExpressions(); i++)
 		{
-			expr = GetExpression( i );
-			Assert( expr );
+			expr = GetExpression(i);
+			Assert(expr);
 
 			float *settings = expr->GetSettings();
 			float *weights = expr->GetWeights();
 
-			if ( settings[j] != 0 || 
-				 weights[j] != 0 )
+			if(settings[j] != 0 || weights[j] != 0)
 			{
-				flexmap[ numflexmaps++ ] = j;
+				flexmap[numflexmaps++] = j;
 				break;
 			}
 		}
 	}
 
-	buf.Printf( "$keys" );
-	for (j = 0; j < numflexmaps; j++)
+	buf.Printf("$keys");
+	for(j = 0; j < numflexmaps; j++)
 	{
-		buf.Printf( " %s", GetGlobalFlexControllerName( flexmap[j] ) );
+		buf.Printf(" %s", GetGlobalFlexControllerName(flexmap[j]));
 	}
-	buf.Printf( "\n" );
+	buf.Printf("\n");
 
-	buf.Printf( "$hasweighting\n" );
+	buf.Printf("$hasweighting\n");
 
-	for (i = 0; i < GetNumExpressions(); i++)
+	for(i = 0; i < GetNumExpressions(); i++)
 	{
-		expr = GetExpression( i );
+		expr = GetExpression(i);
 
-		buf.Printf( "\"%s\" ", expr->name );
+		buf.Printf("\"%s\" ", expr->name);
 
 		// isalpha returns non zero for ents > 256
-		if (expr->index <= 'z') 
+		if(expr->index <= 'z')
 		{
-			buf.Printf( "\"%c\" ", expr->index );
+			buf.Printf("\"%c\" ", expr->index);
 		}
 		else
 		{
-			buf.Printf( "\"0x%04x\" ", expr->index );
+			buf.Printf("\"0x%04x\" ", expr->index);
 		}
 
 		float *settings = expr->GetSettings();
 		float *weights = expr->GetWeights();
-		Assert( settings );
-		Assert( weights );
+		Assert(settings);
+		Assert(weights);
 
-		for (j = 0; j < numflexmaps; j++)
+		for(j = 0; j < numflexmaps; j++)
 		{
-			buf.Printf( "%.3f %.3f ", settings[flexmap[j]], weights[flexmap[j]] );
+			buf.Printf("%.3f %.3f ", settings[flexmap[j]], weights[flexmap[j]]);
 		}
 
-		if ( Q_strstr( expr->name, "Right Side Smile" ) )
+		if(Q_strstr(expr->name, "Right Side Smile"))
 		{
-			Con_Printf( "wrote %s with checksum %s\n",
-				expr->name, expr->GetBitmapCheckSum() );
+			Con_Printf("wrote %s with checksum %s\n", expr->name, expr->GetBitmapCheckSum());
 		}
 
-		buf.Printf( "\"%s\"\n", expr->description );
+		buf.Printf("\"%s\"\n", expr->description);
 	}
 
-	char relative[ 512 ];
-	filesystem->FullPathToRelativePath( filename, relative, sizeof( relative ) );
-	
-	MakeFileWriteable( relative );
-	FileHandle_t fh = filesystem->Open( relative, "wt" );
-	if ( !fh )
+	char relative[512];
+	filesystem->FullPathToRelativePath(filename, relative, sizeof(relative));
+
+	MakeFileWriteable(relative);
+	FileHandle_t fh = filesystem->Open(relative, "wt");
+	if(!fh)
 	{
-		Con_ErrorPrintf( "Unable to write to %s (read-only?)\n", relative );
+		Con_ErrorPrintf("Unable to write to %s (read-only?)\n", relative);
 		return;
 	}
 	else
 	{
-		filesystem->Write( buf.Base(), buf.TellPut(), fh );
+		filesystem->Write(buf.Base(), buf.TellPut(), fh);
 		filesystem->Close(fh);
 	}
 
-	SetDirty( false );
+	SetDirty(false);
 
-	for (i = 0; i < GetNumExpressions(); i++)
+	for(i = 0; i < GetNumExpressions(); i++)
 	{
-		expr = GetExpression( i );
-		if ( expr )
+		expr = GetExpression(i);
+		if(expr)
 		{
 			expr->ResetUndo();
-			expr->SetDirty( false );
+			expr->SetDirty(false);
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CExpClass::Export( void )
+void CExpClass::Export(void)
 {
-	char vfefilename[ 512 ];
-	Q_StripExtension( GetFileName(), vfefilename, sizeof( vfefilename ) );
-	Q_DefaultExtension( vfefilename, ".vfe", sizeof( vfefilename ) );
+	char vfefilename[512];
+	Q_StripExtension(GetFileName(), vfefilename, sizeof(vfefilename));
+	Q_DefaultExtension(vfefilename, ".vfe", sizeof(vfefilename));
 
-	Con_Printf( "Exporting %s to %s\n", GetName(), vfefilename );
+	Con_Printf("Exporting %s to %s\n", GetName(), vfefilename);
 
 	int i, j;
 
@@ -211,21 +208,21 @@ void CExpClass::Export( void )
 	// find all used controllers
 	int fc_count = GetGlobalFlexControllerCount();
 
-	for (j = 0; j < fc_count; j++)
+	for(j = 0; j < fc_count; j++)
 	{
 		int k = j;
 
-		for (i = 0; i < GetNumExpressions(); i++)
+		for(i = 0; i < GetNumExpressions(); i++)
 		{
-			expr = GetExpression( i );
-			Assert( expr );
+			expr = GetExpression(i);
+			Assert(expr);
 
 			float *settings = expr->GetSettings();
 			float *weights = expr->GetWeights();
-			Assert( settings );
-			Assert( weights );
+			Assert(settings);
+			Assert(weights);
 
-			if ( settings[k] != 0 || weights[k] != 0 )
+			if(settings[k] != 0 || weights[k] != 0)
 			{
 				flexmap[numflexmaps++] = k;
 				break;
@@ -233,29 +230,29 @@ void CExpClass::Export( void )
 		}
 	}
 
-	byte *pData = (byte *)calloc( 1024 * 1024, 1 );
+	byte *pData = (byte *)calloc(1024 * 1024, 1);
 	byte *pDataStart = pData;
 
 	flexsettinghdr_t *fhdr = (flexsettinghdr_t *)pData;
-	
+
 	fhdr->id = ('V' << 16) + ('F' << 8) + ('E');
 	fhdr->version = 0;
-	V_strncpy( fhdr->name, vfefilename, sizeof( fhdr->name ) );
+	V_strncpy(fhdr->name, vfefilename, sizeof(fhdr->name));
 
 	// allocate room for header
-	pData += sizeof( flexsettinghdr_t );
-	ALIGN4( pData );
+	pData += sizeof(flexsettinghdr_t);
+	ALIGN4(pData);
 
 	// store flex settings
 	flexsetting_t *pSetting = (flexsetting_t *)pData;
 	fhdr->numflexsettings = GetNumExpressions();
 	fhdr->flexsettingindex = pData - pDataStart;
-	pData += sizeof( flexsetting_t ) * fhdr->numflexsettings;
-	ALIGN4( pData );
-	for (i = 0; i < fhdr->numflexsettings; i++)
+	pData += sizeof(flexsetting_t) * fhdr->numflexsettings;
+	ALIGN4(pData);
+	for(i = 0; i < fhdr->numflexsettings; i++)
 	{
-		expr = GetExpression( i );
-		Assert( expr );
+		expr = GetExpression(i);
+		Assert(expr);
 
 		pSetting[i].index = expr->index;
 		pSetting[i].settingindex = pData - (byte *)(&pSetting[i]);
@@ -264,12 +261,12 @@ void CExpClass::Export( void )
 
 		float *settings = expr->GetSettings();
 		float *weights = expr->GetWeights();
-		Assert( settings );
-		Assert( weights );
+		Assert(settings);
+		Assert(weights);
 
-		for (j = 0; j < numflexmaps; j++)
+		for(j = 0; j < numflexmaps; j++)
 		{
-			if (settings[flexmap[j]] != 0 || weights[flexmap[j]] != 0)
+			if(settings[flexmap[j]] != 0 || weights[flexmap[j]] != 0)
 			{
 				pSetting[i].numsettings++;
 				pFlexWeights->key = j;
@@ -278,154 +275,154 @@ void CExpClass::Export( void )
 				pFlexWeights++;
 			}
 			pData = (byte *)pFlexWeights;
-			ALIGN4( pData );
+			ALIGN4(pData);
 		}
 	}
 
 	// store indexed table
 	int numindexes = 1;
-	for (i = 0; i < fhdr->numflexsettings; i++)
+	for(i = 0; i < fhdr->numflexsettings; i++)
 	{
-		if (pSetting[i].index >= numindexes)
+		if(pSetting[i].index >= numindexes)
 			numindexes = pSetting[i].index + 1;
 	}
 
 	int *pIndex = (int *)pData;
 	fhdr->numindexes = numindexes;
 	fhdr->indexindex = pData - pDataStart;
-	pData += sizeof( int ) * numindexes;
-	ALIGN4( pData );
-	for (i = 0; i < numindexes; i++)
+	pData += sizeof(int) * numindexes;
+	ALIGN4(pData);
+	for(i = 0; i < numindexes; i++)
 	{
 		pIndex[i] = -1;
 	}
-	for (i = 0; i < fhdr->numflexsettings; i++)
+	for(i = 0; i < fhdr->numflexsettings; i++)
 	{
 		pIndex[pSetting[i].index] = i;
 	}
 
 	// store flex setting names
-	for (i = 0; i < fhdr->numflexsettings; i++)
+	for(i = 0; i < fhdr->numflexsettings; i++)
 	{
-		expr = GetExpression( i );
+		expr = GetExpression(i);
 		pSetting[i].nameindex = pData - (byte *)(&pSetting[i]);
-		strcpy( (char *)pData,  expr->name );
-		pData += strlen( expr->name ) + 1;
+		strcpy((char *)pData, expr->name);
+		pData += strlen(expr->name) + 1;
 	}
-	ALIGN4( pData );
+	ALIGN4(pData);
 
 	// store key names
 	char **pKeynames = (char **)pData;
 	fhdr->numkeys = numflexmaps;
 	fhdr->keynameindex = pData - pDataStart;
-	pData += sizeof( char *) * numflexmaps;
-	
-	for (i = 0; i < numflexmaps; i++)
+	pData += sizeof(char *) * numflexmaps;
+
+	for(i = 0; i < numflexmaps; i++)
 	{
 		pKeynames[i] = (char *)(pData - pDataStart);
-		strcpy( (char *)pData,  GetGlobalFlexControllerName( flexmap[i] ) );
-		pData += strlen( GetGlobalFlexControllerName( flexmap[i] ) ) + 1;
+		strcpy((char *)pData, GetGlobalFlexControllerName(flexmap[i]));
+		pData += strlen(GetGlobalFlexControllerName(flexmap[i])) + 1;
 	}
-	ALIGN4( pData );
+	ALIGN4(pData);
 
 	// allocate room for remapping
 	int *keymapping = (int *)pData;
 	fhdr->keymappingindex = pData - pDataStart;
-	pData += sizeof( int ) * numflexmaps;
-	for (i = 0; i < numflexmaps; i++)
+	pData += sizeof(int) * numflexmaps;
+	for(i = 0; i < numflexmaps; i++)
 	{
 		keymapping[i] = -1;
 	}
-	ALIGN4( pData );
+	ALIGN4(pData);
 
 	fhdr->length = pData - pDataStart;
 
-	char relative[ 512 ];
-	filesystem->FullPathToRelativePath( vfefilename, relative, sizeof( relative ) );
-	
-	MakeFileWriteable( relative );
-	FileHandle_t fh = filesystem->Open( relative, "wb" );
-	if ( !fh )
+	char relative[512];
+	filesystem->FullPathToRelativePath(vfefilename, relative, sizeof(relative));
+
+	MakeFileWriteable(relative);
+	FileHandle_t fh = filesystem->Open(relative, "wb");
+	if(!fh)
 	{
-		Con_ErrorPrintf( "Unable to write to %s (read-only?)\n", relative );
+		Con_ErrorPrintf("Unable to write to %s (read-only?)\n", relative);
 		return;
 	}
 	else
 	{
-		filesystem->Write( pDataStart, fhdr->length, fh );
+		filesystem->Write(pDataStart, fhdr->length, fh);
 		filesystem->Close(fh);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
-const char *CExpClass::GetBaseName( void ) const
+const char *CExpClass::GetBaseName(void) const
 {
 	return m_szBaseName;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
-const char *CExpClass::GetName( void ) const
+const char *CExpClass::GetName(void) const
 {
 	return m_szClassName;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
-const char *CExpClass::GetFileName( void ) const
+const char *CExpClass::GetFileName(void) const
 {
 	return m_szFileName;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *filename - 
+// Purpose:
+// Input  : *filename -
 //-----------------------------------------------------------------------------
-void CExpClass::SetFileName( const char *filename )
+void CExpClass::SetFileName(const char *filename)
 {
-	strcpy( m_szFileName, filename );
+	strcpy(m_szFileName, filename);
 }
 
 bool IsUsingPerPlayerExpressions();
 
-void CExpClass::ReloadBitmaps( void )
+void CExpClass::ReloadBitmaps(void)
 {
 	bool bUsingPerPlayerOverrides = IsUsingPerPlayerExpressions();
 
 	int c = models->Count();
-	for ( int model = 0; model < MAX_FP_MODELS; model++ )
+	for(int model = 0; model < MAX_FP_MODELS; model++)
 	{
 		// Only reload bitmaps for current model index
-		if ( bUsingPerPlayerOverrides && model != models->GetActiveModelIndex() )
+		if(bUsingPerPlayerOverrides && model != models->GetActiveModelIndex())
 			continue;
 
-		models->ForceActiveModelIndex( model );
+		models->ForceActiveModelIndex(model);
 
-		for ( int i = 0 ; i < GetNumExpressions(); i++ )
+		for(int i = 0; i < GetNumExpressions(); i++)
 		{
-			CExpression *e = GetExpression( i );
-			if ( !e )
+			CExpression *e = GetExpression(i);
+			if(!e)
 				continue;
 
-			if ( e->m_Bitmap[ model ].valid )
+			if(e->m_Bitmap[model].valid)
 			{
-				DeleteObject( e->m_Bitmap[ model ].image );
-				e->m_Bitmap[ model ].valid = false;
+				DeleteObject(e->m_Bitmap[model].image);
+				e->m_Bitmap[model].valid = false;
 			}
 
-			if ( model >= c )
+			if(model >= c)
 				continue;
 
-			if ( !LoadBitmapFromFile( e->GetBitmapFilename( model ), e->m_Bitmap[ model ] ) )
+			if(!LoadBitmapFromFile(e->GetBitmapFilename(model), e->m_Bitmap[model]))
 			{
-				e->CreateNewBitmap( model );
+				e->CreateNewBitmap(model);
 			}
 		}
 	}
@@ -434,78 +431,80 @@ void CExpClass::ReloadBitmaps( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
-//			*description - 
-//			*flexsettings - 
-//			selectnewitem - 
+// Purpose:
+// Input  : *name -
+//			*description -
+//			*flexsettings -
+//			selectnewitem -
 // Output : CExpression
 //-----------------------------------------------------------------------------
-CExpression *CExpClass::AddExpression( const char *name, const char *description, float *flexsettings, float *flexweights, bool selectnewitem, bool bDirtyClass )
+CExpression *CExpClass::AddExpression(const char *name, const char *description, float *flexsettings,
+									  float *flexweights, bool selectnewitem, bool bDirtyClass)
 {
 	CStudioHdr *hdr = models->GetActiveStudioModel()->GetStudioHdr();
-	if ( !hdr )
+	if(!hdr)
 		return NULL;
 
-	CExpression *exp = FindExpression( name );
-	if ( exp )
+	CExpression *exp = FindExpression(name);
+	if(exp)
 	{
-		Con_ErrorPrintf( "Can't create, an expression with the name '%s' already exists.\n", name );
+		Con_ErrorPrintf("Can't create, an expression with the name '%s' already exists.\n", name);
 		return NULL;
 	}
 
 	// Add to end of list
 	int idx = m_Expressions.AddToTail();
 
-	exp = &m_Expressions[ idx ];
+	exp = &m_Expressions[idx];
 
 	float *settings = exp->GetSettings();
 	float *weights = exp->GetWeights();
-	Assert( settings );
-	Assert( weights );
+	Assert(settings);
+	Assert(weights);
 
-	exp->SetExpressionClass( GetName() );
-	strcpy( exp->name, name );
-	strcpy( exp->description, description );
-	memcpy( settings, flexsettings, GLOBAL_STUDIO_FLEX_CONTROL_COUNT * sizeof( float ) );
-	memcpy( weights, flexweights, GLOBAL_STUDIO_FLEX_CONTROL_COUNT * sizeof( float ) );
+	exp->SetExpressionClass(GetName());
+	strcpy(exp->name, name);
+	strcpy(exp->description, description);
+	memcpy(settings, flexsettings, GLOBAL_STUDIO_FLEX_CONTROL_COUNT * sizeof(float));
+	memcpy(weights, flexweights, GLOBAL_STUDIO_FLEX_CONTROL_COUNT * sizeof(float));
 	exp->index = '_';
 
-	if ( IsPhonemeClass() )
+	if(IsPhonemeClass())
 	{
-		exp->index = TextToPhoneme( name );
+		exp->index = TextToPhoneme(name);
 	}
 
-	exp->m_Bitmap[ models->GetActiveModelIndex() ].valid = false;
-	if ( !LoadBitmapFromFile( exp->GetBitmapFilename( models->GetActiveModelIndex() ), exp->m_Bitmap[ models->GetActiveModelIndex() ] ) )
+	exp->m_Bitmap[models->GetActiveModelIndex()].valid = false;
+	if(!LoadBitmapFromFile(exp->GetBitmapFilename(models->GetActiveModelIndex()),
+						   exp->m_Bitmap[models->GetActiveModelIndex()]))
 	{
-		exp->CreateNewBitmap( models->GetActiveModelIndex() );
-	}
-	
-	if ( selectnewitem )
-	{
-		SelectExpression( idx );
+		exp->CreateNewBitmap(models->GetActiveModelIndex());
 	}
 
-	if ( bDirtyClass )
+	if(selectnewitem)
 	{
-		SetDirty( true );
+		SelectExpression(idx);
+	}
+
+	if(bDirtyClass)
+	{
+		SetDirty(true);
 	}
 
 	return exp;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 // Output : CExpression
 //-----------------------------------------------------------------------------
-CExpression *CExpClass::FindExpression( const char *name )
+CExpression *CExpClass::FindExpression(const char *name)
 {
-	for ( int i = 0 ; i < m_Expressions.Size(); i++ )
+	for(int i = 0; i < m_Expressions.Size(); i++)
 	{
-		CExpression *exp = &m_Expressions[ i ];
-		if ( !stricmp( exp->name, name ) )
+		CExpression *exp = &m_Expressions[i];
+		if(!stricmp(exp->name, name))
 		{
 			return exp;
 		}
@@ -515,139 +514,139 @@ CExpression *CExpClass::FindExpression( const char *name )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
-void CExpClass::DeleteExpression( const char *name )
+void CExpClass::DeleteExpression(const char *name)
 {
 
-	for ( int i = 0 ; i < m_Expressions.Size(); i++ )
+	for(int i = 0; i < m_Expressions.Size(); i++)
 	{
-		CExpression *exp = &m_Expressions[ i ];
-		if ( !stricmp( exp->name, name ) )
+		CExpression *exp = &m_Expressions[i];
+		if(!stricmp(exp->name, name))
 		{
-			SetDirty( true );
+			SetDirty(true);
 
-			m_Expressions.Remove( i );
+			m_Expressions.Remove(i);
 			return;
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
-int CExpClass::GetNumExpressions( void )
+int CExpClass::GetNumExpressions(void)
 {
 	return m_Expressions.Size();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : num - 
+// Purpose:
+// Input  : num -
 // Output : CExpression
 //-----------------------------------------------------------------------------
-CExpression *CExpClass::GetExpression( int num )
+CExpression *CExpClass::GetExpression(int num)
 {
-	if ( num < 0 || num >= m_Expressions.Size() )
+	if(num < 0 || num >= m_Expressions.Size())
 	{
 		return NULL;
 	}
 
-	CExpression *exp = &m_Expressions[ num ];
+	CExpression *exp = &m_Expressions[num];
 	return exp;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CExpClass::GetDirty( void )
+bool CExpClass::GetDirty(void)
 {
 	return m_bDirty;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dirty - 
+// Purpose:
+// Input  : dirty -
 //-----------------------------------------------------------------------------
-void CExpClass::SetDirty( bool dirty )
+void CExpClass::SetDirty(bool dirty)
 {
 	m_bDirty = dirty;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
-int CExpClass::GetIndex( void )
+int CExpClass::GetIndex(void)
 {
-	for ( int i = 0; i < expressions->GetNumClasses(); i++ )
+	for(int i = 0; i < expressions->GetNumClasses(); i++)
 	{
-		CExpClass *cl = expressions->GetClass( i );
-		if ( cl == this )
+		CExpClass *cl = expressions->GetClass(i);
+		if(cl == this)
 			return i;
 	}
 	return -1;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : num - 
+// Purpose:
+// Input  : num -
 //-----------------------------------------------------------------------------
-void CExpClass::SelectExpression( int num, bool deselect )
+void CExpClass::SelectExpression(int num, bool deselect)
 {
 	m_nSelectedExpression = num;
 
-	g_pFlexPanel->setExpression( num );
-	g_pExpressionTrayTool->Select( num, deselect );
+	g_pFlexPanel->setExpression(num);
+	g_pExpressionTrayTool->Select(num, deselect);
 	g_pExpressionTrayTool->redraw();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
-int CExpClass::GetSelectedExpression( void )
+int CExpClass::GetSelectedExpression(void)
 {
 	return m_nSelectedExpression;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CExpClass::DeselectExpression( void )
+void CExpClass::DeselectExpression(void)
 {
 	m_nSelectedExpression = -1;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : exp1 - 
-//			exp2 - 
+// Purpose:
+// Input  : exp1 -
+//			exp2 -
 //-----------------------------------------------------------------------------
-void CExpClass::SwapExpressionOrder( int exp1, int exp2 )
+void CExpClass::SwapExpressionOrder(int exp1, int exp2)
 {
-	CExpression temp1 = m_Expressions[ exp1 ];
-	CExpression temp2 = m_Expressions[ exp2 ];
+	CExpression temp1 = m_Expressions[exp1];
+	CExpression temp2 = m_Expressions[exp2];
 
-	m_Expressions.Remove( exp1 );
-	m_Expressions.InsertBefore( exp1, temp2 );
-	m_Expressions.Remove( exp2 );
-	m_Expressions.InsertBefore( exp2, temp1 );
+	m_Expressions.Remove(exp1);
+	m_Expressions.InsertBefore(exp1, temp2);
+	m_Expressions.Remove(exp2);
+	m_Expressions.InsertBefore(exp2, temp1);
 }
 
-void CExpClass::BuildValidChecksums( CUtlRBTree< CRC32_t > &tree )
+void CExpClass::BuildValidChecksums(CUtlRBTree<CRC32_t> &tree)
 {
-	for ( int i = 0; i < m_Expressions.Size(); i++ )
+	for(int i = 0; i < m_Expressions.Size(); i++)
 	{
-		CExpression *exp = &m_Expressions[ i ];
-		if ( !exp )
+		CExpression *exp = &m_Expressions[i];
+		if(!exp)
 			continue;
 
 		CRC32_t crc = exp->GetBitmapCRC();
-		tree.Insert( crc );
+		tree.Insert(crc);
 	}
 }
 
@@ -655,69 +654,68 @@ void CExpClass::BuildValidChecksums( CUtlRBTree< CRC32_t > &tree )
 // Purpose: After a class is loaded, check the class directory and delete any bmp files that aren't
 //  still referenced
 //-----------------------------------------------------------------------------
-void CExpClass::CheckBitmapConsistency( void )
+void CExpClass::CheckBitmapConsistency(void)
 {
-	char path[ 512 ];
+	char path[512];
 
-	Q_snprintf( path, sizeof( path ), "expressions/%s/%s/*.bmp", models->GetActiveModelName(), GetBaseName() );
-	Q_FixSlashes( path );
-	Q_strlower( path );
+	Q_snprintf(path, sizeof(path), "expressions/%s/%s/*.bmp", models->GetActiveModelName(), GetBaseName());
+	Q_FixSlashes(path);
+	Q_strlower(path);
 
-	g_pProgressDialog->Start( CFmtStr( "%s / %s - Reconcile Expression Thumbnails", models->GetActiveModelName(), GetBaseName() ), "", true );
+	g_pProgressDialog->Start(
+		CFmtStr("%s / %s - Reconcile Expression Thumbnails", models->GetActiveModelName(), GetBaseName()), "", true);
 
-	CUtlVector< CUtlString > workList;
+	CUtlVector<CUtlString> workList;
 
 	FileFindHandle_t hFindFile;
-	char const *fn = filesystem->FindFirstEx( path, "MOD", &hFindFile );
-	if ( fn )
+	char const *fn = filesystem->FindFirstEx(path, "MOD", &hFindFile);
+	if(fn)
 	{
-		while ( fn )
+		while(fn)
 		{
 			// Don't do anything with directories
-			if ( !filesystem->FindIsDirectory( hFindFile ) )
+			if(!filesystem->FindIsDirectory(hFindFile))
 			{
 				CUtlString s = fn;
-				workList.AddToTail( s );
-
-				
+				workList.AddToTail(s);
 			}
 
-			fn = filesystem->FindNext( hFindFile );
+			fn = filesystem->FindNext(hFindFile);
 		}
 
-		filesystem->FindClose( hFindFile );
+		filesystem->FindClose(hFindFile);
 	}
 
-	CUtlRBTree< CRC32_t > tree( 0, 0, DefLessFunc( CRC32_t ) );
-	BuildValidChecksums( tree );
+	CUtlRBTree<CRC32_t> tree(0, 0, DefLessFunc(CRC32_t));
+	BuildValidChecksums(tree);
 
-	for ( int i = 0 ; i < workList.Count(); ++i )
+	for(int i = 0; i < workList.Count(); ++i)
 	{
-		char testname[ 256 ];
-		Q_StripExtension( workList[ i ].String(), testname, sizeof( testname ) );
+		char testname[256];
+		Q_StripExtension(workList[i].String(), testname, sizeof(testname));
 
-		g_pProgressDialog->UpdateText( "%s", testname );
-		g_pProgressDialog->Update( (float)i / (float)workList.Count() );
+		g_pProgressDialog->UpdateText("%s", testname);
+		g_pProgressDialog->Update((float)i / (float)workList.Count());
 
 		CRC32_t check;
-		Q_hextobinary( testname, Q_strlen( testname ), (byte *)&check, sizeof( check ) );
+		Q_hextobinary(testname, Q_strlen(testname), (byte *)&check, sizeof(check));
 
-		if ( tree.Find( check ) == tree.InvalidIndex() )
+		if(tree.Find(check) == tree.InvalidIndex())
 		{
-			char kill[ 512 ];
-			Q_snprintf( kill, sizeof( kill ), "expressions/%s/%s/%s", models->GetActiveModelName(), GetBaseName(), fn );
-			Q_FixSlashes( kill );
-			Q_strlower( kill );
+			char kill[512];
+			Q_snprintf(kill, sizeof(kill), "expressions/%s/%s/%s", models->GetActiveModelName(), GetBaseName(), fn);
+			Q_FixSlashes(kill);
+			Q_strlower(kill);
 
 			// Delete it
-			Con_ErrorPrintf( "Removing unused bitmap file '%s'\n", kill );
+			Con_ErrorPrintf("Removing unused bitmap file '%s'\n", kill);
 
-			filesystem->RemoveFile( kill, "MOD" );
+			filesystem->RemoveFile(kill, "MOD");
 		}
 
-		if ( g_pProgressDialog->IsCancelled() )
+		if(g_pProgressDialog->IsCancelled())
 		{
-			Msg( "Cancelled\n" );
+			Msg("Cancelled\n");
 			break;
 		}
 	}
@@ -729,7 +727,7 @@ void CExpClass::CheckBitmapConsistency( void )
 // Purpose: Does this class have expression indices based on phoneme lookups
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CExpClass::IsPhonemeClass( void ) const
+bool CExpClass::IsPhonemeClass(void) const
 {
 	return m_bIsPhonemeClass;
 }

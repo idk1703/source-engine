@@ -15,8 +15,8 @@ alloc $projPos
 if( 0 )
 {
 	; NOTE: Don't do this optimization anymore since it would mean a gazillion combos
-	; Special case for static prop lighting.  We can go directly from 
-	; world to proj space for position, with the exception of z, which 
+	; Special case for static prop lighting.  We can go directly from
+	; world to proj space for position, with the exception of z, which
 	; is needed for fogging *if* height fog is enabled.
 
 	; NOTE: We don't use this path if $envmap is defined since we need

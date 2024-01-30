@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -28,32 +28,39 @@ public:
 	CEconNotification();
 	virtual ~CEconNotification();
 
-	void SetText( const char *pText );
-	void AddStringToken( const char* pToken, const wchar_t* pValue );
+	void SetText(const char *pText);
+	void AddStringToken(const char *pToken, const wchar_t *pValue);
 
-	void SetKeyValues( KeyValues *pKeyValues );
+	void SetKeyValues(KeyValues *pKeyValues);
 	KeyValues *GetKeyValues() const;
 
-	const char* GetUnlocalizedText() { return m_pText; }
+	const char *GetUnlocalizedText()
+	{
+		return m_pText;
+	}
 	const wchar_t *GetText();
 	int GetID() const;
 
-	virtual void SetLifetime( float flSeconds );
+	virtual void SetLifetime(float flSeconds);
 	virtual float GetExpireTime() const;
 
 	virtual float GetInGameLifeTime() const;
-	
-	void SetIsInUse( bool bInUse );
+
+	void SetIsInUse(bool bInUse);
 	bool GetIsInUse() const;
 
-	void SetSteamID( const CSteamID &steamID );
+	void SetSteamID(const CSteamID &steamID);
 	const CSteamID &GetSteamID() const;
 
-	virtual bool BShowInGameElements() const { return true; }
+	virtual bool BShowInGameElements() const
+	{
+		return true;
+	}
 
 	virtual void MarkForDeletion();
 
-	enum EType {
+	enum EType
+	{
 		// Can only be deleted
 		eType_Basic,
 		// Can be accept or declined
@@ -82,22 +89,20 @@ public:
 	// All types, if expire time is set
 	virtual void Expired();
 
-
-
-	virtual void UpdateTick() { }
+	virtual void UpdateTick() {}
 
 	virtual const char *GetUnlocalizedHelpText();
 
-	virtual vgui::EditablePanel *CreateUIElement( bool bMainMenu ) const;
+	virtual vgui::EditablePanel *CreateUIElement(bool bMainMenu) const;
 
-	void SetSoundFilename( const char *filename )
+	void SetSoundFilename(const char *filename)
 	{
 		m_pSoundFilename = filename;
 	}
 
 	const char *GetSoundFilename() const
 	{
-		if ( m_pSoundFilename )
+		if(m_pSoundFilename)
 		{
 			return m_pSoundFilename;
 		}
@@ -119,13 +124,11 @@ private:
 	bool m_bInUse;
 };
 
-
-
 /**
  * Filter function for CEconNotification's, used to remove them
  * @return true if the notification matches, false otherwise
  */
-typedef bool (*NotificationFilterFunc)( CEconNotification *pNotification );
+typedef bool (*NotificationFilterFunc)(CEconNotification *pNotification);
 
 /**
  * Visitor object for notifications.
@@ -133,7 +136,7 @@ typedef bool (*NotificationFilterFunc)( CEconNotification *pNotification );
 class CEconNotificationVisitor
 {
 public:
-	virtual void Visit( CEconNotification &notification ) = 0;
+	virtual void Visit(CEconNotification &notification) = 0;
 };
 
 /**
@@ -141,21 +144,21 @@ public:
  * @param pNotification
  * @return id to retrieve the notification later if necessary
  */
-int NotificationQueue_Add( CEconNotification *pNotification );
+int NotificationQueue_Add(CEconNotification *pNotification);
 
 /**
  * Retrieves a notification by ID
  * @param iID id of the notification
  * @return the CEconNotification, NULL if not found
  */
-CEconNotification *NotificationQueue_Get( int iID );
+CEconNotification *NotificationQueue_Get(int iID);
 
 /**
  * Retrieves a notification by index
  * @param idx Index of the notification relative to GetNumNotifications
  * @return the CEconNotification, NULL if not found
  */
-CEconNotification *NotificationQueue_GetByIndex( int idx );
+CEconNotification *NotificationQueue_GetByIndex(int idx);
 
 /**
  * Removes all notifications from the queue and deletes them
@@ -167,31 +170,31 @@ void NotificationQueue_RemoveAll();
  * Removes the notification from the queue and deletes it
  * @param iID
  */
-void NotificationQueue_Remove( int iID );
+void NotificationQueue_Remove(int iID);
 
 /**
  * Removes the notification from the queue and deletes it
  * @param pNotification
  */
-void NotificationQueue_Remove( CEconNotification *pNotification );
+void NotificationQueue_Remove(CEconNotification *pNotification);
 
 /**
  * Removes notifications that pass the specified filter
  * @param func
  */
-void NotificationQueue_Remove( NotificationFilterFunc func );
+void NotificationQueue_Remove(NotificationFilterFunc func);
 
 /**
  * Count up how many notifications of the given kind are already in the queue
  * @param func
  */
-int NotificationQueue_Count( NotificationFilterFunc func );
+int NotificationQueue_Count(NotificationFilterFunc func);
 
 /**
  * The visitor object will "visit" each notification and perform any work necessary.
  * @param visitor object
  */
-void NotificationQueue_Visit( CEconNotificationVisitor &visitor );
+void NotificationQueue_Visit(CEconNotificationVisitor &visitor);
 
 /**
  * Update the notification queue
@@ -209,6 +212,6 @@ int NotificationQueue_GetNumNotifications();
  * @param pElementName
  * @return the control that was created
  */
-vgui::EditablePanel* NotificationQueue_CreateMainMenuUIElement( vgui::EditablePanel *pParent, const char *pElementName );
+vgui::EditablePanel *NotificationQueue_CreateMainMenuUIElement(vgui::EditablePanel *pParent, const char *pElementName);
 
 #endif // endif

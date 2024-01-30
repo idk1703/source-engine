@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -8,44 +8,43 @@
 #include "weapon_dodbasemelee.h"
 #include "dod_gamerules.h"
 
-#if defined( CLIENT_DLL )
-	#include "c_dod_player.h"
+#if defined(CLIENT_DLL)
+#include "c_dod_player.h"
 #else
-	#include "dod_player.h"
-	#include "ilagcompensationmanager.h"
+#include "dod_player.h"
+#include "ilagcompensationmanager.h"
 #endif
 
 #include "effect_dispatch_data.h"
 
-
-#define	KNIFE_BODYHIT_VOLUME 128
-#define	KNIFE_WALLHIT_VOLUME 512
+#define KNIFE_BODYHIT_VOLUME 128
+#define KNIFE_WALLHIT_VOLUME 512
 
 // ----------------------------------------------------------------------------- //
 // CWeaponDODBaseMelee tables.
 // ----------------------------------------------------------------------------- //
 
-IMPLEMENT_NETWORKCLASS_ALIASED( WeaponDODBaseMelee, DT_WeaponDODBaseMelee )
+IMPLEMENT_NETWORKCLASS_ALIASED(WeaponDODBaseMelee, DT_WeaponDODBaseMelee)
 
-BEGIN_NETWORK_TABLE_NOBASE( CWeaponDODBaseMelee, DT_LocalActiveWeaponBaseMeleeData )
+BEGIN_NETWORK_TABLE_NOBASE(CWeaponDODBaseMelee, DT_LocalActiveWeaponBaseMeleeData)
 END_NETWORK_TABLE()
 
-BEGIN_NETWORK_TABLE( CWeaponDODBaseMelee, DT_WeaponDODBaseMelee )
+BEGIN_NETWORK_TABLE(CWeaponDODBaseMelee, DT_WeaponDODBaseMelee)
 END_NETWORK_TABLE()
 
 #ifdef CLIENT_DLL
-BEGIN_PREDICTION_DATA( CWeaponDODBaseMelee )
-	DEFINE_PRED_FIELD( m_flSmackTime, FIELD_FLOAT, FTYPEDESC_INSENDTABLE ),
+BEGIN_PREDICTION_DATA(CWeaponDODBaseMelee)
+	DEFINE_PRED_FIELD(m_flSmackTime, FIELD_FLOAT, FTYPEDESC_INSENDTABLE),
 END_PREDICTION_DATA()
 #endif
 
-LINK_ENTITY_TO_CLASS( weapon_dod_base_melee, CWeaponDODBaseMelee );
+LINK_ENTITY_TO_CLASS(weapon_dod_base_melee, CWeaponDODBaseMelee);
 
 #ifndef CLIENT_DLL
 
-	BEGIN_DATADESC( CWeaponDODBaseMelee )
-		DEFINE_FUNCTION( Smack )
-	END_DATADESC()
+BEGIN_DATADESC(CWeaponDODBaseMelee)
+	DEFINE_FUNCTION(Smack)
+END_DATADESC()
 
 #endif
 
@@ -53,98 +52,96 @@ LINK_ENTITY_TO_CLASS( weapon_dod_base_melee, CWeaponDODBaseMelee );
 // CWeaponDODBaseMelee implementation.
 // ----------------------------------------------------------------------------- //
 
-CWeaponDODBaseMelee::CWeaponDODBaseMelee()
-{
-}
+CWeaponDODBaseMelee::CWeaponDODBaseMelee() {}
 
 void CWeaponDODBaseMelee::Spawn()
 {
 	Precache();
 
-	WEAPON_FILE_INFO_HANDLE	hWpnInfo = LookupWeaponInfoSlot( GetClassname() );
+	WEAPON_FILE_INFO_HANDLE hWpnInfo = LookupWeaponInfoSlot(GetClassname());
 
-	Assert( hWpnInfo != GetInvalidWeaponInfoHandle() );
+	Assert(hWpnInfo != GetInvalidWeaponInfoHandle());
 
-	CDODWeaponInfo *pWeaponInfo = dynamic_cast< CDODWeaponInfo* >( GetFileWeaponInfoFromHandle( hWpnInfo ) );
+	CDODWeaponInfo *pWeaponInfo = dynamic_cast<CDODWeaponInfo *>(GetFileWeaponInfoFromHandle(hWpnInfo));
 
-	Assert( pWeaponInfo && "Failed to get CDODWeaponInfo in melee weapon spawn" );
-		
+	Assert(pWeaponInfo && "Failed to get CDODWeaponInfo in melee weapon spawn");
+
 	m_pWeaponInfo = pWeaponInfo;
 
-	Assert( m_pWeaponInfo );
+	Assert(m_pWeaponInfo);
 
 	m_iClip1 = -1;
 	BaseClass::Spawn();
 }
 
-void CWeaponDODBaseMelee::WeaponIdle( void )
+void CWeaponDODBaseMelee::WeaponIdle(void)
 {
-	if ( m_flTimeWeaponIdle > gpGlobals->curtime )
+	if(m_flTimeWeaponIdle > gpGlobals->curtime)
 		return;
 
-	SendWeaponAnim( ACT_VM_IDLE );
+	SendWeaponAnim(ACT_VM_IDLE);
 
 	m_flTimeWeaponIdle = gpGlobals->curtime + SequenceDuration();
 }
 
 void CWeaponDODBaseMelee::PrimaryAttack()
 {
-	MeleeAttack( 60, MELEE_DMG_EDGE, 0.2f, 0.4f );
+	MeleeAttack(60, MELEE_DMG_EDGE, 0.2f, 0.4f);
 }
 
-CBaseEntity *CWeaponDODBaseMelee::MeleeAttack( int iDamageAmount, int iDamageType, float flDmgDelay, float flAttackDelay )
+CBaseEntity *CWeaponDODBaseMelee::MeleeAttack(int iDamageAmount, int iDamageType, float flDmgDelay, float flAttackDelay)
 {
-	if ( !CanAttack() )
+	if(!CanAttack())
 		return NULL;
 
-	CDODPlayer *pPlayer = ToDODPlayer( GetPlayerOwner() );
+	CDODPlayer *pPlayer = ToDODPlayer(GetPlayerOwner());
 
-#if !defined (CLIENT_DLL)
+#if !defined(CLIENT_DLL)
 	// Move other players back to history positions based on local player's lag
-	lagcompensation->StartLagCompensation( pPlayer, pPlayer->GetCurrentCommand() );
+	lagcompensation->StartLagCompensation(pPlayer, pPlayer->GetCurrentCommand());
 #endif
 
 	Vector vForward, vRight, vUp;
-	AngleVectors( pPlayer->EyeAngles(), &vForward, &vRight, &vUp );
-	Vector vecSrc	= pPlayer->Weapon_ShootPosition();
-	Vector vecEnd	= vecSrc + vForward * 48;
+	AngleVectors(pPlayer->EyeAngles(), &vForward, &vRight, &vUp);
+	Vector vecSrc = pPlayer->Weapon_ShootPosition();
+	Vector vecEnd = vecSrc + vForward * 48;
 
-	CTraceFilterSimple filter( pPlayer, COLLISION_GROUP_NONE );
+	CTraceFilterSimple filter(pPlayer, COLLISION_GROUP_NONE);
 
 	int iTraceMask = MASK_SOLID | CONTENTS_HITBOX | CONTENTS_DEBRIS;
 
 	trace_t tr;
-	UTIL_TraceLine( vecSrc, vecEnd, iTraceMask, &filter, &tr );
+	UTIL_TraceLine(vecSrc, vecEnd, iTraceMask, &filter, &tr);
 
 	const float rayExtension = 40.0f;
-	UTIL_ClipTraceToPlayers( vecSrc, vecEnd + vForward * rayExtension, iTraceMask, &filter, &tr );
+	UTIL_ClipTraceToPlayers(vecSrc, vecEnd + vForward * rayExtension, iTraceMask, &filter, &tr);
 
-	if ( tr.fraction >= 1.0 )
+	if(tr.fraction >= 1.0)
 	{
-		Vector head_hull_mins( -16, -16, -18 );
-		Vector head_hull_maxs( 16, 16, 18 );
+		Vector head_hull_mins(-16, -16, -18);
+		Vector head_hull_maxs(16, 16, 18);
 
-		UTIL_TraceHull( vecSrc, vecEnd, head_hull_mins, head_hull_maxs, MASK_SOLID, &filter, &tr );
-		if ( tr.fraction < 1.0 )
+		UTIL_TraceHull(vecSrc, vecEnd, head_hull_mins, head_hull_maxs, MASK_SOLID, &filter, &tr);
+		if(tr.fraction < 1.0)
 		{
 			// Calculate the point of intersection of the line (or hull) and the object we hit
 			// This is and approximation of the "best" intersection
 			CBaseEntity *pHit = tr.m_pEnt;
-			if ( !pHit || pHit->IsBSPModel() )
-				FindHullIntersection( vecSrc, tr, VEC_DUCK_HULL_MIN, VEC_DUCK_HULL_MAX, pPlayer );
-			vecEnd = tr.endpos;	// This is the point on the actual surface (the hull could have hit space)
+			if(!pHit || pHit->IsBSPModel())
+				FindHullIntersection(vecSrc, tr, VEC_DUCK_HULL_MIN, VEC_DUCK_HULL_MAX, pPlayer);
+			vecEnd = tr.endpos; // This is the point on the actual surface (the hull could have hit space)
 
 			// Make sure it is in front of us
 			Vector vecToEnd = vecEnd - vecSrc;
-			VectorNormalize( vecToEnd );
+			VectorNormalize(vecToEnd);
 
 			// if zero length, always hit
-			if ( vecToEnd.Length() > 0 )
+			if(vecToEnd.Length() > 0)
 			{
-				float dot = DotProduct( vForward, vecToEnd );
+				float dot = DotProduct(vForward, vecToEnd);
 
 				// sanity that our hit is within range
-				if ( abs(dot) < 0.95 )
+				if(abs(dot) < 0.95)
 				{
 					// fake that we actually missed
 					tr.fraction = 1.0;
@@ -153,22 +150,22 @@ CBaseEntity *CWeaponDODBaseMelee::MeleeAttack( int iDamageAmount, int iDamageTyp
 		}
 	}
 
-	bool bDidHit = ( tr.fraction < 1.0f );
+	bool bDidHit = (tr.fraction < 1.0f);
 
 	bool bDoStrongAttack = false;
 
-	if ( bDidHit && tr.m_pEnt->IsPlayer() && tr.m_pEnt->m_takedamage != DAMAGE_YES )
+	if(bDidHit && tr.m_pEnt->IsPlayer() && tr.m_pEnt->m_takedamage != DAMAGE_YES)
 	{
-		bDidHit = 0;	// still play the animation, we just dont attempt to damage this player
+		bDidHit = 0; // still play the animation, we just dont attempt to damage this player
 	}
 
-	if ( bDidHit )	//if the swing hit 
-	{	
+	if(bDidHit) // if the swing hit
+	{
 		// delay the decal a bit
 		m_trHit = tr;
 
 		// Store the ent in an EHANDLE, just in case it goes away by the time we get into our think function.
-		m_pTraceHitEnt = tr.m_pEnt; 
+		m_pTraceHitEnt = tr.m_pEnt;
 
 		m_iSmackDamage = iDamageAmount;
 		m_iSmackDamageType = iDamageType;
@@ -179,23 +176,22 @@ CBaseEntity *CWeaponDODBaseMelee::MeleeAttack( int iDamageAmount, int iDamageTyp
 		int iVictimTeam = tr.m_pEnt->GetTeamNumber();
 
 		// do the mega attack if its a player, and we would do damage
-		if ( tr.m_pEnt->IsPlayer() &&
-			tr.m_pEnt->m_takedamage == DAMAGE_YES && 
-			( iVictimTeam != iOwnerTeam || ( iVictimTeam == iOwnerTeam && friendlyfire.GetBool() ) ) )
+		if(tr.m_pEnt->IsPlayer() && tr.m_pEnt->m_takedamage == DAMAGE_YES &&
+		   (iVictimTeam != iOwnerTeam || (iVictimTeam == iOwnerTeam && friendlyfire.GetBool())))
 		{
-			CDODPlayer *pVictim = ToDODPlayer( tr.m_pEnt );
+			CDODPlayer *pVictim = ToDODPlayer(tr.m_pEnt);
 
 			Vector victimForward;
-			AngleVectors( pVictim->GetAbsAngles(), &victimForward );
+			AngleVectors(pVictim->GetAbsAngles(), &victimForward);
 
-			if ( DotProduct( victimForward, vForward ) > 0.3 )
+			if(DotProduct(victimForward, vForward) > 0.3)
 			{
 				bDoStrongAttack = true;
 			}
 		}
 	}
 
-	if ( bDoStrongAttack )
+	if(bDoStrongAttack)
 	{
 		m_iSmackDamage = 300;
 		flAttackDelay = 0.9f;
@@ -204,34 +200,33 @@ CBaseEntity *CWeaponDODBaseMelee::MeleeAttack( int iDamageAmount, int iDamageTyp
 		m_iSmackDamageType = MELEE_DMG_EDGE | MELEE_DMG_STRONGATTACK;
 
 		// play a "Strong" attack
-		SendWeaponAnim( ACT_VM_SECONDARYATTACK );
+		SendWeaponAnim(ACT_VM_SECONDARYATTACK);
 	}
 	else
 	{
-		WeaponSound( MELEE_MISS );
-		SendWeaponAnim( GetMeleeActivity() );
+		WeaponSound(MELEE_MISS);
+		SendWeaponAnim(GetMeleeActivity());
 	}
 
 	// player animation
-	pPlayer->DoAnimationEvent( PLAYERANIMEVENT_SECONDARY_ATTACK );
+	pPlayer->DoAnimationEvent(PLAYERANIMEVENT_SECONDARY_ATTACK);
 
 	m_flNextPrimaryAttack = gpGlobals->curtime + flAttackDelay;
 	m_flNextSecondaryAttack = gpGlobals->curtime + flAttackDelay;
 	m_flTimeWeaponIdle = gpGlobals->curtime + SequenceDuration();
 
-
 #ifndef CLIENT_DLL
-	IGameEvent * event = gameeventmanager->CreateEvent( "dod_stats_weapon_attack" );
-	if ( event )
+	IGameEvent *event = gameeventmanager->CreateEvent("dod_stats_weapon_attack");
+	if(event)
 	{
-		event->SetInt( "attacker", pPlayer->GetUserID() );
-		event->SetInt( "weapon", GetStatsWeaponID() );
+		event->SetInt("attacker", pPlayer->GetUserID());
+		event->SetInt("weapon", GetStatsWeaponID());
 
-		gameeventmanager->FireEvent( event );
+		gameeventmanager->FireEvent(event);
 	}
 
-	lagcompensation->FinishLagCompensation( pPlayer );
-#endif	//CLIENT_DLL
+	lagcompensation->FinishLagCompensation(pPlayer);
+#endif // CLIENT_DLL
 
 	return tr.m_pEnt;
 }

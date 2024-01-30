@@ -1,17 +1,17 @@
 /*
-     File:       ApplicationServices.h
- 
-     Contains:   Master include for ApplicationServices public framework
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 2000-2001 by Apple Computer, Inc., all rights reserved.
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+	File:       ApplicationServices.h
+
+	Contains:   Master include for ApplicationServices public framework
+
+	Version:    QuickTime 7.3
+
+	Copyright:  (c) 2007 (c) 2000-2001 by Apple Computer, Inc., all rights reserved.
+
+	Bugs?:      For bug reports, consult the following page on
+			the World Wide Web:
+
+				http://developer.apple.com/bugreporter/
+
 */
 #ifndef __APPLICATIONSERVICES__
 #define __APPLICATIONSERVICES__
@@ -19,8 +19,6 @@
 #ifndef __CORESERVICES__
 #include <CoreServices.h>
 #endif
-
-
 
 #ifndef __CORESERVICES__
 #include <CoreServices.h>
@@ -294,6 +292,4 @@
 #include <LaunchServices.h>
 #endif
 
-
 #endif /* __APPLICATIONSERVICES__ */
-

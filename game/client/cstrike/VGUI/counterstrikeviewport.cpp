@@ -13,7 +13,7 @@
 
 #include "cbase.h"
 
-#pragma warning( disable : 4800  )  // disable forcing int to bool performance warning
+#pragma warning(disable : 4800) // disable forcing int to bool performance warning
 
 // VGUI panel includes
 #include <vgui_controls/Panel.h>
@@ -48,142 +48,142 @@
 #include "vguicenterprint.h"
 #include "text_message.h"
 
-
-static void OpenPanelWithCheck( const char *panelToOpen, const char *panelToCheck )
+static void OpenPanelWithCheck(const char *panelToOpen, const char *panelToCheck)
 {
-	IViewPortPanel *checkPanel = gViewPortInterface->FindPanelByName( panelToCheck );
-	if ( !checkPanel || !checkPanel->IsVisible() )
+	IViewPortPanel *checkPanel = gViewPortInterface->FindPanelByName(panelToCheck);
+	if(!checkPanel || !checkPanel->IsVisible())
 	{
-		gViewPortInterface->ShowPanel( panelToOpen, true );
+		gViewPortInterface->ShowPanel(panelToOpen, true);
 	}
 }
 
-
-CON_COMMAND( buyequip, "Show equipment buy menu" )
+CON_COMMAND(buyequip, "Show equipment buy menu")
 {
 	C_CSPlayer *pPlayer = C_CSPlayer::GetLocalCSPlayer();
 
-	if( pPlayer && pPlayer->m_lifeState == LIFE_ALIVE && pPlayer->State_Get() == STATE_ACTIVE )
+	if(pPlayer && pPlayer->m_lifeState == LIFE_ALIVE && pPlayer->State_Get() == STATE_ACTIVE)
 	{
-		if( !pPlayer->IsInBuyZone() )
+		if(!pPlayer->IsInBuyZone())
 		{
-			internalCenterPrint->Print( "#Cstrike_NotInBuyZone" );
+			internalCenterPrint->Print("#Cstrike_NotInBuyZone");
 		}
-		else if( CSGameRules()->IsBuyTimeElapsed() )
+		else if(CSGameRules()->IsBuyTimeElapsed())
 		{
 			char strBuyTime[16];
-			Q_snprintf( strBuyTime, sizeof( strBuyTime ), "%d", (int)CSGameRules()->GetBuyTimeLength() );
-			
+			Q_snprintf(strBuyTime, sizeof(strBuyTime), "%d", (int)CSGameRules()->GetBuyTimeLength());
+
 			wchar_t buffer[128];
 			wchar_t buytime[16];
-			g_pVGuiLocalize->ConvertANSIToUnicode( strBuyTime, buytime, sizeof(buytime) );
-			g_pVGuiLocalize->ConstructString( buffer, sizeof(buffer), g_pVGuiLocalize->Find("#Cstrike_TitlesTXT_Cant_buy"), 1, buytime );
-			internalCenterPrint->Print( buffer );
+			g_pVGuiLocalize->ConvertANSIToUnicode(strBuyTime, buytime, sizeof(buytime));
+			g_pVGuiLocalize->ConstructString(buffer, sizeof(buffer),
+											 g_pVGuiLocalize->Find("#Cstrike_TitlesTXT_Cant_buy"), 1, buytime);
+			internalCenterPrint->Print(buffer);
 		}
 		else
 		{
-			if( pPlayer->GetTeamNumber() == TEAM_CT )
+			if(pPlayer->GetTeamNumber() == TEAM_CT)
 			{
-				OpenPanelWithCheck( PANEL_BUY_EQUIP_CT, PANEL_BUY_CT );
+				OpenPanelWithCheck(PANEL_BUY_EQUIP_CT, PANEL_BUY_CT);
 			}
-			else if( pPlayer->GetTeamNumber() == TEAM_TERRORIST )
+			else if(pPlayer->GetTeamNumber() == TEAM_TERRORIST)
 			{
-				OpenPanelWithCheck( PANEL_BUY_EQUIP_TER, PANEL_BUY_TER );
+				OpenPanelWithCheck(PANEL_BUY_EQUIP_TER, PANEL_BUY_TER);
 			}
 		}
 	}
 }
 
-CON_COMMAND( buymenu, "Show main buy menu" )
+CON_COMMAND(buymenu, "Show main buy menu")
 {
 	C_CSPlayer *pPlayer = C_CSPlayer::GetLocalCSPlayer();
 
-	if( pPlayer )
+	if(pPlayer)
 	{
-		if ( pPlayer->m_lifeState != LIFE_ALIVE && pPlayer->State_Get() != STATE_ACTIVE )
+		if(pPlayer->m_lifeState != LIFE_ALIVE && pPlayer->State_Get() != STATE_ACTIVE)
 			return;
 
-		if( !pPlayer->IsInBuyZone() )
+		if(!pPlayer->IsInBuyZone())
 		{
-			internalCenterPrint->Print( "#Cstrike_NotInBuyZone" );
+			internalCenterPrint->Print("#Cstrike_NotInBuyZone");
 		}
-		else if( CSGameRules()->IsBuyTimeElapsed() )
+		else if(CSGameRules()->IsBuyTimeElapsed())
 		{
 			char strBuyTime[16];
-			Q_snprintf( strBuyTime, sizeof( strBuyTime ), "%d", (int)CSGameRules()->GetBuyTimeLength() );
+			Q_snprintf(strBuyTime, sizeof(strBuyTime), "%d", (int)CSGameRules()->GetBuyTimeLength());
 
 			wchar_t buffer[128];
 			wchar_t buytime[16];
-			g_pVGuiLocalize->ConvertANSIToUnicode( strBuyTime, buytime, sizeof(buytime) );
-			g_pVGuiLocalize->ConstructString( buffer, sizeof(buffer), g_pVGuiLocalize->Find("#Cstrike_TitlesTXT_Cant_buy"), 1, buytime );
-			internalCenterPrint->Print( buffer );
+			g_pVGuiLocalize->ConvertANSIToUnicode(strBuyTime, buytime, sizeof(buytime));
+			g_pVGuiLocalize->ConstructString(buffer, sizeof(buffer),
+											 g_pVGuiLocalize->Find("#Cstrike_TitlesTXT_Cant_buy"), 1, buytime);
+			internalCenterPrint->Print(buffer);
 		}
 		else
 		{
-			if( pPlayer->GetTeamNumber() == TEAM_CT )
+			if(pPlayer->GetTeamNumber() == TEAM_CT)
 			{
-				OpenPanelWithCheck( PANEL_BUY_CT, PANEL_BUY_EQUIP_CT );
+				OpenPanelWithCheck(PANEL_BUY_CT, PANEL_BUY_EQUIP_CT);
 			}
-			else if( pPlayer->GetTeamNumber() == TEAM_TERRORIST )
+			else if(pPlayer->GetTeamNumber() == TEAM_TERRORIST)
 			{
-				OpenPanelWithCheck( PANEL_BUY_TER, PANEL_BUY_EQUIP_TER );
+				OpenPanelWithCheck(PANEL_BUY_TER, PANEL_BUY_EQUIP_TER);
 			}
 		}
 	}
 }
 
-CON_COMMAND( chooseteam, "Choose a new team" )
+CON_COMMAND(chooseteam, "Choose a new team")
 {
 	C_CSPlayer *pPlayer = C_CSPlayer::GetLocalCSPlayer();
 
-	if ( pPlayer && pPlayer->CanShowTeamMenu() )
+	if(pPlayer && pPlayer->CanShowTeamMenu())
 	{
-		gViewPortInterface->ShowPanel( PANEL_TEAM, true );
+		gViewPortInterface->ShowPanel(PANEL_TEAM, true);
 	}
 }
 
-CON_COMMAND_F( spec_help, "Show spectator help screen", FCVAR_CLIENTCMD_CAN_EXECUTE)
+CON_COMMAND_F(spec_help, "Show spectator help screen", FCVAR_CLIENTCMD_CAN_EXECUTE)
 {
-	if ( gViewPortInterface )
-		gViewPortInterface->ShowPanel( PANEL_INFO, true );
+	if(gViewPortInterface)
+		gViewPortInterface->ShowPanel(PANEL_INFO, true);
 }
 
-CON_COMMAND_F( spec_menu, "Activates spectator menu", FCVAR_CLIENTCMD_CAN_EXECUTE)
+CON_COMMAND_F(spec_menu, "Activates spectator menu", FCVAR_CLIENTCMD_CAN_EXECUTE)
 {
 	bool bShowIt = true;
 
 	C_CSPlayer *pPlayer = C_CSPlayer::GetLocalCSPlayer();
 
-	if ( pPlayer && !pPlayer->IsObserver() )
+	if(pPlayer && !pPlayer->IsObserver())
 		return;
 
-	if ( args.ArgC() == 2 )
+	if(args.ArgC() == 2)
 	{
-		 bShowIt = atoi( args[ 1 ] ) == 1;
+		bShowIt = atoi(args[1]) == 1;
 	}
-	
-	if ( gViewPortInterface )
-		gViewPortInterface->ShowPanel( PANEL_SPECMENU, bShowIt );
+
+	if(gViewPortInterface)
+		gViewPortInterface->ShowPanel(PANEL_SPECMENU, bShowIt);
 }
 
-CON_COMMAND_F( togglescores, "Toggles score panel", FCVAR_CLIENTCMD_CAN_EXECUTE)
+CON_COMMAND_F(togglescores, "Toggles score panel", FCVAR_CLIENTCMD_CAN_EXECUTE)
 {
-	if ( !gViewPortInterface )
-		return;
-	
-	IViewPortPanel *scoreboard = gViewPortInterface->FindPanelByName( PANEL_SCOREBOARD );
-
-	if ( !scoreboard )
+	if(!gViewPortInterface)
 		return;
 
-	if ( scoreboard->IsVisible() )
+	IViewPortPanel *scoreboard = gViewPortInterface->FindPanelByName(PANEL_SCOREBOARD);
+
+	if(!scoreboard)
+		return;
+
+	if(scoreboard->IsVisible())
 	{
-		gViewPortInterface->ShowPanel( scoreboard, false );
+		gViewPortInterface->ShowPanel(scoreboard, false);
 		GetClientVoiceMgr()->StopSquelchMode();
 	}
 	else
 	{
-		gViewPortInterface->ShowPanel( scoreboard, true );
+		gViewPortInterface->ShowPanel(scoreboard, true);
 	}
 }
 
@@ -191,106 +191,104 @@ CON_COMMAND_F( togglescores, "Toggles score panel", FCVAR_CLIENTCMD_CAN_EXECUTE)
 // Purpose: called when the VGUI subsystem starts up
 //			Creates the sub panels and initialises them
 //-----------------------------------------------------------------------------
-void CounterStrikeViewport::Start( IGameUIFuncs *pGameUIFuncs, IGameEventManager2 * pGameEventManager )
+void CounterStrikeViewport::Start(IGameUIFuncs *pGameUIFuncs, IGameEventManager2 *pGameEventManager)
 {
-	BaseClass::Start( pGameUIFuncs, pGameEventManager );
+	BaseClass::Start(pGameUIFuncs, pGameEventManager);
 }
 
-void CounterStrikeViewport::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CounterStrikeViewport::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
-	gHUD.InitColors( pScheme );
+	gHUD.InitColors(pScheme);
 
-	SetPaintBackgroundEnabled( false );
+	SetPaintBackgroundEnabled(false);
 }
 
-
-IViewPortPanel* CounterStrikeViewport::CreatePanelByName(const char *szPanelName)
+IViewPortPanel *CounterStrikeViewport::CreatePanelByName(const char *szPanelName)
 {
-	IViewPortPanel* newpanel = NULL;
+	IViewPortPanel *newpanel = NULL;
 
 	// overwrite MOD specific panel creation
 
-	if ( Q_strcmp(PANEL_SCOREBOARD, szPanelName) == 0)
+	if(Q_strcmp(PANEL_SCOREBOARD, szPanelName) == 0)
 	{
-		newpanel = new CCSClientScoreBoardDialog( this );
+		newpanel = new CCSClientScoreBoardDialog(this);
 	}
 
-	else if ( Q_strcmp(PANEL_SPECGUI, szPanelName) == 0 )
+	else if(Q_strcmp(PANEL_SPECGUI, szPanelName) == 0)
 	{
-		newpanel = new CCSSpectatorGUI( this );	
+		newpanel = new CCSSpectatorGUI(this);
 	}
 
-	else if ( Q_strcmp(PANEL_CLASS_CT, szPanelName) == 0 )
+	else if(Q_strcmp(PANEL_CLASS_CT, szPanelName) == 0)
 	{
-		newpanel = new CClassMenu_CT( this );	
+		newpanel = new CClassMenu_CT(this);
 	}
 
-	else if ( Q_strcmp(PANEL_CLASS_TER, szPanelName) == 0 )
+	else if(Q_strcmp(PANEL_CLASS_TER, szPanelName) == 0)
 	{
-		newpanel = new CClassMenu_TER( this );	
+		newpanel = new CClassMenu_TER(this);
 	}
 
-	else if ( Q_strcmp(PANEL_BUY_CT, szPanelName) == 0 )
+	else if(Q_strcmp(PANEL_BUY_CT, szPanelName) == 0)
 	{
-		newpanel = new CCSBuyMenu_CT( this );
+		newpanel = new CCSBuyMenu_CT(this);
 	}
 
-	else if ( Q_strcmp(PANEL_BUY_TER, szPanelName) == 0 )
+	else if(Q_strcmp(PANEL_BUY_TER, szPanelName) == 0)
 	{
-		newpanel = new CCSBuyMenu_TER( this );
+		newpanel = new CCSBuyMenu_TER(this);
 	}
 
-	else if ( Q_strcmp(PANEL_BUY_EQUIP_CT, szPanelName) == 0 )
+	else if(Q_strcmp(PANEL_BUY_EQUIP_CT, szPanelName) == 0)
 	{
-		newpanel = new CCSBuyEquipMenu_CT( this );
+		newpanel = new CCSBuyEquipMenu_CT(this);
 	}
 
-	else if ( Q_strcmp(PANEL_BUY_EQUIP_TER, szPanelName) == 0 )
+	else if(Q_strcmp(PANEL_BUY_EQUIP_TER, szPanelName) == 0)
 	{
-		newpanel = new CCSBuyEquipMenu_TER( this );
+		newpanel = new CCSBuyEquipMenu_TER(this);
 	}
 
-	else if ( Q_strcmp(PANEL_TEAM, szPanelName) == 0 )
+	else if(Q_strcmp(PANEL_TEAM, szPanelName) == 0)
 	{
-		newpanel = new CCSTeamMenu( this );
+		newpanel = new CCSTeamMenu(this);
 	}
 
-	else if ( Q_strcmp(PANEL_INFO, szPanelName) == 0 )
+	else if(Q_strcmp(PANEL_INFO, szPanelName) == 0)
 	{
-		newpanel = new CCSTextWindow( this );
+		newpanel = new CCSTextWindow(this);
 	}
 
 	else
 	{
 		// create a generic base panel, don't add twice
-		newpanel = BaseClass::CreatePanelByName( szPanelName );
+		newpanel = BaseClass::CreatePanelByName(szPanelName);
 	}
 
-	return newpanel; 
+	return newpanel;
 }
 
-void CounterStrikeViewport::CreateDefaultPanels( void )
+void CounterStrikeViewport::CreateDefaultPanels(void)
 {
-	AddNewPanel( CreatePanelByName( PANEL_TEAM ), "PANEL_TEAM" );
-	AddNewPanel( CreatePanelByName( PANEL_CLASS_CT ), "PANEL_CLASS_CT" );
-	AddNewPanel( CreatePanelByName( PANEL_CLASS_TER ), "PANEL_CLASS_TER" );
+	AddNewPanel(CreatePanelByName(PANEL_TEAM), "PANEL_TEAM");
+	AddNewPanel(CreatePanelByName(PANEL_CLASS_CT), "PANEL_CLASS_CT");
+	AddNewPanel(CreatePanelByName(PANEL_CLASS_TER), "PANEL_CLASS_TER");
 
-	AddNewPanel( CreatePanelByName( PANEL_BUY_CT ), "PANEL_BUY_CT" );
-	AddNewPanel( CreatePanelByName( PANEL_BUY_TER ), "PANEL_BUY_TER" );
-	AddNewPanel( CreatePanelByName( PANEL_BUY_EQUIP_CT ), "PANEL_BUY_EQUIP_CT" );
-	AddNewPanel( CreatePanelByName( PANEL_BUY_EQUIP_TER ), "PANEL_BUY_EQUIP_TER" );
+	AddNewPanel(CreatePanelByName(PANEL_BUY_CT), "PANEL_BUY_CT");
+	AddNewPanel(CreatePanelByName(PANEL_BUY_TER), "PANEL_BUY_TER");
+	AddNewPanel(CreatePanelByName(PANEL_BUY_EQUIP_CT), "PANEL_BUY_EQUIP_CT");
+	AddNewPanel(CreatePanelByName(PANEL_BUY_EQUIP_TER), "PANEL_BUY_EQUIP_TER");
 
 	BaseClass::CreateDefaultPanels();
-
 }
 
-int CounterStrikeViewport::GetDeathMessageStartHeight( void )
+int CounterStrikeViewport::GetDeathMessageStartHeight(void)
 {
 	int x = YRES(2);
 
-	if ( g_pSpectatorGUI && g_pSpectatorGUI->IsVisible() )
+	if(g_pSpectatorGUI && g_pSpectatorGUI->IsVisible())
 	{
 		x += g_pSpectatorGUI->GetTopBarHeight();
 	}
@@ -305,7 +303,7 @@ HUD_ChatInputPosition
 Sets the location of the input for chat text
 ==========================
 */
-//MIKETODO: positioning of chat text (and other engine output)
+// MIKETODO: positioning of chat text (and other engine output)
 /*
 	#include "Exports.h"
 

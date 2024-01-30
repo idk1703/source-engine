@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -24,72 +24,65 @@
 
 using namespace vgui;
 
-DECLARE_HUDELEMENT( CHudBossHealthMeter );
+DECLARE_HUDELEMENT(CHudBossHealthMeter);
 
-
-ConVar cl_boss_show_stun( "cl_boss_show_stun", "0", FCVAR_DEVELOPMENTONLY );
-
+ConVar cl_boss_show_stun("cl_boss_show_stun", "0", FCVAR_DEVELOPMENTONLY);
 
 //-----------------------------------------------------------------------------
-CHudBossHealthMeter::CHudBossHealthMeter( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudBossHealth" )
+CHudBossHealthMeter::CHudBossHealthMeter(const char *pElementName)
+	: CHudElement(pElementName), BaseClass(NULL, "HudBossHealth")
 {
 	Panel *pParent = g_pClientMode->GetViewport();
-	SetParent( pParent );
+	SetParent(pParent);
 
 	m_pStunMeter = NULL;
 
-	m_pHealthBarPanel = new vgui::EditablePanel( this, "HealthBarPanel" );
+	m_pHealthBarPanel = new vgui::EditablePanel(this, "HealthBarPanel");
 
-	SetHiddenBits( HIDEHUD_MISCSTATUS );
+	SetHiddenBits(HIDEHUD_MISCSTATUS);
 
-	m_inactiveColor = Color( 0, 255, 0, 255 );
+	m_inactiveColor = Color(0, 255, 0, 255);
 
-	vgui::ivgui()->AddTickSignal( GetVPanel() );
+	vgui::ivgui()->AddTickSignal(GetVPanel());
 }
 
-
 //-----------------------------------------------------------------------------
-void CHudBossHealthMeter::ApplySchemeSettings( IScheme *pScheme )
+void CHudBossHealthMeter::ApplySchemeSettings(IScheme *pScheme)
 {
 	// load control settings...
-	LoadControlSettings( "resource/UI/HudBossHealth.res" );
+	LoadControlSettings("resource/UI/HudBossHealth.res");
 
-	m_pStunMeter = dynamic_cast< ContinuousProgressBar * >( FindChildByName( "StunMeter" ) );
+	m_pStunMeter = dynamic_cast<ContinuousProgressBar *>(FindChildByName("StunMeter"));
 
-	//BarImage
-	m_pBarImagePanel = dynamic_cast<ImagePanel*>( m_pHealthBarPanel->FindChildByName( "BarImage" ) );
+	// BarImage
+	m_pBarImagePanel = dynamic_cast<ImagePanel *>(m_pHealthBarPanel->FindChildByName("BarImage"));
 	m_bossActiveBarColor = m_pBarImagePanel ? m_pBarImagePanel->GetDrawColor() : m_inactiveColor;
-		
 
 	// BorderImage
-	m_pBorderImagePanel = dynamic_cast< ImagePanel* >( FindChildByName( "BorderImage" ) );
+	m_pBorderImagePanel = dynamic_cast<ImagePanel *>(FindChildByName("BorderImage"));
 	m_bossActiveBorderColor = m_pBorderImagePanel ? m_pBorderImagePanel->GetDrawColor() : m_inactiveColor;
 
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 }
 
+//-----------------------------------------------------------------------------
+void CHudBossHealthMeter::Init(void) {}
 
 //-----------------------------------------------------------------------------
-void CHudBossHealthMeter::Init( void )
-{
-}
-
-
-//-----------------------------------------------------------------------------
-bool CHudBossHealthMeter::ShouldDraw( void )
+bool CHudBossHealthMeter::ShouldDraw(void)
 {
 	CBasePlayer *pPlayer = CBasePlayer::GetLocalPlayer();
-	if ( !pPlayer || pPlayer->GetObserverMode() == OBS_MODE_FREEZECAM )
+	if(!pPlayer || pPlayer->GetObserverMode() == OBS_MODE_FREEZECAM)
 	{
 		return false;
 	}
 
-	if ( CHudElement::ShouldDraw() && g_pMonsterResource )
+	if(CHudElement::ShouldDraw() && g_pMonsterResource)
 	{
 		return g_pMonsterResource->GetBossHealthPercentage() > 0.0f ? true : false;
 	}
 
-	if ( pPlayer->GetTeamNumber() <= TEAM_SPECTATOR )
+	if(pPlayer->GetTeamNumber() <= TEAM_SPECTATOR)
 	{
 		return false;
 	}
@@ -97,60 +90,59 @@ bool CHudBossHealthMeter::ShouldDraw( void )
 	return false;
 }
 
-void CHudBossHealthMeter::OnTick( void )
+void CHudBossHealthMeter::OnTick(void)
 {
 	int nXPos, nYPos;
-	GetPos( nXPos, nYPos );
+	GetPos(nXPos, nYPos);
 	nYPos = m_nHealthDeadPosY;
 
 	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
-	if ( pPlayer && !pPlayer->IsObserver() )
+	if(pPlayer && !pPlayer->IsObserver())
 	{
 		nYPos = m_nHealthAlivePosY;
 	}
 
-	SetPos( nXPos, nYPos );
+	SetPos(nXPos, nYPos);
 }
-
 
 //-----------------------------------------------------------------------------
 // Update HUD due to data changes
-void CHudBossHealthMeter::Update( void )
+void CHudBossHealthMeter::Update(void)
 {
-	if ( g_pMonsterResource )
+	if(g_pMonsterResource)
 	{
-		m_pHealthBarPanel->SetWide( m_nHealthBarWide * g_pMonsterResource->GetBossHealthPercentage() );
+		m_pHealthBarPanel->SetWide(m_nHealthBarWide * g_pMonsterResource->GetBossHealthPercentage());
 
-		if ( m_pStunMeter )
+		if(m_pStunMeter)
 		{
 			float stun = g_pMonsterResource->GetBossStunPercentage();
-			if ( stun > 0.0f && cl_boss_show_stun.GetBool() )
+			if(stun > 0.0f && cl_boss_show_stun.GetBool())
 			{
-				if ( !m_pStunMeter->IsVisible() )
+				if(!m_pStunMeter->IsVisible())
 				{
-					m_pStunMeter->SetVisible( true );
+					m_pStunMeter->SetVisible(true);
 				}
 
-				m_pStunMeter->SetProgress( g_pMonsterResource->GetBossStunPercentage() );
+				m_pStunMeter->SetProgress(g_pMonsterResource->GetBossStunPercentage());
 			}
-			else if ( m_pStunMeter->IsVisible() )
+			else if(m_pStunMeter->IsVisible())
 			{
-				m_pStunMeter->SetVisible( false );
+				m_pStunMeter->SetVisible(false);
 			}
 		}
 
 		int iState = g_pMonsterResource->GetBossState();
-	
-		if ( m_pBarImagePanel )
+
+		if(m_pBarImagePanel)
 		{
-			Color barColor = ( iState == 0 ) ? m_bossActiveBarColor : m_inactiveColor;
-			m_pBarImagePanel->SetDrawColor( barColor );
+			Color barColor = (iState == 0) ? m_bossActiveBarColor : m_inactiveColor;
+			m_pBarImagePanel->SetDrawColor(barColor);
 		}
 
-		if ( m_pBorderImagePanel )
+		if(m_pBorderImagePanel)
 		{
-			Color borderColor = ( iState == 0 ) ? m_bossActiveBorderColor : m_inactiveColor;
-			m_pBorderImagePanel->SetDrawColor( borderColor );
+			Color borderColor = (iState == 0) ? m_bossActiveBorderColor : m_inactiveColor;
+			m_pBorderImagePanel->SetDrawColor(borderColor);
 		}
 	}
 }

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,18 +14,18 @@
 #include "basedialogparams.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 struct CPhonemeParams : public CBaseDialogParams
 {
 	// i/o phoneme name
-	char		m_szName[ 256 ];
+	char m_szName[256];
 
 	// Can enter multiple phonemes, and clicking buttons just appends phonemes to string
-	bool		m_bMultiplePhoneme;
+	bool m_bMultiplePhoneme;
 };
 
 // Display/create actor info
-int PhonemeProperties( CPhonemeParams *params );
+int PhonemeProperties(CPhonemeParams *params);
 
 #endif // PHONEMEPROPERTIES_H

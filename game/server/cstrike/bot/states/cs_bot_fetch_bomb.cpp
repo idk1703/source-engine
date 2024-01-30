@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,12 +13,11 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-
 //--------------------------------------------------------------------------------------------------------------
 /**
  * Move to the bomb on the floor and pick it up
  */
-void FetchBombState::OnEnter( CCSBot *me )
+void FetchBombState::OnEnter(CCSBot *me)
 {
 	me->DestroyPath();
 }
@@ -27,25 +26,24 @@ void FetchBombState::OnEnter( CCSBot *me )
 /**
  * Move to the bomb on the floor and pick it up
  */
-void FetchBombState::OnUpdate( CCSBot *me )
+void FetchBombState::OnUpdate(CCSBot *me)
 {
-	if (me->HasC4())
+	if(me->HasC4())
 	{
-		me->PrintIfWatched( "I picked up the bomb\n" );
+		me->PrintIfWatched("I picked up the bomb\n");
 		me->Idle();
 		return;
 	}
 
-
 	CBaseEntity *bomb = TheCSBots()->GetLooseBomb();
-	if (bomb)
+	if(bomb)
 	{
-		if (!me->HasPath())
+		if(!me->HasPath())
 		{
 			// build a path to the bomb
-			if (me->ComputePath( bomb->GetAbsOrigin() ) == false)
+			if(me->ComputePath(bomb->GetAbsOrigin()) == false)
 			{
-				me->PrintIfWatched( "Fetch bomb pathfind failed\n" );
+				me->PrintIfWatched("Fetch bomb pathfind failed\n");
 
 				// go Hunt instead of Idle to prevent continuous re-pathing to inaccessible bomb
 				me->Hunt();
@@ -56,7 +54,7 @@ void FetchBombState::OnUpdate( CCSBot *me )
 	else
 	{
 		// someone picked up the bomb
-		me->PrintIfWatched( "Someone else picked up the bomb.\n" );
+		me->PrintIfWatched("Someone else picked up the bomb.\n");
 		me->Idle();
 		return;
 	}
@@ -64,6 +62,6 @@ void FetchBombState::OnUpdate( CCSBot *me )
 	// look around
 	me->UpdateLookAround();
 
-	if (me->UpdatePathMovement() != CCSBot::PROGRESSING)
+	if(me->UpdatePathMovement() != CCSBot::PROGRESSING)
 		me->Idle();
 }

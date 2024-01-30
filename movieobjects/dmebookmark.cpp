@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "movieobjects/dmebookmark.h"
@@ -10,23 +10,19 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
+//-----------------------------------------------------------------------------
+// Class factory
+//-----------------------------------------------------------------------------
+IMPLEMENT_ELEMENT_FACTORY(DmeBookmark, CDmeBookmark);
 
 //-----------------------------------------------------------------------------
-// Class factory 
-//-----------------------------------------------------------------------------
-IMPLEMENT_ELEMENT_FACTORY( DmeBookmark, CDmeBookmark );
-
-
-//-----------------------------------------------------------------------------
-// Constructor, destructor 
+// Constructor, destructor
 //-----------------------------------------------------------------------------
 void CDmeBookmark::OnConstruction()
 {
-	m_Time.InitAndSet( this, "time", 0 );
-	m_Duration.InitAndSet( this, "duration", 0 );
-	m_Note.Init( this, "note" );
+	m_Time.InitAndSet(this, "time", 0);
+	m_Duration.InitAndSet(this, "duration", 0);
+	m_Note.Init(this, "note");
 }
 
-void CDmeBookmark::OnDestruction()
-{
-}
+void CDmeBookmark::OnDestruction() {}

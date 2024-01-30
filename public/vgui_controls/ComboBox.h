@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,168 +18,180 @@
 
 namespace vgui
 {
-//-----------------------------------------------------------------------------
-// Purpose: Scroll bar button
-//-----------------------------------------------------------------------------
-class ComboBoxButton : public vgui::Button
-{
-public:
-	ComboBoxButton(ComboBox *parent, const char *panelName, const char *text);
-	virtual void ApplySchemeSettings(IScheme *pScheme);
-	virtual IBorder *GetBorder(bool depressed, bool armed, bool selected, bool keyfocus);
-	virtual void OnCursorExited();
-
-	virtual Color GetButtonBgColor()
+	//-----------------------------------------------------------------------------
+	// Purpose: Scroll bar button
+	//-----------------------------------------------------------------------------
+	class ComboBoxButton : public vgui::Button
 	{
-		if (IsEnabled())
-			return  Button::GetButtonBgColor();
+	public:
+		ComboBoxButton(ComboBox *parent, const char *panelName, const char *text);
+		virtual void ApplySchemeSettings(IScheme *pScheme);
+		virtual IBorder *GetBorder(bool depressed, bool armed, bool selected, bool keyfocus);
+		virtual void OnCursorExited();
 
-		return m_DisabledBgColor;
-	}
+		virtual Color GetButtonBgColor()
+		{
+			if(IsEnabled())
+				return Button::GetButtonBgColor();
 
-private:
-	Color m_DisabledBgColor;
-};
+			return m_DisabledBgColor;
+		}
 
-//-----------------------------------------------------------------------------
-// Purpose: Text entry with drop down options list
-//-----------------------------------------------------------------------------
-class ComboBox : public TextEntry
-{
-	DECLARE_CLASS_SIMPLE( ComboBox, TextEntry );
+	private:
+		Color m_DisabledBgColor;
+	};
 
-public:
-	ComboBox(Panel *parent, const char *panelName, int numLines, bool allowEdit);
-	~ComboBox();
+	//-----------------------------------------------------------------------------
+	// Purpose: Text entry with drop down options list
+	//-----------------------------------------------------------------------------
+	class ComboBox : public TextEntry
+	{
+		DECLARE_CLASS_SIMPLE(ComboBox, TextEntry);
 
-	// functions designed to be overriden
-	virtual void OnShowMenu(Menu *menu) {}
-	virtual void OnHideMenu(Menu *menu) {}
+	public:
+		ComboBox(Panel *parent, const char *panelName, int numLines, bool allowEdit);
+		~ComboBox();
 
-	// Set the number of items in the drop down menu.
-	virtual void SetNumberOfEditLines( int numLines );
+		// functions designed to be overriden
+		virtual void OnShowMenu(Menu *menu) {}
+		virtual void OnHideMenu(Menu *menu) {}
 
-	//  Add an item to the drop down
-	virtual int AddItem(const char *itemText, const KeyValues *userData);
-	virtual int AddItem(const wchar_t *itemText, const KeyValues *userData);
+		// Set the number of items in the drop down menu.
+		virtual void SetNumberOfEditLines(int numLines);
 
-	virtual int GetItemCount() const;
-	int GetItemIDFromRow( int row );
+		//  Add an item to the drop down
+		virtual int AddItem(const char *itemText, const KeyValues *userData);
+		virtual int AddItem(const wchar_t *itemText, const KeyValues *userData);
 
-	// update the item
-	virtual bool UpdateItem(int itemID, const char *itemText,const  KeyValues *userData);
-	virtual bool UpdateItem(int itemID, const wchar_t *itemText, const KeyValues *userData);
-	virtual bool IsItemIDValid(int itemID);
+		virtual int GetItemCount() const;
+		int GetItemIDFromRow(int row);
 
-	// set the enabled state of an item
-	virtual void SetItemEnabled(const char *itemText, bool state);
-	virtual void SetItemEnabled(int itemID, bool state);
-	
-	// Removes a single item
-	void DeleteItem( int itemID );
+		// update the item
+		virtual bool UpdateItem(int itemID, const char *itemText, const KeyValues *userData);
+		virtual bool UpdateItem(int itemID, const wchar_t *itemText, const KeyValues *userData);
+		virtual bool IsItemIDValid(int itemID);
 
-	// Remove all items from the drop down menu
-	void RemoveAll();
-	// deprecated, use above
-	void DeleteAllItems()	{ RemoveAll(); }
+		// set the enabled state of an item
+		virtual void SetItemEnabled(const char *itemText, bool state);
+		virtual void SetItemEnabled(int itemID, bool state);
 
-	// Sorts the items in the list - FIXME does nothing
-	virtual void SortItems();
+		// Removes a single item
+		void DeleteItem(int itemID);
 
-	// Set the visiblity of the drop down menu button.
-	virtual void SetDropdownButtonVisible(bool state);
+		// Remove all items from the drop down menu
+		void RemoveAll();
+		// deprecated, use above
+		void DeleteAllItems()
+		{
+			RemoveAll();
+		}
 
-	// Return true if the combobox current has the dropdown menu open
-	virtual bool IsDropdownVisible();
+		// Sorts the items in the list - FIXME does nothing
+		virtual void SortItems();
 
-	// Activate the item in the menu list,as if that 
-	// menu item had been selected by the user
-	MESSAGE_FUNC_INT( ActivateItem, "ActivateItem", itemID );
-	void ActivateItemByRow(int row);
+		// Set the visiblity of the drop down menu button.
+		virtual void SetDropdownButtonVisible(bool state);
 
-	void SilentActivateItem(int itemID);	// Sets the menu to the appropriate row without sending a TextChanged message
-	void SilentActivateItemByRow(int row);	// Sets the menu to the appropriate row without sending a TextChanged message
+		// Return true if the combobox current has the dropdown menu open
+		virtual bool IsDropdownVisible();
 
-	int GetActiveItem();
-	KeyValues *GetActiveItemUserData();
-	KeyValues *GetItemUserData(int itemID);
-	void GetItemText( int itemID, OUT_Z_BYTECAP(bufLenInBytes) wchar_t *text, int bufLenInBytes );
-	void GetItemText( int itemID, OUT_Z_BYTECAP(bufLenInBytes) char *text, int bufLenInBytes );
+		// Activate the item in the menu list,as if that
+		// menu item had been selected by the user
+		MESSAGE_FUNC_INT(ActivateItem, "ActivateItem", itemID);
+		void ActivateItemByRow(int row);
 
-	// sets a custom menu to use for the dropdown
-	virtual void SetMenu( Menu *menu );
-	virtual Menu *GetMenu() { return m_pDropDown; }
+		void SilentActivateItem(
+			int itemID); // Sets the menu to the appropriate row without sending a TextChanged message
+		void SilentActivateItemByRow(
+			int row); // Sets the menu to the appropriate row without sending a TextChanged message
 
-	// Layout the format of the combo box for drawing on screen
-	virtual void PerformLayout();
+		int GetActiveItem();
+		KeyValues *GetActiveItemUserData();
+		KeyValues *GetItemUserData(int itemID);
+		void GetItemText(int itemID, OUT_Z_BYTECAP(bufLenInBytes) wchar_t *text, int bufLenInBytes);
+		void GetItemText(int itemID, OUT_Z_BYTECAP(bufLenInBytes) char *text, int bufLenInBytes);
 
-	/* action signals
-		"TextChanged" - signals that the text has changed in the combo box
+		// sets a custom menu to use for the dropdown
+		virtual void SetMenu(Menu *menu);
+		virtual Menu *GetMenu()
+		{
+			return m_pDropDown;
+		}
 
-	*/
+		// Layout the format of the combo box for drawing on screen
+		virtual void PerformLayout();
 
-	virtual void ShowMenu();
-	virtual void HideMenu();
-	virtual void OnKillFocus();
-	MESSAGE_FUNC( OnMenuClose, "MenuClose" );
-	virtual void DoClick();
-	virtual void OnSizeChanged(int wide, int tall);
+		/* action signals
+			"TextChanged" - signals that the text has changed in the combo box
 
-	virtual void SetOpenDirection(Menu::MenuDirection_e direction);
+		*/
 
-	virtual void SetFont( HFont font );
+		virtual void ShowMenu();
+		virtual void HideMenu();
+		virtual void OnKillFocus();
+		MESSAGE_FUNC(OnMenuClose, "MenuClose");
+		virtual void DoClick();
+		virtual void OnSizeChanged(int wide, int tall);
 
-	virtual void SetUseFallbackFont( bool bState, HFont hFallback );
+		virtual void SetOpenDirection(Menu::MenuDirection_e direction);
 
-	ComboBoxButton *GetComboButton( void ) { return m_pButton; }
+		virtual void SetFont(HFont font);
 
-protected:
-	// overrides
-	virtual void OnMousePressed(MouseCode code);
-	virtual void OnMouseDoublePressed(MouseCode code);
-	MESSAGE_FUNC( OnMenuItemSelected, "MenuItemSelected" );
-	virtual void OnCommand( const char *command );
-	virtual void ApplySchemeSettings(IScheme *pScheme);
-	virtual void ApplySettings( KeyValues *pInResourceData );
-	virtual void OnCursorEntered();
-	virtual void OnCursorExited();
+		virtual void SetUseFallbackFont(bool bState, HFont hFallback);
 
-	// custom message handlers
-	MESSAGE_FUNC_WCHARPTR( OnSetText, "SetText", text );
-	virtual void OnSetFocus();						// called after the panel receives the keyboard focus
+		ComboBoxButton *GetComboButton(void)
+		{
+			return m_pButton;
+		}
+
+	protected:
+		// overrides
+		virtual void OnMousePressed(MouseCode code);
+		virtual void OnMouseDoublePressed(MouseCode code);
+		MESSAGE_FUNC(OnMenuItemSelected, "MenuItemSelected");
+		virtual void OnCommand(const char *command);
+		virtual void ApplySchemeSettings(IScheme *pScheme);
+		virtual void ApplySettings(KeyValues *pInResourceData);
+		virtual void OnCursorEntered();
+		virtual void OnCursorExited();
+
+		// custom message handlers
+		MESSAGE_FUNC_WCHARPTR(OnSetText, "SetText", text);
+		virtual void OnSetFocus(); // called after the panel receives the keyboard focus
 #ifdef _X360
-	virtual void OnKeyCodePressed(KeyCode code);
+		virtual void OnKeyCodePressed(KeyCode code);
 #endif
-    virtual void OnKeyCodeTyped(KeyCode code);
-	virtual void OnKeyTyped(wchar_t unichar);
+		virtual void OnKeyCodeTyped(KeyCode code);
+		virtual void OnKeyTyped(wchar_t unichar);
 
-	void SelectMenuItem(int itemToSelect);
-    void MoveAlongMenuItemList(int direction);
-	void MoveToFirstMenuItem();
-	void MoveToLastMenuItem();
-private:
-	void DoMenuLayout();
+		void SelectMenuItem(int itemToSelect);
+		void MoveAlongMenuItemList(int direction);
+		void MoveToFirstMenuItem();
+		void MoveToLastMenuItem();
 
-	Menu 				*m_pDropDown;
-	ComboBoxButton 		*m_pButton;
-	bool				m_bPreventTextChangeMessage;
+	private:
+		void DoMenuLayout();
 
-//=============================================================================
-// HPE_BEGIN:
-// [pfreese] This member variable is never initialized and not used correctly
-//=============================================================================
+		Menu *m_pDropDown;
+		ComboBoxButton *m_pButton;
+		bool m_bPreventTextChangeMessage;
 
-// 	bool 				m_bAllowEdit;
+		//=============================================================================
+		// HPE_BEGIN:
+		// [pfreese] This member variable is never initialized and not used correctly
+		//=============================================================================
 
-//=============================================================================
-// HPE_END
-//=============================================================================
-	bool 				m_bHighlight;
-	Menu::MenuDirection_e 	m_iDirection;
-	int 				m_iOpenOffsetY;
+		// 	bool 				m_bAllowEdit;
 
-	char				m_szBorderOverride[64];
-};
+		//=============================================================================
+		// HPE_END
+		//=============================================================================
+		bool m_bHighlight;
+		Menu::MenuDirection_e m_iDirection;
+		int m_iOpenOffsetY;
+
+		char m_szBorderOverride[64];
+	};
 
 } // namespace vgui
 

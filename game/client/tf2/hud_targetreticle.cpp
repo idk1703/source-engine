@@ -21,16 +21,14 @@
 #include <vgui/ISurface.h>
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CTargetReticle::CTargetReticle( void )
-: BaseClass( NULL, "CTargetReticle" ),
-  m_CursorNone(vgui::dc_none)
+CTargetReticle::CTargetReticle(void) : BaseClass(NULL, "CTargetReticle"), m_CursorNone(vgui::dc_none)
 {
-	SetCursor( m_CursorNone );
+	SetCursor(m_CursorNone);
 
-	SetPaintBackgroundEnabled( false );
-	SetAutoDelete( false );
+	SetPaintBackgroundEnabled(false);
+	SetAutoDelete(false);
 	m_hTargetEntity = NULL;
 	m_pTargetLabel = NULL;
 	m_iReticleId = 0;
@@ -40,100 +38,99 @@ CTargetReticle::CTargetReticle( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTargetReticle::~CTargetReticle()
 {
-	if ( m_pTargetLabel != NULL )
+	if(m_pTargetLabel != NULL)
 	{
 		delete m_pTargetLabel;
 		m_pTargetLabel = NULL;
 	}
 
-	SetParent( (vgui::Panel *)NULL );
+	SetParent((vgui::Panel *)NULL);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTargetReticle::Init( C_BaseEntity *pEntity, const char *sName )
+void CTargetReticle::Init(C_BaseEntity *pEntity, const char *sName)
 {
 	vgui::Panel *pParent = GetClientModeNormal()->GetViewport();
-	SetParent( pParent );
-	SetCursor( pParent->GetCursor() );
+	SetParent(pParent);
+	SetCursor(pParent->GetCursor());
 
-	if ( !m_pTargetLabel )
+	if(!m_pTargetLabel)
 	{
-		m_pTargetLabel = new vgui::Label( pParent, "TargetLabel", "Unnamed" );
-		m_pTargetLabel->SetPos( 0, 0 );
-		m_pTargetLabel->SetFgColor( Color( 255, 170, 0, 255 ) );
-		m_pTargetLabel->SetPaintBackgroundEnabled( false );
-		m_pTargetLabel->SetAutoDelete( false );
-		m_pTargetLabel->SetCursor( m_CursorNone );
+		m_pTargetLabel = new vgui::Label(pParent, "TargetLabel", "Unnamed");
+		m_pTargetLabel->SetPos(0, 0);
+		m_pTargetLabel->SetFgColor(Color(255, 170, 0, 255));
+		m_pTargetLabel->SetPaintBackgroundEnabled(false);
+		m_pTargetLabel->SetAutoDelete(false);
+		m_pTargetLabel->SetCursor(m_CursorNone);
 	}
 
-	SetSize( XRES(32),YRES(32) );
+	SetSize(XRES(32), YRES(32));
 	m_hTargetEntity = pEntity;
-	m_pTargetLabel->SetText( sName );
+	m_pTargetLabel->SetText(sName);
 
 	int contentW, contentH;
-	m_pTargetLabel->GetContentSize( contentW, contentH );
-	m_pTargetLabel->SetWide( contentW );
+	m_pTargetLabel->GetContentSize(contentW, contentH);
+	m_pTargetLabel->SetWide(contentW);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-C_BaseEntity *CTargetReticle::GetTarget( void )
+C_BaseEntity *CTargetReticle::GetTarget(void)
 {
 	return m_hTargetEntity;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTargetReticle::Update( void )
+void CTargetReticle::Update(void)
 {
-	if ( !m_hTargetEntity )
+	if(!m_hTargetEntity)
 	{
 		C_BaseTFPlayer *pPlayer = C_BaseTFPlayer::GetLocalPlayer();
-		pPlayer->Remove_Target( this );
+		pPlayer->Remove_Target(this);
 		return;
 	}
 
 	// Load our textures..
-	if ( !m_iReticleId )
+	if(!m_iReticleId)
 	{
 		m_iReticleId = vgui::surface()->CreateNewTextureID();
-		vgui::surface()->DrawSetTextureFile( m_iReticleId, "Hud/target_reticle" , true, false);
+		vgui::surface()->DrawSetTextureFile(m_iReticleId, "Hud/target_reticle", true, false);
 	}
-	
-	if ( !m_iReticleLeftId )
+
+	if(!m_iReticleLeftId)
 	{
 		m_iReticleLeftId = vgui::surface()->CreateNewTextureID();
-		vgui::surface()->DrawSetTextureFile( m_iReticleLeftId, "Hud/target_reticle_left", true, false );
+		vgui::surface()->DrawSetTextureFile(m_iReticleLeftId, "Hud/target_reticle_left", true, false);
 	}
-	
-	if ( !m_iReticleRightId )
+
+	if(!m_iReticleRightId)
 	{
 		m_iReticleRightId = vgui::surface()->CreateNewTextureID();
-		vgui::surface()->DrawSetTextureFile( m_iReticleRightId, "Hud/target_reticle_right" , true, false);
+		vgui::surface()->DrawSetTextureFile(m_iReticleRightId, "Hud/target_reticle_right", true, false);
 	}
 
 	int iX, iY;
-	GetTargetInScreenSpace( m_hTargetEntity, iX, iY );
-	
+	GetTargetInScreenSpace(m_hTargetEntity, iX, iY);
+
 	int halfWidth = GetWide() / 2;
-	halfWidth = MAX( halfWidth, m_pTargetLabel->GetWide() / 2 );
+	halfWidth = MAX(halfWidth, m_pTargetLabel->GetWide() / 2);
 
 	m_iRenderTextureId = m_iReticleId;
-	if( iX < halfWidth || iX > ScreenWidth()-halfWidth )
+	if(iX < halfWidth || iX > ScreenWidth() - halfWidth)
 	{
 		// It's off the screen. See what side it's on.
-		Vector vCenter = m_hTargetEntity->WorldSpaceCenter( );
-		
-		if( CurrentViewRight().Dot( vCenter - CurrentViewOrigin() ) > 0 )
+		Vector vCenter = m_hTargetEntity->WorldSpaceCenter();
+
+		if(CurrentViewRight().Dot(vCenter - CurrentViewOrigin()) > 0)
 		{
 			m_iRenderTextureId = m_iReticleRightId;
 			iX = ScreenWidth() - halfWidth;
@@ -149,35 +146,34 @@ void CTargetReticle::Update( void )
 	}
 
 	// Move the icon there
-	SetPos( iX - (GetWide() / 2), iY - (GetTall() / 2) );
+	SetPos(iX - (GetWide() / 2), iY - (GetTall() / 2));
 
 	// Center the text under it
-	m_pTargetLabel->SetPos( iX - (m_pTargetLabel->GetWide() / 2), iY + (GetTall() / 2) );
+	m_pTargetLabel->SetPos(iX - (m_pTargetLabel->GetWide() / 2), iY + (GetTall() / 2));
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTargetReticle::Paint()
 {
-	if ( !m_hTargetEntity || !m_iRenderTextureId )
+	if(!m_hTargetEntity || !m_iRenderTextureId)
 		return;
 
 	C_BaseTFPlayer *pPlayer = C_BaseTFPlayer::GetLocalPlayer();
-	if ( pPlayer == NULL || pPlayer->GetHealth() < 1 )
+	if(pPlayer == NULL || pPlayer->GetHealth() < 1)
 		return;
 
 	// Show hide label based on EMP state
 	bool suppress_reticle = pPlayer->HasPowerup(POWERUP_EMP);
 
-	m_pTargetLabel->SetVisible( suppress_reticle ? false : true );
+	m_pTargetLabel->SetVisible(suppress_reticle ? false : true);
 
 	// Don't draw the reticle either
-	if ( suppress_reticle )
+	if(suppress_reticle)
 		return;
 
-	vgui::surface()->DrawSetTexture( m_iRenderTextureId );
-	vgui::surface()->DrawSetColor( 255, 255, 255, 255 );
-	vgui::surface()->DrawTexturedRect( 0, 0, GetWide(), GetTall() );
+	vgui::surface()->DrawSetTexture(m_iRenderTextureId);
+	vgui::surface()->DrawSetColor(255, 255, 255, 255);
+	vgui::surface()->DrawTexturedRect(0, 0, GetWide(), GetTall());
 }
-

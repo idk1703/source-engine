@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -28,16 +28,17 @@ bool FileExists(const char *fileName)
 //-----------------------------------------------------------------------------
 // Purpose: Launches steam if necessary
 //-----------------------------------------------------------------------------
-bool ShouldLaunchAppViaSteam(const char *lpCmdLine, const char *steamFilesystemDllName, const char *stdioFilesystemDllName)
+bool ShouldLaunchAppViaSteam(const char *lpCmdLine, const char *steamFilesystemDllName,
+							 const char *stdioFilesystemDllName)
 {
 	// see if steam is on the command line
 	const char *steamStr = strstr(lpCmdLine, STEAM_PARM);
 
 	// check the character following it is a whitespace or null
-	if (steamStr)
+	if(steamStr)
 	{
 		const char *postChar = steamStr + strlen(STEAM_PARM);
-		if (*postChar == 0 || isspace(*postChar))
+		if(*postChar == 0 || isspace(*postChar))
 		{
 			// we're running under steam already, let the app continue
 			return false;
@@ -45,14 +46,14 @@ bool ShouldLaunchAppViaSteam(const char *lpCmdLine, const char *steamFilesystemD
 	}
 
 	// we're not running under steam, see which filesystems are available
-	if (FileExists(stdioFilesystemDllName))
+	if(FileExists(stdioFilesystemDllName))
 	{
 		// we're being run with a stdio filesystem, so we can continue without steam
 		return false;
 	}
 
 	// make sure we have a steam filesystem available
-	if (!FileExists(steamFilesystemDllName))
+	if(!FileExists(steamFilesystemDllName))
 	{
 		return false;
 	}
@@ -74,19 +75,19 @@ void LaunchSelfViaSteam(const char *params)
 
 	// strip out the exe name
 	char *slash = strrchr(appPath, '\\');
-	if (slash)
+	if(slash)
 	{
 		*slash = 0;
 	}
 
 	// save out our details to the registry
 	HKEY hKey;
-	if (ERROR_SUCCESS == RegOpenKey(HKEY_CURRENT_USER, "Software\\Valve\\Steam", &hKey)) 
+	if(ERROR_SUCCESS == RegOpenKey(HKEY_CURRENT_USER, "Software\\Valve\\Steam", &hKey))
 	{
 		DWORD dwType = REG_SZ;
-		DWORD dwSize = static_cast<DWORD>( strlen(appPath) + 1 );
+		DWORD dwSize = static_cast<DWORD>(strlen(appPath) + 1);
 		RegSetValueEx(hKey, "TempAppPath", NULL, dwType, (LPBYTE)appPath, dwSize);
-		dwSize = static_cast<DWORD>( strlen(params) + 1 );
+		dwSize = static_cast<DWORD>(strlen(params) + 1);
 		RegSetValueEx(hKey, "TempAppCmdLine", NULL, dwType, (LPBYTE)params, dwSize);
 		// clear out the appID (since we don't know it yet)
 		dwType = REG_DWORD;
@@ -97,28 +98,28 @@ void LaunchSelfViaSteam(const char *params)
 
 	// search for an active steam instance
 	HWND hwnd = ::FindWindow("Valve_SteamIPC_Class", "Hidden Window");
-	if (hwnd)
+	if(hwnd)
 	{
 		::PostMessage(hwnd, WM_USER + 3, 0, 0);
 	}
 	else
 	{
 		// couldn't find steam, find and launch it
-		
+
 		// first, search backwards through our current set of directories
 		char steamExe[MAX_PATH];
 		steamExe[0] = 0;
 		char dir[MAX_PATH];
-		if (::GetCurrentDirectoryA(sizeof(dir), dir))
+		if(::GetCurrentDirectoryA(sizeof(dir), dir))
 		{
 			char *slash = strrchr(dir, '\\');
-			while (slash)
+			while(slash)
 			{
 				// see if steam_dev.exe is in the directory first
 				slash[1] = 0;
 				strcat(slash, "steam_dev.exe");
 				FILE *f = fopen(dir, "rb");
-				if (f)
+				if(f)
 				{
 					// found it
 					fclose(f);
@@ -130,7 +131,7 @@ void LaunchSelfViaSteam(const char *params)
 				slash[1] = 0;
 				strcat(slash, "steam.exe");
 				f = fopen(dir, "rb");
-				if (f)
+				if(f)
 				{
 					// found it
 					fclose(f);
@@ -146,30 +147,31 @@ void LaunchSelfViaSteam(const char *params)
 			}
 		}
 
-		if (!steamExe[0])
+		if(!steamExe[0])
 		{
 			// still not found, use the one in the registry
 			HKEY hKey;
-			if (ERROR_SUCCESS == RegOpenKey(HKEY_CURRENT_USER, "Software\\Valve\\Steam", &hKey)) 
+			if(ERROR_SUCCESS == RegOpenKey(HKEY_CURRENT_USER, "Software\\Valve\\Steam", &hKey))
 			{
 				DWORD dwType;
 				DWORD dwSize = sizeof(steamExe);
-				RegQueryValueEx( hKey, "SteamExe", NULL, &dwType, (LPBYTE)steamExe, &dwSize);
-				RegCloseKey( hKey );
+				RegQueryValueEx(hKey, "SteamExe", NULL, &dwType, (LPBYTE)steamExe, &dwSize);
+				RegCloseKey(hKey);
 			}
 		}
-		
-		if (!steamExe[0])
+
+		if(!steamExe[0])
 		{
 			// still no path, error
-			::MessageBox(NULL, "Error running game: could not find steam.exe to launch", "Fatal Error", MB_OK | MB_ICONERROR);
+			::MessageBox(NULL, "Error running game: could not find steam.exe to launch", "Fatal Error",
+						 MB_OK | MB_ICONERROR);
 			return;
 		}
 
 		// fix any slashes
-		for (char *slash = steamExe; *slash; slash++)
+		for(char *slash = steamExe; *slash; slash++)
 		{
-			if (*slash == '/')
+			if(*slash == '/')
 			{
 				*slash = '\\';
 			}
@@ -178,14 +180,14 @@ void LaunchSelfViaSteam(const char *params)
 		// change to the steam directory
 		strcpy(dir, steamExe);
 		char *delimiter = strrchr(dir, '\\');
-		if (delimiter)
+		if(delimiter)
 		{
 			*delimiter = 0;
 			_chdir(dir);
 		}
 
 		// exec steam.exe, in silent mode, with the launch app param
-		char *args[4] = { steamExe, "-silent", "-applaunch", NULL };
+		char *args[4] = {steamExe, "-silent", "-applaunch", NULL};
 		_spawnv(_P_NOWAIT, steamExe, args);
 	}
 }

@@ -8,17 +8,23 @@
 #ifdef TF_RAID_MODE
 
 //---------------------------------------------------------------------------------------------
-class CBossAlphaLaunchRockets : public Action< CBossAlpha >
+class CBossAlphaLaunchRockets : public Action<CBossAlpha>
 {
 public:
-	virtual ActionResult< CBossAlpha >	OnStart( CBossAlpha *me, Action< CBossAlpha > *priorAction );
-	virtual ActionResult< CBossAlpha >	Update( CBossAlpha *me, float interval );
-	virtual void					OnEnd( CBossAlpha *me, Action< CBossAlpha > *nextAction );
+	virtual ActionResult<CBossAlpha> OnStart(CBossAlpha *me, Action<CBossAlpha> *priorAction);
+	virtual ActionResult<CBossAlpha> Update(CBossAlpha *me, float interval);
+	virtual void OnEnd(CBossAlpha *me, Action<CBossAlpha> *nextAction);
 
 	// if anything interrupts this action, abort it
-	virtual ActionResult< CBossAlpha >	OnSuspend( CBossAlpha *me, Action< CBossAlpha > *interruptingAction )	{ return Done(); }
+	virtual ActionResult<CBossAlpha> OnSuspend(CBossAlpha *me, Action<CBossAlpha> *interruptingAction)
+	{
+		return Done();
+	}
 
-	virtual const char *GetName( void ) const	{ return "LaunchRockets"; }		// return name of this action
+	virtual const char *GetName(void) const
+	{
+		return "LaunchRockets";
+	} // return name of this action
 
 private:
 	CountdownTimer m_timer;
@@ -28,10 +34,9 @@ private:
 
 	int m_animLayer;
 
-	CHandle< CBaseCombatCharacter > m_target;
+	CHandle<CBaseCombatCharacter> m_target;
 	Vector m_lastTargetPosition;
 };
-
 
 #endif // TF_RAID_MODE
 

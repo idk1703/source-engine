@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -25,36 +25,33 @@
 #define MAX_TRAINING_MSG_LENGTH 512
 
 extern int Training_GetCompletedTrainingClasses();
-extern void Training_MarkClassComplete( int iClass, int iStage );
+extern void Training_MarkClassComplete(int iClass, int iStage);
 
 //-----------------------------------------------------------------------------
-// Purpose:  
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFHudTraining : public vgui::EditablePanel, public CGameEventListener
 {
-	DECLARE_CLASS_SIMPLE( CTFHudTraining, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CTFHudTraining, vgui::EditablePanel);
 
 public:
-
-	CTFHudTraining( vgui::Panel *parent, const char *name );
+	CTFHudTraining(vgui::Panel *parent, const char *name);
 	virtual ~CTFHudTraining();
 
-	static bool   FormatTrainingText( const char* input, wchar_t* output );
+	static bool FormatTrainingText(const char *input, wchar_t *output);
 
-	virtual void  ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual void  Reset();
-	virtual void  FireGameEvent( IGameEvent *event );
-	virtual bool  IsVisible( void );
-	virtual void  OnTick();
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void Reset();
+	virtual void FireGameEvent(IGameEvent *event);
+	virtual bool IsVisible(void);
+	virtual void OnTick();
 
-	void          SetTrainingText( char *msg );
-	void          SetTrainingObjective( char *msg );
+	void SetTrainingText(char *msg);
+	void SetTrainingObjective(char *msg);
 
 private:
-
-	CExRichText		*m_pMsgLabel;
-	CExLabel		*m_pPressSpacebarToContinueLabel;
+	CExRichText *m_pMsgLabel;
+	CExLabel *m_pPressSpacebarToContinueLabel;
 };
 
-
-#endif	// TF_HUD_TRAINING_H
+#endif // TF_HUD_TRAINING_H

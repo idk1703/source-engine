@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -20,16 +20,13 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CPatchTimeout dialog
 
-
-CPatchTimeout::CPatchTimeout(CWnd* pParent /*=NULL*/)
-	: CDialog(CPatchTimeout::IDD, pParent)
+CPatchTimeout::CPatchTimeout(CWnd *pParent /*=NULL*/) : CDialog(CPatchTimeout::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CPatchTimeout)
 	//}}AFX_DATA_INIT
 }
 
-
-void CPatchTimeout::DoDataExchange(CDataExchange* pDX)
+void CPatchTimeout::DoDataExchange(CDataExchange *pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CPatchTimeout)
@@ -39,10 +36,9 @@ void CPatchTimeout::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-
 BEGIN_MESSAGE_MAP(CPatchTimeout, CDialog)
 	//{{AFX_MSG_MAP(CPatchTimeout)
-		// NOTE: the ClassWizard will add message map macros here
+	// NOTE: the ClassWizard will add message map macros here
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 

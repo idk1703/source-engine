@@ -8,18 +8,21 @@
 
 #include "Path/NextBotChasePath.h"
 
-class CTFBotMeleeAttack : public Action< CTFBot >
+class CTFBotMeleeAttack : public Action<CTFBot>
 {
 public:
-	CTFBotMeleeAttack( float giveUpRange = -1.0f );
+	CTFBotMeleeAttack(float giveUpRange = -1.0f);
 
-	virtual ActionResult< CTFBot >	OnStart( CTFBot *me, Action< CTFBot > *priorAction );
-	virtual ActionResult< CTFBot >	Update( CTFBot *me, float interval );
+	virtual ActionResult<CTFBot> OnStart(CTFBot *me, Action<CTFBot> *priorAction);
+	virtual ActionResult<CTFBot> Update(CTFBot *me, float interval);
 
-	virtual const char *GetName( void ) const	{ return "MeleeAttack"; };
+	virtual const char *GetName(void) const
+	{
+		return "MeleeAttack";
+	};
 
 private:
-	float m_giveUpRange;			// if non-negative and if threat is farther than this, give up our melee attack
+	float m_giveUpRange; // if non-negative and if threat is farther than this, give up our melee attack
 	ChasePath m_path;
 };
 

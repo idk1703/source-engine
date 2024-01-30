@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,27 +19,24 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPrefab3D::CPrefab3D()
 {
 	m_pWorld = NULL;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPrefab3D::~CPrefab3D()
 {
 	FreeData();
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPrefab3D::FreeData()
 {
@@ -47,15 +44,14 @@ void CPrefab3D::FreeData()
 	m_pWorld = NULL;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMapClass *CPrefab3D::Create(void)
 {
-	if (!IsLoaded() && (Load() == -1))
+	if(!IsLoaded() && (Load() == -1))
 	{
-		return(NULL);
+		return (NULL);
 	}
 
 	CMapClass *pCopy;
@@ -64,9 +60,9 @@ CMapClass *CPrefab3D::Create(void)
 	//
 	// Check for just one object - if only one, don't group it.
 	//
-	if (m_pWorld->GetChildCount() == 1)
+	if(m_pWorld->GetChildCount() == 1)
 	{
-		
+
 		pOriginal = m_pWorld->GetChildren()->Element(0);
 		pCopy = pOriginal->Copy(false);
 	}
@@ -87,12 +83,11 @@ CMapClass *CPrefab3D::Create(void)
 	// HACK: must calculate bounds here due to a hack in CMapClass::CopyChildrenFrom
 	pCopy->CalcBounds();
 
-	return(pCopy);
+	return (pCopy);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  : point - Where to center the prefab.
 // Output : CMapClass
 //-----------------------------------------------------------------------------
@@ -104,7 +99,7 @@ CMapClass *CPrefab3D::CreateAtPoint(const Vector &point)
 	//
 	CMapClass *pObject = Create();
 
-	if (pObject != NULL)
+	if(pObject != NULL)
 	{
 		//
 		// Move the prefab center to match the given point.
@@ -112,7 +107,7 @@ CMapClass *CPrefab3D::CreateAtPoint(const Vector &point)
 		Vector move = point;
 		Vector center;
 		pObject->GetBoundsCenter(center);
-		for (int i = 0; i < 3; i++)
+		for(int i = 0; i < 3; i++)
 		{
 			move[i] -= center[i];
 		}
@@ -122,16 +117,15 @@ CMapClass *CPrefab3D::CreateAtPoint(const Vector &point)
 		Options.SetLockingTextures(bOldLock);
 	}
 
-	return(pObject);
+	return (pObject);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : 
-// Output : 
+// Purpose:
+// Input  :
+// Output :
 //-----------------------------------------------------------------------------
-CMapClass *CPrefab3D::CreateAtPointAroundOrigin( Vector const &point )
+CMapClass *CPrefab3D::CreateAtPointAroundOrigin(Vector const &point)
 {
 	//
 	// Create the prefab object. It will either be a single object
@@ -139,23 +133,22 @@ CMapClass *CPrefab3D::CreateAtPointAroundOrigin( Vector const &point )
 	//
 	CMapClass *pObject = Create();
 
-	if( !pObject )
+	if(!pObject)
 		return NULL;
 
 	Vector move = point;
 
-	BOOL bOldLock = Options.SetLockingTextures( TRUE );
-	pObject->TransMove( move );
-	Options.SetLockingTextures( bOldLock );
+	BOOL bOldLock = Options.SetLockingTextures(TRUE);
+	pObject->TransMove(move);
+	Options.SetLockingTextures(bOldLock);
 
-	return ( pObject );
+	return (pObject);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pBox - 
-// Output : 
+// Purpose:
+// Input  : pBox -
+// Output :
 //-----------------------------------------------------------------------------
 CMapClass *CPrefab3D::CreateInBox(BoundBox *pBox)
 {
@@ -165,7 +158,7 @@ CMapClass *CPrefab3D::CreateInBox(BoundBox *pBox)
 	//
 	CMapClass *pObject = Create();
 
-	if (pObject != NULL)
+	if(pObject != NULL)
 	{
 		//
 		// Scale the prefab to match the box bounds.
@@ -177,7 +170,7 @@ CMapClass *CPrefab3D::CreateInBox(BoundBox *pBox)
 		pObject->GetBoundsSize(CurSize);
 
 		Vector scale;
-		for (int i = 0; i < 3; i++)
+		for(int i = 0; i < 3; i++)
 		{
 			scale[i] = NewSize[i] / CurSize[i];
 		}
@@ -193,7 +186,7 @@ CMapClass *CPrefab3D::CreateInBox(BoundBox *pBox)
 
 		Vector center;
 		pObject->GetBoundsCenter(center);
-		for (int i = 0; i < 3; i++)
+		for(int i = 0; i < 3; i++)
 		{
 			move[i] -= center[i];
 		}
@@ -203,12 +196,11 @@ CMapClass *CPrefab3D::CreateInBox(BoundBox *pBox)
 		Options.SetLockingTextures(bOldLock);
 	}
 
-	return(pObject);
+	return (pObject);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPrefab3D::CenterOnZero()
 {
@@ -223,7 +215,6 @@ void CPrefab3D::CenterOnZero()
 	Options.SetLockingTextures(bOldLock);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Returns true if the prefab data has been loaded from disk, false if not.
 //-----------------------------------------------------------------------------
@@ -232,30 +223,23 @@ bool CPrefab3D::IsLoaded(void)
 	return (m_pWorld != NULL);
 }
 
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+CPrefabRMF::CPrefabRMF() {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CPrefabRMF::CPrefabRMF()
-{
-}
-
+CPrefabRMF::~CPrefabRMF() {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-CPrefabRMF::~CPrefabRMF()
-{
-}
-
-
-//-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : file - 
-//			dwFlags - 
+// Purpose:
+// Input  : file -
+//			dwFlags -
 // Output : int
 //-----------------------------------------------------------------------------
-int CPrefabRMF::DoLoad(std::fstream& file, DWORD dwFlags)
+int CPrefabRMF::DoLoad(std::fstream &file, DWORD dwFlags)
 {
 	int iRvl;
 
@@ -265,7 +249,7 @@ int CPrefabRMF::DoLoad(std::fstream& file, DWORD dwFlags)
 
 	if(m_pWorld)
 		delete m_pWorld;
-	m_pWorld = new CMapWorld( NULL );
+	m_pWorld = new CMapWorld(NULL);
 
 	// read data
 	if(dwFlags & lsMAP)
@@ -287,14 +271,13 @@ int CPrefabRMF::DoLoad(std::fstream& file, DWORD dwFlags)
 	return 1;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : file - 
-//			dwFlags - 
+// Purpose:
+// Input  : file -
+//			dwFlags -
 // Output : int
 //-----------------------------------------------------------------------------
-int CPrefabRMF::DoSave(std::fstream& file, DWORD dwFlags)
+int CPrefabRMF::DoSave(std::fstream &file, DWORD dwFlags)
 {
 	// save world
 	if(dwFlags & lsMAP)
@@ -303,10 +286,9 @@ int CPrefabRMF::DoSave(std::fstream& file, DWORD dwFlags)
 	return m_pWorld->SerializeRMF(file, TRUE);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dwFlags - 
+// Purpose:
+// Input  : dwFlags -
 // Output : int
 //-----------------------------------------------------------------------------
 int CPrefabRMF::Load(DWORD dwFlags)
@@ -314,8 +296,8 @@ int CPrefabRMF::Load(DWORD dwFlags)
 	//
 	// Get parent library's file handle.
 	//
-	CPrefabLibraryRMF *pLibrary = dynamic_cast <CPrefabLibraryRMF *>(CPrefabLibrary::FindID(dwLibID));
-	if (!pLibrary)
+	CPrefabLibraryRMF *pLibrary = dynamic_cast<CPrefabLibraryRMF *>(CPrefabLibrary::FindID(dwLibID));
+	if(!pLibrary)
 	{
 		return -1;
 	}
@@ -323,15 +305,14 @@ int CPrefabRMF::Load(DWORD dwFlags)
 	std::fstream &file = pLibrary->m_file;
 	file.seekg(dwFileOffset);
 
-	return(DoLoad(file, dwFlags));
+	return (DoLoad(file, dwFlags));
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pszFilename - 
-//			bLoadNow - 
-//			dwFlags - 
+// Purpose:
+// Input  : pszFilename -
+//			bLoadNow -
+//			dwFlags -
 // Output : int
 //-----------------------------------------------------------------------------
 int CPrefabRMF::Init(LPCTSTR pszFilename, BOOL bLoadNow, DWORD dwFlags)
@@ -344,18 +325,17 @@ int CPrefabRMF::Init(LPCTSTR pszFilename, BOOL bLoadNow, DWORD dwFlags)
 	return Init(file, bLoadNow, dwFlags);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : file - 
-//			bLoadNow - 
-//			dwFlags - 
+// Purpose:
+// Input  : file -
+//			bLoadNow -
+//			dwFlags -
 // Output : int
 //-----------------------------------------------------------------------------
 int CPrefabRMF::Init(std::fstream &file, BOOL bLoadNow, DWORD dwFlags)
 {
-	int iRvl = 1;	// start off ok
-	
+	int iRvl = 1; // start off ok
+
 	if(bLoadNow)
 	{
 		// do load now
@@ -371,11 +351,10 @@ int CPrefabRMF::Init(std::fstream &file, BOOL bLoadNow, DWORD dwFlags)
 	return iRvl;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pszFilename - 
-//			dwFlags - 
+// Purpose:
+// Input  : pszFilename -
+//			dwFlags -
 // Output : int
 //-----------------------------------------------------------------------------
 int CPrefabRMF::Save(LPCTSTR pszFilename, DWORD dwFlags)
@@ -384,16 +363,15 @@ int CPrefabRMF::Save(LPCTSTR pszFilename, DWORD dwFlags)
 	return Save(file, dwFlags);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : file - 
-//			dwFlags - 
+// Purpose:
+// Input  : file -
+//			dwFlags -
 // Output : int
 //-----------------------------------------------------------------------------
-int CPrefabRMF::Save(std::fstream& file, DWORD dwFlags)
+int CPrefabRMF::Save(std::fstream &file, DWORD dwFlags)
 {
-	if (!IsLoaded() && (Load() == -1))
+	if(!IsLoaded() && (Load() == -1))
 	{
 		AfxMessageBox("Couldn't Load prefab to Save it.");
 		return -1;
@@ -402,29 +380,22 @@ int CPrefabRMF::Save(std::fstream& file, DWORD dwFlags)
 	return DoSave(file, dwFlags);
 }
 
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+CPrefabVMF::CPrefabVMF() {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CPrefabVMF::CPrefabVMF()
-{
-}
-
-
-//-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-CPrefabVMF::~CPrefabVMF()
-{
-}
-
+CPrefabVMF::~CPrefabVMF() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns true if the prefab data has been loaded from disk, false if not.
 //-----------------------------------------------------------------------------
 bool CPrefabVMF::IsLoaded(void)
 {
-	if (m_pWorld == NULL)
+	if(m_pWorld == NULL)
 	{
 		return false;
 	}
@@ -434,9 +405,9 @@ bool CPrefabVMF::IsLoaded(void)
 	// against our cached date/time to see if we need to reload it.
 	//
 	struct _stat info;
-	if (_stat(m_szFilename, &info) == 0)
+	if(_stat(m_szFilename, &info) == 0)
 	{
-		if (info.st_mtime > m_nFileTime)
+		if(info.st_mtime > m_nFileTime)
 		{
 			return false;
 		}
@@ -445,10 +416,9 @@ bool CPrefabVMF::IsLoaded(void)
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dwFlags - 
+// Purpose:
+// Input  : dwFlags -
 // Output : int
 //-----------------------------------------------------------------------------
 int CPrefabVMF::Load(DWORD dwFlags)
@@ -456,12 +426,12 @@ int CPrefabVMF::Load(DWORD dwFlags)
 	//
 	// Create a new world to hold the loaded objects.
 	//
-	if (m_pWorld != NULL)
+	if(m_pWorld != NULL)
 	{
 		delete m_pWorld;
 	}
 
-	m_pWorld = new CMapWorld( NULL );
+	m_pWorld = new CMapWorld(NULL);
 
 	//
 	// Open the file.
@@ -472,7 +442,7 @@ int CPrefabVMF::Load(DWORD dwFlags)
 	//
 	// Read the file.
 	//
-	if (eResult == ChunkFile_Ok)
+	if(eResult == ChunkFile_Ok)
 	{
 		//
 		// Set up handlers for the subchunks that we are interested in.
@@ -484,28 +454,28 @@ int CPrefabVMF::Load(DWORD dwFlags)
 
 		File.PushHandlers(&Handlers);
 
-		//CMapDoc::SetLoadingMapDoc( this );  dvs: fix - without this, no displacements in prefabs
+		// CMapDoc::SetLoadingMapDoc( this );  dvs: fix - without this, no displacements in prefabs
 
 		//
 		// Read the sub-chunks. We ignore keys in the root of the file, so we don't pass a
 		// key value callback to ReadChunk.
 		//
-		while (eResult == ChunkFile_Ok)
+		while(eResult == ChunkFile_Ok)
 		{
 			eResult = File.ReadChunk();
 		}
 
-		if (eResult == ChunkFile_EOF)
+		if(eResult == ChunkFile_EOF)
 		{
 			eResult = ChunkFile_Ok;
 		}
 
-		//CMapDoc::SetLoadingMapDoc( NULL );
+		// CMapDoc::SetLoadingMapDoc( NULL );
 
 		File.PopHandlers();
 	}
 
-	if (eResult == ChunkFile_Ok)
+	if(eResult == ChunkFile_Ok)
 	{
 		m_pWorld->PostloadWorld();
 		m_pWorld->CalcBounds();
@@ -516,24 +486,23 @@ int CPrefabVMF::Load(DWORD dwFlags)
 		// Store the file modification time to use as a cache check.
 		//
 		struct _stat info;
-		if (_stat(m_szFilename, &info) == 0)
+		if(_stat(m_szFilename, &info) == 0)
 		{
 			m_nFileTime = info.st_mtime;
 		}
 	}
 	else
 	{
-		//GetMainWnd()->MessageBox(File.GetErrorText(eResult), "Error loading prefab", MB_OK | MB_ICONEXCLAMATION);
+		// GetMainWnd()->MessageBox(File.GetErrorText(eResult), "Error loading prefab", MB_OK | MB_ICONEXCLAMATION);
 	}
 
-	return(eResult == ChunkFile_Ok);
+	return (eResult == ChunkFile_Ok);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pFile - 
-//			pData - 
+// Purpose:
+// Input  : pFile -
+//			pData -
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CPrefabVMF::LoadEntityCallback(CChunkFile *pFile, CPrefabVMF *pPrefab)
@@ -542,34 +511,32 @@ ChunkFileResult_t CPrefabVMF::LoadEntityCallback(CChunkFile *pFile, CPrefabVMF *
 
 	ChunkFileResult_t eResult = pEntity->LoadVMF(pFile);
 
-	if (eResult == ChunkFile_Ok)
+	if(eResult == ChunkFile_Ok)
 	{
 		CMapWorld *pWorld = pPrefab->GetWorld();
 		pWorld->AddChild(pEntity);
 	}
 
-	return(ChunkFile_Ok);
+	return (ChunkFile_Ok);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pFile - 
-//			pData - 
+// Purpose:
+// Input  : pFile -
+//			pData -
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CPrefabVMF::LoadWorldCallback(CChunkFile *pFile, CPrefabVMF *pPrefab)
 {
 	CMapWorld *pWorld = pPrefab->GetWorld();
 	ChunkFileResult_t eResult = pWorld->LoadVMF(pFile);
-	return(eResult);
+	return (eResult);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pszFilename - 
-//			dwFlags - 
+// Purpose:
+// Input  : pszFilename -
+//			dwFlags -
 // Output : int
 //-----------------------------------------------------------------------------
 int CPrefabVMF::Save(LPCTSTR pszFilename, DWORD dwFlags)
@@ -577,9 +544,8 @@ int CPrefabVMF::Save(LPCTSTR pszFilename, DWORD dwFlags)
 	return 1;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPrefabVMF::SetFilename(const char *szFilename)
 {
@@ -590,4 +556,3 @@ void CPrefabVMF::SetFilename(const char *szFilename)
 
 	strcpy(m_szFilename, szFilename);
 }
-

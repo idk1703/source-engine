@@ -1,6 +1,6 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -22,20 +22,19 @@
 // Input  : *pParseGroup - pointer to the buffer for the group
 //			*pGroupString - null terminated list of characters to flag
 //-----------------------------------------------------------------------------
-void CharacterSetBuild( characterset_t *pSetBuffer, const char *pszSetString )
+void CharacterSetBuild(characterset_t *pSetBuffer, const char *pszSetString)
 {
 	int i = 0;
 
 	// Test our pointers
-	if ( !pSetBuffer || !pszSetString )
+	if(!pSetBuffer || !pszSetString)
 		return;
 
-	memset( pSetBuffer->set, 0, sizeof(pSetBuffer->set) );
+	memset(pSetBuffer->set, 0, sizeof(pSetBuffer->set));
 
-	while ( pszSetString[i] )
+	while(pszSetString[i])
 	{
-		pSetBuffer->set[ pszSetString[i] ] = 1;
+		pSetBuffer->set[pszSetString[i]] = 1;
 		i++;
 	}
-
 }

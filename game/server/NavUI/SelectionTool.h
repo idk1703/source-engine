@@ -9,29 +9,28 @@
 #include "NavUI.h"
 #include "nav.h"
 
-
 //--------------------------------------------------------------------------------------------------------
 class SelectionToolPanel : public CNavUIToolPanel
 {
-	DECLARE_CLASS_SIMPLE( SelectionToolPanel, CNavUIToolPanel );
+	DECLARE_CLASS_SIMPLE(SelectionToolPanel, CNavUIToolPanel);
 
 public:
-	SelectionToolPanel( vgui::Panel *parent, const char *toolName );
+	SelectionToolPanel(vgui::Panel *parent, const char *toolName);
 
-	virtual void Init( void );
-	virtual void Shutdown( void );
-	virtual void PerformLayout( void );
-	virtual void OnCommand( const char *command );
+	virtual void Init(void);
+	virtual void Shutdown(void);
+	virtual void PerformLayout(void);
+	virtual void OnCommand(const char *command);
 
-	virtual void StartLeftClickAction( const char *actionName );
-	virtual void FinishLeftClickAction( const char *actionName );
-	virtual void StartRightClickAction( const char *actionName );
-	virtual void OnCursorMoved( int x, int y );
+	virtual void StartLeftClickAction(const char *actionName);
+	virtual void FinishLeftClickAction(const char *actionName);
+	virtual void StartRightClickAction(const char *actionName);
+	virtual void OnCursorMoved(int x, int y);
 
-	virtual bool IsFloodSelectable( CNavArea *area );
+	virtual bool IsFloodSelectable(CNavArea *area);
 
 protected:
-	void FloodSelect( void );
+	void FloodSelect(void);
 	CNavArea *m_floodStartArea;
 
 	enum DragSelectType

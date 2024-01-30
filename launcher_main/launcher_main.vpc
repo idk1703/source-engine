@@ -19,10 +19,10 @@ $Include "$SRCDIR\vpc_scripts\source_exe_base.vpc"
 
 $Configuration
 {
-    $General
-    {
-        $AdditionalProjectDependencies "$BASE;newdat" [$WIN32 && !$ANALYZE]
-    }
+	$General
+	{
+		$AdditionalProjectDependencies "$BASE;newdat" [$WIN32 && !$ANALYZE]
+	}
 
 	$Compiler
 	{
@@ -87,7 +87,7 @@ $Project
 		-$File	"$SRCDIR\public\tier0\memoverride.cpp"
 	}
 
-	$Folder	"Link Libraries" 
+	$Folder	"Link Libraries"
 	{
 		-$Lib tier0 [$WINDOWS]
 		-$Lib tier1 [$WINDOWS]

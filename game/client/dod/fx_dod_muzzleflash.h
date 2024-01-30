@@ -12,17 +12,21 @@
 class CMuzzleFlashEmitter_1stPerson : public CLocalSpaceEmitter
 {
 public:
-	DECLARE_CLASS( CMuzzleFlashEmitter_1stPerson, CLocalSpaceEmitter );
+	DECLARE_CLASS(CMuzzleFlashEmitter_1stPerson, CLocalSpaceEmitter);
 
-	static CSmartPtr<CMuzzleFlashEmitter_1stPerson> Create( const char *pDebugName, int entIndex, int nAttachment, int fFlags = 0 );
+	static CSmartPtr<CMuzzleFlashEmitter_1stPerson> Create(const char *pDebugName, int entIndex, int nAttachment,
+														   int fFlags = 0);
 
-	virtual void Update( float t ) { BaseClass::Update(t); }
+	virtual void Update(float t)
+	{
+		BaseClass::Update(t);
+	}
 
 protected:
-	CMuzzleFlashEmitter_1stPerson( const char *pDebugName );
+	CMuzzleFlashEmitter_1stPerson(const char *pDebugName);
 
 private:
-	CMuzzleFlashEmitter_1stPerson( const CMuzzleFlashEmitter_1stPerson & );
+	CMuzzleFlashEmitter_1stPerson(const CMuzzleFlashEmitter_1stPerson &);
 
 	int m_iMuzzleFlashType;
 };

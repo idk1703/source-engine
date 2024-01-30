@@ -7,18 +7,21 @@
 
 #ifdef TF_RAID_MODE
 
-class CBossAlphaStunned : public Action< CBossAlpha >
+class CBossAlphaStunned : public Action<CBossAlpha>
 {
 public:
-	CBossAlphaStunned( float duration, Action< CBossAlpha > *nextAction = NULL );
+	CBossAlphaStunned(float duration, Action<CBossAlpha> *nextAction = NULL);
 
-	virtual ActionResult< CBossAlpha >	OnStart( CBossAlpha *me, Action< CBossAlpha > *priorAction );
-	virtual ActionResult< CBossAlpha >	Update( CBossAlpha *me, float interval );
-	virtual void					OnEnd( CBossAlpha *me, Action< CBossAlpha > *nextAction );
+	virtual ActionResult<CBossAlpha> OnStart(CBossAlpha *me, Action<CBossAlpha> *priorAction);
+	virtual ActionResult<CBossAlpha> Update(CBossAlpha *me, float interval);
+	virtual void OnEnd(CBossAlpha *me, Action<CBossAlpha> *nextAction);
 
-	virtual EventDesiredResult< CBossAlpha > OnInjured( CBossAlpha *me, const CTakeDamageInfo &info );
+	virtual EventDesiredResult<CBossAlpha> OnInjured(CBossAlpha *me, const CTakeDamageInfo &info);
 
-	virtual const char *GetName( void ) const	{ return "Stunned"; }		// return name of this action
+	virtual const char *GetName(void) const
+	{
+		return "Stunned";
+	} // return name of this action
 
 private:
 	CountdownTimer m_timer;
@@ -27,11 +30,10 @@ private:
 		BECOMING_STUNNED,
 		STUNNED,
 		RECOVERING
-	}
-	m_state;
+	} m_state;
 	int m_layerUsed;
 
-	Action< CBossAlpha > *m_nextAction;
+	Action<CBossAlpha> *m_nextAction;
 };
 
 #endif // TF_RAID_MODE

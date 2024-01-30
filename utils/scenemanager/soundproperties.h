@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -15,30 +15,28 @@
 class CSoundEntry;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 struct CSoundParams : public CBaseDialogParams
 {
 	bool addsound;
 
-	CSoundParams()
-	{
-	}
+	CSoundParams() {}
 
-	CSoundParams( const CSoundParams& src )
+	CSoundParams(const CSoundParams &src)
 	{
 		addsound = src.addsound;
 
 		int c = src.items.Count();
-		for ( int i = 0; i < c; i++ )
+		for(int i = 0; i < c; i++)
 		{
-			items.AddToTail( src.items[ i ] );
+			items.AddToTail(src.items[i]);
 		}
 	}
 
-	CUtlVector< CSoundEntry * >	items;
+	CUtlVector<CSoundEntry *> items;
 };
 
-int SoundProperties( CSoundParams *params );
+int SoundProperties(CSoundParams *params);
 
 #endif // SOUNDPROPERTIES_H

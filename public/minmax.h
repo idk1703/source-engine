@@ -21,7 +21,7 @@
 
 // If you're getting some weird fopen error from this, it's because someone included stdio before this file. Usually
 // moving the basetypes.h include higher in the file that is exploding fixes this.
-#if defined( fopen ) && defined( __GNUC__ ) && __GNUC__ < 5
+#if defined(fopen) && defined(__GNUC__) && __GNUC__ < 5
 #undef fopen
 #endif
 

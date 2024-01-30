@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -21,19 +21,17 @@
 #include "engine/IEngineSound.h"
 #include "SoundEmitterSystem/isoundemittersystembase.h"
 
-acttable_t	unarmedActtable[] = 
-{
-	{ ACT_HL2MP_IDLE,					ACT_HL2MP_IDLE_MELEE,					false },
-	{ ACT_HL2MP_RUN,					ACT_HL2MP_RUN_MELEE,					false },
-	{ ACT_HL2MP_IDLE_CROUCH,			ACT_HL2MP_IDLE_CROUCH_MELEE,			false },
-	{ ACT_HL2MP_WALK_CROUCH,			ACT_HL2MP_WALK_CROUCH_MELEE,			false },
-	{ ACT_HL2MP_GESTURE_RANGE_ATTACK,	ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE,	false },
-	{ ACT_HL2MP_GESTURE_RELOAD,			ACT_HL2MP_GESTURE_RELOAD_MELEE,			false },
-	{ ACT_HL2MP_JUMP,					ACT_HL2MP_JUMP_MELEE,					false },
+acttable_t unarmedActtable[] = {
+	{ACT_HL2MP_IDLE, ACT_HL2MP_IDLE_MELEE, false},
+	{ACT_HL2MP_RUN, ACT_HL2MP_RUN_MELEE, false},
+	{ACT_HL2MP_IDLE_CROUCH, ACT_HL2MP_IDLE_CROUCH_MELEE, false},
+	{ACT_HL2MP_WALK_CROUCH, ACT_HL2MP_WALK_CROUCH_MELEE, false},
+	{ACT_HL2MP_GESTURE_RANGE_ATTACK, ACT_HL2MP_GESTURE_RANGE_ATTACK_MELEE, false},
+	{ACT_HL2MP_GESTURE_RELOAD, ACT_HL2MP_GESTURE_RELOAD_MELEE, false},
+	{ACT_HL2MP_JUMP, ACT_HL2MP_JUMP_MELEE, false},
 };
 
-const char *g_pszChellConcepts[] =
-{
+const char *g_pszChellConcepts[] = {
 	"CONCEPT_CHELL_IDLE",
 	"CONCEPT_CHELL_DEAD",
 };
@@ -41,29 +39,28 @@ const char *g_pszChellConcepts[] =
 extern ConVar sv_footsteps;
 extern ConVar sv_debug_player_use;
 
-extern float IntervalDistance( float x, float x0, float x1 );
-
+extern float IntervalDistance(float x, float x0, float x1);
 
 //-----------------------------------------------------------------------------
 // Consider the weapon's built-in accuracy, this character's proficiency with
 // the weapon, and the status of the target. Use this information to determine
 // how accurately to shoot at the target.
 //-----------------------------------------------------------------------------
-Vector CPortal_Player::GetAttackSpread( CBaseCombatWeapon *pWeapon, CBaseEntity *pTarget )
+Vector CPortal_Player::GetAttackSpread(CBaseCombatWeapon *pWeapon, CBaseEntity *pTarget)
 {
-	if ( pWeapon )
-		return pWeapon->GetBulletSpread( WEAPON_PROFICIENCY_PERFECT );
-	
+	if(pWeapon)
+		return pWeapon->GetBulletSpread(WEAPON_PROFICIENCY_PERFECT);
+
 	return VECTOR_CONE_15DEGREES;
 }
 
-void CPortal_Player::GetStepSoundVelocities( float *velwalk, float *velrun )
+void CPortal_Player::GetStepSoundVelocities(float *velwalk, float *velrun)
 {
-	// UNDONE: need defined numbers for run, walk, crouch, crouch run velocities!!!!	
-	if ( ( GetFlags() & FL_DUCKING ) || ( GetMoveType() == MOVETYPE_LADDER ) )
+	// UNDONE: need defined numbers for run, walk, crouch, crouch run velocities!!!!
+	if((GetFlags() & FL_DUCKING) || (GetMoveType() == MOVETYPE_LADDER))
 	{
-		*velwalk = 10;		// These constants should be based on cl_movespeedkey * cl_forwardspeed somehow
-		*velrun = 60;		
+		*velwalk = 10; // These constants should be based on cl_movespeedkey * cl_forwardspeed somehow
+		*velrun = 60;
 	}
 	else
 	{
@@ -73,42 +70,42 @@ void CPortal_Player::GetStepSoundVelocities( float *velwalk, float *velrun )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : step - 
-//			fvol - 
+// Purpose:
+// Input  : step -
+//			fvol -
 //			force - force sound to play
 //-----------------------------------------------------------------------------
-void CPortal_Player::PlayStepSound( Vector &vecOrigin, surfacedata_t *psurface, float fvol, bool force )
+void CPortal_Player::PlayStepSound(Vector &vecOrigin, surfacedata_t *psurface, float fvol, bool force)
 {
 #ifndef CLIENT_DLL
 	IncrementStepsTaken();
 #endif
 
-	BaseClass::PlayStepSound( vecOrigin, psurface, fvol, force );
+	BaseClass::PlayStepSound(vecOrigin, psurface, fvol, force);
 }
 
-Activity CPortal_Player::TranslateActivity( Activity baseAct, bool *pRequired /* = NULL */ )
+Activity CPortal_Player::TranslateActivity(Activity baseAct, bool *pRequired /* = NULL */)
 {
 	Activity translated = baseAct;
 
-	if ( GetActiveWeapon() )
+	if(GetActiveWeapon())
 	{
-		translated = GetActiveWeapon()->ActivityOverride( baseAct, pRequired );
+		translated = GetActiveWeapon()->ActivityOverride(baseAct, pRequired);
 	}
-	else if ( unarmedActtable )
+	else if(unarmedActtable)
 	{
 		acttable_t *pTable = unarmedActtable;
 		int actCount = ARRAYSIZE(unarmedActtable);
 
-		for ( int i = 0; i < actCount; i++, pTable++ )
+		for(int i = 0; i < actCount; i++, pTable++)
 		{
-			if ( baseAct == pTable->baseAct )
+			if(baseAct == pTable->baseAct)
 			{
 				translated = (Activity)pTable->weaponAct;
 			}
 		}
 	}
-	else if (pRequired)
+	else if(pRequired)
 	{
 		*pRequired = false;
 	}
@@ -116,12 +113,12 @@ Activity CPortal_Player::TranslateActivity( Activity baseAct, bool *pRequired /*
 	return translated;
 }
 
-CWeaponPortalBase* CPortal_Player::GetActivePortalWeapon() const
+CWeaponPortalBase *CPortal_Player::GetActivePortalWeapon() const
 {
 	CBaseCombatWeapon *pWeapon = GetActiveWeapon();
-	if ( pWeapon )
+	if(pWeapon)
 	{
-		return dynamic_cast< CWeaponPortalBase* >( pWeapon );
+		return dynamic_cast<CWeaponPortalBase *>(pWeapon);
 	}
 	else
 	{
@@ -132,7 +129,7 @@ CWeaponPortalBase* CPortal_Player::GetActivePortalWeapon() const
 CBaseEntity *CPortal_Player::FindUseEntity()
 {
 	Vector forward, up;
-	EyeVectors( &forward, NULL, &up );
+	EyeVectors(&forward, NULL, &up);
 
 	trace_t tr;
 	// Search for objects in a sphere (tests for entities that are not solid, yet still useable)
@@ -142,88 +139,92 @@ CBaseEntity *CPortal_Player::FindUseEntity()
 	// A button, etc. can be made out of clip brushes, make sure it's +useable via a traceline, too.
 	int useableContents = MASK_SOLID | CONTENTS_DEBRIS | CONTENTS_PLAYERCLIP;
 
-	UTIL_TraceLine( searchCenter, searchCenter + forward * 1024, useableContents, this, COLLISION_GROUP_NONE, &tr );
+	UTIL_TraceLine(searchCenter, searchCenter + forward * 1024, useableContents, this, COLLISION_GROUP_NONE, &tr);
 	// try the hit entity if there is one, or the ground entity if there isn't.
 	CBaseEntity *pNearest = NULL;
 	CBaseEntity *pObject = tr.m_pEnt;
 
-	// TODO: Removed because we no longer have ghost animatings. We may need similar code that clips rays against transformed objects.
-//#ifndef CLIENT_DLL
-//	// Check for ghost animatings (these aren't hit in the normal trace because they aren't solid)
-//	if ( !IsUseableEntity(pObject, 0) )
-//	{
-//		Ray_t rayGhostAnimating;
-//		rayGhostAnimating.Init( searchCenter, searchCenter + forward * 1024 );
-//
-//		CBaseEntity *list[1024];
-//		int nCount = UTIL_EntitiesAlongRay( list, 1024, rayGhostAnimating, 0 );
-//
-//		// Loop through all entities along the pick up ray
-//		for ( int i = 0; i < nCount; i++ )
-//		{
-//			CGhostAnimating *pGhostAnimating = dynamic_cast<CGhostAnimating*>( list[i] );
-//
-//			// If the entity is a ghost animating
-//			if( pGhostAnimating )
-//			{
-//				trace_t trGhostAnimating;
-//				enginetrace->ClipRayToEntity( rayGhostAnimating, MASK_ALL, pGhostAnimating, &trGhostAnimating );
-//
-//				if ( trGhostAnimating.fraction < tr.fraction )
-//				{
-//					// If we're not grabbing the clipped ghost
-//					VPlane plane = pGhostAnimating->GetLocalClipPlane();
-//					UTIL_Portal_PlaneTransform( pGhostAnimating->GetCloneTransform(), plane, plane );
-//					if ( plane.GetPointSide( trGhostAnimating.endpos ) != SIDE_FRONT )
-//					{
-//						tr = trGhostAnimating;
-//						pObject = tr.m_pEnt;
-//					}
-//				}
-//			}
-//		}
-//	}
-//#endif
+	// TODO: Removed because we no longer have ghost animatings. We may need similar code that clips rays against
+	// transformed objects.
+	//#ifndef CLIENT_DLL
+	//	// Check for ghost animatings (these aren't hit in the normal trace because they aren't solid)
+	//	if ( !IsUseableEntity(pObject, 0) )
+	//	{
+	//		Ray_t rayGhostAnimating;
+	//		rayGhostAnimating.Init( searchCenter, searchCenter + forward * 1024 );
+	//
+	//		CBaseEntity *list[1024];
+	//		int nCount = UTIL_EntitiesAlongRay( list, 1024, rayGhostAnimating, 0 );
+	//
+	//		// Loop through all entities along the pick up ray
+	//		for ( int i = 0; i < nCount; i++ )
+	//		{
+	//			CGhostAnimating *pGhostAnimating = dynamic_cast<CGhostAnimating*>( list[i] );
+	//
+	//			// If the entity is a ghost animating
+	//			if( pGhostAnimating )
+	//			{
+	//				trace_t trGhostAnimating;
+	//				enginetrace->ClipRayToEntity( rayGhostAnimating, MASK_ALL, pGhostAnimating, &trGhostAnimating );
+	//
+	//				if ( trGhostAnimating.fraction < tr.fraction )
+	//				{
+	//					// If we're not grabbing the clipped ghost
+	//					VPlane plane = pGhostAnimating->GetLocalClipPlane();
+	//					UTIL_Portal_PlaneTransform( pGhostAnimating->GetCloneTransform(), plane, plane );
+	//					if ( plane.GetPointSide( trGhostAnimating.endpos ) != SIDE_FRONT )
+	//					{
+	//						tr = trGhostAnimating;
+	//						pObject = tr.m_pEnt;
+	//					}
+	//				}
+	//			}
+	//		}
+	//	}
+	//#endif
 
 	int count = 0;
 	// UNDONE: Might be faster to just fold this range into the sphere query
 	const int NUM_TANGENTS = 7;
-	while ( !IsUseableEntity(pObject, 0) && count < NUM_TANGENTS)
+	while(!IsUseableEntity(pObject, 0) && count < NUM_TANGENTS)
 	{
 		// trace a box at successive angles down
 		//							45 deg, 30 deg, 20 deg, 15 deg, 10 deg, -10, -15
-		const float tangents[NUM_TANGENTS] = { 1, 0.57735026919f, 0.3639702342f, 0.267949192431f, 0.1763269807f, -0.1763269807f, -0.267949192431f };
-		Vector down = forward - tangents[count]*up;
+		const float tangents[NUM_TANGENTS] = {
+			1, 0.57735026919f, 0.3639702342f, 0.267949192431f, 0.1763269807f, -0.1763269807f, -0.267949192431f};
+		Vector down = forward - tangents[count] * up;
 		VectorNormalize(down);
-		UTIL_TraceHull( searchCenter, searchCenter + down * 72, -Vector(16,16,16), Vector(16,16,16), useableContents, this, COLLISION_GROUP_NONE, &tr );
+		UTIL_TraceHull(searchCenter, searchCenter + down * 72, -Vector(16, 16, 16), Vector(16, 16, 16), useableContents,
+					   this, COLLISION_GROUP_NONE, &tr);
 		pObject = tr.m_pEnt;
 		count++;
 	}
 	float nearestDot = CONE_90_DEGREES;
-	if ( IsUseableEntity(pObject, 0) )
+	if(IsUseableEntity(pObject, 0))
 	{
 		Vector delta = tr.endpos - tr.startpos;
 		float centerZ = CollisionProp()->WorldSpaceCenter().z;
-		delta.z = IntervalDistance( tr.endpos.z, centerZ + CollisionProp()->OBBMins().z, centerZ + CollisionProp()->OBBMaxs().z );
+		delta.z = IntervalDistance(tr.endpos.z, centerZ + CollisionProp()->OBBMins().z,
+								   centerZ + CollisionProp()->OBBMaxs().z);
 		float dist = delta.Length();
-		if ( dist < PLAYER_USE_RADIUS )
+		if(dist < PLAYER_USE_RADIUS)
 		{
 #ifndef CLIENT_DLL
 
-			if ( sv_debug_player_use.GetBool() )
+			if(sv_debug_player_use.GetBool())
 			{
-				NDebugOverlay::Line( searchCenter, tr.endpos, 0, 255, 0, true, 30 );
-				NDebugOverlay::Cross3D( tr.endpos, 16, 0, 255, 0, true, 30 );
+				NDebugOverlay::Line(searchCenter, tr.endpos, 0, 255, 0, true, 30);
+				NDebugOverlay::Cross3D(tr.endpos, 16, 0, 255, 0, true, 30);
 			}
 
-			if ( pObject->MyNPCPointer() && pObject->MyNPCPointer()->IsPlayerAlly( this ) )
+			if(pObject->MyNPCPointer() && pObject->MyNPCPointer()->IsPlayerAlly(this))
 			{
 				// If about to select an NPC, do a more thorough check to ensure
 				// that we're selecting the right one from a group.
-				pObject = DoubleCheckUseNPC( pObject, searchCenter, forward );
+				pObject = DoubleCheckUseNPC(pObject, searchCenter, forward);
 			}
 
-			g_PortalGameStats.Event_PlayerUsed( searchCenter, forward, pObject );
+			g_PortalGameStats.Event_PlayerUsed(searchCenter, forward, pObject);
 #endif
 
 			return pObject;
@@ -237,40 +238,41 @@ CBaseEntity *CPortal_Player::FindUseEntity()
 	// check ground entity first
 	// if you've got a useable ground entity, then shrink the cone of this search to 45 degrees
 	// otherwise, search out in a 90 degree cone (hemisphere)
-	if ( GetGroundEntity() && IsUseableEntity(GetGroundEntity(), FCAP_USE_ONGROUND) )
+	if(GetGroundEntity() && IsUseableEntity(GetGroundEntity(), FCAP_USE_ONGROUND))
 	{
 		pNearest = GetGroundEntity();
 		nearestDot = CONE_45_DEGREES;
 	}
 
-	for ( CEntitySphereQuery sphere( searchCenter, PLAYER_USE_RADIUS ); ( pObject = sphere.GetCurrentEntity() ) != NULL; sphere.NextEntity() )
+	for(CEntitySphereQuery sphere(searchCenter, PLAYER_USE_RADIUS); (pObject = sphere.GetCurrentEntity()) != NULL;
+		sphere.NextEntity())
 	{
-		if ( !pObject )
+		if(!pObject)
 			continue;
 
-		if ( !IsUseableEntity( pObject, FCAP_USE_IN_RADIUS ) )
+		if(!IsUseableEntity(pObject, FCAP_USE_IN_RADIUS))
 			continue;
 
 		// see if it's more roughly in front of the player than previous guess
 		Vector point;
-		pObject->CollisionProp()->CalcNearestPoint( searchCenter, &point );
+		pObject->CollisionProp()->CalcNearestPoint(searchCenter, &point);
 
 		Vector dir = point - searchCenter;
 		VectorNormalize(dir);
-		float dot = DotProduct( dir, forward );
+		float dot = DotProduct(dir, forward);
 
 		// Need to be looking at the object more or less
-		if ( dot < 0.8 )
+		if(dot < 0.8)
 			continue;
 
-		if ( dot > nearestDot )
+		if(dot > nearestDot)
 		{
 			// Since this has purely been a radius search to this point, we now
 			// make sure the object isn't behind glass or a grate.
 			trace_t trCheckOccluded;
-			UTIL_TraceLine( searchCenter, point, useableContents, this, COLLISION_GROUP_NONE, &trCheckOccluded );
+			UTIL_TraceLine(searchCenter, point, useableContents, this, COLLISION_GROUP_NONE, &trCheckOccluded);
 
-			if ( trCheckOccluded.fraction == 1.0 || trCheckOccluded.m_pEnt == pObject )
+			if(trCheckOccluded.fraction == 1.0 || trCheckOccluded.m_pEnt == pObject)
 			{
 				pNearest = pObject;
 				nearestDot = dot;
@@ -279,53 +281,55 @@ CBaseEntity *CPortal_Player::FindUseEntity()
 	}
 
 #ifndef CLIENT_DLL
-	if ( !pNearest )
+	if(!pNearest)
 	{
 		// Haven't found anything near the player to use, nor any NPC's at distance.
 		// Check to see if the player is trying to select an NPC through a rail, fence, or other 'see-though' volume.
 		trace_t trAllies;
-		UTIL_TraceLine( searchCenter, searchCenter + forward * PLAYER_USE_RADIUS, MASK_OPAQUE_AND_NPCS, this, COLLISION_GROUP_NONE, &trAllies );
+		UTIL_TraceLine(searchCenter, searchCenter + forward * PLAYER_USE_RADIUS, MASK_OPAQUE_AND_NPCS, this,
+					   COLLISION_GROUP_NONE, &trAllies);
 
-		if ( trAllies.m_pEnt && IsUseableEntity( trAllies.m_pEnt, 0 ) && trAllies.m_pEnt->MyNPCPointer() && trAllies.m_pEnt->MyNPCPointer()->IsPlayerAlly( this ) )
+		if(trAllies.m_pEnt && IsUseableEntity(trAllies.m_pEnt, 0) && trAllies.m_pEnt->MyNPCPointer() &&
+		   trAllies.m_pEnt->MyNPCPointer()->IsPlayerAlly(this))
 		{
 			// This is an NPC, take it!
 			pNearest = trAllies.m_pEnt;
 		}
 	}
 
-	if ( pNearest && pNearest->MyNPCPointer() && pNearest->MyNPCPointer()->IsPlayerAlly( this ) )
+	if(pNearest && pNearest->MyNPCPointer() && pNearest->MyNPCPointer()->IsPlayerAlly(this))
 	{
-		pNearest = DoubleCheckUseNPC( pNearest, searchCenter, forward );
+		pNearest = DoubleCheckUseNPC(pNearest, searchCenter, forward);
 	}
 
-	if ( sv_debug_player_use.GetBool() )
+	if(sv_debug_player_use.GetBool())
 	{
-		if ( !pNearest )
+		if(!pNearest)
 		{
-			NDebugOverlay::Line( searchCenter, tr.endpos, 255, 0, 0, true, 30 );
-			NDebugOverlay::Cross3D( tr.endpos, 16, 255, 0, 0, true, 30 );
+			NDebugOverlay::Line(searchCenter, tr.endpos, 255, 0, 0, true, 30);
+			NDebugOverlay::Cross3D(tr.endpos, 16, 255, 0, 0, true, 30);
 		}
-		else if ( pNearest == pFoundByTrace )
+		else if(pNearest == pFoundByTrace)
 		{
-			NDebugOverlay::Line( searchCenter, tr.endpos, 0, 255, 0, true, 30 );
-			NDebugOverlay::Cross3D( tr.endpos, 16, 0, 255, 0, true, 30 );
+			NDebugOverlay::Line(searchCenter, tr.endpos, 0, 255, 0, true, 30);
+			NDebugOverlay::Cross3D(tr.endpos, 16, 0, 255, 0, true, 30);
 		}
 		else
 		{
-			NDebugOverlay::Box( pNearest->WorldSpaceCenter(), Vector(-8, -8, -8), Vector(8, 8, 8), 0, 255, 0, true, 30 );
+			NDebugOverlay::Box(pNearest->WorldSpaceCenter(), Vector(-8, -8, -8), Vector(8, 8, 8), 0, 255, 0, true, 30);
 		}
 	}
 
-	g_PortalGameStats.Event_PlayerUsed( searchCenter, forward, pNearest );
+	g_PortalGameStats.Event_PlayerUsed(searchCenter, forward, pNearest);
 #endif
 
 	return pNearest;
 }
 
-CBaseEntity* CPortal_Player::FindUseEntityThroughPortal( void )
+CBaseEntity *CPortal_Player::FindUseEntityThroughPortal(void)
 {
 	Vector forward, up;
-	EyeVectors( &forward, NULL, &up );
+	EyeVectors(&forward, NULL, &up);
 
 	CProp_Portal *pPortal = GetHeldObjectPortal();
 
@@ -336,19 +340,19 @@ CBaseEntity* CPortal_Player::FindUseEntityThroughPortal( void )
 	Vector vTransformedForward, vTransformedUp, vTransformedSearchCenter;
 
 	VMatrix matThisToLinked = pPortal->MatrixThisToLinked();
-	UTIL_Portal_PointTransform( matThisToLinked, searchCenter, vTransformedSearchCenter );
-	UTIL_Portal_VectorTransform( matThisToLinked, forward, vTransformedForward );
-	UTIL_Portal_VectorTransform( matThisToLinked, up, vTransformedUp );
-
+	UTIL_Portal_PointTransform(matThisToLinked, searchCenter, vTransformedSearchCenter);
+	UTIL_Portal_VectorTransform(matThisToLinked, forward, vTransformedForward);
+	UTIL_Portal_VectorTransform(matThisToLinked, up, vTransformedUp);
 
 	// NOTE: Some debris objects are useable too, so hit those as well
 	// A button, etc. can be made out of clip brushes, make sure it's +useable via a traceline, too.
 	int useableContents = MASK_SOLID | CONTENTS_DEBRIS | CONTENTS_PLAYERCLIP;
 
-	//UTIL_TraceLine( vTransformedSearchCenter, vTransformedSearchCenter + vTransformedForward * 1024, useableContents, this, COLLISION_GROUP_NONE, &tr );
+	// UTIL_TraceLine( vTransformedSearchCenter, vTransformedSearchCenter + vTransformedForward * 1024, useableContents,
+	// this, COLLISION_GROUP_NONE, &tr );
 	Ray_t rayLinked;
-	rayLinked.Init( searchCenter, searchCenter + forward * 1024 );
-	UTIL_PortalLinked_TraceRay( pPortal, rayLinked, useableContents, this, COLLISION_GROUP_NONE, &tr );
+	rayLinked.Init(searchCenter, searchCenter + forward * 1024);
+	UTIL_PortalLinked_TraceRay(pPortal, rayLinked, useableContents, this, COLLISION_GROUP_NONE, &tr);
 
 	// try the hit entity if there is one, or the ground entity if there isn't.
 	CBaseEntity *pNearest = NULL;
@@ -356,33 +360,36 @@ CBaseEntity* CPortal_Player::FindUseEntityThroughPortal( void )
 	int count = 0;
 	// UNDONE: Might be faster to just fold this range into the sphere query
 	const int NUM_TANGENTS = 7;
-	while ( !IsUseableEntity(pObject, 0) && count < NUM_TANGENTS)
+	while(!IsUseableEntity(pObject, 0) && count < NUM_TANGENTS)
 	{
 		// trace a box at successive angles down
 		//							45 deg, 30 deg, 20 deg, 15 deg, 10 deg, -10, -15
-		const float tangents[NUM_TANGENTS] = { 1, 0.57735026919f, 0.3639702342f, 0.267949192431f, 0.1763269807f, -0.1763269807f, -0.267949192431f };
-		Vector down = vTransformedForward - tangents[count]*vTransformedUp;
+		const float tangents[NUM_TANGENTS] = {
+			1, 0.57735026919f, 0.3639702342f, 0.267949192431f, 0.1763269807f, -0.1763269807f, -0.267949192431f};
+		Vector down = vTransformedForward - tangents[count] * vTransformedUp;
 		VectorNormalize(down);
-		UTIL_TraceHull( vTransformedSearchCenter, vTransformedSearchCenter + down * 72, -Vector(16,16,16), Vector(16,16,16), useableContents, this, COLLISION_GROUP_NONE, &tr );
+		UTIL_TraceHull(vTransformedSearchCenter, vTransformedSearchCenter + down * 72, -Vector(16, 16, 16),
+					   Vector(16, 16, 16), useableContents, this, COLLISION_GROUP_NONE, &tr);
 		pObject = tr.m_pEnt;
 		count++;
 	}
 	float nearestDot = CONE_90_DEGREES;
-	if ( IsUseableEntity(pObject, 0) )
+	if(IsUseableEntity(pObject, 0))
 	{
 		Vector delta = tr.endpos - tr.startpos;
 		float centerZ = CollisionProp()->WorldSpaceCenter().z;
-		delta.z = IntervalDistance( tr.endpos.z, centerZ + CollisionProp()->OBBMins().z, centerZ + CollisionProp()->OBBMaxs().z );
+		delta.z = IntervalDistance(tr.endpos.z, centerZ + CollisionProp()->OBBMins().z,
+								   centerZ + CollisionProp()->OBBMaxs().z);
 		float dist = delta.Length();
-		if ( dist < PLAYER_USE_RADIUS )
+		if(dist < PLAYER_USE_RADIUS)
 		{
 #ifndef CLIENT_DLL
 
-			if ( pObject->MyNPCPointer() && pObject->MyNPCPointer()->IsPlayerAlly( this ) )
+			if(pObject->MyNPCPointer() && pObject->MyNPCPointer()->IsPlayerAlly(this))
 			{
 				// If about to select an NPC, do a more thorough check to ensure
 				// that we're selecting the right one from a group.
-				pObject = DoubleCheckUseNPC( pObject, vTransformedSearchCenter, vTransformedForward );
+				pObject = DoubleCheckUseNPC(pObject, vTransformedSearchCenter, vTransformedForward);
 			}
 #endif
 
@@ -393,40 +400,42 @@ CBaseEntity* CPortal_Player::FindUseEntityThroughPortal( void )
 	// check ground entity first
 	// if you've got a useable ground entity, then shrink the cone of this search to 45 degrees
 	// otherwise, search out in a 90 degree cone (hemisphere)
-	if ( GetGroundEntity() && IsUseableEntity(GetGroundEntity(), FCAP_USE_ONGROUND) )
+	if(GetGroundEntity() && IsUseableEntity(GetGroundEntity(), FCAP_USE_ONGROUND))
 	{
 		pNearest = GetGroundEntity();
 		nearestDot = CONE_45_DEGREES;
 	}
 
-	for ( CEntitySphereQuery sphere( vTransformedSearchCenter, PLAYER_USE_RADIUS ); ( pObject = sphere.GetCurrentEntity() ) != NULL; sphere.NextEntity() )
+	for(CEntitySphereQuery sphere(vTransformedSearchCenter, PLAYER_USE_RADIUS);
+		(pObject = sphere.GetCurrentEntity()) != NULL; sphere.NextEntity())
 	{
-		if ( !pObject )
+		if(!pObject)
 			continue;
 
-		if ( !IsUseableEntity( pObject, FCAP_USE_IN_RADIUS ) )
+		if(!IsUseableEntity(pObject, FCAP_USE_IN_RADIUS))
 			continue;
 
 		// see if it's more roughly in front of the player than previous guess
 		Vector point;
-		pObject->CollisionProp()->CalcNearestPoint( vTransformedSearchCenter, &point );
+		pObject->CollisionProp()->CalcNearestPoint(vTransformedSearchCenter, &point);
 
 		Vector dir = point - vTransformedSearchCenter;
 		VectorNormalize(dir);
-		float dot = DotProduct( dir, vTransformedForward );
+		float dot = DotProduct(dir, vTransformedForward);
 
 		// Need to be looking at the object more or less
-		if ( dot < 0.8 )
+		if(dot < 0.8)
 			continue;
 
-		if ( dot > nearestDot )
+		if(dot > nearestDot)
 		{
 			// Since this has purely been a radius search to this point, we now
 			// make sure the object isn't behind glass or a grate.
 			trace_t trCheckOccluded;
-			UTIL_TraceLine( vTransformedSearchCenter, point, useableContents, this, COLLISION_GROUP_NONE, &trCheckOccluded );
+			UTIL_TraceLine(vTransformedSearchCenter, point, useableContents, this, COLLISION_GROUP_NONE,
+						   &trCheckOccluded);
 
-			if ( trCheckOccluded.fraction == 1.0 || trCheckOccluded.m_pEnt == pObject )
+			if(trCheckOccluded.fraction == 1.0 || trCheckOccluded.m_pEnt == pObject)
 			{
 				pNearest = pObject;
 				nearestDot = dot;
@@ -435,30 +444,31 @@ CBaseEntity* CPortal_Player::FindUseEntityThroughPortal( void )
 	}
 
 #ifndef CLIENT_DLL
-	if ( !pNearest )
+	if(!pNearest)
 	{
 		// Haven't found anything near the player to use, nor any NPC's at distance.
 		// Check to see if the player is trying to select an NPC through a rail, fence, or other 'see-though' volume.
 		trace_t trAllies;
-		UTIL_TraceLine( vTransformedSearchCenter, vTransformedSearchCenter + vTransformedForward * PLAYER_USE_RADIUS, MASK_OPAQUE_AND_NPCS, this, COLLISION_GROUP_NONE, &trAllies );
+		UTIL_TraceLine(vTransformedSearchCenter, vTransformedSearchCenter + vTransformedForward * PLAYER_USE_RADIUS,
+					   MASK_OPAQUE_AND_NPCS, this, COLLISION_GROUP_NONE, &trAllies);
 
-		if ( trAllies.m_pEnt && IsUseableEntity( trAllies.m_pEnt, 0 ) && trAllies.m_pEnt->MyNPCPointer() && trAllies.m_pEnt->MyNPCPointer()->IsPlayerAlly( this ) )
+		if(trAllies.m_pEnt && IsUseableEntity(trAllies.m_pEnt, 0) && trAllies.m_pEnt->MyNPCPointer() &&
+		   trAllies.m_pEnt->MyNPCPointer()->IsPlayerAlly(this))
 		{
 			// This is an NPC, take it!
 			pNearest = trAllies.m_pEnt;
 		}
 	}
 
-	if ( pNearest && pNearest->MyNPCPointer() && pNearest->MyNPCPointer()->IsPlayerAlly( this ) )
+	if(pNearest && pNearest->MyNPCPointer() && pNearest->MyNPCPointer()->IsPlayerAlly(this))
 	{
-		pNearest = DoubleCheckUseNPC( pNearest, vTransformedSearchCenter, vTransformedForward );
+		pNearest = DoubleCheckUseNPC(pNearest, vTransformedSearchCenter, vTransformedForward);
 	}
 
 #endif
 
 	return pNearest;
 }
-
 
 #if 0
 
@@ -467,11 +477,11 @@ CBaseEntity* CPortal_Player::FindUseEntityThroughPortal( void )
 //==========================
 
 // Below this many degrees, slow down turning rate linearly
-#define FADE_TURN_DEGREES	45.0f
+#define FADE_TURN_DEGREES						45.0f
 // After this, need to start turning feet
-#define MAX_TORSO_ANGLE		90.0f
+#define MAX_TORSO_ANGLE							90.0f
 // Below this amount, don't play a turning animation/perform IK
-#define MIN_TURN_ANGLE_REQUIRING_TURN_ANIMATION		15.0f
+#define MIN_TURN_ANGLE_REQUIRING_TURN_ANIMATION 15.0f
 
 static ConVar tf2_feetyawrunscale( "tf2_feetyawrunscale", "2", FCVAR_REPLICATED, "Multiplier on tf2_feetyawrate to allow turning faster when running." );
 extern ConVar sv_backspeed;
@@ -492,7 +502,7 @@ CPlayerAnimState::CPlayerAnimState( CPortal_Player *outer )
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerAnimState::Update()
 {
@@ -511,7 +521,7 @@ void CPlayerAnimState::Update()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerAnimState::ComputePlaybackRate()
 {
@@ -524,7 +534,7 @@ void CPlayerAnimState::ComputePlaybackRate()
 	bool isMoving = ( speed > 0.5f ) ? true : false;
 
 	float maxspeed = GetOuter()->GetSequenceGroundSpeed( GetOuter()->GetSequence() );
-	
+
 	if ( isMoving && ( maxspeed > 0.0f ) )
 	{
 		float flFactor = 1.0f;
@@ -542,7 +552,7 @@ void CPlayerAnimState::ComputePlaybackRate()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CBasePlayer
 //-----------------------------------------------------------------------------
 CPortal_Player *CPlayerAnimState::GetOuter()
@@ -551,8 +561,8 @@ CPortal_Player *CPlayerAnimState::GetOuter()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dt - 
+// Purpose:
+// Input  : dt -
 //-----------------------------------------------------------------------------
 void CPlayerAnimState::EstimateYaw( void )
 {
@@ -600,7 +610,7 @@ void CPlayerAnimState::EstimateYaw( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Override for backpeddling
-// Input  : dt - 
+// Input  : dt -
 //-----------------------------------------------------------------------------
 void CPlayerAnimState::ComputePoseParam_BodyYaw( void )
 {
@@ -609,7 +619,7 @@ void CPlayerAnimState::ComputePoseParam_BodyYaw( void )
 		return;
 
 	// view direction relative to movement
-	float flYaw;	 
+	float flYaw;
 
 	EstimateYaw();
 
@@ -638,7 +648,7 @@ void CPlayerAnimState::ComputePoseParam_BodyYaw( void )
 	{
 		flYaw = flYaw - 360;
 	}
-	
+
 	GetOuter()->SetPoseParameter( iYaw, flYaw );
 
 #ifndef CLIENT_DLL
@@ -648,7 +658,7 @@ void CPlayerAnimState::ComputePoseParam_BodyYaw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerAnimState::ComputePoseParam_BodyPitch( CStudioHdr *pStudioHdr )
 {
@@ -670,11 +680,11 @@ void CPlayerAnimState::ComputePoseParam_BodyPitch( CStudioHdr *pStudioHdr )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : goal - 
-//			maxrate - 
-//			dt - 
-//			current - 
+// Purpose:
+// Input  : goal -
+//			maxrate -
+//			dt -
+//			current -
 // Output : int
 //-----------------------------------------------------------------------------
 int CPlayerAnimState::ConvergeAngles( float goal,float maxrate, float dt, float& current )
@@ -738,7 +748,7 @@ void CPlayerAnimState::ComputePoseParam_BodyLookYaw( void )
 	float turnrate = 360.0f;
 
 	Vector vel;
-	
+
 	GetOuterAbsVelocity( vel );
 
 	bool isMoving = ( vel.Length() > 1.0f ) ? true : false;
@@ -790,7 +800,7 @@ void CPlayerAnimState::ComputePoseParam_BodyLookYaw( void )
 		// Standing still for a while, rotate feet around to face forward
 		// Or rotated too far
 		// FIXME:  Play an in place turning animation
-		if ( rotated_too_far || 
+		if ( rotated_too_far ||
 			( gpGlobals->curtime > m_flLastTurnTime + mp_facefronttime.GetFloat() ) )
 		{
 			m_flGoalFeetYaw		= GetOuter()->GetAnimEyeAngles().y;
@@ -863,10 +873,10 @@ void CPlayerAnimState::ComputePoseParam_BodyLookYaw( void )
 }
 
 
- 
+
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : activity - 
+// Purpose:
+// Input  : activity -
 // Output : Activity
 //-----------------------------------------------------------------------------
 Activity CPlayerAnimState::BodyYawTranslateActivity( Activity activity )
@@ -917,7 +927,7 @@ void CPlayerAnimState::Teleport( Vector *pOldOrigin, QAngle *pOldAngles )
 
 void CPlayerAnimState::GetOuterAbsVelocity( Vector& vel )
 {
-#if defined( CLIENT_DLL )
+#if defined(CLIENT_DLL)
 	GetOuter()->EstimateAbsVelocity( vel );
 #else
 	vel = GetOuter()->GetAbsVelocity();

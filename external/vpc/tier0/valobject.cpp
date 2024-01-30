@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose:
 //
@@ -10,7 +10,6 @@
 
 // NOTE: This has to be the last file included!
 #include "tier0/memdbgon.h"
-
 
 #ifdef DBGFLAG_VALIDATE
 
@@ -25,15 +24,15 @@
 //			pValObjectPrev -	Object that precedes us in the linked list (we're
 //								always added to the end)
 //-----------------------------------------------------------------------------
-void CValObject::Init( tchar *pchType, void *pvObj, tchar *pchName, 
-					   CValObject *pValObjectParent, CValObject *pValObjectPrev )
+void CValObject::Init(tchar *pchType, void *pvObj, tchar *pchName, CValObject *pValObjectParent,
+					  CValObject *pValObjectPrev)
 {
 	m_nUser = 0;
 
 	// Initialize pchType:
-	if ( NULL != pchType )
+	if(NULL != pchType)
 	{
-		V_strncpy( m_rgchType, pchType, (int) ( sizeof(m_rgchType) / sizeof(*m_rgchType) ) );
+		V_strncpy(m_rgchType, pchType, (int)(sizeof(m_rgchType) / sizeof(*m_rgchType)));
 	}
 	else
 	{
@@ -41,11 +40,11 @@ void CValObject::Init( tchar *pchType, void *pvObj, tchar *pchName,
 	}
 
 	m_pvObj = pvObj;
-	
-	// Initialize pchName: 
-	if ( NULL != pchName )
+
+	// Initialize pchName:
+	if(NULL != pchName)
 	{
-		V_strncpy( m_rgchName, pchName, sizeof(m_rgchName) / sizeof(*m_rgchName) );
+		V_strncpy(m_rgchName, pchName, sizeof(m_rgchName) / sizeof(*m_rgchName));
 	}
 	else
 	{
@@ -54,10 +53,10 @@ void CValObject::Init( tchar *pchType, void *pvObj, tchar *pchName,
 
 	m_pValObjectParent = pValObjectParent;
 
-	if ( NULL == pValObjectParent )
+	if(NULL == pValObjectParent)
 		m_nLevel = 0;
 	else
-		m_nLevel = pValObjectParent->NLevel( ) + 1;
+		m_nLevel = pValObjectParent->NLevel() + 1;
 
 	m_cpubMemSelf = 0;
 	m_cubMemSelf = 0;
@@ -65,60 +64,53 @@ void CValObject::Init( tchar *pchType, void *pvObj, tchar *pchName,
 	m_cubMemTree = 0;
 
 	// Insert us at the back of the linked list
-	if ( NULL != pValObjectPrev )
+	if(NULL != pValObjectPrev)
 	{
-		Assert( NULL == pValObjectPrev->m_pValObjectNext );
+		Assert(NULL == pValObjectPrev->m_pValObjectNext);
 		pValObjectPrev->m_pValObjectNext = this;
 	}
 	m_pValObjectNext = NULL;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CValObject::~CValObject( )
-{
-}
-
+CValObject::~CValObject() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: The object we represent has claimed direct ownership of a block of
 //			memory.  Record that we own it.
 // Input:	pvMem -			Address of the memory block
 //-----------------------------------------------------------------------------
-void CValObject::ClaimMemoryBlock( void *pvMem )
+void CValObject::ClaimMemoryBlock(void *pvMem)
 {
 	// Get the memory block header
-	CMemBlockHdr *pMemBlockHdr = CMemBlockHdr::PMemBlockHdrFromPvUser( pvMem );
-	pMemBlockHdr->CheckValid( );
+	CMemBlockHdr *pMemBlockHdr = CMemBlockHdr::PMemBlockHdrFromPvUser(pvMem);
+	pMemBlockHdr->CheckValid();
 
 	// Update our counters
 	m_cpubMemSelf++;
-	m_cubMemSelf+= pMemBlockHdr->CubUser( );
+	m_cubMemSelf += pMemBlockHdr->CubUser();
 	m_cpubMemTree++;
-	m_cubMemTree+= pMemBlockHdr->CubUser( );
+	m_cubMemTree += pMemBlockHdr->CubUser();
 
 	// If we have a parent object, let it know about the memory (it'll recursively call up the tree)
-	if ( NULL != m_pValObjectParent )
-		m_pValObjectParent->ClaimChildMemoryBlock( pMemBlockHdr->CubUser( ) );
+	if(NULL != m_pValObjectParent)
+		m_pValObjectParent->ClaimChildMemoryBlock(pMemBlockHdr->CubUser());
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: A child of ours has claimed ownership of a memory block.  Make
 //			a note of it, and pass the message back up the tree.
 // Input:	cubUser -			Size of the memory block
 //-----------------------------------------------------------------------------
-void CValObject::ClaimChildMemoryBlock( int cubUser )
+void CValObject::ClaimChildMemoryBlock(int cubUser)
 {
 	m_cpubMemTree++;
 	m_cubMemTree += cubUser;
 
-	if ( NULL != m_pValObjectParent )
-		m_pValObjectParent->ClaimChildMemoryBlock( cubUser );
+	if(NULL != m_pValObjectParent)
+		m_pValObjectParent->ClaimChildMemoryBlock(cubUser);
 }
-
-
 
 #endif // DBGFLAG_VALIDATE

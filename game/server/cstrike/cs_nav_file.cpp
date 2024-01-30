@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -25,13 +25,13 @@ const int NavCurrentVersion = 9;
 //--------------------------------------------------------------------------------------------------------------
 //
 // The 'place directory' is used to save and load places from
-// nav files in a size-efficient manner that also allows for the 
+// nav files in a size-efficient manner that also allows for the
 // order of the place ID's to change without invalidating the
 // nav files.
 //
-// The place directory is stored in the nav file as a list of 
+// The place directory is stored in the nav file as a list of
 // place name strings.  Each nav area then contains an index
-// into that directory, or zero if no place has been assigned to 
+// into that directory, or zero if no place has been assigned to
 // that area.
 //
 class PlaceDirectory
@@ -106,7 +106,7 @@ public:
 		IndexType count = (IndexType)m_directory.Count();
 		filesystem->Write( &count, sizeof(IndexType), file );
 
-		// store entries		
+		// store entries
 		for( int i=0; i<m_directory.Count(); ++i )
 		{
 			const char *placeName = TheNavMesh->PlaceToName( m_directory[i] );
@@ -177,7 +177,7 @@ void CNavArea::Save( FILE *fp ) const
 	fprintf( fp, "v  %f %f %f\n", m_extent.lo.x, m_extent.hi.y, m_swZ );
 
 	static int base = 1;
-	fprintf( fp, "\n\ng %04dArea%s%s%s%s\n", m_id, 
+	fprintf( fp, "\n\ng %04dArea%s%s%s%s\n", m_id,
 				(GetAttributes() & BOT_NAV_CROUCH) ? "CROUCH" : "",
 				(GetAttributes() & BOT_NAV_JUMP) ? "JUMP" : "",
 				(GetAttributes() & BOT_NAV_PRECISE) ? "PRECISE" : "",
@@ -241,7 +241,7 @@ void CNavArea::Save( FileHandle_t file, unsigned int version ) const
 	FOR_EACH_LL( m_hidingSpotList, hit )
 	{
 		HidingSpot *spot = m_hidingSpotList[ hit ];
-		
+
 		spot->Save( file, version );
 
 		// overflow check
@@ -322,7 +322,7 @@ void CNavArea::Save( FileHandle_t file, unsigned int version ) const
 				spotCount = (unsigned char)e->spotList.Count();
 			}
 			filesystem->Write( &spotCount, sizeof(unsigned char), file );
-		
+
 			saveCount = 0;
 			FOR_EACH_LL( e->spotList, sit )
 			{
@@ -465,7 +465,7 @@ void CNavArea::Load( FileHandle_t file, unsigned int version )
 			HidingSpot *spot = TheNavMesh->CreateHidingSpot();
 
 			spot->Load( file, version );
-			
+
 			m_hidingSpotList.AddToTail( spot );
 		}
 	}
@@ -513,7 +513,7 @@ void CNavArea::Load( FileHandle_t file, unsigned int version )
 			// read list of spots along this path
 			unsigned char spotCount;
 			filesystem->Read( &spotCount, sizeof(unsigned char), file );
-		
+
 			for( int s=0; s<spotCount; ++s )
 			{
 				Vector pos;
@@ -542,7 +542,7 @@ void CNavArea::Load( FileHandle_t file, unsigned int version )
 		// read list of spots along this path
 		unsigned char spotCount;
 		filesystem->Read( &spotCount, sizeof(unsigned char), file );
-	
+
 		SpotOrder order;
 		for( int s=0; s<spotCount; ++s )
 		{
@@ -874,7 +874,7 @@ void CNavMesh::ComputeBattlefrontAreas( void )
 				if (fabs(area->GetEarliestOccupyTime( TEAM_TERRORIST ) - area->GetEarliestOccupyTime( TEAM_CT )) < epsilon)
 				{
 				}
-				
+
 			}
 		}
 	}
@@ -910,14 +910,14 @@ Changes all '/' characters into '\' characters, in place.
 inline void COM_FixSlashes( char *pname )
 {
 #ifdef _WIN32
-	while ( *pname ) 
+	while ( *pname )
 	{
 		if ( *pname == '/' )
 			*pname = '\\';
 		pname++;
 	}
 #else
-	while ( *pname ) 
+	while ( *pname )
 	{
 		if ( *pname == '\\' )
 			*pname = '/';
@@ -1285,7 +1285,7 @@ NavErrorType CNavMesh::Load( void )
 
 		// check validity of nav area
 		if (areaExtent.lo.x >= areaExtent.hi.x || areaExtent.lo.y >= areaExtent.hi.y)
-			Warning( "WARNING: Degenerate Navigation Area #%d at ( %g, %g, %g )\n", 
+			Warning( "WARNING: Degenerate Navigation Area #%d at ( %g, %g, %g )\n",
 						area->GetID(), area->m_center.x, area->m_center.y, area->m_center.z );
 
 		if (areaExtent.lo.x < extent.lo.x)

@@ -1,4 +1,4 @@
-//======= Copyright © 1996-2006, Valve Corporation, All rights reserved. ======
+//======= Copyright ï¿½ 1996-2006, Valve Corporation, All rights reserved. ======
 
 //	STATIC: "INTRO"						"0..1"
 //  STATIC: "USE_STATIC_CONTROL_FLOW"	"0..1" [vs20]
@@ -54,8 +54,8 @@ struct VS_INPUT
 
 struct VS_OUTPUT
 {
-    float4 projPos							: POSITION;
-#if !defined( _X360 )    	
+	float4 projPos							: POSITION;
+#if !defined( _X360 )
 	float  fog								: FOG;
 #endif
 	float2 baseTexCoord						: TEXCOORD0;
@@ -80,7 +80,7 @@ VS_OUTPUT main( const VS_INPUT v )
 #if !defined( SHADER_MODEL_VS_3_0 ) || !MORPHING
 	ApplyMorph( v.vPosFlex, v.vNormalFlex, vPosition.xyz, vNormal, vTangent.xyz );
 #else
-	ApplyMorph( morphSampler, cMorphTargetTextureDim, cMorphSubrect, v.vVertexID, float3( 0, 0, 0 ), 
+	ApplyMorph( morphSampler, cMorphTargetTextureDim, cMorphSubrect, v.vVertexID, float3( 0, 0, 0 ),
 		vPosition.xyz, vNormal, vTangent.xyz );
 #endif
 
@@ -148,5 +148,3 @@ VS_OUTPUT main( const VS_INPUT v )
 
 	return o;
 }
-
-

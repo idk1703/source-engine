@@ -18,12 +18,11 @@
 extern ConVar tf_bot_path_lookahead_range;
 extern ConVar tf_bot_debug_spy;
 
-
 //---------------------------------------------------------------------------------------------
-ActionResult< CTFBot >	CTFBotSpyLurk::OnStart( CTFBot *me, Action< CTFBot > *priorAction )
+ActionResult<CTFBot> CTFBotSpyLurk::OnStart(CTFBot *me, Action<CTFBot> *priorAction)
 {
-	// cloak 
-	if ( !me->m_Shared.IsStealthed() )
+	// cloak
+	if(!me->m_Shared.IsStealthed())
 	{
 		me->PressAltFireButton();
 	}
@@ -31,51 +30,50 @@ ActionResult< CTFBot >	CTFBotSpyLurk::OnStart( CTFBot *me, Action< CTFBot > *pri
 	// disguise as the enemy team
 	me->DisguiseAsMemberOfEnemyTeam();
 
-	m_lurkTimer.Start( RandomFloat( 3.0f, 5.0f ) );
+	m_lurkTimer.Start(RandomFloat(3.0f, 5.0f));
 
 	return Continue();
 }
 
-
 //---------------------------------------------------------------------------------------------
-ActionResult< CTFBot >	CTFBotSpyLurk::Update( CTFBot *me, float interval )
+ActionResult<CTFBot> CTFBotSpyLurk::Update(CTFBot *me, float interval)
 {
 	const CKnownEntity *threat = me->GetVisionInterface()->GetPrimaryKnownThreat();
-	if ( threat && threat->GetEntity() )
+	if(threat && threat->GetEntity())
 	{
-		CBaseObject *enemyObject = dynamic_cast< CBaseObject * >( threat->GetEntity() );
-		if ( enemyObject && !enemyObject->HasSapper() && me->IsEnemy( enemyObject ) )
+		CBaseObject *enemyObject = dynamic_cast<CBaseObject *>(threat->GetEntity());
+		if(enemyObject && !enemyObject->HasSapper() && me->IsEnemy(enemyObject))
 		{
-			return SuspendFor( new CTFBotSpySap( enemyObject ), "Sapping an enemy object" );
+			return SuspendFor(new CTFBotSpySap(enemyObject), "Sapping an enemy object");
 		}
 	}
 
-	if ( me->GetEnemySentry() != NULL && !me->GetEnemySentry()->HasSapper() )
+	if(me->GetEnemySentry() != NULL && !me->GetEnemySentry()->HasSapper())
 	{
-		return SuspendFor( new CTFBotSpySap( me->GetEnemySentry() ), "Sapping a Sentry" );
+		return SuspendFor(new CTFBotSpySap(me->GetEnemySentry()), "Sapping a Sentry");
 	}
 
-	if ( m_lurkTimer.IsElapsed() )
+	if(m_lurkTimer.IsElapsed())
 	{
-		return Done( "Lost patience with my hiding spot" );
+		return Done("Lost patience with my hiding spot");
 	}
 
 	CTFNavArea *myArea = me->GetLastKnownArea();
 
-	if ( !myArea )
+	if(!myArea)
 	{
 		return Continue();
 	}
 
 	// go after victims we've gotten behind
-	if ( threat && threat->GetTimeSinceLastKnown() < 3.0f )
+	if(threat && threat->GetTimeSinceLastKnown() < 3.0f)
 	{
-		CTFPlayer *victim = ToTFPlayer( threat->GetEntity() );
-		if ( victim )
+		CTFPlayer *victim = ToTFPlayer(threat->GetEntity());
+		if(victim)
 		{
-			if ( !victim->IsLookingTowards( me ) )
+			if(!victim->IsLookingTowards(me))
 			{
-				return ChangeTo( new CTFBotSpyAttack( victim ), "Going after a backstab victim" );
+				return ChangeTo(new CTFBotSpyAttack(victim), "Going after a backstab victim");
 			}
 		}
 	}
@@ -83,9 +81,8 @@ ActionResult< CTFBot >	CTFBotSpyLurk::Update( CTFBot *me, float interval )
 	return Continue();
 }
 
-
 //---------------------------------------------------------------------------------------------
-QueryResultType CTFBotSpyLurk::ShouldAttack( const INextBot *me, const CKnownEntity *them ) const
+QueryResultType CTFBotSpyLurk::ShouldAttack(const INextBot *me, const CKnownEntity *them) const
 {
 	return ANSWER_NO;
 }

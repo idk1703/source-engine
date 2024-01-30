@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -12,63 +12,58 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CFriendsGames::CFriendsGames(vgui::Panel *parent) : 
-	CBaseGamesPage(parent, "FriendsGames",  eFriendsServer )
+CFriendsGames::CFriendsGames(vgui::Panel *parent) : CBaseGamesPage(parent, "FriendsGames", eFriendsServer)
 {
 	m_iServerRefreshCount = 0;
-	
-	if ( !IsSteamGameServerBrowsingEnabled() )
+
+	if(!IsSteamGameServerBrowsingEnabled())
 	{
 		m_pGameList->SetEmptyListText("#ServerBrowser_OfflineMode");
-		m_pConnect->SetEnabled( false );
-		m_pRefreshAll->SetEnabled( false );
-		m_pRefreshQuick->SetEnabled( false );
-		m_pAddServer->SetEnabled( false );
-		m_pFilter->SetEnabled( false );
+		m_pConnect->SetEnabled(false);
+		m_pRefreshAll->SetEnabled(false);
+		m_pRefreshQuick->SetEnabled(false);
+		m_pAddServer->SetEnabled(false);
+		m_pFilter->SetEnabled(false);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CFriendsGames::~CFriendsGames()
-{
-}
-
+CFriendsGames::~CFriendsGames() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: returns true if the game list supports the specified ui elements
 //-----------------------------------------------------------------------------
 bool CFriendsGames::SupportsItem(InterfaceItem_e item)
 {
-	switch (item)
+	switch(item)
 	{
-	case FILTERS:
-		return true;
+		case FILTERS:
+			return true;
 
-	case GETNEWLIST:
-	default:
-		return false;
+		case GETNEWLIST:
+		default:
+			return false;
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: called when the current refresh list is complete
 //-----------------------------------------------------------------------------
-void CFriendsGames::RefreshComplete( HServerListRequest hReq, EMatchMakingServerResponse response )
+void CFriendsGames::RefreshComplete(HServerListRequest hReq, EMatchMakingServerResponse response)
 {
 	SetRefreshing(false);
 	m_pGameList->SortList();
 	m_iServerRefreshCount = 0;
 
-	if ( IsSteamGameServerBrowsingEnabled() )
+	if(IsSteamGameServerBrowsingEnabled())
 	{
 		// set empty message
 		m_pGameList->SetEmptyListText("#ServerBrowser_NoFriendsServers");
 	}
 
-	BaseClass::RefreshComplete( hReq, response );
+	BaseClass::RefreshComplete(hReq, response);
 }
 
 //-----------------------------------------------------------------------------
@@ -79,7 +74,7 @@ void CFriendsGames::OnOpenContextMenu(int itemID)
 	// get the server
 	int serverID = GetSelectedServerID();
 
-	if ( serverID == -1 )
+	if(serverID == -1)
 		return;
 
 	// Activate context menu

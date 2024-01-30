@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -17,23 +17,29 @@
 
 using namespace vgui;
 
-DECLARE_BUILD_FACTORY( CChannelGraphPanel );
+DECLARE_BUILD_FACTORY(CChannelGraphPanel);
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CChannelGraphPanel::CChannelGraphPanel( Panel *parent, const char *name )
-	: BaseClass( parent, name ), m_font( 0 ),
-	m_graphMinTime( 0 ), m_graphMaxTime( 0 ),
-	m_graphMinValue( 0.0f ), m_graphMaxValue( 0.0f ),
-	m_nMouseStartX( -1 ), m_nMouseStartY( -1 ),
-	m_nMouseLastX( -1 ), m_nMouseLastY( -1 ),
-	m_nTextBorder( 2 ), m_nGraphOriginX( 40 ), m_nGraphOriginY( 10 )
+CChannelGraphPanel::CChannelGraphPanel(Panel *parent, const char *name)
+	: BaseClass(parent, name),
+	  m_font(0),
+	  m_graphMinTime(0),
+	  m_graphMaxTime(0),
+	  m_graphMinValue(0.0f),
+	  m_graphMaxValue(0.0f),
+	  m_nMouseStartX(-1),
+	  m_nMouseStartY(-1),
+	  m_nMouseLastX(-1),
+	  m_nMouseLastY(-1),
+	  m_nTextBorder(2),
+	  m_nGraphOriginX(40),
+	  m_nGraphOriginY(10)
 {
 }
 
-
-void CChannelGraphPanel::SetChannel( CDmeChannel *pChannel )
+void CChannelGraphPanel::SetChannel(CDmeChannel *pChannel)
 {
 	m_hChannel = pChannel;
 	CDmeLog *pLog = m_hChannel->GetLog();
@@ -43,16 +49,16 @@ void CChannelGraphPanel::SetChannel( CDmeChannel *pChannel )
 	m_graphMinValue = FLT_MAX;
 	m_graphMaxValue = -FLT_MAX;
 
-	int nComponents = NumComponents( pLog->GetDataType() );
+	int nComponents = NumComponents(pLog->GetDataType());
 	int nKeys = pLog->GetKeyCount();
-	for ( int k = 0; k < nKeys; ++k )
+	for(int k = 0; k < nKeys; ++k)
 	{
-		DmeTime_t t = pLog->GetKeyTime( k );
-		for ( int i = 0; i < nComponents; ++i )
+		DmeTime_t t = pLog->GetKeyTime(k);
+		for(int i = 0; i < nComponents; ++i)
 		{
-			float f = pLog->GetComponent( t, i );
-			m_graphMinValue = min( m_graphMinValue, f );
-			m_graphMaxValue = max( m_graphMaxValue, f );
+			float f = pLog->GetComponent(t, i);
+			m_graphMinValue = min(m_graphMinValue, f);
+			m_graphMaxValue = max(m_graphMaxValue, f);
 		}
 	}
 }
@@ -60,49 +66,49 @@ void CChannelGraphPanel::SetChannel( CDmeChannel *pChannel )
 //-----------------------------------------------------------------------------
 // input methods
 //-----------------------------------------------------------------------------
-void CChannelGraphPanel::OnSizeChanged( int newWide, int newTall ) // called after the size of a panel has been changed
+void CChannelGraphPanel::OnSizeChanged(int newWide, int newTall) // called after the size of a panel has been changed
 {
 	int wide = newWide - m_nGraphOriginX;
 	int tall = newTall - m_nGraphOriginY;
-	m_flTimeToPixel = wide / ( m_graphMaxTime - m_graphMinTime ).GetSeconds();
-	m_flValueToPixel = tall / ( m_graphMaxValue - m_graphMinValue );
+	m_flTimeToPixel = wide / (m_graphMaxTime - m_graphMinTime).GetSeconds();
+	m_flValueToPixel = tall / (m_graphMaxValue - m_graphMinValue);
 }
 
-void CChannelGraphPanel::OnMousePressed( MouseCode code )
+void CChannelGraphPanel::OnMousePressed(MouseCode code)
 {
-	BaseClass::OnMousePressed( code );
-	if ( code != MOUSE_LEFT )
+	BaseClass::OnMousePressed(code);
+	if(code != MOUSE_LEFT)
 		return;
 
-	vgui::input()->GetCursorPos( m_nMouseStartX, m_nMouseStartY );
-	ScreenToLocal( m_nMouseStartX, m_nMouseStartY );
+	vgui::input()->GetCursorPos(m_nMouseStartX, m_nMouseStartY);
+	ScreenToLocal(m_nMouseStartX, m_nMouseStartY);
 	m_nMouseLastX = m_nMouseStartX;
 	m_nMouseLastY = m_nMouseStartY;
 
-	input()->SetMouseCapture( GetVPanel() );
+	input()->SetMouseCapture(GetVPanel());
 }
 
-void CChannelGraphPanel::OnMouseReleased( MouseCode code )
+void CChannelGraphPanel::OnMouseReleased(MouseCode code)
 {
-	BaseClass::OnMouseReleased( code );
-	if ( code != MOUSE_LEFT )
+	BaseClass::OnMouseReleased(code);
+	if(code != MOUSE_LEFT)
 		return;
 
 	m_nMouseStartX = m_nMouseStartY = -1;
 	m_nMouseLastX = m_nMouseLastY = -1;
 
-	input()->SetMouseCapture( NULL );
+	input()->SetMouseCapture(NULL);
 }
 
-void CChannelGraphPanel::OnCursorMoved( int mx, int my )
+void CChannelGraphPanel::OnCursorMoved(int mx, int my)
 {
-	BaseClass::OnCursorMoved( mx, my );
-	if ( !vgui::input()->IsMouseDown( MOUSE_LEFT ) )
+	BaseClass::OnCursorMoved(mx, my);
+	if(!vgui::input()->IsMouseDown(MOUSE_LEFT))
 		return;
 
 	bool bInValueLegend = m_nMouseStartX < m_nGraphOriginX;
 	bool bInTimeLegend = m_nMouseStartY > GetTall() - m_nGraphOriginY - 1;
-	if ( bInTimeLegend && bInValueLegend )
+	if(bInTimeLegend && bInValueLegend)
 	{
 		bInTimeLegend = bInValueLegend = false;
 	}
@@ -110,37 +116,37 @@ void CChannelGraphPanel::OnCursorMoved( int mx, int my )
 	int dx = mx - m_nMouseLastX;
 	int dy = my - m_nMouseLastY;
 
-	if ( bInTimeLegend )
+	if(bInTimeLegend)
 	{
-		if ( abs( dy ) > abs( dx ) )
+		if(abs(dy) > abs(dx))
 		{
-			m_graphMinTime -= DmeTime_t( dy / m_flTimeToPixel );
-			m_graphMaxTime += DmeTime_t( dy / m_flTimeToPixel );
-			m_flTimeToPixel = ( GetWide() - m_nGraphOriginX ) / ( m_graphMaxTime - m_graphMinTime ).GetSeconds();
+			m_graphMinTime -= DmeTime_t(dy / m_flTimeToPixel);
+			m_graphMaxTime += DmeTime_t(dy / m_flTimeToPixel);
+			m_flTimeToPixel = (GetWide() - m_nGraphOriginX) / (m_graphMaxTime - m_graphMinTime).GetSeconds();
 
 			int x = mx = m_nMouseLastX;
 			int y = my = m_nMouseLastY;
-			LocalToScreen( x, y );
-			vgui::input()->SetCursorPos( x, y );
+			LocalToScreen(x, y);
+			vgui::input()->SetCursorPos(x, y);
 		}
 		else
 		{
-			m_graphMinTime -= DmeTime_t( dx / m_flTimeToPixel );
-			m_graphMaxTime -= DmeTime_t( dx / m_flTimeToPixel );
+			m_graphMinTime -= DmeTime_t(dx / m_flTimeToPixel);
+			m_graphMaxTime -= DmeTime_t(dx / m_flTimeToPixel);
 		}
 	}
-	else if ( bInValueLegend )
+	else if(bInValueLegend)
 	{
-		if ( abs( dx ) > abs( dy ) )
+		if(abs(dx) > abs(dy))
 		{
 			m_graphMinValue += dx / m_flValueToPixel;
 			m_graphMaxValue -= dx / m_flValueToPixel;
-			m_flValueToPixel = ( GetTall() - m_nGraphOriginY ) / ( m_graphMaxValue - m_graphMinValue );
+			m_flValueToPixel = (GetTall() - m_nGraphOriginY) / (m_graphMaxValue - m_graphMinValue);
 
 			int x = mx = m_nMouseLastX;
 			int y = my = m_nMouseLastY;
-			LocalToScreen( x, y );
-			vgui::input()->SetCursorPos( x, y );
+			LocalToScreen(x, y);
+			vgui::input()->SetCursorPos(x, y);
 		}
 		else
 		{
@@ -153,7 +159,7 @@ void CChannelGraphPanel::OnCursorMoved( int mx, int my )
 	m_nMouseLastY = my;
 }
 
-void CChannelGraphPanel::OnMouseWheeled( int delta )
+void CChannelGraphPanel::OnMouseWheeled(int delta)
 {
 	// TODO - zoom in around current time?
 }
@@ -166,26 +172,25 @@ void CChannelGraphPanel::PerformLayout()
 	BaseClass::PerformLayout();
 }
 
-
-float GetDisplayIncrement( int windowpixels, int fontpixels, float valuerange, int *pDecimalPlaces = NULL )
+float GetDisplayIncrement(int windowpixels, int fontpixels, float valuerange, int *pDecimalPlaces = NULL)
 {
-	float ratio = valuerange * fontpixels / ( windowpixels );
-	int nPower = ( int )ceil( log10( ratio ) );
-	if ( pDecimalPlaces )
+	float ratio = valuerange * fontpixels / (windowpixels);
+	int nPower = (int)ceil(log10(ratio));
+	if(pDecimalPlaces)
 	{
-		*pDecimalPlaces = max( 0, -nPower );
+		*pDecimalPlaces = max(0, -nPower);
 	}
-	return pow( 10.0f, nPower );
+	return pow(10.0f, nPower);
 }
 
-int CChannelGraphPanel::TimeToPixel( DmeTime_t time )
+int CChannelGraphPanel::TimeToPixel(DmeTime_t time)
 {
-	return m_nGraphOriginX + ( int )floor( m_flTimeToPixel * ( time - m_graphMinTime ).GetSeconds() + 0.5f );
+	return m_nGraphOriginX + (int)floor(m_flTimeToPixel * (time - m_graphMinTime).GetSeconds() + 0.5f);
 }
 
-int CChannelGraphPanel::ValueToPixel( float flValue )
+int CChannelGraphPanel::ValueToPixel(float flValue)
 {
-	return m_nGraphOriginY + ( int )floor( m_flValueToPixel * ( flValue - m_graphMinValue ) + 0.5f );
+	return m_nGraphOriginY + (int)floor(m_flValueToPixel * (flValue - m_graphMinValue) + 0.5f);
 }
 
 //-----------------------------------------------------------------------------
@@ -198,103 +203,104 @@ void CChannelGraphPanel::Paint()
 	int tall = GetTall() - m_nGraphOriginY;
 
 	int textwidth = 40, textheight = 10;
-	surface()->GetTextSize( m_font, L"999.9", textwidth, textheight );
+	surface()->GetTextSize(m_font, L"999.9", textwidth, textheight);
 
 	// draw current time marker
 	DmeTime_t curtime = m_hChannel->GetCurrentTime();
-	if ( curtime >= m_graphMinTime && curtime <= m_graphMaxTime )
+	if(curtime >= m_graphMinTime && curtime <= m_graphMaxTime)
 	{
-		Color cyan( 0, 255, 255, 255 );
-		surface()->DrawSetColor( cyan );
-		int x = TimeToPixel( curtime );
-		surface()->DrawLine( x, 0, x, GetTall() - m_nGraphOriginY - 1 );
+		Color cyan(0, 255, 255, 255);
+		surface()->DrawSetColor(cyan);
+		int x = TimeToPixel(curtime);
+		surface()->DrawLine(x, 0, x, GetTall() - m_nGraphOriginY - 1);
 	}
 
 	// draw left/bottom graph border
-	Color black( 0, 0, 0, 255 );
-	surface()->DrawSetColor( black );
-	surface()->DrawLine( m_nGraphOriginX, GetTall() - m_nGraphOriginY - 1, GetWide(), GetTall() - m_nGraphOriginY - 1 );
-	surface()->DrawLine( m_nGraphOriginX, GetTall() - m_nGraphOriginY - 1, m_nGraphOriginX, 0 );
+	Color black(0, 0, 0, 255);
+	surface()->DrawSetColor(black);
+	surface()->DrawLine(m_nGraphOriginX, GetTall() - m_nGraphOriginY - 1, GetWide(), GetTall() - m_nGraphOriginY - 1);
+	surface()->DrawLine(m_nGraphOriginX, GetTall() - m_nGraphOriginY - 1, m_nGraphOriginX, 0);
 
-	surface()->DrawSetTextColor( black );
-	surface()->DrawSetTextFont( m_font );
+	surface()->DrawSetTextColor(black);
+	surface()->DrawSetTextFont(m_font);
 
 	// draw graph tickmarks and values along the left border
 	int nDecimalPlaces = 0;
-	float flValueIncrement = GetDisplayIncrement( tall, ( int )( 1.5f * textheight ), m_graphMaxValue - m_graphMinValue, &nDecimalPlaces );
-	int nMinValueIndex = ( int )ceil ( m_graphMinValue / flValueIncrement );
-	int nMaxValueIndex = ( int )floor( m_graphMaxValue / flValueIncrement );
+	float flValueIncrement =
+		GetDisplayIncrement(tall, (int)(1.5f * textheight), m_graphMaxValue - m_graphMinValue, &nDecimalPlaces);
+	int nMinValueIndex = (int)ceil(m_graphMinValue / flValueIncrement);
+	int nMaxValueIndex = (int)floor(m_graphMaxValue / flValueIncrement);
 	float flValue = nMinValueIndex * flValueIncrement;
-	for ( int i = nMinValueIndex; i <= nMaxValueIndex; ++i, flValue += flValueIncrement )
+	for(int i = nMinValueIndex; i <= nMaxValueIndex; ++i, flValue += flValueIncrement)
 	{
-		wchar_t pFormat[ 32 ];
-		V_swprintf_safe( pFormat, L"%%.%df", nDecimalPlaces );
+		wchar_t pFormat[32];
+		V_swprintf_safe(pFormat, L"%%.%df", nDecimalPlaces);
 
-		wchar_t wstring[ 32 ];
-		V_swprintf_safe( wstring, pFormat, flValue );
+		wchar_t wstring[32];
+		V_swprintf_safe(wstring, pFormat, flValue);
 
 		int tw = 0, th = 0;
-		surface()->GetTextSize( m_font, wstring, tw, th );
+		surface()->GetTextSize(m_font, wstring, tw, th);
 
-		int y = GetTall() - ValueToPixel( flValue ) - 1;
-		surface()->DrawSetTextPos( m_nGraphOriginX - m_nTextBorder - tw, y - textheight / 2 );
-		surface()->DrawPrintText( wstring, wcslen( wstring ) );
+		int y = GetTall() - ValueToPixel(flValue) - 1;
+		surface()->DrawSetTextPos(m_nGraphOriginX - m_nTextBorder - tw, y - textheight / 2);
+		surface()->DrawPrintText(wstring, wcslen(wstring));
 
-		surface()->DrawLine( m_nGraphOriginX - m_nTextBorder, y, m_nGraphOriginX, y );
+		surface()->DrawLine(m_nGraphOriginX - m_nTextBorder, y, m_nGraphOriginX, y);
 	}
 
 	// draw graph tickmarks and times along the bottom border
-	float flTimeIncrement = GetDisplayIncrement( wide, textwidth, ( m_graphMaxTime - m_graphMinTime ).GetSeconds(), &nDecimalPlaces );
-	int nMinTimeIndex = ( int )ceil ( m_graphMinTime.GetSeconds() / flTimeIncrement );
-	int nMaxTimeIndex = ( int )floor( m_graphMaxTime.GetSeconds() / flTimeIncrement );
+	float flTimeIncrement =
+		GetDisplayIncrement(wide, textwidth, (m_graphMaxTime - m_graphMinTime).GetSeconds(), &nDecimalPlaces);
+	int nMinTimeIndex = (int)ceil(m_graphMinTime.GetSeconds() / flTimeIncrement);
+	int nMaxTimeIndex = (int)floor(m_graphMaxTime.GetSeconds() / flTimeIncrement);
 	float flTime = nMinTimeIndex * flTimeIncrement;
-	for ( int i = nMinTimeIndex; i <= nMaxTimeIndex; ++i, flTime += flTimeIncrement )
+	for(int i = nMinTimeIndex; i <= nMaxTimeIndex; ++i, flTime += flTimeIncrement)
 	{
-		wchar_t pFormat[ 32 ];
-		V_swprintf_safe( pFormat, L"%%.%df", nDecimalPlaces );
+		wchar_t pFormat[32];
+		V_swprintf_safe(pFormat, L"%%.%df", nDecimalPlaces);
 
-		wchar_t wstring[ 32 ];
-		V_swprintf_safe( wstring, pFormat, flTime );
+		wchar_t wstring[32];
+		V_swprintf_safe(wstring, pFormat, flTime);
 
 		int tw = 0, th = 0;
-		surface()->GetTextSize( m_font, wstring, tw, th );
+		surface()->GetTextSize(m_font, wstring, tw, th);
 
-		int x = TimeToPixel( DmeTime_t( flTime ) );
-		surface()->DrawSetTextPos( x - tw / 2, GetTall() - m_nGraphOriginY + m_nTextBorder - 1 );
-		surface()->DrawPrintText( wstring, wcslen( wstring ) );
+		int x = TimeToPixel(DmeTime_t(flTime));
+		surface()->DrawSetTextPos(x - tw / 2, GetTall() - m_nGraphOriginY + m_nTextBorder - 1);
+		surface()->DrawPrintText(wstring, wcslen(wstring));
 
-		surface()->DrawLine( x, GetTall() - m_nGraphOriginY + m_nTextBorder - 1, x, GetTall() - m_nGraphOriginY - 1 );
+		surface()->DrawLine(x, GetTall() - m_nGraphOriginY + m_nTextBorder - 1, x, GetTall() - m_nGraphOriginY - 1);
 	}
 
-	static Color s_componentColors[] =
-	{
-		Color( 255, 0, 0, 255 ),
-		Color( 0, 255, 0, 255 ),
-		Color( 0, 0, 255, 255 ),
-		Color( 0, 0, 0, 255 ),
+	static Color s_componentColors[] = {
+		Color(255, 0, 0, 255),
+		Color(0, 255, 0, 255),
+		Color(0, 0, 255, 255),
+		Color(0, 0, 0, 255),
 	};
 
 	CDmeLog *pLog = m_hChannel->GetLog();
-	int nComponents = NumComponents( pLog->GetDataType() );
+	int nComponents = NumComponents(pLog->GetDataType());
 	int nKeys = pLog->GetKeyCount();
 
 	// draw plotted graph
-	for ( int i = 0; i < nComponents; ++i )
+	for(int i = 0; i < nComponents; ++i)
 	{
-		Color &color = s_componentColors[ i % ARRAYSIZE( s_componentColors ) ];
-		surface()->DrawSetColor( color );
+		Color &color = s_componentColors[i % ARRAYSIZE(s_componentColors)];
+		surface()->DrawSetColor(color);
 
 		int lastx = -1;
 		int lasty = -1;
-		for ( int k = 0; k < nKeys; ++k )
+		for(int k = 0; k < nKeys; ++k)
 		{
-			DmeTime_t t = pLog->GetKeyTime( k );
-			float f = pLog->GetComponent( t, i );
-			int x = TimeToPixel( t );
-			int y = GetTall() - ValueToPixel( f ) - 1;
-			if ( k )
+			DmeTime_t t = pLog->GetKeyTime(k);
+			float f = pLog->GetComponent(t, i);
+			int x = TimeToPixel(t);
+			int y = GetTall() - ValueToPixel(f) - 1;
+			if(k)
 			{
-				surface()->DrawLine( lastx, lasty, x, y );
+				surface()->DrawLine(lastx, lasty, x, y);
 			}
 			lastx = x;
 			lasty = y;
@@ -309,9 +315,9 @@ void CChannelGraphPanel::ApplySchemeSettings(IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 
-	m_font = pScheme->GetFont( "DefaultVerySmall" );
+	m_font = pScheme->GetFont("DefaultVerySmall");
 
-	surface()->GetTextSize( m_font, L"999.9", m_nGraphOriginX, m_nGraphOriginY );
+	surface()->GetTextSize(m_font, L"999.9", m_nGraphOriginX, m_nGraphOriginY);
 	m_nGraphOriginX += 2 * m_nTextBorder;
 	m_nGraphOriginY += 2 * m_nTextBorder;
 
@@ -320,40 +326,38 @@ void CChannelGraphPanel::ApplySchemeSettings(IScheme *pScheme)
 	SetBorder(pScheme->GetBorder("ButtonDepressedBorder"));
 }
 
-
 //-----------------------------------------------------------------------------
 //
-// CChannelGraphFrame methods 
+// CChannelGraphFrame methods
 //
 //-----------------------------------------------------------------------------
-CChannelGraphFrame::CChannelGraphFrame( Panel *parent, const char *pTitle )
-: BaseClass( parent, "CChannelGraphFrame" )
+CChannelGraphFrame::CChannelGraphFrame(Panel *parent, const char *pTitle) : BaseClass(parent, "CChannelGraphFrame")
 {
-	SetTitle( pTitle, true );
+	SetTitle(pTitle, true);
 
-	SetSizeable( true );
-	SetCloseButtonVisible( true );
-	SetMinimumSize( 200, 100 );
+	SetSizeable(true);
+	SetCloseButtonVisible(true);
+	SetMinimumSize(200, 100);
 
-	SetVisible( true );
+	SetVisible(true);
 
-	SetSize( 400, 200 );
-	SetPos( 100, 100 );
+	SetSize(400, 200);
+	SetPos(100, 100);
 
-	m_pChannelGraph = new CChannelGraphPanel( this, "ChannelGraph" );
+	m_pChannelGraph = new CChannelGraphPanel(this, "ChannelGraph");
 
-	SetScheme( vgui::scheme()->LoadSchemeFromFile( "Resource/BoxRocket.res", "BoxRocket" ) );
+	SetScheme(vgui::scheme()->LoadSchemeFromFile("Resource/BoxRocket.res", "BoxRocket"));
 }
 
-void CChannelGraphFrame::SetChannel( CDmeChannel *pChannel )
+void CChannelGraphFrame::SetChannel(CDmeChannel *pChannel)
 {
-	m_pChannelGraph->SetChannel( pChannel );
+	m_pChannelGraph->SetChannel(pChannel);
 }
 
-void CChannelGraphFrame::OnCommand( const char *cmd )
+void CChannelGraphFrame::OnCommand(const char *cmd)
 {
-	BaseClass::OnCommand( cmd );
-	m_pChannelGraph->OnCommand( cmd );
+	BaseClass::OnCommand(cmd);
+	m_pChannelGraph->OnCommand(cmd);
 }
 
 void CChannelGraphFrame::PerformLayout()
@@ -362,7 +366,7 @@ void CChannelGraphFrame::PerformLayout()
 
 	int border = 5;
 	int iWidth, iHeight;
-	GetSize( iWidth, iHeight );
-	m_pChannelGraph->SetPos( border, GetCaptionHeight() + border );
-	m_pChannelGraph->SetSize( iWidth - 2 * border, iHeight - GetCaptionHeight() - 2 * border );
+	GetSize(iWidth, iHeight);
+	m_pChannelGraph->SetPos(border, GetCaptionHeight() + border);
+	m_pChannelGraph->SetSize(iWidth - 2 * border, iHeight - GetCaptionHeight() - 2 * border);
 }

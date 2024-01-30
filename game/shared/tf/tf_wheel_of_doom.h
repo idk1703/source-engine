@@ -37,7 +37,6 @@ enum eWheelOfDoomEffectSkinIndex
 	EFFECT_COUNT
 };
 
-
 #ifdef GAME_DLL
 
 class CWheelOfDoomSpiral;
@@ -49,34 +48,35 @@ class CWheelOfDoomSpiral;
 class CWheelOfDoom : public CBaseAnimating, public CGameEventListener
 {
 public:
-	DECLARE_CLASS( CWheelOfDoom, CBaseAnimating );
+	DECLARE_CLASS(CWheelOfDoom, CBaseAnimating);
 	DECLARE_DATADESC();
 
-
-	CWheelOfDoom( void );
-	~CWheelOfDoom( void );
+	CWheelOfDoom(void);
+	~CWheelOfDoom(void);
 
 	// Initialization
-	virtual void Spawn( void );
-	virtual void Precache( void );
+	virtual void Spawn(void);
+	virtual void Precache(void);
 
 	// Thinks
-	void IdleThink( void );
-	void SpinThink( void );
+	void IdleThink(void);
+	void SpinThink(void);
 
-	virtual void FireGameEvent( IGameEvent *gameEvent );
+	virtual void FireGameEvent(IGameEvent *gameEvent);
 
-	void StartSpin( void );
-	void Spin( inputdata_t& inputdata );
-	void ClearAllEffects( inputdata_t& inputdata );
+	void StartSpin(void);
+	void Spin(inputdata_t &inputdata);
+	void ClearAllEffects(inputdata_t &inputdata);
 	bool IsDoneBoardcastingEffectSound() const;
 
-	float GetDuration() const { return m_flDuration; }
+	float GetDuration() const
+	{
+		return m_flDuration;
+	}
 
-	void DBG_ApplyEffectByName( const char* pszEffectName );
+	void DBG_ApplyEffectByName(const char *pszEffectName);
 
 private:
-
 	enum eEffectProperty
 	{
 		PROPERTY_WHAMMY,
@@ -85,8 +85,8 @@ private:
 
 	struct EffectData_t
 	{
-		CUtlVector<CTFPlayer*> m_vecPlayers;
-		CWheelOfDoom* m_pWheel;
+		CUtlVector<CTFPlayer *> m_vecPlayers;
+		CWheelOfDoom *m_pWheel;
 	};
 
 	struct EffectManager;
@@ -95,24 +95,33 @@ private:
 	public:
 		WOD_BaseEffect();
 
-		virtual void InitEffect( float flDefaultDuration );
+		virtual void InitEffect(float flDefaultDuration);
 
-		virtual void ActivateEffect( EffectData_t& data )	{};
-		virtual void UpdateEffect( EffectData_t& data  )	{};
-		virtual void DeactivateEffect( EffectData_t& data )	{};
+		virtual void ActivateEffect(EffectData_t &data) {};
+		virtual void UpdateEffect(EffectData_t &data) {};
+		virtual void DeactivateEffect(EffectData_t &data) {};
 
-		void SetListFlags( int iFlags );
-		int GetListFlags() const			{ return m_iListFlags; }
-		const char* GetName()				{ return m_pszName; }
-		eWheelOfDoomEffectSkinIndex GetSkinIndex() const { return m_nSkin; }
+		void SetListFlags(int iFlags);
+		int GetListFlags() const
+		{
+			return m_iListFlags;
+		}
+		const char *GetName()
+		{
+			return m_pszName;
+		}
+		eWheelOfDoomEffectSkinIndex GetSkinIndex() const
+		{
+			return m_nSkin;
+		}
+
 	protected:
-
 		eWheelOfDoomEffectSkinIndex m_nSkin;
 		float m_flExpireTime;
-		const char* m_pszEffectAnnouncementSound;
+		const char *m_pszEffectAnnouncementSound;
 		int m_iListFlags;
 
-		const char* m_pszName;
+		const char *m_pszName;
 
 		friend struct EffectManager;
 	};
@@ -120,58 +129,59 @@ private:
 	struct EffectManager
 	{
 	public:
-		explicit EffectManager( CWheelOfDoom* pWheel ) { m_pWheel = pWheel; }
+		explicit EffectManager(CWheelOfDoom *pWheel)
+		{
+			m_pWheel = pWheel;
+		}
 		~EffectManager();
 
-		int AddEffect( WOD_BaseEffect* pEffect, float flDefaultDuration );
-		void ApplyAllEffectsToPlayer( CTFPlayer* pPlayer );
+		int AddEffect(WOD_BaseEffect *pEffect, float flDefaultDuration);
+		void ApplyAllEffectsToPlayer(CTFPlayer *pPlayer);
 		void ClearEffects();
 		bool UpdateAndClearExpiredEffects();
 		void Precache();
 
 	private:
-		CWheelOfDoom*	m_pWheel;
-		CUtlVector<WOD_BaseEffect*> m_vecActiveEffects;
+		CWheelOfDoom *m_pWheel;
+		CUtlVector<WOD_BaseEffect *> m_vecActiveEffects;
 	} m_EffectManager;
 
-	WOD_BaseEffect* GetRandomEffectWithFlags();
+	WOD_BaseEffect *GetRandomEffectWithFlags();
 	void EndSpin();
 
-	CUtlVector<WOD_BaseEffect*> m_vecEffects;
+	CUtlVector<WOD_BaseEffect *> m_vecEffects;
 
-	void RegisterEffect( WOD_BaseEffect* pEffect, int nFlags = 0 );
+	void RegisterEffect(WOD_BaseEffect *pEffect, int nFlags = 0);
 
-	static void ApplyAttributeToAllPlayers( const char* pszAttribName, float flValue );
-	static void ApplyAttributeToPlayer( CTFPlayer* pPlayer, const char* pszAttribName, float flValue );
-	static void RemoveAttributeFromAllPlayers( const char* pszAttribName );
-	static void RemoveAttributeFromPlayer( CTFPlayer* pPlayer, const char* pszAttribName );
+	static void ApplyAttributeToAllPlayers(const char *pszAttribName, float flValue);
+	static void ApplyAttributeToPlayer(CTFPlayer *pPlayer, const char *pszAttribName, float flValue);
+	static void RemoveAttributeFromAllPlayers(const char *pszAttribName);
+	static void RemoveAttributeFromPlayer(CTFPlayer *pPlayer, const char *pszAttribName);
 
-	static void SpeakMagicConceptToAllPlayers( const char* pszEffect );
+	static void SpeakMagicConceptToAllPlayers(const char *pszEffect);
 
+	WOD_BaseEffect *m_pChosenEffect;
+	CWheelOfDoomSpiral *m_pSpiral;
 
-	WOD_BaseEffect* m_pChosenEffect;
-	CWheelOfDoomSpiral* m_pSpiral;
-
-	static const char* GetScreenModelName();
+	static const char *GetScreenModelName();
 	float CalcNextTickTime() const;
 	float CalcSpinCompletion() const;
-	void SetSkin( int nSkin );
-	void SetScale( float flScale );
-	void PlaySound( const char* pszSound );
+	void SetSkin(int nSkin);
+	void SetScale(float flScale);
+	void PlaySound(const char *pszSound);
 
-	bool	m_bAnnounced;
-	bool	m_bHasSpiral;
-	float	m_flDuration;
-	float	m_flNextTickTime;
-	float	m_flNextAnnounceTime;
-	float	m_flStopSpinTime;
-	CUtlVector<CWheelOfDoom*> m_vecOtherWODs;
+	bool m_bAnnounced;
+	bool m_bHasSpiral;
+	float m_flDuration;
+	float m_flNextTickTime;
+	float m_flNextAnnounceTime;
+	float m_flStopSpinTime;
+	CUtlVector<CWheelOfDoom *> m_vecOtherWODs;
 
-	float	m_flFinishBroadcastingEffectTime;
+	float m_flFinishBroadcastingEffectTime;
 
 	COutputEvent m_EffectApplied;
 	COutputEvent m_EffectExpired;
-
 
 	//-----------------------------------------------------------------------
 	// Effects
@@ -186,7 +196,7 @@ private:
 			m_pszEffectAnnouncementSound = "Halloween.MerasmusWheelCrits";
 		};
 
-		void ActivateEffect( EffectData_t& data );
+		void ActivateEffect(EffectData_t &data);
 	};
 
 	class WOD_UberEffect : public WOD_BaseEffect
@@ -199,8 +209,8 @@ private:
 			m_pszEffectAnnouncementSound = "Halloween.MerasmusWheelUber";
 		};
 
-		void InitEffect( float flDefaultExpireTime );
-		void ActivateEffect( EffectData_t& data );
+		void InitEffect(float flDefaultExpireTime);
+		void ActivateEffect(EffectData_t &data);
 	};
 
 	class WOD_SuperSpeedEffect : public WOD_BaseEffect
@@ -213,8 +223,8 @@ private:
 			m_pszEffectAnnouncementSound = "Halloween.MerasmusWheelSuperSpeed";
 		};
 
-		void ActivateEffect( EffectData_t& data );
-		void DeactivateEffect( EffectData_t& data );
+		void ActivateEffect(EffectData_t &data);
+		void DeactivateEffect(EffectData_t &data);
 	};
 
 	class WOD_SuperJumpEffect : public WOD_BaseEffect
@@ -227,8 +237,8 @@ private:
 			m_pszEffectAnnouncementSound = "Halloween.MerasmusWheelSuperJump";
 		}
 
-		void ActivateEffect( EffectData_t& data );
-		void DeactivateEffect( EffectData_t& data );
+		void ActivateEffect(EffectData_t &data);
+		void DeactivateEffect(EffectData_t &data);
 	};
 
 	class WOD_BigHeadEffect : public WOD_BaseEffect
@@ -241,8 +251,8 @@ private:
 			m_pszEffectAnnouncementSound = "Halloween.MerasmusWheelBigHead";
 		}
 
-		void ActivateEffect( EffectData_t& data );
-		void DeactivateEffect( EffectData_t& data );
+		void ActivateEffect(EffectData_t &data);
+		void DeactivateEffect(EffectData_t &data);
 	};
 
 	class WOD_SmallHeadEffect : public WOD_BaseEffect
@@ -255,8 +265,8 @@ private:
 			m_pszEffectAnnouncementSound = "Halloween.MerasmusWheelShrunkHead";
 		}
 
-		void ActivateEffect( EffectData_t& data );
-		void DeactivateEffect( EffectData_t& data );
+		void ActivateEffect(EffectData_t &data);
+		void DeactivateEffect(EffectData_t &data);
 	};
 
 	class WOD_LowGravityEffect : public WOD_BaseEffect
@@ -269,8 +279,8 @@ private:
 			m_pszEffectAnnouncementSound = "Halloween.MerasmusWheelGravity";
 		}
 
-		void ActivateEffect( EffectData_t& data );
-		void DeactivateEffect( EffectData_t& data );
+		void ActivateEffect(EffectData_t &data);
+		void DeactivateEffect(EffectData_t &data);
 	};
 
 	class WOD_Pee : public WOD_BaseEffect
@@ -283,13 +293,12 @@ private:
 			m_pszEffectAnnouncementSound = "Halloween.MerasmusWheelJarate";
 		}
 
-		void ActivateEffect( EffectData_t& data );
-		void UpdateEffect( EffectData_t& data );
+		void ActivateEffect(EffectData_t &data);
+		void UpdateEffect(EffectData_t &data);
 
 	private:
-
 		float m_flNextPeeTime;
-		CUtlVector<CBaseEntity*> m_vecClouds;
+		CUtlVector<CBaseEntity *> m_vecClouds;
 	};
 
 	class WOD_Burn : public WOD_BaseEffect
@@ -302,8 +311,8 @@ private:
 			m_pszEffectAnnouncementSound = "Halloween.MerasmusWheelBurn";
 		}
 
-		void InitEffect( float flDefaultDuration );
-		void ActivateEffect( EffectData_t& data );
+		void InitEffect(float flDefaultDuration);
+		void ActivateEffect(EffectData_t &data);
 	};
 
 	class WOD_Ghosts : public WOD_BaseEffect
@@ -316,8 +325,8 @@ private:
 			m_pszEffectAnnouncementSound = "Halloween.MerasmusWheelGhosts";
 		}
 
-		void ActivateEffect( EffectData_t& data );
-		void DeactivateEffect( EffectData_t& data );
+		void ActivateEffect(EffectData_t &data);
+		void DeactivateEffect(EffectData_t &data);
 	};
 
 	class WOD_Dance : public WOD_BaseEffect
@@ -331,15 +340,15 @@ private:
 			m_flNextDanceTime = 0.f;
 		}
 
-		void InitEffect( float flExpireTime );
+		void InitEffect(float flExpireTime);
 
-		void UpdateEffect( EffectData_t& data );
-		void DeactivateEffect( EffectData_t& data );
+		void UpdateEffect(EffectData_t &data);
+		void DeactivateEffect(EffectData_t &data);
 
 	private:
-		int GetNumOFTeamDancing( int nTeam ) const;
-		void SlamPosAndAngles( CTFPlayer* pPlayer, const Vector& vPos, const QAngle& vAng );
-		
+		int GetNumOFTeamDancing(int nTeam) const;
+		void SlamPosAndAngles(CTFPlayer *pPlayer, const Vector &vPos, const QAngle &vAng);
+
 		struct Dancer_t
 		{
 			Vector m_vecPos;
@@ -347,15 +356,15 @@ private:
 			CHandle<CTFPlayer> m_hPlayer;
 		};
 
-		CUtlVector<Dancer_t*> m_vecDancers;
+		CUtlVector<Dancer_t *> m_vecDancers;
 
 		struct MerasmusCreateInfo_t
 		{
-			MerasmusCreateInfo_t( const Vector& p, const QAngle& ang ) : m_vecPos( p ), m_vecAngles( ang ) {}
+			MerasmusCreateInfo_t(const Vector &p, const QAngle &ang) : m_vecPos(p), m_vecAngles(ang) {}
 			Vector m_vecPos;
 			QAngle m_vecAngles;
 		};
-		CUtlVector< MerasmusCreateInfo_t > m_vecMerasmusDancerCreateInfos;
+		CUtlVector<MerasmusCreateInfo_t> m_vecMerasmusDancerCreateInfos;
 		int m_iCurrentMerasmusCreateInfo;
 		CHandle<CMerasmusDancer> m_hMerasmusDancer;
 

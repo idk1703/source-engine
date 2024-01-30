@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,10 +18,10 @@
 #include "tier0/memdbgon.h"
 
 // forward declarations
-void ToolFramework_RecordMaterialParams( IMaterial *pMaterial );
+void ToolFramework_RecordMaterialParams(IMaterial *pMaterial);
 
 //-----------------------------------------------------------------------------
-// Constructor, destructor: 
+// Constructor, destructor:
 //-----------------------------------------------------------------------------
 
 CBaseAnimatedTextureProxy::CBaseAnimatedTextureProxy()
@@ -34,31 +34,30 @@ CBaseAnimatedTextureProxy::~CBaseAnimatedTextureProxy()
 	Cleanup();
 }
 
-
 //-----------------------------------------------------------------------------
 // Initialization, shutdown
 //-----------------------------------------------------------------------------
-bool CBaseAnimatedTextureProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
+bool CBaseAnimatedTextureProxy::Init(IMaterial *pMaterial, KeyValues *pKeyValues)
 {
-	char const* pAnimatedTextureVarName = pKeyValues->GetString( "animatedTextureVar" );
+	char const *pAnimatedTextureVarName = pKeyValues->GetString("animatedTextureVar");
 
-	if( pAnimatedTextureVarName )
+	if(pAnimatedTextureVarName)
 	{
 		bool foundVar;
 
-		m_AnimatedTextureVar = pMaterial->FindVar( pAnimatedTextureVarName, &foundVar, false );
-		if( foundVar )
+		m_AnimatedTextureVar = pMaterial->FindVar(pAnimatedTextureVarName, &foundVar, false);
+		if(foundVar)
 		{
-			char const* pAnimatedTextureFrameNumVarName = pKeyValues->GetString( "animatedTextureFrameNumVar" );
+			char const *pAnimatedTextureFrameNumVarName = pKeyValues->GetString("animatedTextureFrameNumVar");
 
-			if( pAnimatedTextureFrameNumVarName )
+			if(pAnimatedTextureFrameNumVarName)
 			{
-				m_AnimatedTextureFrameNumVar = pMaterial->FindVar( pAnimatedTextureFrameNumVarName, &foundVar, false );
+				m_AnimatedTextureFrameNumVar = pMaterial->FindVar(pAnimatedTextureFrameNumVarName, &foundVar, false);
 
-				if( foundVar )
+				if(foundVar)
 				{
-					m_FrameRate = pKeyValues->GetFloat( "animatedTextureFrameRate", 15 );
-					m_WrapAnimation = !pKeyValues->GetInt( "animationNoWrap", 0 );
+					m_FrameRate = pKeyValues->GetFloat("animatedTextureFrameRate", 15);
+					m_WrapAnimation = !pKeyValues->GetInt("animationNoWrap", 0);
 					return true;
 				}
 			}
@@ -76,15 +75,14 @@ void CBaseAnimatedTextureProxy::Cleanup()
 	m_AnimatedTextureFrameNumVar = NULL;
 }
 
-
 //-----------------------------------------------------------------------------
 // Does the dirty deed
 //-----------------------------------------------------------------------------
-void CBaseAnimatedTextureProxy::OnBind( void *pEntity )
+void CBaseAnimatedTextureProxy::OnBind(void *pEntity)
 {
-	Assert ( m_AnimatedTextureVar );
+	Assert(m_AnimatedTextureVar);
 
-	if( m_AnimatedTextureVar->GetType() != MATERIAL_VAR_TYPE_TEXTURE )
+	if(m_AnimatedTextureVar->GetType() != MATERIAL_VAR_TYPE_TEXTURE)
 	{
 		return;
 	}
@@ -92,9 +90,9 @@ void CBaseAnimatedTextureProxy::OnBind( void *pEntity )
 	pTexture = m_AnimatedTextureVar->GetTextureValue();
 	int numFrames = pTexture->GetNumAnimationFrames();
 
-	if ( numFrames <= 0 )
+	if(numFrames <= 0)
 	{
-		Assert( !"0 frames in material calling animated texture proxy" );
+		Assert(!"0 frames in material calling animated texture proxy");
 		return;
 	}
 
@@ -106,39 +104,39 @@ void CBaseAnimatedTextureProxy::OnBind( void *pEntity )
 	float prevTime = deltaTime - gpGlobals->frametime;
 
 	// Clamp..
-	if (deltaTime < 0.0f)
+	if(deltaTime < 0.0f)
 		deltaTime = 0.0f;
-	if (prevTime < 0.0f)
+	if(prevTime < 0.0f)
 		prevTime = 0.0f;
 
-	float frame = m_FrameRate * deltaTime;	
+	float frame = m_FrameRate * deltaTime;
 	float prevFrame = m_FrameRate * prevTime;
 
-	int intFrame = ((int)frame) % numFrames; 
+	int intFrame = ((int)frame) % numFrames;
 	int intPrevFrame = ((int)prevFrame) % numFrames;
 
 	// Report wrap situation...
-	if (intPrevFrame > intFrame)
+	if(intPrevFrame > intFrame)
 	{
-		if (m_WrapAnimation)
+		if(m_WrapAnimation)
 		{
-			AnimationWrapped( pEntity );
+			AnimationWrapped(pEntity);
 		}
 		else
 		{
 			// Only sent the wrapped message once.
 			// when we're in non-wrapping mode
-			if (prevFrame < numFrames)
-				AnimationWrapped( pEntity );
+			if(prevFrame < numFrames)
+				AnimationWrapped(pEntity);
 			intFrame = numFrames - 1;
 		}
 	}
 
-	m_AnimatedTextureFrameNumVar->SetIntValue( intFrame );
+	m_AnimatedTextureFrameNumVar->SetIntValue(intFrame);
 
-	if ( ToolsEnabled() )
+	if(ToolsEnabled())
 	{
-		ToolFramework_RecordMaterialParams( GetMaterial() );
+		ToolFramework_RecordMaterialParams(GetMaterial());
 	}
 }
 

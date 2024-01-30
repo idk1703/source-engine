@@ -6,7 +6,7 @@
 
 #include "cbase.h"
 
-#if defined( REPLAY_ENABLED )
+#if defined(REPLAY_ENABLED)
 
 #include "replayyoutubeapi.h"
 
@@ -37,27 +37,29 @@
 
 using namespace vgui;
 
-static ConVar youtube_username( "youtube_username", "", FCVAR_ARCHIVE, "Username for YouTube." );
+static ConVar youtube_username("youtube_username", "", FCVAR_ARCHIVE, "Username for YouTube.");
 
 //-----------------------------------------------------------------------------
 
 extern IReplayMovieManager *g_pReplayMovieManager;
 extern const char *COM_GetModDirectory();
-extern void GetYouTubeAPIKey( const char *pGameDir, bool bOnSteamPublic, const char **ppSource, const char **ppDeveloperTag, const char **ppDeveloperKey );
-
-
+extern void GetYouTubeAPIKey(const char *pGameDir, bool bOnSteamPublic, const char **ppSource,
+							 const char **ppDeveloperTag, const char **ppDeveloperKey);
 
 //-----------------------------------------------------------------------------
 
-static bool HasInvalidCharacters( const char *pString )
+static bool HasInvalidCharacters(const char *pString)
 {
-	while ( *pString != 0 )
+	while(*pString != 0)
 	{
-		switch ( *pString )
+		switch(*pString)
 		{
-		case '<': return true;
-		case '>': return true;
-		case '&': return true;
+			case '<':
+				return true;
+			case '>':
+				return true;
+			case '&':
+				return true;
 		}
 		++pString;
 	}
@@ -66,48 +68,48 @@ static bool HasInvalidCharacters( const char *pString )
 
 //-----------------------------------------------------------------------------
 
-void UploadOgsData( IReplayMovie *pMovie, bool bEnded = false, const char *pEndReason = NULL )
+void UploadOgsData(IReplayMovie *pMovie, bool bEnded = false, const char *pEndReason = NULL)
 {
 	static int s_nUploadCounter = 0;
 
-	KeyValues* pKVData = new KeyValues( "TF2ReplayUploads" );
+	KeyValues *pKVData = new KeyValues("TF2ReplayUploads");
 
-	pKVData->SetInt( "UploadCounter", s_nUploadCounter++ );
-	pKVData->SetInt( "ReplayHandle", (int)pMovie->GetReplayHandle() );
+	pKVData->SetInt("UploadCounter", s_nUploadCounter++);
+	pKVData->SetInt("ReplayHandle", (int)pMovie->GetReplayHandle());
 
 	const ReplayRenderSettings_t &RenderSettings = pMovie->GetRenderSettings();
-	CFmtStr fmtResolution( "%ix%i", RenderSettings.m_nWidth, RenderSettings.m_nHeight );
-	pKVData->SetString( "ResolutionID", fmtResolution.Access() );
+	CFmtStr fmtResolution("%ix%i", RenderSettings.m_nWidth, RenderSettings.m_nHeight);
+	pKVData->SetString("ResolutionID", fmtResolution.Access());
 
-	pKVData->SetString( "CodecID", ReplayVideo_GetCodec( ReplayVideo_FindCodecPresetFromCodec( RenderSettings.m_Codec ) ).m_pName );
-	pKVData->SetInt( "MotionBlurQuality", RenderSettings.m_nMotionBlurQuality );
-	pKVData->SetInt( "RenderQuality", RenderSettings.m_nEncodingQuality );
-	pKVData->SetInt( "FPSUPF", RenderSettings.m_FPS.GetUnitsPerFrame() );
-	pKVData->SetInt( "FPSUPS", RenderSettings.m_FPS.GetUnitsPerSecond() );
+	pKVData->SetString("CodecID",
+					   ReplayVideo_GetCodec(ReplayVideo_FindCodecPresetFromCodec(RenderSettings.m_Codec)).m_pName);
+	pKVData->SetInt("MotionBlurQuality", RenderSettings.m_nMotionBlurQuality);
+	pKVData->SetInt("RenderQuality", RenderSettings.m_nEncodingQuality);
+	pKVData->SetInt("FPSUPF", RenderSettings.m_FPS.GetUnitsPerFrame());
+	pKVData->SetInt("FPSUPS", RenderSettings.m_FPS.GetUnitsPerSecond());
 
-	if ( bEnded )
+	if(bEnded)
 	{
-		pKVData->SetInt( "EndUploadTime", GetSteamWorksSGameStatsUploader().GetTimeSinceEpoch() );
-		pKVData->SetString( "EndUploadReasonID", pEndReason );
+		pKVData->SetInt("EndUploadTime", GetSteamWorksSGameStatsUploader().GetTimeSinceEpoch());
+		pKVData->SetString("EndUploadReasonID", pEndReason);
 	}
 	else
 	{
-		pKVData->SetInt( "StartUploadTime", GetSteamWorksSGameStatsUploader().GetTimeSinceEpoch() );
+		pKVData->SetInt("StartUploadTime", GetSteamWorksSGameStatsUploader().GetTimeSinceEpoch());
 	}
 
-	GetSteamWorksSGameStatsUploader().AddStatsForUpload( pKVData );
+	GetSteamWorksSGameStatsUploader().AddStatsForUpload(pKVData);
 }
 
 //-----------------------------------------------------------------------------
 
 class CYouTubeLoginWaitDialog : public CGenericWaitingDialog
 {
-	DECLARE_CLASS_SIMPLE( CYouTubeLoginWaitDialog, CGenericWaitingDialog );
+	DECLARE_CLASS_SIMPLE(CYouTubeLoginWaitDialog, CGenericWaitingDialog);
+
 public:
-	CYouTubeLoginWaitDialog( IReplayMovie *pMovie, CConfirmDialog *pLoginDialog ) 
-		: CGenericWaitingDialog( pLoginDialog->GetParent() )
-		, m_pMovie( pMovie )
-		, m_pLoginDialog( pLoginDialog )
+	CYouTubeLoginWaitDialog(IReplayMovie *pMovie, CConfirmDialog *pLoginDialog)
+		: CGenericWaitingDialog(pLoginDialog->GetParent()), m_pMovie(pMovie), m_pLoginDialog(pLoginDialog)
 	{
 	}
 
@@ -115,7 +117,7 @@ public:
 	{
 		BaseClass::OnUserClose();
 		YouTube_LoginCancel();
-		ShowMessageBox( "#YouTube_LoginResults_Title", "#YouTube_LoginResults_Cancel", "#GameUI_OK" );
+		ShowMessageBox("#YouTube_LoginResults_Title", "#YouTube_LoginResults_Cancel", "#GameUI_OK");
 	}
 
 	virtual void OnTick()
@@ -123,28 +125,28 @@ public:
 		BaseClass::OnTick();
 
 		eYouTubeLoginStatus loginStatus = YouTube_GetLoginStatus();
-		switch ( loginStatus )
+		switch(loginStatus)
 		{
-		case kYouTubeLogin_NotLoggedIn:
-			break;
-		case kYouTubeLogin_LoggedIn:
-			Close();
-			PostMessage( m_pLoginDialog, new KeyValues("Command", "command", "cancel" ), NULL);
-			YouTube_ShowUploadDialog( m_pMovie, m_pLoginDialog->GetParent() );
-			break;
-		case kYouTubeLogin_CouldNotConnect:
-			Close();
-			ShowMessageBox( "#YouTube_LoginResults_Title", "#YouTube_LoginResults_CouldNotConnect", "#GameUI_OK" );
-			break;
-		case kYouTubeLogin_Forbidden:
-			Close();
-			ShowMessageBox( "#YouTube_LoginResults_Title", "#YouTube_LoginResults_Forbidden", "#GameUI_OK" );
-			break;
-		case kYouTubeLogin_GenericFailure:
-		default:
-			Close();
-			ShowMessageBox( "#YouTube_LoginResults_Title", "#YouTube_LoginResults_Failure", "#GameUI_OK" );
-			break;
+			case kYouTubeLogin_NotLoggedIn:
+				break;
+			case kYouTubeLogin_LoggedIn:
+				Close();
+				PostMessage(m_pLoginDialog, new KeyValues("Command", "command", "cancel"), NULL);
+				YouTube_ShowUploadDialog(m_pMovie, m_pLoginDialog->GetParent());
+				break;
+			case kYouTubeLogin_CouldNotConnect:
+				Close();
+				ShowMessageBox("#YouTube_LoginResults_Title", "#YouTube_LoginResults_CouldNotConnect", "#GameUI_OK");
+				break;
+			case kYouTubeLogin_Forbidden:
+				Close();
+				ShowMessageBox("#YouTube_LoginResults_Title", "#YouTube_LoginResults_Forbidden", "#GameUI_OK");
+				break;
+			case kYouTubeLogin_GenericFailure:
+			default:
+				Close();
+				ShowMessageBox("#YouTube_LoginResults_Title", "#YouTube_LoginResults_Failure", "#GameUI_OK");
+				break;
 		}
 	}
 
@@ -155,42 +157,50 @@ private:
 
 class CYouTubeUploadWaitDialog : public CGenericWaitingDialog
 {
-	DECLARE_CLASS_SIMPLE( CYouTubeUploadWaitDialog, CGenericWaitingDialog );
+	DECLARE_CLASS_SIMPLE(CYouTubeUploadWaitDialog, CGenericWaitingDialog);
+
 public:
-	CYouTubeUploadWaitDialog( IReplayMovie *pMovie, const char *pTitle, const char *pDescription, YouTubeUploadHandle_t handle, vgui::Panel *pParent )  
-		: CGenericWaitingDialog( pParent )
-		, m_pMovie( pMovie )
-		, m_strTitle( pTitle )
-		, m_strDescription( pDescription )
-		, m_uploadHandle( handle )
-		, m_iTick( 0 )
+	CYouTubeUploadWaitDialog(IReplayMovie *pMovie, const char *pTitle, const char *pDescription,
+							 YouTubeUploadHandle_t handle, vgui::Panel *pParent)
+		: CGenericWaitingDialog(pParent),
+		  m_pMovie(pMovie),
+		  m_strTitle(pTitle),
+		  m_strDescription(pDescription),
+		  m_uploadHandle(handle),
+		  m_iTick(0)
 	{
 	}
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme )
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme)
 	{
-		BaseClass::ApplySchemeSettings( pScheme );
-		m_pProgressBar = dynamic_cast< ProgressBar * >( FindChildByName( "Progress" ) );
+		BaseClass::ApplySchemeSettings(pScheme);
+		m_pProgressBar = dynamic_cast<ProgressBar *>(FindChildByName("Progress"));
 	}
 
 	virtual void PerformLayout()
 	{
 		BaseClass::PerformLayout();
-		if ( m_pProgressBar )
+		if(m_pProgressBar)
 		{
-			m_pProgressBar->SetVisible( true );
-			m_pProgressBar->SetSegmentInfo( XRES(1), XRES(5) );
+			m_pProgressBar->SetVisible(true);
+			m_pProgressBar->SetSegmentInfo(XRES(1), XRES(5));
 		}
 	}
 
-	virtual const char* GetResFile() const { return "resource/UI/YouTubeUploadWaitingDialog.res"; }
-	virtual const char *GetResFilePathId() const { return "GAME"; }
+	virtual const char *GetResFile() const
+	{
+		return "resource/UI/YouTubeUploadWaitingDialog.res";
+	}
+	virtual const char *GetResFilePathId() const
+	{
+		return "GAME";
+	}
 
 	virtual void OnUserClose()
 	{
 		BaseClass::OnUserClose();
-		YouTube_CancelUpload( m_uploadHandle );
-		UploadOgsData( m_pMovie, true, "cancelled" );
+		YouTube_CancelUpload(m_uploadHandle);
+		UploadOgsData(m_pMovie, true, "cancelled");
 	}
 
 	virtual void OnTick()
@@ -199,48 +209,48 @@ public:
 
 		double ultotal = 0.0;
 		double ulnow = 0.0;
-		if ( YouTube_GetUploadProgress( m_uploadHandle, ultotal, ulnow ) == false )
+		if(YouTube_GetUploadProgress(m_uploadHandle, ultotal, ulnow) == false)
 		{
 			Close();
-			ShowMessageBox( "#YouTube_Upload_Title", "#YouTube_Upload_Failure", "#GameUI_OK" );
+			ShowMessageBox("#YouTube_Upload_Title", "#YouTube_Upload_Failure", "#GameUI_OK");
 		}
-		else if ( YouTube_IsUploadFinished( m_uploadHandle ) )
+		else if(YouTube_IsUploadFinished(m_uploadHandle))
 		{
 			bool bSuccess = true;
 			CUtlString strURLToVideo;
 			CUtlString strURLToVideoStats;
-			if ( YouTube_GetUploadResults( m_uploadHandle, bSuccess, strURLToVideo, strURLToVideoStats ) && bSuccess )
+			if(YouTube_GetUploadResults(m_uploadHandle, bSuccess, strURLToVideo, strURLToVideoStats) && bSuccess)
 			{
 				// mark movie uploaded
-				m_pMovie->SetUploaded( true );
-				m_pMovie->SetUploadURL( strURLToVideoStats.Get() );
-				g_pReplayMovieManager->FlagMovieForFlush( m_pMovie, true );
+				m_pMovie->SetUploaded(true);
+				m_pMovie->SetUploadURL(strURLToVideoStats.Get());
+				g_pReplayMovieManager->FlagMovieForFlush(m_pMovie, true);
 				// update the UI
-				CReplayDetailsPanel *pDetailsPanel = dynamic_cast< CReplayDetailsPanel *>( GetParent() );
-				if ( pDetailsPanel )
+				CReplayDetailsPanel *pDetailsPanel = dynamic_cast<CReplayDetailsPanel *>(GetParent());
+				if(pDetailsPanel)
 				{
-					pDetailsPanel->InvalidateLayout( true, false );
-				}		
-				ShowMessageBox( "#YouTube_Upload_Title", "#YouTube_Upload_Success", "#GameUI_OK", NULL, GetParent() );
+					pDetailsPanel->InvalidateLayout(true, false);
+				}
+				ShowMessageBox("#YouTube_Upload_Title", "#YouTube_Upload_Success", "#GameUI_OK", NULL, GetParent());
 
 				// notify the GC
-				uint64 uSessionId = g_pClientReplayContext->GetServerSessionId( m_pMovie->GetReplayHandle() );
-				if ( uSessionId != 0 )
+				uint64 uSessionId = g_pClientReplayContext->GetServerSessionId(m_pMovie->GetReplayHandle());
+				if(uSessionId != 0)
 				{
-					GCSDK::CProtoBufMsg< CMsgReplayUploadedToYouTube > msg( k_EMsgGCReplay_UploadedToYouTube );
-					msg.Body().set_youtube_url( strURLToVideoStats.Get() );
-					msg.Body().set_youtube_account_name( YouTube_GetLoginName() );
-					msg.Body().set_session_id( uSessionId );
-					GCClientSystem()->BSendMessage( msg );
+					GCSDK::CProtoBufMsg<CMsgReplayUploadedToYouTube> msg(k_EMsgGCReplay_UploadedToYouTube);
+					msg.Body().set_youtube_url(strURLToVideoStats.Get());
+					msg.Body().set_youtube_account_name(YouTube_GetLoginName());
+					msg.Body().set_session_id(uSessionId);
+					GCClientSystem()->BSendMessage(msg);
 				}
 
-				surface()->PlaySound( "replay\\youtube_uploadfinished.wav" );
+				surface()->PlaySound("replay\\youtube_uploadfinished.wav");
 
-				UploadOgsData( m_pMovie, true, "completed" );
+				UploadOgsData(m_pMovie, true, "completed");
 
 				// share on Steam Community
-				if ( steamapicontext && steamapicontext->SteamRemoteStorage() )
-				{					
+				if(steamapicontext && steamapicontext->SteamRemoteStorage())
+				{
 					CUtlString strPreviewFileName;
 					AppId_t nConsumerAppId = steamapicontext->SteamUtils()->GetAppID();
 					ERemoteStoragePublishedFileVisibility eVisibility = k_ERemoteStoragePublishedFileVisibilityPublic;
@@ -250,47 +260,48 @@ public:
 
 					// don't bother waiting for result
 					SteamAPICall_t hSteamAPICall = steamapicontext->SteamRemoteStorage()->PublishVideo(
-						k_EWorkshopVideoProviderNone, "", 
-						strURLToVideo.Get(),
-						strPreviewFileName.Get(), 
-						nConsumerAppId, 
-						m_strTitle.Get(), 
-						m_strDescription.Get(), 
-						eVisibility, 
-						&tags
-						);
+						k_EWorkshopVideoProviderNone, "", strURLToVideo.Get(), strPreviewFileName.Get(), nConsumerAppId,
+						m_strTitle.Get(), m_strDescription.Get(), eVisibility, &tags);
 					hSteamAPICall;
 				}
 			}
 			else
 			{
-				ShowMessageBox( "#YouTube_Upload_Title", "#YouTube_Upload_Failure", "#GameUI_OK" );
+				ShowMessageBox("#YouTube_Upload_Title", "#YouTube_Upload_Failure", "#GameUI_OK");
 
-				surface()->PlaySound( "replay\\youtube_uploadfailed.wav" );
+				surface()->PlaySound("replay\\youtube_uploadfailed.wav");
 
-				UploadOgsData( m_pMovie, true, "failed" );
+				UploadOgsData(m_pMovie, true, "failed");
 			}
 			// close wait dialog
-			YouTube_ClearUploadResults( m_uploadHandle );
+			YouTube_ClearUploadResults(m_uploadHandle);
 			Close();
 		}
 		else
 		{
-			float flProgress = MIN( ulnow / MAX( ultotal, 1.0 ), 1.0f );
-			int iProgress = int( 100.0 * flProgress );
-			int ulnow_kb = uint32( ulnow / 1024 );
-			int ultotal_kb = uint32( ultotal / 1024 );
+			float flProgress = MIN(ulnow / MAX(ultotal, 1.0), 1.0f);
+			int iProgress = int(100.0 * flProgress);
+			int ulnow_kb = uint32(ulnow / 1024);
+			int ultotal_kb = uint32(ultotal / 1024);
 
-			if ( ulnow_kb == ultotal_kb )
+			if(ulnow_kb == ultotal_kb)
 			{
 				// we tick at 500 ms, so this should be ok
-				m_iTick = ( m_iTick + 1 ) % 4;
-				switch ( m_iTick )
+				m_iTick = (m_iTick + 1) % 4;
+				switch(m_iTick)
 				{
-				case 0:	SetDialogVariable( "duration", g_pVGuiLocalize->Find( "YouTube_UploadFinishing1" ) ); break;
-				case 1: SetDialogVariable( "duration", g_pVGuiLocalize->Find( "YouTube_UploadFinishing2" ) ); break;
-				case 2: SetDialogVariable( "duration", g_pVGuiLocalize->Find( "YouTube_UploadFinishing3" ) ); break;
-				case 3: SetDialogVariable( "duration", g_pVGuiLocalize->Find( "YouTube_UploadFinishing4" ) ); break;
+					case 0:
+						SetDialogVariable("duration", g_pVGuiLocalize->Find("YouTube_UploadFinishing1"));
+						break;
+					case 1:
+						SetDialogVariable("duration", g_pVGuiLocalize->Find("YouTube_UploadFinishing2"));
+						break;
+					case 2:
+						SetDialogVariable("duration", g_pVGuiLocalize->Find("YouTube_UploadFinishing3"));
+						break;
+					case 3:
+						SetDialogVariable("duration", g_pVGuiLocalize->Find("YouTube_UploadFinishing4"));
+						break;
 				}
 			}
 			else
@@ -299,20 +310,18 @@ public:
 				wchar_t wszPercentage[32];
 				wchar_t wszNow[32];
 				wchar_t wszTotal[32];
-				_snwprintf( wszPercentage, ARRAYSIZE( wszPercentage ), L"%u", iProgress );
-				_snwprintf( wszNow, ARRAYSIZE( wszNow ), L"%u", ulnow_kb );
-				_snwprintf( wszTotal, ARRAYSIZE( wszTotal ), L"%u", ultotal_kb );
-				g_pVGuiLocalize->ConstructString_safe( wszProgress, g_pVGuiLocalize->Find( "#YouTube_UploadProgress" ), 3, 
-												  wszPercentage,
-												  wszNow,
-												  wszTotal );
+				_snwprintf(wszPercentage, ARRAYSIZE(wszPercentage), L"%u", iProgress);
+				_snwprintf(wszNow, ARRAYSIZE(wszNow), L"%u", ulnow_kb);
+				_snwprintf(wszTotal, ARRAYSIZE(wszTotal), L"%u", ultotal_kb);
+				g_pVGuiLocalize->ConstructString_safe(wszProgress, g_pVGuiLocalize->Find("#YouTube_UploadProgress"), 3,
+													  wszPercentage, wszNow, wszTotal);
 
-				SetDialogVariable( "duration", wszProgress );
+				SetDialogVariable("duration", wszProgress);
 			}
 
-			if ( m_pProgressBar )
+			if(m_pProgressBar)
 			{
-				m_pProgressBar->SetProgress( flProgress );
+				m_pProgressBar->SetProgress(flProgress);
 			}
 		}
 	}
@@ -331,56 +340,67 @@ private:
 //-----------------------------------------------------------------------------
 class CYouTubeLoginDialog : public CConfirmDialog
 {
-	DECLARE_CLASS_SIMPLE( CYouTubeLoginDialog, CConfirmDialog );
+	DECLARE_CLASS_SIMPLE(CYouTubeLoginDialog, CConfirmDialog);
+
 public:
-	CYouTubeLoginDialog( IReplayMovie *pMovie, Panel *pParent ) : BaseClass( pParent ), m_pMovie( pMovie ) {}
+	CYouTubeLoginDialog(IReplayMovie *pMovie, Panel *pParent) : BaseClass(pParent), m_pMovie(pMovie) {}
 
-	const wchar_t *GetText() { return NULL; }
-
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme )
+	const wchar_t *GetText()
 	{
-		BaseClass::ApplySchemeSettings( pScheme );
-		TextEntry *pTextEntryUserName = dynamic_cast< TextEntry * >( FindChildByName( "UserNameTextEntry" ) );
-		if ( pTextEntryUserName )
+		return NULL;
+	}
+
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme)
+	{
+		BaseClass::ApplySchemeSettings(pScheme);
+		TextEntry *pTextEntryUserName = dynamic_cast<TextEntry *>(FindChildByName("UserNameTextEntry"));
+		if(pTextEntryUserName)
 		{
-			pTextEntryUserName->SetText( "" );
-			pTextEntryUserName->InsertString( youtube_username.GetString() );
+			pTextEntryUserName->SetText("");
+			pTextEntryUserName->InsertString(youtube_username.GetString());
 		}
 	}
 
-	virtual void OnCommand( const char *command )
+	virtual void OnCommand(const char *command)
 	{
-		if ( !Q_strnicmp( command, "register", 8 ) )
+		if(!Q_strnicmp(command, "register", 8))
 		{
-			if ( steamapicontext && steamapicontext->SteamFriends() )
+			if(steamapicontext && steamapicontext->SteamFriends())
 			{
-				steamapicontext->SteamFriends()->ActivateGameOverlayToWebPage( "http://www.youtube.com/create_account?next=/" );
+				steamapicontext->SteamFriends()->ActivateGameOverlayToWebPage(
+					"http://www.youtube.com/create_account?next=/");
 			}
-		}		
-		else if ( !Q_strnicmp( command, "confirm", 7 ) )
+		}
+		else if(!Q_strnicmp(command, "confirm", 7))
 		{
-			TextEntry *pTextEntryUserName = dynamic_cast< TextEntry * >( FindChildByName( "UserNameTextEntry" ) );
-			TextEntry *pTextEntryPassword = dynamic_cast< TextEntry * >( FindChildByName( "PasswordTextEntry" ) );
-			if ( pTextEntryUserName && pTextEntryPassword )
+			TextEntry *pTextEntryUserName = dynamic_cast<TextEntry *>(FindChildByName("UserNameTextEntry"));
+			TextEntry *pTextEntryPassword = dynamic_cast<TextEntry *>(FindChildByName("PasswordTextEntry"));
+			if(pTextEntryUserName && pTextEntryPassword)
 			{
 				char szUserName[256];
-				pTextEntryUserName->GetText( szUserName, sizeof( szUserName ) );
+				pTextEntryUserName->GetText(szUserName, sizeof(szUserName));
 				char szPassword[256];
-				pTextEntryPassword->GetText( szPassword, sizeof( szPassword ) );
-				youtube_username.SetValue( szUserName );
-				Login( szUserName, szPassword );
+				pTextEntryPassword->GetText(szPassword, sizeof(szPassword));
+				youtube_username.SetValue(szUserName);
+				Login(szUserName, szPassword);
 			}
 
 			return;
 		}
-		BaseClass::OnCommand( command );
+		BaseClass::OnCommand(command);
 	}
 
 protected:
-	virtual const char *GetResFile() { return "Resource/UI/YouTubeLoginDialog.res"; }
-	virtual const char *GetResFilePathId() { return "GAME"; }
+	virtual const char *GetResFile()
+	{
+		return "Resource/UI/YouTubeLoginDialog.res";
+	}
+	virtual const char *GetResFilePathId()
+	{
+		return "GAME";
+	}
 
-	void Login( const char* pUserName, const char *pPassword )
+	void Login(const char *pUserName, const char *pPassword)
 	{
 		const bool bOnSteamPublic = GetUniverse() == k_EUniversePublic;
 		const char *pGameDir = COM_GetModDirectory();
@@ -388,19 +408,19 @@ protected:
 		const char *pDeveloperTag = NULL;
 		const char *pDeveloperKey = NULL;
 
-		GetYouTubeAPIKey( pGameDir, bOnSteamPublic, &pSource, &pDeveloperTag, &pDeveloperKey );
+		GetYouTubeAPIKey(pGameDir, bOnSteamPublic, &pSource, &pDeveloperTag, &pDeveloperKey);
 
-		Assert( pSource );
-		Assert( pDeveloperTag );
-		Assert( pDeveloperKey );
-		
-		YouTube_SetDeveloperSettings( pDeveloperKey, pDeveloperTag );
+		Assert(pSource);
+		Assert(pDeveloperTag);
+		Assert(pDeveloperKey);
+
+		YouTube_SetDeveloperSettings(pDeveloperKey, pDeveloperTag);
 
 		// try to log in
-		YouTube_Login( pUserName, pPassword, pSource );
-		
-		CYouTubeLoginWaitDialog *pDialog = new CYouTubeLoginWaitDialog( m_pMovie, this );
-		ShowWaitingDialog( pDialog, "#YouTube_LoggingIn", true, true, -1 );
+		YouTube_Login(pUserName, pPassword, pSource);
+
+		CYouTubeLoginWaitDialog *pDialog = new CYouTubeLoginWaitDialog(m_pMovie, this);
+		ShowWaitingDialog(pDialog, "#YouTube_LoggingIn", true, true, -1);
 	}
 
 private:
@@ -412,182 +432,196 @@ private:
 //-----------------------------------------------------------------------------
 class CYouTubeUploadDialog : public CConfirmDialog
 {
-	DECLARE_CLASS_SIMPLE( CYouTubeUploadDialog, CConfirmDialog );
+	DECLARE_CLASS_SIMPLE(CYouTubeUploadDialog, CConfirmDialog);
+
 public:
-	CYouTubeUploadDialog( IReplayMovie *pMovie, Panel *pParent ) : BaseClass( pParent ), m_pMovie( pMovie ) {}
+	CYouTubeUploadDialog(IReplayMovie *pMovie, Panel *pParent) : BaseClass(pParent), m_pMovie(pMovie) {}
 
-	const wchar_t *GetText() { return NULL; }
-
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme )
+	const wchar_t *GetText()
 	{
-		BaseClass::ApplySchemeSettings( pScheme );
-		m_pTextEntryMovieTitle = dynamic_cast< TextEntry * >( FindChildByName( "MovieTitleTextEntry" ) );
-		m_pTextEntryMovieDesc = dynamic_cast< TextEntry * >( FindChildByName( "MovieDescTextEntry" ) );
-
-		// use insert, so that max characters is obeyed
-		m_pTextEntryMovieTitle->InsertString( m_pMovie->GetItemTitle() );
-		// @todo add steam profile to description
-		m_pTextEntryMovieDesc->SetText( "" );
-		m_pTextEntryMovieDesc->SetMultiline( true );
-		m_pTextEntryMovieDesc->SetCatchEnterKey( true );
-		m_pTextEntryMovieDesc->SetVerticalScrollbar( true );
-		ScrollBar *pScrollbar = dynamic_cast< ScrollBar* >( m_pTextEntryMovieDesc->FindChildByName( "Scrollbar" ) );
-		if ( pScrollbar )
-		{
-			pScrollbar->SetAutohideButtons( false );
-			pScrollbar->SetScrollbarButtonsVisible( true );
-		}
-
-		m_pUnlistedCheckbox = dynamic_cast< CheckButton * >( FindChildByName( "UnlistedCheckbox" ) );
-		if ( m_pUnlistedCheckbox )
-		{
-			m_pUnlistedCheckbox->SetMouseInputEnabled( true );
-		}
-		
+		return NULL;
 	}
 
-	void GetGameNameStrings( const char **ppShortGameName, const char **ppFullGameName )
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme)
+	{
+		BaseClass::ApplySchemeSettings(pScheme);
+		m_pTextEntryMovieTitle = dynamic_cast<TextEntry *>(FindChildByName("MovieTitleTextEntry"));
+		m_pTextEntryMovieDesc = dynamic_cast<TextEntry *>(FindChildByName("MovieDescTextEntry"));
+
+		// use insert, so that max characters is obeyed
+		m_pTextEntryMovieTitle->InsertString(m_pMovie->GetItemTitle());
+		// @todo add steam profile to description
+		m_pTextEntryMovieDesc->SetText("");
+		m_pTextEntryMovieDesc->SetMultiline(true);
+		m_pTextEntryMovieDesc->SetCatchEnterKey(true);
+		m_pTextEntryMovieDesc->SetVerticalScrollbar(true);
+		ScrollBar *pScrollbar = dynamic_cast<ScrollBar *>(m_pTextEntryMovieDesc->FindChildByName("Scrollbar"));
+		if(pScrollbar)
+		{
+			pScrollbar->SetAutohideButtons(false);
+			pScrollbar->SetScrollbarButtonsVisible(true);
+		}
+
+		m_pUnlistedCheckbox = dynamic_cast<CheckButton *>(FindChildByName("UnlistedCheckbox"));
+		if(m_pUnlistedCheckbox)
+		{
+			m_pUnlistedCheckbox->SetMouseInputEnabled(true);
+		}
+	}
+
+	void GetGameNameStrings(const char **ppShortGameName, const char **ppFullGameName)
 	{
 		const char *pGameDir = COM_GetModDirectory();
 
 		// Team Fortress 2?
-		if ( FStrEq( pGameDir, "tf" ) )
+		if(FStrEq(pGameDir, "tf"))
 		{
 			*ppShortGameName = "TF2";
 			*ppFullGameName = "Team Fortress 2";
 		}
 		// Team Fortress 2 Beta?
-		else if ( FStrEq( pGameDir, "tf_beta" ) )
+		else if(FStrEq(pGameDir, "tf_beta"))
 		{
 			*ppShortGameName = "TF2";
 			*ppFullGameName = "Team Fortress 2 Beta";
 		}
 		// Counter-Strike: Source?
-		else if ( FStrEq( pGameDir, "cstrike" ) )
+		else if(FStrEq(pGameDir, "cstrike"))
 		{
 			*ppShortGameName = "CSS";
 			*ppFullGameName = "Counter-Strike: Source";
 		}
 		// Counter-Strike: Source Beta?
-		else if ( FStrEq( pGameDir, "cstrike_beta" ) )
+		else if(FStrEq(pGameDir, "cstrike_beta"))
 		{
 			*ppShortGameName = "CSS";
 			*ppFullGameName = "Counter-Strike: Source Beta";
 		}
 		else
 		{
-			AssertMsg( 0, "Unknown game" );
+			AssertMsg(0, "Unknown game");
 			*ppShortGameName = "";
 			*ppFullGameName = "";
 		}
 	}
 
-	virtual void OnCommand( const char *command )
+	virtual void OnCommand(const char *command)
 	{
-		if ( !Q_strnicmp( command, "termsofservice", 14 ) )
+		if(!Q_strnicmp(command, "termsofservice", 14))
 		{
-			if ( steamapicontext && steamapicontext->SteamFriends() )
+			if(steamapicontext && steamapicontext->SteamFriends())
 			{
-				steamapicontext->SteamFriends()->ActivateGameOverlayToWebPage( "http://www.youtube.com/t/terms" );
+				steamapicontext->SteamFriends()->ActivateGameOverlayToWebPage("http://www.youtube.com/t/terms");
 			}
-		}		
-		else if ( !Q_strnicmp( command, "confirm", 7 ) )
+		}
+		else if(!Q_strnicmp(command, "confirm", 7))
 		{
 			char szTitle[256];
-			m_pTextEntryMovieTitle->GetText( szTitle, sizeof( szTitle ) );
+			m_pTextEntryMovieTitle->GetText(szTitle, sizeof(szTitle));
 			char szDesc[2048];
-			m_pTextEntryMovieDesc->GetText( szDesc, sizeof( szDesc ) );
+			m_pTextEntryMovieDesc->GetText(szDesc, sizeof(szDesc));
 
-			if ( HasInvalidCharacters( szTitle ) )
+			if(HasInvalidCharacters(szTitle))
 			{
-				ShowMessageBox( "#YouTube_Upload_Title", "#YouTube_Upload_InvalidChars_Title", "#GameUI_OK" );
+				ShowMessageBox("#YouTube_Upload_Title", "#YouTube_Upload_InvalidChars_Title", "#GameUI_OK");
 				return;
 			}
-			if ( HasInvalidCharacters( szDesc ) )
+			if(HasInvalidCharacters(szDesc))
 			{
-				ShowMessageBox( "#YouTube_Upload_Title", "#YouTube_Upload_InvalidChars_Desc", "#GameUI_OK" );
+				ShowMessageBox("#YouTube_Upload_Title", "#YouTube_Upload_InvalidChars_Desc", "#GameUI_OK");
 				return;
 			}
 
-			CGenericClassBasedReplay *pReplay = ToGenericClassBasedReplay( m_pMovie->GetItemReplay() );
+			CGenericClassBasedReplay *pReplay = ToGenericClassBasedReplay(m_pMovie->GetItemReplay());
 
-			CFmtStr fmtMovieFullFilename( "%s%s", g_pReplayMovieManager->GetRenderDir(), m_pMovie->GetMovieFilename() );
+			CFmtStr fmtMovieFullFilename("%s%s", g_pReplayMovieManager->GetRenderDir(), m_pMovie->GetMovieFilename());
 			const char *pMimeType = "video/mp4";
 			const char *pTitle = szTitle;
 			const char *pCategory = "Games";
 
 			// add steam profile to the description for verification if necessary
 			EUniverse eSteamUniverse = GetUniverse();
-			CUtlString description( szDesc );
-			if ( steamapicontext && steamapicontext->SteamUser() )
+			CUtlString description(szDesc);
+			if(steamapicontext && steamapicontext->SteamUser())
 			{
 				const char *pchCommunityURL = "http://steamcommunity.com/";
-				switch ( eSteamUniverse )
+				switch(eSteamUniverse)
 				{
-				case k_EUniverseDev:
-					pchCommunityURL = "http://localhost/community/";
-					break;
-				case k_EUniverseBeta:
-					pchCommunityURL = "http://beta.steamcommunity.com/";
-					break;
-				case k_EUniversePublic:
-				default:
-					pchCommunityURL = "http://steamcommunity.com/";
+					case k_EUniverseDev:
+						pchCommunityURL = "http://localhost/community/";
+						break;
+					case k_EUniverseBeta:
+						pchCommunityURL = "http://beta.steamcommunity.com/";
+						break;
+					case k_EUniversePublic:
+					default:
+						pchCommunityURL = "http://steamcommunity.com/";
 				}
-				description.Format( "%s\n\n%sprofiles/%llu", szDesc, pchCommunityURL, steamapicontext->SteamUser()->GetSteamID().ConvertToUint64() );
+				description.Format("%s\n\n%sprofiles/%llu", szDesc, pchCommunityURL,
+								   steamapicontext->SteamUser()->GetSteamID().ConvertToUint64());
 			}
 
 			const char *pShortGameName = NULL;
 			const char *pFullGameName = NULL;
 
-			GetGameNameStrings( &pShortGameName, &pFullGameName );
+			GetGameNameStrings(&pShortGameName, &pFullGameName);
 
-			CFmtStr1024 keywords( "%s Replay, %s, %s, Replay, Valve, %s", pShortGameName, pShortGameName, pFullGameName, pReplay->GetPlayerClass() );
+			CFmtStr1024 keywords("%s Replay, %s, %s, Replay, Valve, %s", pShortGameName, pShortGameName, pFullGameName,
+								 pReplay->GetPlayerClass());
 			bool bUnlisted = m_pUnlistedCheckbox->IsSelected();
 
-			uint64 uSessionId = g_pClientReplayContext->GetServerSessionId( pReplay->GetHandle() );
-			if ( uSessionId != 0 )
+			uint64 uSessionId = g_pClientReplayContext->GetServerSessionId(pReplay->GetHandle());
+			if(uSessionId != 0)
 			{
 				char szSessionId[32];
 
 				// Write session ID as hex (this code taken from KeyValues.cpp, modified).
 #ifdef WIN32
-				Q_snprintf( szSessionId, sizeof( szSessionId ), "%I64X", uSessionId );
+				Q_snprintf(szSessionId, sizeof(szSessionId), "%I64X", uSessionId);
 #else
-				Q_snprintf( szSessionId, sizeof( szSessionId ), "%llX", uSessionId );
+				Q_snprintf(szSessionId, sizeof(szSessionId), "%llX", uSessionId);
 #endif
 
 				// Add the match tag to the list of keywords.
-				keywords.AppendFormat( ", match_%s", szSessionId );
+				keywords.AppendFormat(", match_%s", szSessionId);
 			}
 
-			UploadOgsData( m_pMovie );
+			UploadOgsData(m_pMovie);
 
-			YouTubeUploadHandle_t handle = YouTube_Upload( fmtMovieFullFilename.Access(), pMimeType, pTitle, description.Get(), pCategory, keywords.Access(), bUnlisted ? kYouTubeAccessControl_Unlisted : kYouTubeAccessControl_Public );
-			if ( handle != NULL )
+			YouTubeUploadHandle_t handle = YouTube_Upload(
+				fmtMovieFullFilename.Access(), pMimeType, pTitle, description.Get(), pCategory, keywords.Access(),
+				bUnlisted ? kYouTubeAccessControl_Unlisted : kYouTubeAccessControl_Public);
+			if(handle != NULL)
 			{
 				// Play a sound
-				surface()->PlaySound( "replay\\youtube_startingupload.wav" );
+				surface()->PlaySound("replay\\youtube_startingupload.wav");
 
-				CYouTubeUploadWaitDialog *pDialog = new CYouTubeUploadWaitDialog( m_pMovie, pTitle, description.Get(), handle, GetParent() );
-				ShowWaitingDialog( pDialog, "#YouTube_Uploading", true, true, -1 );
+				CYouTubeUploadWaitDialog *pDialog =
+					new CYouTubeUploadWaitDialog(m_pMovie, pTitle, description.Get(), handle, GetParent());
+				ShowWaitingDialog(pDialog, "#YouTube_Uploading", true, true, -1);
 
 				// get rid of this dialog
 				FinishUp();
 			}
 			else
 			{
-				ShowMessageBox( "#YouTube_Upload_Title", "#YouTube_Upload_Failure", "#GameUI_OK" );
+				ShowMessageBox("#YouTube_Upload_Title", "#YouTube_Upload_Failure", "#GameUI_OK");
 			}
 
 			return;
 		}
-		BaseClass::OnCommand( command );
+		BaseClass::OnCommand(command);
 	}
 
 protected:
-	virtual const char *GetResFile() { return "Resource/UI/YouTubeUploadDialog.res"; }
-	virtual const char *GetResFilePathId() { return "GAME"; }
+	virtual const char *GetResFile()
+	{
+		return "Resource/UI/YouTubeUploadDialog.res";
+	}
+	virtual const char *GetResFilePathId()
+	{
+		return "GAME";
+	}
 
 private:
 	IReplayMovie *m_pMovie;
@@ -598,18 +632,18 @@ private:
 
 //-----------------------------------------------------------------------------
 
-void YouTube_ShowLoginDialog( IReplayMovie *pMovie, vgui::Panel *pParent )
+void YouTube_ShowLoginDialog(IReplayMovie *pMovie, vgui::Panel *pParent)
 {
-	CYouTubeLoginDialog *pDialog = vgui::SETUP_PANEL( new CYouTubeLoginDialog( pMovie, pParent ) );
-	pDialog->Show( false );
+	CYouTubeLoginDialog *pDialog = vgui::SETUP_PANEL(new CYouTubeLoginDialog(pMovie, pParent));
+	pDialog->Show(false);
 }
 
 //-----------------------------------------------------------------------------
 
-void YouTube_ShowUploadDialog( IReplayMovie *pMovie, vgui::Panel *pParent )
+void YouTube_ShowUploadDialog(IReplayMovie *pMovie, vgui::Panel *pParent)
 {
-	CYouTubeUploadDialog *pDialog = vgui::SETUP_PANEL( new CYouTubeUploadDialog( pMovie, pParent ) );
-	pDialog->Show( false );
+	CYouTubeUploadDialog *pDialog = vgui::SETUP_PANEL(new CYouTubeUploadDialog(pMovie, pParent));
+	pDialog->Show(false);
 }
 
 //-----------------------------------------------------------------------------

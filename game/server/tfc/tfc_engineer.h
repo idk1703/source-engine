@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,12 +10,9 @@
 #pragma once
 #endif
 
-
 class CTFCPlayer;
-
 
 void DestroyBuilding(CTFCPlayer *eng, char *bld);
 void DestroyTeleporter(CTFCPlayer *eng, int type);
-
 
 #endif // TFC_ENGINEER_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -14,8 +14,8 @@ const float BROADCAST_LIST_TIMEOUT = 0.4f;
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CLanGames::CLanGames(vgui::Panel *parent, bool bAutoRefresh, const char *pCustomResFilename ) : 
-	CBaseGamesPage(parent, "LanGames", eLANServer, pCustomResFilename)
+CLanGames::CLanGames(vgui::Panel *parent, bool bAutoRefresh, const char *pCustomResFilename)
+	: CBaseGamesPage(parent, "LanGames", eLANServer, pCustomResFilename)
 {
 	m_iServerRefreshCount = 0;
 	m_bRequesting = false;
@@ -25,20 +25,16 @@ CLanGames::CLanGames(vgui::Panel *parent, bool bAutoRefresh, const char *pCustom
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CLanGames::~CLanGames()
-{
-}
-
+CLanGames::~CLanGames() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Activates the page, starts refresh
 //-----------------------------------------------------------------------------
 void CLanGames::OnPageShow()
 {
-	if ( m_bAutoRefresh )
+	if(m_bAutoRefresh)
 		StartRefresh();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Called every frame
@@ -54,14 +50,14 @@ void CLanGames::OnTick()
 //-----------------------------------------------------------------------------
 bool CLanGames::SupportsItem(InterfaceItem_e item)
 {
-	switch (item)
+	switch(item)
 	{
-	case FILTERS:
-		return true;
+		case FILTERS:
+			return true;
 
-	case GETNEWLIST:
-	default:
-		return false;
+		case GETNEWLIST:
+		default:
+			return false;
 	}
 }
 
@@ -74,17 +70,15 @@ void CLanGames::StartRefresh()
 	m_fRequestTime = Plat_FloatTime();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Control which button are visible.
 //-----------------------------------------------------------------------------
-void CLanGames::ManualShowButtons( bool bShowConnect, bool bShowRefreshAll, bool bShowFilter )
+void CLanGames::ManualShowButtons(bool bShowConnect, bool bShowRefreshAll, bool bShowFilter)
 {
-	m_pConnect->SetVisible( bShowConnect );
-	m_pRefreshAll->SetVisible( bShowRefreshAll );
-	m_pFilter->SetVisible( bShowFilter );
+	m_pConnect->SetVisible(bShowConnect);
+	m_pRefreshAll->SetVisible(bShowRefreshAll);
+	m_pFilter->SetVisible(bShowFilter);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: stops current refresh/GetNewServerList()
@@ -101,11 +95,11 @@ void CLanGames::StopRefresh()
 //-----------------------------------------------------------------------------
 void CLanGames::CheckRetryRequest()
 {
-	if (!m_bRequesting)
+	if(!m_bRequesting)
 		return;
 
 	double curtime = Plat_FloatTime();
-	if (curtime - m_fRequestTime <= BROADCAST_LIST_TIMEOUT)
+	if(curtime - m_fRequestTime <= BROADCAST_LIST_TIMEOUT)
 	{
 		return;
 	}
@@ -117,25 +111,25 @@ void CLanGames::CheckRetryRequest()
 //-----------------------------------------------------------------------------
 // Purpose: called when a server response has timed out, remove it
 //-----------------------------------------------------------------------------
-void CLanGames::ServerFailedToRespond( HServerListRequest hReq, int iServer )
+void CLanGames::ServerFailedToRespond(HServerListRequest hReq, int iServer)
 {
-	int iServerMap = m_mapServers.Find( iServer );
-	if ( iServerMap != m_mapServers.InvalidIndex() )
-		RemoveServer( m_mapServers[ iServerMap ] );
+	int iServerMap = m_mapServers.Find(iServer);
+	if(iServerMap != m_mapServers.InvalidIndex())
+		RemoveServer(m_mapServers[iServerMap]);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: called when the current refresh list is complete
 //-----------------------------------------------------------------------------
-void CLanGames::RefreshComplete( HServerListRequest hReq, EMatchMakingServerResponse response )
+void CLanGames::RefreshComplete(HServerListRequest hReq, EMatchMakingServerResponse response)
 {
-	SetRefreshing( false );
+	SetRefreshing(false);
 	m_pGameList->SortList();
 	m_iServerRefreshCount = 0;
 	m_pGameList->SetEmptyListText("#ServerBrowser_NoLanServers");
 	SetEmptyListText();
 
-	BaseClass::RefreshComplete( hReq, response );
+	BaseClass::RefreshComplete(hReq, response);
 }
 
 void CLanGames::SetEmptyListText()
@@ -150,11 +144,10 @@ void CLanGames::OnOpenContextMenu(int row)
 {
 	int serverID = GetSelectedServerID();
 
-	if ( serverID == -1 )
+	if(serverID == -1)
 		return;
 
 	// Activate context menu
 	CServerContextMenu *menu = ServerBrowserDialog().GetContextMenu(GetActiveList());
 	menu->ShowMenu(this, serverID, true, true, true, false);
 }
-

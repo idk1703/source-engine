@@ -10,59 +10,57 @@
 
 #include "isaverestore.h"
 
-#if defined( _WIN32 )
+#if defined(_WIN32)
 #pragma once
 #endif
 
 //-------------------------------------
 
-template <class BITSTRING>
+template<class BITSTRING>
 class CVarBitVecSaveRestoreOps : public CDefSaveRestoreOps
 {
 public:
-	CVarBitVecSaveRestoreOps()
-	{
-	}
+	CVarBitVecSaveRestoreOps() {}
 
 	// save data type interface
-	virtual void Save( const SaveRestoreFieldInfo_t &fieldInfo, ISave *pSave )
+	virtual void Save(const SaveRestoreFieldInfo_t &fieldInfo, ISave *pSave)
 	{
 		BITSTRING *pBitString = (BITSTRING *)fieldInfo.pField;
 		int numBits = pBitString->GetNumBits();
-		pSave->WriteInt( &numBits );
-		pSave->WriteInt( pBitString->Base(), pBitString->GetNumDWords() );
+		pSave->WriteInt(&numBits);
+		pSave->WriteInt(pBitString->Base(), pBitString->GetNumDWords());
 	}
-	
-	virtual void Restore( const SaveRestoreFieldInfo_t &fieldInfo, IRestore *pRestore )
+
+	virtual void Restore(const SaveRestoreFieldInfo_t &fieldInfo, IRestore *pRestore)
 	{
 		BITSTRING *pBitString = (BITSTRING *)fieldInfo.pField;
 		int numBits = pRestore->ReadInt();
-		if ( !pBitString->IsFixedSize() )
-			pBitString->Resize( numBits );
+		if(!pBitString->IsFixedSize())
+			pBitString->Resize(numBits);
 		else
 		{
-			Assert( pBitString->GetNumBits() >= numBits );
+			Assert(pBitString->GetNumBits() >= numBits);
 			pBitString->ClearAll();
 		}
-		int numIntsInStream = CalcNumIntsForBits( numBits );
-		int readSize = MIN( pBitString->GetNumDWords(), numIntsInStream );
-		pRestore->ReadInt( pBitString->Base(), numIntsInStream );
+		int numIntsInStream = CalcNumIntsForBits(numBits);
+		int readSize = MIN(pBitString->GetNumDWords(), numIntsInStream);
+		pRestore->ReadInt(pBitString->Base(), numIntsInStream);
 
 		numIntsInStream -= readSize;
-		while ( numIntsInStream-- > 0 )
+		while(numIntsInStream-- > 0)
 		{
 			int ignored;
-			pRestore->ReadInt( &ignored, 1 );
+			pRestore->ReadInt(&ignored, 1);
 		}
 	}
-	
-	virtual void MakeEmpty( const SaveRestoreFieldInfo_t &fieldInfo )
+
+	virtual void MakeEmpty(const SaveRestoreFieldInfo_t &fieldInfo)
 	{
 		BITSTRING *pBitString = (BITSTRING *)fieldInfo.pField;
 		pBitString->ClearAll();
 	}
 
-	virtual bool IsEmpty( const SaveRestoreFieldInfo_t &fieldInfo )
+	virtual bool IsEmpty(const SaveRestoreFieldInfo_t &fieldInfo)
 	{
 		BITSTRING *pBitString = (BITSTRING *)fieldInfo.pField;
 		return pBitString->IsAllClear();
@@ -71,7 +69,7 @@ public:
 
 //-------------------------------------
 
-template <class BITSTRING>
+template<class BITSTRING>
 ISaveRestoreOps *GetBitstringDataOps(BITSTRING *)
 {
 	static CVarBitVecSaveRestoreOps<BITSTRING> ops;
@@ -80,16 +78,18 @@ ISaveRestoreOps *GetBitstringDataOps(BITSTRING *)
 
 //-------------------------------------
 
-#define SaveBitString( pSave, pBitString, fieldtype) \
-	CDataopsInstantiator<fieldtype>::GetDataOps( pBitString )->Save( pBitString, pSave );
+#define SaveBitString(pSave, pBitString, fieldtype) \
+	CDataopsInstantiator<fieldtype>::GetDataOps(pBitString)->Save(pBitString, pSave);
 
-#define RestoreBitString( pRestore, pBitString, fieldtype) \
-	CDataopsInstantiator<fieldtype>::GetDataOps( pBitString )->Restore( pBitString, pRestore );
+#define RestoreBitString(pRestore, pBitString, fieldtype) \
+	CDataopsInstantiator<fieldtype>::GetDataOps(pBitString)->Restore(pBitString, pRestore);
 
 //-------------------------------------
 
-#define DEFINE_BITSTRING(name) \
-	{ FIELD_CUSTOM, #name, { offsetof(classNameTypedef,name), 0 }, 1, FTYPEDESC_SAVE, NULL, GetBitstringDataOps(&(((classNameTypedef *)0)->name)), NULL }
+#define DEFINE_BITSTRING(name)                                                               \
+	{                                                                                        \
+		FIELD_CUSTOM, #name, {offsetof(classNameTypedef, name), 0}, 1, FTYPEDESC_SAVE, NULL, \
+			GetBitstringDataOps(&(((classNameTypedef *)0)->name)), NULL                      \
+	}
 
 #endif // SAVERESTORE_BITSTRING_H
-

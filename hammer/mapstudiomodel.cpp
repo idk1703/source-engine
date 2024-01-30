@@ -1,13 +1,13 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
 #include "stdafx.h"
 #include "Box3D.h"
 #include "GlobalFunctions.h"
-#include "MapDefs.h"		// dvs: For COORD_NOTINIT
+#include "MapDefs.h" // dvs: For COORD_NOTINIT
 #include "MapDoc.h"
 #include "MapEntity.h"
 #include "MapStudioModel.h"
@@ -24,16 +24,12 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
-#define STUDIO_RENDER_DISTANCE		400
-
+#define STUDIO_RENDER_DISTANCE 400
 
 IMPLEMENT_MAPCLASS(CMapStudioModel)
 
-
 float CMapStudioModel::m_fRenderDistance = STUDIO_RENDER_DISTANCE;
 BOOL CMapStudioModel::m_bAnimateModels = TRUE;
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Factory function. Used for creating a CMapStudioModel from a set
@@ -50,7 +46,7 @@ CMapClass *CMapStudioModel::CreateMapStudioModel(CHelperInfo *pHelperInfo, CMapE
 	// If we weren't passed a model name as an argument, get it from our parent
 	// entity's "model" key.
 	//
-	if (pszModel == NULL)
+	if(pszModel == NULL)
 	{
 		pszModel = pParent->GetKeyValue("model");
 	}
@@ -58,16 +54,15 @@ CMapClass *CMapStudioModel::CreateMapStudioModel(CHelperInfo *pHelperInfo, CMapE
 	//
 	// If we have a model name, create a studio model object.
 	//
-	if (pszModel != NULL)
+	if(pszModel != NULL)
 	{
 		bool bLightProp = !stricmp(pHelperInfo->GetName(), "lightprop");
 		bool bOrientedBounds = (bLightProp | !stricmp(pHelperInfo->GetName(), "studioprop"));
 		return CreateMapStudioModel(pszModel, bOrientedBounds, bLightProp);
 	}
 
-	return(NULL);
+	return (NULL);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Factory function. Creates a CMapStudioModel object from a relative
@@ -77,11 +72,12 @@ CMapClass *CMapStudioModel::CreateMapStudioModel(CHelperInfo *pHelperInfo, CMapE
 //			bOrientedBounds - Whether the bounding box should consider the orientation of the model.
 // Output : Returns a pointer to the newly created CMapStudioModel object.
 //-----------------------------------------------------------------------------
-CMapStudioModel *CMapStudioModel::CreateMapStudioModel(const char *pszModelPath, bool bOrientedBounds, bool bReversePitch)
+CMapStudioModel *CMapStudioModel::CreateMapStudioModel(const char *pszModelPath, bool bOrientedBounds,
+													   bool bReversePitch)
 {
 	CMapStudioModel *pModel = new CMapStudioModel;
 	pModel->m_pStudioModel = CStudioModelCache::CreateModel(pszModelPath);
-	if ( pModel->m_pStudioModel )
+	if(pModel->m_pStudioModel)
 	{
 		pModel->SetOrientedBounds(bOrientedBounds);
 		pModel->ReversePitch(bReversePitch);
@@ -93,9 +89,8 @@ CMapStudioModel *CMapStudioModel::CreateMapStudioModel(const char *pszModelPath,
 		delete pModel;
 		pModel = NULL;
 	}
-	return(pModel);
+	return (pModel);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor.
@@ -106,34 +101,31 @@ CMapStudioModel::CMapStudioModel(void)
 	InitViewerSettings();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Destructor. Releases the studio model cache reference.
 //-----------------------------------------------------------------------------
 CMapStudioModel::~CMapStudioModel(void)
 {
-	if (m_pStudioModel != NULL)
+	if(m_pStudioModel != NULL)
 	{
 		CStudioModelCache::Release(m_pStudioModel);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Called by the renderer before every frame to animate the models.
 //-----------------------------------------------------------------------------
 void CMapStudioModel::AdvanceAnimation(float flInterval)
 {
-	if (m_bAnimateModels)
+	if(m_bAnimateModels)
 	{
 		CStudioModelCache::AdvanceAnimation(flInterval);
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bFullUpdate - 
+// Purpose:
+// Input  : bFullUpdate -
 //-----------------------------------------------------------------------------
 void CMapStudioModel::CalcBounds(BOOL bFullUpdate)
 {
@@ -142,7 +134,7 @@ void CMapStudioModel::CalcBounds(BOOL bFullUpdate)
 	Vector Mins(0, 0, 0);
 	Vector Maxs(0, 0, 0);
 
-	if (m_pStudioModel != NULL)
+	if(m_pStudioModel != NULL)
 	{
 		//
 		// The 3D bounds are the bounds of the oriented model's first sequence, so that
@@ -154,7 +146,7 @@ void CMapStudioModel::CalcBounds(BOOL bFullUpdate)
 		m_pStudioModel->SetAngles(angles);
 		m_pStudioModel->ExtractBbox(m_CullBox.bmins, m_CullBox.bmaxs);
 
-		if (m_bOrientedBounds)
+		if(m_bOrientedBounds)
 		{
 			//
 			// Oriented bounds - the 2D bounds are the same as the 3D bounds.
@@ -182,7 +174,7 @@ void CMapStudioModel::CalcBounds(BOOL bFullUpdate)
 	//
 	// If we do not yet have a valid bounding box, use a default box.
 	//
-	if ((Maxs - Mins) == Vector(0, 0, 0))
+	if((Maxs - Mins) == Vector(0, 0, 0))
 	{
 		Mins = m_CullBox.bmins = m_Origin - Vector(10, 10, 10);
 		Maxs = m_CullBox.bmaxs = m_Origin + Vector(10, 10, 10);
@@ -192,23 +184,21 @@ void CMapStudioModel::CalcBounds(BOOL bFullUpdate)
 	m_Render2DBox.UpdateBounds(Mins, Maxs);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CMapClass
 //-----------------------------------------------------------------------------
 CMapClass *CMapStudioModel::Copy(bool bUpdateDependencies)
 {
 	CMapStudioModel *pCopy = new CMapStudioModel;
 
-	if (pCopy != NULL)
+	if(pCopy != NULL)
 	{
 		pCopy->CopyFrom(this, bUpdateDependencies);
 	}
 
-	return(pCopy);
+	return (pCopy);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Makes this an exact duplicate of pObject.
@@ -223,7 +213,7 @@ CMapClass *CMapStudioModel::CopyFrom(CMapClass *pObject, bool bUpdateDependencie
 	CMapClass::CopyFrom(pObject, bUpdateDependencies);
 
 	m_pStudioModel = pFrom->m_pStudioModel;
-	if (m_pStudioModel != NULL)
+	if(m_pStudioModel != NULL)
 	{
 		CStudioModelCache::AddRef(m_pStudioModel);
 	}
@@ -241,19 +231,17 @@ CMapClass *CMapStudioModel::CopyFrom(CMapClass *pObject, bool bUpdateDependencie
 	m_flFadeMaxDist = pFrom->m_flFadeMaxDist;
 	m_iSolid = pFrom->m_iSolid;
 
-	return(this);
+	return (this);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bEnable - 
+// Purpose:
+// Input  : bEnable -
 //-----------------------------------------------------------------------------
 void CMapStudioModel::EnableAnimation(BOOL bEnable)
 {
 	m_bAnimateModels = bEnable;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns this object's pitch, yaw, and roll.
@@ -262,12 +250,11 @@ void CMapStudioModel::GetAngles(QAngle &Angles)
 {
 	Angles = m_Angles;
 
-	if (m_bPitchSet)
+	if(m_bPitchSet)
 	{
 		Angles[PITCH] = m_flPitch;
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns this object's pitch, yaw, and roll for rendering.
@@ -276,15 +263,14 @@ void CMapStudioModel::GetRenderAngles(QAngle &Angles)
 {
 	GetAngles(Angles);
 
-	if (m_bReversePitch)
+	if(m_bReversePitch)
 	{
 		Angles[PITCH] *= -1;
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMapStudioModel::Initialize(void)
 {
@@ -302,86 +288,83 @@ void CMapStudioModel::Initialize(void)
 	m_iSolid = -1;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Notifies that this object's parent entity has had a key value change.
 // Input  : szKey - The key that changed.
 //			szValue - The new value of the key.
 //-----------------------------------------------------------------------------
-void CMapStudioModel::OnParentKeyChanged(const char* szKey, const char* szValue)
+void CMapStudioModel::OnParentKeyChanged(const char *szKey, const char *szValue)
 {
-	if (!stricmp(szKey, "angles"))
+	if(!stricmp(szKey, "angles"))
 	{
 		sscanf(szValue, "%f %f %f", &m_Angles[PITCH], &m_Angles[YAW], &m_Angles[ROLL]);
 		PostUpdate(Notify_Changed);
 	}
-	else if (!stricmp(szKey, "pitch"))
+	else if(!stricmp(szKey, "pitch"))
 	{
 		m_flPitch = atof(szValue);
 		m_bPitchSet = true;
 
 		PostUpdate(Notify_Changed);
 	}
-	else if (!stricmp(szKey, "skin"))
+	else if(!stricmp(szKey, "skin"))
 	{
 		m_Skin = atoi(szValue);
 		PostUpdate(Notify_Changed);
 	}
-	else if (!stricmp(szKey, "fademindist"))
+	else if(!stricmp(szKey, "fademindist"))
 	{
 		m_flFadeMinDist = atoi(szValue);
 	}
-	else if (!stricmp(szKey, "fademaxdist"))
+	else if(!stricmp(szKey, "fademaxdist"))
 	{
 		m_flFadeMaxDist = atoi(szValue);
 	}
-	else if (!stricmp(szKey, "screenspacefade"))
+	else if(!stricmp(szKey, "screenspacefade"))
 	{
 		m_bScreenSpaceFade = (atoi(szValue) != 0);
 	}
-	else if (!stricmp(szKey, "fadescale"))
+	else if(!stricmp(szKey, "fadescale"))
 	{
 		m_flFadeScale = atof(szValue);
 	}
-	else if ( !stricmp( szKey, "solid") )
+	else if(!stricmp(szKey, "solid"))
 	{
-		m_iSolid = atof( szValue );
+		m_iSolid = atof(szValue);
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pRender - 
+// Purpose:
+// Input  : pRender -
 //-----------------------------------------------------------------------------
 bool CMapStudioModel::RenderPreload(CRender3D *pRender, bool bNewContext)
 {
-	return(m_pStudioModel != NULL);
+	return (m_pStudioModel != NULL);
 }
-
 
 //-----------------------------------------------------------------------------
 // Draws basis vectors
 //-----------------------------------------------------------------------------
-static void DrawBasisVectors( CRender3D* pRender, const Vector &origin, const QAngle &angles)
+static void DrawBasisVectors(CRender3D *pRender, const Vector &origin, const QAngle &angles)
 {
 	matrix3x4_t fCurrentMatrix;
 	AngleMatrix(angles, fCurrentMatrix);
 
-	pRender->PushRenderMode( RENDER_MODE_WIREFRAME );
+	pRender->PushRenderMode(RENDER_MODE_WIREFRAME);
 
 	CMeshBuilder meshBuilder;
-	CMatRenderContextPtr pRenderContext( MaterialSystemInterface() );
-	IMesh* pMesh = pRenderContext->GetDynamicMesh();
-	meshBuilder.Begin( pMesh, MATERIAL_LINES, 3 );
+	CMatRenderContextPtr pRenderContext(MaterialSystemInterface());
+	IMesh *pMesh = pRenderContext->GetDynamicMesh();
+	meshBuilder.Begin(pMesh, MATERIAL_LINES, 3);
 
 	meshBuilder.Color3ub(255, 0, 0);
 	meshBuilder.Position3f(origin[0], origin[1], origin[2]);
 	meshBuilder.AdvanceVertex();
 
 	meshBuilder.Color3ub(255, 0, 0);
-	meshBuilder.Position3f(origin[0] + (100 * fCurrentMatrix[0][0]), 
-		origin[1] + (100 * fCurrentMatrix[1][0]), origin[2] + (100 * fCurrentMatrix[2][0]));
+	meshBuilder.Position3f(origin[0] + (100 * fCurrentMatrix[0][0]), origin[1] + (100 * fCurrentMatrix[1][0]),
+						   origin[2] + (100 * fCurrentMatrix[2][0]));
 	meshBuilder.AdvanceVertex();
 
 	meshBuilder.Color3ub(0, 255, 0);
@@ -389,8 +372,8 @@ static void DrawBasisVectors( CRender3D* pRender, const Vector &origin, const QA
 	meshBuilder.AdvanceVertex();
 
 	meshBuilder.Color3ub(0, 255, 0);
-	meshBuilder.Position3f(origin[0] + (100 * fCurrentMatrix[0][1]), 
-		origin[1] + (100 * fCurrentMatrix[1][1]), origin[2] + (100 * fCurrentMatrix[2][1]));
+	meshBuilder.Position3f(origin[0] + (100 * fCurrentMatrix[0][1]), origin[1] + (100 * fCurrentMatrix[1][1]),
+						   origin[2] + (100 * fCurrentMatrix[2][1]));
 	meshBuilder.AdvanceVertex();
 
 	meshBuilder.Color3ub(0, 0, 255);
@@ -398,8 +381,8 @@ static void DrawBasisVectors( CRender3D* pRender, const Vector &origin, const QA
 	meshBuilder.AdvanceVertex();
 
 	meshBuilder.Color3ub(0, 0, 255);
-	meshBuilder.Position3f(origin[0] + (100 * fCurrentMatrix[0][2]), 
-		origin[1] + (100 * fCurrentMatrix[1][2]), origin[2] + (100 * fCurrentMatrix[2][2]));
+	meshBuilder.Position3f(origin[0] + (100 * fCurrentMatrix[0][2]), origin[1] + (100 * fCurrentMatrix[1][2]),
+						   origin[2] + (100 * fCurrentMatrix[2][2]));
 	meshBuilder.AdvanceVertex();
 
 	meshBuilder.End();
@@ -407,7 +390,6 @@ static void DrawBasisVectors( CRender3D* pRender, const Vector &origin, const QA
 
 	pRender->PopRenderMode();
 }
-
 
 //-----------------------------------------------------------------------------
 // It should render last if any of its materials are translucent, or if
@@ -417,7 +399,6 @@ bool CMapStudioModel::ShouldRenderLast()
 {
 	return m_pStudioModel->IsTranslucent() || Options.view3d.bPreviewModelFade;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Renders the studio model in the 2D views.
@@ -429,50 +410,52 @@ void CMapStudioModel::Render2D(CRender2D *pRender)
 	Vector vecMaxs;
 	GetRender2DBox(vecMins, vecMaxs);
 
-	Vector2D pt,pt2;
+	Vector2D pt, pt2;
 	pRender->TransformPoint(pt, vecMins);
 	pRender->TransformPoint(pt2, vecMaxs);
 
 	color32 rgbColor = GetRenderColor();
-	bool	bIsEditable = IsEditable();
+	bool bIsEditable = IsEditable();
 
-	if (GetSelectionState() != SELECT_NONE)
+	if(GetSelectionState() != SELECT_NONE)
 	{
-		pRender->SetDrawColor( GetRValue(Options.colors.clrSelection), GetGValue(Options.colors.clrSelection), GetBValue(Options.colors.clrSelection) );
-		pRender->SetHandleColor( GetRValue(Options.colors.clrSelection), GetGValue(Options.colors.clrSelection), GetBValue(Options.colors.clrSelection) );
+		pRender->SetDrawColor(GetRValue(Options.colors.clrSelection), GetGValue(Options.colors.clrSelection),
+							  GetBValue(Options.colors.clrSelection));
+		pRender->SetHandleColor(GetRValue(Options.colors.clrSelection), GetGValue(Options.colors.clrSelection),
+								GetBValue(Options.colors.clrSelection));
 	}
 	else
 	{
-		pRender->SetDrawColor( rgbColor.r, rgbColor.g, rgbColor.b );
-		pRender->SetHandleColor( rgbColor.r, rgbColor.g, rgbColor.b );
+		pRender->SetDrawColor(rgbColor.r, rgbColor.g, rgbColor.b);
+		pRender->SetHandleColor(rgbColor.r, rgbColor.g, rgbColor.b);
 	}
 
-	int sizeX = abs(pt2.x-pt.x);
-	int sizeY = abs(pt2.y-pt.y);
+	int sizeX = abs(pt2.x - pt.x);
+	int sizeY = abs(pt2.y - pt.y);
 
 	//
-	// Don't draw the center handle if the model is smaller than the handle cross 	
+	// Don't draw the center handle if the model is smaller than the handle cross
 	//
-	if ( bIsEditable && sizeX >= 8 && sizeY >= 8 && pRender->IsActiveView() )
+	if(bIsEditable && sizeX >= 8 && sizeY >= 8 && pRender->IsActiveView())
 	{
-		pRender->SetHandleStyle( HANDLE_RADIUS, CRender::HANDLE_CROSS );
+		pRender->SetHandleStyle(HANDLE_RADIUS, CRender::HANDLE_CROSS);
 
-		pRender->DrawHandle( (vecMins+vecMaxs)/2 );
+		pRender->DrawHandle((vecMins + vecMaxs) / 2);
 	}
-	
+
 	QAngle vecAngles;
 	GetRenderAngles(vecAngles);
 
-	bool bDrawAsModel = (Options.view2d.bDrawModels && ((sizeX+sizeY) > 50)) ||	
-						IsSelected() ||	( pRender->IsInLocalTransformMode() && !pRender->GetInstanceRendering() );
-						
-	if ( !bDrawAsModel || IsSelected() )
+	bool bDrawAsModel = (Options.view2d.bDrawModels && ((sizeX + sizeY) > 50)) || IsSelected() ||
+						(pRender->IsInLocalTransformMode() && !pRender->GetInstanceRendering());
+
+	if(!bDrawAsModel || IsSelected())
 	{
 		// Draw the bounding box.
-		pRender->DrawBox( vecMins, vecMaxs );
+		pRender->DrawBox(vecMins, vecMaxs);
 	}
 
-	if ( bDrawAsModel )
+	if(bDrawAsModel)
 	{
 		//
 		// Draw the model as wireframe.
@@ -482,92 +465,89 @@ void CMapStudioModel::Render2D(CRender2D *pRender)
 		m_pStudioModel->SetOrigin(m_Origin[0], m_Origin[1], m_Origin[2]);
 		m_pStudioModel->SetSkin(m_Skin);
 
-		if ( GetSelectionState() == SELECT_NORMAL || ( pRender->IsInLocalTransformMode() && pRender->GetInstanceRendering() == false ) )
+		if(GetSelectionState() == SELECT_NORMAL ||
+		   (pRender->IsInLocalTransformMode() && pRender->GetInstanceRendering() == false))
 		{
- 			// draw textured model half translucent
-			m_pStudioModel->DrawModel2D(pRender, 0.6 , false );
+			// draw textured model half translucent
+			m_pStudioModel->DrawModel2D(pRender, 0.6, false);
 		}
 		else
 		{
-			// just draw the wireframe 
-			m_pStudioModel->DrawModel2D(pRender, 1.0 , true );
+			// just draw the wireframe
+			m_pStudioModel->DrawModel2D(pRender, 1.0, true);
 		}
 	}
 
-	if ( IsSelected() )
+	if(IsSelected())
 	{
 		//
 		// Render the forward vector if the object is selected.
 		//
-		
+
 		Vector Forward;
 		AngleVectors(vecAngles, &Forward, NULL, NULL);
 
-		pRender->SetDrawColor( 255, 255, 0 );
+		pRender->SetDrawColor(255, 255, 0);
 		pRender->DrawLine(m_Origin, m_Origin + Forward * 24);
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-inline float CMapStudioModel::ComputeDistanceFade( CRender3D *pRender ) const
+inline float CMapStudioModel::ComputeDistanceFade(CRender3D *pRender) const
 {
 	Vector vecViewPos;
-	pRender->GetCamera()->GetViewPoint( vecViewPos );
+	pRender->GetCamera()->GetViewPoint(vecViewPos);
 
-	Vector vecDelta;		
+	Vector vecDelta;
 	vecDelta = m_Origin - vecViewPos;
 
 	float flMin = min(m_flFadeMinDist, m_flFadeMaxDist);
 	float flMax = max(m_flFadeMinDist, m_flFadeMaxDist);
 
-	if (flMin < 0)
+	if(flMin < 0)
 	{
 		flMin = 0;
 	}
 
 	float alpha = 1.0f;
-	if (flMax > 0)
+	if(flMax > 0)
 	{
 		float flDist = vecDelta.Length();
-		if ( flDist > flMax )
+		if(flDist > flMax)
 		{
 			alpha = 0.0f;
 		}
-		else if ( flDist > flMin )
+		else if(flDist > flMin)
 		{
-			alpha = RemapValClamped( flDist, flMin, flMax, 1.0f, 0 );
+			alpha = RemapValClamped(flDist, flMin, flMax, 1.0f, 0);
 		}
 	}
-		
+
 	return alpha;
 }
-
 
 //-----------------------------------------------------------------------------
 // Computes fade alpha based on distance fade + screen fade
 //-----------------------------------------------------------------------------
-inline float CMapStudioModel::ComputeScreenFade( CRender3D *pRender ) const
+inline float CMapStudioModel::ComputeScreenFade(CRender3D *pRender) const
 {
 	return 1.0;
 }
 
-
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-inline float CMapStudioModel::ComputeFade( CRender3D *pRender ) const
+inline float CMapStudioModel::ComputeFade(CRender3D *pRender) const
 {
-	if ( m_bScreenSpaceFade )
+	if(m_bScreenSpaceFade)
 	{
-		return ComputeScreenFade( pRender );
+		return ComputeScreenFade(pRender);
 	}
 	else
 	{
-		return ComputeDistanceFade( pRender );
+		return ComputeDistanceFade(pRender);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Renders the studio model in the 3D views.
@@ -576,12 +556,12 @@ inline float CMapStudioModel::ComputeFade( CRender3D *pRender ) const
 void CMapStudioModel::Render3D(CRender3D *pRender)
 {
 	Color CurrentColor;
-	CurrentColor.SetColor( r, g, b );
+	CurrentColor.SetColor(r, g, b);
 
 	//
 	// Set to the default rendering mode, unless we're in lightmap mode
 	//
-	if (pRender->GetCurrentRenderMode() == RENDER_MODE_LIGHTMAP_GRID)
+	if(pRender->GetCurrentRenderMode() == RENDER_MODE_LIGHTMAP_GRID)
 		pRender->PushRenderMode(RENDER_MODE_TEXTURED);
 	else
 		pRender->PushRenderMode(RENDER_MODE_CURRENT);
@@ -595,48 +575,48 @@ void CMapStudioModel::Render3D(CRender3D *pRender)
 	//
 	// If we have a model, render it if it is close enough to the camera.
 	//
-	if (m_pStudioModel != NULL)
+	if(m_pStudioModel != NULL)
 	{
 		Vector ViewPoint;
 		pRender->GetCamera()->GetViewPoint(ViewPoint);
 
-		Vector	Origin( m_Origin );
-		if ( pRender->GetInstanceRendering() )
+		Vector Origin(m_Origin);
+		if(pRender->GetInstanceRendering())
 		{
-			pRender->TransformInstanceVector( m_Origin, Origin );
+			pRender->TransformInstanceVector(m_Origin, Origin);
 		}
 
-		if ((fabs(ViewPoint[0] - Origin[0]) < m_fRenderDistance) &&
-			(fabs(ViewPoint[1] - Origin[1]) < m_fRenderDistance) &&
-			(fabs(ViewPoint[2] - Origin[2]) < m_fRenderDistance))
+		if((fabs(ViewPoint[0] - Origin[0]) < m_fRenderDistance) &&
+		   (fabs(ViewPoint[1] - Origin[1]) < m_fRenderDistance) && (fabs(ViewPoint[2] - Origin[2]) < m_fRenderDistance))
 		{
 			color32 rgbColor = GetRenderColor();
 
-			if (GetSelectionState() != SELECT_NONE)
+			if(GetSelectionState() != SELECT_NONE)
 			{
-				pRender->SetDrawColor( GetRValue(Options.colors.clrSelection), GetGValue(Options.colors.clrSelection), GetBValue(Options.colors.clrSelection) );
+				pRender->SetDrawColor(GetRValue(Options.colors.clrSelection), GetGValue(Options.colors.clrSelection),
+									  GetBValue(Options.colors.clrSelection));
 			}
 			else
 			{
 				// If the user disabled collisions on this instance of the model, color the wireframe differently
-				if ( m_iSolid != -1 )
+				if(m_iSolid != -1)
 				{
-					if ( m_iSolid == 0 )
+					if(m_iSolid == 0)
 					{
-						rgbColor.r = GetRValue( Options.colors.clrModelCollisionWireframeDisabled );
-						rgbColor.g = GetGValue( Options.colors.clrModelCollisionWireframeDisabled );
-						rgbColor.b = GetBValue( Options.colors.clrModelCollisionWireframeDisabled );
+						rgbColor.r = GetRValue(Options.colors.clrModelCollisionWireframeDisabled);
+						rgbColor.g = GetGValue(Options.colors.clrModelCollisionWireframeDisabled);
+						rgbColor.b = GetBValue(Options.colors.clrModelCollisionWireframeDisabled);
 						rgbColor.a = 255;
 					}
 					else
 					{
-						rgbColor.r = GetRValue( Options.colors.clrModelCollisionWireframe );
-						rgbColor.g = GetGValue( Options.colors.clrModelCollisionWireframe );
-						rgbColor.b = GetBValue( Options.colors.clrModelCollisionWireframe );
+						rgbColor.r = GetRValue(Options.colors.clrModelCollisionWireframe);
+						rgbColor.g = GetGValue(Options.colors.clrModelCollisionWireframe);
+						rgbColor.b = GetBValue(Options.colors.clrModelCollisionWireframe);
 						rgbColor.a = 255;
 					}
 				}
-				pRender->SetDrawColor( rgbColor.r, rgbColor.g, rgbColor.b );
+				pRender->SetDrawColor(rgbColor.r, rgbColor.g, rgbColor.b);
 			}
 
 			//
@@ -647,21 +627,21 @@ void CMapStudioModel::Render3D(CRender3D *pRender)
 			m_pStudioModel->SetSkin(m_Skin);
 
 			float flAlpha = 1.0;
-			if ( Options.view3d.bPreviewModelFade )
+			if(Options.view3d.bPreviewModelFade)
 			{
-				flAlpha = ComputeFade( pRender );
+				flAlpha = ComputeFade(pRender);
 			}
 
 			bool bWireframe = pRender->GetCurrentRenderMode() == RENDER_MODE_WIREFRAME;
- 
-			if ( GetSelectionState() == SELECT_MODIFY )
+
+			if(GetSelectionState() == SELECT_MODIFY)
 				bWireframe = true;
 
 			pRender->BeginRenderHitTarget(this);
-			m_pStudioModel->DrawModel3D(pRender, flAlpha, bWireframe );
+			m_pStudioModel->DrawModel3D(pRender, flAlpha, bWireframe);
 			pRender->EndRenderHitTarget();
 
-			if (IsSelected())
+			if(IsSelected())
 			{
 				pRender->RenderWireframeBox(m_Render2DBox.bmins, m_Render2DBox.bmaxs, 255, 255, 0);
 			}
@@ -669,7 +649,8 @@ void CMapStudioModel::Render3D(CRender3D *pRender)
 		else
 		{
 			pRender->BeginRenderHitTarget(this);
-			pRender->RenderBox(m_Render2DBox.bmins, m_Render2DBox.bmaxs, CurrentColor.r(), CurrentColor.g(), CurrentColor.b(), GetSelectionState());
+			pRender->RenderBox(m_Render2DBox.bmins, m_Render2DBox.bmaxs, CurrentColor.r(), CurrentColor.g(),
+							   CurrentColor.b(), GetSelectionState());
 			pRender->EndRenderHitTarget();
 		}
 	}
@@ -679,49 +660,47 @@ void CMapStudioModel::Render3D(CRender3D *pRender)
 	else
 	{
 		pRender->BeginRenderHitTarget(this);
-		pRender->RenderBox(m_Render2DBox.bmins, m_Render2DBox.bmaxs, CurrentColor.r(), CurrentColor.g(), CurrentColor.b(), GetSelectionState());
+		pRender->RenderBox(m_Render2DBox.bmins, m_Render2DBox.bmaxs, CurrentColor.r(), CurrentColor.g(),
+						   CurrentColor.b(), GetSelectionState());
 		pRender->EndRenderHitTarget();
 	}
 
 	//
 	// Draw our basis vectors.
 	//
-	if (IsSelected())
+	if(IsSelected())
 	{
-		DrawBasisVectors( pRender, m_Origin, vecAngles );
+		DrawBasisVectors(pRender, m_Origin, vecAngles);
 	}
 
 	pRender->PopRenderMode();
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &File - 
-//			bRMF - 
+// Purpose:
+// Input  : &File -
+//			bRMF -
 // Output : int
 //-----------------------------------------------------------------------------
 int CMapStudioModel::SerializeRMF(std::fstream &File, BOOL bRMF)
 {
-	return(0);
+	return (0);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &File - 
-//			bRMF - 
+// Purpose:
+// Input  : &File -
+//			bRMF -
 // Output : int
 //-----------------------------------------------------------------------------
 int CMapStudioModel::SerializeMAP(std::fstream &File, BOOL bRMF)
 {
-	return(0);
+	return (0);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : Angles - 
+// Purpose:
+// Input  : Angles -
 //-----------------------------------------------------------------------------
 void CMapStudioModel::SetAngles(QAngle &Angles)
 {
@@ -730,20 +709,20 @@ void CMapStudioModel::SetAngles(QAngle &Angles)
 	//
 	// Round very small angles to zero.
 	//
-	for (int nDim = 0; nDim < 3; nDim++)
+	for(int nDim = 0; nDim < 3; nDim++)
 	{
-		if (fabs(m_Angles[nDim]) < 0.001)
+		if(fabs(m_Angles[nDim]) < 0.001)
 		{
 			m_Angles[nDim] = 0;
 		}
 	}
 
-	while (m_Angles[YAW] < 0)
+	while(m_Angles[YAW] < 0)
 	{
 		m_Angles[YAW] += 360;
 	}
 
-	if (m_bPitchSet)
+	if(m_bPitchSet)
 	{
 		m_flPitch = m_Angles[PITCH];
 	}
@@ -752,20 +731,19 @@ void CMapStudioModel::SetAngles(QAngle &Angles)
 	// Update the angles of our parent entity.
 	//
 	CMapEntity *pEntity = dynamic_cast<CMapEntity *>(m_pParent);
-	if (pEntity != NULL)
+	if(pEntity != NULL)
 	{
 		char szValue[80];
 		sprintf(szValue, "%g %g %g", m_Angles[0], m_Angles[1], m_Angles[2]);
 		pEntity->NotifyChildKeyChanged(this, "angles", szValue);
 
-		if (m_bPitchSet)
+		if(m_bPitchSet)
 		{
 			sprintf(szValue, "%g", m_flPitch);
 			pEntity->NotifyChildKeyChanged(this, "pitch", szValue);
 		}
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets the distance at which studio models become rendered as bounding
@@ -777,10 +755,9 @@ void CMapStudioModel::SetRenderDistance(float fRenderDistance)
 	m_fRenderDistance = fRenderDistance;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pTransBox - 
+// Purpose:
+// Input  : pTransBox -
 //-----------------------------------------------------------------------------
 void CMapStudioModel::DoTransform(const VMatrix &matrix)
 {
@@ -792,7 +769,7 @@ void CMapStudioModel::DoTransform(const VMatrix &matrix)
 	fRotateMatrix = matrix.As3x4();
 
 	// Light entities negate pitch again!
-	if ( m_bReversePitch )
+	if(m_bReversePitch)
 	{
 		QAngle rotAngles;
 		MatrixAngles(fRotateMatrix, rotAngles);
@@ -802,17 +779,17 @@ void CMapStudioModel::DoTransform(const VMatrix &matrix)
 	}
 
 	QAngle angles;
-	GetAngles( angles );
-	
-	AngleMatrix( angles, fCurrentMatrix);
-	ConcatTransforms(fRotateMatrix, fCurrentMatrix, fMatrixNew);
-	MatrixAngles( fMatrixNew, angles );
+	GetAngles(angles);
 
-	SetAngles( angles );
+	AngleMatrix(angles, fCurrentMatrix);
+	ConcatTransforms(fRotateMatrix, fCurrentMatrix, fMatrixNew);
+	MatrixAngles(fMatrixNew, angles);
+
+	SetAngles(angles);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CMapStudioModel::GetFrame(void)
@@ -821,81 +798,75 @@ int CMapStudioModel::GetFrame(void)
 	return 0;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nFrame - 
+// Purpose:
+// Input  : nFrame -
 //-----------------------------------------------------------------------------
 void CMapStudioModel::SetFrame(int nFrame)
 {
 	// TODO:
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Returns the current sequence being used for rendering.
 //-----------------------------------------------------------------------------
 int CMapStudioModel::GetSequence(void)
 {
-	if (!m_pStudioModel)
+	if(!m_pStudioModel)
 	{
 		return 0;
 	}
 	return m_pStudioModel->GetSequence();
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CMapStudioModel::GetSequenceCount(void)
 {
-	if (!m_pStudioModel)
+	if(!m_pStudioModel)
 	{
 		return 0;
 	}
 	return m_pStudioModel->GetSequenceCount();
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nIndex - 
-//			szName - 
+// Purpose:
+// Input  : nIndex -
+//			szName -
 //-----------------------------------------------------------------------------
 void CMapStudioModel::GetSequenceName(int nIndex, char *szName)
 {
-	if (m_pStudioModel)
+	if(m_pStudioModel)
 	{
 		m_pStudioModel->GetSequenceName(nIndex, szName);
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nIndex - 
+// Purpose:
+// Input  : nIndex -
 //-----------------------------------------------------------------------------
 void CMapStudioModel::SetSequence(int nIndex)
 {
-	if (m_pStudioModel)
+	if(m_pStudioModel)
 	{
 		m_pStudioModel->SetSequence(nIndex);
 	}
 }
 
-
-int CMapStudioModel::GetSequenceIndex( const char *pSequenceName ) const
+int CMapStudioModel::GetSequenceIndex(const char *pSequenceName) const
 {
-	if ( m_pStudioModel )
+	if(m_pStudioModel)
 	{
 		int cnt = m_pStudioModel->GetSequenceCount();
-		for ( int i=0; i < cnt; i++ )
+		for(int i = 0; i < cnt; i++)
 		{
 			char name[2048];
-			m_pStudioModel->GetSequenceName( i, name );
-			if ( Q_stricmp( pSequenceName, name ) == 0 )
+			m_pStudioModel->GetSequenceName(i, name);
+			if(Q_stricmp(pSequenceName, name) == 0)
 				return i;
 		}
 	}

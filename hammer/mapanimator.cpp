@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,9 +17,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
-IMPLEMENT_MAPCLASS( CMapAnimator );
-
+IMPLEMENT_MAPCLASS(CMapAnimator);
 
 //-----------------------------------------------------------------------------
 // Purpose: Factory function. Used for creating a CMapKeyFrame from a set
@@ -30,12 +28,11 @@ IMPLEMENT_MAPCLASS( CMapAnimator );
 //-----------------------------------------------------------------------------
 CMapClass *CMapAnimator::CreateMapAnimator(CHelperInfo *pHelperInfo, CMapEntity *pParent)
 {
-	return(new CMapAnimator);
+	return (new CMapAnimator);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMapAnimator::CMapAnimator()
 {
@@ -48,17 +45,13 @@ CMapAnimator::CMapAnimator()
 	m_nKeysChanged = 0;
 }
 
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+CMapAnimator::~CMapAnimator() {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-CMapAnimator::~CMapAnimator()
-{
-}
-
-
-//-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CMapClass *
 //-----------------------------------------------------------------------------
 CMapClass *CMapAnimator::Copy(bool bUpdateDependencies)
@@ -68,21 +61,20 @@ CMapClass *CMapAnimator::Copy(bool bUpdateDependencies)
 	return pNew;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pObj - 
+// Purpose:
+// Input  : *pObj -
 // Output : CMapClass
 //-----------------------------------------------------------------------------
 CMapClass *CMapAnimator::CopyFrom(CMapClass *pObj, bool bUpdateDependencies)
 {
 	CMapKeyFrame::CopyFrom(pObj, bUpdateDependencies);
-	CMapAnimator *pFrom = dynamic_cast<CMapAnimator*>( pObj );
-	Assert( pFrom != NULL );
+	CMapAnimator *pFrom = dynamic_cast<CMapAnimator *>(pObj);
+	Assert(pFrom != NULL);
 
-	memcpy( m_CoordFrame.Base(), pFrom->m_CoordFrame.Base(), sizeof(m_CoordFrame) );
+	memcpy(m_CoordFrame.Base(), pFrom->m_CoordFrame.Base(), sizeof(m_CoordFrame));
 	m_bCurrentlyAnimating = false;
-	m_pCurrentKeyFrame = NULL;	// keyframe it's currently at
+	m_pCurrentKeyFrame = NULL; // keyframe it's currently at
 
 	m_iTimeModifier = pFrom->m_iTimeModifier;
 	m_iPositionInterpolator = pFrom->m_iPositionInterpolator;
@@ -93,13 +85,13 @@ CMapClass *CMapAnimator::CopyFrom(CMapClass *pObj, bool bUpdateDependencies)
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns a coordinate frame to render in, if the entity is animating
-// Input  : matrix - 
+// Input  : matrix -
 // Output : returns true if a new matrix is returned, false if it is invalid
 //-----------------------------------------------------------------------------
-bool CMapAnimator::GetTransformMatrix( VMatrix& matrix )
+bool CMapAnimator::GetTransformMatrix(VMatrix &matrix)
 {
 	// are we currently animating?
-	if ( m_bCurrentlyAnimating )
+	if(m_bCurrentlyAnimating)
 	{
 		matrix = m_CoordFrame;
 		return true;
@@ -108,36 +100,33 @@ bool CMapAnimator::GetTransformMatrix( VMatrix& matrix )
 	return false;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Notifies that the entity this is attached to has had a key change
-// Input  : key - 
-//			value - 
+// Input  : key -
+//			value -
 //-----------------------------------------------------------------------------
-void CMapAnimator::OnParentKeyChanged( const char* key, const char* value )
+void CMapAnimator::OnParentKeyChanged(const char *key, const char *value)
 {
-	if ( !stricmp(key, "TimeModifier") )
+	if(!stricmp(key, "TimeModifier"))
 	{
-		m_iTimeModifier = atoi( value );
+		m_iTimeModifier = atoi(value);
 	}
-	else if ( !stricmp(key, "PositionInterpolator") )
+	else if(!stricmp(key, "PositionInterpolator"))
 	{
-		m_iPositionInterpolator = atoi( value );
+		m_iPositionInterpolator = atoi(value);
 
 		// HACK: Force everything in the path to update. Better to follow our path and update only it.
 		UpdateAllDependencies(this);
 	}
-	else if ( !stricmp(key, "RotationInterpolator") )
+	else if(!stricmp(key, "RotationInterpolator"))
 	{
-		m_iRotationInterpolator = atoi( value );
+		m_iRotationInterpolator = atoi(value);
 	}
 
 	m_nKeysChanged++;
 
-	CMapKeyFrame::OnParentKeyChanged( key, value );
+	CMapKeyFrame::OnParentKeyChanged(key, value);
 }
-
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Gets the current and previous keyframes for a given time.
@@ -146,29 +135,29 @@ void CMapAnimator::OnParentKeyChanged( const char* key, const char* value )
 //			pPrevKeyFrame - receives previous keyframe pointer
 // Output : time remaining after the thing has reached this key
 //-----------------------------------------------------------------------------
-float CMapAnimator::GetKeyFramesAtTime( float time, CMapKeyFrame *&pKeyFrame, CMapKeyFrame *&pPrevKeyFrame )
+float CMapAnimator::GetKeyFramesAtTime(float time, CMapKeyFrame *&pKeyFrame, CMapKeyFrame *&pPrevKeyFrame)
 {
-	pKeyFrame = this; 
+	pKeyFrame = this;
 	pPrevKeyFrame = this;
 
 	float outTime = time;
 
-	while ( pKeyFrame )
+	while(pKeyFrame)
 	{
-		if ( pKeyFrame->MoveTime() > outTime )
+		if(pKeyFrame->MoveTime() > outTime)
 		{
 			break;
 		}
 
 		// make sure this anim has enough time
-		if ( pKeyFrame->MoveTime() < 0.01f )
+		if(pKeyFrame->MoveTime() < 0.01f)
 		{
 			outTime = 0.0f;
 			break;
 		}
 
 		outTime -= pKeyFrame->MoveTime();
-		
+
 		pPrevKeyFrame = pKeyFrame;
 		pKeyFrame = pKeyFrame->NextKeyFrame();
 	}
@@ -176,24 +165,23 @@ float CMapAnimator::GetKeyFramesAtTime( float time, CMapKeyFrame *&pKeyFrame, CM
 	return outTime;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: creates a new keyframe at the specified time
-// Input  : time - 
+// Input  : time -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-CMapEntity *CMapAnimator::CreateNewKeyFrame( float time )
+CMapEntity *CMapAnimator::CreateNewKeyFrame(float time)
 {
 	// work out where we are in the animation
 	CMapKeyFrame *key;
 	CMapKeyFrame *pPrevKey;
-	float partialTime = GetKeyFramesAtTime( time, key, pPrevKey );
+	float partialTime = GetKeyFramesAtTime(time, key, pPrevKey);
 
-	CMapEntity *pCurrentEnt = dynamic_cast<CMapEntity*>( key->m_pParent );
+	CMapEntity *pCurrentEnt = dynamic_cast<CMapEntity *>(key->m_pParent);
 
 	// check to see if we're direction on a key frame
-	Vector posOffset( 0, 0, 0 );
-	if ( partialTime == 0 )
+	Vector posOffset(0, 0, 0);
+	if(partialTime == 0)
 	{
 		// create this new key frame slightly after the current one, and offset
 		posOffset[0] = 64;
@@ -203,77 +191,77 @@ CMapEntity *CMapAnimator::CreateNewKeyFrame( float time )
 	Vector vOrigin;
 	QAngle angles;
 	Quaternion qAngles;
-	GetAnimationAtTime( key, pPrevKey, partialTime, vOrigin, qAngles, m_iPositionInterpolator, m_iRotationInterpolator );
-	QuaternionAngles( qAngles, angles );
+	GetAnimationAtTime(key, pPrevKey, partialTime, vOrigin, qAngles, m_iPositionInterpolator, m_iRotationInterpolator);
+	QuaternionAngles(qAngles, angles);
 
 	// create the new map entity
 	CMapEntity *pNewEntity = new CMapEntity;
 
 	Vector newPos;
-	VectorAdd( vOrigin, posOffset, newPos );
-	pNewEntity->SetPlaceholder( TRUE );
-	pNewEntity->SetOrigin( newPos );
-	pNewEntity->SetClass( "keyframe_track" );
+	VectorAdd(vOrigin, posOffset, newPos);
+	pNewEntity->SetPlaceholder(TRUE);
+	pNewEntity->SetOrigin(newPos);
+	pNewEntity->SetClass("keyframe_track");
 
 	char buf[128];
-	sprintf( buf, "%f %f %f", angles[0], angles[1], angles[2] );
-	pNewEntity->SetKeyValue( "angles", buf );
+	sprintf(buf, "%f %f %f", angles[0], angles[1], angles[2]);
+	pNewEntity->SetKeyValue("angles", buf);
 
 	// link it into the keyframe list
 
 	// take over this existing next keyframe pointer
-	const char *nextKeyName = pCurrentEnt->GetKeyValue( "NextKey" );
-	if ( nextKeyName )
+	const char *nextKeyName = pCurrentEnt->GetKeyValue("NextKey");
+	if(nextKeyName)
 	{
-		pNewEntity->SetKeyValue( "NextKey", nextKeyName );
+		pNewEntity->SetKeyValue("NextKey", nextKeyName);
 	}
-		
+
 	// create a new unique name for this ent
 	char newName[128];
-	const char *oldName = pCurrentEnt->GetKeyValue( "targetname" );
-	if ( !oldName || oldName[0] == 0 )
+	const char *oldName = pCurrentEnt->GetKeyValue("targetname");
+	if(!oldName || oldName[0] == 0)
 		oldName = "keyframe";
 
-	CMapWorld *pWorld = GetWorldObject( this );
-	if ( pWorld )
+	CMapWorld *pWorld = GetWorldObject(this);
+	if(pWorld)
 	{
-		pWorld->GenerateNewTargetname( oldName, newName, sizeof( newName ), true, NULL );
-		pNewEntity->SetKeyValue( "targetname", newName );
+		pWorld->GenerateNewTargetname(oldName, newName, sizeof(newName), true, NULL);
+		pNewEntity->SetKeyValue("targetname", newName);
 
 		// point the current entity at the newly created one
-		pCurrentEnt->SetKeyValue( "NextKey", newName );
+		pCurrentEnt->SetKeyValue("NextKey", newName);
 
 		// copy any relevant values
-		const char *keyValue = pCurrentEnt->GetKeyValue( "parentname" );
-		if ( keyValue )
-			pNewEntity->SetKeyValue( "parentname", keyValue );
+		const char *keyValue = pCurrentEnt->GetKeyValue("parentname");
+		if(keyValue)
+			pNewEntity->SetKeyValue("parentname", keyValue);
 
-		keyValue = pCurrentEnt->GetKeyValue( "MoveSpeed" );
-		if ( keyValue )
-			pNewEntity->SetKeyValue( "MoveSpeed", keyValue );
+		keyValue = pCurrentEnt->GetKeyValue("MoveSpeed");
+		if(keyValue)
+			pNewEntity->SetKeyValue("MoveSpeed", keyValue);
 	}
-	
-	return(pNewEntity);
-}
 
+	return (pNewEntity);
+}
 
 //-----------------------------------------------------------------------------
 // Purpose: stops CMapKeyframe from doing it's auto-connect behavior when cloning
-// Input  : pClone - 
+// Input  : pClone -
 //-----------------------------------------------------------------------------
-void CMapAnimator::OnClone( CMapClass *pClone, CMapWorld *pWorld, const CMapObjectList &OriginalList, CMapObjectList &NewList )
+void CMapAnimator::OnClone(CMapClass *pClone, CMapWorld *pWorld, const CMapObjectList &OriginalList,
+						   CMapObjectList &NewList)
 {
-	CMapClass::OnClone( pClone, pWorld, OriginalList, NewList );
+	CMapClass::OnClone(pClone, pWorld, OriginalList, NewList);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: calculates the position of an animating object at a given time in
 //			it's animation sequence
-// Input  : animTime - 
-//			*newOrigin - 
-//			*newAngles - 
+// Input  : animTime -
+//			*newOrigin -
+//			*newAngles -
 //-----------------------------------------------------------------------------
-void CMapAnimator::GetAnimationAtTime( float animTime, Vector& newOrigin, Quaternion &newAngles )
+void CMapAnimator::GetAnimationAtTime(float animTime, Vector &newOrigin, Quaternion &newAngles)
 {
 	// setup the animation, given the time
 
@@ -282,33 +270,35 @@ void CMapAnimator::GetAnimationAtTime( float animTime, Vector& newOrigin, Quater
 	animTime /= totalAnimTime;
 
 	// don't use time modifier until we work out what we're going to do with it
-	//Motion_CalculateModifiedTime( animTime, m_iTimeModifier, &newTime );
+	// Motion_CalculateModifiedTime( animTime, m_iTimeModifier, &newTime );
 	newTime = animTime;
 
 	// find out where we are in the keyframe sequence based on the time
 	CMapKeyFrame *pPrevKeyFrame;
-	float posTime = GetKeyFramesAtTime( newTime * totalAnimTime, m_pCurrentKeyFrame, pPrevKeyFrame );
+	float posTime = GetKeyFramesAtTime(newTime * totalAnimTime, m_pCurrentKeyFrame, pPrevKeyFrame);
 
 	// find the position from that keyframe
-	GetAnimationAtTime( m_pCurrentKeyFrame, pPrevKeyFrame, posTime, newOrigin, newAngles, m_iPositionInterpolator, m_iRotationInterpolator );
+	GetAnimationAtTime(m_pCurrentKeyFrame, pPrevKeyFrame, posTime, newOrigin, newAngles, m_iPositionInterpolator,
+					   m_iRotationInterpolator);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: calculates the position of the animating object between two keyframes
-// Input  : currentKey - 
-//			pPrevKey - 
-//			partialTime - 
-//			newOrigin - 
-//			newAngles - 
-//			posInterpolator - 
-//			rotInterpolator - 
+// Input  : currentKey -
+//			pPrevKey -
+//			partialTime -
+//			newOrigin -
+//			newAngles -
+//			posInterpolator -
+//			rotInterpolator -
 //-----------------------------------------------------------------------------
-void CMapAnimator::GetAnimationAtTime( CMapKeyFrame *currentKey, CMapKeyFrame *pPrevKey, float partialTime, Vector& newOrigin, Quaternion &newAngles, int posInterpolator, int rotInterpolator )
+void CMapAnimator::GetAnimationAtTime(CMapKeyFrame *currentKey, CMapKeyFrame *pPrevKey, float partialTime,
+									  Vector &newOrigin, Quaternion &newAngles, int posInterpolator,
+									  int rotInterpolator)
 {
 	// calculate the proportion of time to be spent on this keyframe
 	float animTime;
-	if ( currentKey->MoveTime() < 0.01 )
+	if(currentKey->MoveTime() < 0.01)
 	{
 		animTime = 1.0f;
 	}
@@ -317,52 +307,51 @@ void CMapAnimator::GetAnimationAtTime( CMapKeyFrame *currentKey, CMapKeyFrame *p
 		animTime = partialTime / currentKey->MoveTime();
 	}
 
-	Assert( animTime >= 0.0f && animTime <= 1.0f );
+	Assert(animTime >= 0.0f && animTime <= 1.0f);
 
-	IPositionInterpolator *pInterp = currentKey->SetupPositionInterpolator( posInterpolator );
+	IPositionInterpolator *pInterp = currentKey->SetupPositionInterpolator(posInterpolator);
 
 	// setup interpolation keyframes
 	Vector keyOrigin;
 	Quaternion keyAngles;
-	pPrevKey->GetOrigin( keyOrigin );
-	pPrevKey->GetQuatAngles( keyAngles );
-	pInterp->SetKeyPosition( -1, keyOrigin );
-	Motion_SetKeyAngles  ( -1, keyAngles );
+	pPrevKey->GetOrigin(keyOrigin);
+	pPrevKey->GetQuatAngles(keyAngles);
+	pInterp->SetKeyPosition(-1, keyOrigin);
+	Motion_SetKeyAngles(-1, keyAngles);
 
-	currentKey->GetOrigin( keyOrigin );
-	currentKey->GetQuatAngles( keyAngles );
-	pInterp->SetKeyPosition( 0, keyOrigin );
-	Motion_SetKeyAngles  ( 0, keyAngles );
+	currentKey->GetOrigin(keyOrigin);
+	currentKey->GetQuatAngles(keyAngles);
+	pInterp->SetKeyPosition(0, keyOrigin);
+	Motion_SetKeyAngles(0, keyAngles);
 
-	currentKey->NextKeyFrame()->GetOrigin( keyOrigin );
-	currentKey->NextKeyFrame()->GetQuatAngles( keyAngles );
-	pInterp->SetKeyPosition( 1, keyOrigin );
-	Motion_SetKeyAngles  ( 1, keyAngles );
+	currentKey->NextKeyFrame()->GetOrigin(keyOrigin);
+	currentKey->NextKeyFrame()->GetQuatAngles(keyAngles);
+	pInterp->SetKeyPosition(1, keyOrigin);
+	Motion_SetKeyAngles(1, keyAngles);
 
-	currentKey->NextKeyFrame()->NextKeyFrame()->GetOrigin( keyOrigin );
-	currentKey->NextKeyFrame()->NextKeyFrame()->GetQuatAngles( keyAngles );
-	pInterp->SetKeyPosition( 2, keyOrigin );
-	Motion_SetKeyAngles  ( 2, keyAngles );
+	currentKey->NextKeyFrame()->NextKeyFrame()->GetOrigin(keyOrigin);
+	currentKey->NextKeyFrame()->NextKeyFrame()->GetQuatAngles(keyAngles);
+	pInterp->SetKeyPosition(2, keyOrigin);
+	Motion_SetKeyAngles(2, keyAngles);
 
 	// get our new interpolated position
 	// HACK HACK - Hey Brian, look here!!!!
 	Vector hackOrigin;
-	pInterp->InterpolatePosition( animTime, hackOrigin );
+	pInterp->InterpolatePosition(animTime, hackOrigin);
 
 	newOrigin[0] = hackOrigin[0];
 	newOrigin[1] = hackOrigin[1];
 	newOrigin[2] = hackOrigin[2];
-	Motion_InterpolateRotation( animTime, rotInterpolator, newAngles );
+	Motion_InterpolateRotation(animTime, rotInterpolator, newAngles);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Builds the animation transformation matrix for the entity if it's animating
 //-----------------------------------------------------------------------------
-void CMapAnimator::UpdateAnimation( float animTime )
+void CMapAnimator::UpdateAnimation(float animTime)
 {
 	// only animate if the doc is animating and we're selected
-	if ( !CMapDoc::GetActiveMapDoc()->IsAnimating() || !m_pParent->IsSelected() )
+	if(!CMapDoc::GetActiveMapDoc()->IsAnimating() || !m_pParent->IsSelected())
 	{
 		// we're not animating
 		m_bCurrentlyAnimating = false;
@@ -373,49 +362,47 @@ void CMapAnimator::UpdateAnimation( float animTime )
 
 	Vector newOrigin;
 	Quaternion newAngles;
-	GetAnimationAtTime( animTime, newOrigin, newAngles );
+	GetAnimationAtTime(animTime, newOrigin, newAngles);
 
 	VMatrix mat, tmpMat;
 	Vector ourOrigin;
-	GetOrigin( ourOrigin );
+	GetOrigin(ourOrigin);
 
 	// build us a matrix
 	// T(newOrigin)R(angle)T(-ourOrigin)
-	m_CoordFrame.Identity() ;
+	m_CoordFrame.Identity();
 
 	// transform back to the origin
-	for ( int i = 0; i < 3; i++ )
+	for(int i = 0; i < 3; i++)
 	{
 		m_CoordFrame[i][3] = -ourOrigin[i];
 	}
-	
+
 	// Apply interpolated Rotation
 	mat.Identity();
-	QuaternionMatrix( newAngles, const_cast< matrix3x4_t & > ( mat.As3x4() ) );
+	QuaternionMatrix(newAngles, const_cast<matrix3x4_t &>(mat.As3x4()));
 	m_CoordFrame = m_CoordFrame * mat;
-	
+
 	// transform back to our new position
 	mat.Identity();
-	for ( int i = 0; i < 3; i++ )
+	for(int i = 0; i < 3; i++)
 	{
 		mat[i][3] = newOrigin[i];
 	}
 
 	m_CoordFrame = m_CoordFrame * mat;
-	
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Rebuilds the line path between keyframe entities
 //			samples the interpolator function to get an approximation of the curve
 //-----------------------------------------------------------------------------
-void CMapAnimator::RebuildPath( void )
+void CMapAnimator::RebuildPath(void)
 {
-	CMapWorld *pWorld = GetWorldObject( this );
-	if ( !pWorld )
+	CMapWorld *pWorld = GetWorldObject(this);
+	if(!pWorld)
 	{
-		// Sometimes the object isn't linked back into the world yet when RebuildPath() 
+		// Sometimes the object isn't linked back into the world yet when RebuildPath()
 		// is called... we will be get called again when needed, but may cause an incorrect
 		// (linear-only) path to get drawn temporarily.
 		return;
@@ -427,20 +414,20 @@ void CMapAnimator::RebuildPath( void )
 	//
 	CMapObjectList VisitedList;
 	CMapKeyFrame *pCurKey = this;
-	while ( pCurKey != NULL )
+	while(pCurKey != NULL)
 	{
-		VisitedList.AddToTail( pCurKey );
+		VisitedList.AddToTail(pCurKey);
 
 		//
 		// Attach ourselves as this keyframe's animator.
 		//
-		pCurKey->SetAnimator( this );
+		pCurKey->SetAnimator(this);
 
 		//
 		// Get the entity parent of this keyframe so we can query keyvalues.
 		//
-		CMapEntity *pCurEnt = dynamic_cast<CMapEntity *>( pCurKey->GetParent() );
-		if ( !pCurEnt )
+		CMapEntity *pCurEnt = dynamic_cast<CMapEntity *>(pCurKey->GetParent());
+		if(!pCurEnt)
 		{
 			return;
 		}
@@ -448,17 +435,17 @@ void CMapAnimator::RebuildPath( void )
 		//
 		// Find the next keyframe in the path.
 		//
-		CMapEntity *pNextEnt = pWorld->FindEntityByName( pCurEnt->GetKeyValue( "NextKey" ) );
+		CMapEntity *pNextEnt = pWorld->FindEntityByName(pCurEnt->GetKeyValue("NextKey"));
 		CMapKeyFrame *pNextKey = NULL;
 
-		if ( pNextEnt )
+		if(pNextEnt)
 		{
-			pNextKey = pNextEnt->GetChildOfType( ( CMapKeyFrame * )NULL );
+			pNextKey = pNextEnt->GetChildOfType((CMapKeyFrame *)NULL);
 			pCurKey->SetNextKeyFrame(pNextKey);
 		}
 		else
 		{
-			pCurKey->SetNextKeyFrame( NULL );
+			pCurKey->SetNextKeyFrame(NULL);
 		}
 
 		pCurKey = pNextKey;
@@ -466,7 +453,7 @@ void CMapAnimator::RebuildPath( void )
 		//
 		// If we detect a circularity, stop.
 		//
-		if ( VisitedList.Find( pCurKey ) != -1 )
+		if(VisitedList.Find(pCurKey) != -1)
 		{
 			break;
 		}
@@ -479,9 +466,9 @@ void CMapAnimator::RebuildPath( void )
 	VisitedList.RemoveAll();
 	pCurKey = this;
 	CMapKeyFrame *pPrevKey = this;
-	while ( pCurKey != NULL )
+	while(pCurKey != NULL)
 	{
-		VisitedList.AddToTail( pCurKey );
+		VisitedList.AddToTail(pCurKey);
 
 		pCurKey->BuildPathSegment(pPrevKey);
 
@@ -491,10 +478,9 @@ void CMapAnimator::RebuildPath( void )
 		//
 		// If we detect a circularity, stop.
 		//
-		if ( VisitedList.Find( pCurKey ) != -1 )
+		if(VisitedList.Find(pCurKey) != -1)
 		{
 			break;
 		}
 	}
 }
-

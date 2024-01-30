@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,34 +13,32 @@
 
 #include <spectatorgui.h>
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Cstrike Spectator UI
 //-----------------------------------------------------------------------------
 class CDODSpectatorGUI : public CSpectatorGUI
 {
 private:
-	DECLARE_CLASS_SIMPLE( CDODSpectatorGUI, CSpectatorGUI );
+	DECLARE_CLASS_SIMPLE(CDODSpectatorGUI, CSpectatorGUI);
 
 public:
-	CDODSpectatorGUI( IViewPort *pViewPort );
-		
-	virtual void Update( void );
-	virtual bool NeedsUpdate( void );
+	CDODSpectatorGUI(IViewPort *pViewPort);
+
+	virtual void Update(void);
+	virtual bool NeedsUpdate(void);
 	virtual Color GetClientColor(int index);
 
-	virtual bool ShouldShowPlayerLabel( int specmode );
-	
-	//virtual bool HasInputElements( void ) { return true; }
+	virtual bool ShouldShowPlayerLabel(int specmode);
+
+	// virtual bool HasInputElements( void ) { return true; }
 
 protected:
-
 	void UpdateTimer();
 	void UpdateScores();
 
-	int		m_nLastTime;
-	int		m_nLastSpecMode;
-	CBaseEntity	*m_nLastSpecTarget;
+	int m_nLastTime;
+	int m_nLastSpecMode;
+	CBaseEntity *m_nLastSpecTarget;
 };
 
 #endif // DODSPECTATORGUI_H

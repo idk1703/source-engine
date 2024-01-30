@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -32,23 +32,20 @@ public:
 		m_iWhiteTexture = -1;
 	}
 
-	void DrawShapedBorder( int x, int y, int wide, int tall, Color fgcolor );
-	void DrawShapedBackground( int x, int y, int wide, int tall, Color bgcolor );
+	void DrawShapedBorder(int x, int y, int wide, int tall, Color fgcolor);
+	void DrawShapedBackground(int x, int y, int wide, int tall, Color bgcolor);
 
 protected:
-	int	m_iWhiteTexture;
+	int m_iWhiteTexture;
 };
 
 class CDODButton : public vgui::Button, public CDODButtonShape
 {
 private:
-	DECLARE_CLASS_SIMPLE( CDODButton, vgui::Button );
-	
+	DECLARE_CLASS_SIMPLE(CDODButton, vgui::Button);
+
 public:
-	CDODButton(vgui::Panel *parent ) :
-					vgui::Button( parent, "DODButton", "" )
-	{
-	}
+	CDODButton(vgui::Panel *parent) : vgui::Button(parent, "DODButton", "") {}
 
 protected:
 	virtual void PaintBackground();
@@ -58,31 +55,26 @@ protected:
 class CDODClassInfoPanel : public vgui::EditablePanel
 {
 private:
-	DECLARE_CLASS_SIMPLE( CDODClassInfoPanel, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CDODClassInfoPanel, vgui::EditablePanel);
 
 public:
-	CDODClassInfoPanel( vgui::Panel *parent, const char *panelName ) : vgui::EditablePanel( parent, panelName )
-	{
-	}
+	CDODClassInfoPanel(vgui::Panel *parent, const char *panelName) : vgui::EditablePanel(parent, panelName) {}
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-	virtual vgui::Panel *CreateControlByName( const char *controlName );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual vgui::Panel *CreateControlByName(const char *controlName);
 };
-
 
 // Solid coloured progress bar with no border
 class CDODProgressBar : public vgui::ProgressBar
 {
 private:
-	DECLARE_CLASS_SIMPLE( CDODProgressBar, vgui::ProgressBar );
-	
+	DECLARE_CLASS_SIMPLE(CDODProgressBar, vgui::ProgressBar);
+
 public:
-	CDODProgressBar(vgui::Panel *parent) : vgui::ProgressBar( parent, "statBar" )
-	{
-	}
+	CDODProgressBar(vgui::Panel *parent) : vgui::ProgressBar(parent, "statBar") {}
 
 protected:
 	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 };
 
-#endif //DOD_BUTTON_H
+#endif // DOD_BUTTON_H

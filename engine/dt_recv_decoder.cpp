@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -26,28 +26,21 @@ CClientSendProp::CClientSendProp()
 
 CClientSendProp::~CClientSendProp()
 {
-	delete [] m_pTableName;
+	delete[] m_pTableName;
 }
 
-
-CClientSendTable::CClientSendTable()
-{
-}
-
+CClientSendTable::CClientSendTable() {}
 
 CClientSendTable::~CClientSendTable()
 {
-	delete [] m_SendTable.m_pNetTableName;
-	
-	for ( int iProp=0; iProp < m_SendTable.m_nProps; iProp++ )
+	delete[] m_SendTable.m_pNetTableName;
+
+	for(int iProp = 0; iProp < m_SendTable.m_nProps; iProp++)
 	{
-		delete [] m_SendTable.m_pProps[iProp].m_pVarName;
-		delete [] m_SendTable.m_pProps[iProp].m_pExcludeDTName;
-		delete [] m_SendTable.m_pProps[iProp].m_pParentArrayPropName;
+		delete[] m_SendTable.m_pProps[iProp].m_pVarName;
+		delete[] m_SendTable.m_pProps[iProp].m_pExcludeDTName;
+		delete[] m_SendTable.m_pProps[iProp].m_pParentArrayPropName;
 	}
 
-	delete [] m_SendTable.m_pProps;
+	delete[] m_SendTable.m_pProps;
 }
-
-
-

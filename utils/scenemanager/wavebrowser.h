@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -29,55 +29,54 @@ class CWaveFileTree;
 class CWaveBrowser : public mxWindow
 {
 	typedef mxWindow BaseClass;
+
 public:
+	CWaveBrowser(mxWindow *parent, CWorkspaceManager *manager, int id);
 
-	CWaveBrowser( mxWindow *parent, CWorkspaceManager *manager, int id );
-
-	virtual		int handleEvent( mxEvent *event );
-	virtual		void OnDelete();
+	virtual int handleEvent(mxEvent *event);
+	virtual void OnDelete();
 
 	CWorkspaceManager *GetManager();
 
-	void		RepopulateTree();
+	void RepopulateTree();
 
-	void		BuildSelectionList( CUtlVector< CWaveFile * >& selected );
+	void BuildSelectionList(CUtlVector<CWaveFile *> &selected);
 
-	void		OnPlay();
+	void OnPlay();
 
-	void		JumpToItem( CWaveFile *wav );
+	void JumpToItem(CWaveFile *wav);
 
-	CWaveFile	*FindEntry( char const *wavname, bool jump = false );
+	CWaveFile *FindEntry(char const *wavname, bool jump = false);
 
+	int GetSoundCount() const;
+	CWaveFile *GetSound(int index);
 
-	int			GetSoundCount() const;
-	CWaveFile	*GetSound( int index );
-
-	void		OnSearch();
+	void OnSearch();
 
 private:
+	char const *GetSearchString();
 
-	char const	*GetSearchString();
+	bool LoadWaveFilesInDirectory(CUtlDict<CWaveFile *, int> &soundlist, char const *pDirectoryName,
+								  int nDirectoryNameLen);
+	bool InitDirectoryRecursive(CUtlDict<CWaveFile *, int> &soundlist, char const *pDirectoryName);
 
-	bool		LoadWaveFilesInDirectory( CUtlDict< CWaveFile *, int >& soundlist, char const* pDirectoryName, int nDirectoryNameLen );
-	bool		InitDirectoryRecursive( CUtlDict< CWaveFile *, int >& soundlist, char const* pDirectoryName );
+	void OnWaveProperties();
+	void OnEnableVoiceDucking();
+	void OnDisableVoiceDucking();
+	void OnCheckout();
+	void OnCheckin();
 
-	void		OnWaveProperties();
-	void		OnEnableVoiceDucking();
-	void		OnDisableVoiceDucking();
-	void		OnCheckout();
-	void		OnCheckin();
+	void OnImportSentence();
+	void OnExportSentence();
 
-	void		OnImportSentence();
-	void		OnExportSentence();
+	void OnGetSentence();
 
-	void		OnGetSentence();
+	void PopulateTree(char const *subdirectory, bool textsearch = false);
 
-	void		PopulateTree( char const *subdirectory, bool textsearch = false );
+	void ShowContextMenu(void);
 
-	void		ShowContextMenu( void );
-
-	void		LoadAllSounds();
-	void		RemoveAllSounds();
+	void LoadAllSounds();
+	void RemoveAllSounds();
 
 	CWaveList *m_pListView;
 
@@ -88,15 +87,15 @@ private:
 
 	CWorkspaceManager *m_pManager;
 
-	CUtlDict< CWaveFile *, int > m_AllSounds;
-	CUtlSymbolTable			m_ScriptTable;
+	CUtlDict<CWaveFile *, int> m_AllSounds;
+	CUtlSymbolTable m_ScriptTable;
 
-	CUtlVector< CUtlSymbol >	m_Scripts;
+	CUtlVector<CUtlSymbol> m_Scripts;
 
-	CWaveOptionsWindow		*m_pOptions;
-	CWaveFileTree		*m_pFileTree;
+	CWaveOptionsWindow *m_pOptions;
+	CWaveFileTree *m_pFileTree;
 
-	CUtlVector< CWaveFile * > m_CurrentSelection;
+	CUtlVector<CWaveFile *> m_CurrentSelection;
 };
 
 #endif // WAVEBROWSER_H

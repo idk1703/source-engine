@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "cbase.h"
@@ -16,21 +16,21 @@
 class CFuncLadderEndPoint : public CBaseEntity
 {
 public:
-	DECLARE_CLASS( CFuncLadderEndPoint, CBaseEntity );
+	DECLARE_CLASS(CFuncLadderEndPoint, CBaseEntity);
 
 	virtual void Activate();
 
 private:
-	bool		Validate();
+	bool Validate();
 };
 
-LINK_ENTITY_TO_CLASS( func_ladderendpoint, CFuncLadderEndPoint );
+LINK_ENTITY_TO_CLASS(func_ladderendpoint, CFuncLadderEndPoint);
 
 void CFuncLadderEndPoint::Activate()
 {
 	BaseClass::Activate();
 
-	if ( IsMarkedForDeletion() )
+	if(IsMarkedForDeletion())
 		return;
 
 	Validate();
@@ -40,29 +40,29 @@ bool CFuncLadderEndPoint::Validate()
 {
 	// Find the the other end
 	Vector startPos = GetAbsOrigin();
-	
-	CFuncLadderEndPoint *other = dynamic_cast< CFuncLadderEndPoint * >( GetNextTarget() );
-	if ( !other )
+
+	CFuncLadderEndPoint *other = dynamic_cast<CFuncLadderEndPoint *>(GetNextTarget());
+	if(!other)
 	{
-		DevMsg( 1, "func_ladderendpoint(%s) without matching target\n", GetEntityName().ToCStr() );
+		DevMsg(1, "func_ladderendpoint(%s) without matching target\n", GetEntityName().ToCStr());
 		return false;
 	}
 
 	Vector endPos = other->GetAbsOrigin();
 
-	CFuncLadder *ladder = ( CFuncLadder * )CreateEntityByName( "func_useableladder" );
-	if ( ladder )
+	CFuncLadder *ladder = (CFuncLadder *)CreateEntityByName("func_useableladder");
+	if(ladder)
 	{
-		ladder->SetEndPoints( startPos, endPos );
-		ladder->SetAbsOrigin( GetAbsOrigin() );
-		ladder->SetParent( GetParent() );
-		ladder->SetName( GetEntityName() );
+		ladder->SetEndPoints(startPos, endPos);
+		ladder->SetAbsOrigin(GetAbsOrigin());
+		ladder->SetParent(GetParent());
+		ladder->SetName(GetEntityName());
 		ladder->Spawn();
 	}
 
 	// Delete both endpoints
-	UTIL_Remove( other );
-	UTIL_Remove( this );
+	UTIL_Remove(other);
+	UTIL_Remove(this);
 
 	return true;
 }

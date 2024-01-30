@@ -8,42 +8,37 @@
 // $NoKeywords: $
 //=============================================================================//
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Iterates the list of updated objects.
 //-----------------------------------------------------------------------------
 POSITION CUpdateHint::GetHeadPosition(int nIndex)
 {
-	return(m_NotifyList[nIndex].Objects.GetHeadPosition());
+	return (m_NotifyList[nIndex].Objects.GetHeadPosition());
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Iterates the list of updated objects.
 //-----------------------------------------------------------------------------
 CMapClass *CUpdateHint::GetNext(POSITION &pos)
 {
-	return(m_NotifyList[nIndex].Objects.GetNext(pos));
+	return (m_NotifyList[nIndex].Objects.GetNext(pos));
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns the notification code for this update.
 //-----------------------------------------------------------------------------
 int CUpdateHint::GetNotifyCode(void)
 {
-	return(m_NotifyList[nIndex].nCode);
+	return (m_NotifyList[nIndex].nCode);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns the current update region.
 //-----------------------------------------------------------------------------
 BoundBox const &CUpdateHint::GetUpdateRegion(void)
 {
-	return(m_UpdateRegion);
+	return (m_UpdateRegion);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Prepares to update an object.
@@ -51,7 +46,7 @@ BoundBox const &CUpdateHint::GetUpdateRegion(void)
 //-----------------------------------------------------------------------------
 void CUpdateHint::PreUpdateObject(CMapClass *pObject)
 {
-	if (pObject != NULL)
+	if(pObject != NULL)
 	{
 		CMapObjectList TempList;
 		TempList.AddTail(pObject);
@@ -63,20 +58,19 @@ void CUpdateHint::PreUpdateObject(CMapClass *pObject)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Prepares to update the list of objects.
 // Input  : pObjects - List of objects, NULL if none.
 //-----------------------------------------------------------------------------
 void CUpdateHint::PreUpdateObjects(CMapObjectList *pObjects)
 {
-	if (pObjects != NULL)
+	if(pObjects != NULL)
 	{
 		POSITION pos = pObjects->GetHeadPosition();
-		while (pos != NULL)
+		while(pos != NULL)
 		{
 			CMapClass *pObject = pObjects->GetNext(pos);
-			if (pObject != NULL)
+			if(pObject != NULL)
 			{
 				m_UpdateRegion.UpdateBounds(pObject);
 			}
@@ -84,14 +78,13 @@ void CUpdateHint::PreUpdateObjects(CMapObjectList *pObjects)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Prepares to update an object.
 // Input  : pObject - Object that will be updated.
 //-----------------------------------------------------------------------------
 void CUpdateHint::PostUpdateObject(CMapClass *pObject, int nNotifyCode)
 {
-	if (pObject != NULL)
+	if(pObject != NULL)
 	{
 		CMapObjectList TempList;
 		TempList.AddTail(pObject);
@@ -103,7 +96,6 @@ void CUpdateHint::PostUpdateObject(CMapClass *pObject, int nNotifyCode)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Prepares to update the list of objects.
 // Input  : pObjects - List of objects, NULL if none.
@@ -112,10 +104,10 @@ void CUpdateHint::PostUpdateObjects(CMapObjectList *pObjects, int nNotifyCode)
 {
 	int nIndex = 0;
 	bool bFound = false;
-		
-	while (!bFound && (nIndex < m_ListEntries))
+
+	while(!bFound && (nIndex < m_ListEntries))
 	{
-		if (m_NotifyList[nIndex].nCode == nNotifyCode)
+		if(m_NotifyList[nIndex].nCode == nNotifyCode)
 		{
 			bFound = true;
 		}
@@ -127,7 +119,7 @@ void CUpdateHint::PostUpdateObjects(CMapObjectList *pObjects, int nNotifyCode)
 
 	if ((!bFound && (nIndex < MAX_NOTIFY_CODES))
 	{
-		if (nIndex < MAX_NOTIFY_CODES)
+		if(nIndex < MAX_NOTIFY_CODES)
 		{
 			m_ListEntries++;
 		}
@@ -143,10 +135,10 @@ void CUpdateHint::PostUpdateObjects(CMapObjectList *pObjects, int nNotifyCode)
 	if (pObjects != NULL)
 	{
 		POSITION pos = pObjects->GetHeadPosition();
-		while (pos != NULL)
+		while(pos != NULL)
 		{
 			CMapClass *pObject = pObjects->GetNext(pos);
-			if (pObject != NULL)
+			if(pObject != NULL)
 			{
 				m_UpdateRegion.UpdateBounds(pObject);
 			}
@@ -154,9 +146,8 @@ void CUpdateHint::PostUpdateObjects(CMapObjectList *pObjects, int nNotifyCode)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CUpdateHint::Reset(void)
 {
@@ -164,9 +155,8 @@ void CUpdateHint::Reset(void)
 	m_UpdateRegion.ResetBounds();
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CUpdateHint::UpdateBounds(BoundBox &bbox)
 {

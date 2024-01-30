@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -23,30 +23,25 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNCREATE(CPakDoc, CDocument)
 
-CPakDoc::CPakDoc()
-{
-}
+CPakDoc::CPakDoc() {}
 
 BOOL CPakDoc::OnNewDocument()
 {
-	if (!CDocument::OnNewDocument())
+	if(!CDocument::OnNewDocument())
 		return FALSE;
 	return TRUE;
 }
 
-CPakDoc::~CPakDoc()
-{
-}
-
+CPakDoc::~CPakDoc() {}
 
 BEGIN_MESSAGE_MAP(CPakDoc, CDocument)
 	//{{AFX_MSG_MAP(CPakDoc)
-		// NOTE - the ClassWizard will add and remove mapping macros here.
+	// NOTE - the ClassWizard will add and remove mapping macros here.
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-/////////////////////////////////////////////////////////////////////////////
-// CPakDoc diagnostics
+	/////////////////////////////////////////////////////////////////////////////
+	// CPakDoc diagnostics
 
 #ifdef _DEBUG
 void CPakDoc::AssertValid() const
@@ -54,7 +49,7 @@ void CPakDoc::AssertValid() const
 	CDocument::AssertValid();
 }
 
-void CPakDoc::Dump(CDumpContext& dc) const
+void CPakDoc::Dump(CDumpContext &dc) const
 {
 	CDocument::Dump(dc);
 }
@@ -63,9 +58,9 @@ void CPakDoc::Dump(CDumpContext& dc) const
 /////////////////////////////////////////////////////////////////////////////
 // CPakDoc serialization
 
-void CPakDoc::Serialize(CArchive& ar)
+void CPakDoc::Serialize(CArchive &ar)
 {
-	if (ar.IsStoring())
+	if(ar.IsStoring())
 	{
 		// TODO: add storing code here
 	}

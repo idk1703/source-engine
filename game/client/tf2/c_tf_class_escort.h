@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,22 +16,23 @@
 
 class C_PlayerClassEscort : public C_PlayerClass
 {
-	
-	DECLARE_CLASS( C_PlayerClassEscort, C_PlayerClass );
+
+	DECLARE_CLASS(C_PlayerClassEscort, C_PlayerClass);
 
 public:
-
-	C_PlayerClassEscort( C_BaseTFPlayer *pPlayer );
+	C_PlayerClassEscort(C_BaseTFPlayer *pPlayer);
 	virtual ~C_PlayerClassEscort();
 
 	DECLARE_PREDICTABLE();
-	PlayerClassEscortData_t *GetClassData( void ) { return &m_ClassData; } 
+	PlayerClassEscortData_t *GetClassData(void)
+	{
+		return &m_ClassData;
+	}
 
 protected:
-
-	PlayerClassEscortData_t	m_ClassData;
+	PlayerClassEscortData_t m_ClassData;
 };
 
-EXTERN_RECV_TABLE( DT_PlayerClassEscortData )
+EXTERN_RECV_TABLE(DT_PlayerClassEscortData)
 
 #endif // C_TF_CLASS_ESCORT_H

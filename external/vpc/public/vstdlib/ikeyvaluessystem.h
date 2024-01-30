@@ -1,6 +1,6 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -33,7 +33,7 @@ public:
 	virtual void FreeKeyValuesMemory(void *pMem) = 0;
 
 	// symbol table access (used for key names)
-	virtual HKeySymbol GetSymbolForString( const char *name, bool bCreate = true ) = 0;
+	virtual HKeySymbol GetSymbolForString(const char *name, bool bCreate = true) = 0;
 	virtual const char *GetStringForSymbol(HKeySymbol symbol) = 0;
 
 	// for debugging, adds KeyValues record into global list so we can track memory leaks
@@ -42,11 +42,12 @@ public:
 
 	// set/get a value for keyvalues resolution symbol
 	// e.g.: SetKeyValuesExpressionSymbol( "LOWVIOLENCE", true ) - enables [$LOWVIOLENCE]
-	virtual void SetKeyValuesExpressionSymbol( const char *name, bool bValue ) = 0;
-	virtual bool GetKeyValuesExpressionSymbol( const char *name ) = 0;
+	virtual void SetKeyValuesExpressionSymbol(const char *name, bool bValue) = 0;
+	virtual bool GetKeyValuesExpressionSymbol(const char *name) = 0;
 
 	// symbol table access from code with case-preserving requirements (used for key names)
-	virtual HKeySymbol GetSymbolForStringCaseSensitive( HKeySymbol &hCaseInsensitiveSymbol, const char *name, bool bCreate = true ) = 0;
+	virtual HKeySymbol GetSymbolForStringCaseSensitive(HKeySymbol &hCaseInsensitiveSymbol, const char *name,
+													   bool bCreate = true) = 0;
 };
 
 VSTDLIB_INTERFACE IKeyValuesSystem *KeyValuesSystem();

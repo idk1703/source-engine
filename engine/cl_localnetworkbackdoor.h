@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,8 +10,6 @@
 #pragma once
 #endif
 
-
-void CL_SetupLocalNetworkBackDoor( bool bUseBackDoor );
-
+void CL_SetupLocalNetworkBackDoor(bool bUseBackDoor);
 
 #endif // CL_LOCALNETWORKBACKDOOR_H

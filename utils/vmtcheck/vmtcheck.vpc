@@ -25,7 +25,7 @@ $Project "Vmtcheck"
 	$Folder	"Source Files"
 	{
 		-$File	"$SRCDIR\public\tier0\memoverride.cpp"
-		
+
 		$File	"vmtcheck.cpp"
 		$File	"vmtcheck_util.cpp"
 

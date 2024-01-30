@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -16,13 +16,13 @@ abstract_class IVertexBufferDX8 : public IVertexBuffer
 {
 public:
 	// TEMPORARY!
-	virtual int Begin( int flags, int numVerts ) = 0;
+	virtual int Begin(int flags, int numVerts) = 0;
 
 	// Sets up the renderstate
-	virtual void SetRenderState( int stream	) = 0;
+	virtual void SetRenderState(int stream) = 0;
 
 	// Gets FVF info
-	virtual void ComputeFVFInfo( int flags, int& fvf, int& size ) const = 0;
+	virtual void ComputeFVFInfo(int flags, int &fvf, int &size) const = 0;
 
 	// Cleans up the vertex buffers
 	virtual void CleanUp() = 0;

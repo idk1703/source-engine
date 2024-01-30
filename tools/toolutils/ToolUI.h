@@ -17,7 +17,6 @@
 #include "vgui_controls/panel.h"
 #include "vgui/mousecode.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
@@ -37,30 +36,29 @@ namespace vgui
 //-----------------------------------------------------------------------------
 class CToolUI : public vgui::Panel
 {
-	DECLARE_CLASS_SIMPLE( CToolUI, vgui::Panel );
+	DECLARE_CLASS_SIMPLE(CToolUI, vgui::Panel);
 
 public:
 	// Constructor
-	CToolUI( vgui::Panel *pParent, const char *pPanelName, CBaseToolSystem *pBaseToolSystem );
+	CToolUI(vgui::Panel *pParent, const char *pPanelName, CBaseToolSystem *pBaseToolSystem);
 
 	// Overrides of panel methods
-	virtual void	PerformLayout();
-	virtual void	OnCommand( const char *cmd );
-	virtual void	OnMousePressed( vgui::MouseCode code );
+	virtual void PerformLayout();
+	virtual void OnCommand(const char *cmd);
+	virtual void OnMousePressed(vgui::MouseCode code);
 
-	virtual void	UpdateMenuBarTitle();
+	virtual void UpdateMenuBarTitle();
 
 	// Other public methods
-	vgui::MenuBar	*GetMenuBar();
-	vgui::Panel		*GetClientArea();
-	vgui::Panel		*GetStatusBar();
+	vgui::MenuBar *GetMenuBar();
+	vgui::Panel *GetClientArea();
+	vgui::Panel *GetStatusBar();
 
 private:
-	vgui::MenuBar	*m_pMenuBar;
-	vgui::Panel		*m_pStatusBar;
-	vgui::Panel		*m_pClientArea;
+	vgui::MenuBar *m_pMenuBar;
+	vgui::Panel *m_pStatusBar;
+	vgui::Panel *m_pClientArea;
 	CBaseToolSystem *m_pBaseToolSystem;
 };
-
 
 #endif // TOOLUI_H

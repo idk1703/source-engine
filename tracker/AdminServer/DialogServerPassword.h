@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -13,13 +13,12 @@
 
 #include <VGUI_Frame.h>
 
-
 namespace vgui
 {
-class TextEntry;
-class Label;
-class Button;
-};
+	class TextEntry;
+	class Label;
+	class Button;
+}; // namespace vgui
 
 //-----------------------------------------------------------------------------
 // Purpose: Prompt for user to enter a password to be able to connect to the server
@@ -34,7 +33,7 @@ public:
 	void Activate(const char *serverName, unsigned int serverID);
 
 	/* message returned:
-		"JoinServerWithPassword" 
+		"JoinServerWithPassword"
 			"serverID"
 			"password"
 	*/
@@ -53,6 +52,5 @@ private:
 
 	int m_iServerID;
 };
-
 
 #endif // DIALOGSERVERPASSWORD_H

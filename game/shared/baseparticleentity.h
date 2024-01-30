@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -15,20 +15,21 @@
 #include "predictable_entity.h"
 #include "baseentity_shared.h"
 
-#if defined( CLIENT_DLL )
+#if defined(CLIENT_DLL)
 #define CBaseParticleEntity C_BaseParticleEntity
 
 #include "particlemgr.h"
 
-#endif 
+#endif
 
 class CBaseParticleEntity : public CBaseEntity
-#if defined( CLIENT_DLL )
-, public IParticleEffect
+#if defined(CLIENT_DLL)
+	,
+							public IParticleEffect
 #endif
 {
 public:
-	DECLARE_CLASS( CBaseParticleEntity, CBaseEntity );
+	DECLARE_CLASS(CBaseParticleEntity, CBaseEntity);
 	DECLARE_PREDICTABLE();
 	DECLARE_NETWORKCLASS();
 
@@ -37,50 +38,58 @@ public:
 
 	// CBaseEntity overrides.
 public:
-#if !defined( CLIENT_DLL )
-	virtual int		UpdateTransmitState( void );	
+#if !defined(CLIENT_DLL)
+	virtual int UpdateTransmitState(void);
 #else
-// Default IParticleEffect overrides.
+	// Default IParticleEffect overrides.
 public:
+	virtual bool ShouldSimulate() const
+	{
+		return m_bSimulate;
+	}
+	virtual void SetShouldSimulate(bool bSim)
+	{
+		m_bSimulate = bSim;
+	}
 
-	virtual bool	ShouldSimulate() const { return m_bSimulate; }
-	virtual void	SetShouldSimulate( bool bSim ) { m_bSimulate = bSim; }
+	virtual void SimulateParticles(CParticleSimulateIterator *pIterator);
+	virtual void RenderParticles(CParticleRenderIterator *pIterator);
+	virtual const Vector &GetSortOrigin();
 
-	virtual void	SimulateParticles( CParticleSimulateIterator *pIterator );
-	virtual void	RenderParticles( CParticleRenderIterator *pIterator );
-	virtual const Vector & GetSortOrigin();
 public:
-	CParticleEffectBinding	m_ParticleEffect;
+	CParticleEffectBinding m_ParticleEffect;
 #endif
 
-	virtual void	Activate();
-	virtual void	Think();	
+	virtual void Activate();
+	virtual void Think();
 
-#if defined( CLIENT_DLL )
+#if defined(CLIENT_DLL)
 	// NOTE: Ths enclosed particle effect binding will do all the drawing
-	virtual bool	ShouldDraw() { return false; }
+	virtual bool ShouldDraw()
+	{
+		return false;
+	}
 
-	int				AllocateToolParticleEffectId();
-	int				GetToolParticleEffectId() const;
+	int AllocateToolParticleEffectId();
+	int GetToolParticleEffectId() const;
 
 private:
-	int				m_nToolParticleEffectId;
-	bool			m_bSimulate;
+	int m_nToolParticleEffectId;
+	bool m_bSimulate;
 #endif
 
 public:
-	void			FollowEntity(CBaseEntity *pEntity);
-	
+	void FollowEntity(CBaseEntity *pEntity);
+
 	// UTIL_Remove will be called after the specified amount of time.
 	// If you pass in -1, the entity will never go away automatically.
-	void			SetLifetime(float lifetime);
+	void SetLifetime(float lifetime);
 
 private:
-	CBaseParticleEntity( const CBaseParticleEntity & ); // not defined, not accessible
+	CBaseParticleEntity(const CBaseParticleEntity &); // not defined, not accessible
 };
 
-
-#if defined( CLIENT_DLL )
+#if defined(CLIENT_DLL)
 
 inline int CBaseParticleEntity::GetToolParticleEffectId() const
 {
@@ -96,5 +105,3 @@ inline int CBaseParticleEntity::AllocateToolParticleEffectId()
 #endif // CLIENT_DLL
 
 #endif
-
-

@@ -1,30 +1,30 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
 #include "mxBitmapButton.h"
 #include "hlfaceposer.h"
 
-
-mxBitmapButton::mxBitmapButton( mxWindow *parent, int x, int y, int w, int h, int id /*= 0*/, const char *bitmap /* = 0 */ )
-: mxWindow( parent, x, y, w, h, "" )
+mxBitmapButton::mxBitmapButton(mxWindow *parent, int x, int y, int w, int h, int id /*= 0*/,
+							   const char *bitmap /* = 0 */)
+	: mxWindow(parent, x, y, w, h, "")
 {
-	setId( id );
+	setId(id);
 
 	m_bmImage.valid = false;
 
-	SetImage( bitmap );
+	SetImage(bitmap);
 
 	HWND wnd = (HWND)getHandle();
 
-	DWORD style = GetWindowLong( wnd, GWL_STYLE );
+	DWORD style = GetWindowLong(wnd, GWL_STYLE);
 	style |= WS_CLIPSIBLINGS;
-	SetWindowLong( wnd, GWL_STYLE, style );
+	SetWindowLong(wnd, GWL_STYLE, style);
 }
 
-mxBitmapButton::~mxBitmapButton( void )
+mxBitmapButton::~mxBitmapButton(void)
 {
 	DeleteImage();
 }
@@ -32,65 +32,65 @@ mxBitmapButton::~mxBitmapButton( void )
 void mxBitmapButton::redraw()
 {
 	HWND wnd = (HWND)getHandle();
-	if ( !wnd )
+	if(!wnd)
 		return;
 
-	if ( !m_bmImage.valid )
+	if(!m_bmImage.valid)
 		return;
 
 	RECT rc;
-	GetClientRect( wnd, &rc );
-	
-	HDC dc = GetDC( wnd );
+	GetClientRect(wnd, &rc);
 
-	DrawBitmapToDC( dc, 0, 0, w(), h(), m_bmImage );
+	HDC dc = GetDC(wnd);
 
-	ReleaseDC( wnd, dc );
+	DrawBitmapToDC(dc, 0, 0, w(), h(), m_bmImage);
 
-	ValidateRect( wnd, &rc );
+	ReleaseDC(wnd, dc);
+
+	ValidateRect(wnd, &rc);
 }
 
-int mxBitmapButton::handleEvent( mxEvent * event )
+int mxBitmapButton::handleEvent(mxEvent *event)
 {
 	int iret = 0;
 
-	switch (event->event)
+	switch(event->event)
 	{
-	case mxEvent::MouseUp:
-		// Send message to parent
-		HWND parent = (HWND)( getParent() ? getParent()->getHandle() : NULL );
-		if ( parent )
-		{
-			LPARAM lp;
-			WPARAM wp;
+		case mxEvent::MouseUp:
+			// Send message to parent
+			HWND parent = (HWND)(getParent() ? getParent()->getHandle() : NULL);
+			if(parent)
+			{
+				LPARAM lp;
+				WPARAM wp;
 
-			wp = MAKEWPARAM( getId(), BN_CLICKED );
-			lp = (long)getHandle();
+				wp = MAKEWPARAM(getId(), BN_CLICKED);
+				lp = (long)getHandle();
 
-			SendMessage( parent, WM_COMMAND, wp, lp );
-			iret = 1;
-		}
-		break;
+				SendMessage(parent, WM_COMMAND, wp, lp);
+				iret = 1;
+			}
+			break;
 	}
 
 	return iret;
 }
 
-void mxBitmapButton::SetImage( const char *bitmapname )
+void mxBitmapButton::SetImage(const char *bitmapname)
 {
-	if ( m_bmImage.valid )
+	if(m_bmImage.valid)
 	{
 		DeleteImage();
 	}
 
-	LoadBitmapFromFile( bitmapname, m_bmImage );
+	LoadBitmapFromFile(bitmapname, m_bmImage);
 }
 
-void mxBitmapButton::DeleteImage( void )
+void mxBitmapButton::DeleteImage(void)
 {
-	if ( m_bmImage.valid )
+	if(m_bmImage.valid)
 	{
-		DeleteObject( m_bmImage.image );
+		DeleteObject(m_bmImage.image);
 		m_bmImage.valid = false;
 	}
 }

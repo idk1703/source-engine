@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,7 +13,6 @@
 #include <vgui_controls/Button.h>
 #include <vgui_controls/MessageBox.h>
 
-
 using namespace vgui;
 
 // Message boxes are windows that pop up in response to events.
@@ -21,18 +20,19 @@ using namespace vgui;
 // In this example we will trigger the opening of a message box when
 // a button is pressed.
 
-class MessageBoxDemo: public DemoPage
+class MessageBoxDemo : public DemoPage
 {
-	public:
-		MessageBoxDemo(Panel *parent, const char *name);
-		~MessageBoxDemo();
+public:
+	MessageBoxDemo(Panel *parent, const char *name);
+	~MessageBoxDemo();
 
-		void OnButtonClicked();
-		void ShowMessageBox();
-	private:
-		Button *m_pButton;
+	void OnButtonClicked();
+	void ShowMessageBox();
 
-		DECLARE_PANELMAP();
+private:
+	Button *m_pButton;
+
+	DECLARE_PANELMAP();
 };
 
 //-----------------------------------------------------------------------------
@@ -54,21 +54,17 @@ MessageBoxDemo::MessageBoxDemo(Panel *parent, const char *name) : DemoPage(paren
 	// Install a command that will be executed when the button is pressed
 	// Here we use a KeyValues command, this is mapped using the Message map
 	// below to a function.
-	m_pButton->SetCommand(new KeyValues ("ButtonClicked"));
-
+	m_pButton->SetCommand(new KeyValues("ButtonClicked"));
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-MessageBoxDemo::~MessageBoxDemo()
-{
-}
-
+MessageBoxDemo::~MessageBoxDemo() {}
 
 //-----------------------------------------------------------------------------
 // Purpose:	 Respond to a message based action signal
-//  
+//
 //-----------------------------------------------------------------------------
 void MessageBoxDemo::OnButtonClicked()
 {
@@ -84,35 +80,26 @@ void MessageBoxDemo::OnButtonClicked()
 
 void MessageBoxDemo::ShowMessageBox()
 {
-   	// create a new message box.
+	// create a new message box.
 	// The first arg is the name of the window and will be across the top.
 	// The second arg is the text that will appear in the message box.
 	// The third arg is if the box starts minimized (yes since we want the button to open it)
 	// The fourth arg is a parent window arg.
-	MessageBox *pMessage = new MessageBox ("Message Window", "Here is some message box text\n You must click OK to continue.", NULL);
-
+	MessageBox *pMessage =
+		new MessageBox("Message Window", "Here is some message box text\n You must click OK to continue.", NULL);
 
 	// This command will pop up the message box and hold it there until we click
 	// the OK button. When the OK button is clicked the message box object is destroyed.
 	pMessage->DoModal();
 }
 
-
-
-
-
-MessageMapItem_t MessageBoxDemo::m_MessageMap[] =
-{
-	MAP_MESSAGE( MessageBoxDemo, "ButtonClicked", OnButtonClicked ), 
+MessageMapItem_t MessageBoxDemo::m_MessageMap[] = {
+	MAP_MESSAGE(MessageBoxDemo, "ButtonClicked", OnButtonClicked),
 };
 
 IMPLEMENT_PANELMAP(MessageBoxDemo, DemoPage);
 
-
-
-Panel* MessageBoxDemo_Create(Panel *parent)
+Panel *MessageBoxDemo_Create(Panel *parent)
 {
 	return new MessageBoxDemo(parent, "MessageBoxDemo");
 }
-
-

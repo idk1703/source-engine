@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -30,7 +30,6 @@ enum ECombineOperation
 	ECO_Error,
 
 	ECO_COUNT
-
 };
 
 #endif /* COMBINEOPERATIONS_H */

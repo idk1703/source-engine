@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -19,30 +19,31 @@
 
 class CEditPathDlg : public CDialog
 {
-// Construction
+	// Construction
 public:
-	CEditPathDlg(CWnd* pParent = NULL);   // standard constructor
+	CEditPathDlg(CWnd *pParent = NULL); // standard constructor
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CEditPathDlg)
-	enum { IDD = IDD_EDITPATH };
-	CComboBox	m_cClass;
-	CString	m_strClass;
-	int		m_iDirection;
-	CString	m_strName;
+	enum
+	{
+		IDD = IDD_EDITPATH
+	};
+	CComboBox m_cClass;
+	CString m_strClass;
+	int m_iDirection;
+	CString m_strName;
 	//}}AFX_DATA
 
-
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CEditPathDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
 protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
+													 //}}AFX_VIRTUAL
 
+	// Implementation
+protected:
 	// Generated message map functions
 	//{{AFX_MSG(CEditPathDlg)
 	virtual BOOL OnInitDialog();

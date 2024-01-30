@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 #include "cbase.h"
 
-#if defined( REPLAY_ENABLED )
+#if defined(REPLAY_ENABLED)
 
 #include "replay/cdll_replay.h"
 #include "replay/replaycamera.h"
@@ -22,7 +22,7 @@
 #include "iviewrender.h"
 #include "igameevents.h"
 #include "replaycamera.h"
-#if defined( TF_CLIENT_DLL )
+#if defined(TF_CLIENT_DLL)
 #include "c_tf_gamestats.h"
 #endif
 #include "steamworks_gamestats.h"
@@ -50,10 +50,10 @@ public:
 	{
 		return GetSteamWorksSGameStatsUploader().GetServerSessionID();
 	}
-	
+
 	virtual IReplayScreenshotSystem *GetReplayScreenshotSystem()
 	{
-		if ( g_pEngineReplay->IsSupportedModAndPlatform() )
+		if(g_pEngineReplay->IsSupportedModAndPlatform())
 			return view->GetReplayScreenshotSystem();
 		return NULL;
 	}
@@ -63,64 +63,64 @@ public:
 		return g_pReplayPerformancePlaybackHandler;
 	}
 
-	virtual bool CacheReplayRagdolls( const char* pFilename, int nStartTick )
+	virtual bool CacheReplayRagdolls(const char *pFilename, int nStartTick)
 	{
-		return Replay_CacheRagdolls( pFilename, nStartTick );
+		return Replay_CacheRagdolls(pFilename, nStartTick);
 	}
 
-	virtual void OnSaveReplay( ReplayHandle_t hNewReplay, bool bShowInputDlg )
+	virtual void OnSaveReplay(ReplayHandle_t hNewReplay, bool bShowInputDlg)
 	{
-		if ( bShowInputDlg )
+		if(bShowInputDlg)
 		{
 			// Get a name for the replay, saves to disk, add thumbnail to replay browser
-			ShowReplayInputPanel( hNewReplay );
+			ShowReplayInputPanel(hNewReplay);
 		}
 		else
 		{
 			// Just add the thumbnail if the replay browser exists
-			CReplayBrowserPanel* pReplayBrowser = ReplayUI_GetBrowserPanel();
-			if ( pReplayBrowser )
+			CReplayBrowserPanel *pReplayBrowser = ReplayUI_GetBrowserPanel();
+			if(pReplayBrowser)
 			{
-				pReplayBrowser->OnSaveReplay( hNewReplay );
+				pReplayBrowser->OnSaveReplay(hNewReplay);
 			}
 		}
 
 		// Fire a message the game DLL can intercept (for achievements, etc).
-		IGameEvent *event = gameeventmanager->CreateEvent( "replay_saved" );
-		if ( event )
+		IGameEvent *event = gameeventmanager->CreateEvent("replay_saved");
+		if(event)
 		{
-			gameeventmanager->FireEventClientSide( event );
+			gameeventmanager->FireEventClientSide(event);
 		}
 	}
 
-	virtual void OnDeleteReplay( ReplayHandle_t hReplay )
+	virtual void OnDeleteReplay(ReplayHandle_t hReplay)
 	{
-		CReplayBrowserPanel* pReplayBrowser = ReplayUI_GetBrowserPanel();
-		if ( pReplayBrowser )
+		CReplayBrowserPanel *pReplayBrowser = ReplayUI_GetBrowserPanel();
+		if(pReplayBrowser)
 		{
-			pReplayBrowser->OnDeleteReplay( hReplay );
+			pReplayBrowser->OnDeleteReplay(hReplay);
 		}
 	}
 
-	virtual void DisplayReplayMessage( const char *pLocalizeStr, bool bUrgent, bool bDlg, const char *pSound )
+	virtual void DisplayReplayMessage(const char *pLocalizeStr, bool bUrgent, bool bDlg, const char *pSound)
 	{
 		// Display a message?
-		if ( !pLocalizeStr || !pLocalizeStr[0] )
+		if(!pLocalizeStr || !pLocalizeStr[0])
 			return;
 
-		g_pClientMode->DisplayReplayMessage( pLocalizeStr, -1.0f, bUrgent, pSound, bDlg );
+		g_pClientMode->DisplayReplayMessage(pLocalizeStr, -1.0f, bUrgent, pSound, bDlg);
 	}
 
-	virtual void DisplayReplayMessage( const wchar_t *pText, bool bUrgent, bool bDlg, const char *pSound )
+	virtual void DisplayReplayMessage(const wchar_t *pText, bool bUrgent, bool bDlg, const char *pSound)
 	{
-		if ( !pText || !pText[0] )
+		if(!pText || !pText[0])
 			return;
-	
-		const int nLen = wcslen( pText ) + 1;
-		char *pAnsi = new char[ nLen ];
-		g_pVGuiLocalize->ConvertUnicodeToANSI( pText, pAnsi, nLen );
 
-		g_pClientMode->DisplayReplayMessage( pAnsi, -1.0f, bUrgent, pSound, bDlg );
+		const int nLen = wcslen(pText) + 1;
+		char *pAnsi = new char[nLen];
+		g_pVGuiLocalize->ConvertUnicodeToANSI(pText, pAnsi, nLen);
+
+		g_pClientMode->DisplayReplayMessage(pAnsi, -1.0f, bUrgent, pSound, bDlg);
 	}
 
 	virtual bool OnConfirmQuit()
@@ -133,22 +133,25 @@ public:
 		ReplayUI_OpenReplayRenderOverlay();
 	}
 
-	virtual void OnRenderComplete( const RenderMovieParams_t &RenderParams, bool bCancelled, bool bSuccess, bool bShowBrowser )
+	virtual void OnRenderComplete(const RenderMovieParams_t &RenderParams, bool bCancelled, bool bSuccess,
+								  bool bShowBrowser)
 	{
 		ReplayUI_HideRenderOverlay();
 
-		if ( bShowBrowser )
+		if(bShowBrowser)
 		{
 			ReplayUI_ReloadBrowser();
 		}
 
 		// Upload a row to the OGS now that rendering has completed
-		GetReplayGameStatsHelper().SW_ReplayStats_WriteRenderDataEnd( RenderParams, bCancelled ? "cancelled" : bSuccess ? "success" : "failed" );
+		GetReplayGameStatsHelper().SW_ReplayStats_WriteRenderDataEnd(RenderParams, bCancelled ? "cancelled"
+																				   : bSuccess ? "success"
+																							  : "failed");
 	}
 
-	virtual void InitPerformanceEditor( ReplayHandle_t hReplay )
+	virtual void InitPerformanceEditor(ReplayHandle_t hReplay)
 	{
-		ReplayUI_InitPerformanceEditor( hReplay );
+		ReplayUI_InitPerformanceEditor(hReplay);
 	}
 
 	virtual void HidePerformanceEditor()
@@ -162,31 +165,31 @@ public:
 		return !g_pReplayMovieManager->IsRendering() || replay_enablerenderpreview.GetBool();
 	}
 
-	virtual void PlaySound( const char *pSound )
+	virtual void PlaySound(const char *pSound)
 	{
-		if ( g_pVGuiSurface )
+		if(g_pVGuiSurface)
 		{
-			g_pVGuiSurface->PlaySound( pSound );
+			g_pVGuiSurface->PlaySound(pSound);
 		}
 	}
 
-	virtual void UploadOgsData( KeyValues *pData, bool bIncludeTimeField )
+	virtual void UploadOgsData(KeyValues *pData, bool bIncludeTimeField)
 	{
-		GetReplayGameStatsHelper().UploadError( pData, bIncludeTimeField );
+		GetReplayGameStatsHelper().UploadError(pData, bIncludeTimeField);
 	}
 
-	virtual bool ShouldCompletePendingReplay( IGameEvent *pEvent )
+	virtual bool ShouldCompletePendingReplay(IGameEvent *pEvent)
 	{
-#if defined( TF_CLIENT_DLL )
-		return !( pEvent->GetInt( "death_flags" ) & TF_DEATH_FEIGN_DEATH );
+#if defined(TF_CLIENT_DLL)
+		return !(pEvent->GetInt("death_flags") & TF_DEATH_FEIGN_DEATH);
 #else
 		return true;
 #endif
 	}
 
-	virtual void OnPlaybackComplete( ReplayHandle_t hReplay, int iPerformance )
+	virtual void OnPlaybackComplete(ReplayHandle_t hReplay, int iPerformance)
 	{
-		ReplayUI_ReloadBrowser( hReplay, iPerformance );
+		ReplayUI_ReloadBrowser(hReplay, iPerformance);
 	}
 
 	virtual IReplayCamera *GetReplayCamera()
@@ -197,7 +200,7 @@ public:
 	virtual bool OnEndOfReplayReached()
 	{
 		CReplayPerformanceEditorPanel *pEditor = ReplayUI_GetPerformanceEditor();
-		if ( !pEditor )
+		if(!pEditor)
 			return false;
 
 		return pEditor->OnEndOfReplayReached();
@@ -205,6 +208,6 @@ public:
 };
 
 static CClientReplayImp s_ClientReplayImp;
-EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CClientReplayImp, IClientReplay, CLIENT_REPLAY_INTERFACE_VERSION, s_ClientReplayImp );
+EXPOSE_SINGLE_INTERFACE_GLOBALVAR(CClientReplayImp, IClientReplay, CLIENT_REPLAY_INTERFACE_VERSION, s_ClientReplayImp);
 
-#endif	// #if defined( REPLAY_ENABLED )
+#endif // #if defined( REPLAY_ENABLED )

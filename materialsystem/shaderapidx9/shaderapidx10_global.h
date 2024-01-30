@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -14,6 +14,5 @@
 #endif
 
 #include "shaderapi_global.h"
-
 
 #endif // SHADERAPIDX10_GLOBAL_H

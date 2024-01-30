@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -21,12 +21,12 @@
 
 class CFolderSelectProps : public CPropertyPage
 {
-// Construction
+	// Construction
 public:
 	virtual BOOL OnSetActive();
 	virtual BOOL OnKillActive();
 
-	CFolderSelectProps(CWnd* pParent = NULL);   // standard constructor
+	CFolderSelectProps(CWnd *pParent = NULL); // standard constructor
 
 	CPersistentString m_StrSupportHTTPPath;
 	CPersistentString m_StrPlayerHTTPPath;
@@ -40,42 +40,43 @@ public:
 	CPersistentString m_BoolOutputDefault;
 	CPersistentString m_BoolRuleDefault;
 	CPersistentString m_BoolPlayerDefault;
-	void UpdateFolders(bool safe=true);
+	void UpdateFolders(bool safe = true);
 	bool alreadyAcknowledged;
 	bool lockOutDir;
 	bool lockTFSDir;
 	bool windowInitted;
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CFolderSelectProps)
-	enum { IDD = IDD_DIRS };
-	CButton	m_DefTFStats;
-	CButton	m_DefSupportHTTP;
-	CButton	m_DefSupport;
-	CButton	m_DefRule;
-	CButton	m_DefPlayerHTTP;
-	CButton	m_DefPlayer;
-	CButton	m_DefOutput;
-	CEdit	m_SupportHTTPPath;
-	CEdit	m_PlayerHTTPPath;
-	CEdit	m_PlayerDir;
-	CEdit	m_TFStatsDir;
-	CEdit	m_SupportDir;
-	CEdit	m_RuleDir;
-	CEdit	m_OutDir;
+	enum
+	{
+		IDD = IDD_DIRS
+	};
+	CButton m_DefTFStats;
+	CButton m_DefSupportHTTP;
+	CButton m_DefSupport;
+	CButton m_DefRule;
+	CButton m_DefPlayerHTTP;
+	CButton m_DefPlayer;
+	CButton m_DefOutput;
+	CEdit m_SupportHTTPPath;
+	CEdit m_PlayerHTTPPath;
+	CEdit m_PlayerDir;
+	CEdit m_TFStatsDir;
+	CEdit m_SupportDir;
+	CEdit m_RuleDir;
+	CEdit m_OutDir;
 	//}}AFX_DATA
 
-
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CFolderSelectProps)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
 protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
+													 //}}AFX_VIRTUAL
 
+	// Implementation
+protected:
 	// Generated message map functions
 	//{{AFX_MSG(CFolderSelectProps)
 	afx_msg void OnDefaultCheckBoxClick();

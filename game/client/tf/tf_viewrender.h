@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -19,12 +19,13 @@
 //-----------------------------------------------------------------------------
 class CTFViewRender : public CViewRender
 {
-	DECLARE_CLASS( CTFViewRender, CViewRender );
+	DECLARE_CLASS(CTFViewRender, CViewRender);
+
 public:
 	CTFViewRender();
 
-	virtual void Init( void );
-	virtual void Render2DEffectsPostHUD( const CViewSetup &view );
+	virtual void Init(void);
+	virtual void Render2DEffectsPostHUD(const CViewSetup &view);
 };
 
-#endif //TF_VIEWRENDER_H
+#endif // TF_VIEWRENDER_H

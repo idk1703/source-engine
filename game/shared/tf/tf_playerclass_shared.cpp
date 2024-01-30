@@ -19,44 +19,33 @@
 // Tables.
 //
 
-#define CLASSMODEL_PARITY_BITS		3
-#define CLASSMODEL_PARITY_MASK		((1<<CLASSMODEL_PARITY_BITS)-1)
-
+#define CLASSMODEL_PARITY_BITS 3
+#define CLASSMODEL_PARITY_MASK ((1 << CLASSMODEL_PARITY_BITS) - 1)
 
 // Client specific.
 #ifdef CLIENT_DLL
 
-BEGIN_RECV_TABLE_NOBASE( CTFPlayerClassShared, DT_TFPlayerClassShared )
-	RecvPropInt( RECVINFO( m_iClass ) ),
-	RecvPropString( RECVINFO( m_iszClassIcon ) ),
-	RecvPropString( RECVINFO( m_iszCustomModel ) ),
-	RecvPropVector( RECVINFO( m_vecCustomModelOffset ) ),
-	RecvPropQAngles( RECVINFO( m_angCustomModelRotation ) ),
-	RecvPropBool( RECVINFO( m_bCustomModelRotates ) ),
-	RecvPropBool( RECVINFO( m_bCustomModelRotationSet ) ),
-	RecvPropBool( RECVINFO( m_bCustomModelVisibleToSelf ) ),
-	RecvPropBool( RECVINFO( m_bUseClassAnimations ) ),
-	RecvPropInt( RECVINFO(m_iClassModelParity) ),
+BEGIN_RECV_TABLE_NOBASE(CTFPlayerClassShared, DT_TFPlayerClassShared)
+	RecvPropInt(RECVINFO(m_iClass)), RecvPropString(RECVINFO(m_iszClassIcon)),
+		RecvPropString(RECVINFO(m_iszCustomModel)), RecvPropVector(RECVINFO(m_vecCustomModelOffset)),
+		RecvPropQAngles(RECVINFO(m_angCustomModelRotation)), RecvPropBool(RECVINFO(m_bCustomModelRotates)),
+		RecvPropBool(RECVINFO(m_bCustomModelRotationSet)), RecvPropBool(RECVINFO(m_bCustomModelVisibleToSelf)),
+		RecvPropBool(RECVINFO(m_bUseClassAnimations)), RecvPropInt(RECVINFO(m_iClassModelParity)),
 END_RECV_TABLE()
 
 // Server specific.
 #else
 
-BEGIN_SEND_TABLE_NOBASE( CTFPlayerClassShared, DT_TFPlayerClassShared )
-	SendPropInt( SENDINFO( m_iClass ), Q_log2( TF_CLASS_COUNT_ALL )+1, SPROP_UNSIGNED ),
-	SendPropStringT( SENDINFO( m_iszClassIcon ) ),
-	SendPropStringT( SENDINFO( m_iszCustomModel ) ),
-	SendPropVector( SENDINFO( m_vecCustomModelOffset ) ),
-	SendPropQAngles( SENDINFO( m_angCustomModelRotation ) ),
-	SendPropBool( SENDINFO( m_bCustomModelRotates ) ),
-	SendPropBool( SENDINFO( m_bCustomModelRotationSet ) ),
-	SendPropBool( SENDINFO( m_bCustomModelVisibleToSelf ) ),
-	SendPropBool( SENDINFO( m_bUseClassAnimations ) ),
-	SendPropInt( SENDINFO(m_iClassModelParity), CLASSMODEL_PARITY_BITS, SPROP_UNSIGNED ),
+BEGIN_SEND_TABLE_NOBASE(CTFPlayerClassShared, DT_TFPlayerClassShared)
+	SendPropInt(SENDINFO(m_iClass), Q_log2(TF_CLASS_COUNT_ALL) + 1, SPROP_UNSIGNED),
+		SendPropStringT(SENDINFO(m_iszClassIcon)), SendPropStringT(SENDINFO(m_iszCustomModel)),
+		SendPropVector(SENDINFO(m_vecCustomModelOffset)), SendPropQAngles(SENDINFO(m_angCustomModelRotation)),
+		SendPropBool(SENDINFO(m_bCustomModelRotates)), SendPropBool(SENDINFO(m_bCustomModelRotationSet)),
+		SendPropBool(SENDINFO(m_bCustomModelVisibleToSelf)), SendPropBool(SENDINFO(m_bUseClassAnimations)),
+		SendPropInt(SENDINFO(m_iClassModelParity), CLASSMODEL_PARITY_BITS, SPROP_UNSIGNED),
 END_SEND_TABLE()
 
 #endif
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
@@ -67,17 +56,17 @@ CTFPlayerClassShared::CTFPlayerClassShared()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFPlayerClassShared::Reset( void )
+void CTFPlayerClassShared::Reset(void)
 {
-	m_iClass.Set( TF_CLASS_UNDEFINED );
+	m_iClass.Set(TF_CLASS_UNDEFINED);
 #ifdef CLIENT_DLL
 	m_iszClassIcon[0] = '\0';
 	m_iszCustomModel[0] = '\0';
 #else
-	m_iszClassIcon.Set( NULL_STRING );
-	m_iszCustomModel.Set( NULL_STRING );
+	m_iszClassIcon.Set(NULL_STRING);
+	m_iszCustomModel.Set(NULL_STRING);
 #endif
 	m_vecCustomModelOffset = vec3_origin;
 	m_angCustomModelRotation = vec3_angle;
@@ -90,24 +79,24 @@ void CTFPlayerClassShared::Reset( void )
 
 #ifndef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFPlayerClassShared::SetCustomModel( const char *pszModelName, bool isUsingClassAnimations )
+void CTFPlayerClassShared::SetCustomModel(const char *pszModelName, bool isUsingClassAnimations)
 {
-	if ( pszModelName && pszModelName[0] )
+	if(pszModelName && pszModelName[0])
 	{
 		bool bAllowPrecache = CBaseEntity::IsPrecacheAllowed();
-		CBaseEntity::SetAllowPrecache( true );
-		CBaseEntity::PrecacheModel( pszModelName );
-		CBaseEntity::SetAllowPrecache( bAllowPrecache );
+		CBaseEntity::SetAllowPrecache(true);
+		CBaseEntity::PrecacheModel(pszModelName);
+		CBaseEntity::SetAllowPrecache(bAllowPrecache);
 
-		m_iszCustomModel.Set( AllocPooledString( pszModelName ) );
+		m_iszCustomModel.Set(AllocPooledString(pszModelName));
 
 		m_bUseClassAnimations = isUsingClassAnimations;
 	}
 	else
 	{
-		m_iszCustomModel.Set( NULL_STRING );
+		m_iszCustomModel.Set(NULL_STRING);
 		m_vecCustomModelOffset = vec3_origin;
 		m_angCustomModelRotation = vec3_angle;
 	}
@@ -117,11 +106,11 @@ void CTFPlayerClassShared::SetCustomModel( const char *pszModelName, bool isUsin
 #endif // #ifndef CLIENT_DLL
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CTFPlayerClassShared::CustomModelHasChanged( void )
+bool CTFPlayerClassShared::CustomModelHasChanged(void)
 {
-	if ( m_iClassModelParity != m_iOldClassModelParity )
+	if(m_iClassModelParity != m_iOldClassModelParity)
 	{
 		m_iOldClassModelParity = m_iClassModelParity.Get();
 		return true;
@@ -133,44 +122,45 @@ bool CTFPlayerClassShared::CustomModelHasChanged( void )
 // Purpose:
 //-----------------------------------------------------------------------------
 #ifdef STAGING_ONLY
-ConVar tf_player_use_female_models( "tf_player_use_female_models", "0", FCVAR_CHEAT | FCVAR_REPLICATED, "For testing. Appends '_female' to the model filename loaded" );
+ConVar tf_player_use_female_models("tf_player_use_female_models", "0", FCVAR_CHEAT | FCVAR_REPLICATED,
+								   "For testing. Appends '_female' to the model filename loaded");
 #endif
 
-const char	*CTFPlayerClassShared::GetModelName( void ) const						
-{ 
+const char *CTFPlayerClassShared::GetModelName(void) const
+{
 	// Does this play have an overridden model?
 #ifdef CLIENT_DLL
-	if ( m_iszCustomModel[0] )
+	if(m_iszCustomModel[0])
 		return m_iszCustomModel;
 #else
-	if ( m_iszCustomModel.Get() != NULL_STRING )
-		return ( STRING( m_iszCustomModel.Get() ) );
+	if(m_iszCustomModel.Get() != NULL_STRING)
+		return (STRING(m_iszCustomModel.Get()));
 #endif
 
-	#define MAX_MODEL_FILENAME_LENGTH 256
-	static char modelFilename[ MAX_MODEL_FILENAME_LENGTH ];
+#define MAX_MODEL_FILENAME_LENGTH 256
+	static char modelFilename[MAX_MODEL_FILENAME_LENGTH];
 
-	Q_strncpy( modelFilename, GetPlayerClassData( m_iClass )->GetModelName(), sizeof( modelFilename ) );
-	
+	Q_strncpy(modelFilename, GetPlayerClassData(m_iClass)->GetModelName(), sizeof(modelFilename));
+
 #ifdef STAGING_ONLY
-	if ( tf_player_use_female_models.GetBool() )
+	if(tf_player_use_female_models.GetBool())
 	{
 		// find the ".mdl" part
 		char *ext;
-		for( ext = modelFilename; *ext != '\000'; ++ext )
+		for(ext = modelFilename; *ext != '\000'; ++ext)
 		{
-			if ( *ext == '.' )
+			if(*ext == '.')
 			{
-				V_strncpy( ext, "_female.mdl", sizeof( modelFilename ) - ( ext - modelFilename ) );
+				V_strncpy(ext, "_female.mdl", sizeof(modelFilename) - (ext - modelFilename));
 				break;
 			}
 		}
 
 		// make sure the test model is precached
 		bool bAllowPrecache = CBaseEntity::IsPrecacheAllowed();
-		CBaseEntity::SetAllowPrecache( true );
-		CBaseEntity::PrecacheModel( modelFilename );
-		CBaseEntity::SetAllowPrecache( bAllowPrecache );
+		CBaseEntity::SetAllowPrecache(true);
+		CBaseEntity::PrecacheModel(modelFilename);
+		CBaseEntity::SetAllowPrecache(bAllowPrecache);
 	}
 #endif
 
@@ -182,42 +172,41 @@ const char	*CTFPlayerClassShared::GetModelName( void ) const
 //-----------------------------------------------------------------------------
 const char *g_HACK_GunslingerEngineerArmsOverride = "models\\weapons\\c_models\\c_engineer_gunslinger.mdl";
 
-const char *CTFPlayerClassShared::GetHandModelName( int iHandIndex = 0 ) const
+const char *CTFPlayerClassShared::GetHandModelName(int iHandIndex = 0) const
 {
-	return iHandIndex == 0
-		 ? GetPlayerClassData( m_iClass )->m_szHandModelName
-		 :g_HACK_GunslingerEngineerArmsOverride;				// this is precached in the CTFRobotArm class
+	return iHandIndex == 0 ? GetPlayerClassData(m_iClass)->m_szHandModelName
+						   : g_HACK_GunslingerEngineerArmsOverride; // this is precached in the CTFRobotArm class
 }
 //-----------------------------------------------------------------------------
 // Purpose: Initialize the player class.
 //-----------------------------------------------------------------------------
-bool CTFPlayerClassShared::Init( int iClass )
+bool CTFPlayerClassShared::Init(int iClass)
 {
-	Assert ( ( iClass >= TF_FIRST_NORMAL_CLASS ) && ( iClass <= TF_LAST_NORMAL_CLASS ) );
+	Assert((iClass >= TF_FIRST_NORMAL_CLASS) && (iClass <= TF_LAST_NORMAL_CLASS));
 
 	Reset();
 	m_iClass = iClass;
 
 #ifdef CLIENT_DLL
-	V_strncpy( m_iszCustomModel, g_aRawPlayerClassNamesShort[ m_iClass ], sizeof( m_iszCustomModel ) );
+	V_strncpy(m_iszCustomModel, g_aRawPlayerClassNamesShort[m_iClass], sizeof(m_iszCustomModel));
 #else
-	m_iszClassIcon.Set( AllocPooledString( g_aRawPlayerClassNamesShort[ m_iClass ] ) );
+	m_iszClassIcon.Set(AllocPooledString(g_aRawPlayerClassNamesShort[m_iClass]));
 #endif
 
 	return true;
 }
 
 // If needed, put this into playerclass scripts
-bool CTFPlayerClassShared::CanBuildObject( int iObjectType )
+bool CTFPlayerClassShared::CanBuildObject(int iObjectType)
 {
 	bool bFound = false;
 
-	TFPlayerClassData_t  *pData = GetData();
+	TFPlayerClassData_t *pData = GetData();
 
 	int i;
-	for ( i=0;i<TF_PLAYER_BLUEPRINT_COUNT;i++ )
+	for(i = 0; i < TF_PLAYER_BLUEPRINT_COUNT; i++)
 	{
-		if ( iObjectType == pData->m_aBuildable[i] )
+		if(iObjectType == pData->m_aBuildable[i])
 		{
 			bFound = true;
 			break;

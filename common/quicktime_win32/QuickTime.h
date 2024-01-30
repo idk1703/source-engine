@@ -1,17 +1,17 @@
 /*
-     File:       QuickTime.h
- 
-     Contains:   Master include for all of QuickTime on OS X
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 1999-2007 by Apple Inc., all rights reserved.
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+	File:       QuickTime.h
+
+	Contains:   Master include for all of QuickTime on OS X
+
+	Version:    QuickTime 7.3
+
+	Copyright:  (c) 2007 (c) 1999-2007 by Apple Inc., all rights reserved.
+
+	Bugs?:      For bug reports, consult the following page on
+			the World Wide Web:
+
+				http://developer.apple.com/bugreporter/
+
 */
 #ifndef __QUICKTIME__
 #define __QUICKTIME__
@@ -19,8 +19,6 @@
 #ifndef __CARBON__
 #include <Carbon.h>
 #endif
-
-
 
 /* QuickTime is not available to 64-bit clients */
 
@@ -86,10 +84,6 @@
 #include <HIMovieView.h>
 #endif
 
-
-
 #endif // !__LP64__
 
-
 #endif /* __QUICKTIME__ */
-

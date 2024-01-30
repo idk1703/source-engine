@@ -13,20 +13,20 @@
 
 class CDODPlayerResource : public CPlayerResource
 {
-	DECLARE_CLASS( CDODPlayerResource, CPlayerResource );
-	
+	DECLARE_CLASS(CDODPlayerResource, CPlayerResource);
+
 public:
 	DECLARE_SERVERCLASS();
 	DECLARE_DATADESC();
 
 	CDODPlayerResource();
 
-	virtual void UpdatePlayerData( void );
-	virtual void Spawn( void );
+	virtual void UpdatePlayerData(void);
+	virtual void Spawn(void);
 
 protected:
-	CNetworkArray( int, m_iObjScore, MAX_PLAYERS+1 );
-	CNetworkArray( int, m_iPlayerClass, MAX_PLAYERS+1 );
+	CNetworkArray(int, m_iObjScore, MAX_PLAYERS + 1);
+	CNetworkArray(int, m_iPlayerClass, MAX_PLAYERS + 1);
 };
 
 #endif // DOD_PLAYER_RESOURCE_H

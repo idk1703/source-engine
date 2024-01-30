@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -27,11 +27,11 @@
 
 #ifdef VPROF_ENABLED
 
-static ConVar vprof_graph	   ( "vprof_graph","0", 0, "Draw the vprof graph." );
-static ConVar vprof_graphwidth ( "vprof_graphwidth", "512", FCVAR_ARCHIVE );
-static ConVar vprof_graphheight( "vprof_graphheight", "256", FCVAR_ARCHIVE );
+static ConVar vprof_graph("vprof_graph", "0", 0, "Draw the vprof graph.");
+static ConVar vprof_graphwidth("vprof_graphwidth", "512", FCVAR_ARCHIVE);
+static ConVar vprof_graphheight("vprof_graphheight", "256", FCVAR_ARCHIVE);
 
-#define	TIMINGS		256		// Number of values to track (must be power of 2) b/c of masking
+#define TIMINGS 256 // Number of values to track (must be power of 2) b/c of masking
 
 #define GRAPH_RED	(0.9f * 255)
 #define GRAPH_GREEN (0.9f * 255)
@@ -39,235 +39,224 @@ static ConVar vprof_graphheight( "vprof_graphheight", "256", FCVAR_ARCHIVE );
 
 #define LERP_HEIGHT 24
 
-
 //-----------------------------------------------------------------------------
-// Purpose: Displays the netgraph 
+// Purpose: Displays the netgraph
 //-----------------------------------------------------------------------------
 class CVProfGraphPanel : public vgui::Panel
 {
 	typedef vgui::Panel BaseClass;
-private:
 
-	vgui::HFont			m_hFont;
+private:
+	vgui::HFont m_hFont;
 
 public:
-						CVProfGraphPanel( vgui::VPANEL parent );
-	virtual				~CVProfGraphPanel( void );
+	CVProfGraphPanel(vgui::VPANEL parent);
+	virtual ~CVProfGraphPanel(void);
 
-	virtual void		ApplySchemeSettings(vgui::IScheme *pScheme);
-	virtual void		Paint();
-	virtual void		OnTick( void );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void Paint();
+	virtual void OnTick(void);
 
-	virtual bool		ShouldDraw( void );
-
+	virtual bool ShouldDraw(void);
 
 	struct CLineSegment
 	{
-		int			x1, y1, x2, y2;
-		byte		color[4];
+		int x1, y1, x2, y2;
+		byte color[4];
 	};
 
-	inline void			DrawLine( vrect_t *rect, unsigned char *color, unsigned char alpha );
+	inline void DrawLine(vrect_t *rect, unsigned char *color, unsigned char alpha);
 
-	void				DrawLineSegments();
+	void DrawLineSegments();
 
-	void				GraphGetXY( vrect_t *rect, int width, int *x, int *y );
+	void GraphGetXY(vrect_t *rect, int width, int *x, int *y);
 
 private:
+	void PaintLineArt(int x, int y, int w);
 
-	void				PaintLineArt( int x, int y, int w );
-
-	CMaterialReference	m_WhiteMaterial;
+	CMaterialReference m_WhiteMaterial;
 
 	// VProf interface:
-	float m_Samples[ TIMINGS ][3];
-	CVProfNode*  m_Components;
+	float m_Samples[TIMINGS][3];
+	CVProfNode *m_Components;
 
-	int   m_CurrentSample;
+	int m_CurrentSample;
 
 	void GetNextSample();
 
 public:
-	static CVProfNode*  m_CurrentNode;
+	static CVProfNode *m_CurrentNode;
 };
 
-CVProfNode* CVProfGraphPanel::m_CurrentNode = NULL;
-
+CVProfNode *CVProfGraphPanel::m_CurrentNode = NULL;
 
 void IN_VProfPrevSibling(void)
 {
-	CVProfNode* n = CVProfGraphPanel::m_CurrentNode->GetPrevSibling();
-	if( n )
+	CVProfNode *n = CVProfGraphPanel::m_CurrentNode->GetPrevSibling();
+	if(n)
 		CVProfGraphPanel::m_CurrentNode = n;
 }
 
 void IN_VProfNextSibling(void)
 {
-	CVProfNode* n = CVProfGraphPanel::m_CurrentNode->GetSibling();
-	if( n )
+	CVProfNode *n = CVProfGraphPanel::m_CurrentNode->GetSibling();
+	if(n)
 		CVProfGraphPanel::m_CurrentNode = n;
-
 }
 
 void IN_VProfParent(void)
 {
-	CVProfNode* n = CVProfGraphPanel::m_CurrentNode->GetParent();
-	if( n )
+	CVProfNode *n = CVProfGraphPanel::m_CurrentNode->GetParent();
+	if(n)
 		CVProfGraphPanel::m_CurrentNode = n;
-
 }
 
 void IN_VProfChild(void)
 {
-	CVProfNode* n = CVProfGraphPanel::m_CurrentNode->GetChild();
-	if( n )
+	CVProfNode *n = CVProfGraphPanel::m_CurrentNode->GetChild();
+	if(n)
 	{
 		// Find the largest child:
-		CVProfGraphPanel::m_CurrentNode = n; 
+		CVProfGraphPanel::m_CurrentNode = n;
 
-		for( ; n; n = n->GetSibling() )
+		for(; n; n = n->GetSibling())
 		{
-			if( n->GetPrevTime() > CVProfGraphPanel::m_CurrentNode->GetPrevTime() )
+			if(n->GetPrevTime() > CVProfGraphPanel::m_CurrentNode->GetPrevTime())
 				CVProfGraphPanel::m_CurrentNode = n;
 		}
 	}
 }
 
-static ConCommand vprof_siblingprev	("vprof_prevsibling", IN_VProfPrevSibling);
-static ConCommand vprof_siblingnext	("vprof_nextsibling", IN_VProfNextSibling);
-static ConCommand vprof_parent		("vprof_parent",	  IN_VProfParent);
-static ConCommand vprof_child		("vprof_child",		  IN_VProfChild);
+static ConCommand vprof_siblingprev("vprof_prevsibling", IN_VProfPrevSibling);
+static ConCommand vprof_siblingnext("vprof_nextsibling", IN_VProfNextSibling);
+static ConCommand vprof_parent("vprof_parent", IN_VProfParent);
+static ConCommand vprof_child("vprof_child", IN_VProfChild);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
+// Purpose:
+// Input  : *parent -
 //-----------------------------------------------------------------------------
-CVProfGraphPanel::CVProfGraphPanel( vgui::VPANEL parent ) : BaseClass( NULL, "CVProfGraphPanel" )
+CVProfGraphPanel::CVProfGraphPanel(vgui::VPANEL parent) : BaseClass(NULL, "CVProfGraphPanel")
 {
-	SetParent( parent ); 
-	SetSize( videomode->GetModeStereoWidth(), videomode->GetModeStereoHeight() );
-	SetPos( 0, 0 );
-	SetVisible( false );
-	SetCursor( null );
+	SetParent(parent);
+	SetSize(videomode->GetModeStereoWidth(), videomode->GetModeStereoHeight());
+	SetPos(0, 0);
+	SetVisible(false);
+	SetCursor(null);
 
 	m_hFont = 0;
 
-	SetFgColor( Color( 0, 0, 0, 255 ) );
-	SetPaintBackgroundEnabled( false );
+	SetFgColor(Color(0, 0, 0, 255));
+	SetPaintBackgroundEnabled(false);
 
-	memset( m_Samples, 0, sizeof( m_Samples ) );
+	memset(m_Samples, 0, sizeof(m_Samples));
 	m_CurrentSample = 0;
 	m_CurrentNode = g_VProfCurrentProfile.GetRoot();
 
 	// Move down to an interesting node ( the render / sound / etc level)
-	if( m_CurrentNode->GetChild() )
+	if(m_CurrentNode->GetChild())
 	{
 		m_CurrentNode = m_CurrentNode->GetChild();
 
-		if( m_CurrentNode->GetChild() )
+		if(m_CurrentNode->GetChild())
 		{
 			m_CurrentNode = m_CurrentNode->GetChild();
 		}
 	}
 
-	vgui::ivgui()->AddTickSignal( GetVPanel() );
+	vgui::ivgui()->AddTickSignal(GetVPanel());
 
-	m_WhiteMaterial.Init( "vgui/white", TEXTURE_GROUP_OTHER );
-
+	m_WhiteMaterial.Init("vgui/white", TEXTURE_GROUP_OTHER);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CVProfGraphPanel::~CVProfGraphPanel( void )
-{
-}
+CVProfGraphPanel::~CVProfGraphPanel(void) {}
 
 void CVProfGraphPanel::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 
-	m_hFont = pScheme->GetFont( "DefaultVerySmall" );
-	Assert( m_hFont );
+	m_hFont = pScheme->GetFont("DefaultVerySmall");
+	Assert(m_hFont);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Figure out x and y position for graph based on vprof_graphpos
 //   value.
-// Input  : *rect - 
-//			width - 
-//			*x - 
-//			*y - 
+// Input  : *rect -
+//			width -
+//			*x -
+//			*y -
 //-----------------------------------------------------------------------------
-void CVProfGraphPanel::GraphGetXY( vrect_t *rect, int width, int *x, int *y )
+void CVProfGraphPanel::GraphGetXY(vrect_t *rect, int width, int *x, int *y)
 {
 	*x = rect->x + rect->width - 5 - width;
-	*y = rect->y+rect->height - LERP_HEIGHT - 5;
+	*y = rect->y + rect->height - LERP_HEIGHT - 5;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CVProfGraphPanel::OnTick( void )
+void CVProfGraphPanel::OnTick(void)
 {
-	SetVisible( ShouldDraw() );
-	
+	SetVisible(ShouldDraw());
 }
 
-bool CVProfGraphPanel::ShouldDraw( void )
+bool CVProfGraphPanel::ShouldDraw(void)
 {
 	return vprof_graph.GetBool();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CVProfGraphPanel::Paint() 
+void CVProfGraphPanel::Paint()
 {
-	int			x, y, w;
-	vrect_t		vrect;
+	int x, y, w;
+	vrect_t vrect;
 
-	if ( ( ShouldDraw() ) == false )
+	if((ShouldDraw()) == false)
 		return;
-	
+
 	// Get screen rectangle
-	vrect.x		 = 0;
-	vrect.y		 = 0;
-	vrect.width	 = videomode->GetModeStereoWidth();
+	vrect.x = 0;
+	vrect.y = 0;
+	vrect.width = videomode->GetModeStereoWidth();
 	vrect.height = videomode->GetModeStereoHeight();
 
 	// Determine graph width
 	w = vprof_graphwidth.GetInt();
-	if ( vrect.width < w + 10 )
+	if(vrect.width < w + 10)
 	{
 		w = vrect.width - 10;
 	}
 
 	// Get the graph's location:
-	GraphGetXY( &vrect, w, &x, &y );
+	GraphGetXY(&vrect, w, &x, &y);
 
-	PaintLineArt( x, y, w );
+	PaintLineArt(x, y, w);
 
 	// Draw the text overlays:
 
 	// Print it out
 	y -= vprof_graphheight.GetInt();
 
-	double RootTime =  g_VProfCurrentProfile.GetRoot()->GetPrevTime();
+	double RootTime = g_VProfCurrentProfile.GetRoot()->GetPrevTime();
 
 	char sz[256];
-	if ( ( g_ClientGlobalVariables.absoluteframetime) > 0.f )
+	if((g_ClientGlobalVariables.absoluteframetime) > 0.f)
 	{
-		Q_snprintf( sz, sizeof( sz ), "%s - %0.1f%%%%", m_CurrentNode->GetName(), ( m_CurrentNode->GetPrevTime() /  RootTime ) * 100.f);
-		g_pMatSystemSurface->DrawColoredText( m_hFont, x, y, GRAPH_RED, GRAPH_GREEN, GRAPH_BLUE, 255, "%s", sz );
+		Q_snprintf(sz, sizeof(sz), "%s - %0.1f%%%%", m_CurrentNode->GetName(),
+				   (m_CurrentNode->GetPrevTime() / RootTime) * 100.f);
+		g_pMatSystemSurface->DrawColoredText(m_hFont, x, y, GRAPH_RED, GRAPH_GREEN, GRAPH_BLUE, 255, "%s", sz);
 	}
 
-	byte color[3][3] = 
-	{
-		{ 255, 0, 0 },
-		{ 0, 0, 255 },
-		{ 255, 255, 255 },
+	byte color[3][3] = {
+		{255, 0, 0},
+		{0, 0, 255},
+		{255, 255, 255},
 	};
 
 	const char *pTitles[3];
@@ -277,30 +266,29 @@ void CVProfGraphPanel::Paint()
 
 	// Draw the legend:
 	x += w / 2;
-	for( int i = 3; --i >= 0; )
+	for(int i = 3; --i >= 0;)
 	{
-		Q_snprintf( sz, sizeof( sz ), "%07.3f ms (%s)", m_Samples[m_CurrentSample][i], pTitles[i] );
+		Q_snprintf(sz, sizeof(sz), "%07.3f ms (%s)", m_Samples[m_CurrentSample][i], pTitles[i]);
 		y -= 10;
-		g_pMatSystemSurface->DrawColoredText( m_hFont, x, y, color[i][0], color[i][1], color[i][2], 180, "%s", sz );
+		g_pMatSystemSurface->DrawColoredText(m_hFont, x, y, color[i][0], color[i][1], color[i][2], 180, "%s", sz);
 	}
 }
-
 
 // VProf interface:
 void CVProfGraphPanel::GetNextSample()
 {
 	// Increment to the next sample:
-	m_CurrentSample = ( m_CurrentSample + 1 ) % TIMINGS; 
+	m_CurrentSample = (m_CurrentSample + 1) % TIMINGS;
 	m_Samples[m_CurrentSample][0] = m_CurrentNode->GetPrevTime();
-	m_Samples[m_CurrentSample][1] = m_CurrentNode->GetParent() ? m_CurrentNode->GetParent()->GetPrevTime() : m_CurrentNode->GetPrevTime();
+	m_Samples[m_CurrentSample][1] =
+		m_CurrentNode->GetParent() ? m_CurrentNode->GetParent()->GetPrevTime() : m_CurrentNode->GetPrevTime();
 	m_Samples[m_CurrentSample][2] = g_VProfCurrentProfile.GetRoot()->GetPrevTime();
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CVProfGraphPanel::PaintLineArt( int x, int y, int w ) 
+void CVProfGraphPanel::PaintLineArt(int x, int y, int w)
 {
 	int nPanelHeight = vprof_graphheight.GetFloat() - LERP_HEIGHT - 2;
 	int h, a;
@@ -308,65 +296,64 @@ void CVProfGraphPanel::PaintLineArt( int x, int y, int w )
 	// Update the sample graph:
 	GetNextSample();
 
-	CMatRenderContextPtr pRenderContext( materials );
+	CMatRenderContextPtr pRenderContext(materials);
 
-	IMesh* m_pMesh = pRenderContext->GetDynamicMesh( true, NULL, NULL, m_WhiteMaterial );
+	IMesh *m_pMesh = pRenderContext->GetDynamicMesh(true, NULL, NULL, m_WhiteMaterial);
 	CMeshBuilder meshBuilder;
-	meshBuilder.Begin( m_pMesh, MATERIAL_LINES, 3 * w + 4 );
+	meshBuilder.Begin(m_pMesh, MATERIAL_LINES, 3 * w + 4);
 
 	// Draw lines at 20, 30, 60 hz, and baseline
 	int i;
-	for ( i = 0; i < 4; ++i )
+	for(i = 0; i < 4; ++i)
 	{
 		int nLineY = y - (nPanelHeight / 3) * i;
 
-		if ( i == 0 )
+		if(i == 0)
 		{
-			meshBuilder.Color4ub( 255, 255, 255, 255 );
+			meshBuilder.Color4ub(255, 255, 255, 255);
 		}
 		else
 		{
-			meshBuilder.Color4ub( 128, 128, 128, 255 );
+			meshBuilder.Color4ub(128, 128, 128, 255);
 		}
 
-		meshBuilder.TexCoord2f( 0, 0.0f, 0.0f );
-		meshBuilder.Position3f( x, nLineY, 0 );
+		meshBuilder.TexCoord2f(0, 0.0f, 0.0f);
+		meshBuilder.Position3f(x, nLineY, 0);
 		meshBuilder.AdvanceVertex();
 
-		if ( i == 0 )
+		if(i == 0)
 		{
-			meshBuilder.Color4ub( 255, 255, 255, 255 );
+			meshBuilder.Color4ub(255, 255, 255, 255);
 		}
 		else
 		{
-			meshBuilder.Color4ub( 128, 128, 128, 255 );
+			meshBuilder.Color4ub(128, 128, 128, 255);
 		}
 
-		meshBuilder.TexCoord2f( 0, 0.0f, 0.0f );
-		meshBuilder.Position3f( x + w, nLineY, 0 );
+		meshBuilder.TexCoord2f(0, 0.0f, 0.0f);
+		meshBuilder.Position3f(x + w, nLineY, 0);
 		meshBuilder.AdvanceVertex();
 	}
 
-	byte color[3][4] = 
-	{
-		{ 255, 0, 0, 255 },
-		{ 0, 0, 255, 255 },
-		{ 255, 255, 255, 255 },
+	byte color[3][4] = {
+		{255, 0, 0, 255},
+		{0, 0, 255, 255},
+		{255, 255, 255, 255},
 	};
 
 	// 0.05f = 1/20 = 20Hz
 	float flMsToPixel = nPanelHeight / 50.0f;
 	float flDxDSample = (w <= TIMINGS) ? 1.0f : (float)w / (float)TIMINGS;
 
-	for( i = 3; --i >= 0; )
+	for(i = 3; --i >= 0;)
 	{
 		int sample = m_CurrentSample;
-		for (a=w; a >= 0; a-- )
+		for(a = w; a >= 0; a--)
 		{
 			h = (int)(m_Samples[sample][i] * flMsToPixel + 0.5f);
 
 			// Clamp the height: (though it shouldn't need it)
-			if ( h > nPanelHeight )
+			if(h > nPanelHeight)
 			{
 				h = nPanelHeight;
 			}
@@ -374,22 +361,22 @@ void CVProfGraphPanel::PaintLineArt( int x, int y, int w )
 			int px = (int)(x + (w - a - 1) * flDxDSample + 0.5f);
 			int py = y - h;
 
-			meshBuilder.Color4ubv( color[i] );
-			meshBuilder.TexCoord2f( 0, 0.0f, 0.0f );
-			meshBuilder.Position3f( px, py, 0 );
+			meshBuilder.Color4ubv(color[i]);
+			meshBuilder.TexCoord2f(0, 0.0f, 0.0f);
+			meshBuilder.Position3f(px, py, 0);
 			meshBuilder.AdvanceVertex();
 
-			if ( ( a != w ) && ( a != 0 ) )
+			if((a != w) && (a != 0))
 			{
-				meshBuilder.Color4ubv( color[i] );
-				meshBuilder.TexCoord2f( 0, 0.0f, 0.0f );
-				meshBuilder.Position3f( px, py, 0 );
+				meshBuilder.Color4ubv(color[i]);
+				meshBuilder.TexCoord2f(0, 0.0f, 0.0f);
+				meshBuilder.Position3f(px, py, 0);
 				meshBuilder.AdvanceVertex();
 			}
 
 			// Move on to the next sample:
 			sample--;
-			if ( sample < 0 ) 
+			if(sample < 0)
 			{
 				sample = TIMINGS - 1;
 			}
@@ -400,9 +387,7 @@ void CVProfGraphPanel::PaintLineArt( int x, int y, int w )
 	m_pMesh->Draw();
 }
 
-
 #endif // VPROF_ENABLED
-
 
 //-----------------------------------------------------------------------------
 // Creates/destroys the vprof graph panel
@@ -412,24 +397,21 @@ void CVProfGraphPanel::PaintLineArt( int x, int y, int w )
 static CVProfGraphPanel *s_pVProfGraphPanel = NULL;
 #endif
 
-void CreateVProfGraphPanel( vgui::Panel *pParent )
+void CreateVProfGraphPanel(vgui::Panel *pParent)
 {
 #ifdef VPROF_ENABLED
-	s_pVProfGraphPanel = new CVProfGraphPanel( pParent->GetVPanel() );
+	s_pVProfGraphPanel = new CVProfGraphPanel(pParent->GetVPanel());
 #endif
 }
 
 void DestroyVProfGraphPanel()
 {
 #ifdef VPROF_ENABLED
-	if ( s_pVProfGraphPanel )
+	if(s_pVProfGraphPanel)
 	{
-		s_pVProfGraphPanel->SetParent( (vgui::Panel *)NULL );
+		s_pVProfGraphPanel->SetParent((vgui::Panel *)NULL);
 		delete s_pVProfGraphPanel;
 		s_pVProfGraphPanel = NULL;
 	}
 #endif
 }
-
-
-

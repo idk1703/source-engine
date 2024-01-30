@@ -15,28 +15,33 @@
 #include "tf_basefourwheelvehicle.h"
 #include "vphysics/vehicles.h"
 
-
 // ------------------------------------------------------------------------ //
 // A wagon that players can build one object on the back of
 // ------------------------------------------------------------------------ //
-class CVehicleWagon: public CBaseTFFourWheelVehicle
+class CVehicleWagon : public CBaseTFFourWheelVehicle
 {
-	DECLARE_CLASS( CVehicleWagon, CBaseTFFourWheelVehicle );
+	DECLARE_CLASS(CVehicleWagon, CBaseTFFourWheelVehicle);
 
 public:
 	DECLARE_SERVERCLASS();
 
-	static CVehicleWagon* Create(const Vector &vOrigin, const QAngle &vAngles);
+	static CVehicleWagon *Create(const Vector &vOrigin, const QAngle &vAngles);
 
-					CVehicleWagon();
+	CVehicleWagon();
 
-	virtual void	Spawn();
-	virtual void	Precache();
-	virtual void	GetControlPanelInfo( int nPanelIndex, const char *&pPanelName );
-	virtual bool	CanTakeEMPDamage( void ) { return true; }
+	virtual void Spawn();
+	virtual void Precache();
+	virtual void GetControlPanelInfo(int nPanelIndex, const char *&pPanelName);
+	virtual bool CanTakeEMPDamage(void)
+	{
+		return true;
+	}
 
 	// Vehicle overrides
-	virtual bool	IsPassengerVisible( int nRole ) { return true; }
+	virtual bool IsPassengerVisible(int nRole)
+	{
+		return true;
+	}
 };
 
 #endif // TF_VEHICLE_WAGON_H

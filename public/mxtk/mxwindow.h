@@ -14,8 +14,6 @@
 #ifndef INCLUDED_MXWINDOW
 #define INCLUDED_MXWINDOW
 
-
-
 #ifndef INCLUDED_MXWIDGET
 #include "mxtk/mxWidget.h"
 #endif
@@ -24,11 +22,7 @@
 #include "mxtk/mxEvent.h"
 #endif
 
-
-
 class mxMenuBar;
-
-
 
 class mxWindow_i;
 class mxWindow : public mxWidget
@@ -37,38 +31,48 @@ class mxWindow : public mxWidget
 
 public:
 	// ENUMS
-	enum { Normal, Popup, Dialog, ModalDialog };
+	enum
+	{
+		Normal,
+		Popup,
+		Dialog,
+		ModalDialog
+	};
 
 	// CREATORS
-	mxWindow (mxWindow *parent, int x, int y, int w, int h, const char *label = 0, int style = 0);
-	virtual ~mxWindow ();
+	mxWindow(mxWindow *parent, int x, int y, int w, int h, const char *label = 0, int style = 0);
+	virtual ~mxWindow();
 
 	// MANIPULATORS
-	virtual int handleEvent (mxEvent *event);
-/*
-	virtual int handleActionEvent (int action);
-	virtual void handleSizeEvent (int w, int h);
-	virtual void handleMouseEvent (int event, int x, int y, int button);
-	virtual void handleKeyEvent (int event, int key);
-	virtual void handleTimerEvent ();
-	virtual void handleIdleEvent ();
-*/
-	virtual void redraw ();
+	virtual int handleEvent(mxEvent *event);
+	/*
+		virtual int handleActionEvent (int action);
+		virtual void handleSizeEvent (int w, int h);
+		virtual void handleMouseEvent (int event, int x, int y, int button);
+		virtual void handleKeyEvent (int event, int key);
+		virtual void handleTimerEvent ();
+		virtual void handleIdleEvent ();
+	*/
+	virtual void redraw();
 
-	virtual bool PaintBackground( void ) { return true; };
+	virtual bool PaintBackground(void)
+	{
+		return true;
+	};
 
 	// Called at exit
-	virtual bool Closing( void ) { return true; };
+	virtual bool Closing(void)
+	{
+		return true;
+	};
 
-	void setTimer (int milliSeconds);
-	void setMenuBar (mxMenuBar *menuBar);
+	void setTimer(int milliSeconds);
+	void setMenuBar(mxMenuBar *menuBar);
 
 private:
 	// NOT IMPLEMENTED
-	mxWindow (const mxWindow&);
-	mxWindow& operator= (const mxWindow&);
+	mxWindow(const mxWindow &);
+	mxWindow &operator=(const mxWindow &);
 };
-
-
 
 #endif // INCLUDED_MXWINDOW

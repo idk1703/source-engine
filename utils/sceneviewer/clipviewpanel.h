@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -14,7 +14,6 @@
 
 #include "vgui_controls/Frame.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
@@ -22,7 +21,6 @@ class CDmeDagEditPanel;
 class CDmeDag;
 class CDmeAnimationList;
 class CDmeCombinationOperator;
-
 
 //-----------------------------------------------------------------------------
 // Material Viewer Panel
@@ -33,26 +31,24 @@ class CClipViewPanel : public vgui::Frame
 
 public:
 	// constructor, destructor
-	CClipViewPanel( vgui::Panel *pParent, const char *pName );
+	CClipViewPanel(vgui::Panel *pParent, const char *pName);
 	virtual ~CClipViewPanel();
 
 	// Overriden methods of vgui::Panel
 	virtual void PerformLayout();
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 
 	// Sets the current scene + camera
-	void SetScene( CDmeDag *pScene );
-	void SetAnimationList( CDmeAnimationList *pAnimationList );
-	void SetVertexAnimationList( CDmeAnimationList *pAnimationList );
-	void SetCombinationOperator( CDmeCombinationOperator *pComboOp );
+	void SetScene(CDmeDag *pScene);
+	void SetAnimationList(CDmeAnimationList *pAnimationList);
+	void SetVertexAnimationList(CDmeAnimationList *pAnimationList);
+	void SetCombinationOperator(CDmeCombinationOperator *pComboOp);
 	void RefreshCombinationOperator();
 
-	CDmeDag *GetScene( );
+	CDmeDag *GetScene();
 
 private:
 	CDmeDagEditPanel *m_pClipViewPreview;
 };
-
-
 
 #endif // CLIPVIEWPANEL_H

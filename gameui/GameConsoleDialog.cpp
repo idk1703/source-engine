@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -18,34 +18,31 @@
 
 using namespace vgui;
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CGameConsoleDialog::CGameConsoleDialog() : BaseClass( NULL, "GameConsole", false )
+CGameConsoleDialog::CGameConsoleDialog() : BaseClass(NULL, "GameConsole", false)
 {
-	AddActionSignalTarget( this );
+	AddActionSignalTarget(this);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: generic vgui command handler
 //-----------------------------------------------------------------------------
 void CGameConsoleDialog::OnCommand(const char *command)
 {
-	if ( !Q_stricmp( command, "Close" ) )
+	if(!Q_stricmp(command, "Close"))
 	{
-		if ( GameUI().IsInBackgroundLevel() )
+		if(GameUI().IsInBackgroundLevel())
 		{
 			// Tell the engine we've hid the console, so that it unpauses the game
 			// even though we're still sitting at the menu.
-			engine->ClientCmd_Unrestricted( "unpause" );
+			engine->ClientCmd_Unrestricted("unpause");
 		}
 	}
 
 	BaseClass::OnCommand(command);
 }
-
 
 //-----------------------------------------------------------------------------
 // HACK: Allow F key bindings to operate even when typing in the text entry field
@@ -55,45 +52,43 @@ void CGameConsoleDialog::OnKeyCodeTyped(KeyCode code)
 	BaseClass::OnKeyCodeTyped(code);
 
 	// check for processing
-	if ( m_pConsolePanel->TextEntryHasFocus() )
+	if(m_pConsolePanel->TextEntryHasFocus())
 	{
 		// HACK: Allow F key bindings to operate even here
-		if ( code >= KEY_F1 && code <= KEY_F12 )
+		if(code >= KEY_F1 && code <= KEY_F12)
 		{
 			// See if there is a binding for the FKey
-			const char *binding = gameuifuncs->GetBindingForButtonCode( code );
-			if ( binding && binding[0] )
+			const char *binding = gameuifuncs->GetBindingForButtonCode(code);
+			if(binding && binding[0])
 			{
 				// submit the entry as a console commmand
 				char szCommand[256];
-				Q_strncpy( szCommand, binding, sizeof( szCommand ) );
-				engine->ClientCmd_Unrestricted( szCommand );
+				Q_strncpy(szCommand, binding, sizeof(szCommand));
+				engine->ClientCmd_Unrestricted(szCommand);
 			}
 		}
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Submits a command
 //-----------------------------------------------------------------------------
-void CGameConsoleDialog::OnCommandSubmitted( const char *pCommand )
+void CGameConsoleDialog::OnCommandSubmitted(const char *pCommand)
 {
-	engine->ClientCmd_Unrestricted( pCommand );
+	engine->ClientCmd_Unrestricted(pCommand);
 }
-
 
 //-----------------------------------------------------------------------------
 // Submits a command
 //-----------------------------------------------------------------------------
 void CGameConsoleDialog::OnClosedByHittingTilde()
 {
-	if ( !LoadingDialog() )
+	if(!LoadingDialog())
 	{
 		GameUI().HideGameUI();
 	}
 	else
 	{
-		vgui::surface()->RestrictPaintToSinglePanel( LoadingDialog()->GetVPanel() );
+		vgui::surface()->RestrictPaintToSinglePanel(LoadingDialog()->GetVPanel());
 	}
 }

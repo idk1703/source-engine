@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -27,120 +27,109 @@
 //-----------------------------------------------------------------------------
 // Singleton interfaces
 //-----------------------------------------------------------------------------
-IEngineTool	*enginetools = NULL;
-IEngineVGui	*enginevgui = NULL;
+IEngineTool *enginetools = NULL;
+IEngineVGui *enginevgui = NULL;
 IFileSystem *g_pFileSystem = NULL;
 IVDebugOverlay *debugoverlay = NULL;
-
 
 //-----------------------------------------------------------------------------
 // Assumed to be implemented within the specific tool DLL
 //-----------------------------------------------------------------------------
-bool ConnectTools( CreateInterfaceFn factory );
-void CreateTools( );
-void DisconnectTools( );
-
+bool ConnectTools(CreateInterfaceFn factory);
+void CreateTools();
+void DisconnectTools();
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void VGUI_CreateToolRootPanel( void )
+void VGUI_CreateToolRootPanel(void)
 {
 	// Just using PANEL_GAMEDLL in HL2 right now
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void VGUI_DestroyToolRootPanel( void )
-{
-}
-
+void VGUI_DestroyToolRootPanel(void) {}
 
 //-----------------------------------------------------------------------------
 // Global accessors for root tool panels
 //-----------------------------------------------------------------------------
-vgui::VPANEL VGui_GetToolRootPanel( void )
+vgui::VPANEL VGui_GetToolRootPanel(void)
 {
-	vgui::VPANEL root = enginevgui->GetPanel( PANEL_GAMEDLL );
+	vgui::VPANEL root = enginevgui->GetPanel(PANEL_GAMEDLL);
 	return root;
 }
 
-vgui::VPANEL VGui_GetRootPanel( void )
+vgui::VPANEL VGui_GetRootPanel(void)
 {
-	vgui::VPANEL root = enginevgui->GetPanel( PANEL_ROOT );
+	vgui::VPANEL root = enginevgui->GetPanel(PANEL_ROOT);
 	return root;
 }
-
 
 //-----------------------------------------------------------------------------
 // Implementation of IToolDictionary
 //-----------------------------------------------------------------------------
-class CToolDictionary : public CTier3DmAppSystem< IToolDictionary >
+class CToolDictionary : public CTier3DmAppSystem<IToolDictionary>
 {
-	typedef CTier3DmAppSystem< IToolDictionary > BaseClass;
+	typedef CTier3DmAppSystem<IToolDictionary> BaseClass;
 
 public:
 	CToolDictionary();
 
 	// Inherited from IAppSystem
-	virtual bool Connect( CreateInterfaceFn factory );
+	virtual bool Connect(CreateInterfaceFn factory);
 	virtual void Disconnect();
-	virtual void *QueryInterface( const char *pInterfaceName );
+	virtual void *QueryInterface(const char *pInterfaceName);
 	virtual InitReturnVal_t Init();
 	virtual void Shutdown();
 
 	// Inherited from IToolDictionary
 	virtual void CreateTools();
-	virtual int	GetToolCount() const;
-	virtual IToolSystem	*GetTool( int index );
+	virtual int GetToolCount() const;
+	virtual IToolSystem *GetTool(int index);
 
 public:
-	void RegisterTool( IToolSystem *tool );
+	void RegisterTool(IToolSystem *tool);
 
 private:
-	CUtlVector< IToolSystem	* >	m_Tools;
+	CUtlVector<IToolSystem *> m_Tools;
 };
 
-
 //-----------------------------------------------------------------------------
-// Singleton interface for tools 
+// Singleton interface for tools
 //-----------------------------------------------------------------------------
 static CToolDictionary g_ToolDictionary;
-EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CToolDictionary, IToolDictionary, VTOOLDICTIONARY_INTERFACE_VERSION, g_ToolDictionary );
-
+EXPOSE_SINGLE_INTERFACE_GLOBALVAR(CToolDictionary, IToolDictionary, VTOOLDICTIONARY_INTERFACE_VERSION,
+								  g_ToolDictionary);
 
 //-----------------------------------------------------------------------------
 // Constructor
 //-----------------------------------------------------------------------------
-CToolDictionary::CToolDictionary()
-{
-}
-
+CToolDictionary::CToolDictionary() {}
 
 //-----------------------------------------------------------------------------
 // Inherited from IAppSystem
 //-----------------------------------------------------------------------------
-bool CToolDictionary::Connect( CreateInterfaceFn factory )
+bool CToolDictionary::Connect(CreateInterfaceFn factory)
 {
-	if ( !BaseClass::Connect( factory ) )
+	if(!BaseClass::Connect(factory))
 		return false;
 
 	// FIXME: This interface pointer is taken care of in tier2 + tier1
 	g_pFileSystem = g_pFullFileSystem;
 
-	enginevgui = ( IEngineVGui * )factory( VENGINE_VGUI_VERSION, NULL );
-	enginetools = ( IEngineTool * )factory( VENGINETOOL_INTERFACE_VERSION, NULL );
-	debugoverlay = ( IVDebugOverlay * )factory( VDEBUG_OVERLAY_INTERFACE_VERSION, NULL );
+	enginevgui = (IEngineVGui *)factory(VENGINE_VGUI_VERSION, NULL);
+	enginetools = (IEngineTool *)factory(VENGINETOOL_INTERFACE_VERSION, NULL);
+	debugoverlay = (IVDebugOverlay *)factory(VDEBUG_OVERLAY_INTERFACE_VERSION, NULL);
 
-	if ( !enginevgui || !debugoverlay || !g_pCVar || !enginetools || !g_pFileSystem  )
+	if(!enginevgui || !debugoverlay || !g_pCVar || !enginetools || !g_pFileSystem)
 		return false;
 
-	if ( !VGui_Startup( factory ) )
+	if(!VGui_Startup(factory))
 		return false;
 
-	return ConnectTools( factory );
+	return ConnectTools(factory);
 }
 
 void CToolDictionary::Disconnect()
@@ -151,13 +140,13 @@ void CToolDictionary::Disconnect()
 	debugoverlay = NULL;
 	g_pFileSystem = NULL;
 
-	BaseClass::Disconnect( );
+	BaseClass::Disconnect();
 }
 
-void *CToolDictionary::QueryInterface( const char *pInterfaceName )
+void *CToolDictionary::QueryInterface(const char *pInterfaceName)
 {
-	if ( !V_strcmp( pInterfaceName, VTOOLDICTIONARY_INTERFACE_VERSION ) )
-		return (IToolDictionary*)this;
+	if(!V_strcmp(pInterfaceName, VTOOLDICTIONARY_INTERFACE_VERSION))
+		return (IToolDictionary *)this;
 
 	return NULL;
 }
@@ -165,20 +154,20 @@ void *CToolDictionary::QueryInterface( const char *pInterfaceName )
 InitReturnVal_t CToolDictionary::Init()
 {
 	InitReturnVal_t nRetVal = BaseClass::Init();
-	if ( nRetVal != INIT_OK )
+	if(nRetVal != INIT_OK)
 		return nRetVal;
 
-	MathLib_Init( 2.2f, 2.2f, 0.0f, 2.0f );
+	MathLib_Init(2.2f, 2.2f, 0.0f, 2.0f);
 
 	// Init registry
-	if ( !registry->Init( "Source\\Tools" ) )
+	if(!registry->Init("Source\\Tools"))
 	{
-		Warning( "registry->Init failed\n" );
+		Warning("registry->Init failed\n");
 		return INIT_FAILED;
 	}
 
 	// Re-enable this and VGui_Shutdown if we create root tool panels
-//	VGui_PostInit();
+	//	VGui_PostInit();
 
 	return INIT_OK;
 }
@@ -193,41 +182,37 @@ void CToolDictionary::Shutdown()
 	BaseClass::Shutdown();
 }
 
-
 //-----------------------------------------------------------------------------
 // Implementation of IToolDictionary methods
 //-----------------------------------------------------------------------------
 void CToolDictionary::CreateTools()
 {
-	::CreateTools( );
+	::CreateTools();
 }
 
-int	CToolDictionary::GetToolCount() const
+int CToolDictionary::GetToolCount() const
 {
 	return m_Tools.Count();
 }
 
-IToolSystem	*CToolDictionary::GetTool( int index )
+IToolSystem *CToolDictionary::GetTool(int index)
 {
-	if ( index < 0 || index >= m_Tools.Count() )
+	if(index < 0 || index >= m_Tools.Count())
 	{
 		return NULL;
 	}
-	return m_Tools[ index ];
+	return m_Tools[index];
 }
 
-void CToolDictionary::RegisterTool( IToolSystem *tool )
+void CToolDictionary::RegisterTool(IToolSystem *tool)
 {
-	m_Tools.AddToTail( tool );
+	m_Tools.AddToTail(tool);
 }
-
 
 //-----------------------------------------------------------------------------
-// Allows tools to install themselves into the dictionary 
+// Allows tools to install themselves into the dictionary
 //-----------------------------------------------------------------------------
-void RegisterTool( IToolSystem *tool )
+void RegisterTool(IToolSystem *tool)
 {
-	g_ToolDictionary.RegisterTool( tool );
+	g_ToolDictionary.RegisterTool(tool);
 }
-
-

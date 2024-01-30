@@ -25,13 +25,13 @@
 #include "grenade_rocket.h"
 #include "VGuiScreen.h"
 
-extern short	g_sModelIndexFireball;
+extern short g_sModelIndexFireball;
 
-#define	MAX_SUPPRESSION_TIME	5.0			// Max amount of time to supress for
+#define MAX_SUPPRESSION_TIME 5.0 // Max amount of time to supress for
 
 // Sentrygun size
-#define SENTRYGUN_MINS		Vector(-16, -16, 0)
-#define SENTRYGUN_MAXS		Vector( 16,  16, 65)
+#define SENTRYGUN_MINS Vector(-16, -16, 0)
+#define SENTRYGUN_MAXS Vector(16, 16, 65)
 
 //=============================================================================
 // Link and precache all the sentrygun types
@@ -42,47 +42,49 @@ PRECACHE_REGISTER(obj_sentrygun_rocketlauncher);
 
 //=============================================================================
 // Data description
-BEGIN_DATADESC( CObjectSentrygun )
+BEGIN_DATADESC(CObjectSentrygun)
 
-	DEFINE_THINKFUNC( SentryRotate ),
-	DEFINE_THINKFUNC( Attack ),
+	DEFINE_THINKFUNC(SentryRotate), DEFINE_THINKFUNC(Attack),
 
 END_DATADESC()
 
 // Sentrygun team-only vars.
-BEGIN_SEND_TABLE_NOBASE( CObjectSentrygun, DT_SentrygunTeamOnlyVars )
-	SendPropInt( SENDINFO(m_iAmmo), 9 ),
+BEGIN_SEND_TABLE_NOBASE(CObjectSentrygun, DT_SentrygunTeamOnlyVars)
+	SendPropInt(SENDINFO(m_iAmmo), 9),
 END_SEND_TABLE()
 
-#define SENTRY_ANIMATION_PARITY_BITS	2
+#define SENTRY_ANIMATION_PARITY_BITS 2
 
 IMPLEMENT_SERVERCLASS_ST(CObjectSentrygun, DT_ObjectSentrygun)
-	SendPropInt( SENDINFO( m_iBaseTurnRate ), 3, SPROP_UNSIGNED ),
-	SendPropEHandle( SENDINFO( m_hEnemy ) ),
-	SendPropDataTable( "teamonly", 0, &REFERENCE_SEND_TABLE( DT_SentrygunTeamOnlyVars ), SendProxy_OnlyToTeam ),	
-	SendPropInt( SENDINFO(m_bTurtled), 1, SPROP_UNSIGNED ),
-	SendPropInt( SENDINFO( m_nAnimationParity ), (1<<SENTRY_ANIMATION_PARITY_BITS), SPROP_UNSIGNED ),
-	SendPropInt( SENDINFO( m_nOrientationParity ), 1, SPROP_UNSIGNED ),
-END_SEND_TABLE();
+SendPropInt(SENDINFO(m_iBaseTurnRate), 3, SPROP_UNSIGNED), SendPropEHandle(SENDINFO(m_hEnemy)),
+	SendPropDataTable("teamonly", 0, &REFERENCE_SEND_TABLE(DT_SentrygunTeamOnlyVars), SendProxy_OnlyToTeam),
+	SendPropInt(SENDINFO(m_bTurtled), 1, SPROP_UNSIGNED),
+	SendPropInt(SENDINFO(m_nAnimationParity), (1 << SENTRY_ANIMATION_PARITY_BITS), SPROP_UNSIGNED),
+	SendPropInt(SENDINFO(m_nOrientationParity), 1, SPROP_UNSIGNED),
+END_SEND_TABLE
+();
 
-ConVar	obj_sentrygun_plasma_health( "obj_sentrygun_plasma_health","200", FCVAR_NONE, "Plasma sentrygun health" );
-ConVar	obj_sentrygun_plasma_range( "obj_sentrygun_plasma_range","1500", FCVAR_NONE, "Plasma sentrygun's shot range" );
-ConVar	obj_sentrygun_rocketlauncher_health( "obj_sentrygun_rocketlauncher_health","250", FCVAR_NONE, "Rocket Launcher sentrygun health" );
-ConVar	obj_sentrygun_range_mid( "obj_sentrygun_range_mid","768", FCVAR_NONE, "Sentrygun's mid targeting range. Targets beyond this need to be in the viewcone to be seen." );
-ConVar	obj_sentrygun_range_max( "obj_sentrygun_range_max","1600", FCVAR_NONE, "Sentrygun's max targeting range." );
+ConVar obj_sentrygun_plasma_health("obj_sentrygun_plasma_health", "200", FCVAR_NONE, "Plasma sentrygun health");
+ConVar obj_sentrygun_plasma_range("obj_sentrygun_plasma_range", "1500", FCVAR_NONE, "Plasma sentrygun's shot range");
+ConVar obj_sentrygun_rocketlauncher_health("obj_sentrygun_rocketlauncher_health", "250", FCVAR_NONE,
+										   "Rocket Launcher sentrygun health");
+ConVar obj_sentrygun_range_mid(
+	"obj_sentrygun_range_mid", "768", FCVAR_NONE,
+	"Sentrygun's mid targeting range. Targets beyond this need to be in the viewcone to be seen.");
+ConVar obj_sentrygun_range_max("obj_sentrygun_range_max", "1600", FCVAR_NONE, "Sentrygun's max targeting range.");
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CObjectSentrygun::CObjectSentrygun( void )
+CObjectSentrygun::CObjectSentrygun(void)
 {
 	UseClientSideAnimation();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CObjectSentrygun::Spawn( void )
+void CObjectSentrygun::Spawn(void)
 {
 	m_bSmarter = false;
 	m_bSensors = false;
@@ -91,11 +93,11 @@ void CObjectSentrygun::Spawn( void )
 	m_bTurtling = false;
 	m_flTurtlingFinishedAt = 0;
 
-	SetViewOffset( Vector(0,0,22) );
+	SetViewOffset(Vector(0, 0, 22));
 
 	// Setup
-	SetSolid( SOLID_BBOX );
-	AddSolidFlags( FSOLID_NOT_STANDABLE );
+	SetSolid(SOLID_BBOX);
+	AddSolidFlags(FSOLID_NOT_STANDABLE);
 	UTIL_SetSize(this, SENTRYGUN_MINS, SENTRYGUN_MAXS);
 
 	BaseClass::Spawn();
@@ -103,36 +105,35 @@ void CObjectSentrygun::Spawn( void )
 	// Start searching for enemies
 	m_hEnemy = NULL;
 	m_hDesignatedEnemy = NULL;
-	SetThink( SentryRotate );
-	SetNextThink( gpGlobals->curtime + 0.5f );
+	SetThink(SentryRotate);
+	SetNextThink(gpGlobals->curtime + 0.5f);
 	m_flNextLook = gpGlobals->curtime;
-	
-	SetTechnology( false, false );
+
+	SetTechnology(false, false);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectSentrygun::Precache()
 {
-	PrecacheModel( SG_PLASMA_MODEL );
-	PrecacheModel( SG_ROCKETLAUNCHER_MODEL );
-	PrecacheVGuiScreen( "screen_obj_sentrygun" );
+	PrecacheModel(SG_PLASMA_MODEL);
+	PrecacheModel(SG_ROCKETLAUNCHER_MODEL);
+	PrecacheVGuiScreen("screen_obj_sentrygun");
 
-	PrecacheScriptSound( "ObjectSentrygun.ResupplyAmmo" );
-	PrecacheScriptSound( "ObjectSentrygun.Idle" );
-	PrecacheScriptSound( "ObjectSentrygun.FoundTarget" );
-	PrecacheScriptSound( "ObjectSentrygun.Turtle" );
-	PrecacheScriptSound( "ObjectSentrygun.UnTurtle" );
-	PrecacheScriptSound( "ObjectSentrygun.Fire" );
-	PrecacheScriptSound( "ObjectSentrygunRocketlauncher.Fire" );
-
+	PrecacheScriptSound("ObjectSentrygun.ResupplyAmmo");
+	PrecacheScriptSound("ObjectSentrygun.Idle");
+	PrecacheScriptSound("ObjectSentrygun.FoundTarget");
+	PrecacheScriptSound("ObjectSentrygun.Turtle");
+	PrecacheScriptSound("ObjectSentrygun.UnTurtle");
+	PrecacheScriptSound("ObjectSentrygun.Fire");
+	PrecacheScriptSound("ObjectSentrygunRocketlauncher.Fire");
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Gets info about the control panels
 //-----------------------------------------------------------------------------
-void CObjectSentrygun::GetControlPanelInfo( int nPanelIndex, const char *&pPanelName )
+void CObjectSentrygun::GetControlPanelInfo(int nPanelIndex, const char *&pPanelName)
 {
 	pPanelName = "screen_obj_sentrygun";
 }
@@ -140,48 +141,48 @@ void CObjectSentrygun::GetControlPanelInfo( int nPanelIndex, const char *&pPanel
 //-----------------------------------------------------------------------------
 // Purpose: Hide the base of the gun if it's on an attachment
 //-----------------------------------------------------------------------------
-void CObjectSentrygun::SetupAttachedVersion( void )
+void CObjectSentrygun::SetupAttachedVersion(void)
 {
 	BaseClass::SetupAttachedVersion();
 
-	SetBodygroup( 1, true );
+	SetBodygroup(1, true);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CObjectSentrygun::SetupUnattachedVersion( void )
+void CObjectSentrygun::SetupUnattachedVersion(void)
 {
 	BaseClass::SetupUnattachedVersion();
 
-	SetBodygroup( 1, false );
+	SetBodygroup(1, false);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CObjectSentrygun::FinishedBuilding( void )
+void CObjectSentrygun::FinishedBuilding(void)
 {
 	BaseClass::FinishedBuilding();
 
 	// Orient it
-	m_vecCurAngles.y = UTIL_AngleMod( GetLocalAngles().y );
+	m_vecCurAngles.y = UTIL_AngleMod(GetLocalAngles().y);
 	RecomputeOrientation();
 }
 
 //-----------------------------------------------------------------------------
 // Called when a rotation happens
 //-----------------------------------------------------------------------------
-void CObjectSentrygun::RecomputeOrientation( )
+void CObjectSentrygun::RecomputeOrientation()
 {
 	ResetOrientation();
 
-	m_iRightBound = UTIL_AngleMod( m_vecCurAngles.y - 50);
-	m_iLeftBound = UTIL_AngleMod( m_vecCurAngles.y + 50);
-	if ( m_iRightBound > m_iLeftBound )
+	m_iRightBound = UTIL_AngleMod(m_vecCurAngles.y - 50);
+	m_iLeftBound = UTIL_AngleMod(m_vecCurAngles.y + 50);
+	if(m_iRightBound > m_iLeftBound)
 	{
 		m_iRightBound = m_iLeftBound;
-		m_iLeftBound = UTIL_AngleMod( m_vecCurAngles.y - 50);
+		m_iLeftBound = UTIL_AngleMod(m_vecCurAngles.y - 50);
 	}
 
 	// Start it rotating
@@ -191,42 +192,42 @@ void CObjectSentrygun::RecomputeOrientation( )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Handle commands sent from vgui panels on the client 
+// Purpose: Handle commands sent from vgui panels on the client
 //-----------------------------------------------------------------------------
-bool CObjectSentrygun::ClientCommand( CBaseTFPlayer *pPlayer, const char *pCmd, ICommandArguments *pArg )
+bool CObjectSentrygun::ClientCommand(CBaseTFPlayer *pPlayer, const char *pCmd, ICommandArguments *pArg)
 {
-	if ( FStrEq( pCmd, "addammo" ) )
+	if(FStrEq(pCmd, "addammo"))
 	{
-		if ( TakeAmmoFrom( pPlayer ) )
+		if(TakeAmmoFrom(pPlayer))
 		{
 			// We got some ammo, so make a sound
-			CPASAttenuationFilter filter( pPlayer, "ObjectSentrygun.ResupplyAmmo" );
-			EmitSound( filter, pPlayer->entindex(), "ObjectSentrygun.ResupplyAmmo" );
+			CPASAttenuationFilter filter(pPlayer, "ObjectSentrygun.ResupplyAmmo");
+			EmitSound(filter, pPlayer->entindex(), "ObjectSentrygun.ResupplyAmmo");
 		}
 		return true;
 	}
 
-	return BaseClass::ClientCommand( pPlayer, pCmd, pArg );
+	return BaseClass::ClientCommand(pPlayer, pCmd, pArg);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Return true if the player gave the sentrygun some ammo
 //-----------------------------------------------------------------------------
-bool CObjectSentrygun::TakeAmmoFrom( CBaseTFPlayer *pPlayer )
+bool CObjectSentrygun::TakeAmmoFrom(CBaseTFPlayer *pPlayer)
 {
 	// Do I need ammo?
-	if ( m_iAmmo >= m_iMaxAmmo )
+	if(m_iAmmo >= m_iMaxAmmo)
 		return false;
 
 	// Try to fill the sentry up a bit at a time
 	int iRoundsToGive = 10;
-	iRoundsToGive = MIN( iRoundsToGive, (m_iMaxAmmo - m_iAmmo) );
-	iRoundsToGive = MIN( iRoundsToGive, pPlayer->GetAmmoCount( m_iAmmoType ) );
-	if ( !iRoundsToGive )
+	iRoundsToGive = MIN(iRoundsToGive, (m_iMaxAmmo - m_iAmmo));
+	iRoundsToGive = MIN(iRoundsToGive, pPlayer->GetAmmoCount(m_iAmmoType));
+	if(!iRoundsToGive)
 		return false;
 
 	// Give me the ammo
-	pPlayer->RemoveAmmo( iRoundsToGive, m_iAmmoType );
+	pPlayer->RemoveAmmo(iRoundsToGive, m_iAmmoType);
 	m_iAmmo += iRoundsToGive;
 	return true;
 }
@@ -234,9 +235,9 @@ bool CObjectSentrygun::TakeAmmoFrom( CBaseTFPlayer *pPlayer )
 //-----------------------------------------------------------------------------
 // Purpose: Resupply has taken damage
 //-----------------------------------------------------------------------------
-int CObjectSentrygun::OnTakeDamage( const CTakeDamageInfo &info )
+int CObjectSentrygun::OnTakeDamage(const CTakeDamageInfo &info)
 {
-	int iDamage = BaseClass::OnTakeDamage( info );
+	int iDamage = BaseClass::OnTakeDamage(info);
 
 	return iDamage;
 }
@@ -244,29 +245,29 @@ int CObjectSentrygun::OnTakeDamage( const CTakeDamageInfo &info )
 //-----------------------------------------------------------------------------
 // Purpose: Object has been blown up
 //-----------------------------------------------------------------------------
-void CObjectSentrygun::Killed( void )
+void CObjectSentrygun::Killed(void)
 {
 	// Tell the player he's lost this resupply beacon
-	if ( GetOwner() )
+	if(GetOwner())
 	{
-		GetOwner()->OwnedObjectDestroyed( this );
+		GetOwner()->OwnedObjectDestroyed(this);
 	}
 
 	BaseClass::Killed();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CObjectSentrygun::RestartAnimation( void )
+void CObjectSentrygun::RestartAnimation(void)
 {
 	// Increment and mask parity counter
 	m_nAnimationParity += 1;
-	m_nAnimationParity &= ( (1<<SENTRY_ANIMATION_PARITY_BITS) - 1 );
+	m_nAnimationParity &= ((1 << SENTRY_ANIMATION_PARITY_BITS) - 1);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectSentrygun::ResetOrientation()
 {
@@ -274,27 +275,27 @@ void CObjectSentrygun::ResetOrientation()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CObjectSentrygun::SetSentryAnim( TFTURRET_ANIM anim )
+void CObjectSentrygun::SetSentryAnim(TFTURRET_ANIM anim)
 {
-	if ( GetSequence() != anim )
+	if(GetSequence() != anim)
 	{
 		switch(anim)
 		{
-		case TFTURRET_ANIM_FIRE:
-		case TFTURRET_ANIM_SPIN:
-			if ( GetSequence() != TFTURRET_ANIM_FIRE && GetSequence() != TFTURRET_ANIM_SPIN )
-			{
+			case TFTURRET_ANIM_FIRE:
+			case TFTURRET_ANIM_SPIN:
+				if(GetSequence() != TFTURRET_ANIM_FIRE && GetSequence() != TFTURRET_ANIM_SPIN)
+				{
+					RestartAnimation();
+				}
+				break;
+			default:
 				RestartAnimation();
-			}
-			break;
-		default:
-			RestartAnimation();
-			break;
+				break;
 		}
 
-		ResetSequence( anim );
+		ResetSequence(anim);
 	}
 }
 
@@ -306,21 +307,21 @@ bool CObjectSentrygun::MoveTurret(void)
 	bool bMoved = 0;
 
 	// any x movement?
-	if ( m_vecCurAngles.x != m_vecGoalAngles.x )
+	if(m_vecCurAngles.x != m_vecGoalAngles.x)
 	{
-		float flDir = m_vecGoalAngles.x > m_vecCurAngles.x ? 1 : -1 ;
+		float flDir = m_vecGoalAngles.x > m_vecCurAngles.x ? 1 : -1;
 
 		m_vecCurAngles.x += 0.1 * (m_iBaseTurnRate * 5) * flDir;
 
 		// if we started below the goal, and now we're past, peg to goal
-		if (flDir == 1)
+		if(flDir == 1)
 		{
-			if (m_vecCurAngles.x > m_vecGoalAngles.x)
+			if(m_vecCurAngles.x > m_vecGoalAngles.x)
 				m_vecCurAngles.x = m_vecGoalAngles.x;
-		} 
+		}
 		else
 		{
-			if (m_vecCurAngles.x < m_vecGoalAngles.x)
+			if(m_vecCurAngles.x < m_vecGoalAngles.x)
 				m_vecCurAngles.x = m_vecGoalAngles.x;
 		}
 
@@ -329,24 +330,24 @@ bool CObjectSentrygun::MoveTurret(void)
 		bMoved = 1;
 	}
 
-	if ( m_vecCurAngles.y != m_vecGoalAngles.y )
+	if(m_vecCurAngles.y != m_vecGoalAngles.y)
 	{
-		float flDir = m_vecGoalAngles.y > m_vecCurAngles.y ? 1 : -1 ;
+		float flDir = m_vecGoalAngles.y > m_vecCurAngles.y ? 1 : -1;
 		float flDist = fabs(m_vecGoalAngles.y - m_vecCurAngles.y);
 		bool bReversed = false;
-		
-		if (flDist > 180)
+
+		if(flDist > 180)
 		{
 			flDist = 360 - flDist;
 			flDir = -flDir;
 			bReversed = true;
 		}
 
-		if (m_hEnemy == NULL && !m_bSuppressing)
+		if(m_hEnemy == NULL && !m_bSuppressing)
 		{
-			if (flDist > 30)
+			if(flDist > 30)
 			{
-				if (m_fTurnRate < m_iBaseTurnRate * 20)
+				if(m_fTurnRate < m_iBaseTurnRate * 20)
 				{
 					m_fTurnRate += m_iBaseTurnRate;
 				}
@@ -354,16 +355,16 @@ bool CObjectSentrygun::MoveTurret(void)
 			else
 			{
 				// Slow down
-				if ( m_fTurnRate > (m_iBaseTurnRate * 5) )
+				if(m_fTurnRate > (m_iBaseTurnRate * 5))
 					m_fTurnRate -= m_iBaseTurnRate;
 			}
 		}
 		else
 		{
 			// When tracking enemies, move faster and don't slow
-			if (flDist > 30)
+			if(flDist > 30)
 			{
-				if (m_fTurnRate < m_iBaseTurnRate * 30)
+				if(m_fTurnRate < m_iBaseTurnRate * 30)
 				{
 					m_fTurnRate += m_iBaseTurnRate * 3;
 				}
@@ -373,23 +374,25 @@ bool CObjectSentrygun::MoveTurret(void)
 		m_vecCurAngles.y += 0.1 * m_fTurnRate * flDir;
 
 		// if we passed over the goal, peg right to it now
-		if (flDir == -1)
+		if(flDir == -1)
 		{
-			if ( (bReversed == false && m_vecGoalAngles.y > m_vecCurAngles.y) || (bReversed == true && m_vecGoalAngles.y < m_vecCurAngles.y) )
+			if((bReversed == false && m_vecGoalAngles.y > m_vecCurAngles.y) ||
+			   (bReversed == true && m_vecGoalAngles.y < m_vecCurAngles.y))
 				m_vecCurAngles.y = m_vecGoalAngles.y;
-		} 
+		}
 		else
 		{
-			if ( (bReversed == false && m_vecGoalAngles.y < m_vecCurAngles.y) || (bReversed == true && m_vecGoalAngles.y > m_vecCurAngles.y) )
+			if((bReversed == false && m_vecGoalAngles.y < m_vecCurAngles.y) ||
+			   (bReversed == true && m_vecGoalAngles.y > m_vecCurAngles.y))
 				m_vecCurAngles.y = m_vecGoalAngles.y;
 		}
 
-		if (m_vecCurAngles.y < 0)
+		if(m_vecCurAngles.y < 0)
 			m_vecCurAngles.y += 360;
-		else if (m_vecCurAngles.y >= 360)
+		else if(m_vecCurAngles.y >= 360)
 			m_vecCurAngles.y -= 360;
 
-		if (flDist < (0.05 * m_iBaseTurnRate))
+		if(flDist < (0.05 * m_iBaseTurnRate))
 			m_vecCurAngles.y = m_vecGoalAngles.y;
 
 		m_fBoneXRotator = m_vecCurAngles.y - GetLocalAngles().y;
@@ -397,7 +400,7 @@ bool CObjectSentrygun::MoveTurret(void)
 		bMoved = 1;
 	}
 
-	if ( !bMoved || !m_fTurnRate )
+	if(!bMoved || !m_fTurnRate)
 	{
 		m_fTurnRate = m_iBaseTurnRate;
 	}
@@ -406,19 +409,19 @@ bool CObjectSentrygun::MoveTurret(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Returns true is the passed ent is in the caller's forward view cone. 
-// The dot product is performed in 2d, making the view cone infinitely tall. 
+// Purpose: Returns true is the passed ent is in the caller's forward view cone.
+// The dot product is performed in 2d, making the view cone infinitely tall.
 //-----------------------------------------------------------------------------
-bool CObjectSentrygun::FInViewCone( CBaseEntity *pEntity )
+bool CObjectSentrygun::FInViewCone(CBaseEntity *pEntity)
 {
-	float		flDot;
+	float flDot;
 
 	Vector vecFacingDir;
-	AngleVectors( m_vecCurAngles, &vecFacingDir );
-	Vector vecLOS = ( pEntity->GetAbsOrigin() - GetAbsOrigin() );
-	flDot = DotProduct( vecLOS , vecFacingDir );
+	AngleVectors(m_vecCurAngles, &vecFacingDir);
+	Vector vecLOS = (pEntity->GetAbsOrigin() - GetAbsOrigin());
+	flDot = DotProduct(vecLOS, vecFacingDir);
 
-	if ( flDot > VIEW_FIELD_NARROW )
+	if(flDot > VIEW_FIELD_NARROW)
 		return true;
 
 	return false;
@@ -427,34 +430,34 @@ bool CObjectSentrygun::FInViewCone( CBaseEntity *pEntity )
 //-----------------------------------------------------------------------------
 // Purpose: Check the shield's values
 //-----------------------------------------------------------------------------
-void CObjectSentrygun::CheckShield( void )
+void CObjectSentrygun::CheckShield(void)
 {
-	if ( m_nRenderFX == kRenderFxNone )
+	if(m_nRenderFX == kRenderFxNone)
 		return;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Rotate and scan for targets
 //-----------------------------------------------------------------------------
-void CObjectSentrygun::SentryRotate( void )
+void CObjectSentrygun::SentryRotate(void)
 {
-	SetNextThink( gpGlobals->curtime + 0.1f );
+	SetNextThink(gpGlobals->curtime + 0.1f);
 
 	CheckShield();
 
 	// I can't do anything if I'm not active
-	if ( !ShouldBeActive() )
+	if(!ShouldBeActive())
 		return;
 
 	// If we're turtling, see if we're finished yet
-	if ( IsTurtling() )
+	if(IsTurtling())
 	{
-		if ( m_flTurtlingFinishedAt <= gpGlobals->curtime )
+		if(m_flTurtlingFinishedAt <= gpGlobals->curtime)
 		{
 			m_bTurtling = false;
-			if ( m_bTurtled )
+			if(m_bTurtled)
 			{
-				AddSolidFlags( FSOLID_NOT_SOLID );
+				AddSolidFlags(FSOLID_NOT_SOLID);
 				m_takedamage = DAMAGE_NO;
 			}
 		}
@@ -462,21 +465,21 @@ void CObjectSentrygun::SentryRotate( void )
 	}
 
 	// Turtling sentryguns don't think
-	if ( IsTurtled() )
+	if(IsTurtled())
 		return;
 
 	// animate
-	SetSentryAnim( TFTURRET_ANIM_SPIN );
+	SetSentryAnim(TFTURRET_ANIM_SPIN);
 
 	// Abort if it's not time to search for enemies
-	if ( m_flNextLook < gpGlobals->curtime )
+	if(m_flNextLook < gpGlobals->curtime)
 	{
 		m_flNextLook = gpGlobals->curtime + 1.0;
 
 		// Look for a target
 		m_hEnemy = FindTarget();
 
-		if ( m_hEnemy != NULL )
+		if(m_hEnemy != NULL)
 		{
 			FoundTarget();
 			return;
@@ -484,16 +487,16 @@ void CObjectSentrygun::SentryRotate( void )
 	}
 
 	// Rotate
-	if ( !MoveTurret() )
+	if(!MoveTurret())
 	{
 		// Play a sound occasionally
-		if ( random->RandomFloat(0, 1) < 0.02 )
+		if(random->RandomFloat(0, 1) < 0.02)
 		{
-			EmitSound( "ObjectSentrygun.Idle" );
+			EmitSound("ObjectSentrygun.Idle");
 		}
 
 		// Switch rotation direction
-		if (m_bTurningRight)
+		if(m_bTurningRight)
 		{
 			m_bTurningRight = false;
 			m_vecGoalAngles.y = m_iLeftBound;
@@ -505,9 +508,9 @@ void CObjectSentrygun::SentryRotate( void )
 		}
 
 		// Randomly look up and down a bit
-		if ( random->RandomFloat(0, 1) < 0.3 )
+		if(random->RandomFloat(0, 1) < 0.3)
 		{
-			m_vecGoalAngles.x = (int)random->RandomFloat(-10,10);
+			m_vecGoalAngles.x = (int)random->RandomFloat(-10, 10);
 		}
 	}
 }
@@ -515,37 +518,39 @@ void CObjectSentrygun::SentryRotate( void )
 //-----------------------------------------------------------------------------
 // Purpose: Check to see if there's a valid target in sight
 //-----------------------------------------------------------------------------
-CBaseEntity *CObjectSentrygun::FindTarget( void )
+CBaseEntity *CObjectSentrygun::FindTarget(void)
 {
 	CBaseEntity *pHighestPriorityTarget = NULL;
 	float fHighestPriority = 0;
 
-	// If I have a designated enemy, and it's valid, assume it will be the target, unless something higher priority shows up.
-	if ( m_hDesignatedEnemy.Get() && ValidTarget( m_hDesignatedEnemy) )
+	// If I have a designated enemy, and it's valid, assume it will be the target, unless something higher priority
+	// shows up.
+	if(m_hDesignatedEnemy.Get() && ValidTarget(m_hDesignatedEnemy))
 	{
-		fHighestPriority = GetPriority( m_hDesignatedEnemy );
+		fHighestPriority = GetPriority(m_hDesignatedEnemy);
 		pHighestPriorityTarget = m_hDesignatedEnemy;
 	}
 
 	// Find a target.
-	CBaseEntity		*pList[1024];
-	Vector			delta( 2048, 2048, 2048 );
-	int count = UTIL_EntitiesInBox( pList, 1024, GetAbsOrigin() - delta, GetAbsOrigin() + delta, FL_CLIENT|FL_NPC|FL_OBJECT );
-	
-	for ( int i = 0; i < count; i++ )
+	CBaseEntity *pList[1024];
+	Vector delta(2048, 2048, 2048);
+	int count =
+		UTIL_EntitiesInBox(pList, 1024, GetAbsOrigin() - delta, GetAbsOrigin() + delta, FL_CLIENT | FL_NPC | FL_OBJECT);
+
+	for(int i = 0; i < count; i++)
 	{
-		if( !pList[i] ) 
+		if(!pList[i])
 			continue;
 
-		if ( pList[i] == this )
+		if(pList[i] == this)
 			continue;
 
-		float fPriority = GetPriority( pList[i] );
+		float fPriority = GetPriority(pList[i]);
 
-		if( !pHighestPriorityTarget || (fPriority > fHighestPriority) )
+		if(!pHighestPriorityTarget || (fPriority > fHighestPriority))
 		{
 
-			if ( ValidTarget( pList[i] ) )
+			if(ValidTarget(pList[i]))
 			{
 				pHighestPriorityTarget = pList[i];
 				fHighestPriority = fPriority;
@@ -559,24 +564,24 @@ CBaseEntity *CObjectSentrygun::FindTarget( void )
 //-----------------------------------------------------------------------------
 // Purpose: Get the priority of the target
 //-----------------------------------------------------------------------------
-float CObjectSentrygun::GetPriority( CBaseEntity *pTarget )
+float CObjectSentrygun::GetPriority(CBaseEntity *pTarget)
 {
 	// Players
-	if ( pTarget->IsPlayer() )
+	if(pTarget->IsPlayer())
 	{
 		return 20;
 	}
 
 	// NPCs
-	if ( pTarget->GetFlags() & FL_NPC )
+	if(pTarget->GetFlags() & FL_NPC)
 		return 10;
 
 	// Objects
-	if ( pTarget->Classify() == CLASS_MILITARY )
+	if(pTarget->Classify() == CLASS_MILITARY)
 	{
 		// Sentryguns are highest priority
 		CBaseObject *pObject = (CBaseObject *)pTarget;
-		if ( pObject->IsSentrygun() )
+		if(pObject->IsSentrygun())
 			return 5;
 		return 2;
 	}
@@ -587,22 +592,22 @@ float CObjectSentrygun::GetPriority( CBaseEntity *pTarget )
 //-----------------------------------------------------------------------------
 // Purpose: Returns the sentry targeting range the target is in
 //-----------------------------------------------------------------------------
-int CObjectSentrygun::Range( CBaseEntity *pTarget )
+int CObjectSentrygun::Range(CBaseEntity *pTarget)
 {
 	Vector vecOrg = EyePosition();
 	Vector vecTargetOrg = pTarget->EyePosition();
 
-	int iDist = ( vecTargetOrg - vecOrg ).Length();
-	
+	int iDist = (vecTargetOrg - vecOrg).Length();
+
 	// Sensors increase targeting range
-	if ( m_bSensors )
+	if(m_bSensors)
 	{
 		iDist *= 0.75;
 	}
 
-	if (iDist < obj_sentrygun_range_mid.GetFloat() )
+	if(iDist < obj_sentrygun_range_mid.GetFloat())
 		return RANGE_NEAR;
-	if (iDist < obj_sentrygun_range_max.GetFloat() )
+	if(iDist < obj_sentrygun_range_max.GetFloat())
 		return RANGE_MID;
 	return RANGE_FAR;
 }
@@ -610,70 +615,67 @@ int CObjectSentrygun::Range( CBaseEntity *pTarget )
 //-----------------------------------------------------------------------------
 // Purpose: Check to see if a target's valid
 //-----------------------------------------------------------------------------
-bool CObjectSentrygun::ValidTarget( CBaseEntity *pTarget )
+bool CObjectSentrygun::ValidTarget(CBaseEntity *pTarget)
 {
 	// Make sure we aren't borked:
-	if ( !pTarget )
+	if(!pTarget)
 		return false;
 
 	// Don't attack things that have already died
-	if ( !pTarget->IsAlive() )
+	if(!pTarget->IsAlive())
 		return false;
 
 	// Don't attack things that cant be hurt
-	if ( pTarget->m_takedamage != DAMAGE_YES )
+	if(pTarget->m_takedamage != DAMAGE_YES)
 		return false;
 
 	// Don't shoot at objects on the neutral team.
-	if( !pTarget->IsInAnyTeam() )
+	if(!pTarget->IsInAnyTeam())
 		return false;
 
-
-
 	// Ignore camoed players
-	if ( pTarget->IsPlayer() )
+	if(pTarget->IsPlayer())
 	{
-		CBaseTFPlayer *pPlayer = (CBaseTFPlayer*)pTarget;
-		
-		if ( InSameTeam( pPlayer ) )
-			return false;
-		if ( pPlayer->IsClass( TFCLASS_UNDECIDED ) )
-			return false;
-		if ( pPlayer->GetCamouflageAmount() >= 30.0f )
-			return false;
+		CBaseTFPlayer *pPlayer = (CBaseTFPlayer *)pTarget;
 
+		if(InSameTeam(pPlayer))
+			return false;
+		if(pPlayer->IsClass(TFCLASS_UNDECIDED))
+			return false;
+		if(pPlayer->GetCamouflageAmount() >= 30.0f)
+			return false;
 	}
 	else
 	{
 		// Only attack enemies.
-		if ( InSameTeam( pTarget) )
+		if(InSameTeam(pTarget))
 			return false;
 	}
 
-	if ( pTarget->GetFlags() & FL_NOTARGET )
+	if(pTarget->GetFlags() & FL_NOTARGET)
 		return false;
 
-	if ( !FVisible(pTarget) )	
+	if(!FVisible(pTarget))
 		return false;
 
 	// Ignore certain enemy infrastructure type objects:
-	CBaseObject *pObject = dynamic_cast< CBaseObject* >(pTarget);
-	if ( pObject )
+	CBaseObject *pObject = dynamic_cast<CBaseObject *>(pTarget);
+	if(pObject)
 	{
 		// Make sure it's not placing
-		if ( pObject->IsPlacing() )
+		if(pObject->IsPlacing())
 			return false;
 
 		// Ignore upgrades
-		if ( pObject->IsAnUpgrade() )
+		if(pObject->IsAnUpgrade())
 			return false;
 
 		// Ignore defensive structures
-		if ( IsObjectADefensiveBuilding( pObject->GetType() ) )
+		if(IsObjectADefensiveBuilding(pObject->GetType()))
 			return false;
 
 		// Ignore mapdefined objects
-		if ( pObject->GetType() == OBJ_MAPDEFINED )
+		if(pObject->GetType() == OBJ_MAPDEFINED)
 			return false;
 	}
 
@@ -682,41 +684,40 @@ bool CObjectSentrygun::ValidTarget( CBaseEntity *pTarget )
 
 	// Now make sure there isn't something other than team players in the way.
 	trace_t tr;
-	CTraceFilterSimpleList sentryFilter( COLLISION_GROUP_NONE );
-	sentryFilter.AddEntityToIgnore( GetOwner() );
-	sentryFilter.AddEntityToIgnore( this );
-	sentryFilter.AddEntityToIgnore( GetMoveParent() );
-	UTIL_TraceLine( vecSrc, pTarget->WorldSpaceCenter(), MASK_SHOT, &sentryFilter, &tr );
+	CTraceFilterSimpleList sentryFilter(COLLISION_GROUP_NONE);
+	sentryFilter.AddEntityToIgnore(GetOwner());
+	sentryFilter.AddEntityToIgnore(this);
+	sentryFilter.AddEntityToIgnore(GetMoveParent());
+	UTIL_TraceLine(vecSrc, pTarget->WorldSpaceCenter(), MASK_SHOT, &sentryFilter, &tr);
 	CBaseEntity *pEntity = tr.m_pEnt;
-	if ( (tr.fraction < 1.0) && ( pEntity != pTarget ) )
+	if((tr.fraction < 1.0) && (pEntity != pTarget))
 		return false;
 
 	int iRange = Range(pTarget);
-	if ( iRange == RANGE_FAR )
+	if(iRange == RANGE_FAR)
 		return false;
 
 	// Better sensors allow them to track irrespective of facing
-	if ( iRange == RANGE_MID && (!FInViewCone(pTarget) && !m_bSensors) )
+	if(iRange == RANGE_MID && (!FInViewCone(pTarget) && !m_bSensors))
 		return false;
 
 	// Don't shoot at turtled sentry guns.
-	CObjectSentrygun *pSentry = dynamic_cast< CObjectSentrygun* >( pTarget );
-	if ( pSentry  && pSentry->IsTurtled() )
+	CObjectSentrygun *pSentry = dynamic_cast<CObjectSentrygun *>(pTarget);
+	if(pSentry && pSentry->IsTurtled())
 		return false;
 
 	// Don't shoot at targets blocked by enemy shields
-	bool bBlocked = TFGameRules()->IsBlockedByEnemyShields( GetAbsOrigin(), pTarget->GetAbsOrigin(), GetTeamNumber() );
-	if( bBlocked )
+	bool bBlocked = TFGameRules()->IsBlockedByEnemyShields(GetAbsOrigin(), pTarget->GetAbsOrigin(), GetTeamNumber());
+	if(bBlocked)
 		return false;
 
-		
 	return true;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Return true if the sentry has some ammo to fire
 //-----------------------------------------------------------------------------
-bool CObjectSentrygun::HasAmmo( void ) 
+bool CObjectSentrygun::HasAmmo(void)
 {
 	return (m_iAmmo > 0);
 }
@@ -726,48 +727,48 @@ bool CObjectSentrygun::HasAmmo( void )
 //-----------------------------------------------------------------------------
 void CObjectSentrygun::FoundTarget()
 {
-	if ( HasAmmo() )
+	if(HasAmmo())
 	{
-		EmitSound( "ObjectSentrygun.FoundTarget" );
+		EmitSound("ObjectSentrygun.FoundTarget");
 	}
 
-	SetThink( Attack );
-	SetNextThink( gpGlobals->curtime + 0.1 );
+	SetThink(Attack);
+	SetNextThink(gpGlobals->curtime + 0.1);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Make sure our target is still valid, and if so, fire at it
 //-----------------------------------------------------------------------------
-void CObjectSentrygun::Attack( void )
+void CObjectSentrygun::Attack(void)
 {
-	SetNextThink( gpGlobals->curtime + 0.1f );
+	SetNextThink(gpGlobals->curtime + 0.1f);
 
 	CheckShield();
 
 	// Turtling sentryguns don't attack
-	if ( IsTurtled() )
+	if(IsTurtled())
 	{
-		SetThink( SentryRotate );
+		SetThink(SentryRotate);
 		return;
 	}
 
 	// I can't do anything if I'm not active
-	if ( !ShouldBeActive() )
+	if(!ShouldBeActive())
 		return;
 
 	// Make sure our target is still valid and that we've still got ammo
-	if ( m_bSuppressing && HasAmmo() )
+	if(m_bSuppressing && HasAmmo())
 	{
-		if ( gpGlobals->curtime > (m_flStartedSuppressing + MAX_SUPPRESSION_TIME) )
+		if(gpGlobals->curtime > (m_flStartedSuppressing + MAX_SUPPRESSION_TIME))
 		{
 			m_bSuppressing = false;
-			SetThink( SentryRotate );
+			SetThink(SentryRotate);
 			return;
 		}
 
 		// Check to see if we can find a valid target to switch to
 		m_hEnemy = FindTarget();
-		if ( m_hEnemy )
+		if(m_hEnemy)
 		{
 			// Stop supressing and target this new enemy
 			m_bSuppressing = false;
@@ -775,12 +776,12 @@ void CObjectSentrygun::Attack( void )
 			FoundTarget();
 		}
 	}
-	else if ( !ValidTarget(m_hEnemy) || HasAmmo() == false )
+	else if(!ValidTarget(m_hEnemy) || HasAmmo() == false)
 	{
 		m_hEnemy = NULL;
 
 		// Smarter sentryguns will suppression fire for a few seconds
-		if ( m_bSmarter && WillSuppress() && HasAmmo() )
+		if(m_bSmarter && WillSuppress() && HasAmmo())
 		{
 			m_bSuppressing = true;
 			m_flStartedSuppressing = gpGlobals->curtime;
@@ -788,15 +789,15 @@ void CObjectSentrygun::Attack( void )
 		else
 		{
 			RecomputeOrientation();
-			SetThink( SentryRotate );
+			SetThink(SentryRotate);
 			return;
 		}
 	}
 
 	// If I have a designated enemy, and it's valid, target it instead of my current enemy
-	if ( m_hDesignatedEnemy.Get() && (m_hEnemy.Get() != m_hDesignatedEnemy.Get()) )
+	if(m_hDesignatedEnemy.Get() && (m_hEnemy.Get() != m_hDesignatedEnemy.Get()))
 	{
-		if ( ValidTarget( m_hDesignatedEnemy ) )
+		if(ValidTarget(m_hDesignatedEnemy))
 		{
 			m_hEnemy = m_hDesignatedEnemy;
 			FoundTarget();
@@ -805,44 +806,44 @@ void CObjectSentrygun::Attack( void )
 
 	// Figure out where we're firing at
 	Vector vecMid = EyePosition();
-	if ( m_bSuppressing )
+	if(m_bSuppressing)
 	{
 		// Suppression fire should just shoot at it's last known position
 		m_vecFireTarget = m_vecLastKnownPosition;
 	}
 	else
 	{
-		m_vecFireTarget = m_hEnemy->BodyTarget( vecMid );
+		m_vecFireTarget = m_hEnemy->BodyTarget(vecMid);
 		m_vecLastKnownPosition = m_vecFireTarget;
 	}
 	Vector vecDirToEnemy = m_vecFireTarget - vecMid;
 	QAngle angToTarget;
 	VectorAngles(vecDirToEnemy, angToTarget);
-	
-	angToTarget.y = UTIL_AngleMod( angToTarget.y );
-	if (angToTarget.x < -180)
+
+	angToTarget.y = UTIL_AngleMod(angToTarget.y);
+	if(angToTarget.x < -180)
 		angToTarget.x += 360;
-	if (angToTarget.x > 180)
+	if(angToTarget.x > 180)
 		angToTarget.x -= 360;
 
 	// now all numbers should be in [1...360]
 	// pin to turret limitations to [-50...50]
-	if (angToTarget.x > 50)
+	if(angToTarget.x > 50)
 		angToTarget.x = 50;
-	else if (angToTarget.x < -50)
+	else if(angToTarget.x < -50)
 		angToTarget.x = -50;
 	m_vecGoalAngles.y = angToTarget.y;
 	m_vecGoalAngles.x = angToTarget.x;
-	
+
 	MoveTurret();
 
 	// Fire on the target if it's within 10 units of being aimed right at it
-	if ( m_flNextAttack <= gpGlobals->curtime && (m_vecGoalAngles - m_vecCurAngles).Length() <= 15 )
+	if(m_flNextAttack <= gpGlobals->curtime && (m_vecGoalAngles - m_vecCurAngles).Length() <= 15)
 	{
 		// Suppressing turrets fire randomly
-		if ( m_bSuppressing )
+		if(m_bSuppressing)
 		{
-			if ( random->RandomInt( 0,1 ) != 0 )
+			if(random->RandomInt(0, 1) != 0)
 			{
 				m_flNextAttack = gpGlobals->curtime + 0.5;
 				return;
@@ -850,24 +851,23 @@ void CObjectSentrygun::Attack( void )
 		}
 
 		// See if the object or its owner is taking emp damage, if so, don't fire
-		if ( ShouldBeActive() )
+		if(ShouldBeActive())
 		{
 			Fire();
 		}
 	}
 	else
 	{
-		SetSentryAnim( TFTURRET_ANIM_SPIN );
+		SetSentryAnim(TFTURRET_ANIM_SPIN);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Called when a rotation happens
 //-----------------------------------------------------------------------------
-void CObjectSentrygun::ObjectMoved( void )
+void CObjectSentrygun::ObjectMoved(void)
 {
-	m_vecCurAngles.y = UTIL_AngleMod( GetLocalAngles().y );
+	m_vecCurAngles.y = UTIL_AngleMod(GetLocalAngles().y);
 	RecomputeOrientation();
 	m_fBoneXRotator = 0;
 	BaseClass::ObjectMoved();
@@ -876,57 +876,56 @@ void CObjectSentrygun::ObjectMoved( void )
 //-----------------------------------------------------------------------------
 // Purpose: Fire at our target
 //-----------------------------------------------------------------------------
-bool CObjectSentrygun::Fire( void )
+bool CObjectSentrygun::Fire(void)
 {
 	// Base sentry doesn't know how to fire
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Tell this sentrygun to attack the following target, if it can
 //-----------------------------------------------------------------------------
-void CObjectSentrygun::DesignateTarget( CBaseEntity *pTarget )
+void CObjectSentrygun::DesignateTarget(CBaseEntity *pTarget)
 {
 	m_hDesignatedEnemy = pTarget;
 
-	if ( m_hEnemy.Get() != m_hDesignatedEnemy.Get() )
+	if(m_hEnemy.Get() != m_hDesignatedEnemy.Get())
 	{
 		m_hEnemy = NULL;
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CObjectSentrygun::IsTurtled( void )
+bool CObjectSentrygun::IsTurtled(void)
 {
 	return m_bTurtled;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CObjectSentrygun::IsTurtling( void )
+bool CObjectSentrygun::IsTurtling(void)
 {
 	return m_bTurtling;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CObjectSentrygun::ToggleTurtle( void )
+void CObjectSentrygun::ToggleTurtle(void)
 {
 	// Don't turtle while building
-	if ( IsPlacing() || IsBuilding() || IsTurtling() )
+	if(IsPlacing() || IsBuilding() || IsTurtling())
 		return;
 
 	// Don't turtle if I'm built on anything
-	if ( GetMoveParent() )
+	if(GetMoveParent())
 		return;
 
 	// Swap turtle state
-	if ( IsTurtled() )
+	if(IsTurtled())
 	{
 		UnTurtle();
 	}
@@ -937,54 +936,54 @@ void CObjectSentrygun::ToggleTurtle( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CObjectSentrygun::Turtle( void )
+void CObjectSentrygun::Turtle(void)
 {
 	m_bTurtled = true;
 	m_bTurtling = true;
 
 	m_flTurtlingFinishedAt = gpGlobals->curtime + SENTRY_TURTLE_TIME;
-	EmitSound( "ObjectSentrygun.Turtle" );
+	EmitSound("ObjectSentrygun.Turtle");
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CObjectSentrygun::UnTurtle( void )
+void CObjectSentrygun::UnTurtle(void)
 {
 	// Make sure there's enough room to unturtle
-	// NJS: this seems a bit hacky and returns false positives sometimes, for now we're just assuming that if it can turtle, it can also unturtle.
-	//trace_t tr;
-	//UTIL_TraceHull( GetAbsOrigin(), GetAbsOrigin(), WorldAlignMins() - Vector( 4,4,4 ), WorldAlignMaxs() + Vector( 4,4,4 ), MASK_SOLID, this, COLLISION_GROUP_NONE, &tr );
-	//if ( tr.startsolid || tr.allsolid )
-	//	return;
+	// NJS: this seems a bit hacky and returns false positives sometimes, for now we're just assuming that if it can
+	// turtle, it can also unturtle.
+	// trace_t tr;
+	// UTIL_TraceHull( GetAbsOrigin(), GetAbsOrigin(), WorldAlignMins() - Vector( 4,4,4 ), WorldAlignMaxs() + Vector(
+	// 4,4,4 ), MASK_SOLID, this, COLLISION_GROUP_NONE, &tr ); if ( tr.startsolid || tr.allsolid ) 	return;
 
 	m_bTurtled = false;
 	m_bTurtling = true;
 	m_flTurtlingFinishedAt = gpGlobals->curtime + SENTRY_TURTLE_TIME;
-	EmitSound( "ObjectSentrygun.UnTurtle" );
+	EmitSound("ObjectSentrygun.UnTurtle");
 
-	RemoveSolidFlags( FSOLID_NOT_SOLID );
+	RemoveSolidFlags(FSOLID_NOT_SOLID);
 	m_takedamage = DAMAGE_YES;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Set the technology levels of the sentrygun
 //-----------------------------------------------------------------------------
-void CObjectSentrygun::SetTechnology( bool bSmarter, bool bSensors )
+void CObjectSentrygun::SetTechnology(bool bSmarter, bool bSensors)
 {
 	m_bSmarter = bSmarter;
 	m_bSensors = bSensors;
 
 	// Smarter sentryguns turn faster
-	if ( m_bSmarter )
+	if(m_bSmarter)
 	{
-		m_iBaseTurnRate	= 6;
+		m_iBaseTurnRate = 6;
 	}
 	else
 	{
-		m_iBaseTurnRate	= 4;
+		m_iBaseTurnRate = 4;
 	}
 }
 
@@ -992,44 +991,46 @@ void CObjectSentrygun::SetTechnology( bool bSmarter, bool bSensors )
 // SENTRYGUN TYPES
 //========================================================================================================
 IMPLEMENT_SERVERCLASS_ST(CObjectSentrygunPlasma, DT_ObjectSentrygunPlasma)
-END_SEND_TABLE();
+END_SEND_TABLE
+();
 
 IMPLEMENT_SERVERCLASS_ST(CObjectSentrygunRocketlauncher, DT_ObjectSentrygunRocketlauncher)
-END_SEND_TABLE();
+END_SEND_TABLE
+();
 
-void CObjectSentrygunPlasma::Spawn( void )
+void CObjectSentrygunPlasma::Spawn(void)
 {
 	m_iHealth = obj_sentrygun_plasma_health.GetInt();
 
-	SetModel( SG_PLASMA_MODEL );
+	SetModel(SG_PLASMA_MODEL);
 	BaseClass::Spawn();
 
-	SetType( OBJ_SENTRYGUN_PLASMA );
+	SetType(OBJ_SENTRYGUN_PLASMA);
 
 	m_flNextAmmoRecharge = gpGlobals->curtime + PLASMA_SENTRYGUN_RECHARGE_TIME;
 	m_nBurstCount = PLASMA_SENTRY_BURST_COUNT;
 
 	m_iAmmo = m_iMaxAmmo = 50;
-	m_iAmmoType = GetAmmoDef()->Index( "ShotgunEnergy" );
+	m_iAmmoType = GetAmmoDef()->Index("ShotgunEnergy");
 }
 
-void CObjectSentrygunRocketlauncher::Spawn( void )
+void CObjectSentrygunRocketlauncher::Spawn(void)
 {
 	m_iHealth = obj_sentrygun_rocketlauncher_health.GetInt();
 
-	SetModel( SG_ROCKETLAUNCHER_MODEL );
+	SetModel(SG_ROCKETLAUNCHER_MODEL);
 	BaseClass::Spawn();
 
-	SetType( OBJ_SENTRYGUN_ROCKET_LAUNCHER );
+	SetType(OBJ_SENTRYGUN_ROCKET_LAUNCHER);
 
 	m_iAmmo = m_iMaxAmmo = 50;
-	m_iAmmoType = GetAmmoDef()->Index( "Rockets" );
+	m_iAmmoType = GetAmmoDef()->Index("Rockets");
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Plasma sentrygun's fire
 //-----------------------------------------------------------------------------
-bool CObjectSentrygunPlasma::Fire( void )
+bool CObjectSentrygunPlasma::Fire(void)
 {
 	Vector vecSrc = EyePosition();
 	Vector vecTarget = m_vecFireTarget;
@@ -1038,56 +1039,56 @@ bool CObjectSentrygunPlasma::Fire( void )
 
 	// Because the plasma sentrygun always thinks it has ammo (see below)
 	// we might not have ammo here, in which case we should just abort.
-	if ( !m_iAmmo )
+	if(!m_iAmmo)
 		return true;
 
-	GetAttachment( "muzzle", vecSrc, vecAng );
+	GetAttachment("muzzle", vecSrc, vecAng);
 
 	// Get the distance to the target
 	float targetDist = (vecTarget - vecSrc).Length();
 	float targetTime = targetDist / PLASMA_VELOCITY;
 
 	// If we're not suppressing, calculate where the target's going to be in that time
-	if ( !m_bSuppressing )
+	if(!m_bSuppressing)
 	{
 		Vector vecVelocity = m_hEnemy->GetSmoothedVelocity();
 		// Dampen Z velocity to prevent jumping people screwing the aim
 		vecVelocity.z *= 0.25;
 		// Get the target point to aim for
-		Vector vecEnd = vecTarget + ( vecVelocity * targetTime );
+		Vector vecEnd = vecTarget + (vecVelocity * targetTime);
 		vecAim = (vecEnd - vecSrc);
 	}
 	else
 	{
 		vecAim = (vecTarget - vecSrc);
 	}
-	VectorNormalize( vecAim );
+	VectorNormalize(vecAim);
 
-	int damageType = GetAmmoDef()->DamageType( m_iAmmoType );
-	CBasePlasmaProjectile *pPlasma = CBasePlasmaProjectile::Create( vecSrc + (vecAim * 32), vecAim, damageType, this );
-	pPlasma->SetDamage( 15 );
-	pPlasma->SetMaxRange( obj_sentrygun_plasma_range.GetFloat() );
-	pPlasma->m_hOwner = GetBuilder(); 
+	int damageType = GetAmmoDef()->DamageType(m_iAmmoType);
+	CBasePlasmaProjectile *pPlasma = CBasePlasmaProjectile::Create(vecSrc + (vecAim * 32), vecAim, damageType, this);
+	pPlasma->SetDamage(15);
+	pPlasma->SetMaxRange(obj_sentrygun_plasma_range.GetFloat());
+	pPlasma->m_hOwner = GetBuilder();
 
-	EmitSound( "ObjectSentrygun.Fire" );
-	SetSentryAnim( TFTURRET_ANIM_FIRE );
+	EmitSound("ObjectSentrygun.Fire");
+	SetSentryAnim(TFTURRET_ANIM_FIRE);
 	DoMuzzleFlash();
 
 	m_iAmmo -= 1;
 
 	float flAttackTime;
-	if (--m_nBurstCount > 0)
+	if(--m_nBurstCount > 0)
 	{
 		flAttackTime = 0.2f;
 	}
 	else
 	{
-		flAttackTime = random->RandomFloat( 1.0f, 2.0f );
-		m_nBurstCount = PLASMA_SENTRY_BURST_COUNT + random->RandomInt( 0, PLASMA_SENTRY_BURST_COUNT );
+		flAttackTime = random->RandomFloat(1.0f, 2.0f);
+		m_nBurstCount = PLASMA_SENTRY_BURST_COUNT + random->RandomInt(0, PLASMA_SENTRY_BURST_COUNT);
 	}
 
 	// If I'm EMPed, slow the firing rate down
-	if ( HasPowerup(POWERUP_EMP) )
+	if(HasPowerup(POWERUP_EMP))
 	{
 		flAttackTime *= 3;
 	}
@@ -1102,16 +1103,15 @@ bool CObjectSentrygunPlasma::Fire( void )
 //			This is to prevent it from continually unlocking & relocking when it's
 //			ammo is flickering between 0 and 1.
 //-----------------------------------------------------------------------------
-bool CObjectSentrygunPlasma::HasAmmo( void ) 
+bool CObjectSentrygunPlasma::HasAmmo(void)
 {
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Plasma sentrygun recharges it's ammo
 //-----------------------------------------------------------------------------
-void CObjectSentrygunPlasma::CheckShield( void )
+void CObjectSentrygunPlasma::CheckShield(void)
 {
 	// ROBIN: Disabled recharging for now
 	/*
@@ -1129,7 +1129,6 @@ void CObjectSentrygunPlasma::CheckShield( void )
 	BaseClass::CheckShield();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Rocket launcher sentrygun's fire
 //-----------------------------------------------------------------------------
@@ -1144,7 +1143,7 @@ bool CObjectSentrygunRocketlauncher::Fire()
 	float targetTime = targetDist / ROCKET_VELOCITY;
 
 	// If we're not suppressing, calculate where the target's going to be in that time
-	if ( !m_bSuppressing )
+	if(!m_bSuppressing)
 	{
 		Vector vecVelocity = m_hEnemy->GetSmoothedVelocity();
 		// Dampen velocity to prevent people rapidly switching strafe
@@ -1152,7 +1151,7 @@ bool CObjectSentrygunRocketlauncher::Fire()
 		// Dampen Z velocity to prevent jumping people screwing the aim
 		vecVelocity.z *= 0.5;
 		// Get the target point to aim for
-		Vector vecEnd = vecTarget + ( vecVelocity * targetTime );
+		Vector vecEnd = vecTarget + (vecVelocity * targetTime);
 		vecAim = (vecEnd - vecSrc);
 	}
 	else
@@ -1160,9 +1159,9 @@ bool CObjectSentrygunRocketlauncher::Fire()
 		vecAim = (vecTarget - vecSrc);
 	}
 
-	CGrenadeRocket::Create( vecSrc, vecAim, edict(), GetOwner() );
+	CGrenadeRocket::Create(vecSrc, vecAim, edict(), GetOwner());
 
-	EmitSound( "ObjectSentrygunRocketlauncher.Fire" );
+	EmitSound("ObjectSentrygunRocketlauncher.Fire");
 
 	m_iAmmo -= 1;
 
@@ -1170,9 +1169,8 @@ bool CObjectSentrygunRocketlauncher::Fire()
 	return true;
 }
 
-
-void CObjectSentrygunRocketlauncher::SetTechnology( bool bSmarter, bool bSensors )
+void CObjectSentrygunRocketlauncher::SetTechnology(bool bSmarter, bool bSensors)
 {
-	BaseClass::SetTechnology( bSmarter, bSensors );
-	m_iBaseTurnRate	= 2;
+	BaseClass::SetTechnology(bSmarter, bSensors);
+	m_iBaseTurnRate = 2;
 }

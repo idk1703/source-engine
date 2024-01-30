@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,21 +11,18 @@
 #include "tier1/KeyValues.h"
 #include "vgui_controls/SectionedListPanel.h"
 
-
 using namespace vgui;
 
-
-class SampleListPanelBoth: public DemoPage
+class SampleListPanelBoth : public DemoPage
 {
-	public:
-		SampleListPanelBoth(Panel *parent, const char *name);
-		~SampleListPanelBoth();
+public:
+	SampleListPanelBoth(Panel *parent, const char *name);
+	~SampleListPanelBoth();
 
-		void onButtonClicked();
-	
-	private:
-		SectionedListPanel *m_pSectionedListPanel;
-		
+	void onButtonClicked();
+
+private:
+	SectionedListPanel *m_pSectionedListPanel;
 };
 
 //-----------------------------------------------------------------------------
@@ -38,10 +35,10 @@ SampleListPanelBoth::SampleListPanelBoth(Panel *parent, const char *name) : Demo
 
 	// Add a new section
 	m_pSectionedListPanel->AddSection(0, "LIST ITEMS");
-	m_pSectionedListPanel->AddColumnToSection(0, "items", "items", 0, 150 );
+	m_pSectionedListPanel->AddColumnToSection(0, "items", "items", 0, 150);
 
 	// Add items to the list
-	KeyValues *data = new KeyValues ("items");
+	KeyValues *data = new KeyValues("items");
 	data->SetString("items", "Many actions");
 	m_pSectionedListPanel->AddItem(0, data);
 
@@ -61,8 +58,8 @@ SampleListPanelBoth::SampleListPanelBoth(Panel *parent, const char *name) : Demo
 	m_pSectionedListPanel->AddItem(0, data);
 
 	// Add a new section
-	//m_pSectionedListPanel->AddSection(1, "RIGHT CLICK");
-	m_pSectionedListPanel->AddColumnToSection(0, "items", "items", 0, 150 );
+	// m_pSectionedListPanel->AddSection(1, "RIGHT CLICK");
+	m_pSectionedListPanel->AddColumnToSection(0, "items", "items", 0, 150);
 
 	// Add items to the list
 	data->SetString("items", "Right-click the item");
@@ -76,7 +73,6 @@ SampleListPanelBoth::SampleListPanelBoth(Panel *parent, const char *name) : Demo
 
 	data->SetString("items", "Commands");
 	m_pSectionedListPanel->AddItem(1, data);
-
 
 	// Add a new section
 	m_pSectionedListPanel->AddSection(2, "RIGHT CLICK");
@@ -95,26 +91,17 @@ SampleListPanelBoth::SampleListPanelBoth(Panel *parent, const char *name) : Demo
 	data->SetString("items", "Commands");
 	m_pSectionedListPanel->AddItem(2, data);
 
-
 	// Set its position.
 	m_pSectionedListPanel->SetPos(90, 25);
 	m_pSectionedListPanel->SetSize(200, 150);
-	
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-SampleListPanelBoth::~SampleListPanelBoth()
-{
-}
+SampleListPanelBoth::~SampleListPanelBoth() {}
 
-
-
-
-Panel* SampleListPanelBoth_Create(Panel *parent)
+Panel *SampleListPanelBoth_Create(Panel *parent)
 {
 	return new SampleListPanelBoth(parent, "List Panel - both");
 }
-
-

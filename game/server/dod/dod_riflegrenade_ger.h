@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -15,11 +15,11 @@
 class CDODRifleGrenadeGER : public CDODBaseGrenade
 {
 public:
-	DECLARE_CLASS( CDODRifleGrenadeGER, CDODBaseGrenade );
+	DECLARE_CLASS(CDODRifleGrenadeGER, CDODBaseGrenade);
 
 	DECLARE_SERVERCLASS();
 
-	// Overrides 
+	// Overrides
 public:
 	CDODRifleGrenadeGER() {}
 	virtual void Spawn();
@@ -27,23 +27,19 @@ public:
 
 	// Grenade stuff.
 public:
-
-	static CDODRifleGrenadeGER* Create( 
-		const Vector &position, 
-		const QAngle &angles, 
-		const Vector &velocity, 
-		const AngularImpulse &angVelocity, 
-		CBaseCombatCharacter *pOwner, 
-		float timer,
-		DODWeaponID weaponID );
+	static CDODRifleGrenadeGER *Create(const Vector &position, const QAngle &angles, const Vector &velocity,
+									   const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, float timer,
+									   DODWeaponID weaponID);
 
 	virtual char *GetExplodingClassname();
 
-	virtual float GetElasticity() { return 0.05; }
+	virtual float GetElasticity()
+	{
+		return 0.05;
+	}
 
 private:
 	float m_flDetonateTime;
 };
-
 
 #endif // DOD_RIFLEGRENADE_GER_H

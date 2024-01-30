@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -21,34 +21,29 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 class CManageGamesDialog : public Frame
 {
-	DECLARE_CLASS_SIMPLE( CManageGamesDialog, Frame );
+	DECLARE_CLASS_SIMPLE(CManageGamesDialog, Frame);
 
 public:
-
-	CManageGamesDialog( Panel *parent, const char *name, int configID );
+	CManageGamesDialog(Panel *parent, const char *name, int configID);
 	virtual ~CManageGamesDialog();
 
-	void	SetGameDir( const char *szDir );
-	void	SetGameName( const char *szDir );
+	void SetGameDir(const char *szDir);
+	void SetGameName(const char *szDir);
 
 protected:
-	
-	virtual void OnCommand( const char *command );
-	
-	bool	IsGameNameUnique( const char *name );
+	virtual void OnCommand(const char *command);
+
+	bool IsGameNameUnique(const char *name);
 
 private:
+	int m_nConfigID;
 
-	int					m_nConfigID;
-	
-	vgui::TextEntry		*m_pGameNameEntry;
-	vgui::TextEntry		*m_pGameDirEntry;
+	vgui::TextEntry *m_pGameNameEntry;
+	vgui::TextEntry *m_pGameDirEntry;
 
-	MESSAGE_FUNC_CHARPTR( OnChooseDirectory, "DirectorySelected", dir );
+	MESSAGE_FUNC_CHARPTR(OnChooseDirectory, "DirectorySelected", dir);
 };
 
-
 extern CManageGamesDialog *g_pManageGamesDialog;
-
 
 #endif // MANAGEGAMESDIALOG_H

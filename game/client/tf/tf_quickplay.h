@@ -16,7 +16,7 @@ namespace vgui
 	class Button;
 	class ComboBox;
 	class RadioButton;
-}
+} // namespace vgui
 
 #include "vgui_controls/EditablePanel.h"
 #include "tf_quickplay_shared.h"
@@ -39,39 +39,43 @@ extern ConVar tf_quickplay_lastviewedmode;
 
 class CQuickplayPanelBase : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CQuickplayPanelBase, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CQuickplayPanelBase, vgui::EditablePanel);
+
 public:
-	CQuickplayPanelBase( vgui::Panel *parent, const char *name );
+	CQuickplayPanelBase(vgui::Panel *parent, const char *name);
 	virtual ~CQuickplayPanelBase();
 
-	virtual void ApplySettings( KeyValues *pInResourceData ) OVERRIDE;
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
-	virtual void OnCommand( const char *pCommand );
+	virtual void ApplySettings(KeyValues *pInResourceData) OVERRIDE;
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme) OVERRIDE;
+	virtual void OnCommand(const char *pCommand);
 
-	void ShowItemByGameType( EGameCategory gameType );
-	void ShowItemByIndex( int iItem );
-	int GetSelectedItemIndex() const { return m_iCurrentItem; }
+	void ShowItemByGameType(EGameCategory gameType);
+	void ShowItemByIndex(int iItem);
+	int GetSelectedItemIndex() const
+	{
+		return m_iCurrentItem;
+	}
 
-	void SetPageScrollButtonsVisible( bool bFlag );
+	void SetPageScrollButtonsVisible(bool bFlag);
 
 protected:
-	void SetupActionTarget( const char *pPanelName );
-	void AddItem( EGameCategory gameType, const char *pTitle, const char *pDescription, const char *pMoreInfo, const char *pComplexity, const char *pImage, const char *pBetaImage );
+	void SetupActionTarget(const char *pPanelName);
+	void AddItem(EGameCategory gameType, const char *pTitle, const char *pDescription, const char *pMoreInfo,
+				 const char *pComplexity, const char *pImage, const char *pBetaImage);
 	virtual void UpdateSelectableItems();
 	void SaveSettings();
 	void SetupMoreOptions();
 	void ReadOptionCombos();
 	void WriteOptionCombosAndSummary();
-	virtual void GetOptionsAndSummaryText( wchar_t *pwszSummary );
+	virtual void GetOptionsAndSummaryText(wchar_t *pwszSummary);
 	void ShowSimplifiedOrAdvancedOptions();
-	virtual const char *GetItemImage( const QuickplayItem& item ) const;
-	MESSAGE_FUNC_PTR( OnTextChanged, "TextChanged", panel );
-	MESSAGE_FUNC_PTR( OnRadioButtonChecked, "RadioButtonChecked", panel );
+	virtual const char *GetItemImage(const QuickplayItem &item) const;
+	MESSAGE_FUNC_PTR(OnTextChanged, "TextChanged", panel);
+	MESSAGE_FUNC_PTR(OnRadioButtonChecked, "RadioButtonChecked", panel);
 
-	virtual void UserSelectItemByIndex( int iNewItem );
+	virtual void UserSelectItemByIndex(int iNewItem);
 
 protected:
-
 	vgui::EditablePanel *m_pContainer;
 	vgui::EditablePanel *m_pSimplifiedOptionsContainer;
 	vgui::EditablePanel *m_pAdvOptionsContainer;
@@ -92,7 +96,8 @@ protected:
 		kEAdvOption_DamageSpread
 	};
 
-	struct AdvOption {
+	struct AdvOption
+	{
 		const char *m_pszContainerName;
 		ConVar *m_pConvar;
 		CUtlVector<const char *> m_vecOptionNames;
@@ -102,16 +107,16 @@ protected:
 	};
 	CUtlVector<AdvOption> m_vecAdvOptions;
 
-	//vgui::CheckButton *m_pFavoritesCheckButton;
-	//vgui::Button *m_pRefreshButton;
-	CUtlVector< QuickplayItem > m_vecItems;
-	CUtlVector< QuickplayItem > m_vecAllItems;
+	// vgui::CheckButton *m_pFavoritesCheckButton;
+	// vgui::Button *m_pRefreshButton;
+	CUtlVector<QuickplayItem> m_vecItems;
+	CUtlVector<QuickplayItem> m_vecAllItems;
 	int m_iCurrentItem;
 	bool m_bSetInitialSelection;
 	bool m_bShowRandomOption;
 
-	char	m_szEvent247Image[MAX_PATH];
-	char	m_szCommunityUpdateImage[MAX_PATH];
+	char m_szEvent247Image[MAX_PATH];
+	char m_szCommunityUpdateImage[MAX_PATH];
 };
 
 #endif // #ifndef _INCLUDED_TF_QUICKPLAY_UI_H

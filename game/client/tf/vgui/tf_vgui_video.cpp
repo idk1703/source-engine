@@ -12,30 +12,28 @@
 #include "tf_vgui_video.h"
 #include "engine/IEngineSound.h"
 
-
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-
-DECLARE_BUILD_FACTORY( CTFVideoPanel );
+DECLARE_BUILD_FACTORY(CTFVideoPanel);
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
-CTFVideoPanel::CTFVideoPanel( vgui::Panel *parent, const char *panelName ) : VideoPanel( 0, 0, 50, 50 )
+CTFVideoPanel::CTFVideoPanel(vgui::Panel *parent, const char *panelName) : VideoPanel(0, 0, 50, 50)
 {
-	SetParent( parent );
-	SetProportional( true );
-	SetKeyBoardInputEnabled( false );
+	SetParent(parent);
+	SetProportional(true);
+	SetKeyBoardInputEnabled(false);
 
-	SetBlackBackground( false );
+	SetBlackBackground(false);
 
 	m_flStartAnimDelay = 0.0f;
 	m_flEndAnimDelay = 0.0f;
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 CTFVideoPanel::~CTFVideoPanel()
 {
@@ -43,67 +41,67 @@ CTFVideoPanel::~CTFVideoPanel()
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 void CTFVideoPanel::ReleaseVideo()
 {
 	enginesound->NotifyEndMoviePlayback();
 
 	// Destroy any previously allocated video
-	if ( g_pVideo && m_VideoMaterial != NULL )
+	if(g_pVideo && m_VideoMaterial != NULL)
 	{
-		g_pVideo->DestroyVideoMaterial( m_VideoMaterial );
+		g_pVideo->DestroyVideoMaterial(m_VideoMaterial);
 		m_VideoMaterial = NULL;
 	}
 }
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
-void CTFVideoPanel::ApplySettings( KeyValues *inResourceData )
+void CTFVideoPanel::ApplySettings(KeyValues *inResourceData)
 {
-	BaseClass::ApplySettings( inResourceData );
+	BaseClass::ApplySettings(inResourceData);
 
-	SetExitCommand( inResourceData->GetString( "command", "" ) );
-	m_flStartAnimDelay = inResourceData->GetFloat( "start_delay", 0.0 );
-	m_flEndAnimDelay = inResourceData->GetFloat( "end_delay", 0.0 );
+	SetExitCommand(inResourceData->GetString("command", ""));
+	m_flStartAnimDelay = inResourceData->GetFloat("start_delay", 0.0);
+	m_flEndAnimDelay = inResourceData->GetFloat("end_delay", 0.0);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFVideoPanel::GetPanelPos( int &xpos, int &ypos )
+void CTFVideoPanel::GetPanelPos(int &xpos, int &ypos)
 {
-	vgui::ipanel()->GetAbsPos( GetVPanel(), xpos, ypos );
+	vgui::ipanel()->GetAbsPos(GetVPanel(), xpos, ypos);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFVideoPanel::OnVideoOver()
 {
 	BaseClass::OnVideoOver();
-	PostMessage( GetParent(), new KeyValues( "IntroFinished" ) );
+	PostMessage(GetParent(), new KeyValues("IntroFinished"));
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFVideoPanel::OnClose()
 {
 	// Fire an exit command if we're asked to do so
-	if ( m_szExitCommand[0] )
+	if(m_szExitCommand[0])
 	{
-		engine->ClientCmd( m_szExitCommand );
+		engine->ClientCmd(m_szExitCommand);
 	}
 
 	// intentionally skipping VideoPanel::OnClose()
 	EditablePanel::OnClose();
 
-	SetVisible( false );
+	SetVisible(false);
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFVideoPanel::Shutdown()
 {

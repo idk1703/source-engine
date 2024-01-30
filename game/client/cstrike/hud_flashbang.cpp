@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -15,30 +15,26 @@
 class CHudFlashbang : public CHudElement, public vgui::Panel
 {
 public:
-	DECLARE_CLASS_SIMPLE( CHudFlashbang, vgui::Panel );
+	DECLARE_CLASS_SIMPLE(CHudFlashbang, vgui::Panel);
 
-	virtual bool ShouldDraw();	
+	virtual bool ShouldDraw();
 	virtual void Paint();
 
-	CHudFlashbang( const char *name );
+	CHudFlashbang(const char *name);
 
 private:
-
 	int m_iAdditiveWhiteID;
 };
 
+DECLARE_HUDELEMENT(CHudFlashbang);
 
-DECLARE_HUDELEMENT( CHudFlashbang );
-
-
-CHudFlashbang::CHudFlashbang( const char *pName ) :
-	vgui::Panel( NULL, "HudFlashbang" ), CHudElement( pName )
+CHudFlashbang::CHudFlashbang(const char *pName) : vgui::Panel(NULL, "HudFlashbang"), CHudElement(pName)
 {
-	SetParent( g_pClientMode->GetViewport() );
-	
+	SetParent(g_pClientMode->GetViewport());
+
 	m_iAdditiveWhiteID = 0;
 
-	SetHiddenBits( HIDEHUD_PLAYERDEAD );
+	SetHiddenBits(HIDEHUD_PLAYERDEAD);
 }
 
 // the flashbang effect cannot be drawn in the HUD, because this lets the user skip its effect
@@ -54,4 +50,3 @@ void CHudFlashbang::Paint()
 {
 	return;
 }
-

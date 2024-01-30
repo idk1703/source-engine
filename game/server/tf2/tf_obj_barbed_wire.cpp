@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -12,29 +12,28 @@
 #include "te_effect_dispatch.h"
 #include "ndebugoverlay.h"
 
-#define BARBED_WIRE_MINS	Vector(-5, -5, 0)
-#define BARBED_WIRE_MAXS	Vector( 5,  5, 40)
-#define BARBED_WIRE_MODEL	"models/objects/obj_barbed_wire.mdl"
+#define BARBED_WIRE_MINS  Vector(-5, -5, 0)
+#define BARBED_WIRE_MAXS  Vector(5, 5, 40)
+#define BARBED_WIRE_MODEL "models/objects/obj_barbed_wire.mdl"
 
-#define MAX_BARBED_WIRE_DISTANCE	768
-#define BARBED_WIRE_THINK_CONTEXT	"BarbedWireThinkContext"
+#define MAX_BARBED_WIRE_DISTANCE  768
+#define BARBED_WIRE_THINK_CONTEXT "BarbedWireThinkContext"
 
-#define BARBED_WIRE_THINK_INTERVAL	0.2
+#define BARBED_WIRE_THINK_INTERVAL 0.2
 
-ConVar obj_barbed_wire_damage( "obj_barbed_wire_damage", "80" );
-ConVar obj_barbed_wire_health( "obj_barbed_wire_health", "100" );
+ConVar obj_barbed_wire_damage("obj_barbed_wire_damage", "80");
+ConVar obj_barbed_wire_health("obj_barbed_wire_health", "100");
 
+IMPLEMENT_SERVERCLASS_ST(CObjectBarbedWire, DT_ObjectBarbedWire)
+SendPropEHandle(SENDINFO(m_hConnectedTo))
+END_SEND_TABLE
+()
 
-IMPLEMENT_SERVERCLASS_ST( CObjectBarbedWire, DT_ObjectBarbedWire )
-	SendPropEHandle( SENDINFO( m_hConnectedTo ) )
-END_SEND_TABLE()
-
-
-LINK_ENTITY_TO_CLASS( obj_barbed_wire, CObjectBarbedWire );
-PRECACHE_REGISTER( obj_barbed_wire );
+	LINK_ENTITY_TO_CLASS(obj_barbed_wire, CObjectBarbedWire);
+PRECACHE_REGISTER(obj_barbed_wire);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CObjectBarbedWire::CObjectBarbedWire()
 {
@@ -42,28 +41,29 @@ CObjectBarbedWire::CObjectBarbedWire()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectBarbedWire::Precache()
 {
-	PrecacheModel( BARBED_WIRE_MODEL );
+	PrecacheModel(BARBED_WIRE_MODEL);
 	BaseClass::Precache();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectBarbedWire::Spawn()
 {
 	Precache();
 
-	SetModel( BARBED_WIRE_MODEL );
-	SetSolid( SOLID_BBOX );
-	SetType( OBJ_BARBED_WIRE );
-	UTIL_SetSize(this, BARBED_WIRE_MINS, BARBED_WIRE_MAXS );
+	SetModel(BARBED_WIRE_MODEL);
+	SetSolid(SOLID_BBOX);
+	SetType(OBJ_BARBED_WIRE);
+	UTIL_SetSize(this, BARBED_WIRE_MINS, BARBED_WIRE_MAXS);
 
 	// Set our flags.
-	m_fObjectFlags |= OF_DOESNT_NEED_POWER | OF_SUPPRESS_APPEAR_ON_MINIMAP | OF_SUPPRESS_NOTIFY_UNDER_ATTACK | OF_ALLOW_REPEAT_PLACEMENT;
+	m_fObjectFlags |= OF_DOESNT_NEED_POWER | OF_SUPPRESS_APPEAR_ON_MINIMAP | OF_SUPPRESS_NOTIFY_UNDER_ATTACK |
+					  OF_ALLOW_REPEAT_PLACEMENT;
 
 	// Get the ball rolling here.
 	BarbedWireThink();
@@ -72,12 +72,12 @@ void CObjectBarbedWire::Spawn()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Enumerator 
+// Purpose: Enumerator
 //-----------------------------------------------------------------------------
 class CBarbedWireEnumerator : public IEntityEnumerator
 {
 public:
-	CBarbedWireEnumerator( CObjectBarbedWire *pWire, Ray_t *pRay, int contentsMask )
+	CBarbedWireEnumerator(CObjectBarbedWire *pWire, Ray_t *pRay, int contentsMask)
 	{
 		m_pWire = pWire;
 		m_pRay = pRay;
@@ -85,20 +85,20 @@ public:
 		m_aDamagedEntities.Purge();
 	}
 
-	virtual bool EnumEntity( IHandleEntity *pHandleEntity )
+	virtual bool EnumEntity(IHandleEntity *pHandleEntity)
 	{
-		CBaseEntity *pEntity = gEntList.GetBaseEntity( pHandleEntity->GetRefEHandle() );
-		if ( pEntity && !m_pWire->InSameTeam( pEntity ) )
+		CBaseEntity *pEntity = gEntList.GetBaseEntity(pHandleEntity->GetRefEHandle());
+		if(pEntity && !m_pWire->InSameTeam(pEntity))
 		{
 			trace_t tr;
-			enginetrace->ClipRayToEntity( *m_pRay, m_ContentsMask, pHandleEntity, &tr );
-			if ( tr.fraction < 1.0f )
+			enginetrace->ClipRayToEntity(*m_pRay, m_ContentsMask, pHandleEntity, &tr);
+			if(tr.fraction < 1.0f)
 			{
 				// Add them to the list & damage them later.
 				// Done this way so entities don't remove themselves from leaves while we're tracing
-				if ( m_aDamagedEntities.Find( pEntity ) == m_aDamagedEntities.InvalidIndex() )
+				if(m_aDamagedEntities.Find(pEntity) == m_aDamagedEntities.InvalidIndex())
 				{
-					m_aDamagedEntities.AddToTail( pEntity );
+					m_aDamagedEntities.AddToTail(pEntity);
 				}
 			}
 		}
@@ -106,90 +106,92 @@ public:
 		return true;
 	}
 
-	void DamageEntities( void )
+	void DamageEntities(void)
 	{
 		int iSize = m_aDamagedEntities.Count();
-		for ( int i = iSize-1; i >= 0; i-- )
+		for(int i = iSize - 1; i >= 0; i--)
 		{
 			CBaseEntity *pEntity = m_aDamagedEntities[i].Get();
-			if ( pEntity )
+			if(pEntity)
 			{
 				// DMG_CRUSH added so there's no physics force generated
-				CTakeDamageInfo info( m_pWire, m_pWire->GetBuilder(), obj_barbed_wire_damage.GetFloat() * BARBED_WIRE_THINK_INTERVAL, DMG_SLASH | DMG_CRUSH );
-				pEntity->TakeDamage( info );
+				CTakeDamageInfo info(m_pWire, m_pWire->GetBuilder(),
+									 obj_barbed_wire_damage.GetFloat() * BARBED_WIRE_THINK_INTERVAL,
+									 DMG_SLASH | DMG_CRUSH);
+				pEntity->TakeDamage(info);
 
 				// Bloodspray
-				CEffectData	data;
+				CEffectData data;
 				data.m_vOrigin = pEntity->WorldSpaceCenter();
-				data.m_vNormal = Vector(0,0,1);
+				data.m_vNormal = Vector(0, 0, 1);
 				data.m_flScale = 4;
 				data.m_fFlags = FX_BLOODSPRAY_ALL;
 				data.m_nEntIndex = pEntity->entindex();
-				DispatchEffect( "tf2blood", data );
+				DispatchEffect("tf2blood", data);
 			}
 		}
 	}
 
 private:
-	CObjectBarbedWire		*m_pWire;
-	int						m_ContentsMask;
-	Ray_t		
-		*m_pRay;
-	CUtlVector< EHANDLE >	m_aDamagedEntities;
+	CObjectBarbedWire *m_pWire;
+	int m_ContentsMask;
+	Ray_t *m_pRay;
+	CUtlVector<EHANDLE> m_aDamagedEntities;
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CObjectBarbedWire::BarbedWireThink( void )
+void CObjectBarbedWire::BarbedWireThink(void)
 {
 	// Cut the rope if we're too far from the entity it's attached to.
-	if ( m_hConnectedTo.Get() )
+	if(m_hConnectedTo.Get())
 	{
-		if ( (WorldSpaceCenter() - m_hConnectedTo->WorldSpaceCenter()).Length() > MAX_BARBED_WIRE_DISTANCE )
+		if((WorldSpaceCenter() - m_hConnectedTo->WorldSpaceCenter()).Length() > MAX_BARBED_WIRE_DISTANCE)
 		{
 			m_hConnectedTo = NULL;
 		}
 
-		if ( m_hConnectedTo )
-		{		
+		if(m_hConnectedTo)
+		{
 			Ray_t ray;
-			ray.Init( WorldSpaceCenter(), m_hConnectedTo->WorldSpaceCenter() );
-			
-			//NDebugOverlay::Line( WorldSpaceCenter(), m_hConnectedTo->WorldSpaceCenter(), 255,255,255, false, 0.1 );
-			//NDebugOverlay::Box( WorldSpaceCenter(), -Vector(5,5,5), Vector(5,5,5), 0,255,0,8, 0.1 );
-			//NDebugOverlay::Box( m_hConnectedTo->WorldSpaceCenter(), -Vector(6,6,6), Vector(6,6,6), 255,255,255,8, 0.1 );
+			ray.Init(WorldSpaceCenter(), m_hConnectedTo->WorldSpaceCenter());
 
-			CBarbedWireEnumerator bwEnum( this, &ray, MASK_SHOT_HULL );
-			enginetrace->EnumerateEntities( ray, false, &bwEnum );
+			// NDebugOverlay::Line( WorldSpaceCenter(), m_hConnectedTo->WorldSpaceCenter(), 255,255,255, false, 0.1 );
+			// NDebugOverlay::Box( WorldSpaceCenter(), -Vector(5,5,5), Vector(5,5,5), 0,255,0,8, 0.1 );
+			// NDebugOverlay::Box( m_hConnectedTo->WorldSpaceCenter(), -Vector(6,6,6), Vector(6,6,6), 255,255,255,8, 0.1
+			// );
+
+			CBarbedWireEnumerator bwEnum(this, &ray, MASK_SHOT_HULL);
+			enginetrace->EnumerateEntities(ray, false, &bwEnum);
 			bwEnum.DamageEntities();
 		}
 	}
-	
-	SetContextThink( BarbedWireThink, gpGlobals->curtime + BARBED_WIRE_THINK_INTERVAL, BARBED_WIRE_THINK_CONTEXT );
+
+	SetContextThink(BarbedWireThink, gpGlobals->curtime + BARBED_WIRE_THINK_INTERVAL, BARBED_WIRE_THINK_CONTEXT);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CObjectBarbedWire::StartPlacement( CBaseTFPlayer *pPlayer )
+void CObjectBarbedWire::StartPlacement(CBaseTFPlayer *pPlayer)
 {
-	if ( pPlayer && !m_hConnectedTo )
+	if(pPlayer && !m_hConnectedTo)
 	{
 		// Automatically connect to the nearest barbed wire on our team.
 		float flClosest = 1e24;
 		CObjectBarbedWire *pClosest = NULL;
-		
+
 		CBaseEntity *pCur = gEntList.FirstEnt();
-		while ( pCur )
+		while(pCur)
 		{
-			CObjectBarbedWire *pWire = dynamic_cast< CObjectBarbedWire* >( pCur );
-			if ( pWire )
+			CObjectBarbedWire *pWire = dynamic_cast<CObjectBarbedWire *>(pCur);
+			if(pWire)
 			{
-				if ( pWire->GetTeamNumber() == pPlayer->GetTeamNumber() )
+				if(pWire->GetTeamNumber() == pPlayer->GetTeamNumber())
 				{
 					float flDist = (pWire->WorldSpaceCenter() - pPlayer->WorldSpaceCenter()).Length();
-					if ( flDist < flClosest )
+					if(flDist < flClosest)
 					{
 						flClosest = flDist;
 						pClosest = pWire;
@@ -197,25 +199,25 @@ void CObjectBarbedWire::StartPlacement( CBaseTFPlayer *pPlayer )
 				}
 			}
 
-			pCur = gEntList.NextEnt( pCur );
+			pCur = gEntList.NextEnt(pCur);
 		}
 
-		if ( pClosest )
+		if(pClosest)
 		{
 			m_hConnectedTo = pClosest;
 		}
 	}
 
-	BaseClass::StartPlacement( pPlayer );
+	BaseClass::StartPlacement(pPlayer);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CObjectBarbedWire::PreStartBuilding()
 {
-	const CObjectBarbedWire *pWire = dynamic_cast< const CObjectBarbedWire* >( m_hBuiltOnEntity.Get() );
-	if ( pWire )
+	const CObjectBarbedWire *pWire = dynamic_cast<const CObjectBarbedWire *>(m_hBuiltOnEntity.Get());
+	if(pWire)
 	{
 		// Reconnect the wire to this entity and don't build yet.
 		m_hConnectedTo = pWire;
@@ -230,10 +232,9 @@ bool CObjectBarbedWire::PreStartBuilding()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectBarbedWire::FinishedBuilding()
 {
 	BaseClass::FinishedBuilding();
 }
-

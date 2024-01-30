@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -10,9 +10,7 @@
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CMySqlDatabase::CMySqlDatabase()
-{
-}
+CMySqlDatabase::CMySqlDatabase() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
@@ -71,9 +69,9 @@ bool CMySqlDatabase::Initialize()
 void CMySqlDatabase::RunThread()
 {
 	::EnterCriticalSection(&m_csThread);
-	while (m_bRunThread)
+	while(m_bRunThread)
 	{
-		if (m_InQueue.Count() > 0)
+		if(m_InQueue.Count() > 0)
 		{
 			// get a dispatched DB request
 			::EnterCriticalSection(&m_csInQueue);
@@ -86,13 +84,13 @@ void CMySqlDatabase::RunThread()
 			::LeaveCriticalSection(&m_csInQueue);
 
 			::EnterCriticalSection(&m_csDBAccess);
-			
+
 			// run sqldb command
 			msg.result = msg.cmd->RunCommand();
 
 			::LeaveCriticalSection(&m_csDBAccess);
 
-			if (msg.replyTarget)
+			if(msg.replyTarget)
 			{
 				// put the results in the outgoing queue
 				::EnterCriticalSection(&m_csOutQueue);
@@ -115,7 +113,7 @@ void CMySqlDatabase::RunThread()
 		}
 
 		// check the size of the outqueue; if it's getting too big, sleep to let the main thread catch up
-		if (m_OutQueue.Count() > 50)
+		if(m_OutQueue.Count() > 50)
 		{
 			::Sleep(2);
 		}
@@ -131,7 +129,7 @@ void CMySqlDatabase::AddCommandToQueue(ISQLDBCommand *cmd, ISQLDBReplyTarget *re
 	::EnterCriticalSection(&m_csInQueue);
 
 	// add to the queue
-	msg_t msg = { cmd, replyTarget, 0, returnState };
+	msg_t msg = {cmd, replyTarget, 0, returnState};
 	m_InQueue.AddToTail(msg);
 
 	::LeaveCriticalSection(&m_csInQueue);
@@ -147,7 +145,7 @@ bool CMySqlDatabase::RunFrame()
 {
 	bool doneWork = false;
 
-	while (m_OutQueue.Count() > 0)
+	while(m_OutQueue.Count() > 0)
 	{
 		::EnterCriticalSection(&m_csOutQueue);
 
@@ -159,7 +157,7 @@ bool CMySqlDatabase::RunFrame()
 		::LeaveCriticalSection(&m_csOutQueue);
 
 		// run result
-		if (msg.replyTarget)
+		if(msg.replyTarget)
 		{
 			msg.replyTarget->SQLDBResponse(msg.cmd->GetID(), msg.returnState, msg.result, msg.cmd->GetReturnData());
 

@@ -19,68 +19,67 @@
 //------------------------------------------------------------------------------------------------------
 void CSurvivalistAward::getWinner()
 {
-	map<PID,bool> isScout;		//to keep track of whether or not a player is a scout now
-	map<PID,bool> wasScout;	//true if a player ever was a scout (and therefore is in contention for the award)
-	
+	map<PID, bool> isScout;	 // to keep track of whether or not a player is a scout now
+	map<PID, bool> wasScout; // true if a player ever was a scout (and therefore is in contention for the award)
+
 	CEventListIterator it;
-	for (it=g_pMatchInfo->eventList()->begin(); it != g_pMatchInfo->eventList()->end(); ++it)
+	for(it = g_pMatchInfo->eventList()->begin(); it != g_pMatchInfo->eventList()->end(); ++it)
 	{
 		switch((*it)->getType())
 		{
-		case CLogEvent::CLASS_CHANGE:
+			case CLogEvent::CLASS_CHANGE:
 			{
-				PID pid=(*it)->getArgument(0)->asPlayerGetPID();
-				player_class newpc=playerClassNameToClassID((*it)->getArgument(1)->getStringValue());
-				
-				if (newpc == PC_SCOUT)
+				PID pid = (*it)->getArgument(0)->asPlayerGetPID();
+				player_class newpc = playerClassNameToClassID((*it)->getArgument(1)->getStringValue());
+
+				if(newpc == PC_SCOUT)
 				{
-					wasScout[pid]=isScout[pid]=true;
-					numdeaths[pid]=0;
+					wasScout[pid] = isScout[pid] = true;
+					numdeaths[pid] = 0;
 				}
 				else
-					isScout[pid]=false;
+					isScout[pid] = false;
 			}
 			break;
-		case CLogEvent::FRAG:
-		case CLogEvent::TEAM_FRAG:
+			case CLogEvent::FRAG:
+			case CLogEvent::TEAM_FRAG:
 			{
-				PID dead=(*it)->getArgument(1)->asPlayerGetPID();
-				if (isScout[dead])
+				PID dead = (*it)->getArgument(1)->asPlayerGetPID();
+				if(isScout[dead])
 					numdeaths[dead]++;
 			}
 			break;
-		case CLogEvent::SUICIDE:
-		case CLogEvent::KILLED_BY_WORLD:
+			case CLogEvent::SUICIDE:
+			case CLogEvent::KILLED_BY_WORLD:
 			{
-				PID dead=(*it)->getArgument(0)->asPlayerGetPID();
-				if (isScout[dead])
+				PID dead = (*it)->getArgument(0)->asPlayerGetPID();
+				if(isScout[dead])
 					numdeaths[dead]++;
 			}
 			break;
 		}
 	}
 
-	fNoWinner=true;
-	winnerID=-1;
+	fNoWinner = true;
+	winnerID = -1;
 
-	map<PID,int>::iterator deathiter;
+	map<PID, int>::iterator deathiter;
 
-	for (deathiter=numdeaths.begin();deathiter!=numdeaths.end();++deathiter)
+	for(deathiter = numdeaths.begin(); deathiter != numdeaths.end(); ++deathiter)
 	{
-		PID pid=(*deathiter).first;
-		int deaths=(*deathiter).second;
+		PID pid = (*deathiter).first;
+		int deaths = (*deathiter).second;
 
-		if (fNoWinner)
+		if(fNoWinner)
 		{
-			fNoWinner=false;
-			winnerID=pid;
+			fNoWinner = false;
+			winnerID = pid;
 			continue;
 		}
 
-		if (deaths <= numdeaths[winnerID])
-			winnerID=pid;
+		if(deaths <= numdeaths[winnerID])
+			winnerID = pid;
 	}
-
 }
 
 //------------------------------------------------------------------------------------------------------
@@ -88,7 +87,7 @@ void CSurvivalistAward::getWinner()
 // Purpose:	writes html to indicate that no one won this award
 // Input:	html - the html file to output to
 //------------------------------------------------------------------------------------------------------
-void CSurvivalistAward::noWinner(CHTMLFile& html)
+void CSurvivalistAward::noWinner(CHTMLFile &html)
 {
 	html.write("No one was cured during this match.");
 }
@@ -98,13 +97,12 @@ void CSurvivalistAward::noWinner(CHTMLFile& html)
 // Purpose:	reports how many times the winner died
 // Input:	html - the html file to write to
 //------------------------------------------------------------------------------------------------------
-void CSurvivalistAward::extendedinfo(CHTMLFile& html)
+void CSurvivalistAward::extendedinfo(CHTMLFile &html)
 {
-	if (numdeaths[winnerID]==0)
-		html.write("%s didn't die at all as a scout!",winnerName.c_str());
-	else if (numdeaths[winnerID]==1)
-		html.write("%s only died once as a scout!",winnerName.c_str());
+	if(numdeaths[winnerID] == 0)
+		html.write("%s didn't die at all as a scout!", winnerName.c_str());
+	else if(numdeaths[winnerID] == 1)
+		html.write("%s only died once as a scout!", winnerName.c_str());
 	else
-		html.write("%s only died %li times as a scout!",winnerName.c_str(),numdeaths[winnerID]);
+		html.write("%s only died %li times as a scout!", winnerName.c_str(), numdeaths[winnerID]);
 }
-

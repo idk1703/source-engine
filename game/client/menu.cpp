@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -22,7 +22,7 @@
 #include <KeyValues.h>
 #include <vgui_controls/AnimationController.h>
 
-#define MAX_MENU_STRING	512
+#define MAX_MENU_STRING 512
 wchar_t g_szMenuString[MAX_MENU_STRING];
 char g_szPrelocalisedMenuString[MAX_MENU_STRING];
 
@@ -35,42 +35,40 @@ char g_szPrelocalisedMenuString[MAX_MENU_STRING];
 //-----------------------------------------------------
 //
 
-DECLARE_HUDELEMENT( CHudMenu );
-DECLARE_HUD_MESSAGE( CHudMenu, ShowMenu );
+DECLARE_HUDELEMENT(CHudMenu);
+DECLARE_HUD_MESSAGE(CHudMenu, ShowMenu);
 
 //
 //-----------------------------------------------------
 //
 
-static char* ConvertCRtoNL( char *str )
+static char *ConvertCRtoNL(char *str)
 {
-	for ( char *ch = str; *ch != 0; ch++ )
-		if ( *ch == '\r' )
+	for(char *ch = str; *ch != 0; ch++)
+		if(*ch == '\r')
 			*ch = '\n';
 	return str;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CHudMenu::CHudMenu( const char *pElementName ) :
-	CHudElement( pElementName ), BaseClass(NULL, "HudMenu")
+CHudMenu::CHudMenu(const char *pElementName) : CHudElement(pElementName), BaseClass(NULL, "HudMenu")
 {
 	m_nSelectedItem = -1;
 
 	vgui::Panel *pParent = g_pClientMode->GetViewport();
-	SetParent( pParent );
-	
-	SetHiddenBits( HIDEHUD_MISCSTATUS );
+	SetParent(pParent);
+
+	SetHiddenBits(HIDEHUD_MISCSTATUS);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CHudMenu::Init( void )
+void CHudMenu::Init(void)
 {
-	HOOK_HUD_MESSAGE( CHudMenu, ShowMenu );
+	HOOK_HUD_MESSAGE(CHudMenu, ShowMenu);
 
 	m_bMenuTakesInput = false;
 	m_bMenuDisplayed = false;
@@ -82,56 +80,54 @@ void CHudMenu::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CHudMenu::Reset( void )
+void CHudMenu::Reset(void)
 {
 	g_szPrelocalisedMenuString[0] = 0;
 	m_fWaitingForMore = false;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CHudMenu::IsMenuOpen( void )
+bool CHudMenu::IsMenuOpen(void)
 {
 	return m_bMenuDisplayed && m_bMenuTakesInput;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CHudMenu::VidInit( void )
-{
-}
+void CHudMenu::VidInit(void) {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMenu::OnThink()
 {
 	float flSelectionTimeout = MENU_SELECTION_TIMEOUT;
 
 	// If we've been open for a while without input, hide
-	if ( m_bMenuDisplayed && ( gpGlobals->curtime - m_flSelectionTime > flSelectionTimeout ) )
+	if(m_bMenuDisplayed && (gpGlobals->curtime - m_flSelectionTime > flSelectionTimeout))
 	{
 		m_bMenuDisplayed = false;
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CHudMenu::ShouldDraw( void )
+bool CHudMenu::ShouldDraw(void)
 {
 	bool draw = CHudElement::ShouldDraw() && m_bMenuDisplayed;
-	if ( !draw )
+	if(!draw)
 		return false;
 
 	// check for if menu is set to disappear
-	if ( m_flShutoffTime > 0 && m_flShutoffTime <= gpGlobals->realtime )
-	{  
+	if(m_flShutoffTime > 0 && m_flShutoffTime <= gpGlobals->realtime)
+	{
 		// times up, shutoff
 		m_bMenuDisplayed = false;
 		return false;
@@ -141,37 +137,36 @@ bool CHudMenu::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *text - 
-//			textlen - 
-//			font - 
-//			x - 
-//			y - 
+// Purpose:
+// Input  : *text -
+//			textlen -
+//			font -
+//			x -
+//			y -
 //-----------------------------------------------------------------------------
-void CHudMenu::PaintString( const wchar_t *text, int textlen, vgui::HFont& font, int x, int y )
+void CHudMenu::PaintString(const wchar_t *text, int textlen, vgui::HFont &font, int x, int y)
 {
-	vgui::surface()->DrawSetTextFont( font );
-	vgui::surface()->DrawSetTextPos( x, y );
+	vgui::surface()->DrawSetTextFont(font);
+	vgui::surface()->DrawSetTextPos(x, y);
 
-	for ( int ch = 0; ch < textlen; ch++ )
+	for(int ch = 0; ch < textlen; ch++)
 	{
-		vgui::surface()->DrawUnicodeChar( text[ch] );
+		vgui::surface()->DrawUnicodeChar(text[ch]);
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudMenu::Paint()
 {
-	if ( !m_bMenuDisplayed )
+	if(!m_bMenuDisplayed)
 		return;
 
 	// center it
 	int x = 20;
 
-	Color	menuColor = m_MenuColor;
+	Color menuColor = m_MenuColor;
 	Color itemColor = m_ItemColor;
 
 	int c = m_Processed.Count();
@@ -181,51 +176,48 @@ void CHudMenu::Paint()
 	int wide = m_nMaxPixels + border;
 	int tall = m_nHeight + border;
 
-	int y = ( ScreenHeight() - tall ) * 0.5f;
+	int y = (ScreenHeight() - tall) * 0.5f;
 
-	DrawBox( x - border/2, y - border/2, wide, tall, m_BoxColor, m_flSelectionAlphaOverride / 255.0f );
+	DrawBox(x - border / 2, y - border / 2, wide, tall, m_BoxColor, m_flSelectionAlphaOverride / 255.0f);
 
-	//DrawTexturedBox( x - border/2, y - border/2, wide, tall, m_BoxColor, m_flSelectionAlphaOverride / 255.0f );
+	// DrawTexturedBox( x - border/2, y - border/2, wide, tall, m_BoxColor, m_flSelectionAlphaOverride / 255.0f );
 
-	menuColor[3] = menuColor[3] * ( m_flSelectionAlphaOverride / 255.0f );
-	itemColor[3] = itemColor[3] * ( m_flSelectionAlphaOverride / 255.0f );
+	menuColor[3] = menuColor[3] * (m_flSelectionAlphaOverride / 255.0f);
+	itemColor[3] = itemColor[3] * (m_flSelectionAlphaOverride / 255.0f);
 
-	for ( int i = 0; i < c; i++ )
+	for(int i = 0; i < c; i++)
 	{
-		ProcessedLine *line = &m_Processed[ i ];
-		Assert( line );
+		ProcessedLine *line = &m_Processed[i];
+		Assert(line);
 
 		Color clr = line->menuitem != 0 ? itemColor : menuColor;
 
 		bool canblur = false;
-		if ( line->menuitem != 0 &&
-			m_nSelectedItem >= 0 && 
-			( line->menuitem == m_nSelectedItem ) )
+		if(line->menuitem != 0 && m_nSelectedItem >= 0 && (line->menuitem == m_nSelectedItem))
 		{
 			canblur = true;
 		}
-		
-		vgui::surface()->DrawSetTextColor( clr );
+
+		vgui::surface()->DrawSetTextColor(clr);
 
 		int drawLen = line->length;
-		if ( line->menuitem != 0 )
+		if(line->menuitem != 0)
 		{
 			drawLen *= m_flTextScan;
 		}
 
-		vgui::surface()->DrawSetTextFont( line->menuitem != 0 ? m_hItemFont : m_hTextFont );
+		vgui::surface()->DrawSetTextFont(line->menuitem != 0 ? m_hItemFont : m_hTextFont);
 
-		PaintString( &g_szMenuString[ line->startchar ], drawLen, 
-			line->menuitem != 0 ? m_hItemFont : m_hTextFont, x, y );
+		PaintString(&g_szMenuString[line->startchar], drawLen, line->menuitem != 0 ? m_hItemFont : m_hTextFont, x, y);
 
-		if ( canblur )
+		if(canblur)
 		{
 			// draw the overbright blur
-			for (float fl = m_flBlur; fl > 0.0f; fl -= 1.0f)
+			for(float fl = m_flBlur; fl > 0.0f; fl -= 1.0f)
 			{
-				if (fl >= 1.0f)
+				if(fl >= 1.0f)
 				{
-					PaintString( &g_szMenuString[ line->startchar ], drawLen, m_hItemFontPulsing, x, y );
+					PaintString(&g_szMenuString[line->startchar], drawLen, m_hItemFontPulsing, x, y);
 				}
 				else
 				{
@@ -233,7 +225,7 @@ void CHudMenu::Paint()
 					Color col = clr;
 					col[3] *= fl;
 					vgui::surface()->DrawSetTextColor(col);
-					PaintString( &g_szMenuString[ line->startchar ], drawLen, m_hItemFontPulsing, x, y );
+					PaintString(&g_szMenuString[line->startchar], drawLen, m_hItemFontPulsing, x, y);
 				}
 			}
 		}
@@ -245,14 +237,14 @@ void CHudMenu::Paint()
 //-----------------------------------------------------------------------------
 // Purpose: selects an item from the menu
 //-----------------------------------------------------------------------------
-void CHudMenu::SelectMenuItem( int menu_item )
+void CHudMenu::SelectMenuItem(int menu_item)
 {
 	// if menu_item is in a valid slot,  send a menuselect command to the server
-	if ( (menu_item > 0) && (m_bitsValidSlots & (1 << (menu_item-1))) )
+	if((menu_item > 0) && (m_bitsValidSlots & (1 << (menu_item - 1))))
 	{
 		char szbuf[32];
-		Q_snprintf( szbuf, sizeof( szbuf ), "menuselect %d\n", menu_item );
-		engine->ClientCmd( szbuf );
+		Q_snprintf(szbuf, sizeof(szbuf), "menuselect %d\n", menu_item);
+		engine->ClientCmd(szbuf);
 
 		m_nSelectedItem = menu_item;
 		// Pulse the selection
@@ -265,7 +257,7 @@ void CHudMenu::SelectMenuItem( int menu_item )
 	}
 }
 
-void CHudMenu::ProcessText( void )
+void CHudMenu::ProcessText(void)
 {
 	m_Processed.RemoveAll();
 	m_nMaxPixels = 0;
@@ -274,17 +266,16 @@ void CHudMenu::ProcessText( void )
 	int i = 0;
 	int startpos = i;
 	int menuitem = 0;
-	while ( i < MAX_MENU_STRING  )
+	while(i < MAX_MENU_STRING)
 	{
-		wchar_t ch = g_szMenuString[ i ];
-		if ( ch == 0 )
+		wchar_t ch = g_szMenuString[i];
+		if(ch == 0)
 			break;
 
-		if ( i == startpos && 
-			( ch == L'-' && g_szMenuString[ i + 1 ] == L'>' ) )
+		if(i == startpos && (ch == L'-' && g_szMenuString[i + 1] == L'>'))
 		{
 			// Special handling for menu item specifiers
-			swscanf( &g_szMenuString[ i + 2 ], L"%d", &menuitem );
+			swscanf(&g_szMenuString[i + 2], L"%d", &menuitem);
 			i += 2;
 			startpos += 2;
 
@@ -292,13 +283,13 @@ void CHudMenu::ProcessText( void )
 		}
 
 		// Skip to end of line
-		while ( i < MAX_MENU_STRING && g_szMenuString[i] != 0 && g_szMenuString[i] != L'\n' )
+		while(i < MAX_MENU_STRING && g_szMenuString[i] != 0 && g_szMenuString[i] != L'\n')
 		{
 			i++;
 		}
 
 		// Store off line
-		if ( ( i - startpos ) >= 1 )
+		if((i - startpos) >= 1)
 		{
 			ProcessedLine line;
 			line.menuitem = menuitem;
@@ -307,13 +298,13 @@ void CHudMenu::ProcessText( void )
 			line.pixels = 0;
 			line.height = 0;
 
-			m_Processed.AddToTail( line );
+			m_Processed.AddToTail(line);
 		}
 
 		menuitem = 0;
 
 		// Skip delimiter
-		if ( g_szMenuString[i] == '\n' )
+		if(g_szMenuString[i] == '\n')
 		{
 			i++;
 		}
@@ -321,7 +312,7 @@ void CHudMenu::ProcessText( void )
 	}
 
 	// Add final block
-	if ( i - startpos >= 1 )
+	if(i - startpos >= 1)
 	{
 		ProcessedLine line;
 		line.menuitem = menuitem;
@@ -330,27 +321,27 @@ void CHudMenu::ProcessText( void )
 		line.pixels = 0;
 		line.height = 0;
 
-		m_Processed.AddToTail( line );
+		m_Processed.AddToTail(line);
 	}
 
 	// Now compute pixels needed
 	int c = m_Processed.Count();
-	for ( i = 0; i < c; i++ )
+	for(i = 0; i < c; i++)
 	{
-		ProcessedLine *l = &m_Processed[ i ];
-		Assert( l );
+		ProcessedLine *l = &m_Processed[i];
+		Assert(l);
 
 		int pixels = 0;
 		vgui::HFont font = l->menuitem != 0 ? m_hItemFont : m_hTextFont;
 
-		for ( int ch = 0; ch < l->length; ch++ )
+		for(int ch = 0; ch < l->length; ch++)
 		{
-			pixels += vgui::surface()->GetCharacterWidth( font, g_szMenuString[ ch + l->startchar ] );
+			pixels += vgui::surface()->GetCharacterWidth(font, g_szMenuString[ch + l->startchar]);
 		}
 
 		l->pixels = pixels;
-		l->height = vgui::surface()->GetFontTall( font );
-		if ( pixels > m_nMaxPixels )
+		l->height = vgui::surface()->GetFontTall(font);
+		if(pixels > m_nMaxPixels)
 		{
 			m_nMaxPixels = pixels;
 		}
@@ -361,7 +352,7 @@ void CHudMenu::ProcessText( void )
 // Purpose: Local method to hide a menu, mirroring code found in
 //          MsgFunc_ShowMenu.
 //-----------------------------------------------------------------------------
-void CHudMenu::HideMenu( void )
+void CHudMenu::HideMenu(void)
 {
 	m_bMenuTakesInput = false;
 	m_flShutoffTime = gpGlobals->realtime + m_flOpenCloseTime;
@@ -373,25 +364,26 @@ void CHudMenu::HideMenu( void )
 //          MsgFunc_ShowMenu.
 //
 //   takes two values:
-//		menuName  : menu name string 
+//		menuName  : menu name string
 //		validSlots: a bitfield describing the valid keys
 //-----------------------------------------------------------------------------
-void CHudMenu::ShowMenu( const char * menuName, int validSlots )
+void CHudMenu::ShowMenu(const char *menuName, int validSlots)
 {
 	m_flShutoffTime = -1;
 	m_bitsValidSlots = validSlots;
 	m_fWaitingForMore = 0;
 
-	Q_strncpy( g_szPrelocalisedMenuString, menuName, sizeof( g_szPrelocalisedMenuString ) );
+	Q_strncpy(g_szPrelocalisedMenuString, menuName, sizeof(g_szPrelocalisedMenuString));
 
 	g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("MenuOpen");
 	m_nSelectedItem = -1;
 
 	// we have the whole string, so we can localise it now
 	char szMenuString[MAX_MENU_STRING];
-	Q_strncpy( szMenuString, ConvertCRtoNL( hudtextmessage->BufferedLocaliseTextString( g_szPrelocalisedMenuString ) ), sizeof( szMenuString ) );
-	g_pVGuiLocalize->ConvertANSIToUnicode( szMenuString, g_szMenuString, sizeof( g_szMenuString ) );
-	
+	Q_strncpy(szMenuString, ConvertCRtoNL(hudtextmessage->BufferedLocaliseTextString(g_szPrelocalisedMenuString)),
+			  sizeof(szMenuString));
+	g_pVGuiLocalize->ConvertANSIToUnicode(szMenuString, g_szMenuString, sizeof(g_szMenuString));
+
 	ProcessText();
 
 	m_bMenuDisplayed = true;
@@ -401,9 +393,9 @@ void CHudMenu::ShowMenu( const char * menuName, int validSlots )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CHudMenu::ShowMenu_KeyValueItems( KeyValues *pKV )
+void CHudMenu::ShowMenu_KeyValueItems(KeyValues *pKV)
 {
 	m_flShutoffTime = -1;
 	m_fWaitingForMore = 0;
@@ -411,22 +403,22 @@ void CHudMenu::ShowMenu_KeyValueItems( KeyValues *pKV )
 
 	g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("MenuOpen");
 	m_nSelectedItem = -1;
-	
+
 	g_szMenuString[0] = '\0';
 	wchar_t *pWritePosition = g_szMenuString;
-	int		nRemaining = sizeof( g_szMenuString ) / sizeof( wchar_t );
-	int		nCount;
+	int nRemaining = sizeof(g_szMenuString) / sizeof(wchar_t);
+	int nCount;
 
 	int i = 0;
-	for ( KeyValues *item = pKV->GetFirstSubKey(); item != NULL; item = item->GetNextKey() )
+	for(KeyValues *item = pKV->GetFirstSubKey(); item != NULL; item = item->GetNextKey())
 	{
 		// Set this slot valid
-		m_bitsValidSlots |= (1<<i);
+		m_bitsValidSlots |= (1 << i);
 
 		const char *pszItem = item->GetName();
-		const wchar_t *wLocalizedItem = g_pVGuiLocalize->Find( pszItem );
+		const wchar_t *wLocalizedItem = g_pVGuiLocalize->Find(pszItem);
 
-		nCount = _snwprintf( pWritePosition, nRemaining, L"%d. %ls\n", i+1, wLocalizedItem );
+		nCount = _snwprintf(pWritePosition, nRemaining, L"%d. %ls\n", i + 1, wLocalizedItem);
 		nRemaining -= nCount;
 		pWritePosition += nCount;
 
@@ -434,9 +426,9 @@ void CHudMenu::ShowMenu_KeyValueItems( KeyValues *pKV )
 	}
 
 	// put a cancel on the end
-	m_bitsValidSlots |= (1<<9);
+	m_bitsValidSlots |= (1 << 9);
 
-	nCount = _snwprintf( pWritePosition, nRemaining, L"0. %ls\n", g_pVGuiLocalize->Find( "#Cancel" ) );
+	nCount = _snwprintf(pWritePosition, nRemaining, L"0. %ls\n", g_pVGuiLocalize->Find("#Cancel"));
 	nRemaining -= nCount;
 	pWritePosition += nCount;
 
@@ -453,50 +445,51 @@ void CHudMenu::ShowMenu_KeyValueItems( KeyValues *pKV )
 //   takes four values:
 //		short: a bitfield of keys that are valid input
 //		char : the duration, in seconds, the menu should stay up. -1 means is stays until something is chosen.
-//		byte : a boolean, TRUE if there is more string yet to be received before displaying the menu, false if it's the last string
-//		string: menu string to display
+//		byte : a boolean, TRUE if there is more string yet to be received before displaying the menu, false if it's the
+//last string 		string: menu string to display
 //  if this message is never received, then scores will simply be the combined totals of the players.
 //-----------------------------------------------------------------------------
-void CHudMenu::MsgFunc_ShowMenu( bf_read &msg)
+void CHudMenu::MsgFunc_ShowMenu(bf_read &msg)
 {
 	m_bitsValidSlots = (short)msg.ReadWord();
 	int DisplayTime = msg.ReadChar();
 	int NeedMore = msg.ReadByte();
 
-	if ( DisplayTime > 0 )
+	if(DisplayTime > 0)
 	{
 		m_flShutoffTime = m_flOpenCloseTime + DisplayTime + gpGlobals->realtime;
-
 	}
 	else
 	{
 		m_flShutoffTime = -1;
 	}
 
-	if ( m_bitsValidSlots )
+	if(m_bitsValidSlots)
 	{
 		char szString[2048];
-		msg.ReadString( szString, sizeof(szString) );
+		msg.ReadString(szString, sizeof(szString));
 
-		if ( !m_fWaitingForMore ) // this is the start of a new menu
+		if(!m_fWaitingForMore) // this is the start of a new menu
 		{
-			Q_strncpy( g_szPrelocalisedMenuString, szString, sizeof( g_szPrelocalisedMenuString ) );
+			Q_strncpy(g_szPrelocalisedMenuString, szString, sizeof(g_szPrelocalisedMenuString));
 		}
 		else
-		{  // append to the current menu string
-			Q_strncat( g_szPrelocalisedMenuString, szString, sizeof( g_szPrelocalisedMenuString ), COPY_ALL_CHARACTERS );
+		{ // append to the current menu string
+			Q_strncat(g_szPrelocalisedMenuString, szString, sizeof(g_szPrelocalisedMenuString), COPY_ALL_CHARACTERS);
 		}
 
-		if ( !NeedMore )
-		{  
+		if(!NeedMore)
+		{
 			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("MenuOpen");
 			m_nSelectedItem = -1;
-			
+
 			// we have the whole string, so we can localise it now
 			char szMenuString[MAX_MENU_STRING];
-			Q_strncpy( szMenuString, ConvertCRtoNL( hudtextmessage->BufferedLocaliseTextString( g_szPrelocalisedMenuString ) ), sizeof( szMenuString ) );
-			g_pVGuiLocalize->ConvertANSIToUnicode( szMenuString, g_szMenuString, sizeof( g_szMenuString ) );
-			
+			Q_strncpy(szMenuString,
+					  ConvertCRtoNL(hudtextmessage->BufferedLocaliseTextString(g_szPrelocalisedMenuString)),
+					  sizeof(szMenuString));
+			g_pVGuiLocalize->ConvertANSIToUnicode(szMenuString, g_szMenuString, sizeof(g_szMenuString));
+
 			ProcessText();
 		}
 
@@ -520,7 +513,7 @@ void CHudMenu::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 
-	SetPaintBackgroundEnabled( false );
+	SetPaintBackgroundEnabled(false);
 
 	// set our size
 	int screenWide, screenTall;

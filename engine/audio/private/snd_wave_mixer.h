@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -18,7 +18,6 @@
 class IWaveData;
 class CAudioMixer;
 
-CAudioMixer *CreateWaveMixer( IWaveData *data, int format, int channels, int bits, int initialStreamPosition );
-
+CAudioMixer *CreateWaveMixer(IWaveData *data, int format, int channels, int bits, int initialStreamPosition);
 
 #endif // SND_WAVE_MIXER_H

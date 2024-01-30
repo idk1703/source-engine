@@ -15,12 +15,13 @@
 
 class CTFPlayerResource : public CPlayerResource
 {
-	DECLARE_CLASS( CTFPlayerResource, CPlayerResource );
+	DECLARE_CLASS(CTFPlayerResource, CPlayerResource);
+
 public:
 	DECLARE_SERVERCLASS();
 
-	virtual void Spawn( void );
-	virtual void UpdatePlayerData( void );
+	virtual void Spawn(void);
+	virtual void UpdatePlayerData(void);
 
 public:
 };

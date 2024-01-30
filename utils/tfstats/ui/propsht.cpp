@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -29,24 +29,26 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-
 class CAboutDlg : public CPropertyPage
 {
 public:
 	CAboutDlg();
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CAboutDlg)
-	enum { IDD = IDD_ABOUTBOX };
+	enum
+	{
+		IDD = IDD_ABOUTBOX
+	};
 	//}}AFX_DATA
 
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CAboutDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
+protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
+													 //}}AFX_VIRTUAL
 
-// Implementation
+	// Implementation
 protected:
 	//{{AFX_MSG(CAboutDlg)
 	//}}AFX_MSG
@@ -60,7 +62,7 @@ CAboutDlg::CAboutDlg() : CPropertyPage(CAboutDlg::IDD)
 	m_psp.dwFlags &= ~PSP_HASHELP;
 }
 
-void CAboutDlg::DoDataExchange(CDataExchange* pDX)
+void CAboutDlg::DoDataExchange(CDataExchange *pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CAboutDlg)
@@ -69,7 +71,7 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CPropertyPage)
 	//{{AFX_MSG_MAP(CAboutDlg)
-		// No message handlers
+	// No message handlers
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -78,40 +80,37 @@ END_MESSAGE_MAP()
 
 IMPLEMENT_DYNAMIC(CAllControlsSheet, CPropertySheet)
 
-CAllControlsSheet::CAllControlsSheet(UINT nIDCaption, CWnd* pParentWnd, UINT iSelectPage)
-	:CPropertySheet(nIDCaption, pParentWnd, iSelectPage)
+CAllControlsSheet::CAllControlsSheet(UINT nIDCaption, CWnd *pParentWnd, UINT iSelectPage)
+	: CPropertySheet(nIDCaption, pParentWnd, iSelectPage)
 {
 	AddControlPages();
-	
-	//CButton* okbut=(CButton*)this->GetDlgItem(IDC_OK);
-	// TODO :: Add the pages for the rest of the controls here.
+
+	// CButton* okbut=(CButton*)this->GetDlgItem(IDC_OK);
+	//  TODO :: Add the pages for the rest of the controls here.
 }
 
-CAllControlsSheet::CAllControlsSheet(LPCTSTR pszCaption, CWnd* pParentWnd, UINT iSelectPage)
-	:CPropertySheet(pszCaption, pParentWnd, iSelectPage)
+CAllControlsSheet::CAllControlsSheet(LPCTSTR pszCaption, CWnd *pParentWnd, UINT iSelectPage)
+	: CPropertySheet(pszCaption, pParentWnd, iSelectPage)
 {
 	AddControlPages();
-	//CButton* okbut=(CButton*)this->GetDlgItem(IDC_OK);
+	// CButton* okbut=(CButton*)this->GetDlgItem(IDC_OK);
 }
 
-CAllControlsSheet::~CAllControlsSheet()
-{
-}
+CAllControlsSheet::~CAllControlsSheet() {}
 
 void CAllControlsSheet::AddControlPages()
 {
-	m_psh.dwFlags|=PSH_NOAPPLYNOW;
+	m_psh.dwFlags |= PSH_NOAPPLYNOW;
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 	m_psh.dwFlags |= PSH_USEHICON;
-	m_psh.dwFlags &= ~PSH_HASHELP;  // Lose the Help button
-	//m_psh.dwFlags |= PSH_WIZARD;
+	m_psh.dwFlags &= ~PSH_HASHELP; // Lose the Help button
+	// m_psh.dwFlags |= PSH_WIZARD;
 	m_psh.hIcon = m_hIcon;
 
 	AddPage(&m_LogPage);
 	AddPage(&m_SwitchPage);
 	AddPage(&m_FolderPage);
 	AddPage(new CAboutDlg);
-
 }
 
 BEGIN_MESSAGE_MAP(CAllControlsSheet, CPropertySheet)
@@ -132,12 +131,12 @@ BOOL CAllControlsSheet::OnInitDialog()
 	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
 	ASSERT(IDM_ABOUTBOX < 0xF000);
 
-	CMenu* pSysMenu = GetSystemMenu(FALSE);
-	if (pSysMenu != NULL)
+	CMenu *pSysMenu = GetSystemMenu(FALSE);
+	if(pSysMenu != NULL)
 	{
 		CString strAboutMenu;
 		strAboutMenu.LoadString(IDS_ABOUTBOX);
-		if (!strAboutMenu.IsEmpty())
+		if(!strAboutMenu.IsEmpty())
 		{
 			pSysMenu->AppendMenu(MF_SEPARATOR);
 			pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
@@ -147,7 +146,7 @@ BOOL CAllControlsSheet::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);
 	SetIcon(m_hIcon, FALSE);
 
-	BOOL result= CPropertySheet::OnInitDialog();
+	BOOL result = CPropertySheet::OnInitDialog();
 
 	this->SetActivePage(1);
 	this->SetActivePage(2);
@@ -155,23 +154,23 @@ BOOL CAllControlsSheet::OnInitDialog()
 	this->SetActivePage(0);
 
 	return result;
-
 }
 HCURSOR CAllControlsSheet::OnQueryDragIcon()
 {
-	return (HCURSOR) m_hIcon;
+	return (HCURSOR)m_hIcon;
 }
 
-BOOL CAllControlsSheet::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID, CCreateContext* pContext)
+BOOL CAllControlsSheet::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT &rect,
+							   CWnd *pParentWnd, UINT nID, CCreateContext *pContext)
 {
-	//removing the default DS_CONTEXT_HELP style
-//  dwStyle= WS_SYSMENU | WS_POPUP | WS_CAPTION | DS_MODALFRAME | WS_VISIBLE;
+	// removing the default DS_CONTEXT_HELP style
+	//  dwStyle= WS_SYSMENU | WS_POPUP | WS_CAPTION | DS_MODALFRAME | WS_VISIBLE;
 	return CWnd::Create(lpszClassName, lpszWindowName, dwStyle, rect, pParentWnd, nID, pContext);
 }
 
 void CAllControlsSheet::OnSysCommand(UINT nID, LPARAM lParam)
 {
-	if ((nID & 0xFFF0) == IDM_ABOUTBOX)
+	if((nID & 0xFFF0) == IDM_ABOUTBOX)
 	{
 		CAboutDlg dlgAbout;
 		dlgAbout.DoModal();

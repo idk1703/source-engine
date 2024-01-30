@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,24 +10,22 @@
 #pragma once
 #endif
 
-
 #include "c_basefourwheelvehicle.h"
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_VehicleTeleportStation : public C_BaseTFFourWheelVehicle
 {
-	DECLARE_CLASS( C_VehicleTeleportStation, C_BaseTFFourWheelVehicle );
+	DECLARE_CLASS(C_VehicleTeleportStation, C_BaseTFFourWheelVehicle);
+
 public:
 	DECLARE_CLIENTCLASS();
 
 	C_VehicleTeleportStation();
 
 private:
-	C_VehicleTeleportStation( const C_VehicleTeleportStation & );		// not defined, not accessible
+	C_VehicleTeleportStation(const C_VehicleTeleportStation &); // not defined, not accessible
 };
-
 
 #endif // C_VEHICLE_TELEPORT_STATION_H

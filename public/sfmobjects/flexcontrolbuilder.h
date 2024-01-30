@@ -10,11 +10,9 @@
 #pragma once
 #endif
 
-
 #include "movieobjects/timeutils.h"
 #include "tier1/utlvector.h"
 #include "movieobjects/dmelog.h"
-
 
 //-----------------------------------------------------------------------------
 // Forward declarations
@@ -28,7 +26,6 @@ class CDmeChannel;
 class CDmeBalanceToStereoCalculatorOperator;
 class CDmeGlobalFlexControllerOperator;
 
-
 //-----------------------------------------------------------------------------
 //
 // Utility class for dealing with the complex task of building flex controls
@@ -38,8 +35,8 @@ class CFlexControlBuilder
 {
 public:
 	// Main entry point for creating flex animation set controls
-	void CreateAnimationSetControls( CDmeFilmClip *pMovie, CDmeAnimationSet *pAnimationSet, 
-		CDmeGameModel *pGameModel, CDmeFilmClip *pSourceClip, CDmeChannelsClip *pDestClip, bool bUseExistingLogs );
+	void CreateAnimationSetControls(CDmeFilmClip *pMovie, CDmeAnimationSet *pAnimationSet, CDmeGameModel *pGameModel,
+									CDmeFilmClip *pSourceClip, CDmeChannelsClip *pDestClip, bool bUseExistingLogs);
 
 private:
 	enum ControlField_t
@@ -90,90 +87,93 @@ private:
 	};
 
 	// Removes a channel from the channels clip referring to it.
-	void RemoveChannelFromClips( CDmeChannel *pChannel );
+	void RemoveChannelFromClips(CDmeChannel *pChannel);
 
 	// Removes a stereo operator from the animation set referring to it
-	void RemoveStereoOpFromSet( CDmeBalanceToStereoCalculatorOperator *pChannel );
+	void RemoveStereoOpFromSet(CDmeBalanceToStereoCalculatorOperator *pChannel);
 
 	// Builds the list of flex controls (outputs) in the current game model
-	void BuildDesiredFlexControlList( CDmeGameModel *pGameModel );
+	void BuildDesiredFlexControlList(CDmeGameModel *pGameModel);
 
 	// This builds a list of the desired input controls we need to have controls for
 	// by the time we're all done with this enormous process.
-	void BuildDesiredControlList( CDmeGameModel *pGameModel );
+	void BuildDesiredControlList(CDmeGameModel *pGameModel);
 
 	// finds controls whose channels don't point to anything anymore, and deletes both the channels and the control
-	void RemoveUnusedControlsAndChannels( CDmeAnimationSet *pAnimationSet, CDmeChannelsClip *pChannelsClip );
+	void RemoveUnusedControlsAndChannels(CDmeAnimationSet *pAnimationSet, CDmeChannelsClip *pChannelsClip);
 
 	// I'll bet you can guess what this does
-	void RemoveUnusedExistingFlexControllers( CDmeGameModel *pGameModel );
+	void RemoveUnusedExistingFlexControllers(CDmeGameModel *pGameModel);
 
 	// Fixup list of existing flex controller logs
 	// - reattach flex controls that were removed from the gamemodel's list
-	void FixupExistingFlexControlLogList( CDmeFilmClip *pCurrentClip, CDmeGameModel *pGameModel );
+	void FixupExistingFlexControlLogList(CDmeFilmClip *pCurrentClip, CDmeGameModel *pGameModel);
 
 	// Converts existing logs to balance/value if necessary while building the list
 	// Also deletes existing infrastructure (balance ops, channels, flex controller ops).
-	void BuildExistingFlexControlLogList( CDmeFilmClip *pCurrentClip, CDmeGameModel *pGameModel );
+	void BuildExistingFlexControlLogList(CDmeFilmClip *pCurrentClip, CDmeGameModel *pGameModel);
 
 	// Finds a desired flex controller index in the m_FlexControllerInfo array
-	int FindDesiredFlexController( const char *pFlexControllerName ) const;
+	int FindDesiredFlexController(const char *pFlexControllerName) const;
 
 	// Blows away the various elements trying to control a flex controller op
-	void CleanupExistingFlexController( CDmeGameModel *pGameModel, CDmeGlobalFlexControllerOperator *pOp );
+	void CleanupExistingFlexController(CDmeGameModel *pGameModel, CDmeGlobalFlexControllerOperator *pOp);
 
 	// Finds a channels clip containing a particular channel
-	CDmeChannelsClip* FindChannelsClipContainingChannel( CDmeFilmClip *pClip, CDmeChannel *pSearch );
+	CDmeChannelsClip *FindChannelsClipContainingChannel(CDmeFilmClip *pClip, CDmeChannel *pSearch);
 
 	// Returns an existing mono log
-	void GetExistingMonoLog( ExistingLogInfo_t *pLog, CDmeFilmClip *pClip, CDmeGlobalFlexControllerOperator *pMonoOp );
+	void GetExistingMonoLog(ExistingLogInfo_t *pLog, CDmeFilmClip *pClip, CDmeGlobalFlexControllerOperator *pMonoOp);
 
 	// Returns an existing stereo log, performing conversion if necessary
-	void GetExistingStereoLog( ExistingLogInfo_t *pLogs, CDmeFilmClip *pClip,
-		CDmeGlobalFlexControllerOperator *pRightOp, CDmeGlobalFlexControllerOperator *pLeftOp );
+	void GetExistingStereoLog(ExistingLogInfo_t *pLogs, CDmeFilmClip *pClip, CDmeGlobalFlexControllerOperator *pRightOp,
+							  CDmeGlobalFlexControllerOperator *pLeftOp);
 
 	// Returns an existing value/balance log
-	void GetExistingVBLog( ExistingLogInfo_t *pLogs, CDmeFilmClip *pClip, CDmeBalanceToStereoCalculatorOperator *pStereoOp );
+	void GetExistingVBLog(ExistingLogInfo_t *pLogs, CDmeFilmClip *pClip,
+						  CDmeBalanceToStereoCalculatorOperator *pStereoOp);
 
 	// Converts an existing left/right log into a value/balance log
-	void ConvertExistingLRLogs( ExistingLogInfo_t *pLogs, CDmeFilmClip *pClip, CDmeChannel *pLeftChannel, CDmeChannel *pRightChannel );
+	void ConvertExistingLRLogs(ExistingLogInfo_t *pLogs, CDmeFilmClip *pClip, CDmeChannel *pLeftChannel,
+							   CDmeChannel *pRightChannel);
 
 	// Computes a global offset and scale to convert from log time to global time
-	void ComputeChannelTimeTransform( DmeTime_t *pOffset, double *pScale, CDmeChannelsClip *pChannelsClip );
-	bool ComputeChannelTimeTransform( DmeTime_t *pOffset, double *pScale, CDmeFilmClip* pClip, CDmeChannel* pChannel );
+	void ComputeChannelTimeTransform(DmeTime_t *pOffset, double *pScale, CDmeChannelsClip *pChannelsClip);
+	bool ComputeChannelTimeTransform(DmeTime_t *pOffset, double *pScale, CDmeFilmClip *pClip, CDmeChannel *pChannel);
 
 	// Initializes the fields of a flex control
-	void InitializeFlexControl( ControlInfo_t &info );
+	void InitializeFlexControl(ControlInfo_t &info);
 
 	// Creates all controls for flexes
-	void CreateFlexControls( CDmeAnimationSet *pAnimationSet );
+	void CreateFlexControls(CDmeAnimationSet *pAnimationSet);
 
 	// Build the infrastructure of the ops that connect that control to the dmegamemodel
-	void AttachControlsToGameModel( CDmeAnimationSet *pAnimationSet, CDmeGameModel *pGameModel, CDmeChannelsClip *pChannelsClip );
+	void AttachControlsToGameModel(CDmeAnimationSet *pAnimationSet, CDmeGameModel *pGameModel,
+								   CDmeChannelsClip *pChannelsClip);
 
 	// Connects a mono control to a single flex controller op
-	void BuildFlexControllerOps( CDmeGameModel *pGameModel, CDmeChannelsClip *pChannelsClip, ControlInfo_t &info, ControlField_t field );
+	void BuildFlexControllerOps(CDmeGameModel *pGameModel, CDmeChannelsClip *pChannelsClip, ControlInfo_t &info,
+								ControlField_t field);
 
 	// Connects a stereo control to a two flex controller ops
-	void BuildStereoFlexControllerOps( CDmeAnimationSet *pAnimationSet,	CDmeGameModel *pGameModel, CDmeChannelsClip *pChannelsClip, ControlInfo_t &info );
+	void BuildStereoFlexControllerOps(CDmeAnimationSet *pAnimationSet, CDmeGameModel *pGameModel,
+									  CDmeChannelsClip *pChannelsClip, ControlInfo_t &info);
 
 	// Attaches existing logs and sets default values for logs
-	void SetupLogs( CDmeChannelsClip *pChannelsClip, bool bUseExistingLogs );
+	void SetupLogs(CDmeChannelsClip *pChannelsClip, bool bUseExistingLogs);
 
 	// Destination flex controllers
-	CUtlVector< FlexControllerInfo_t > m_FlexControllerInfo;
+	CUtlVector<FlexControllerInfo_t> m_FlexControllerInfo;
 
 	// Destination controls
-	CUtlVector< ControlInfo_t > m_ControlInfo;
+	CUtlVector<ControlInfo_t> m_ControlInfo;
 
 	CDmeFilmClip *m_pMovie;
 };
-
 
 //-----------------------------------------------------------------------------
 // Initialize default global flex controller
 //-----------------------------------------------------------------------------
 void SetupDefaultFlexController();
-
 
 #endif // FLEXCONTROLBUILDER_H

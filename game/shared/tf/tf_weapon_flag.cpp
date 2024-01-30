@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -21,16 +21,16 @@
 //
 // Weapon Flag tables.
 //
-IMPLEMENT_NETWORKCLASS_ALIASED( TFFlag, DT_TFWeaponFlag )
+IMPLEMENT_NETWORKCLASS_ALIASED(TFFlag, DT_TFWeaponFlag)
 
-BEGIN_NETWORK_TABLE( CTFFlag, DT_TFWeaponFlag )
+BEGIN_NETWORK_TABLE(CTFFlag, DT_TFWeaponFlag)
 END_NETWORK_TABLE()
 
-BEGIN_PREDICTION_DATA( CTFFlag )
+BEGIN_PREDICTION_DATA(CTFFlag)
 END_PREDICTION_DATA()
 
-LINK_ENTITY_TO_CLASS( tf_weapon_flag, CTFFlag );
-PRECACHE_WEAPON_REGISTER( tf_weapon_flag );
+LINK_ENTITY_TO_CLASS(tf_weapon_flag, CTFFlag);
+PRECACHE_WEAPON_REGISTER(tf_weapon_flag);
 
 //=============================================================================
 //
@@ -40,20 +40,17 @@ PRECACHE_WEAPON_REGISTER( tf_weapon_flag );
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFFlag::CTFFlag()
-{
-
-}
+CTFFlag::CTFFlag() {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CTFFlag::Deploy( void )
+bool CTFFlag::Deploy(void)
 {
-	if ( BaseClass::Deploy() )
+	if(BaseClass::Deploy())
 	{
 #ifdef GAME_DLL
-        TFTeamMgr()->PlayerCenterPrint( ToTFPlayer( GetOwner() ), "#TF_Flag_AltFireToDrop" );
+		TFTeamMgr()->PlayerCenterPrint(ToTFPlayer(GetOwner()), "#TF_Flag_AltFireToDrop");
 #endif
 		return true;
 	}
@@ -62,21 +59,20 @@ bool CTFFlag::Deploy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFFlag::SecondaryAttack( void )
+void CTFFlag::SecondaryAttack(void)
 {
-	CTFPlayer *pPlayer = ToTFPlayer( GetOwner() );
+	CTFPlayer *pPlayer = ToTFPlayer(GetOwner());
 
-	if ( !pPlayer )
+	if(!pPlayer)
 		return;
 
-	if ( !CanAttack() )
+	if(!CanAttack())
 		return;
 
 #ifdef GAME_DLL
 	pPlayer->DropCurrentWeapon();
 #endif
-	pPlayer->SwitchToNextBestWeapon( this );
+	pPlayer->SwitchToNextBestWeapon(this);
 }
-

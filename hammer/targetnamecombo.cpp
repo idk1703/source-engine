@@ -19,9 +19,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
-#pragma warning( disable : 4355 )
-
+#pragma warning(disable : 4355)
 
 BEGIN_MESSAGE_MAP(CTargetNameComboBox, CFilteredComboBox)
 	//{{AFX_MSG_MAP(CTargetNameComboBox)
@@ -29,15 +27,13 @@ BEGIN_MESSAGE_MAP(CTargetNameComboBox, CFilteredComboBox)
 END_MESSAGE_MAP()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CTargetNameComboBox::CTargetNameComboBox( CFilteredComboBox::ICallbacks *pPassThru ) : 
-	BaseClass( this )
+CTargetNameComboBox::CTargetNameComboBox(CFilteredComboBox::ICallbacks *pPassThru) : BaseClass(this)
 {
 	m_pEntityList = NULL;
 	m_pPassThru = pPassThru;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Frees allocated memory.
@@ -47,14 +43,13 @@ CTargetNameComboBox::~CTargetNameComboBox(void)
 	FreeSubLists();
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTargetNameComboBox::FreeSubLists(void)
 {
 	POSITION pos = m_SubLists.GetHeadPosition();
-	while (pos != NULL)
+	while(pos != NULL)
 	{
 		CMapEntityList *pList = m_SubLists.GetNext(pos);
 		delete pList;
@@ -63,17 +58,16 @@ void CTargetNameComboBox::FreeSubLists(void)
 	m_SubLists.RemoveAll();
 }
 
-
 void CTargetNameComboBox::CreateFonts()
 {
 	//
 	// Create a normal and bold font.
 	//
-	if (!m_BoldFont.m_hObject)
+	if(!m_BoldFont.m_hObject)
 	{
 		CFont &nf = GetNormalFont();
-		
-		if ( nf.m_hObject )
+
+		if(nf.m_hObject)
 		{
 			LOGFONT LogFont;
 			nf.GetLogFont(&LogFont);
@@ -83,14 +77,13 @@ void CTargetNameComboBox::CreateFonts()
 	}
 }
 
-
-CTargetNameComboBox* CTargetNameComboBox::Create( CFilteredComboBox::ICallbacks *pCallbacks, DWORD dwStyle, RECT rect, CWnd *pParentWnd, UINT nID )
+CTargetNameComboBox *CTargetNameComboBox::Create(CFilteredComboBox::ICallbacks *pCallbacks, DWORD dwStyle, RECT rect,
+												 CWnd *pParentWnd, UINT nID)
 {
-	CTargetNameComboBox *pRet = new CTargetNameComboBox( pCallbacks );
-	pRet->BaseClass::Create( dwStyle, rect, pParentWnd, nID );
+	CTargetNameComboBox *pRet = new CTargetNameComboBox(pCallbacks);
+	pRet->BaseClass::Create(dwStyle, rect, pParentWnd, nID);
 	return pRet;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Attaches an entity list to the combo box. This list will be used
@@ -101,8 +94,8 @@ CTargetNameComboBox* CTargetNameComboBox::Create( CFilteredComboBox::ICallbacks 
 void CTargetNameComboBox::SetEntityList(const CMapEntityList *pEntityList)
 {
 	// We want all notifications, even if the current text doesn't match an exact entity name.
-	SetOnlyProvideSuggestions( false );
-	
+	SetOnlyProvideSuggestions(false);
+
 	// Setup the list.
 	m_pEntityList = pEntityList;
 
@@ -110,26 +103,26 @@ void CTargetNameComboBox::SetEntityList(const CMapEntityList *pEntityList)
 
 	m_EntityLists.RemoveAll();
 
-	if (m_pEntityList != NULL)
+	if(m_pEntityList != NULL)
 	{
-		FOR_EACH_OBJ( *m_pEntityList, pos )
+		FOR_EACH_OBJ(*m_pEntityList, pos)
 		{
 			CMapEntity *pEntity = m_pEntityList->Element(pos);
 			const char *pszTargetName = pEntity->GetKeyValue("targetname");
-			if (pszTargetName != NULL)
+			if(pszTargetName != NULL)
 			{
 				//
 				// If the targetname is not in the combo box, add it to the combo as the
 				// first entry in an entity list. The list is necessary because there
 				// may be several entities in the map with the same targetname.
 				//
-				int nIndex = m_EntityLists.Find( pszTargetName );
-				if (nIndex == m_EntityLists.InvalidIndex())
+				int nIndex = m_EntityLists.Find(pszTargetName);
+				if(nIndex == m_EntityLists.InvalidIndex())
 				{
 					CMapEntityList *pList = new CMapEntityList;
 					pList->AddToTail(pEntity);
 
-					m_EntityLists.Insert( pszTargetName, pList );
+					m_EntityLists.Insert(pszTargetName, pList);
 
 					//
 					// Keep track of all the sub lists so we can delete them later.
@@ -150,50 +143,48 @@ void CTargetNameComboBox::SetEntityList(const CMapEntityList *pEntityList)
 
 	// Setup the suggestions.
 	CUtlVector<CString> suggestions;
-	for ( int i=m_EntityLists.First(); i != m_EntityLists.InvalidIndex(); i=m_EntityLists.Next( i ) )
+	for(int i = m_EntityLists.First(); i != m_EntityLists.InvalidIndex(); i = m_EntityLists.Next(i))
 	{
-		suggestions.AddToTail( m_EntityLists.GetElementName( i ) );
+		suggestions.AddToTail(m_EntityLists.GetElementName(i));
 	}
-	SetSuggestions( suggestions );
+	SetSuggestions(suggestions);
 }
 
-
-CMapEntityList* CTargetNameComboBox::GetSubEntityList( const char *pName )
+CMapEntityList *CTargetNameComboBox::GetSubEntityList(const char *pName)
 {
-	int testIndex = m_EntityLists.Find( pName );
-	if ( testIndex != m_EntityLists.InvalidIndex() )
+	int testIndex = m_EntityLists.Find(pName);
+	if(testIndex != m_EntityLists.InvalidIndex())
 	{
 		return m_EntityLists[testIndex];
 	}
-	
-	return NULL;	
+
+	return NULL;
 }
 
-
-void CTargetNameComboBox::OnTextChanged( const char *pText )
+void CTargetNameComboBox::OnTextChanged(const char *pText)
 {
 	// Make sure our fonts are created.
 	CreateFonts();
-	
+
 	// Update the fonts.
 	int nCount = 0;
-	CMapEntityList *pList = GetSubEntityList( pText );
-	if ( pList )
+	CMapEntityList *pList = GetSubEntityList(pText);
+	if(pList)
 		nCount = pList->Count();
-	
+
 	// Figure out the font and color that we want.
 	CFont *pWantedFont = &m_BoldFont;
-	if ( (nCount == 0) || (nCount == 1) )
+	if((nCount == 0) || (nCount == 1))
 		pWantedFont = &GetNormalFont();
 
-	COLORREF clrWanted = RGB(255,0,0);
-	if ( nCount > 0 )
-		clrWanted = RGB(0,0,0);
+	COLORREF clrWanted = RGB(255, 0, 0);
+	if(nCount > 0)
+		clrWanted = RGB(0, 0, 0);
 
-	SetEditControlFont( *pWantedFont );
-	SetEditControlTextColor( clrWanted );
+	SetEditControlFont(*pWantedFont);
+	SetEditControlTextColor(clrWanted);
 
 	// Pass it through to the owner if they want notification.
-	if ( m_pPassThru )
-		m_pPassThru->OnTextChanged( pText );	
+	if(m_pPassThru)
+		m_pPassThru->OnTextChanged(pText);
 }

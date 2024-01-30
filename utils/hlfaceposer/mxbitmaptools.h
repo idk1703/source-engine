@@ -1,10 +1,10 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
-#if !defined( MXBITMAPTOOLS_H )
+#if !defined(MXBITMAPTOOLS_H)
 #define MXBITMAPTOOLS_H
 #ifdef _WIN32
 #pragma once
@@ -20,16 +20,16 @@ struct mxbitmapdata_t
 		height = 0;
 	}
 
-	bool		valid;
-	void		*image;
-	int			width;
-	int			height;
+	bool valid;
+	void *image;
+	int width;
+	int height;
 };
 
 class mxWindow;
 
-bool LoadBitmapFromFile( const char *relative, mxbitmapdata_t& bitmap );
-void DrawBitmapToWindow( mxWindow *wnd, int x, int y, int w, int h, mxbitmapdata_t& bitmap );
-void DrawBitmapToDC( void *hdc, int x, int y, int w, int h, mxbitmapdata_t& bitmap );
+bool LoadBitmapFromFile(const char *relative, mxbitmapdata_t &bitmap);
+void DrawBitmapToWindow(mxWindow *wnd, int x, int y, int w, int h, mxbitmapdata_t &bitmap);
+void DrawBitmapToDC(void *hdc, int x, int y, int w, int h, mxbitmapdata_t &bitmap);
 
 #endif // MXBITMAPTOOLS_H

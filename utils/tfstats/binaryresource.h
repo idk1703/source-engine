@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -24,25 +24,23 @@ class CBinaryResource
 private:
 	std::string filename;
 	size_t numBytes;
-	unsigned char* pData;
+	unsigned char *pData;
+
 public:
-	CBinaryResource(char* name, size_t bytes,unsigned char* data)
-	:filename(name),numBytes(bytes),pData(data)
-	{}
-	
+	CBinaryResource(char *name, size_t bytes, unsigned char *data) : filename(name), numBytes(bytes), pData(data) {}
+
 	bool writeOut()
 	{
-		FILE* f=fopen(filename.c_str(),"wb");
-		if (!f)
+		FILE *f = fopen(filename.c_str(), "wb");
+		if(!f)
 			return false;
-		fwrite(pData,1,numBytes,f);
+		fwrite(pData, 1, numBytes, f);
 		fclose(f);
 #ifndef WIN32
-		chmod(filename.c_str(),PERMIT);
+		chmod(filename.c_str(), PERMIT);
 #endif
 		return true;
 	}
 };
 
 #endif // BINARYRESOURCE_H
-

@@ -27,43 +27,53 @@ namespace GCSDK
 class CEconItemFactory
 {
 public:
-	CEconItemFactory( );
-	
+	CEconItemFactory();
+
 	// Gets a pointer to the underlying item schema the factory is using
-	GameItemSchema_t &GetSchema() { return m_schema; }
-
-	// Create a random item based on the incoming item selection criteria
-	CEconItem *CreateRandomItem( const CEconGameAccount *pGameAccount, const CItemSelectionCriteria &criteria );
-
-	// Create an item from a specific definition index
-	CEconItem *CreateSpecificItem( const CEconGameAccount *pGameAccount, item_definition_index_t unDefinitionIndex );
-
-	CEconItem *CreateSpecificItem( GCSDK::CGCSharedObjectCache *pUserSOCache, item_definition_index_t unDefinitionIndex )
+	GameItemSchema_t &GetSchema()
 	{
-		return CreateSpecificItem( pUserSOCache->GetSingleton<CEconGameAccount>(), unDefinitionIndex );
+		return m_schema;
 	}
 
-	uint64 GetNextID() { Assert( m_bIsInitialized ); return m_ulNextObjID++; }
+	// Create a random item based on the incoming item selection criteria
+	CEconItem *CreateRandomItem(const CEconGameAccount *pGameAccount, const CItemSelectionCriteria &criteria);
+
+	// Create an item from a specific definition index
+	CEconItem *CreateSpecificItem(const CEconGameAccount *pGameAccount, item_definition_index_t unDefinitionIndex);
+
+	CEconItem *CreateSpecificItem(GCSDK::CGCSharedObjectCache *pUserSOCache, item_definition_index_t unDefinitionIndex)
+	{
+		return CreateSpecificItem(pUserSOCache->GetSingleton<CEconGameAccount>(), unDefinitionIndex);
+	}
+
+	uint64 GetNextID()
+	{
+		Assert(m_bIsInitialized);
+		return m_ulNextObjID++;
+	}
 
 	bool BYieldingInit();
-	bool BIsInitialized() { return m_bIsInitialized; }
+	bool BIsInitialized()
+	{
+		return m_bIsInitialized;
+	}
 
 #ifdef DBGFLAG_VALIDATE
-	virtual void Validate( CValidator &validator, const char *pchName )
+	virtual void Validate(CValidator &validator, const char *pchName)
 	{
 		VALIDATE_SCOPE();
-		ValidateObj( m_schema );
+		ValidateObj(m_schema);
 	}
 #endif // DBGFLAG_VALIDATE
 
-	void							 ApplyStaticAttributeToItem( CEconItem *pItem, const static_attrib_t& staticAttrib, const CEconGameAccount *pGameAccount ) const;
-	const CEconItemDefinition		*RollItemDefinition( const CItemSelectionCriteria &criteria ) const;
+	void ApplyStaticAttributeToItem(CEconItem *pItem, const static_attrib_t &staticAttrib,
+									const CEconGameAccount *pGameAccount) const;
+	const CEconItemDefinition *RollItemDefinition(const CItemSelectionCriteria &criteria) const;
 
 private:
-	bool							 BAddGCGeneratedAttributesToItem( const CEconGameAccount *pGameAccount, CEconItem *pItem ) const;
+	bool BAddGCGeneratedAttributesToItem(const CEconGameAccount *pGameAccount, CEconItem *pItem) const;
 
 private:
-
 	// The schema this factory uses to create items
 	GameItemSchema_t m_schema;
 
@@ -72,4 +82,4 @@ private:
 	bool m_bIsInitialized;
 };
 
-#endif //ECONITEMFACTORY_H
+#endif // ECONITEMFACTORY_H

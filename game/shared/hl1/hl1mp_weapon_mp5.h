@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose:		Projectile shot from the MP5 
+// Purpose:		Projectile shot from the MP5
 //
 // $Workfile:     $
 // $Date:         $
@@ -11,8 +11,8 @@
 // $NoKeywords: $
 //=============================================================================//
 
-#ifndef	WEAPONMP5_H
-#define	WEAPONMP5_H
+#ifndef WEAPONMP5_H
+#define WEAPONMP5_H
 
 #ifdef CLIENT_DLL
 #else
@@ -31,23 +31,22 @@ class CGrenadeMP5;
 
 class CWeaponMP5 : public CBaseHL1MPCombatWeapon
 {
-	DECLARE_CLASS( CWeaponMP5, CBaseHL1MPCombatWeapon );
-public:
+	DECLARE_CLASS(CWeaponMP5, CBaseHL1MPCombatWeapon);
 
-	DECLARE_NETWORKCLASS(); 
+public:
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CWeaponMP5();
 
-	void	Precache( void );
-	void	PrimaryAttack( void );
-	void	SecondaryAttack( void );
-	void	DryFire( void );
-	void	WeaponIdle( void );
+	void Precache(void);
+	void PrimaryAttack(void);
+	void SecondaryAttack(void);
+	void DryFire(void);
+	void WeaponIdle(void);
 
-//	DECLARE_SERVERCLASS();
+	//	DECLARE_SERVERCLASS();
 	DECLARE_DATADESC();
 };
 
-
-#endif	//WEAPONMP5_H
+#endif // WEAPONMP5_H

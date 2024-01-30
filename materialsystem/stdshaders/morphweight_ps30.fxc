@@ -10,4 +10,3 @@ HALF4 main( PS_INPUT i ) : COLOR
 {
 	return i.vMorphWeights;
 }
-

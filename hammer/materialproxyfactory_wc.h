@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -12,7 +12,6 @@
 
 class IMaterialProxyFactory;
 
-IMaterialProxyFactory* GetHammerMaterialProxyFactory();
-
+IMaterialProxyFactory *GetHammerMaterialProxyFactory();
 
 #endif // MATERIALPROXYFACTORY_WC_H

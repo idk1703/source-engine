@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -9,6 +9,6 @@
 #define SYS_H
 #pragma once
 
-extern void Sys_CopyStringToClipboard( const char *pOut );
+extern void Sys_CopyStringToClipboard(const char *pOut);
 
 #endif // SYS_H

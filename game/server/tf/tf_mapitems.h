@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -10,86 +10,76 @@
 #pragma once
 #endif
 
-
 #include "tf_shareddefs.h"
 
-
 class CTFPlayer;
-
 
 /*==================================================*/
 /* CTF Support defines 								*/
 /*==================================================*/
-#define CTF_FLAG1 		1
-#define CTF_FLAG2 		2
-#define CTF_DROPOFF1 	3
-#define CTF_DROPOFF2 	4
-#define CTF_SCORE1   	5
-#define CTF_SCORE2   	6
-
+#define CTF_FLAG1	 1
+#define CTF_FLAG2	 2
+#define CTF_DROPOFF1 3
+#define CTF_DROPOFF2 4
+#define CTF_SCORE1	 5
+#define CTF_SCORE2	 6
 
 // Defines for GoalItem Removing from Player Methods
-#define GI_DROP_PLAYERDEATH	  0		// Dropped by a dying player
-#define GI_DROP_REMOVEGOAL	  1		// Removed by a Goal
-#define GI_DROP_PLAYERDROP	  2		// Dropped by a player
-
+#define GI_DROP_PLAYERDEATH 0 // Dropped by a dying player
+#define GI_DROP_REMOVEGOAL	1 // Removed by a Goal
+#define GI_DROP_PLAYERDROP	2 // Dropped by a player
 
 // Defines for methods of GoalItem returning
-#define GI_RET_DROP_DEAD 	0		// Dropped by a dead player
-#define GI_RET_DROP_LIVING 	1		// Dropped by a living player
-#define GI_RET_GOAL			2		// Returned by a Goal
-#define GI_RET_TIME			3		// Returned due to timeout
-
+#define GI_RET_DROP_DEAD   0 // Dropped by a dead player
+#define GI_RET_DROP_LIVING 1 // Dropped by a living player
+#define GI_RET_GOAL		   2 // Returned by a Goal
+#define GI_RET_TIME		   3 // Returned due to timeout
 
 // Defines for Goal States
-#define TFGS_ACTIVE		1 
-#define TFGS_INACTIVE	2 
-#define TFGS_REMOVED	3 
-#define TFGS_DELAYED	4
-
+#define TFGS_ACTIVE	  1
+#define TFGS_INACTIVE 2
+#define TFGS_REMOVED  3
+#define TFGS_DELAYED  4
 
 // Defines for Goal Result types : goal_result
-#define TFGR_SINGLE				1  // Goal can only be activated once
-#define TFGR_ADD_BONUSES		2 	// Any Goals activated by this one give their bonuses
-#define TFGR_ENDGAME			4 	// Goal fires Intermission, displays scores, and ends level
-#define TFGR_NO_ITEM_RESULTS	8	// GoalItems given by this Goal don't do results
-#define TFGR_REMOVE_DISGUISE	16 // Prevent/Remove undercover from any Spy
-#define TFGR_FORCE_RESPAWN		32 // Forces the player to teleport to a respawn point
-#define TFGR_DESTROY_BUILDINGS	64 // Destroys this player's buildings, if anys
-
+#define TFGR_SINGLE			   1  // Goal can only be activated once
+#define TFGR_ADD_BONUSES	   2  // Any Goals activated by this one give their bonuses
+#define TFGR_ENDGAME		   4  // Goal fires Intermission, displays scores, and ends level
+#define TFGR_NO_ITEM_RESULTS   8  // GoalItems given by this Goal don't do results
+#define TFGR_REMOVE_DISGUISE   16 // Prevent/Remove undercover from any Spy
+#define TFGR_FORCE_RESPAWN	   32 // Forces the player to teleport to a respawn point
+#define TFGR_DESTROY_BUILDINGS 64 // Destroys this player's buildings, if anys
 
 // Defines for Goal Item types, : goal_activation (in items)
-#define TFGI_GLOW			1   // Players carrying this GoalItem will glow
-#define TFGI_SLOW			2   // Players carrying this GoalItem will move at half-speed
-#define TFGI_DROP			4   // Players dying with this item will drop it
-#define TFGI_RETURN_DROP	8   // Return if a player with it dies
-#define TFGI_RETURN_GOAL	16  // Return if a player with it has it removed by a goal's activation
-#define TFGI_RETURN_REMOVE	32  // Return if it is removed by TFGI_REMOVE
-#define TFGI_REVERSE_AP		64  // Only pickup if the player _doesn't_ match AP Details
-#define TFGI_REMOVE			128 // Remove if left untouched for 2 minutes after being dropped
-#define TFGI_KEEP			256 // Players keep this item even when they die
-#define TFGI_ITEMGLOWS		512	// Item glows when on the ground
-#define TFGI_DONTREMOVERES	1024 // Don't remove results when the item is removed
-#define TFGI_DROPTOGROUND	2048 // Drop To Ground when spawning
-#define TFGI_CANBEDROPPED	4096 // Can be voluntarily dropped by players
-#define TFGI_SOLID			8192 // Is solid... blocks bullets, etc
-
+#define TFGI_GLOW		   1	// Players carrying this GoalItem will glow
+#define TFGI_SLOW		   2	// Players carrying this GoalItem will move at half-speed
+#define TFGI_DROP		   4	// Players dying with this item will drop it
+#define TFGI_RETURN_DROP   8	// Return if a player with it dies
+#define TFGI_RETURN_GOAL   16	// Return if a player with it has it removed by a goal's activation
+#define TFGI_RETURN_REMOVE 32	// Return if it is removed by TFGI_REMOVE
+#define TFGI_REVERSE_AP	   64	// Only pickup if the player _doesn't_ match AP Details
+#define TFGI_REMOVE		   128	// Remove if left untouched for 2 minutes after being dropped
+#define TFGI_KEEP		   256	// Players keep this item even when they die
+#define TFGI_ITEMGLOWS	   512	// Item glows when on the ground
+#define TFGI_DONTREMOVERES 1024 // Don't remove results when the item is removed
+#define TFGI_DROPTOGROUND  2048 // Drop To Ground when spawning
+#define TFGI_CANBEDROPPED  4096 // Can be voluntarily dropped by players
+#define TFGI_SOLID		   8192 // Is solid... blocks bullets, etc
 
 // For all these defines, see the tfortmap.txt that came with the zip
 // for complete descriptions.
 // Defines for Goal Activation types : goal_activation (in goals)
-#define TFGA_TOUCH			1  // Activated when touched
-#define TFGA_TOUCH_DETPACK	2  // Activated when touched by a detpack explosion
-#define TFGA_REVERSE_AP		4  // Activated when AP details are _not_ met
-#define TFGA_SPANNER		8  // Activated when hit by an engineer's spanner
-#define TFGA_DROPTOGROUND	2048 // Drop to Ground when spawning
-
+#define TFGA_TOUCH		   1	// Activated when touched
+#define TFGA_TOUCH_DETPACK 2	// Activated when touched by a detpack explosion
+#define TFGA_REVERSE_AP	   4	// Activated when AP details are _not_ met
+#define TFGA_SPANNER	   8	// Activated when hit by an engineer's spanner
+#define TFGA_DROPTOGROUND  2048 // Drop to Ground when spawning
 
 // Defines for Goal Effects types : goal_effect
-#define TFGE_AP				  1  // AP is affected. Default.
-#define TFGE_AP_TEAM		  2  // All of the AP's team.
-#define TFGE_NOT_AP_TEAM	  4  // All except AP's team.
-#define TFGE_NOT_AP			  8  // All except AP.
+#define TFGE_AP				  1	 // AP is affected. Default.
+#define TFGE_AP_TEAM		  2	 // All of the AP's team.
+#define TFGE_NOT_AP_TEAM	  4	 // All except AP's team.
+#define TFGE_NOT_AP			  8	 // All except AP.
 #define TFGE_WALL			  16 // If set, walls stop the Radius effects
 #define TFGE_SAME_ENVIRONMENT 32 // If set, players in a different environment to the Goal are not affected
 #define TFGE_TIMER_CHECK_AP	  64 // If set, Timer Goals check their critera for all players fitting their effects
@@ -179,9 +169,9 @@ public:
 	float	wait;
 
 	float	search_time;		// Timer goal delay
-	int	    item_list;			// Used to keep track of which goalitems are 
+	int	    item_list;			// Used to keep track of which goalitems are
 								// affecting the player at any time.
-								// GoalItems use it to keep track of their own 
+								// GoalItems use it to keep track of their own
 								// mask to apply to a player's item_list
 
 	float	drop_time;		// Time spent untouched before item return
@@ -190,16 +180,16 @@ public:
 	int			armorclass;			// Type of armor being worn;
 
 	int		count;			// Change teamscores
-	
+
 	// Goal Size
 	Vector  goal_min;
 	Vector  goal_max;
 
 	bool m_bAddBonuses;
-	
+
 	int items;
 	int items_allowed;
-	
+
 	int else_goal;
 	int if_goal_is_active;
 	int if_goal_is_inactive;
@@ -209,21 +199,21 @@ public:
 	int if_group_is_removed;
 
 	int		speed_reduction;
-	
+
 	int return_item_no;
 	int if_item_has_moved;
 	int if_item_hasnt_moved;
-	
+
 	int has_item_from_group;
 	int hasnt_item_from_group;
-	
+
 	int goal_activation;
 	int delay_time;
 	int weapon;
 	string_t owned_by_teamcheck;
 	int owned_by;
 	string_t noise;
-	
+
 	// Spawnpoint behaviour
 	int     remove_spawnpoint;
 	int     restore_spawnpoint;
@@ -295,7 +285,7 @@ public:
 
 	BOOL    do_triggerwork;		// Overrides for trigger handling in TF Goals
 	string_t killtarget;	// Remove ents with this target
-	string_t	target;	
+	string_t	target;
 
 	string_t	message;
 
@@ -310,7 +300,7 @@ public:
 
 	int remove_item_group;
 };
- 
+
 
 class CTFGoalItem : public CTFGoal
 {
@@ -352,7 +342,6 @@ public:
 
 	Class_T	Classify ( void ) { return CLASS_TFGOAL_TIMER; }
 };
-
 
 #if 0
 class CTFSpawn : public CTFBaseItem

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -21,31 +21,26 @@ public:
 
 	virtual void LevelInitPostEntity();
 	virtual void LevelShutdownPreEntity();
-	
-public:
 
+public:
 	// Called when a player uses the radio
-	void	UpdateRadioStatus(int entindex, float duration);
+	void UpdateRadioStatus(int entindex, float duration);
 
 	// Called when a player (bot) speaks a wav file
-	void	UpdateVoiceStatus(int entindex, float duration);
+	void UpdateVoiceStatus(int entindex, float duration);
 
 	// Call from the HUD_CreateEntities function so it can add sprites above player heads.
-	void	DrawHeadLabels();
+	void DrawHeadLabels();
 
 private:
+	float m_radioUntil[MAX_PLAYERS]; // Who is currently talking. Indexed by client index.
+	IMaterial *m_pHeadLabelMaterial; // For labels above players' heads.
 
-
-	float		m_radioUntil[MAX_PLAYERS];	// Who is currently talking. Indexed by client index.
-	IMaterial	*m_pHeadLabelMaterial;		// For labels above players' heads.
-
-	void		ExpireBotVoice( bool force = false );
-	float		m_voiceUntil[MAX_PLAYERS];	// Who is currently talking. Indexed by client index.
+	void ExpireBotVoice(bool force = false);
+	float m_voiceUntil[MAX_PLAYERS]; // Who is currently talking. Indexed by client index.
 };
 
-
-// Get the (global) voice manager. 
-CRadioStatus* RadioManager();
-
+// Get the (global) voice manager.
+CRadioStatus *RadioManager();
 
 #endif // RADIO_STATUS_H

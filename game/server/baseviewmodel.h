@@ -6,7 +6,7 @@
 // $Date:         $
 // $NoKeywords: $
 //=============================================================================//
-#if !defined( BASEVIEWMODEL_H )
+#if !defined(BASEVIEWMODEL_H)
 #define BASEVIEWMODEL_H
 #ifdef _WIN32
 #pragma once

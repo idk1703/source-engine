@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -15,29 +15,27 @@ class CPakFrame : public CMDIChildWnd
 {
 	DECLARE_DYNCREATE(CPakFrame)
 protected:
-	CPakFrame();           // protected constructor used by dynamic creation
+	CPakFrame(); // protected constructor used by dynamic creation
 
-// Attributes
+	// Attributes
 public:
-
-// Operations
+	// Operations
 public:
-
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CPakFrame)
-	protected:
-	virtual BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext);
+protected:
+	virtual BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext *pContext);
 	//}}AFX_VIRTUAL
 
-// Implementation
+	// Implementation
 protected:
 	CSplitterWnd SplitWnd;
 	virtual ~CPakFrame();
 
 	// Generated message map functions
 	//{{AFX_MSG(CPakFrame)
-		// NOTE - the ClassWizard will add and remove member functions here.
+	// NOTE - the ClassWizard will add and remove member functions here.
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

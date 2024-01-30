@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -21,18 +21,19 @@ public:
 	CFacePoserVGui(void);
 	~CFacePoserVGui(void);
 
-	bool Init( HWND hWindow );
+	bool Init(HWND hWindow);
 	void Simulate();
 	void Shutdown();
-	bool HasFocus( CVGuiWnd *pWnd );
-	void SetFocus( CVGuiWnd *pWnd );
-	bool IsInitialized() { return m_hMainWindow != NULL; };
-
+	bool HasFocus(CVGuiWnd *pWnd);
+	void SetFocus(CVGuiWnd *pWnd);
+	bool IsInitialized()
+	{
+		return m_hMainWindow != NULL;
+	};
 
 protected:
-
-	HWND			m_hMainWindow;
-	CVGuiWnd		*m_pActiveWindow;	// the VGUI window that has the focus
+	HWND m_hMainWindow;
+	CVGuiWnd *m_pActiveWindow; // the VGUI window that has the focus
 };
 
 CFacePoserVGui *FaceposerVGui();

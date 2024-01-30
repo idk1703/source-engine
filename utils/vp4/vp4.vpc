@@ -23,7 +23,7 @@ $Project "Vp4"
 	$Folder	"Source Files"
 	{
 		$File	"vp4dialog.cpp"
-		
+
 		$File	"main.cpp"	\
 				"$SRCDIR\public\vgui_controls\vgui_controls.cpp"
 				{

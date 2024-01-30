@@ -16,57 +16,58 @@
 #include "func_nogrenades.h"
 #include "tf_obj_sentrygun.h"
 
-extern void SendProxy_Origin( const SendProp *pProp, const void *pStruct, const void *pData, DVariant *pOut, int iElement, int objectID );
-extern void SendProxy_Angles( const SendProp *pProp, const void *pStruct, const void *pData, DVariant *pOut, int iElement, int objectID );
+extern void SendProxy_Origin(const SendProp *pProp, const void *pStruct, const void *pData, DVariant *pOut,
+							 int iElement, int objectID);
+extern void SendProxy_Angles(const SendProp *pProp, const void *pStruct, const void *pData, DVariant *pOut,
+							 int iElement, int objectID);
 #endif
 
 #ifdef CLIENT_DLL
 #include "props_shared.h"
 #endif
 
-//w_rocket_airstrike\w_rocket_airstrike.mdl
-#define MINI_ROCKETS_MODEL					"models/weapons/w_models/w_rocket_airstrike/w_rocket_airstrike.mdl"
+// w_rocket_airstrike\w_rocket_airstrike.mdl
+#define MINI_ROCKETS_MODEL "models/weapons/w_models/w_rocket_airstrike/w_rocket_airstrike.mdl"
 
 //=============================================================================
 //
 // TF Base Rocket tables.
 //
 
-IMPLEMENT_NETWORKCLASS_ALIASED( TFBaseRocket, DT_TFBaseRocket )
+IMPLEMENT_NETWORKCLASS_ALIASED(TFBaseRocket, DT_TFBaseRocket)
 
-BEGIN_NETWORK_TABLE( CTFBaseRocket, DT_TFBaseRocket )
+BEGIN_NETWORK_TABLE(CTFBaseRocket, DT_TFBaseRocket)
 // Client specific.
 #ifdef CLIENT_DLL
-RecvPropVector( RECVINFO( m_vInitialVelocity ) ),
+	RecvPropVector(RECVINFO(m_vInitialVelocity)),
 
-RecvPropVector( RECVINFO_NAME( m_vecNetworkOrigin, m_vecOrigin ) ),
-RecvPropQAngles( RECVINFO_NAME( m_angNetworkAngles, m_angRotation ) ),
-RecvPropInt( RECVINFO( m_iDeflected ) ),
-RecvPropEHandle( RECVINFO( m_hLauncher ) ),
+		RecvPropVector(RECVINFO_NAME(m_vecNetworkOrigin, m_vecOrigin)),
+		RecvPropQAngles(RECVINFO_NAME(m_angNetworkAngles, m_angRotation)), RecvPropInt(RECVINFO(m_iDeflected)),
+		RecvPropEHandle(RECVINFO(m_hLauncher)),
 
 // Server specific.
 #else
-SendPropVector( SENDINFO( m_vInitialVelocity ), 12 /*nbits*/, 0 /*flags*/, -3000 /*low value*/, 3000 /*high value*/	),
+	SendPropVector(SENDINFO(m_vInitialVelocity), 12 /*nbits*/, 0 /*flags*/, -3000 /*low value*/, 3000 /*high value*/),
 
-SendPropExclude( "DT_BaseEntity", "m_vecOrigin" ),
-SendPropExclude( "DT_BaseEntity", "m_angRotation" ),
+		SendPropExclude("DT_BaseEntity", "m_vecOrigin"), SendPropExclude("DT_BaseEntity", "m_angRotation"),
 
-SendPropVector	(SENDINFO(m_vecOrigin), -1,  SPROP_COORD_MP_INTEGRAL|SPROP_CHANGES_OFTEN, 0.0f, HIGH_DEFAULT, SendProxy_Origin ),
-SendPropQAngles	(SENDINFO(m_angRotation), 6, SPROP_CHANGES_OFTEN, SendProxy_Angles ),
-SendPropInt( SENDINFO( m_iDeflected ), 4, SPROP_UNSIGNED ),
-SendPropEHandle( SENDINFO( m_hLauncher ) ),
+		SendPropVector(SENDINFO(m_vecOrigin), -1, SPROP_COORD_MP_INTEGRAL | SPROP_CHANGES_OFTEN, 0.0f, HIGH_DEFAULT,
+					   SendProxy_Origin),
+		SendPropQAngles(SENDINFO(m_angRotation), 6, SPROP_CHANGES_OFTEN, SendProxy_Angles),
+		SendPropInt(SENDINFO(m_iDeflected), 4, SPROP_UNSIGNED), SendPropEHandle(SENDINFO(m_hLauncher)),
 
 #endif
 END_NETWORK_TABLE()
 
 // Server specific.
 #ifdef GAME_DLL
-BEGIN_DATADESC( CTFBaseRocket )
+BEGIN_DATADESC(CTFBaseRocket)
 END_DATADESC()
 #endif
 
 #ifdef _DEBUG
-ConVar tf_rocket_show_radius( "tf_rocket_show_radius", "0", FCVAR_REPLICATED | FCVAR_CHEAT | FCVAR_DEVELOPMENTONLY, "Render rocket radius." );
+ConVar tf_rocket_show_radius("tf_rocket_show_radius", "0", FCVAR_REPLICATED | FCVAR_CHEAT | FCVAR_DEVELOPMENTONLY,
+							 "Render rocket radius.");
 #endif
 
 //=============================================================================
@@ -81,13 +82,13 @@ CTFBaseRocket::CTFBaseRocket()
 {
 	m_vInitialVelocity.Init();
 	m_iDeflected = 0;
-	
+
 // Client specific.
 #ifdef CLIENT_DLL
 
 	m_flSpawnTime = 0.0f;
 	m_iCachedDeflect = false;
-	
+
 // Server specific.
 #else
 
@@ -102,38 +103,36 @@ CTFBaseRocket::CTFBaseRocket()
 //-----------------------------------------------------------------------------
 // Purpose: Destructor.
 //-----------------------------------------------------------------------------
-CTFBaseRocket::~CTFBaseRocket()
-{
-}
+CTFBaseRocket::~CTFBaseRocket() {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFBaseRocket::Precache( void )
+void CTFBaseRocket::Precache(void)
 {
 	BaseClass::Precache();
-	PrecacheParticleSystem( "Explosion_ShockWave_01" );
-	PrecacheModel( MINI_ROCKETS_MODEL );
+	PrecacheParticleSystem("Explosion_ShockWave_01");
+	PrecacheModel(MINI_ROCKETS_MODEL);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFBaseRocket::Spawn( void )
+void CTFBaseRocket::Spawn(void)
 {
 	BaseClass::Spawn();
 
 	// Precache.
 	Precache();
 	UseClientSideAnimation();
-	
-	if ( GetLauncher() )
+
+	if(GetLauncher())
 	{
 		int iMiniRocket = 0;
-		CALL_ATTRIB_HOOK_INT_ON_OTHER( GetLauncher(), iMiniRocket, mini_rockets );
-		if ( iMiniRocket )
+		CALL_ATTRIB_HOOK_INT_ON_OTHER(GetLauncher(), iMiniRocket, mini_rockets);
+		if(iMiniRocket)
 		{
-			SetModel( MINI_ROCKETS_MODEL );
+			SetModel(MINI_ROCKETS_MODEL);
 		}
 	}
 
@@ -145,28 +144,28 @@ void CTFBaseRocket::Spawn( void )
 // Server specific.
 #else
 
-	//Derived classes must have set model.
-	Assert( GetModel() );	
+	// Derived classes must have set model.
+	Assert(GetModel());
 
-	SetSolid( SOLID_BBOX );
-	SetMoveType( MOVETYPE_FLY, MOVECOLLIDE_FLY_CUSTOM );
-	AddEFlags( EFL_NO_WATER_VELOCITY_CHANGE );
-	AddEffects( EF_NOSHADOW );
+	SetSolid(SOLID_BBOX);
+	SetMoveType(MOVETYPE_FLY, MOVECOLLIDE_FLY_CUSTOM);
+	AddEFlags(EFL_NO_WATER_VELOCITY_CHANGE);
+	AddEffects(EF_NOSHADOW);
 
-	SetCollisionGroup( TFCOLLISION_GROUP_ROCKETS );
+	SetCollisionGroup(TFCOLLISION_GROUP_ROCKETS);
 
-	UTIL_SetSize( this, -Vector( 0, 0, 0 ), Vector( 0, 0, 0 ) );
-	ResetSequence( LookupSequence("idle") );
+	UTIL_SetSize(this, -Vector(0, 0, 0), Vector(0, 0, 0));
+	ResetSequence(LookupSequence("idle"));
 
 	// Setup attributes.
 	m_takedamage = DAMAGE_NO;
-	SetGravity( 0.0f );
+	SetGravity(0.0f);
 
 	// Setup the touch and think functions.
-	SetTouch( &CTFBaseRocket::RocketTouch );
-	SetNextThink( gpGlobals->curtime );
+	SetTouch(&CTFBaseRocket::RocketTouch);
+	SetNextThink(gpGlobals->curtime);
 
-	AddFlag( FL_GRENADE );
+	AddFlag(FL_GRENADE);
 
 	m_flDestroyableTime = gpGlobals->curtime + TF_ROCKET_DESTROYABLE_TIMER;
 	m_bCritical = false;
@@ -181,14 +180,14 @@ void CTFBaseRocket::Spawn( void )
 #ifdef CLIENT_DLL
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFBaseRocket::PostDataUpdate( DataUpdateType_t type )
+void CTFBaseRocket::PostDataUpdate(DataUpdateType_t type)
 {
 	// Pass through to the base class.
-	BaseClass::PostDataUpdate( type );
+	BaseClass::PostDataUpdate(type);
 
-	if ( type == DATA_UPDATE_CREATED )
+	if(type == DATA_UPDATE_CREATED)
 	{
 		// Now stick our initial velocity and angles into the interpolation history.
 		CInterpolatedVar<Vector> &interpolator = GetOriginInterpolator();
@@ -197,49 +196,48 @@ void CTFBaseRocket::PostDataUpdate( DataUpdateType_t type )
 		CInterpolatedVar<QAngle> &rotInterpolator = GetRotationInterpolator();
 		rotInterpolator.ClearHistory();
 
-		float flChangeTime = GetLastChangeTime( LATCH_SIMULATION_VAR );
+		float flChangeTime = GetLastChangeTime(LATCH_SIMULATION_VAR);
 
 		// Add a sample 1 second back.
 		Vector vCurOrigin = GetLocalOrigin() - m_vInitialVelocity;
-		interpolator.AddToHead( flChangeTime - 1.0f, &vCurOrigin, false );
+		interpolator.AddToHead(flChangeTime - 1.0f, &vCurOrigin, false);
 
 		QAngle vCurAngles = GetLocalAngles();
-		rotInterpolator.AddToHead( flChangeTime - 1.0f, &vCurAngles, false );
+		rotInterpolator.AddToHead(flChangeTime - 1.0f, &vCurAngles, false);
 
 		// Add the current sample.
 		vCurOrigin = GetLocalOrigin();
-		interpolator.AddToHead( flChangeTime, &vCurOrigin, false );
+		interpolator.AddToHead(flChangeTime, &vCurOrigin, false);
 
-		rotInterpolator.AddToHead( flChangeTime - 1.0, &vCurAngles, false );
+		rotInterpolator.AddToHead(flChangeTime - 1.0, &vCurAngles, false);
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBaseRocket::OnDataChanged(DataUpdateType_t updateType)
 {
 	BaseClass::OnDataChanged(updateType);
 
-	if ( updateType == DATA_UPDATE_CREATED || m_iCachedDeflect != GetDeflected() )
+	if(updateType == DATA_UPDATE_CREATED || m_iCachedDeflect != GetDeflected())
 	{
-		CreateTrails();		
+		CreateTrails();
 	}
 
 	m_iCachedDeflect = GetDeflected();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int CTFBaseRocket::DrawModel( int flags )
+int CTFBaseRocket::DrawModel(int flags)
 {
 	// During the first 0.2 seconds of our life, don't draw ourselves.
-	if ( gpGlobals->curtime - m_flSpawnTime < 0.2f )
+	if(gpGlobals->curtime - m_flSpawnTime < 0.2f)
 		return 0;
 
-	return BaseClass::DrawModel( flags );
+	return BaseClass::DrawModel(flags);
 }
 
 //=============================================================================
@@ -249,115 +247,116 @@ int CTFBaseRocket::DrawModel( int flags )
 #else
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CTFBaseRocket *CTFBaseRocket::Create( CBaseEntity *pLauncher, const char *pszClassname, const Vector &vecOrigin, 
-									  const QAngle &vecAngles, CBaseEntity *pOwner )
+CTFBaseRocket *CTFBaseRocket::Create(CBaseEntity *pLauncher, const char *pszClassname, const Vector &vecOrigin,
+									 const QAngle &vecAngles, CBaseEntity *pOwner)
 {
-	CTFBaseRocket *pRocket = static_cast<CTFBaseRocket*>( CBaseEntity::Create( pszClassname, vecOrigin, vecAngles, pOwner ) );
-	if ( !pRocket )
+	CTFBaseRocket *pRocket =
+		static_cast<CTFBaseRocket *>(CBaseEntity::Create(pszClassname, vecOrigin, vecAngles, pOwner));
+	if(!pRocket)
 		return NULL;
 
-	pRocket->SetLauncher( pLauncher );
+	pRocket->SetLauncher(pLauncher);
 
 	// Initialize the owner.
-	pRocket->SetOwnerEntity( pOwner );
+	pRocket->SetOwnerEntity(pOwner);
 
 	// Spawn.
 	pRocket->Spawn();
 
 	// Setup the initial velocity.
 	Vector vecForward, vecRight, vecUp;
-	AngleVectors( vecAngles, &vecForward, &vecRight, &vecUp );
+	AngleVectors(vecAngles, &vecForward, &vecRight, &vecUp);
 
 	float flLaunchSpeed = 1100.0f;
-	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pLauncher, flLaunchSpeed, mult_projectile_speed );
+	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER(pLauncher, flLaunchSpeed, mult_projectile_speed);
 
 	// Hack: This attribute represents a bucket of attributes - one of which is projectile speed.
 	// If the concept works we'll make the "bucket" system directly modify the attributes instead.
-	if ( pOwner )
+	if(pOwner)
 	{
 		// if the owner is a Sentry, Check its owner
 		int iRocketSpecialist = 0;
-		CObjectSentrygun *pSentry = dynamic_cast<CObjectSentrygun*>( pOwner );
-		if ( pSentry )
+		CObjectSentrygun *pSentry = dynamic_cast<CObjectSentrygun *>(pOwner);
+		if(pSentry)
 		{
-			CALL_ATTRIB_HOOK_INT_ON_OTHER( pSentry->GetOwner(), iRocketSpecialist, rocket_specialist );
+			CALL_ATTRIB_HOOK_INT_ON_OTHER(pSentry->GetOwner(), iRocketSpecialist, rocket_specialist);
 		}
 		else
 		{
-			CALL_ATTRIB_HOOK_INT_ON_OTHER( pOwner, iRocketSpecialist, rocket_specialist );
+			CALL_ATTRIB_HOOK_INT_ON_OTHER(pOwner, iRocketSpecialist, rocket_specialist);
 		}
 
-		if ( iRocketSpecialist )
+		if(iRocketSpecialist)
 		{
-			flLaunchSpeed *= RemapValClamped( iRocketSpecialist, 1.f, 4.f, 1.15f, 1.6f );
-			flLaunchSpeed = Min( flLaunchSpeed, 3000.f );
+			flLaunchSpeed *= RemapValClamped(iRocketSpecialist, 1.f, 4.f, 1.15f, 1.6f);
+			flLaunchSpeed = Min(flLaunchSpeed, 3000.f);
 		}
 	}
 
-	CTFPlayer *pTFOwner = ToTFPlayer( pRocket->GetOwnerPlayer() );
+	CTFPlayer *pTFOwner = ToTFPlayer(pRocket->GetOwnerPlayer());
 
-	if ( pTFOwner )
+	if(pTFOwner)
 	{
-		pRocket->SetTruceValidForEnt( pTFOwner->IsTruceValidForEnt() );
+		pRocket->SetTruceValidForEnt(pTFOwner->IsTruceValidForEnt());
 
-		if ( pTFOwner->m_Shared.GetCarryingRuneType() == RUNE_PRECISION )
+		if(pTFOwner->m_Shared.GetCarryingRuneType() == RUNE_PRECISION)
 		{
 			flLaunchSpeed = 3000.f;
 		}
 	}
 
 	Vector vecVelocity = vecForward * flLaunchSpeed;
-	pRocket->SetAbsVelocity( vecVelocity );	
-	pRocket->SetupInitialTransmittedGrenadeVelocity( vecVelocity );
+	pRocket->SetAbsVelocity(vecVelocity);
+	pRocket->SetupInitialTransmittedGrenadeVelocity(vecVelocity);
 
 	// Setup the initial angles.
 	QAngle angles;
-	VectorAngles( vecVelocity, angles );
-	pRocket->SetAbsAngles( angles );
+	VectorAngles(vecVelocity, angles);
+	pRocket->SetAbsAngles(angles);
 
 	// Set team.
-	pRocket->ChangeTeam( pOwner->GetTeamNumber() );
+	pRocket->ChangeTeam(pOwner->GetTeamNumber());
 
 	return pRocket;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFBaseRocket::RocketTouch( CBaseEntity *pOther )
+void CTFBaseRocket::RocketTouch(CBaseEntity *pOther)
 {
 	// Verify a correct "other."
-	Assert( pOther );
-	bool bShield = pOther->IsCombatItem() && !InSameTeam( pOther );
-	if ( pOther->IsSolidFlagSet( FSOLID_TRIGGER | FSOLID_VOLUME_CONTENTS ) && !bShield )
+	Assert(pOther);
+	bool bShield = pOther->IsCombatItem() && !InSameTeam(pOther);
+	if(pOther->IsSolidFlagSet(FSOLID_TRIGGER | FSOLID_VOLUME_CONTENTS) && !bShield)
 		return;
 
 	// Handle hitting skybox (disappear).
 	const trace_t *pTrace = &CBaseEntity::GetTouchTrace();
-	if( pTrace->surface.flags & SURF_SKY )
+	if(pTrace->surface.flags & SURF_SKY)
 	{
-		UTIL_Remove( this );
+		UTIL_Remove(this);
 		return;
 	}
 
 	trace_t trace;
-	memcpy( &trace, pTrace, sizeof( trace_t ) );
-	Explode( &trace, pOther );
+	memcpy(&trace, pTrace, sizeof(trace_t));
+	Explode(&trace, pOther);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-unsigned int CTFBaseRocket::PhysicsSolidMaskForEntity( void ) const
-{ 
+unsigned int CTFBaseRocket::PhysicsSolidMaskForEntity(void) const
+{
 	int teamContents = 0;
 
-	if ( !CanCollideWithTeammates() )
+	if(!CanCollideWithTeammates())
 	{
 		// Only collide with the other team
-		teamContents = ( GetTeamNumber() == TF_TEAM_RED ) ? CONTENTS_BLUETEAM : CONTENTS_REDTEAM;
+		teamContents = (GetTeamNumber() == TF_TEAM_RED) ? CONTENTS_BLUETEAM : CONTENTS_REDTEAM;
 	}
 	else
 	{
@@ -369,55 +368,55 @@ unsigned int CTFBaseRocket::PhysicsSolidMaskForEntity( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CTFBaseRocket::ShouldNotDetonate( void )
+bool CTFBaseRocket::ShouldNotDetonate(void)
 {
-	return InNoGrenadeZone( this );
+	return InNoGrenadeZone(this);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFBaseRocket::Destroy( bool bBlinkOut, bool bBreakRocket )
+void CTFBaseRocket::Destroy(bool bBlinkOut, bool bBreakRocket)
 {
-	if ( bBreakRocket )
+	if(bBreakRocket)
 	{
-		CPVSFilter filter( GetAbsOrigin() );
-		UserMessageBegin( filter, "BreakModelRocketDud" );
-		WRITE_SHORT( GetModelIndex() );
-		WRITE_VEC3COORD( GetAbsOrigin() );
-		WRITE_ANGLES( GetAbsAngles() );
+		CPVSFilter filter(GetAbsOrigin());
+		UserMessageBegin(filter, "BreakModelRocketDud");
+		WRITE_SHORT(GetModelIndex());
+		WRITE_VEC3COORD(GetAbsOrigin());
+		WRITE_ANGLES(GetAbsAngles());
 		MessageEnd();
 	}
 
 	// Kill it
-	SetThink( &BaseClass::SUB_Remove );
-	SetNextThink( gpGlobals->curtime );
-	SetTouch( NULL );
-	AddEffects( EF_NODRAW );
+	SetThink(&BaseClass::SUB_Remove);
+	SetNextThink(gpGlobals->curtime);
+	SetTouch(NULL);
+	AddEffects(EF_NODRAW);
 
-	if ( bBlinkOut )
+	if(bBlinkOut)
 	{
 		// Sprite flash
-		CSprite *pGlowSprite = CSprite::SpriteCreate( NOGRENADE_SPRITE, GetAbsOrigin(), false );
-		if ( pGlowSprite )
+		CSprite *pGlowSprite = CSprite::SpriteCreate(NOGRENADE_SPRITE, GetAbsOrigin(), false);
+		if(pGlowSprite)
 		{
-			pGlowSprite->SetTransparency( kRenderGlow, 255, 255, 255, 255, kRenderFxFadeFast );
-			pGlowSprite->SetThink( &CSprite::SUB_Remove );
-			pGlowSprite->SetNextThink( gpGlobals->curtime + 1.0 );
+			pGlowSprite->SetTransparency(kRenderGlow, 255, 255, 255, 255, kRenderFxFadeFast);
+			pGlowSprite->SetThink(&CSprite::SUB_Remove);
+			pGlowSprite->SetNextThink(gpGlobals->curtime + 1.0);
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFBaseRocket::Explode( trace_t *pTrace, CBaseEntity *pOther )
+void CTFBaseRocket::Explode(trace_t *pTrace, CBaseEntity *pOther)
 {
-	if ( ShouldNotDetonate() )
+	if(ShouldNotDetonate())
 	{
-		Destroy( true );
+		Destroy(true);
 		return;
 	}
 
@@ -425,20 +424,20 @@ void CTFBaseRocket::Explode( trace_t *pTrace, CBaseEntity *pOther )
 	m_hEnemy = pOther;
 
 	// Invisible.
-	SetModelName( NULL_STRING );
-	AddSolidFlags( FSOLID_NOT_SOLID );
+	SetModelName(NULL_STRING);
+	AddSolidFlags(FSOLID_NOT_SOLID);
 	m_takedamage = DAMAGE_NO;
 
 	// Pull out a bit.
-	if ( pTrace->fraction != 1.0 )
+	if(pTrace->fraction != 1.0)
 	{
-		SetAbsOrigin( pTrace->endpos + ( pTrace->plane.normal * 1.0f ) );
+		SetAbsOrigin(pTrace->endpos + (pTrace->plane.normal * 1.0f));
 	}
 
 	// Play explosion sound and effect.
 	Vector vecOrigin = GetAbsOrigin();
-	CPVSFilter filter( vecOrigin );
-	
+	CPVSFilter filter(vecOrigin);
+
 	// Halloween Spell Effect Check
 	int iHalloweenSpell = 0;
 	int iCustomParticleIndex = INVALID_STRING_INDEX;
@@ -446,90 +445,93 @@ void CTFBaseRocket::Explode( trace_t *pTrace, CBaseEntity *pOther )
 	// if the owner is a Sentry, Check its owner
 	CBaseEntity *pPlayerOwner = GetOwnerPlayer();
 
-	if ( TF_IsHolidayActive( kHoliday_HalloweenOrFullMoon ) )
+	if(TF_IsHolidayActive(kHoliday_HalloweenOrFullMoon))
 	{
-		CALL_ATTRIB_HOOK_INT_ON_OTHER( pPlayerOwner, iHalloweenSpell, halloween_pumpkin_explosions );
-		if ( iHalloweenSpell > 0 )
+		CALL_ATTRIB_HOOK_INT_ON_OTHER(pPlayerOwner, iHalloweenSpell, halloween_pumpkin_explosions);
+		if(iHalloweenSpell > 0)
 		{
-			iCustomParticleIndex = GetParticleSystemIndex( "halloween_explosion" );
+			iCustomParticleIndex = GetParticleSystemIndex("halloween_explosion");
 		}
 	}
 
-	CTFWeaponBase *pWeapon = dynamic_cast< CTFWeaponBase * >( GetOriginalLauncher() );
-	if ( pWeapon )
+	CTFWeaponBase *pWeapon = dynamic_cast<CTFWeaponBase *>(GetOriginalLauncher());
+	if(pWeapon)
 	{
 		ownerWeaponDefIndex = pWeapon->GetAttributeContainer()->GetItem()->GetItemDefIndex();
 	}
-	
+
 	int iLargeExplosion = 0;
-	CALL_ATTRIB_HOOK_INT_ON_OTHER( pPlayerOwner, iLargeExplosion, use_large_smoke_explosion );
-	if ( iLargeExplosion > 0 )
+	CALL_ATTRIB_HOOK_INT_ON_OTHER(pPlayerOwner, iLargeExplosion, use_large_smoke_explosion);
+	if(iLargeExplosion > 0)
 	{
-		DispatchParticleEffect( "explosionTrail_seeds_mvm", GetAbsOrigin(), GetAbsAngles() );
-		DispatchParticleEffect( "fluidSmokeExpl_ring_mvm", GetAbsOrigin(), GetAbsAngles() );
+		DispatchParticleEffect("explosionTrail_seeds_mvm", GetAbsOrigin(), GetAbsAngles());
+		DispatchParticleEffect("fluidSmokeExpl_ring_mvm", GetAbsOrigin(), GetAbsAngles());
 	}
 
-	TE_TFExplosion( filter, 0.0f, vecOrigin, pTrace->plane.normal, GetWeaponID(), pOther->entindex(), ownerWeaponDefIndex, SPECIAL1, iCustomParticleIndex );
+	TE_TFExplosion(filter, 0.0f, vecOrigin, pTrace->plane.normal, GetWeaponID(), pOther->entindex(),
+				   ownerWeaponDefIndex, SPECIAL1, iCustomParticleIndex);
 
-	CSoundEnt::InsertSound ( SOUND_COMBAT, vecOrigin, 1024, 3.0 );
+	CSoundEnt::InsertSound(SOUND_COMBAT, vecOrigin, 1024, 3.0);
 
 	// Damage.
 	CBaseEntity *pAttacker = GetOwnerEntity();
-	IScorer *pScorerInterface = dynamic_cast<IScorer*>( pAttacker );
-	if ( pScorerInterface )
+	IScorer *pScorerInterface = dynamic_cast<IScorer *>(pAttacker);
+	if(pScorerInterface)
 	{
 		pAttacker = pScorerInterface->GetScorer();
 	}
-	else if ( pAttacker && pAttacker->GetOwnerEntity() )
+	else if(pAttacker && pAttacker->GetOwnerEntity())
 	{
 		pAttacker = pAttacker->GetOwnerEntity();
 	}
 
 	float flRadius = GetRadius();
 
-	if ( pAttacker ) // No attacker, deal no damage. Otherwise we could potentially kill teammates.
+	if(pAttacker) // No attacker, deal no damage. Otherwise we could potentially kill teammates.
 	{
-		CTFPlayer *pTarget = ToTFPlayer( GetEnemy() );
-		if ( pTarget )
+		CTFPlayer *pTarget = ToTFPlayer(GetEnemy());
+		if(pTarget)
 		{
 			// Rocket Specialist
-			CheckForStunOnImpact( pTarget );
+			CheckForStunOnImpact(pTarget);
 
-			if ( pTarget->GetTeamNumber() != pAttacker->GetTeamNumber() )
+			if(pTarget->GetTeamNumber() != pAttacker->GetTeamNumber())
 			{
-				IGameEvent *event = gameeventmanager->CreateEvent( "projectile_direct_hit" );
-				if ( event )
+				IGameEvent *event = gameeventmanager->CreateEvent("projectile_direct_hit");
+				if(event)
 				{
-					event->SetInt( "attacker", pAttacker->entindex() );
-					event->SetInt( "victim", pTarget->entindex() );
-					event->SetInt( "weapon_def_index", ownerWeaponDefIndex );
+					event->SetInt("attacker", pAttacker->entindex());
+					event->SetInt("victim", pTarget->entindex());
+					event->SetInt("weapon_def_index", ownerWeaponDefIndex);
 
-					gameeventmanager->FireEvent( event, true );
+					gameeventmanager->FireEvent(event, true);
 				}
 			}
 		}
 
-		CTakeDamageInfo info( this, pAttacker, GetOriginalLauncher(), vec3_origin, vecOrigin, GetDamage(), GetDamageType(), GetDamageCustom() );
-		CTFRadiusDamageInfo radiusinfo( &info, vecOrigin, flRadius, NULL, TF_ROCKET_RADIUS_FOR_RJS, GetDamageForceScale() );
-		TFGameRules()->RadiusDamage( radiusinfo );
+		CTakeDamageInfo info(this, pAttacker, GetOriginalLauncher(), vec3_origin, vecOrigin, GetDamage(),
+							 GetDamageType(), GetDamageCustom());
+		CTFRadiusDamageInfo radiusinfo(&info, vecOrigin, flRadius, NULL, TF_ROCKET_RADIUS_FOR_RJS,
+									   GetDamageForceScale());
+		TFGameRules()->RadiusDamage(radiusinfo);
 	}
 
-#if defined( _DEBUG ) && defined( STAGING_ONLY )
+#if defined(_DEBUG) && defined(STAGING_ONLY)
 	// Debug!
-	if ( tf_rocket_show_radius.GetBool() )
+	if(tf_rocket_show_radius.GetBool())
 	{
-		DrawRadius( flRadius );
+		DrawRadius(flRadius);
 	}
 #endif
 
 	// Don't decal players with scorch.
-	if ( !pOther->IsPlayer() )
+	if(!pOther->IsPlayer())
 	{
-		UTIL_DecalTrace( pTrace, "Scorch" );
+		UTIL_DecalTrace(pTrace, "Scorch");
 	}
 
 	// Remove the rocket.
-	UTIL_Remove( this );
+	UTIL_Remove(this);
 
 	return;
 }
@@ -537,48 +539,48 @@ void CTFBaseRocket::Explode( trace_t *pTrace, CBaseEntity *pOther )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFBaseRocket::CheckForStunOnImpact( CTFPlayer* pTarget )
+void CTFBaseRocket::CheckForStunOnImpact(CTFPlayer *pTarget)
 {
-	if ( !m_bStunOnImpact )
+	if(!m_bStunOnImpact)
 		return;
 
-	CTFPlayer *pAttacker = ToTFPlayer( GetOwnerPlayer() );
-	if ( !pAttacker )
+	CTFPlayer *pAttacker = ToTFPlayer(GetOwnerPlayer());
+	if(!pAttacker)
 		return;
 
 	int iRocketSpecialist = GetStunLevel();
-	if ( !iRocketSpecialist )
+	if(!iRocketSpecialist)
 		return;
 
 	// Stun
 	float flStunAmount = pTarget->IsMiniBoss() ? 0.85f : 1.f;
-	float flStunTime = RemapValClamped( iRocketSpecialist, 1.f, 4.f, 0.5f, 0.75f );
+	float flStunTime = RemapValClamped(iRocketSpecialist, 1.f, 4.f, 0.5f, 0.75f);
 
-	pTarget->SetAbsVelocity( vec3_origin );
-	pTarget->m_Shared.StunPlayer( flStunTime, flStunAmount, TF_STUN_MOVEMENT | TF_STUN_NO_EFFECTS, pAttacker );
+	pTarget->SetAbsVelocity(vec3_origin);
+	pTarget->m_Shared.StunPlayer(flStunTime, flStunAmount, TF_STUN_MOVEMENT | TF_STUN_NO_EFFECTS, pAttacker);
 
-	if ( TFGameRules()->IsMannVsMachineMode() && pTarget->IsBot() && ( pAttacker->GetTeamNumber() == TF_TEAM_PVE_DEFENDERS ) )
+	if(TFGameRules()->IsMannVsMachineMode() && pTarget->IsBot() &&
+	   (pAttacker->GetTeamNumber() == TF_TEAM_PVE_DEFENDERS))
 	{
-		pAttacker->AwardAchievement( ACHIEVEMENT_TF_MVM_ROCKET_SPECIALIST_STUN_GRIND );
+		pAttacker->AwardAchievement(ACHIEVEMENT_TF_MVM_ROCKET_SPECIALIST_STUN_GRIND);
 	}
 
-
 	// Effect
-	CPVSFilter filter( GetAbsOrigin() );
-	TE_TFParticleEffect( filter, 0.0, "mvm_soldier_shockwave", GetAbsOrigin(), QAngle( 0, 0, 0 ) );
+	CPVSFilter filter(GetAbsOrigin());
+	TE_TFParticleEffect(filter, 0.0, "mvm_soldier_shockwave", GetAbsOrigin(), QAngle(0, 0, 0));
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-int CTFBaseRocket::GetStunLevel( void )
+int CTFBaseRocket::GetStunLevel(void)
 {
-	CTFPlayer *pAttacker = ToTFPlayer( GetOwnerPlayer() );
-	if ( !pAttacker )
+	CTFPlayer *pAttacker = ToTFPlayer(GetOwnerPlayer());
+	if(!pAttacker)
 		return 0;
 
 	int iRocketSpecialist = 0;
-	CALL_ATTRIB_HOOK_INT_ON_OTHER( pAttacker, iRocketSpecialist, rocket_specialist );
+	CALL_ATTRIB_HOOK_INT_ON_OTHER(pAttacker, iRocketSpecialist, rocket_specialist);
 	return iRocketSpecialist;
 }
 
@@ -586,7 +588,7 @@ int CTFBaseRocket::GetStunLevel( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFBaseRocket::DrawRadius( float flRadius )
+void CTFBaseRocket::DrawRadius(float flRadius)
 {
 	Vector pos = GetAbsOrigin();
 	int r = 255;
@@ -595,41 +597,41 @@ void CTFBaseRocket::DrawRadius( float flRadius )
 	bool bDepthTest = true;
 
 	Vector edge, lastEdge;
-	NDebugOverlay::Line( pos, pos + Vector( 0, 0, 50 ), r, g, b, !bDepthTest, flLifetime );
+	NDebugOverlay::Line(pos, pos + Vector(0, 0, 50), r, g, b, !bDepthTest, flLifetime);
 
-	lastEdge = Vector( flRadius + pos.x, pos.y, pos.z );
+	lastEdge = Vector(flRadius + pos.x, pos.y, pos.z);
 	float angle;
-	for( angle=0.0f; angle <= 360.0f; angle += 22.5f )
+	for(angle = 0.0f; angle <= 360.0f; angle += 22.5f)
 	{
-		edge.x = flRadius * cos( DEG2RAD( angle ) ) + pos.x;
+		edge.x = flRadius * cos(DEG2RAD(angle)) + pos.x;
 		edge.y = pos.y;
-		edge.z = flRadius * sin( DEG2RAD( angle ) ) + pos.z;
+		edge.z = flRadius * sin(DEG2RAD(angle)) + pos.z;
 
-		NDebugOverlay::Line( edge, lastEdge, r, g, b, !bDepthTest, flLifetime );
+		NDebugOverlay::Line(edge, lastEdge, r, g, b, !bDepthTest, flLifetime);
 
 		lastEdge = edge;
 	}
 
-	lastEdge = Vector( pos.x, flRadius + pos.y, pos.z );
-	for( angle=0.0f; angle <= 360.0f; angle += 22.5f )
+	lastEdge = Vector(pos.x, flRadius + pos.y, pos.z);
+	for(angle = 0.0f; angle <= 360.0f; angle += 22.5f)
 	{
 		edge.x = pos.x;
-		edge.y = flRadius * cos( DEG2RAD( angle ) ) + pos.y;
-		edge.z = flRadius * sin( DEG2RAD( angle ) ) + pos.z;
+		edge.y = flRadius * cos(DEG2RAD(angle)) + pos.y;
+		edge.z = flRadius * sin(DEG2RAD(angle)) + pos.z;
 
-		NDebugOverlay::Line( edge, lastEdge, r, g, b, !bDepthTest, flLifetime );
+		NDebugOverlay::Line(edge, lastEdge, r, g, b, !bDepthTest, flLifetime);
 
 		lastEdge = edge;
 	}
 
-	lastEdge = Vector( pos.x, flRadius + pos.y, pos.z );
-	for( angle=0.0f; angle <= 360.0f; angle += 22.5f )
+	lastEdge = Vector(pos.x, flRadius + pos.y, pos.z);
+	for(angle = 0.0f; angle <= 360.0f; angle += 22.5f)
 	{
-		edge.x = flRadius * cos( DEG2RAD( angle ) ) + pos.x;
-		edge.y = flRadius * sin( DEG2RAD( angle ) ) + pos.y;
+		edge.x = flRadius * cos(DEG2RAD(angle)) + pos.x;
+		edge.y = flRadius * sin(DEG2RAD(angle)) + pos.y;
 		edge.z = pos.z;
 
-		NDebugOverlay::Line( edge, lastEdge, r, g, b, !bDepthTest, flLifetime );
+		NDebugOverlay::Line(edge, lastEdge, r, g, b, !bDepthTest, flLifetime);
 
 		lastEdge = edge;
 	}
@@ -637,59 +639,58 @@ void CTFBaseRocket::DrawRadius( float flRadius )
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-float CTFBaseRocket::GetRadius() 
-{ 
+float CTFBaseRocket::GetRadius()
+{
 	float flRadius = TF_ROCKET_RADIUS;
-	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( m_hLauncher, flRadius, mult_explosion_radius );
+	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER(m_hLauncher, flRadius, mult_explosion_radius);
 
 	CBaseEntity *pAttacker = GetOwnerPlayer();
-	if ( pAttacker )
+	if(pAttacker)
 	{
 		int iRocketSpecialist = 0;
-		CALL_ATTRIB_HOOK_INT_ON_OTHER( pAttacker, iRocketSpecialist, rocket_specialist );
-		if ( iRocketSpecialist )
+		CALL_ATTRIB_HOOK_INT_ON_OTHER(pAttacker, iRocketSpecialist, rocket_specialist);
+		if(iRocketSpecialist)
 		{
-			bool bDirectHit = ( GetEnemy() && GetEnemy()->GetTeamNumber() != pAttacker->GetTeamNumber() && 
-								( GetEnemy()->IsPlayer() || GetEnemy()->MyCombatCharacterPointer() ) );
+			bool bDirectHit = (GetEnemy() && GetEnemy()->GetTeamNumber() != pAttacker->GetTeamNumber() &&
+							   (GetEnemy()->IsPlayer() || GetEnemy()->MyCombatCharacterPointer()));
 			// If we have the Rocket Specialist attribute and hit an enemy combatant directly...
-			if ( bDirectHit )
+			if(bDirectHit)
 			{
 				// Increased blast radius
-				flRadius *= RemapValClamped( iRocketSpecialist, 1.f, 4.f, 1.15f, 1.6f );
+				flRadius *= RemapValClamped(iRocketSpecialist, 1.f, 4.f, 1.15f, 1.6f);
 				m_bStunOnImpact = true;
 			}
 		}
 
-		CTFPlayer *pTFPlayer = ToTFPlayer( pAttacker );
+		CTFPlayer *pTFPlayer = ToTFPlayer(pAttacker);
 		// Airstrike gets a small blast radius penalty while Rjing
-		if ( pTFPlayer && pTFPlayer->m_Shared.InCond( TF_COND_BLASTJUMPING ) )
+		if(pTFPlayer && pTFPlayer->m_Shared.InCond(TF_COND_BLASTJUMPING))
 		{
 			// Using this attr to key in the AirStrike
 			float flRocketJumpAttackBonus = 1.0f;
-			CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pAttacker, flRocketJumpAttackBonus, rocketjump_attackrate_bonus );
-			if ( flRocketJumpAttackBonus != 1.0f )
+			CALL_ATTRIB_HOOK_FLOAT_ON_OTHER(pAttacker, flRocketJumpAttackBonus, rocketjump_attackrate_bonus);
+			if(flRocketJumpAttackBonus != 1.0f)
 			{
 				flRadius *= 0.80;
 			}
 		}
 	}
 
-	return flRadius; 
+	return flRadius;
 }
-
 
 //-----------------------------------------------------------------------------
 // Checks if the owner is a sentry gun, if so returns the sentry guns owner
 //-----------------------------------------------------------------------------
-CBaseEntity *CTFBaseRocket::GetOwnerPlayer( void ) const
+CBaseEntity *CTFBaseRocket::GetOwnerPlayer(void) const
 {
 	// if the owner is a Sentry, Check its owner
 	CBaseEntity *pOwner = GetOwnerEntity();
-	CObjectSentrygun *pSentry = dynamic_cast<CObjectSentrygun*>( pOwner );
+	CObjectSentrygun *pSentry = dynamic_cast<CObjectSentrygun *>(pOwner);
 
-	if ( pSentry )
+	if(pSentry)
 	{
 		return pSentry->GetOwner();
 	}
@@ -698,33 +699,33 @@ CBaseEntity *CTFBaseRocket::GetOwnerPlayer( void ) const
 
 #endif
 
-#if defined( CLIENT_DLL )
+#if defined(CLIENT_DLL)
 
 //-----------------------------------------------------------------------------
 // Receive the BreakModelRocketDud user message
 //-----------------------------------------------------------------------------
-void __MsgFunc_BreakModelRocketDud( bf_read &msg )
+void __MsgFunc_BreakModelRocketDud(bf_read &msg)
 {
 	int nModelIndex = (int)msg.ReadShort();
-	CUtlVector<breakmodel_t>	aGibs;
-	BuildGibList( aGibs, nModelIndex, 1.0f, COLLISION_GROUP_NONE );
-	if ( !aGibs.Count() )
+	CUtlVector<breakmodel_t> aGibs;
+	BuildGibList(aGibs, nModelIndex, 1.0f, COLLISION_GROUP_NONE);
+	if(!aGibs.Count())
 		return;
 
 	// Get the origin & angles
 	Vector vecOrigin, vecForward;
 	QAngle vecAngles;
-	msg.ReadBitVec3Coord( vecOrigin );
-	msg.ReadBitAngles( vecAngles );
+	msg.ReadBitVec3Coord(vecOrigin);
+	msg.ReadBitAngles(vecAngles);
 
-	AngleVectors( vecAngles, &vecForward );
+	AngleVectors(vecAngles, &vecForward);
 
-	Vector vecBreakVelocity = Vector(0,0,300) + vecForward*-400;
-	AngularImpulse angularImpulse( 0, RandomFloat( -500, -3000 ), 0 );
-	breakablepropparams_t breakParams( vecOrigin, vecAngles, vecBreakVelocity, angularImpulse );
+	Vector vecBreakVelocity = Vector(0, 0, 300) + vecForward * -400;
+	AngularImpulse angularImpulse(0, RandomFloat(-500, -3000), 0);
+	breakablepropparams_t breakParams(vecOrigin, vecAngles, vecBreakVelocity, angularImpulse);
 	breakParams.impactEnergyScale = 1.0f;
 
-	CreateGibsFromList( aGibs, nModelIndex, NULL, breakParams, NULL, -1 , false, true );
+	CreateGibsFromList(aGibs, nModelIndex, NULL, breakParams, NULL, -1, false, true);
 }
 
 #endif

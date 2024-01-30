@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -22,14 +22,14 @@ class CSkillSelectionDialog;
 //-----------------------------------------------------------------------------
 class CCommentaryDialog : public vgui::Frame
 {
-	DECLARE_CLASS_SIMPLE( CCommentaryDialog, vgui::Frame );
+	DECLARE_CLASS_SIMPLE(CCommentaryDialog, vgui::Frame);
 
 public:
 	CCommentaryDialog(vgui::Panel *parent);
 	~CCommentaryDialog();
 
-	virtual void OnClose( void );
-	virtual void OnCommand( const char *command );
+	virtual void OnClose(void);
+	virtual void OnCommand(const char *command);
 	virtual void OnKeyCodePressed(vgui::KeyCode code);
 };
 
@@ -38,13 +38,13 @@ public:
 //-----------------------------------------------------------------------------
 class CPostCommentaryDialog : public vgui::Frame
 {
-	DECLARE_CLASS_SIMPLE( CPostCommentaryDialog, vgui::Frame );
+	DECLARE_CLASS_SIMPLE(CPostCommentaryDialog, vgui::Frame);
 
 public:
 	CPostCommentaryDialog(vgui::Panel *parent);
 	~CPostCommentaryDialog();
 
-	virtual void OnFinishedClose( void );
+	virtual void OnFinishedClose(void);
 	virtual void OnKeyCodeTyped(vgui::KeyCode code);
 	virtual void OnKeyCodePressed(vgui::KeyCode code);
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -33,9 +33,7 @@ CDialogAddServer::CDialogAddServer(IGameList *gameList) : Frame(NULL, "DialogAdd
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CDialogAddServer::~CDialogAddServer()
-{
-}
+CDialogAddServer::~CDialogAddServer() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Activates this dialog
@@ -47,12 +45,12 @@ void CDialogAddServer::Open()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *command - 
+// Purpose:
+// Input  : *command -
 //-----------------------------------------------------------------------------
 void CDialogAddServer::OnCommand(const char *command)
 {
-	if (!stricmp(command, "OK"))
+	if(!stricmp(command, "OK"))
 	{
 		OnOK();
 	}
@@ -70,17 +68,18 @@ void CDialogAddServer::OnOK()
 	// try and parse out IP address
 	const char *address = GetControlString("ServerNameText", "");
 	netadr_t netaddr;
-	if (net->StringToAdr(address, &netaddr))
+	if(net->StringToAdr(address, &netaddr))
 	{
 		// net address successfully parsed, add the server to the game list
 		serveritem_t server;
 		memset(&server, 0, sizeof(server));
-		for (int i = 0; i < 4; i++)
+		for(int i = 0; i < 4; i++)
 		{
 			server.ip[i] = netaddr.ip[i];
 		}
-		server.port = (netaddr.port & 0xff) << 8 | (netaddr.port & 0xff00) >> 8;;
-		if (!server.port)
+		server.port = (netaddr.port & 0xff) << 8 | (netaddr.port & 0xff00) >> 8;
+		;
+		if(!server.port)
 		{
 			// use the default port since it was not entered
 			server.port = 27015;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "movieobjects/dmeoperator.h"
@@ -9,23 +9,17 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
+//-----------------------------------------------------------------------------
+// Expose this class to the scene database
+//-----------------------------------------------------------------------------
+IMPLEMENT_ABSTRACT_ELEMENT(DmeOperator, CDmeOperator);
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Purpose:
 //-----------------------------------------------------------------------------
-IMPLEMENT_ABSTRACT_ELEMENT( DmeOperator, CDmeOperator );
+void CDmeOperator::OnConstruction() {}
 
-
-//-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-void CDmeOperator::OnConstruction()
-{
-}
-
-void CDmeOperator::OnDestruction()
-{
-}
+void CDmeOperator::OnDestruction() {}
 
 //-----------------------------------------------------------------------------
 // IsDirty - ie needs to operate

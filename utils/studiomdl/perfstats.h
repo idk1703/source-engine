@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -20,6 +20,6 @@ enum
 	SPEWPERFSTATS_SPREADSHEET = 4,
 };
 
-void SpewPerfStats( studiohdr_t *pStudioHdr, const char *pFilename, unsigned int flags );
+void SpewPerfStats(studiohdr_t *pStudioHdr, const char *pFilename, unsigned int flags);
 
 #endif // PERFSTATS_H

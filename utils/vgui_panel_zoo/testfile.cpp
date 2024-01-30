@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -27,30 +27,30 @@
 
 //-----------------------------------------------------------------------------
 // Purpose: Warning/Msg call back through this API
-// Input  : type - 
-//			*pMsg - 
+// Input  : type -
+//			*pMsg -
 // Output : SpewRetval_t
 //-----------------------------------------------------------------------------
-SpewRetval_t SpewFunc( SpewType_t type, char const *pMsg )
-{	
-	switch ( type )
+SpewRetval_t SpewFunc(SpewType_t type, char const *pMsg)
+{
+	switch(type)
 	{
 
-	default:
-	case SPEW_MESSAGE:
-	case SPEW_ASSERT:
-	case SPEW_LOG:
-		OutputDebugString( pMsg );
-		break;
-	case SPEW_WARNING:
-		OutputDebugString( pMsg );
-		break;
-	case SPEW_ERROR:
-		OutputDebugString( pMsg );
-		exit( -1 );
-		break;
+		default:
+		case SPEW_MESSAGE:
+		case SPEW_ASSERT:
+		case SPEW_LOG:
+			OutputDebugString(pMsg);
+			break;
+		case SPEW_WARNING:
+			OutputDebugString(pMsg);
+			break;
+		case SPEW_ERROR:
+			OutputDebugString(pMsg);
+			exit(-1);
+			break;
 	}
-	
+
 	return SPEW_CONTINUE;
 }
 
@@ -60,17 +60,16 @@ SpewRetval_t SpewFunc( SpewType_t type, char const *pMsg )
 //-----------------------------------------------------------------------------
 static CreateInterfaceFn s_pFactoryList[2];
 
-void *VGuiFactory( const char *pName, int *pReturnCode )
+void *VGuiFactory(const char *pName, int *pReturnCode)
 {
-	for ( int i = 0; i < ARRAYSIZE( s_pFactoryList ); ++i )
+	for(int i = 0; i < ARRAYSIZE(s_pFactoryList); ++i)
 	{
-		void *pInterface = s_pFactoryList[i]( pName, pReturnCode );
-		if ( pInterface )
+		void *pInterface = s_pFactoryList[i](pName, pReturnCode);
+		if(pInterface)
 			return pInterface;
 	}
 	return NULL;
 }
-
 
 //-----------------------------------------------------------------------------
 // The application object
@@ -87,46 +86,42 @@ public:
 	virtual void Destroy() {}
 };
 
-DEFINE_WINDOWED_STEAM_APPLICATION_OBJECT( CPanelZooApp );
-
+DEFINE_WINDOWED_STEAM_APPLICATION_OBJECT(CPanelZooApp);
 
 //-----------------------------------------------------------------------------
 // The application object
 //-----------------------------------------------------------------------------
 bool CPanelZooApp::Create()
 {
-	SpewOutputFunc( SpewFunc );
-	SpewActivate( "panelzoo", 2 );
+	SpewOutputFunc(SpewFunc);
+	SpewActivate("panelzoo", 2);
 
-	AppSystemInfo_t appSystems[] = 
-	{
-		{ "inputsystem.dll",		INPUTSYSTEM_INTERFACE_VERSION },
-		{ "vgui2.dll",				VGUI_IVGUI_INTERFACE_VERSION },
-		{ "", "" }	// Required to terminate the list
+	AppSystemInfo_t appSystems[] = {
+		{"inputsystem.dll", INPUTSYSTEM_INTERFACE_VERSION},
+		{"vgui2.dll", VGUI_IVGUI_INTERFACE_VERSION},
+		{"", ""} // Required to terminate the list
 	};
 
-	return AddSystems( appSystems );
+	return AddSystems(appSystems);
 }
-
 
 //-----------------------------------------------------------------------------
 // Setup
 //-----------------------------------------------------------------------------
 bool CPanelZooApp::PreInit()
 {
-	if ( !BaseClass::PreInit() )
+	if(!BaseClass::PreInit())
 		return false;
 
-	if ( !BaseClass::SetupSearchPaths( NULL, false, true ) )
+	if(!BaseClass::SetupSearchPaths(NULL, false, true))
 	{
-		::MessageBox( NULL, "Error", "Unable to initialize file system\n", MB_OK );
+		::MessageBox(NULL, "Error", "Unable to initialize file system\n", MB_OK);
 		return false;
 	}
 
-	g_pFullFileSystem->AddSearchPath( "platform", "PLATFORM" );
+	g_pFullFileSystem->AddSearchPath("platform", "PLATFORM");
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Entry point
@@ -134,23 +129,23 @@ bool CPanelZooApp::PreInit()
 int CPanelZooApp::Main()
 {
 	// In order to load resource files the file must be in your vgui filesystem path.
-//	g_pFullFileSystem->AddSearchPath("../", "resources");
+	//	g_pFullFileSystem->AddSearchPath("../", "resources");
 
 	// Init the surface
-//	vgui::surface()->Init();
+	//	vgui::surface()->Init();
 
 	// Make a embedded panel
 	vgui::Panel *panel = new vgui::Panel(NULL, "TopPanel");
-	vgui::surface()->SetEmbeddedPanel( panel->GetVPanel() );
+	vgui::surface()->SetEmbeddedPanel(panel->GetVPanel());
 
 	// Load the scheme
-	if (!vgui::scheme()->LoadSchemeFromFile( "//platform/Resource/SourceScheme.res", "PANELZOO" ))
+	if(!vgui::scheme()->LoadSchemeFromFile("//platform/Resource/SourceScheme.res", "PANELZOO"))
 		return 1;
 
 	// localization
-	g_pVGuiLocalize->AddFile( "Resource/platform_english.txt" );
-	g_pVGuiLocalize->AddFile( "Resource/valve_%language%.txt" );
-	g_pVGuiLocalize->AddFile( "Resource/vgui_%language%.txt" );
+	g_pVGuiLocalize->AddFile("Resource/platform_english.txt");
+	g_pVGuiLocalize->AddFile("Resource/valve_%language%.txt");
+	g_pVGuiLocalize->AddFile("Resource/vgui_%language%.txt");
 
 	// Start vgui
 	vgui::ivgui()->Start();
@@ -160,19 +155,13 @@ int CPanelZooApp::Main()
 	panelZoo->Activate();
 
 	// Run app frame loop
-	while (vgui::ivgui()->IsRunning())
+	while(vgui::ivgui()->IsRunning())
 	{
 		vgui::ivgui()->RunFrame();
 	}
 
 	delete panelZoo;
-//	delete panel;
+	//	delete panel;
 
 	return 1;
 }
-
-
-
-
-
-

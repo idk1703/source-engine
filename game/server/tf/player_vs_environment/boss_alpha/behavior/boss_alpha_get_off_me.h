@@ -7,16 +7,18 @@
 
 #ifdef TF_RAID_MODE
 
-
 //----------------------------------------------------------------------------
-class CBossAlphaGetOffMe : public Action< CBossAlpha >
+class CBossAlphaGetOffMe : public Action<CBossAlpha>
 {
 public:
-	virtual ActionResult< CBossAlpha >	OnStart( CBossAlpha *me, Action< CBossAlpha > *priorAction );
-	virtual ActionResult< CBossAlpha >	Update( CBossAlpha *me, float interval );
-	virtual void						OnEnd( CBossAlpha *me, Action< CBossAlpha > *nextAction );
+	virtual ActionResult<CBossAlpha> OnStart(CBossAlpha *me, Action<CBossAlpha> *priorAction);
+	virtual ActionResult<CBossAlpha> Update(CBossAlpha *me, float interval);
+	virtual void OnEnd(CBossAlpha *me, Action<CBossAlpha> *nextAction);
 
-	virtual const char *GetName( void ) const	{ return "GetOffMe"; }		// return name of this action
+	virtual const char *GetName(void) const
+	{
+		return "GetOffMe";
+	} // return name of this action
 
 private:
 	CountdownTimer m_timer;

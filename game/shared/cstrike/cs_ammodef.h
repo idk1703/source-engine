@@ -21,8 +21,8 @@ class ConVar;
 
 struct CSAmmoCost
 {
-	int	buySize;
-	int	cost;
+	int buySize;
+	int cost;
 };
 
 //=============================================================================
@@ -32,24 +32,20 @@ class CCSAmmoDef : public CAmmoDef
 {
 
 public:
-
-	void AddAmmoCost( char const* name, int cost, int buySize );
+	void AddAmmoCost(char const *name, int cost, int buySize);
 
 	CCSAmmoDef(void);
-	~CCSAmmoDef( void );
+	~CCSAmmoDef(void);
 
-	int GetBuySize( int nAmmoIndex ) const;
-	int GetCost( int nAmmoIndex ) const;
+	int GetBuySize(int nAmmoIndex) const;
+	int GetCost(int nAmmoIndex) const;
 
 private:
-	CSAmmoCost	m_csAmmo[MAX_AMMO_TYPES];
+	CSAmmoCost m_csAmmo[MAX_AMMO_TYPES];
 };
-
 
 // Get the global ammodef object. This is usually implemented in each mod's game rules file somewhere,
 // so the mod can setup custom ammo types.
-CCSAmmoDef* GetCSAmmoDef();
-
+CCSAmmoDef *GetCSAmmoDef();
 
 #endif // CS_AMMODEF_H
- 

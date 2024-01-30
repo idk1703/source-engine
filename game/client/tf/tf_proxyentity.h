@@ -17,11 +17,12 @@ abstract_class CBaseInvisMaterialProxy : public CEntityMaterialProxy
 public:
 	CBaseInvisMaterialProxy();
 
-	virtual bool Init( IMaterial *pMaterial, KeyValues* pKeyValues ) OVERRIDE;	
+	virtual bool Init(IMaterial * pMaterial, KeyValues * pKeyValues) OVERRIDE;
 	virtual void Release() OVERRIDE;
-	virtual IMaterial* GetMaterial() OVERRIDE;
+	virtual IMaterial *GetMaterial() OVERRIDE;
+
 protected:
-	virtual void OnBindNotEntity( void *pRenderable ) OVERRIDE;
+	virtual void OnBindNotEntity(void *pRenderable) OVERRIDE;
 	IMaterialVar *m_pPercentInvisible;
 };
 

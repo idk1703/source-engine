@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
 // Purpose:			The "weapon" used to build objects
-//					
+//
 //
 // $Workfile:     $
 // $Date:         $
@@ -26,81 +26,83 @@ extern ISoundEmitterSystemBase *soundemitterbase;
 extern ConVar tf2_object_hard_limits;
 extern ConVar tf_fastbuild;
 
+EXTERN_SEND_TABLE
+(DT_BaseCombatWeapon)
 
-EXTERN_SEND_TABLE(DT_BaseCombatWeapon)
+	BEGIN_NETWORK_TABLE_NOBASE(CTFWeaponBuilder, DT_BuilderLocalData)
+		SendPropInt(SENDINFO(m_iObjectType), BUILDER_OBJECT_BITS, SPROP_UNSIGNED),
+	SendPropEHandle(SENDINFO(m_hObjectBeingBuilt)),
+	SendPropArray3(SENDINFO_ARRAY3(m_aBuildableObjectTypes), SendPropBool(SENDINFO_ARRAY(m_aBuildableObjectTypes))),
+END_NETWORK_TABLE
+()
 
-BEGIN_NETWORK_TABLE_NOBASE( CTFWeaponBuilder, DT_BuilderLocalData )
-	SendPropInt( SENDINFO( m_iObjectType ), BUILDER_OBJECT_BITS, SPROP_UNSIGNED ),
-	SendPropEHandle( SENDINFO( m_hObjectBeingBuilt ) ),
-	SendPropArray3( SENDINFO_ARRAY3( m_aBuildableObjectTypes ), SendPropBool( SENDINFO_ARRAY( m_aBuildableObjectTypes ) ) ),
-END_NETWORK_TABLE()
+	IMPLEMENT_SERVERCLASS_ST(CTFWeaponBuilder, DT_TFWeaponBuilder)
+		SendPropInt(SENDINFO(m_iBuildState), 4, SPROP_UNSIGNED),
+	SendPropDataTable("BuilderLocalData", 0, &REFERENCE_SEND_TABLE(DT_BuilderLocalData),
+					  SendProxy_SendLocalWeaponDataTable),
+	SendPropInt(SENDINFO(m_iObjectMode), 4, SPROP_UNSIGNED), SendPropFloat(SENDINFO(m_flWheatleyTalkingUntil)),
+END_SEND_TABLE
+()
 
-IMPLEMENT_SERVERCLASS_ST(CTFWeaponBuilder, DT_TFWeaponBuilder)
-	SendPropInt( SENDINFO( m_iBuildState ), 4, SPROP_UNSIGNED ),
-	SendPropDataTable( "BuilderLocalData", 0, &REFERENCE_SEND_TABLE( DT_BuilderLocalData ), SendProxy_SendLocalWeaponDataTable ),
-	SendPropInt( SENDINFO( m_iObjectMode ) , 4, SPROP_UNSIGNED ),
-	SendPropFloat( SENDINFO( m_flWheatleyTalkingUntil) ),
-END_SEND_TABLE()
-
-LINK_ENTITY_TO_CLASS( tf_weapon_builder, CTFWeaponBuilder );
-PRECACHE_WEAPON_REGISTER( tf_weapon_builder );
+	LINK_ENTITY_TO_CLASS(tf_weapon_builder, CTFWeaponBuilder);
+PRECACHE_WEAPON_REGISTER(tf_weapon_builder);
 
 //
 
-IMPLEMENT_SERVERCLASS_ST( CTFWeaponSapper, DT_TFWeaponSapper )
-	SendPropFloat( SENDINFO( m_flChargeBeginTime ) ),
-END_SEND_TABLE()
+IMPLEMENT_SERVERCLASS_ST(CTFWeaponSapper, DT_TFWeaponSapper)
+SendPropFloat(SENDINFO(m_flChargeBeginTime)),
+END_SEND_TABLE
+()
 
-LINK_ENTITY_TO_CLASS( tf_weapon_sapper, CTFWeaponSapper );
-PRECACHE_WEAPON_REGISTER( tf_weapon_sapper );
-
+	LINK_ENTITY_TO_CLASS(tf_weapon_sapper, CTFWeaponSapper);
+PRECACHE_WEAPON_REGISTER(tf_weapon_sapper);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFWeaponBuilder::CTFWeaponBuilder()
 {
-	m_iObjectType.Set( BUILDER_INVALID_OBJECT );
+	m_iObjectType.Set(BUILDER_INVALID_OBJECT);
 	m_iObjectMode = 0;
 	m_bAttack3Down = false;
 
-	//Sapper VO Pack stuff
-	WheatleyReset( true );
+	// Sapper VO Pack stuff
+	WheatleyReset(true);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFWeaponBuilder::~CTFWeaponBuilder()
 {
 	StopPlacement();
-	if (m_pkvWavList)
+	if(m_pkvWavList)
 	{
 		m_pkvWavList->deleteThis();
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFWeaponBuilder::SetSubType( int iSubType )
+void CTFWeaponBuilder::SetSubType(int iSubType)
 {
 	m_iObjectType = iSubType;
-	
+
 	// m_iViewModelIndex is set by the base Precache(), which didn't know what
 	// type of object we built, so it didn't get the right viewmodel index.
 	// Now that our data is filled in, go and get the right index.
 	const char *pszViewModel = GetViewModel(0);
-	if ( pszViewModel && pszViewModel[0] )
+	if(pszViewModel && pszViewModel[0])
 	{
-		m_iViewModelIndex = CBaseEntity::PrecacheModel( pszViewModel );
+		m_iViewModelIndex = CBaseEntity::PrecacheModel(pszViewModel);
 	}
 
-	if ( m_iObjectType == OBJ_ATTACHMENT_SAPPER )
+	if(m_iObjectType == OBJ_ATTACHMENT_SAPPER)
 	{
-		if ( IsWheatleySapper() )
+		if(IsWheatleySapper())
 		{
-			if (m_pkvWavList)
+			if(m_pkvWavList)
 			{
 				m_pkvWavList->deleteThis();
 			}
@@ -108,50 +110,49 @@ void CTFWeaponBuilder::SetSubType( int iSubType )
 		}
 	}
 
-	BaseClass::SetSubType( iSubType );
+	BaseClass::SetSubType(iSubType);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFWeaponBuilder::Precache( void )
+void CTFWeaponBuilder::Precache(void)
 {
 	BaseClass::Precache();
 
 	// Precache all the viewmodels we could possibly be building
-	for ( int iObj=0; iObj < OBJ_LAST; iObj++ )
+	for(int iObj = 0; iObj < OBJ_LAST; iObj++)
 	{
-		const CObjectInfo *pInfo = GetObjectInfo( iObj );
+		const CObjectInfo *pInfo = GetObjectInfo(iObj);
 
-		if ( pInfo )
+		if(pInfo)
 		{
-			if ( pInfo->m_pViewModel )
+			if(pInfo->m_pViewModel)
 			{
-				PrecacheModel( pInfo->m_pViewModel );
+				PrecacheModel(pInfo->m_pViewModel);
 			}
 
-			if ( pInfo->m_pPlayerModel )
+			if(pInfo->m_pPlayerModel)
 			{
-				PrecacheModel( pInfo->m_pPlayerModel );
+				PrecacheModel(pInfo->m_pPlayerModel);
 			}
 		}
 	}
-
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CTFWeaponBuilder::CanDeploy( void )
+bool CTFWeaponBuilder::CanDeploy(void)
 {
-	CTFPlayer *pPlayer = ToTFPlayer( GetOwner() );
-	if (!pPlayer)
+	CTFPlayer *pPlayer = ToTFPlayer(GetOwner());
+	if(!pPlayer)
 		return false;
 
-	if ( pPlayer->m_Shared.IsCarryingObject() )
+	if(pPlayer->m_Shared.IsCarryingObject())
 		return BaseClass::CanDeploy();
 
-	if ( pPlayer->CanBuild( m_iObjectType, m_iObjectMode ) != CB_CAN_BUILD )
+	if(pPlayer->CanBuild(m_iObjectType, m_iObjectMode) != CB_CAN_BUILD)
 	{
 		return false;
 	}
@@ -160,49 +161,49 @@ bool CTFWeaponBuilder::CanDeploy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CTFWeaponBuilder::Deploy( void )
+bool CTFWeaponBuilder::Deploy(void)
 {
 	bool bDeploy = BaseClass::Deploy();
 
-	if ( bDeploy )
+	if(bDeploy)
 	{
-		SetCurrentState( BS_PLACING );
-		StartPlacement(); 
+		SetCurrentState(BS_PLACING);
+		StartPlacement();
 		m_flNextPrimaryAttack = gpGlobals->curtime + 0.35f;
-		m_flNextSecondaryAttack = gpGlobals->curtime;		// asap
+		m_flNextSecondaryAttack = gpGlobals->curtime; // asap
 
-		CTFPlayer *pPlayer = ToTFPlayer( GetOwner() );
-		if (!pPlayer)
+		CTFPlayer *pPlayer = ToTFPlayer(GetOwner());
+		if(!pPlayer)
 			return false;
 
-		pPlayer->SetNextAttack( gpGlobals->curtime );
+		pPlayer->SetNextAttack(gpGlobals->curtime);
 
-		m_iWorldModelIndex = modelinfo->GetModelIndex( GetWorldModel() );
+		m_iWorldModelIndex = modelinfo->GetModelIndex(GetWorldModel());
 
 		m_flNextDenySound = 0;
 
 		// Set off the hint here, because we don't know until now if our building
 		// is rotate-able or not.
-		if ( m_hObjectBeingBuilt && !m_hObjectBeingBuilt->MustBeBuiltOnAttachmentPoint() )
+		if(m_hObjectBeingBuilt && !m_hObjectBeingBuilt->MustBeBuiltOnAttachmentPoint())
 		{
 			// set the alt-fire hint so it gets removed when we holster
 			m_iAltFireHint = HINT_ALTFIRE_ROTATE_BUILDING;
-			pPlayer->StartHintTimer( m_iAltFireHint );
+			pPlayer->StartHintTimer(m_iAltFireHint);
 		}
 
-		pPlayer->PlayWearableAnimsForPlaybackEvent( WAP_START_BUILDING );
+		pPlayer->PlayWearableAnimsForPlaybackEvent(WAP_START_BUILDING);
 	}
 
 	return bDeploy;
 }
 
-Activity CTFWeaponBuilder::GetDrawActivity( void )
+Activity CTFWeaponBuilder::GetDrawActivity(void)
 {
 	// sapper used to call different draw animations , one when invis and one when not.
 	// now you can go invis *while* deploying, so let's always use the one-handed deploy.
-	if ( GetType() == OBJ_ATTACHMENT_SAPPER )
+	if(GetType() == OBJ_ATTACHMENT_SAPPER)
 	{
 		return ACT_VM_DRAW_DEPLOYED;
 	}
@@ -213,41 +214,42 @@ Activity CTFWeaponBuilder::GetDrawActivity( void )
 //-----------------------------------------------------------------------------
 // Purpose: Stop placement when holstering
 //-----------------------------------------------------------------------------
-bool CTFWeaponBuilder::Holster( CBaseCombatWeapon *pSwitchingTo )
+bool CTFWeaponBuilder::Holster(CBaseCombatWeapon *pSwitchingTo)
 {
-	CTFPlayer *pOwner = ToTFPlayer( GetOwner() );
-	if ( !pOwner )
-		return false; 
-
-	if ( pOwner->m_Shared.IsCarryingObject() )
+	CTFPlayer *pOwner = ToTFPlayer(GetOwner());
+	if(!pOwner)
 		return false;
 
-	if ( m_iObjectType == OBJ_ATTACHMENT_SAPPER )
+	if(pOwner->m_Shared.IsCarryingObject())
+		return false;
+
+	if(m_iObjectType == OBJ_ATTACHMENT_SAPPER)
 	{
-		if( IsWheatleySapper() )
+		if(IsWheatleySapper())
 		{
 			pOwner->ClearSappingTracking();
-			if ( pOwner->m_Shared.GetState() == TF_STATE_DYING)
+			if(pOwner->m_Shared.GetState() == TF_STATE_DYING)
 			{
-				if ( RandomInt( 0, 4) == 0 )
+				if(RandomInt(0, 4) == 0)
 				{
-					WheatleyEmitSound( "PSap.DeathLong", true );
+					WheatleyEmitSound("PSap.DeathLong", true);
 				}
 				else
 				{
-					WheatleyEmitSound( "PSap.Death", true );
+					WheatleyEmitSound("PSap.Death", true);
 				}
 			}
 			else
 			{
 				float flSoundDuration;
-				if ( gpGlobals->curtime - m_flWheatleyLastDeploy < 1.5 && gpGlobals->curtime - m_flWheatleyLastDeploy > -1.0 )
+				if(gpGlobals->curtime - m_flWheatleyLastDeploy < 1.5 &&
+				   gpGlobals->curtime - m_flWheatleyLastDeploy > -1.0)
 				{
-					flSoundDuration = WheatleyEmitSound( "PSap.HolsterFast");
+					flSoundDuration = WheatleyEmitSound("PSap.HolsterFast");
 				}
 				else
 				{
-					flSoundDuration = WheatleyEmitSound( "PSap.Holster");
+					flSoundDuration = WheatleyEmitSound("PSap.Holster");
 				}
 				m_flWheatleyLastHolster = gpGlobals->curtime + flSoundDuration;
 			}
@@ -256,49 +258,48 @@ bool CTFWeaponBuilder::Holster( CBaseCombatWeapon *pSwitchingTo )
 
 	m_flNextVoicePakIdleStartTime = -1.0f;
 
-	if ( m_iBuildState == BS_PLACING || m_iBuildState == BS_PLACING_INVALID )
+	if(m_iBuildState == BS_PLACING || m_iBuildState == BS_PLACING_INVALID)
 	{
-		SetCurrentState( BS_IDLE );
+		SetCurrentState(BS_IDLE);
 	}
 	StopPlacement();
 
-	pOwner->PlayWearableAnimsForPlaybackEvent( WAP_STOP_BUILDING );
+	pOwner->PlayWearableAnimsForPlaybackEvent(WAP_STOP_BUILDING);
 
 	return BaseClass::Holster(pSwitchingTo);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFWeaponBuilder::ItemPostFrame( void )
+void CTFWeaponBuilder::ItemPostFrame(void)
 {
-	CTFPlayer *pOwner = ToTFPlayer( GetOwner() );
-	if ( !pOwner )
+	CTFPlayer *pOwner = ToTFPlayer(GetOwner());
+	if(!pOwner)
 		return;
 
 	// If we're building, and our team has lost, stop placing the object
-	if ( m_hObjectBeingBuilt.Get() && 
-		TFGameRules()->State_Get() == GR_STATE_TEAM_WIN && 
-		pOwner->GetTeamNumber() != TFGameRules()->GetWinningTeam() )
+	if(m_hObjectBeingBuilt.Get() && TFGameRules()->State_Get() == GR_STATE_TEAM_WIN &&
+	   pOwner->GetTeamNumber() != TFGameRules()->GetWinningTeam())
 	{
 		StopPlacement();
 		return;
 	}
 
 	// Check that I still have enough resources to build this item
-	if ( pOwner->CanBuild( m_iObjectType, m_iObjectMode ) != CB_CAN_BUILD )
+	if(pOwner->CanBuild(m_iObjectType, m_iObjectMode) != CB_CAN_BUILD)
 	{
 		SwitchOwnersWeaponToLast();
 	}
 
-	if ( ( pOwner->m_nButtons & IN_ATTACK ) && ( m_flNextPrimaryAttack <= gpGlobals->curtime ) )
+	if((pOwner->m_nButtons & IN_ATTACK) && (m_flNextPrimaryAttack <= gpGlobals->curtime))
 	{
 		PrimaryAttack();
 	}
 
-	if ( pOwner->m_nButtons & IN_ATTACK2 )
+	if(pOwner->m_nButtons & IN_ATTACK2)
 	{
-		if ( m_flNextSecondaryAttack <= gpGlobals->curtime )
+		if(m_flNextSecondaryAttack <= gpGlobals->curtime)
 		{
 			SecondaryAttack();
 		}
@@ -310,12 +311,12 @@ void CTFWeaponBuilder::ItemPostFrame( void )
 
 	// Attrib
 	int iMarkForDeathOnPickup = 0;
-	if ( pOwner->m_Shared.IsCarryingObject () )
+	if(pOwner->m_Shared.IsCarryingObject())
 	{
-		CALL_ATTRIB_HOOK_INT_ON_OTHER( pOwner, iMarkForDeathOnPickup, mark_for_death_on_building_pickup );
-		if ( iMarkForDeathOnPickup )
+		CALL_ATTRIB_HOOK_INT_ON_OTHER(pOwner, iMarkForDeathOnPickup, mark_for_death_on_building_pickup);
+		if(iMarkForDeathOnPickup)
 		{
-			pOwner->m_Shared.AddCond( TF_COND_MARKEDFORDEATH_SILENT, 3.f );
+			pOwner->m_Shared.AddCond(TF_COND_MARKEDFORDEATH_SILENT, 3.f);
 		}
 	}
 
@@ -325,13 +326,13 @@ void CTFWeaponBuilder::ItemPostFrame( void )
 //-----------------------------------------------------------------------------
 // Purpose: Start placing or building the currently selected object
 //-----------------------------------------------------------------------------
-void CTFWeaponBuilder::PrimaryAttack( void )
+void CTFWeaponBuilder::PrimaryAttack(void)
 {
-	CTFPlayer *pOwner = ToTFPlayer( GetOwner() );
-	if ( !pOwner )
+	CTFPlayer *pOwner = ToTFPlayer(GetOwner());
+	if(!pOwner)
 		return;
 
-	if ( !CanAttack() )
+	if(!CanAttack())
 		return;
 
 	// Necessary so that we get the latest building position for the test, otherwise
@@ -339,70 +340,71 @@ void CTFWeaponBuilder::PrimaryAttack( void )
 	UpdatePlacementState();
 
 	// What state should we move to?
-	switch( m_iBuildState )
+	switch(m_iBuildState)
 	{
-	case BS_IDLE:
+		case BS_IDLE:
 		{
 			// Idle state starts selection
-			SetCurrentState( BS_SELECTING );
+			SetCurrentState(BS_SELECTING);
 		}
 		break;
 
-	case BS_SELECTING:
+		case BS_SELECTING:
 		{
 			// Do nothing, client handles selection
 			return;
 		}
 		break;
 
-	case BS_PLACING:
+		case BS_PLACING:
 		{
-			if ( m_hObjectBeingBuilt )
+			if(m_hObjectBeingBuilt)
 			{
 				int iFlags = m_hObjectBeingBuilt->GetObjectFlags();
 
-				// Tricky, because this can re-calc the object position and change whether its a valid 
+				// Tricky, because this can re-calc the object position and change whether its a valid
 				// pos or not. Best not to do this only in debug, but we can be pretty sure that this
 				// will give the same result as was calculated in UpdatePlacementState() above.
-				Assert( IsValidPlacement() );
+				Assert(IsValidPlacement());
 
 				// If we're placing an attachment, like a sapper, play a placement animation on the owner
-				if ( m_hObjectBeingBuilt->MustBeBuiltOnAttachmentPoint() )
+				if(m_hObjectBeingBuilt->MustBeBuiltOnAttachmentPoint())
 				{
-					pOwner->DoAnimationEvent( PLAYERANIMEVENT_ATTACK_GRENADE );
+					pOwner->DoAnimationEvent(PLAYERANIMEVENT_ATTACK_GRENADE);
 				}
 
 				CBaseEntity *pBuiltOnObject = m_hObjectBeingBuilt->GetBuiltOnObject();
-				
-				if ( pBuiltOnObject && m_iObjectType == OBJ_ATTACHMENT_SAPPER )
+
+				if(pBuiltOnObject && m_iObjectType == OBJ_ATTACHMENT_SAPPER)
 				{
 					m_vLastKnownSapPos = pBuiltOnObject->GetAbsOrigin();
 					m_hLastSappedBuilding = pBuiltOnObject;
 				}
 				StartBuilding();
 
-				if ( m_iObjectType == OBJ_ATTACHMENT_SAPPER )
+				if(m_iObjectType == OBJ_ATTACHMENT_SAPPER)
 				{
 					// tell players a sapper was just placed (so bots can react)
-					CUtlVector< CTFPlayer * > playerVector;
-					CollectPlayers( &playerVector, TEAM_ANY, COLLECT_ONLY_LIVING_PLAYERS );
+					CUtlVector<CTFPlayer *> playerVector;
+					CollectPlayers(&playerVector, TEAM_ANY, COLLECT_ONLY_LIVING_PLAYERS);
 
-					for( int i=0; i<playerVector.Count(); ++i )
-						playerVector[i]->OnSapperPlaced( pBuiltOnObject );
+					for(int i = 0; i < playerVector.Count(); ++i)
+						playerVector[i]->OnSapperPlaced(pBuiltOnObject);
 
 					// if we just placed a sapper on a teleporter...try to sap the match, too?
-					if ( pBuiltOnObject )
+					if(pBuiltOnObject)
 					{
-						CObjectTeleporter *pTeleporter = dynamic_cast<CObjectTeleporter*>( pBuiltOnObject );
-						if ( pTeleporter && pTeleporter->GetMatchingTeleporter() && !pTeleporter->GetMatchingTeleporter()->HasSapper() )
+						CObjectTeleporter *pTeleporter = dynamic_cast<CObjectTeleporter *>(pBuiltOnObject);
+						if(pTeleporter && pTeleporter->GetMatchingTeleporter() &&
+						   !pTeleporter->GetMatchingTeleporter()->HasSapper())
 						{
 							// Start placing another
-							SetCurrentState( BS_PLACING );
-							StartPlacement(); 
-	
-							if ( m_hObjectBeingBuilt.Get() )
+							SetCurrentState(BS_PLACING);
+							StartPlacement();
+
+							if(m_hObjectBeingBuilt.Get())
 							{
-								m_hObjectBeingBuilt->UpdateAttachmentPlacement( pTeleporter->GetMatchingTeleporter() );
+								m_hObjectBeingBuilt->UpdateAttachmentPlacement(pTeleporter->GetMatchingTeleporter());
 								StartBuilding();
 							}
 						}
@@ -410,11 +412,11 @@ void CTFWeaponBuilder::PrimaryAttack( void )
 				}
 
 				// Should we switch away?
-				if ( iFlags & OF_ALLOW_REPEAT_PLACEMENT )
+				if(iFlags & OF_ALLOW_REPEAT_PLACEMENT)
 				{
 					// Start placing another
-					SetCurrentState( BS_PLACING );
-					StartPlacement(); 
+					SetCurrentState(BS_PLACING);
+					StartPlacement();
 				}
 				else
 				{
@@ -424,12 +426,12 @@ void CTFWeaponBuilder::PrimaryAttack( void )
 		}
 		break;
 
-	case BS_PLACING_INVALID:
+		case BS_PLACING_INVALID:
 		{
-			if ( m_flNextDenySound < gpGlobals->curtime )
+			if(m_flNextDenySound < gpGlobals->curtime)
 			{
-				CSingleUserRecipientFilter filter( pOwner );
-				EmitSound( filter, entindex(), "Player.DenyWeaponSelection" );
+				CSingleUserRecipientFilter filter(pOwner);
+				EmitSound(filter, entindex(), "Player.DenyWeaponSelection");
 
 				m_flNextDenySound = gpGlobals->curtime + 0.5;
 			}
@@ -440,33 +442,33 @@ void CTFWeaponBuilder::PrimaryAttack( void )
 	m_flNextPrimaryAttack = gpGlobals->curtime + 0.2f;
 }
 
-void CTFWeaponBuilder::SecondaryAttack( void )
+void CTFWeaponBuilder::SecondaryAttack(void)
 {
-	if ( m_bInAttack2 )
+	if(m_bInAttack2)
 		return;
 
 	// require a re-press
 	m_bInAttack2 = true;
 
-	CTFPlayer *pOwner = ToTFPlayer( GetOwner() );
-	if ( !pOwner )
+	CTFPlayer *pOwner = ToTFPlayer(GetOwner());
+	if(!pOwner)
 		return;
 
 	UpdatePlacementState();
 
-	if ( !pOwner->IsPlayerClass( TF_CLASS_ENGINEER ) && pOwner->DoClassSpecialSkill() )
+	if(!pOwner->IsPlayerClass(TF_CLASS_ENGINEER) && pOwner->DoClassSpecialSkill())
 	{
 		// Spies do the special skill first.
 	}
-	else if ( m_iBuildState == BS_PLACING || m_iBuildState == BS_PLACING_INVALID )
+	else if(m_iBuildState == BS_PLACING || m_iBuildState == BS_PLACING_INVALID)
 	{
-		if ( m_hObjectBeingBuilt )
+		if(m_hObjectBeingBuilt)
 		{
-			pOwner->StopHintTimer( HINT_ALTFIRE_ROTATE_BUILDING );
+			pOwner->StopHintTimer(HINT_ALTFIRE_ROTATE_BUILDING);
 			m_hObjectBeingBuilt->RotateBuildAngles();
 		}
 	}
-	else if ( pOwner->DoClassSpecialSkill() )
+	else if(pOwner->DoClassSpecialSkill())
 	{
 		// Engineers do the special skill last.
 	}
@@ -477,85 +479,85 @@ void CTFWeaponBuilder::SecondaryAttack( void )
 //-----------------------------------------------------------------------------
 // Purpose: Set the builder to the specified state
 //-----------------------------------------------------------------------------
-void CTFWeaponBuilder::SetCurrentState( int iState )
+void CTFWeaponBuilder::SetCurrentState(int iState)
 {
 	m_iBuildState = iState;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Set the owner's weapon and last weapon appropriately when we need to
-//			switch away from the builder weapon.  
+//			switch away from the builder weapon.
 //-----------------------------------------------------------------------------
 void CTFWeaponBuilder::SwitchOwnersWeaponToLast()
 {
-	CTFPlayer *pOwner = ToTFPlayer( GetOwner() );
-	if ( !pOwner )
+	CTFPlayer *pOwner = ToTFPlayer(GetOwner());
+	if(!pOwner)
 		return;
 
 	// for engineer, switch to wrench and set last weapon appropriately
-	if ( pOwner->IsPlayerClass( TF_CLASS_ENGINEER ) )
+	if(pOwner->IsPlayerClass(TF_CLASS_ENGINEER))
 	{
 		// Switch to wrench if possible. if not, then best weapon
-		CBaseCombatWeapon *pWpn = pOwner->Weapon_GetSlot( 2 );
+		CBaseCombatWeapon *pWpn = pOwner->Weapon_GetSlot(2);
 
 		// Don't store last weapon when we autoswitch off builder
 		CBaseCombatWeapon *pLastWpn = pOwner->GetLastWeapon();
 
-		if ( pWpn )
+		if(pWpn)
 		{
-			pOwner->Weapon_Switch( pWpn );
+			pOwner->Weapon_Switch(pWpn);
 		}
 		else
 		{
-			pOwner->SwitchToNextBestWeapon( NULL );
+			pOwner->SwitchToNextBestWeapon(NULL);
 		}
 
-		if ( pWpn == pLastWpn )
+		if(pWpn == pLastWpn)
 		{
 			// We had the wrench out before we started building. Go ahead and set out last
 			// weapon to our primary weapon.
-			pWpn = pOwner->Weapon_GetSlot( 0 );
-			pOwner->Weapon_SetLast( pWpn );
+			pWpn = pOwner->Weapon_GetSlot(0);
+			pOwner->Weapon_SetLast(pWpn);
 		}
 		else
 		{
-			pOwner->Weapon_SetLast( pLastWpn );
+			pOwner->Weapon_SetLast(pLastWpn);
 		}
 	}
 	else
 	{
 		// for all other classes, just switch to last weapon used
-		pOwner->Weapon_Switch( pOwner->GetLastWeapon() );
+		pOwner->Weapon_Switch(pOwner->GetLastWeapon());
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: updates the building postion and checks the new postion
 //-----------------------------------------------------------------------------
-void CTFWeaponBuilder::UpdatePlacementState( void )
+void CTFWeaponBuilder::UpdatePlacementState(void)
 {
 	// This updates the building position
 	bool bValidPos = IsValidPlacement();
 
 	// If we're in placement mode, update the placement model
-	switch( m_iBuildState )
+	switch(m_iBuildState)
 	{
-	case BS_PLACING:
-	case BS_PLACING_INVALID:
+		case BS_PLACING:
+		case BS_PLACING_INVALID:
 		{
-			if ( bValidPos )
+			if(bValidPos)
 			{
-				SetCurrentState( BS_PLACING );
+				SetCurrentState(BS_PLACING);
 			}
 			else
 			{
-				SetCurrentState( BS_PLACING_INVALID );
+				SetCurrentState(BS_PLACING_INVALID);
 			}
 		}
 		break;
 
-	default:
-		break;
+		default:
+			break;
 	}
 }
 
@@ -563,46 +565,45 @@ void CTFWeaponBuilder::UpdatePlacementState( void )
 // Purpose: Idle updates the position of the build placement model
 //-----------------------------------------------------------------------------
 /*#define SAPPER_VOPAK_DEFAULT_WAIT 0.0f*/
-void CTFWeaponBuilder::WeaponIdle( void )
+void CTFWeaponBuilder::WeaponIdle(void)
 {
-	CTFPlayer *pOwner = ToTFPlayer( GetOwner() );
-	if ( !pOwner )
+	CTFPlayer *pOwner = ToTFPlayer(GetOwner());
+	if(!pOwner)
 		return;
 
-	WheatleySapperIdle( pOwner );
+	WheatleySapperIdle(pOwner);
 
-	if ( HasWeaponIdleTimeElapsed() )
+	if(HasWeaponIdleTimeElapsed())
 	{
-		SendWeaponAnim( ACT_VM_IDLE );
+		SendWeaponAnim(ACT_VM_IDLE);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Special Item Idle
 //-----------------------------------------------------------------------------
-bool CTFWeaponBuilder::IsWheatleySapper( void )
+bool CTFWeaponBuilder::IsWheatleySapper(void)
 {
 	float flVoicePak = 0.0;
-	CALL_ATTRIB_HOOK_FLOAT( flVoicePak, sapper_voice_pak );
+	CALL_ATTRIB_HOOK_FLOAT(flVoicePak, sapper_voice_pak);
 	return (flVoicePak == 1.0);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Special Item Reset
 //-----------------------------------------------------------------------------
-void CTFWeaponBuilder::WheatleyReset( bool bResetIntro )
+void CTFWeaponBuilder::WheatleyReset(bool bResetIntro)
 {
-	if ( IsWheatleySapper() )
+	if(IsWheatleySapper())
 	{
-		WheatleyEmitSound( "PSap.null" );
+		WheatleyEmitSound("PSap.null");
 	}
-	if ( bResetIntro )
+	if(bResetIntro)
 	{
 		m_bWheatleyIntroPlayed = false;
 	}
 	m_flNextVoicePakIdleStartTime = -1.0f;
-	SetWheatleyState( TF_PSAPSTATE_IDLE );
+	SetWheatleyState(TF_PSAPSTATE_IDLE);
 	m_flWheatleyTalkingUntil = 0.00;
 	m_flWheatleyLastDamage = 0.00;
 	m_iWheatleyVOSequenceOffset = 0;
@@ -610,64 +611,65 @@ void CTFWeaponBuilder::WheatleyReset( bool bResetIntro )
 	m_flWheatleyLastHolster = 0.00;
 }
 
-bool CTFWeaponBuilder::IsWheatleyTalking( void )
+bool CTFWeaponBuilder::IsWheatleyTalking(void)
 {
 	return gpGlobals->curtime <= m_flWheatleyTalkingUntil;
 }
 
-float CTFWeaponBuilder::WheatleyEmitSound( const char *snd, bool bEmitToAll /*= false*/, bool bNoRepeats /*= false */ )
+float CTFWeaponBuilder::WheatleyEmitSound(const char *snd, bool bEmitToAll /*= false*/, bool bNoRepeats /*= false */)
 {
-	CTFPlayer *pOwner = ToTFPlayer( GetOwner() );
+	CTFPlayer *pOwner = ToTFPlayer(GetOwner());
 	CSoundParameters params;
-	if ( !soundemitterbase->GetParametersForSound( snd, params, GENDER_NONE ) )
+	if(!soundemitterbase->GetParametersForSound(snd, params, GENDER_NONE))
 	{
 		return 0.00;
 	}
-	//Should we check to see if it's already been played?
-	if ( bNoRepeats && m_pkvWavList )
+	// Should we check to see if it's already been played?
+	if(bNoRepeats && m_pkvWavList)
 	{
-		if ( m_pkvWavList->GetInt( params.soundname , 0 ) )
+		if(m_pkvWavList->GetInt(params.soundname, 0))
 		{
 			return 0;
 		}
 		else
 		{
-			m_pkvWavList->SetInt( params.soundname , 1);
+			m_pkvWavList->SetInt(params.soundname, 1);
 		}
 	}
-	//Look for special cases that require us to pick the next lines from a sequential list
-	if ( Q_strcmp( params.soundname, "vo/items/wheatley_sapper/wheatley_sapper_idle38.mp3") == NULL )
+	// Look for special cases that require us to pick the next lines from a sequential list
+	if(Q_strcmp(params.soundname, "vo/items/wheatley_sapper/wheatley_sapper_idle38.mp3") == NULL)
 	{
-		SetWheatleyState( TF_PSAPSTATE_SPECIALIDLE_HARMLESS );
+		SetWheatleyState(TF_PSAPSTATE_SPECIALIDLE_HARMLESS);
 		m_iWheatleyVOSequenceOffset = 0;
 	}
-	else if ( Q_strcmp( params.soundname, "vo/items/wheatley_sapper/wheatley_sapper_idle41.mp3") == NULL )
+	else if(Q_strcmp(params.soundname, "vo/items/wheatley_sapper/wheatley_sapper_idle41.mp3") == NULL)
 	{
-		SetWheatleyState( TF_PSAPSTATE_SPECIALIDLE_HACK );
+		SetWheatleyState(TF_PSAPSTATE_SPECIALIDLE_HACK);
 		m_iWheatleyVOSequenceOffset = 0;
 	}
-	else if ( Q_strcmp( params.soundname, "vo/items/wheatley_sapper/wheatley_sapper_idle35.mp3") == NULL )
+	else if(Q_strcmp(params.soundname, "vo/items/wheatley_sapper/wheatley_sapper_idle35.mp3") == NULL)
 	{
-		SetWheatleyState( TF_PSAPSTATE_SPECIALIDLE_KNIFE );
+		SetWheatleyState(TF_PSAPSTATE_SPECIALIDLE_KNIFE);
 		m_iWheatleyVOSequenceOffset = 0;
 	}
-	
-	//Play the sound
-	// When playing a sound to all players, do it at the last known sapper location
-	// This is not played on the object itself (building or sapper) cause it may not exist in the case of death and follow up audio
-	// Also having it played on this entity itself prevents multiple VO playing in the case of mass sapping
-	if ( bEmitToAll )
+
+	// Play the sound
+	//  When playing a sound to all players, do it at the last known sapper location
+	//  This is not played on the object itself (building or sapper) cause it may not exist in the case of death and
+	//  follow up audio Also having it played on this entity itself prevents multiple VO playing in the case of mass
+	//  sapping
+	if(bEmitToAll)
 	{
-		//int entIndex = 0;
-		CBroadcastNonOwnerRecipientFilter filter( pOwner );
-		EmitSound( filter, entindex(), snd, &m_vLastKnownSapPos );
+		// int entIndex = 0;
+		CBroadcastNonOwnerRecipientFilter filter(pOwner);
+		EmitSound(filter, entindex(), snd, &m_vLastKnownSapPos);
 	}
 
 	// GetSoundDuration is not supported on Linux or for MP3s.  So lets just put in a good number
-	//float flSoundDuration = enginesound->GetSoundDuration( params.soundname );
+	// float flSoundDuration = enginesound->GetSoundDuration( params.soundname );
 	float flSoundDuration = 3.0f;
-	CSingleUserRecipientFilter filter( pOwner );
-	EmitSound( filter, entindex(), params );
+	CSingleUserRecipientFilter filter(pOwner);
+	EmitSound(filter, entindex(), params);
 	m_flWheatleyTalkingUntil = gpGlobals->curtime + flSoundDuration;
 	return flSoundDuration;
 }
@@ -675,34 +677,33 @@ float CTFWeaponBuilder::WheatleyEmitSound( const char *snd, bool bEmitToAll /*= 
 //-----------------------------------------------------------------------------
 // Purpose: Set Wheatley Sapper State
 //-----------------------------------------------------------------------------
-void CTFWeaponBuilder::SetWheatleyState( int iNewState )
+void CTFWeaponBuilder::SetWheatleyState(int iNewState)
 {
 	m_iSapState = iNewState;
 }
 
 int CTFWeaponBuilder::GetWheatleyIdleWait()
 {
-	return RandomInt( WHEATLEY_IDLE_WAIT_SECS_MIN, WHEATLEY_IDLE_WAIT_SECS_MAX );
+	return RandomInt(WHEATLEY_IDLE_WAIT_SECS_MIN, WHEATLEY_IDLE_WAIT_SECS_MAX);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Set Wheatley Sapper State
 //-----------------------------------------------------------------------------
-void CTFWeaponBuilder::WheatleyDamage( void )
+void CTFWeaponBuilder::WheatleyDamage(void)
 {
-	if ( (gpGlobals->curtime - m_flWheatleyLastDamage) > 10.0)
+	if((gpGlobals->curtime - m_flWheatleyLastDamage) > 10.0)
 	{
-		if ( RandomInt(0,2) == 0 )
+		if(RandomInt(0, 2) == 0)
 		{
-			CTFPlayer *pOwner = ToTFPlayer( GetOwner() );
-			if (pOwner)
+			CTFPlayer *pOwner = ToTFPlayer(GetOwner());
+			if(pOwner)
 			{
 				pOwner->ClearSappingEvent();
 			}
-			SetWheatleyState( TF_PSAPSTATE_IDLE );
+			SetWheatleyState(TF_PSAPSTATE_IDLE);
 			m_flWheatleyLastDamage = gpGlobals->curtime;
-			WheatleyEmitSound( "PSap.Damage" );
+			WheatleyEmitSound("PSap.Damage");
 		}
 	}
 }
@@ -710,27 +711,28 @@ void CTFWeaponBuilder::WheatleyDamage( void )
 //-----------------------------------------------------------------------------
 // Purpose: Special Item Idle
 //-----------------------------------------------------------------------------
-void CTFWeaponBuilder::WheatleySapperIdle( CTFPlayer *pOwner )
+void CTFWeaponBuilder::WheatleySapperIdle(CTFPlayer *pOwner)
 {
-	if ( pOwner && m_iObjectType == OBJ_ATTACHMENT_SAPPER && IsWheatleySapper())
+	if(pOwner && m_iObjectType == OBJ_ATTACHMENT_SAPPER && IsWheatleySapper())
 	{
-		//Is Wheatley coming out of the player's pocket?
-		if( m_flNextVoicePakIdleStartTime < 0.0f )
-		{			
+		// Is Wheatley coming out of the player's pocket?
+		if(m_flNextVoicePakIdleStartTime < 0.0f)
+		{
 			pOwner->ClearSappingTracking();
 			float flSoundDuration;
-			if ( gpGlobals->curtime - m_flWheatleyLastHolster < 2.0 && gpGlobals->curtime - m_flWheatleyLastHolster >= -1.00 )
+			if(gpGlobals->curtime - m_flWheatleyLastHolster < 2.0 &&
+			   gpGlobals->curtime - m_flWheatleyLastHolster >= -1.00)
 			{
-				flSoundDuration = WheatleyEmitSound( "Psap.DeployAgain" );
+				flSoundDuration = WheatleyEmitSound("Psap.DeployAgain");
 			}
 			else
 			{
-				flSoundDuration = WheatleyEmitSound( (m_bWheatleyIntroPlayed) ? "Psap.Deploy" : "Psap.DeployIntro" );
+				flSoundDuration = WheatleyEmitSound((m_bWheatleyIntroPlayed) ? "Psap.Deploy" : "Psap.DeployIntro");
 			}
 			m_flWheatleyLastDeploy = gpGlobals->curtime + flSoundDuration;
-			if ( (!m_bWheatleyIntroPlayed) && (RandomInt(0,2) == 0) )
+			if((!m_bWheatleyIntroPlayed) && (RandomInt(0, 2) == 0))
 			{
-				SetWheatleyState( TF_PSAPSTATE_INTRO );
+				SetWheatleyState(TF_PSAPSTATE_INTRO);
 				m_bWheatleyIntroPlayed = true;
 				m_iWheatleyVOSequenceOffset = 0;
 				m_flNextVoicePakIdleStartTime = gpGlobals->curtime + flSoundDuration + 3.0;
@@ -738,89 +740,89 @@ void CTFWeaponBuilder::WheatleySapperIdle( CTFPlayer *pOwner )
 			else
 			{
 				m_bWheatleyIntroPlayed = true;
-				SetWheatleyState( TF_PSAPSTATE_IDLE );
+				SetWheatleyState(TF_PSAPSTATE_IDLE);
 				m_flNextVoicePakIdleStartTime = gpGlobals->curtime + flSoundDuration + GetWheatleyIdleWait();
 			}
 		}
-		//Is there a sapper event? (sapper placed / sapper finished)
-		else if( pOwner->GetSappingEvent() != TF_SAPEVENT_NONE)
+		// Is there a sapper event? (sapper placed / sapper finished)
+		else if(pOwner->GetSappingEvent() != TF_SAPEVENT_NONE)
 		{
 			char *pVoicePakString = NULL;
-			switch ( pOwner->GetSappingEvent() )
+			switch(pOwner->GetSappingEvent())
 			{
-			case TF_SAPEVENT_PLACED:
-				if (RandomInt(0,1) == 0)
-				{
-					if ( RandomInt(0,3) == 0 )
+				case TF_SAPEVENT_PLACED:
+					if(RandomInt(0, 1) == 0)
 					{
-						pVoicePakString = "PSap.AttachedPW";
-						SetWheatleyState( TF_PSAPSTATE_WAITINGHACK );
-					}
-					else 
-					{
-						pVoicePakString = "PSap.Attached";
-						SetWheatleyState( TF_PSAPSTATE_WAITINGHACKPW );
-					}
-					m_flNextVoicePakIdleStartTime = gpGlobals->curtime + 0.2;
-				}
-				else
-				{
-					pVoicePakString = "PSap.Hacking";
-					SetWheatleyState( TF_PSAPSTATE_IDLE );
-					m_flNextVoicePakIdleStartTime = gpGlobals->curtime + GetWheatleyIdleWait();
-				}
-				break;
-			case TF_SAPEVENT_DONE:
-				if ( IsWheatleyTalking() )
-				{
-					if ( m_hLastSappedBuilding && m_hLastSappedBuilding.Get() )
-					{
-						//Building Alive, Sapper died
-						pVoicePakString = "PSap.Death";
+						if(RandomInt(0, 3) == 0)
+						{
+							pVoicePakString = "PSap.AttachedPW";
+							SetWheatleyState(TF_PSAPSTATE_WAITINGHACK);
+						}
+						else
+						{
+							pVoicePakString = "PSap.Attached";
+							SetWheatleyState(TF_PSAPSTATE_WAITINGHACKPW);
+						}
+						m_flNextVoicePakIdleStartTime = gpGlobals->curtime + 0.2;
 					}
 					else
 					{
-						pVoicePakString = "PSap.HackedLoud";
-					}
-					
-					if ( RandomInt( 0, 3 ) == 0 )
-					{
-						SetWheatleyState( TF_PSAPSTATE_WAITINGFOLLOWUP);
-						m_flNextVoicePakIdleStartTime = gpGlobals->curtime + 1.3;
-					}
-					else
-					{
+						pVoicePakString = "PSap.Hacking";
+						SetWheatleyState(TF_PSAPSTATE_IDLE);
 						m_flNextVoicePakIdleStartTime = gpGlobals->curtime + GetWheatleyIdleWait();
 					}
-				}
-				else
-				{
-					SetWheatleyState( TF_PSAPSTATE_WAITINGHACKED );
-					m_flNextVoicePakIdleStartTime = gpGlobals->curtime + 0.5;
-				}
-				break;
-			default:
-				break;
+					break;
+				case TF_SAPEVENT_DONE:
+					if(IsWheatleyTalking())
+					{
+						if(m_hLastSappedBuilding && m_hLastSappedBuilding.Get())
+						{
+							// Building Alive, Sapper died
+							pVoicePakString = "PSap.Death";
+						}
+						else
+						{
+							pVoicePakString = "PSap.HackedLoud";
+						}
+
+						if(RandomInt(0, 3) == 0)
+						{
+							SetWheatleyState(TF_PSAPSTATE_WAITINGFOLLOWUP);
+							m_flNextVoicePakIdleStartTime = gpGlobals->curtime + 1.3;
+						}
+						else
+						{
+							m_flNextVoicePakIdleStartTime = gpGlobals->curtime + GetWheatleyIdleWait();
+						}
+					}
+					else
+					{
+						SetWheatleyState(TF_PSAPSTATE_WAITINGHACKED);
+						m_flNextVoicePakIdleStartTime = gpGlobals->curtime + 0.5;
+					}
+					break;
+				default:
+					break;
 			}
 			pOwner->ClearSappingEvent();
-			if ( pVoicePakString )
+			if(pVoicePakString)
 			{
-				float flSoundDuration = WheatleyEmitSound( pVoicePakString, true );
+				float flSoundDuration = WheatleyEmitSound(pVoicePakString, true);
 				m_flNextVoicePakIdleStartTime += flSoundDuration;
 			}
 		}
-		//Are we in the intro sequence?
-		else if ( m_iSapState == TF_PSAPSTATE_INTRO && gpGlobals->curtime > m_flNextVoicePakIdleStartTime )
+		// Are we in the intro sequence?
+		else if(m_iSapState == TF_PSAPSTATE_INTRO && gpGlobals->curtime > m_flNextVoicePakIdleStartTime)
 		{
-			if ( !IsWheatleyTalking() )
+			if(!IsWheatleyTalking())
 			{
 				char szVoicePakString[128];
 				szVoicePakString[0] = '\0';
-				if ( m_iWheatleyVOSequenceOffset >= 0 && m_iWheatleyVOSequenceOffset <=3 )
+				if(m_iWheatleyVOSequenceOffset >= 0 && m_iWheatleyVOSequenceOffset <= 3)
 				{
-					V_sprintf_safe( szVoicePakString, "PSap.IdleIntro0%i", ++m_iWheatleyVOSequenceOffset);
-					float flSoundDuration = WheatleyEmitSound( szVoicePakString );
-					if ( m_iWheatleyVOSequenceOffset == 4 )
+					V_sprintf_safe(szVoicePakString, "PSap.IdleIntro0%i", ++m_iWheatleyVOSequenceOffset);
+					float flSoundDuration = WheatleyEmitSound(szVoicePakString);
+					if(m_iWheatleyVOSequenceOffset == 4)
 					{
 						m_flNextVoicePakIdleStartTime = gpGlobals->curtime + GetWheatleyIdleWait() + flSoundDuration;
 					}
@@ -831,23 +833,23 @@ void CTFWeaponBuilder::WheatleySapperIdle( CTFPlayer *pOwner )
 				}
 				else
 				{
-					SetWheatleyState( TF_PSAPSTATE_IDLE );
+					SetWheatleyState(TF_PSAPSTATE_IDLE);
 					m_iWheatleyVOSequenceOffset = 0;
 				}
 			}
 		}
-		//Does a generic timed event need to be serviced?
-		else if( gpGlobals->curtime > m_flNextVoicePakIdleStartTime )
+		// Does a generic timed event need to be serviced?
+		else if(gpGlobals->curtime > m_flNextVoicePakIdleStartTime)
 		{
 			bool bNoRepeats = false;
 			bool bEmitAll = false;
 			char *pVoicePakString = NULL;
-			//Sapped! vo
-			if ( m_iSapState == TF_PSAPSTATE_WAITINGHACKED )
+			// Sapped! vo
+			if(m_iSapState == TF_PSAPSTATE_WAITINGHACKED)
 			{
 				bEmitAll = true;
-				SetWheatleyState( TF_PSAPSTATE_IDLE );
-				if ( IsWheatleyTalking() )
+				SetWheatleyState(TF_PSAPSTATE_IDLE);
+				if(IsWheatleyTalking())
 				{
 					pVoicePakString = "PSap.HackedLoud";
 				}
@@ -855,31 +857,31 @@ void CTFWeaponBuilder::WheatleySapperIdle( CTFPlayer *pOwner )
 				{
 					pVoicePakString = "PSap.Hacked";
 				}
-				if ( RandomInt( 0, 3 ) == 0 )
+				if(RandomInt(0, 3) == 0)
 				{
-					SetWheatleyState( TF_PSAPSTATE_WAITINGFOLLOWUP);
+					SetWheatleyState(TF_PSAPSTATE_WAITINGFOLLOWUP);
 					m_flNextVoicePakIdleStartTime = gpGlobals->curtime + 1.3;
 				}
 				else
 				{
-					SetWheatleyState( TF_PSAPSTATE_IDLE );
+					SetWheatleyState(TF_PSAPSTATE_IDLE);
 					m_flNextVoicePakIdleStartTime = gpGlobals->curtime + GetWheatleyIdleWait();
 				}
 			}
-			//Waiting to start the password guessing vo
-			else if ( m_iSapState == TF_PSAPSTATE_WAITINGHACKPW )
+			// Waiting to start the password guessing vo
+			else if(m_iSapState == TF_PSAPSTATE_WAITINGHACKPW)
 			{
 				bEmitAll = true;
-				SetWheatleyState( TF_PSAPSTATE_IDLE );
+				SetWheatleyState(TF_PSAPSTATE_IDLE);
 				pVoicePakString = "PSap.HackingPW";
 				m_flNextVoicePakIdleStartTime = gpGlobals->curtime + GetWheatleyIdleWait();
 			}
-			//Waiting to start regular hacking vo
-			else if ( m_iSapState == TF_PSAPSTATE_WAITINGHACK )
+			// Waiting to start regular hacking vo
+			else if(m_iSapState == TF_PSAPSTATE_WAITINGHACK)
 			{
 				bEmitAll = true;
-				SetWheatleyState( TF_PSAPSTATE_IDLE );
-				if ( RandomInt( 0, 2 ) == 0 )
+				SetWheatleyState(TF_PSAPSTATE_IDLE);
+				if(RandomInt(0, 2) == 0)
 				{
 					pVoicePakString = "PSap.HackingShort";
 				}
@@ -889,85 +891,85 @@ void CTFWeaponBuilder::WheatleySapperIdle( CTFPlayer *pOwner )
 				}
 				m_flNextVoicePakIdleStartTime = gpGlobals->curtime + GetWheatleyIdleWait();
 			}
-			//Waiting to start successful hack followup vo
-			else if ( m_iSapState == TF_PSAPSTATE_WAITINGFOLLOWUP )
+			// Waiting to start successful hack followup vo
+			else if(m_iSapState == TF_PSAPSTATE_WAITINGFOLLOWUP)
 			{
 				bEmitAll = true;
-				SetWheatleyState( TF_PSAPSTATE_IDLE );
+				SetWheatleyState(TF_PSAPSTATE_IDLE);
 				pVoicePakString = "PSap.HackedFollowup";
 				m_flNextVoicePakIdleStartTime = gpGlobals->curtime + GetWheatleyIdleWait();
 			}
-			//If Wheatley's talking, skip & check again later
-			else if ( IsWheatleyTalking() )
+			// If Wheatley's talking, skip & check again later
+			else if(IsWheatleyTalking())
 			{
 				pVoicePakString = NULL;
 				m_flNextVoicePakIdleStartTime = gpGlobals->curtime + 5.0;
 			}
-			//Are we in the SPECIAL IDLE SEQUENCE "HACK"?
-			else if ( m_iSapState == TF_PSAPSTATE_SPECIALIDLE_HACK )
+			// Are we in the SPECIAL IDLE SEQUENCE "HACK"?
+			else if(m_iSapState == TF_PSAPSTATE_SPECIALIDLE_HACK)
 			{
-				switch ( m_iWheatleyVOSequenceOffset )
+				switch(m_iWheatleyVOSequenceOffset)
 				{
-				case 0:
-					pVoicePakString = "PSap.IdleHack02";
-					m_iWheatleyVOSequenceOffset++;
-					break;
-				default:
-					SetWheatleyState( TF_PSAPSTATE_IDLE );
-					m_iWheatleyVOSequenceOffset = 0;
-					break;
+					case 0:
+						pVoicePakString = "PSap.IdleHack02";
+						m_iWheatleyVOSequenceOffset++;
+						break;
+					default:
+						SetWheatleyState(TF_PSAPSTATE_IDLE);
+						m_iWheatleyVOSequenceOffset = 0;
+						break;
 				}
 				m_flNextVoicePakIdleStartTime = gpGlobals->curtime + GetWheatleyIdleWait();
 			}
-			//Are we in the SPECIAL IDLE SEQUENCE "KNIFE"?
-			else if ( m_iSapState == TF_PSAPSTATE_SPECIALIDLE_KNIFE )
+			// Are we in the SPECIAL IDLE SEQUENCE "KNIFE"?
+			else if(m_iSapState == TF_PSAPSTATE_SPECIALIDLE_KNIFE)
 			{
-				switch ( m_iWheatleyVOSequenceOffset )
+				switch(m_iWheatleyVOSequenceOffset)
 				{
-				case 0:
-					pVoicePakString = "PSap.IdleKnife02";
-					m_iWheatleyVOSequenceOffset++;
-					m_flNextVoicePakIdleStartTime = gpGlobals->curtime + 0.3;
-					break;
-				case 1:
-					pVoicePakString = "PSap.IdleKnife03";
-					m_iWheatleyVOSequenceOffset++;
-					m_flNextVoicePakIdleStartTime = gpGlobals->curtime + GetWheatleyIdleWait();
-					break;
-				default:
-					SetWheatleyState( TF_PSAPSTATE_IDLE );
-					m_iWheatleyVOSequenceOffset = 0;
-					m_flNextVoicePakIdleStartTime = gpGlobals->curtime + GetWheatleyIdleWait();
-					break;
+					case 0:
+						pVoicePakString = "PSap.IdleKnife02";
+						m_iWheatleyVOSequenceOffset++;
+						m_flNextVoicePakIdleStartTime = gpGlobals->curtime + 0.3;
+						break;
+					case 1:
+						pVoicePakString = "PSap.IdleKnife03";
+						m_iWheatleyVOSequenceOffset++;
+						m_flNextVoicePakIdleStartTime = gpGlobals->curtime + GetWheatleyIdleWait();
+						break;
+					default:
+						SetWheatleyState(TF_PSAPSTATE_IDLE);
+						m_iWheatleyVOSequenceOffset = 0;
+						m_flNextVoicePakIdleStartTime = gpGlobals->curtime + GetWheatleyIdleWait();
+						break;
 				}
 			}
-			//Are we in the SPECIAL IDLE SEQUENCE "HARMLESS"?
-			else if ( m_iSapState == TF_PSAPSTATE_SPECIALIDLE_HARMLESS )
+			// Are we in the SPECIAL IDLE SEQUENCE "HARMLESS"?
+			else if(m_iSapState == TF_PSAPSTATE_SPECIALIDLE_HARMLESS)
 			{
-				switch ( m_iWheatleyVOSequenceOffset )
+				switch(m_iWheatleyVOSequenceOffset)
 				{
-				case 0:
-					pVoicePakString = "PSap.IdleHarmless02";
-					m_iWheatleyVOSequenceOffset++;
-					m_flNextVoicePakIdleStartTime = gpGlobals->curtime + GetWheatleyIdleWait();
-					break;
-				default:
-					SetWheatleyState( TF_PSAPSTATE_IDLE );
-					m_iWheatleyVOSequenceOffset = 0;
-					m_flNextVoicePakIdleStartTime = gpGlobals->curtime + GetWheatleyIdleWait();
-					break;
+					case 0:
+						pVoicePakString = "PSap.IdleHarmless02";
+						m_iWheatleyVOSequenceOffset++;
+						m_flNextVoicePakIdleStartTime = gpGlobals->curtime + GetWheatleyIdleWait();
+						break;
+					default:
+						SetWheatleyState(TF_PSAPSTATE_IDLE);
+						m_iWheatleyVOSequenceOffset = 0;
+						m_flNextVoicePakIdleStartTime = gpGlobals->curtime + GetWheatleyIdleWait();
+						break;
 				}
 			}
-			//Is the player stealthed?
-			else if ( pOwner->m_Shared.IsStealthed() )
+			// Is the player stealthed?
+			else if(pOwner->m_Shared.IsStealthed())
 			{
-				if ( RandomInt(0,1) == 0 )
+				if(RandomInt(0, 1) == 0)
 				{
 					pVoicePakString = "PSap.Sneak";
 				}
 				m_flNextVoicePakIdleStartTime = gpGlobals->curtime + GetWheatleyIdleWait();
 			}
-			else if ( m_iSapState == TF_PSAPSTATE_IDLE )
+			else if(m_iSapState == TF_PSAPSTATE_IDLE)
 			{
 				pVoicePakString = "PSap.Idle";
 				bNoRepeats = true;
@@ -977,58 +979,57 @@ void CTFWeaponBuilder::WheatleySapperIdle( CTFPlayer *pOwner )
 			{
 				pVoicePakString = NULL;
 			}
-			if (!pVoicePakString)
+			if(!pVoicePakString)
 			{
 				m_flNextVoicePakIdleStartTime = gpGlobals->curtime + GetWheatleyIdleWait();
 				return;
 			}
-			float flSoundDuration = WheatleyEmitSound( pVoicePakString, bEmitAll, bNoRepeats );
+			float flSoundDuration = WheatleyEmitSound(pVoicePakString, bEmitAll, bNoRepeats);
 			m_flNextVoicePakIdleStartTime += flSoundDuration;
 		}
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Start placing the object
 //-----------------------------------------------------------------------------
-void CTFWeaponBuilder::StartPlacement( void )
+void CTFWeaponBuilder::StartPlacement(void)
 {
 	StopPlacement();
 
-	CTFPlayer *pTFPlayer = ToTFPlayer( GetOwner() );
-	if ( !pTFPlayer )
+	CTFPlayer *pTFPlayer = ToTFPlayer(GetOwner());
+	if(!pTFPlayer)
 		return;
 
-	if ( pTFPlayer->m_Shared.IsCarryingObject() )
+	if(pTFPlayer->m_Shared.IsCarryingObject())
 	{
 		m_hObjectBeingBuilt = pTFPlayer->m_Shared.GetCarriedObject();
 		m_hObjectBeingBuilt->StopFollowingEntity();
 	}
 	else
 	{
-		m_hObjectBeingBuilt = (CBaseObject*)CreateEntityByName( GetObjectInfo( m_iObjectType )->m_pClassName );
+		m_hObjectBeingBuilt = (CBaseObject *)CreateEntityByName(GetObjectInfo(m_iObjectType)->m_pClassName);
 	}
 
-	if ( m_hObjectBeingBuilt )
+	if(m_hObjectBeingBuilt)
 	{
 		// Set the builder before Spawn() so attributes can hook correctly
-		m_hObjectBeingBuilt->SetBuilder( pTFPlayer );
+		m_hObjectBeingBuilt->SetBuilder(pTFPlayer);
 
 		bool bIsCarried = m_hObjectBeingBuilt->IsCarried();
 
 		// split this off from the block at the bottom because we need to know what type of building
 		// this is before we spawn so things like the teleporters have the correct placement models
 		// but we need to set the starting construction health after we've called spawn
-		if ( !bIsCarried )
+		if(!bIsCarried)
 		{
-			m_hObjectBeingBuilt->SetObjectMode( m_iObjectMode );
+			m_hObjectBeingBuilt->SetObjectMode(m_iObjectMode);
 		}
 
 		m_hObjectBeingBuilt->Spawn();
-		m_hObjectBeingBuilt->StartPlacement( pTFPlayer );
+		m_hObjectBeingBuilt->StartPlacement(pTFPlayer);
 
-		if ( !bIsCarried )
+		if(!bIsCarried)
 		{
 			m_hObjectBeingBuilt->m_iHealth = OBJECT_CONSTRUCTION_STARTINGHEALTH;
 		}
@@ -1036,15 +1037,15 @@ void CTFWeaponBuilder::StartPlacement( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFWeaponBuilder::StopPlacement( void )
+void CTFWeaponBuilder::StopPlacement(void)
 {
-	if ( m_hObjectBeingBuilt )
+	if(m_hObjectBeingBuilt)
 	{
-		if ( m_hObjectBeingBuilt->IsCarried() )
+		if(m_hObjectBeingBuilt->IsCarried())
 		{
-			m_hObjectBeingBuilt->MakeCarriedObject( ToTFPlayer( GetOwner() ) );
+			m_hObjectBeingBuilt->MakeCarriedObject(ToTFPlayer(GetOwner()));
 		}
 		else
 		{
@@ -1055,17 +1056,17 @@ void CTFWeaponBuilder::StopPlacement( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFWeaponBuilder::WeaponReset( void )
+void CTFWeaponBuilder::WeaponReset(void)
 {
-	//Check to see if the active weapon is the wheatley sapper, and, if so, reset him
-	if ( m_iObjectType == OBJ_ATTACHMENT_SAPPER )
+	// Check to see if the active weapon is the wheatley sapper, and, if so, reset him
+	if(m_iObjectType == OBJ_ATTACHMENT_SAPPER)
 	{
-		if ( IsWheatleySapper() )
+		if(IsWheatleySapper())
 		{
-			CTFPlayer *pPlayer = ToTFPlayer( GetOwner() );
-			if ( pPlayer )
+			CTFPlayer *pPlayer = ToTFPlayer(GetOwner());
+			if(pPlayer)
 			{
 				pPlayer->ClearSappingTracking();
 			}
@@ -1078,13 +1079,12 @@ void CTFWeaponBuilder::WeaponReset( void )
 	StopPlacement();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Move the placement model to the current position. Return false if it's an invalid position
 //-----------------------------------------------------------------------------
-bool CTFWeaponBuilder::IsValidPlacement( void )
+bool CTFWeaponBuilder::IsValidPlacement(void)
 {
-	if ( !m_hObjectBeingBuilt )
+	if(!m_hObjectBeingBuilt)
 		return false;
 
 	CBaseObject *pObj = m_hObjectBeingBuilt.Get();
@@ -1098,44 +1098,44 @@ bool CTFWeaponBuilder::IsValidPlacement( void )
 // Purpose: Player holding this weapon has started building something
 // Assumes we are in a valid build position
 //-----------------------------------------------------------------------------
-void CTFWeaponBuilder::StartBuilding( void )
+void CTFWeaponBuilder::StartBuilding(void)
 {
 	CBaseObject *pObj = m_hObjectBeingBuilt.Get();
 
-	Assert( pObj );
+	Assert(pObj);
 
-	pObj->StartBuilding( GetOwner() );
+	pObj->StartBuilding(GetOwner());
 
 	m_hObjectBeingBuilt = NULL;
 
-	CTFPlayer *pOwner = ToTFPlayer( GetOwner() );
-	if ( pOwner )
+	CTFPlayer *pOwner = ToTFPlayer(GetOwner());
+	if(pOwner)
 	{
 		pOwner->RemoveInvisibility();
-		pOwner->m_Shared.SetCarriedObject( NULL );
+		pOwner->m_Shared.SetCarriedObject(NULL);
 
-		if ( TFGameRules() && TFGameRules()->GameModeUsesUpgrades() )
+		if(TFGameRules() && TFGameRules()->GameModeUsesUpgrades())
 		{
-			if ( pObj->ObjectType() == OBJ_ATTACHMENT_SAPPER )
+			if(pObj->ObjectType() == OBJ_ATTACHMENT_SAPPER)
 			{
 				// Let human players place player-targeted sappers in modes that allow upgrades
-				if ( !pOwner->IsBot() && pObj->GetBuiltOnObject() && pObj->GetBuiltOnObject()->IsPlayer() )
+				if(!pOwner->IsBot() && pObj->GetBuiltOnObject() && pObj->GetBuiltOnObject()->IsPlayer())
 				{
 					int iRoboSapper = 0;
-					CALL_ATTRIB_HOOK_INT_ON_OTHER( pOwner, iRoboSapper, robo_sapper );
+					CALL_ATTRIB_HOOK_INT_ON_OTHER(pOwner, iRoboSapper, robo_sapper);
 
 					int nMode = iRoboSapper ? MODE_SAPPER_ANTI_ROBOT_RADIUS : MODE_SAPPER_ANTI_ROBOT;
-					pObj->SetObjectMode( nMode );
+					pObj->SetObjectMode(nMode);
 
-					pOwner->RemoveAmmo( 1, TF_AMMO_GRENADES2 );
+					pOwner->RemoveAmmo(1, TF_AMMO_GRENADES2);
 					StartEffectBarRegen();
 				}
 			}
 #ifdef STAGING_ONLY
 			// Traps use TF_AMMO_GRENADES1
-			else if ( pObj->GetType() == OBJ_SPY_TRAP )
+			else if(pObj->GetType() == OBJ_SPY_TRAP)
 			{
-				pOwner->RemoveAmmo( 1, TF_AMMO_GRENADES1 );
+				pOwner->RemoveAmmo(1, TF_AMMO_GRENADES1);
 			}
 #endif // STAGING_ONLY
 		}
@@ -1145,72 +1145,72 @@ void CTFWeaponBuilder::StartBuilding( void )
 //-----------------------------------------------------------------------------
 // Purpose: Return true if this weapon has some ammo
 //-----------------------------------------------------------------------------
-bool CTFWeaponBuilder::HasAmmo( void )
+bool CTFWeaponBuilder::HasAmmo(void)
 {
-	CTFPlayer *pOwner = ToTFPlayer( GetOwner() );
-	if ( !pOwner )
+	CTFPlayer *pOwner = ToTFPlayer(GetOwner());
+	if(!pOwner)
 		return false;
 
-	int iCost = pOwner->m_Shared.CalculateObjectCost( pOwner, m_iObjectType );
-	return ( pOwner->GetBuildResources() >= iCost );
+	int iCost = pOwner->m_Shared.CalculateObjectCost(pOwner, m_iObjectType);
+	return (pOwner->GetBuildResources() >= iCost);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int CTFWeaponBuilder::GetSlot( void ) const
+int CTFWeaponBuilder::GetSlot(void) const
 {
-	return GetObjectInfo( m_iObjectType )->m_SelectionSlot;
+	return GetObjectInfo(m_iObjectType)->m_SelectionSlot;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int CTFWeaponBuilder::GetPosition( void ) const
+int CTFWeaponBuilder::GetPosition(void) const
 {
-	return GetObjectInfo( m_iObjectType )->m_SelectionPosition;
+	return GetObjectInfo(m_iObjectType)->m_SelectionPosition;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
-const char *CTFWeaponBuilder::GetPrintName( void ) const
+const char *CTFWeaponBuilder::GetPrintName(void) const
 {
-	return GetObjectInfo( m_iObjectType )->m_pStatusName;
+	return GetObjectInfo(m_iObjectType)->m_pStatusName;
 }
 
 // -----------------------------------------------------------------------------
 // Purpose:
 // -----------------------------------------------------------------------------
-bool CTFWeaponBuilder::CanBuildObjectType( int iObjectType )
+bool CTFWeaponBuilder::CanBuildObjectType(int iObjectType)
 {
-	if ( iObjectType < 0 || iObjectType >= OBJ_LAST )
+	if(iObjectType < 0 || iObjectType >= OBJ_LAST)
 		return false;
 
-	return m_aBuildableObjectTypes.Get( iObjectType );
+	return m_aBuildableObjectTypes.Get(iObjectType);
 }
 
 // -----------------------------------------------------------------------------
 // Purpose:
 // -----------------------------------------------------------------------------
-void CTFWeaponBuilder::SetObjectTypeAsBuildable( int iObjectType )
+void CTFWeaponBuilder::SetObjectTypeAsBuildable(int iObjectType)
 {
-	if ( iObjectType < 0 || iObjectType >= OBJ_LAST )
+	if(iObjectType < 0 || iObjectType >= OBJ_LAST)
 		return;
 
-	m_aBuildableObjectTypes.Set( iObjectType, true );
-	SetSubType( iObjectType );
+	m_aBuildableObjectTypes.Set(iObjectType, true);
+	SetSubType(iObjectType);
 }
 
 // -----------------------------------------------------------------------------
 // Purpose:
 // -----------------------------------------------------------------------------
-Activity CTFWeaponBuilder::TranslateViewmodelHandActivity( Activity actBase )
+Activity CTFWeaponBuilder::TranslateViewmodelHandActivity(Activity actBase)
 {
-	if ( GetObjectInfo( m_iObjectType )->m_bUseItemInfo )
+	if(GetObjectInfo(m_iObjectType)->m_bUseItemInfo)
 	{
-		return BaseClass::TranslateViewmodelHandActivity( actBase );
+		return BaseClass::TranslateViewmodelHandActivity(actBase);
 	}
 	else
 	{
@@ -1221,39 +1221,39 @@ Activity CTFWeaponBuilder::TranslateViewmodelHandActivity( Activity actBase )
 // -----------------------------------------------------------------------------
 // Purpose:
 // -----------------------------------------------------------------------------
-const char *CTFWeaponBuilder::GetViewModel( int iViewModel ) const
+const char *CTFWeaponBuilder::GetViewModel(int iViewModel) const
 {
-	if ( m_iObjectType != BUILDER_INVALID_OBJECT )
+	if(m_iObjectType != BUILDER_INVALID_OBJECT)
 	{
-		if ( GetObjectInfo( m_iObjectType )->m_bUseItemInfo )
+		if(GetObjectInfo(m_iObjectType)->m_bUseItemInfo)
 			return BaseClass::GetViewModel();
 
-		return GetObjectInfo( m_iObjectType )->m_pViewModel;
+		return GetObjectInfo(m_iObjectType)->m_pViewModel;
 	}
 
 	return BaseClass::GetViewModel();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-const char *CTFWeaponBuilder::GetWorldModel( void ) const	
+const char *CTFWeaponBuilder::GetWorldModel(void) const
 {
-	if ( m_iObjectType != BUILDER_INVALID_OBJECT )
+	if(m_iObjectType != BUILDER_INVALID_OBJECT)
 	{
-		return GetObjectInfo( m_iObjectType )->m_pPlayerModel;
+		return GetObjectInfo(m_iObjectType)->m_pPlayerModel;
 	}
 
 	return BaseClass::GetWorldModel();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CTFWeaponBuilder::AllowsAutoSwitchTo( void ) const
+bool CTFWeaponBuilder::AllowsAutoSwitchTo(void) const
 {
 	// ask the object we're building
-	return GetObjectInfo( m_iObjectType )->m_bAutoSwitchTo;
+	return GetObjectInfo(m_iObjectType)->m_bAutoSwitchTo;
 }
 
 // ****************************************************************************
@@ -1265,29 +1265,30 @@ CTFWeaponSapper::CTFWeaponSapper()
 	m_bAttackDown = false;
 }
 //-----------------------------------------------------------------------------
-void CTFWeaponSapper::ItemPostFrame( void )
+void CTFWeaponSapper::ItemPostFrame(void)
 {
 #ifdef STAGING_ONLY
-	CTFPlayer *pPlayer = ToTFPlayer( GetPlayerOwner() );
-	if ( pPlayer )
+	CTFPlayer *pPlayer = ToTFPlayer(GetPlayerOwner());
+	if(pPlayer)
 	{
 		float flSapperDeployTime = 0;
-		CALL_ATTRIB_HOOK_FLOAT( flSapperDeployTime, sapper_deploy_time );
-		if ( flSapperDeployTime )
+		CALL_ATTRIB_HOOK_FLOAT(flSapperDeployTime, sapper_deploy_time);
+		if(flSapperDeployTime)
 		{
-			//IsValidPlacement
-			if ( !( pPlayer->m_nButtons & IN_ATTACK ) || !IsValidPlacement() )
+			// IsValidPlacement
+			if(!(pPlayer->m_nButtons & IN_ATTACK) || !IsValidPlacement())
 			{
 				m_bAttackDown = false;
 				m_flChargeBeginTime = 0;
 			}
-			else if ( m_bAttackDown == false && ( pPlayer->m_nButtons & IN_ATTACK ) )
+			else if(m_bAttackDown == false && (pPlayer->m_nButtons & IN_ATTACK))
 			{
 				m_bAttackDown = true;
 				m_flChargeBeginTime = gpGlobals->curtime;
 			}
 
-			if ( ( m_bAttackDown == true && m_flChargeBeginTime + flSapperDeployTime < gpGlobals->curtime ) || !( pPlayer->m_nButtons & IN_ATTACK ) )
+			if((m_bAttackDown == true && m_flChargeBeginTime + flSapperDeployTime < gpGlobals->curtime) ||
+			   !(pPlayer->m_nButtons & IN_ATTACK))
 			{
 				BaseClass::ItemPostFrame();
 			}
@@ -1298,23 +1299,22 @@ void CTFWeaponSapper::ItemPostFrame( void )
 	BaseClass::ItemPostFrame();
 }
 //-----------------------------------------------------------------------------
-const char *CTFWeaponSapper::GetViewModel( int iViewModel ) const
+const char *CTFWeaponSapper::GetViewModel(int iViewModel) const
 {
 	// Skip over Builder's version
 	return CTFWeaponBase::GetViewModel();
 }
 //-----------------------------------------------------------------------------
-const char *CTFWeaponSapper::GetWorldModel( void ) const	
+const char *CTFWeaponSapper::GetWorldModel(void) const
 {
 	// Skip over Builder's version
 	return CTFWeaponBase::GetWorldModel();
 }
 //-----------------------------------------------------------------------------
-Activity CTFWeaponSapper::TranslateViewmodelHandActivity( Activity actBase )
+Activity CTFWeaponSapper::TranslateViewmodelHandActivity(Activity actBase)
 {
-	return BaseClass::TranslateViewmodelHandActivity( actBase );
+	return BaseClass::TranslateViewmodelHandActivity(actBase);
 
 	// Skip over Builder's version
-	//return CTFWeaponBase::TranslateViewmodelHandActivity( actBase );
+	// return CTFWeaponBase::TranslateViewmodelHandActivity( actBase );
 }
-

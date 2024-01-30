@@ -17,19 +17,19 @@
 #endif
 #ifndef __TFSTATSREPORT_H
 #define __TFSTATSREPORT_H
-#pragma warning(disable:4786)
+#pragma warning(disable : 4786)
 #include <time.h>
 #include "BinaryResource.h"
 #include "MatchInfo.h"
 #include "HTML.h"
-#include "util.h"	
+#include "util.h"
 
 //------------------------------------------------------------------------------------------------------
 // Purpose:  This class is reponsible for generating the top and nav frames of the
 //	report. also for generating all the resources such as jpgs, gifs, javascripts and
 //	style sheets
 //------------------------------------------------------------------------------------------------------
-class CTFStatsReport  
+class CTFStatsReport
 {
 private:
 	time_t matchstart;
@@ -41,18 +41,16 @@ private:
 	bool valid;
 	void init();
 
-/*
-	const char* makeDurationString();
-	char DurationString[300];
-*/
-
+	/*
+		const char* makeDurationString();
+		char DurationString[300];
+	*/
 
 	void generate();
 
-	static char* javaScriptSource;
-	static char* styleSheetSource;
-	//CMatchInfo* pMatchInfo;
-
+	static char *javaScriptSource;
+	static char *styleSheetSource;
+	// CMatchInfo* pMatchInfo;
 
 	static CBinaryResource gifAwards;
 	static CBinaryResource jpgBgLeft;
@@ -71,12 +69,9 @@ private:
 	static CBinaryResource gifPlayerStatsServerOff;
 	static CBinaryResource gifPlayerStatsServerOn;
 
-
-	
 public:
-
 	explicit CTFStatsReport();
-	
+
 	void genImages();
 	void genJavaScript();
 	void genStyleSheet();
@@ -86,8 +81,7 @@ public:
 	void genNavFrame();
 
 	virtual ~CTFStatsReport();
-
 };
 
-#endif 
+#endif
 #endif // TFSTATSREPORT_H

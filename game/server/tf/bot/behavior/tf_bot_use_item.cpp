@@ -8,44 +8,41 @@
 #include "bot/tf_bot.h"
 #include "bot/behavior/tf_bot_use_item.h"
 
-
 //---------------------------------------------------------------------------------------------
-CTFBotUseItem::CTFBotUseItem( CTFWeaponBase *item )
+CTFBotUseItem::CTFBotUseItem(CTFWeaponBase *item)
 {
 	m_item = item;
 }
 
-
 //---------------------------------------------------------------------------------------------
-ActionResult< CTFBot >	CTFBotUseItem::OnStart( CTFBot *me, Action< CTFBot > *priorAction )
+ActionResult<CTFBot> CTFBotUseItem::OnStart(CTFBot *me, Action<CTFBot> *priorAction)
 {
 	// force-equip the item we're going to use
-	me->PushRequiredWeapon( m_item );
+	me->PushRequiredWeapon(m_item);
 
-	m_cooldownTimer.Start( m_item->m_flNextPrimaryAttack - gpGlobals->curtime + 0.25f );
+	m_cooldownTimer.Start(m_item->m_flNextPrimaryAttack - gpGlobals->curtime + 0.25f);
 
 	return Continue();
 }
 
-
 //---------------------------------------------------------------------------------------------
-ActionResult< CTFBot >	CTFBotUseItem::Update( CTFBot *me, float interval )
+ActionResult<CTFBot> CTFBotUseItem::Update(CTFBot *me, float interval)
 {
-	if ( m_item == NULL )
+	if(m_item == NULL)
 	{
-		return Done( "NULL item" );
+		return Done("NULL item");
 	}
 
 	CTFWeaponBase *myCurrentWeapon = me->m_Shared.GetActiveTFWeapon();
 
-	if ( !myCurrentWeapon )
+	if(!myCurrentWeapon)
 	{
-		return Done( "NULL weapon" );
+		return Done("NULL weapon");
 	}
 
-	if ( m_cooldownTimer.HasStarted() )
+	if(m_cooldownTimer.HasStarted())
 	{
-		if ( m_cooldownTimer.IsElapsed() )
+		if(m_cooldownTimer.IsElapsed())
 		{
 			// use it
 			me->PressFireButton();
@@ -55,19 +52,17 @@ ActionResult< CTFBot >	CTFBotUseItem::Update( CTFBot *me, float interval )
 	else // used
 	{
 		// some items use the taunt system - wait for the taunt to end
-		if ( !me->IsTaunting() )
+		if(!me->IsTaunting())
 		{
-			return Done( "Item used" );
+			return Done("Item used");
 		}
 	}
 
 	return Continue();
 }
 
-
 //---------------------------------------------------------------------------------------------
-void CTFBotUseItem::OnEnd( CTFBot *me, Action< CTFBot > *nextAction )
+void CTFBotUseItem::OnEnd(CTFBot *me, Action<CTFBot> *nextAction)
 {
 	me->PopRequiredWeapon();
 }
-

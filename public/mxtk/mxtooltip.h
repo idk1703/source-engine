@@ -14,28 +14,22 @@
 #ifndef INCLUDED_MXTOOLTIP
 #define INCLUDED_MXTOOLTIP
 
-
-
 class mxWidget;
 
-
-
-class mxToolTip  
+class mxToolTip
 {
 public:
 	// NO CREATORS
 	mxToolTip() {}
-	virtual ~mxToolTip () {}
+	virtual ~mxToolTip() {}
 
 	// MANIPULATORS
-	static void add (mxWidget *widget, const char *text);
+	static void add(mxWidget *widget, const char *text);
 
 private:
 	// NOT IMPLEMENTED
-	mxToolTip (const mxToolTip&);
-	mxToolTip& operator= (const mxToolTip&);
+	mxToolTip(const mxToolTip &);
+	mxToolTip &operator=(const mxToolTip &);
 };
-
-
 
 #endif // INCLUDED_MXTOOLTIP

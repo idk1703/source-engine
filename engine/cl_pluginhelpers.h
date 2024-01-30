@@ -17,21 +17,22 @@ class CPluginHudMessage;
 class CPluginUIManager : public vgui::Panel
 {
 private:
-	DECLARE_CLASS_SIMPLE( CPluginUIManager, vgui::Panel );
+	DECLARE_CLASS_SIMPLE(CPluginUIManager, vgui::Panel);
 
 public:
 	CPluginUIManager();
 	~CPluginUIManager();
 
-	void Show( DIALOG_TYPE type, KeyValues *kv );
+	void Show(DIALOG_TYPE type, KeyValues *kv);
 	void OnPanelClosed();
 	void Shutdown();
 
-	void GetHudMessagePosition( int &x, int &y, int &wide, int &tall ); // Gets the position of the plugin HUD message. The askconnect dialog is placed here.
+	void GetHudMessagePosition(
+		int &x, int &y, int &wide,
+		int &tall); // Gets the position of the plugin HUD message. The askconnect dialog is placed here.
 
 protected:
 	void OnTick();
-
 
 	int m_iCurPriority;
 	int m_iMessageDisplayUntil;
@@ -45,6 +46,4 @@ protected:
 
 extern CPluginUIManager *g_PluginManager;
 
-
-void PluginHelpers_Menu( SVC_Menu *msg );
-
+void PluginHelpers_Menu(SVC_Menu *msg);

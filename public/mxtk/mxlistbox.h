@@ -14,17 +14,11 @@
 #ifndef INCLUDED_MXLIST
 #define INCLUDED_MXLIST
 
-
-
 #ifndef INCLUDED_MxWIDGET
 #include "mxtk/mxWidget.h"
 #endif
 
-
-
 class mxWindow;
-
-
 
 class mxListBox_i;
 class mxListBox : public mxWidget
@@ -33,34 +27,36 @@ class mxListBox : public mxWidget
 
 public:
 	// ENUMS
-	enum { Normal, MultiSelection };
+	enum
+	{
+		Normal,
+		MultiSelection
+	};
 
 	// CREATORS
-	mxListBox (mxWindow *parent, int x, int y, int w, int h, int id = 0, int style = 0);
-	virtual ~mxListBox ();
+	mxListBox(mxWindow *parent, int x, int y, int w, int h, int id = 0, int style = 0);
+	virtual ~mxListBox();
 
 	// MANIPULATORS
-	void add (const char *item);
-	void select (int index);
-	void deselect (int index);
-	void remove (int index);
-	void removeAll ();
-	void setItemText (int index, const char *text);
-	void setItemData (int index, void *data);
+	void add(const char *item);
+	void select(int index);
+	void deselect(int index);
+	void remove(int index);
+	void removeAll();
+	void setItemText(int index, const char *text);
+	void setItemData(int index, void *data);
 
 	// ACCESSORS
-	int getItemCount () const;
-	int getSelectedIndex () const;
-	bool isSelected (int index) const;
-	const char *getItemText (int index) const;
-	void *getItemData (int index) const;
+	int getItemCount() const;
+	int getSelectedIndex() const;
+	bool isSelected(int index) const;
+	const char *getItemText(int index) const;
+	void *getItemData(int index) const;
 
 private:
 	// NOT IMPLEMENTED
-	mxListBox (const mxListBox&);
-	mxListBox& operator= (const mxListBox&);
+	mxListBox(const mxListBox &);
+	mxListBox &operator=(const mxListBox &);
 };
-
-
 
 #endif // INCLUDED_MXLISTBOX

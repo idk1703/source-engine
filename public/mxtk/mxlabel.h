@@ -14,17 +14,11 @@
 #ifndef INCLUDED_MXLABEL
 #define INCLUDED_MXLABEL
 
-
-
 #ifndef INCLUDED_MXWIDGET
 #include "mxtk/mxWidget.h"
 #endif
 
-
-
 class mxWindow;
-
-
 
 class mxLabel_i;
 class mxLabel : public mxWidget
@@ -33,15 +27,13 @@ class mxLabel : public mxWidget
 
 public:
 	// CREATORS
-	mxLabel (mxWindow *parent, int x, int y, int w, int h, const char *label = 0);
-	virtual ~mxLabel ();
+	mxLabel(mxWindow *parent, int x, int y, int w, int h, const char *label = 0);
+	virtual ~mxLabel();
 
 private:
 	// NOT IMPLEMENTED
-	mxLabel (const mxLabel&);
-	mxLabel& operator= (const mxLabel&);
+	mxLabel(const mxLabel &);
+	mxLabel &operator=(const mxLabel &);
 };
-
-
 
 #endif // INCLUDED_MXLABEL

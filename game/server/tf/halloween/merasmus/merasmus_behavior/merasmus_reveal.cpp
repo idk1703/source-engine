@@ -14,24 +14,22 @@
 #include "merasmus_reveal.h"
 #include "merasmus_attack.h"
 
-
 //---------------------------------------------------------------------------------------------
-ActionResult< CMerasmus >	CMerasmusReveal::OnStart( CMerasmus *me, Action< CMerasmus > *priorAction )
+ActionResult<CMerasmus> CMerasmusReveal::OnStart(CMerasmus *me, Action<CMerasmus> *priorAction)
 {
 	me->OnRevealed(false);
 
-	me->GetBodyInterface()->StartActivity( ACT_SHIELD_UP );
+	me->GetBodyInterface()->StartActivity(ACT_SHIELD_UP);
 
 	return Continue();
 }
 
-
 //----------------------------------------------------------------------------------
-ActionResult< CMerasmus >	CMerasmusReveal::Update( CMerasmus *me, float interval )
+ActionResult<CMerasmus> CMerasmusReveal::Update(CMerasmus *me, float interval)
 {
-	if ( me->IsActivityFinished() )
+	if(me->IsActivityFinished())
 	{
-		return ChangeTo( new CMerasmusAttack, "Here I come!" );
+		return ChangeTo(new CMerasmusAttack, "Here I come!");
 	}
 
 	return Continue();

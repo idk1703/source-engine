@@ -10,7 +10,7 @@
 #include "tier0/threadtools.h"
 #include "const.h"
 
-#if defined( _WIN32 )
+#if defined(_WIN32)
 #pragma once
 #endif
 

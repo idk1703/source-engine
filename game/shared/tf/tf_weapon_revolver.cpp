@@ -20,28 +20,28 @@
 //
 // Weapon Revolver tables.
 //
-IMPLEMENT_NETWORKCLASS_ALIASED( TFRevolver, DT_WeaponRevolver )
+IMPLEMENT_NETWORKCLASS_ALIASED(TFRevolver, DT_WeaponRevolver)
 
-BEGIN_NETWORK_TABLE( CTFRevolver, DT_WeaponRevolver )
+BEGIN_NETWORK_TABLE(CTFRevolver, DT_WeaponRevolver)
 END_NETWORK_TABLE()
 
 #ifdef CLIENT_DLL
-BEGIN_PREDICTION_DATA( CTFRevolver )
-DEFINE_PRED_FIELD( m_flLastAccuracyCheck, FIELD_FLOAT, 0 ),
+BEGIN_PREDICTION_DATA(CTFRevolver)
+	DEFINE_PRED_FIELD(m_flLastAccuracyCheck, FIELD_FLOAT, 0),
 END_PREDICTION_DATA()
 #endif
 
-LINK_ENTITY_TO_CLASS( tf_weapon_revolver, CTFRevolver );
-PRECACHE_WEAPON_REGISTER( tf_weapon_revolver );
+LINK_ENTITY_TO_CLASS(tf_weapon_revolver, CTFRevolver);
+PRECACHE_WEAPON_REGISTER(tf_weapon_revolver);
 
 // Server specific.
 #ifndef CLIENT_DLL
-BEGIN_DATADESC( CTFRevolver )
+BEGIN_DATADESC(CTFRevolver)
 END_DATADESC()
 #endif
 
 #ifdef STAGING_ONLY
-CREATE_SIMPLE_WEAPON_TABLE( TFRevolver_Secondary, tf_weapon_revolver_secondary )
+CREATE_SIMPLE_WEAPON_TABLE(TFRevolver_Secondary, tf_weapon_revolver_secondary)
 #endif
 
 //=============================================================================
@@ -56,36 +56,35 @@ CTFRevolver::CTFRevolver()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CTFRevolver::DefaultReload( int iClipSize1, int iClipSize2, int iActivity )
+bool CTFRevolver::DefaultReload(int iClipSize1, int iClipSize2, int iActivity)
 {
 	// The the owning local player.
 	CTFPlayer *pPlayer = GetTFPlayerOwner();
-	if ( !pPlayer )
+	if(!pPlayer)
 		return false;
 
-	if ( pPlayer->IsPlayerClass( TF_CLASS_SPY ) )
+	if(pPlayer->IsPlayerClass(TF_CLASS_SPY))
 	{
-		if ( pPlayer->m_Shared.InCond( TF_COND_STEALTHED ) )
+		if(pPlayer->m_Shared.InCond(TF_COND_STEALTHED))
 		{
 			return false;
 		}
 	}
 
-	if ( pPlayer->m_Shared.IsFeignDeathReady() )
+	if(pPlayer->m_Shared.IsFeignDeathReady())
 		return false; // Can't reload if our feign death arm is up.
 
-	return BaseClass::DefaultReload( iClipSize1, iClipSize2, iActivity );
-
+	return BaseClass::DefaultReload(iClipSize1, iClipSize2, iActivity);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int	CTFRevolver::GetDamageType( void ) const
+int CTFRevolver::GetDamageType(void) const
 {
-	if ( CanHeadshot() && (gpGlobals->curtime - m_flLastAccuracyCheck > 1.f) )
+	if(CanHeadshot() && (gpGlobals->curtime - m_flLastAccuracyCheck > 1.f))
 	{
 		int iDamageType = BaseClass::GetDamageType() | DMG_USE_HITLOCATIONS;
 		return iDamageType;
@@ -97,17 +96,17 @@ int	CTFRevolver::GetDamageType( void ) const
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CTFRevolver::CanFireCriticalShot( bool bIsHeadshot )
+bool CTFRevolver::CanFireCriticalShot(bool bIsHeadshot)
 {
-	if ( !BaseClass::CanFireCriticalShot( bIsHeadshot ) )
+	if(!BaseClass::CanFireCriticalShot(bIsHeadshot))
 		return false;
 
 	CTFPlayer *pPlayer = GetTFPlayerOwner();
-	if ( pPlayer && pPlayer->m_Shared.IsCritBoosted() )
+	if(pPlayer && pPlayer->m_Shared.IsCritBoosted())
 		return true;
 
 	// can only fire a crit shot if this is a headshot, unless we're critboosted
-	if ( !bIsHeadshot )
+	if(!bIsHeadshot)
 	{
 		// Base revolver still randomly crits. Ambassador doesn't.
 		return !CanHeadshot();
@@ -119,79 +118,79 @@ bool CTFRevolver::CanFireCriticalShot( bool bIsHeadshot )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFRevolver::PrimaryAttack( void )
+void CTFRevolver::PrimaryAttack(void)
 {
 	// Check for ammunition.
-	if ( m_iClip1 <= 0 && m_iClip1 != -1 )
+	if(m_iClip1 <= 0 && m_iClip1 != -1)
 		return;
 
 	// Are we capable of firing again?
-	if ( m_flNextPrimaryAttack > gpGlobals->curtime )
+	if(m_flNextPrimaryAttack > gpGlobals->curtime)
 		return;
 
 	// Get the player owning the weapon.
-	CTFPlayer *pPlayer = ToTFPlayer( GetPlayerOwner() );
-	if ( !pPlayer )
+	CTFPlayer *pPlayer = ToTFPlayer(GetPlayerOwner());
+	if(!pPlayer)
 		return;
 
-	if ( !CanAttack() )
+	if(!CanAttack())
 		return;
 
 	BaseClass::PrimaryAttack();
 
-	if ( HasLastShotCritical() )
+	if(HasLastShotCritical())
 	{
-		pPlayer->m_Shared.AddCond( TF_COND_CRITBOOSTED );
+		pPlayer->m_Shared.AddCond(TF_COND_CRITBOOSTED);
 	}
 	else
 	{
 		int iAttr = 0;
-		CALL_ATTRIB_HOOK_INT( iAttr, last_shot_crits );
-		if ( iAttr )
+		CALL_ATTRIB_HOOK_INT(iAttr, last_shot_crits);
+		if(iAttr)
 		{
-			pPlayer->m_Shared.RemoveCond( TF_COND_CRITBOOSTED );
+			pPlayer->m_Shared.RemoveCond(TF_COND_CRITBOOSTED);
 		}
 	}
 
 	m_flLastAccuracyCheck = gpGlobals->curtime;
 
-	if ( SapperKillsCollectCrits() )
+	if(SapperKillsCollectCrits())
 	{
 		// Do this after the attack, so that we know if we are doing custom damage
-		CTFPlayer *pOwner = ToTFPlayer( GetPlayerOwner() );
-		if ( pOwner )
+		CTFPlayer *pOwner = ToTFPlayer(GetPlayerOwner());
+		if(pOwner)
 		{
 			int iRevengeCrits = pOwner->m_Shared.GetRevengeCrits();
-			if ( iRevengeCrits > 0 )
+			if(iRevengeCrits > 0)
 			{
-				pOwner->m_Shared.SetRevengeCrits( iRevengeCrits-1 );
+				pOwner->m_Shared.SetRevengeCrits(iRevengeCrits - 1);
 			}
 		}
 	}
 #ifdef GAME_DLL
 	// Lower bonus for each attack
 	int iExtraDamageOnHitPenalty = 0;
-	CALL_ATTRIB_HOOK_INT( iExtraDamageOnHitPenalty, extra_damage_on_hit_penalty );
-	if ( iExtraDamageOnHitPenalty )
+	CALL_ATTRIB_HOOK_INT(iExtraDamageOnHitPenalty, extra_damage_on_hit_penalty);
+	if(iExtraDamageOnHitPenalty)
 	{
 		int iDecaps = pPlayer->m_Shared.GetDecapitations();
-		pPlayer->m_Shared.SetDecapitations( Max( 0, iDecaps - iExtraDamageOnHitPenalty ) );
+		pPlayer->m_Shared.SetDecapitations(Max(0, iDecaps - iExtraDamageOnHitPenalty));
 	}
 #endif
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-float CTFRevolver::GetWeaponSpread( void )
+float CTFRevolver::GetWeaponSpread(void)
 {
 	float fSpread = BaseClass::GetWeaponSpread();
 
-	if ( CanHeadshot() )
+	if(CanHeadshot())
 	{
 		// We are highly accurate for our first shot.
 		float flTimeSinceCheck = gpGlobals->curtime - m_flLastAccuracyCheck;
-		fSpread = RemapValClamped( flTimeSinceCheck, 1.0f, 0.5f, 0.0f, fSpread+0.0f );
+		fSpread = RemapValClamped(flTimeSinceCheck, 1.0f, 0.5f, 0.0f, fSpread + 0.0f);
 	}
 
 	return fSpread;
@@ -199,23 +198,23 @@ float CTFRevolver::GetWeaponSpread( void )
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFRevolver::GetWeaponCrosshairScale( float &flScale )
+void CTFRevolver::GetWeaponCrosshairScale(float &flScale)
 {
-	C_TFPlayer* pTFPlayer = ToTFPlayer( GetOwner() );
-	if ( !pTFPlayer )
+	C_TFPlayer *pTFPlayer = ToTFPlayer(GetOwner());
+	if(!pTFPlayer)
 		return;
 
-	if ( CanHeadshot() )
+	if(CanHeadshot())
 	{
-		float curtime = pTFPlayer->GetFinalPredictedTime() + ( gpGlobals->interpolation_amount * TICK_INTERVAL );
+		float curtime = pTFPlayer->GetFinalPredictedTime() + (gpGlobals->interpolation_amount * TICK_INTERVAL);
 		float flTimeSinceCheck = curtime - m_flLastAccuracyCheck;
-		flScale = RemapValClamped( flTimeSinceCheck, 1.0f, 0.5f, 0.75f, 2.5f );
+		flScale = RemapValClamped(flTimeSinceCheck, 1.0f, 0.5f, 0.75f, 2.5f);
 	}
 	else
 	{
-		BaseClass::GetWeaponCrosshairScale( flScale );
+		BaseClass::GetWeaponCrosshairScale(flScale);
 	}
 }
 #endif
@@ -223,33 +222,33 @@ void CTFRevolver::GetWeaponCrosshairScale( float &flScale )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-int CTFRevolver::GetCount( void )
+int CTFRevolver::GetCount(void)
 {
-	CTFPlayer *pOwner = ToTFPlayer( GetPlayerOwner() );
-	if ( !pOwner )
+	CTFPlayer *pOwner = ToTFPlayer(GetPlayerOwner());
+	if(!pOwner)
 		return 0;
 
-	if ( SapperKillsCollectCrits() )
+	if(SapperKillsCollectCrits())
 	{
 		return pOwner->m_Shared.GetRevengeCrits();
 	}
 
 	int iExtraDamageOnHit = 0;
-	CALL_ATTRIB_HOOK_INT( iExtraDamageOnHit, extra_damage_on_hit );
-	if ( iExtraDamageOnHit )
+	CALL_ATTRIB_HOOK_INT(iExtraDamageOnHit, extra_damage_on_hit);
+	if(iExtraDamageOnHit)
 	{
-		return Min( 200, pOwner->m_Shared.GetDecapitations() );
+		return Min(200, pOwner->m_Shared.GetDecapitations());
 	}
 
 	return 0;
 }
 
 //-----------------------------------------------------------------------------
-const char* CTFRevolver::GetEffectLabelText( void )
+const char *CTFRevolver::GetEffectLabelText(void)
 {
 	int iExtraDamageOnHit = 0;
-	CALL_ATTRIB_HOOK_INT( iExtraDamageOnHit, extra_damage_on_hit );
-	if ( iExtraDamageOnHit )
+	CALL_ATTRIB_HOOK_INT(iExtraDamageOnHit, extra_damage_on_hit);
+	if(iExtraDamageOnHit)
 	{
 		return "#TF_BONUS";
 	}
@@ -258,50 +257,50 @@ const char* CTFRevolver::GetEffectLabelText( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CTFRevolver::Holster( CBaseCombatWeapon *pSwitchingTo )
+bool CTFRevolver::Holster(CBaseCombatWeapon *pSwitchingTo)
 {
 #ifdef GAME_DLL
-	CTFPlayer *pOwner = ToTFPlayer( GetPlayerOwner() );
-	if ( pOwner )
+	CTFPlayer *pOwner = ToTFPlayer(GetPlayerOwner());
+	if(pOwner)
 	{
-		if ( SapperKillsCollectCrits() )
-		{	
-			if ( pOwner->m_Shared.GetRevengeCrits() )
+		if(SapperKillsCollectCrits())
+		{
+			if(pOwner->m_Shared.GetRevengeCrits())
 			{
-				pOwner->m_Shared.RemoveCond( TF_COND_CRITBOOSTED );
+				pOwner->m_Shared.RemoveCond(TF_COND_CRITBOOSTED);
 			}
 		}
 
-		if ( HasLastShotCritical() )
+		if(HasLastShotCritical())
 		{
-			pOwner->m_Shared.RemoveCond( TF_COND_CRITBOOSTED );
+			pOwner->m_Shared.RemoveCond(TF_COND_CRITBOOSTED);
 		}
 	}
 #endif
 
-	return BaseClass::Holster( pSwitchingTo );
+	return BaseClass::Holster(pSwitchingTo);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CTFRevolver::Deploy( void )
+bool CTFRevolver::Deploy(void)
 {
 #ifdef GAME_DLL
-	CTFPlayer *pOwner = ToTFPlayer( GetPlayerOwner() );
-	if ( pOwner )
+	CTFPlayer *pOwner = ToTFPlayer(GetPlayerOwner());
+	if(pOwner)
 	{
-		if ( SapperKillsCollectCrits() )
+		if(SapperKillsCollectCrits())
 		{
-			if ( pOwner->m_Shared.GetRevengeCrits() )
+			if(pOwner->m_Shared.GetRevengeCrits())
 			{
-				pOwner->m_Shared.AddCond( TF_COND_CRITBOOSTED );
+				pOwner->m_Shared.AddCond(TF_COND_CRITBOOSTED);
 			}
 		}
 
-		if ( HasLastShotCritical() )
+		if(HasLastShotCritical())
 		{
-			pOwner->m_Shared.AddCond( TF_COND_CRITBOOSTED );
+			pOwner->m_Shared.AddCond(TF_COND_CRITBOOSTED);
 		}
 	}
 #endif
@@ -313,15 +312,15 @@ bool CTFRevolver::Deploy( void )
 //-----------------------------------------------------------------------------
 // Purpose: Reset revenge crits when the revolver is changed
 //-----------------------------------------------------------------------------
-void CTFRevolver::Detach( void )
+void CTFRevolver::Detach(void)
 {
-	if ( SapperKillsCollectCrits() )
+	if(SapperKillsCollectCrits())
 	{
 		CTFPlayer *pPlayer = GetTFPlayerOwner();
-		if ( pPlayer )
+		if(pPlayer)
 		{
-			pPlayer->m_Shared.SetRevengeCrits( 0 );
-			pPlayer->m_Shared.RemoveCond( TF_COND_CRITBOOSTED );
+			pPlayer->m_Shared.SetRevengeCrits(0);
+			pPlayer->m_Shared.RemoveCond(TF_COND_CRITBOOSTED);
 		}
 	}
 
@@ -329,17 +328,17 @@ void CTFRevolver::Detach( void )
 }
 
 //-----------------------------------------------------------------------------
-float CTFRevolver::GetProjectileDamage( void )
+float CTFRevolver::GetProjectileDamage(void)
 {
 	float flDamageMod = 1.0f;
 	int iExtraDamageOnHit = 0;
-	CALL_ATTRIB_HOOK_INT( iExtraDamageOnHit, extra_damage_on_hit );
-	if ( iExtraDamageOnHit )
+	CALL_ATTRIB_HOOK_INT(iExtraDamageOnHit, extra_damage_on_hit);
+	if(iExtraDamageOnHit)
 	{
-		CTFPlayer *pOwner = ToTFPlayer( GetOwner() );
-		if ( pOwner )
+		CTFPlayer *pOwner = ToTFPlayer(GetOwner());
+		if(pOwner)
 		{
-			flDamageMod = 1.0f + ( Min( 200, pOwner->m_Shared.GetDecapitations() ) * 0.01f );
+			flDamageMod = 1.0f + (Min(200, pOwner->m_Shared.GetDecapitations()) * 0.01f);
 		}
 	}
 

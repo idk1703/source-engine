@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -21,13 +21,13 @@ public:
 	}
 
 	// Assign a value to the handle.
-	const CHudTextureHandle& operator=( const CHudTexture *t )
+	const CHudTextureHandle &operator=(const CHudTexture *t)
 	{
 		m_pValue = (CHudTexture *)t;
 		return *this;
 	}
 
-	void Set( CHudTexture *t )
+	void Set(CHudTexture *t)
 	{
 		m_pValue = t;
 	}
@@ -37,17 +37,17 @@ public:
 		return m_pValue;
 	}
 
-	operator CHudTexture*()
+	operator CHudTexture *()
 	{
 		return m_pValue;
 	}
 
-	operator CHudTexture*() const
+	operator CHudTexture *() const
 	{
 		return m_pValue;
 	}
 
-	CHudTexture	*operator->() const
+	CHudTexture *operator->() const
 	{
 		return m_pValue;
 	}

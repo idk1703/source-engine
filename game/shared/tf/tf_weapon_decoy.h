@@ -23,30 +23,41 @@
 class CTFDecoy : public CTFJar
 {
 public:
-	DECLARE_CLASS( CTFDecoy, CTFJar );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_CLASS(CTFDecoy, CTFJar);
+	DECLARE_NETWORKCLASS();
 
-/*
-// Server specific.
-#ifdef GAME_DLL
-	DECLARE_DATADESC();
-#endif
-*/
+	/*
+	// Server specific.
+	#ifdef GAME_DLL
+		DECLARE_DATADESC();
+	#endif
+	*/
 
 	CTFDecoy();
 	~CTFDecoy() {}
 
-	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_LIFELINE; }	// TODO: Need real weapon ID
+	virtual int GetWeaponID(void) const
+	{
+		return TF_WEAPON_LIFELINE;
+	} // TODO: Need real weapon ID
 
-	virtual void	PrimaryAttack( void );
+	virtual void PrimaryAttack(void);
 
-	virtual bool	ShouldDrawCrosshair( void )						{ return false; }
-	virtual bool	HasPrimaryAmmo()								{ return true; }
-	virtual bool	CanBeSelected()									{ return true; }
+	virtual bool ShouldDrawCrosshair(void)
+	{
+		return false;
+	}
+	virtual bool HasPrimaryAmmo()
+	{
+		return true;
+	}
+	virtual bool CanBeSelected()
+	{
+		return true;
+	}
 
 private:
-	CTFDecoy( const CTFDecoy & ) {}
+	CTFDecoy(const CTFDecoy &) {}
 };
-
 
 #endif // TF_WEAPON_DECOY_H

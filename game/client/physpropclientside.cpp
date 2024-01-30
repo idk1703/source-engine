@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -18,35 +18,39 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-#define FADEOUT_TIME	1.0f
+#define FADEOUT_TIME 1.0f
 
-ConVar	cl_phys_props_max( "cl_phys_props_max", "300", 0, "Maximum clientside physic props" );
-ConVar	r_propsmaxdist( "r_propsmaxdist", "1200", 0, "Maximum visible distance" );
+ConVar cl_phys_props_max("cl_phys_props_max", "300", 0, "Maximum clientside physic props");
+ConVar r_propsmaxdist("r_propsmaxdist", "1200", 0, "Maximum visible distance");
 
-ConVar	cl_phys_props_enable( "cl_phys_props_enable", "1", 0, "Disable clientside physics props (must be set before loading a level)." );
-ConVar	cl_phys_props_respawndist( "cl_phys_props_respawndist", "1500", 0, "Minimum distance from the player that a clientside prop must be before it's allowed to respawn." );
-ConVar	cl_phys_props_respawnrate( "cl_phys_props_respawnrate", "60", 0, "Time, in seconds, between clientside prop respawns." );
+ConVar cl_phys_props_enable("cl_phys_props_enable", "1", 0,
+							"Disable clientside physics props (must be set before loading a level).");
+ConVar cl_phys_props_respawndist(
+	"cl_phys_props_respawndist", "1500", 0,
+	"Minimum distance from the player that a clientside prop must be before it's allowed to respawn.");
+ConVar cl_phys_props_respawnrate("cl_phys_props_respawnrate", "60", 0,
+								 "Time, in seconds, between clientside prop respawns.");
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-static int PropBreakablePrecacheAll( int modelIndex )
+static int PropBreakablePrecacheAll(int modelIndex)
 {
 	CUtlVector<breakmodel_t> list;
 
-	BreakModelList( list, modelIndex, COLLISION_GROUP_NONE, 0 );
+	BreakModelList(list, modelIndex, COLLISION_GROUP_NONE, 0);
 	return list.Count();
 }
 
-static CUtlVector<C_PhysPropClientside*> s_PhysPropList;
-static CUtlVector<C_FuncPhysicsRespawnZone*> s_RespawnZoneList;
+static CUtlVector<C_PhysPropClientside *> s_PhysPropList;
+static CUtlVector<C_FuncPhysicsRespawnZone *> s_RespawnZoneList;
 
-C_PhysPropClientside *C_PhysPropClientside::CreateNew( bool bForce )
+C_PhysPropClientside *C_PhysPropClientside::CreateNew(bool bForce)
 {
-	if ( (s_PhysPropList.Count() >= cl_phys_props_max.GetInt()) && !bForce )
+	if((s_PhysPropList.Count() >= cl_phys_props_max.GetInt()) && !bForce)
 	{
-		DevMsg("Warning! Client physic props overflow *max %i).\n", cl_phys_props_max.GetInt() );
+		DevMsg("Warning! Client physic props overflow *max %i).\n", cl_phys_props_max.GetInt());
 		return NULL;
 	}
 
@@ -62,24 +66,24 @@ C_PhysPropClientside::C_PhysPropClientside()
 	m_flTouchDelta = 0;
 	m_pRespawnZone = NULL;
 
-	s_PhysPropList.AddToTail( this );
+	s_PhysPropList.AddToTail(this);
 }
 
 C_PhysPropClientside::~C_PhysPropClientside()
 {
-	if ( m_pRespawnZone )
+	if(m_pRespawnZone)
 	{
-		m_pRespawnZone->PropDestroyed( this );
+		m_pRespawnZone->PropDestroyed(this);
 	}
 
-	PhysCleanupFrictionSounds( this );
+	PhysCleanupFrictionSounds(this);
 	VPhysicsDestroyObject();
-	s_PhysPropList.FindAndRemove( this );
+	s_PhysPropList.FindAndRemove(this);
 }
 
 void C_PhysPropClientside::SetPhysicsMode(int iMode)
 {
-	if ( m_iPhysicsMode == PHYSICS_MULTIPLAYER_AUTODETECT )
+	if(m_iPhysicsMode == PHYSICS_MULTIPLAYER_AUTODETECT)
 		m_iPhysicsMode = iMode;
 }
 
@@ -87,52 +91,52 @@ void C_PhysPropClientside::SetPhysicsMode(int iMode)
 // Should we collide?
 //-----------------------------------------------------------------------------
 
-bool C_PhysPropClientside::KeyValue( const char *szKeyName, const char *szValue )
+bool C_PhysPropClientside::KeyValue(const char *szKeyName, const char *szValue)
 {
-	if (FStrEq(szKeyName, "physdamagescale"))
+	if(FStrEq(szKeyName, "physdamagescale"))
 	{
 		m_impactEnergyScale = atof(szValue);
 	}
-	else if ( FStrEq(szKeyName, "health") )
+	else if(FStrEq(szKeyName, "health"))
 	{
 		m_iHealth = Q_atoi(szValue);
 	}
-	else if (FStrEq(szKeyName, "spawnflags"))
+	else if(FStrEq(szKeyName, "spawnflags"))
 	{
 		m_spawnflags = Q_atoi(szValue);
 	}
-	else if (FStrEq(szKeyName, "model"))
+	else if(FStrEq(szKeyName, "model"))
 	{
-		SetModelName( AllocPooledString( szValue ) );
+		SetModelName(AllocPooledString(szValue));
 	}
-	else if (FStrEq(szKeyName, "fademaxdist"))
+	else if(FStrEq(szKeyName, "fademaxdist"))
 	{
 		m_fadeMaxDist = Q_atof(szValue);
 	}
-	else if (FStrEq(szKeyName, "fademindist"))
+	else if(FStrEq(szKeyName, "fademindist"))
 	{
 		m_fadeMinDist = Q_atof(szValue);
 	}
-	else if (FStrEq(szKeyName, "fadescale"))
+	else if(FStrEq(szKeyName, "fadescale"))
 	{
 		m_flFadeScale = Q_atof(szValue);
 	}
-	else if (FStrEq(szKeyName, "inertiaScale"))
+	else if(FStrEq(szKeyName, "inertiaScale"))
 	{
 		m_inertiaScale = Q_atof(szValue);
 	}
-	else if (FStrEq(szKeyName, "skin"))
+	else if(FStrEq(szKeyName, "skin"))
 	{
-		m_nSkin  = Q_atoi(szValue);
+		m_nSkin = Q_atoi(szValue);
 	}
-	else if (FStrEq(szKeyName, "physicsmode"))
+	else if(FStrEq(szKeyName, "physicsmode"))
 	{
 		m_iPhysicsMode = Q_atoi(szValue);
 	}
 
 	else
 	{
-		if ( !BaseClass::KeyValue( szKeyName, szValue ) )
+		if(!BaseClass::KeyValue(szKeyName, szValue))
 		{
 			// key hasn't been handled
 			return false;
@@ -143,34 +147,34 @@ bool C_PhysPropClientside::KeyValue( const char *szKeyName, const char *szValue 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pOther - 
+// Purpose:
+// Input  : *pOther -
 //-----------------------------------------------------------------------------
-void C_PhysPropClientside::StartTouch( C_BaseEntity *pOther )
+void C_PhysPropClientside::StartTouch(C_BaseEntity *pOther)
 {
 	// Limit the amount of times we can bounce
-	if ( m_flTouchDelta < gpGlobals->curtime )
+	if(m_flTouchDelta < gpGlobals->curtime)
 	{
-		HitSurface( pOther );
+		HitSurface(pOther);
 		m_flTouchDelta = gpGlobals->curtime + 0.1f;
 	}
 
-	BaseClass::StartTouch( pOther );
+	BaseClass::StartTouch(pOther);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pOther - 
+// Purpose:
+// Input  : *pOther -
 //-----------------------------------------------------------------------------
-void C_PhysPropClientside::HitSurface( C_BaseEntity *pOther )
+void C_PhysPropClientside::HitSurface(C_BaseEntity *pOther)
 {
-	if ( HasInteraction( PROPINTER_WORLD_BLOODSPLAT ) )
+	if(HasInteraction(PROPINTER_WORLD_BLOODSPLAT))
 	{
-		trace_t	tr;
+		trace_t tr;
 		tr = BaseClass::GetTouchTrace();
-		if ( tr.m_pEnt )
+		if(tr.m_pEnt)
 		{
-			UTIL_BloodDecalTrace( &tr, BLOOD_COLOR_RED );
+			UTIL_BloodDecalTrace(&tr, BLOOD_COLOR_RED);
 		}
 	}
 }
@@ -178,40 +182,41 @@ void C_PhysPropClientside::HitSurface( C_BaseEntity *pOther )
 void C_PhysPropClientside::RecreateAll()
 {
 	DestroyAll();
-	if ( cl_phys_props_enable.GetInt() )
+	if(cl_phys_props_enable.GetInt())
 	{
-		ParseAllEntities( engine->GetMapEntitiesString() );
+		ParseAllEntities(engine->GetMapEntitiesString());
 		InitializePropRespawnZones();
 	}
 }
 
 void C_PhysPropClientside::DestroyAll()
 {
-	while (s_PhysPropList.Count() > 0 )
+	while(s_PhysPropList.Count() > 0)
 	{
 		C_PhysPropClientside *p = s_PhysPropList[0];
 		p->Release();
 	}
-	while (s_RespawnZoneList.Count() > 0)
+	while(s_RespawnZoneList.Count() > 0)
 	{
 		C_FuncPhysicsRespawnZone *p = s_RespawnZoneList[0];
 		p->Release();
 	}
 }
 
-void C_PhysPropClientside::SetRespawnZone( C_FuncPhysicsRespawnZone *pZone ) 
-{ 
-	m_pRespawnZone = pZone; 
+void C_PhysPropClientside::SetRespawnZone(C_FuncPhysicsRespawnZone *pZone)
+{
+	m_pRespawnZone = pZone;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Parse this prop's data from the model, if it has a keyvalues section.
 //			Returns true only if this prop is using a model that has a prop_data section that's invalid.
 //-----------------------------------------------------------------------------
-int C_PhysPropClientside::ParsePropData( void )
+int C_PhysPropClientside::ParsePropData(void)
 {
 	KeyValues *modelKeyValues = new KeyValues("");
-	if ( !modelKeyValues->LoadFromBuffer( modelinfo->GetModelName( GetModel() ), modelinfo->GetModelKeyValueText( GetModel() ) ) )
+	if(!modelKeyValues->LoadFromBuffer(modelinfo->GetModelName(GetModel()),
+									   modelinfo->GetModelKeyValueText(GetModel())))
 	{
 		modelKeyValues->deleteThis();
 		return PARSE_FAILED_NO_DATA;
@@ -219,93 +224,90 @@ int C_PhysPropClientside::ParsePropData( void )
 
 	// Do we have a props section?
 	KeyValues *pkvPropData = modelKeyValues->FindKey("prop_data");
-	if ( !pkvPropData )
+	if(!pkvPropData)
 	{
 		modelKeyValues->deleteThis();
 		return PARSE_FAILED_NO_DATA;
 	}
 
-	int iResult = g_PropDataSystem.ParsePropFromKV( this, pkvPropData, modelKeyValues );
+	int iResult = g_PropDataSystem.ParsePropFromKV(this, pkvPropData, modelKeyValues);
 	modelKeyValues->deleteThis();
 	return iResult;
 }
 
 bool C_PhysPropClientside::Initialize()
 {
-	if ( InitializeAsClientEntity( STRING(GetModelName()), RENDER_GROUP_OPAQUE_ENTITY ) == false )
+	if(InitializeAsClientEntity(STRING(GetModelName()), RENDER_GROUP_OPAQUE_ENTITY) == false)
 	{
 		return false;
 	}
 
 	const model_t *mod = GetModel();
-	if ( mod )
+	if(mod)
 	{
 		Vector mins, maxs;
-		modelinfo->GetModelBounds( mod, mins, maxs );
-		SetCollisionBounds( mins, maxs );
+		modelinfo->GetModelBounds(mod, mins, maxs);
+		SetCollisionBounds(mins, maxs);
 	}
 
 	solid_t tmpSolid;
 
 	// Create the object in the physics system
 
-	if ( !PhysModelParseSolid( tmpSolid, this, GetModelIndex() ) )
+	if(!PhysModelParseSolid(tmpSolid, this, GetModelIndex()))
 	{
-		DevMsg("C_PhysPropClientside::Initialize: PhysModelParseSolid failed for entity %i.\n", GetModelIndex() );
+		DevMsg("C_PhysPropClientside::Initialize: PhysModelParseSolid failed for entity %i.\n", GetModelIndex());
 		return false;
 	}
 	else
 	{
-		m_pPhysicsObject = VPhysicsInitNormal( SOLID_VPHYSICS, 0, m_spawnflags & SF_PHYSPROP_START_ASLEEP, &tmpSolid );
-	
-		if ( !m_pPhysicsObject )
+		m_pPhysicsObject = VPhysicsInitNormal(SOLID_VPHYSICS, 0, m_spawnflags & SF_PHYSPROP_START_ASLEEP, &tmpSolid);
+
+		if(!m_pPhysicsObject)
 		{
 			// failed to create a physics object
-		DevMsg(" C_PhysPropClientside::Initialize: VPhysicsInitNormal() failed for %s.\n", STRING(GetModelName()) );
+			DevMsg(" C_PhysPropClientside::Initialize: VPhysicsInitNormal() failed for %s.\n", STRING(GetModelName()));
 			return false;
 		}
 	}
 
 	// We want touch calls when we hit the world
 	unsigned int flags = VPhysicsGetObject()->GetCallbackFlags();
-	VPhysicsGetObject()->SetCallbackFlags( flags | CALLBACK_GLOBAL_TOUCH_STATIC );
+	VPhysicsGetObject()->SetCallbackFlags(flags | CALLBACK_GLOBAL_TOUCH_STATIC);
 
-	if ( m_spawnflags & SF_PHYSPROP_MOTIONDISABLED )
+	if(m_spawnflags & SF_PHYSPROP_MOTIONDISABLED)
 	{
-		m_pPhysicsObject->EnableMotion( false );
+		m_pPhysicsObject->EnableMotion(false);
 	}
-		
+
 	Spawn(); // loads breakable & prop data
 
-	if ( m_iPhysicsMode == PHYSICS_MULTIPLAYER_AUTODETECT )
+	if(m_iPhysicsMode == PHYSICS_MULTIPLAYER_AUTODETECT)
 	{
-		m_iPhysicsMode = GetAutoMultiplayerPhysicsMode( 
-			CollisionProp()->OBBSize(), m_pPhysicsObject->GetMass() );
+		m_iPhysicsMode = GetAutoMultiplayerPhysicsMode(CollisionProp()->OBBSize(), m_pPhysicsObject->GetMass());
 	}
 
-	if 	( m_spawnflags & SF_PHYSPROP_FORCE_SERVER_SIDE )
+	if(m_spawnflags & SF_PHYSPROP_FORCE_SERVER_SIDE)
 	{
 		// forced to be server-side by map maker
 		return false;
 	}
-		
 
-	
-	if ( m_iPhysicsMode != PHYSICS_MULTIPLAYER_CLIENTSIDE )
+	if(m_iPhysicsMode != PHYSICS_MULTIPLAYER_CLIENTSIDE)
 	{
 		// spawn only clientside entities
 		return false;
 	}
-	else 
+	else
 	{
-		if ( engine->IsInEditMode() )
+		if(engine->IsInEditMode())
 		{
 			// don't spawn in map edit mode
 			return false;
 		}
 	}
 
-	if ( m_fadeMinDist < 0 )
+	if(m_fadeMinDist < 0)
 	{
 		// start fading out at 75% of r_propsmaxdist
 		m_fadeMaxDist = r_propsmaxdist.GetFloat();
@@ -313,20 +315,20 @@ bool C_PhysPropClientside::Initialize()
 	}
 
 	// player can push it away
-	SetCollisionGroup( COLLISION_GROUP_PUSHAWAY );
+	SetCollisionGroup(COLLISION_GROUP_PUSHAWAY);
 
 	UpdatePartitionListEntry();
 
 	CollisionProp()->UpdatePartition();
 
-	SetBlocksLOS( false ); // this should be a small object
+	SetBlocksLOS(false); // this should be a small object
 
 	// Set up shadows; do it here so that objects can change shadowcasting state
 	CreateShadow();
 
 	UpdateVisibility();
 
-	SetNextClientThink( CLIENT_THINK_NEVER );
+	SetNextClientThink(CLIENT_THINK_NEVER);
 
 	return true;
 }
@@ -341,21 +343,21 @@ void C_PhysPropClientside::Spawn()
 	BaseClass::Spawn();
 
 	// we don't really precache models here, just checking how many we have:
-	m_iNumBreakableChunks = PropBreakablePrecacheAll( GetModelIndex() );
+	m_iNumBreakableChunks = PropBreakablePrecacheAll(GetModelIndex());
 
 	ParsePropData();
 
 	// If we have no custom breakable chunks, see if we're breaking into generic ones
-	if ( !m_iNumBreakableChunks )
+	if(!m_iNumBreakableChunks)
 	{
-		if ( GetBreakableModel() != NULL_STRING && GetBreakableCount() )
+		if(GetBreakableModel() != NULL_STRING && GetBreakableCount())
 		{
 			m_iNumBreakableChunks = GetBreakableCount();
 		}
 	}
 
 	// Setup takedamage based upon the health we parsed earlier
-	if ( m_iHealth == 0 )
+	if(m_iHealth == 0)
 	{
 		m_takedamage = DAMAGE_NO;
 	}
@@ -365,14 +367,14 @@ void C_PhysPropClientside::Spawn()
 	}
 }
 
-void C_PhysPropClientside::OnTakeDamage( int iDamage ) // very simple version
+void C_PhysPropClientside::OnTakeDamage(int iDamage) // very simple version
 {
-	if ( m_takedamage == DAMAGE_NO )
+	if(m_takedamage == DAMAGE_NO)
 		return;
 
 	m_iHealth -= iDamage;
 
-	if (m_iHealth <= 0)
+	if(m_iHealth <= 0)
 	{
 		Break();
 	}
@@ -380,7 +382,7 @@ void C_PhysPropClientside::OnTakeDamage( int iDamage ) // very simple version
 
 float C_PhysPropClientside::GetMass()
 {
-	if ( VPhysicsGetObject() )
+	if(VPhysicsGetObject())
 	{
 		return VPhysicsGetObject()->GetMass();
 	}
@@ -390,7 +392,7 @@ float C_PhysPropClientside::GetMass()
 
 bool C_PhysPropClientside::IsAsleep()
 {
-	if ( VPhysicsGetObject() )
+	if(VPhysicsGetObject())
 	{
 		return VPhysicsGetObject()->IsAsleep();
 	}
@@ -399,71 +401,70 @@ bool C_PhysPropClientside::IsAsleep()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_PhysPropClientside::ClientThink( void )
+void C_PhysPropClientside::ClientThink(void)
 {
-	if ( m_fDeathTime < 0 )
+	if(m_fDeathTime < 0)
 	{
-		SetNextClientThink( CLIENT_THINK_NEVER );
+		SetNextClientThink(CLIENT_THINK_NEVER);
 		return;
 	}
 
-	if ( m_fDeathTime <= gpGlobals->curtime )
+	if(m_fDeathTime <= gpGlobals->curtime)
 	{
 		Release(); // Die
 		return;
 	}
 
-	// fade out 
+	// fade out
 
-	float alpha = (m_fDeathTime - gpGlobals->curtime)/FADEOUT_TIME;
+	float alpha = (m_fDeathTime - gpGlobals->curtime) / FADEOUT_TIME;
 
-	SetRenderMode( kRenderTransTexture );
+	SetRenderMode(kRenderTransTexture);
 
-	SetRenderColorA( alpha * 256 );
+	SetRenderColorA(alpha * 256);
 
-	SetNextClientThink( CLIENT_THINK_ALWAYS );
+	SetNextClientThink(CLIENT_THINK_ALWAYS);
 }
 
-void C_PhysPropClientside::StartFadeOut( float fDelay )
+void C_PhysPropClientside::StartFadeOut(float fDelay)
 {
 	m_fDeathTime = gpGlobals->curtime + fDelay + FADEOUT_TIME;
 
-	SetNextClientThink( gpGlobals->curtime + fDelay );
+	SetNextClientThink(gpGlobals->curtime + fDelay);
 }
-
 
 void C_PhysPropClientside::Break()
 {
 	m_takedamage = DAMAGE_NO;
-	
+
 	IPhysicsObject *pPhysics = VPhysicsGetObject();
 
 	Vector velocity;
 	AngularImpulse angVelocity;
 	Vector origin;
 	QAngle angles;
-	AddSolidFlags( FSOLID_NOT_SOLID );
+	AddSolidFlags(FSOLID_NOT_SOLID);
 
-	if ( pPhysics )
+	if(pPhysics)
 	{
-		pPhysics->GetVelocity( &velocity, &angVelocity );
-		pPhysics->GetPosition( &origin, &angles );
+		pPhysics->GetVelocity(&velocity, &angVelocity);
+		pPhysics->GetPosition(&origin, &angles);
 		pPhysics->RecheckCollisionFilter();
 	}
 	else
 	{
 		velocity = GetAbsVelocity();
-		QAngleToAngularImpulse( GetLocalAngularVelocity(), angVelocity );
+		QAngleToAngularImpulse(GetLocalAngularVelocity(), angVelocity);
 		origin = GetAbsOrigin();
 		angles = GetAbsAngles();
 	}
 
-	breakablepropparams_t params( origin, angles, velocity, angVelocity );
+	breakablepropparams_t params(origin, angles, velocity, angVelocity);
 	params.impactEnergyScale = m_impactEnergyScale;
 	params.defCollisionGroup = GetCollisionGroup();
-	if ( params.defCollisionGroup == COLLISION_GROUP_NONE )
+	if(params.defCollisionGroup == COLLISION_GROUP_NONE)
 	{
 		// don't automatically make anything COLLISION_GROUP_NONE or it will
 		// collide with debris being ejected by breaking
@@ -474,34 +475,34 @@ void C_PhysPropClientside::Break()
 	params.defBurstScale = 100;
 
 	// spwan break chunks
-	PropBreakableCreateAll( GetModelIndex(), pPhysics, params, this, -1, false );
+	PropBreakableCreateAll(GetModelIndex(), pPhysics, params, this, -1, false);
 
 	Release(); // destroy object
 }
 
-void C_PhysPropClientside::Clone( Vector &velocity )
+void C_PhysPropClientside::Clone(Vector &velocity)
 {
 	C_PhysPropClientside *pEntity = C_PhysPropClientside::CreateNew();
 
-	if ( !pEntity )
+	if(!pEntity)
 		return;
 
 	pEntity->m_spawnflags = m_spawnflags;
 
 	// We never want to be motion disabled
 	pEntity->m_spawnflags &= ~SF_PHYSPROP_MOTIONDISABLED;
-		
-	pEntity->SetDmgModBullet( GetDmgModBullet() );
-	pEntity->SetDmgModClub( GetDmgModClub() );
-	pEntity->SetDmgModExplosive( GetDmgModExplosive() );
-	
-	pEntity->SetModelName( GetModelName() );
-	pEntity->SetLocalOrigin( GetLocalOrigin() );
-	pEntity->SetLocalAngles( GetLocalAngles() );
-	pEntity->SetOwnerEntity( this );
-	pEntity->SetPhysicsMode( PHYSICS_MULTIPLAYER_CLIENTSIDE );
 
-	if ( !pEntity->Initialize() )
+	pEntity->SetDmgModBullet(GetDmgModBullet());
+	pEntity->SetDmgModClub(GetDmgModClub());
+	pEntity->SetDmgModExplosive(GetDmgModExplosive());
+
+	pEntity->SetModelName(GetModelName());
+	pEntity->SetLocalOrigin(GetLocalOrigin());
+	pEntity->SetLocalAngles(GetLocalAngles());
+	pEntity->SetOwnerEntity(this);
+	pEntity->SetPhysicsMode(PHYSICS_MULTIPLAYER_CLIENTSIDE);
+
+	if(!pEntity->Initialize())
 	{
 		pEntity->Release();
 		return;
@@ -510,22 +511,22 @@ void C_PhysPropClientside::Clone( Vector &velocity )
 	pEntity->m_nSkin = m_nSkin;
 	pEntity->m_iHealth = m_iHealth;
 
-	if ( pEntity->m_iHealth == 0 )
+	if(pEntity->m_iHealth == 0)
 	{
 		// if  no health, don't collide with player anymore, don't take damage
 		pEntity->m_takedamage = DAMAGE_NO;
-		pEntity->SetCollisionGroup( COLLISION_GROUP_NONE );
+		pEntity->SetCollisionGroup(COLLISION_GROUP_NONE);
 	}
-	
+
 	IPhysicsObject *pPhysicsObject = pEntity->VPhysicsGetObject();
 
-	if( pPhysicsObject )
+	if(pPhysicsObject)
 	{
 		// randomize velocity by 5%
-		float rndf = RandomFloat( -0.025, 0.025 );
-		Vector rndVel = velocity + rndf*velocity;
+		float rndf = RandomFloat(-0.025, 0.025);
+		Vector rndVel = velocity + rndf * velocity;
 
-		pPhysicsObject->AddVelocity( &rndVel, NULL );
+		pPhysicsObject->AddVelocity(&rndVel, NULL);
 	}
 	else
 	{
@@ -534,34 +535,34 @@ void C_PhysPropClientside::Clone( Vector &velocity )
 	}
 }
 
-void C_PhysPropClientside::ImpactTrace( trace_t *pTrace, int iDamageType, const char *pCustomImpactName )
+void C_PhysPropClientside::ImpactTrace(trace_t *pTrace, int iDamageType, const char *pCustomImpactName)
 {
-	VPROF( "C_PhysPropClientside::ImpactTrace" );
+	VPROF("C_PhysPropClientside::ImpactTrace");
 	IPhysicsObject *pPhysicsObject = VPhysicsGetObject();
 
-	if( !pPhysicsObject )
+	if(!pPhysicsObject)
 		return;
 
 	Vector dir = pTrace->endpos - pTrace->startpos;
 	int iDamage = 0;
 
-	if ( iDamageType == DMG_BLAST )
+	if(iDamageType == DMG_BLAST)
 	{
-		iDamage = VectorLength( dir );
-		dir *= 500;  // adjust impact strenght
+		iDamage = VectorLength(dir);
+		dir *= 500; // adjust impact strenght
 
 		// apply force at object mass center
-		pPhysicsObject->ApplyForceCenter( dir );
+		pPhysicsObject->ApplyForceCenter(dir);
 	}
 	else
 	{
-		Vector hitpos;  
-	
-		VectorMA( pTrace->startpos, pTrace->fraction, dir, hitpos );
-		VectorNormalize( dir );
+		Vector hitpos;
+
+		VectorMA(pTrace->startpos, pTrace->fraction, dir, hitpos);
+		VectorNormalize(dir);
 
 		// guess avg damage
-		if ( iDamageType == DMG_BULLET )
+		if(iDamageType == DMG_BULLET)
 		{
 			iDamage = 30;
 		}
@@ -569,11 +570,11 @@ void C_PhysPropClientside::ImpactTrace( trace_t *pTrace, int iDamageType, const 
 		{
 			iDamage = 50;
 		}
-		 
-		dir *= 4000;  // adjust impact strenght
+
+		dir *= 4000; // adjust impact strenght
 
 		// apply force where we hit it
-		pPhysicsObject->ApplyForceOffset( dir, hitpos );	
+		pPhysicsObject->ApplyForceOffset(dir, hitpos);
 
 		// Build the impact data
 		CEffectData data;
@@ -585,74 +586,73 @@ void C_PhysPropClientside::ImpactTrace( trace_t *pTrace, int iDamageType, const 
 		data.m_hEntity = GetRefEHandle();
 
 		// Send it on its way
-		if ( !pCustomImpactName )
+		if(!pCustomImpactName)
 		{
-			DispatchEffect( "Impact", data );
+			DispatchEffect("Impact", data);
 		}
 		else
 		{
-			DispatchEffect( pCustomImpactName, data );
+			DispatchEffect(pCustomImpactName, data);
 		}
 	}
 
 	// Clone( dir ); // debug code
 
-	OnTakeDamage( iDamage );
+	OnTakeDamage(iDamage);
 }
 
-const char *C_PhysPropClientside::ParseEntity( const char *pEntData )
+const char *C_PhysPropClientside::ParseEntity(const char *pEntData)
 {
-	CEntityMapData entData( (char*)pEntData );
+	CEntityMapData entData((char *)pEntData);
 	char className[MAPKEY_MAXLENGTH];
-	
+
 	MDLCACHE_CRITICAL_SECTION();
 
-	if (!entData.ExtractValue("classname", className))
+	if(!entData.ExtractValue("classname", className))
 	{
-		Error( "classname missing from entity!\n" );
+		Error("classname missing from entity!\n");
 	}
 
-	if ( !Q_strcmp( className, "prop_physics_multiplayer" ) )
+	if(!Q_strcmp(className, "prop_physics_multiplayer"))
 	{
 		// always force clientside entitis placed in maps
-		C_PhysPropClientside *pEntity = C_PhysPropClientside::CreateNew( true ); 
+		C_PhysPropClientside *pEntity = C_PhysPropClientside::CreateNew(true);
 
-		if ( pEntity )
-		{	// Set up keyvalues.
+		if(pEntity)
+		{ // Set up keyvalues.
 			pEntity->ParseMapData(&entData);
-			
-			if ( !pEntity->Initialize() )
+
+			if(!pEntity->Initialize())
 				pEntity->Release();
-		
+
 			return entData.CurrentBufferPosition();
 		}
 	}
 
-	if ( !Q_strcmp( className, "func_proprrespawnzone" ) )
+	if(!Q_strcmp(className, "func_proprrespawnzone"))
 	{
 		C_FuncPhysicsRespawnZone *pEntity = new C_FuncPhysicsRespawnZone();
 
-		if ( pEntity )
-		{	
+		if(pEntity)
+		{
 			// Set up keyvalues.
 			pEntity->ParseMapData(&entData);
 
-			if ( !pEntity->Initialize() )
+			if(!pEntity->Initialize())
 				pEntity->Release();
 
 			return entData.CurrentBufferPosition();
 		}
 	}
-	
+
 	// Just skip past all the keys.
 	char keyName[MAPKEY_MAXLENGTH];
 	char value[MAPKEY_MAXLENGTH];
-	if ( entData.GetFirstKey(keyName, value) )
+	if(entData.GetFirstKey(keyName, value))
 	{
-		do 
+		do
 		{
-		} 
-		while ( entData.GetNextKey(keyName, value) );
+		} while(entData.GetNextKey(keyName, value));
 	}
 
 	//
@@ -674,23 +674,23 @@ void C_PhysPropClientside::ParseAllEntities(const char *pMapData)
 	//
 	//  Loop through all entities in the map data, creating each.
 	//
-	for ( ; true; pMapData = MapEntity_SkipToNextEntity(pMapData, szTokenBuffer) )
+	for(; true; pMapData = MapEntity_SkipToNextEntity(pMapData, szTokenBuffer))
 	{
 		//
 		// Parse the opening brace.
 		//
 		char token[MAPKEY_MAXLENGTH];
-		pMapData = MapEntity_ParseToken( pMapData, token );
+		pMapData = MapEntity_ParseToken(pMapData, token);
 
 		//
 		// Check to see if we've finished or not.
 		//
-		if (!pMapData)
+		if(!pMapData)
 			break;
 
-		if (token[0] != '{')
+		if(token[0] != '{')
 		{
-			Error( "MapEntity_ParseAllEntities: found %s when expecting {", token);
+			Error("MapEntity_ParseAllEntities: found %s when expecting {", token);
 			continue;
 		}
 
@@ -698,49 +698,50 @@ void C_PhysPropClientside::ParseAllEntities(const char *pMapData)
 		// Parse the entity and add it to the spawn list.
 		//
 
-		pMapData = ParseEntity( pMapData );
+		pMapData = ParseEntity(pMapData);
 
 		nEntities++;
 	}
 }
 
-CBaseEntity *BreakModelCreateSingle( CBaseEntity *pOwner, breakmodel_t *pModel, const Vector &position, 
-	const QAngle &angles, const Vector &velocity, const AngularImpulse &angVelocity, int nSkin, const breakablepropparams_t &params )
+CBaseEntity *BreakModelCreateSingle(CBaseEntity *pOwner, breakmodel_t *pModel, const Vector &position,
+									const QAngle &angles, const Vector &velocity, const AngularImpulse &angVelocity,
+									int nSkin, const breakablepropparams_t &params)
 {
 	C_PhysPropClientside *pEntity = C_PhysPropClientside::CreateNew();
 
-	if ( !pEntity )
+	if(!pEntity)
 		return NULL;
 
 	// UNDONE: Allow .qc to override spawnflags for child pieces
 	C_PhysPropClientside *pBreakableOwner = dynamic_cast<C_PhysPropClientside *>(pOwner);
 
 	// Inherit the base object's damage modifiers
-	if ( pBreakableOwner )
+	if(pBreakableOwner)
 	{
-		pEntity->SetEffects( pBreakableOwner->GetEffects() );
+		pEntity->SetEffects(pBreakableOwner->GetEffects());
 
 		pEntity->m_spawnflags = pBreakableOwner->m_spawnflags;
 
 		// We never want to be motion disabled
 		pEntity->m_spawnflags &= ~SF_PHYSPROP_MOTIONDISABLED;
-		
-		pEntity->SetDmgModBullet( pBreakableOwner->GetDmgModBullet() );
-		pEntity->SetDmgModClub( pBreakableOwner->GetDmgModClub() );
-		pEntity->SetDmgModExplosive( pBreakableOwner->GetDmgModExplosive() );
+
+		pEntity->SetDmgModBullet(pBreakableOwner->GetDmgModBullet());
+		pEntity->SetDmgModClub(pBreakableOwner->GetDmgModClub());
+		pEntity->SetDmgModExplosive(pBreakableOwner->GetDmgModExplosive());
 
 		// FIXME: If this was created from a client-side entity which was in the
 		// middle of ramping the fade scale, we're screwed.
-		pEntity->CopyFadeFrom( pBreakableOwner );
+		pEntity->CopyFadeFrom(pBreakableOwner);
 	}
-	
-	pEntity->SetModelName( AllocPooledString( pModel->modelName ) );
-	pEntity->SetLocalOrigin( position );
-	pEntity->SetLocalAngles( angles );
-	pEntity->SetOwnerEntity( pOwner );
-	pEntity->SetPhysicsMode( PHYSICS_MULTIPLAYER_CLIENTSIDE );
 
-	if ( !pEntity->Initialize() )
+	pEntity->SetModelName(AllocPooledString(pModel->modelName));
+	pEntity->SetLocalOrigin(position);
+	pEntity->SetLocalAngles(angles);
+	pEntity->SetOwnerEntity(pOwner);
+	pEntity->SetPhysicsMode(PHYSICS_MULTIPLAYER_CLIENTSIDE);
+
+	if(!pEntity->Initialize())
 	{
 		pEntity->Release();
 		return NULL;
@@ -750,49 +751,48 @@ CBaseEntity *BreakModelCreateSingle( CBaseEntity *pOwner, breakmodel_t *pModel, 
 	pEntity->m_iHealth = pModel->health;
 
 #ifdef TF_CLIENT_DLL
-	pEntity->SetCollisionGroup( COLLISION_GROUP_DEBRIS );
+	pEntity->SetCollisionGroup(COLLISION_GROUP_DEBRIS);
 #endif
 
 #ifdef DOD_DLL
-	pEntity->SetCollisionGroup( COLLISION_GROUP_DEBRIS );
+	pEntity->SetCollisionGroup(COLLISION_GROUP_DEBRIS);
 #endif
 
-	if ( pModel->health == 0 )
+	if(pModel->health == 0)
 	{
 		// if  no health, don't collide with player anymore, don't take damage
 		pEntity->m_takedamage = DAMAGE_NO;
 
-		if ( pEntity->GetCollisionGroup() == COLLISION_GROUP_PUSHAWAY )
+		if(pEntity->GetCollisionGroup() == COLLISION_GROUP_PUSHAWAY)
 		{
-			pEntity->SetCollisionGroup( COLLISION_GROUP_NONE );
+			pEntity->SetCollisionGroup(COLLISION_GROUP_NONE);
 		}
 	}
-	
-	if ( pModel->fadeTime > 0 )
+
+	if(pModel->fadeTime > 0)
 	{
-		pEntity->StartFadeOut( pModel->fadeTime );
+		pEntity->StartFadeOut(pModel->fadeTime);
 	}
 
-	if ( pModel->fadeMinDist > 0 && pModel->fadeMaxDist >= pModel->fadeMinDist )
+	if(pModel->fadeMinDist > 0 && pModel->fadeMaxDist >= pModel->fadeMinDist)
 	{
-		pEntity->SetFadeMinMax( pModel->fadeMinDist, pModel->fadeMaxDist );
+		pEntity->SetFadeMinMax(pModel->fadeMinDist, pModel->fadeMaxDist);
 	}
 
-	if ( pModel->isRagdoll )
+	if(pModel->isRagdoll)
 	{
-		DevMsg( "BreakModelCreateSingle: clientside doesn't support ragdoll breakmodels.\n" );
+		DevMsg("BreakModelCreateSingle: clientside doesn't support ragdoll breakmodels.\n");
 	}
-
 
 	IPhysicsObject *pPhysicsObject = pEntity->VPhysicsGetObject();
 
-	if( pPhysicsObject )
+	if(pPhysicsObject)
 	{
 		// randomize velocity by 5%
-		float rndf = RandomFloat( -0.025, 0.025 );
-		Vector rndVel = velocity + rndf*velocity;
+		float rndf = RandomFloat(-0.025, 0.025);
+		Vector rndVel = velocity + rndf * velocity;
 
-		pPhysicsObject->AddVelocity( &rndVel, &angVelocity );
+		pPhysicsObject->AddVelocity(&rndVel, &angVelocity);
 	}
 	else
 	{
@@ -804,33 +804,31 @@ CBaseEntity *BreakModelCreateSingle( CBaseEntity *pOwner, breakmodel_t *pModel, 
 	return pEntity;
 }
 
-
-
 //======================================================================================================================
 // PROP RESPAWN ZONES
 //======================================================================================================================
-C_FuncPhysicsRespawnZone::C_FuncPhysicsRespawnZone( void )
+C_FuncPhysicsRespawnZone::C_FuncPhysicsRespawnZone(void)
 {
-	s_RespawnZoneList.AddToTail( this );
+	s_RespawnZoneList.AddToTail(this);
 }
 
-C_FuncPhysicsRespawnZone::~C_FuncPhysicsRespawnZone( void )
+C_FuncPhysicsRespawnZone::~C_FuncPhysicsRespawnZone(void)
 {
-	s_RespawnZoneList.FindAndRemove( this );
+	s_RespawnZoneList.FindAndRemove(this);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool C_FuncPhysicsRespawnZone::KeyValue( const char *szKeyName, const char *szValue )
+bool C_FuncPhysicsRespawnZone::KeyValue(const char *szKeyName, const char *szValue)
 {
-	if (FStrEq(szKeyName, "model"))
+	if(FStrEq(szKeyName, "model"))
 	{
-		SetModelName( AllocPooledString( szValue ) );
+		SetModelName(AllocPooledString(szValue));
 	}
 	else
 	{
-		if ( !BaseClass::KeyValue( szKeyName, szValue ) )
+		if(!BaseClass::KeyValue(szKeyName, szValue))
 		{
 			// key hasn't been handled
 			return false;
@@ -841,29 +839,29 @@ bool C_FuncPhysicsRespawnZone::KeyValue( const char *szKeyName, const char *szVa
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool C_FuncPhysicsRespawnZone::Initialize( void )
+bool C_FuncPhysicsRespawnZone::Initialize(void)
 {
-	if ( InitializeAsClientEntity( STRING(GetModelName()), RENDER_GROUP_OPAQUE_ENTITY ) == false )
+	if(InitializeAsClientEntity(STRING(GetModelName()), RENDER_GROUP_OPAQUE_ENTITY) == false)
 		return false;
 
-	SetSolid( SOLID_BSP );	
-	AddSolidFlags( FSOLID_NOT_SOLID );
-	AddSolidFlags( FSOLID_TRIGGER );	
-	SetMoveType( MOVETYPE_NONE );
+	SetSolid(SOLID_BSP);
+	AddSolidFlags(FSOLID_NOT_SOLID);
+	AddSolidFlags(FSOLID_TRIGGER);
+	SetMoveType(MOVETYPE_NONE);
 
 	const model_t *mod = GetModel();
-	if ( mod )
+	if(mod)
 	{
 		Vector mins, maxs;
-		modelinfo->GetModelBounds( mod, mins, maxs );
-		SetCollisionBounds( mins, maxs );
+		modelinfo->GetModelBounds(mod, mins, maxs);
+		SetCollisionBounds(mins, maxs);
 	}
 
 	Spawn();
 
-	AddEffects( EF_NODRAW );
+	AddEffects(EF_NODRAW);
 
 	UpdatePartitionListEntry();
 
@@ -871,7 +869,7 @@ bool C_FuncPhysicsRespawnZone::Initialize( void )
 
 	UpdateVisibility();
 
-	SetNextClientThink( gpGlobals->curtime + (cl_phys_props_respawnrate.GetFloat() * RandomFloat(1.0,1.1)) );
+	SetNextClientThink(gpGlobals->curtime + (cl_phys_props_respawnrate.GetFloat() * RandomFloat(1.0, 1.1)));
 
 	return true;
 }
@@ -881,7 +879,7 @@ bool C_FuncPhysicsRespawnZone::Initialize( void )
 //-----------------------------------------------------------------------------
 void C_PhysPropClientside::InitializePropRespawnZones(void)
 {
-	for ( int i = 0; i < s_RespawnZoneList.Count(); i++ )
+	for(int i = 0; i < s_RespawnZoneList.Count(); i++)
 	{
 		C_FuncPhysicsRespawnZone *pZone = s_RespawnZoneList[i];
 		pZone->InitializePropsWithin();
@@ -889,17 +887,17 @@ void C_PhysPropClientside::InitializePropRespawnZones(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_FuncPhysicsRespawnZone::InitializePropsWithin( void )
+void C_FuncPhysicsRespawnZone::InitializePropsWithin(void)
 {
 	// Find the props inside this zone
-	for ( int i = 0; i < s_PhysPropList.Count(); i++ )
+	for(int i = 0; i < s_PhysPropList.Count(); i++)
 	{
 		C_PhysPropClientside *pProp = s_PhysPropList[i];
-		if ( CollisionProp()->IsPointInBounds( pProp->WorldSpaceCenter() ) )
+		if(CollisionProp()->IsPointInBounds(pProp->WorldSpaceCenter()))
 		{
-			pProp->SetRespawnZone( this );
+			pProp->SetRespawnZone(this);
 
 			// This is a crappy way to do this
 			int iProp = m_PropList.AddToTail();
@@ -915,13 +913,13 @@ void C_FuncPhysicsRespawnZone::InitializePropsWithin( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_FuncPhysicsRespawnZone::PropDestroyed( C_PhysPropClientside *pProp )
+void C_FuncPhysicsRespawnZone::PropDestroyed(C_PhysPropClientside *pProp)
 {
-	for ( int i = 0; i < m_PropList.Count(); i++ )
+	for(int i = 0; i < m_PropList.Count(); i++)
 	{
-		if ( pProp->GetClientHandle() == m_PropList[i].hClientEntity )
+		if(pProp->GetClientHandle() == m_PropList[i].hClientEntity)
 		{
 			m_PropList[i].hClientEntity = INVALID_CLIENTENTITY_HANDLE;
 			return;
@@ -933,61 +931,61 @@ void C_FuncPhysicsRespawnZone::PropDestroyed( C_PhysPropClientside *pProp )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool C_FuncPhysicsRespawnZone::CanMovePropAt( Vector vecOrigin, const Vector &vecMins, const Vector &vecMaxs )
+bool C_FuncPhysicsRespawnZone::CanMovePropAt(Vector vecOrigin, const Vector &vecMins, const Vector &vecMaxs)
 {
 	float flDist = cl_phys_props_respawndist.GetFloat();
 
 	// Do a distance check first. We don't want to move props when the player is near 'em.
-	if ( (MainViewOrigin() - vecOrigin).LengthSqr() < (flDist*flDist) )
+	if((MainViewOrigin() - vecOrigin).LengthSqr() < (flDist * flDist))
 		return false;
 
 	// Now make sure it's not in view
-	if( engine->IsBoxInViewCluster( vecMins + vecOrigin, vecMaxs + vecOrigin) )
+	if(engine->IsBoxInViewCluster(vecMins + vecOrigin, vecMaxs + vecOrigin))
 		return false;
 
-	if( !engine->CullBox( vecMins + vecOrigin, vecMaxs + vecOrigin ) )
+	if(!engine->CullBox(vecMins + vecOrigin, vecMaxs + vecOrigin))
 		return false;
 
 	return true;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_FuncPhysicsRespawnZone::RespawnProps( void )
+void C_FuncPhysicsRespawnZone::RespawnProps(void)
 {
-	for ( int i = 0; i < m_PropList.Count(); i++ )
+	for(int i = 0; i < m_PropList.Count(); i++)
 	{
-		if ( m_PropList[i].hClientEntity == INVALID_CLIENTENTITY_HANDLE )
+		if(m_PropList[i].hClientEntity == INVALID_CLIENTENTITY_HANDLE)
 		{
-			if ( !CanMovePropAt( m_PropList[i].vecOrigin, -Vector(32,32,32), Vector(32,32,32) ) )
+			if(!CanMovePropAt(m_PropList[i].vecOrigin, -Vector(32, 32, 32), Vector(32, 32, 32)))
 				continue;
 
 			// This is a crappy way to do this
 			C_PhysPropClientside *pEntity = C_PhysPropClientside::CreateNew();
-			if ( pEntity )
+			if(pEntity)
 			{
 				pEntity->m_spawnflags = m_PropList[i].iSpawnFlags;
-				pEntity->SetModelName( m_PropList[i].iszModelName );
-				pEntity->SetAbsOrigin( m_PropList[i].vecOrigin );
-				pEntity->SetAbsAngles( m_PropList[i].vecAngles );
-				pEntity->SetPhysicsMode( PHYSICS_MULTIPLAYER_CLIENTSIDE );
+				pEntity->SetModelName(m_PropList[i].iszModelName);
+				pEntity->SetAbsOrigin(m_PropList[i].vecOrigin);
+				pEntity->SetAbsAngles(m_PropList[i].vecAngles);
+				pEntity->SetPhysicsMode(PHYSICS_MULTIPLAYER_CLIENTSIDE);
 				pEntity->m_nSkin = m_PropList[i].iSkin;
 				pEntity->m_iHealth = m_PropList[i].iHealth;
-				if ( pEntity->m_iHealth == 0 )
+				if(pEntity->m_iHealth == 0)
 				{
 					pEntity->m_takedamage = DAMAGE_NO;
 				}
 
-				if ( !pEntity->Initialize() )
+				if(!pEntity->Initialize())
 				{
 					pEntity->Release();
 				}
 				else
 				{
-					pEntity->SetRespawnZone( this );
+					pEntity->SetRespawnZone(this);
 					m_PropList[i].hClientEntity = pEntity->GetClientHandle();
 				}
 			}
@@ -995,24 +993,24 @@ void C_FuncPhysicsRespawnZone::RespawnProps( void )
 		else
 		{
 			// If the prop has moved, bring it back
-			C_BaseEntity *pEntity = ClientEntityList().GetBaseEntityFromHandle( m_PropList[i].hClientEntity );
-			if ( pEntity )
+			C_BaseEntity *pEntity = ClientEntityList().GetBaseEntityFromHandle(m_PropList[i].hClientEntity);
+			if(pEntity)
 			{
-				if ( !CollisionProp()->IsPointInBounds( pEntity->WorldSpaceCenter() ) )
+				if(!CollisionProp()->IsPointInBounds(pEntity->WorldSpaceCenter()))
 				{
 					Vector vecMins, vecMaxs;
-					pEntity->CollisionProp()->WorldSpaceSurroundingBounds( &vecMins, &vecMaxs );
-					if ( !CanMovePropAt( m_PropList[i].vecOrigin, vecMins, vecMaxs ) || 
-						 !CanMovePropAt( pEntity->GetAbsOrigin(), vecMins, vecMaxs ) )
+					pEntity->CollisionProp()->WorldSpaceSurroundingBounds(&vecMins, &vecMaxs);
+					if(!CanMovePropAt(m_PropList[i].vecOrigin, vecMins, vecMaxs) ||
+					   !CanMovePropAt(pEntity->GetAbsOrigin(), vecMins, vecMaxs))
 						continue;
 
-					pEntity->SetAbsOrigin( m_PropList[i].vecOrigin );
-					pEntity->SetAbsAngles( m_PropList[i].vecAngles );
+					pEntity->SetAbsOrigin(m_PropList[i].vecOrigin);
+					pEntity->SetAbsAngles(m_PropList[i].vecAngles);
 
 					IPhysicsObject *pPhys = pEntity->VPhysicsGetObject();
-					if ( pPhys )
+					if(pPhys)
 					{
-						pPhys->SetPosition( pEntity->GetAbsOrigin(), pEntity->GetAbsAngles(), true );
+						pPhys->SetPosition(pEntity->GetAbsOrigin(), pEntity->GetAbsAngles(), true);
 					}
 				}
 			}
@@ -1021,11 +1019,11 @@ void C_FuncPhysicsRespawnZone::RespawnProps( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_FuncPhysicsRespawnZone::ClientThink( void )
+void C_FuncPhysicsRespawnZone::ClientThink(void)
 {
 	RespawnProps();
 
-	SetNextClientThink( gpGlobals->curtime + (cl_phys_props_respawnrate.GetFloat() * RandomFloat(1.0,1.1)) );
+	SetNextClientThink(gpGlobals->curtime + (cl_phys_props_respawnrate.GetFloat() * RandomFloat(1.0, 1.1)));
 }

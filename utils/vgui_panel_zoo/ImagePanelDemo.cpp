@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,7 +19,7 @@ using namespace vgui;
 // An ImagePanel is a panel class that handles drawing of Images and gives
 // them all kinds of panel features.
 //-----------------------------------------------------------------------------
-class ImagePanelDemo: public DemoPage
+class ImagePanelDemo : public DemoPage
 {
 	typedef DemoPage BaseClass;
 
@@ -28,7 +28,7 @@ public:
 	~ImagePanelDemo();
 
 	virtual void ApplySchemeSettings(IScheme *pScheme);
-	
+
 private:
 	IImage *m_pImage;
 	ImagePanel *m_pImagePanel;
@@ -44,32 +44,28 @@ ImagePanelDemo::ImagePanelDemo(Panel *parent, const char *name) : DemoPage(paren
 
 	// Set the position
 	m_pImagePanel->SetPos(100, 100);
-
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-ImagePanelDemo::~ImagePanelDemo()
-{
-}
+ImagePanelDemo::~ImagePanelDemo() {}
 
 //-----------------------------------------------------------------------------
 // Scheme settings
 //-----------------------------------------------------------------------------
 void ImagePanelDemo::ApplySchemeSettings(IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
 	// get an image
-	m_pImage = scheme()->GetImage("Resource/valve_logo", false );
+	m_pImage = scheme()->GetImage("Resource/valve_logo", false);
 
 	// now insert an image
 	m_pImagePanel->SetImage(m_pImage);
 }
 
-Panel* ImagePanelDemo_Create(Panel *parent)
+Panel *ImagePanelDemo_Create(Panel *parent)
 {
 	return new ImagePanelDemo(parent, "ImagePanelDemo");
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -9,22 +9,20 @@
 #include "BaseVSShader.h"
 #include "cpp_shader_constant_register_map.h"
 
-BEGIN_VS_SHADER( Bik_dx80, "Help for Bik_dx80" )
+BEGIN_VS_SHADER(Bik_dx80, "Help for Bik_dx80")
 	BEGIN_SHADER_PARAMS
-		SHADER_PARAM( YTEXTURE, SHADER_PARAM_TYPE_TEXTURE, "shadertest/BaseTexture", "Y Bink Texture" )
-//		SHADER_PARAM( ATEXTURE, SHADER_PARAM_TYPE_TEXTURE, "shadertest/BaseTexture", "A Bink Texture" )
-		SHADER_PARAM( CRTEXTURE, SHADER_PARAM_TYPE_TEXTURE, "shadertest/BaseTexture", "Cr Bink Texture" )
-		SHADER_PARAM( CBTEXTURE, SHADER_PARAM_TYPE_TEXTURE, "shadertest/BaseTexture", "Cb Bink Texture" )
+		SHADER_PARAM(YTEXTURE, SHADER_PARAM_TYPE_TEXTURE, "shadertest/BaseTexture", "Y Bink Texture")
+		//		SHADER_PARAM( ATEXTURE, SHADER_PARAM_TYPE_TEXTURE, "shadertest/BaseTexture", "A Bink Texture" )
+		SHADER_PARAM(CRTEXTURE, SHADER_PARAM_TYPE_TEXTURE, "shadertest/BaseTexture", "Cr Bink Texture")
+		SHADER_PARAM(CBTEXTURE, SHADER_PARAM_TYPE_TEXTURE, "shadertest/BaseTexture", "Cb Bink Texture")
 	END_SHADER_PARAMS
 
-	SHADER_INIT_PARAMS()
-	{
-	}
+	SHADER_INIT_PARAMS() {}
 
 	SHADER_FALLBACK
 	{
-		if ( g_pHardwareConfig->GetDXSupportLevel() < 80 )
-		{	
+		if(g_pHardwareConfig->GetDXSupportLevel() < 80)
+		{
 			return "wireframe";
 		}
 		return 0;
@@ -32,64 +30,63 @@ BEGIN_VS_SHADER( Bik_dx80, "Help for Bik_dx80" )
 
 	SHADER_INIT
 	{
-		if ( params[YTEXTURE]->IsDefined() )
+		if(params[YTEXTURE]->IsDefined())
 		{
-			LoadTexture( YTEXTURE );
+			LoadTexture(YTEXTURE);
 		}
-//		if ( params[ATEXTURE]->IsDefined() )
-//		{
-//			LoadTexture( ATEXTURE );
-//		}
-		if ( params[CRTEXTURE]->IsDefined() )
+		//		if ( params[ATEXTURE]->IsDefined() )
+		//		{
+		//			LoadTexture( ATEXTURE );
+		//		}
+		if(params[CRTEXTURE]->IsDefined())
 		{
-			LoadTexture( CRTEXTURE );
+			LoadTexture(CRTEXTURE);
 		}
-		if ( params[CBTEXTURE]->IsDefined() )
+		if(params[CBTEXTURE]->IsDefined())
 		{
-			LoadTexture( CBTEXTURE );
+			LoadTexture(CBTEXTURE);
 		}
 	}
 
 	SHADER_DRAW
 	{
 		int nPass;
-		for( nPass = 0; nPass < 2; nPass++ )
+		for(nPass = 0; nPass < 2; nPass++)
 		{
 			SHADOW_STATE
 			{
-				pShaderShadow->EnableTexture( SHADER_SAMPLER0, true );
-				pShaderShadow->EnableTexture( SHADER_SAMPLER1, true );
-				pShaderShadow->EnableTexture( SHADER_SAMPLER2, true );
+				pShaderShadow->EnableTexture(SHADER_SAMPLER0, true);
+				pShaderShadow->EnableTexture(SHADER_SAMPLER1, true);
+				pShaderShadow->EnableTexture(SHADER_SAMPLER2, true);
 				// we don't do alpha for these on dx8
 				//				pShaderShadow->EnableTexture( SHADER_SAMPLER3, true );
 
 				unsigned int flags = VERTEX_POSITION;
 				int numTexCoords = 1;
-				pShaderShadow->VertexShaderVertexFormat( flags, numTexCoords, 0, 0 );
+				pShaderShadow->VertexShaderVertexFormat(flags, numTexCoords, 0, 0);
 
-				pShaderShadow->SetVertexShader( "bik_vs11", 0 );
-				pShaderShadow->SetPixelShader( "bik_ps11", 0 );
-				if( nPass > 0 )
+				pShaderShadow->SetVertexShader("bik_vs11", 0);
+				pShaderShadow->SetPixelShader("bik_ps11", 0);
+				if(nPass > 0)
 				{
-					EnableAlphaBlending( SHADER_BLEND_ONE, SHADER_BLEND_ONE );
+					EnableAlphaBlending(SHADER_BLEND_ONE, SHADER_BLEND_ONE);
 				}
 			}
 			DYNAMIC_STATE
 			{
-				BindTexture( SHADER_SAMPLER0, YTEXTURE, FRAME );
-				BindTexture( SHADER_SAMPLER1, CRTEXTURE, FRAME );
-				BindTexture( SHADER_SAMPLER2, CBTEXTURE, FRAME );
+				BindTexture(SHADER_SAMPLER0, YTEXTURE, FRAME);
+				BindTexture(SHADER_SAMPLER1, CRTEXTURE, FRAME);
+				BindTexture(SHADER_SAMPLER2, CBTEXTURE, FRAME);
 				// we don't do alpha for these on dx8
 				//				BindTexture( SHADER_SAMPLER3, ATEXTURE, FRAME );
 
-				pShaderAPI->SetVertexShaderIndex( 0 );
-				pShaderAPI->SetPixelShaderIndex( nPass );
+				pShaderAPI->SetVertexShaderIndex(0);
+				pShaderAPI->SetPixelShaderIndex(nPass);
 
 				// We need the view matrix
-				LoadViewMatrixIntoVertexShaderConstant( VERTEX_SHADER_VIEWMODEL );
+				LoadViewMatrixIntoVertexShaderConstant(VERTEX_SHADER_VIEWMODEL);
 			}
-			Draw( );
-
+			Draw();
 		}
 	}
 END_SHADER

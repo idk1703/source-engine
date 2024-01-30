@@ -12,17 +12,20 @@
 
 class CTFTauntProp : public CBaseCombatCharacter
 {
-	DECLARE_CLASS( CTFTauntProp, CBaseCombatCharacter );
+	DECLARE_CLASS(CTFTauntProp, CBaseCombatCharacter);
+
 public:
 	DECLARE_SERVERCLASS();
 
 	CTFTauntProp();
 
-	virtual bool StartSceneEvent( CSceneEventInfo *info, CChoreoScene *scene, CChoreoEvent *event, CChoreoActor *actor, CBaseEntity *pTarget ) OVERRIDE;
+	virtual bool StartSceneEvent(CSceneEventInfo *info, CChoreoScene *scene, CChoreoEvent *event, CChoreoActor *actor,
+								 CBaseEntity *pTarget) OVERRIDE;
 
-	virtual bool ProcessSceneEvent( CSceneEventInfo *info, CChoreoScene *scene, CChoreoEvent *event ) OVERRIDE;
+	virtual bool ProcessSceneEvent(CSceneEventInfo *info, CChoreoScene *scene, CChoreoEvent *event) OVERRIDE;
 
-	virtual float PlayScene( const char *pszScene, float flDelay = 0.0f, AI_Response *response = NULL, IRecipientFilter *filter = NULL ) OVERRIDE;
+	virtual float PlayScene(const char *pszScene, float flDelay = 0.0f, AI_Response *response = NULL,
+							IRecipientFilter *filter = NULL) OVERRIDE;
 
 	virtual void UpdateOnRemove() OVERRIDE;
 

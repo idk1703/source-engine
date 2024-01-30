@@ -5,7 +5,7 @@
 // Valve, L.L.C., or in accordance with the terms and conditions stipulated in
 // the agreement/contract under which the contents have been supplied.
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -17,74 +17,70 @@
 #pragma once
 #endif
 
-
 #include "datamodel/idatamodel.h"
 #include "datamodel/dmelement.h"
 #include "datamodel/dmattribute.h"
 #include "datamodel/dmattributevar.h"
 
-
 //-----------------------------------------------------------------------------
 // Purpose: CDmeHandle is a templatized wrapper around DmElementHandle_t
 //-----------------------------------------------------------------------------
-template< class DmeType, bool Counted = false >
+template<class DmeType, bool Counted = false>
 class CDmeHandle : public CDmeElementRefHelper
 {
 public:
-	CDmeHandle() : m_handle( DMELEMENT_HANDLE_INVALID )
+	CDmeHandle() : m_handle(DMELEMENT_HANDLE_INVALID) {}
+
+	explicit CDmeHandle(CDmElement *pObject) : m_handle(DMELEMENT_HANDLE_INVALID)
 	{
+		Set(pObject);
 	}
 
-	explicit CDmeHandle( CDmElement *pObject ) : m_handle( DMELEMENT_HANDLE_INVALID )
+	CDmeHandle(DmElementHandle_t h) : m_handle(DMELEMENT_HANDLE_INVALID)
 	{
-		Set( pObject );
+		Set(h);
 	}
 
-	CDmeHandle( DmElementHandle_t h ) : m_handle( DMELEMENT_HANDLE_INVALID )
+	CDmeHandle(const CDmeHandle<DmeType, Counted> &handle) : m_handle(DMELEMENT_HANDLE_INVALID)
 	{
-		Set( h );
+		Set(handle.m_handle);
 	}
 
-	CDmeHandle( const CDmeHandle< DmeType, Counted > &handle ) : m_handle( DMELEMENT_HANDLE_INVALID )
+	template<class T, bool B>
+	CDmeHandle(const CDmeHandle<T, B> &handle) : m_handle(DMELEMENT_HANDLE_INVALID)
 	{
-		Set( handle.m_handle );
-	}
+		DmeType *p = (T *)NULL; // triggers compiler error if converting from invalid handle type
+		NOTE_UNUSED(p);
 
-	template < class T, bool B >
-	CDmeHandle( const CDmeHandle< T, B > &handle ) : m_handle( DMELEMENT_HANDLE_INVALID )
-	{
-		DmeType *p = ( T* )NULL; // triggers compiler error if converting from invalid handle type
-		NOTE_UNUSED( p );
-
-		Set( handle.GetHandle() );
+		Set(handle.GetHandle());
 	}
 
 	~CDmeHandle()
 	{
-		if ( !g_pDataModel )
+		if(!g_pDataModel)
 			return; // some handles are static, and don't get destroyed until program termination
 
-		Unref( m_handle, Counted );
+		Unref(m_handle, Counted);
 	}
 
-	template < class T, bool B >
-	CDmeHandle& operator=( const CDmeHandle< T, B > &handle )
+	template<class T, bool B>
+	CDmeHandle &operator=(const CDmeHandle<T, B> &handle)
 	{
-		DmeType *p = ( T* )NULL; // triggers compiler error if converting from invalid handle type
-		NOTE_UNUSED( p );
+		DmeType *p = (T *)NULL; // triggers compiler error if converting from invalid handle type
+		NOTE_UNUSED(p);
 
-		Set( handle.GetHandle() );
+		Set(handle.GetHandle());
 		return *this;
 	}
 
 	DmeType *Get()
 	{
-		return static_cast< DmeType* >( g_pDataModel->GetElement( m_handle ) );
+		return static_cast<DmeType *>(g_pDataModel->GetElement(m_handle));
 	}
 
 	const DmeType *Get() const
 	{
-		return static_cast< DmeType* >( g_pDataModel->GetElement( m_handle ) );
+		return static_cast<DmeType *>(g_pDataModel->GetElement(m_handle));
 	}
 
 	DmElementHandle_t GetHandle() const
@@ -92,38 +88,38 @@ public:
 		return m_handle;
 	}
 
-	void Set( CDmElement *pObject )
+	void Set(CDmElement *pObject)
 	{
-		Set( pObject ? pObject->GetHandle() : DMELEMENT_HANDLE_INVALID );
+		Set(pObject ? pObject->GetHandle() : DMELEMENT_HANDLE_INVALID);
 	}
 
-	void Set( DmElementHandle_t h )
+	void Set(DmElementHandle_t h)
 	{
-		if ( h == m_handle )
+		if(h == m_handle)
 			return;
 
-		Unref( m_handle, Counted );
+		Unref(m_handle, Counted);
 
 		m_handle = h;
-		if ( h != DMELEMENT_HANDLE_INVALID )
+		if(h != DMELEMENT_HANDLE_INVALID)
 		{
-			CDmElement *pElement = g_pDataModel->GetElement( m_handle );
-			Assert( pElement );
-			if ( pElement && !pElement->IsA( DmeType::GetStaticTypeSymbol() ) )
+			CDmElement *pElement = g_pDataModel->GetElement(m_handle);
+			Assert(pElement);
+			if(pElement && !pElement->IsA(DmeType::GetStaticTypeSymbol()))
 			{
 				m_handle = DMELEMENT_HANDLE_INVALID;
 			}
 		}
 
-		Ref( m_handle, Counted );
+		Ref(m_handle, Counted);
 	}
 
-	operator DmeType*()
+	operator DmeType *()
 	{
 		return Get();
 	}
 
-	operator const DmeType*() const
+	operator const DmeType *() const
 	{
 		return Get();
 	}
@@ -133,93 +129,90 @@ public:
 		return m_handle;
 	}
 
-	DmeType* operator->()
-	{ 
-		return Get(); 
-	}
-
-	const DmeType* operator->() const
-	{ 
-		return Get(); 
-	}
-
-	CDmeHandle& operator=( DmElementHandle_t h )
+	DmeType *operator->()
 	{
-		Set( h );
+		return Get();
+	}
+
+	const DmeType *operator->() const
+	{
+		return Get();
+	}
+
+	CDmeHandle &operator=(DmElementHandle_t h)
+	{
+		Set(h);
 		return *this;
 	}
 
-	CDmeHandle& operator=( CDmElement *pObject )
+	CDmeHandle &operator=(CDmElement *pObject)
 	{
-		Set( pObject );
+		Set(pObject);
 		return *this;
 	}
 
-	bool operator==( const CDmeHandle< DmeType > &h ) const
+	bool operator==(const CDmeHandle<DmeType> &h) const
 	{
 		return m_handle == h.m_handle;
 	}
 
-	bool operator!=( const CDmeHandle< DmeType > &h ) const
+	bool operator!=(const CDmeHandle<DmeType> &h) const
 	{
-		return !operator==( h );
+		return !operator==(h);
 	}
 
-	bool operator<( const CDmeHandle< DmeType > &h ) const
+	bool operator<(const CDmeHandle<DmeType> &h) const
 	{
 		return m_handle < h.m_handle;
 	}
 
-	bool operator==( DmeType *pObject )	const
+	bool operator==(DmeType *pObject) const
 	{
 		DmElementHandle_t h = pObject ? pObject->GetHandle() : DMELEMENT_HANDLE_INVALID;
 		return m_handle == h;
 	}
 
-	bool operator!=( DmeType *pObject )	const
+	bool operator!=(DmeType *pObject) const
 	{
-		return !operator==( pObject );
+		return !operator==(pObject);
 	}
 
-	bool operator==( DmElementHandle_t h ) const
+	bool operator==(DmElementHandle_t h) const
 	{
-		return ( m_handle == h );
+		return (m_handle == h);
 	}
 
-	bool operator!=( DmElementHandle_t h ) const
+	bool operator!=(DmElementHandle_t h) const
 	{
-		return ( m_handle != h );
+		return (m_handle != h);
 	}
 
 	operator bool() const
-	{ 
-		return ( Get() != NULL );
+	{
+		return (Get() != NULL);
 	}
 
 	bool operator!() const
 	{
-		return ( Get() == NULL );
+		return (Get() == NULL);
 	}
 
 private:
 	DmElementHandle_t m_handle;
 };
 
-typedef CDmeHandle< CDmElement, true > CDmeCountedHandle;
-
+typedef CDmeHandle<CDmElement, true> CDmeCountedHandle;
 
 //-----------------------------------------------------------------------------
 // Vector of element handles
 //-----------------------------------------------------------------------------
-typedef CUtlVector< CDmeHandle<CDmElement> > DmeHandleVec_t;
-
-
+typedef CUtlVector<CDmeHandle<CDmElement>> DmeHandleVec_t;
 
 //-----------------------------------------------------------------------------
 // helper class for undo classes to allow them to hold onto refcounted element handles
 //-----------------------------------------------------------------------------
 
-template< typename T >
+template<typename T>
 class CDmAttributeUndoStorageType
 {
 public:
@@ -227,17 +220,17 @@ public:
 };
 
 template<>
-class CDmAttributeUndoStorageType< DmElementHandle_t >
+class CDmAttributeUndoStorageType<DmElementHandle_t>
 {
 public:
 	typedef CDmeCountedHandle UndoStorageType;
 };
 
 template<>
-class CDmAttributeUndoStorageType< CUtlVector< DmElementHandle_t > >
+class CDmAttributeUndoStorageType<CUtlVector<DmElementHandle_t>>
 {
 public:
-	typedef CUtlVector< CDmeCountedHandle > UndoStorageType;
+	typedef CUtlVector<CDmeCountedHandle> UndoStorageType;
 };
 
 #endif // DMEHANDLE_H

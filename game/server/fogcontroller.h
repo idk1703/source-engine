@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -14,7 +14,7 @@
 #include "igamesystem.h"
 
 // Spawn Flags
-#define SF_FOG_MASTER		0x0001
+#define SF_FOG_MASTER 0x0001
 
 //=============================================================================
 //
@@ -27,7 +27,7 @@ class CFogController : public CBaseEntity
 public:
 	DECLARE_SERVERCLASS();
 	DECLARE_DATADESC();
-	DECLARE_CLASS( CFogController, CBaseEntity );
+	DECLARE_CLASS(CFogController, CBaseEntity);
 
 	CFogController();
 	~CFogController();
@@ -43,9 +43,9 @@ public:
 	void InputTurnOff(inputdata_t &data);
 	void InputSetColor(inputdata_t &data);
 	void InputSetColorSecondary(inputdata_t &data);
-	void InputSetFarZ( inputdata_t &data );
-	void InputSetAngles( inputdata_t &inputdata );
-	void InputSetMaxDensity( inputdata_t &inputdata );
+	void InputSetFarZ(inputdata_t &data);
+	void InputSetAngles(inputdata_t &inputdata);
+	void InputSetMaxDensity(inputdata_t &inputdata);
 
 	void InputSetColorLerpTo(inputdata_t &data);
 	void InputSetColorSecondaryLerpTo(inputdata_t &data);
@@ -56,16 +56,18 @@ public:
 
 	int DrawDebugTextOverlays(void);
 
-	void SetLerpValues( void );
-	void Spawn( void );
+	void SetLerpValues(void);
+	void Spawn(void);
 
-	bool IsMaster( void )					{ return HasSpawnFlags( SF_FOG_MASTER ); }
+	bool IsMaster(void)
+	{
+		return HasSpawnFlags(SF_FOG_MASTER);
+	}
 
 public:
-
-	CNetworkVarEmbedded( fogparams_t, m_fog );
-	bool					m_bUseAngles;
-	int						m_iChangedVariables;
+	CNetworkVarEmbedded(fogparams_t, m_fog);
+	bool m_bUseAngles;
+	int m_iChangedVariables;
 };
 
 //=============================================================================
@@ -75,9 +77,8 @@ public:
 class CFogSystem : public CAutoGameSystem
 {
 public:
-
 	// Creation/Init.
-	CFogSystem( char const *name ) : CAutoGameSystem( name ) 
+	CFogSystem(char const *name) : CAutoGameSystem(name)
 	{
 		m_pMasterController = NULL;
 	}
@@ -89,13 +90,15 @@ public:
 
 	virtual void LevelInitPreEntity();
 	virtual void LevelInitPostEntity();
-	CFogController *GetMasterFogController( void )			{ return m_pMasterController; }
+	CFogController *GetMasterFogController(void)
+	{
+		return m_pMasterController;
+	}
 
 private:
-
-	CFogController	*m_pMasterController;
+	CFogController *m_pMasterController;
 };
 
-CFogSystem *FogSystem( void );
+CFogSystem *FogSystem(void);
 
 #endif // FOGCONTROLLER_H

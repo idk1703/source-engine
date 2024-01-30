@@ -1,6 +1,6 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -16,36 +16,40 @@
 //
 // commonmacros.h
 //
-// This should contain ONLY general purpose macros that are 
+// This should contain ONLY general purpose macros that are
 // appropriate for use in engine/launcher/all tools
 //
 // -------------------------------------------------------
 
 // Makes a 4-byte "packed ID" int out of 4 characters
-#define MAKEID(d,c,b,a)					( ((int)(a) << 24) | ((int)(b) << 16) | ((int)(c) << 8) | ((int)(d)) )
+#define MAKEID(d, c, b, a) (((int)(a) << 24) | ((int)(b) << 16) | ((int)(c) << 8) | ((int)(d)))
 
 // Compares a string with a 4-byte packed ID constant
-#define STRING_MATCHES_ID( p, id )		( (*((int *)(p)) == (id) ) ? true : false )
-#define ID_TO_STRING( id, p )			( (p)[3] = (((id)>>24) & 0xFF), (p)[2] = (((id)>>16) & 0xFF), (p)[1] = (((id)>>8) & 0xFF), (p)[0] = (((id)>>0) & 0xFF) )
+#define STRING_MATCHES_ID(p, id) ((*((int *)(p)) == (id)) ? true : false)
+#define ID_TO_STRING(id, p)                                                                         \
+	((p)[3] = (((id) >> 24) & 0xFF), (p)[2] = (((id) >> 16) & 0xFF), (p)[1] = (((id) >> 8) & 0xFF), \
+	 (p)[0] = (((id) >> 0) & 0xFF))
 
-#define V_ARRAYSIZE(p)		(sizeof(p)/sizeof(p[0]))
+#define V_ARRAYSIZE(p) (sizeof(p) / sizeof(p[0]))
 
-#define SETBITS(iBitVector, bits)		((iBitVector) |= (bits))
-#define CLEARBITS(iBitVector, bits)		((iBitVector) &= ~(bits))
-#define FBitSet(iBitVector, bits)		((iBitVector) & (bits))
+#define SETBITS(iBitVector, bits)	((iBitVector) |= (bits))
+#define CLEARBITS(iBitVector, bits) ((iBitVector) &= ~(bits))
+#define FBitSet(iBitVector, bits)	((iBitVector) & (bits))
 
-inline bool IsPowerOfTwo( int value )
+inline bool IsPowerOfTwo(int value)
 {
-	return (value & ( value - 1 )) == 0;
+	return (value & (value - 1)) == 0;
 }
 
 #ifndef REFERENCE
 #define REFERENCE(arg) ((void)arg)
 #endif
 
-#define CONST_INTEGER_AS_STRING(x) #x //Wraps the integer in quotes, allowing us to form constant strings with it
-#define __HACK_LINE_AS_STRING__(x) CONST_INTEGER_AS_STRING(x) //__LINE__ can only be converted to an actual number by going through this, otherwise the output is literally "__LINE__"
-#define __LINE__AS_STRING __HACK_LINE_AS_STRING__(__LINE__) //Gives you the line number in constant string form
+#define CONST_INTEGER_AS_STRING(x) #x // Wraps the integer in quotes, allowing us to form constant strings with it
+#define __HACK_LINE_AS_STRING__(x) \
+	CONST_INTEGER_AS_STRING(x) //__LINE__ can only be converted to an actual number by going through this, otherwise the
+							   //output is literally "__LINE__"
+#define __LINE__AS_STRING __HACK_LINE_AS_STRING__(__LINE__) // Gives you the line number in constant string form
 
 // Using ARRAYSIZE implementation from winnt.h:
 #ifdef ARRAYSIZE
@@ -57,14 +61,10 @@ inline bool IsPowerOfTwo( int value )
 //   RTL_NUMBER_OF(Buffer) == 100
 // This is also popularly known as: NUMBER_OF, ARRSIZE, _countof, NELEM, etc.
 //
-#define RTL_NUMBER_OF_V1(A) (sizeof(A)/sizeof((A)[0]))
+#define RTL_NUMBER_OF_V1(A) (sizeof(A) / sizeof((A)[0]))
 
-#if defined(__cplusplus) && \
-    !defined(MIDL_PASS) && \
-    !defined(RC_INVOKED) && \
-    !defined(_PREFAST_) && \
-    (_MSC_FULL_VER >= 13009466) && \
-    !defined(SORTPP_PASS)
+#if defined(__cplusplus) && !defined(MIDL_PASS) && !defined(RC_INVOKED) && !defined(_PREFAST_) && \
+	(_MSC_FULL_VER >= 13009466) && !defined(SORTPP_PASS)
 
 // From crtdefs.h
 #if !defined(UNALIGNED)
@@ -97,8 +97,8 @@ inline bool IsPowerOfTwo( int value )
 // Attempts to pass pointers instead of arrays to this macro result in compile time errors.
 // That is the point.
 extern "C++" // templates cannot be declared to have 'C' linkage
-template <typename T, size_t N>
-char (*RtlpNumberOf( UNALIGNED T (&)[N] ))[N];
+	template<typename T, size_t N>
+	char (*RtlpNumberOf(UNALIGNED T (&)[N]))[N];
 
 #define RTL_NUMBER_OF_V2(A) (sizeof(*RtlpNumberOf(A)))
 
@@ -142,8 +142,7 @@ char (*RtlpNumberOf( UNALIGNED T (&)[N] ))[N];
 
 // ARRAYSIZE is more readable version of RTL_NUMBER_OF_V2
 // _ARRAYSIZE is a version useful for anonymous types
-#define ARRAYSIZE(A)    RTL_NUMBER_OF_V2(A)
-#define _ARRAYSIZE(A)   RTL_NUMBER_OF_V1(A)
+#define ARRAYSIZE(A)  RTL_NUMBER_OF_V2(A)
+#define _ARRAYSIZE(A) RTL_NUMBER_OF_V1(A)
 
 #endif // COMMONMACROS_H
-

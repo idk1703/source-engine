@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -12,12 +12,10 @@
 #pragma once
 #endif
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
 class CCommand;
-
 
 #define MAX_BUFFER_SIZE 2048
 
@@ -30,9 +28,9 @@ public:
 	CBenchmarkResults();
 
 	bool IsBenchmarkRunning();
-	void StartBenchmark( const CCommand &args );
+	void StartBenchmark(const CCommand &args);
 	void StopBenchmark();
-	void SetResultsFilename( const char *pFilename );
+	void SetResultsFilename(const char *pFilename);
 	void Upload();
 
 private:
@@ -48,6 +46,5 @@ inline CBenchmarkResults *GetBenchResultsMgr()
 	extern CBenchmarkResults g_BenchmarkResults;
 	return &g_BenchmarkResults;
 }
-
 
 #endif // CBENCHMARK_H

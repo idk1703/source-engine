@@ -14,12 +14,9 @@
 #ifndef INCLUDED_MXBMP
 #define INCLUDED_MXBMP
 
-
-
 #ifndef INCLUDED_MXIMAGE
 #include "mxtk/mxImage.h"
 #endif
-
 
 #ifdef WIN32
 #include <pshpack2.h>
@@ -27,53 +24,50 @@
 
 typedef struct
 {
-	word bfType; 
-    int bfSize;
-	word bfReserved1; 
+	word bfType;
+	int bfSize;
+	word bfReserved1;
 	word bfReserved2;
 	int bfOffBits;
 } mxBitmapFileHeader;
 
 typedef struct tagMxBitmapFileHeader
 {
-	int biSize; 
-	int biWidth; 
-	int biHeight; 
-	word biPlanes; 
+	int biSize;
+	int biWidth;
+	int biHeight;
+	word biPlanes;
 	word biBitCount;
-	int biCompression; 
-	int biSizeImage; 
-	int biXPelsPerMeter; 
-	int biYPelsPerMeter; 
-	int biClrUsed; 
-	int biClrImportant; 
-} mxBitmapInfoHeader; 
- 
+	int biCompression;
+	int biSizeImage;
+	int biXPelsPerMeter;
+	int biYPelsPerMeter;
+	int biClrUsed;
+	int biClrImportant;
+} mxBitmapInfoHeader;
+
 typedef struct
 {
 	byte rgbBlue;
-	byte rgbGreen; 
-    byte rgbRed;
+	byte rgbGreen;
+	byte rgbRed;
 	byte rgbReserved;
-} mxBitmapRGBQuad; 
+} mxBitmapRGBQuad;
 
 #ifdef WIN32
 #include <poppack.h>
 #endif
 
-
-
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-mxImage *mxBmpRead (const char *filename);
-bool mxBmpWrite (const char *filename, mxImage *image);
+	mxImage *mxBmpRead(const char *filename);
+	bool mxBmpWrite(const char *filename, mxImage *image);
 
 #ifdef __cplusplus
 }
 #endif
-
-
 
 #endif // INCLUDED_MXBMP

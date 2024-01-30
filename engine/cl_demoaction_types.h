@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -13,19 +13,18 @@ class CDemoActionSkipAhead : public CBaseDemoAction
 	typedef CBaseDemoAction BaseClass;
 
 public:
-	virtual bool Init( KeyValues *pInitData );
-	virtual bool Update( const DemoActionTimingContext& tc );
-	virtual void FireAction( void );
-	virtual void SaveKeysToBuffer( int depth, CUtlBuffer& buf );
+	virtual bool Init(KeyValues *pInitData);
+	virtual bool Update(const DemoActionTimingContext &tc);
+	virtual void FireAction(void);
+	virtual void SaveKeysToBuffer(int depth, CUtlBuffer &buf);
 
-	void SetSkipToTick( int tick );
-	void SetSkipToTime( float t );
-	
+	void SetSkipToTick(int tick);
+	void SetSkipToTime(float t);
+
 private:
-
-	bool		m_bUsingSkipTick;
-	int			m_nSkipToTick;
-	float		m_flSkipToTime;
+	bool m_bUsingSkipTick;
+	int m_nSkipToTick;
+	float m_flSkipToTime;
 
 	friend class CBaseActionSkipAheadDialog;
 };
@@ -38,11 +37,10 @@ class CDemoActionStopPlayback : public CBaseDemoAction
 	typedef CBaseDemoAction BaseClass;
 
 public:
-	virtual bool Update( const DemoActionTimingContext& tc );
-	virtual void			FireAction( void );
+	virtual bool Update(const DemoActionTimingContext &tc);
+	virtual void FireAction(void);
 
 private:
-
 	friend class CBaseActionStopPlaybackDialog;
 };
 
@@ -54,21 +52,20 @@ class CDemoActionPlayCommands : public CBaseDemoAction
 	typedef CBaseDemoAction BaseClass;
 
 public:
-	virtual bool Init( KeyValues *pInitData );
-	virtual void FireAction( void );
-	virtual void SaveKeysToBuffer( int depth, CUtlBuffer& buf );
+	virtual bool Init(KeyValues *pInitData);
+	virtual void FireAction(void);
+	virtual void SaveKeysToBuffer(int depth, CUtlBuffer &buf);
 
-	void		SetCommandStream( char const *stream );
-	char const	*GetCommandStream( void ) const;
+	void SetCommandStream(char const *stream);
+	char const *GetCommandStream(void) const;
 
 private:
-
 	enum
 	{
 		MAX_COMMAND_STREAM = 256,
 	};
 
-	char		m_szCommandStream[ MAX_COMMAND_STREAM ];
+	char m_szCommandStream[MAX_COMMAND_STREAM];
 };
 
 //-----------------------------------------------------------------------------
@@ -79,14 +76,14 @@ class CDemoActionScreenFadeStart : public CBaseDemoAction
 	typedef CBaseDemoAction BaseClass;
 
 public:
-	virtual bool Init( KeyValues *pInitData );
-	virtual void FireAction( void );
-	virtual void SaveKeysToBuffer( int depth, CUtlBuffer& buf );
+	virtual bool Init(KeyValues *pInitData);
+	virtual void FireAction(void);
+	virtual void SaveKeysToBuffer(int depth, CUtlBuffer &buf);
 
-	ScreenFade_t *GetScreenFade( void );
+	ScreenFade_t *GetScreenFade(void);
 
 private:
-	ScreenFade_t		fade;
+	ScreenFade_t fade;
 
 	friend class CBaseActionScreenFadeStartDialog;
 };
@@ -99,17 +96,17 @@ class CDemoActionTextMessageStart : public CBaseDemoAction
 	typedef CBaseDemoAction BaseClass;
 
 public:
-	virtual bool Init( KeyValues *pInitData );
-	virtual void			FireAction( void );
-	virtual void SaveKeysToBuffer( int depth, CUtlBuffer& buf );
+	virtual bool Init(KeyValues *pInitData);
+	virtual void FireAction(void);
+	virtual void SaveKeysToBuffer(int depth, CUtlBuffer &buf);
 
-	client_textmessage_t *GetTextMessage( void );
+	client_textmessage_t *GetTextMessage(void);
 
-	void						SetMessageText( char const *text );
-	char const					*GetMessageText( void ) const;
+	void SetMessageText(char const *text);
+	char const *GetMessageText(void) const;
 
-	void						SetFontName( char const *font );
-	char const					*GetFontName( void ) const;
+	void SetFontName(char const *font);
+	char const *GetFontName(void) const;
 
 private:
 	enum
@@ -118,9 +115,9 @@ private:
 		MAX_FONT_NAME = 64,
 	};
 
-	char						m_szMessageText[ MAX_MESSAGE_TEXT ];
-	char						m_szVguiFont[ MAX_FONT_NAME ];
-	client_textmessage_t		message;
+	char m_szMessageText[MAX_MESSAGE_TEXT];
+	char m_szVguiFont[MAX_FONT_NAME];
+	client_textmessage_t message;
 };
 
 //-----------------------------------------------------------------------------
@@ -131,15 +128,15 @@ class CDemoActionCDTrackStart : public CBaseDemoAction
 	typedef CBaseDemoAction BaseClass;
 
 public:
-	virtual bool Init( KeyValues *pInitData );
-	virtual void			FireAction( void );
-	virtual void SaveKeysToBuffer( int depth, CUtlBuffer& buf );
+	virtual bool Init(KeyValues *pInitData);
+	virtual void FireAction(void);
+	virtual void SaveKeysToBuffer(int depth, CUtlBuffer &buf);
 
-	void		SetTrack( int track );
-	int			GetTrack( void ) const;
+	void SetTrack(int track);
+	int GetTrack(void) const;
 
 private:
-	int			m_nCDTrack;
+	int m_nCDTrack;
 };
 
 //-----------------------------------------------------------------------------
@@ -150,34 +147,33 @@ class CDemoActionCDTrackStop : public CBaseDemoAction
 	typedef CBaseDemoAction BaseClass;
 
 public:
-	virtual void			FireAction( void );
+	virtual void FireAction(void);
 
 private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CDemoActionPlaySoundStart : public CBaseDemoAction
 {
 	typedef CBaseDemoAction BaseClass;
 
 public:
-	virtual bool Init( KeyValues *pInitData );
-	virtual void			FireAction( void );
-	virtual void SaveKeysToBuffer( int depth, CUtlBuffer& buf );
+	virtual bool Init(KeyValues *pInitData);
+	virtual void FireAction(void);
+	virtual void SaveKeysToBuffer(int depth, CUtlBuffer &buf);
 
-	void		SetSoundName( char const *name );
-	char const	*GetSoundName( void ) const;
+	void SetSoundName(char const *name);
+	char const *GetSoundName(void) const;
 
 private:
-
 	enum
 	{
 		MAX_SOUND_NAME = 128,
 	};
 
-	char		m_szSoundName[ MAX_SOUND_NAME ];
+	char m_szSoundName[MAX_SOUND_NAME];
 };
 
 //-----------------------------------------------------------------------------
@@ -188,24 +184,23 @@ class CBaseDemoActionWithStopTime : public CBaseDemoAction
 	typedef CBaseDemoAction BaseClass;
 
 public:
-	virtual bool Init( KeyValues *pInitData );
-	virtual bool Update( const DemoActionTimingContext& tc );
-	virtual void SaveKeysToBuffer( int depth, CUtlBuffer& buf );
+	virtual bool Init(KeyValues *pInitData);
+	virtual bool Update(const DemoActionTimingContext &tc);
+	virtual void SaveKeysToBuffer(int depth, CUtlBuffer &buf);
 
-	void		SetStopTick( int tick );
-	void		SetStopTime( float time );
-	
+	void SetStopTick(int tick);
+	void SetStopTime(float time);
+
 private:
-
-	bool		m_bUsingStopTick;
-	int			m_nStopTick;
-	float		m_flStopTime;
+	bool m_bUsingStopTick;
+	int m_nStopTick;
+	float m_flStopTime;
 
 	friend class CBaseActionWithStopTimeDialog;
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CDemoActionChangePlaybackRate : public CBaseDemoActionWithStopTime
 {
@@ -214,25 +209,24 @@ class CDemoActionChangePlaybackRate : public CBaseDemoActionWithStopTime
 public:
 	CDemoActionChangePlaybackRate();
 
-	virtual bool Init( KeyValues *pInitData );
-	virtual void FireAction( void );
-	virtual void	OnActionFinished( void );
+	virtual bool Init(KeyValues *pInitData);
+	virtual void FireAction(void);
+	virtual void OnActionFinished(void);
 
-	virtual void SaveKeysToBuffer( int depth, CUtlBuffer& buf );
+	virtual void SaveKeysToBuffer(int depth, CUtlBuffer &buf);
 
-	void		SetPlaybackRate( float rate );
-	float		GetPlaybackRate( void ) const;
+	void SetPlaybackRate(float rate);
+	float GetPlaybackRate(void) const;
 
 private:
-
-	float		m_flPlaybackRate;
-	float		m_flSavePlaybackRate;
+	float m_flPlaybackRate;
+	float m_flSavePlaybackRate;
 
 	friend class CBaseActionChangePlaybackRateDialog;
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CDemoActionPausePlayback : public CBaseDemoActionWithStopTime
 {
@@ -241,17 +235,16 @@ class CDemoActionPausePlayback : public CBaseDemoActionWithStopTime
 public:
 	CDemoActionPausePlayback();
 
-	virtual bool Init( KeyValues *pInitData );
-	virtual void FireAction( void );
+	virtual bool Init(KeyValues *pInitData);
+	virtual void FireAction(void);
 
-	virtual void SaveKeysToBuffer( int depth, CUtlBuffer& buf );
+	virtual void SaveKeysToBuffer(int depth, CUtlBuffer &buf);
 
-	void		SetPauseTime( float t );
-	float		GetPauseTime( void ) const;
+	void SetPauseTime(float t);
+	float GetPauseTime(void) const;
 
 private:
-
-	float		m_flPauseTime;
+	float m_flPauseTime;
 
 	friend class CBaseActionPauseDialog;
 };
@@ -259,26 +252,27 @@ private:
 class CDemoActionZoom : public CBaseDemoAction
 {
 	typedef CBaseDemoAction BaseClass;
+
 public:
 	CDemoActionZoom();
 
-	virtual bool Init( KeyValues *pInitData );
-	virtual bool Update( const DemoActionTimingContext& tc );
-	virtual void FireAction( void );
-	virtual void SaveKeysToBuffer( int depth, CUtlBuffer& buf );
+	virtual bool Init(KeyValues *pInitData);
+	virtual bool Update(const DemoActionTimingContext &tc);
+	virtual void FireAction(void);
+	virtual void SaveKeysToBuffer(int depth, CUtlBuffer &buf);
+
 private:
+	bool m_bSpline;
+	bool m_bStayout;
 
-	bool			m_bSpline;
-	bool			m_bStayout;
+	float m_flFinalFOV;
+	float m_flFOVRateOut; // degress per second
+	float m_flFOVRateIn;  // degrees per second
+	float m_flHoldTime;
 
-	float			m_flFinalFOV;
-	float			m_flFOVRateOut;  // degress per second
-	float			m_flFOVRateIn;	 // degrees per second
-	float			m_flHoldTime;
-
-// for playback
-	float			m_flFOVStartTime;
-	float			m_flOriginalFOV;
+	// for playback
+	float m_flFOVStartTime;
+	float m_flOriginalFOV;
 
 	friend class CBaseActionZoomDialog;
 };

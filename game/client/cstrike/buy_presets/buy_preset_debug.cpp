@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -20,7 +20,7 @@
 
 #if BUY_PRESET_DEBUGGING
 
-static ConVar cl_preset_debug( "cl_preset_debug", "0", 0, "Controls debug information about buy presets" );
+static ConVar cl_preset_debug("cl_preset_debug", "0", 0, "Controls debug information about buy presets");
 
 //--------------------------------------------------------------------------------------------------------------
 bool IsPresetDebuggingEnabled()

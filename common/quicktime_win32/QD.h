@@ -1,17 +1,17 @@
 /*
-     File:       QD.h
- 
-     Contains:   Master include for QD private framework
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 1999-2001 by Apple Computer, Inc., all rights reserved.
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+	File:       QD.h
+
+	Contains:   Master include for QD private framework
+
+	Version:    QuickTime 7.3
+
+	Copyright:  (c) 2007 (c) 1999-2001 by Apple Computer, Inc., all rights reserved.
+
+	Bugs?:      For bug reports, consult the following page on
+			the World Wide Web:
+
+				http://developer.apple.com/bugreporter/
+
 */
 #ifndef __QD__
 #define __QD__
@@ -19,7 +19,6 @@
 #ifndef __CORESERVICES__
 #include <CoreServices.h>
 #endif
-
 
 #ifndef __COREGRAPHICS__
 #include <CoreGraphics.h>
@@ -36,7 +35,6 @@
 #ifndef __AE__
 #include <AE.h>
 #endif
-
 
 #ifndef __QUICKDRAW__
 #include <Quickdraw.h>
@@ -90,6 +88,4 @@
 #include <ATSUnicodeDirectAccess.h>
 #endif
 
-
 #endif /* __QD__ */
-

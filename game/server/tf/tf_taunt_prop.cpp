@@ -15,93 +15,92 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-IMPLEMENT_SERVERCLASS_ST( CTFTauntProp, DT_TFTauntProp )
-END_SEND_TABLE()
+IMPLEMENT_SERVERCLASS_ST(CTFTauntProp, DT_TFTauntProp)
+END_SEND_TABLE
+()
 
-LINK_ENTITY_TO_CLASS( tf_taunt_prop, CTFTauntProp );
+	LINK_ENTITY_TO_CLASS(tf_taunt_prop, CTFTauntProp);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFTauntProp::CTFTauntProp()
 {
 	UseClientSideAnimation();
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CTFTauntProp::StartSceneEvent( CSceneEventInfo *info, CChoreoScene *scene, CChoreoEvent *event, CChoreoActor *actor, CBaseEntity *pTarget )
+bool CTFTauntProp::StartSceneEvent(CSceneEventInfo *info, CChoreoScene *scene, CChoreoEvent *event, CChoreoActor *actor,
+								   CBaseEntity *pTarget)
 {
-	switch ( event->GetType() )
+	switch(event->GetType())
 	{
-	case CChoreoEvent::SEQUENCE:
-	case CChoreoEvent::GESTURE:
-	{
-		// Get the (gesture) sequence.
-		info->m_nSequence = LookupSequence( event->GetParameters() );
-		if ( info->m_nSequence < 0 )
-			return false;
-
-		SetSequence( info->m_nSequence );
-		SetPlaybackRate( 1.0f );
-		SetCycle( 0 );
-		ResetSequenceInfo();
-
-		if ( IsUsingClientSideAnimation() )
+		case CChoreoEvent::SEQUENCE:
+		case CChoreoEvent::GESTURE:
 		{
-			ResetClientsideFrame();
-		}
+			// Get the (gesture) sequence.
+			info->m_nSequence = LookupSequence(event->GetParameters());
+			if(info->m_nSequence < 0)
+				return false;
 
-		return true;
-	}
-	default:
-		return BaseClass::StartSceneEvent( info, scene, event, actor, pTarget );
+			SetSequence(info->m_nSequence);
+			SetPlaybackRate(1.0f);
+			SetCycle(0);
+			ResetSequenceInfo();
+
+			if(IsUsingClientSideAnimation())
+			{
+				ResetClientsideFrame();
+			}
+
+			return true;
+		}
+		default:
+			return BaseClass::StartSceneEvent(info, scene, event, actor, pTarget);
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CTFTauntProp::ProcessSceneEvent( CSceneEventInfo *info, CChoreoScene *scene, CChoreoEvent *event )
+bool CTFTauntProp::ProcessSceneEvent(CSceneEventInfo *info, CChoreoScene *scene, CChoreoEvent *event)
 {
 	// Only process sequences
-	if ( event->GetType() != CChoreoEvent::SEQUENCE )
+	if(event->GetType() != CChoreoEvent::SEQUENCE)
 		return false;
 
-	return BaseClass::ProcessSceneEvent( info, scene, event );
+	return BaseClass::ProcessSceneEvent(info, scene, event);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-float CTFTauntProp::PlayScene( const char *pszScene, float flDelay /*= 0.0f*/, AI_Response *response /*= NULL*/, IRecipientFilter *filter /*= NULL*/ )
+float CTFTauntProp::PlayScene(const char *pszScene, float flDelay /*= 0.0f*/, AI_Response *response /*= NULL*/,
+							  IRecipientFilter *filter /*= NULL*/)
 {
-	if ( m_hScene.Get() )
+	if(m_hScene.Get())
 	{
-		StopScriptedScene( this, m_hScene );
+		StopScriptedScene(this, m_hScene);
 		m_hScene = NULL;
 	}
 
 	MDLCACHE_CRITICAL_SECTION();
 
-	return InstancedScriptedScene( this, pszScene, &m_hScene, flDelay, false, response, true, filter );
+	return InstancedScriptedScene(this, pszScene, &m_hScene, flDelay, false, response, true, filter);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTauntProp::UpdateOnRemove()
 {
-	if ( m_hScene.Get() )
+	if(m_hScene.Get())
 	{
-		StopScriptedScene( this, m_hScene );
+		StopScriptedScene(this, m_hScene);
 		m_hScene = NULL;
 	}
-		
+
 	BaseClass::UpdateOnRemove();
 }

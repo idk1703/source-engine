@@ -21,25 +21,25 @@ public:
 	CRenderQueue();
 	~CRenderQueue();
 
-	virtual void	Add( ReplayHandle_t hReplay, int iPerformance );
-	virtual void	Remove( ReplayHandle_t hReplay, int iPerformance );
-	virtual void	Clear();
+	virtual void Add(ReplayHandle_t hReplay, int iPerformance);
+	virtual void Remove(ReplayHandle_t hReplay, int iPerformance);
+	virtual void Clear();
 
-	virtual int		GetCount() const;
-	virtual bool	GetEntryData( int iIndex, ReplayHandle_t *pHandleOut, int *pPerformanceOut ) const;
-	virtual bool	IsInQueue( ReplayHandle_t hReplay, int iPerformance ) const;
+	virtual int GetCount() const;
+	virtual bool GetEntryData(int iIndex, ReplayHandle_t *pHandleOut, int *pPerformanceOut) const;
+	virtual bool IsInQueue(ReplayHandle_t hReplay, int iPerformance) const;
 
 private:
 	struct RenderInfo_t
 	{
-		ReplayHandle_t	m_hReplay;
-		int				m_iPerformance;
+		ReplayHandle_t m_hReplay;
+		int m_iPerformance;
 	};
 
-	RenderInfo_t *Find( ReplayHandle_t hReplay, int iPerformance );
-	const RenderInfo_t *Find( ReplayHandle_t hReplay, int iPerformance ) const;
+	RenderInfo_t *Find(ReplayHandle_t hReplay, int iPerformance);
+	const RenderInfo_t *Find(ReplayHandle_t hReplay, int iPerformance) const;
 
-	CUtlVector< RenderInfo_t * > m_vecQueue;
+	CUtlVector<RenderInfo_t *> m_vecQueue;
 };
 
 //----------------------------------------------------------------------------------------

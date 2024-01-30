@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,12 +24,12 @@ class ITFHintItem;
 typedef unsigned int EFFECT_HANDLE;
 #define EFFECT_INVALID_HANDLE (EFFECT_HANDLE)(~0)
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CPanelEffect
 {
 public:
-	DECLARE_CLASS_NOBASE( CPanelEffect );
+	DECLARE_CLASS_NOBASE(CPanelEffect);
 
 	enum
 	{
@@ -47,93 +47,90 @@ public:
 		ENDPOINT_ENTITY,
 	};
 
+	CPanelEffect(ITFHintItem *owner);
+	virtual ~CPanelEffect();
 
-							CPanelEffect( ITFHintItem *owner );
-	virtual					~CPanelEffect();
+	virtual void doPaint(vgui::Panel *panel);
 
-	virtual void			doPaint( vgui::Panel *panel );
+	virtual void Think(void);
 
-	virtual void			Think( void );
+	virtual bool ShouldRemove(void);
+	virtual void SetShouldRemove(bool remove);
 
-	virtual bool			ShouldRemove( void );
-	virtual void			SetShouldRemove( bool remove );
+	virtual EFFECT_HANDLE GetHandle(void);
 
-	virtual EFFECT_HANDLE	GetHandle( void );
+	virtual void SetType(int type);
+	virtual int GetType(void);
 
-	virtual void			SetType( int type );
-	virtual int				GetType( void );
+	virtual void SetPanel(vgui::Panel *panel);
+	virtual vgui::Panel *GetPanel(void);
 
-	virtual void			SetPanel( vgui::Panel *panel );
-	virtual vgui::Panel		*GetPanel( void );
+	virtual void SetPanelOther(vgui::Panel *panel);
+	virtual vgui::Panel *GetPanelOther(void);
 
-	virtual void			SetPanelOther( vgui::Panel *panel );
-	virtual vgui::Panel		*GetPanelOther( void );
+	virtual void SetTargetPoint(int x, int y);
+	virtual void SetTargetRect(int x, int y, int w, int h);
 
-	virtual void			SetTargetPoint( int x, int y );
-	virtual void			SetTargetRect( int x, int y, int w, int h );
-	
-	virtual void			SetColor( int r, int g, int b, int a );
-	virtual void			GetColor( int& r, int& g, int& b, int& a );
+	virtual void SetColor(int r, int g, int b, int a);
+	virtual void GetColor(int &r, int &g, int &b, int &a);
 
-	virtual void			SetEndTime( float time );
-	virtual float			GetEndTime( void );
+	virtual void SetEndTime(float time);
+	virtual float GetEndTime(void);
 
-	virtual void			SetOwner( ITFHintItem *owner );
-	virtual ITFHintItem		*GetOwner( void );
+	virtual void SetOwner(ITFHintItem *owner);
+	virtual ITFHintItem *GetOwner(void);
 
-	virtual void			SetUsingOffset( bool active, int x, int y );
-	virtual bool			GetUsingOffset( void );
-	virtual void			GetOffset( int& x, int& y );
+	virtual void SetUsingOffset(bool active, int x, int y);
+	virtual bool GetUsingOffset(void);
+	virtual void GetOffset(int &x, int &y);
 
-	virtual int				GetTargetType( void );
-	virtual void			SetTargetType( int type );
-	virtual bool			GetTargetRectangle( vgui::Panel *outpanel, int&x, int&y, int&w, int&h );
+	virtual int GetTargetType(void);
+	virtual void SetTargetType(int type);
+	virtual bool GetTargetRectangle(vgui::Panel *outpanel, int &x, int &y, int &w, int &h);
 
-	virtual void			SetVisible( bool visible );
-	virtual bool			GetVisible( void );
+	virtual void SetVisible(bool visible);
+	virtual bool GetVisible(void);
 
 private:
-
-	static EFFECT_HANDLE	m_nHandleCount;
+	static EFFECT_HANDLE m_nHandleCount;
 
 protected:
+	virtual bool IsVisibleIncludingParent(vgui::Panel *panel);
 
-	virtual bool			IsVisibleIncludingParent( vgui::Panel *panel );
+	EFFECT_HANDLE m_Handle;
 
-	EFFECT_HANDLE			m_Handle;
-
-	ITFHintItem				*m_pOwner;
+	ITFHintItem *m_pOwner;
 
 	// Data
-	
+
 	// type of effect
-	int						m_nType;
+	int m_nType;
 
 	// effect targets
-	vgui::PHandle			m_hPanel;
-	vgui::PHandle			m_hOtherPanel;
+	vgui::PHandle m_hPanel;
+	vgui::PHandle m_hOtherPanel;
 
 	// effect color
-	int						m_r, m_g, m_b, m_a;
+	int m_r, m_g, m_b, m_a;
 
-	float					m_flEndTime;// 0.0f for no end time
+	float m_flEndTime; // 0.0f for no end time
 
 	// true if we should offset endpoint of arrow/lines into m_hOtherPanel by m_nOffset amount
-	bool					m_bEndpointIsCoordinate;
+	bool m_bEndpointIsCoordinate;
 	// x, y offset into destination panel
-	int						m_nOffset[ 2 ];
+	int m_nOffset[2];
 
-	bool					m_bShouldRemove;
+	bool m_bShouldRemove;
 
-	int						m_TargetType;
-	int						m_ptX;
-	int						m_ptY;
-	int						m_rectX;
-	int						m_rectY;
-	int						m_rectW;
-	int						m_rectH;
+	int m_TargetType;
+	int m_ptX;
+	int m_ptY;
+	int m_rectX;
+	int m_rectY;
+	int m_rectW;
+	int m_rectH;
 
-	bool					m_bVisible;
+	bool m_bVisible;
 };
 
 #define EFFECT_FLASH_TIME 0.7f
@@ -154,13 +151,13 @@ protected:
 #define AXIALLINE_A 255
 
 // Panel effect APIs
-void DestroyPanelEffects( ITFHintItem *owner );
-EFFECT_HANDLE CreateFlashEffect( ITFHintItem *owner, vgui::Panel *target );
-EFFECT_HANDLE CreateArrowEffect( ITFHintItem *owner, vgui::Panel *from, vgui::Panel *to );
-EFFECT_HANDLE CreateAxialLineEffect( ITFHintItem *owner, vgui::Panel *from, vgui::Panel *to );
-EFFECT_HANDLE CreateArrowEffectToPoint( ITFHintItem *owner, vgui::Panel *from, int x, int y );
-EFFECT_HANDLE CreateAxialLineEffectToPoint( ITFHintItem *owner, vgui::Panel *from, int x, int y );
-EFFECT_HANDLE CreateArrowEffectToRect( ITFHintItem *owner, vgui::Panel *from, int x, int y, int w, int h );
-EFFECT_HANDLE CreateAxialLineEffectToRect( ITFHintItem *owner, vgui::Panel *from, int x, int y, int w, int h );
+void DestroyPanelEffects(ITFHintItem *owner);
+EFFECT_HANDLE CreateFlashEffect(ITFHintItem *owner, vgui::Panel *target);
+EFFECT_HANDLE CreateArrowEffect(ITFHintItem *owner, vgui::Panel *from, vgui::Panel *to);
+EFFECT_HANDLE CreateAxialLineEffect(ITFHintItem *owner, vgui::Panel *from, vgui::Panel *to);
+EFFECT_HANDLE CreateArrowEffectToPoint(ITFHintItem *owner, vgui::Panel *from, int x, int y);
+EFFECT_HANDLE CreateAxialLineEffectToPoint(ITFHintItem *owner, vgui::Panel *from, int x, int y);
+EFFECT_HANDLE CreateArrowEffectToRect(ITFHintItem *owner, vgui::Panel *from, int x, int y, int w, int h);
+EFFECT_HANDLE CreateAxialLineEffectToRect(ITFHintItem *owner, vgui::Panel *from, int x, int y, int w, int h);
 
 #endif // PANELEFFECT_H

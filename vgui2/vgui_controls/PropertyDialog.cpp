@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -42,8 +42,8 @@ PropertyDialog::PropertyDialog(Panel *parent, const char *panelName) : Frame(par
 	_applyButton = new Button(this, "ApplyButton", "#PropertyDialog_Apply");
 	_applyButton->AddActionSignalTarget(this);
 	_applyButton->SetTabPosition(4);
-	_applyButton->SetVisible(false);		// default to not visible
-    _applyButton->SetEnabled(false);        // default to not enabled
+	_applyButton->SetVisible(false); // default to not visible
+	_applyButton->SetEnabled(false); // default to not enabled
 	_applyButton->SetCommand("Apply");
 
 	SetSizeable(false);
@@ -52,9 +52,7 @@ PropertyDialog::PropertyDialog(Panel *parent, const char *panelName) : Frame(par
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-PropertyDialog::~PropertyDialog()
-{
-}
+PropertyDialog::~PropertyDialog() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns a pointer to the PropertySheet this dialog encapsulates
@@ -106,27 +104,26 @@ void PropertyDialog::PerformLayout()
 	BaseClass::PerformLayout();
 
 	int iBottom = m_iSheetInsetBottom;
-	if ( IsProportional() )
+	if(IsProportional())
 	{
-		iBottom = scheme()->GetProportionalScaledValueEx( GetScheme(), iBottom );
+		iBottom = scheme()->GetProportionalScaledValueEx(GetScheme(), iBottom);
 	}
 
 	int x, y, wide, tall;
 	GetClientArea(x, y, wide, tall);
 	_propertySheet->SetBounds(x, y, wide, tall - iBottom);
 
-
 	// move the buttons to the bottom-right corner
 	int xpos = x + wide - 80;
 	int ypos = tall + y - 28;
 
-	if (_applyButton->IsVisible())
+	if(_applyButton->IsVisible())
 	{
 		_applyButton->SetBounds(xpos, ypos, 72, 24);
 		xpos -= 80;
 	}
 
-	if (_cancelButton->IsVisible())
+	if(_cancelButton->IsVisible())
 	{
 		_cancelButton->SetBounds(xpos, ypos, 72, 24);
 		xpos -= 80;
@@ -143,20 +140,20 @@ void PropertyDialog::PerformLayout()
 //-----------------------------------------------------------------------------
 void PropertyDialog::OnCommand(const char *command)
 {
-	if (!stricmp(command, "OK"))
+	if(!stricmp(command, "OK"))
 	{
-		if ( OnOK(false) )
+		if(OnOK(false))
 		{
 			OnCommand("Close");
 		}
 		_applyButton->SetEnabled(false);
 	}
-	else if (!stricmp(command, "Cancel"))
+	else if(!stricmp(command, "Cancel"))
 	{
 		OnCancel();
 		Close();
 	}
-	else if (!stricmp(command, "Apply"))
+	else if(!stricmp(command, "Apply"))
 	{
 		OnOK(true);
 		_applyButton->SetEnabled(false);
@@ -176,34 +173,32 @@ void PropertyDialog::OnCancel()
 	// designed to be overridden
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : code - 
+// Purpose:
+// Input  : code -
 //-----------------------------------------------------------------------------
 void PropertyDialog::OnKeyCodeTyped(KeyCode code)
 {
 	// this has been removed, since it conflicts with how we use the escape key in the game
-//	if (code == KEY_ESCAPE)
-//	{
-//		OnCommand("Cancel");
-//	}
-//	else
+	//	if (code == KEY_ESCAPE)
+	//	{
+	//		OnCommand("Cancel");
+	//	}
+	//	else
 	{
 		BaseClass::OnKeyCodeTyped(code);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Command handler
 //-----------------------------------------------------------------------------
 bool PropertyDialog::OnOK(bool applyOnly)
 {
-    // the sheet should have the pages apply changes before we tell the world
+	// the sheet should have the pages apply changes before we tell the world
 	_propertySheet->ApplyChanges();
 
-    // this should tell anybody who's watching us that we're done
+	// this should tell anybody who's watching us that we're done
 	PostActionSignal(new KeyValues("ApplyChanges"));
 
 	// default to closing
@@ -217,7 +212,7 @@ void PropertyDialog::ActivateBuildMode()
 {
 	// no subpanel, no build mode
 	EditablePanel *panel = dynamic_cast<EditablePanel *>(GetActivePage());
-	if (!panel)
+	if(!panel)
 		return;
 
 	panel->ActivateBuildMode();
@@ -279,7 +274,7 @@ void PropertyDialog::SetApplyButtonVisible(bool state)
 //-----------------------------------------------------------------------------
 void PropertyDialog::OnApplyButtonEnable()
 {
-	if (_applyButton->IsEnabled())
+	if(_applyButton->IsEnabled())
 		return;
 
 	EnableApplyButton(true);
@@ -295,9 +290,9 @@ void PropertyDialog::EnableApplyButton(bool bEnable)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void PropertyDialog::RequestFocus(int direction)
 {
-    _propertySheet->RequestFocus(direction);
+	_propertySheet->RequestFocus(direction);
 }

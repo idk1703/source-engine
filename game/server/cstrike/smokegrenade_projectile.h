@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,44 +10,34 @@
 #pragma once
 #endif
 
-
 #include "basecsgrenade_projectile.h"
-
 
 class CSmokeGrenadeProjectile : public CBaseCSGrenadeProjectile
 {
 public:
-	DECLARE_CLASS( CSmokeGrenadeProjectile, CBaseCSGrenadeProjectile );
+	DECLARE_CLASS(CSmokeGrenadeProjectile, CBaseCSGrenadeProjectile);
 	DECLARE_DATADESC();
 
-// Overrides.
+	// Overrides.
 public:
-	
 	virtual void Spawn();
 	virtual void Precache();
 	virtual void Detonate();
-	virtual void BounceSound( void );
+	virtual void BounceSound(void);
 
 	void Think_Detonate();
 	void Think_Fade();
 	void Think_Remove();
 
-
-// Grenade stuff.
+	// Grenade stuff.
 public:
+	static CSmokeGrenadeProjectile *Create(const Vector &position, const QAngle &angles, const Vector &velocity,
+										   const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner);
 
-	static CSmokeGrenadeProjectile* Create( 
-		const Vector &position, 
-		const QAngle &angles, 
-		const Vector &velocity, 
-		const AngularImpulse &angVelocity, 
-		CBaseCombatCharacter *pOwner );
-
-	void SetTimer( float timer );
+	void SetTimer(float timer);
 
 	EHANDLE m_hSmokeEffect;
 	bool m_bDidSmokeEffect;
 };
-
 
 #endif // HEGRENADE_PROJECTILE_H

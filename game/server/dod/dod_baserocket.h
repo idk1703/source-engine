@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,43 +18,54 @@
 #include "weapon_dodbase.h"
 
 class RocketTrail;
- 
+
 //================================================
-// CDODBaseRocket	
+// CDODBaseRocket
 //================================================
 class CDODBaseRocket : public CBaseAnimating
 {
-	DECLARE_CLASS( CDODBaseRocket, CBaseAnimating );
+	DECLARE_CLASS(CDODBaseRocket, CBaseAnimating);
 
 public:
 	CDODBaseRocket();
 	~CDODBaseRocket();
-	
-	void	Spawn( void );
-	void	Precache( void );
-	void	RocketTouch( CBaseEntity *pOther );
-	void	Explode( void );
-	void	Fire( void );
-	
-	virtual float	GetDamage() { return m_flDamage; }
-	virtual void	SetDamage(float flDamage) { m_flDamage = flDamage; }
 
-	unsigned int PhysicsSolidMaskForEntity( void ) const;
+	void Spawn(void);
+	void Precache(void);
+	void RocketTouch(CBaseEntity *pOther);
+	void Explode(void);
+	void Fire(void);
 
-	static CDODBaseRocket *Create( const char *szClassname, const Vector &vecOrigin, const QAngle &vecAngles, CBaseEntity *pOwner );	
+	virtual float GetDamage()
+	{
+		return m_flDamage;
+	}
+	virtual void SetDamage(float flDamage)
+	{
+		m_flDamage = flDamage;
+	}
 
-	void SetupInitialTransmittedGrenadeVelocity( const Vector &velocity );
+	unsigned int PhysicsSolidMaskForEntity(void) const;
 
-	virtual DODWeaponID GetEmitterWeaponID() { return WEAPON_NONE; Assert(0); }
+	static CDODBaseRocket *Create(const char *szClassname, const Vector &vecOrigin, const QAngle &vecAngles,
+								  CBaseEntity *pOwner);
+
+	void SetupInitialTransmittedGrenadeVelocity(const Vector &velocity);
+
+	virtual DODWeaponID GetEmitterWeaponID()
+	{
+		return WEAPON_NONE;
+		Assert(0);
+	}
 
 protected:
-	virtual void DoExplosion( trace_t *pTrace );
+	virtual void DoExplosion(trace_t *pTrace);
 
-	void FlyThink( void );
+	void FlyThink(void);
 
-	float					m_flDamage;
+	float m_flDamage;
 
-	CNetworkVector( m_vInitialVelocity );
+	CNetworkVector(m_vInitialVelocity);
 
 private:
 	DECLARE_DATADESC();

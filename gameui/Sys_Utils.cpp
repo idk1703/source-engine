@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -10,13 +10,12 @@
 #include "EngineInterface.h"
 #include "tier0/vcrmode.h"
 
-#if defined( _X360 )
+#if defined(_X360)
 #include "xbox/xbox_win32stubs.h"
 #endif
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
-
 
 #ifdef WIN32
 const unsigned int SYS_NO_ERROR = NO_ERROR;
@@ -32,7 +31,6 @@ unsigned long Sys_GetLastError()
 	return ::GetLastError();
 }
 
-
 WHANDLE Sys_CreateMutex(const char *mutexName)
 {
 	return (WHANDLE)::CreateMutex(NULL, FALSE, TEXT(mutexName));
@@ -42,7 +40,6 @@ void Sys_ReleaseMutex(WHANDLE mutexHandle)
 {
 	::ReleaseMutex((HANDLE)mutexHandle);
 }
-
 
 const unsigned int SYS_WAIT_OBJECT_0 = WAIT_OBJECT_0;
 const unsigned int SYS_WAIT_ABANDONED = WAIT_ABANDONED;
@@ -83,18 +80,18 @@ void Sys_PostMessage(WHANDLE wnd, unsigned int msg, unsigned int wParam, unsigne
 void Sys_SetCursorPos(int x, int y)
 {
 	::SetCursorPos(x, y);
-//	engine->SetCursorPos(x,y); // SRC version
+	//	engine->SetCursorPos(x,y); // SRC version
 }
 #endif
 
 #ifndef _XBOX
 static ATOM staticWndclassAtom = 0;
-static WNDCLASS staticWndclass = { NULL };
+static WNDCLASS staticWndclass = {NULL};
 #endif
 
-static LRESULT CALLBACK staticProc(HWND hwnd,UINT msg,WPARAM wparam,LPARAM lparam)
+static LRESULT CALLBACK staticProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
-	return DefWindowProc(hwnd,msg,wparam,lparam);
+	return DefWindowProc(hwnd, msg, wparam, lparam);
 }
 
 WHANDLE Sys_CreateWindowEx(const char *windowName)
@@ -123,12 +120,11 @@ void Sys_DestroyWindow(WHANDLE wnd)
 	//::DestroyWindow((HWND)wnd);
 }
 
-#elif defined( POSIX )
+#elif defined(POSIX)
 const unsigned int SYS_NO_ERROR = 0;
 const unsigned int SYS_ERROR_INVALID_HANDLE = 0;
 const unsigned int SYS_WAIT_OBJECT_0 = 0;
 const unsigned int SYS_WAIT_ABANDONED = 0;
-
 
 void Sys_SetLastError(unsigned long error)
 {
@@ -140,26 +136,25 @@ unsigned long Sys_GetLastError()
 	return errno;
 }
 
-
 WHANDLE Sys_CreateMutex(const char *mutexName)
 {
-	Assert( !"Implement me" );
+	Assert(!"Implement me");
 	return 0;
 }
 
 void Sys_ReleaseMutex(WHANDLE mutexHandle)
 {
-	Assert( !"Implement me" );
+	Assert(!"Implement me");
 }
 
 void Sys_PostMessage(WHANDLE wnd, unsigned int msg, unsigned int wParam, unsigned int lParam)
 {
-	Assert( !"Implement me" );
+	Assert(!"Implement me");
 }
 
 unsigned int Sys_RegisterWindowMessage(const char *msgName)
 {
-	Assert( !"Implement me" );
+	Assert(!"Implement me");
 	return 0;
 }
 
@@ -170,11 +165,9 @@ unsigned int Sys_WaitForSingleObject(WHANDLE mutexHandle, int milliseconds)
 
 void Sys_EnumWindows(void *callbackFunction, int lparam)
 {
-	Assert( !"Implement me" );
+	Assert(!"Implement me");
 }
-
 
 #else
 #error
 #endif
-

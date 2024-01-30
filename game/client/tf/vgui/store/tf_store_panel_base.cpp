@@ -4,7 +4,6 @@
 //
 //=============================================================================//
 
-
 #include "cbase.h"
 #include "store/tf_store_panel_base.h"
 #include "vgui/IInput.h"
@@ -20,102 +19,103 @@
 #include <tier0/memdbgon.h>
 
 class CServerNotConnectedToSteamDialog;
-CServerNotConnectedToSteamDialog *OpenServerNotConnectedToSteamDialog( vgui::Panel *pParent );
+CServerNotConnectedToSteamDialog *OpenServerNotConnectedToSteamDialog(vgui::Panel *pParent);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CTFBaseStorePanel::CTFBaseStorePanel( Panel *parent ) : CStorePanel(parent)
+CTFBaseStorePanel::CTFBaseStorePanel(Panel *parent) : CStorePanel(parent)
 {
-	m_pArmoryPanel = new CArmoryPanel( this, "armory_panel" );
+	m_pArmoryPanel = new CArmoryPanel(this, "armory_panel");
 	m_pNotificationsPresentPanel = NULL;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFBaseStorePanel::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CTFBaseStorePanel::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
-	m_pNotificationsPresentPanel = FindChildByName( "NotificationsPresentPanel" );
+	m_pNotificationsPresentPanel = FindChildByName("NotificationsPresentPanel");
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFBaseStorePanel::OnArmoryOpened( KeyValues *data )
+void CTFBaseStorePanel::OnArmoryOpened(KeyValues *data)
 {
-	int iItemDef = data->GetInt( "itemdef", 0 );
+	int iItemDef = data->GetInt("itemdef", 0);
 
 	// If it's a bundle, open the armory to a custom page showing all the items in the bundle
-	CEconItemDefinition *pDef = ItemSystem()->GetStaticDataForItemByDefIndex( iItemDef );
-	if ( pDef )
+	CEconItemDefinition *pDef = ItemSystem()->GetStaticDataForItemByDefIndex(iItemDef);
+	if(pDef)
 	{
 		const bundleinfo_t *pBundleInfo = pDef->GetBundleInfo();
-		if ( pBundleInfo )
+		if(pBundleInfo)
 		{
 			CUtlVector<item_definition_index_t> vecItems;
-			FOR_EACH_VEC( pBundleInfo->vecItemDefs, j )
+			FOR_EACH_VEC(pBundleInfo->vecItemDefs, j)
 			{
-				if ( pBundleInfo->vecItemDefs[j] )
+				if(pBundleInfo->vecItemDefs[j])
 				{
-					vecItems.AddToTail( pBundleInfo->vecItemDefs[j]->GetDefinitionIndex() );
+					vecItems.AddToTail(pBundleInfo->vecItemDefs[j]->GetDefinitionIndex());
 				}
 			}
 
-			m_pArmoryPanel->ShowPanel( pDef->GetItemBaseName(), &vecItems );
+			m_pArmoryPanel->ShowPanel(pDef->GetItemBaseName(), &vecItems);
 			m_pArmoryPanel->MoveToFront();
 			return;
 		}
 	}
 
-	m_pArmoryPanel->ShowPanel( iItemDef );
+	m_pArmoryPanel->ShowPanel(iItemDef);
 	m_pArmoryPanel->MoveToFront();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFBaseStorePanel::OnArmoryClosed( void )
+void CTFBaseStorePanel::OnArmoryClosed(void)
 {
-	PostMessage( m_pArmoryPanel, new KeyValues("Closing") );
-	m_pArmoryPanel->SetVisible( false );
+	PostMessage(m_pArmoryPanel, new KeyValues("Closing"));
+	m_pArmoryPanel->SetVisible(false);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFBaseStorePanel::OnThink()
 {
 	bool bShouldBeVisible = NotificationQueue_GetNumNotifications() != 0;
-	if ( m_pNotificationsPresentPanel != NULL && m_pNotificationsPresentPanel->IsVisible() != bShouldBeVisible )
+	if(m_pNotificationsPresentPanel != NULL && m_pNotificationsPresentPanel->IsVisible() != bShouldBeVisible)
 	{
-		m_pNotificationsPresentPanel->SetVisible( bShouldBeVisible );
-		if ( bShouldBeVisible )
+		m_pNotificationsPresentPanel->SetVisible(bShouldBeVisible);
+		if(bShouldBeVisible)
 		{
-			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "NotificationsPresentBlink" );
+			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence(this, "NotificationsPresentBlink");
 		}
 		else
 		{
-			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "NotificationsPresentBlinkStop" );
-		}		
+			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence(this,
+																					"NotificationsPresentBlinkStop");
+		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFBaseStorePanel::PostTransactionCompleted( void )
+void CTFBaseStorePanel::PostTransactionCompleted(void)
 {
 	// pop this dialog up
-	if ( NeedsToChooseMostHelpfulFriend() )
+	if(NeedsToChooseMostHelpfulFriend())
 	{
 		// update main menu
-		IGameEvent *event = gameeventmanager->CreateEvent( "store_pricesheet_updated" );
-		if ( event )
+		IGameEvent *event = gameeventmanager->CreateEvent("store_pricesheet_updated");
+		if(event)
 		{
-			gameeventmanager->FireEventClientSide( event );
+			gameeventmanager->FireEventClientSide(event);
 		}
 	}
 
@@ -123,11 +123,11 @@ void CTFBaseStorePanel::PostTransactionCompleted( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFBaseStorePanel::SetTransactionID( uint64 inID )
+void CTFBaseStorePanel::SetTransactionID(uint64 inID)
 {
-	BaseClass::SetTransactionID( inID );
+	BaseClass::SetTransactionID(inID);
 
-	EconUI()->GetBackpackPanel()->SetCurrentTransactionID( inID );
+	EconUI()->GetBackpackPanel()->SetCurrentTransactionID(inID);
 }

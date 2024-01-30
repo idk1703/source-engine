@@ -14,37 +14,28 @@
 #include "mxtk/mxGroupBox.h"
 #include <windows.h>
 
-
-
 class mxGroupBox_i
 {
 public:
 	int dummy;
 };
 
-
-
-mxGroupBox::mxGroupBox (mxWindow *parent, int x, int y, int w, int h, const char *label)
-: mxWidget (parent, x, y, w, h, label)
+mxGroupBox::mxGroupBox(mxWindow *parent, int x, int y, int w, int h, const char *label)
+	: mxWidget(parent, x, y, w, h, label)
 {
-	if (!parent)
+	if(!parent)
 		return;
 
-	HWND hwndParent = (HWND) ((mxWidget *) parent)->getHandle ();
+	HWND hwndParent = (HWND)((mxWidget *)parent)->getHandle();
 
-	void *handle = (void *) CreateWindowEx (0, "BUTTON", label, WS_VISIBLE | WS_CHILD | BS_GROUPBOX,
-				x, y, w, h, hwndParent,
-				(HMENU) NULL, (HINSTANCE) GetModuleHandle (NULL), NULL);
-	
-	SendMessage ((HWND) handle, WM_SETFONT, (WPARAM) (HFONT) GetStockObject (ANSI_VAR_FONT), MAKELPARAM (TRUE, 0));
+	void *handle = (void *)CreateWindowEx(0, "BUTTON", label, WS_VISIBLE | WS_CHILD | BS_GROUPBOX, x, y, w, h,
+										  hwndParent, (HMENU)NULL, (HINSTANCE)GetModuleHandle(NULL), NULL);
 
-	setHandle (handle);
-	setType (MX_GROUPBOX);
-	setParent (parent);
+	SendMessage((HWND)handle, WM_SETFONT, (WPARAM)(HFONT)GetStockObject(ANSI_VAR_FONT), MAKELPARAM(TRUE, 0));
+
+	setHandle(handle);
+	setType(MX_GROUPBOX);
+	setParent(parent);
 }
 
-
-
-mxGroupBox::~mxGroupBox ()
-{
-}
+mxGroupBox::~mxGroupBox() {}

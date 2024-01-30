@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -21,27 +21,25 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CSwitchProps dialog
 
-
-CSwitchProps::CSwitchProps(CWnd* pParent /*=NULL*/)
+CSwitchProps::CSwitchProps(CWnd *pParent /*=NULL*/)
 	: CPropertyPage(CSwitchProps::IDD),
-	m_persistDefall("AllSwitchesDefault"),
-	m_persistDisplayMM2("DefaultMM2"),
-	m_persistDisplayStartupInfo("DefaultStartupInfo"),
-	m_persistPersistPlayerStats("DefaultPersistPlayerStats"),
-	m_persistUseSupportDir("DefaultUseSupportDir"),
-	m_persistElimPlayers("DefaultElimPlayers"),
-	m_persistElimDays("DefaultElimDays"),
-	m_persistPause("DefaultPause"),
-	m_persistPauseSecs("DefaultPauseSecs")
+	  m_persistDefall("AllSwitchesDefault"),
+	  m_persistDisplayMM2("DefaultMM2"),
+	  m_persistDisplayStartupInfo("DefaultStartupInfo"),
+	  m_persistPersistPlayerStats("DefaultPersistPlayerStats"),
+	  m_persistUseSupportDir("DefaultUseSupportDir"),
+	  m_persistElimPlayers("DefaultElimPlayers"),
+	  m_persistElimDays("DefaultElimDays"),
+	  m_persistPause("DefaultPause"),
+	  m_persistPauseSecs("DefaultPauseSecs")
 {
 	//{{AFX_DATA_INIT(CSwitchProps)
 	//}}AFX_DATA_INIT
 	m_psp.dwFlags &= ~PSP_HASHELP;
-	alreadyAcknowledged=false;
+	alreadyAcknowledged = false;
 }
 
-
-void CSwitchProps::DoDataExchange(CDataExchange* pDX)
+void CSwitchProps::DoDataExchange(CDataExchange *pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CSwitchProps)
@@ -59,7 +57,6 @@ void CSwitchProps::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-
 BEGIN_MESSAGE_MAP(CSwitchProps, CDialog)
 	//{{AFX_MSG_MAP(CSwitchProps)
 	ON_BN_CLICKED(IDC_DEFALL, OnDefall)
@@ -67,97 +64,88 @@ BEGIN_MESSAGE_MAP(CSwitchProps, CDialog)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-/////////////////////////////////////////////////////////////////////////////
-// CSwitchProps message handlers
-
+	/////////////////////////////////////////////////////////////////////////////
+	// CSwitchProps message handlers
 
 #include "propsht.h"
 BOOL CSwitchProps::OnKillActive()
 {
-	//call superclass
-	BOOL bRes=this->CPropertyPage::OnKillActive();
-	
-	m_persistDefall=m_Defall.GetCheck();
-	m_persistPause=theApp.pause=m_Pause.GetCheck();
-	
+	// call superclass
+	BOOL bRes = this->CPropertyPage::OnKillActive();
+
+	m_persistDefall = m_Defall.GetCheck();
+	m_persistPause = theApp.pause = m_Pause.GetCheck();
+
 	char buf[100];
-	m_PauseSecs.GetWindowText(buf,100);
-	m_persistPauseSecs=theApp.pauseSecs=atoi(buf);
+	m_PauseSecs.GetWindowText(buf, 100);
+	m_persistPauseSecs = theApp.pauseSecs = atoi(buf);
 
+	m_persistDisplayMM2 = theApp.displayMM2 = m_DisplayMM2.GetCheck() == 1;
+	m_persistPersistPlayerStats = theApp.persistPlayerStats = m_PersistPlayerStats.GetCheck() == 1;
+	m_persistUseSupportDir = theApp.useSupportDir = m_UseSupportDir.GetCheck() == 1;
+	m_persistDisplayStartupInfo = theApp.displayStartupInfo = m_DisplayStartupInfo.GetCheck() == 1;
+	m_persistElimPlayers = theApp.elimOldPlayers = m_ElimOldPlrs.GetCheck() == 1;
 
-	m_persistDisplayMM2=theApp.displayMM2=m_DisplayMM2.GetCheck()==1;
-	m_persistPersistPlayerStats=theApp.persistPlayerStats=m_PersistPlayerStats.GetCheck()==1;
-	m_persistUseSupportDir=theApp.useSupportDir=m_UseSupportDir.GetCheck()==1;
-	m_persistDisplayStartupInfo=theApp.displayStartupInfo=m_DisplayStartupInfo.GetCheck()==1;
-	m_persistElimPlayers=theApp.elimOldPlayers=m_ElimOldPlrs.GetCheck()==1;
-	
-	
-	m_elimDays.GetWindowText(buf,100);
-	m_persistElimDays=theApp.elimDays=atoi(buf);
-	
-	
+	m_elimDays.GetWindowText(buf, 100);
+	m_persistElimDays = theApp.elimDays = atoi(buf);
+
 	return bRes;
-
 }
 
 BOOL CSwitchProps::OnSetActive()
 {
 
-	//call superclass
-	BOOL bRes=this->CPropertyPage::OnSetActive();
+	// call superclass
+	BOOL bRes = this->CPropertyPage::OnSetActive();
 
-	if (theApp.FirstEverTimeRun && !alreadyAcknowledged)
+	if(theApp.FirstEverTimeRun && !alreadyAcknowledged)
 	{
-		alreadyAcknowledged=true;
-		m_persistDefall=1;
+		alreadyAcknowledged = true;
+		m_persistDefall = 1;
 		m_Defall.SetCheck(1);
-		OnDefall();		
+		OnDefall();
 		return bRes;
 	}
-	
-	
+
 	bool temp;
-	
-	temp=m_persistDefall.toBool();
+
+	temp = m_persistDefall.toBool();
 	m_Defall.SetCheck(temp);
 
-	temp=theApp.pause=m_persistPause.toBool();
+	temp = theApp.pause = m_persistPause.toBool();
 	m_Pause.SetCheck(temp);
 
-	theApp.pauseSecs=m_persistPauseSecs.toInt();
+	theApp.pauseSecs = m_persistPauseSecs.toInt();
 	m_PauseSecs.SetWindowText(m_persistPauseSecs.toChars());
 
-	temp=theApp.displayMM2=m_persistDisplayMM2.toBool();
+	temp = theApp.displayMM2 = m_persistDisplayMM2.toBool();
 	m_DisplayMM2.SetCheck(temp);
-	
-	temp=theApp.persistPlayerStats=m_persistPersistPlayerStats.toBool();
+
+	temp = theApp.persistPlayerStats = m_persistPersistPlayerStats.toBool();
 	m_PersistPlayerStats.SetCheck(temp);
-	
-	temp=theApp.useSupportDir=m_persistUseSupportDir.toBool();
+
+	temp = theApp.useSupportDir = m_persistUseSupportDir.toBool();
 	m_UseSupportDir.SetCheck(temp);
 
-	temp=theApp.displayStartupInfo=m_persistDisplayStartupInfo.toBool();
+	temp = theApp.displayStartupInfo = m_persistDisplayStartupInfo.toBool();
 	m_DisplayStartupInfo.SetCheck(temp);
-	
-	temp=theApp.elimOldPlayers=m_persistElimPlayers.toBool();
+
+	temp = theApp.elimOldPlayers = m_persistElimPlayers.toBool();
 	m_ElimOldPlrs.SetCheck(temp);
-	
-	theApp.elimDays=m_persistElimDays.toInt();
+
+	theApp.elimDays = m_persistElimDays.toInt();
 	m_elimDays.SetWindowText(m_persistElimDays.toChars());
 
-	
 	OnDefall();
 	OnPlrpersist();
 	return bRes;
-
 }
 
-
-void CSwitchProps::OnDefall() 
+void CSwitchProps::OnDefall()
 {
-	bool defall=m_Defall.GetCheck()!=0;
-	
-	if (defall)
+	bool defall = m_Defall.GetCheck() != 0;
+
+	if(defall)
 	{
 		m_DisplayMM2.SetCheck(0);
 		m_DisplayStartupInfo.SetCheck(0);
@@ -167,21 +155,20 @@ void CSwitchProps::OnDefall()
 		m_PauseSecs.SetWindowText("2");
 		m_PersistPlayerStats.SetCheck(1);
 		m_UseSupportDir.SetCheck(1);
-
 	}
-		m_DisplayMM2.EnableWindow(!defall);
-		m_DisplayStartupInfo.EnableWindow(!defall);
-		m_elimDays.EnableWindow(!defall);
-		m_ElimOldPlrs.EnableWindow(!defall);
-		m_Pause.EnableWindow(!defall);
-		m_PauseSecs.EnableWindow(!defall);
-		m_PersistPlayerStats.EnableWindow(!defall);
-		m_UseSupportDir.EnableWindow(!defall);
-		m_OnlyHereToBeDisabled.EnableWindow(!defall);
-		m_OnlyHereToBeDisabledToo.EnableWindow(!defall);
+	m_DisplayMM2.EnableWindow(!defall);
+	m_DisplayStartupInfo.EnableWindow(!defall);
+	m_elimDays.EnableWindow(!defall);
+	m_ElimOldPlrs.EnableWindow(!defall);
+	m_Pause.EnableWindow(!defall);
+	m_PauseSecs.EnableWindow(!defall);
+	m_PersistPlayerStats.EnableWindow(!defall);
+	m_UseSupportDir.EnableWindow(!defall);
+	m_OnlyHereToBeDisabled.EnableWindow(!defall);
+	m_OnlyHereToBeDisabledToo.EnableWindow(!defall);
 }
 
-void CSwitchProps::OnPlrpersist() 
+void CSwitchProps::OnPlrpersist()
 {
 	m_ElimOldPlrs.EnableWindow(m_PersistPlayerStats.GetCheck() && !m_Defall.GetCheck());
 	m_elimDays.EnableWindow(m_PersistPlayerStats.GetCheck() && !m_Defall.GetCheck());

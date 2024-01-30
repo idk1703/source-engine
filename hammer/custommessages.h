@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -9,8 +9,7 @@
 #define CUSTOMMESSAGES_H
 #pragma once
 
-
-enum 
+enum
 {
 	CUSTOMMESSAGESSTART = WM_USER + 1,
 
@@ -21,19 +20,18 @@ enum
 	//
 	// Posted by CAngleBox:
 	//
-	ABN_CHANGED,		// The angle in the angle box has changed.
+	ABN_CHANGED, // The angle in the angle box has changed.
 
 	//
 	// Posted by CTextureWindow:
 	//
-	TWN_SELCHANGED,		// The texture window selection has changed.
-	TWN_LBUTTONDBLCLK,	// The user double clicked in the texture window.
+	TWN_SELCHANGED,	   // The texture window selection has changed.
+	TWN_LBUTTONDBLCLK, // The user double clicked in the texture window.
 
 	//
 	// Posted by CLightingPreviewResultsWindow
 	//
 	LPRV_WINDOWCLOSED,
 };
-
 
 #endif // CUSTOMMESSAGES_H

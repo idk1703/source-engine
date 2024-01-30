@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -20,12 +20,10 @@
 class CSocket;
 class IResponse;
 
-
-class CPlayerList: public IResponse
+class CPlayerList : public IResponse
 {
 public:
-
-	CPlayerList(IResponse *target,serveritem_t &server, const char *rconPassword);
+	CPlayerList(IResponse *target, serveritem_t &server, const char *rconPassword);
 	~CPlayerList();
 
 	// send an rcon command to a server
@@ -48,11 +46,9 @@ public:
 
 	void SetPassword(const char *newPass);
 
-
 private:
-
 	serveritem_t m_Server;
-	CSocket	*m_pQuery;	// Game server query socket
+	CSocket *m_pQuery; // Game server query socket
 	CUtlVector<Players_t> m_PlayerList;
 
 	IResponse *m_pResponseTarget;
@@ -63,8 +59,6 @@ private:
 	bool m_bNewPlayerList;
 	bool m_bRconFailed;
 	char m_szRconPassword[100];
-
 };
-
 
 #endif // PLAYERLIST_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -9,7 +9,7 @@
 #include <windows.h>
 #include <stdio.h>
 
-template <class T, int nBlockSize, int nMaxBlocks>
+template<class T, int nBlockSize, int nMaxBlocks>
 class BlockArray
 {
 public:
@@ -22,13 +22,16 @@ public:
 		GetBlocks(0);
 	}
 
-	T& operator[] (int iIndex);
-	
+	T &operator[](int iIndex);
+
 	void SetCount(int nObjects);
-	int GetCount() { return nCount; }
+	int GetCount()
+	{
+		return nCount;
+	}
 
 private:
-	T * Blocks[nMaxBlocks+1];
+	T *Blocks[nMaxBlocks + 1];
 	short nCount;
 	short nBlocks;
 	void GetBlocks(int nNewBlocks);
@@ -44,13 +47,12 @@ BlockArray<T,BlockSize,nMaxBlocks>::BlockArray()
 template <class T, int nBlockSize, int nMaxBlocks>
 BlockArray<T,BlockSize,nMaxBlocks>::~BlockArray()
 {
-	GetBlocks(0);	// free blocks	
+	GetBlocks(0);	// free blocks
 }
 */
 
-template <class T, int nBlockSize, int nMaxBlocks>
-void BlockArray<T,nBlockSize,nMaxBlocks>::
-	GetBlocks(int nNewBlocks)
+template<class T, int nBlockSize, int nMaxBlocks>
+void BlockArray<T, nBlockSize, nMaxBlocks>::GetBlocks(int nNewBlocks)
 {
 	for(int i = nBlocks; i < nNewBlocks; i++)
 	{
@@ -64,9 +66,8 @@ void BlockArray<T,nBlockSize,nMaxBlocks>::
 	nBlocks = nNewBlocks;
 }
 
-template <class T, int nBlockSize, int nMaxBlocks>
-void BlockArray<T,nBlockSize,nMaxBlocks>::
-	SetCount(int nObjects)
+template<class T, int nBlockSize, int nMaxBlocks>
+void BlockArray<T, nBlockSize, nMaxBlocks>::SetCount(int nObjects)
 {
 	if(nObjects == nCount)
 		return;
@@ -78,11 +79,11 @@ void BlockArray<T,nBlockSize,nMaxBlocks>::
 	nCount = nObjects;
 }
 
-template <class T, int nBlockSize, int nMaxBlocks>
-T& BlockArray<T,nBlockSize,nMaxBlocks>::operator[] (int iIndex)
+template<class T, int nBlockSize, int nMaxBlocks>
+T &BlockArray<T, nBlockSize, nMaxBlocks>::operator[](int iIndex)
 {
 	if(iIndex >= nCount)
-		SetCount(iIndex+1);
+		SetCount(iIndex + 1);
 	return Blocks[iIndex / nBlockSize][iIndex % nBlockSize];
 }
 

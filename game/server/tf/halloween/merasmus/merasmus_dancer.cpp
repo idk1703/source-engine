@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -15,31 +15,30 @@
 
 //-----------------------------------------------------------------------------
 
-#define POOF_SOUND					"Halloween.Merasmus_Hiding_Explode"
+#define POOF_SOUND "Halloween.Merasmus_Hiding_Explode"
 
 //-----------------------------------------------------------------------------
 
-LINK_ENTITY_TO_CLASS( merasmus_dancer, CMerasmusDancer );
+LINK_ENTITY_TO_CLASS(merasmus_dancer, CMerasmusDancer);
 
-IMPLEMENT_SERVERCLASS_ST( CMerasmusDancer, DT_MerasmusDancer )
-END_SEND_TABLE()
-
-//-----------------------------------------------------------------------------
-
-#define MERASMUS_MODEL_NAME						"models/bots/merasmus/merasmus.mdl"
+IMPLEMENT_SERVERCLASS_ST(CMerasmusDancer, DT_MerasmusDancer)
+END_SEND_TABLE
+()
 
 //-----------------------------------------------------------------------------
 
-CMerasmusDancer::CMerasmusDancer()
-:	m_bEmitParticleEffect( false )
+#define MERASMUS_MODEL_NAME "models/bots/merasmus/merasmus.mdl"
+
+	//-----------------------------------------------------------------------------
+
+	CMerasmusDancer::CMerasmusDancer()
+	: m_bEmitParticleEffect(false)
 {
 }
 
 //-----------------------------------------------------------------------------
 
-CMerasmusDancer::~CMerasmusDancer()
-{
-}
+CMerasmusDancer::~CMerasmusDancer() {}
 
 //-----------------------------------------------------------------------------
 
@@ -51,25 +50,25 @@ void CMerasmusDancer::Spawn()
 
 	BaseClass::Spawn();
 
-	SetModel( MERASMUS_MODEL_NAME );
+	SetModel(MERASMUS_MODEL_NAME);
 	UseClientSideAnimation();
 
-	SetThink( &CMerasmusDancer::DanceThink );
-	SetNextThink( gpGlobals->curtime );
+	SetThink(&CMerasmusDancer::DanceThink);
+	SetNextThink(gpGlobals->curtime);
 
 	m_bEmitParticleEffect = true;
 }
 
 //-----------------------------------------------------------------------------
 
-void CMerasmusDancer::PlaySequence( const char *pSeqName )
+void CMerasmusDancer::PlaySequence(const char *pSeqName)
 {
-	int iAnimSequence = LookupSequence( pSeqName );	// dance animation
-	if ( iAnimSequence )
+	int iAnimSequence = LookupSequence(pSeqName); // dance animation
+	if(iAnimSequence)
 	{
-		SetSequence( iAnimSequence );
-		SetPlaybackRate( 1.0f );
-		SetCycle( 0 );
+		SetSequence(iAnimSequence);
+		SetPlaybackRate(1.0f);
+		SetCycle(0);
 		ResetSequenceInfo();
 
 		HideStaff();
@@ -78,14 +77,14 @@ void CMerasmusDancer::PlaySequence( const char *pSeqName )
 
 //-----------------------------------------------------------------------------
 
-void CMerasmusDancer::PlayActivity( int iActivity )
+void CMerasmusDancer::PlayActivity(int iActivity)
 {
-	int iAnimSequence = ::SelectWeightedSequence( GetModelPtr(), iActivity, GetSequence() );
-	if ( iAnimSequence )
+	int iAnimSequence = ::SelectWeightedSequence(GetModelPtr(), iActivity, GetSequence());
+	if(iAnimSequence)
 	{
-		SetSequence( iAnimSequence );
-		SetPlaybackRate( 1.0f );
-		SetCycle( 0 );
+		SetSequence(iAnimSequence);
+		SetPlaybackRate(1.0f);
+		SetCycle(0);
 		ResetSequenceInfo();
 
 		HideStaff();
@@ -96,15 +95,15 @@ void CMerasmusDancer::PlayActivity( int iActivity )
 
 void CMerasmusDancer::HideStaff()
 {
-	int nStaffBodyGroup = FindBodygroupByName( "staff" );
-	SetBodygroup( nStaffBodyGroup, 2 );
+	int nStaffBodyGroup = FindBodygroupByName("staff");
+	SetBodygroup(nStaffBodyGroup, 2);
 }
 
 //-----------------------------------------------------------------------------
 
 void CMerasmusDancer::Dance()
 {
-	PlaySequence( "taunt06" );
+	PlaySequence("taunt06");
 }
 
 //-----------------------------------------------------------------------------
@@ -112,7 +111,7 @@ void CMerasmusDancer::Dance()
 void CMerasmusDancer::Vanish()
 {
 	m_bEmitParticleEffect = true;
-	m_DieCountdownTimer.Start( 0.0f );
+	m_DieCountdownTimer.Start(0.0f);
 }
 
 //-----------------------------------------------------------------------------
@@ -120,9 +119,9 @@ void CMerasmusDancer::Vanish()
 void CMerasmusDancer::BlastOff()
 {
 	m_bEmitParticleEffect = true;
-	m_DieCountdownTimer.Start( 0.3f );
+	m_DieCountdownTimer.Start(0.3f);
 
-	PlayActivity( ACT_FLY );
+	PlayActivity(ACT_FLY);
 }
 
 //-----------------------------------------------------------------------------
@@ -131,15 +130,15 @@ void CMerasmusDancer::Precache()
 {
 	BaseClass::Precache();
 
-	int model = PrecacheModel( MERASMUS_MODEL_NAME );
-	PrecacheGibsForModel( model );
-	PrecacheParticleSystem( "merasmus_tp" ); // puff effect
+	int model = PrecacheModel(MERASMUS_MODEL_NAME);
+	PrecacheGibsForModel(model);
+	PrecacheParticleSystem("merasmus_tp"); // puff effect
 
-	PrecacheScriptSound( POOF_SOUND );
+	PrecacheScriptSound(POOF_SOUND);
 
 	// We deliberately allow late precaches here.
 	bool bAllowPrecache = CBaseAnimating::IsPrecacheAllowed();
-	CBaseAnimating::SetAllowPrecache( bAllowPrecache );
+	CBaseAnimating::SetAllowPrecache(bAllowPrecache);
 }
 
 //-----------------------------------------------------------------------------
@@ -153,20 +152,21 @@ bool CMerasmusDancer::ShouldDelete() const
 
 void CMerasmusDancer::DanceThink()
 {
-	// Emit the initial effect here, rather than in Spawn(), since GetAbsOrigin() and GetAbsAngles() don't return useful values then.
-	if ( m_bEmitParticleEffect )
+	// Emit the initial effect here, rather than in Spawn(), since GetAbsOrigin() and GetAbsAngles() don't return useful
+	// values then.
+	if(m_bEmitParticleEffect)
 	{
-		DispatchParticleEffect( "merasmus_tp", GetAbsOrigin(), GetAbsAngles() );
+		DispatchParticleEffect("merasmus_tp", GetAbsOrigin(), GetAbsAngles());
 		m_bEmitParticleEffect = false;
-		EmitSound( POOF_SOUND );
+		EmitSound(POOF_SOUND);
 	}
 
-	if ( ShouldDelete() )
+	if(ShouldDelete())
 	{
-		EmitSound( POOF_SOUND );
-		UTIL_Remove( this );
+		EmitSound(POOF_SOUND);
+		UTIL_Remove(this);
 		return;
 	}
-	
-	SetNextThink( gpGlobals->curtime );
+
+	SetNextThink(gpGlobals->curtime);
 }

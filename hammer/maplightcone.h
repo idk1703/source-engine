@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,27 +10,23 @@
 #pragma once
 #endif
 
-
 #include "MapHelper.h"
 #include "MapFace.h"
 #include "fgdlib/WCKeyValues.h"
 
-
 class CHelperInfo;
 class CRender3D;
-
 
 class CMapLightCone : public CMapHelper
 {
 public:
+	DECLARE_MAPCLASS(CMapLightCone, CMapHelper);
 
-	DECLARE_MAPCLASS(CMapLightCone,CMapHelper);
-	
 	//
 	// Factory for building from a list of string parameters.
 	//
 	static CMapClass *Create(CHelperInfo *pInfo, CMapEntity *pParent);
-	
+
 	//
 	// Construction/destruction:
 	//
@@ -49,17 +45,32 @@ public:
 
 	virtual void PostloadWorld(CMapWorld *pWorld);
 
-	virtual bool IsVisualElement(void) { return(false); } // Only visible when parent entity is selected.
-	virtual bool IsClutter(void) { return true; }
-	virtual bool IsCulledByCordon(const Vector &vecMins, const Vector &vecMaxs) { return false; } // We don't hide unless our parent hides.
+	virtual bool IsVisualElement(void)
+	{
+		return (false);
+	} // Only visible when parent entity is selected.
+	virtual bool IsClutter(void)
+	{
+		return true;
+	}
+	virtual bool IsCulledByCordon(const Vector &vecMins, const Vector &vecMaxs)
+	{
+		return false;
+	} // We don't hide unless our parent hides.
 
 	virtual CMapClass *PrepareSelection(SelectMode_t eSelectMode);
-		
-	const char* GetDescription() { return("Light cone helper"); }
 
-	void OnParentKeyChanged( const char* key, const char* value );
-	bool ShouldRenderLast(void) { return(true); }
-	void GetAngles(QAngle& fAngles);
+	const char *GetDescription()
+	{
+		return ("Light cone helper");
+	}
+
+	void OnParentKeyChanged(const char *key, const char *value);
+	bool ShouldRenderLast(void)
+	{
+		return (true);
+	}
+	void GetAngles(QAngle &fAngles);
 
 	float GetInnerConeAngle(void) const
 	{
@@ -73,11 +84,11 @@ public:
 
 	Vector GetColor(void) const
 	{
-		float multiplier=m_fBrightness/256.0;
+		float multiplier = m_fBrightness / 256.0;
 		Vector ret;
-		ret.x=GammaToLinear(m_LightColor.x/255.0)*multiplier;
-		ret.y=GammaToLinear(m_LightColor.y/255.0)*multiplier;
-		ret.z=GammaToLinear(m_LightColor.z/255.0)*multiplier;
+		ret.x = GammaToLinear(m_LightColor.x / 255.0) * multiplier;
+		ret.y = GammaToLinear(m_LightColor.y / 255.0) * multiplier;
+		ret.z = GammaToLinear(m_LightColor.z / 255.0) * multiplier;
 		return ret;
 	}
 
@@ -85,13 +96,11 @@ public:
 	float m_fLinearAttn;
 	float m_fConstantAttn;
 
-	float m_fFiftyPercentDistance;							// "_fifty_percent_distance" <0 = not
-															// using this mode
-	float m_fZeroPercentDistance;							// "_zero_percent_distance"
-
+	float m_fFiftyPercentDistance; // "_fifty_percent_distance" <0 = not
+								   // using this mode
+	float m_fZeroPercentDistance;  // "_zero_percent_distance"
 
 protected:
-
 	void BuildCone(void);
 	float GetBrightnessAtDist(float fDistance);
 	float GetLightDist(float fBrightness);
@@ -99,7 +108,6 @@ protected:
 
 	Vector m_LightColor;
 	float m_fBrightness;
-
 
 	float m_fInnerConeAngle;
 	float m_fOuterConeAngle;

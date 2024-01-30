@@ -10,58 +10,51 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
+//-----------------------------------------------------------------------------
+// Expose this class to the scene database
+//-----------------------------------------------------------------------------
+IMPLEMENT_ELEMENT_FACTORY(DmeAnimationList, CDmeAnimationList);
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
-//-----------------------------------------------------------------------------
-IMPLEMENT_ELEMENT_FACTORY( DmeAnimationList, CDmeAnimationList );
-
-
-//-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeAnimationList::OnConstruction()
 {
-	m_Animations.Init( this, "animations" );
+	m_Animations.Init(this, "animations");
 }
 
-void CDmeAnimationList::OnDestruction()
-{
-}
-
+void CDmeAnimationList::OnDestruction() {}
 
 //-----------------------------------------------------------------------------
 // Adds, removes animations
 //-----------------------------------------------------------------------------
-int CDmeAnimationList::AddAnimation( CDmeChannelsClip *pAnimation )
+int CDmeAnimationList::AddAnimation(CDmeChannelsClip *pAnimation)
 {
-	return m_Animations.AddToTail( pAnimation );
+	return m_Animations.AddToTail(pAnimation);
 }
 
-void CDmeAnimationList::RemoveAnimation( int nIndex )
+void CDmeAnimationList::RemoveAnimation(int nIndex)
 {
-	m_Animations.Remove( nIndex );
+	m_Animations.Remove(nIndex);
 }
-
 
 //-----------------------------------------------------------------------------
 // Sets the transform
 //-----------------------------------------------------------------------------
-void CDmeAnimationList::SetAnimation( int nIndex, CDmeChannelsClip *pAnimation )
+void CDmeAnimationList::SetAnimation(int nIndex, CDmeChannelsClip *pAnimation)
 {
-	m_Animations.Set( nIndex, pAnimation );
+	m_Animations.Set(nIndex, pAnimation);
 }
-
 
 //-----------------------------------------------------------------------------
 // Finds an animation by name
 //-----------------------------------------------------------------------------
-int CDmeAnimationList::FindAnimation( const char *pAnimName )
+int CDmeAnimationList::FindAnimation(const char *pAnimName)
 {
 	int nCount = m_Animations.Count();
-	for ( int i = 0; i < nCount; ++i )
+	for(int i = 0; i < nCount; ++i)
 	{
-		if ( !Q_stricmp( m_Animations[i]->GetName(), pAnimName ) )
+		if(!Q_stricmp(m_Animations[i]->GetName(), pAnimName))
 			return i;
 	}
 	return -1;

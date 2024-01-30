@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -32,49 +32,58 @@ public:
 	// stats input
 	//
 
-	void BeginRun( void );
+	void BeginRun(void);
 
 	// Advances the next frame for the stats...
-	void NextFrame(); 
+	void NextFrame();
 
-	void BeginFrame( void );
+	void BeginFrame(void);
 
 	// Timed stat gathering
-	void BeginTimedStat( EngineTimedStatId_t stat );
-	void EndTimedStat( EngineTimedStatId_t stat );
+	void BeginTimedStat(EngineTimedStatId_t stat);
+	void EndTimedStat(EngineTimedStatId_t stat);
 
 	// Adds to a timed stat...
-	void AddToTimedStat( EngineTimedStatId_t stat, float time );
+	void AddToTimedStat(EngineTimedStatId_t stat, float time);
 
 	// Slams a timed stat
-	void SetTimedStat( EngineTimedStatId_t stat, float time );
+	void SetTimedStat(EngineTimedStatId_t stat, float time);
 
 	// returns timed stats
-	double TimedStatInFrame( EngineTimedStatId_t stat ) const;
-	double TotalTimedStat( EngineTimedStatId_t stat ) const;
+	double TimedStatInFrame(EngineTimedStatId_t stat) const;
+	double TotalTimedStat(EngineTimedStatId_t stat) const;
 
-	void BeginDrawWorld( void );
-	void EndDrawWorld( void );
+	void BeginDrawWorld(void);
+	void EndDrawWorld(void);
 
-	void EndFrame( void );
-	void EndRun( void );
+	void EndFrame(void);
+	void EndRun(void);
 
-	void PauseStats( bool bPaused );
+	void PauseStats(bool bPaused);
 
 	//
 	// stats output
 	// call these outside of a BeginFrame/EndFrame pair
 	//
 
-	double GetRunTime( void );
-	
-	void SetFrameTime( float flFrameTime ) { m_flFrameTime = flFrameTime; }
-	void SetFPSVariability( float flFPSVariability ) { m_flFPSVariability = flFPSVariability; }
+	double GetRunTime(void);
 
-	int FrameCount() const { return m_totalNumFrames; }
+	void SetFrameTime(float flFrameTime)
+	{
+		m_flFrameTime = flFrameTime;
+	}
+	void SetFPSVariability(float flFPSVariability)
+	{
+		m_flFPSVariability = flFPSVariability;
+	}
+
+	int FrameCount() const
+	{
+		return m_totalNumFrames;
+	}
 
 private:
-	void ComputeFrameTimeStats( void );
+	void ComputeFrameTimeStats(void);
 
 	// How many frames worth of data have we logged?
 	int m_totalNumFrames;
@@ -99,41 +108,39 @@ private:
 	float m_flFPSVariability;
 };
 
-
 //-----------------------------------------------------------------------------
 // Inlined stat gathering methods
 //-----------------------------------------------------------------------------
-inline void CEngineStats::BeginTimedStat( EngineTimedStatId_t stat )
+inline void CEngineStats::BeginTimedStat(EngineTimedStatId_t stat)
 {
-	if (m_InFrame)
+	if(m_InFrame)
 	{
-		m_StatGroup.m_StatStartTime[stat] = 
-			Sys_FloatTime();
+		m_StatGroup.m_StatStartTime[stat] = Sys_FloatTime();
 	}
 }
 
-inline void CEngineStats::EndTimedStat( EngineTimedStatId_t stat )
+inline void CEngineStats::EndTimedStat(EngineTimedStatId_t stat)
 {
-	if (m_InFrame)
+	if(m_InFrame)
 	{
 		float dt = (float)Sys_FloatTime() - (float)(m_StatGroup.m_StatStartTime[stat]);
-		m_StatGroup.m_StatFrameTime[stat] += dt; 
+		m_StatGroup.m_StatFrameTime[stat] += dt;
 	}
 }
 
 // Adds to a timed stat...
-inline void CEngineStats::AddToTimedStat( EngineTimedStatId_t stat, float dt )
+inline void CEngineStats::AddToTimedStat(EngineTimedStatId_t stat, float dt)
 {
-	if (m_InFrame)
+	if(m_InFrame)
 	{
-		m_StatGroup.m_StatFrameTime[stat] += dt; 
+		m_StatGroup.m_StatFrameTime[stat] += dt;
 	}
 }
 
 // Slams a timed stat
-inline void CEngineStats::SetTimedStat( EngineTimedStatId_t stat, float time )
+inline void CEngineStats::SetTimedStat(EngineTimedStatId_t stat, float time)
 {
-	m_StatGroup.m_StatFrameTime[stat] = time; 
+	m_StatGroup.m_StatFrameTime[stat] = time;
 }
 extern CEngineStats g_EngineStats;
 

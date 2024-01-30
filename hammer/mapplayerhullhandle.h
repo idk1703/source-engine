@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,34 +10,30 @@
 #pragma once
 #endif
 
-
 #include "MapHelper.h"
 #include "ToolInterface.h"
-
 
 class CHelperInfo;
 class CRender2D;
 class CRender3D;
 class CMapPlayerHullHandle;
 
-
-#define MAX_KEYNAME_SIZE	32
+#define MAX_KEYNAME_SIZE 32
 
 class CMapPlayerHullHandle : public CMapHelper
 {
 
-friend class CMapAxisHandle;
-friend class CMapSweptPlayerHull;
+	friend class CMapAxisHandle;
+	friend class CMapSweptPlayerHull;
 
 public:
-
-	DECLARE_MAPCLASS(CMapPlayerHullHandle,CMapHelper)
+	DECLARE_MAPCLASS(CMapPlayerHullHandle, CMapHelper)
 
 	//
 	// Factory for building from a list of string parameters.
 	//
 	static CMapClass *Create(CHelperInfo *pInfo, CMapEntity *pParent);
-	void Attach( CMapSweptPlayerHull *pOwner );
+	void Attach(CMapSweptPlayerHull *pOwner);
 
 	inline int GetRadius(void);
 
@@ -66,11 +62,23 @@ public:
 	virtual bool HitTest2D(CMapView2D *pView, const Vector2D &point, HitInfo_t &HitData);
 	virtual CMapClass *PrepareSelection(SelectMode_t eSelectMode);
 
-	virtual bool IsVisualElement(void) { return false; } // Only visible if our parent is selected.
-	virtual bool IsClutter(void) { return true; }
-	virtual bool IsCulledByCordon(const Vector &vecMins, const Vector &vecMaxs) { return false; } // We don't hide unless our parent hides.
-	
-	virtual const char* GetDescription() { return("Player hull handle"); }
+	virtual bool IsVisualElement(void)
+	{
+		return false;
+	} // Only visible if our parent is selected.
+	virtual bool IsClutter(void)
+	{
+		return true;
+	}
+	virtual bool IsCulledByCordon(const Vector &vecMins, const Vector &vecMaxs)
+	{
+		return false;
+	} // We don't hide unless our parent hides.
+
+	virtual const char *GetDescription()
+	{
+		return ("Player hull handle");
+	}
 
 	virtual void OnAddToWorld(CMapWorld *pWorld);
 	virtual void OnParentKeyChanged(const char *key, const char *value);
@@ -79,32 +87,28 @@ public:
 	virtual void PostloadWorld(CMapWorld *pWorld);
 
 protected:
-
 	// Called by the point handle tool while dragging.
 	void UpdateOrigin(const Vector &vecOrigin);
 
 	// Overridden to update our parent's keyvalue when we move.
 	virtual void DoTransform(const VMatrix &matrix);
-	
-private:
 
+private:
 	void Initialize(void);
 	void UpdateParentKey(void);
 
-	CMapSweptPlayerHull *m_pOwner;		// The swept player hull that we belong to.
-	
+	CMapSweptPlayerHull *m_pOwner; // The swept player hull that we belong to.
+
 	char m_szKeyName[MAX_KEYNAME_SIZE];
 	bool m_bDrawLineToParent;
 };
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CMapPlayerHullHandle::GetRadius(void)
 {
 	return HANDLE_RADIUS;
 }
-
 
 #endif // MAPPLAYERHULLHANDLE_H

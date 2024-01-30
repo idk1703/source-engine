@@ -20,7 +20,6 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Constructor. Inits data members.
 //-----------------------------------------------------------------------------
@@ -30,14 +29,10 @@ CToolPickFace::CToolPickFace(void)
 	m_bAllowMultiSelect = false;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Destructor.
 //-----------------------------------------------------------------------------
-CToolPickFace::~CToolPickFace(void)
-{
-}
-
+CToolPickFace::~CToolPickFace(void) {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Enables or disables multiselect for this tool.
@@ -49,14 +44,13 @@ void CToolPickFace::AllowMultiSelect(bool bAllow)
 	//
 	// Shouldn't ever happen, but you never know.
 	//
-	if ((!bAllow) && (m_Faces.Count() > 1))
+	if((!bAllow) && (m_Faces.Count() > 1))
 	{
 		CMapFace *pFace = m_Faces[0].pFace;
 		DeselectAll();
 		SelectFace(pFace);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Called when the tool is deactivated.
@@ -66,7 +60,6 @@ void CToolPickFace::OnDeactivate()
 {
 	DeselectAll();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles the left mouse button up message in the 3D view.
@@ -80,7 +73,6 @@ bool CToolPickFace::OnLMouseUp3D(CMapView3D *pView, UINT nFlags, const Vector2D 
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Handles the left mouse button up message in the 3D view.
 // Input  : pView - The view that the event occurred in.
@@ -93,23 +85,23 @@ bool CToolPickFace::OnLMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2
 	bool bControl = ((nFlags & MK_CONTROL) != 0);
 	bool bShift = ((nFlags & MK_SHIFT) != 0);
 
-	if (!m_bAllowMultiSelect)
+	if(!m_bAllowMultiSelect)
 	{
 		// Ignore shift click for single selection mode.
 		bShift = false;
 	}
 
 	unsigned long uFace;
-	CMapClass *pObject = pView->NearestObjectAt( vPoint, uFace);
-	if (pObject != NULL)
+	CMapClass *pObject = pView->NearestObjectAt(vPoint, uFace);
+	if(pObject != NULL)
 	{
-		CMapSolid *pSolid = dynamic_cast <CMapSolid *>(pObject);
-		if (pSolid != NULL)
+		CMapSolid *pSolid = dynamic_cast<CMapSolid *>(pObject);
+		if(pSolid != NULL)
 		{
 			//
 			// We clicked on a solid.
 			//
-			if (!bShift)
+			if(!bShift)
 			{
 				//
 				// Get the face that we clicked on.
@@ -117,9 +109,9 @@ bool CToolPickFace::OnLMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2
 				CMapFace *pFace = pSolid->GetFace(uFace);
 				Assert(pFace != NULL);
 
-				if (pFace != NULL)
+				if(pFace != NULL)
 				{
-					if ((!m_bAllowMultiSelect) || (!bControl))
+					if((!m_bAllowMultiSelect) || (!bControl))
 					{
 						// Single select.
 						DeselectAll();
@@ -140,27 +132,27 @@ bool CToolPickFace::OnLMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2
 				//
 				bool bAllSelected = true;
 				int nFaceCount = pSolid->GetFaceCount();
-				for (int nFace = 0; nFace < nFaceCount; nFace++)
+				for(int nFace = 0; nFace < nFaceCount; nFace++)
 				{
 					CMapFace *pFace = pSolid->GetFace(nFace);
 					int nIndex = FindFace(pFace);
-					if ((nIndex == -1) || (m_Faces[nIndex].eState != FaceState_Select))
+					if((nIndex == -1) || (m_Faces[nIndex].eState != FaceState_Select))
 					{
 						bAllSelected = false;
 						break;
 					}
 				}
 
-				if (!bControl)
+				if(!bControl)
 				{
 					DeselectAll();
 				}
 
 				nFaceCount = pSolid->GetFaceCount();
-				for (int nFace = 0; nFace < nFaceCount; nFace++)
+				for(int nFace = 0; nFace < nFaceCount; nFace++)
 				{
 					CMapFace *pFace = pSolid->GetFace(nFace);
-					if (bAllSelected)
+					if(bAllSelected)
 					{
 						DeselectFace(pFace);
 					}
@@ -171,7 +163,7 @@ bool CToolPickFace::OnLMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2
 				}
 			}
 
-			if (m_pNotifyTarget)
+			if(m_pNotifyTarget)
 			{
 				m_pNotifyTarget->OnNotifyPickFace(this);
 			}
@@ -180,7 +172,6 @@ bool CToolPickFace::OnLMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles the left mouse button double click message in the 3D view.
@@ -194,7 +185,6 @@ bool CToolPickFace::OnLMouseDblClk3D(CMapView3D *pView, UINT nFlags, const Vecto
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Handles the right mouse button up message in the 3D view.
 // Input  : pView - The view that the event occurred in.
@@ -207,7 +197,6 @@ bool CToolPickFace::OnRMouseUp3D(CMapView3D *pView, UINT nFlags, const Vector2D 
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Handles the mouse button up message in the 3D view.
 // Input  : pView - The view that the event occurred in.
@@ -219,7 +208,6 @@ bool CToolPickFace::OnRMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2
 {
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles the mouse move message in the 3D view.
@@ -234,42 +222,40 @@ bool CToolPickFace::OnMouseMove3D(CMapView3D *pView, UINT nFlags, const Vector2D
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Sets the cursor to the eyedropper cursor.
 //-----------------------------------------------------------------------------
 void CToolPickFace::SetEyedropperCursor(void)
 {
 	static HCURSOR hcurEyedropper = NULL;
-	
-	if (!hcurEyedropper)
+
+	if(!hcurEyedropper)
 	{
 		hcurEyedropper = LoadCursor(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDC_EYEDROPPER));
 	}
-	
+
 	SetCursor(hcurEyedropper);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pFace - 
+// Purpose:
+// Input  : pFace -
 //-----------------------------------------------------------------------------
 void CToolPickFace::CycleSelectFace(CMapFace *pFace)
 {
 	int nIndex = FindFace(pFace);
-	if (nIndex != -1)
+	if(nIndex != -1)
 	{
 		//
 		// The face is in our list, update its selection state.
 		//
-		if (m_Faces[nIndex].eState == FaceState_Partial)
+		if(m_Faces[nIndex].eState == FaceState_Partial)
 		{
 			DeselectFace(nIndex);
 		}
-		else if (m_Faces[nIndex].eState == FaceState_Select)
+		else if(m_Faces[nIndex].eState == FaceState_Select)
 		{
-			if (m_Faces[nIndex].eOriginalState == FaceState_Partial)
+			if(m_Faces[nIndex].eOriginalState == FaceState_Partial)
 			{
 				m_Faces[nIndex].eState = FaceState_Partial;
 				pFace->SetSelectionState(SELECT_MULTI_PARTIAL);
@@ -279,7 +265,7 @@ void CToolPickFace::CycleSelectFace(CMapFace *pFace)
 				DeselectFace(nIndex);
 			}
 		}
-		else if (m_Faces[nIndex].eState == FaceState_None)
+		else if(m_Faces[nIndex].eState == FaceState_None)
 		{
 			m_Faces[nIndex].eState = FaceState_Select;
 			pFace->SetSelectionState(SELECT_NORMAL);
@@ -295,17 +281,16 @@ void CToolPickFace::CycleSelectFace(CMapFace *pFace)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Sets the fully selected and partially selected faces for the picker.
-// Input  : FaceListFull - 
-//			FaceListPartial - 
+// Input  : FaceListFull -
+//			FaceListPartial -
 //-----------------------------------------------------------------------------
 void CToolPickFace::SetSelectedFaces(CMapFaceList &FaceListFull, CMapFaceList &FaceListPartial)
 {
 	m_Faces.RemoveAll();
 
-	for (int i = 0; i < FaceListFull.Count(); i++)
+	for(int i = 0; i < FaceListFull.Count(); i++)
 	{
 		CMapFace *pFace = FaceListFull.Element(i);
 
@@ -313,7 +298,7 @@ void CToolPickFace::SetSelectedFaces(CMapFaceList &FaceListFull, CMapFaceList &F
 		pFace->SetSelectionState(SELECT_NORMAL);
 	}
 
-	for (int i = 0; i < FaceListPartial.Count(); i++)
+	for(int i = 0; i < FaceListPartial.Count(); i++)
 	{
 		CMapFace *pFace = FaceListPartial.Element(i);
 
@@ -322,16 +307,15 @@ void CToolPickFace::SetSelectedFaces(CMapFaceList &FaceListFull, CMapFaceList &F
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pFace - 
+// Purpose:
+// Input  : pFace -
 //-----------------------------------------------------------------------------
 int CToolPickFace::FindFace(CMapFace *pFace)
 {
-	for (int i = 0; i < m_Faces.Count(); i++)
+	for(int i = 0; i < m_Faces.Count(); i++)
 	{
-		if (m_Faces[i].pFace == pFace)
+		if(m_Faces[i].pFace == pFace)
 		{
 			return i;
 		}
@@ -340,22 +324,20 @@ int CToolPickFace::FindFace(CMapFace *pFace)
 	return -1;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Clears the selection set.
 //-----------------------------------------------------------------------------
 void CToolPickFace::DeselectAll(void)
 {
-	for (int i = 0; i < m_Faces.Count(); i++)
+	for(int i = 0; i < m_Faces.Count(); i++)
 	{
 		m_Faces[i].pFace->SetSelectionState(SELECT_NONE);
 	}
 
 	m_Faces.RemoveAll();
 
-	m_pDocument->UpdateAllViews( MAPVIEW_UPDATE_ONLY_3D );
+	m_pDocument->UpdateAllViews(MAPVIEW_UPDATE_ONLY_3D);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Selects the face unconditionally.
@@ -364,7 +346,7 @@ void CToolPickFace::DeselectAll(void)
 void CToolPickFace::SelectFace(CMapFace *pFace)
 {
 	int nIndex = FindFace(pFace);
-	if (nIndex != -1)
+	if(nIndex != -1)
 	{
 		//
 		// The face is in our list, update its selection state.
@@ -382,19 +364,17 @@ void CToolPickFace::SelectFace(CMapFace *pFace)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Deselects the given face.
 //-----------------------------------------------------------------------------
 void CToolPickFace::DeselectFace(CMapFace *pFace)
 {
 	int nIndex = FindFace(pFace);
-	if (nIndex != -1)
+	if(nIndex != -1)
 	{
 		DeselectFace(nIndex);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Removes the face at the given index from the selection set.
@@ -404,9 +384,9 @@ void CToolPickFace::DeselectFace(int nIndex)
 {
 	Assert(m_Faces.IsValidIndex(nIndex));
 
-	if (m_Faces.IsValidIndex(nIndex))
+	if(m_Faces.IsValidIndex(nIndex))
 	{
-		if (m_Faces[nIndex].eOriginalState != FaceState_Partial)
+		if(m_Faces[nIndex].eOriginalState != FaceState_Partial)
 		{
 			m_Faces[nIndex].pFace->SetSelectionState(SELECT_NONE);
 
@@ -426,11 +406,10 @@ void CToolPickFace::DeselectFace(int nIndex)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pFace - 
-//			eState - 
+// Purpose:
+// Input  : pFace -
+//			eState -
 //-----------------------------------------------------------------------------
 void CToolPickFace::AddToList(CMapFace *pFace, FaceState_t eState)
 {
@@ -439,26 +418,24 @@ void CToolPickFace::AddToList(CMapFace *pFace, FaceState_t eState)
 	m_Faces[nIndex].eState = eState;
 	m_Faces[nIndex].eOriginalState = eState;
 
-	m_pDocument->UpdateAllViews( MAPVIEW_UPDATE_ONLY_3D );
+	m_pDocument->UpdateAllViews(MAPVIEW_UPDATE_ONLY_3D);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nIndex - 
+// Purpose:
+// Input  : nIndex -
 //-----------------------------------------------------------------------------
 void CToolPickFace::RemoveFromList(int nIndex)
 {
 	Assert(m_Faces.IsValidIndex(nIndex));
 
-	if (m_Faces.IsValidIndex(nIndex))
+	if(m_Faces.IsValidIndex(nIndex))
 	{
 		m_Faces.FastRemove(nIndex);
 
-		m_pDocument->UpdateAllViews( MAPVIEW_UPDATE_ONLY_3D );
+		m_pDocument->UpdateAllViews(MAPVIEW_UPDATE_ONLY_3D);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns lists of fully selected and partially selected faces.
@@ -468,16 +445,15 @@ void CToolPickFace::GetSelectedFaces(CMapFaceList &FaceListFull, CMapFaceList &F
 	FaceListFull.RemoveAll();
 	FaceListPartial.RemoveAll();
 
-	for (int i = 0; i < m_Faces.Count(); i++)
+	for(int i = 0; i < m_Faces.Count(); i++)
 	{
-		if (m_Faces[i].eState == FaceState_Select)
+		if(m_Faces[i].eState == FaceState_Select)
 		{
 			FaceListFull.AddToTail(m_Faces[i].pFace);
 		}
-		else if (m_Faces[i].eState == FaceState_Partial)
+		else if(m_Faces[i].eState == FaceState_Partial)
 		{
 			FaceListPartial.AddToTail(m_Faces[i].pFace);
 		}
 	}
 }
-

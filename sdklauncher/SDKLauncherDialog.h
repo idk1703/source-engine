@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -27,36 +27,33 @@ class CSDKLauncherDialog : public vgui::Frame
 	typedef vgui::Frame BaseClass;
 
 public:
-	DECLARE_CLASS_SIMPLE( CSDKLauncherDialog, vgui::Frame );
+	DECLARE_CLASS_SIMPLE(CSDKLauncherDialog, vgui::Frame);
 
 	CSDKLauncherDialog(vgui::Panel *parent, const char *name);
 	virtual ~CSDKLauncherDialog();
 
-	void PopulateCurrentGameCombo( bool bSelectLast );
-	void PopulateCurrentEngineCombo( bool bSelectLast );
-	void Launch( int hActiveListItem, bool bForce );
-	void RefreshConfigs( void );
-	void SetCurrentGame( const char* pcCurrentGame );
+	void PopulateCurrentGameCombo(bool bSelectLast);
+	void PopulateCurrentEngineCombo(bool bSelectLast);
+	void Launch(int hActiveListItem, bool bForce);
+	void RefreshConfigs(void);
+	void SetCurrentGame(const char *pcCurrentGame);
 
 protected:
-
 	virtual void OnClose();
-	virtual void OnCommand( const char *command );
+	virtual void OnCommand(const char *command);
 
 private:
-
-	void ResetConfigs( void );
-	bool ParseConfigs( CUtlVector<CGameConfig*> &configs );
+	void ResetConfigs(void);
+	bool ParseConfigs(CUtlVector<CGameConfig *> &configs);
 	void PopulateMediaList();
-	void GetEngineVersion(char* pcEngineVer, int nSize);
+	void GetEngineVersion(char *pcEngineVer, int nSize);
 	void SetEngineVersion(const char *pcEngineVer);
 
-	MESSAGE_FUNC_INT( OnItemDoubleLeftClick, "ItemDoubleLeftClick", itemID );
-	MESSAGE_FUNC_INT( OnItemContextMenu, "ItemContextMenu", itemID );
-	MESSAGE_FUNC_PARAMS( OnTextChanged, "TextChanged", pkv );
+	MESSAGE_FUNC_INT(OnItemDoubleLeftClick, "ItemDoubleLeftClick", itemID);
+	MESSAGE_FUNC_INT(OnItemContextMenu, "ItemContextMenu", itemID);
+	MESSAGE_FUNC_PARAMS(OnTextChanged, "TextChanged", pkv);
 
 private:
-
 	vgui::ImageList *m_pImageList;
 	vgui::SectionedListPanel *m_pMediaList;
 	vgui::Menu *m_pContextMenu;
@@ -64,8 +61,6 @@ private:
 	vgui::ComboBox *m_pCurrentEngineCombo;
 };
 
-
 extern CSDKLauncherDialog *g_pSDKLauncherDialog;
-
 
 #endif // MEDIABROWSERDIALOG_H

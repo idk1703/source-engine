@@ -27,13 +27,13 @@ $Project "vtf"
 	}
 
 	$Folder	"Public Header Files"
-	{	
+	{
 		$File	"s3tc_decode.h"				[$WINDOWS]
 		$File	"$SRCDIR\public\vtf\vtf.h"
 	}
 
 	$Folder	"Header Files"
-	{	
+	{
 		$File	"cvtf.h"
 	}
 

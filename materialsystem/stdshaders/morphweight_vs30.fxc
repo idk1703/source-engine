@@ -21,7 +21,7 @@ VS_OUTPUT main( const VS_INPUT v )
 	projSpace *= 2.0f;
 	projSpace -= 1.0f;
 	projSpace.y *= -1.0f;
-	
+
 	o.vDestCoord = float4( projSpace.x, projSpace.y, 0.0f, 1.0f );
 	o.vMorphWeights	= v.vMorphWeights;
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -72,8 +72,7 @@ public:
 		k_ERunResultAppNotFound = 2,
 		k_ERunResultNotInitialized = 3,
 	};
-	virtual ERunResult RunEngine( int iAppID, const char *gameDir, const char *commandLineParams ) = 0;
-
+	virtual ERunResult RunEngine(int iAppID, const char *gameDir, const char *commandLineParams) = 0;
 };
 
 #define RUNGAMEENGINE_INTERFACE_VERSION "RunGameEngine005"

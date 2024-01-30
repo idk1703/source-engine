@@ -18,87 +18,72 @@ using namespace vgui;
 
 extern ConVar hud_drawhistory_time;
 
-#define HISTORY_PICKUP_GAP				(m_iHistoryGap + 5)
-#define HISTORY_PICKUP_PICK_HEIGHT		(32 + (m_iHistoryGap * 2))
-#define HISTORY_PICKUP_HEIGHT_MAX		(GetTall() - 100)
-#define	ITEM_GUTTER_SIZE				48
+#define HISTORY_PICKUP_GAP		   (m_iHistoryGap + 5)
+#define HISTORY_PICKUP_PICK_HEIGHT (32 + (m_iHistoryGap * 2))
+#define HISTORY_PICKUP_HEIGHT_MAX  (GetTall() - 100)
+#define ITEM_GUTTER_SIZE		   48
 
-
-DECLARE_HUDELEMENT( CHudHistoryResource );
-DECLARE_HUD_MESSAGE( CHudHistoryResource, ItemPickup );
+DECLARE_HUDELEMENT(CHudHistoryResource);
+DECLARE_HUD_MESSAGE(CHudHistoryResource, ItemPickup);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CHudHistoryResource::CHudHistoryResource( const char *pElementName ) :
-	CHudElement( pElementName ), BaseClass( NULL, "HudHistoryResource" )
-{	
+CHudHistoryResource::CHudHistoryResource(const char *pElementName)
+	: CHudElement(pElementName), BaseClass(NULL, "HudHistoryResource")
+{
 	vgui::Panel *pParent = g_pClientMode->GetViewport();
-	SetParent( pParent );
-	SetHiddenBits( HIDEHUD_MISCSTATUS );
+	SetParent(pParent);
+	SetHiddenBits(HIDEHUD_MISCSTATUS);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pScheme - 
+// Purpose:
+// Input  : *pScheme -
 //-----------------------------------------------------------------------------
-void CHudHistoryResource::ApplySchemeSettings( IScheme *pScheme )
+void CHudHistoryResource::ApplySchemeSettings(IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CHudHistoryResource::Init( void )
+void CHudHistoryResource::Init(void)
 {
-	HOOK_HUD_MESSAGE( CHudHistoryResource, ItemPickup );
+	HOOK_HUD_MESSAGE(CHudHistoryResource, ItemPickup);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CHudHistoryResource::Reset( void )
-{
-}
+void CHudHistoryResource::Reset(void) {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Set a new minimum size gap between history icons
 //-----------------------------------------------------------------------------
-void CHudHistoryResource::SetHistoryGap( int iNewHistoryGap )
-{
-}
+void CHudHistoryResource::SetHistoryGap(int iNewHistoryGap) {}
 
-void CHudHistoryResource::AddToHistory( int iType, int iId, int iCount )
-{
-}
+void CHudHistoryResource::AddToHistory(int iType, int iId, int iCount) {}
 
-void CHudHistoryResource::AddToHistory( int iType, const char *szName, int iCount )
-{
-}
+void CHudHistoryResource::AddToHistory(int iType, const char *szName, int iCount) {}
 
-void CHudHistoryResource::AddToHistory( C_BaseCombatWeapon *weapon )
-{
-}
+void CHudHistoryResource::AddToHistory(C_BaseCombatWeapon *weapon) {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Handle an item pickup event from the server
 //-----------------------------------------------------------------------------
-void CHudHistoryResource::MsgFunc_ItemPickup( bf_read &msg )
-{
-}
+void CHudHistoryResource::MsgFunc_ItemPickup(bf_read &msg) {}
 
 //-----------------------------------------------------------------------------
 // Purpose: If there aren't any items in the history, clear it out.
 //-----------------------------------------------------------------------------
-void CHudHistoryResource::CheckClearHistory( void )
-{
-}
+void CHudHistoryResource::CheckClearHistory(void) {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CHudHistoryResource::ShouldDraw( void )
+bool CHudHistoryResource::ShouldDraw(void)
 {
 	return false;
 }
@@ -106,8 +91,4 @@ bool CHudHistoryResource::ShouldDraw( void )
 //-----------------------------------------------------------------------------
 // Purpose: Draw the pickup history
 //-----------------------------------------------------------------------------
-void CHudHistoryResource::Paint( void )
-{
-}
-
-
+void CHudHistoryResource::Paint(void) {}

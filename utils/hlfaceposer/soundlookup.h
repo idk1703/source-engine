@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -14,20 +14,20 @@
 #include "utlvector.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 struct CSoundLookupParams : public CBaseDialogParams
 {
-	char				m_szWaveFile[ 256 ];
+	char m_szWaveFile[256];
 
-	char				m_szPrompt[ 256 ];
+	char m_szPrompt[256];
 
-	CUtlVector< int >	*entryList;
+	CUtlVector<int> *entryList;
 
-	char				m_szSoundName[ 256 ];
+	char m_szSoundName[256];
 };
 
 // Display/create dialog
-int SoundLookup( CSoundLookupParams *params, HWND parent );
+int SoundLookup(CSoundLookupParams *params, HWND parent);
 
 #endif // SOUNDLOOKUP_H

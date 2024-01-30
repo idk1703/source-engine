@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -16,7 +16,6 @@
 #include "vgui_controls/Frame.h"
 #include "datamodel/dmehandle.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
@@ -30,29 +29,28 @@ namespace vgui
 	class PropertySheet;
 	class PropertyPage;
 	class Button;
-}
-
+} // namespace vgui
 
 //-----------------------------------------------------------------------------
 // Dag editor panel
 //-----------------------------------------------------------------------------
 class CDmeCombinationSystemEditorPanel : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CDmeCombinationSystemEditorPanel, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CDmeCombinationSystemEditorPanel, vgui::EditablePanel);
 
 public:
 	// constructor, destructor
-	CDmeCombinationSystemEditorPanel( vgui::Panel *pParent, const char *pName );
+	CDmeCombinationSystemEditorPanel(vgui::Panel *pParent, const char *pName);
 	virtual ~CDmeCombinationSystemEditorPanel();
 
 	// Sets the current scene + animation list
-	void SetDmeElement( CDmeCombinationOperator *pComboSystem );
+	void SetDmeElement(CDmeCombinationOperator *pComboSystem);
 	CDmeCombinationOperator *GetDmeElement();
 
 private:
 	// Called when the selection changes moves
-	MESSAGE_FUNC( OnPageChanged, "PageChanged" );
-    MESSAGE_FUNC_PARAMS( OnDmeElementChanged, "DmeElementChanged", kv );
+	MESSAGE_FUNC(OnPageChanged, "PageChanged");
+	MESSAGE_FUNC_PARAMS(OnDmeElementChanged, "DmeElementChanged", kv);
 
 	vgui::PropertySheet *m_pEditorSheet;
 	vgui::PropertyPage *m_pControlsPage;
@@ -63,31 +61,29 @@ private:
 	CDmeElementPanel *m_pPropertiesPanel;
 };
 
-
 //-----------------------------------------------------------------------------
 // Frame for combination system
 //-----------------------------------------------------------------------------
 class CDmeCombinationSystemEditorFrame : public vgui::Frame
 {
-	DECLARE_CLASS_SIMPLE( CDmeCombinationSystemEditorFrame, vgui::Frame );
+	DECLARE_CLASS_SIMPLE(CDmeCombinationSystemEditorFrame, vgui::Frame);
 
 public:
-	CDmeCombinationSystemEditorFrame( vgui::Panel *pParent, const char *pTitle );
+	CDmeCombinationSystemEditorFrame(vgui::Panel *pParent, const char *pTitle);
 	~CDmeCombinationSystemEditorFrame();
 
 	// Sets the current scene + animation list
-	void SetCombinationOperator( CDmeCombinationOperator *pComboSystem );
+	void SetCombinationOperator(CDmeCombinationOperator *pComboSystem);
 
 	// Inherited from Frame
-	virtual void OnCommand( const char *pCommand );
+	virtual void OnCommand(const char *pCommand);
 
 private:
-    MESSAGE_FUNC( OnDmeElementChanged, "DmeElementChanged" );
+	MESSAGE_FUNC(OnDmeElementChanged, "DmeElementChanged");
 
 	CDmeCombinationSystemEditorPanel *m_pEditor;
 	vgui::Button *m_pOpenButton;
 	vgui::Button *m_pCancelButton;
 };
-
 
 #endif // DMECOMBINATIONSYSTEMEDITORPANEL_H

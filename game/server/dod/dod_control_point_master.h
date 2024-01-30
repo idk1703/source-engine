@@ -23,73 +23,85 @@
 // Control Point Master
 // ====================
 // One ControlPointMaster is spawned per level. Shortly after spawning it detects all the Control
-// points in the map and puts them into the m_ControlPoints. From there it detects the state 
-// where all points are captured and resets them if necessary It gives points every time interval to 
+// points in the map and puts them into the m_ControlPoints. From there it detects the state
+// where all points are captured and resets them if necessary It gives points every time interval to
 // the owners of the points
 // ====================
 
-#define TIMER_CONTEXT	"TIMER_CONTEXT"
-#define FLAGS_CONTEXT	"FLAGS_CONTEXT"
+#define TIMER_CONTEXT "TIMER_CONTEXT"
+#define FLAGS_CONTEXT "FLAGS_CONTEXT"
 
 class CControlPointMaster : public CBaseEntity
 {
 public:
-	DECLARE_CLASS( CControlPointMaster, CBaseEntity );
+	DECLARE_CLASS(CControlPointMaster, CBaseEntity);
 
 	CControlPointMaster();
-	
-	virtual void Spawn( void );	
-	virtual bool KeyValue( const char *szKeyName, const char *szValue );
 
-	int GetNumPoints( void );
-	int GetPointOwner( int point ); 
-	void Reset( void );
+	virtual void Spawn(void);
+	virtual bool KeyValue(const char *szKeyName, const char *szValue);
 
-	void RoundRespawn( void );
+	int GetNumPoints(void);
+	int GetPointOwner(int point);
+	void Reset(void);
 
-	int CountAdvantageFlags( int team );
+	void RoundRespawn(void);
 
-	bool IsActive( void ) { return ( m_bDisabled == false ); }
+	int CountAdvantageFlags(int team);
 
-	bool IsUsingRoundTimer( void ) { return m_bUseTimer; }
-	void GetTimerData( int &iTimerSeconds, int &iTimerWinTeam );
+	bool IsActive(void)
+	{
+		return (m_bDisabled == false);
+	}
 
-	void FireTeamWinOutput( int iWinningTeam );
+	bool IsUsingRoundTimer(void)
+	{
+		return m_bUseTimer;
+	}
+	void GetTimerData(int &iTimerSeconds, int &iTimerWinTeam);
 
-	void CheckWinConditions( void );
+	void FireTeamWinOutput(int iWinningTeam);
 
-	bool WouldNewCPOwnerWinGame( CControlPoint *pPoint, int iNewOwner );
+	void CheckWinConditions(void);
 
-	CControlPoint *GetCPByIndex( int index );
+	bool WouldNewCPOwnerWinGame(CControlPoint *pPoint, int iNewOwner);
+
+	CControlPoint *GetCPByIndex(int index);
 
 private:
-	void BecomeActive( void );
-	void BecomeInactive( void );
-	
-	void EXPORT CPMThink( void );
+	void BecomeActive(void);
+	void BecomeInactive(void);
 
-	int TeamOwnsAllPoints( CControlPoint *pOverridePoint = NULL, int iOverrideNewTeam = TEAM_UNASSIGNED );
+	void EXPORT CPMThink(void);
 
-	void TeamWins( int team );
+	int TeamOwnsAllPoints(CControlPoint *pOverridePoint = NULL, int iOverrideNewTeam = TEAM_UNASSIGNED);
 
-	bool FindControlPoints( void );	//look in the map to find active control points
+	void TeamWins(int team);
 
-	void InputAddTimerSeconds( inputdata_t &inputdata );
+	bool FindControlPoints(void); // look in the map to find active control points
 
-	CUtlMap<int, CControlPoint *>	m_ControlPoints;
+	void InputAddTimerSeconds(inputdata_t &inputdata);
 
-	bool m_bFoundPoints;		//true when the control points have been found and the array is initialized
-	
-	float m_fGivePointsTime;	//the time at which we give points for holding control points
+	CUtlMap<int, CControlPoint *> m_ControlPoints;
+
+	bool m_bFoundPoints; // true when the control points have been found and the array is initialized
+
+	float m_fGivePointsTime; // the time at which we give points for holding control points
 
 	DECLARE_DATADESC();
 
-	bool m_bDisabled;				//is this CPM active or not
-	void InputEnable( inputdata_t &inputdata ) { BecomeInactive(); }	
-	void InputDisable( inputdata_t &inputdata ) { BecomeActive(); }
+	bool m_bDisabled; // is this CPM active or not
+	void InputEnable(inputdata_t &inputdata)
+	{
+		BecomeInactive();
+	}
+	void InputDisable(inputdata_t &inputdata)
+	{
+		BecomeActive();
+	}
 
-	void InputRoundInit( inputdata_t &inputdata );
-	void InputRoundStart( inputdata_t &inputdata );
+	void InputRoundInit(inputdata_t &inputdata);
+	void InputRoundStart(inputdata_t &inputdata);
 
 	bool m_bUseTimer;
 	int m_iTimerTeam;
@@ -102,121 +114,120 @@ private:
 class CDODCustomScoring : public CBaseEntity, public CGameEventListener
 {
 public:
-	DECLARE_CLASS( CDODCustomScoring, CBaseEntity );
+	DECLARE_CLASS(CDODCustomScoring, CBaseEntity);
 
 	DECLARE_DATADESC();
 
 	CDODCustomScoring()
 	{
-		ListenForGameEvent( "dod_round_win" );
-		ListenForGameEvent( "dod_round_active" );
+		ListenForGameEvent("dod_round_win");
+		ListenForGameEvent("dod_round_active");
 	}
 
-	virtual void Spawn( void )
+	virtual void Spawn(void)
 	{
-		Assert( m_iPointTeam == TEAM_ALLIES || m_iPointTeam == TEAM_AXIS );
-    }
+		Assert(m_iPointTeam == TEAM_ALLIES || m_iPointTeam == TEAM_AXIS);
+	}
 
-	virtual void FireGameEvent( IGameEvent *event )
+	virtual void FireGameEvent(IGameEvent *event)
 	{
 		const char *eventName = event->GetName();
 
-		if ( !Q_strcmp( eventName, "dod_round_win" ) )
+		if(!Q_strcmp(eventName, "dod_round_win"))
 		{
-			int team = event->GetInt( "team" );
-			if ( team == m_iPointTeam )
+			int team = event->GetInt("team");
+			if(team == m_iPointTeam)
 			{
 				GiveRemainingPoints();
 			}
 
 			// stop giving points, round is over
-			SetThink( NULL );	// think no more!
+			SetThink(NULL); // think no more!
 		}
-		else if ( !Q_strcmp( eventName, "dod_round_active" ) )
+		else if(!Q_strcmp(eventName, "dod_round_active"))
 		{
 			StartGivingPoints();
 		}
 	}
 
 	// Needs to be activated by gamerules
-	void StartGivingPoints( void )
+	void StartGivingPoints(void)
 	{
-		if ( m_iNumPointGives <= 0 )
+		if(m_iNumPointGives <= 0)
 			return;
 
-		if ( m_iPointsToGive <= 0 )
+		if(m_iPointsToGive <= 0)
 			return;
 
 		m_iRemainingPoints = m_iNumPointGives * m_iPointsToGive;
 
-		SetThink( &CDODCustomScoring::PointsThink );
-		SetNextThink( gpGlobals->curtime + m_iTickLength );
+		SetThink(&CDODCustomScoring::PointsThink);
+		SetNextThink(gpGlobals->curtime + m_iTickLength);
 	}
 
 	// Give this team all the points that they would have gotten had we continued
-	void GiveRemainingPoints( void )
+	void GiveRemainingPoints(void)
 	{
-		GivePoints( m_iRemainingPoints );
+		GivePoints(m_iRemainingPoints);
 	}
 
 	// input to give tick points to our team
-	void InputGivePoints( inputdata_t &inputdata )
+	void InputGivePoints(inputdata_t &inputdata)
 	{
 		int iPoints = inputdata.value.Int();
-		GetGlobalTeam(m_iPointTeam)->AddScore( MAX( iPoints, 0 ) );
+		GetGlobalTeam(m_iPointTeam)->AddScore(MAX(iPoints, 0));
 	}
 
 	// accessor for our point team
-	int GetPointTeam( void )
+	int GetPointTeam(void)
 	{
 		return m_iPointTeam;
 	}
 
 private:
-
-	void GivePoints( int points )
+	void GivePoints(int points)
 	{
-		GetGlobalTeam(m_iPointTeam)->AddScore( MAX( points, 0 ) );
+		GetGlobalTeam(m_iPointTeam)->AddScore(MAX(points, 0));
 		m_iRemainingPoints -= points;
 
-		if ( points > 0 )
+		if(points > 0)
 		{
-			if ( points == 1 )
+			if(points == 1)
 			{
-				UTIL_ClientPrintAll( HUD_PRINTTALK, "#game_score_allie_point" );
+				UTIL_ClientPrintAll(HUD_PRINTTALK, "#game_score_allie_point");
 			}
 			else
 			{
 				char buf[8];
-				Q_snprintf( buf, sizeof(buf), "%d", points );
-				UTIL_ClientPrintAll( HUD_PRINTTALK, "#game_score_allie_points", buf );
+				Q_snprintf(buf, sizeof(buf), "%d", points);
+				UTIL_ClientPrintAll(HUD_PRINTTALK, "#game_score_allie_points", buf);
 			}
 
-			IGameEvent *event = gameeventmanager->CreateEvent( "dod_tick_points" );
+			IGameEvent *event = gameeventmanager->CreateEvent("dod_tick_points");
 
-			if ( event )
+			if(event)
 			{
-				event->SetInt( "team", m_iPointTeam );
-				event->SetInt( "score", points );
-				event->SetInt( "totalscore", GetGlobalTeam(m_iPointTeam)->GetScore() );
+				event->SetInt("team", m_iPointTeam);
+				event->SetInt("score", points);
+				event->SetInt("totalscore", GetGlobalTeam(m_iPointTeam)->GetScore());
 
-				gameeventmanager->FireEvent( event );
+				gameeventmanager->FireEvent(event);
 			}
-		}		
+		}
 	}
 
-	void PointsThink( void )
+	void PointsThink(void)
 	{
-		GivePoints( m_iPointsToGive );
+		GivePoints(m_iPointsToGive);
 
-		SetNextThink( gpGlobals->curtime + m_iTickLength );	
+		SetNextThink(gpGlobals->curtime + m_iTickLength);
 	}
 
-	int m_iPointTeam;			// team to give points to
-	int m_iPointsToGive;		// points to give per tick
-	int m_iRemainingPoints;		// total number of points we have left to give
-	int m_iTickLength;			// time between point gives
-	int m_iNumPointGives;		// number of times we're planning on giving out points
+	int m_iPointTeam;		// team to give points to
+	int m_iPointsToGive;	// points to give per tick
+	int m_iRemainingPoints; // total number of points we have left to give
+	int m_iTickLength;		// time between point gives
+	int m_iNumPointGives;	// number of times we're planning on giving out points
 };
 
-#endif //DOD_CONTROL_POINT_MASTER_H
+#endif // DOD_CONTROL_POINT_MASTER_H

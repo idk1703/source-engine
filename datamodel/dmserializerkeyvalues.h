@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -11,17 +11,14 @@
 #pragma once
 #endif
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
 class IDataModel;
 
-
 //-----------------------------------------------------------------------------
 // Installation methods for standard serializers
 //-----------------------------------------------------------------------------
-void InstallKeyValuesSerializer( IDataModel *pFactory );
-
+void InstallKeyValuesSerializer(IDataModel *pFactory);
 
 #endif // DMSERIALIZER_H

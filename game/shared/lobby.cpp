@@ -1,9 +1,8 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
-
 
 #include "cbase.h"
 #include "gcsdk/gcsdk_auto.h"
@@ -14,10 +13,10 @@
 using namespace GCSDK;
 
 #ifdef GC
-void CLobbyInvite::YldInitFromPlayerGroup( GCSDK::IPlayerGroup *pPlayerGroup )
+void CLobbyInvite::YldInitFromPlayerGroup(GCSDK::IPlayerGroup *pPlayerGroup)
 {
-	SetGroupID( pPlayerGroup->GetGroupID() );
-	SetSenderID( pPlayerGroup->GetLeader().ConvertToUint64() );
-	SetSenderName( GGCBase()->YieldingGetPersonaName( pPlayerGroup->GetLeader(), "Unknown Player" ) );
+	SetGroupID(pPlayerGroup->GetGroupID());
+	SetSenderID(pPlayerGroup->GetLeader().ConvertToUint64());
+	SetSenderName(GGCBase()->YieldingGetPersonaName(pPlayerGroup->GetLeader(), "Unknown Player"));
 }
 #endif

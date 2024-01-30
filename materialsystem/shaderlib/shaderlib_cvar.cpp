@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -16,15 +16,15 @@
 class CShaderLibConVarAccessor : public IConCommandBaseAccessor
 {
 public:
-	virtual bool	RegisterConCommandBase( ConCommandBase *pCommand )
+	virtual bool RegisterConCommandBase(ConCommandBase *pCommand)
 	{
 		// Link to engine's list instead
-		g_pCVar->RegisterConCommand( pCommand );
+		g_pCVar->RegisterConCommand(pCommand);
 
-		char const *pValue = g_pCVar->GetCommandLineValue( pCommand->GetName() );
-		if( pValue && !pCommand->IsCommand() )
+		char const *pValue = g_pCVar->GetCommandLineValue(pCommand->GetName());
+		if(pValue && !pCommand->IsCommand())
 		{
-			( ( ConVar * )pCommand )->SetValue( pValue );
+			((ConVar *)pCommand)->SetValue(pValue);
 		}
 		return true;
 	}
@@ -32,11 +32,10 @@ public:
 
 CShaderLibConVarAccessor g_ConVarAccessor;
 
-
-void InitShaderLibCVars( CreateInterfaceFn cvarFactory )
+void InitShaderLibCVars(CreateInterfaceFn cvarFactory)
 {
-	if ( g_pCVar )
+	if(g_pCVar)
 	{
-		ConVar_Register( FCVAR_MATERIAL_SYSTEM_THREAD, &g_ConVarAccessor );
+		ConVar_Register(FCVAR_MATERIAL_SYSTEM_THREAD, &g_ConVarAccessor);
 	}
 }

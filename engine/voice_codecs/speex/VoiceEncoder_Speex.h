@@ -1,6 +1,6 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -9,7 +9,7 @@
 /* This product contains Speex software.  The license terms of the Speex
 software, distributed with this product, are as follows:
 
-© 2002-2003, Jean-Marc Valin/Xiph.Org Foundation
+ï¿½ 2002-2003, Jean-Marc Valin/Xiph.Org Foundation
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -62,15 +62,14 @@ public:
 	bool ResetState();
 
 private:
+	bool InitStates();
+	void TermStates();
 
-	bool	InitStates();
-	void	TermStates();
+	int m_Quality;		  // voice codec quality ( 0,2,4,6,8 )
+	void *m_EncoderState; // speex internal encoder state
+	void *m_DecoderState; // speex internal decoder state
 
-	int			m_Quality;		// voice codec quality ( 0,2,4,6,8 )
-	void *		m_EncoderState;	// speex internal encoder state
-	void *		m_DecoderState; // speex internal decoder state
-
-	SpeexBits	m_Bits;	// helpful bit buffer structure
+	SpeexBits m_Bits; // helpful bit buffer structure
 };
 
 #endif // !defined(AFX_FRAMEENCODER_SPEEX_H__C160B146_3782_4D91_A022_0B852C57BAB9__INCLUDED_)

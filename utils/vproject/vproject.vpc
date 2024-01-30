@@ -21,7 +21,7 @@ $Project "VProject"
 	$Folder	"Header Files"
 	{
 		$File	"sys_utils.h"
-		$File	"vproject.h"		
+		$File	"vproject.h"
 	}
 
 	$Folder "Resources"

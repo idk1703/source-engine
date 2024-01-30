@@ -25,7 +25,7 @@ $Project "Mksheet"
 		-$File	"$SRCDIR\public\tier0\memoverride.cpp"
 		$File	"mksheet.cpp"
 	}
-	
+
 	$Folder	"Link Libraries"
 	{
 		$Lib bitmap

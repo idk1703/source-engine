@@ -9,35 +9,32 @@
 #include "eyeball_boss_notice.h"
 #include "eyeball_boss_approach_target.h"
 
-
 //---------------------------------------------------------------------------------------------
-ActionResult< CEyeballBoss > CEyeballBossNotice::OnStart( CEyeballBoss *me, Action< CEyeballBoss > *priorAction )
+ActionResult<CEyeballBoss> CEyeballBossNotice::OnStart(CEyeballBoss *me, Action<CEyeballBoss> *priorAction)
 {
-	m_timer.Start( 0.25f );
+	m_timer.Start(0.25f);
 
-	me->EmitSound( "Halloween.EyeballBossBecomeAlert" );
+	me->EmitSound("Halloween.EyeballBossBecomeAlert");
 
 	return Continue();
 }
 
-
 //---------------------------------------------------------------------------------------------
-ActionResult< CEyeballBoss > CEyeballBossNotice::Update( CEyeballBoss *me, float interval )
+ActionResult<CEyeballBoss> CEyeballBossNotice::Update(CEyeballBoss *me, float interval)
 {
 	CBaseEntity *victim = me->GetVictim();
 
-	if ( !victim )
+	if(!victim)
 	{
-		return Done( "Victim gone" );
+		return Done("Victim gone");
 	}
 
-	me->GetBodyInterface()->AimHeadTowards( victim );
+	me->GetBodyInterface()->AimHeadTowards(victim);
 
-	if ( m_timer.IsElapsed() )
+	if(m_timer.IsElapsed())
 	{
-		return ChangeTo( new CEyeballBossApproachTarget, "Chasing victim" );
+		return ChangeTo(new CEyeballBossApproachTarget, "Chasing victim");
 	}
 
 	return Continue();
 }
-

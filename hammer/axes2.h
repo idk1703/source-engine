@@ -18,7 +18,7 @@
 class Axes2
 {
 public:
-	Axes2() 
+	Axes2()
 	{
 		bInvertHorz = bInvertVert = false;
 		axHorz = AXIS_X;
@@ -29,12 +29,12 @@ public:
 	void SetAxes(int h, bool bInvertH, int v, bool bInvertV);
 	void SetAxes(Axes2 &axes);
 
-	bool bInvertHorz;	// Whether the horizontal axis is inverted.
-	bool bInvertVert;	// Whether the vertical axis is inverted.
+	bool bInvertHorz; // Whether the horizontal axis is inverted.
+	bool bInvertVert; // Whether the vertical axis is inverted.
 
-	int axHorz;			// Index of the horizontal axis (x=0, y=1, z=2)
-	int axVert;			// Index of the vertical axis (x=0, y=1, z=2)
-	int axThird;		// Index of the "out of the screen" axis (x=0, y=1, z=2)
+	int axHorz;	 // Index of the horizontal axis (x=0, y=1, z=2)
+	int axVert;	 // Index of the vertical axis (x=0, y=1, z=2)
+	int axThird; // Index of the "out of the screen" axis (x=0, y=1, z=2)
 };
 
 #endif // AXES2_H

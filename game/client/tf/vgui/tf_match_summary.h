@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -66,144 +66,160 @@ enum matchsummary_columns_t
 class TFSectionedListPanel : public vgui::SectionedListPanel
 {
 private:
-	DECLARE_CLASS_SIMPLE( TFSectionedListPanel, vgui::SectionedListPanel );
+	DECLARE_CLASS_SIMPLE(TFSectionedListPanel, vgui::SectionedListPanel);
 
 public:
-	TFSectionedListPanel( Panel *parent, const char *panelName ) : BaseClass( parent, panelName ){}
-	virtual ~TFSectionedListPanel(){}
+	TFSectionedListPanel(Panel *parent, const char *panelName) : BaseClass(parent, panelName) {}
+	virtual ~TFSectionedListPanel() {}
 
-	CPanelAnimationVarAliasType( int, m_iMedalWidth,		"medal_width",		"s.05",	"proportional_width" );
-	CPanelAnimationVarAliasType( int, m_iAvatarWidth,		"avatar_width",		"s.1",	"proportional_width" );		// Avatar width doesn't scale with resolution
-	CPanelAnimationVarAliasType( int, m_iSpacerWidth,		"spacer",			"s.1",	"proportional_width" );
-	CPanelAnimationVarAliasType( int, m_iNameWidth,			"name_width",		"s.1",	"proportional_width" );
-	CPanelAnimationVarAliasType( int, m_iClassWidth,		"class_width",		"s.1",	"proportional_width" );
-	CPanelAnimationVarAliasType( int, m_iAwardWidth,		"award_width",		"s.1",	"proportional_width" );
-	CPanelAnimationVarAliasType( int, m_iStatsWidth,		"stats_width",		"s.1",	"proportional_width" );
-	CPanelAnimationVarAliasType( int, m_iHorizFillInset,	"horiz_inset",		"5",	"proportional_int" );
+	CPanelAnimationVarAliasType(int, m_iMedalWidth, "medal_width", "s.05", "proportional_width");
+	CPanelAnimationVarAliasType(int, m_iAvatarWidth, "avatar_width", "s.1",
+								"proportional_width"); // Avatar width doesn't scale with resolution
+	CPanelAnimationVarAliasType(int, m_iSpacerWidth, "spacer", "s.1", "proportional_width");
+	CPanelAnimationVarAliasType(int, m_iNameWidth, "name_width", "s.1", "proportional_width");
+	CPanelAnimationVarAliasType(int, m_iClassWidth, "class_width", "s.1", "proportional_width");
+	CPanelAnimationVarAliasType(int, m_iAwardWidth, "award_width", "s.1", "proportional_width");
+	CPanelAnimationVarAliasType(int, m_iStatsWidth, "stats_width", "s.1", "proportional_width");
+	CPanelAnimationVarAliasType(int, m_iHorizFillInset, "horiz_inset", "5", "proportional_int");
 };
-																				   
+
 class CTFMatchSummary : public CHudElement, public vgui::EditablePanel
 {
 private:
-	DECLARE_CLASS_SIMPLE( CTFMatchSummary, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CTFMatchSummary, vgui::EditablePanel);
 
 public:
-	CTFMatchSummary( const char *pElementName );
+	CTFMatchSummary(const char *pElementName);
 	virtual ~CTFMatchSummary();
 
-	virtual bool ShouldDraw( void ) OVERRIDE;
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
+	virtual bool ShouldDraw(void) OVERRIDE;
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme) OVERRIDE;
 	virtual void PerformLayout() OVERRIDE;
-	virtual void SetVisible( bool state ) OVERRIDE;
+	virtual void SetVisible(bool state) OVERRIDE;
 	virtual void OnTick() OVERRIDE;
-	virtual void LevelInit( void ) OVERRIDE;
-	virtual void LevelShutdown( void ) OVERRIDE;
+	virtual void LevelInit(void) OVERRIDE;
+	virtual void LevelShutdown(void) OVERRIDE;
 
-	virtual GameActionSet_t GetPreferredActionSet() OVERRIDE { return GAME_ACTION_SET_IN_GAME_HUD; }
-	virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
+	virtual GameActionSet_t GetPreferredActionSet() OVERRIDE
+	{
+		return GAME_ACTION_SET_IN_GAME_HUD;
+	}
+	virtual void FireGameEvent(IGameEvent *event) OVERRIDE;
 
-	bool ShowPerformanceMedals( void );
-	
+	bool ShowPerformanceMedals(void);
+
 private:
-
-	void Update( void );
-	void InitPlayerList( TFSectionedListPanel *pPlayerList, int nTeam );
-	static bool TFPlayerSortFunc( vgui::SectionedListPanel *list, int itemID1, int itemID2 );
+	void Update(void);
+	void InitPlayerList(TFSectionedListPanel *pPlayerList, int nTeam);
+	static bool TFPlayerSortFunc(vgui::SectionedListPanel *list, int itemID1, int itemID2);
 	void UpdateTeamInfo();
 	void UpdatePlayerList();
-	void UpdatePlayerAvatar( int playerIndex, KeyValues *kv );
+	void UpdatePlayerAvatar(int playerIndex, KeyValues *kv);
 	void RecalculateMedalCounts();
-	void UpdateBadgePanels( CUtlVector<CTFBadgePanel*> &pBadgePanels, TFSectionedListPanel *pPlayerList );
+	void UpdateBadgePanels(CUtlVector<CTFBadgePanel *> &pBadgePanels, TFSectionedListPanel *pPlayerList);
 
-	void InternalUpdateMedalCountForType( int iTeam, StatMedal_t eMedal );
-	matchsummary_columns_t InternalAddMedalKeyValues( int iIndex, StatMedal_t eMedal, KeyValues *pKeyValues, int nTotalMedals = -1 );
-	void FireMedalEffects( Panel *pPanel, int nPanelXPos, int nPanelYPos, int nPanelWide, int nPanelTall, StatMedal_t eParticleMedal );
+	void InternalUpdateMedalCountForType(int iTeam, StatMedal_t eMedal);
+	matchsummary_columns_t InternalAddMedalKeyValues(int iIndex, StatMedal_t eMedal, KeyValues *pKeyValues,
+													 int nTotalMedals = -1);
+	void FireMedalEffects(Panel *pPanel, int nPanelXPos, int nPanelYPos, int nPanelWide, int nPanelTall,
+						  StatMedal_t eParticleMedal);
 
 private:
 	EditablePanel *m_pTeamScoresPanel;
 
-	int		m_iImageClass[SCOREBOARD_CLASS_ICONS];
-	int		m_iImageClassAlt[SCOREBOARD_CLASS_ICONS];
-	int		m_iImageMedals[StatMedal_Max];
+	int m_iImageClass[SCOREBOARD_CLASS_ICONS];
+	int m_iImageClassAlt[SCOREBOARD_CLASS_ICONS];
+	int m_iImageMedals[StatMedal_Max];
 
-	CDrawingPanel				*m_pDrawingPanel;
+	CDrawingPanel *m_pDrawingPanel;
 
-	vgui::EditablePanel			*m_pBlueTeamPanel;
-	vgui::EditablePanel			*m_pRedTeamPanel;
+	vgui::EditablePanel *m_pBlueTeamPanel;
+	vgui::EditablePanel *m_pRedTeamPanel;
 
-	vgui::EditablePanel			*m_pMainStatsContainer;
-	vgui::EditablePanel			*m_pPlayerListBlueParent;
-	TFSectionedListPanel		*m_pPlayerListBlue;
-	vgui::EditablePanel			*m_pPlayerListRedParent;
-	TFSectionedListPanel		*m_pPlayerListRed;
-	CExLabel					*m_pBlueTeamScore;
-	CExLabel					*m_pBlueTeamScoreDropshadow;
-	EditablePanel				*m_pBlueTeamScoreBG;
-	EditablePanel				*m_pBluePlayerListBG;
-	CExLabel					*m_pRedTeamScore;
-	CExLabel					*m_pRedTeamScoreDropshadow;
-	EditablePanel				*m_pRedTeamScoreBG;
-	EditablePanel				*m_pRedPlayerListBG;
-	EditablePanel				*m_pBlueMedalsPanel;
-	EditablePanel				*m_pRedMedalsPanel;
-	vgui::ImagePanel			*m_pRedTeamImage;
-	vgui::ImagePanel			*m_pBlueTeamImage;
-	CAvatarImagePanel			*m_pRedLeaderAvatarImage;
-	CAvatarImagePanel			*m_pBlueLeaderAvatarImage;
-	EditablePanel				*m_pRedLeaderAvatarBG;
-	EditablePanel				*m_pBlueLeaderAvatarBG;
-	EditablePanel				*m_pStatsLabelPanel;
-	CExLabel					*m_pStatsAndMedals;
-	CExLabel					*m_pStatsAndMedalsShadow;
-	CExLabel					*m_pBlueTeamName;
-	CExLabel					*m_pRedTeamName;
-  	CExLabel					*m_pRedTeamWinner;
-	CExLabel					*m_pRedTeamWinnerDropshadow;
-	CExLabel					*m_pBlueTeamWinner;
-	CExLabel					*m_pBlueTeamWinnerDropshadow;
+	vgui::EditablePanel *m_pMainStatsContainer;
+	vgui::EditablePanel *m_pPlayerListBlueParent;
+	TFSectionedListPanel *m_pPlayerListBlue;
+	vgui::EditablePanel *m_pPlayerListRedParent;
+	TFSectionedListPanel *m_pPlayerListRed;
+	CExLabel *m_pBlueTeamScore;
+	CExLabel *m_pBlueTeamScoreDropshadow;
+	EditablePanel *m_pBlueTeamScoreBG;
+	EditablePanel *m_pBluePlayerListBG;
+	CExLabel *m_pRedTeamScore;
+	CExLabel *m_pRedTeamScoreDropshadow;
+	EditablePanel *m_pRedTeamScoreBG;
+	EditablePanel *m_pRedPlayerListBG;
+	EditablePanel *m_pBlueMedalsPanel;
+	EditablePanel *m_pRedMedalsPanel;
+	vgui::ImagePanel *m_pRedTeamImage;
+	vgui::ImagePanel *m_pBlueTeamImage;
+	CAvatarImagePanel *m_pRedLeaderAvatarImage;
+	CAvatarImagePanel *m_pBlueLeaderAvatarImage;
+	EditablePanel *m_pRedLeaderAvatarBG;
+	EditablePanel *m_pBlueLeaderAvatarBG;
+	EditablePanel *m_pStatsLabelPanel;
+	CExLabel *m_pStatsAndMedals;
+	CExLabel *m_pStatsAndMedalsShadow;
+	CExLabel *m_pBlueTeamName;
+	CExLabel *m_pRedTeamName;
+	CExLabel *m_pRedTeamWinner;
+	CExLabel *m_pRedTeamWinnerDropshadow;
+	CExLabel *m_pBlueTeamWinner;
+	CExLabel *m_pBlueTeamWinnerDropshadow;
 
-	CTFParticlePanel			*m_pParticlePanel;
+	CTFParticlePanel *m_pParticlePanel;
 
-	vgui::EditablePanel			*m_pStatsBgPanel;
+	vgui::EditablePanel *m_pStatsBgPanel;
 
-	vgui::ImageList				*m_pImageList;
-	CUtlMap<CSteamID,int>		m_mapAvatarsToImageList;
+	vgui::ImageList *m_pImageList;
+	CUtlMap<CSteamID, int> m_mapAvatarsToImageList;
 
-	vgui::HFont					m_hFont;
- 	bool						m_bLargeMatchGroup;
-	bool						m_bXPShown;
+	vgui::HFont m_hFont;
+	bool m_bLargeMatchGroup;
+	bool m_bXPShown;
 
-	float						m_flDrawingPanelTime;
+	float m_flDrawingPanelTime;
 
-	CPanelAnimationVar( Color, m_clrGoldMedal, "GoldMedalText", "214 186 24 255" );
-	CPanelAnimationVar( Color, m_clrSilverMedal, "SilverMedalText", "222 218 222 255" );
-	CPanelAnimationVar( Color, m_clrBronzeMedal, "BronzeMedalText", "214 125 57 255" );
+	CPanelAnimationVar(Color, m_clrGoldMedal, "GoldMedalText", "214 186 24 255");
+	CPanelAnimationVar(Color, m_clrSilverMedal, "SilverMedalText", "222 218 222 255");
+	CPanelAnimationVar(Color, m_clrBronzeMedal, "BronzeMedalText", "214 125 57 255");
 
-	CPanelAnimationVarAliasType( int, m_iAnimBluePlayerListParent, "AnimBluePlayerListParent", "0", "proportional_width" );
-	CPanelAnimationVarAliasType( int, m_iAnimBlueTeamScore, "AnimBlueTeamScore", "0", "proportional_width" );
-	CPanelAnimationVarAliasType( int, m_iAnimBlueTeamScoreDropshadow, "AnimBlueTeamScoreDropshadow", "0", "proportional_width" );
-	CPanelAnimationVarAliasType( int, m_iAnimBlueTeamScoreBG, "AnimBlueTeamScoreBG", "0", "proportional_width" );
-	CPanelAnimationVarAliasType( int, m_iAnimBluePlayerListBG, "AnimBluePlayerListBG", "0", "proportional_width" );
+	CPanelAnimationVarAliasType(int, m_iAnimBluePlayerListParent, "AnimBluePlayerListParent", "0",
+								"proportional_width");
+	CPanelAnimationVarAliasType(int, m_iAnimBlueTeamScore, "AnimBlueTeamScore", "0", "proportional_width");
+	CPanelAnimationVarAliasType(int, m_iAnimBlueTeamScoreDropshadow, "AnimBlueTeamScoreDropshadow", "0",
+								"proportional_width");
+	CPanelAnimationVarAliasType(int, m_iAnimBlueTeamScoreBG, "AnimBlueTeamScoreBG", "0", "proportional_width");
+	CPanelAnimationVarAliasType(int, m_iAnimBluePlayerListBG, "AnimBluePlayerListBG", "0", "proportional_width");
 
-	CPanelAnimationVarAliasType( int, m_iAnimRedTeamScoreBGWide, "AnimRedTeamScoreBGWide", "0", "proportional_width" );
-	CPanelAnimationVarAliasType( int, m_iAnimRedTeamScoreBGXPos, "AnimRedTeamScoreBGXPos", "0", "proportional_xpos" );
-	CPanelAnimationVarAliasType( int, m_iAnimRedTeamScoreWide, "AnimRedTeamScoreWide", "0", "proportional_width" );
-	CPanelAnimationVarAliasType( int, m_iAnimRedTeamScoreXPos, "AnimRedTeamScoreXPos", "0", "proportional_xpos" );
-	CPanelAnimationVarAliasType( int, m_iAnimRedTeamScoreDropshadowWide, "AnimRedTeamScoreDropshadowWide", "0", "proportional_width" );
-	CPanelAnimationVarAliasType( int, m_iAnimRedTeamScoreDropshadowXPos, "AnimRedTeamScoreDropshadowXPos", "0", "proportional_xpos" );
-	CPanelAnimationVarAliasType( int, m_iAnimRedPlayerListParentWide, "AnimRedPlayerListParentWide", "0", "proportional_width" );
-	CPanelAnimationVarAliasType( int, m_iAnimRedPlayerListParentXPos, "AnimRedPlayerListParentXPos", "0", "proportional_xpos" );
-	CPanelAnimationVarAliasType( int, m_iAnimRedPlayerListBGWide, "AnimRedPlayerListBGWide", "0", "proportional_width" );
-	CPanelAnimationVarAliasType( int, m_iAnimRedPlayerListBGXPos, "AnimRedPlayerListBGXPos", "0", "proportional_xpos" );
-	CPanelAnimationVarAliasType( int, m_iAnimBlueMedalsYPos, "AnimBlueMedalsYPos", "0", "proportional_ypos" );
-	CPanelAnimationVarAliasType( int, m_iAnimRedMedalsYPos, "AnimRedMedalsYPos", "0", "proportional_ypos" );
-	CPanelAnimationVarAliasType( int, m_iAnimStatsLabelPanel6v6YPos, "AnimStatsLabelPanel6v6YPos", "0", "proportional_ypos" );
-	CPanelAnimationVarAliasType( int, m_iAnimBlueTeamLabel6v6YPos, "AnimBlueTeamLabel6v6YPos", "0", "proportional_ypos" );
-	CPanelAnimationVarAliasType( int, m_iAnimRedTeamLabel6v6YPos, "AnimRedTeamLabel6v6YPos", "0", "proportional_ypos" );
-	CPanelAnimationVarAliasType( int, m_iAnimStatsLabelPanel12v12YPos, "AnimStatsLabelPanel12v12YPos", "0", "proportional_ypos" );
-	CPanelAnimationVarAliasType( int, m_iAnimBlueTeamLabel12v12YPos, "AnimBlueTeamLabel12v12YPos", "0", "proportional_ypos" );
-	CPanelAnimationVarAliasType( int, m_iAnimRedTeamLabel12v12YPos, "AnimRedTeamLabel12v12YPos", "0", "proportional_ypos" );
-	CPanelAnimationVarAliasType( int, m_iAnimStatsContainer12v12YPos, "AnimStatsContainer12v12YPos", "0", "proportional_ypos" );
+	CPanelAnimationVarAliasType(int, m_iAnimRedTeamScoreBGWide, "AnimRedTeamScoreBGWide", "0", "proportional_width");
+	CPanelAnimationVarAliasType(int, m_iAnimRedTeamScoreBGXPos, "AnimRedTeamScoreBGXPos", "0", "proportional_xpos");
+	CPanelAnimationVarAliasType(int, m_iAnimRedTeamScoreWide, "AnimRedTeamScoreWide", "0", "proportional_width");
+	CPanelAnimationVarAliasType(int, m_iAnimRedTeamScoreXPos, "AnimRedTeamScoreXPos", "0", "proportional_xpos");
+	CPanelAnimationVarAliasType(int, m_iAnimRedTeamScoreDropshadowWide, "AnimRedTeamScoreDropshadowWide", "0",
+								"proportional_width");
+	CPanelAnimationVarAliasType(int, m_iAnimRedTeamScoreDropshadowXPos, "AnimRedTeamScoreDropshadowXPos", "0",
+								"proportional_xpos");
+	CPanelAnimationVarAliasType(int, m_iAnimRedPlayerListParentWide, "AnimRedPlayerListParentWide", "0",
+								"proportional_width");
+	CPanelAnimationVarAliasType(int, m_iAnimRedPlayerListParentXPos, "AnimRedPlayerListParentXPos", "0",
+								"proportional_xpos");
+	CPanelAnimationVarAliasType(int, m_iAnimRedPlayerListBGWide, "AnimRedPlayerListBGWide", "0", "proportional_width");
+	CPanelAnimationVarAliasType(int, m_iAnimRedPlayerListBGXPos, "AnimRedPlayerListBGXPos", "0", "proportional_xpos");
+	CPanelAnimationVarAliasType(int, m_iAnimBlueMedalsYPos, "AnimBlueMedalsYPos", "0", "proportional_ypos");
+	CPanelAnimationVarAliasType(int, m_iAnimRedMedalsYPos, "AnimRedMedalsYPos", "0", "proportional_ypos");
+	CPanelAnimationVarAliasType(int, m_iAnimStatsLabelPanel6v6YPos, "AnimStatsLabelPanel6v6YPos", "0",
+								"proportional_ypos");
+	CPanelAnimationVarAliasType(int, m_iAnimBlueTeamLabel6v6YPos, "AnimBlueTeamLabel6v6YPos", "0", "proportional_ypos");
+	CPanelAnimationVarAliasType(int, m_iAnimRedTeamLabel6v6YPos, "AnimRedTeamLabel6v6YPos", "0", "proportional_ypos");
+	CPanelAnimationVarAliasType(int, m_iAnimStatsLabelPanel12v12YPos, "AnimStatsLabelPanel12v12YPos", "0",
+								"proportional_ypos");
+	CPanelAnimationVarAliasType(int, m_iAnimBlueTeamLabel12v12YPos, "AnimBlueTeamLabel12v12YPos", "0",
+								"proportional_ypos");
+	CPanelAnimationVarAliasType(int, m_iAnimRedTeamLabel12v12YPos, "AnimRedTeamLabel12v12YPos", "0",
+								"proportional_ypos");
+	CPanelAnimationVarAliasType(int, m_iAnimStatsContainer12v12YPos, "AnimStatsContainer12v12YPos", "0",
+								"proportional_ypos");
 
 	struct MatchDataUpdate_t
 	{
@@ -241,8 +257,8 @@ private:
 
 	float m_flMedalSoundTime;
 
-	CUtlVector< CTFBadgePanel* > m_pBlueBadgePanels;
-	CUtlVector< CTFBadgePanel* > m_pRedBadgePanels;
+	CUtlVector<CTFBadgePanel *> m_pBlueBadgePanels;
+	CUtlVector<CTFBadgePanel *> m_pRedBadgePanels;
 };
 
-#endif //TF_MATCH_SUMMARY_H
+#endif // TF_MATCH_SUMMARY_H

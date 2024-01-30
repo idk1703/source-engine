@@ -1,9 +1,8 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
-
 
 #ifndef WEBM_VIDEO_H
 #define WEBM_VIDEO_H
@@ -11,7 +10,6 @@
 #ifdef _WIN32
 #pragma once
 #endif
-
 
 //-----------------------------------------------------------------------------
 // Forward declarations
@@ -23,9 +21,8 @@ class CQuickTimeMaterial;
 //-----------------------------------------------------------------------------
 // Global interfaces - you already did the needed includes, right?
 //-----------------------------------------------------------------------------
-extern IFileSystem		*g_pFileSystem;
-extern IMaterialSystem	*materials;
-
+extern IFileSystem *g_pFileSystem;
+extern IMaterialSystem *materials;
 
 //-----------------------------------------------------------------------------
 // WebM Header files, anything that seems strange here is to make it so their headers
@@ -60,74 +57,77 @@ extern IMaterialSystem	*materials;
 // -----------------------------------------------------------------------------
 // CQuickTimeVideoSubSystem - Implementation of IVideoSubSystem
 // -----------------------------------------------------------------------------
-class CWebMVideoSubSystem : public CTier2AppSystem< IVideoSubSystem >
+class CWebMVideoSubSystem : public CTier2AppSystem<IVideoSubSystem>
 {
-	typedef CTier2AppSystem< IVideoSubSystem > BaseClass;
+	typedef CTier2AppSystem<IVideoSubSystem> BaseClass;
 
-	public:
-		CWebMVideoSubSystem();
-		~CWebMVideoSubSystem();
+public:
+	CWebMVideoSubSystem();
+	~CWebMVideoSubSystem();
 
-		// Inherited from IAppSystem 
-		virtual bool					Connect( CreateInterfaceFn factory );
-		virtual void					Disconnect();
-		virtual void				   *QueryInterface( const char *pInterfaceName );
-		virtual InitReturnVal_t			Init();
-		virtual void					Shutdown();
+	// Inherited from IAppSystem
+	virtual bool Connect(CreateInterfaceFn factory);
+	virtual void Disconnect();
+	virtual void *QueryInterface(const char *pInterfaceName);
+	virtual InitReturnVal_t Init();
+	virtual void Shutdown();
 
-		// Inherited from IVideoSubSystem
-		 
-		// SubSystem Identification functions
-		virtual VideoSystem_t			GetSystemID();
-		virtual VideoSystemStatus_t		GetSystemStatus();
-		virtual VideoSystemFeature_t	GetSupportedFeatures();
-		virtual const char			   *GetVideoSystemName();
-		
-		// Setup & Shutdown Services
-		virtual bool					InitializeVideoSystem( IVideoCommonServices *pCommonServices );
-		virtual bool					ShutdownVideoSystem();
-		
-		virtual VideoResult_t			VideoSoundDeviceCMD( VideoSoundDeviceOperation_t operation, void *pDevice = nullptr, void *pData = nullptr );
-		
-		// get list of file extensions and features we support
-		virtual int						GetSupportedFileExtensionCount();
-		virtual const char			   *GetSupportedFileExtension( int num );
-		virtual VideoSystemFeature_t	GetSupportedFileExtensionFeatures( int num );
+	// Inherited from IVideoSubSystem
 
-		// Video Playback and Recording Services
-		virtual VideoResult_t			PlayVideoFileFullScreen( const char *filename, void *mainWindow, int windowWidth, int windowHeight, int desktopWidth, int desktopHeight, bool windowed, float forcedMinTime, VideoPlaybackFlags_t playbackFlags );
+	// SubSystem Identification functions
+	virtual VideoSystem_t GetSystemID();
+	virtual VideoSystemStatus_t GetSystemStatus();
+	virtual VideoSystemFeature_t GetSupportedFeatures();
+	virtual const char *GetVideoSystemName();
 
-		// Create/destroy a video material
-		virtual IVideoMaterial		   *CreateVideoMaterial( const char *pMaterialName, const char *pVideoFileName, VideoPlaybackFlags_t flags );
-		virtual VideoResult_t			DestroyVideoMaterial( IVideoMaterial *pVideoMaterial );
+	// Setup & Shutdown Services
+	virtual bool InitializeVideoSystem(IVideoCommonServices *pCommonServices);
+	virtual bool ShutdownVideoSystem();
 
-		// Create/destroy a video encoder		
-		virtual IVideoRecorder		   *CreateVideoRecorder();
-		virtual VideoResult_t			DestroyVideoRecorder( IVideoRecorder *pRecorder );
-		
-		virtual VideoResult_t			CheckCodecAvailability( VideoEncodeCodec_t codec );
-		
-		virtual VideoResult_t			GetLastResult();
+	virtual VideoResult_t VideoSoundDeviceCMD(VideoSoundDeviceOperation_t operation, void *pDevice = nullptr,
+											  void *pData = nullptr);
 
-	private:
-	
-		bool							SetupWebM();
-		bool							ShutdownWebM();
+	// get list of file extensions and features we support
+	virtual int GetSupportedFileExtensionCount();
+	virtual const char *GetSupportedFileExtension(int num);
+	virtual VideoSystemFeature_t GetSupportedFileExtensionFeatures(int num);
 
-		VideoResult_t					SetResult( VideoResult_t status );
+	// Video Playback and Recording Services
+	virtual VideoResult_t PlayVideoFileFullScreen(const char *filename, void *mainWindow, int windowWidth,
+												  int windowHeight, int desktopWidth, int desktopHeight, bool windowed,
+												  float forcedMinTime, VideoPlaybackFlags_t playbackFlags);
 
-		bool							m_bWebMInitialized;
-		VideoResult_t					m_LastResult;
-		
-		VideoSystemStatus_t				m_CurrentStatus;
-		VideoSystemFeature_t			m_AvailableFeatures;
+	// Create/destroy a video material
+	virtual IVideoMaterial *CreateVideoMaterial(const char *pMaterialName, const char *pVideoFileName,
+												VideoPlaybackFlags_t flags);
+	virtual VideoResult_t DestroyVideoMaterial(IVideoMaterial *pVideoMaterial);
 
-		IVideoCommonServices		   *m_pCommonServices;
-		
-		CUtlVector< IVideoMaterial* >	m_MaterialList;
-		CUtlVector< IVideoRecorder* >	m_RecorderList;
-		
-		static const VideoSystemFeature_t	DEFAULT_FEATURE_SET;
+	// Create/destroy a video encoder
+	virtual IVideoRecorder *CreateVideoRecorder();
+	virtual VideoResult_t DestroyVideoRecorder(IVideoRecorder *pRecorder);
+
+	virtual VideoResult_t CheckCodecAvailability(VideoEncodeCodec_t codec);
+
+	virtual VideoResult_t GetLastResult();
+
+private:
+	bool SetupWebM();
+	bool ShutdownWebM();
+
+	VideoResult_t SetResult(VideoResult_t status);
+
+	bool m_bWebMInitialized;
+	VideoResult_t m_LastResult;
+
+	VideoSystemStatus_t m_CurrentStatus;
+	VideoSystemFeature_t m_AvailableFeatures;
+
+	IVideoCommonServices *m_pCommonServices;
+
+	CUtlVector<IVideoMaterial *> m_MaterialList;
+	CUtlVector<IVideoRecorder *> m_RecorderList;
+
+	static const VideoSystemFeature_t DEFAULT_FEATURE_SET;
 };
 
 #endif // WEBM_VIDEO_H

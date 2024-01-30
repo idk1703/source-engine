@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,26 +18,26 @@ using namespace vgui;
 
 class CTFPingPanel : public EditablePanel, public CGameEventListener
 {
-	DECLARE_CLASS_SIMPLE( CTFPingPanel, EditablePanel )
+	DECLARE_CLASS_SIMPLE(CTFPingPanel, EditablePanel)
 public:
-	CTFPingPanel( Panel* pPanel, const char *pszName, EMatchGroup eMatchGroup );
+	CTFPingPanel(Panel *pPanel, const char *pszName, EMatchGroup eMatchGroup);
 	~CTFPingPanel();
 
-	virtual void ApplySchemeSettings( IScheme *pScheme ) OVERRIDE;
+	virtual void ApplySchemeSettings(IScheme *pScheme) OVERRIDE;
 	virtual void PerformLayout() OVERRIDE;
-	virtual void OnCommand( const char *command ) OVERRIDE;
+	virtual void OnCommand(const char *command) OVERRIDE;
 
-	virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
+	virtual void FireGameEvent(IGameEvent *event) OVERRIDE;
 
 private:
 	void CleanupPingPanels();
 	void UpdateCurrentPing();
 
-	MESSAGE_FUNC_PTR( OnCheckButtonChecked, "CheckButtonChecked", panel );
-	MESSAGE_FUNC( OnSliderMoved, "SliderMoved" );
+	MESSAGE_FUNC_PTR(OnCheckButtonChecked, "CheckButtonChecked", panel);
+	MESSAGE_FUNC(OnSliderMoved, "SliderMoved");
 
-	CPanelAnimationVarAliasType( int, m_iDataCenterY, "datacenter_y", "0", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iDataCenterYSpace, "datacenter_y_space", "0", "proportional_int" );
+	CPanelAnimationVarAliasType(int, m_iDataCenterY, "datacenter_y", "0", "proportional_int");
+	CPanelAnimationVarAliasType(int, m_iDataCenterYSpace, "datacenter_y_space", "0", "proportional_int");
 
 	EditablePanel *m_pMainContainer;
 	CheckButton *m_pCheckButton;
@@ -50,7 +50,7 @@ private:
 		float m_flPopulationRatio;
 		int m_nPing;
 	};
-	CUtlVector< PingPanelInfo > m_vecDataCenterPingPanels;
+	CUtlVector<PingPanelInfo> m_vecDataCenterPingPanels;
 
 	EMatchGroup m_eMatchGroup;
 };

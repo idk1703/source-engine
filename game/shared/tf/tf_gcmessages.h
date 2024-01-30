@@ -2,7 +2,7 @@
 //
 // Purpose: This file defines all of our over-the-wire net protocols for the
 //			Game Coordinator for Team Fortress.  Note that we never use types
-//			with undefined length (like int).  Always use an explicit type 
+//			with undefined length (like int).  Always use an explicit type
 //			(like int32).
 //
 //=============================================================================
@@ -23,11 +23,11 @@
 #include "tf_gcmessages.pb.h"
 #ifdef GC
 #include "tf_gcmessages_interserver.pb.h" // These should not be exposed to clients/servers
-#endif // #ifdef GC
+#endif									  // #ifdef GC
 
 #include <tier0/valve_minmax_on.h>
 
-#pragma pack( push, 1 )
+#pragma pack(push, 1)
 
 //-----------------------------------------------------------------------------
 // Type IDs for TF GC classes. These are part of the client-GC protocol and
@@ -35,15 +35,15 @@
 //-----------------------------------------------------------------------------
 enum EGCTFProtoObjectTypes
 {
-	k_EProtoObjectTypesGameBase			= 2000,
+	k_EProtoObjectTypesGameBase = 2000,
 
-//	k_EProtoObjectHeroStandings			= k_EProtoObjectTypesGameBase + 1,
-//	k_EProtoObjectGameAccountClient		= k_EProtoObjectTypesGameBase + 2,
-	k_EProtoObjectTFParty				= k_EProtoObjectTypesGameBase + 3,
-	k_EProtoObjectTFGameServerLobby		= k_EProtoObjectTypesGameBase + 4,
-//	k_EProtoObjectBetaParticipation		= k_EProtoObjectTypesGameBase + 5,
-	k_EProtoObjectTFPartyInvite			= k_EProtoObjectTypesGameBase + 6,
-	k_EProtoObjectTFRatingData			= k_EProtoObjectTypesGameBase + 7,
+	//	k_EProtoObjectHeroStandings			= k_EProtoObjectTypesGameBase + 1,
+	//	k_EProtoObjectGameAccountClient		= k_EProtoObjectTypesGameBase + 2,
+	k_EProtoObjectTFParty = k_EProtoObjectTypesGameBase + 3,
+	k_EProtoObjectTFGameServerLobby = k_EProtoObjectTypesGameBase + 4,
+	//	k_EProtoObjectBetaParticipation		= k_EProtoObjectTypesGameBase + 5,
+	k_EProtoObjectTFPartyInvite = k_EProtoObjectTypesGameBase + 6,
+	k_EProtoObjectTFRatingData = k_EProtoObjectTypesGameBase + 7,
 };
 
 //=============================================================================
@@ -80,12 +80,12 @@ struct MsgGC_Duel_Results_t
 // k_EMsgGC_Duel_Status
 enum EGCDuelStatus
 {
-	kDuel_Status_Invalid					= -1,
+	kDuel_Status_Invalid = -1,
 	kDuel_Status_AlreadyInDuel_Inititator,
 	kDuel_Status_AlreadyInDuel_Target,
 	kDuel_Status_DuelBanned_Initiator,
 	kDuel_Status_DuelBanned_Target,
-	kDuel_Status_MissingSession,				// could be gameserver session or target client session
+	kDuel_Status_MissingSession, // could be gameserver session or target client session
 	kDuel_Status_Cancelled,
 };
 struct MsgGC_Duel_Status_t
@@ -143,11 +143,11 @@ enum
 	kVoteKickBanPlayerReason_Scamming,
 };
 
-uint32 GetKickBanPlayerReason( const char *pReasonString );
+uint32 GetKickBanPlayerReason(const char *pReasonString);
 
 //=============================================================================
 
-#pragma pack( pop )
+#pragma pack(pop)
 
 // Normal:
 #define MATCHMAKING_SPEWLEVEL4 4

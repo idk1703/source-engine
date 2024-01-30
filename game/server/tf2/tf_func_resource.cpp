@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -21,39 +21,39 @@
 #include "team_messages.h"
 #include "tf_stats.h"
 
-LINK_ENTITY_TO_CLASS( trigger_resourcezone, CResourceZone);
+LINK_ENTITY_TO_CLASS(trigger_resourcezone, CResourceZone);
 
-BEGIN_DATADESC( CResourceZone )
+BEGIN_DATADESC(CResourceZone)
 
-	// keys 
-	DEFINE_KEYFIELD_NOT_SAVED( m_nResourcesLeft, FIELD_INTEGER, "ResourceAmount" ),
-	DEFINE_KEYFIELD_NOT_SAVED( m_iMaxChunks, FIELD_INTEGER, "ResourceChunks" ),
-	DEFINE_KEYFIELD_NOT_SAVED( m_flResourceRate, FIELD_FLOAT, "ResourceRate" ),
-	DEFINE_KEYFIELD_NOT_SAVED( m_flChunkValueMin, FIELD_FLOAT, "ChunkValueMin" ),
-	DEFINE_KEYFIELD_NOT_SAVED( m_flChunkValueMax, FIELD_FLOAT, "ChunkValueMax" ),
+	// keys
+	DEFINE_KEYFIELD_NOT_SAVED(m_nResourcesLeft, FIELD_INTEGER, "ResourceAmount"),
+		DEFINE_KEYFIELD_NOT_SAVED(m_iMaxChunks, FIELD_INTEGER, "ResourceChunks"),
+		DEFINE_KEYFIELD_NOT_SAVED(m_flResourceRate, FIELD_FLOAT, "ResourceRate"),
+		DEFINE_KEYFIELD_NOT_SAVED(m_flChunkValueMin, FIELD_FLOAT, "ChunkValueMin"),
+		DEFINE_KEYFIELD_NOT_SAVED(m_flChunkValueMax, FIELD_FLOAT, "ChunkValueMax"),
 
-	// inputs
-	DEFINE_INPUTFUNC( FIELD_INTEGER, "SetAmount", InputSetAmount ),
-	DEFINE_INPUTFUNC( FIELD_VOID, "ResetAmount", InputResetAmount ),
-	DEFINE_INPUTFUNC( FIELD_VOID, "SetActive", InputSetActive ),
-	DEFINE_INPUTFUNC( FIELD_VOID, "SetInactive", InputSetInactive ),
-	DEFINE_INPUTFUNC( FIELD_VOID, "ToggleActive", InputToggleActive ),
+		// inputs
+		DEFINE_INPUTFUNC(FIELD_INTEGER, "SetAmount", InputSetAmount),
+		DEFINE_INPUTFUNC(FIELD_VOID, "ResetAmount", InputResetAmount),
+		DEFINE_INPUTFUNC(FIELD_VOID, "SetActive", InputSetActive),
+		DEFINE_INPUTFUNC(FIELD_VOID, "SetInactive", InputSetInactive),
+		DEFINE_INPUTFUNC(FIELD_VOID, "ToggleActive", InputToggleActive),
 
-	// outputs
-	DEFINE_OUTPUT( m_OnEmpty, "OnEmpty" ),
+		// outputs
+		DEFINE_OUTPUT(m_OnEmpty, "OnEmpty"),
 
 END_DATADESC()
 
-
 IMPLEMENT_SERVERCLASS_ST(CResourceZone, DT_ResourceZone)
-	SendPropFloat( SENDINFO( m_flClientResources ),	8,	SPROP_UNSIGNED,	0.0f,	1.0f ),
-	SendPropInt( SENDINFO( m_nResourcesLeft ),	20,	SPROP_UNSIGNED ),
-END_SEND_TABLE();
+SendPropFloat(SENDINFO(m_flClientResources), 8, SPROP_UNSIGNED, 0.0f, 1.0f),
+	SendPropInt(SENDINFO(m_nResourcesLeft), 20, SPROP_UNSIGNED),
+END_SEND_TABLE
+();
 
-PRECACHE_REGISTER( trigger_resourcezone );
+PRECACHE_REGISTER(trigger_resourcezone);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CResourceZone::CResourceZone()
 {
@@ -66,15 +66,15 @@ CResourceZone::CResourceZone()
 //-----------------------------------------------------------------------------
 // Purpose: Initializes the resource zone
 //-----------------------------------------------------------------------------
-void CResourceZone::Spawn( void )
+void CResourceZone::Spawn(void)
 {
-	SetSolid( SOLID_BSP );
-	AddSolidFlags( FSOLID_TRIGGER );
-	SetMoveType( MOVETYPE_NONE );
-	AddEffects( EF_NODRAW );
-	SetModel( STRING( GetModelName() ) );
+	SetSolid(SOLID_BSP);
+	AddSolidFlags(FSOLID_TRIGGER);
+	SetMoveType(MOVETYPE_NONE);
+	AddEffects(EF_NODRAW);
+	SetModel(STRING(GetModelName()));
 
-	if ( !m_nResourcesLeft )
+	if(!m_nResourcesLeft)
 	{
 		m_nResourcesLeft = 10000;
 	}
@@ -82,45 +82,43 @@ void CResourceZone::Spawn( void )
 	m_nMaxResources = m_nResourcesLeft;
 	m_flClientResources = 1;
 
-	SetActive( false );
+	SetActive(false);
 	m_vecGatherPoint = WorldSpaceCenter();
 	m_angGatherPoint = vec3_angle;
 	m_iTeamGathering = -1;
 	m_aSpawners.Purge();
 	m_hResourcePump = NULL;
 
-	if ( !m_iMaxChunks )
+	if(!m_iMaxChunks)
 		m_iMaxChunks = 5;
-	if ( !m_flChunkValueMin )
+	if(!m_flChunkValueMin)
 		m_flChunkValueMin = 20;
-	if ( !m_flChunkValueMax )
+	if(!m_flChunkValueMax)
 		m_flChunkValueMax = 60;
 
 	m_flBaseResourceRate = m_flResourceRate;
-	
+
 	m_flRespawnTimeModifier = 1.0f;
 
 	m_flTestTime = 0;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CResourceZone::Precache( void )
-{
-}
+void CResourceZone::Precache(void) {}
 
 //-----------------------------------------------------------------------------
-// Purpose: See if we've got a gather point specified 
+// Purpose: See if we've got a gather point specified
 //-----------------------------------------------------------------------------
-void CResourceZone::Activate( void )
+void CResourceZone::Activate(void)
 {
 	BaseClass::Activate();
 
-	if (m_target != NULL_STRING)
+	if(m_target != NULL_STRING)
 	{
-		CBaseEntity	*pEnt = gEntList.FindEntityByName( NULL, m_target );
-		if ( pEnt )
+		CBaseEntity *pEnt = gEntList.FindEntityByName(NULL, m_target);
+		if(pEnt)
 		{
 			m_vecGatherPoint = pEnt->GetLocalOrigin();
 			m_angGatherPoint = pEnt->GetLocalAngles();
@@ -129,96 +127,96 @@ void CResourceZone::Activate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CResourceZone::InputSetAmount( inputdata_t &inputdata )
+void CResourceZone::InputSetAmount(inputdata_t &inputdata)
 {
 	m_nMaxResources = m_nResourcesLeft = inputdata.value.Int();
 	RecomputeClientResources();
 
 	// We may have just been reactivated
-	if ( m_nResourcesLeft )
+	if(m_nResourcesLeft)
 	{
-		SetActive( true );
+		SetActive(true);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CResourceZone::InputResetAmount( inputdata_t &inputdata )
+void CResourceZone::InputResetAmount(inputdata_t &inputdata)
 {
 	m_nResourcesLeft = m_nMaxResources;
 	m_flClientResources = 1;
 
 	// We may have just been reactivated
-	if ( m_nResourcesLeft )
+	if(m_nResourcesLeft)
 	{
-		SetActive( true );
+		SetActive(true);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CResourceZone::InputSetActive( inputdata_t &inputdata )
+void CResourceZone::InputSetActive(inputdata_t &inputdata)
 {
-	SetActive( true );
+	SetActive(true);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CResourceZone::InputSetInactive( inputdata_t &inputdata )
+void CResourceZone::InputSetInactive(inputdata_t &inputdata)
 {
-	SetActive( false );
+	SetActive(false);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CResourceZone::InputToggleActive( inputdata_t &inputdata )
+void CResourceZone::InputToggleActive(inputdata_t &inputdata)
 {
-	if ( GetActive() )
+	if(GetActive())
 	{
-		SetActive( false );
+		SetActive(false);
 	}
 	else
 	{
-		SetActive( true );
+		SetActive(true);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CResourceZone::SetActive( bool bActive )
+void CResourceZone::SetActive(bool bActive)
 {
 	// Going active?
-	if ( !m_bActive && bActive )
+	if(!m_bActive && bActive)
 	{
 		// Start our ambient sound
-		//EmitAmbientSound( this, Center(), "ResourceZone.AmbientActiveSound" );
+		// EmitAmbientSound( this, Center(), "ResourceZone.AmbientActiveSound" );
 	}
-	else if ( m_bActive && !bActive )
+	else if(m_bActive && !bActive)
 	{
 		// Going inactive
 
 		// Stop our sound loop
-		//StopSound( "ResourceZone.AmbientActiveSound" );
+		// StopSound( "ResourceZone.AmbientActiveSound" );
 	}
 
 	m_bActive = bActive;
 
 	// Tell all my spawners
-	for ( int i = 0; i < m_aSpawners.Size(); i++ )
+	for(int i = 0; i < m_aSpawners.Size(); i++)
 	{
-		m_aSpawners[i]->SetActive( bActive );
+		m_aSpawners[i]->SetActive(bActive);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CResourceZone::GetActive() const
 {
@@ -228,20 +226,20 @@ bool CResourceZone::GetActive() const
 //-----------------------------------------------------------------------------
 // Zone increasing....
 //-----------------------------------------------------------------------------
-void CResourceZone::AddZoneIncreaser( float rate )
+void CResourceZone::AddZoneIncreaser(float rate)
 {
-	Assert( rate != 0.0f );
+	Assert(rate != 0.0f);
 
 	m_flRespawnTimeModifier *= rate;
 	m_flResourceRate = m_flBaseResourceRate / m_flRespawnTimeModifier;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CResourceZone::RemoveZoneIncreaser( float rate )
+void CResourceZone::RemoveZoneIncreaser(float rate)
 {
-	Assert( rate != 0.0f );
+	Assert(rate != 0.0f);
 
 	m_flRespawnTimeModifier /= rate;
 	m_flResourceRate = m_flBaseResourceRate / m_flRespawnTimeModifier;
@@ -250,36 +248,36 @@ void CResourceZone::RemoveZoneIncreaser( float rate )
 //-----------------------------------------------------------------------------
 // Purpose: Removes resources from the zone, and returns true if it's now empty
 //-----------------------------------------------------------------------------
-bool CResourceZone::RemoveResources( int nResourcesRemoved )
+bool CResourceZone::RemoveResources(int nResourcesRemoved)
 {
-	if ( IsEmpty() )
+	if(IsEmpty())
 		return true;
 
 	m_nResourcesLeft = MAX(0, m_nResourcesLeft - nResourcesRemoved);
 	RecomputeClientResources();
 
 	// If I'm out of resources, destroy my resource spawners
-	if ( IsEmpty() )
+	if(IsEmpty())
 	{
 		// Tell all existing chunks to stay forever
 		int i;
-		for ( i = 0; i < m_aChunks.Size(); i++ )
+		for(i = 0; i < m_aChunks.Size(); i++)
 		{
 			// Clear them removal think
-			m_aChunks[i]->SetThink( NULL );
+			m_aChunks[i]->SetThink(NULL);
 		}
 
-		SetActive( false );
-		
+		SetActive(false);
+
 		// Tell teams about it
-		for ( i = 0; i < GetNumberOfTeams(); i++ )
+		for(i = 0; i < GetNumberOfTeams(); i++)
 		{
-			CTFTeam *pTeam = GetGlobalTFTeam( i );
-			pTeam->PostMessage( TEAMMSG_RESOURCE_ZONE_EMPTIED );
+			CTFTeam *pTeam = GetGlobalTFTeam(i);
+			pTeam->PostMessage(TEAMMSG_RESOURCE_ZONE_EMPTIED);
 		}
 
 		// Fire my output
-		m_OnEmpty.FireOutput( NULL,this );
+		m_OnEmpty.FireOutput(NULL, this);
 		return true;
 	}
 
@@ -289,10 +287,10 @@ bool CResourceZone::RemoveResources( int nResourcesRemoved )
 //-----------------------------------------------------------------------------
 // Purpose: Return true if this zone is empty
 //-----------------------------------------------------------------------------
-bool CResourceZone::IsEmpty( void )
-{ 
+bool CResourceZone::IsEmpty(void)
+{
 	// Inactive zones pretend to be empty, so nothing tries to do anything with them
-	if ( !GetActive() )
+	if(!GetActive())
 		return true;
 
 	return (m_nResourcesLeft <= 0);
@@ -301,15 +299,15 @@ bool CResourceZone::IsEmpty( void )
 //-----------------------------------------------------------------------------
 // Purpose: Return true if the specified point is within this zone
 //-----------------------------------------------------------------------------
-bool CResourceZone::PointIsWithin( const Vector &vecPoint )
+bool CResourceZone::PointIsWithin(const Vector &vecPoint)
 {
-	return CollisionProp()->IsPointInBounds( vecPoint );
+	return CollisionProp()->IsPointInBounds(vecPoint);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Resource zones have 1 build point
 //-----------------------------------------------------------------------------
-int CResourceZone::GetNumBuildPoints( void ) const
+int CResourceZone::GetNumBuildPoints(void) const
 {
 	return 1;
 }
@@ -317,31 +315,31 @@ int CResourceZone::GetNumBuildPoints( void ) const
 //-----------------------------------------------------------------------------
 // Purpose: Return true if the specified object type can be built on this point
 //-----------------------------------------------------------------------------
-bool CResourceZone::CanBuildObjectOnBuildPoint( int iPoint, int iObjectType )
+bool CResourceZone::CanBuildObjectOnBuildPoint(int iPoint, int iObjectType)
 {
-	ASSERT( iPoint <= GetNumBuildPoints() );
+	ASSERT(iPoint <= GetNumBuildPoints());
 
 	// Don't allow more than one pump
-	if ( m_hResourcePump.Get() )
+	if(m_hResourcePump.Get())
 		return false;
 
 	// Only pumps can be built on zones
-	return ( iObjectType == OBJ_RESOURCEPUMP );
+	return (iObjectType == OBJ_RESOURCEPUMP);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CResourceZone::GetBuildPoint( int iPoint, Vector &vecOrigin, QAngle &vecAngles )
+bool CResourceZone::GetBuildPoint(int iPoint, Vector &vecOrigin, QAngle &vecAngles)
 {
-	ASSERT( iPoint <= GetNumBuildPoints() );
+	ASSERT(iPoint <= GetNumBuildPoints());
 
 	// If we have a gather point, return it
-	if ( m_vecGatherPoint != WorldSpaceCenter() )
+	if(m_vecGatherPoint != WorldSpaceCenter())
 	{
 		vecOrigin = m_vecGatherPoint;
 	}
-	else if ( m_aSpawners.Size() )
+	else if(m_aSpawners.Size())
 	{
 		// Return the first resource spawner
 		vecOrigin = m_aSpawners[0]->GetAbsOrigin();
@@ -351,53 +349,53 @@ bool CResourceZone::GetBuildPoint( int iPoint, Vector &vecOrigin, QAngle &vecAng
 		vecOrigin = GetAbsOrigin();
 	}
 
-	vecAngles = QAngle(0,0,0);
+	vecAngles = QAngle(0, 0, 0);
 	return true;
 }
 
-int CResourceZone::GetBuildPointAttachmentIndex( int iPoint ) const
+int CResourceZone::GetBuildPointAttachmentIndex(int iPoint) const
 {
 	return 0;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CResourceZone::SetObjectOnBuildPoint( int iPoint, CBaseObject *pObject )
+void CResourceZone::SetObjectOnBuildPoint(int iPoint, CBaseObject *pObject)
 {
 	m_hResourcePump = pObject;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int CResourceZone::GetNumObjectsOnMe( void )
+int CResourceZone::GetNumObjectsOnMe(void)
 {
-	if ( m_hResourcePump.Get() )
+	if(m_hResourcePump.Get())
 		return 1;
 
 	return 0;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CBaseEntity	*CResourceZone::GetFirstObjectOnMe( void )
+CBaseEntity *CResourceZone::GetFirstObjectOnMe(void)
 {
 	return m_hResourcePump;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CBaseObject *CResourceZone::GetObjectOfTypeOnMe( int iObjectType )
+CBaseObject *CResourceZone::GetObjectOfTypeOnMe(int iObjectType)
 {
-	if ( GetNumObjectsOnMe() == 1 )
+	if(GetNumObjectsOnMe() == 1)
 	{
-		CBaseObject *pObject = dynamic_cast<CBaseObject*>( m_hResourcePump.Get() );
-		if ( pObject )
+		CBaseObject *pObject = dynamic_cast<CBaseObject *>(m_hResourcePump.Get());
+		if(pObject)
 		{
-			if ( pObject->GetType() == iObjectType )
+			if(pObject->GetType() == iObjectType)
 				return pObject;
 		}
 	}
@@ -405,42 +403,41 @@ CBaseObject *CResourceZone::GetObjectOfTypeOnMe( int iObjectType )
 	return NULL;
 }
 
-int	CResourceZone::FindObjectOnBuildPoint( CBaseObject *pObject )
+int CResourceZone::FindObjectOnBuildPoint(CBaseObject *pObject)
 {
-	if (m_hResourcePump == pObject)
+	if(m_hResourcePump == pObject)
 		return 0;
 	return -1;
 }
 
-void CResourceZone::GetExitPoint( CBaseEntity *pPlayer, int iPoint, Vector *pAbsOrigin, QAngle *pAbsAngles )
+void CResourceZone::GetExitPoint(CBaseEntity *pPlayer, int iPoint, Vector *pAbsOrigin, QAngle *pAbsAngles)
 {
 	Assert(0);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CResourceZone::RemoveAllObjects( void )
+void CResourceZone::RemoveAllObjects(void)
 {
-	UTIL_Remove( m_hResourcePump );
+	UTIL_Remove(m_hResourcePump);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Get the team that's gathering from this point
 //-----------------------------------------------------------------------------
-CTFTeam *CResourceZone::GetOwningTeam( void )
+CTFTeam *CResourceZone::GetOwningTeam(void)
 {
-	if ( m_iTeamGathering == -1 )
+	if(m_iTeamGathering == -1)
 		return NULL;
 
-	return (CTFTeam*)GetGlobalTeam(m_iTeamGathering);
+	return (CTFTeam *)GetGlobalTeam(m_iTeamGathering);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CResourceZone::SetOwningTeam( int iTeamNumber )
+void CResourceZone::SetOwningTeam(int iTeamNumber)
 {
 	m_iTeamGathering = iTeamNumber;
 }
@@ -448,16 +445,16 @@ void CResourceZone::SetOwningTeam( int iTeamNumber )
 //-----------------------------------------------------------------------------
 // Purpose: Transmit this to all players who are in commander mode
 //-----------------------------------------------------------------------------
-int CResourceZone::ShouldTransmit( const CCheckTransmitInfo *pInfo )
+int CResourceZone::ShouldTransmit(const CCheckTransmitInfo *pInfo)
 {
 	// Team rules may tell us that we should
-	CBaseEntity* pRecipientEntity = CBaseEntity::Instance( pInfo->m_pClientEnt );
-	Assert( pRecipientEntity->IsPlayer() );
-	
-	CBasePlayer *pPlayer = (CBasePlayer*)pRecipientEntity;
-	if ( pPlayer->GetTeam() )
+	CBaseEntity *pRecipientEntity = CBaseEntity::Instance(pInfo->m_pClientEnt);
+	Assert(pRecipientEntity->IsPlayer());
+
+	CBasePlayer *pPlayer = (CBasePlayer *)pRecipientEntity;
+	if(pPlayer->GetTeam())
 	{
-		if (pPlayer->GetTeam()->ShouldTransmitToPlayer( pPlayer, this ))
+		if(pPlayer->GetTeam()->ShouldTransmitToPlayer(pPlayer, this))
 			return FL_EDICT_ALWAYS;
 	}
 
@@ -467,14 +464,14 @@ int CResourceZone::ShouldTransmit( const CCheckTransmitInfo *pInfo )
 //-----------------------------------------------------------------------------
 // Purpose: Check to see if we should create any more resource chunks
 //-----------------------------------------------------------------------------
-bool CResourceZone::ShouldSpawnChunk( void )
+bool CResourceZone::ShouldSpawnChunk(void)
 {
 	// Don't spawn chunks if we're outta resources
-	if ( IsEmpty() )
+	if(IsEmpty())
 		return false;
 
 	// Create a chunk if we're below our max
-	if ( m_aChunks.Size() >= m_iMaxChunks )
+	if(m_aChunks.Size() >= m_iMaxChunks)
 		return false;
 
 	return true;
@@ -483,49 +480,48 @@ bool CResourceZone::ShouldSpawnChunk( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CResourceZone::SpawnChunk( const Vector &vecOrigin )
+void CResourceZone::SpawnChunk(const Vector &vecOrigin)
 {
 	// ROBIN: Disabled for now
 	return;
 
-	TFStats()->IncrementStat( TF_STAT_RESOURCE_CHUNKS_SPAWNED, 1 );
+	TFStats()->IncrementStat(TF_STAT_RESOURCE_CHUNKS_SPAWNED, 1);
 
 	// Create a resource chunk and add it to our list
-	Vector vecVelocity = Vector( random->RandomFloat( -100,100 ), random->RandomFloat( -100,100 ), random->RandomFloat( 300,600 ));
-	CResourceChunk *pChunk = CResourceChunk::Create( false, vecOrigin, vecVelocity );
+	Vector vecVelocity =
+		Vector(random->RandomFloat(-100, 100), random->RandomFloat(-100, 100), random->RandomFloat(300, 600));
+	CResourceChunk *pChunk = CResourceChunk::Create(false, vecOrigin, vecVelocity);
 	pChunk->m_hZone = this;
 
 	// Add it to our list
-	m_aChunks.AddToTail( pChunk );
+	m_aChunks.AddToTail(pChunk);
 
 	// Remove it's value from the zone
-	RemoveResources( pChunk->GetResourceValue() );
+	RemoveResources(pChunk->GetResourceValue());
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CResourceZone::RecomputeClientResources( )
+void CResourceZone::RecomputeClientResources()
 {
-	m_flClientResources = clamp( (float)m_nResourcesLeft / (float)m_nMaxResources, 0.0f, 1.0f );
+	m_flClientResources = clamp((float)m_nResourcesLeft / (float)m_nMaxResources, 0.0f, 1.0f);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CResourceZone::RemoveChunk( CResourceChunk *pChunk, bool bReturn )
+void CResourceZone::RemoveChunk(CResourceChunk *pChunk, bool bReturn)
 {
-	if (bReturn)
+	if(bReturn)
 	{
-		TFStats()->IncrementStat( TF_STAT_RESOURCE_CHUNKS_RETIRED, 1 );
+		TFStats()->IncrementStat(TF_STAT_RESOURCE_CHUNKS_RETIRED, 1);
 	}
 
-	m_aChunks.FindAndRemove( pChunk );
+	m_aChunks.FindAndRemove(pChunk);
 
 	// If I'm being returned, re-add my value to the resource level of the zone
-	if ( bReturn )
+	if(bReturn)
 	{
 		m_nResourcesLeft += pChunk->GetResourceValue();
 		RecomputeClientResources();
@@ -535,97 +531,97 @@ void CResourceZone::RemoveChunk( CResourceChunk *pChunk, bool bReturn )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CResourceZone::AddSpawner( CResourceSpawner *pSpawner )
+void CResourceZone::AddSpawner(CResourceSpawner *pSpawner)
 {
-	m_aSpawners.AddToTail( pSpawner );
-	pSpawner->SetActive( GetActive() );
+	m_aSpawners.AddToTail(pSpawner);
+	pSpawner->SetActive(GetActive());
 }
 
 //========================================================================================================================
 // RESOURCE CHUNK SPAWNER
 //========================================================================================================================
-LINK_ENTITY_TO_CLASS( env_resourcespawner, CResourceSpawner );
-PRECACHE_REGISTER( env_resourcespawner );
+LINK_ENTITY_TO_CLASS(env_resourcespawner, CResourceSpawner);
+PRECACHE_REGISTER(env_resourcespawner);
 
-BEGIN_DATADESC( CResourceSpawner )
+BEGIN_DATADESC(CResourceSpawner)
 
 	// functions
-	DEFINE_FUNCTION( SpawnChunkThink ),
+	DEFINE_FUNCTION(SpawnChunkThink),
 
 END_DATADESC()
 
-
 IMPLEMENT_SERVERCLASS_ST(CResourceSpawner, DT_ResourceSpawner)
-	SendPropInt( SENDINFO( m_bActive ), 1, SPROP_UNSIGNED ),
-END_SEND_TABLE();
+SendPropInt(SENDINFO(m_bActive), 1, SPROP_UNSIGNED),
+END_SEND_TABLE
+();
 
 // Resource Spawner Models
 char *sResourceSpawnerModel = "models/resources/resource_spawner_B.mdl";
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CResourceSpawner::Spawn( void )
+void CResourceSpawner::Spawn(void)
 {
 	m_hZone = NULL;
 	m_bActive = false;
-	SetModel( sResourceSpawnerModel );
+	SetModel(sResourceSpawnerModel);
 
 	// Create the object in the physics system
 	/*
 	VPhysicsInitStatic();
 	*/
-	SetMoveType( MOVETYPE_NONE );
+	SetMoveType(MOVETYPE_NONE);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CResourceSpawner::Precache( void )
+void CResourceSpawner::Precache(void)
 {
-	PrecacheModel( sResourceSpawnerModel );
+	PrecacheModel(sResourceSpawnerModel);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Find my resource point
 //-----------------------------------------------------------------------------
-void CResourceSpawner::Activate( void )
+void CResourceSpawner::Activate(void)
 {
-	if ( m_target != NULL_STRING )
+	if(m_target != NULL_STRING)
 	{
 		// Find my resource zone
-		CResourceZone *pZone = (CResourceZone*)gEntList.FindEntityByName( NULL, m_target );
-		if ( pZone )
+		CResourceZone *pZone = (CResourceZone *)gEntList.FindEntityByName(NULL, m_target);
+		if(pZone)
 		{
 			m_hZone = pZone;
-			SetModel( sResourceSpawnerModel );
-			m_hZone->AddSpawner( this );
+			SetModel(sResourceSpawnerModel);
+			m_hZone->AddSpawner(this);
 			return;
 		}
 	}
 
-	Warning( "ERROR: Resource Spawner without a target resource zone specified.\n" );
-	UTIL_Remove( this );
+	Warning("ERROR: Resource Spawner without a target resource zone specified.\n");
+	UTIL_Remove(this);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CResourceSpawner::SetActive( bool bActive )
+void CResourceSpawner::SetActive(bool bActive)
 {
 	// Going active?
-	if ( !m_bActive && bActive )
+	if(!m_bActive && bActive)
 	{
-		// Randomize the thinks a little to reduce network usage ong chunk spawning 
-		SetNextThink( gpGlobals->curtime + m_hZone->GetResourceRate() + random->RandomFloat( 0.0, 1.0 ) );
-		SetThink( SpawnChunkThink );
-		RemoveEffects( EF_NODRAW );
+		// Randomize the thinks a little to reduce network usage ong chunk spawning
+		SetNextThink(gpGlobals->curtime + m_hZone->GetResourceRate() + random->RandomFloat(0.0, 1.0));
+		SetThink(SpawnChunkThink);
+		RemoveEffects(EF_NODRAW);
 	}
-	else if ( m_bActive && !bActive )
+	else if(m_bActive && !bActive)
 	{
 		// Going inactive
-		SetThink( NULL );
-		AddEffects( EF_NODRAW );
+		SetThink(NULL);
+		AddEffects(EF_NODRAW);
 	}
 
 	m_bActive = bActive;
@@ -634,49 +630,49 @@ void CResourceSpawner::SetActive( bool bActive )
 //-----------------------------------------------------------------------------
 // Purpose: Spawn a chunk from this spawner
 //-----------------------------------------------------------------------------
-void CResourceSpawner::SpawnChunkThink( void )
+void CResourceSpawner::SpawnChunkThink(void)
 {
 	// Lost our zone?
-	if ( !m_hZone )
+	if(!m_hZone)
 	{
-		SetActive( false );
+		SetActive(false);
 		return;
 	}
 
-	if ( m_hZone->ShouldSpawnChunk() )
+	if(m_hZone->ShouldSpawnChunk())
 	{
 		// Start spawning events
-		EntityMessageBegin( this );
+		EntityMessageBegin(this);
 		MessageEnd();
 
-		m_hZone->SpawnChunk( GetAbsOrigin() + Vector(0,0,64) );
+		m_hZone->SpawnChunk(GetAbsOrigin() + Vector(0, 0, 64));
 	}
 
-	// Randomize the thinks a little to reduce network usage on chunk spawning 
-	SetNextThink( gpGlobals->curtime + m_hZone->GetResourceRate() + random->RandomFloat( 0.0, 1.0 ) );
+	// Randomize the thinks a little to reduce network usage on chunk spawning
+	SetNextThink(gpGlobals->curtime + m_hZone->GetResourceRate() + random->RandomFloat(0.0, 1.0));
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Convert an amount of resources into a number of processed & unprocessed resource chunks
 //-----------------------------------------------------------------------------
-void ConvertResourceValueToChunks( int iResources, int *iNumProcessed, int *iNumNormal )
+void ConvertResourceValueToChunks(int iResources, int *iNumProcessed, int *iNumNormal)
 {
 	*iNumProcessed = *iNumNormal = 0;
 
-	while ( iResources >= resource_chunk_processed_value.GetFloat() )
+	while(iResources >= resource_chunk_processed_value.GetFloat())
 	{
 		iResources -= resource_chunk_processed_value.GetFloat();
 		*iNumProcessed += 1;
 	}
 
-	while ( iResources >= resource_chunk_value.GetFloat() )
+	while(iResources >= resource_chunk_value.GetFloat())
 	{
 		iResources -= resource_chunk_value.GetFloat();
 		*iNumNormal += 1;
 	}
 
 	// Round up
-	if ( iResources )
+	if(iResources)
 	{
 		*iNumNormal++;
 	}

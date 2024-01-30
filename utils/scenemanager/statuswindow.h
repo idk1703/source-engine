@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -17,21 +17,20 @@ class mxScrollbar;
 class CStatusWindow : public mxWindow
 {
 public:
-	CStatusWindow (mxWindow *parent, int x, int y, int w, int h, const char *label = 0 );
+	CStatusWindow(mxWindow *parent, int x, int y, int w, int h, const char *label = 0);
 	~CStatusWindow();
 
-	void StatusPrint( int r, int g, int b, bool overwrite, const char *text );
+	void StatusPrint(int r, int g, int b, bool overwrite, const char *text);
 
 	virtual void redraw();
-	virtual bool PaintBackground( void );
+	virtual bool PaintBackground(void);
 
-	virtual int handleEvent( mxEvent *event );
+	virtual int handleEvent(mxEvent *event);
 
-//	virtual void Think( float dt );
+	//	virtual void Think( float dt );
 
 private:
-
-	void PositionSliders( int sboffset );
+	void PositionSliders(int sboffset);
 
 	enum
 	{
@@ -41,15 +40,15 @@ private:
 
 	struct TextLine
 	{
-		char		m_szText[ 512 ];
-		int			r, g, b;
-		float		curtime;
+		char m_szText[512];
+		int r, g, b;
+		float curtime;
 	};
 
-	TextLine		m_rgTextLines[ MAX_TEXT_LINES ];
-	int				m_nCurrentLine;
+	TextLine m_rgTextLines[MAX_TEXT_LINES];
+	int m_nCurrentLine;
 
-	mxScrollbar		*m_pScrollbar;
+	mxScrollbar *m_pScrollbar;
 };
 
 extern CStatusWindow *g_pStatusWindow;

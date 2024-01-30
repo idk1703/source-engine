@@ -30,7 +30,6 @@ class ISoundEmitterSystemBase;
 
 typedef unsigned short AVIHandle_t;
 
-
 //-----------------------------------------------------------------------------
 // Class factories
 //-----------------------------------------------------------------------------
@@ -40,7 +39,6 @@ extern CreateInterfaceFn g_AppSystemFactory;
 
 // this factory connect the AppSystemFactory + client.dll + gameui.dll
 extern CreateInterfaceFn g_GameSystemFactory;
-
 
 //-----------------------------------------------------------------------------
 // Singleton interfaces
@@ -66,9 +64,9 @@ inline bool InEditMode()
 
 struct modinfo_t
 {
-	char szInfo[ 256 ];
-	char szDL  [ 256 ];
-	char szHLVersion[ 32 ];
+	char szInfo[256];
+	char szDL[256];
+	char szHLVersion[32];
 	int version;
 	int size;
 	bool svonly;
@@ -77,8 +75,8 @@ struct modinfo_t
 
 extern modinfo_t gmodinfo;
 
-void LoadEntityDLLs( const char *szBaseDir, bool bIsServerOnly );
-void UnloadEntityDLLs( void );
+void LoadEntityDLLs(const char *szBaseDir, bool bIsServerOnly);
+void UnloadEntityDLLs(void);
 
 // This returns true if someone called Error() or Sys_Error() and we're exiting.
 // Since we call exit() from inside those, some destructors need to be safe and not crash.
@@ -87,7 +85,7 @@ bool IsInErrorExit();
 // error message
 bool Sys_MessageBox(const char *title, const char *info, bool bShowOkAndCancel);
 
-bool ServerDLL_Load( bool bIsServerOnly );
+bool ServerDLL_Load(bool bIsServerOnly);
 void ServerDLL_Unload();
 
 typedef uint32 AppId_t;
@@ -95,17 +93,16 @@ typedef uint32 AppId_t;
 // steam.inf information.
 struct SteamInfVersionInfo_t
 {
-	int32 ClientVersion; // PatchVersion
-	int32 ServerVersion; // ServerVersion
-	char szVersionString[ 32 ]; // PatchVersion string
-	char szProductString[ 32 ]; // ProductName string
+	int32 ClientVersion;	  // PatchVersion
+	int32 ServerVersion;	  // ServerVersion
+	char szVersionString[32]; // PatchVersion string
+	char szProductString[32]; // ProductName string
 
-	AppId_t AppID; // Steam AppID. Read from steam.inf(AppID) or gameinfo.txt(SteamAppId)
+	AppId_t AppID;		 // Steam AppID. Read from steam.inf(AppID) or gameinfo.txt(SteamAppId)
 	AppId_t ServerAppID; // ServerAppID. Used for dedicated server crash reporting.
 };
-const SteamInfVersionInfo_t& GetSteamInfIDVersionInfo();
+const SteamInfVersionInfo_t &GetSteamInfIDVersionInfo();
 
 extern CreateInterfaceFn g_ServerFactory;
 
 #endif
-

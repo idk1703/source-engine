@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -27,7 +27,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-CNavMesh *NavMeshFactory( void )
+CNavMesh *NavMeshFactory(void)
 {
 #ifdef TERROR
 	return new TerrorNavMesh;

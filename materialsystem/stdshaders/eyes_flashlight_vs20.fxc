@@ -57,7 +57,7 @@ struct VS_INPUT
 
 struct VS_OUTPUT
 {
-    float4 projPos				: POSITION;			// Projection-space position
+	float4 projPos				: POSITION;			// Projection-space position
 #if !defined( _X360 )
 	float  fog					: FOG;				// Fixed-function fog factor
 #endif
@@ -93,8 +93,8 @@ VS_OUTPUT main( const VS_INPUT v )
 
 	// Perform skinning
 	float3 worldNormal, worldPos;
-	SkinPositionAndNormal( 
-		g_bSkinning, 
+	SkinPositionAndNormal(
+		g_bSkinning,
 		vPosition, vNormal,
 		v.vBoneWeights, v.vBoneIndices,
 		worldPos, worldNormal );
@@ -135,7 +135,7 @@ VS_OUTPUT main( const VS_INPUT v )
 
 	float endFalloffFactor = RemapValClamped_01( flDist, fFarZ, 0.6 * fFarZ );
 	o.vertAtten.xyz = endFalloffFactor * dot( vDistAtten, cFlashlighAtten.xyz );
-	
+
 	o.vertAtten *= dot( normalize( vWorldPosToLightVector ), worldNormal );
 
 	o.irisTexCoord.x  = dot( cIrisProjectionU,  float4(worldPos, 1) );

@@ -7,7 +7,7 @@ Usage for the vpc-generating perl scripts::
 "generatesimpleVPC.pl"
 
 - Run from the vpc_scripts directory.
-- Use full or relative path to the vcproj file. 
+- Use full or relative path to the vcproj file.
 - Use -o to specify an output directory. If no output directory is specified, The vpc script(s) will be generated in the same directory as the source vcproj.
 ("generateSimpleVPC.pl" produces a stripped-down version of the output scripts)
 
@@ -26,7 +26,7 @@ No arguments are necessary:
 
 > generateSnapshot.pl
 
- 
+
 
 NOTES:
 

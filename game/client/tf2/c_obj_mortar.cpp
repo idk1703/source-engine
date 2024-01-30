@@ -20,48 +20,50 @@
 #include "iusesmortarpanel.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_ObjectMortar : public C_BaseObject, public IUsesMortarPanel
 {
-	DECLARE_CLASS( C_ObjectMortar, C_BaseObject );
+	DECLARE_CLASS(C_ObjectMortar, C_BaseObject);
+
 public:
 	DECLARE_CLIENTCLASS();
 	DECLARE_ENTITY_PANEL();
 
 	C_ObjectMortar();
 
-	virtual void SetDormant( bool bDormant );
-	virtual void Select( void );
-	virtual void RecalculateIDString( void );
-	
-	void		 FireMortar( void );
+	virtual void SetDormant(bool bDormant);
+	virtual void Select(void);
+	virtual void RecalculateIDString(void);
 
-// IUsesMortarPanel
+	void FireMortar(void);
+
+	// IUsesMortarPanel
 public:
 	// Get the data from this mortar needed by the panel
-	virtual void	GetMortarData( float *flClientMortarYaw, bool *bAllowedToFire, float *flPower, float *flFiringPower, float *flFiringAccuracy, int *iFiringState );
-	virtual void	SendYawCommand( void );
-	virtual void	ForceClientYawCountdown( float flTime );
-	virtual void	ClickFire( void );
+	virtual void GetMortarData(float *flClientMortarYaw, bool *bAllowedToFire, float *flPower, float *flFiringPower,
+							   float *flFiringAccuracy, int *iFiringState);
+	virtual void SendYawCommand(void);
+	virtual void ForceClientYawCountdown(float flTime);
+	virtual void ClickFire(void);
 
 public:
-	int		m_iRoundType;
-	int		m_iMortarRounds[ MA_LASTAMMOTYPE ];
+	int m_iRoundType;
+	int m_iMortarRounds[MA_LASTAMMOTYPE];
 
 	// Mortar firing info.
-	int		m_iFiringState; // One of the MORTAR_ defines.
-	bool	m_bMortarReloading;
-	float	m_flPower;
-	bool	m_bAllowedToFire;
-	
+	int m_iFiringState; // One of the MORTAR_ defines.
+	bool m_bMortarReloading;
+	float m_flPower;
+	bool m_bAllowedToFire;
+
 	// Parameters for the next shot.
 	float m_flFiringPower;
 	float m_flFiringAccuracy;
 
-	float m_flMortarYaw;	// What direction the mortar is aimed in.
+	float m_flMortarYaw; // What direction the mortar is aimed in.
 	float m_flMortarPitch;
-	
+
 	// This is what is used on the client to draw the ground line and orient the mortar.
 	// It is usually copied right over from m_flClientMortarYaw (which comes from the server),
 	// but this is also used when rotating the mortar so you can see the line move smoothly.
@@ -72,60 +74,60 @@ public:
 	float m_flForceClientYawCountdown;
 
 private:
-	C_ObjectMortar( const C_ObjectMortar & ); // not defined, not accessible
+	C_ObjectMortar(const C_ObjectMortar &); // not defined, not accessible
 };
 
 IMPLEMENT_CLIENTCLASS_DT(C_ObjectMortar, DT_ObjectMortar, CObjectMortar)
-	RecvPropInt( RECVINFO(m_iRoundType) ),
-	RecvPropArray( RecvPropInt( RECVINFO(m_iMortarRounds[0]) ),	m_iMortarRounds )
-END_RECV_TABLE()
+RecvPropInt(RECVINFO(m_iRoundType)), RecvPropArray(RecvPropInt(RECVINFO(m_iMortarRounds[0])), m_iMortarRounds)
+END_RECV_TABLE
+()
 
-//-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-C_ObjectMortar::C_ObjectMortar( void )
+	//-----------------------------------------------------------------------------
+	// Purpose:
+	//-----------------------------------------------------------------------------
+	C_ObjectMortar::C_ObjectMortar(void)
 {
-	memset( m_iMortarRounds, 0, sizeof( m_iMortarRounds ) );
+	memset(m_iMortarRounds, 0, sizeof(m_iMortarRounds));
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_ObjectMortar::SetDormant( bool bDormant )
+void C_ObjectMortar::SetDormant(bool bDormant)
 {
-	BaseClass::SetDormant( bDormant );
-	ENTITY_PANEL_ACTIVATE( "mortar", !bDormant );
+	BaseClass::SetDormant(bDormant);
+	ENTITY_PANEL_ACTIVATE("mortar", !bDormant);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Cycle ammo types on the mortar
 //-----------------------------------------------------------------------------
-void C_ObjectMortar::Select( void )
+void C_ObjectMortar::Select(void)
 {
 	C_BaseTFPlayer *pPlayer = C_BaseTFPlayer::GetLocalPlayer();
-	if ( pPlayer == NULL )
+	if(pPlayer == NULL)
 		return;
 
 	int iOldType = m_iRoundType++;
 
 	// Cycle to the next ammo type
-	while ( m_iRoundType != iOldType )
+	while(m_iRoundType != iOldType)
 	{
 		// Hit the end of the round types?
-		if ( m_iRoundType == MA_LASTAMMOTYPE )
+		if(m_iRoundType == MA_LASTAMMOTYPE)
 		{
 			m_iRoundType = MA_SHELL;
 			break;
 		}
 
 		// Does this round type need a technology?
-		if ( MortarAmmoTechs[ m_iRoundType ] && MortarAmmoTechs[ m_iRoundType ][0] )
+		if(MortarAmmoTechs[m_iRoundType] && MortarAmmoTechs[m_iRoundType][0])
 		{
 			// Does the player have the technology?
-			if ( pPlayer->HasNamedTechnology( MortarAmmoTechs[ m_iRoundType ] ) )
+			if(pPlayer->HasNamedTechnology(MortarAmmoTechs[m_iRoundType]))
 			{
 				// Do we have ammo?
-				if ( m_iMortarRounds[ m_iRoundType ] > 0 )
+				if(m_iMortarRounds[m_iRoundType] > 0)
 					break;
 			}
 		}
@@ -134,29 +136,31 @@ void C_ObjectMortar::Select( void )
 		m_iRoundType++;
 	}
 
-	engine->ClientCmd( VarArgs("mortarround %d", m_iRoundType) );
+	engine->ClientCmd(VarArgs("mortarround %d", m_iRoundType));
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_ObjectMortar::RecalculateIDString( void )
+void C_ObjectMortar::RecalculateIDString(void)
 {
 	// Only owners get full data
-	if ( IsOwnedByLocalPlayer() )
+	if(IsOwnedByLocalPlayer())
 	{
-		if ( m_iRoundType >= 0 )
+		if(m_iRoundType >= 0)
 		{
 			// -1 means we have infinite rounds of this type
-			if ( m_iMortarRounds[ m_iRoundType ] == -1 )
+			if(m_iMortarRounds[m_iRoundType] == -1)
 			{
-				Q_snprintf( m_szIDString, sizeof(m_szIDString), "%s  -  %s", GetTargetDescription(), MortarAmmoNames[ m_iRoundType ] );
+				Q_snprintf(m_szIDString, sizeof(m_szIDString), "%s  -  %s", GetTargetDescription(),
+						   MortarAmmoNames[m_iRoundType]);
 			}
-			else 
+			else
 			{
-				Q_snprintf( m_szIDString, sizeof(m_szIDString), "%s  -  %d %s", GetTargetDescription(), m_iMortarRounds[ m_iRoundType ], MortarAmmoNames[ m_iRoundType ] );
+				Q_snprintf(m_szIDString, sizeof(m_szIDString), "%s  -  %d %s", GetTargetDescription(),
+						   m_iMortarRounds[m_iRoundType], MortarAmmoNames[m_iRoundType]);
 			}
-			Q_strncat( m_szIDString, "\nUse it to change ammo types.", sizeof(m_szIDString), COPY_ALL_CHARACTERS );
+			Q_strncat(m_szIDString, "\nUse it to change ammo types.", sizeof(m_szIDString), COPY_ALL_CHARACTERS);
 		}
 	}
 
@@ -164,34 +168,35 @@ void C_ObjectMortar::RecalculateIDString( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_ObjectMortar::ClickFire( void )
+void C_ObjectMortar::ClickFire(void)
 {
-	switch( m_iFiringState )
+	switch(m_iFiringState)
 	{
-	case MORTAR_IDLE:
-		m_iFiringState = MORTAR_CHARGING_POWER;
-		break;
-	
-	case MORTAR_CHARGING_POWER:
-		m_flFiringPower = m_flPower;
-		m_iFiringState = MORTAR_CHARGING_ACCURACY;
-		break;
-	
-	case MORTAR_CHARGING_ACCURACY:
-		m_flFiringAccuracy = m_flPower;
-		m_iFiringState = MORTAR_IDLE;
+		case MORTAR_IDLE:
+			m_iFiringState = MORTAR_CHARGING_POWER;
+			break;
 
-		FireMortar();
-		break;
+		case MORTAR_CHARGING_POWER:
+			m_flFiringPower = m_flPower;
+			m_iFiringState = MORTAR_CHARGING_ACCURACY;
+			break;
+
+		case MORTAR_CHARGING_ACCURACY:
+			m_flFiringAccuracy = m_flPower;
+			m_iFiringState = MORTAR_IDLE;
+
+			FireMortar();
+			break;
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_ObjectMortar::GetMortarData( float *flClientMortarYaw, bool *bAllowedToFire, float *flPower, float *flFiringPower, float *flFiringAccuracy, int *iFiringState )
+void C_ObjectMortar::GetMortarData(float *flClientMortarYaw, bool *bAllowedToFire, float *flPower, float *flFiringPower,
+								   float *flFiringAccuracy, int *iFiringState)
 {
 	*flClientMortarYaw = m_flClientMortarYaw;
 	*bAllowedToFire = m_bAllowedToFire;
@@ -202,61 +207,59 @@ void C_ObjectMortar::GetMortarData( float *flClientMortarYaw, bool *bAllowedToFi
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_ObjectMortar::SendYawCommand( void )
+void C_ObjectMortar::SendYawCommand(void)
 {
 	char szbuf[48];
-	Q_snprintf( szbuf, sizeof( szbuf ), "MortarYaw %0.2f\n", m_flClientMortarYaw );
-	SendClientCommand( szbuf );
+	Q_snprintf(szbuf, sizeof(szbuf), "MortarYaw %0.2f\n", m_flClientMortarYaw);
+	SendClientCommand(szbuf);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_ObjectMortar::ForceClientYawCountdown( float flTime )
+void C_ObjectMortar::ForceClientYawCountdown(float flTime)
 {
 	m_flForceClientYawCountdown = flTime;
 }
 
-
 //-----------------------------------------------------------------------------
-// Control screen 
+// Control screen
 //-----------------------------------------------------------------------------
 class CMortarControlPanel : public CObjectControlPanel
 {
-	DECLARE_CLASS( CMortarControlPanel, CObjectControlPanel );
+	DECLARE_CLASS(CMortarControlPanel, CObjectControlPanel);
+
 public:
-	CMortarControlPanel( vgui::Panel *parent, const char *panelName );
+	CMortarControlPanel(vgui::Panel *parent, const char *panelName);
 	virtual ~CMortarControlPanel();
-	
-	virtual bool Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData );
-	virtual void OnCommand( const char *command );
-	C_ObjectMortar* GetMortar() const;
+
+	virtual bool Init(KeyValues *pKeyValues, VGuiScreenInitData_t *pInitData);
+	virtual void OnCommand(const char *command);
+	C_ObjectMortar *GetMortar() const;
 
 protected:
-	virtual vgui::Panel* TickCurrentPanel();
+	virtual vgui::Panel *TickCurrentPanel();
 
 private:
 	CMortarMinimapPanel *m_pMinimapPanel;
 };
 
-
-DECLARE_VGUI_SCREEN_FACTORY( CMortarControlPanel, "mortar_control_panel" );
-
+DECLARE_VGUI_SCREEN_FACTORY(CMortarControlPanel, "mortar_control_panel");
 
 //-----------------------------------------------------------------------------
-// Constructor: 
+// Constructor:
 //-----------------------------------------------------------------------------
-CMortarControlPanel::CMortarControlPanel( vgui::Panel *parent, const char *panelName )
-	: BaseClass( parent, "CMortarControlPanel" ) 
+CMortarControlPanel::CMortarControlPanel(vgui::Panel *parent, const char *panelName)
+	: BaseClass(parent, "CMortarControlPanel")
 {
-	m_pMinimapPanel = new CMortarMinimapPanel( this, "MinimapPanel" );
-	m_pMinimapPanel->Init( NULL );
+	m_pMinimapPanel = new CMortarMinimapPanel(this, "MinimapPanel");
+	m_pMinimapPanel->Init(NULL);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMortarControlPanel::~CMortarControlPanel()
 {
@@ -264,107 +267,109 @@ CMortarControlPanel::~CMortarControlPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Initialization 
+// Initialization
 //-----------------------------------------------------------------------------
-bool CMortarControlPanel::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData )
+bool CMortarControlPanel::Init(KeyValues *pKeyValues, VGuiScreenInitData_t *pInitData)
 {
 	// Make sure all named panels are created up above because BaseClass::Init initializes them
 	// all from their keyvalues.
-	if ( !BaseClass::Init( pKeyValues, pInitData ) )
+	if(!BaseClass::Init(pKeyValues, pInitData))
 		return false;
 
 	// Init subpanels.
 	int x, y, w, h;
-	GetBounds( x, y, w, h );
+	GetBounds(x, y, w, h);
 
-	m_pMinimapPanel->LevelInit( engine->GetLevelName() );
-	m_pMinimapPanel->SetVisible( true );
-	m_pMinimapPanel->InitMortarMinimap( GetMortar() );
+	m_pMinimapPanel->LevelInit(engine->GetLevelName());
+	m_pMinimapPanel->SetVisible(true);
+	m_pMinimapPanel->InitMortarMinimap(GetMortar());
 	return true;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-C_ObjectMortar* CMortarControlPanel::GetMortar() const
+C_ObjectMortar *CMortarControlPanel::GetMortar() const
 {
-	return dynamic_cast< C_ObjectMortar* >( GetOwningObject() );
+	return dynamic_cast<C_ObjectMortar *>(GetOwningObject());
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void C_ObjectMortar::FireMortar( void )
+void C_ObjectMortar::FireMortar(void)
 {
 	char cmd[512];
-	Q_snprintf( cmd, sizeof( cmd ), "FireMortar %.2f %.2f", m_flFiringPower, m_flFiringAccuracy );
-	SendClientCommand( cmd );
+	Q_snprintf(cmd, sizeof(cmd), "FireMortar %.2f %.2f", m_flFiringPower, m_flFiringAccuracy);
+	SendClientCommand(cmd);
 }
 
 //-----------------------------------------------------------------------------
 // Frame-based update
 //-----------------------------------------------------------------------------
-vgui::Panel* CMortarControlPanel::TickCurrentPanel()
+vgui::Panel *CMortarControlPanel::TickCurrentPanel()
 {
 	C_BaseObject *pObj = GetOwningObject();
-	if (!pObj)
-		return BaseClass::TickCurrentPanel();;
+	if(!pObj)
+		return BaseClass::TickCurrentPanel();
+	;
 
-	ShowOwnerLabel( true );
-	ShowHealthLabel( true );
+	ShowOwnerLabel(true);
+	ShowHealthLabel(true);
 
 	C_ObjectMortar *pMortar = GetMortar();
-	if ( !pMortar )
-		return BaseClass::TickCurrentPanel();;
+	if(!pMortar)
+		return BaseClass::TickCurrentPanel();
+	;
 
-	ShowOwnerLabel( false );
-	ShowHealthLabel( false );
+	ShowOwnerLabel(false);
+	ShowHealthLabel(false);
 
 	m_pMinimapPanel->Repaint();
 
 	float flAccuracySpeed = (1.0 / MORTAR_CHARGE_ACCURACY_RATE);
 
 	// Handle power charging
-	switch( pMortar->m_iFiringState )
+	switch(pMortar->m_iFiringState)
 	{
-	case MORTAR_IDLE:
-		pMortar->m_flPower = 0;
-		break;
+		case MORTAR_IDLE:
+			pMortar->m_flPower = 0;
+			break;
 
-	case MORTAR_CHARGING_POWER:
-		pMortar->m_flPower = MIN( pMortar->m_flPower + ( (1.0 / MORTAR_CHARGE_POWER_RATE) * gpGlobals->frametime), 1 );
-		pMortar->m_flFiringPower = 0;
-		pMortar->m_flFiringAccuracy = 0;
-		if ( pMortar->m_flPower >= 1.0 )
-		{
-			// Hit Max, start going down
-			pMortar->m_flFiringPower = pMortar->m_flPower;
-			pMortar->m_iFiringState = MORTAR_CHARGING_ACCURACY;
-		}
-		break;
+		case MORTAR_CHARGING_POWER:
+			pMortar->m_flPower = MIN(pMortar->m_flPower + ((1.0 / MORTAR_CHARGE_POWER_RATE) * gpGlobals->frametime), 1);
+			pMortar->m_flFiringPower = 0;
+			pMortar->m_flFiringAccuracy = 0;
+			if(pMortar->m_flPower >= 1.0)
+			{
+				// Hit Max, start going down
+				pMortar->m_flFiringPower = pMortar->m_flPower;
+				pMortar->m_iFiringState = MORTAR_CHARGING_ACCURACY;
+			}
+			break;
 
-	case MORTAR_CHARGING_ACCURACY:
-		// Calculate accuracy speed
-		if ( pMortar->m_flFiringPower > 0.5 )
-		{
-			// Shots over halfway suffer an increased speed to the accuracy power, making accurate shots harder
-			float flAdjustedPower = (pMortar->m_flFiringPower - 0.5) * 3.0;
-			flAccuracySpeed += (pMortar->m_flFiringPower * flAdjustedPower);
-		}
+		case MORTAR_CHARGING_ACCURACY:
+			// Calculate accuracy speed
+			if(pMortar->m_flFiringPower > 0.5)
+			{
+				// Shots over halfway suffer an increased speed to the accuracy power, making accurate shots harder
+				float flAdjustedPower = (pMortar->m_flFiringPower - 0.5) * 3.0;
+				flAccuracySpeed += (pMortar->m_flFiringPower * flAdjustedPower);
+			}
 
-		pMortar->m_flPower = MAX( pMortar->m_flPower - ( flAccuracySpeed * gpGlobals->frametime), -0.25f);
-		if ( pMortar->m_flPower <= -0.25 )
-		{
-			// Hit Min, fire mortar
-			pMortar->m_flFiringAccuracy = pMortar->m_flPower;
-			pMortar->m_iFiringState = MORTAR_IDLE;
+			pMortar->m_flPower = MAX(pMortar->m_flPower - (flAccuracySpeed * gpGlobals->frametime), -0.25f);
+			if(pMortar->m_flPower <= -0.25)
+			{
+				// Hit Min, fire mortar
+				pMortar->m_flFiringAccuracy = pMortar->m_flPower;
+				pMortar->m_iFiringState = MORTAR_IDLE;
 
-			pMortar->FireMortar();
-		}
-		break;
-	
-	default:
-		break;
+				pMortar->FireMortar();
+			}
+			break;
+
+		default:
+			break;
 	}
 
 	return BaseClass::TickCurrentPanel();
@@ -373,17 +378,16 @@ vgui::Panel* CMortarControlPanel::TickCurrentPanel()
 //-----------------------------------------------------------------------------
 // Button click handlers
 //-----------------------------------------------------------------------------
-void CMortarControlPanel::OnCommand( const char *command )
+void CMortarControlPanel::OnCommand(const char *command)
 {
 	C_ObjectMortar *pMortar = GetMortar();
-	if ( !pMortar )
+	if(!pMortar)
 		return;
 
-	if ( !Q_stricmp( command, "FireMortar" ) )
+	if(!Q_stricmp(command, "FireMortar"))
 	{
 		pMortar->ClickFire();
 	}
 
 	BaseClass::OnCommand(command);
 }
-

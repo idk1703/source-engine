@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -22,28 +22,30 @@
 
 class CSteamDebugHelperDlg : public CDialog
 {
-// Construction
+	// Construction
 public:
-	CSteamDebugHelperDlg(CWnd* pParent = NULL);	// standard constructor
+	CSteamDebugHelperDlg(CWnd *pParent = NULL); // standard constructor
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CSteamDebugHelperDlg)
-	enum { IDD = IDD_STEAMDEBUGHELPER_DIALOG };
-		// NOTE: the ClassWizard will add data members here
+	enum
+	{
+		IDD = IDD_STEAMDEBUGHELPER_DIALOG
+	};
+	// NOTE: the ClassWizard will add data members here
 	//}}AFX_DATA
 
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CSteamDebugHelperDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
+protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
 	//}}AFX_VIRTUAL
 
-	void SetConfigFilename( const char *pName );
+	void SetConfigFilename(const char *pName);
 
 	CString m_ConfigFilename;
-	KeyValues* LoadConfigFile();
+	KeyValues *LoadConfigFile();
 
-	
 	// Extracted from the kv file.
 	const char *m_pSourceExeDir;
 	KeyValues *m_pSteamAppCfg;
@@ -51,8 +53,7 @@ public:
 	const char *m_pSteamAppDir;
 	char m_SteamBaseDir[512];
 
-
-// Implementation
+	// Implementation
 protected:
 	HICON m_hIcon;
 

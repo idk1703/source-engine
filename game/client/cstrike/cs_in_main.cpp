@@ -19,5 +19,4 @@ public:
 static CCSInput g_Input;
 
 // Expose this interface
-IInput *input = ( IInput * )&g_Input;
-
+IInput *input = (IInput *)&g_Input;

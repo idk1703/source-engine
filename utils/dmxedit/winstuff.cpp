@@ -17,20 +17,18 @@
 #include <windows.h>
 #endif // #ifdef WIN32
 
-
 //-----------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------
-void MyGetUserName( char *pszBuf, unsigned long *pBufSiz )
+void MyGetUserName(char *pszBuf, unsigned long *pBufSiz)
 {
-	GetUserName( pszBuf, pBufSiz );
+	GetUserName(pszBuf, pBufSiz);
 }
 
-
 //-----------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------
-void MyGetComputerName( char *pszBuf, unsigned long *pBufSiz )
+void MyGetComputerName(char *pszBuf, unsigned long *pBufSiz)
 {
-	GetComputerName( pszBuf, pBufSiz );
+	GetComputerName(pszBuf, pBufSiz);
 }

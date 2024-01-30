@@ -31,105 +31,106 @@
 bool BIsPartyLeader()
 {
 	CTFParty *pParty = GTFGCClientSystem()->GetParty();
-	return ( pParty == NULL || pParty->GetLeader() == steamapicontext->SteamUser()->GetSteamID() );
+	return (pParty == NULL || pParty->GetLeader() == steamapicontext->SteamUser()->GetSteamID());
 }
 
 bool BIsPartyInUIState()
 {
-	if ( !GCClientSystem()->BConnectedtoGC() )
+	if(!GCClientSystem()->BConnectedtoGC())
 		return false;
 	CTFParty *pParty = GTFGCClientSystem()->GetParty();
-	return ( pParty == NULL || pParty->GetState() == CSOTFParty_State_UI );
+	return (pParty == NULL || pParty->GetState() == CSOTFParty_State_UI);
 }
 
-CSteamID SteamIDFromDecimalString( const char *pszUint64InDecimal )
+CSteamID SteamIDFromDecimalString(const char *pszUint64InDecimal)
 {
 	uint64 ulSteamID = 0;
-	if ( sscanf( pszUint64InDecimal, "%llu", &ulSteamID ) )
+	if(sscanf(pszUint64InDecimal, "%llu", &ulSteamID))
 	{
-		return CSteamID( ulSteamID );
+		return CSteamID(ulSteamID);
 	}
 	else
 	{
-		Assert( false );
+		Assert(false);
 		return CSteamID();
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CBaseLobbyContainerFrame::CBaseLobbyContainerFrame( const char* pszPanelName ) 
-	: vgui::PropertyDialog( NULL, pszPanelName )
-	, m_bNextButtonEnabled( false )
-	, m_pContextMenu( NULL )
+CBaseLobbyContainerFrame::CBaseLobbyContainerFrame(const char *pszPanelName)
+	: vgui::PropertyDialog(NULL, pszPanelName), m_bNextButtonEnabled(false), m_pContextMenu(NULL)
 {
-	vgui::VPANEL gameuiPanel = enginevgui->GetPanel( PANEL_GAMEUIDLL );
-	SetParent( gameuiPanel );
+	vgui::VPANEL gameuiPanel = enginevgui->GetPanel(PANEL_GAMEUIDLL);
+	SetParent(gameuiPanel);
 
-	SetMoveable( false );
-	SetSizeable( false );
+	SetMoveable(false);
+	SetSizeable(false);
 
-	vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/ClientScheme.res", "ClientScheme");
+	vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx(enginevgui->GetPanel(PANEL_CLIENTDLL),
+																"resource/ClientScheme.res", "ClientScheme");
 	SetScheme(scheme);
-	SetProportional( true );
+	SetProportional(true);
 
-	ListenForGameEvent( "gameui_hidden" );
+	ListenForGameEvent("gameui_hidden");
 
-	ListenForGameEvent( "lobby_updated" );
-	ListenForGameEvent( "party_updated" );
-	ListenForGameEvent( "client_beginconnect" );
+	ListenForGameEvent("lobby_updated");
+	ListenForGameEvent("party_updated");
+	ListenForGameEvent("client_beginconnect");
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CBaseLobbyContainerFrame::~CBaseLobbyContainerFrame( void )
-{
-}
+CBaseLobbyContainerFrame::~CBaseLobbyContainerFrame(void) {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseLobbyContainerFrame::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CBaseLobbyContainerFrame::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
 	// load control settings...
-	LoadControlSettings( GetResFile() );
+	LoadControlSettings(GetResFile());
 
-	m_pStartPartyButton = dynamic_cast<vgui::Button *>(FindChildByName( "StartPartyButton", true )); Assert( m_pStartPartyButton );
-	m_pBackButton = dynamic_cast<vgui::Button *>( FindChildByName( "BackButton", true ) ); Assert( m_pBackButton );
-	m_pNextButton = dynamic_cast<vgui::Button *>( FindChildByName( "NextButton", true ) ); Assert( m_pNextButton );
+	m_pStartPartyButton = dynamic_cast<vgui::Button *>(FindChildByName("StartPartyButton", true));
+	Assert(m_pStartPartyButton);
+	m_pBackButton = dynamic_cast<vgui::Button *>(FindChildByName("BackButton", true));
+	Assert(m_pBackButton);
+	m_pNextButton = dynamic_cast<vgui::Button *>(FindChildByName("NextButton", true));
+	Assert(m_pNextButton);
 
 	SetOKButtonVisible(false);
 	SetCancelButtonVisible(false);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseLobbyContainerFrame::ShowPanel(bool bShow)
 {
-	tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ );
+	tmZone(TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__);
 
 	// Keep the MM dashboard on top of us
-	bShow ? GetMMDashboardParentManager()->PushModalFullscreenPopup( this ) 
-		  : GetMMDashboardParentManager()->PopModalFullscreenPopup( this );
+	bShow ? GetMMDashboardParentManager()->PushModalFullscreenPopup(this)
+		  : GetMMDashboardParentManager()->PopModalFullscreenPopup(this);
 
-	m_pContents->SetControlVisible( "PartyActiveGroupBox", false );
+	m_pContents->SetControlVisible("PartyActiveGroupBox", false);
 
 	// Make sure we're signed on
-	if ( bShow )
+	if(bShow)
 	{
-		if ( GetPropertySheet()->GetActivePage() != m_pContents )
+		if(GetPropertySheet()->GetActivePage() != m_pContents)
 		{
-			GetPropertySheet()->SetActivePage( m_pContents );
+			GetPropertySheet()->SetActivePage(m_pContents);
 		}
 		else
 		{
 			// VGUI doesn't tell the starting active page that it's active, so we post a pageshow to it
-			vgui::ivgui()->PostMessage( m_pContents->GetVPanel(), new KeyValues("PageShow"), GetPropertySheet()->GetVPanel() );
+			vgui::ivgui()->PostMessage(m_pContents->GetVPanel(), new KeyValues("PageShow"),
+									   GetPropertySheet()->GetVPanel());
 		}
 
 		Activate();
@@ -137,54 +138,53 @@ void CBaseLobbyContainerFrame::ShowPanel(bool bShow)
 		// I don't know why, I don't want to know why, I shouldn't
 		// have to wonder why, but for whatever reason this stupid
 		// panel isn't laying out correctly unless we do this terribleness
-		InvalidateLayout( true );
-		m_pContents->InvalidateLayout( true, true );
+		InvalidateLayout(true);
+		m_pContents->InvalidateLayout(true, true);
 
-		GTFGCClientSystem()->SetLocalPlayerSquadSurplus( false );
+		GTFGCClientSystem()->SetLocalPlayerSquadSurplus(false);
 		WriteControls();
 		m_pContents->UpdateControls();
 
-		Panel* pPvPRankPanel = FindChildByName( "RankPanel", true );
-		if ( pPvPRankPanel )
+		Panel *pPvPRankPanel = FindChildByName("RankPanel", true);
+		if(pPvPRankPanel)
 		{
-			pPvPRankPanel->OnCommand( "update_base_state" );
-			pPvPRankPanel->OnCommand( "begin_xp_lerp" );
+			pPvPRankPanel->OnCommand("update_base_state");
+			pPvPRankPanel->OnCommand("begin_xp_lerp");
 		}
 	}
 	else
 	{
-		if ( m_hPingPanel )
+		if(m_hPingPanel)
 		{
 			m_hPingPanel->MarkForDeletion();
 		}
 	}
 
-	OnCommand( "leave_party" );
+	OnCommand("leave_party");
 
-	SetVisible( bShow );
-	m_pContents->SetVisible( bShow );
+	SetVisible(bShow);
+	m_pContents->SetVisible(bShow);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseLobbyContainerFrame::SetNextButtonEnabled( bool bValue )
+void CBaseLobbyContainerFrame::SetNextButtonEnabled(bool bValue)
 {
 	m_bNextButtonEnabled = bValue;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseLobbyContainerFrame::OnThink()
 {
 	BaseClass::OnThink();
 
 	// Check if we don't want to be here, then get out!
-	if ( GTFGCClientSystem()->GetMatchmakingUIState() == eMatchmakingUIState_Inactive )
+	if(GTFGCClientSystem()->GetMatchmakingUIState() == eMatchmakingUIState_Inactive)
 	{
-		Msg( "Hiding LobbyContainerFrame" );
+		Msg("Hiding LobbyContainerFrame");
 		ShowPanel(false);
 		return;
 	}
@@ -192,310 +192,309 @@ void CBaseLobbyContainerFrame::OnThink()
 	WriteControls();
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseLobbyContainerFrame::FireGameEvent( IGameEvent *event )
+void CBaseLobbyContainerFrame::FireGameEvent(IGameEvent *event)
 {
-	if ( GTFGCClientSystem()->GetSearchMode() != GetHandledMode() )
+	if(GTFGCClientSystem()->GetSearchMode() != GetHandledMode())
 		return;
 
 	const char *pszEventname = event->GetName();
-	if ( !Q_stricmp( pszEventname, "lobby_updated" ) || !Q_stricmp( pszEventname, "party_updated" ) )
+	if(!Q_stricmp(pszEventname, "lobby_updated") || !Q_stricmp(pszEventname, "party_updated"))
 	{
 		WriteControls();
 		return;
 	}
 
 	// Bail when we connect to any server
-	if ( !Q_stricmp( pszEventname, "client_beginconnect" ) )
+	if(!Q_stricmp(pszEventname, "client_beginconnect"))
 	{
-		ShowPanel( false );
+		ShowPanel(false);
 		return;
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseLobbyContainerFrame::StartSearch( void )
+void CBaseLobbyContainerFrame::StartSearch(void)
 {
 	// Is anyone banned from matchmaking?
 	RTime32 rtimeExpire = 0;
-	if ( m_pContents->IsAnyoneBanned( rtimeExpire ) )
+	if(m_pContents->IsAnyoneBanned(rtimeExpire))
 	{
-		CRTime timeExpire( rtimeExpire );
-		timeExpire.SetToGMT( false );
+		CRTime timeExpire(rtimeExpire);
+		timeExpire.SetToGMT(false);
 		char out_buf[k_RTimeRenderBufferSize];
 		wchar_t wszExpire[512];
 		wchar_t wszLocalized[512];
-		g_pVGuiLocalize->ConvertANSIToUnicode( timeExpire.Render( out_buf ), wszExpire, sizeof( wszExpire ) );
-		g_pVGuiLocalize->ConstructString_safe( wszLocalized, g_pVGuiLocalize->Find( "#TF_Matchmaking_Banned" ), 1, wszExpire );
-		ShowMessageBox( "#TF_Matchmaking_Title", wszLocalized, "#GameUI_OK" );
+		g_pVGuiLocalize->ConvertANSIToUnicode(timeExpire.Render(out_buf), wszExpire, sizeof(wszExpire));
+		g_pVGuiLocalize->ConstructString_safe(wszLocalized, g_pVGuiLocalize->Find("#TF_Matchmaking_Banned"), 1,
+											  wszExpire);
+		ShowMessageBox("#TF_Matchmaking_Title", wszLocalized, "#GameUI_OK");
 		return;
 	}
 
-	if ( VerifyPartyAuthorization() )
+	if(VerifyPartyAuthorization())
 	{
-		GTFGCClientSystem()->RequestSelectWizardStep( TF_Matchmaking_WizardStep_SEARCHING );
+		GTFGCClientSystem()->RequestSelectWizardStep(TF_Matchmaking_WizardStep_SEARCHING);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseLobbyContainerFrame::OnCommand( const char *command )
+void CBaseLobbyContainerFrame::OnCommand(const char *command)
 {
-	if ( FStrEq( command, "options" ) )
+	if(FStrEq(command, "options"))
 	{
 		OpenOptionsContextMenu();
 	}
-	else if ( FStrEq( command, "back" ) )
+	else if(FStrEq(command, "back"))
 	{
-		if ( !GCClientSystem()->BConnectedtoGC() || !BIsPartyLeader() )
+		if(!GCClientSystem()->BConnectedtoGC() || !BIsPartyLeader())
 		{
 			// TODO: Remove this when we have the dashboard everywhere.
 			//		 Well...this entire panel should be gone.
 			GTFGCClientSystem()->EndMatchmaking();
 			// And hide us
-			ShowPanel( false );
+			ShowPanel(false);
 			return;
 		}
 
 		HandleBackPressed();
 	}
-	else if ( FStrEq( command, "leave_party" ) )
+	else if(FStrEq(command, "leave_party"))
 	{
-		m_pStartPartyButton->SetVisible( true );
-		SetControlVisible( "PlayWithFriendsExplanation", true );
-		m_pContents->SetControlVisible( "PartyActiveGroupBox", false );
+		m_pStartPartyButton->SetVisible(true);
+		SetControlVisible("PlayWithFriendsExplanation", true);
+		m_pContents->SetControlVisible("PartyActiveGroupBox", false);
 	}
-	else if ( FStrEq( command, "start_party" ) )
+	else if(FStrEq(command, "start_party"))
 	{
-		m_pStartPartyButton->SetVisible( false );
-		SetControlVisible( "PlayWithFriendsExplanation", false );
-		m_pContents->SetControlVisible( "PartyActiveGroupBox", true );
+		m_pStartPartyButton->SetVisible(false);
+		SetControlVisible("PlayWithFriendsExplanation", false);
+		m_pContents->SetControlVisible("PartyActiveGroupBox", true);
 
-		Assert( steamapicontext );
+		Assert(steamapicontext);
 
-		IGameEvent *pEvent = gameeventmanager->CreateEvent( "mm_lobby_member_join" );
-		if ( pEvent )
+		IGameEvent *pEvent = gameeventmanager->CreateEvent("mm_lobby_member_join");
+		if(pEvent)
 		{
-			pEvent->SetString( "steamid", CFmtStr( "%llu", steamapicontext->SteamUser()->GetSteamID().ConvertToUint64() ) );
-			pEvent->SetInt( "solo", 1 );
-			gameeventmanager->FireEventClientSide( pEvent );
+			pEvent->SetString("steamid", CFmtStr("%llu", steamapicontext->SteamUser()->GetSteamID().ConvertToUint64()));
+			pEvent->SetInt("solo", 1);
+			gameeventmanager->FireEventClientSide(pEvent);
 		}
 	}
 	else
 	{
 
 		// What other commands are there?
-		Assert( false );
+		Assert(false);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CBaseLobbyContainerFrame::PerformLayout( void ) 
+void CBaseLobbyContainerFrame::PerformLayout(void)
 {
-	if ( GetVParent() )
+	if(GetVParent())
 	{
-		int w,h;
-		vgui::ipanel()->GetSize( GetVParent(), w, h );
-		SetBounds(0,0,w,h);
+		int w, h;
+		vgui::ipanel()->GetSize(GetVParent(), w, h);
+		SetBounds(0, 0, w, h);
 	}
 
 	BaseClass::PerformLayout();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-static void LeaveSearch( bool bConfirmed, void *pContext )
+static void LeaveSearch(bool bConfirmed, void *pContext)
 {
-	if ( bConfirmed )
+	if(bConfirmed)
 	{
-		switch ( GTFGCClientSystem()->GetSearchMode() )
+		switch(GTFGCClientSystem()->GetSearchMode())
 		{
-		case TF_Matchmaking_MVM:
-			GTFGCClientSystem()->RequestSelectWizardStep( TF_Matchmaking_WizardStep_MVM_CHALLENGE );
-			break;
+			case TF_Matchmaking_MVM:
+				GTFGCClientSystem()->RequestSelectWizardStep(TF_Matchmaking_WizardStep_MVM_CHALLENGE);
+				break;
 
-		case TF_Matchmaking_LADDER:
-			GTFGCClientSystem()->RequestSelectWizardStep( TF_Matchmaking_WizardStep_LADDER );
-			break;
+			case TF_Matchmaking_LADDER:
+				GTFGCClientSystem()->RequestSelectWizardStep(TF_Matchmaking_WizardStep_LADDER);
+				break;
 
-		default:
-			AssertMsg1( false, "Unknown search mode %d", (int)GTFGCClientSystem()->GetSearchMode() );
-			break;
+			default:
+				AssertMsg1(false, "Unknown search mode %d", (int)GTFGCClientSystem()->GetSearchMode());
+				break;
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseLobbyContainerFrame::OnKeyCodeTyped(vgui::KeyCode code)
 {
-	if ( code == KEY_ESCAPE )
+	if(code == KEY_ESCAPE)
 	{
-		if ( m_pContents->IsPartyActiveGroupBoxVisible() )
+		if(m_pContents->IsPartyActiveGroupBoxVisible())
 		{
-			ShowConfirmDialog( "#TF_MM_LeaveParty_Title", "#TF_MM_LeaveParty_Confirm",
-								"#TF_Coach_Yes", "#TF_Coach_No",
-								&CBaseLobbyContainerFrame::LeaveLobbyPanel );
+			ShowConfirmDialog("#TF_MM_LeaveParty_Title", "#TF_MM_LeaveParty_Confirm", "#TF_Coach_Yes", "#TF_Coach_No",
+							  &CBaseLobbyContainerFrame::LeaveLobbyPanel);
 			return;
 		}
-		else if ( GTFGCClientSystem()->GetWizardStep() == TF_Matchmaking_WizardStep_SEARCHING )
+		else if(GTFGCClientSystem()->GetWizardStep() == TF_Matchmaking_WizardStep_SEARCHING)
 		{
-			ShowConfirmDialog( "#TF_MM_LeaveQueue_Title", "#TF_MM_LeaveQueue_Confirm",
-								"#TF_Coach_Yes", "#TF_Coach_No",
-								&LeaveSearch );
+			ShowConfirmDialog("#TF_MM_LeaveQueue_Title", "#TF_MM_LeaveQueue_Confirm", "#TF_Coach_Yes", "#TF_Coach_No",
+							  &LeaveSearch);
 			return;
 		}
 
-		OnCommand( "back" );
+		OnCommand("back");
 		return;
 	}
 
-	BaseClass::OnKeyCodeTyped( code );
+	BaseClass::OnKeyCodeTyped(code);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseLobbyContainerFrame::OnKeyCodePressed(vgui::KeyCode code)
 {
-	ButtonCode_t nButtonCode = GetBaseButtonCode( code );
+	ButtonCode_t nButtonCode = GetBaseButtonCode(code);
 
-	if ( nButtonCode == KEY_XBUTTON_B || nButtonCode == STEAMCONTROLLER_B || nButtonCode == STEAMCONTROLLER_START )
+	if(nButtonCode == KEY_XBUTTON_B || nButtonCode == STEAMCONTROLLER_B || nButtonCode == STEAMCONTROLLER_START)
 	{
-		OnCommand( "back" );
+		OnCommand("back");
 		return;
 	}
-	else if ( nButtonCode == KEY_XBUTTON_X )
+	else if(nButtonCode == KEY_XBUTTON_X)
 	{
 		m_pContents->ToggleJoinLateCheckButton();
 	}
 
-	BaseClass::OnKeyCodePressed( code );
+	BaseClass::OnKeyCodePressed(code);
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseLobbyContainerFrame::WriteControls()
 {
-	tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ );
+	tmZone(TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__);
 
-	if ( !IsVisible() )
+	if(!IsVisible())
 		return;
 
 	// Make sure we want to be in matchmaking.  (If we don't, the frame should hide us pretty quickly.)
 	// We might get an event or something right at the transition point occasionally when the UI should
 	// not be visible
-	if ( GTFGCClientSystem()->GetMatchmakingUIState() == eMatchmakingUIState_Inactive )
+	if(GTFGCClientSystem()->GetMatchmakingUIState() == eMatchmakingUIState_Inactive)
 	{
 		return;
 	}
 
 	bool bNoGC = false;
-	if ( !GCClientSystem()->BConnectedtoGC() ||
-		GTFGCClientSystem()->BHaveLiveMatch() ||
-		( GTFGCClientSystem()->GetParty() && GTFGCClientSystem()->GetParty()->BOffline() ) )
+	if(!GCClientSystem()->BConnectedtoGC() || GTFGCClientSystem()->BHaveLiveMatch() ||
+	   (GTFGCClientSystem()->GetParty() && GTFGCClientSystem()->GetParty()->BOffline()))
 	{
 		bNoGC = true;
-	}	
+	}
 
-	SetControlVisible( "PlayWithFriendsExplanation", !bNoGC && ShouldShowPartyButton(), true );
-	SetControlVisible( "RankPanel", !bNoGC, true );
-	SetControlVisible( "NoGCGroupBox", bNoGC, true );
+	SetControlVisible("PlayWithFriendsExplanation", !bNoGC && ShouldShowPartyButton(), true);
+	SetControlVisible("RankPanel", !bNoGC, true);
+	SetControlVisible("NoGCGroupBox", bNoGC, true);
 
-	GetPropertySheet()->SetTabWidth( -1 );
+	GetPropertySheet()->SetTabWidth(-1);
 
 	// Check if we already have a party, then make sure and show it
-	if ( !m_pStartPartyButton->IsVisible() && m_pContents->NumPlayersInParty() > 1 )
+	if(!m_pStartPartyButton->IsVisible() && m_pContents->NumPlayersInParty() > 1)
 	{
-		m_pContents->SetControlVisible( "PartyActiveGroupBox", true );
+		m_pContents->SetControlVisible("PartyActiveGroupBox", true);
 	}
 
 	// Show/hide start party button as appropriate
 	bool bShowPartyButton = ShouldShowPartyButton();
 
-	m_pStartPartyButton->SetVisible( bShowPartyButton && !bNoGC );
+	m_pStartPartyButton->SetVisible(bShowPartyButton && !bNoGC);
 
 	// Check for matchmaking bans and display time remaining if we're banned
-	if ( steamapicontext == NULL || steamapicontext->SteamUser() == NULL )
+	if(steamapicontext == NULL || steamapicontext->SteamUser() == NULL)
 		return;
 
 	CEconGameAccountClient *pGameAccountClient = NULL;
-	if ( InventoryManager() && TFInventoryManager()->GetLocalTFInventory() && TFInventoryManager()->GetLocalTFInventory()->GetSOC() )
+	if(InventoryManager() && TFInventoryManager()->GetLocalTFInventory() &&
+	   TFInventoryManager()->GetLocalTFInventory()->GetSOC())
 	{
-		pGameAccountClient = TFInventoryManager()->GetLocalTFInventory()->GetSOC()->GetSingleton<CEconGameAccountClient>();
+		pGameAccountClient =
+			TFInventoryManager()->GetLocalTFInventory()->GetSOC()->GetSingleton<CEconGameAccountClient>();
 	}
 
-	const IMatchGroupDescription *pMatchDesc = GetMatchGroupDescription( m_pContents->GetMatchGroup() );
+	const IMatchGroupDescription *pMatchDesc = GetMatchGroupDescription(m_pContents->GetMatchGroup());
 	EMMPenaltyPool ePenaltyPool = pMatchDesc ? pMatchDesc->m_params.m_ePenaltyPool : eMMPenaltyPool_Invalid;
 
 	CRTime timeExpire = CRTime::RTime32TimeCur();
 	int nDuration = -1;
 	bool bBanned = false;
 
-	if ( pGameAccountClient && ePenaltyPool != eMMPenaltyPool_Invalid )
+	if(pGameAccountClient && ePenaltyPool != eMMPenaltyPool_Invalid)
 	{
-		switch ( ePenaltyPool )
+		switch(ePenaltyPool)
 		{
-		case eMMPenaltyPool_Casual:
-			timeExpire = pGameAccountClient->Obj().matchmaking_casual_ban_expiration();
-			nDuration = pGameAccountClient->Obj().matchmaking_casual_ban_last_duration();
-			bBanned = timeExpire > CRTime::RTime32TimeCur();
-			break;
-		case eMMPenaltyPool_Ranked:
-			timeExpire = pGameAccountClient->Obj().matchmaking_ranked_ban_expiration();
-			nDuration = pGameAccountClient->Obj().matchmaking_ranked_ban_last_duration();
-			bBanned = timeExpire > CRTime::RTime32TimeCur();
-			break;
-		default: Assert( false );
+			case eMMPenaltyPool_Casual:
+				timeExpire = pGameAccountClient->Obj().matchmaking_casual_ban_expiration();
+				nDuration = pGameAccountClient->Obj().matchmaking_casual_ban_last_duration();
+				bBanned = timeExpire > CRTime::RTime32TimeCur();
+				break;
+			case eMMPenaltyPool_Ranked:
+				timeExpire = pGameAccountClient->Obj().matchmaking_ranked_ban_expiration();
+				nDuration = pGameAccountClient->Obj().matchmaking_ranked_ban_last_duration();
+				bBanned = timeExpire > CRTime::RTime32TimeCur();
+				break;
+			default:
+				Assert(false);
 		}
 
-		SetControlVisible( "MatchmakingBanPanel", bBanned );
+		SetControlVisible("MatchmakingBanPanel", bBanned);
 
-		if ( bBanned )
+		if(bBanned)
 		{
-			CExLabel *pBanLabel = FindControl<CExLabel>( "MatchmakingBanDurationLabel", true );
+			CExLabel *pBanLabel = FindControl<CExLabel>("MatchmakingBanDurationLabel", true);
 
-			if ( pBanLabel )
+			if(pBanLabel)
 			{
-				timeExpire.SetToGMT( false );
+				timeExpire.SetToGMT(false);
 
 				CRTime rtNow = CRTime::RTime32TimeCur();
 
 				int nSecondsRemaining = timeExpire.GetRTime32() - rtNow.GetRTime32();
 
-				if ( nSecondsRemaining >= 0 )
+				if(nSecondsRemaining >= 0)
 				{
 
 					const int nDaysForLongBan = 2;
 
 					int nDaysRemaining = nSecondsRemaining / 86400;
 					int nHoursRemaining = nSecondsRemaining / 3600;
-					int nMinutesRemaining = ( nSecondsRemaining % 3600 ) / 60;
+					int nMinutesRemaining = (nSecondsRemaining % 3600) / 60;
 
 					int nDurationDays = nDuration / 86400;
 					int nDurationHours = nDuration / 3600;
-					int nDurationMinutes = ( nDuration % 3600 ) / 60;
+					int nDurationMinutes = (nDuration % 3600) / 60;
 
 					// Want the remainder hours if we're going to display 'days' remaining
-					if ( nDurationDays >= nDaysForLongBan )
+					if(nDurationDays >= nDaysForLongBan)
 					{
-						nDurationHours = ( nDuration % ( 86400 * nDurationDays ) ) / 3600;
+						nDurationHours = (nDuration % (86400 * nDurationDays)) / 3600;
 
-						if ( nDaysRemaining >= nDaysForLongBan )
+						if(nDaysRemaining >= nDaysForLongBan)
 						{
-							nHoursRemaining = ( nSecondsRemaining % ( 86400 * nDaysRemaining ) ) / 3600;
+							nHoursRemaining = (nSecondsRemaining % (86400 * nDaysRemaining)) / 3600;
 						}
 					}
 
@@ -506,49 +505,58 @@ void CBaseLobbyContainerFrame::WriteControls()
 					wchar_t wszDurationHours[16];
 					wchar_t wszDurationMinutes[16];
 
-					_snwprintf( wszDaysRemaining, ARRAYSIZE( wszDaysRemaining ), L"%d", nDaysRemaining );
-					_snwprintf( wszHoursRemaining, ARRAYSIZE( wszHoursRemaining ), L"%d", nHoursRemaining );
-					_snwprintf( wszMinutesRemaining, ARRAYSIZE( wszMinutesRemaining ), L"%d", nMinutesRemaining );
-					_snwprintf( wszDurationDays, ARRAYSIZE( wszDurationDays ), L"%d", nDurationDays );
-					_snwprintf( wszDurationHours, ARRAYSIZE( wszDurationHours ), L"%d", nDurationHours );
-					_snwprintf( wszDurationMinutes, ARRAYSIZE( wszDurationMinutes ), L"%d", nDurationMinutes );
+					_snwprintf(wszDaysRemaining, ARRAYSIZE(wszDaysRemaining), L"%d", nDaysRemaining);
+					_snwprintf(wszHoursRemaining, ARRAYSIZE(wszHoursRemaining), L"%d", nHoursRemaining);
+					_snwprintf(wszMinutesRemaining, ARRAYSIZE(wszMinutesRemaining), L"%d", nMinutesRemaining);
+					_snwprintf(wszDurationDays, ARRAYSIZE(wszDurationDays), L"%d", nDurationDays);
+					_snwprintf(wszDurationHours, ARRAYSIZE(wszDurationHours), L"%d", nDurationHours);
+					_snwprintf(wszDurationMinutes, ARRAYSIZE(wszDurationMinutes), L"%d", nDurationMinutes);
 
 					wchar_t wszLocalized[512];
 
 					// Short ban (less than "nDaysForLongBan" days and thus less than that remaining)
-					if ( nDurationDays < nDaysForLongBan )
+					if(nDurationDays < nDaysForLongBan)
 					{
 						// Less than an hour ban
-						if ( nDurationHours < 1 )
+						if(nDurationHours < 1)
 						{
-							g_pVGuiLocalize->ConstructString_safe( wszLocalized, g_pVGuiLocalize->Find( "#TF_Matchmaking_Ban_Duration_Remaining_Short" ), 2, wszDurationMinutes, wszMinutesRemaining );
+							g_pVGuiLocalize->ConstructString_safe(
+								wszLocalized, g_pVGuiLocalize->Find("#TF_Matchmaking_Ban_Duration_Remaining_Short"), 2,
+								wszDurationMinutes, wszMinutesRemaining);
 						}
 						else
 						{
-							g_pVGuiLocalize->ConstructString_safe( wszLocalized, g_pVGuiLocalize->Find( "#TF_Matchmaking_Ban_Duration_Remaining" ), 4, wszDurationHours, wszDurationMinutes, wszHoursRemaining, wszMinutesRemaining );
+							g_pVGuiLocalize->ConstructString_safe(
+								wszLocalized, g_pVGuiLocalize->Find("#TF_Matchmaking_Ban_Duration_Remaining"), 4,
+								wszDurationHours, wszDurationMinutes, wszHoursRemaining, wszMinutesRemaining);
 						}
 					}
 					// Long ban (at least "nDaysForLongBan" days) but less than that remaining
-					else if ( nDaysRemaining < nDaysForLongBan )
+					else if(nDaysRemaining < nDaysForLongBan)
 					{
-						g_pVGuiLocalize->ConstructString_safe( wszLocalized, g_pVGuiLocalize->Find( "#TF_Matchmaking_Ban_Duration_Remaining_Long_Penalty_Short_Duration" ), 4, wszDurationDays, wszDurationHours, wszHoursRemaining, wszMinutesRemaining );
+						g_pVGuiLocalize->ConstructString_safe(
+							wszLocalized,
+							g_pVGuiLocalize->Find("#TF_Matchmaking_Ban_Duration_Remaining_Long_Penalty_Short_Duration"),
+							4, wszDurationDays, wszDurationHours, wszHoursRemaining, wszMinutesRemaining);
 					}
 					// Long ban and at least that long remaining)
 					else
 					{
-						g_pVGuiLocalize->ConstructString_safe( wszLocalized, g_pVGuiLocalize->Find( "TF_Matchmaking_Ban_Duration_Remaining_Long_Penalty" ), 4, wszDurationDays, wszDurationHours, wszDaysRemaining, wszHoursRemaining );
+						g_pVGuiLocalize->ConstructString_safe(
+							wszLocalized, g_pVGuiLocalize->Find("TF_Matchmaking_Ban_Duration_Remaining_Long_Penalty"),
+							4, wszDurationDays, wszDurationHours, wszDaysRemaining, wszHoursRemaining);
 					}
-					pBanLabel->SetText( wszLocalized );
+					pBanLabel->SetText(wszLocalized);
 				}
 				else
 				{
-					pBanLabel->SetText( "#TF_Matchmaking_Ban_Duration_Remaining_Shortly" );
+					pBanLabel->SetText("#TF_Matchmaking_Ban_Duration_Remaining_Shortly");
 				}
 			}
 		}
 	}
 
-	m_pNextButton->SetEnabled( m_bNextButtonEnabled && !bBanned && !bNoGC );
+	m_pNextButton->SetEnabled(m_bNextButtonEnabled && !bBanned && !bNoGC);
 }
 
 //-----------------------------------------------------------------------------
@@ -557,74 +565,72 @@ void CBaseLobbyContainerFrame::WriteControls()
 void CBaseLobbyContainerFrame::HandleBackPressed()
 {
 	// We dont know how or why we got here.  Failsafe and just leave.
-	if( GTFGCClientSystem()->GetSearchMode() != GetHandledMode() )
+	if(GTFGCClientSystem()->GetSearchMode() != GetHandledMode())
 	{
-		Msg( "Lobby handles mode %d, but search mode is %d. Ending matchmaking", (int)( GetHandledMode() ), (int)( GTFGCClientSystem()->GetSearchMode() ) );
+		Msg("Lobby handles mode %d, but search mode is %d. Ending matchmaking", (int)(GetHandledMode()),
+			(int)(GTFGCClientSystem()->GetSearchMode()));
 	}
 
 	GTFGCClientSystem()->EndMatchmaking();
-	ShowPanel( false );
+	ShowPanel(false);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseLobbyContainerFrame::ShouldShowPartyButton() const
 {
-	return !m_pContents->IsPartyActiveGroupBoxVisible() && 
-			GTFGCClientSystem()->GetWizardStep() != TF_Matchmaking_WizardStep_SEARCHING &&
-			GCClientSystem()->BConnectedtoGC() &&
-			BIsPartyLeader();
+	return !m_pContents->IsPartyActiveGroupBoxVisible() &&
+		   GTFGCClientSystem()->GetWizardStep() != TF_Matchmaking_WizardStep_SEARCHING &&
+		   GCClientSystem()->BConnectedtoGC() && BIsPartyLeader();
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseLobbyContainerFrame::OpenOptionsContextMenu()
 {
-	if ( m_pContextMenu )
+	if(m_pContextMenu)
 		delete m_pContextMenu;
 
-	m_pContextMenu = new Menu( this, "ContextMenu" );
-	MenuBuilder contextMenuBuilder( m_pContextMenu, this );
+	m_pContextMenu = new Menu(this, "ContextMenu");
+	MenuBuilder contextMenuBuilder(m_pContextMenu, this);
 	const char *pszContextMenuBorder = "NotificationDefault";
 	const char *pszContextMenuFont = "HudFontMediumSecondary";
-	m_pContextMenu->SetBorder( scheme()->GetIScheme( GetScheme() )->GetBorder( pszContextMenuBorder ) );
-	m_pContextMenu->SetFont( scheme()->GetIScheme( GetScheme() )->GetFont( pszContextMenuFont ) );
+	m_pContextMenu->SetBorder(scheme()->GetIScheme(GetScheme())->GetBorder(pszContextMenuBorder));
+	m_pContextMenu->SetFont(scheme()->GetIScheme(GetScheme())->GetFont(pszContextMenuFont));
 
-	contextMenuBuilder.AddMenuItem( "#TF_LobbyContainer_Ping", new KeyValues( "Context_Ping" ), "ping" );
-	contextMenuBuilder.AddMenuItem( "#TF_LobbyContainer_Help", "show_explanations", "help" );
+	contextMenuBuilder.AddMenuItem("#TF_LobbyContainer_Ping", new KeyValues("Context_Ping"), "ping");
+	contextMenuBuilder.AddMenuItem("#TF_LobbyContainer_Help", "show_explanations", "help");
 
 	m_pContextMenu->SetVisible(true);
 	m_pContextMenu->AddActionSignalTarget(this);
 
 	m_pContextMenu->MakeReadyForUse();
 
-	Panel* pOptionsButton = FindChildByName( "OptionsButton" );
+	Panel *pOptionsButton = FindChildByName("OptionsButton");
 
-	if ( !pOptionsButton )
+	if(!pOptionsButton)
 	{
 		// Position to the cursor's position
 		int nX, nY;
-		g_pVGuiInput->GetCursorPosition( nX, nY );
-		m_pContextMenu->SetPos( nX - 1, nY - 1 );
+		g_pVGuiInput->GetCursorPosition(nX, nY);
+		m_pContextMenu->SetPos(nX - 1, nY - 1);
 	}
 	else
 	{
 		int nOptionsX = pOptionsButton->GetXPos();
-		int nX = Min( nOptionsX, GetWide() - m_pContextMenu->GetWide() );
+		int nX = Min(nOptionsX, GetWide() - m_pContextMenu->GetWide());
 		int nY = pOptionsButton->GetYPos() + pOptionsButton->GetTall();
-		m_pContextMenu->SetPos( nX - 1, nY - 1 );
+		m_pContextMenu->SetPos(nX - 1, nY - 1);
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseLobbyContainerFrame::OpenPingOptions()
 {
 	// just create a new one. panel will destroy itself on close.
-	m_hPingPanel = new CTFPingPanel( this, "PingPanel", m_pContents->GetMatchGroup() );
+	m_hPingPanel = new CTFPingPanel(this, "PingPanel", m_pContents->GetMatchGroup());
 }

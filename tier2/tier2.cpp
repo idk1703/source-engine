@@ -18,7 +18,6 @@
 #include "mdllib/mdllib.h"
 #include "filesystem/IQueuedLoader.h"
 
-
 //-----------------------------------------------------------------------------
 // These tier2 libraries must be set by any users of this library.
 // They can be set by calling ConnectTier2Libraries or InitDefaultFileSystem.
@@ -38,63 +37,63 @@ IP4 *p4 = 0;
 IMdlLib *mdllib = 0;
 IQueuedLoader *g_pQueuedLoader = 0;
 
-
 //-----------------------------------------------------------------------------
 // Call this to connect to all tier 2 libraries.
 // It's up to the caller to check the globals it cares about to see if ones are missing
 //-----------------------------------------------------------------------------
-void ConnectTier2Libraries( CreateInterfaceFn *pFactoryList, int nFactoryCount )
+void ConnectTier2Libraries(CreateInterfaceFn *pFactoryList, int nFactoryCount)
 {
 	// Don't connect twice..
-	Assert( !g_pFullFileSystem && !materials && !g_pInputSystem && !g_pNetworkSystem && 
-		!p4 && !mdllib && !g_pMaterialSystemDebugTextureInfo && !g_VBAllocTracker &&
-		!g_pMaterialSystemHardwareConfig && !g_pQueuedLoader );
+	Assert(!g_pFullFileSystem && !materials && !g_pInputSystem && !g_pNetworkSystem && !p4 && !mdllib &&
+		   !g_pMaterialSystemDebugTextureInfo && !g_VBAllocTracker && !g_pMaterialSystemHardwareConfig &&
+		   !g_pQueuedLoader);
 
-	for ( int i = 0; i < nFactoryCount; ++i )
+	for(int i = 0; i < nFactoryCount; ++i)
 	{
-		if ( !g_pFullFileSystem )
+		if(!g_pFullFileSystem)
 		{
-			g_pFullFileSystem = ( IFileSystem * )pFactoryList[i]( FILESYSTEM_INTERFACE_VERSION, NULL );
+			g_pFullFileSystem = (IFileSystem *)pFactoryList[i](FILESYSTEM_INTERFACE_VERSION, NULL);
 		}
-		if ( !materials )
+		if(!materials)
 		{
-			g_pMaterialSystem = materials = ( IMaterialSystem * )pFactoryList[i]( MATERIAL_SYSTEM_INTERFACE_VERSION, NULL );
+			g_pMaterialSystem = materials = (IMaterialSystem *)pFactoryList[i](MATERIAL_SYSTEM_INTERFACE_VERSION, NULL);
 		}
-		if ( !g_pInputSystem )
+		if(!g_pInputSystem)
 		{
-			g_pInputSystem = ( IInputSystem * )pFactoryList[i]( INPUTSYSTEM_INTERFACE_VERSION, NULL );
+			g_pInputSystem = (IInputSystem *)pFactoryList[i](INPUTSYSTEM_INTERFACE_VERSION, NULL);
 		}
-		if ( !g_pNetworkSystem )
+		if(!g_pNetworkSystem)
 		{
-			g_pNetworkSystem = ( INetworkSystem * )pFactoryList[i]( NETWORKSYSTEM_INTERFACE_VERSION, NULL );
+			g_pNetworkSystem = (INetworkSystem *)pFactoryList[i](NETWORKSYSTEM_INTERFACE_VERSION, NULL);
 		}
-		if ( !g_pMaterialSystemHardwareConfig )
+		if(!g_pMaterialSystemHardwareConfig)
 		{
-			g_pMaterialSystemHardwareConfig = ( IMaterialSystemHardwareConfig * )pFactoryList[i]( MATERIALSYSTEM_HARDWARECONFIG_INTERFACE_VERSION, NULL );
+			g_pMaterialSystemHardwareConfig =
+				(IMaterialSystemHardwareConfig *)pFactoryList[i](MATERIALSYSTEM_HARDWARECONFIG_INTERFACE_VERSION, NULL);
 		}
-		if ( !g_pMaterialSystemDebugTextureInfo )
+		if(!g_pMaterialSystemDebugTextureInfo)
 		{
-			g_pMaterialSystemDebugTextureInfo = (IDebugTextureInfo*)pFactoryList[i]( DEBUG_TEXTURE_INFO_VERSION, 0 );
+			g_pMaterialSystemDebugTextureInfo = (IDebugTextureInfo *)pFactoryList[i](DEBUG_TEXTURE_INFO_VERSION, 0);
 		}
-		if ( !g_VBAllocTracker )
+		if(!g_VBAllocTracker)
 		{
-			g_VBAllocTracker = (IVBAllocTracker*)pFactoryList[i]( VB_ALLOC_TRACKER_INTERFACE_VERSION, 0 );
+			g_VBAllocTracker = (IVBAllocTracker *)pFactoryList[i](VB_ALLOC_TRACKER_INTERFACE_VERSION, 0);
 		}
-		if ( !colorcorrection )
+		if(!colorcorrection)
 		{
-			colorcorrection = ( IColorCorrectionSystem * )pFactoryList[i]( COLORCORRECTION_INTERFACE_VERSION, NULL );
+			colorcorrection = (IColorCorrectionSystem *)pFactoryList[i](COLORCORRECTION_INTERFACE_VERSION, NULL);
 		}
-		if ( !p4 )
+		if(!p4)
 		{
-			p4 = ( IP4 * )pFactoryList[i]( P4_INTERFACE_VERSION, NULL );
+			p4 = (IP4 *)pFactoryList[i](P4_INTERFACE_VERSION, NULL);
 		}
-		if ( !mdllib )
+		if(!mdllib)
 		{
-			mdllib = ( IMdlLib * )pFactoryList[i]( MDLLIB_INTERFACE_VERSION, NULL );
+			mdllib = (IMdlLib *)pFactoryList[i](MDLLIB_INTERFACE_VERSION, NULL);
 		}
-		if ( !g_pQueuedLoader )
+		if(!g_pQueuedLoader)
 		{
-			g_pQueuedLoader = (IQueuedLoader *)pFactoryList[i]( QUEUEDLOADER_INTERFACE_VERSION, NULL );
+			g_pQueuedLoader = (IQueuedLoader *)pFactoryList[i](QUEUEDLOADER_INTERFACE_VERSION, NULL);
 		}
 	}
 }
@@ -113,5 +112,3 @@ void DisconnectTier2Libraries()
 	mdllib = 0;
 	g_pQueuedLoader = 0;
 }
-
-

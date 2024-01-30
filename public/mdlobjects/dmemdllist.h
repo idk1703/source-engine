@@ -6,19 +6,15 @@
 //
 //===========================================================================//
 
-
 #ifndef DMEMDLLIST_H
 #define DMEMDLLIST_H
-
 
 #ifdef _WIN32
 #pragma once
 #endif
 
-
 #include "datamodel/dmattributevar.h"
 #include "datamodel/dmelement.h"
-
 
 //-----------------------------------------------------------------------------
 // A base class intended to be used for the common pattern in MDLOBJECTS
@@ -27,12 +23,13 @@
 //-----------------------------------------------------------------------------
 class CDmeMdlList : public CDmElement
 {
-	DEFINE_ELEMENT( CDmeMdlList, CDmElement );
+	DEFINE_ELEMENT(CDmeMdlList, CDmElement);
 
 public:
-	virtual CDmAttribute *GetListAttr() { return NULL; }
-
+	virtual CDmAttribute *GetListAttr()
+	{
+		return NULL;
+	}
 };
-
 
 #endif // DMEMDLLIST_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,53 +11,54 @@
 #include "gcsdk/enumutils.h"
 #include "schemainitutils.h"
 #ifdef CLIENT_DLL
-	#include "c_tf_player.h"
+#include "c_tf_player.h"
 #endif
 #ifdef GAME_DLL
-	#include "tf_player.h"
+#include "tf_player.h"
 #endif
 
 using namespace GCSDK;
 
 //-----------------------------------------------------------------------------
-// Purpose: Get user's War Data by steamID and war ID.  Returns NULL if it 
-//			doesnt exist or if the war is inactive and bLoadEvenIfWarInactive 
+// Purpose: Get user's War Data by steamID and war ID.  Returns NULL if it
+//			doesnt exist or if the war is inactive and bLoadEvenIfWarInactive
 //			is false.  On the GC bLoadSOCacheIfNeeded will load the user's
 //			SOCache if needed in order to try and get their war data
 //-----------------------------------------------------------------------------
-CWarData* GetPlayerWarData( const CSteamID& steamID, war_definition_index_t warDefIndex, bool bLoadEvenIfWarInactive
+CWarData *GetPlayerWarData(const CSteamID &steamID, war_definition_index_t warDefIndex, bool bLoadEvenIfWarInactive
 #ifdef GC_DLL
-	, bool bLoadSOCacheIfNeeded
+						   ,
+						   bool bLoadSOCacheIfNeeded
 #endif
-	)
+)
 {
-	const CWarDefinition* pWarDef = GetItemSchema()->GetWarDefinitionByIndex( warDefIndex );
+	const CWarDefinition *pWarDef = GetItemSchema()->GetWarDefinitionByIndex(warDefIndex);
 	// If the war isn't active and we weren't told to ignore that, then return NULL
-	if ( !pWarDef || ( !bLoadEvenIfWarInactive && !pWarDef->IsActive() ) )
+	if(!pWarDef || (!bLoadEvenIfWarInactive && !pWarDef->IsActive()))
 		return NULL;
 
 #ifdef GC_DLL
-	CGCSharedObjectCache *pSOCache = GGCBase()->FindSOCache( steamID );
+	CGCSharedObjectCache *pSOCache = GGCBase()->FindSOCache(steamID);
 
 	// Load their SO cache if needed
-	if ( pSOCache == NULL && bLoadSOCacheIfNeeded )
+	if(pSOCache == NULL && bLoadSOCacheIfNeeded)
 	{
-		pSOCache = GGCBase()->YieldingFindOrLoadSOCache( steamID );
+		pSOCache = GGCBase()->YieldingFindOrLoadSOCache(steamID);
 	}
 #else
-	GCSDK::CGCClientSharedObjectCache *pSOCache = GCClientSystem()->GetSOCache( steamID );
+	GCSDK::CGCClientSharedObjectCache *pSOCache = GCClientSystem()->GetSOCache(steamID);
 #endif
 
-	if ( pSOCache )
+	if(pSOCache)
 	{
-		auto *pTypeCache = pSOCache->FindTypeCache( CWarData::k_nTypeID );
-		if ( pTypeCache )
+		auto *pTypeCache = pSOCache->FindTypeCache(CWarData::k_nTypeID);
+		if(pTypeCache)
 		{
 			int nCount = pTypeCache->GetCount();
-			for( int i=0; i < nCount; ++i )
+			for(int i = 0; i < nCount; ++i)
 			{
-				CWarData* pWarData = static_cast< CWarData* >( pTypeCache->GetObject( i ) );
-				if ( pWarData->Obj().war_id() == warDefIndex )
+				CWarData *pWarData = static_cast<CWarData *>(pTypeCache->GetObject(i));
+				if(pWarData->Obj().war_id() == warDefIndex)
 					return pWarData;
 			}
 		}
@@ -67,68 +68,65 @@ CWarData* GetPlayerWarData( const CSteamID& steamID, war_definition_index_t warD
 }
 
 #ifdef CLIENT_DLL
-CWarData* GetLocalPlayerWarData( war_definition_index_t warDefIndex )
+CWarData *GetLocalPlayerWarData(war_definition_index_t warDefIndex)
 {
-	if ( !steamapicontext || !steamapicontext->SteamUser() )
+	if(!steamapicontext || !steamapicontext->SteamUser())
 	{
 		return NULL;
 	}
 
-	return GetPlayerWarData( steamapicontext->SteamUser()->GetSteamID(), warDefIndex, true );
+	return GetPlayerWarData(steamapicontext->SteamUser()->GetSteamID(), warDefIndex, true);
 }
 #endif
 
-
 CWarDefinition::CWarDefinition()
-	: m_nDefIndex( INVALID_WAR_DEF_INDEX )
-	, m_pszLocalizedWarname( NULL )
-	, m_pszDefName( NULL )
-	, m_mapSides( DefLessFunc( SidesMap_t::KeyType_t ) )
-	, m_rtTimeEnd( 0 )
-	, m_rtTimeStart( 0 )
-{}
-
-bool CWarDefinition::BInitFromKV( KeyValues *pKV, CUtlVector<CUtlString> *pVecErrors )
+	: m_nDefIndex(INVALID_WAR_DEF_INDEX),
+	  m_pszLocalizedWarname(NULL),
+	  m_pszDefName(NULL),
+	  m_mapSides(DefLessFunc(SidesMap_t::KeyType_t)),
+	  m_rtTimeEnd(0),
+	  m_rtTimeStart(0)
 {
-	m_nDefIndex = atoi( pKV->GetName() );
-	SCHEMA_INIT_CHECK( m_nDefIndex != INVALID_WAR_DEF_INDEX, "Missing 'war_id' for war def %s", pKV->GetName() );
+}
 
-	m_pszDefName = pKV->GetString( "name" );
-	SCHEMA_INIT_CHECK( m_nDefIndex != INVALID_WAR_DEF_INDEX, "Missing 'name' for war def %s", pKV->GetName() );
+bool CWarDefinition::BInitFromKV(KeyValues *pKV, CUtlVector<CUtlString> *pVecErrors)
+{
+	m_nDefIndex = atoi(pKV->GetName());
+	SCHEMA_INIT_CHECK(m_nDefIndex != INVALID_WAR_DEF_INDEX, "Missing 'war_id' for war def %s", pKV->GetName());
 
-	const char *pszTime = pKV->GetString( "start_time", NULL );
-	SCHEMA_INIT_CHECK( pszTime != NULL, "war definition %s does not have 'start_time'", pKV->GetName() );
-	m_rtTimeStart = ( pszTime && pszTime[0] )
-							? CRTime::RTime32FromFmtString( "YYYY-MM-DD hh:mm:ss" , pszTime )
-							: RTime32(0);
+	m_pszDefName = pKV->GetString("name");
+	SCHEMA_INIT_CHECK(m_nDefIndex != INVALID_WAR_DEF_INDEX, "Missing 'name' for war def %s", pKV->GetName());
 
-	pszTime = pKV->GetString( "end_time", NULL );
-	SCHEMA_INIT_CHECK( pszTime != NULL, "war definition %s does not have 'end_time'", pKV->GetName() );
-	m_rtTimeEnd = ( pszTime && pszTime[0] )
-							? CRTime::RTime32FromFmtString( "YYYY-MM-DD hh:mm:ss" , pszTime )
-							: RTime32(0);
-		
-	KeyValues* pKVSidesBlock = pKV->FindKey( "sides" );
-	FOR_EACH_TRUE_SUBKEY( pKVSidesBlock, pKVSide )
+	const char *pszTime = pKV->GetString("start_time", NULL);
+	SCHEMA_INIT_CHECK(pszTime != NULL, "war definition %s does not have 'start_time'", pKV->GetName());
+	m_rtTimeStart = (pszTime && pszTime[0]) ? CRTime::RTime32FromFmtString("YYYY-MM-DD hh:mm:ss", pszTime) : RTime32(0);
+
+	pszTime = pKV->GetString("end_time", NULL);
+	SCHEMA_INIT_CHECK(pszTime != NULL, "war definition %s does not have 'end_time'", pKV->GetName());
+	m_rtTimeEnd = (pszTime && pszTime[0]) ? CRTime::RTime32FromFmtString("YYYY-MM-DD hh:mm:ss", pszTime) : RTime32(0);
+
+	KeyValues *pKVSidesBlock = pKV->FindKey("sides");
+	FOR_EACH_TRUE_SUBKEY(pKVSidesBlock, pKVSide)
 	{
-		auto& side = m_mapSides[m_mapSides.Insert( atoi( pKVSide->GetName() ) ) ];
-		side.BInitFromKV( pKV->GetName(), pKVSide, pVecErrors );
+		auto &side = m_mapSides[m_mapSides.Insert(atoi(pKVSide->GetName()))];
+		side.BInitFromKV(pKV->GetName(), pKVSide, pVecErrors);
 	}
 
-	m_pszLocalizedWarname = pKV->GetString( "localized_name", NULL );
-	SCHEMA_INIT_CHECK( m_pszLocalizedWarname != NULL, "war definition %s does not have 'localized_name'", pKV->GetName() );
+	m_pszLocalizedWarname = pKV->GetString("localized_name", NULL);
+	SCHEMA_INIT_CHECK(m_pszLocalizedWarname != NULL, "war definition %s does not have 'localized_name'",
+					  pKV->GetName());
 
 	return SCHEMA_INIT_SUCCESS();
 }
 
-const CWarDefinition::CWarSideDefinition_t* CWarDefinition::GetSide( war_side_t nSide ) const
+const CWarDefinition::CWarSideDefinition_t *CWarDefinition::GetSide(war_side_t nSide) const
 {
-	if ( IsValidSide( nSide ) )
+	if(IsValidSide(nSide))
 	{
-		SidesMap_t::IndexType_t idx = m_mapSides.Find( nSide );
-		if ( idx != m_mapSides.InvalidIndex() )
+		SidesMap_t::IndexType_t idx = m_mapSides.Find(nSide);
+		if(idx != m_mapSides.InvalidIndex())
 		{
-			return &m_mapSides[ idx ];
+			return &m_mapSides[idx];
 		}
 	}
 
@@ -137,98 +135,110 @@ const CWarDefinition::CWarSideDefinition_t* CWarDefinition::GetSide( war_side_t 
 
 bool CWarDefinition::IsActive() const
 {
-	Assert( m_rtTimeEnd != 0 );
-	Assert( m_rtTimeStart != 0 );
-	if ( m_rtTimeEnd == 0 || m_rtTimeStart == 0 )
+	Assert(m_rtTimeEnd != 0);
+	Assert(m_rtTimeStart != 0);
+	if(m_rtTimeEnd == 0 || m_rtTimeStart == 0)
 		return false;
 
 	return CRTime::RTime32TimeCur() > m_rtTimeStart && CRTime::RTime32TimeCur() < m_rtTimeEnd;
 }
 
-bool CWarDefinition::IsValidSide( war_side_t nSide ) const
+bool CWarDefinition::IsValidSide(war_side_t nSide) const
 {
-	FOR_EACH_MAP_FAST( m_mapSides, i )
+	FOR_EACH_MAP_FAST(m_mapSides, i)
 	{
-		if ( m_mapSides[i].m_nSideIndex == nSide )
+		if(m_mapSides[i].m_nSideIndex == nSide)
 			return true;
 	}
 
 	return false;
 }
 
-bool CWarDefinition::CWarSideDefinition_t::BInitFromKV( const char* pszContainingWarName, KeyValues *pKVSide, CUtlVector<CUtlString> *pVecErrors )
+bool CWarDefinition::CWarSideDefinition_t::BInitFromKV(const char *pszContainingWarName, KeyValues *pKVSide,
+													   CUtlVector<CUtlString> *pVecErrors)
 {
-	m_nSideIndex = (war_side_t)atoi( pKVSide->GetName() );
-	SCHEMA_INIT_CHECK( m_nSideIndex != INVALID_WAR_SIDE, "war definition %s has invalid side index: %d", pszContainingWarName, m_nSideIndex );
+	m_nSideIndex = (war_side_t)atoi(pKVSide->GetName());
+	SCHEMA_INIT_CHECK(m_nSideIndex != INVALID_WAR_SIDE, "war definition %s has invalid side index: %d",
+					  pszContainingWarName, m_nSideIndex);
 
-	m_pszLocalizedName = pKVSide->GetString( "localized_name", NULL );
-	SCHEMA_INIT_CHECK( m_pszLocalizedName != NULL, "war definition %s side %s missing side localization name", pszContainingWarName, pKVSide->GetName() );
+	m_pszLocalizedName = pKVSide->GetString("localized_name", NULL);
+	SCHEMA_INIT_CHECK(m_pszLocalizedName != NULL, "war definition %s side %s missing side localization name",
+					  pszContainingWarName, pKVSide->GetName());
 
-	m_pszLeaderboardName = pKVSide->GetString( "leaderboard_name", NULL );
-	SCHEMA_INIT_CHECK( m_pszLocalizedName != NULL, "war definition %s side %s missing side leaderboard name", pszContainingWarName, pKVSide->GetName() );
+	m_pszLeaderboardName = pKVSide->GetString("leaderboard_name", NULL);
+	SCHEMA_INIT_CHECK(m_pszLocalizedName != NULL, "war definition %s side %s missing side leaderboard name",
+					  pszContainingWarName, pKVSide->GetName());
 
-	//TODO BRETT: Grab the leaderboard now?
+	// TODO BRETT: Grab the leaderboard now?
 	return SCHEMA_INIT_SUCCESS();
 }
 
 CWarData::CWarData()
 {
-	Obj().set_account_id( 0 );
-	Obj().set_war_id( INVALID_WAR_DEF_INDEX );
-	Obj().set_affiliation( INVALID_WAR_SIDE );
-	Obj().set_points_scored( 0 );
+	Obj().set_account_id(0);
+	Obj().set_war_id(INVALID_WAR_DEF_INDEX);
+	Obj().set_affiliation(INVALID_WAR_SIDE);
+	Obj().set_points_scored(0);
 }
 #ifdef GC
 
-IMPLEMENT_CLASS_MEMPOOL( CWarData, 1000, UTLMEMORYPOOL_GROW_SLOW );
+IMPLEMENT_CLASS_MEMPOOL(CWarData, 1000, UTLMEMORYPOOL_GROW_SLOW);
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-CWarData::CWarData( uint32 unAccountID, war_definition_index_t eWarID, war_side_t eSide )
+CWarData::CWarData(uint32 unAccountID, war_definition_index_t eWarID, war_side_t eSide)
 {
-	Obj().set_account_id( unAccountID );
-	Obj().set_war_id( eWarID );
-	Obj().set_affiliation( eSide );
-	Obj().set_points_scored( 0 );
+	Obj().set_account_id(unAccountID);
+	Obj().set_war_id(eWarID);
+	Obj().set_affiliation(eSide);
+	Obj().set_points_scored(0);
 }
 
-bool CWarData::BYieldingAddInsertToTransaction( GCSDK::CSQLAccess & sqlAccess )
+bool CWarData::BYieldingAddInsertToTransaction(GCSDK::CSQLAccess &sqlAccess)
 {
 	CSchWarData schWarData;
-	WriteToRecord( &schWarData );
-	return CSchemaSharedObjectHelper::BYieldingAddInsertToTransaction( sqlAccess, &schWarData );
+	WriteToRecord(&schWarData);
+	return CSchemaSharedObjectHelper::BYieldingAddInsertToTransaction(sqlAccess, &schWarData);
 }
 
-bool CWarData::BYieldingAddWriteToTransaction( GCSDK::CSQLAccess & sqlAccess, const CUtlVector< int > &fields )
+bool CWarData::BYieldingAddWriteToTransaction(GCSDK::CSQLAccess &sqlAccess, const CUtlVector<int> &fields)
 {
 	CSchWarData schWarData;
-	WriteToRecord( &schWarData );
-	CColumnSet csDatabaseDirty( schWarData.GetPSchema()->GetRecordInfo() );
+	WriteToRecord(&schWarData);
+	CColumnSet csDatabaseDirty(schWarData.GetPSchema()->GetRecordInfo());
 	csDatabaseDirty.MakeEmpty();
-	FOR_EACH_VEC( fields, nField )
+	FOR_EACH_VEC(fields, nField)
 	{
-		switch ( fields[nField] )
+		switch(fields[nField])
 		{
-			case CSOWarData::kAccountIdFieldNumber		: csDatabaseDirty.BAddColumn( CSchWarData::k_iField_unAccountID );		break;
-			case CSOWarData::kWarIdFieldNumber			: csDatabaseDirty.BAddColumn( CSchWarData::k_iField_unWarID );			break;
-			case CSOWarData::kAffiliationFieldNumber	: csDatabaseDirty.BAddColumn( CSchWarData::k_iField_unAffiliation );	break;
-			case CSOWarData::kPointsScoredFieldNumber	: csDatabaseDirty.BAddColumn( CSchWarData::k_iField_unPointsScored );	break;
+			case CSOWarData::kAccountIdFieldNumber:
+				csDatabaseDirty.BAddColumn(CSchWarData::k_iField_unAccountID);
+				break;
+			case CSOWarData::kWarIdFieldNumber:
+				csDatabaseDirty.BAddColumn(CSchWarData::k_iField_unWarID);
+				break;
+			case CSOWarData::kAffiliationFieldNumber:
+				csDatabaseDirty.BAddColumn(CSchWarData::k_iField_unAffiliation);
+				break;
+			case CSOWarData::kPointsScoredFieldNumber:
+				csDatabaseDirty.BAddColumn(CSchWarData::k_iField_unPointsScored);
+				break;
 			default:
-				Assert( false );
+				Assert(false);
 		}
 	}
-	return CSchemaSharedObjectHelper::BYieldingAddWriteToTransaction( sqlAccess, &schWarData, csDatabaseDirty );
+	return CSchemaSharedObjectHelper::BYieldingAddWriteToTransaction(sqlAccess, &schWarData, csDatabaseDirty);
 }
 
-bool CWarData::BYieldingAddRemoveToTransaction( GCSDK::CSQLAccess & sqlAccess )
+bool CWarData::BYieldingAddRemoveToTransaction(GCSDK::CSQLAccess &sqlAccess)
 {
 	CSchWarData schDuelSummary;
-	WriteToRecord( &schDuelSummary );
-	return CSchemaSharedObjectHelper::BYieldingAddRemoveToTransaction( sqlAccess, &schDuelSummary );
+	WriteToRecord(&schDuelSummary);
+	return CSchemaSharedObjectHelper::BYieldingAddRemoveToTransaction(sqlAccess, &schDuelSummary);
 }
 
-void CWarData::WriteToRecord( CSchWarData *pWarData ) const
+void CWarData::WriteToRecord(CSchWarData *pWarData) const
 {
 	pWarData->m_unAccountID = Obj().account_id();
 	pWarData->m_unWarID = Obj().war_id();
@@ -236,22 +246,23 @@ void CWarData::WriteToRecord( CSchWarData *pWarData ) const
 	pWarData->m_unPointsScored = Obj().points_scored();
 }
 
-void CWarData::ReadFromRecord( const CSchWarData & warData )
+void CWarData::ReadFromRecord(const CSchWarData &warData)
 {
-	Obj().set_account_id( warData.m_unAccountID );
-	Obj().set_war_id( warData.m_unWarID );
-	Obj().set_affiliation( warData.m_unAffiliation );
-	Obj().set_points_scored( warData.m_unPointsScored );
+	Obj().set_account_id(warData.m_unAccountID);
+	Obj().set_war_id(warData.m_unWarID);
+	Obj().set_affiliation(warData.m_unAffiliation);
+	Obj().set_points_scored(warData.m_unPointsScored);
 }
 #endif
 
-#if defined( CLIENT_DLL ) || defined( GC )
+#if defined(CLIENT_DLL) || defined(GC)
 CTFWarGlobalDataHelper::CTFWarGlobalDataHelper()
-	: m_bInitialized( false )
-	, m_mapWarStats( DefLessFunc( WarStatsMap_t::KeyType_t ) )
+	: m_bInitialized(false),
+	  m_mapWarStats(DefLessFunc(WarStatsMap_t::KeyType_t))
 #ifdef CLIENT_DLL
-	, m_flLastUpdateRequest( 0.f )
-	, m_flLastUpdated( 0.f )
+	  ,
+	  m_flLastUpdateRequest(0.f),
+	  m_flLastUpdated(0.f)
 #endif
 {
 #ifdef CLIENT_DLL
@@ -259,65 +270,67 @@ CTFWarGlobalDataHelper::CTFWarGlobalDataHelper()
 #endif
 }
 
-CGCMsgGC_War_GlobalStatsResponse* CTFWarGlobalDataHelper::FindOrCreateWarData( war_definition_index_t nWarDef, bool bCreateIfDoesntExist )
+CGCMsgGC_War_GlobalStatsResponse *CTFWarGlobalDataHelper::FindOrCreateWarData(war_definition_index_t nWarDef,
+																			  bool bCreateIfDoesntExist)
 {
-	const CWarDefinition* pWarDef = GetItemSchema()->GetWarDefinitionByIndex( nWarDef );
-	if ( !pWarDef )
+	const CWarDefinition *pWarDef = GetItemSchema()->GetWarDefinitionByIndex(nWarDef);
+	if(!pWarDef)
 		return NULL;
 
-	if ( nWarDef == INVALID_WAR_DEF_INDEX )
+	if(nWarDef == INVALID_WAR_DEF_INDEX)
 		return NULL;
 
-	CGCMsgGC_War_GlobalStatsResponse* pGlobalData = NULL;
-		
-	auto waridx = m_mapWarStats.Find( (war_definition_index_t)nWarDef );
-	if ( waridx == m_mapWarStats.InvalidIndex() && bCreateIfDoesntExist )
+	CGCMsgGC_War_GlobalStatsResponse *pGlobalData = NULL;
+
+	auto waridx = m_mapWarStats.Find((war_definition_index_t)nWarDef);
+	if(waridx == m_mapWarStats.InvalidIndex() && bCreateIfDoesntExist)
 	{
-		waridx = m_mapWarStats.Insert( nWarDef );
-		m_mapWarStats[ waridx ].set_war_id( nWarDef );
+		waridx = m_mapWarStats.Insert(nWarDef);
+		m_mapWarStats[waridx].set_war_id(nWarDef);
 	}
 
-	if ( waridx != m_mapWarStats.InvalidIndex() )
+	if(waridx != m_mapWarStats.InvalidIndex())
 	{
-		pGlobalData = &m_mapWarStats[ waridx ];
+		pGlobalData = &m_mapWarStats[waridx];
 	}
-		
+
 	return pGlobalData;
 }
 
-CGCMsgGC_War_GlobalStatsResponse_SideScore* CTFWarGlobalDataHelper::FindOrCreateWarDataSide( war_side_t nWarSide, war_definition_index_t nWarDef, bool bCreateIfDoesntExist )
+CGCMsgGC_War_GlobalStatsResponse_SideScore *CTFWarGlobalDataHelper::FindOrCreateWarDataSide(
+	war_side_t nWarSide, war_definition_index_t nWarDef, bool bCreateIfDoesntExist)
 {
 	// Make sure it's a valid war
-	const CWarDefinition* pWarDef = GetItemSchema()->GetWarDefinitionByIndex( nWarDef );
-	if ( !pWarDef )
+	const CWarDefinition *pWarDef = GetItemSchema()->GetWarDefinitionByIndex(nWarDef);
+	if(!pWarDef)
 		return NULL;
 
 	// Valid side on a valid awr
-	if ( !pWarDef->IsValidSide( nWarSide ) )
+	if(!pWarDef->IsValidSide(nWarSide))
 		return NULL;
 
 	// Find or create the war stats
-	CGCMsgGC_War_GlobalStatsResponse* pWarStats = FindOrCreateWarData( nWarDef, bCreateIfDoesntExist );
-	if ( !pWarStats )
+	CGCMsgGC_War_GlobalStatsResponse *pWarStats = FindOrCreateWarData(nWarDef, bCreateIfDoesntExist);
+	if(!pWarStats)
 		return NULL;
 
 	// Find or create the side for the war
-	CGCMsgGC_War_GlobalStatsResponse_SideScore* pSide = NULL;
-	for( int i=0; i < pWarStats->side_scores_size(); ++i )
+	CGCMsgGC_War_GlobalStatsResponse_SideScore *pSide = NULL;
+	for(int i = 0; i < pWarStats->side_scores_size(); ++i)
 	{
-		if ( pWarStats->side_scores( i ).side() == nWarSide )
+		if(pWarStats->side_scores(i).side() == nWarSide)
 		{
-			pSide = pWarStats->mutable_side_scores( i );
+			pSide = pWarStats->mutable_side_scores(i);
 			break;
 		}
 	}
 
 	// Didn't already exist.  Create and initialize
-	if ( pSide == NULL && bCreateIfDoesntExist )
+	if(pSide == NULL && bCreateIfDoesntExist)
 	{
 		pSide = pWarStats->add_side_scores();
-		pSide->set_score( 0 );
-		pSide->set_side( nWarSide );
+		pSide->set_score(0);
+		pSide->set_side(nWarSide);
 	}
 
 	return pSide;
@@ -331,30 +344,30 @@ void CTFWarGlobalDataHelper::Init()
 {
 #ifdef GC
 	TSQLCmdStr sStatement;
-	const CColumnSet csCountsCount = CSET_FULL( CSchWarData );
-	BuildSelectStatementText( &sStatement, csCountsCount  );
+	const CColumnSet csCountsCount = CSET_FULL(CSchWarData);
+	BuildSelectStatementText(&sStatement, csCountsCount);
 	TSQLCmdStr sLoadQuery;
 
 	CSQLAccess sqlAccess;
-	if( !sqlAccess.BYieldingExecute( "CTFWarGlobalDataHelper::Init", sLoadQuery ) )
+	if(!sqlAccess.BYieldingExecute("CTFWarGlobalDataHelper::Init", sLoadQuery))
 	{
-		EmitError( SPEW_GC, __FUNCTION__": Failed to run load query!\n" );
+		EmitError(SPEW_GC, __FUNCTION__ ": Failed to run load query!\n");
 		return;
 	}
 
-	CUtlVector< CSchWarData > vecRecords;
-	if ( !sqlAccess.BYieldingReadRecordsWithQuery< CSchWarData >( &vecRecords, sStatement, csCountsCount ) )
+	CUtlVector<CSchWarData> vecRecords;
+	if(!sqlAccess.BYieldingReadRecordsWithQuery<CSchWarData>(&vecRecords, sStatement, csCountsCount))
 	{
-		EmitError( SPEW_GC, __FUNCTION__": Failed to read spy vs engy points!\n" );
+		EmitError(SPEW_GC, __FUNCTION__ ": Failed to read spy vs engy points!\n");
 		return;
 	}
 
 	// Tally up points for each side
-	FOR_EACH_VEC( vecRecords, i )
+	FOR_EACH_VEC(vecRecords, i)
 	{
-		const CSchWarData& record = vecRecords[i];
+		const CSchWarData &record = vecRecords[i];
 
-		AddToSideScore( record.m_unWarID, record.m_unAffiliation, record.m_unPointsScored );
+		AddToSideScore(record.m_unWarID, record.m_unAffiliation, record.m_unPointsScored);
 	}
 
 	m_bInitialized = true;
@@ -368,62 +381,61 @@ void CTFWarGlobalDataHelper::Init()
 //-----------------------------------------------------------------------------
 // Purpose: Set the stats.  We're initialized once we do this.
 //-----------------------------------------------------------------------------
-void CTFWarGlobalDataHelper::SetGlobalStats( const CGCMsgGC_War_GlobalStatsResponse& newData )
+void CTFWarGlobalDataHelper::SetGlobalStats(const CGCMsgGC_War_GlobalStatsResponse &newData)
 {
 #ifdef CLIENT_DLL
 	m_flLastUpdated = Plat_FloatTime();
 #endif
 	m_bInitialized = true;
-	
-	CGCMsgGC_War_GlobalStatsResponse* pExistingData = FindOrCreateWarData( newData.war_id(), true );
-	if ( pExistingData )
+
+	CGCMsgGC_War_GlobalStatsResponse *pExistingData = FindOrCreateWarData(newData.war_id(), true);
+	if(pExistingData)
 	{
-		pExistingData->CopyFrom( newData );
+		pExistingData->CopyFrom(newData);
 	}
 
 #ifdef CLIENT_DLL
-	IGameEvent *event = gameeventmanager->CreateEvent( "global_war_data_updated" );
-	if ( event )
+	IGameEvent *event = gameeventmanager->CreateEvent("global_war_data_updated");
+	if(event)
 	{
-		gameeventmanager->FireEventClientSide( event );
-	}	
+		gameeventmanager->FireEventClientSide(event);
+	}
 #endif
 }
 
-void CTFWarGlobalDataHelper::AddToSideScore( war_definition_index_t nWar, war_side_t nSide, uint32 nValue )
+void CTFWarGlobalDataHelper::AddToSideScore(war_definition_index_t nWar, war_side_t nSide, uint32 nValue)
 {
-	Assert( nWar != INVALID_WAR_DEF_INDEX );
-	Assert( nSide != INVALID_WAR_SIDE );
-	
-	CGCMsgGC_War_GlobalStatsResponse_SideScore* pSide = FindOrCreateWarDataSide( nSide, nWar, true );
-	if ( pSide )
+	Assert(nWar != INVALID_WAR_DEF_INDEX);
+	Assert(nSide != INVALID_WAR_SIDE);
+
+	CGCMsgGC_War_GlobalStatsResponse_SideScore *pSide = FindOrCreateWarDataSide(nSide, nWar, true);
+	if(pSide)
 	{
-		pSide->set_score( pSide->score() + nValue );
+		pSide->set_score(pSide->score() + nValue);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Grab the Spy stats.  Request an update if we're on the client and stale
 //-----------------------------------------------------------------------------
-uint64 CTFWarGlobalDataHelper::GetGlobalSideScore( war_definition_index_t nWar, war_side_t nSide ) 
-{ 
-	Assert( nWar != INVALID_WAR_DEF_INDEX );
-	Assert( nSide != INVALID_WAR_SIDE );
+uint64 CTFWarGlobalDataHelper::GetGlobalSideScore(war_definition_index_t nWar, war_side_t nSide)
+{
+	Assert(nWar != INVALID_WAR_DEF_INDEX);
+	Assert(nSide != INVALID_WAR_SIDE);
 
 #ifdef CLIENT_DLL
 	CheckGlobalStatsStaleness();
 #endif
-	
-	CGCMsgGC_War_GlobalStatsResponse_SideScore* pSide = FindOrCreateWarDataSide( nSide, nWar, true );
-	if ( pSide )
+
+	CGCMsgGC_War_GlobalStatsResponse_SideScore *pSide = FindOrCreateWarDataSide(nSide, nWar, true);
+	if(pSide)
 	{
 		return pSide->score();
 	}
 
-	Assert( false );
+	Assert(false);
 	return 0;
 }
-
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
@@ -432,9 +444,9 @@ uint64 CTFWarGlobalDataHelper::GetGlobalSideScore( war_definition_index_t nWar, 
 void CTFWarGlobalDataHelper::RequestUpdateGlobalStats()
 {
 	// Ask for new war stats
-	GCSDK::CProtoBufMsg<CGCMsgGC_War_RequestGlobalStats> msg( k_EMsgGC_War_RequestGlobalStats );
-	msg.Body().set_war_id( PYRO_VS_HEAVY_WAR_DEF_INDEX ); // TODO Brett: Get all the war data
-	GCClientSystem()->BSendMessage( msg );
+	GCSDK::CProtoBufMsg<CGCMsgGC_War_RequestGlobalStats> msg(k_EMsgGC_War_RequestGlobalStats);
+	msg.Body().set_war_id(PYRO_VS_HEAVY_WAR_DEF_INDEX); // TODO Brett: Get all the war data
+	GCClientSystem()->BSendMessage(msg);
 	m_flLastUpdateRequest = Plat_FloatTime();
 }
 
@@ -444,7 +456,7 @@ void CTFWarGlobalDataHelper::RequestUpdateGlobalStats()
 void CTFWarGlobalDataHelper::CheckGlobalStatsStaleness()
 {
 	float flTimeSinceLastRequest = Plat_FloatTime() - m_flLastUpdateRequest;
-	if ( flTimeSinceLastRequest > 30.f )
+	if(flTimeSinceLastRequest > 30.f)
 	{
 		RequestUpdateGlobalStats();
 	}
@@ -455,7 +467,7 @@ void CTFWarGlobalDataHelper::CheckGlobalStatsStaleness()
 //-----------------------------------------------------------------------------
 void CTFWarGlobalDataHelper::RequestLeaderboard()
 {
-	//TODO BRETT loop all the wars and grab each one
+	// TODO BRETT loop all the wars and grab each one
 
 	/*if ( steamapicontext && steamapicontext->SteamUserStats() )
 	{
@@ -476,16 +488,17 @@ void CTFWarGlobalDataHelper::RequestLeaderboard()
 
 		if ( eSide != k_EInvalidSide )
 		{
-			SteamAPICall_t apicall = steamapicontext->SteamUserStats()->FindLeaderboard( eSide == k_ESpy ? k_pszSpyVsEngyLeaderboard_Spy : k_pszSpyVsEngyLeaderboard_Engy );
-			m_findLeaderboardCallback.Set( apicall, this, &CTFWarGlobalDataHelper::OnFindLeaderboard );
+			SteamAPICall_t apicall = steamapicontext->SteamUserStats()->FindLeaderboard( eSide == k_ESpy ?
+	k_pszSpyVsEngyLeaderboard_Spy : k_pszSpyVsEngyLeaderboard_Engy ); m_findLeaderboardCallback.Set( apicall, this,
+	&CTFWarGlobalDataHelper::OnFindLeaderboard );
 		}
-	}*/	
+	}*/
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Requests the war leaderboard
 //-----------------------------------------------------------------------------
-void CTFWarGlobalDataHelper::OnFindLeaderboard( LeaderboardFindResult_t *pResult, bool bIOFailure )
+void CTFWarGlobalDataHelper::OnFindLeaderboard(LeaderboardFindResult_t *pResult, bool bIOFailure)
 {
 	m_findLeaderboardResults = *pResult;
 	DownloadLeaderboard();
@@ -493,60 +506,69 @@ void CTFWarGlobalDataHelper::OnFindLeaderboard( LeaderboardFindResult_t *pResult
 
 void CTFWarGlobalDataHelper::DownloadLeaderboard()
 {
-	if ( m_findLeaderboardResults.m_bLeaderboardFound )
+	if(m_findLeaderboardResults.m_bLeaderboardFound)
 	{
 		// friends
-		SteamAPICall_t apicall = steamapicontext->SteamUserStats()->DownloadLeaderboardEntries( m_findLeaderboardResults.m_hSteamLeaderboard, k_ELeaderboardDataRequestFriends, 1, 10 );
-		downloadLeaderboardCallbackFriends.Set( apicall, this, &CTFWarGlobalDataHelper::OnLeaderboardScoresDownloaded_Friends );			
+		SteamAPICall_t apicall = steamapicontext->SteamUserStats()->DownloadLeaderboardEntries(
+			m_findLeaderboardResults.m_hSteamLeaderboard, k_ELeaderboardDataRequestFriends, 1, 10);
+		downloadLeaderboardCallbackFriends.Set(apicall, this,
+											   &CTFWarGlobalDataHelper::OnLeaderboardScoresDownloaded_Friends);
 		// global around user
-		apicall = steamapicontext->SteamUserStats()->DownloadLeaderboardEntries( m_findLeaderboardResults.m_hSteamLeaderboard, k_ELeaderboardDataRequestGlobal, 1, 10 );
-		downloadLeaderboardCallbackGlobal.Set( apicall, this, &CTFWarGlobalDataHelper::OnLeaderboardScoresDownloaded_Global );
+		apicall = steamapicontext->SteamUserStats()->DownloadLeaderboardEntries(
+			m_findLeaderboardResults.m_hSteamLeaderboard, k_ELeaderboardDataRequestGlobal, 1, 10);
+		downloadLeaderboardCallbackGlobal.Set(apicall, this,
+											  &CTFWarGlobalDataHelper::OnLeaderboardScoresDownloaded_Global);
 	}
 }
 
-static void RetrieveLeaderboardEntries( LeaderboardScoresDownloaded_t &scores, CTFWarGlobalDataHelper::LeaderBoardEntries_t &entries )
+static void RetrieveLeaderboardEntries(LeaderboardScoresDownloaded_t &scores,
+									   CTFWarGlobalDataHelper::LeaderBoardEntries_t &entries)
 {
 	entries.m_bInitialized = true;
 	entries.m_vecEntries.PurgeAndDeleteElements();
-	entries.m_vecEntries.EnsureCapacity( scores.m_cEntryCount );
-	for ( int i = 0; i < scores.m_cEntryCount; ++i )
+	entries.m_vecEntries.EnsureCapacity(scores.m_cEntryCount);
+	for(int i = 0; i < scores.m_cEntryCount; ++i)
 	{
 		LeaderboardEntry_t *leaderboardEntry = new LeaderboardEntry_t;
-		if ( steamapicontext->SteamUserStats()->GetDownloadedLeaderboardEntry( scores.m_hSteamLeaderboardEntries, i, leaderboardEntry, NULL, 0 ) )
+		if(steamapicontext->SteamUserStats()->GetDownloadedLeaderboardEntry(scores.m_hSteamLeaderboardEntries, i,
+																			leaderboardEntry, NULL, 0))
 		{
-			entries.m_vecEntries.AddToTail( leaderboardEntry );
+			entries.m_vecEntries.AddToTail(leaderboardEntry);
 		}
 	}
 }
 
-void CTFWarGlobalDataHelper::OnLeaderboardScoresDownloaded_Global( LeaderboardScoresDownloaded_t *pResult, bool bIOFailure )
+void CTFWarGlobalDataHelper::OnLeaderboardScoresDownloaded_Global(LeaderboardScoresDownloaded_t *pResult,
+																  bool bIOFailure)
 {
-	RetrieveLeaderboardEntries( *pResult, downloadedLeaderboardScoresGlobal );
+	RetrieveLeaderboardEntries(*pResult, downloadedLeaderboardScoresGlobal);
 }
 
-void CTFWarGlobalDataHelper::OnLeaderboardScoresDownloaded_Friends( LeaderboardScoresDownloaded_t *pResult, bool bIOFailure )
+void CTFWarGlobalDataHelper::OnLeaderboardScoresDownloaded_Friends(LeaderboardScoresDownloaded_t *pResult,
+																   bool bIOFailure)
 {
-	RetrieveLeaderboardEntries( *pResult, downloadedLeaderboardScoresFriends );
+	RetrieveLeaderboardEntries(*pResult, downloadedLeaderboardScoresFriends);
 }
 
 class CGC_War_GlobalStatsResponse : public GCSDK::CGCClientJob
 {
 public:
-	CGC_War_GlobalStatsResponse( GCSDK::CGCClient *pGCClient ) : GCSDK::CGCClientJob( pGCClient ) { }
+	CGC_War_GlobalStatsResponse(GCSDK::CGCClient *pGCClient) : GCSDK::CGCClientJob(pGCClient) {}
 
-	virtual bool BYieldingRunJobFromMsg( GCSDK::IMsgNetPacket *pNetPacket )
+	virtual bool BYieldingRunJobFromMsg(GCSDK::IMsgNetPacket *pNetPacket)
 	{
-		GCSDK::CProtoBufMsg< CGCMsgGC_War_GlobalStatsResponse > msg( pNetPacket );
+		GCSDK::CProtoBufMsg<CGCMsgGC_War_GlobalStatsResponse> msg(pNetPacket);
 
-		GetWarData().SetGlobalStats( msg.Body() );
+		GetWarData().SetGlobalStats(msg.Body());
 
 		return true;
 	}
 };
-GC_REG_JOB( GCSDK::CGCClient, CGC_War_GlobalStatsResponse, "CGC_War_GlobalStatsResponse", k_EMsgGC_War_GlobalStatsResponse, GCSDK::k_EServerTypeGCClient );
+GC_REG_JOB(GCSDK::CGCClient, CGC_War_GlobalStatsResponse, "CGC_War_GlobalStatsResponse",
+		   k_EMsgGC_War_GlobalStatsResponse, GCSDK::k_EServerTypeGCClient);
 #endif
 
-CTFWarGlobalDataHelper& GetWarData()
+CTFWarGlobalDataHelper &GetWarData()
 {
 #ifdef GC
 	return GGCTF()->GetGlobalWarData();

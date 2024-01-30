@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -14,9 +14,8 @@
 //-----------------------------------------------------------------------------
 enum TrackerMessageFlags_e
 {
-	MESSAGEFLAG_SYSTEM = 1<<2,			// message is from the tracker system
-	MESSAGEFLAG_MARKETING = 1<<3,			// message is from the tracker system
+	MESSAGEFLAG_SYSTEM = 1 << 2,	// message is from the tracker system
+	MESSAGEFLAG_MARKETING = 1 << 3, // message is from the tracker system
 };
-
 
 #endif // TRACKERMESSAGEFLAGS_H

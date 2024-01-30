@@ -16,7 +16,6 @@
 class C_TFPlayerClass : public CTFPlayerClassShared
 {
 public:
-
 	C_TFPlayerClass() {}
 };
 

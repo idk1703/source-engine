@@ -449,7 +449,7 @@ L 07/22/1999 - 20:48:15: "Target_Pratice<80>" activated the goal "info_player_te
 L 07/22/1999 - 20:48:25: "MCGILLA<74>" killed "Target_Pratice<80>" with "ac"
 L 07/22/1999 - 20:48:27: "Target_Pratice<80>" activated the goal "info_player_teamspawn"
 L 07/22/1999 - 20:48:42: =------= MATCH RESULTS =------=
-L 07/22/1999 - 20:48:42: "red" and "blue" defeated "yellow" 
+L 07/22/1999 - 20:48:42: "red" and "blue" defeated "yellow"
 L 07/22/1999 - 20:48:42: "blue" RESULTS: "1" players. "1" frags, "1" unaccounted for. "500" team score. Allies:"2"
 L 07/22/1999 - 20:48:42: "red" RESULTS: "4" players. "29" frags, "4" unaccounted for. "500" team score. Allies:"1"
 L 07/22/1999 - 20:48:42: "yellow" RESULTS: "3" players. "17" frags, "3" unaccounted for. "200" team score. Allies:

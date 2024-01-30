@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #if !defined(AFX_ARCHDLG_H__C146AA5D_38FE_11D1_AFC9_0060979D2F4E__INCLUDED_)
@@ -14,46 +14,51 @@
 
 class CArchDlg : public CDialog
 {
-// Construction
+	// Construction
 public:
-	CArchDlg(Vector& bmins, Vector& bmaxs, CWnd* pParent = NULL);   // standard constructor
-	~CArchDlg();   // standard constructor
+	CArchDlg(Vector &bmins, Vector &bmaxs, CWnd *pParent = NULL); // standard constructor
+	~CArchDlg();												  // standard constructor
 
 	void DrawArch(CDC *pDC);
 
 	Vector bmins, bmaxs;
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CArchDlg)
-	enum { IDD = IDD_ARCH };
-	CSpinButtonCtrl	m_cStartAngleSpin;
-	CSpinButtonCtrl	m_cWallWidthSpin;
-	CEdit	m_cWallWidth;
-	CSpinButtonCtrl	m_cSidesSpin;
-	CEdit	m_cSides;
-	CSpinButtonCtrl	m_cArcSpin;
-	CEdit	m_cArc;
-	CStatic	m_cPreview;
-	int		m_iSides;
-	int		m_iWallWidth;
-	int		m_iAddHeight;
-	float	m_fArc;
-	float	m_fAngle;
+	enum
+	{
+		IDD = IDD_ARCH
+	};
+	CSpinButtonCtrl m_cStartAngleSpin;
+	CSpinButtonCtrl m_cWallWidthSpin;
+	CEdit m_cWallWidth;
+	CSpinButtonCtrl m_cSidesSpin;
+	CEdit m_cSides;
+	CSpinButtonCtrl m_cArcSpin;
+	CEdit m_cArc;
+	CStatic m_cPreview;
+	int m_iSides;
+	int m_iWallWidth;
+	int m_iAddHeight;
+	float m_fArc;
+	float m_fAngle;
 	//}}AFX_DATA
 
-	void SetMaxWallWidth(int iMaxWallWidth) { m_iMaxWallWidth = iMaxWallWidth; }
+	void SetMaxWallWidth(int iMaxWallWidth)
+	{
+		m_iMaxWallWidth = iMaxWallWidth;
+	}
 	void SaveValues();
 
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CArchDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
 protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
+													 //}}AFX_VIRTUAL
 
+	// Implementation
+protected:
 	int m_iMaxWallWidth;
 
 	// Generated message map functions

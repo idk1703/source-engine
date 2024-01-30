@@ -19,18 +19,18 @@ CPlayerSpawnCache::CPlayerSpawnCache()
 	Reset();
 
 	// The only event we care about
-	ListenForGameEvent( "game_newmap" );
+	ListenForGameEvent("game_newmap");
 }
 
 void CPlayerSpawnCache::Reset()
 {
-	V_memset( &m_Data, 0, sizeof( m_Data ) );
+	V_memset(&m_Data, 0, sizeof(m_Data));
 }
 
-void CPlayerSpawnCache::FireGameEvent( IGameEvent *pEvent )
+void CPlayerSpawnCache::FireGameEvent(IGameEvent *pEvent)
 {
 	// On new map, clear the cache
-	if ( FStrEq( pEvent->GetName(), "game_newmap" ) )
+	if(FStrEq(pEvent->GetName(), "game_newmap"))
 	{
 		Reset();
 	}

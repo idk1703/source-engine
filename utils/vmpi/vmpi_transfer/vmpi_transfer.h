@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -9,6 +9,5 @@
 #ifdef _WIN32
 #pragma once
 #endif
-
 
 #endif // VMPI_TRANSFER_H

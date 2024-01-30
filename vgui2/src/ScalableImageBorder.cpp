@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -27,10 +27,10 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 ScalableImageBorder::ScalableImageBorder()
 {
-	_inset[0]=0;
-	_inset[1]=0;
-	_inset[2]=0;
-	_inset[3]=0;
+	_inset[0] = 0;
+	_inset[1] = 0;
+	_inset[2] = 0;
+	_inset[3] = 0;
 	_name = NULL;
 	m_eBackgroundType = IBorder::BACKGROUND_TEXTURED;
 
@@ -47,52 +47,52 @@ ScalableImageBorder::ScalableImageBorder()
 //-----------------------------------------------------------------------------
 ScalableImageBorder::~ScalableImageBorder()
 {
-	if ( vgui::surface() && m_iTextureID != -1 )
+	if(vgui::surface() && m_iTextureID != -1)
 	{
-		vgui::surface()->DestroyTextureID( m_iTextureID );
+		vgui::surface()->DestroyTextureID(m_iTextureID);
 		m_iTextureID = -1;
 	}
 
-	delete [] _name;
-	if ( m_pszImageName )
+	delete[] _name;
+	if(m_pszImageName)
 	{
-		delete [] m_pszImageName;
+		delete[] m_pszImageName;
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ScalableImageBorder::SetImage(const char *imageName)
 {
-	if ( m_pszImageName )
+	if(m_pszImageName)
 	{
-		delete [] m_pszImageName;
+		delete[] m_pszImageName;
 		m_pszImageName = NULL;
 	}
 
-	if (*imageName)
+	if(*imageName)
 	{
-		int len = Q_strlen(imageName) + 1 + 5;	// 5 for "vgui/"
-		delete [] m_pszImageName;
-		m_pszImageName = new char[ len ];
-		Q_snprintf( m_pszImageName, len, "vgui/%s", imageName );
+		int len = Q_strlen(imageName) + 1 + 5; // 5 for "vgui/"
+		delete[] m_pszImageName;
+		m_pszImageName = new char[len];
+		Q_snprintf(m_pszImageName, len, "vgui/%s", imageName);
 
-		g_pSurface->DrawSetTextureFile( m_iTextureID, m_pszImageName, true, false);
+		g_pSurface->DrawSetTextureFile(m_iTextureID, m_pszImageName, true, false);
 
 		// get image dimensions, compare to m_iSrcCornerHeight, m_iSrcCornerWidth
-		int wide,tall;
-		g_pSurface->DrawGetTextureSize( m_iTextureID, wide, tall );
+		int wide, tall;
+		g_pSurface->DrawGetTextureSize(m_iTextureID, wide, tall);
 
-		m_flCornerWidthPercent = ( wide > 0 ) ? ( (float)m_iSrcCornerWidth / (float)wide ) : 0;
-		m_flCornerHeightPercent = ( tall > 0 ) ? ( (float)m_iSrcCornerHeight / (float)tall ) : 0;
-	}	
+		m_flCornerWidthPercent = (wide > 0) ? ((float)m_iSrcCornerWidth / (float)wide) : 0;
+		m_flCornerHeightPercent = (tall > 0) ? ((float)m_iSrcCornerHeight / (float)tall) : 0;
+	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void ScalableImageBorder::SetInset(int left,int top,int right,int bottom)
+void ScalableImageBorder::SetInset(int left, int top, int right, int bottom)
 {
 	_inset[SIDE_LEFT] = left;
 	_inset[SIDE_TOP] = top;
@@ -101,9 +101,9 @@ void ScalableImageBorder::SetInset(int left,int top,int right,int bottom)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void ScalableImageBorder::GetInset(int& left,int& top,int& right,int& bottom)
+void ScalableImageBorder::GetInset(int &left, int &top, int &right, int &bottom)
 {
 	left = _inset[SIDE_LEFT];
 	top = _inset[SIDE_TOP];
@@ -112,7 +112,7 @@ void ScalableImageBorder::GetInset(int& left,int& top,int& right,int& bottom)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ScalableImageBorder::Paint(int x, int y, int wide, int tall)
 {
@@ -124,11 +124,11 @@ void ScalableImageBorder::Paint(int x, int y, int wide, int tall)
 //-----------------------------------------------------------------------------
 void ScalableImageBorder::Paint(int x, int y, int wide, int tall, int breakSide, int breakStart, int breakEnd)
 {
-	if ( !m_pszImageName || !m_pszImageName[0] )
+	if(!m_pszImageName || !m_pszImageName[0])
 		return;
 
-	g_pSurface->DrawSetColor( m_Color );
-	g_pSurface->DrawSetTexture( m_iTextureID );
+	g_pSurface->DrawSetColor(m_Color);
+	g_pSurface->DrawSetTexture(m_iTextureID);
 
 	float uvx = 0;
 	float uvy = 0;
@@ -137,51 +137,51 @@ void ScalableImageBorder::Paint(int x, int y, int wide, int tall, int breakSide,
 	float drawW, drawH;
 
 	int row, col;
-	for ( row=0;row<3;row++ )
+	for(row = 0; row < 3; row++)
 	{
 		x = 0;
 		uvx = 0;
 
-		if ( row == 0 || row == 2 )
+		if(row == 0 || row == 2)
 		{
-			//uvh - row 0 or 2, is src_corner_height
+			// uvh - row 0 or 2, is src_corner_height
 			uvh = m_flCornerHeightPercent;
 			drawH = m_iCornerHeight;
 		}
 		else
 		{
-			//uvh - row 1, is tall - ( 2 * src_corner_height ) ( min 0 )
-			uvh = max( 1.f - 2.f * m_flCornerHeightPercent, 0.0f );
-			drawH = max( 0, ( tall - 2 * m_iCornerHeight ) );
+			// uvh - row 1, is tall - ( 2 * src_corner_height ) ( min 0 )
+			uvh = max(1.f - 2.f * m_flCornerHeightPercent, 0.0f);
+			drawH = max(0, (tall - 2 * m_iCornerHeight));
 		}
 
-		for ( col=0;col<3;col++ )
+		for(col = 0; col < 3; col++)
 		{
-			if ( col == 0 || col == 2 )
+			if(col == 0 || col == 2)
 			{
-				//uvw - col 0 or 2, is src_corner_width
+				// uvw - col 0 or 2, is src_corner_width
 				uvw = m_flCornerWidthPercent;
 				drawW = m_iCornerWidth;
 			}
 			else
 			{
-				//uvw - col 1, is wide - ( 2 * src_corner_width ) ( min 0 )
-				uvw = max( 1.f - 2.f * m_flCornerWidthPercent, 0.0f );
-				drawW = max( 0, ( wide - 2 * m_iCornerWidth ) );
+				// uvw - col 1, is wide - ( 2 * src_corner_width ) ( min 0 )
+				uvw = max(1.f - 2.f * m_flCornerWidthPercent, 0.0f);
+				drawW = max(0, (wide - 2 * m_iCornerWidth));
 			}
 
-			Vector2D uv11( uvx, uvy );
-			Vector2D uv21( uvx+uvw, uvy );
-			Vector2D uv22( uvx+uvw, uvy+uvh );
-			Vector2D uv12( uvx, uvy+uvh );
+			Vector2D uv11(uvx, uvy);
+			Vector2D uv21(uvx + uvw, uvy);
+			Vector2D uv22(uvx + uvw, uvy + uvh);
+			Vector2D uv12(uvx, uvy + uvh);
 
 			vgui::Vertex_t verts[4];
-			verts[0].Init( Vector2D( x, y ), uv11 );
-			verts[1].Init( Vector2D( x+drawW, y ), uv21 );
-			verts[2].Init( Vector2D( x+drawW, y+drawH ), uv22 );
-			verts[3].Init( Vector2D( x, y+drawH ), uv12  );
+			verts[0].Init(Vector2D(x, y), uv11);
+			verts[1].Init(Vector2D(x + drawW, y), uv21);
+			verts[2].Init(Vector2D(x + drawW, y + drawH), uv22);
+			verts[3].Init(Vector2D(x, y + drawH), uv12);
 
-			g_pSurface->DrawTexturedPolygon( 4, verts );	
+			g_pSurface->DrawTexturedPolygon(4, verts);
 
 			x += drawW;
 			uvx += uvw;
@@ -195,39 +195,39 @@ void ScalableImageBorder::Paint(int x, int y, int wide, int tall, int breakSide,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ScalableImageBorder::Paint(VPANEL panel)
 {
 	// get panel size
 	int wide, tall;
-	ipanel()->GetSize( panel, wide, tall );
+	ipanel()->GetSize(panel, wide, tall);
 	Paint(0, 0, wide, tall, -1, 0, 0);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ScalableImageBorder::ApplySchemeSettings(IScheme *pScheme, KeyValues *inResourceData)
 {
 	m_eBackgroundType = (backgroundtype_e)inResourceData->GetInt("backgroundtype");
 
-	m_iSrcCornerHeight = inResourceData->GetInt( "src_corner_height" );
-	m_iSrcCornerWidth = inResourceData->GetInt( "src_corner_width" );
-	m_iCornerHeight = inResourceData->GetInt( "draw_corner_height" );
-	m_iCornerWidth = inResourceData->GetInt( "draw_corner_width" );
+	m_iSrcCornerHeight = inResourceData->GetInt("src_corner_height");
+	m_iSrcCornerWidth = inResourceData->GetInt("src_corner_width");
+	m_iCornerHeight = inResourceData->GetInt("draw_corner_height");
+	m_iCornerWidth = inResourceData->GetInt("draw_corner_width");
 
 	// scale the x and y up to our screen co-ords
-	m_iCornerHeight = scheme()->GetProportionalScaledValue( m_iCornerHeight);
+	m_iCornerHeight = scheme()->GetProportionalScaledValue(m_iCornerHeight);
 	m_iCornerWidth = scheme()->GetProportionalScaledValue(m_iCornerWidth);
 
 	const char *imageName = inResourceData->GetString("image", "");
-	SetImage( imageName );
+	SetImage(imageName);
 
-	m_bPaintFirst = inResourceData->GetInt("paintfirst", true );
+	m_bPaintFirst = inResourceData->GetInt("paintfirst", true);
 
 	const char *col = inResourceData->GetString("color", NULL);
-	if ( col && col[0] )
+	if(col && col[0])
 	{
 		m_Color = pScheme->GetColor(col, Color(255, 255, 255, 255));
 	}
@@ -242,7 +242,7 @@ void ScalableImageBorder::ApplySchemeSettings(IScheme *pScheme, KeyValues *inRes
 //-----------------------------------------------------------------------------
 const char *ScalableImageBorder::GetName()
 {
-	if (_name)
+	if(_name)
 		return _name;
 	return "";
 }
@@ -252,21 +252,20 @@ const char *ScalableImageBorder::GetName()
 //-----------------------------------------------------------------------------
 void ScalableImageBorder::SetName(const char *name)
 {
-	if (_name)
+	if(_name)
 	{
-		delete [] _name;
+		delete[] _name;
 	}
 
 	int len = Q_strlen(name) + 1;
-	_name = new char[ len ];
-	Q_strncpy( _name, name, len );
+	_name = new char[len];
+	Q_strncpy(_name, name, len);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 IBorder::backgroundtype_e ScalableImageBorder::GetBackgroundType()
 {
 	return m_eBackgroundType;
 }
-

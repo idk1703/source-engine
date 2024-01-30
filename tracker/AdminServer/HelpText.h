@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -13,11 +13,10 @@
 
 #include <VGUI_KeyValues.h>
 
-
 //-----------------------------------------------------------------------------
 // Purpose: parses in a text file and returns help strings about key words
 //-----------------------------------------------------------------------------
-class CHelpText 
+class CHelpText
 {
 public:
 	CHelpText(const char *mod);
@@ -27,9 +26,7 @@ public:
 	const char *GetHelp(const char *keyname);
 
 private:
-
 	vgui::KeyValues *m_pHelpData;
-
 };
 
 #endif // HELPTEXT_H

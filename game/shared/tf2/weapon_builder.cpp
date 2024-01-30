@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
 // Purpose:			The "weapon" used to build objects
-//					
+//
 //
 // $Workfile:     $
 // $Date:         $
@@ -22,80 +22,73 @@
 extern ConVar tf2_object_hard_limits;
 extern ConVar tf_fastbuild;
 
-EXTERN_SEND_TABLE(DT_BaseCombatWeapon)
+EXTERN_SEND_TABLE
+(DT_BaseCombatWeapon)
 
-IMPLEMENT_SERVERCLASS_ST(CWeaponBuilder, DT_WeaponBuilder)
-	SendPropInt( SENDINFO( m_iBuildState ), 4, SPROP_UNSIGNED ),
-	SendPropInt( SENDINFO( m_iCurrentObject ), BUILDER_OBJECT_BITS, SPROP_UNSIGNED ),
-	SendPropInt( SENDINFO( m_iCurrentObjectState ), 4, SPROP_UNSIGNED ),
-	SendPropEHandle( SENDINFO( m_hObjectBeingBuilt ) ),
-	SendPropTime( SENDINFO( m_flStartTime ) ),
-	SendPropTime( SENDINFO( m_flTotalTime ) ),
-	SendPropArray
-	( 
-		SendPropInt( SENDINFO_ARRAY(m_bObjectValidity), 1, SPROP_UNSIGNED), m_bObjectValidity
-	),
-	SendPropArray
-	( 
-		SendPropInt( SENDINFO_ARRAY(m_bObjectBuildability), 1, SPROP_UNSIGNED), m_bObjectBuildability
-	),
-END_SEND_TABLE()
+	IMPLEMENT_SERVERCLASS_ST(CWeaponBuilder, DT_WeaponBuilder) SendPropInt(SENDINFO(m_iBuildState), 4, SPROP_UNSIGNED),
+	SendPropInt(SENDINFO(m_iCurrentObject), BUILDER_OBJECT_BITS, SPROP_UNSIGNED),
+	SendPropInt(SENDINFO(m_iCurrentObjectState), 4, SPROP_UNSIGNED), SendPropEHandle(SENDINFO(m_hObjectBeingBuilt)),
+	SendPropTime(SENDINFO(m_flStartTime)), SendPropTime(SENDINFO(m_flTotalTime)),
+	SendPropArray(SendPropInt(SENDINFO_ARRAY(m_bObjectValidity), 1, SPROP_UNSIGNED), m_bObjectValidity),
+	SendPropArray(SendPropInt(SENDINFO_ARRAY(m_bObjectBuildability), 1, SPROP_UNSIGNED), m_bObjectBuildability),
+END_SEND_TABLE
+()
 
-LINK_ENTITY_TO_CLASS( weapon_builder, CWeaponBuilder );
+	LINK_ENTITY_TO_CLASS(weapon_builder, CWeaponBuilder);
 PRECACHE_WEAPON_REGISTER(weapon_builder);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CWeaponBuilder::CWeaponBuilder()
 {
-	for ( int i=0; i < m_bObjectValidity.Count(); i++ )
-		m_bObjectValidity.Set( i, 0 );
+	for(int i = 0; i < m_bObjectValidity.Count(); i++)
+		m_bObjectValidity.Set(i, 0);
 
 	m_iCurrentObject = BUILDER_INVALID_OBJECT;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CWeaponBuilder::Precache( void )
+void CWeaponBuilder::Precache(void)
 {
 	BaseClass::Precache();
 
-	PrecacheModel( "models/weapons/v_slam.mdl" );
-	PrecacheVGuiScreen( "screen_human_pda" );
+	PrecacheModel("models/weapons/v_slam.mdl");
+	PrecacheVGuiScreen("screen_human_pda");
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Gets info about the control panels
 //-----------------------------------------------------------------------------
-void CWeaponBuilder::GetControlPanelInfo( int nPanelIndex, const char *&pPanelName )
+void CWeaponBuilder::GetControlPanelInfo(int nPanelIndex, const char *&pPanelName)
 {
 	pPanelName = "screen_human_pda";
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CWeaponBuilder::ShouldShowControlPanels( void )
+bool CWeaponBuilder::ShouldShowControlPanels(void)
 {
-	if ( GetActivity() == ACT_VM_IDLE )
+	if(GetActivity() == ACT_VM_IDLE)
 		return true;
 
 	return false;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CWeaponBuilder::UpdateOnRemove( void )
+void CWeaponBuilder::UpdateOnRemove(void)
 {
 	// Tell the player he's lost his build weapon
-	CBaseTFPlayer *pOwner = ToBaseTFPlayer( GetOwner() );
-	if ( pOwner && pOwner->GetWeaponBuilder() == this )
+	CBaseTFPlayer *pOwner = ToBaseTFPlayer(GetOwner());
+	if(pOwner && pOwner->GetWeaponBuilder() == this)
 	{
-		pOwner->SetWeaponBuilder( NULL );
+		pOwner->SetWeaponBuilder(NULL);
 	}
 
 	// Chain at end to mimic destructor unwind order
@@ -105,51 +98,52 @@ void CWeaponBuilder::UpdateOnRemove( void )
 //-----------------------------------------------------------------------------
 // Purpose: Builder weapon has just been given to a player
 //-----------------------------------------------------------------------------
-void CWeaponBuilder::Equip( CBaseCombatCharacter *pOwner )
+void CWeaponBuilder::Equip(CBaseCombatCharacter *pOwner)
 {
-	BaseClass::Equip( pOwner );
-	((CBaseTFPlayer*)pOwner)->SetWeaponBuilder( this );
+	BaseClass::Equip(pOwner);
+	((CBaseTFPlayer *)pOwner)->SetWeaponBuilder(this);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Add a new object type to this build weapon. This will allow
 //			the player carrying this builder to build the object.
 //-----------------------------------------------------------------------------
-void CWeaponBuilder::AddBuildableObject( int iObjectType )
+void CWeaponBuilder::AddBuildableObject(int iObjectType)
 {
-	m_bObjectValidity.Set( iObjectType, true );
+	m_bObjectValidity.Set(iObjectType, true);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CWeaponBuilder::CanDeploy( void )
+bool CWeaponBuilder::CanDeploy(void)
 {
-	if ( m_iCurrentObject != BUILDER_INVALID_OBJECT )
+	if(m_iCurrentObject != BUILDER_INVALID_OBJECT)
 	{
-		SetCurrentState( BS_PLACING );
-		StartPlacement(); 
+		SetCurrentState(BS_PLACING);
+		StartPlacement();
 		m_flNextPrimaryAttack = gpGlobals->curtime + 0.35f;
 	}
 	else
 	{
 		m_hObjectBeingBuilt = NULL;
-		SetCurrentState( BS_IDLE );
-		SetCurrentObject( m_iCurrentObject );
+		SetCurrentState(BS_IDLE);
+		SetCurrentObject(m_iCurrentObject);
 	}
 	return BaseClass::CanDeploy();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CWeaponBuilder::Deploy( )
+bool CWeaponBuilder::Deploy()
 {
-#if !defined( CLIENT_DLL )
-	if ( m_hObjectBeingBuilt.Get() && m_hObjectBeingBuilt->IsAnUpgrade() )
-		return DefaultDeploy( (char*)GetViewModel(), (char*)GetWorldModel(), ACT_SLAM_STICKWALL_ND_DRAW, (char*)GetAnimPrefix() );
+#if !defined(CLIENT_DLL)
+	if(m_hObjectBeingBuilt.Get() && m_hObjectBeingBuilt->IsAnUpgrade())
+		return DefaultDeploy((char *)GetViewModel(), (char *)GetWorldModel(), ACT_SLAM_STICKWALL_ND_DRAW,
+							 (char *)GetAnimPrefix());
 
-	return DefaultDeploy( (char*)GetViewModel(), (char*)GetWorldModel(), ACT_VM_DRAW, (char*)GetAnimPrefix() );
+	return DefaultDeploy((char *)GetViewModel(), (char *)GetWorldModel(), ACT_VM_DRAW, (char *)GetAnimPrefix());
 #else
 	return true;
 #endif
@@ -158,18 +152,18 @@ bool CWeaponBuilder::Deploy( )
 //-----------------------------------------------------------------------------
 // Purpose: Prevent switching when working on something
 //-----------------------------------------------------------------------------
-bool CWeaponBuilder::CanHolster( void )
+bool CWeaponBuilder::CanHolster(void)
 {
-	if ( IsBuilding() )
+	if(IsBuilding())
 		return false;
 
 	return BaseClass::CanHolster();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CBaseCombatWeapon *CWeaponBuilder::GetLastWeapon( void )
+CBaseCombatWeapon *CWeaponBuilder::GetLastWeapon(void)
 {
 	return BaseClass::GetLastWeapon();
 }
@@ -177,11 +171,11 @@ CBaseCombatWeapon *CWeaponBuilder::GetLastWeapon( void )
 //-----------------------------------------------------------------------------
 // Purpose: Stop placement when holstering
 //-----------------------------------------------------------------------------
-bool CWeaponBuilder::Holster( CBaseCombatWeapon *pSwitchingTo )
+bool CWeaponBuilder::Holster(CBaseCombatWeapon *pSwitchingTo)
 {
-	if ( m_iBuildState == BS_PLACING || m_iBuildState == BS_PLACING_INVALID )
+	if(m_iBuildState == BS_PLACING || m_iBuildState == BS_PLACING_INVALID)
 	{
-		SetCurrentState( BS_IDLE );
+		SetCurrentState(BS_IDLE);
 	}
 	StopPlacement();
 
@@ -189,32 +183,32 @@ bool CWeaponBuilder::Holster( CBaseCombatWeapon *pSwitchingTo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CWeaponBuilder::ItemPostFrame( void )
+void CWeaponBuilder::ItemPostFrame(void)
 {
-	CBaseTFPlayer *pOwner = ToBaseTFPlayer( GetOwner() );
-	if ( !pOwner )
+	CBaseTFPlayer *pOwner = ToBaseTFPlayer(GetOwner());
+	if(!pOwner)
 		return;
 
 	// Ignore input while the player's building anything
-	if ( pOwner->IsBuilding() )
+	if(pOwner->IsBuilding())
 		return;
 
 	// Switch away if I'm not in placement mode
-	if ( m_iBuildState != BS_PLACING && m_iBuildState != BS_PLACING_INVALID )
+	if(m_iBuildState != BS_PLACING && m_iBuildState != BS_PLACING_INVALID)
 	{
-		pOwner->SwitchToNextBestWeapon( NULL );
+		pOwner->SwitchToNextBestWeapon(NULL);
 		return;
 	}
 
-	if (( pOwner->m_nButtons & IN_ATTACK ) && (m_flNextPrimaryAttack <= gpGlobals->curtime) )
+	if((pOwner->m_nButtons & IN_ATTACK) && (m_flNextPrimaryAttack <= gpGlobals->curtime))
 	{
 		PrimaryAttack();
 	}
 
-	// Allow shield post frame 
-	AllowShieldPostFrame( true );
+	// Allow shield post frame
+	AllowShieldPostFrame(true);
 
 	WeaponIdle();
 }
@@ -222,78 +216,78 @@ void CWeaponBuilder::ItemPostFrame( void )
 //-----------------------------------------------------------------------------
 // Purpose: Start placing or building the currently selected object
 //-----------------------------------------------------------------------------
-void CWeaponBuilder::PrimaryAttack( void )
+void CWeaponBuilder::PrimaryAttack(void)
 {
-	CBaseTFPlayer *pOwner = ToBaseTFPlayer( GetOwner() );
-	if ( !pOwner )
+	CBaseTFPlayer *pOwner = ToBaseTFPlayer(GetOwner());
+	if(!pOwner)
 		return;
 
 	// What state should we move to?
-	switch( m_iBuildState )
+	switch(m_iBuildState)
 	{
-	case BS_IDLE:
+		case BS_IDLE:
 		{
 			// Idle state starts selection
-			SetCurrentState( BS_SELECTING );
+			SetCurrentState(BS_SELECTING);
 		}
 		break;
 
-	case BS_SELECTING:
+		case BS_SELECTING:
 		{
 			// Do nothing, client handles selection
 			return;
 		}
 		break;
 
-	case BS_PLACING:
+		case BS_PLACING:
 		{
-			if ( m_hObjectBeingBuilt )
+			if(m_hObjectBeingBuilt)
 			{
 				// Give the object a chance to veto the "start building" command. Objects like barbed wire
 				// may want to change their properties instead of actually building yet.
-				if ( m_hObjectBeingBuilt->PreStartBuilding() )
+				if(m_hObjectBeingBuilt->PreStartBuilding())
 				{
 					int iFlags = m_hObjectBeingBuilt->GetObjectFlags();
 
 					// Can't build if the game hasn't started
-					if ( !tf_fastbuild.GetInt() && CurrentActIsAWaitingAct() )
+					if(!tf_fastbuild.GetInt() && CurrentActIsAWaitingAct())
 					{
-						ClientPrint( pOwner, HUD_PRINTCENTER, "Can't build until the game's started.\n" );
+						ClientPrint(pOwner, HUD_PRINTCENTER, "Can't build until the game's started.\n");
 						return;
 					}
 
 					StartBuilding();
 
 					// Should we switch away?
-					if ( iFlags & OF_ALLOW_REPEAT_PLACEMENT )
+					if(iFlags & OF_ALLOW_REPEAT_PLACEMENT)
 					{
 						// Start placing another
-						SetCurrentState( BS_PLACING );
-						StartPlacement(); 
+						SetCurrentState(BS_PLACING);
+						StartPlacement();
 					}
 					else
 					{
-						pOwner->SwitchToNextBestWeapon( NULL );
+						pOwner->SwitchToNextBestWeapon(NULL);
 					}
 				}
 			}
 		}
 		break;
 
-	case BS_PLACING_INVALID:
+		case BS_PLACING_INVALID:
 		{
-			WeaponSound( SINGLE_NPC );
+			WeaponSound(SINGLE_NPC);
 
 			// If there is any associated error text when placing the object, display it
-			if( m_hObjectBeingBuilt != NULL )
+			if(m_hObjectBeingBuilt != NULL)
 			{
-				if (m_hObjectBeingBuilt->MustBeBuiltInResourceZone())
+				if(m_hObjectBeingBuilt->MustBeBuiltInResourceZone())
 				{
-					ClientPrint( pOwner, HUD_PRINTCENTER, "Only placeable in an empty resource zone.\n" );
+					ClientPrint(pOwner, HUD_PRINTCENTER, "Only placeable in an empty resource zone.\n");
 				}
-				else if (m_hObjectBeingBuilt->MustBeBuiltInConstructionYard())
+				else if(m_hObjectBeingBuilt->MustBeBuiltInConstructionYard())
 				{
-					ClientPrint( pOwner, HUD_PRINTCENTER, "Only placeable in a construction yard.\n" );
+					ClientPrint(pOwner, HUD_PRINTCENTER, "Only placeable in a construction yard.\n");
 				}
 			}
 		}
@@ -306,18 +300,18 @@ void CWeaponBuilder::PrimaryAttack( void )
 //-----------------------------------------------------------------------------
 // Purpose: Set the builder to the specified state
 //-----------------------------------------------------------------------------
-void CWeaponBuilder::SetCurrentState( int iState )
+void CWeaponBuilder::SetCurrentState(int iState)
 {
 	// Check the current build state... we may need to shut some stuff down...
 	switch(m_iBuildState)
 	{
-	case BS_PLACING:
-	case BS_PLACING_INVALID:
+		case BS_PLACING:
+		case BS_PLACING_INVALID:
 		{
-			if ((iState != BS_PLACING) && (iState != BS_PLACING_INVALID) && (iState != BS_BUILDING))
+			if((iState != BS_PLACING) && (iState != BS_PLACING_INVALID) && (iState != BS_BUILDING))
 			{
 				StopPlacement();
-				WeaponSound( SPECIAL1 );
+				WeaponSound(SPECIAL1);
 			}
 		}
 		break;
@@ -329,24 +323,24 @@ void CWeaponBuilder::SetCurrentState( int iState )
 //-----------------------------------------------------------------------------
 // Purpose: Set the builder to the specified object
 //-----------------------------------------------------------------------------
-void CWeaponBuilder::SetCurrentObject( int iObject )
+void CWeaponBuilder::SetCurrentObject(int iObject)
 {
 	// Fixup for invalid objects
-	if (iObject < 0)
+	if(iObject < 0)
 		iObject = BUILDER_INVALID_OBJECT;
 
-	CBaseTFPlayer *pOwner = ToBaseTFPlayer( GetOwner() );
-	if ( !pOwner )
+	CBaseTFPlayer *pOwner = ToBaseTFPlayer(GetOwner());
+	if(!pOwner)
 		return;
 
 	int i;
 
 	// If -1 was passed in, set to our first available object
-	if ( iObject == BUILDER_INVALID_OBJECT )
+	if(iObject == BUILDER_INVALID_OBJECT)
 	{
-		for ( i = 0; i < OBJ_LAST; i++ )
+		for(i = 0; i < OBJ_LAST; i++)
 		{
-			if ( m_bObjectValidity[i] )
+			if(m_bObjectValidity[i])
 			{
 				iObject = i;
 				break;
@@ -355,19 +349,19 @@ void CWeaponBuilder::SetCurrentObject( int iObject )
 	}
 
 	// Recalculate the buildability of each object (for propagation to the client)
-	for ( i=0; i < m_bObjectBuildability.Count(); i++ )
-		m_bObjectBuildability.Set( i, 0 );
+	for(i = 0; i < m_bObjectBuildability.Count(); i++)
+		m_bObjectBuildability.Set(i, 0);
 
-	for ( i = 0; i < OBJ_LAST; i++ )
+	for(i = 0; i < OBJ_LAST; i++)
 	{
-		if ( m_bObjectValidity[i] && pOwner->CanBuild(i) == CB_CAN_BUILD )
+		if(m_bObjectValidity[i] && pOwner->CanBuild(i) == CB_CAN_BUILD)
 		{
-			m_bObjectBuildability.Set( i, true );
+			m_bObjectBuildability.Set(i, true);
 		}
 	}
 
 	m_iCurrentObject = iObject;
-	m_iCurrentObjectState = pOwner->CanBuild( m_iCurrentObject );
+	m_iCurrentObjectState = pOwner->CanBuild(m_iCurrentObject);
 	m_flStartTime = 0;
 	m_flTotalTime = 0;
 }
@@ -375,36 +369,36 @@ void CWeaponBuilder::SetCurrentObject( int iObject )
 //-----------------------------------------------------------------------------
 // Purpose: Idle updates the position of the build placement model
 //-----------------------------------------------------------------------------
-void CWeaponBuilder::WeaponIdle( void )
+void CWeaponBuilder::WeaponIdle(void)
 {
-	CBaseTFPlayer *pOwner = ToBaseTFPlayer( GetOwner() );
-	if ( !pOwner )
+	CBaseTFPlayer *pOwner = ToBaseTFPlayer(GetOwner());
+	if(!pOwner)
 		return;
 
 	// If we're in placement mode, update the placement model
-	switch( m_iBuildState )
+	switch(m_iBuildState)
 	{
-	case BS_PLACING:
-	case BS_PLACING_INVALID:
+		case BS_PLACING:
+		case BS_PLACING_INVALID:
 		{
-			if ( UpdatePlacement() )
+			if(UpdatePlacement())
 			{
-				SetCurrentState( BS_PLACING );
+				SetCurrentState(BS_PLACING);
 			}
 			else
 			{
-				SetCurrentState( BS_PLACING_INVALID );
+				SetCurrentState(BS_PLACING_INVALID);
 			}
 		}
 		break;
 
-	default:
-		break;
+		default:
+			break;
 	}
 
-	if ( HasWeaponIdleTimeElapsed() )
+	if(HasWeaponIdleTimeElapsed())
 	{
-		SendWeaponAnim( ACT_VM_IDLE );
+		SendWeaponAnim(ACT_VM_IDLE);
 	}
 }
 
@@ -412,29 +406,29 @@ void CWeaponBuilder::WeaponIdle( void )
 // Purpose: The player holding this weapon has just gained new technology.
 //			Check to see if it affects the medikit
 //-----------------------------------------------------------------------------
-void CWeaponBuilder::GainedNewTechnology( CBaseTechnology *pTechnology )
+void CWeaponBuilder::GainedNewTechnology(CBaseTechnology *pTechnology)
 {
-	CBaseTFPlayer *pPlayer = ToBaseTFPlayer( GetOwner() );
-	if ( pPlayer )
+	CBaseTFPlayer *pPlayer = ToBaseTFPlayer(GetOwner());
+	if(pPlayer)
 	{
 		// Force a recalculation of the state for this object
-		SetCurrentObject( m_iCurrentObject );
+		SetCurrentObject(m_iCurrentObject);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Start placing the object
 //-----------------------------------------------------------------------------
-void CWeaponBuilder::StartPlacement( void )
+void CWeaponBuilder::StartPlacement(void)
 {
 	StopPlacement();
 
 	// Create the slab
-	m_hObjectBeingBuilt = (CBaseObject*)CreateEntityByName( GetObjectInfo( m_iCurrentObject )->m_pClassName );
-	if ( m_hObjectBeingBuilt )
+	m_hObjectBeingBuilt = (CBaseObject *)CreateEntityByName(GetObjectInfo(m_iCurrentObject)->m_pClassName);
+	if(m_hObjectBeingBuilt)
 	{
 		m_hObjectBeingBuilt->Spawn();
-		m_hObjectBeingBuilt->StartPlacement( ToBaseTFPlayer( GetOwner() ) );
+		m_hObjectBeingBuilt->StartPlacement(ToBaseTFPlayer(GetOwner()));
 		UpdatePlacement();
 
 		// Stomp this here in the same frame we make the object, so prevent clientside warnings that it's under attack
@@ -445,20 +439,20 @@ void CWeaponBuilder::StartPlacement( void )
 //-----------------------------------------------------------------------------
 // Purpose: Set the viewmodel according to the type of object we're placing
 //-----------------------------------------------------------------------------
-const char *CWeaponBuilder::GetViewModel( int viewmodelindex /*=0*/ )  const
+const char *CWeaponBuilder::GetViewModel(int viewmodelindex /*=0*/) const
 {
-	if ( m_hObjectBeingBuilt.Get() && m_hObjectBeingBuilt->IsAnUpgrade() )
+	if(m_hObjectBeingBuilt.Get() && m_hObjectBeingBuilt->IsAnUpgrade())
 		return "models/weapons/v_slam.mdl";
 
-	return BaseClass::GetViewModel( viewmodelindex );
+	return BaseClass::GetViewModel(viewmodelindex);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CWeaponBuilder::StopPlacement( void )
+void CWeaponBuilder::StopPlacement(void)
 {
-	if ( m_hObjectBeingBuilt )
+	if(m_hObjectBeingBuilt)
 	{
 		m_hObjectBeingBuilt->StopPlacement();
 		m_hObjectBeingBuilt = NULL;
@@ -468,63 +462,63 @@ void CWeaponBuilder::StopPlacement( void )
 //-----------------------------------------------------------------------------
 // Purpose: Move the placement model to the current position. Return false if it's an invalid position
 //-----------------------------------------------------------------------------
-bool CWeaponBuilder::UpdatePlacement( void )
+bool CWeaponBuilder::UpdatePlacement(void)
 {
-	if ( !m_hObjectBeingBuilt )
+	if(!m_hObjectBeingBuilt)
 		return false;
 
-	return m_hObjectBeingBuilt->UpdatePlacement( ToBaseTFPlayer(GetOwner()) );
+	return m_hObjectBeingBuilt->UpdatePlacement(ToBaseTFPlayer(GetOwner()));
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Player holding this weapon has started building something
 //-----------------------------------------------------------------------------
-void CWeaponBuilder::StartBuilding( void )
+void CWeaponBuilder::StartBuilding(void)
 {
-	if ( m_hObjectBeingBuilt.Get() && UpdatePlacement() )
+	if(m_hObjectBeingBuilt.Get() && UpdatePlacement())
 	{
-		SetCurrentState( BS_BUILDING );
-		m_hObjectBeingBuilt->StartBuilding( GetOwner() );
+		SetCurrentState(BS_BUILDING);
+		m_hObjectBeingBuilt->StartBuilding(GetOwner());
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Player holding this weapon has aborted the build of an object
 //-----------------------------------------------------------------------------
-void CWeaponBuilder::StoppedBuilding( int iObjectType )
+void CWeaponBuilder::StoppedBuilding(int iObjectType)
 {
-	CBaseTFPlayer *pPlayer = ToBaseTFPlayer( GetOwner() );
-	if ( pPlayer )
+	CBaseTFPlayer *pPlayer = ToBaseTFPlayer(GetOwner());
+	if(pPlayer)
 	{
 		// Force a recalculation of the state for this object
-		SetCurrentObject( m_iCurrentObject );
-		SetCurrentState( BS_IDLE );
+		SetCurrentObject(m_iCurrentObject);
+		SetCurrentState(BS_IDLE);
 
-		WeaponSound( SPECIAL2 );
+		WeaponSound(SPECIAL2);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CWeaponBuilder::IsBuilding( void )
+bool CWeaponBuilder::IsBuilding(void)
 {
-	return ( m_iBuildState == BS_BUILDING );
+	return (m_iBuildState == BS_BUILDING);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: The player holding this weapon has just finished building an object
 //-----------------------------------------------------------------------------
-void CWeaponBuilder::FinishedObject( void )
+void CWeaponBuilder::FinishedObject(void)
 {
-	CBaseTFPlayer *pPlayer = ToBaseTFPlayer( GetOwner() );
-	if ( pPlayer )
+	CBaseTFPlayer *pPlayer = ToBaseTFPlayer(GetOwner());
+	if(pPlayer)
 	{
 		// We're no longer building anything...
 		m_hObjectBeingBuilt = NULL;
 
 		// Force a recalculation of the state for this object
-		SetCurrentObject( m_iCurrentObject );
-		SetCurrentState( BS_IDLE );
+		SetCurrentObject(m_iCurrentObject);
+		SetCurrentState(BS_IDLE);
 	}
 }

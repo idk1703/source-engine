@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -17,7 +17,6 @@
 #include "movieobjects/dmeeditortypedictionary.h"
 #include "vgui_controls/MessageMap.h"
 
-
 //-----------------------------------------------------------------------------
 // Forward declarations
 //-----------------------------------------------------------------------------
@@ -27,41 +26,38 @@ namespace vgui
 {
 	class Panel;
 	class ComboBox;
-}
-
+} // namespace vgui
 
 //-----------------------------------------------------------------------------
 // Configuration for integer choices
 //-----------------------------------------------------------------------------
 class CDmeEditorIntChoicesInfo : public CDmeEditorChoicesInfo
 {
-	DEFINE_ELEMENT( CDmeEditorIntChoicesInfo, CDmeEditorChoicesInfo );
+	DEFINE_ELEMENT(CDmeEditorIntChoicesInfo, CDmeEditorChoicesInfo);
 
 public:
 	// Add a choice
-	void AddChoice( int nValue, const char *pChoiceString );
+	void AddChoice(int nValue, const char *pChoiceString);
 
 	// Gets the choices
-	int GetChoiceValue( int nIndex ) const;
+	int GetChoiceValue(int nIndex) const;
 };
-
 
 //-----------------------------------------------------------------------------
 // CAttributeIntChoicePanel
 //-----------------------------------------------------------------------------
 class CAttributeIntChoicePanel : public CBaseAttributeChoicePanel
 {
-	DECLARE_CLASS_SIMPLE( CAttributeIntChoicePanel, CBaseAttributeChoicePanel );
+	DECLARE_CLASS_SIMPLE(CAttributeIntChoicePanel, CBaseAttributeChoicePanel);
 
 public:
-	CAttributeIntChoicePanel( vgui::Panel *parent,	const AttributeWidgetInfo_t &info );
+	CAttributeIntChoicePanel(vgui::Panel *parent, const AttributeWidgetInfo_t &info);
 
 private:
 	// Derived classes can re-implement this to fill the combo box however they like
-	virtual void PopulateComboBox( vgui::ComboBox *pComboBox );
-	virtual void SetAttributeFromComboBox( vgui::ComboBox *pComboBox, KeyValues *pKeyValues );
-	virtual void SetComboBoxFromAttribute( vgui::ComboBox *pComboBox );
+	virtual void PopulateComboBox(vgui::ComboBox *pComboBox);
+	virtual void SetAttributeFromComboBox(vgui::ComboBox *pComboBox, KeyValues *pKeyValues);
+	virtual void SetComboBoxFromAttribute(vgui::ComboBox *pComboBox);
 };
-
 
 #endif // ATTRIBUTEINTCHOICEPANEL_h

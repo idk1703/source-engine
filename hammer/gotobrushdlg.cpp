@@ -13,30 +13,26 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 BEGIN_MESSAGE_MAP(CGotoBrushDlg, CDialog)
 	//{{AFX_MSG_MAP(CGotoBrushDlg)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CGotoBrushDlg::CGotoBrushDlg(CWnd *pParent)
-	: CDialog(CGotoBrushDlg::IDD, pParent)
+CGotoBrushDlg::CGotoBrushDlg(CWnd *pParent) : CDialog(CGotoBrushDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CGotoBrushDlg)
 	m_nBrushID = 0;
 	//}}AFX_DATA_INIT
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pDX - 
+// Purpose:
+// Input  : pDX -
 //-----------------------------------------------------------------------------
-void CGotoBrushDlg::DoDataExchange(CDataExchange* pDX)
+void CGotoBrushDlg::DoDataExchange(CDataExchange *pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CGotoBrushDlg)
@@ -44,12 +40,10 @@ void CGotoBrushDlg::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CGotoBrushDlg::OnOK() 
+void CGotoBrushDlg::OnOK()
 {
 	CDialog::OnOK();
 }
-

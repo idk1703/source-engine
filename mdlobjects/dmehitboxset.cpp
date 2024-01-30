@@ -10,23 +10,17 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
+//-----------------------------------------------------------------------------
+// Expose this class to the scene database
+//-----------------------------------------------------------------------------
+IMPLEMENT_ELEMENT_FACTORY(DmeHitboxSet, CDmeHitboxSet);
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
-//-----------------------------------------------------------------------------
-IMPLEMENT_ELEMENT_FACTORY( DmeHitboxSet, CDmeHitboxSet );
-
-
-//-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeHitboxSet::OnConstruction()
 {
-	m_Hitboxes.Init( this, "hitboxes" );
+	m_Hitboxes.Init(this, "hitboxes");
 }
 
-void CDmeHitboxSet::OnDestruction()
-{
-}
-
-
+void CDmeHitboxSet::OnDestruction() {}

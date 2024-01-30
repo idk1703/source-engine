@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -10,47 +10,44 @@
 #include "items.h"
 #include "cs_player.h"
 
-
 class CItemAssaultSuit : public CItem
 {
-	void Spawn( void )
-	{ 
-		Precache( );
-		CItem::Spawn( );
-	}
-	
-	void Precache( void )
+	void Spawn(void)
 	{
-		PrecacheScriptSound( "BaseCombatCharacter.ItemPickup2" );
+		Precache();
+		CItem::Spawn();
 	}
-	
-	bool MyTouch( CBasePlayer *pBasePlayer )
+
+	void Precache(void)
 	{
-		CCSPlayer *pPlayer = dynamic_cast< CCSPlayer* >( pBasePlayer );
-		if ( !pPlayer )
+		PrecacheScriptSound("BaseCombatCharacter.ItemPickup2");
+	}
+
+	bool MyTouch(CBasePlayer *pBasePlayer)
+	{
+		CCSPlayer *pPlayer = dynamic_cast<CCSPlayer *>(pBasePlayer);
+		if(!pPlayer)
 		{
-			Assert( false );
+			Assert(false);
 			return false;
 		}
 
 		pPlayer->m_bHasHelmet = true;
-		pPlayer->SetArmorValue( 100 );
+		pPlayer->SetArmorValue(100);
 
-		if ( pPlayer->IsDead() == false )
+		if(pPlayer->IsDead() == false)
 		{
-			CPASAttenuationFilter filter( pBasePlayer );
-			EmitSound( filter, entindex(), "BaseCombatCharacter.ItemPickup2" );
+			CPASAttenuationFilter filter(pBasePlayer);
+			EmitSound(filter, entindex(), "BaseCombatCharacter.ItemPickup2");
 
-			CSingleUserRecipientFilter user( pPlayer );
-			UserMessageBegin( user, "ItemPickup" );
-			WRITE_STRING( "item_assaultsuit" );
+			CSingleUserRecipientFilter user(pPlayer);
+			UserMessageBegin(user, "ItemPickup");
+			WRITE_STRING("item_assaultsuit");
 			MessageEnd();
 		}
 
-		return true;		
+		return true;
 	}
 };
 
-LINK_ENTITY_TO_CLASS( item_assaultsuit, CItemAssaultSuit );
-
-
+LINK_ENTITY_TO_CLASS(item_assaultsuit, CItemAssaultSuit);

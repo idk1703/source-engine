@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -15,25 +15,24 @@
 #include "ObjectControlPanel.h"
 #include "tf_obj_base_manned_gun.h"
 
-
 //-----------------------------------------------------------------------------
-// Control screen 
+// Control screen
 //-----------------------------------------------------------------------------
 class CMannedPlasmagunControlPanel : public CRotatingObjectControlPanel
 {
-	DECLARE_CLASS( CMannedPlasmagunControlPanel, CRotatingObjectControlPanel );
+	DECLARE_CLASS(CMannedPlasmagunControlPanel, CRotatingObjectControlPanel);
 
 public:
-	CMannedPlasmagunControlPanel( vgui::Panel *parent, const char *panelName );
-	virtual bool Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData );
+	CMannedPlasmagunControlPanel(vgui::Panel *parent, const char *panelName);
+	virtual bool Init(KeyValues *pKeyValues, VGuiScreenInitData_t *pInitData);
 	virtual void OnTick();
-	virtual void OnCommand( const char *command );
+	virtual void OnCommand(const char *command);
 
-	void GetInGun( void );
+	void GetInGun(void);
 
 private:
-	vgui::Label		*m_pMannedLabel;
-	vgui::Button	*m_pOccupyButton;
+	vgui::Label *m_pMannedLabel;
+	vgui::Button *m_pOccupyButton;
 };
 
 #endif // C_OBJ_BASE_MANNED_GUN_H

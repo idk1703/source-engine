@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,13 +11,10 @@
 #pragma once
 #endif
 
-
 #include "disp_defs.h"
-
 
 // Figure out the max number of vertices and indices for a displacement
 // of the specified power.
-void CalcMaxNumVertsAndIndices( int power, int *nVerts, int *nIndices );
-
+void CalcMaxNumVertsAndIndices(int power, int *nVerts, int *nIndices);
 
 #endif // DISPINFO_HELPERS_H

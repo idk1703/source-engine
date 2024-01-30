@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -10,6 +10,5 @@
 #ifdef _WIN32
 #pragma once
 #endif
-
 
 #endif // GLOBALSTATE_PRIVATE_H

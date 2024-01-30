@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,7 +17,7 @@ class CPanelListPanel;
 
 #define SCRIPT_VERSION 1.0f
 
-typedef void * FileHandle_t;
+typedef void *FileHandle_t;
 
 enum objtype_t
 {
@@ -41,7 +41,7 @@ class CScriptListItem
 {
 public:
 	CScriptListItem();
-	CScriptListItem( char const *strItem, char const *strValue );
+	CScriptListItem(char const *strItem, char const *strValue);
 
 	char szItemText[128];
 	char szValue[256];
@@ -52,36 +52,36 @@ public:
 class CScriptObject : public vgui::Panel
 {
 public:
-	void AddItem( CScriptListItem *pItem );
-	void RemoveAndDeleteAllItems( void );
-	CScriptObject( void );
+	void AddItem(CScriptListItem *pItem);
+	void RemoveAndDeleteAllItems(void);
+	CScriptObject(void);
 	~CScriptObject();
 
-	bool ReadFromBuffer( const char **pBuffer, bool isNewObject );
+	bool ReadFromBuffer(const char **pBuffer, bool isNewObject);
 	void WriteToConfig();
-	void WriteToFile( FileHandle_t fp );
-	void WriteToScriptFile( FileHandle_t fp );
-	void SetCurValue( char const *strValue );
+	void WriteToFile(FileHandle_t fp);
+	void WriteToScriptFile(FileHandle_t fp);
+	void SetCurValue(char const *strValue);
 
-	objtype_t GetType( char *pszType );
+	objtype_t GetType(char *pszType);
 
 	objtype_t type;
 
-	char cvarname[64 ];
-	char prompt[ 256 ];
-	char tooltip[ 256 ];
+	char cvarname[64];
+	char prompt[256];
+	char tooltip[256];
 
 	CScriptListItem *pListItems;
 
 	float fMin, fMax;
 
-	char	defValue[ 128 ];  // Default value string
-	float   fdefValue; // Float version of default value.
+	char defValue[128]; // Default value string
+	float fdefValue;	// Float version of default value.
 
-	char	curValue[ 128 ];
-	float   fcurValue;
+	char curValue[128];
+	float fcurValue;
 
-	bool bSetInfo;  // Prepend "Setinfo" to keyvalue pair in config?
+	bool bSetInfo; // Prepend "Setinfo" to keyvalue pair in config?
 	// Linked list of default list box items.
 
 	CScriptObject *pNext;
@@ -90,32 +90,38 @@ public:
 abstract_class CDescription
 {
 public:
-	CDescription( void );
+	CDescription(void);
 	virtual ~CDescription();
 
-	bool ReadFromBuffer( const char **pBuffer, bool bAllowNewObject );
-	bool InitFromFile( const char *pszFileName, bool bAllowNewObject = true );
-	void TransferCurrentValues( const char *pszConfigFile );
+	bool ReadFromBuffer(const char **pBuffer, bool bAllowNewObject);
+	bool InitFromFile(const char *pszFileName, bool bAllowNewObject = true);
+	void TransferCurrentValues(const char *pszConfigFile);
 
-	void AddObject( CScriptObject *pItem );
+	void AddObject(CScriptObject * pItem);
 	void WriteToConfig();
-	void WriteToFile( FileHandle_t fp );
-	void WriteToScriptFile( FileHandle_t fp );
+	void WriteToFile(FileHandle_t fp);
+	void WriteToScriptFile(FileHandle_t fp);
 
-	virtual void WriteScriptHeader( FileHandle_t fp ) = 0; // Clients must implement this.
-	virtual void WriteFileHeader( FileHandle_t fp ) = 0; // Clients must implement this.
+	virtual void WriteScriptHeader(FileHandle_t fp) = 0; // Clients must implement this.
+	virtual void WriteFileHeader(FileHandle_t fp) = 0;	 // Clients must implement this.
 
-	void setDescription( const char *pszDesc );
-	void setHint( const char *pszHint );
+	void setDescription(const char *pszDesc);
+	void setHint(const char *pszHint);
 
-	const char *GetDescription( void ) { return m_pszDescriptionType; };
-	const char *getHint( void ) { return m_pszHintText; } ;
+	const char *GetDescription(void)
+	{
+		return m_pszDescriptionType;
+	};
+	const char *getHint(void)
+	{
+		return m_pszHintText;
+	};
+
 public:
 	CScriptObject *pObjList;
-	CScriptObject *FindObject( const char *pszObjectName );
+	CScriptObject *FindObject(const char *pszObjectName);
 
 private:
-
 	char *m_pszHintText;
 	char *m_pszDescriptionType;
 };
@@ -124,32 +130,32 @@ namespace vgui
 {
 	class Label;
 	class Panel;
-}
+} // namespace vgui
 
 class mpcontrol_t : public vgui::Panel
 {
 public:
-	mpcontrol_t( vgui::Panel *parent, char const *panelName );
+	mpcontrol_t(vgui::Panel *parent, char const *panelName);
 
-	virtual	void	OnSizeChanged( int wide, int tall ) OVERRIDE;
+	virtual void OnSizeChanged(int wide, int tall) OVERRIDE;
 
-	objtype_t		type;
-	vgui::Panel		*pControl;
-	vgui::Label		*pPrompt;
-	CScriptObject	*pScrObj;
+	objtype_t type;
+	vgui::Panel *pControl;
+	vgui::Label *pPrompt;
+	CScriptObject *pScrObj;
 
-	mpcontrol_t		*next;
+	mpcontrol_t *next;
 };
 
 class CInfoDescription : public CDescription
 {
 public:
-	CInfoDescription( void );
+	CInfoDescription(void);
 
-	virtual void WriteScriptHeader( FileHandle_t fp ) OVERRIDE;
-	virtual void WriteFileHeader( FileHandle_t fp ) OVERRIDE; 
+	virtual void WriteScriptHeader(FileHandle_t fp) OVERRIDE;
+	virtual void WriteFileHeader(FileHandle_t fp) OVERRIDE;
 };
 
-void UTIL_StripInvalidCharacters( char *pszInput, int maxlen );
+void UTIL_StripInvalidCharacters(char *pszInput, int maxlen);
 
 #endif // SCRIPTOBJECT_H

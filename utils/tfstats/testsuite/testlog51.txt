@@ -462,7 +462,7 @@ L 07/22/1999 - 17:15:25: Broadcast: "2 . . .
 L 07/22/1999 - 17:15:26: Broadcast: "1 . . .
 "
 L 07/22/1999 - 17:15:31: =------= MATCH RESULTS =------=
-L 07/22/1999 - 17:15:31: "blue" defeated "red" 
+L 07/22/1999 - 17:15:31: "blue" defeated "red"
 L 07/22/1999 - 17:15:31: "blue" RESULTS: "2" players. "104" frags, "2" unaccounted for. "120" team score. Allies:
 L 07/22/1999 - 17:15:31: "red" RESULTS: "2" players. "17" frags, "2" unaccounted for. "15" team score. Allies:
 L 07/22/1999 - 17:15:33: "ScAvenger001<16>" activated the goal "brise1"

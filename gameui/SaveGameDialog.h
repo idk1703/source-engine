@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,17 +20,17 @@
 //-----------------------------------------------------------------------------
 class CSaveGameDialog : public CBaseSaveGameDialog
 {
-	DECLARE_CLASS_SIMPLE( CSaveGameDialog, CBaseSaveGameDialog );
+	DECLARE_CLASS_SIMPLE(CSaveGameDialog, CBaseSaveGameDialog);
 
 public:
-	CSaveGameDialog( vgui::Panel *parent );
+	CSaveGameDialog(vgui::Panel *parent);
 	~CSaveGameDialog();
 
 	virtual void Activate();
-	static void FindSaveSlot( char *buffer, int bufsize );
+	static void FindSaveSlot(char *buffer, int bufsize);
 
 protected:
-	virtual void OnCommand( const char *command );
+	virtual void OnCommand(const char *command);
 	virtual void OnScanningSaveGames();
 };
 
@@ -43,24 +43,24 @@ class CAsyncCtxSaveGame;
 
 class CSaveGameDialogXbox : public CSaveGameBrowserDialog
 {
-	DECLARE_CLASS_SIMPLE( CSaveGameDialogXbox, CSaveGameBrowserDialog );
+	DECLARE_CLASS_SIMPLE(CSaveGameDialogXbox, CSaveGameBrowserDialog);
 
 public:
-					CSaveGameDialogXbox( vgui::Panel *parent );
-	virtual void	PerformSelectedAction( void );
-	virtual void	UpdateFooterOptions( void );
-	virtual void	OnCommand( const char *command );
-	virtual void	OnDoneScanningSaveGames( void );
+	CSaveGameDialogXbox(vgui::Panel *parent);
+	virtual void PerformSelectedAction(void);
+	virtual void UpdateFooterOptions(void);
+	virtual void OnCommand(const char *command);
+	virtual void OnDoneScanningSaveGames(void);
 
 private:
 	friend class CAsyncCtxSaveGame;
-	void			InitiateSaving();
-	void			SaveCompleted( CAsyncCtxSaveGame *pCtx );
+	void InitiateSaving();
+	void SaveCompleted(CAsyncCtxSaveGame *pCtx);
 
 private:
-	bool					m_bGameSaving;
-	bool					m_bNewSaveAvailable;
-	SaveGameDescription_t	m_NewSaveDesc;
+	bool m_bGameSaving;
+	bool m_bNewSaveAvailable;
+	SaveGameDescription_t m_NewSaveDesc;
 };
 
 #endif // SAVEGAMEDIALOG_H

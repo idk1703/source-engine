@@ -25,12 +25,11 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Instance the singleton and expose the interface to it.
 // Output : IClientMode
 //-----------------------------------------------------------------------------
-IClientMode *GetClientModeNormal( void )
+IClientMode *GetClientModeNormal(void)
 {
 	static ClientModeTFNormal g_ClientModeNormal;
 	return &g_ClientModeNormal;
@@ -39,14 +38,15 @@ IClientMode *GetClientModeNormal( void )
 ClientModeTFNormal::ClientModeTFNormal()
 {
 	m_pViewport = new Viewport();
-	m_pViewport->Start( gameuifuncs, gameeventmanager );
+	m_pViewport->Start(gameuifuncs, gameeventmanager);
 }
 
 ClientModeTFNormal::Viewport::Viewport()
 {
 	// use a custom scheme for the hud
 	m_bHumanScheme = true;
-	vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/ClientSchemeHuman.res", "HudScheme");
+	vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx(enginevgui->GetPanel(PANEL_CLIENTDLL),
+																"resource/ClientSchemeHuman.res", "HudScheme");
 	SetScheme(scheme);
 }
 
@@ -59,18 +59,18 @@ void ClientModeTFNormal::Viewport::OnThink()
 	if(!pPlayer)
 		return;
 	int team = pPlayer->GetTeamNumber();
-	if ( !team )
+	if(!team)
 		return;
 
-	bool human = ( team == TEAM_HUMANS ) ? true : false;
-	if ( human != m_bHumanScheme )
+	bool human = (team == TEAM_HUMANS) ? true : false;
+	if(human != m_bHumanScheme)
 	{
 		ReloadScheme();
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ClientModeTFNormal::Viewport::ReloadScheme()
 {
@@ -83,11 +83,11 @@ void ClientModeTFNormal::Viewport::ReloadScheme()
 	const char *schemeFile = NULL;
 
 	int team = pPlayer->GetTeamNumber();
-	if ( team )
+	if(team)
 	{
-		m_bHumanScheme = ( team == TEAM_HUMANS ) ? true : false;
+		m_bHumanScheme = (team == TEAM_HUMANS) ? true : false;
 
-		if ( m_bHumanScheme )
+		if(m_bHumanScheme)
 		{
 			schemeFile = "resource/ClientSchemeHuman.res";
 		}
@@ -97,33 +97,33 @@ void ClientModeTFNormal::Viewport::ReloadScheme()
 		}
 	}
 
-//	BaseClass::ReloadScheme( schemeFile );
+	//	BaseClass::ReloadScheme( schemeFile );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : vgui::Panel
 //-----------------------------------------------------------------------------
-vgui::Panel *ClientModeTFNormal::GetMinimapParent( void )
+vgui::Panel *ClientModeTFNormal::GetMinimapParent(void)
 {
 	return GetViewport();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ClientModeTFNormal::Update()
 {
 	BaseClass::Update();
-	HudCommanderOverlayMgr()->Tick( );
+	HudCommanderOverlayMgr()->Tick();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : frametime - 
-//			*cmd - 
+// Purpose:
+// Input  : frametime -
+//			*cmd -
 //-----------------------------------------------------------------------------
-void ClientModeTFNormal::CreateMove( float flInputSampleTime, CUserCmd *cmd )
+void ClientModeTFNormal::CreateMove(float flInputSampleTime, CUserCmd *cmd)
 {
 	// Let the player override the view.
 	C_BaseTFPlayer *pPlayer = C_BaseTFPlayer::GetLocalPlayer();
@@ -131,34 +131,34 @@ void ClientModeTFNormal::CreateMove( float flInputSampleTime, CUserCmd *cmd )
 		return;
 
 	// Let the player at it
-	pPlayer->CreateMove( flInputSampleTime, cmd );
+	pPlayer->CreateMove(flInputSampleTime, cmd);
 
 	// Handle knockdowns
-	if ( pPlayer->CheckKnockdownAngleOverride() )
+	if(pPlayer->CheckKnockdownAngleOverride())
 	{
 		QAngle ang;
-		pPlayer->GetKnockdownAngles( ang );
+		pPlayer->GetKnockdownAngles(ang);
 
 		cmd->viewangles = ang;
-		engine->SetViewAngles( ang );
+		engine->SetViewAngles(ang);
 
 		cmd->forwardmove = cmd->sidemove = cmd->upmove = 0;
 		// Only keep score if it's down
-		cmd->buttons &= ( IN_SCORE );
+		cmd->buttons &= (IN_SCORE);
 	}
 
-	if ( pPlayer->GetPlayerClass() )
+	if(pPlayer->GetPlayerClass())
 	{
 		C_PlayerClass *pPlayerClass = pPlayer->GetPlayerClass();
-		pPlayerClass->CreateMove( flInputSampleTime, cmd );
+		pPlayerClass->CreateMove(flInputSampleTime, cmd);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool ClientModeTFNormal::ShouldDrawViewModel( void )
+bool ClientModeTFNormal::ShouldDrawViewModel(void)
 {
 	C_BaseTFPlayer *pPlayer = C_BaseTFPlayer::GetLocalPlayer();
 	if(!pPlayer)
@@ -166,8 +166,3 @@ bool ClientModeTFNormal::ShouldDrawViewModel( void )
 
 	return pPlayer->ShouldDrawViewModel();
 }
-
-
-
-
-

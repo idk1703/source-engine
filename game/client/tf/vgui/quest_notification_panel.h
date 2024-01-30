@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -30,7 +30,7 @@ class CQuestNotificationPanel;
 class CQuestNotification
 {
 public:
-	CQuestNotification( CEconItem *pItem );
+	CQuestNotification(CEconItem *pItem);
 
 	enum ENotificationType_t
 	{
@@ -43,19 +43,22 @@ public:
 
 	virtual ~CQuestNotification() {}
 
-	virtual float Present( CQuestNotificationPanel* pNotificationPanel );
-	virtual void Update( CQuestNotificationPanel* pNotificationPanel ) = 0;
+	virtual float Present(CQuestNotificationPanel *pNotificationPanel);
+	virtual void Update(CQuestNotificationPanel *pNotificationPanel) = 0;
 	virtual bool IsDone() const = 0;
 	virtual bool ShouldPresent() const = 0;
 	virtual ENotificationType_t GetType() const = 0;
 	virtual float GetReplayTime() const = 0;
 
-	CEconItemHandle& GetItemHandle() { return m_hItem; } 
+	CEconItemHandle &GetItemHandle()
+	{
+		return m_hItem;
+	}
 
 protected:
 	CEconItemHandle m_hItem;
-	RealTimeCountdownTimer	m_timerDialog;
-	RealTimeCountdownTimer	m_timerShow; 
+	RealTimeCountdownTimer m_timerDialog;
+	RealTimeCountdownTimer m_timerShow;
 };
 
 //-----------------------------------------------------------------------------
@@ -64,16 +67,15 @@ protected:
 class CQuestNotification_Speaking : public CQuestNotification
 {
 public:
-
-	CQuestNotification_Speaking( CEconItem *pItem );
+	CQuestNotification_Speaking(CEconItem *pItem);
 	virtual ~CQuestNotification_Speaking() {}
 
-	virtual float Present( CQuestNotificationPanel* pNotificationPanel ) OVERRIDE;
-	virtual void Update( CQuestNotificationPanel* pNotificationPanel ) OVERRIDE;
+	virtual float Present(CQuestNotificationPanel *pNotificationPanel) OVERRIDE;
+	virtual void Update(CQuestNotificationPanel *pNotificationPanel) OVERRIDE;
 	virtual bool IsDone() const OVERRIDE;
 
 protected:
-	virtual const char *GetSoundEntry( const CQuestThemeDefinition* pTheme, int nClassIndex ) = 0;
+	virtual const char *GetSoundEntry(const CQuestThemeDefinition *pTheme, int nClassIndex) = 0;
 
 	const char *m_pszSoundToSpeak;
 };
@@ -83,23 +85,28 @@ protected:
 //-----------------------------------------------------------------------------
 class CQuestNotification_NewQuest : public CQuestNotification_Speaking
 {
-	DECLARE_CLASS_SIMPLE( CQuestNotification_NewQuest, CQuestNotification_Speaking );
+	DECLARE_CLASS_SIMPLE(CQuestNotification_NewQuest, CQuestNotification_Speaking);
+
 public:
-	CQuestNotification_NewQuest( CEconItem *pItem )
-		: CQuestNotification_Speaking( pItem )
-	{}
+	CQuestNotification_NewQuest(CEconItem *pItem) : CQuestNotification_Speaking(pItem) {}
 
 	virtual ~CQuestNotification_NewQuest() {}
 
 	virtual bool ShouldPresent() const OVERRIDE;
-	ENotificationType_t GetType() const { return NOTIFICATION_TYPE_NEW_QUEST; }
-	virtual float GetReplayTime() const { return 300.f; }
+	ENotificationType_t GetType() const
+	{
+		return NOTIFICATION_TYPE_NEW_QUEST;
+	}
+	virtual float GetReplayTime() const
+	{
+		return 300.f;
+	}
 	static float k_flReplayTime;
 
 protected:
-	virtual const char *GetSoundEntry( const CQuestThemeDefinition* pTheme, int nClassIndex ) OVERRIDE;
+	virtual const char *GetSoundEntry(const CQuestThemeDefinition *pTheme, int nClassIndex) OVERRIDE;
 
-	static CUtlVector< itemid_t > m_vecNotifiedItemIDs;
+	static CUtlVector<itemid_t> m_vecNotifiedItemIDs;
 };
 
 //-----------------------------------------------------------------------------
@@ -107,74 +114,85 @@ protected:
 //-----------------------------------------------------------------------------
 class CQuestNotification_CompletedQuest : public CQuestNotification_Speaking
 {
-	DECLARE_CLASS_SIMPLE( CQuestNotification_CompletedQuest, CQuestNotification_Speaking );
+	DECLARE_CLASS_SIMPLE(CQuestNotification_CompletedQuest, CQuestNotification_Speaking);
+
 public:
-	CQuestNotification_CompletedQuest( CEconItem *pItem );
+	CQuestNotification_CompletedQuest(CEconItem *pItem);
 
 	virtual ~CQuestNotification_CompletedQuest() {}
 
 	virtual bool ShouldPresent() const;
-	ENotificationType_t GetType() const { return NOTIFICATION_TYPE_COMPLETED; }
-	virtual float GetReplayTime() const { return NEVER_REPEAT; }
+	ENotificationType_t GetType() const
+	{
+		return NOTIFICATION_TYPE_COMPLETED;
+	}
+	virtual float GetReplayTime() const
+	{
+		return NEVER_REPEAT;
+	}
 
 protected:
-	virtual const char *GetSoundEntry( const CQuestThemeDefinition* pTheme, int nClassIndex ) OVERRIDE;
+	virtual const char *GetSoundEntry(const CQuestThemeDefinition *pTheme, int nClassIndex) OVERRIDE;
 
 	RealTimeCountdownTimer m_PresentTimer;
 };
 
 class CQuestNotification_FullyCompletedQuest : public CQuestNotification_CompletedQuest
 {
-	DECLARE_CLASS_SIMPLE( CQuestNotification_FullyCompletedQuest, CQuestNotification_CompletedQuest );
+	DECLARE_CLASS_SIMPLE(CQuestNotification_FullyCompletedQuest, CQuestNotification_CompletedQuest);
+
 public:
-	CQuestNotification_FullyCompletedQuest( CEconItem *pItem ) : CQuestNotification_CompletedQuest( pItem )
-	{
-	}
+	CQuestNotification_FullyCompletedQuest(CEconItem *pItem) : CQuestNotification_CompletedQuest(pItem) {}
 
 	virtual ~CQuestNotification_FullyCompletedQuest() {}
 
-	ENotificationType_t GetType() const { return NOTIFICATION_TYPE_FULLY_COMPLETED; }
+	ENotificationType_t GetType() const
+	{
+		return NOTIFICATION_TYPE_FULLY_COMPLETED;
+	}
+
 protected:
-	virtual const char *GetSoundEntry( const CQuestThemeDefinition* pTheme, int nClassIndex ) OVERRIDE;
+	virtual const char *GetSoundEntry(const CQuestThemeDefinition *pTheme, int nClassIndex) OVERRIDE;
 };
 
 //-----------------------------------------------------------------------------
 // The quest notification panel where a character tells the user about quest state
 //-----------------------------------------------------------------------------
-class CQuestNotificationPanel : public CHudElement, public EditablePanel 
+class CQuestNotificationPanel : public CHudElement, public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CQuestNotificationPanel, EditablePanel );
+	DECLARE_CLASS_SIMPLE(CQuestNotificationPanel, EditablePanel);
+
 public:
-	CQuestNotificationPanel( const char *pszElementName );
+	CQuestNotificationPanel(const char *pszElementName);
 	virtual ~CQuestNotificationPanel();
 
-	virtual void ApplySchemeSettings( IScheme *pScheme ) OVERRIDE;
+	virtual void ApplySchemeSettings(IScheme *pScheme) OVERRIDE;
 	virtual void PerformLayout() OVERRIDE;
-	virtual void FireGameEvent( IGameEvent * event ) OVERRIDE;
+	virtual void FireGameEvent(IGameEvent *event) OVERRIDE;
 	virtual void Reset() OVERRIDE;
 	virtual bool ShouldDraw() OVERRIDE;
 	virtual void OnThink() OVERRIDE;
-private:
 
+private:
 	bool ShouldPresent();
 
 	void Update();
 	void CheckForNotificationOpportunities();
 
-	bool AddNotificationForItem( const CEconItemView *pItem, CQuestNotification* pNotification );
-	void SetCharacterImage( const char *pszImageName );
+	bool AddNotificationForItem(const CEconItemView *pItem, CQuestNotification *pNotification);
+	void SetCharacterImage(const char *pszImageName);
 
-	CUtlVector< CQuestNotification* > m_vecNotifications;
+	CUtlVector<CQuestNotification *> m_vecNotifications;
 
 	float m_flTimeSinceLastShown;
 	bool m_bIsPresenting;
-	RealTimeCountdownTimer	m_timerHoldUp;
-	RealTimeCountdownTimer	m_timerNotificationCooldown;
-	RealTimeCountdownTimer	m_animTimer;
-	EditablePanel  *m_pMainContainer;
-	bool			m_bInitialized;
+	RealTimeCountdownTimer m_timerHoldUp;
+	RealTimeCountdownTimer m_timerNotificationCooldown;
+	RealTimeCountdownTimer m_animTimer;
+	EditablePanel *m_pMainContainer;
+	bool m_bInitialized;
 
-	CUtlMap< itemid_t, CCopyableUtlVector< float > > m_mapNotifiedItemIDs;
+	CUtlMap<itemid_t, CCopyableUtlVector<float>> m_mapNotifiedItemIDs;
 };
 
 #endif // QUEST_NOTIFICATION_PANEL_H

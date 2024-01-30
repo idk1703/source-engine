@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -20,17 +20,14 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CSetPasswordDlg dialog
 
-
-CSetPasswordDlg::CSetPasswordDlg(int dlgID, CWnd* pParent /*=NULL*/)
-	: CDialog(dlgID, pParent)
+CSetPasswordDlg::CSetPasswordDlg(int dlgID, CWnd *pParent /*=NULL*/) : CDialog(dlgID, pParent)
 {
 	//{{AFX_DATA_INIT(CSetPasswordDlg)
 	m_Password = _T("");
 	//}}AFX_DATA_INIT
 }
 
-
-void CSetPasswordDlg::DoDataExchange(CDataExchange* pDX)
+void CSetPasswordDlg::DoDataExchange(CDataExchange *pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CSetPasswordDlg)
@@ -38,10 +35,9 @@ void CSetPasswordDlg::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-
 BEGIN_MESSAGE_MAP(CSetPasswordDlg, CDialog)
 	//{{AFX_MSG_MAP(CSetPasswordDlg)
-		// NOTE: the ClassWizard will add message map macros here
+	// NOTE: the ClassWizard will add message map macros here
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 

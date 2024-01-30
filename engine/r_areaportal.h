@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,13 +11,10 @@
 #pragma once
 #endif
 
-
 #include "utlvector.h"
 #include "gl_model_private.h"
 
-
 class Frustum_t;
-
 
 // Used to clip area portals. The coordinates here are in normalized
 // view space (-1,-1) - (1,1)
@@ -25,9 +22,8 @@ class Frustum_t;
 class CPortalRect
 {
 public:
-	float	left, top, right, bottom;
+	float left, top, right, bottom;
 };
-
 
 // ---------------------------------------------------------------------------- //
 // Functions.
@@ -35,10 +31,11 @@ public:
 
 // Copies cl.pAreaBits, finds the area the viewer is in, and figures out what
 // other areas are visible. The new bits are placed in g_RenderAreaBits.
-void R_SetupAreaBits( int iForceViewLeaf = -1, const VisOverrideData_t* pVisData = NULL, float *pWaterReflectionHeight = NULL );
+void R_SetupAreaBits(int iForceViewLeaf = -1, const VisOverrideData_t *pVisData = NULL,
+					 float *pWaterReflectionHeight = NULL);
 
 // Ask if an area is visible to the renderer.
-unsigned char R_IsAreaVisible( int area );
+unsigned char R_IsAreaVisible(int area);
 
 void R_Areaportal_LevelInit();
 void R_Areaportal_LevelShutdown();
@@ -65,11 +62,9 @@ enum
 	FRUSTUM_SUPPRESS_CLIPPING = FRUSTUM_CLIP_IN_AREA,
 };
 
+bool R_CullNode(Frustum_t *pAreaFrustum, mnode_t *pNode, int &nClipMask);
 
-bool R_CullNode( Frustum_t *pAreaFrustum, mnode_t *pNode, int &nClipMask );
-
-const Frustum_t* GetAreaFrustum( int area );
-
+const Frustum_t *GetAreaFrustum(int area);
 
 // ---------------------------------------------------------------------------- //
 // Globals.
@@ -80,17 +75,14 @@ extern ConVar r_DrawPortals;
 // Used when r_DrawPortals is on. Draws the screen space rects for each portal.
 extern CUtlVector<CPortalRect> g_PortalRects;
 
-
-
 // ---------------------------------------------------------------------------- //
 // Inlines.
 // ---------------------------------------------------------------------------- //
 
-inline unsigned char R_IsAreaVisible( int area )
+inline unsigned char R_IsAreaVisible(int area)
 {
 	extern unsigned char g_RenderAreaBits[32];
-	return g_RenderAreaBits[area>>3] & (1 << (area&7));
+	return g_RenderAreaBits[area >> 3] & (1 << (area & 7));
 }
-
 
 #endif // R_AREAPORTAL_H

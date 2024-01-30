@@ -7,7 +7,7 @@
 
 
 $Project
-{	
+{
 	$Folder	"Source Files"
 	{
 		$File	"$SRCDIR\common\crypto.cpp"
@@ -22,7 +22,7 @@ $Project
 		}
 	}
 
-	$Folder	"Link Libraries" 
+	$Folder	"Link Libraries"
 	{
 		$Lib	vpklib
 		// So we can check the signature of the item schema.
@@ -43,7 +43,7 @@ $Project
 		{
 			$Configuration "Release" { $ExcludedFromBuild "Yes" }
 		}
-		
+
 		$File "$SRCDIR\lib\common\$PLATSUBDIR\2015\release\cryptlib.lib" [$WIN64]
 		{
 			$Configuration "Debug" 	{ $ExcludedFromBuild "Yes" }

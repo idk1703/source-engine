@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,11 +11,9 @@
 #pragma once
 #endif
 
-
 class CMDIClientWnd : public CWnd
 {
 public:
-
 	CMDIClientWnd();
 	virtual ~CMDIClientWnd();
 
@@ -24,14 +22,11 @@ public:
 	//}}AFX_VIRTUAL
 
 protected:
-
 	//{{AFX_MSG(CMDIClientWnd)
 	afx_msg BOOL OnEraseBkgnd(CDC *pDC);
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
-
 };
-
 
 #endif // MDICLIENTWND_H

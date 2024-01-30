@@ -28,7 +28,7 @@ $Project "Vbspinfo"
 	$Folder	"Source Files"
 	{
 		-$File	"$SRCDIR\public\tier0\memoverride.cpp"
-		
+
 		$File	"..\common\tools_minidump.cpp"
 		$File	"..\common\bsplib.cpp"
 		$File	"..\common\cmdlib.cpp"

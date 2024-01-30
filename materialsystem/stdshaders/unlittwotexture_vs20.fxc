@@ -21,14 +21,14 @@ struct VS_INPUT
 
 struct VS_OUTPUT
 {
-    float4 projPos					: POSITION;			// Projection-space position	
+	float4 projPos					: POSITION;			// Projection-space position
 #if !defined( _X360 )
 	float  fog						: FOG;
 #endif
 	HALF2 baseTexCoord				: TEXCOORD0;		// Base texture coordinate
 	HALF2 baseTexCoord2				: TEXCOORD1;		// Base texture coordinate
 	float4 worldPos_projPosZ		: TEXCOORD7;		// Necessary for water fog dest alpha
-	
+
 	float4 vColor					: COLOR0;
 	float4 fogFactorW				: COLOR1;
 };
@@ -36,13 +36,13 @@ struct VS_OUTPUT
 VS_OUTPUT main( const VS_INPUT v )
 {
 	VS_OUTPUT o = ( VS_OUTPUT )0;
-	
+
 	float4 vPosition = v.vPos;
 
 	// Perform skinning
 	float3 worldNormal, worldPos;
-	SkinPosition( 
-		g_bSkinning, 
+	SkinPosition(
+		g_bSkinning,
 		vPosition,
 		v.vBoneWeights, v.vBoneIndices,
 		worldPos );
@@ -54,8 +54,8 @@ VS_OUTPUT main( const VS_INPUT v )
 	o.fogFactorW.w = CalcFog( worldPos, vProjPos, g_FogType );
 #if !defined( _X360 )
 	o.fog = o.fogFactorW.w;
-#endif	
-	// Needed for water fog alpha; 
+#endif
+	// Needed for water fog alpha;
 	// FIXME: we shouldn't have to compute this all thie time.
 	o.worldPos_projPosZ = float4( worldPos.xyz, vProjPos.z );
 
@@ -66,7 +66,7 @@ VS_OUTPUT main( const VS_INPUT v )
 	// Base texture coordinates
 	o.baseTexCoord2.x = dot( v.vTexCoord0, cBaseTexCoordTransform2[0] );
 	o.baseTexCoord2.y = dot( v.vTexCoord0, cBaseTexCoordTransform2[1] );
-	
+
 	o.vColor = cModulationColor;
 
 	return o;

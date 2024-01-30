@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -12,104 +12,94 @@
 #include "datacache/imdlcache.h"
 #include "vstdlib/jobthread.h"
 
-
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
-
-
 
 #define QUERYCACHE_SIZE 1024
 
 static QueryCacheEntry_t s_QCache[QUERYCACHE_SIZE];
 
-#define QUERYCACHE_HASH_SIZE ( QUERYCACHE_SIZE  * 2 )
+#define QUERYCACHE_HASH_SIZE (QUERYCACHE_SIZE * 2)
 
 // elements available for cache reuse
 static CUtlIntrusiveDList<QueryCacheEntry_t> s_VictimList;
 
-
 static CUtlIntrusiveDList<QueryCacheEntry_t> s_HashChains[QUERYCACHE_HASH_SIZE];
 
-
-
 static int s_nReplaceCtr = QUERYCACHE_SIZE - 1;
-static int s_nTimeStampCounter = 0 ;
+static int s_nTimeStampCounter = 0;
 static int s_nNumCacheQueries = 0;
 static int s_nNumCacheMisses = 0;
 static int s_SuccessfulSpeculatives = 0;
 static int s_WastedSpeculativeUpdates = 0;
 
-void QueryCacheKey_t::ComputeHashIndex( void )
+void QueryCacheKey_t::ComputeHashIndex(void)
 {
-	unsigned int ret = ( unsigned int ) m_Type;
-	for( int i = 0 ; i < m_nNumValidPoints; i++ )
+	unsigned int ret = (unsigned int)m_Type;
+	for(int i = 0; i < m_nNumValidPoints; i++)
 	{
-		ret += ( unsigned int ) m_pEntities[i].ToInt();
-		ret += ( unsigned int ) m_nOffsetMode;
+		ret += (unsigned int)m_pEntities[i].ToInt();
+		ret += (unsigned int)m_nOffsetMode;
 	}
-	ret += *( ( uint32 *) &m_flMinimumUpdateInterval );
+	ret += *((uint32 *)&m_flMinimumUpdateInterval);
 	ret += m_nTraceMask;
 	m_nHashIdx = ret % QUERYCACHE_HASH_SIZE;
 }
 
+ConVar sv_disable_querycache("sv_disable_querycache", "0", FCVAR_CHEAT, "debug - disable trace query cache");
 
-ConVar	sv_disable_querycache("sv_disable_querycache", "0", FCVAR_CHEAT, "debug - disable trace query cache" );
-
-static QueryCacheEntry_t *FindOrAllocateCacheEntry( QueryCacheKey_t const &entry )
+static QueryCacheEntry_t *FindOrAllocateCacheEntry(QueryCacheKey_t const &entry)
 {
 	QueryCacheEntry_t *pFound = NULL;
 	// see if we find it
-	for( QueryCacheEntry_t *pNode = s_HashChains[entry.m_nHashIdx].m_pHead; pNode; pNode = pNode->m_pNext )
+	for(QueryCacheEntry_t *pNode = s_HashChains[entry.m_nHashIdx].m_pHead; pNode; pNode = pNode->m_pNext)
 	{
-		if ( pNode->m_QueryParams.Matches( &entry ) )
+		if(pNode->m_QueryParams.Matches(&entry))
 		{
 			pFound = pNode;
 			break;
 		}
 	}
-	if (! pFound )
+	if(!pFound)
 	{
 		pFound = s_VictimList.RemoveHead();
-		if ( ! pFound )
+		if(!pFound)
 		{
 			// randomly replace one
 			pFound = s_QCache + s_nReplaceCtr;
 			s_nReplaceCtr--;
-			if ( s_nReplaceCtr < 0 )
+			if(s_nReplaceCtr < 0)
 				s_nReplaceCtr = QUERYCACHE_SIZE - 1;
-			if ( pFound->m_QueryParams.m_Type != EQUERY_INVALID )
+			if(pFound->m_QueryParams.m_Type != EQUERY_INVALID)
 			{
-				s_HashChains[pFound->m_QueryParams.m_nHashIdx].RemoveNode( pFound );
+				s_HashChains[pFound->m_QueryParams.m_nHashIdx].RemoveNode(pFound);
 			}
 		}
 		pFound->m_QueryParams = entry;
-		s_HashChains[pFound->m_QueryParams.m_nHashIdx].AddToHead( pFound );
+		s_HashChains[pFound->m_QueryParams.m_nHashIdx].AddToHead(pFound);
 		pFound->m_bSpeculativelyDone = false;
 		pFound->IssueQuery();
 	}
 	else
 	{
-		if ( sv_disable_querycache.GetInt() || 
-			 ( gpGlobals->curtime - pFound->m_flLastUpdateTime >= 
-			   pFound->m_QueryParams.m_flMinimumUpdateInterval ) )
+		if(sv_disable_querycache.GetInt() ||
+		   (gpGlobals->curtime - pFound->m_flLastUpdateTime >= pFound->m_QueryParams.m_flMinimumUpdateInterval))
 		{
 			pFound->m_bSpeculativelyDone = false;
 			pFound->IssueQuery();
 		}
 		else
 		{
-			if ( pFound->m_bSpeculativelyDone )
+			if(pFound->m_bSpeculativelyDone)
 				s_SuccessfulSpeculatives++;
 		}
-		
 	}
 	return pFound;
 }
 
-static QueryCacheEntry_t *FindOrAllocateCacheEntry( EQueryType_t nType,
-													CBaseEntity *pEntity1, CBaseEntity *pEntity2,
-													EEntityOffsetMode_t nMode1, EEntityOffsetMode_t nMode2,
-													unsigned int nTraceMask )
+static QueryCacheEntry_t *FindOrAllocateCacheEntry(EQueryType_t nType, CBaseEntity *pEntity1, CBaseEntity *pEntity2,
+												   EEntityOffsetMode_t nMode1, EEntityOffsetMode_t nMode2,
+												   unsigned int nTraceMask)
 {
 	QueryCacheKey_t entry;
 	entry.m_Type = nType;
@@ -120,33 +110,26 @@ static QueryCacheEntry_t *FindOrAllocateCacheEntry( EQueryType_t nType,
 	entry.m_nTraceMask = nTraceMask;
 	entry.m_nNumValidPoints = 2;
 	entry.ComputeHashIndex();
-	return FindOrAllocateCacheEntry( entry );
+	return FindOrAllocateCacheEntry(entry);
 }
 
-bool QueryCacheKey_t::Matches( QueryCacheKey_t const *pNode ) const
+bool QueryCacheKey_t::Matches(QueryCacheKey_t const *pNode) const
 {
-	if (
-		( pNode->m_Type != m_Type ) ||
-		( pNode->m_nTraceMask != m_nTraceMask ) ||
-		( pNode->m_pTraceFilterFunction != m_pTraceFilterFunction ) ||
-		( pNode->m_nNumValidPoints != m_nNumValidPoints ) || 
-		( pNode->m_flMinimumUpdateInterval != m_flMinimumUpdateInterval )
-		)
+	if((pNode->m_Type != m_Type) || (pNode->m_nTraceMask != m_nTraceMask) ||
+	   (pNode->m_pTraceFilterFunction != m_pTraceFilterFunction) || (pNode->m_nNumValidPoints != m_nNumValidPoints) ||
+	   (pNode->m_flMinimumUpdateInterval != m_flMinimumUpdateInterval))
 		return false;
-	for( int i = 0; i < m_nNumValidPoints; i++ )
+	for(int i = 0; i < m_nNumValidPoints; i++)
 	{
-		if (
-			( pNode->m_pEntities[i] != m_pEntities[i] ) ||
-			( pNode->m_nOffsetMode[i] != m_nOffsetMode[i] )
-			)
+		if((pNode->m_pEntities[i] != m_pEntities[i]) || (pNode->m_nOffsetMode[i] != m_nOffsetMode[i]))
 			return false;
 	}
 	return true;
 }
 
-static void CalculateOffsettedPosition( CBaseEntity *pEntity, EEntityOffsetMode_t nMode, Vector *pVecOut  )
+static void CalculateOffsettedPosition(CBaseEntity *pEntity, EEntityOffsetMode_t nMode, Vector *pVecOut)
 {
-	switch( nMode )
+	switch(nMode)
 	{
 		case EOFFSET_MODE_WORLDSPACE_CENTER:
 			*pVecOut = pEntity->WorldSpaceCenter();
@@ -162,8 +145,6 @@ static void CalculateOffsettedPosition( CBaseEntity *pEntity, EEntityOffsetMode_
 	}
 }
 
-
-
 struct QueryCacheUpdateRecord_t
 {
 	int m_nStartHashChain;
@@ -171,22 +152,19 @@ struct QueryCacheUpdateRecord_t
 	CUtlIntrusiveDListWithTailPtr<QueryCacheEntry_t> m_KilledList;
 };
 
-
-
-void ProcessQueryCacheUpdate( QueryCacheUpdateRecord_t &workItem )
+void ProcessQueryCacheUpdate(QueryCacheUpdateRecord_t &workItem)
 {
 	float flCurTime = gpGlobals->curtime;
 	// run through all of the cache.
-	for( int i = 0; i < workItem.m_nNumHashChainsToUpdate; i++ )
+	for(int i = 0; i < workItem.m_nNumHashChainsToUpdate; i++)
 	{
 		QueryCacheEntry_t *pNext;
-		for( QueryCacheEntry_t *pEntry = s_HashChains[i + workItem.m_nStartHashChain].m_pHead ; pEntry; pEntry = pNext )
+		for(QueryCacheEntry_t *pEntry = s_HashChains[i + workItem.m_nStartHashChain].m_pHead; pEntry; pEntry = pNext)
 		{
 			pNext = pEntry->m_pNext;
-			if ( pEntry->m_bUsedSinceUpdated )
+			if(pEntry->m_bUsedSinceUpdated)
 			{
-				if ( flCurTime - pEntry->m_flLastUpdateTime >= 
-					 pEntry->m_QueryParams.m_flMinimumUpdateInterval )
+				if(flCurTime - pEntry->m_flLastUpdateTime >= pEntry->m_QueryParams.m_flMinimumUpdateInterval)
 				{
 					// don't bother updating if we have recently
 					pEntry->IssueQuery();
@@ -196,110 +174,99 @@ void ProcessQueryCacheUpdate( QueryCacheUpdateRecord_t &workItem )
 			}
 			else
 			{
-				if ( flCurTime - pEntry->m_flLastUpdateTime > pEntry->m_QueryParams.m_flMinimumUpdateInterval )
+				if(flCurTime - pEntry->m_flLastUpdateTime > pEntry->m_QueryParams.m_flMinimumUpdateInterval)
 				{
-					if ( pEntry->m_bSpeculativelyDone  && ( !pEntry->m_bUsedSinceUpdated ) )
+					if(pEntry->m_bSpeculativelyDone && (!pEntry->m_bUsedSinceUpdated))
 					{
 						s_WastedSpeculativeUpdates++;
 					}
 					pEntry->m_QueryParams.m_Type = EQUERY_INVALID;
-					s_HashChains[pEntry->m_QueryParams.m_nHashIdx].RemoveNode( pEntry );
-					workItem.m_KilledList.AddToHead( pEntry );
+					s_HashChains[pEntry->m_QueryParams.m_nHashIdx].RemoveNode(pEntry);
+					workItem.m_KilledList.AddToHead(pEntry);
 				}
 			}
 		}
 	}
 }
 
-
 #define N_WAYS_TO_SPLIT_CACHE_UPDATE 8
 
 static void PreUpdateQueryCache()
 {
-	//mdlcache->BeginCoarseLock();			// x360 only - will need to port for this in the future
+	// mdlcache->BeginCoarseLock();			// x360 only - will need to port for this in the future
 	mdlcache->BeginLock();
 }
 
 static void PostUpdateQueryCache()
 {
 	mdlcache->EndLock();
-	//mdlcache->EndCoarseLock();			// x360 only - will need to port for this in the future
+	// mdlcache->EndCoarseLock();			// x360 only - will need to port for this in the future
 }
 
-
-void UpdateQueryCache( void )
+void UpdateQueryCache(void)
 {
 	// parallel process all hash chains
 	QueryCacheUpdateRecord_t workList[N_WAYS_TO_SPLIT_CACHE_UPDATE];
 	int nCurEntry = 0;
-	for( int i =0 ; i < N_WAYS_TO_SPLIT_CACHE_UPDATE; i++ )
+	for(int i = 0; i < N_WAYS_TO_SPLIT_CACHE_UPDATE; i++)
 	{
 		workList[i].m_nStartHashChain = nCurEntry;
-		if ( i != N_WAYS_TO_SPLIT_CACHE_UPDATE -1 )
-			workList[i].m_nNumHashChainsToUpdate = ARRAYSIZE( s_HashChains ) / N_WAYS_TO_SPLIT_CACHE_UPDATE;
+		if(i != N_WAYS_TO_SPLIT_CACHE_UPDATE - 1)
+			workList[i].m_nNumHashChainsToUpdate = ARRAYSIZE(s_HashChains) / N_WAYS_TO_SPLIT_CACHE_UPDATE;
 		else
-			workList[i].m_nNumHashChainsToUpdate = ARRAYSIZE( s_HashChains ) - nCurEntry;
-		nCurEntry += ARRAYSIZE( s_HashChains ) / N_WAYS_TO_SPLIT_CACHE_UPDATE;
+			workList[i].m_nNumHashChainsToUpdate = ARRAYSIZE(s_HashChains) - nCurEntry;
+		nCurEntry += ARRAYSIZE(s_HashChains) / N_WAYS_TO_SPLIT_CACHE_UPDATE;
 	}
-	ParallelProcess( "ProcessQueryCacheUpdate", workList, N_WAYS_TO_SPLIT_CACHE_UPDATE, ProcessQueryCacheUpdate, PreUpdateQueryCache, PostUpdateQueryCache, ( sv_disable_querycache.GetBool() ) ? 0 : INT_MAX );
+	ParallelProcess("ProcessQueryCacheUpdate", workList, N_WAYS_TO_SPLIT_CACHE_UPDATE, ProcessQueryCacheUpdate,
+					PreUpdateQueryCache, PostUpdateQueryCache, (sv_disable_querycache.GetBool()) ? 0 : INT_MAX);
 	// now, we need to take all of the obsolete cache entries each thread generated and add them to
 	// the victim cache
-	for( int i = 0 ; i < N_WAYS_TO_SPLIT_CACHE_UPDATE; i++ )
+	for(int i = 0; i < N_WAYS_TO_SPLIT_CACHE_UPDATE; i++)
 	{
-		PrependDListWithTailToDList( workList[i].m_KilledList, s_VictimList );
+		PrependDListWithTailToDList(workList[i].m_KilledList, s_VictimList);
 	}
 }
 
-void InvalidateQueryCache( void )
+void InvalidateQueryCache(void)
 {
 	s_VictimList.RemoveAll();
-	for( int i = 0; i < ARRAYSIZE( s_HashChains); i++ )
+	for(int i = 0; i < ARRAYSIZE(s_HashChains); i++)
 		s_HashChains[i].RemoveAll();
 	// now, invalidate all cache entries and add them to the victims
-	for( int i = 0; i < ARRAYSIZE( s_QCache ); i++ )
+	for(int i = 0; i < ARRAYSIZE(s_QCache); i++)
 	{
 		s_QCache[i].m_QueryParams.m_Type = EQUERY_INVALID;
-		s_VictimList.AddToHead( s_QCache + i );
+		s_VictimList.AddToHead(s_QCache + i);
 	}
 }
 
-
-void QueryCacheEntry_t::IssueQuery( void )
+void QueryCacheEntry_t::IssueQuery(void)
 {
-	for( int i = 0 ; i < m_QueryParams.m_nNumValidPoints; i++ )
+	for(int i = 0; i < m_QueryParams.m_nNumValidPoints; i++)
 	{
 		CBaseEntity *pEntity = m_QueryParams.m_pEntities[i];
-		if (! pEntity )
+		if(!pEntity)
 		{
 			m_QueryParams.m_Type = EQUERY_INVALID;
-			s_HashChains[m_QueryParams.m_nHashIdx].RemoveNode( this );
-			s_VictimList.AddToHead( this );
+			s_HashChains[m_QueryParams.m_nHashIdx].RemoveNode(this);
+			s_VictimList.AddToHead(this);
 			return;
 		}
-		CalculateOffsettedPosition( pEntity, m_QueryParams.m_nOffsetMode[i],
-									&( m_QueryParams.m_Points[i] ) );
+		CalculateOffsettedPosition(pEntity, m_QueryParams.m_nOffsetMode[i], &(m_QueryParams.m_Points[i]));
 	}
-	CTraceFilterSimple filter( m_QueryParams.m_pEntities[2],
-							   m_QueryParams.m_nCollisionGroup,
-							   m_QueryParams.m_pTraceFilterFunction );
+	CTraceFilterSimple filter(m_QueryParams.m_pEntities[2], m_QueryParams.m_nCollisionGroup,
+							  m_QueryParams.m_pTraceFilterFunction);
 	trace_t result;
 	s_nNumCacheMisses++;
-	UTIL_TraceLine( m_QueryParams.m_Points[0], m_QueryParams.m_Points[1],
-					m_QueryParams.m_nTraceMask, &filter, &result );
-	m_bResult = ! ( result.DidHit() );
+	UTIL_TraceLine(m_QueryParams.m_Points[0], m_QueryParams.m_Points[1], m_QueryParams.m_nTraceMask, &filter, &result);
+	m_bResult = !(result.DidHit());
 	m_flLastUpdateTime = gpGlobals->curtime;
 }
 
-
-bool IsLineOfSightBetweenTwoEntitiesClear( CBaseEntity *pSrcEntity,
-										   EEntityOffsetMode_t nSrcOffsetMode,
-										   CBaseEntity *pDestEntity,
-										   EEntityOffsetMode_t nDestOffsetMode,
-										   CBaseEntity *pSkipEntity,
-										   int nCollisionGroup,
-										   unsigned int nTraceMask,
-										   ShouldHitFunc_t pTraceFilterCallback,
-										   float flMinimumUpdateInterval )
+bool IsLineOfSightBetweenTwoEntitiesClear(CBaseEntity *pSrcEntity, EEntityOffsetMode_t nSrcOffsetMode,
+										  CBaseEntity *pDestEntity, EEntityOffsetMode_t nDestOffsetMode,
+										  CBaseEntity *pSkipEntity, int nCollisionGroup, unsigned int nTraceMask,
+										  ShouldHitFunc_t pTraceFilterCallback, float flMinimumUpdateInterval)
 {
 	QueryCacheKey_t entry;
 	entry.m_Type = EQUERY_ENTITY_LOS_CHECK;
@@ -317,27 +284,22 @@ bool IsLineOfSightBetweenTwoEntitiesClear( CBaseEntity *pSrcEntity,
 	entry.ComputeHashIndex();
 
 	s_nNumCacheQueries++;
-	QueryCacheEntry_t *pNode = FindOrAllocateCacheEntry( entry );
+	QueryCacheEntry_t *pNode = FindOrAllocateCacheEntry(entry);
 	pNode->m_bUsedSinceUpdated = true;
 	return pNode->m_bResult;
 }
 
-
-#if defined( CLIENT_DLL )
-CON_COMMAND_F( cl_querycache_stats, "Display status of the query cache (client only)", FCVAR_CHEAT )
+#if defined(CLIENT_DLL)
+CON_COMMAND_F(cl_querycache_stats, "Display status of the query cache (client only)", FCVAR_CHEAT)
 #else
-CON_COMMAND( sv_querycache_stats, "Display status of the query cache (client only)" )
+CON_COMMAND(sv_querycache_stats, "Display status of the query cache (client only)")
 #endif
 {
 #ifndef CLIENT_DLL
-	if ( !UTIL_IsCommandIssuedByServerAdmin() )
+	if(!UTIL_IsCommandIssuedByServerAdmin())
 		return;
 #endif
 
-	Warning( "%d queries, %d misses (%d free) suc spec = %d wasted spec=%d\n",
-			 s_nNumCacheQueries, s_nNumCacheMisses, s_VictimList.Count(),
-			 s_SuccessfulSpeculatives, s_WastedSpeculativeUpdates );
+	Warning("%d queries, %d misses (%d free) suc spec = %d wasted spec=%d\n", s_nNumCacheQueries, s_nNumCacheMisses,
+			s_VictimList.Count(), s_SuccessfulSpeculatives, s_WastedSpeculativeUpdates);
 }
-
-
-

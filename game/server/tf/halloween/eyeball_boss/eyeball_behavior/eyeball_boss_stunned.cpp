@@ -8,40 +8,38 @@
 #include "../eyeball_boss.h"
 #include "eyeball_boss_stunned.h"
 
-
 //---------------------------------------------------------------------------------------------
-ActionResult< CEyeballBoss > CEyeballBossStunned::OnStart( CEyeballBoss *me, Action< CEyeballBoss > *priorAction )
+ActionResult<CEyeballBoss> CEyeballBossStunned::OnStart(CEyeballBoss *me, Action<CEyeballBoss> *priorAction)
 {
-	m_stunTimer.Start( 5.0f );
+	m_stunTimer.Start(5.0f);
 
-	int animSequence = me->LookupSequence( "stunned" );
-	if ( animSequence )
+	int animSequence = me->LookupSequence("stunned");
+	if(animSequence)
 	{
-		me->SetSequence( animSequence );
-		me->SetPlaybackRate( 1.0f );
-		me->SetCycle( 0 );
+		me->SetSequence(animSequence);
+		me->SetPlaybackRate(1.0f);
+		me->SetCycle(0);
 		me->ResetSequenceInfo();
 	}
 
-	me->EmitSound( "Halloween.EyeballBossStunned" );
+	me->EmitSound("Halloween.EyeballBossStunned");
 
 	// limit the total amount of damage we can take while stunned
-	me->SetDamageLimit( me->GetMaxHealth() / 3 );
+	me->SetDamageLimit(me->GetMaxHealth() / 3);
 
 	// sink
-	me->GetLocomotionInterface()->SetDesiredAltitude( 0.0f );
+	me->GetLocomotionInterface()->SetDesiredAltitude(0.0f);
 
 	return Continue();
 }
 
-
 //---------------------------------------------------------------------------------------------
-ActionResult< CEyeballBoss > CEyeballBossStunned::Update( CEyeballBoss *me, float interval )
+ActionResult<CEyeballBoss> CEyeballBossStunned::Update(CEyeballBoss *me, float interval)
 {
-	if ( m_stunTimer.IsElapsed() )
+	if(m_stunTimer.IsElapsed())
 	{
 		// get mad and retaliate
-		me->BecomeEnraged( 20.0f );
+		me->BecomeEnraged(20.0f);
 
 		return Done();
 	}
@@ -49,12 +47,11 @@ ActionResult< CEyeballBoss > CEyeballBossStunned::Update( CEyeballBoss *me, floa
 	return Continue();
 }
 
-
 //---------------------------------------------------------------------------------------------
-void CEyeballBossStunned::OnEnd( CEyeballBoss *me, Action< CEyeballBoss > *nextAction )
+void CEyeballBossStunned::OnEnd(CEyeballBoss *me, Action<CEyeballBoss> *nextAction)
 {
 	me->RemoveDamageLimit();
 
 	// resume hovering
-	me->GetLocomotionInterface()->SetDesiredAltitude( tf_eyeball_boss_hover_height.GetFloat() );
+	me->GetLocomotionInterface()->SetDesiredAltitude(tf_eyeball_boss_hover_height.GetFloat());
 }

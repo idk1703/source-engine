@@ -14,24 +14,24 @@
 
 extern void v_strncpy(char *dest, const char *src, int bufsize);
 
-CServerPing::CServerPing(IResponse *target,serveritem_t &server) {
-	
-	memcpy(&m_Server, &server,sizeof(serveritem_t));
-	m_pResponseTarget=target;
+CServerPing::CServerPing(IResponse *target, serveritem_t &server)
+{
 
-	m_bIsRefreshing=false;
+	memcpy(&m_Server, &server, sizeof(serveritem_t));
+	m_pResponseTarget = target;
+
+	m_bIsRefreshing = false;
 
 	int bytecode = S2A_INFO_DETAILED;
 	m_pQuery = new CSocket("internet server ping", -1);
 	m_pQuery->AddMessageHandler(new CServerPingMsgHandlerDetails(this, CMsgHandler::MSGHANDLER_ALL, &bytecode));
-	m_fSendTime=0;
+	m_fSendTime = 0;
 }
 
-CServerPing::~CServerPing() {
+CServerPing::~CServerPing()
+{
 	delete m_pQuery;
-
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: sends a status query packet to a single server
@@ -39,15 +39,15 @@ CServerPing::~CServerPing() {
 void CServerPing::Query()
 {
 	CMsgBuffer *buffer = m_pQuery->GetSendBuffer();
-	assert( buffer );
-	
-	if ( !buffer ) 
+	assert(buffer);
+
+	if(!buffer)
 	{
 		return;
 	}
 
-	m_bIsRefreshing=true;
-	m_bRefreshed=false;
+	m_bIsRefreshing = true;
+	m_bRefreshed = false;
 
 	netadr_t adr;
 
@@ -67,42 +67,37 @@ void CServerPing::Query()
 	buffer->WriteString("ping");
 
 	// Sendmessage
-	m_pQuery->SendMessage( &adr );
+	m_pQuery->SendMessage(&adr);
 
 	m_fSendTime = CSocket::GetClock();
-	
 }
 
-
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CServerPing::RunFrame()
 {
-/*	float curtime = CSocket::GetClock();
-	if(m_fSendTime!=0 && (curtime-m_fSendTime)> 5.0f) // 10 seconds timeout
-	{	
-		m_fSendTime = 0;
-		m_pResponseTarget->ServerFailedToRespond();
-	}
-*/
+	/*	float curtime = CSocket::GetClock();
+		if(m_fSendTime!=0 && (curtime-m_fSendTime)> 5.0f) // 10 seconds timeout
+		{
+			m_fSendTime = 0;
+			m_pResponseTarget->ServerFailedToRespond();
+		}
+	*/
 
-	if (m_pQuery)
+	if(m_pQuery)
 	{
 		m_pQuery->Frame();
 	}
-
 }
 
 void CServerPing::UpdateServer(float recvTime)
 {
 
-	//A2A_ACK
+	// A2A_ACK
 	int ping = (int)((recvTime - m_fSendTime) * 1000);
 
-
-	if (ping > 10000 || ping < 0)
+	if(ping > 10000 || ping < 0)
 	{
 		// make sure ping is valid
 		ping = 1200;
@@ -110,36 +105,34 @@ void CServerPing::UpdateServer(float recvTime)
 
 	m_Server.ping = ping;
 
-
-	m_bIsRefreshing=false;
-	m_bRefreshed=true;
-	m_fSendTime=0;
+	m_bIsRefreshing = false;
+	m_bRefreshed = true;
+	m_fSendTime = 0;
 
 	// notify the UI of the new server info
 	m_pResponseTarget->ServerResponded();
-
 }
 
-void CServerPing::Refresh() 
+void CServerPing::Refresh()
 {
 	Query();
 }
 
-bool CServerPing::IsRefreshing() 
+bool CServerPing::IsRefreshing()
 {
 
 	return m_bIsRefreshing;
 }
 
-serveritem_t &CServerPing::GetServer() 
+serveritem_t &CServerPing::GetServer()
 {
 	return m_Server;
 }
 
-bool CServerPing::Refreshed() 
+bool CServerPing::Refreshed()
 {
 	bool val = m_bRefreshed;
-	m_bRefreshed=false;
+	m_bRefreshed = false;
 
 	return val;
 }

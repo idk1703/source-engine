@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -31,45 +31,41 @@
 #include "LogSelectProps.h"
 #include "SwitchProps.h"
 
-
-
 class CAllControlsSheet : public CPropertySheet
 {
 	DECLARE_DYNAMIC(CAllControlsSheet)
 
-// Construction
+	// Construction
 public:
-	CAllControlsSheet(UINT nIDCaption, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
-	CAllControlsSheet(LPCTSTR pszCaption, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
+	CAllControlsSheet(UINT nIDCaption, CWnd *pParentWnd = NULL, UINT iSelectPage = 0);
+	CAllControlsSheet(LPCTSTR pszCaption, CWnd *pParentWnd = NULL, UINT iSelectPage = 0);
 
 protected:
 	void AddControlPages(void);
 
-// Attributes
+	// Attributes
 public:
-
 	CFolderSelectProps m_FolderPage;
 	CLogSelectProps m_LogPage;
 	CSwitchProps m_SwitchPage;
 
-// Operations
+	// Operations
 public:
-
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CAllControlsSheet)
-	public:
-	virtual BOOL Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID, CCreateContext* pContext = NULL);
+public:
+	virtual BOOL Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT &rect,
+						CWnd *pParentWnd, UINT nID, CCreateContext *pContext = NULL);
 	//}}AFX_VIRTUAL
 
-// Implementation
+	// Implementation
 public:
 	virtual ~CAllControlsSheet();
 	virtual BOOL OnInitDialog();
 
 	// Generated message map functions
 protected:
-
 	HICON m_hIcon;
 
 	//{{AFX_MSG(CAllControlsSheet)

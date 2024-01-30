@@ -16,7 +16,7 @@ struct VS_INPUT
 
 struct VS_OUTPUT
 {
-    float4 projPos					: POSITION;	
+	float4 projPos					: POSITION;
 	float2 zValue					: TEXCOORD0;
 };
 
@@ -32,7 +32,3 @@ VS_OUTPUT main( const VS_INPUT v )
 	o.zValue.y = (o.projPos.w - cDepthFactor.y) / cDepthFactor.x;
 	return o;
 }
-
-
-
-

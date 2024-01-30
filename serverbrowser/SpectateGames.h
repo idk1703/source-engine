@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -24,7 +24,7 @@ public:
 	// property page handlers
 	virtual void OnPageShow();
 
-	virtual bool CheckTagFilter( gameserveritem_t &server );
+	virtual bool CheckTagFilter(gameserveritem_t &server);
 
 protected:
 	// filters by spectator games
@@ -33,6 +33,5 @@ protected:
 private:
 	typedef CInternetGames BaseClass;
 };
-
 
 #endif // SPECTATEGAMES_H

@@ -11,7 +11,7 @@
 #pragma once
 #endif
 
-#include "game_item_schema.h"			// needed for GameItemDefinition_t
+#include "game_item_schema.h" // needed for GameItemDefinition_t
 
 class CAttribute_String;
 class CAttribute_DynamicRecipeComponent;
@@ -29,10 +29,17 @@ class IMaterial;
 //
 // This is used to prevent having to have different specializations for "T" versus
 // "const T" when checking for equivalent template type arguments, etc.
-template < typename T >
-struct StripConstIfPresent { typedef T ResultType; };
+template<typename T>
+struct StripConstIfPresent
+{
+	typedef T ResultType;
+};
 
-template < typename T > struct StripConstIfPresent<const T> { typedef T ResultType; };
+template<typename T>
+struct StripConstIfPresent<const T>
+{
+	typedef T ResultType;
+};
 
 // AreTypesIdentical<T, U> takes two input types and "returns" via kValue whether the
 // types are exactly equal. This is intended for checking type equivalence at compile-time
@@ -40,17 +47,43 @@ template < typename T > struct StripConstIfPresent<const T> { typedef T ResultTy
 //
 // We use it in the attribute code to guarantee that we're only doing The Old, Scary Path
 // when dealing with attributes of The Old, Scary Type.
-template < typename T, typename U >
-struct AreTypesIdentical { enum { kValue = false }; };
+template<typename T, typename U>
+struct AreTypesIdentical
+{
+	enum
+	{
+		kValue = false
+	};
+};
 
-template < typename T > struct AreTypesIdentical<T, T> { enum { kValue = true }; };
+template<typename T>
+struct AreTypesIdentical<T, T>
+{
+	enum
+	{
+		kValue = true
+	};
+};
 
 // IsPointerType<T> takes one input and "returns" via kValue whether the type is a pointer
 // type in any way, const, volatile, whatever.
-template < typename T >
-struct IsPointerType { enum { kValue = false }; };
+template<typename T>
+struct IsPointerType
+{
+	enum
+	{
+		kValue = false
+	};
+};
 
-template < typename T > struct IsPointerType<T *> { enum { kValue = true }; };
+template<typename T>
+struct IsPointerType<T *>
+{
+	enum
+	{
+		kValue = true
+	};
+};
 
 // IsValidAttributeValueTypeImpl<T> is a hand-made specialization for what types we want
 // to consider valid attribute data types. This is used as a sanity check to make sure we
@@ -58,19 +91,76 @@ template < typename T > struct IsPointerType<T *> { enum { kValue = true }; };
 // would cause an assert at runtime, but it seems like getting compile-time asserts is
 // advantageous, and probably worth paying the small cost of adding to this list whenever
 // a new attribute type is added.)
-template < typename T> 
-struct IsValidAttributeValueTypeImpl { enum { kValue = false }; };
+template<typename T>
+struct IsValidAttributeValueTypeImpl
+{
+	enum
+	{
+		kValue = false
+	};
+};
 
-template < > struct IsValidAttributeValueTypeImpl<attrib_value_t> { enum { kValue = true }; };
-template < > struct IsValidAttributeValueTypeImpl<float> { enum { kValue = true }; };
-template < > struct IsValidAttributeValueTypeImpl<uint64> { enum { kValue = true }; };
-template < > struct IsValidAttributeValueTypeImpl<CAttribute_String> { enum { kValue = true }; };
-template < > struct IsValidAttributeValueTypeImpl<CAttribute_DynamicRecipeComponent> { enum { kValue = true }; };
-template < > struct IsValidAttributeValueTypeImpl < CAttribute_ItemSlotCriteria > { enum { kValue = true }; };
-template < > struct IsValidAttributeValueTypeImpl < CAttribute_WorldItemPlacement > { enum { kValue = true }; };
+template<>
+struct IsValidAttributeValueTypeImpl<attrib_value_t>
+{
+	enum
+	{
+		kValue = true
+	};
+};
+template<>
+struct IsValidAttributeValueTypeImpl<float>
+{
+	enum
+	{
+		kValue = true
+	};
+};
+template<>
+struct IsValidAttributeValueTypeImpl<uint64>
+{
+	enum
+	{
+		kValue = true
+	};
+};
+template<>
+struct IsValidAttributeValueTypeImpl<CAttribute_String>
+{
+	enum
+	{
+		kValue = true
+	};
+};
+template<>
+struct IsValidAttributeValueTypeImpl<CAttribute_DynamicRecipeComponent>
+{
+	enum
+	{
+		kValue = true
+	};
+};
+template<>
+struct IsValidAttributeValueTypeImpl<CAttribute_ItemSlotCriteria>
+{
+	enum
+	{
+		kValue = true
+	};
+};
+template<>
+struct IsValidAttributeValueTypeImpl<CAttribute_WorldItemPlacement>
+{
+	enum
+	{
+		kValue = true
+	};
+};
 
-template < typename T >
-struct IsValidAttributeValueType : public IsValidAttributeValueTypeImpl< typename StripConstIfPresent<T>::ResultType > { };
+template<typename T>
+struct IsValidAttributeValueType : public IsValidAttributeValueTypeImpl<typename StripConstIfPresent<T>::ResultType>
+{
+};
 
 //-----------------------------------------------------------------------------
 // Purpose: Interface for callback functions per-attribute-data-type. When adding
@@ -81,34 +171,62 @@ struct IsValidAttributeValueType : public IsValidAttributeValueTypeImpl< typenam
 class IEconItemAttributeIterator
 {
 public:
-	virtual ~IEconItemAttributeIterator ( ) { }
+	virtual ~IEconItemAttributeIterator() {}
 
 	// Returns whether to continue iteration after this element.
-	virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, attrib_value_t value )											= 0;
-	virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, float value )													= 0;
-	virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const uint64& value )											= 0;
-	virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const CAttribute_String& value )								= 0;
-	virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const CAttribute_DynamicRecipeComponent& value )				= 0;
-	virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const CAttribute_ItemSlotCriteria& value )						= 0;
-	virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const CAttribute_WorldItemPlacement& value )					= 0;
+	virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef, attrib_value_t value) = 0;
+	virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef, float value) = 0;
+	virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef, const uint64 &value) = 0;
+	virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef,
+										 const CAttribute_String &value) = 0;
+	virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef,
+										 const CAttribute_DynamicRecipeComponent &value) = 0;
+	virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef,
+										 const CAttribute_ItemSlotCriteria &value) = 0;
+	virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef,
+										 const CAttribute_WorldItemPlacement &value) = 0;
 };
 
 //-----------------------------------------------------------------------------
 // Purpose: Iterator where each callback is default implemented, but the value
 //			is ignored.  Derive from this iterator when you only care about certain
 //			attribute types.
-//			
+//
 //-----------------------------------------------------------------------------
 class CEconItemSpecificAttributeIterator : public IEconItemAttributeIterator
 {
 	// By default, always return true
-	virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, attrib_value_t value )											{ return true; }
-	virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, float value )													{ return true; }
-	virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const uint64& value )											{ return true; }
-	virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const CAttribute_String& value )								{ return true; }
-	virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const CAttribute_DynamicRecipeComponent& value )				{ return true; }
-	virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const CAttribute_ItemSlotCriteria& value )						{ return true; }
-	virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const CAttribute_WorldItemPlacement& value )					{ return true; }
+	virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef, attrib_value_t value)
+	{
+		return true;
+	}
+	virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef, float value)
+	{
+		return true;
+	}
+	virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef, const uint64 &value)
+	{
+		return true;
+	}
+	virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef, const CAttribute_String &value)
+	{
+		return true;
+	}
+	virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef,
+										 const CAttribute_DynamicRecipeComponent &value)
+	{
+		return true;
+	}
+	virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef,
+										 const CAttribute_ItemSlotCriteria &value)
+	{
+		return true;
+	}
+	virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef,
+										 const CAttribute_WorldItemPlacement &value)
+	{
+		return true;
+	}
 };
 
 //-----------------------------------------------------------------------------
@@ -123,44 +241,47 @@ class CEconItemSpecificAttributeIterator : public IEconItemAttributeIterator
 class IEconItemUntypedAttributeIterator : public IEconItemAttributeIterator
 {
 public:
-	virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, attrib_value_t ) OVERRIDE
+	virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef, attrib_value_t) OVERRIDE
 	{
-		return OnIterateAttributeValueUntyped( pAttrDef );
+		return OnIterateAttributeValueUntyped(pAttrDef);
 	}
 
-	virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, float ) OVERRIDE
+	virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef, float) OVERRIDE
 	{
-		return OnIterateAttributeValueUntyped( pAttrDef );
+		return OnIterateAttributeValueUntyped(pAttrDef);
 	}
 
-	virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const uint64& ) OVERRIDE
+	virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef, const uint64 &) OVERRIDE
 	{
-		return OnIterateAttributeValueUntyped( pAttrDef );
+		return OnIterateAttributeValueUntyped(pAttrDef);
 	}
 
-	virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const CAttribute_String& ) OVERRIDE
+	virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef,
+										 const CAttribute_String &) OVERRIDE
 	{
-		return OnIterateAttributeValueUntyped( pAttrDef );
+		return OnIterateAttributeValueUntyped(pAttrDef);
 	}
 
-	virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const CAttribute_DynamicRecipeComponent& ) OVERRIDE
+	virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef,
+										 const CAttribute_DynamicRecipeComponent &) OVERRIDE
 	{
-		return OnIterateAttributeValueUntyped( pAttrDef );
+		return OnIterateAttributeValueUntyped(pAttrDef);
 	}
 
-	virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const CAttribute_ItemSlotCriteria& ) OVERRIDE
+	virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef,
+										 const CAttribute_ItemSlotCriteria &) OVERRIDE
 	{
-		return OnIterateAttributeValueUntyped( pAttrDef );
+		return OnIterateAttributeValueUntyped(pAttrDef);
 	}
 
-	virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const CAttribute_WorldItemPlacement& ) OVERRIDE
+	virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef,
+										 const CAttribute_WorldItemPlacement &) OVERRIDE
 	{
-		return OnIterateAttributeValueUntyped( pAttrDef );
+		return OnIterateAttributeValueUntyped(pAttrDef);
 	}
-
 
 private:
-	virtual bool OnIterateAttributeValueUntyped( const CEconItemAttributeDefinition *pAttrDef ) = 0;
+	virtual bool OnIterateAttributeValueUntyped(const CEconItemAttributeDefinition *pAttrDef) = 0;
 };
 
 //-----------------------------------------------------------------------------
@@ -171,11 +292,10 @@ private:
 class CAttributeIterator_HasAttribute : public IEconItemUntypedAttributeIterator
 {
 public:
-	CAttributeIterator_HasAttribute( const CEconItemAttributeDefinition *pAttrDef )
-		: m_pAttrDef( pAttrDef )
-		, m_bFound( false )
+	CAttributeIterator_HasAttribute(const CEconItemAttributeDefinition *pAttrDef)
+		: m_pAttrDef(pAttrDef), m_bFound(false)
 	{
-		Assert( m_pAttrDef );
+		Assert(m_pAttrDef);
 	}
 
 	bool WasFound() const
@@ -184,12 +304,12 @@ public:
 	}
 
 private:
-	bool OnIterateAttributeValueUntyped( const CEconItemAttributeDefinition *pAttrDef ) OVERRIDE
+	bool OnIterateAttributeValueUntyped(const CEconItemAttributeDefinition *pAttrDef) OVERRIDE
 	{
 		// We don't assert because we might be reusing the same iterator between calls.
 		// Assert( !m_bFound );
-		
-		if ( m_pAttrDef == pAttrDef )
+
+		if(m_pAttrDef == pAttrDef)
 		{
 			m_bFound = true;
 		}
@@ -223,14 +343,12 @@ private:
 //			global because C++ doesn't support template member functions on a
 //			template class inside a standalone template function. Weird.
 //-----------------------------------------------------------------------------
-template < typename TActualTypeInMemory, typename TTreatAsThisType = TActualTypeInMemory >
+template<typename TActualTypeInMemory, typename TTreatAsThisType = TActualTypeInMemory>
 class CAttributeIterator_GetTypedAttributeValue : public IEconItemAttributeIterator
 {
 public:
-	CAttributeIterator_GetTypedAttributeValue( const CEconItemAttributeDefinition *pAttrDef, TTreatAsThisType *outpValue )
-		: m_pAttrDef( pAttrDef )
-		, m_outpValue( outpValue )
-		, m_bFound( false )
+	CAttributeIterator_GetTypedAttributeValue(const CEconItemAttributeDefinition *pAttrDef, TTreatAsThisType *outpValue)
+		: m_pAttrDef(pAttrDef), m_outpValue(outpValue), m_bFound(false)
 	{
 		// If this fails, it means that the type TActualTypeInMemory isn't something the attribute
 		// system is prepared to recognize as a valid attribute storage type. The list of valid types
@@ -239,7 +357,7 @@ public:
 		// If you added a new type and didn't make a specialization for it, this will fail. If you
 		// *didn't* add a new type, it probably means you're passing a pointer of an incorrect type
 		// in to FindAttribute().
-		COMPILE_TIME_ASSERT( IsValidAttributeValueType<TActualTypeInMemory>::kValue );
+		COMPILE_TIME_ASSERT(IsValidAttributeValueType<TActualTypeInMemory>::kValue);
 
 		// The only reason we allow callers to specify a different TTreatAsThisType (versus having
 		// it always match TActualTypeInMemory) is to deal with the old attribute system, which sometimes
@@ -247,47 +365,53 @@ public:
 		// arbitrary bits. We test here to make sure that we're only using the "treat these bits as
 		// a different type" behavior code when dealing with attributes using the old storage system
 		// (attrib_value_t) or when we're trying to get the pointer to buffer contents for a string.
-		COMPILE_TIME_ASSERT( ((AreTypesIdentical<TActualTypeInMemory, attrib_value_t>::kValue && AreTypesIdentical<TTreatAsThisType, float>::kValue) ||
-							  (AreTypesIdentical<TActualTypeInMemory, CAttribute_String>::kValue && AreTypesIdentical<TTreatAsThisType, const char *>::kValue) ||
-							   AreTypesIdentical<TActualTypeInMemory, TTreatAsThisType>::kValue) );
+		COMPILE_TIME_ASSERT(((AreTypesIdentical<TActualTypeInMemory, attrib_value_t>::kValue &&
+							  AreTypesIdentical<TTreatAsThisType, float>::kValue) ||
+							 (AreTypesIdentical<TActualTypeInMemory, CAttribute_String>::kValue &&
+							  AreTypesIdentical<TTreatAsThisType, const char *>::kValue) ||
+							 AreTypesIdentical<TActualTypeInMemory, TTreatAsThisType>::kValue));
 
-		Assert( m_pAttrDef );
-		Assert( outpValue );
+		Assert(m_pAttrDef);
+		Assert(outpValue);
 	}
 
-	virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, attrib_value_t value ) OVERRIDE
+	virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef, attrib_value_t value) OVERRIDE
 	{
-		return OnIterateAttributeValueTyped( pAttrDef, value );
+		return OnIterateAttributeValueTyped(pAttrDef, value);
 	}
 
-	virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, float value ) OVERRIDE
+	virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef, float value) OVERRIDE
 	{
-		return OnIterateAttributeValueTyped( pAttrDef, value );
+		return OnIterateAttributeValueTyped(pAttrDef, value);
 	}
 
-	virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const uint64 & value ) OVERRIDE
+	virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef, const uint64 &value) OVERRIDE
 	{
-		return OnIterateAttributeValueTyped( pAttrDef, value );
+		return OnIterateAttributeValueTyped(pAttrDef, value);
 	}
 
-	virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const CAttribute_String & value ) OVERRIDE
+	virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef,
+										 const CAttribute_String &value) OVERRIDE
 	{
-		return OnIterateAttributeValueTyped( pAttrDef, value );
+		return OnIterateAttributeValueTyped(pAttrDef, value);
 	}
 
-	virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const CAttribute_DynamicRecipeComponent & value ) OVERRIDE
+	virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef,
+										 const CAttribute_DynamicRecipeComponent &value) OVERRIDE
 	{
-		return OnIterateAttributeValueTyped( pAttrDef, value );
+		return OnIterateAttributeValueTyped(pAttrDef, value);
 	}
 
-	virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const CAttribute_ItemSlotCriteria & value ) OVERRIDE
+	virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef,
+										 const CAttribute_ItemSlotCriteria &value) OVERRIDE
 	{
-		return OnIterateAttributeValueTyped( pAttrDef, value );
+		return OnIterateAttributeValueTyped(pAttrDef, value);
 	}
 
-	virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const CAttribute_WorldItemPlacement & value ) OVERRIDE
+	virtual bool OnIterateAttributeValue(const CEconItemAttributeDefinition *pAttrDef,
+										 const CAttribute_WorldItemPlacement &value) OVERRIDE
 	{
-		return OnIterateAttributeValueTyped( pAttrDef, value );
+		return OnIterateAttributeValueTyped(pAttrDef, value);
 	}
 
 	bool WasFound() const
@@ -305,14 +429,14 @@ private:
 	// for "damage multiplier" but feeding in a string), it will get found in this function, which will assert and
 	// tell you you've got the wrong type. (FindAttribute() in that case will return false because it's impossible
 	// for us to safely copy the value out.)
-	template < typename TAnyOtherType >
-	bool OnIterateAttributeValueTyped( const CEconItemAttributeDefinition *pAttrDef, const TAnyOtherType& value )
+	template<typename TAnyOtherType>
+	bool OnIterateAttributeValueTyped(const CEconItemAttributeDefinition *pAttrDef, const TAnyOtherType &value)
 	{
-		COMPILE_TIME_ASSERT( IsValidAttributeValueType<TAnyOtherType>::kValue );
+		COMPILE_TIME_ASSERT(IsValidAttributeValueType<TAnyOtherType>::kValue);
 
 		// We don't assert because we might be reusing the same iterator between calls.
 		// Assert( !m_bFound );
-		AssertMsg( m_pAttrDef != pAttrDef, "Incorrect type found for attribute during iteration." );
+		AssertMsg(m_pAttrDef != pAttrDef, "Incorrect type found for attribute during iteration.");
 
 		return true;
 	}
@@ -323,32 +447,32 @@ private:
 	//
 	// Note that this is just a normal member function, but is *not* a template member function, which would compile
 	// under VC but otherwise be illegal.
-	bool OnIterateAttributeValueTyped( const CEconItemAttributeDefinition *pAttrDef, const TActualTypeInMemory& value )
+	bool OnIterateAttributeValueTyped(const CEconItemAttributeDefinition *pAttrDef, const TActualTypeInMemory &value)
 	{
 		// We don't assert because we might be reusing the same iterator between calls.
 		// Assert( !m_bFound );
 
-		if ( m_pAttrDef == pAttrDef )
+		if(m_pAttrDef == pAttrDef)
 		{
 			m_bFound = true;
-			CopyAttributeValueToOutput( &value, reinterpret_cast<TTreatAsThisType *>( m_outpValue ) );
+			CopyAttributeValueToOutput(&value, reinterpret_cast<TTreatAsThisType *>(m_outpValue));
 		}
-			
+
 		return !m_bFound;
 	}
 
 private:
-	static void CopyAttributeValueToOutput( const TActualTypeInMemory *pValue, TTreatAsThisType *out_pValue )
+	static void CopyAttributeValueToOutput(const TActualTypeInMemory *pValue, TTreatAsThisType *out_pValue)
 	{
 		// Even if we are using the old attribute type system, we need to guarantee that the type
 		// in memory (ie., uint32) and the type we're considering it as (ie., float) are the same size
 		// because we're going to be doing bitwise casts.
-		COMPILE_TIME_ASSERT( sizeof( TActualTypeInMemory ) == sizeof( TTreatAsThisType ) );
+		COMPILE_TIME_ASSERT(sizeof(TActualTypeInMemory) == sizeof(TTreatAsThisType));
 
-		Assert( pValue );
-		Assert( out_pValue );
+		Assert(pValue);
+		Assert(out_pValue);
 
-		*out_pValue = *reinterpret_cast<const TTreatAsThisType *>( pValue );
+		*out_pValue = *reinterpret_cast<const TTreatAsThisType *>(pValue);
 	}
 
 private:
@@ -368,12 +492,13 @@ private:
 //			function call a declared-but-not-defined non-template function that
 //			we can define later.
 //-----------------------------------------------------------------------------
-void CopyStringAttributeValueToCharPointerOutput( const CAttribute_String *pValue, const char **out_pValue );
+void CopyStringAttributeValueToCharPointerOutput(const CAttribute_String *pValue, const char **out_pValue);
 
-template < >
-inline void CAttributeIterator_GetTypedAttributeValue<CAttribute_String, const char *>::CopyAttributeValueToOutput( const CAttribute_String *pValue, const char **out_pValue )
+template<>
+inline void CAttributeIterator_GetTypedAttributeValue<CAttribute_String, const char *>::CopyAttributeValueToOutput(
+	const CAttribute_String *pValue, const char **out_pValue)
 {
-	CopyStringAttributeValueToCharPointerOutput( pValue, out_pValue );
+	CopyStringAttributeValueToCharPointerOutput(pValue, out_pValue);
 }
 
 //-----------------------------------------------------------------------------
@@ -381,44 +506,48 @@ inline void CAttributeIterator_GetTypedAttributeValue<CAttribute_String, const c
 //			definition [pAttrDef]. Can be called on anything with an IterateAttributes()
 //			member functions (IEconItemInterface, CEconItemDefinition).
 //-----------------------------------------------------------------------------
-template < typename TAttributeContainerType >
-bool FindAttribute( const TAttributeContainerType *pSomethingThatHasAnIterateAttributesFunction, const CEconItemAttributeDefinition *pAttrDef )
+template<typename TAttributeContainerType>
+bool FindAttribute(const TAttributeContainerType *pSomethingThatHasAnIterateAttributesFunction,
+				   const CEconItemAttributeDefinition *pAttrDef)
 {
 #ifdef CLIENT_DLL
-	VPROF_BUDGET( "IEconItemInterface::FindAttribute", VPROF_BUDGETGROUP_FINDATTRIBUTE );
+	VPROF_BUDGET("IEconItemInterface::FindAttribute", VPROF_BUDGETGROUP_FINDATTRIBUTE);
 #endif
-	if ( !pAttrDef )
+	if(!pAttrDef)
 		return false;
 
-	CAttributeIterator_HasAttribute it( pAttrDef );
-	pSomethingThatHasAnIterateAttributesFunction->IterateAttributes( &it );
+	CAttributeIterator_HasAttribute it(pAttrDef);
+	pSomethingThatHasAnIterateAttributesFunction->IterateAttributes(&it);
 	return it.WasFound();
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-template < typename TActualTypeInMemory, typename TTreatAsThisType, typename TAttributeContainerType >
-bool FindAttribute_UnsafeBitwiseCast( const TAttributeContainerType *pSomethingThatHasAnIterateAttributesFunction, const CEconItemAttributeDefinition *pAttrDef, TTreatAsThisType *out_pValue )
+template<typename TActualTypeInMemory, typename TTreatAsThisType, typename TAttributeContainerType>
+bool FindAttribute_UnsafeBitwiseCast(const TAttributeContainerType *pSomethingThatHasAnIterateAttributesFunction,
+									 const CEconItemAttributeDefinition *pAttrDef, TTreatAsThisType *out_pValue)
 {
 #ifdef CLIENT_DLL
-	VPROF_BUDGET( "IEconItemInterface::FindAttribute_UnsafeBitwiseCast", VPROF_BUDGETGROUP_FINDATTRIBUTEUNSAFE );
+	VPROF_BUDGET("IEconItemInterface::FindAttribute_UnsafeBitwiseCast", VPROF_BUDGETGROUP_FINDATTRIBUTEUNSAFE);
 #endif
-	if ( !pAttrDef )
+	if(!pAttrDef)
 		return false;
 
-	CAttributeIterator_GetTypedAttributeValue<TActualTypeInMemory, TTreatAsThisType> it( pAttrDef, out_pValue );
-	pSomethingThatHasAnIterateAttributesFunction->IterateAttributes( &it );
+	CAttributeIterator_GetTypedAttributeValue<TActualTypeInMemory, TTreatAsThisType> it(pAttrDef, out_pValue);
+	pSomethingThatHasAnIterateAttributesFunction->IterateAttributes(&it);
 	return it.WasFound();
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-template < typename TAttributeContainerType, typename T >
-bool FindAttribute( const TAttributeContainerType *pSomethingThatHasAnIterateAttributesFunction, const CEconItemAttributeDefinition *pAttrDef, T *out_pValue )
+template<typename TAttributeContainerType, typename T>
+bool FindAttribute(const TAttributeContainerType *pSomethingThatHasAnIterateAttributesFunction,
+				   const CEconItemAttributeDefinition *pAttrDef, T *out_pValue)
 {
-	return FindAttribute_UnsafeBitwiseCast<T, T, TAttributeContainerType>( pSomethingThatHasAnIterateAttributesFunction, pAttrDef, out_pValue );
+	return FindAttribute_UnsafeBitwiseCast<T, T, TAttributeContainerType>(pSomethingThatHasAnIterateAttributesFunction,
+																		  pAttrDef, out_pValue);
 }
 
 //-----------------------------------------------------------------------------
@@ -427,69 +556,81 @@ bool FindAttribute( const TAttributeContainerType *pSomethingThatHasAnIterateAtt
 class IEconItemInterface
 {
 public:
-	virtual ~IEconItemInterface() { }
+	virtual ~IEconItemInterface() {}
 
 	// Is an attribute present? We neither know nor care anything about the attribute
 	// value stored.
-	bool FindAttribute( const CEconItemAttributeDefinition *pAttrDef ) const
+	bool FindAttribute(const CEconItemAttributeDefinition *pAttrDef) const
 	{
-		return ::FindAttribute( this, pAttrDef );
+		return ::FindAttribute(this, pAttrDef);
 	}
 
 	// If an attribute is present, it will copy the value into out_pValue and return true.
 	// If the attribute is not present, it will return false and not touch the value in
 	// out_pValue. If a T is passed in that is not a type the attribute system understands,
 	// this function will fail to compile.
-	template < typename T >
-	bool FindAttribute( const CEconItemAttributeDefinition *pAttrDef, T *out_pValue ) const
+	template<typename T>
+	bool FindAttribute(const CEconItemAttributeDefinition *pAttrDef, T *out_pValue) const
 	{
-		return ::FindAttribute( this, pAttrDef, out_pValue );
+		return ::FindAttribute(this, pAttrDef, out_pValue);
 	}
 
 	// Helpers to look for specific attribute values
-	virtual CEconItemPaintKitDefinition *GetCustomPainkKitDefinition( void ) const { return GetItemDefinition() ? GetItemDefinition()->GetCustomPainkKitDefinition() : NULL; }
-	virtual bool GetCustomPaintKitWear( float &flWear ) const;
+	virtual CEconItemPaintKitDefinition *GetCustomPainkKitDefinition(void) const
+	{
+		return GetItemDefinition() ? GetItemDefinition()->GetCustomPainkKitDefinition() : NULL;
+	}
+	virtual bool GetCustomPaintKitWear(float &flWear) const;
 
 	// IEconItemInterface common implementation.
 	virtual bool IsTradable() const;
-	virtual int  GetUntradabilityFlags() const;
+	virtual int GetUntradabilityFlags() const;
 	virtual bool IsCommodity() const;
 	virtual bool IsUsableInCrafting() const;
-	virtual bool IsMarketable() const;				// can this item be listed on the Marketplace?
+	virtual bool IsMarketable() const; // can this item be listed on the Marketplace?
 
-	bool IsTemporaryItem() const;					// returns whether this item is a temporary instance of an item that is not by nature temporary (ie., a preview item, an item with an attribute expiration timer)
-	RTime32 GetExpirationDate() const;				// will return RTime32( 0 ) if this item will not expire, otherwise the time that it will auto-delete itself; this looks at both static and dynamic ways of expiring timers
+	bool IsTemporaryItem() const; // returns whether this item is a temporary instance of an item that is not by nature
+								  // temporary (ie., a preview item, an item with an attribute expiration timer)
+	RTime32 GetExpirationDate()
+		const; // will return RTime32( 0 ) if this item will not expire, otherwise the time that it will auto-delete
+			   // itself; this looks at both static and dynamic ways of expiring timers
 
 	// IEconItemInterface interface.
 	virtual const GameItemDefinition_t *GetItemDefinition() const = 0;
 
-	virtual itemid_t		GetID() const = 0;				// intentionally not called GetItemID to avoid stomping non-virtual GetItemID() on CEconItem
-	virtual uint32			GetAccountID() const = 0;
-	virtual int32			GetQuality() const = 0;
-	virtual style_index_t	GetStyle() const = 0;
-	virtual uint8			GetFlags() const = 0;
+	virtual itemid_t GetID()
+		const = 0; // intentionally not called GetItemID to avoid stomping non-virtual GetItemID() on CEconItem
+	virtual uint32 GetAccountID() const = 0;
+	virtual int32 GetQuality() const = 0;
+	virtual style_index_t GetStyle() const = 0;
+	virtual uint8 GetFlags() const = 0;
 	virtual eEconItemOrigin GetOrigin() const = 0;
-	virtual int				GetQuantity() const = 0;
-	virtual uint32			GetItemLevel() const = 0;
-	virtual bool			GetInUse() const = 0;			// is this item in use somewhere in the backend? (ie., cross-game trading)
+	virtual int GetQuantity() const = 0;
+	virtual uint32 GetItemLevel() const = 0;
+	virtual bool GetInUse() const = 0; // is this item in use somewhere in the backend? (ie., cross-game trading)
 
-	virtual const char	   *GetCustomName() const = 0;		// get a user-generated name, if present, otherwise NULL; return value is UTF8
-	virtual const char	   *GetCustomDesc() const = 0;		// get a user-generated flavor text, if present, otherwise NULL; return value is UTF8
+	virtual const char *GetCustomName()
+		const = 0; // get a user-generated name, if present, otherwise NULL; return value is UTF8
+	virtual const char *GetCustomDesc()
+		const = 0; // get a user-generated flavor text, if present, otherwise NULL; return value is UTF8
 
 	// IEconItemInterface attribute iteration interface. This is not meant to be used for
 	// attribute lookup! This is meant for anything that requires iterating over the full
 	// attribute list.
-	virtual void IterateAttributes( IEconItemAttributeIterator *pIterator ) const = 0;
+	virtual void IterateAttributes(IEconItemAttributeIterator *pIterator) const = 0;
 
 	// Fetch values from the definition
-	const char	*GetDefinitionString( const char *pszKeyName, const char *pszDefaultValue = "" ) const;
-	KeyValues *GetDefinitionKey( const char *pszKeyName ) const;
+	const char *GetDefinitionString(const char *pszKeyName, const char *pszDefaultValue = "") const;
+	KeyValues *GetDefinitionKey(const char *pszKeyName) const;
 
 	RTime32 GetTradableAfterDateTime() const;
 
-	virtual item_definition_index_t GetItemDefIndex() const { return GetItemDefinition() ? GetItemDefinition()->GetDefinitionIndex() : INVALID_ITEM_DEF_INDEX; }
+	virtual item_definition_index_t GetItemDefIndex() const
+	{
+		return GetItemDefinition() ? GetItemDefinition()->GetDefinitionIndex() : INVALID_ITEM_DEF_INDEX;
+	}
 
-	virtual IMaterial* GetMaterialOverride( int iTeam ) = 0;
+	virtual IMaterial *GetMaterialOverride(int iTeam) = 0;
 
 protected:
 	bool IsPermanentlyUntradable() const;
@@ -497,49 +638,49 @@ protected:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: Classes that want default behavior for GetMaterialOverride, which 
-// currently derive from IEconItemInterface can instead derive from 
+// Purpose: Classes that want default behavior for GetMaterialOverride, which
+// currently derive from IEconItemInterface can instead derive from
 // CMaterialOverrideContainer< IEconItemInterface > and have the details
-// of material overrides hidden from them. 
+// of material overrides hidden from them.
 //-----------------------------------------------------------------------------
-template <typename TBaseClass> 
+template<typename TBaseClass>
 class CMaterialOverrideContainer : public TBaseClass
 {
 public:
-	virtual IMaterial* GetMaterialOverride( int iTeam ) OVERRIDE
+	virtual IMaterial *GetMaterialOverride(int iTeam) OVERRIDE
 	{
-		#ifdef CLIENT_DLL
-			Assert( iTeam >= 0 && iTeam < ARRAYSIZE( m_materialOverrides ) );
+#ifdef CLIENT_DLL
+		Assert(iTeam >= 0 && iTeam < ARRAYSIZE(m_materialOverrides));
 
-			if ( m_materialOverrides[ iTeam ].IsValid() )
-				return m_materialOverrides[ iTeam ];
+		if(m_materialOverrides[iTeam].IsValid())
+			return m_materialOverrides[iTeam];
 
-			if ( !this->GetItemDefinition() )
-				return NULL;
-
-			const char* pName = this->GetItemDefinition()->GetMaterialOverride( iTeam );
-			if ( pName == NULL )
-				return NULL;
-
-			m_materialOverrides[ iTeam ].Init( pName, TEXTURE_GROUP_CLIENT_EFFECTS );
-			return m_materialOverrides[ iTeam ];
-		#else
+		if(!this->GetItemDefinition())
 			return NULL;
-		#endif
+
+		const char *pName = this->GetItemDefinition()->GetMaterialOverride(iTeam);
+		if(pName == NULL)
+			return NULL;
+
+		m_materialOverrides[iTeam].Init(pName, TEXTURE_GROUP_CLIENT_EFFECTS);
+		return m_materialOverrides[iTeam];
+#else
+		return NULL;
+#endif
 	}
 
 protected:
 	void ResetMaterialOverrides()
 	{
-		#ifdef CLIENT_DLL
-			for ( int i = 0; i < TF_TEAM_COUNT; ++i ) 
-				m_materialOverrides[ i ].Shutdown();
-		#endif
+#ifdef CLIENT_DLL
+		for(int i = 0; i < TF_TEAM_COUNT; ++i)
+			m_materialOverrides[i].Shutdown();
+#endif
 	}
 
 private:
 #ifdef CLIENT_DLL
-	CMaterialReference m_materialOverrides[ TF_TEAM_COUNT ];
+	CMaterialReference m_materialOverrides[TF_TEAM_COUNT];
 #endif
 };
 

@@ -16,32 +16,25 @@
 
 using namespace vgui;
 
+//--------------------------------------------------------------------------------------------------------
+NavMenu::NavMenu(Panel *parent, const char *panelName) : Menu(parent, panelName) {}
 
 //--------------------------------------------------------------------------------------------------------
-NavMenu::NavMenu( Panel *parent, const char *panelName ) : Menu( parent, panelName )
-{ 
-}
-
-
-//--------------------------------------------------------------------------------------------------------
-bool NavMenu::LoadFromFile( const char * fileName)	// load menu from KeyValues
+bool NavMenu::LoadFromFile(const char *fileName) // load menu from KeyValues
 {
-	KeyValues * kv = new KeyValues(fileName);
+	KeyValues *kv = new KeyValues(fileName);
 
-	if  ( !kv->LoadFromFile( filesystem, fileName, "GAME" ) )
+	if(!kv->LoadFromFile(filesystem, fileName, "GAME"))
 		return false;
 
-	bool ret = false;//LoadFromKeyValues( kv );
+	bool ret = false; // LoadFromKeyValues( kv );
 
 	kv->deleteThis();
 	return ret;
 }
 
-
 //--------------------------------------------------------------------------------------------------------
-NavMenu::~NavMenu()
-{
-}
+NavMenu::~NavMenu() {}
 
 #endif // SERVER_USES_VGUI
 

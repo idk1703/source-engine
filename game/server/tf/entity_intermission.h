@@ -18,12 +18,11 @@
 class CTFIntermission : public CLogicalEntity
 {
 public:
-	DECLARE_CLASS( CTFIntermission, CLogicalEntity );
+	DECLARE_CLASS(CTFIntermission, CLogicalEntity);
 
-	void InputActivate( inputdata_t &inputdata );
+	void InputActivate(inputdata_t &inputdata);
 
 	DECLARE_DATADESC();
 };
 
 #endif // ENTITY_INTERMISSION_H
-

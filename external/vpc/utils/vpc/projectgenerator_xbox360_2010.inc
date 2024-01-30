@@ -1,5 +1,5 @@
 
-//========= Copyright © 1996-2006, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2006, Valve Corporation, All rights reserved. ============//
 //
 //	Property Enumerations
 //
@@ -207,4 +207,3 @@ PROPERTYNAME( XBOX360_2010_CONSOLEDEPLOYMENT, DeploymentRoot )
 PROPERTYNAME( XBOX360_2010_CONSOLEDEPLOYMENT, EmulationType )
 PROPERTYNAME( XBOX360_2010_CONSOLEDEPLOYMENT, LayoutFile )
 PROPERTYNAME( XBOX360_2010_CONSOLEDEPLOYMENT, AdditionalOptions )
-

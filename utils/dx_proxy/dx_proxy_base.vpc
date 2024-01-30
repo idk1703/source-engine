@@ -20,7 +20,7 @@ $Configuration	"Debug"
 		$OutputDirectory			".\Debug_$DX_SDK_VER"
 		$IntermediateDirectory		".\Debug_$DX_SDK_VER"
 	}
-	
+
 	$Linker
 	{
 		$IgnoreSpecificLibrary		"libcp.lib; libcmt.lib;"
@@ -34,7 +34,7 @@ $Configuration	"Release"
 		$OutputDirectory			".\Release_$DX_SDK_VER"
 		$IntermediateDirectory		".\Release_$DX_SDK_VER"
 	}
-	
+
 	$Linker
 	{
 		$IgnoreSpecificLibrary		"libcpd.lib libcmtd.lib;"

@@ -12,7 +12,7 @@
 #include "in_buttons.h"
 #include "weapon_combat_usedwithshieldbase.h"
 
-#if !defined( CLIENT_DLL )
+#if !defined(CLIENT_DLL)
 #include "tf_shield.h"
 
 extern ConVar tf_knockdowntime;
@@ -33,15 +33,22 @@ extern ConVar tf_knockdowntime;
 #include "tier0/memdbgon.h"
 
 // Damage CVars
-ConVar	weapon_combat_shield_rechargetime( "weapon_combat_shield_rechargetime","4", FCVAR_REPLICATED, "Time after taking damage before the shields starts recharging" );
-ConVar	weapon_combat_shield_rechargeamount( "weapon_combat_shield_rechargeamount","0.03", FCVAR_REPLICATED, "Amount shield recharges every 10th of a second (must be an int)" );
-ConVar	weapon_combat_shield_factor( "weapon_combat_shield_factor","0.4", FCVAR_REPLICATED, "Factor applied to damage the shield blocks" );
+ConVar weapon_combat_shield_rechargetime("weapon_combat_shield_rechargetime", "4", FCVAR_REPLICATED,
+										 "Time after taking damage before the shields starts recharging");
+ConVar weapon_combat_shield_rechargeamount("weapon_combat_shield_rechargeamount", "0.03", FCVAR_REPLICATED,
+										   "Amount shield recharges every 10th of a second (must be an int)");
+ConVar weapon_combat_shield_factor("weapon_combat_shield_factor", "0.4", FCVAR_REPLICATED,
+								   "Factor applied to damage the shield blocks");
 
-ConVar  weapon_combat_shield_teslaspeed( "weapon_combat_shield_teslaspeed", "0.025f", FCVAR_REPLICATED, "Speed of the tesla effect on the view model." );
-ConVar	weapon_combat_shield_teslaskitter( "weapon_combat_shield_teslaskitter", "0.3f", FCVAR_REPLICATED, "Speed of the tesla skitter effect (percentage)." );
-ConVar	weapon_combat_shield_teslaeffect( "weapon_combat_shield_teslaeffect", "4", FCVAR_REPLICATED, "Experimenting with effects." );
+ConVar weapon_combat_shield_teslaspeed("weapon_combat_shield_teslaspeed", "0.025f", FCVAR_REPLICATED,
+									   "Speed of the tesla effect on the view model.");
+ConVar weapon_combat_shield_teslaskitter("weapon_combat_shield_teslaskitter", "0.3f", FCVAR_REPLICATED,
+										 "Speed of the tesla skitter effect (percentage).");
+ConVar weapon_combat_shield_teslaeffect("weapon_combat_shield_teslaeffect", "4", FCVAR_REPLICATED,
+										"Experimenting with effects.");
 
-ConVar	weapon_combat_shield_health( "weapon_combat_shield_health", "100", FCVAR_REPLICATED, "Combat shield's maximum health." );
+ConVar weapon_combat_shield_health("weapon_combat_shield_health", "100", FCVAR_REPLICATED,
+								   "Combat shield's maximum health.");
 
 // HACK:  If we don't set this then we get a pop when transitioning into / out of idle animation
 //  for commando_test model because the origin is wrong
@@ -49,14 +56,14 @@ ConVar	weapon_combat_shield_health( "weapon_combat_shield_health", "100", FCVAR_
 #define SHIELD_FADOUT_TIME 0.2f
 
 //-----------------------------------------------------------------------------
-// Constructor, destructor: 
+// Constructor, destructor:
 //-----------------------------------------------------------------------------
 CWeaponCombatShield::CWeaponCombatShield()
 {
 	m_bAllowPostFrame = true;
 	m_bHasShieldParry = false;
 	m_flShieldHealth = 1.0;
-#if defined( CLIENT_DLL )
+#if defined(CLIENT_DLL)
 	m_flFlashTimeEnd = 0;
 
 	m_flTeslaSpeed = weapon_combat_shield_teslaspeed.GetFloat();
@@ -71,31 +78,31 @@ CWeaponCombatShield::CWeaponCombatShield()
 	m_pShieldBeam2 = NULL;
 	m_pShieldBeam3 = NULL;
 #endif
-	SetPredictionEligible( true );
+	SetPredictionEligible(true);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CWeaponCombatShield::Precache( void )
+void CWeaponCombatShield::Precache(void)
 {
 	BaseClass::Precache();
 
-	PrecacheModel( "sprites/blueflare1.vmt" );
-	PrecacheModel( "sprites/physbeam.vmt" );
+	PrecacheModel("sprites/blueflare1.vmt");
+	PrecacheModel("sprites/physbeam.vmt");
 
-	PrecacheScriptSound( "WeaponCombatShield.TakeBash" );
+	PrecacheScriptSound("WeaponCombatShield.TakeBash");
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CWeaponCombatShield::Deploy( void )
+bool CWeaponCombatShield::Deploy(void)
 {
-	if ( BaseClass::Deploy() )
+	if(BaseClass::Deploy())
 	{
 		GainedNewTechnology(NULL);
-		SetShieldState( SS_DOWN );
+		SetShieldState(SS_DOWN);
 		return true;
 	}
 	return false;
@@ -104,58 +111,57 @@ bool CWeaponCombatShield::Deploy( void )
 //-----------------------------------------------------------------------------
 // Purpose: Get the activity the other weapon in our twohanded container should play for this activity
 //-----------------------------------------------------------------------------
-int	CWeaponCombatShield::GetOtherWeaponsActivity( int iActivity )
+int CWeaponCombatShield::GetOtherWeaponsActivity(int iActivity)
 {
-	switch ( iActivity )
+	switch(iActivity)
 	{
-	case ACT_VM_HAULBACK:
-		return ACT_VM_DRAW;
+		case ACT_VM_HAULBACK:
+			return ACT_VM_DRAW;
 
-	case ACT_VM_SECONDARYATTACK:
-		return ACT_VM_HOLSTER;
+		case ACT_VM_SECONDARYATTACK:
+			return ACT_VM_HOLSTER;
 
-	default:
-		break;
+		default:
+			break;
 	};
 
 	return -1;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Get the activity the other weapon in our twohanded container should 
+// Purpose: Get the activity the other weapon in our twohanded container should
 //			play instead of the one it's attempting to play.
 //-----------------------------------------------------------------------------
-int	CWeaponCombatShield::ReplaceOtherWeaponsActivity( int iActivity )
+int CWeaponCombatShield::ReplaceOtherWeaponsActivity(int iActivity)
 {
-	switch ( iActivity )
+	switch(iActivity)
 	{
-	case ACT_VM_IDLE:
-		// If I'm active, don't let it idle
-		if ( GetShieldState() != SS_DOWN )
-			return -1;
+		case ACT_VM_IDLE:
+			// If I'm active, don't let it idle
+			if(GetShieldState() != SS_DOWN)
+				return -1;
 
-	default:
-		break;
+		default:
+			break;
 	};
 
 	return BaseClass::ReplaceOtherWeaponsActivity(iActivity);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CWeaponCombatShield::Holster( CBaseCombatWeapon *pSwitchingTo )
+bool CWeaponCombatShield::Holster(CBaseCombatWeapon *pSwitchingTo)
 {
-	CBaseTFPlayer *player = ToBaseTFPlayer( GetOwner() );
-	if ( player )
+	CBaseTFPlayer *player = ToBaseTFPlayer(GetOwner());
+	if(player)
 	{
-		player->SetBlocking( false );
-		player->SetParrying( false );
+		player->SetBlocking(false);
+		player->SetParrying(false);
 
-		if ( m_iShieldState != SS_DOWN && 
-			 m_iShieldState != SS_UNAVAILABLE )
+		if(m_iShieldState != SS_DOWN && m_iShieldState != SS_UNAVAILABLE)
 		{
-			SetShieldState( SS_LOWERING );
+			SetShieldState(SS_LOWERING);
 		}
 	}
 
@@ -165,25 +171,23 @@ bool CWeaponCombatShield::Holster( CBaseCombatWeapon *pSwitchingTo )
 //-----------------------------------------------------------------------------
 // Purpose: I've been bashed by another player's shield
 //-----------------------------------------------------------------------------
-bool CWeaponCombatShield::TakeShieldBash( CBaseTFPlayer *pBasher )
+bool CWeaponCombatShield::TakeShieldBash(CBaseTFPlayer *pBasher)
 {
-	CBaseTFPlayer *pOwner = ToBaseTFPlayer( GetOwner() );
-	if ( !pOwner )
+	CBaseTFPlayer *pOwner = ToBaseTFPlayer(GetOwner());
+	if(!pOwner)
 		return false;
 
 	// If I'm blocking, drop my block and prevent me from doing anything
-	if ( GetShieldState() == SS_UP ||
-		 GetShieldState() == SS_RAISING ||
-		 GetShieldState() == SS_LOWERING )
+	if(GetShieldState() == SS_UP || GetShieldState() == SS_RAISING || GetShieldState() == SS_LOWERING)
 	{
 		// Make the shield unavailable
-		SetShieldState( SS_UNAVAILABLE );
-		SendWeaponAnim( ACT_VM_HITCENTER );
+		SetShieldState(SS_UNAVAILABLE);
+		SendWeaponAnim(ACT_VM_HITCENTER);
 
 		m_flShieldUnavailableEndTime = gpGlobals->curtime + 2.0;
 
-		// Play a sound	
-		EmitSound( "WeaponCombatShield.TakeBash" );		
+		// Play a sound
+		EmitSound("WeaponCombatShield.TakeBash");
 		return true;
 	}
 
@@ -191,71 +195,71 @@ bool CWeaponCombatShield::TakeShieldBash( CBaseTFPlayer *pBasher )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CWeaponCombatShield::SetShieldState( int iShieldState )
+void CWeaponCombatShield::SetShieldState(int iShieldState)
 {
-	CBaseTFPlayer *pOwner = ToBaseTFPlayer( GetOwner() );
-	if ( !pOwner )
+	CBaseTFPlayer *pOwner = ToBaseTFPlayer(GetOwner());
+	if(!pOwner)
 		return;
 
-	switch (iShieldState )
+	switch(iShieldState)
 	{
-	default:
-	case SS_DOWN:
-		pOwner->SetBlocking( false );
-		m_flShieldUpStartTime = 0;
-		m_flShieldParryEndTime = 0;
-		m_flShieldUnavailableEndTime = 0;
-		m_flShieldRaisedTime = 0.0f;
-		m_flShieldLoweredTime = 0.0f;
-		break;
+		default:
+		case SS_DOWN:
+			pOwner->SetBlocking(false);
+			m_flShieldUpStartTime = 0;
+			m_flShieldParryEndTime = 0;
+			m_flShieldUnavailableEndTime = 0;
+			m_flShieldRaisedTime = 0.0f;
+			m_flShieldLoweredTime = 0.0f;
+			break;
 
-	case SS_UP:
-		SendWeaponAnim( ACT_VM_FIDGET );
-		pOwner->SetBlocking( true );
-		m_flShieldDownStartTime = 0.0f;
-		m_flShieldParryEndTime = 0;
-		m_flShieldUnavailableEndTime = 0;
-		m_flShieldRaisedTime = 0.0f;
-		m_flShieldLoweredTime = 0.0f;
-		break;
+		case SS_UP:
+			SendWeaponAnim(ACT_VM_FIDGET);
+			pOwner->SetBlocking(true);
+			m_flShieldDownStartTime = 0.0f;
+			m_flShieldParryEndTime = 0;
+			m_flShieldUnavailableEndTime = 0;
+			m_flShieldRaisedTime = 0.0f;
+			m_flShieldLoweredTime = 0.0f;
+			break;
 
-	case SS_PARRYING:
-		pOwner->SetBlocking( false );
-		pOwner->SetParrying( true );
-		m_flShieldParryEndTime = gpGlobals->curtime + PARRY_OPPORTUNITY_LENGTH;
-		m_flShieldParrySwingEndTime = gpGlobals->curtime + 1.0f;	// a hack to make it look ok
-		m_flShieldUnavailableEndTime = gpGlobals->curtime + SequenceDuration();
-		m_flNextPrimaryAttack = m_flShieldUnavailableEndTime;
-		m_flShieldRaisedTime = 0.0f;
-		m_flShieldLoweredTime = 0.0f;
-		break;
+		case SS_PARRYING:
+			pOwner->SetBlocking(false);
+			pOwner->SetParrying(true);
+			m_flShieldParryEndTime = gpGlobals->curtime + PARRY_OPPORTUNITY_LENGTH;
+			m_flShieldParrySwingEndTime = gpGlobals->curtime + 1.0f; // a hack to make it look ok
+			m_flShieldUnavailableEndTime = gpGlobals->curtime + SequenceDuration();
+			m_flNextPrimaryAttack = m_flShieldUnavailableEndTime;
+			m_flShieldRaisedTime = 0.0f;
+			m_flShieldLoweredTime = 0.0f;
+			break;
 
-	case SS_PARRYING_FINISH_SWING:
-		pOwner->SetBlocking( false );
-		pOwner->SetParrying( false );
-		break;
+		case SS_PARRYING_FINISH_SWING:
+			pOwner->SetBlocking(false);
+			pOwner->SetParrying(false);
+			break;
 
-	case SS_UNAVAILABLE:
-		SendWeaponAnim( ACT_VM_HAULBACK );
-		pOwner->SetBlocking( false );
-		pOwner->SetParrying( false );
-		break;
+		case SS_UNAVAILABLE:
+			SendWeaponAnim(ACT_VM_HAULBACK);
+			pOwner->SetBlocking(false);
+			pOwner->SetParrying(false);
+			break;
 
-	case SS_RAISING:
+		case SS_RAISING:
 		{
-			pOwner->SetBlocking( false );
-			pOwner->SetParrying( false );
+			pOwner->SetBlocking(false);
+			pOwner->SetParrying(false);
 			m_flShieldRaisedTime = gpGlobals->curtime + SequenceDuration();
 			m_flShieldUpStartTime = gpGlobals->curtime;
 		}
 		break;
-	case SS_LOWERING:
+		case SS_LOWERING:
 		{
-			SendWeaponAnim( ACT_VM_HAULBACK );
-			pOwner->SetBlocking( false );
-			pOwner->SetParrying( false );
+			SendWeaponAnim(ACT_VM_HAULBACK);
+			pOwner->SetBlocking(false);
+			pOwner->SetParrying(false);
 			m_flShieldLoweredTime = gpGlobals->curtime + SequenceDuration();
 			m_flShieldDownStartTime = gpGlobals->curtime;
 		}
@@ -268,60 +272,60 @@ void CWeaponCombatShield::SetShieldState( int iShieldState )
 //-----------------------------------------------------------------------------
 // Purpose: Check to see if the shield state should change
 //-----------------------------------------------------------------------------
-void CWeaponCombatShield::UpdateShieldState( void )
+void CWeaponCombatShield::UpdateShieldState(void)
 {
-	CBaseTFPlayer *pOwner = ToBaseTFPlayer( GetOwner() );
-	if ( !pOwner )
+	CBaseTFPlayer *pOwner = ToBaseTFPlayer(GetOwner());
+	if(!pOwner)
 		return;
 
 	// Check to see if I should move out of the current state
-	switch ( m_iShieldState )
+	switch(m_iShieldState)
 	{
-	default:
-	case SS_DOWN:
-	case SS_UP:
-		break;
+		default:
+		case SS_DOWN:
+		case SS_UP:
+			break;
 
-	case SS_RAISING:
-			if ( gpGlobals->curtime > m_flShieldRaisedTime )
+		case SS_RAISING:
+			if(gpGlobals->curtime > m_flShieldRaisedTime)
 			{
-				SetShieldState( SS_UP );
+				SetShieldState(SS_UP);
 			}
 			break;
-	case SS_LOWERING:
-		if ( gpGlobals->curtime > m_flShieldLoweredTime )
-		{
-			SetShieldState( SS_DOWN );
-		}
-		break;
+		case SS_LOWERING:
+			if(gpGlobals->curtime > m_flShieldLoweredTime)
+			{
+				SetShieldState(SS_DOWN);
+			}
+			break;
 
-	case SS_PARRYING:
-		if ( gpGlobals->curtime > m_flShieldParryEndTime )
-		{
-			SetShieldState( SS_PARRYING_FINISH_SWING );
-		}
-		break;
+		case SS_PARRYING:
+			if(gpGlobals->curtime > m_flShieldParryEndTime)
+			{
+				SetShieldState(SS_PARRYING_FINISH_SWING);
+			}
+			break;
 
-	case SS_PARRYING_FINISH_SWING:
-		if ( gpGlobals->curtime > m_flShieldParrySwingEndTime )
-		{
-			SetShieldState( SS_UNAVAILABLE );
-		}
-		break;
+		case SS_PARRYING_FINISH_SWING:
+			if(gpGlobals->curtime > m_flShieldParrySwingEndTime)
+			{
+				SetShieldState(SS_UNAVAILABLE);
+			}
+			break;
 
-	case SS_UNAVAILABLE:
-		if ( gpGlobals->curtime > m_flShieldUnavailableEndTime )
-		{
-			SetShieldState( SS_DOWN );
-		}
-		break;
+		case SS_UNAVAILABLE:
+			if(gpGlobals->curtime > m_flShieldUnavailableEndTime)
+			{
+				SetShieldState(SS_DOWN);
+			}
+			break;
 	};
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int CWeaponCombatShield::GetShieldState( void )
+int CWeaponCombatShield::GetShieldState(void)
 {
 	return m_iShieldState;
 }
@@ -329,17 +333,17 @@ int CWeaponCombatShield::GetShieldState( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CWeaponCombatShield::SetShieldUsable( bool bUsable )
+void CWeaponCombatShield::SetShieldUsable(bool bUsable)
 {
 	// Shutting down!
-	if ( !bUsable )
+	if(!bUsable)
 	{
-		if ( m_iShieldState == SS_UP || m_iShieldState == SS_RAISING )
+		if(m_iShieldState == SS_UP || m_iShieldState == SS_RAISING)
 		{
 			// We've got our shield up, so drop it (play sound & animation).
-			SendWeaponAnim( ACT_VM_HAULBACK );
-			WeaponSound( SPECIAL2 );			
-			SetShieldState( SS_LOWERING );			
+			SendWeaponAnim(ACT_VM_HAULBACK);
+			WeaponSound(SPECIAL2);
+			SetShieldState(SS_LOWERING);
 		}
 	}
 
@@ -349,26 +353,26 @@ void CWeaponCombatShield::SetShieldUsable( bool bUsable )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CWeaponCombatShield::ShieldUsable( void )
+bool CWeaponCombatShield::ShieldUsable(void)
 {
 	return m_bUsable;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : allow - 
+// Purpose:
+// Input  : allow -
 //-----------------------------------------------------------------------------
-void CWeaponCombatShield::SetAllowPostFrame( bool allow )
+void CWeaponCombatShield::SetAllowPostFrame(bool allow)
 {
 	m_bAllowPostFrame = allow;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CWeaponCombatShield::ItemPostFrame( void )
+void CWeaponCombatShield::ItemPostFrame(void)
 {
-	if ( m_bAllowPostFrame )
+	if(m_bAllowPostFrame)
 	{
 		ShieldPostFrame();
 	}
@@ -377,9 +381,9 @@ void CWeaponCombatShield::ItemPostFrame( void )
 //-----------------------------------------------------------------------------
 // Purpose: Allow the shield to interrupt reloads, etc.
 //-----------------------------------------------------------------------------
-void CWeaponCombatShield::ItemBusyFrame( void )
+void CWeaponCombatShield::ItemBusyFrame(void)
 {
-	if ( m_bAllowPostFrame )
+	if(m_bAllowPostFrame)
 	{
 		ShieldPostFrame();
 	}
@@ -388,15 +392,15 @@ void CWeaponCombatShield::ItemBusyFrame( void )
 //-----------------------------------------------------------------------------
 // Purpose: The player holding this weapon has just gained new technology.
 //-----------------------------------------------------------------------------
-void CWeaponCombatShield::GainedNewTechnology( CBaseTechnology *pTechnology )
+void CWeaponCombatShield::GainedNewTechnology(CBaseTechnology *pTechnology)
 {
-	BaseClass::GainedNewTechnology( pTechnology );
+	BaseClass::GainedNewTechnology(pTechnology);
 
-	CBaseTFPlayer *pPlayer = ToBaseTFPlayer( GetOwner() );
-	if ( pPlayer )
+	CBaseTFPlayer *pPlayer = ToBaseTFPlayer(GetOwner());
+	if(pPlayer)
 	{
 		// Has a parry?
-		if ( pPlayer->HasNamedTechnology( "com_comboshield_parry" ) )
+		if(pPlayer->HasNamedTechnology("com_comboshield_parry"))
 		{
 			m_bHasShieldParry = true;
 		}
@@ -407,14 +411,13 @@ void CWeaponCombatShield::GainedNewTechnology( CBaseTechnology *pTechnology )
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Handle the shield input
 //-----------------------------------------------------------------------------
-void CWeaponCombatShield::ShieldPostFrame( void )
+void CWeaponCombatShield::ShieldPostFrame(void)
 {
-	CBaseTFPlayer *pOwner = ToBaseTFPlayer( GetOwner() );
-	if (!pOwner)
+	CBaseTFPlayer *pOwner = ToBaseTFPlayer(GetOwner());
+	if(!pOwner)
 		return;
 
 	UpdateShieldState();
@@ -424,46 +427,46 @@ void CWeaponCombatShield::ShieldPostFrame( void )
 	bool isEMPed = IsOwnerEMPed();
 
 	// If the shield's unavailable, just abort
-	if ( GetShieldState() == SS_UNAVAILABLE )
+	if(GetShieldState() == SS_UNAVAILABLE)
 		return;
 
-	if ( m_flNextPrimaryAttack > gpGlobals->curtime )
+	if(m_flNextPrimaryAttack > gpGlobals->curtime)
 		return;
 
-	bool shieldRaised = ( GetShieldState() == SS_UP );
-	bool shieldRaising = ( GetShieldState() == SS_RAISING );
+	bool shieldRaised = (GetShieldState() == SS_UP);
+	bool shieldRaising = (GetShieldState() == SS_RAISING);
 
 	//	GetShieldState() == SS_LOWERING );
 
 	// If my shield's out of power, I can't do anything with it
-	if ( !GetShieldHealth() )
+	if(!GetShieldHealth())
 		return;
 
 	// Was the shield button just pressed?
-	if ( GetShieldState() == SS_DOWN && !isEMPed && pOwner->m_nButtons & IN_ATTACK2 )
+	if(GetShieldState() == SS_DOWN && !isEMPed && pOwner->m_nButtons & IN_ATTACK2)
 	{
 		// Play sound & anim
-		WeaponSound( SPECIAL1 );
-		SendWeaponAnim( ACT_VM_SECONDARYATTACK );
+		WeaponSound(SPECIAL1);
+		SendWeaponAnim(ACT_VM_SECONDARYATTACK);
 
-		SetShieldState( SS_RAISING );
-		
+		SetShieldState(SS_RAISING);
+
 		// Abort any reloads in progess
 		pOwner->AbortReload();
 	}
-	else if ( ( shieldRaised || shieldRaising ) && !FBitSet( pOwner->m_nButtons, IN_ATTACK2 ) )
+	else if((shieldRaised || shieldRaising) && !FBitSet(pOwner->m_nButtons, IN_ATTACK2))
 	{
 		// Shield button was just released, check to see if we were parrying
-		bool shouldParry = (gpGlobals->curtime < (m_flShieldUpStartTime + PARRY_DETECTION_TIME ));
+		bool shouldParry = (gpGlobals->curtime < (m_flShieldUpStartTime + PARRY_DETECTION_TIME));
 
-		if ( m_bHasShieldParry && shouldParry )
+		if(m_bHasShieldParry && shouldParry)
 		{
 			// Parry!
 			// Play sound & anim
-			WeaponSound( SPECIAL2 );
-			SendWeaponAnim( ACT_VM_SWINGHIT );
+			WeaponSound(SPECIAL2);
+			SendWeaponAnim(ACT_VM_SWINGHIT);
 
-			SetShieldState( SS_PARRYING );
+			SetShieldState(SS_PARRYING);
 
 			// Bash enemies in front of me
 			ShieldBash();
@@ -472,28 +475,28 @@ void CWeaponCombatShield::ShieldPostFrame( void )
 		{
 			// Player's just lowered his shield
 			// Play sound & anim
-			WeaponSound( SPECIAL2 );
-			SendWeaponAnim( ACT_VM_HAULBACK );
+			WeaponSound(SPECIAL2);
+			SendWeaponAnim(ACT_VM_HAULBACK);
 
-			SetShieldState( SS_LOWERING );
+			SetShieldState(SS_LOWERING);
 			m_flNextPrimaryAttack = gpGlobals->curtime + SequenceDuration();
 		}
 	}
-	else if ( GetShieldState() == SS_UP && ( pOwner->m_nButtons & IN_ATTACK2 ) && ( isEMPed ) )
+	else if(GetShieldState() == SS_UP && (pOwner->m_nButtons & IN_ATTACK2) && (isEMPed))
 	{
 		// We've got our shield up, and we were just EMPed, so drop it
 		// Play sound & anim
-		SendWeaponAnim( ACT_VM_HAULBACK );
-		WeaponSound( SPECIAL2 );
+		SendWeaponAnim(ACT_VM_HAULBACK);
+		WeaponSound(SPECIAL2);
 
-		SetShieldState( SS_LOWERING );
+		SetShieldState(SS_LOWERING);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Bash enemies in front of me with my shield
 //-----------------------------------------------------------------------------
-void CWeaponCombatShield::ShieldBash( void )
+void CWeaponCombatShield::ShieldBash(void)
 {
 #if 0
 	// ROBIN: Disabled shield bash
@@ -506,7 +509,7 @@ void CWeaponCombatShield::ShieldBash( void )
 
 	// Get the target point and location
 	Vector vecAiming;
-	Vector vecSrc = pOwner->Weapon_ShootPosition( pOwner->GetOrigin() );	
+	Vector vecSrc = pOwner->Weapon_ShootPosition( pOwner->GetOrigin() );
 	pOwner->EyeVectors( &vecAiming );
 
 	// Find a player in range of this player, and make sure they're healable
@@ -534,136 +537,136 @@ void CWeaponCombatShield::ShieldBash( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Attempt to block the incoming attack, and return the damage it 
+// Purpose: Attempt to block the incoming attack, and return the damage it
 //			should do after the block, if any.
 //-----------------------------------------------------------------------------
-float CWeaponCombatShield::AttemptToBlock( float flDamage )
+float CWeaponCombatShield::AttemptToBlock(float flDamage)
 {
-	CBaseTFPlayer *pPlayer = ToBaseTFPlayer( GetOwner() );
-	if ( !pPlayer || !weapon_combat_shield_factor.GetFloat() )
+	CBaseTFPlayer *pPlayer = ToBaseTFPlayer(GetOwner());
+	if(!pPlayer || !weapon_combat_shield_factor.GetFloat())
 		return 0;
 
 	// Block as much of the damage as we can
 	float flPowerNeeded = flDamage * weapon_combat_shield_factor.GetFloat();
-	flPowerNeeded = RemapVal( flPowerNeeded, 0, weapon_combat_shield_health.GetFloat(), 0, 1 );
-	float flPowerUsed = MIN( flPowerNeeded, GetShieldHealth() );
+	flPowerNeeded = RemapVal(flPowerNeeded, 0, weapon_combat_shield_health.GetFloat(), 0, 1);
+	float flPowerUsed = MIN(flPowerNeeded, GetShieldHealth());
 
 #ifndef CLIENT_DLL
-	RemoveShieldHealth( flPowerUsed );
+	RemoveShieldHealth(flPowerUsed);
 
 	// Start recharging shortly after taking damage
-	SetThink( ShieldRechargeThink );
-	SetNextThink( gpGlobals->curtime + weapon_combat_shield_rechargetime.GetFloat() );
+	SetThink(ShieldRechargeThink);
+	SetNextThink(gpGlobals->curtime + weapon_combat_shield_rechargetime.GetFloat());
 #endif
 
 	// Failed to block it all?
-	if ( flPowerUsed < flPowerNeeded )
+	if(flPowerUsed < flPowerNeeded)
 	{
 #ifndef CLIENT_DLL
 		// Force the shield to drop if it's up
-		if ( GetShieldState() == SS_UP )
+		if(GetShieldState() == SS_UP)
 		{
 			// Play sound & anim
-			SendWeaponAnim( ACT_VM_HAULBACK );
-			WeaponSound( SPECIAL2 );
-			SetShieldState( SS_LOWERING );
+			SendWeaponAnim(ACT_VM_HAULBACK);
+			WeaponSound(SPECIAL2);
+			SetShieldState(SS_LOWERING);
 		}
 #endif
 
-		return ( flDamage - (flPowerUsed * (1.0 / weapon_combat_shield_factor.GetFloat())) );
+		return (flDamage - (flPowerUsed * (1.0 / weapon_combat_shield_factor.GetFloat())));
 	}
 
 	return 0;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-float CWeaponCombatShield::GetShieldHealth( void )
+float CWeaponCombatShield::GetShieldHealth(void)
 {
 	return m_flShieldHealth;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CWeaponCombatShield::AddShieldHealth( float flHealth )
+void CWeaponCombatShield::AddShieldHealth(float flHealth)
 {
-	m_flShieldHealth = MIN( 1.0, m_flShieldHealth + flHealth );
+	m_flShieldHealth = MIN(1.0, m_flShieldHealth + flHealth);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CWeaponCombatShield::RemoveShieldHealth( float flHealth )
+void CWeaponCombatShield::RemoveShieldHealth(float flHealth)
 {
-	m_flShieldHealth = MAX( 0.0, m_flShieldHealth - flHealth );
+	m_flShieldHealth = MAX(0.0, m_flShieldHealth - flHealth);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Recharge the shield
 //-----------------------------------------------------------------------------
-void CWeaponCombatShield::ShieldRechargeThink( void )
+void CWeaponCombatShield::ShieldRechargeThink(void)
 {
 // FIXME:
-//xxx
-#if !defined( CLIENT_DLL )
-	if ( GetShieldHealth() >= 1.0 )
+// xxx
+#if !defined(CLIENT_DLL)
+	if(GetShieldHealth() >= 1.0)
 	{
-		SetThink( NULL );
+		SetThink(NULL);
 		return;
 	}
 
-	AddShieldHealth( weapon_combat_shield_rechargeamount.GetFloat() );
-	SetNextThink( gpGlobals->curtime + 0.1f );
+	AddShieldHealth(weapon_combat_shield_rechargeamount.GetFloat());
+	SetNextThink(gpGlobals->curtime + 0.1f);
 #endif
 }
-
 
 //====================================================================================
 // WEAPON CLIENT HANDLING
 //====================================================================================
-int CWeaponCombatShield::UpdateClientData( CBasePlayer *pPlayer )
+int CWeaponCombatShield::UpdateClientData(CBasePlayer *pPlayer)
 {
-	if ( !pPlayer )
+	if(!pPlayer)
 	{
-		return BaseClass::UpdateClientData( pPlayer );
+		return BaseClass::UpdateClientData(pPlayer);
 	}
 
-	CWeaponTwoHandedContainer *pContainer = ( CWeaponTwoHandedContainer * )pPlayer->Weapon_OwnsThisType( "weapon_twohandedcontainer" );
-	if ( !pContainer || pContainer != pPlayer->GetActiveWeapon() )
-		return BaseClass::UpdateClientData( pPlayer );
+	CWeaponTwoHandedContainer *pContainer =
+		(CWeaponTwoHandedContainer *)pPlayer->Weapon_OwnsThisType("weapon_twohandedcontainer");
+	if(!pContainer || pContainer != pPlayer->GetActiveWeapon())
+		return BaseClass::UpdateClientData(pPlayer);
 
 	// Make sure this weapon is one of the container's active weapons
-	if ( pContainer->GetLeftWeapon() != this && pContainer->GetRightWeapon() != this )
-		return BaseClass::UpdateClientData( pPlayer );
+	if(pContainer->GetLeftWeapon() != this && pContainer->GetRightWeapon() != this)
+		return BaseClass::UpdateClientData(pPlayer);
 
-	int retval = pContainer->UpdateClientData( pPlayer );
-	m_iState =  pContainer->m_iState;
+	int retval = pContainer->UpdateClientData(pPlayer);
+	m_iState = pContainer->m_iState;
 	return retval;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CWeaponCombatShield::VisibleInWeaponSelection( void )
+bool CWeaponCombatShield::VisibleInWeaponSelection(void)
 {
 	return false;
 }
 
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
-bool CWeaponCombatShield::IsUp( void )
+bool CWeaponCombatShield::IsUp(void)
 {
-	return ( GetShieldState() == SS_UP );
+	return (GetShieldState() == SS_UP);
 }
 
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
-float CWeaponCombatShield::GetRaisingTime( void )
+float CWeaponCombatShield::GetRaisingTime(void)
 {
-	if ((GetShieldState() != SS_UP ) && (GetShieldState() != SS_RAISING))
+	if((GetShieldState() != SS_UP) && (GetShieldState() != SS_RAISING))
 		return 0.0f;
 
 	return gpGlobals->curtime - m_flShieldUpStartTime;
@@ -671,19 +674,19 @@ float CWeaponCombatShield::GetRaisingTime( void )
 
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
-float CWeaponCombatShield::GetLoweringTime( void )
+float CWeaponCombatShield::GetLoweringTime(void)
 {
-	if ((GetShieldState() != SS_DOWN ) && (GetShieldState() != SS_LOWERING))
+	if((GetShieldState() != SS_DOWN) && (GetShieldState() != SS_LOWERING))
 		return 0.0f;
 
 	return gpGlobals->curtime - m_flShieldDownStartTime;
 }
 
-#if defined( CLIENT_DLL )
+#if defined(CLIENT_DLL)
 //-----------------------------------------------------------------------------
 // Purpose: Draw the ammo counts
 //-----------------------------------------------------------------------------
-void CWeaponCombatShield::DrawAmmo( void )
+void CWeaponCombatShield::DrawAmmo(void)
 {
 	// ROBIN: Removed this now that the shield colors itself to show health level
 	return;
@@ -696,51 +699,53 @@ void CWeaponCombatShield::DrawAmmo( void )
 	float flInverseFactor = 1.0 - flPowerLevel;
 
 	// Set our color
-	gHUD.m_clrNormal.GetColor( r, g, b, a );
-	
+	gHUD.m_clrNormal.GetColor(r, g, b, a);
+
 	int iWidth = XRES(12);
 	int iHeight = YRES(64);
 
 	x = XRES(548);
-	y = ( ScreenHeight() - YRES(2) - iHeight );
+	y = (ScreenHeight() - YRES(2) - iHeight);
 
 	// Flashing the power level?
 	float flFlash = 0;
-	if ( gpGlobals->curtime < m_flFlashTimeEnd && !GetPrimaryAmmo() )
+	if(gpGlobals->curtime < m_flFlashTimeEnd && !GetPrimaryAmmo())
 	{
-		flFlash = fmod( gpGlobals->curtime, 0.25 );
+		flFlash = fmod(gpGlobals->curtime, 0.25);
 		flFlash *= 2 * M_PI;
-		flFlash = cos( flFlash );
+		flFlash = cos(flFlash);
 	}
 
 	// draw the exhausted portion of the bar.
-	vgui::surface()->DrawSetColor( Color( r, g * flPowerLevel, b * flPowerLevel, 100 + (flFlash * 100) ) );
-	vgui::surface()->DrawFilledRect( x, y, x + iWidth, y + iHeight * flInverseFactor );
+	vgui::surface()->DrawSetColor(Color(r, g * flPowerLevel, b * flPowerLevel, 100 + (flFlash * 100)));
+	vgui::surface()->DrawFilledRect(x, y, x + iWidth, y + iHeight * flInverseFactor);
 
 	// draw the powerered portion of the bar
-	vgui::surface()->DrawSetColor( Color( r, g * flPowerLevel, b * flPowerLevel, 190 ) );
-	vgui::surface()->DrawFilledRect( x, y + iHeight * flInverseFactor, x + iWidth, y + iHeight * flInverseFactor + iHeight * flPowerLevel);
+	vgui::surface()->DrawSetColor(Color(r, g * flPowerLevel, b * flPowerLevel, 190));
+	vgui::surface()->DrawFilledRect(x, y + iHeight * flInverseFactor, x + iWidth,
+									y + iHeight * flInverseFactor + iHeight * flPowerLevel);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CWeaponCombatShield::GetViewmodelBoneControllers( C_BaseViewModel *pViewModel, float controllers[MAXSTUDIOBONECTRLS])
+void CWeaponCombatShield::GetViewmodelBoneControllers(C_BaseViewModel *pViewModel,
+													  float controllers[MAXSTUDIOBONECTRLS])
 {
 	// Dial shows the shield power level
 	float flPowerLevel = 1.0;
-	if ( GetShieldState() == SS_UP )
+	if(GetShieldState() == SS_UP)
 	{
 		flPowerLevel = GetShieldHealth();
 	}
-	else if ( GetShieldState() == SS_RAISING )
+	else if(GetShieldState() == SS_RAISING)
 	{
 		// Bring the power up with the animation
 		float flTotal = m_flShieldRaisedTime - m_flShieldUpStartTime;
 		float flCurrent = (gpGlobals->curtime - m_flShieldUpStartTime);
 		flPowerLevel = flCurrent / flTotal;
 	}
-	else if ( GetShieldState() == SS_LOWERING )
+	else if(GetShieldState() == SS_LOWERING)
 	{
 		// Bring the power down with the animation
 		float flTotal = (m_flShieldLoweredTime - m_flShieldDownStartTime);
@@ -753,24 +758,24 @@ void CWeaponCombatShield::GetViewmodelBoneControllers( C_BaseViewModel *pViewMod
 	flPowerLevel *= 0.55;
 
 	// Add some shake
-	flPowerLevel += RandomFloat( -0.02, 0.02 );
+	flPowerLevel += RandomFloat(-0.02, 0.02);
 	controllers[0] = flPowerLevel;
 }
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CWeaponCombatShield::ViewModelDrawn( C_BaseViewModel *pViewModel )
+void CWeaponCombatShield::ViewModelDrawn(C_BaseViewModel *pViewModel)
 {
-	if ( m_iShieldState == SS_DOWN )
+	if(m_iShieldState == SS_DOWN)
 		return;
 
-	DrawBeams( pViewModel );
+	DrawBeams(pViewModel);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CWeaponCombatShield::InitShieldBeam( void )
+void CWeaponCombatShield::InitShieldBeam(void)
 {
 	BeamInfo_t beamInfo;
 
@@ -792,8 +797,8 @@ void CWeaponCombatShield::InitShieldBeam( void )
 	beamInfo.m_flBlue = 128.0f;
 	beamInfo.m_nSegments = 15;
 	beamInfo.m_bRenderable = false;
-	
-	m_pShieldBeam = beams->CreateBeamPoints( beamInfo );
+
+	m_pShieldBeam = beams->CreateBeamPoints(beamInfo);
 
 	beamInfo.m_vecStart.Init();
 	beamInfo.m_vecEnd.Init();
@@ -814,7 +819,7 @@ void CWeaponCombatShield::InitShieldBeam( void )
 	beamInfo.m_nSegments = 20;
 	beamInfo.m_bRenderable = false;
 
-	m_pShieldBeam2 = beams->CreateBeamPoints( beamInfo );
+	m_pShieldBeam2 = beams->CreateBeamPoints(beamInfo);
 
 	beamInfo.m_vecStart.Init();
 	beamInfo.m_vecEnd.Init();
@@ -835,15 +840,15 @@ void CWeaponCombatShield::InitShieldBeam( void )
 	beamInfo.m_nSegments = 18;
 	beamInfo.m_bRenderable = false;
 
-	m_pShieldBeam3 = beams->CreateBeamPoints( beamInfo );	
+	m_pShieldBeam3 = beams->CreateBeamPoints(beamInfo);
 
-	m_hShieldSpriteMaterial.Init( "sprites/blueflare1", TEXTURE_GROUP_CLIENT_EFFECTS );
+	m_hShieldSpriteMaterial.Init("sprites/blueflare1", TEXTURE_GROUP_CLIENT_EFFECTS);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CWeaponCombatShield::InitTeslaBeam( void )
+void CWeaponCombatShield::InitTeslaBeam(void)
 {
 	BeamInfo_t beamInfo;
 
@@ -865,8 +870,8 @@ void CWeaponCombatShield::InitTeslaBeam( void )
 	beamInfo.m_flBlue = 127.0f;
 	beamInfo.m_nSegments = 15;
 	beamInfo.m_bRenderable = false;
-	
-	m_pTeslaBeam = beams->CreateBeamPoints( beamInfo );
+
+	m_pTeslaBeam = beams->CreateBeamPoints(beamInfo);
 
 	beamInfo.m_vecStart.Init();
 	beamInfo.m_vecEnd.Init();
@@ -886,10 +891,10 @@ void CWeaponCombatShield::InitTeslaBeam( void )
 	beamInfo.m_flBlue = 127.0f;
 	beamInfo.m_nSegments = 8;
 	beamInfo.m_bRenderable = false;
-	
-	m_pTeslaBeam2 = beams->CreateBeamPoints( beamInfo );
 
-	m_hTeslaSpriteMaterial.Init( "sprites/blueflare1", TEXTURE_GROUP_CLIENT_EFFECTS );
+	m_pTeslaBeam2 = beams->CreateBeamPoints(beamInfo);
+
+	m_hTeslaSpriteMaterial.Init("sprites/blueflare1", TEXTURE_GROUP_CLIENT_EFFECTS);
 }
 
 //-----------------------------------------------------------------------------
@@ -898,27 +903,27 @@ void CWeaponCombatShield::InitTeslaBeam( void )
 // NOTE: This is a big ugly mess that will get cleaned up when I nail down
 //       the effect.
 //-----------------------------------------------------------------------------
-void CWeaponCombatShield::DrawBeams( C_BaseViewModel *pViewModel )
+void CWeaponCombatShield::DrawBeams(C_BaseViewModel *pViewModel)
 {
 	// Verify data.
-	if ( !pViewModel )
+	if(!pViewModel)
 		return;
 
 	// Only humans have the tesla effects
-	if ( GetTeamNumber() == TEAM_ALIENS )
+	if(GetTeamNumber() == TEAM_ALIENS)
 		return;
 
 	// Init
-	if ( !m_pTeslaBeam ) 
-	{ 
-		InitTeslaBeam(); 
+	if(!m_pTeslaBeam)
+	{
+		InitTeslaBeam();
 	}
-	if ( !m_pShieldBeam ) 
-	{ 
-		InitShieldBeam(); 
+	if(!m_pShieldBeam)
+	{
+		InitShieldBeam();
 	}
 
-	if ( !m_pShieldBeam || !m_pTeslaBeam )
+	if(!m_pShieldBeam || !m_pTeslaBeam)
 		return;
 
 	// Variables
@@ -937,63 +942,69 @@ void CWeaponCombatShield::DrawBeams( C_BaseViewModel *pViewModel )
 	// Tesla Effect
 	Vector vecRightTop, vecRightBottom;
 	Vector vecLeftTop, vecLeftBottom;
-	iAttachment = pViewModel->LookupAttachment( "LeftBottom" );
-	pViewModel->GetAttachment( iAttachment, vecLeftBottom, vecAngle );
-	pViewModel->UncorrectViewModelAttachment( vecLeftBottom );
+	iAttachment = pViewModel->LookupAttachment("LeftBottom");
+	pViewModel->GetAttachment(iAttachment, vecLeftBottom, vecAngle);
+	pViewModel->UncorrectViewModelAttachment(vecLeftBottom);
 
-	iAttachment = pViewModel->LookupAttachment( "LeftTip" );
-	pViewModel->GetAttachment( iAttachment, vecLeftTop, vecAngle );
-	pViewModel->UncorrectViewModelAttachment( vecLeftTop );
+	iAttachment = pViewModel->LookupAttachment("LeftTip");
+	pViewModel->GetAttachment(iAttachment, vecLeftTop, vecAngle);
+	pViewModel->UncorrectViewModelAttachment(vecLeftTop);
 
-	iAttachment = pViewModel->LookupAttachment( "RightBottom" );
-	pViewModel->GetAttachment( iAttachment, vecRightBottom, vecAngle );
-	pViewModel->UncorrectViewModelAttachment( vecRightBottom );
+	iAttachment = pViewModel->LookupAttachment("RightBottom");
+	pViewModel->GetAttachment(iAttachment, vecRightBottom, vecAngle);
+	pViewModel->UncorrectViewModelAttachment(vecRightBottom);
 
-	iAttachment = pViewModel->LookupAttachment( "RightTip" );
-	pViewModel->GetAttachment( iAttachment, vecRightTop, vecAngle );
-	pViewModel->UncorrectViewModelAttachment( vecRightTop );
+	iAttachment = pViewModel->LookupAttachment("RightTip");
+	pViewModel->GetAttachment(iAttachment, vecRightTop, vecAngle);
+	pViewModel->UncorrectViewModelAttachment(vecRightTop);
 
 	m_flTeslaLeftInc += weapon_combat_shield_teslaspeed.GetFloat();
 	m_flTeslaRightInc += weapon_combat_shield_teslaspeed.GetFloat();
-	if ( m_flTeslaLeftInc > 1.0f ) { m_flTeslaLeftInc = 0.0f; }
-	if ( m_flTeslaRightInc > 1.0f ) { m_flTeslaRightInc = 0.0f; }
+	if(m_flTeslaLeftInc > 1.0f)
+	{
+		m_flTeslaLeftInc = 0.0f;
+	}
+	if(m_flTeslaRightInc > 1.0f)
+	{
+		m_flTeslaRightInc = 0.0f;
+	}
 
 	Vector vecLeft = vecLeftTop - vecLeftBottom;
 	Vector vecRight = vecRightTop - vecRightBottom;
-	Vector vecStart = vecLeftBottom + ( m_flTeslaLeftInc * vecLeft );
-	Vector vecEnd = vecRightBottom + ( m_flTeslaRightInc * vecRight );
+	Vector vecStart = vecLeftBottom + (m_flTeslaLeftInc * vecLeft);
+	Vector vecEnd = vecRightBottom + (m_flTeslaRightInc * vecRight);
 
 	beamInfo.m_vecStart = vecStart;
 	beamInfo.m_vecEnd = vecEnd;
 	beamInfo.m_flRed = color.r;
 	beamInfo.m_flGreen = color.g;
 	beamInfo.m_flBlue = color.b;
-	beams->UpdateBeamInfo( m_pTeslaBeam, beamInfo );	
-	beams->UpdateBeamInfo( m_pTeslaBeam2, beamInfo );	
-	beams->DrawBeam( m_pTeslaBeam );
-	beams->DrawBeam( m_pTeslaBeam2 );
+	beams->UpdateBeamInfo(m_pTeslaBeam, beamInfo);
+	beams->UpdateBeamInfo(m_pTeslaBeam2, beamInfo);
+	beams->DrawBeam(m_pTeslaBeam);
+	beams->DrawBeam(m_pTeslaBeam2);
 
 	// Draw a sprite at the tip of the tesla coil.
 	float flSize = 4.0f;
 
-	materials->Bind( m_hShieldSpriteMaterial, this );
-	DrawSprite( vecStart, flSize, flSize, color );
-	DrawSprite( vecEnd, flSize, flSize, color );
+	materials->Bind(m_hShieldSpriteMaterial, this);
+	DrawSprite(vecStart, flSize, flSize, color);
+	DrawSprite(vecEnd, flSize, flSize, color);
 
 	// Shield Effect
-	float flPercentage = random->RandomFloat( 0.0f, 1.0f );
-	if ( flPercentage < weapon_combat_shield_teslaskitter.GetFloat() )
+	float flPercentage = random->RandomFloat(0.0f, 1.0f);
+	if(flPercentage < weapon_combat_shield_teslaskitter.GetFloat())
 	{
 		char szShieldJoint[16];
-		int nJoint = random->RandomInt( 1, 8 );
-		Q_snprintf( szShieldJoint, sizeof( szShieldJoint ), "Shield%d", nJoint );
+		int nJoint = random->RandomInt(1, 8);
+		Q_snprintf(szShieldJoint, sizeof(szShieldJoint), "Shield%d", nJoint);
 
 		Vector vecJoint;
-		int iAttachment = pViewModel->LookupAttachment( &szShieldJoint[0] );
-		pViewModel->GetAttachment( iAttachment, vecJoint, vecAngle );
-		pViewModel->UncorrectViewModelAttachment( vecJoint );	
+		int iAttachment = pViewModel->LookupAttachment(&szShieldJoint[0]);
+		pViewModel->GetAttachment(iAttachment, vecJoint, vecAngle);
+		pViewModel->UncorrectViewModelAttachment(vecJoint);
 
-		if ( nJoint < 5 )
+		if(nJoint < 5)
 		{
 			beamInfo.m_vecStart = vecLeftTop;
 		}
@@ -1002,15 +1013,15 @@ void CWeaponCombatShield::DrawBeams( C_BaseViewModel *pViewModel )
 			beamInfo.m_vecStart = vecRightTop;
 		}
 		beamInfo.m_vecEnd = vecJoint;
-		beams->UpdateBeamInfo( m_pTeslaBeam, beamInfo );	
-		beams->UpdateBeamInfo( m_pTeslaBeam2, beamInfo );	
-		beams->DrawBeam( m_pTeslaBeam );
-		beams->DrawBeam( m_pTeslaBeam2 );
+		beams->UpdateBeamInfo(m_pTeslaBeam, beamInfo);
+		beams->UpdateBeamInfo(m_pTeslaBeam2, beamInfo);
+		beams->DrawBeam(m_pTeslaBeam);
+		beams->DrawBeam(m_pTeslaBeam2);
 
-		float flSize = 7.0f; 
-		color32 color = { 206, 181, 127, 255 };
-		materials->Bind( m_hShieldSpriteMaterial, this );
-		DrawSprite( beamInfo.m_vecStart, flSize, flSize, color );
+		float flSize = 7.0f;
+		color32 color = {206, 181, 127, 255};
+		materials->Bind(m_hShieldSpriteMaterial, this);
+		DrawSprite(beamInfo.m_vecStart, flSize, flSize, color);
 	}
 
 #if 0
@@ -1022,7 +1033,7 @@ void CWeaponCombatShield::DrawBeams( C_BaseViewModel *pViewModel )
 		Q_snprintf( szShieldJoint, sizeof( szShieldJoint ), "Shield%d", iJoint+1 );
 		iAttachment = pViewModel->LookupAttachment( &szShieldJoint[0] );
 		pViewModel->GetAttachment( iAttachment, vecShieldJoints[iJoint], vecAngle );
-		pViewModel->UncorrectViewModelAttachment( vecShieldJoints[iJoint] );	
+		pViewModel->UncorrectViewModelAttachment( vecShieldJoints[iJoint] );
 	}
 
 	// Shield Internal
@@ -1089,117 +1100,107 @@ void CWeaponCombatShield::DrawBeams( C_BaseViewModel *pViewModel )
 //-----------------------------------------------------------------------------
 // Purpose: If the shield has no health, and they're trying to raise it, flash the power level
 //-----------------------------------------------------------------------------
-void CWeaponCombatShield::HandleInput( void )
+void CWeaponCombatShield::HandleInput(void)
 {
 	// If the player's dead, ignore input
 	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
-	if ( !pPlayer || pPlayer->GetHealth() < 0 )
+	if(!pPlayer || pPlayer->GetHealth() < 0)
 		return;
 
 	// Attempting to raise the shield?
-	if ( !GetShieldHealth() && ( gHUD.m_iKeyBits & IN_ATTACK2 ) )
+	if(!GetShieldHealth() && (gHUD.m_iKeyBits & IN_ATTACK2))
 	{
 		m_flFlashTimeEnd = gpGlobals->curtime + 1.0;
 	}
 }
 #endif
 
-LINK_ENTITY_TO_CLASS( weapon_combat_shield, CWeaponCombatShield );
-LINK_ENTITY_TO_CLASS( weapon_combat_shield_alien, CWeaponCombatShieldAlien );
+LINK_ENTITY_TO_CLASS(weapon_combat_shield, CWeaponCombatShield);
+LINK_ENTITY_TO_CLASS(weapon_combat_shield_alien, CWeaponCombatShieldAlien);
 
-IMPLEMENT_NETWORKCLASS_ALIASED( WeaponCombatShield , DT_WeaponCombatShield )
-IMPLEMENT_NETWORKCLASS_ALIASED( WeaponCombatShieldAlien, DT_WeaponCombatShieldAlien )
+IMPLEMENT_NETWORKCLASS_ALIASED(WeaponCombatShield, DT_WeaponCombatShield)
+IMPLEMENT_NETWORKCLASS_ALIASED(WeaponCombatShieldAlien, DT_WeaponCombatShieldAlien)
 
-#if !defined( CLIENT_DLL )
+#if !defined(CLIENT_DLL)
 //-----------------------------------------------------------------------------
 // Purpose: Only send the LocalWeaponData to the player carrying the weapon
 //-----------------------------------------------------------------------------
-void* SendProxy_SendCombatShieldLocalWeaponDataTable( const SendProp *pProp, const void *pStruct, const void *pVarData, CSendProxyRecipients *pRecipients, int objectID )
+void *SendProxy_SendCombatShieldLocalWeaponDataTable(const SendProp *pProp, const void *pStruct, const void *pVarData,
+													 CSendProxyRecipients *pRecipients, int objectID)
 {
 	// Get the weapon entity
-	CBaseCombatWeapon *pWeapon = (CBaseCombatWeapon*)pVarData;
-	if ( pWeapon )
+	CBaseCombatWeapon *pWeapon = (CBaseCombatWeapon *)pVarData;
+	if(pWeapon)
 	{
 		// Only send this chunk of data to the player carrying this weapon
-		CBasePlayer *pPlayer = ToBasePlayer( pWeapon->GetOwner() );
-		if ( pPlayer )
+		CBasePlayer *pPlayer = ToBasePlayer(pWeapon->GetOwner());
+		if(pPlayer)
 		{
-			pRecipients->SetOnly( pPlayer->GetClientIndex() );
-			return (void*)pVarData;
+			pRecipients->SetOnly(pPlayer->GetClientIndex());
+			return (void *)pVarData;
 		}
 	}
-	
+
 	return NULL;
 }
-REGISTER_SEND_PROXY_NON_MODIFIED_POINTER( SendProxy_SendCombatShieldLocalWeaponDataTable );
+REGISTER_SEND_PROXY_NON_MODIFIED_POINTER
+(SendProxy_SendCombatShieldLocalWeaponDataTable);
 #endif
 
 //-----------------------------------------------------------------------------
 // Purpose: Propagation data for weapons. Only sent when a player's holding it.
 //-----------------------------------------------------------------------------
-BEGIN_NETWORK_TABLE_NOBASE( CWeaponCombatShield, DT_WeaponCombatShieldLocal )
-#if !defined( CLIENT_DLL )
-	SendPropTime( SENDINFO( m_flShieldParryEndTime ) ),
-	SendPropTime( SENDINFO( m_flShieldParrySwingEndTime ) ),
-	SendPropTime( SENDINFO( m_flShieldUnavailableEndTime ) ),
-	SendPropTime( SENDINFO( m_flShieldRaisedTime ) ),
-	SendPropTime( SENDINFO( m_flShieldLoweredTime ) ),
+BEGIN_NETWORK_TABLE_NOBASE(CWeaponCombatShield, DT_WeaponCombatShieldLocal)
+#if !defined(CLIENT_DLL)
+	SendPropTime(SENDINFO(m_flShieldParryEndTime)), SendPropTime(SENDINFO(m_flShieldParrySwingEndTime)),
+		SendPropTime(SENDINFO(m_flShieldUnavailableEndTime)), SendPropTime(SENDINFO(m_flShieldRaisedTime)),
+		SendPropTime(SENDINFO(m_flShieldLoweredTime)),
 #else
-	RecvPropTime( RECVINFO( m_flShieldParryEndTime ) ),
-	RecvPropTime( RECVINFO( m_flShieldParrySwingEndTime ) ),
-	RecvPropTime( RECVINFO( m_flShieldUnavailableEndTime ) ),
-	RecvPropTime( RECVINFO( m_flShieldRaisedTime ) ),
-	RecvPropTime( RECVINFO( m_flShieldLoweredTime ) ),
+	RecvPropTime(RECVINFO(m_flShieldParryEndTime)), RecvPropTime(RECVINFO(m_flShieldParrySwingEndTime)),
+		RecvPropTime(RECVINFO(m_flShieldUnavailableEndTime)), RecvPropTime(RECVINFO(m_flShieldRaisedTime)),
+		RecvPropTime(RECVINFO(m_flShieldLoweredTime)),
 #endif
 END_NETWORK_TABLE()
 
-BEGIN_NETWORK_TABLE( CWeaponCombatShield , DT_WeaponCombatShield )
-#if !defined( CLIENT_DLL )
-	SendPropDataTable("this", 0, &REFERENCE_SEND_TABLE(DT_WeaponCombatShieldLocal), SendProxy_SendCombatShieldLocalWeaponDataTable ),
-	SendPropTime( SENDINFO( m_flShieldUpStartTime ) ),
-	SendPropTime( SENDINFO( m_flShieldDownStartTime ) ),
-	SendPropInt( SENDINFO( m_iShieldState ), 3, SPROP_UNSIGNED ),
-	SendPropInt( SENDINFO( m_bAllowPostFrame ), 1, SPROP_UNSIGNED ),
-	SendPropInt( SENDINFO( m_bHasShieldParry ), 1, SPROP_UNSIGNED ),
-	SendPropFloat(SENDINFO( m_flShieldHealth ), 8, SPROP_ROUNDDOWN, 0.0f, 1.0f ),
+BEGIN_NETWORK_TABLE(CWeaponCombatShield, DT_WeaponCombatShield)
+#if !defined(CLIENT_DLL)
+	SendPropDataTable("this", 0, &REFERENCE_SEND_TABLE(DT_WeaponCombatShieldLocal),
+					  SendProxy_SendCombatShieldLocalWeaponDataTable),
+		SendPropTime(SENDINFO(m_flShieldUpStartTime)), SendPropTime(SENDINFO(m_flShieldDownStartTime)),
+		SendPropInt(SENDINFO(m_iShieldState), 3, SPROP_UNSIGNED),
+		SendPropInt(SENDINFO(m_bAllowPostFrame), 1, SPROP_UNSIGNED),
+		SendPropInt(SENDINFO(m_bHasShieldParry), 1, SPROP_UNSIGNED),
+		SendPropFloat(SENDINFO(m_flShieldHealth), 8, SPROP_ROUNDDOWN, 0.0f, 1.0f),
 #else
 	RecvPropDataTable("this", 0, 0, &REFERENCE_RECV_TABLE(DT_WeaponCombatShieldLocal)),
-	RecvPropTime( RECVINFO( m_flShieldUpStartTime ) ),
-	RecvPropTime( RECVINFO( m_flShieldDownStartTime ) ),
-	RecvPropInt( RECVINFO( m_iShieldState ) ),
-	RecvPropInt( RECVINFO( m_bAllowPostFrame ) ),
-	RecvPropInt( RECVINFO( m_bHasShieldParry ) ),
-	RecvPropFloat(RECVINFO( m_flShieldHealth ) ),
+		RecvPropTime(RECVINFO(m_flShieldUpStartTime)), RecvPropTime(RECVINFO(m_flShieldDownStartTime)),
+		RecvPropInt(RECVINFO(m_iShieldState)), RecvPropInt(RECVINFO(m_bAllowPostFrame)),
+		RecvPropInt(RECVINFO(m_bHasShieldParry)), RecvPropFloat(RECVINFO(m_flShieldHealth)),
 #endif
 END_NETWORK_TABLE()
 
-BEGIN_NETWORK_TABLE( CWeaponCombatShieldAlien, DT_WeaponCombatShieldAlien )
+BEGIN_NETWORK_TABLE(CWeaponCombatShieldAlien, DT_WeaponCombatShieldAlien)
 END_NETWORK_TABLE()
 
-BEGIN_PREDICTION_DATA( CWeaponCombatShield  )
+BEGIN_PREDICTION_DATA(CWeaponCombatShield)
 
-	DEFINE_PRED_FIELD( m_iShieldState, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),
-	DEFINE_PRED_FIELD( m_bAllowPostFrame, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE ),
-	DEFINE_PRED_FIELD( m_bHasShieldParry, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE ),
-	DEFINE_PRED_FIELD( m_flShieldHealth, FIELD_FLOAT, FTYPEDESC_INSENDTABLE ),
+	DEFINE_PRED_FIELD(m_iShieldState, FIELD_INTEGER, FTYPEDESC_INSENDTABLE),
+		DEFINE_PRED_FIELD(m_bAllowPostFrame, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE),
+		DEFINE_PRED_FIELD(m_bHasShieldParry, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE),
+		DEFINE_PRED_FIELD(m_flShieldHealth, FIELD_FLOAT, FTYPEDESC_INSENDTABLE),
 
-	DEFINE_PRED_FIELD_TOL( m_flShieldUpStartTime, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, TD_MSECTOLERANCE ),
-	DEFINE_PRED_FIELD_TOL( m_flShieldDownStartTime, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, TD_MSECTOLERANCE ),
-	DEFINE_PRED_FIELD_TOL( m_flShieldParryEndTime, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, TD_MSECTOLERANCE ),
-	DEFINE_PRED_FIELD_TOL( m_flShieldParrySwingEndTime, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, TD_MSECTOLERANCE ),
-	DEFINE_PRED_FIELD_TOL( m_flShieldUnavailableEndTime, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, TD_MSECTOLERANCE ),
-	DEFINE_PRED_FIELD_TOL( m_flShieldRaisedTime, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, TD_MSECTOLERANCE ),
-	DEFINE_PRED_FIELD_TOL( m_flShieldLoweredTime, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, TD_MSECTOLERANCE ),
+		DEFINE_PRED_FIELD_TOL(m_flShieldUpStartTime, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, TD_MSECTOLERANCE),
+		DEFINE_PRED_FIELD_TOL(m_flShieldDownStartTime, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, TD_MSECTOLERANCE),
+		DEFINE_PRED_FIELD_TOL(m_flShieldParryEndTime, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, TD_MSECTOLERANCE),
+		DEFINE_PRED_FIELD_TOL(m_flShieldParrySwingEndTime, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, TD_MSECTOLERANCE),
+		DEFINE_PRED_FIELD_TOL(m_flShieldUnavailableEndTime, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, TD_MSECTOLERANCE),
+		DEFINE_PRED_FIELD_TOL(m_flShieldRaisedTime, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, TD_MSECTOLERANCE),
+		DEFINE_PRED_FIELD_TOL(m_flShieldLoweredTime, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, TD_MSECTOLERANCE),
 
 END_PREDICTION_DATA()
 
-BEGIN_PREDICTION_DATA( CWeaponCombatShieldAlien )
+BEGIN_PREDICTION_DATA(CWeaponCombatShieldAlien)
 END_PREDICTION_DATA()
 
 PRECACHE_WEAPON_REGISTER(weapon_combat_shield);
 PRECACHE_WEAPON_REGISTER(weapon_combat_shield_alien);
-
-
-
-
-

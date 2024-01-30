@@ -1,4 +1,4 @@
-//======= Copyright © 1996-2007, Valve Corporation, All rights reserved. ======
+//======= Copyright ï¿½ 1996-2007, Valve Corporation, All rights reserved. ======
 // STATIC: "CONVERT_TO_SRGB"			"0..0"
 // STATIC: "CUBEMAP"					"0..1"
 // STATIC: "SELFILLUM"					"0..1"
@@ -241,7 +241,7 @@ float4 main( PS_INPUT i ) : COLOR
 							g_EnvmapTint_ShadowTweaks.xyz;
 		}
 	}
-	
+
 	float3 specularLighting = float3( 0.0f, 0.0f, 0.0f );
 	float3 rimLighting = float3( 0.0f, 0.0f, 0.0f );
 
@@ -251,7 +251,7 @@ float4 main( PS_INPUT i ) : COLOR
 
 #if ( FASTPATH_NOBUMP == 0 )
 	float4 vSpecExpMap = tex2D( SpecExponentSampler, i.baseTexCoordDetailTexCoord.xy );
-	
+
 	if ( !bFlashlight )
 	{
 		fRimMask = lerp( 1.0f, vSpecExpMap.a, g_RimMaskControl );						// Select rim mask
@@ -261,7 +261,7 @@ float4 main( PS_INPUT i ) : COLOR
 #if defined( _X360 )
 	[flatten]
 #endif
-	
+
 #if ( PHONG_USE_EXPONENT_FACTOR )
 	fSpecExp = ( 1.0f + g_EyePos_SpecExponent.w * vSpecExpMap.r );
 #else
@@ -274,7 +274,7 @@ float4 main( PS_INPUT i ) : COLOR
 #endif
 	vSpecularTint = lerp( float3(1.0f, 1.0f, 1.0f), baseColor.rgb, vSpecExpMap.g );
 	vSpecularTint = (g_SpecularTint.r >= 0.0) ? g_SpecularTint.rgb : vSpecularTint;
-		
+
 #else
 	fSpecExp = max(g_EyePos_SpecExponent.w, 0);
 #endif
@@ -297,7 +297,7 @@ float4 main( PS_INPUT i ) : COLOR
 		#if FLASHLIGHT
 			float4 flashlightSpacePosition = mul( float4( vWorldPos, 1.0f ), g_FlashlightWorldToTexture );
 
-			DoSpecularFlashlight( g_FlashlightPos, vWorldPos, flashlightSpacePosition, worldSpaceNormal, 
+			DoSpecularFlashlight( g_FlashlightPos, vWorldPos, flashlightSpacePosition, worldSpaceNormal,
 				g_FlashlightAttenuationFactors.xyz, g_FlashlightAttenuationFactors.w,
 				FlashlightSampler, ShadowDepthSampler, NormalizeRandRotSampler, FLASHLIGHTDEPTHFILTERMODE, FLASHLIGHTSHADOWS, true, vProjPos.xy / vProjPos.z,
 				fSpecExp, vEyeDir, bDoSpecularWarp, SpecularWarpSampler, fFresnelRanges, g_EnvmapTint_ShadowTweaks,
@@ -344,14 +344,14 @@ float4 main( PS_INPUT i ) : COLOR
 	}
 
 #if DETAILTEXTURE
-	diffuseComponent = TextureCombinePostLighting( diffuseComponent, detailColor, 
+	diffuseComponent = TextureCombinePostLighting( diffuseComponent, detailColor,
 		DETAIL_BLEND_MODE, g_SelfIllumTint_and_DetailBlendFactor.w );
 #endif
 
 	if ( bDoRimLighting && !bFlashlight )
 	{
 		float fRimMultiply = fRimMask * fRimFresnel; // both unit range: [0, 1]
-		
+
 		// Add in rim light modulated with tint, mask and traditional Fresnel (not using Fresnel ranges)
 		rimLighting *= fRimMultiply;
 

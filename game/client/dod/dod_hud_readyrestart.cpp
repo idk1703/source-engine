@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -24,104 +24,106 @@
 //-----------------------------------------------------------------------------
 class CDODReadyRestartLabel : public vgui::Panel, public CHudElement
 {
-	DECLARE_CLASS_SIMPLE( CDODReadyRestartLabel, vgui::Panel );
+	DECLARE_CLASS_SIMPLE(CDODReadyRestartLabel, vgui::Panel);
 
 public:
-	CDODReadyRestartLabel( const char *pElementName );
+	CDODReadyRestartLabel(const char *pElementName);
 
 	virtual void Reset();
 	virtual void Init();
 
 	virtual void PerformLayout();
 
-	void FireGameEvent( IGameEvent * event);
+	void FireGameEvent(IGameEvent *event);
 
 protected:
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 	virtual void OnThink();
 
 private:
 	vgui::HFont m_hFont;
-	Color		m_bgColor;
+	Color m_bgColor;
 
-	vgui::Label *m_pRestartLabel;	// "Round will restart in 0:00"
-	vgui::Label *m_pAlliesReady;	// "Allies are READY"
-	vgui::Label *m_pAxisReady;		// "Axis are NOT READY"
+	vgui::Label *m_pRestartLabel; // "Round will restart in 0:00"
+	vgui::Label *m_pAlliesReady;  // "Allies are READY"
+	vgui::Label *m_pAxisReady;	  // "Axis are NOT READY"
 
 	vgui::Label *m_pBackground;
 
 	float m_flLastRestartTime;
 
-	CPanelAnimationVarAliasType( int, m_iTextX, "text_xpos", "8", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iTextY, "text_ypos", "8", "proportional_int" );
+	CPanelAnimationVarAliasType(int, m_iTextX, "text_xpos", "8", "proportional_int");
+	CPanelAnimationVarAliasType(int, m_iTextY, "text_ypos", "8", "proportional_int");
 };
 
-DECLARE_HUDELEMENT( CDODReadyRestartLabel );
+DECLARE_HUDELEMENT(CDODReadyRestartLabel);
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CDODReadyRestartLabel::CDODReadyRestartLabel( const char *pElementName ) : BaseClass(NULL, "ReadyRestartLabel"), CHudElement( pElementName )
+CDODReadyRestartLabel::CDODReadyRestartLabel(const char *pElementName)
+	: BaseClass(NULL, "ReadyRestartLabel"), CHudElement(pElementName)
 {
 	vgui::Panel *pParent = g_pClientMode->GetViewport();
-	SetParent( pParent );
-	SetVisible( false );
-	SetAlpha( 0 );
+	SetParent(pParent);
+	SetVisible(false);
+	SetAlpha(0);
 
-	m_pBackground = new vgui::Label( this, "Background", "" );
+	m_pBackground = new vgui::Label(this, "Background", "");
 
 	wchar_t labelText[128];
-	g_pVGuiLocalize->ConstructString( labelText, sizeof(labelText), g_pVGuiLocalize->Find( "#clan_game_restart" ), 2, L"0", L"00" );
+	g_pVGuiLocalize->ConstructString(labelText, sizeof(labelText), g_pVGuiLocalize->Find("#clan_game_restart"), 2, L"0",
+									 L"00");
 
-	m_pRestartLabel = new vgui::Label( this, "RoundState_waiting", g_pVGuiLocalize->Find( "#Clan_awaiting_ready" ) );
-	m_pRestartLabel->SetFgColor( GetFgColor() );
+	m_pRestartLabel = new vgui::Label(this, "RoundState_waiting", g_pVGuiLocalize->Find("#Clan_awaiting_ready"));
+	m_pRestartLabel->SetFgColor(GetFgColor());
 	m_pRestartLabel->SizeToContents();
 
-	m_pAlliesReady = new vgui::Label( this, "RoundState_allies", L"" );
-	m_pAlliesReady->SetFgColor( GetFgColor() );
+	m_pAlliesReady = new vgui::Label(this, "RoundState_allies", L"");
+	m_pAlliesReady->SetFgColor(GetFgColor());
 
-	m_pAxisReady = new vgui::Label( this, "RoundState_axis", L"" );
-	m_pAxisReady->SetFgColor( GetFgColor() );
+	m_pAxisReady = new vgui::Label(this, "RoundState_axis", L"");
+	m_pAxisReady->SetFgColor(GetFgColor());
 
 	m_flLastRestartTime = 0;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODReadyRestartLabel::Reset()
 {
-	g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "ReadyRestartLabelHide" );
+	g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("ReadyRestartLabelHide");
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODReadyRestartLabel::Init()
 {
 	// listen for events
-	ListenForGameEvent( "dod_round_start" );
-	ListenForGameEvent( "dod_ready_restart" );
-	ListenForGameEvent( "dod_allies_ready" );
-	ListenForGameEvent( "dod_axis_ready" );
+	ListenForGameEvent("dod_round_start");
+	ListenForGameEvent("dod_ready_restart");
+	ListenForGameEvent("dod_allies_ready");
+	ListenForGameEvent("dod_axis_ready");
 
-	g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "ReadyRestartLabelHide" );
+	g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("ReadyRestartLabelHide");
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CDODReadyRestartLabel::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CDODReadyRestartLabel::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
-	SetFgColor( Color(0,0,0,0) );
-	m_hFont = pScheme->GetFont( "HudHintText", true );
+	SetFgColor(Color(0, 0, 0, 0));
+	m_hFont = pScheme->GetFont("HudHintText", true);
 
-	m_pBackground->SetBgColor( GetSchemeColor("HintMessageBg", pScheme) );
-	m_pBackground->SetPaintBackgroundType( 2 );
+	m_pBackground->SetBgColor(GetSchemeColor("HintMessageBg", pScheme));
+	m_pBackground->SetPaintBackgroundType(2);
 
-	SetAlpha( 0 );
+	SetAlpha(0);
 }
 
 //-----------------------------------------------------------------------------
@@ -132,24 +134,24 @@ void CDODReadyRestartLabel::PerformLayout()
 	BaseClass::PerformLayout();
 
 	int wide, tall;
-	GetSize( wide, tall );
+	GetSize(wide, tall);
 
 	// find the widest line
 	int labelWide = m_pRestartLabel->GetWide();
 
 	// find the total height
-	int fontTall = vgui::surface()->GetFontTall( m_hFont );
+	int fontTall = vgui::surface()->GetFontTall(m_hFont);
 
-	labelWide += m_iTextX*2;
-	int labelTall = fontTall*3 + m_iTextY*2;
+	labelWide += m_iTextX * 2;
+	int labelTall = fontTall * 3 + m_iTextY * 2;
 
-	m_pBackground->SetBounds( 0, 0, labelWide, labelTall );
+	m_pBackground->SetBounds(0, 0, labelWide, labelTall);
 
-	int xOffset = (labelWide - m_pRestartLabel->GetWide())/2;
+	int xOffset = (labelWide - m_pRestartLabel->GetWide()) / 2;
 
-	m_pRestartLabel->SetPos( xOffset, m_iTextY );
-	m_pAlliesReady->SetPos( xOffset, m_iTextY + fontTall );
-	m_pAxisReady->SetPos( xOffset, m_iTextY + 2 *fontTall );
+	m_pRestartLabel->SetPos(xOffset, m_iTextY);
+	m_pAlliesReady->SetPos(xOffset, m_iTextY + fontTall);
+	m_pAxisReady->SetPos(xOffset, m_iTextY + 2 * fontTall);
 }
 
 //-----------------------------------------------------------------------------
@@ -159,11 +161,11 @@ void CDODReadyRestartLabel::OnThink()
 {
 	float flRoundRestartTime = DODGameRules()->GetRoundRestartTime();
 
-	if( flRoundRestartTime != m_flLastRestartTime )
+	if(flRoundRestartTime != m_flLastRestartTime)
 	{
-		if( flRoundRestartTime > 0 )
+		if(flRoundRestartTime > 0)
 		{
-			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "ReadyRestartLabelHide" );
+			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("ReadyRestartLabelHide");
 		}
 		m_flLastRestartTime = flRoundRestartTime;
 	}
@@ -177,30 +179,30 @@ void CDODReadyRestartLabel::OnThink()
 //-----------------------------------------------------------------------------
 // Purpose: Activates the hint display upon receiving a hint
 //-----------------------------------------------------------------------------
-void CDODReadyRestartLabel::FireGameEvent( IGameEvent * event)
+void CDODReadyRestartLabel::FireGameEvent(IGameEvent *event)
 {
-	if( Q_strcmp( "dod_round_start", event->GetName() ) == 0 )
+	if(Q_strcmp("dod_round_start", event->GetName()) == 0)
 	{
-		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "ReadyRestartLabelHide" );
+		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("ReadyRestartLabelHide");
 	}
-	else if( Q_strcmp( "dod_ready_restart", event->GetName() ) == 0 )
+	else if(Q_strcmp("dod_ready_restart", event->GetName()) == 0)
 	{
-		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "ReadyRestartLabelShow" );
+		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("ReadyRestartLabelShow");
 
-		m_pAlliesReady->SetText( g_pVGuiLocalize->Find( "#clan_allies_not_ready" ) );
+		m_pAlliesReady->SetText(g_pVGuiLocalize->Find("#clan_allies_not_ready"));
 		m_pAlliesReady->SizeToContents();
 
-		m_pAxisReady->SetText( g_pVGuiLocalize->Find( "#clan_axis_not_ready" ) );
+		m_pAxisReady->SetText(g_pVGuiLocalize->Find("#clan_axis_not_ready"));
 		m_pAxisReady->SizeToContents();
 	}
-	else if( Q_strcmp( "dod_allies_ready", event->GetName() ) == 0 )
+	else if(Q_strcmp("dod_allies_ready", event->GetName()) == 0)
 	{
-		m_pAlliesReady->SetText( g_pVGuiLocalize->Find( "#clan_allies_ready" ) );
+		m_pAlliesReady->SetText(g_pVGuiLocalize->Find("#clan_allies_ready"));
 		m_pAlliesReady->SizeToContents();
 	}
-	else if( Q_strcmp( "dod_axis_ready", event->GetName() ) == 0 )
+	else if(Q_strcmp("dod_axis_ready", event->GetName()) == 0)
 	{
-		m_pAxisReady->SetText( g_pVGuiLocalize->Find( "#clan_axis_ready" ) );
+		m_pAxisReady->SetText(g_pVGuiLocalize->Find("#clan_axis_ready"));
 		m_pAxisReady->SizeToContents();
 	}
 }

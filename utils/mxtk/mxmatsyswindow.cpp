@@ -21,88 +21,62 @@ public:
 	HGLRC hglrc;
 };
 
-
-
-mxMatSysWindow::mxMatSysWindow (mxWindow *parent, int x, int y, int w, int h, const char *label, int style)
-: mxWindow (parent, x, y, w, h, label, style)
+mxMatSysWindow::mxMatSysWindow(mxWindow *parent, int x, int y, int w, int h, const char *label, int style)
+	: mxWindow(parent, x, y, w, h, label, style)
 {
 	d_this = new mxMatSysWindow_i;
 
 	bool error = false;
 
-	if ((d_this->hdc = GetDC ((HWND) getHandle ())) == NULL)
+	if((d_this->hdc = GetDC((HWND)getHandle())) == NULL)
 	{
 		error = true;
 		goto done;
 	}
 
-	setDrawFunc (0);
+	setDrawFunc(0);
 
 done:
-	if (error)
+	if(error)
 		delete this;
 }
 
-
-
-mxMatSysWindow::~mxMatSysWindow ()
+mxMatSysWindow::~mxMatSysWindow()
 {
-	if (d_this->hdc)
-		ReleaseDC ((HWND) getHandle (), d_this->hdc);
+	if(d_this->hdc)
+		ReleaseDC((HWND)getHandle(), d_this->hdc);
 
 	delete d_this;
 }
 
-
-
-int
-mxMatSysWindow::handleEvent (mxEvent *event)
+int mxMatSysWindow::handleEvent(mxEvent *event)
 {
 	return 0;
 }
 
-
-
-void
-mxMatSysWindow::redraw ()
+void mxMatSysWindow::redraw()
 {
 	// makeCurrent ();
-	if (d_drawFunc)
-		d_drawFunc ();
+	if(d_drawFunc)
+		d_drawFunc();
 	else
-		draw ();
+		draw();
 	// swapBuffers ();
 }
 
+void mxMatSysWindow::draw() {}
 
-
-void
-mxMatSysWindow::draw ()
-{
-}
-
-
-
-int
-mxMatSysWindow::makeCurrent ()
+int mxMatSysWindow::makeCurrent()
 {
 	return 1;
 }
 
-
-
-int
-mxMatSysWindow::swapBuffers ()
+int mxMatSysWindow::swapBuffers()
 {
 	return 0;
 }
 
-
-
-void
-mxMatSysWindow::setDrawFunc (void (*func) (void))
+void mxMatSysWindow::setDrawFunc(void (*func)(void))
 {
 	d_drawFunc = func;
 }
-
-

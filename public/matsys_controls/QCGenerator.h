@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -28,34 +28,44 @@ namespace vgui
 
 class CBrowseButton : public vgui::Button
 {
-	DECLARE_CLASS_SIMPLE( CBrowseButton, vgui::Button );
+	DECLARE_CLASS_SIMPLE(CBrowseButton, vgui::Button);
 
 public:
-	CBrowseButton( vgui::Panel *pParent );
+	CBrowseButton(vgui::Panel *pParent);
 	~CBrowseButton();
-	void InitBrowseInfo( int x, int y, const char *pszName, const char *pszDir, const char *pszFilter, const char *pszField );
+	void InitBrowseInfo(int x, int y, const char *pszName, const char *pszDir, const char *pszFilter,
+						const char *pszField);
 
 private:
 	char *pszStartingDirectory;
 	char *pszFileFilter;
 	char *pszTargetField;
 
-	char **GetStartingDirectory(){ return &pszStartingDirectory; }
-	char **GetFileFilter(){ return &pszFileFilter; }
-	char **GetTargetField(){ return &pszTargetField; }
-	void SetCharVar( char **pVar, const char *pszNewText );
+	char **GetStartingDirectory()
+	{
+		return &pszStartingDirectory;
+	}
+	char **GetFileFilter()
+	{
+		return &pszFileFilter;
+	}
+	char **GetTargetField()
+	{
+		return &pszTargetField;
+	}
+	void SetCharVar(char **pVar, const char *pszNewText);
 	void SetActionMessage();
 };
 
 struct LODInfo
 {
 	char pszFilename[MAX_PATH];
-    int iLOD;	
+	int iLOD;
 };
 
 struct QCInfo
 {
-    CQCGenerator *pQCGenerator;
+	CQCGenerator *pQCGenerator;
 
 	char pszSMDPath[MAX_PATH];
 	char pszCollisionPath[MAX_PATH];
@@ -75,13 +85,13 @@ struct QCInfo
 
 	float fScale;
 	float fMass;
-	void Init( CQCGenerator *pPanel )
+	void Init(CQCGenerator *pPanel)
 	{
 		pQCGenerator = pPanel;
 
-		V_strcpy_safe( pszSMDPath, "" );
-		V_strcpy_safe( pszCollisionPath, "" );
-		V_strcpy_safe( pszSurfaceProperty, "default" );
+		V_strcpy_safe(pszSMDPath, "");
+		V_strcpy_safe(pszCollisionPath, "");
+		V_strcpy_safe(pszSurfaceProperty, "default");
 		bStaticProp = false;
 		bMostlyOpaque = false;
 		bDisableCollision = false;
@@ -102,54 +112,50 @@ struct QCInfo
 //-----------------------------------------------------------------------------
 class CQCGenerator : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CQCGenerator, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CQCGenerator, vgui::EditablePanel);
 
 public:
-	CQCGenerator( vgui::Panel *pParent, const char *pszPath, const char *pszScene );
+	CQCGenerator(vgui::Panel *pParent, const char *pszPath, const char *pszScene);
 	~CQCGenerator();
 
 	// overridden frame functions
-//	virtual void Activate();
+	//	virtual void Activate();
 
-	virtual void OnCommand( const char *command );
+	virtual void OnCommand(const char *command);
 
-	// Purpose: 
-//	virtual void OnKeyCodeTyped( vgui::KeyCode code );
+	// Purpose:
+	//	virtual void OnKeyCodeTyped( vgui::KeyCode code );
 
-	MESSAGE_FUNC( OnNewLODText, "TextNewLine" );	
-	MESSAGE_FUNC_PARAMS( OnBrowse, "browse", data );	
-	MESSAGE_FUNC_PARAMS( OnFileSelected, "FileSelected", data );	
-	MESSAGE_FUNC_PARAMS( OnDirectorySelected, "DirectorySelected", data );	
+	MESSAGE_FUNC(OnNewLODText, "TextNewLine");
+	MESSAGE_FUNC_PARAMS(OnBrowse, "browse", data);
+	MESSAGE_FUNC_PARAMS(OnFileSelected, "FileSelected", data);
+	MESSAGE_FUNC_PARAMS(OnDirectorySelected, "DirectorySelected", data);
 
 	bool GenerateQCFile();
-//	void BrowseDirectory( KeyValues *data );
-	void BrowseFile( KeyValues *data );
+	//	void BrowseDirectory( KeyValues *data );
+	void BrowseFile(KeyValues *data);
 
-	void DeleteLOD( );
+	void DeleteLOD();
 	void EditLOD();
-	virtual void OnKeyCodeTyped( vgui::KeyCode code);
-	void InitializeSMDPaths( const char *pszPath, const char *pszScene );
-	
+	virtual void OnKeyCodeTyped(vgui::KeyCode code);
+	void InitializeSMDPaths(const char *pszPath, const char *pszScene);
+
 protected:
 	// Creates standard controls. Allows the derived class to
 	// add these controls to various splitter windows
-	void CreateStandardControls( vgui::Panel *pParent );
+	void CreateStandardControls(vgui::Panel *pParent);
 
 private:
-
-	CBrowseButton *m_pCollisionBrowseButton;	
+	CBrowseButton *m_pCollisionBrowseButton;
 	char m_szTargetField[MAX_PATH];
 	vgui::ListPanel *m_pLODPanel;
 
 	vgui::TextEntry *m_pLODEdit;
-	
+
 	int m_nSelectedSequence;
 	int m_nSelectedColumn;
 
 	QCInfo m_QCInfo_t;
 };
-
-
-
 
 #endif // QCGENERATOR_H

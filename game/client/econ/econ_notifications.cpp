@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -30,9 +30,12 @@
 
 //-----------------------------------------------------------------------------
 
-ConVar cl_notifications_show_ingame( "cl_notifications_show_ingame", "1", FCVAR_ARCHIVE, "Whether notifications should show up in-game." );
-ConVar cl_notifications_max_num_visible( "cl_notifications_max_num_visible", "3", FCVAR_ARCHIVE, "How many notifications are visible in-game." );
-ConVar cl_notifications_move_time( "cl_notifications_move_time", "0.5", FCVAR_ARCHIVE, "How long it takes for a notification to move." );
+ConVar cl_notifications_show_ingame("cl_notifications_show_ingame", "1", FCVAR_ARCHIVE,
+									"Whether notifications should show up in-game.");
+ConVar cl_notifications_max_num_visible("cl_notifications_max_num_visible", "3", FCVAR_ARCHIVE,
+										"How many notifications are visible in-game.");
+ConVar cl_notifications_move_time("cl_notifications_move_time", "0.5", FCVAR_ARCHIVE,
+								  "How long it takes for a notification to move.");
 
 // notification queue holds all the notifications
 class CEconNotificationQueue
@@ -41,39 +44,40 @@ public:
 	CEconNotificationQueue();
 	~CEconNotificationQueue();
 
-	int AddNotification( CEconNotification *pNotification );
+	int AddNotification(CEconNotification *pNotification);
 	void RemoveAllNotifications();
-	void RemoveNotification( int iID );
-	void RemoveNotification( CEconNotification *pNotification );
-	void RemoveNotifications( NotificationFilterFunc func );
-	int CountNotifications( NotificationFilterFunc func );
-	void VisitNotifications( CEconNotificationVisitor &visitor );
-	CEconNotification *GetNotification( int iID );
-	CEconNotification *GetNotificationByIndex( int idx );
+	void RemoveNotification(int iID);
+	void RemoveNotification(CEconNotification *pNotification);
+	void RemoveNotifications(NotificationFilterFunc func);
+	int CountNotifications(NotificationFilterFunc func);
+	void VisitNotifications(CEconNotificationVisitor &visitor);
+	CEconNotification *GetNotification(int iID);
+	CEconNotification *GetNotificationByIndex(int idx);
 	void Update();
-	bool HasItems() { return m_vecNotifications.Count() != 0; }
-	const CUtlVector< CEconNotification *> &GetItems() { return m_vecNotifications; }
+	bool HasItems()
+	{
+		return m_vecNotifications.Count() != 0;
+	}
+	const CUtlVector<CEconNotification *> &GetItems()
+	{
+		return m_vecNotifications;
+	}
 
 private:
 	int m_iIDGenerator;
-	CUtlVector< CEconNotification *> m_vecNotifications;
+	CUtlVector<CEconNotification *> m_vecNotifications;
 };
 static CEconNotificationQueue g_notificationQueue;
 
-CEconNotificationQueue::CEconNotificationQueue()
-	: m_iIDGenerator(0)
-{
-}
+CEconNotificationQueue::CEconNotificationQueue() : m_iIDGenerator(0) {}
 
-CEconNotificationQueue::~CEconNotificationQueue()
-{
-}
+CEconNotificationQueue::~CEconNotificationQueue() {}
 
-int CEconNotificationQueue::AddNotification( CEconNotification *pNotification )
+int CEconNotificationQueue::AddNotification(CEconNotification *pNotification)
 {
 	int iID = ++m_iIDGenerator;
 	pNotification->m_iID = iID;
-	m_vecNotifications.AddToTail( pNotification );
+	m_vecNotifications.AddToTail(pNotification);
 	return iID;
 }
 
@@ -82,47 +86,47 @@ void CEconNotificationQueue::RemoveAllNotifications()
 	m_vecNotifications.PurgeAndDeleteElements();
 }
 
-void CEconNotificationQueue::RemoveNotification( int iID )
+void CEconNotificationQueue::RemoveNotification(int iID)
 {
-	FOR_EACH_VEC( m_vecNotifications, i )
+	FOR_EACH_VEC(m_vecNotifications, i)
 	{
 		CEconNotification *pNotification = m_vecNotifications[i];
-		if ( pNotification->GetID() == iID )
+		if(pNotification->GetID() == iID)
 		{
 			delete pNotification;
-			m_vecNotifications.Remove( i );
+			m_vecNotifications.Remove(i);
 			return;
 		}
 	}
 }
 
-void CEconNotificationQueue::RemoveNotification( CEconNotification *pNotification )
+void CEconNotificationQueue::RemoveNotification(CEconNotification *pNotification)
 {
-	if ( pNotification )
+	if(pNotification)
 	{
-		RemoveNotification( pNotification->GetID() );
+		RemoveNotification(pNotification->GetID());
 	}
 }
 
-void CEconNotificationQueue::RemoveNotifications( NotificationFilterFunc func )
+void CEconNotificationQueue::RemoveNotifications(NotificationFilterFunc func)
 {
-	for ( int i = 0; i < m_vecNotifications.Count(); ++i)
+	for(int i = 0; i < m_vecNotifications.Count(); ++i)
 	{
 		CEconNotification *pNotification = m_vecNotifications[i];
-		if ( func( pNotification ) )
+		if(func(pNotification))
 		{
 			pNotification->MarkForDeletion();
 		}
 	}
 }
 
-int CEconNotificationQueue::CountNotifications( NotificationFilterFunc func )
+int CEconNotificationQueue::CountNotifications(NotificationFilterFunc func)
 {
 	int nResult = 0;
-	for ( int i = 0; i < m_vecNotifications.Count(); ++i)
+	for(int i = 0; i < m_vecNotifications.Count(); ++i)
 	{
 		CEconNotification *pNotification = m_vecNotifications[i];
-		if ( func( pNotification ) )
+		if(func(pNotification))
 		{
 			++nResult;
 		}
@@ -131,21 +135,21 @@ int CEconNotificationQueue::CountNotifications( NotificationFilterFunc func )
 	return nResult;
 }
 
-void CEconNotificationQueue::VisitNotifications( CEconNotificationVisitor &visitor )
+void CEconNotificationQueue::VisitNotifications(CEconNotificationVisitor &visitor)
 {
-	for ( int i = 0; i < m_vecNotifications.Count(); ++i )
+	for(int i = 0; i < m_vecNotifications.Count(); ++i)
 	{
 		CEconNotification *pNotification = m_vecNotifications[i];
-		visitor.Visit( *pNotification );
+		visitor.Visit(*pNotification);
 	}
 }
 
-CEconNotification *CEconNotificationQueue::GetNotification( int iID )
+CEconNotification *CEconNotificationQueue::GetNotification(int iID)
 {
-	FOR_EACH_VEC( m_vecNotifications, i )
+	FOR_EACH_VEC(m_vecNotifications, i)
 	{
 		CEconNotification *pNotification = m_vecNotifications[i];
-		if ( pNotification->GetID() == iID )
+		if(pNotification->GetID() == iID)
 		{
 			return pNotification;
 		}
@@ -153,11 +157,11 @@ CEconNotification *CEconNotificationQueue::GetNotification( int iID )
 	return NULL;
 }
 
-CEconNotification *CEconNotificationQueue::GetNotificationByIndex( int idx )
+CEconNotification *CEconNotificationQueue::GetNotificationByIndex(int idx)
 {
-	if ( idx < 0 || idx >= m_vecNotifications.Count() )
+	if(idx < 0 || idx >= m_vecNotifications.Count())
 	{
-		Assert( !"Invalid index passed to GetNotificationByIndex" );
+		Assert(!"Invalid index passed to GetNotificationByIndex");
 		return NULL;
 	}
 	return m_vecNotifications[idx];
@@ -166,14 +170,15 @@ CEconNotification *CEconNotificationQueue::GetNotificationByIndex( int idx )
 void CEconNotificationQueue::Update()
 {
 	float flNowTime = engine->Time();
-	for ( int i = 0; i < m_vecNotifications.Count(); )
+	for(int i = 0; i < m_vecNotifications.Count();)
 	{
 		CEconNotification *pNotification = m_vecNotifications[i];
-		if ( pNotification->GetIsInUse() == false && pNotification->GetExpireTime() >= 0 && pNotification->GetExpireTime() < flNowTime )
+		if(pNotification->GetIsInUse() == false && pNotification->GetExpireTime() >= 0 &&
+		   pNotification->GetExpireTime() < flNowTime)
 		{
 			pNotification->Expired();
 			delete pNotification;
-			m_vecNotifications.Remove( i );
+			m_vecNotifications.Remove(i);
 			continue;
 		}
 		pNotification->UpdateTick();
@@ -183,18 +188,18 @@ void CEconNotificationQueue::Update()
 
 //-----------------------------------------------------------------------------
 
-static void ColorizeText( CEconNotification *pNotification, CExLabel *pControl, const wchar_t* wszText )
+static void ColorizeText(CEconNotification *pNotification, CExLabel *pControl, const wchar_t *wszText)
 {
 	static wchar_t wszStrippedText[2048];
 
-	if ( pControl == NULL )
+	if(pControl == NULL)
 		return;
 
 	pControl->GetTextImage()->ClearColorChangeStream();
 
-	if ( wszText == NULL )
+	if(wszText == NULL)
 	{
-		pControl->SetText( L"" );
+		pControl->SetText(L"");
 		return;
 	}
 
@@ -202,10 +207,10 @@ static void ColorizeText( CEconNotification *pNotification, CExLabel *pControl, 
 	int endIdx = 0;
 	int insertIdx = 0;
 	bool bContinue = true;
-	while ( bContinue )
+	while(bContinue)
 	{
 		bool bSetColor = false;
-		switch ( wszText[endIdx] )
+		switch(wszText[endIdx])
 		{
 			case 0:
 				bContinue = false;
@@ -224,26 +229,26 @@ static void ColorizeText( CEconNotification *pNotification, CExLabel *pControl, 
 				bSetColor = true;
 				break;
 			case COLOR_ACHIEVEMENT:
+			{
+				vgui::IScheme *pSourceScheme = vgui::scheme()->GetIScheme(vgui::scheme()->GetScheme("SourceScheme"));
+				if(pSourceScheme)
 				{
-					vgui::IScheme *pSourceScheme = vgui::scheme()->GetIScheme( vgui::scheme()->GetScheme( "SourceScheme" ) ); 
-					if ( pSourceScheme )
-					{
-						newColor = pSourceScheme->GetColor( "SteamLightGreen", pControl->GetBgColor() );
-					}
-					else
-					{
-						newColor = pControl->GetFgColor();
-					}
-					bSetColor = true;
+					newColor = pSourceScheme->GetColor("SteamLightGreen", pControl->GetBgColor());
 				}
-				break;
+				else
+				{
+					newColor = pControl->GetFgColor();
+				}
+				bSetColor = true;
+			}
+			break;
 			case COLOR_CUSTOM:
 				newColor = pControl->GetFgColor();
 				KeyValues *pKeyValues = pNotification->GetKeyValues();
-				if ( pKeyValues )
+				if(pKeyValues)
 				{
-					KeyValues* pColor = pKeyValues->FindKey( "custom_color" );
-					if ( pColor )
+					KeyValues *pColor = pKeyValues->FindKey("custom_color");
+					if(pColor)
 					{
 						newColor = pColor->GetColor();
 					}
@@ -251,9 +256,9 @@ static void ColorizeText( CEconNotification *pNotification, CExLabel *pControl, 
 				bSetColor = true;
 				break;
 		}
-		if ( bSetColor )
+		if(bSetColor)
 		{
-			pControl->GetTextImage()->AddColorChange( newColor, insertIdx );
+			pControl->GetTextImage()->AddColorChange(newColor, insertIdx);
 		}
 		else
 		{
@@ -261,83 +266,85 @@ static void ColorizeText( CEconNotification *pNotification, CExLabel *pControl, 
 		}
 		++endIdx;
 	}
-	pControl->SetText( wszStrippedText );
+	pControl->SetText(wszStrippedText);
 }
 
 // generic "toast" for notifications
 class CGenericNotificationToast : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CGenericNotificationToast, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CGenericNotificationToast, vgui::EditablePanel);
+
 public:
-	CGenericNotificationToast( vgui::Panel *parent, int iNotificationID, bool bMainMenu );
+	CGenericNotificationToast(vgui::Panel *parent, int iNotificationID, bool bMainMenu);
 	virtual ~CGenericNotificationToast();
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 	virtual void PerformLayout();
+
 protected:
-	int 				m_iNotificationID;
-	vgui::Panel			*m_pAvatarBG;
-	CAvatarImagePanel	*m_pAvatar;
-	bool				m_bMainMenu;
+	int m_iNotificationID;
+	vgui::Panel *m_pAvatarBG;
+	CAvatarImagePanel *m_pAvatar;
+	bool m_bMainMenu;
 };
 
-CGenericNotificationToast::CGenericNotificationToast( vgui::Panel *parent, int iNotificationID, bool bMainMenu )
-	: BaseClass( parent, "GenericNotificationToast" )
-	, m_iNotificationID( iNotificationID )
-	, m_pAvatar( NULL )
-	, m_pAvatarBG( NULL )
-	, m_bMainMenu( bMainMenu )
+CGenericNotificationToast::CGenericNotificationToast(vgui::Panel *parent, int iNotificationID, bool bMainMenu)
+	: BaseClass(parent, "GenericNotificationToast"),
+	  m_iNotificationID(iNotificationID),
+	  m_pAvatar(NULL),
+	  m_pAvatarBG(NULL),
+	  m_bMainMenu(bMainMenu)
 {
 }
 
-CGenericNotificationToast::~CGenericNotificationToast()
-{
-}
+CGenericNotificationToast::~CGenericNotificationToast() {}
 
-void CGenericNotificationToast::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CGenericNotificationToast::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
-	CEconNotification *pNotification = NotificationQueue_Get( m_iNotificationID );
+	CEconNotification *pNotification = NotificationQueue_Get(m_iNotificationID);
 	bool bHighPriority = pNotification && pNotification->BHighPriority();
 	KeyValues *pConditions = NULL;
 
-	if ( bHighPriority )
+	if(bHighPriority)
 	{
-		pConditions = new KeyValues( "conditions" );
-		if ( bHighPriority )
+		pConditions = new KeyValues("conditions");
+		if(bHighPriority)
 		{
-			KeyValues *pSubKey = new KeyValues( "if_high_priority" );
-			pConditions->AddSubKey( pSubKey );
+			KeyValues *pSubKey = new KeyValues("if_high_priority");
+			pConditions->AddSubKey(pSubKey);
 		}
 	}
 
-	if ( m_bMainMenu )
+	if(m_bMainMenu)
 	{
-		LoadControlSettings( "Resource/UI/Econ/GenericNotificationToastMainMenu.res", NULL, NULL, pConditions );
+		LoadControlSettings("Resource/UI/Econ/GenericNotificationToastMainMenu.res", NULL, NULL, pConditions);
 	}
 	else
 	{
-		LoadControlSettings( "Resource/UI/Econ/GenericNotificationToast.res", NULL, NULL, pConditions );
+		LoadControlSettings("Resource/UI/Econ/GenericNotificationToast.res", NULL, NULL, pConditions);
 	}
 
-	if ( pConditions )
+	if(pConditions)
 	{
 		pConditions->deleteThis();
 	}
 
-	m_pAvatar = dynamic_cast< CAvatarImagePanel *>( FindChildByName("AvatarImage") );
+	m_pAvatar = dynamic_cast<CAvatarImagePanel *>(FindChildByName("AvatarImage"));
 	m_pAvatarBG = FindChildByName("AvatarBGPanel");
 
-	if ( pNotification )
+	if(pNotification)
 	{
-		if ( pNotification->GetSteamID() == CSteamID() )
+		if(pNotification->GetSteamID() == CSteamID())
 		{
-			ColorizeText( pNotification, dynamic_cast< CExLabel* >( FindChildByName( "TextLabel" ) ), pNotification->GetText() );
+			ColorizeText(pNotification, dynamic_cast<CExLabel *>(FindChildByName("TextLabel")),
+						 pNotification->GetText());
 		}
 		else
 		{
-			ColorizeText( pNotification, dynamic_cast< CExLabel* >( FindChildByName( "AvatarTextLabel" ) ), pNotification->GetText() );
+			ColorizeText(pNotification, dynamic_cast<CExLabel *>(FindChildByName("AvatarTextLabel")),
+						 pNotification->GetText());
 		}
 	}
 }
@@ -347,53 +354,53 @@ void CGenericNotificationToast::PerformLayout()
 	BaseClass::PerformLayout();
 
 	CSteamID steamID;
-	CEconNotification *pNotification = NotificationQueue_Get( m_iNotificationID );
-	if ( pNotification )
+	CEconNotification *pNotification = NotificationQueue_Get(m_iNotificationID);
+	if(pNotification)
 	{
 		steamID = pNotification->GetSteamID();
 	}
 
 	int iMinHeight = 0;
-	if ( m_pAvatar )
+	if(m_pAvatar)
 	{
-		if ( steamID != CSteamID() )
+		if(steamID != CSteamID())
 		{
-			m_pAvatar->SetVisible( true );
-			m_pAvatar->SetShouldDrawFriendIcon( false );
-			m_pAvatar->SetPlayer( steamID, k_EAvatarSize64x64 );
+			m_pAvatar->SetVisible(true);
+			m_pAvatar->SetShouldDrawFriendIcon(false);
+			m_pAvatar->SetPlayer(steamID, k_EAvatarSize64x64);
 			// make sure there's a minimum height
 			// note we use iY to ensure that there's a buffer below too
 			int iX, iY, iWidth, iHeight;
-			m_pAvatar->GetBounds( iX, iY, iWidth, iHeight );
+			m_pAvatar->GetBounds(iX, iY, iWidth, iHeight);
 			iMinHeight = 2 * iY + iHeight;
 		}
 		else
 		{
-			m_pAvatar->SetVisible( false );
+			m_pAvatar->SetVisible(false);
 			m_pAvatar->ClearAvatar();
 		}
 	}
-	if ( m_pAvatarBG )
+	if(m_pAvatarBG)
 	{
-		m_pAvatarBG->SetVisible( m_pAvatar != NULL && m_pAvatar->IsVisible() );
+		m_pAvatarBG->SetVisible(m_pAvatar != NULL && m_pAvatar->IsVisible());
 	}
 
 	const char *pTextLabelName = steamID != CSteamID() ? "AvatarTextLabel" : "TextLabel";
-	CExLabel* pText = dynamic_cast< CExLabel *>( FindChildByName( pTextLabelName ) );
-	if ( pText )
+	CExLabel *pText = dynamic_cast<CExLabel *>(FindChildByName(pTextLabelName));
+	if(pText)
 	{
-		pText->SetVisible( true );
-		pText->InvalidateLayout( true, false );
+		pText->SetVisible(true);
+		pText->InvalidateLayout(true, false);
 		int iWidth, iHeight;
-		pText->GetSize( iWidth, iHeight );
+		pText->GetSize(iWidth, iHeight);
 		int iContentWidth, iContentHeight;
-		pText->GetContentSize( iContentWidth, iContentHeight );
-		pText->SetSize( iWidth, iContentHeight );
+		pText->GetContentSize(iContentWidth, iContentHeight);
+		pText->SetSize(iWidth, iContentHeight);
 		int iDelta = iContentHeight - iHeight;
 		// resize ourselves to fit
 		int iContainerWidth, iContainerHeight;
-		GetSize( iContainerWidth, iContainerHeight );
-		SetSize( iContainerWidth, MAX( iContainerHeight + iDelta, iMinHeight ) );
+		GetSize(iContainerWidth, iContainerHeight);
+		SetSize(iContainerWidth, MAX(iContainerHeight + iDelta, iMinHeight));
 	}
 }
 
@@ -401,34 +408,34 @@ void CGenericNotificationToast::PerformLayout()
 
 class CNotificationToastControl : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CNotificationToastControl, vgui::EditablePanel );	
+	DECLARE_CLASS_SIMPLE(CNotificationToastControl, vgui::EditablePanel);
+
 public:
-	CNotificationToastControl( vgui::EditablePanel *pParent, vgui::EditablePanel *pNotificationToast, int iNotificationID, bool bAddControls )
-		: BaseClass( pParent, bAddControls ? "NotificationToastControl" : "NotificationToastContainer" )
-		, m_pChild( pNotificationToast )
-		, m_iNotificationID( iNotificationID )
-		, m_bAddControls( bAddControls )
-		, m_pTriggerButton( NULL )
-		, m_pAcceptButton( NULL )
-		, m_pDeclineButton( NULL )
-		, m_iOverrideHeight( 0 )
+	CNotificationToastControl(vgui::EditablePanel *pParent, vgui::EditablePanel *pNotificationToast,
+							  int iNotificationID, bool bAddControls)
+		: BaseClass(pParent, bAddControls ? "NotificationToastControl" : "NotificationToastContainer"),
+		  m_pChild(pNotificationToast),
+		  m_iNotificationID(iNotificationID),
+		  m_bAddControls(bAddControls),
+		  m_pTriggerButton(NULL),
+		  m_pAcceptButton(NULL),
+		  m_pDeclineButton(NULL),
+		  m_iOverrideHeight(0)
 	{
-		m_pChild->SetParent( this );
+		m_pChild->SetParent(this);
 	}
 
-	virtual ~CNotificationToastControl()
-	{
-	}
+	virtual ~CNotificationToastControl() {}
 
-	virtual void ApplySchemeSettings( vgui::IScheme *scheme )
+	virtual void ApplySchemeSettings(vgui::IScheme *scheme)
 	{
-		CEconNotification *pNotification = g_notificationQueue.GetNotification( m_iNotificationID );
+		CEconNotification *pNotification = g_notificationQueue.GetNotification(m_iNotificationID);
 
 		// It is not entirely clear why pNotification is allowed to be NULL. Weapon switching
 		// with pyro was causing crashes because of pNotification being NULL, and there were
 		// previously existing checks, but it's not clear why.
-		CEconNotification::EType eNotificationType = pNotification ? pNotification->NotificationType() \
-		                                                           : CEconNotification::eType_Basic;
+		CEconNotification::EType eNotificationType =
+			pNotification ? pNotification->NotificationType() : CEconNotification::eType_Basic;
 
 		bool bHighPriority = pNotification && pNotification->BHighPriority();
 		bool bCanDelete = false;
@@ -436,7 +443,7 @@ public:
 		bool bCanTrigger = false;
 		bool bOneButton = false;
 
-		switch ( eNotificationType )
+		switch(eNotificationType)
 		{
 			case CEconNotification::eType_AcceptDecline:
 				bCanAcceptDecline = true;
@@ -454,79 +461,79 @@ public:
 				bCanDelete = true;
 				break;
 			default:
-				Assert( !"Unhandled enum type" );
+				Assert(!"Unhandled enum type");
 		}
 
 		KeyValues *pConditions = NULL;
 
-		if ( bOneButton || bHighPriority )
+		if(bOneButton || bHighPriority)
 		{
-			pConditions = new KeyValues( "conditions" );
-			if ( bOneButton )
+			pConditions = new KeyValues("conditions");
+			if(bOneButton)
 			{
-				KeyValues *pSubKey = new KeyValues( "if_one_button" );
-				pConditions->AddSubKey( pSubKey );
+				KeyValues *pSubKey = new KeyValues("if_one_button");
+				pConditions->AddSubKey(pSubKey);
 			}
-			if ( bHighPriority )
+			if(bHighPriority)
 			{
-				KeyValues *pSubKey = new KeyValues( "if_high_priority" );
-				pConditions->AddSubKey( pSubKey );
+				KeyValues *pSubKey = new KeyValues("if_high_priority");
+				pConditions->AddSubKey(pSubKey);
 			}
 		}
 
-		if ( m_bAddControls )
+		if(m_bAddControls)
 		{
-			LoadControlSettings( "Resource/UI/Econ/NotificationToastControl.res", NULL, NULL, pConditions );
+			LoadControlSettings("Resource/UI/Econ/NotificationToastControl.res", NULL, NULL, pConditions);
 		}
 		else
 		{
-			LoadControlSettings( "Resource/UI/Econ/NotificationToastContainer.res", NULL, NULL, pConditions );
+			LoadControlSettings("Resource/UI/Econ/NotificationToastContainer.res", NULL, NULL, pConditions);
 		}
 
-		if ( pConditions )
+		if(pConditions)
 		{
 			pConditions->deleteThis();
 		}
 
-		BaseClass::ApplySchemeSettings( scheme );
+		BaseClass::ApplySchemeSettings(scheme);
 
-		GetSize( m_iOriginalWidth, m_iOriginalHeight );
+		GetSize(m_iOriginalWidth, m_iOriginalHeight);
 
-		CExButton *pDeleteButton = dynamic_cast< CExButton *>( FindChildByName( "DeleteButton" ) );
+		CExButton *pDeleteButton = dynamic_cast<CExButton *>(FindChildByName("DeleteButton"));
 
-		if ( pDeleteButton && bCanDelete )
+		if(pDeleteButton && bCanDelete)
 		{
-			pDeleteButton->AddActionSignalTarget( this );
-			pDeleteButton->SetVisible ( pNotification != NULL );
+			pDeleteButton->AddActionSignalTarget(this);
+			pDeleteButton->SetVisible(pNotification != NULL);
 		}
 
-		if ( pNotification == NULL )
+		if(pNotification == NULL)
 			return;
 
-		if ( bCanAcceptDecline )
+		if(bCanAcceptDecline)
 		{
-			m_pAcceptButton = dynamic_cast< CExButton * >( FindChildByName( "AcceptButton" ) );
-			m_pDeclineButton = dynamic_cast< CExButton * >( FindChildByName( "DeclineButton" ) );
-			if ( m_pAcceptButton && m_pDeclineButton )
+			m_pAcceptButton = dynamic_cast<CExButton *>(FindChildByName("AcceptButton"));
+			m_pDeclineButton = dynamic_cast<CExButton *>(FindChildByName("DeclineButton"));
+			if(m_pAcceptButton && m_pDeclineButton)
 			{
-				m_pAcceptButton->AddActionSignalTarget( this );
-				m_pDeclineButton->AddActionSignalTarget( this );
-				m_pAcceptButton->SetVisible( true );
-				m_pDeclineButton->SetVisible( true );
+				m_pAcceptButton->AddActionSignalTarget(this);
+				m_pDeclineButton->AddActionSignalTarget(this);
+				m_pAcceptButton->SetVisible(true);
+				m_pDeclineButton->SetVisible(true);
 				int posX, posY;
-				m_pAcceptButton->GetPos( posX, posY );
+				m_pAcceptButton->GetPos(posX, posY);
 				m_iButtonOffsetY = GetTall() - posY;
 			}
 		}
-		if ( bCanTrigger )
+		if(bCanTrigger)
 		{
-			m_pTriggerButton = dynamic_cast< CExButton *>( FindChildByName( "TriggerButton" ) );
-			if ( m_pTriggerButton )
+			m_pTriggerButton = dynamic_cast<CExButton *>(FindChildByName("TriggerButton"));
+			if(m_pTriggerButton)
 			{
-				m_pTriggerButton->AddActionSignalTarget( this );
-				m_pTriggerButton->SetVisible( true );
+				m_pTriggerButton->AddActionSignalTarget(this);
+				m_pTriggerButton->SetVisible(true);
 				int posX, posY;
-				m_pTriggerButton->GetPos( posX, posY );
+				m_pTriggerButton->GetPos(posX, posY);
 				m_iButtonOffsetY = GetTall() - posY;
 			}
 		}
@@ -537,129 +544,129 @@ public:
 		BaseClass::PerformLayout();
 		m_pChild->PerformLayout();
 		int iWidth, iHeight;
-		m_pChild->GetSize( iWidth, iHeight );
+		m_pChild->GetSize(iWidth, iHeight);
 
 		// position control buttons
-		if ( iHeight + m_iButtonOffsetY > m_iOriginalHeight )
+		if(iHeight + m_iButtonOffsetY > m_iOriginalHeight)
 		{
-			if ( m_pAcceptButton && m_pDeclineButton )
+			if(m_pAcceptButton && m_pDeclineButton)
 			{
 				int posX, posY;
-				m_pAcceptButton->GetPos( posX, posY );
-//				int newPosY = iHeight;
-//				iHeight += m_iButtonOffsetY;
-//				m_pAcceptButton->SetPos( posX, newPosY );
-//				m_pDeclineButton->GetPos( posX, posY );
-//				m_pDeclineButton->SetPos( posX, newPosY );
+				m_pAcceptButton->GetPos(posX, posY);
+				//				int newPosY = iHeight;
+				//				iHeight += m_iButtonOffsetY;
+				//				m_pAcceptButton->SetPos( posX, newPosY );
+				//				m_pDeclineButton->GetPos( posX, posY );
+				//				m_pDeclineButton->SetPos( posX, newPosY );
 			}
-			else if ( m_pTriggerButton )
+			else if(m_pTriggerButton)
 			{
 				int posX, posY;
-				m_pTriggerButton->GetPos( posX, posY );
-//				posY = iHeight;
-//				iHeight += m_iButtonOffsetY;
-//				m_pTriggerButton->SetPos( posX, posY );
+				m_pTriggerButton->GetPos(posX, posY);
+				//				posY = iHeight;
+				//				iHeight += m_iButtonOffsetY;
+				//				m_pTriggerButton->SetPos( posX, posY );
 			}
 		}
 
 		// position help label
-		CEconNotification *pNotification = g_notificationQueue.GetNotification( m_iNotificationID );
-		CExLabel *pHelpLabel = dynamic_cast< CExLabel* >( FindChildByName( "HelpTextLabel" ) );
-		if ( pHelpLabel )
+		CEconNotification *pNotification = g_notificationQueue.GetNotification(m_iNotificationID);
+		CExLabel *pHelpLabel = dynamic_cast<CExLabel *>(FindChildByName("HelpTextLabel"));
+		if(pHelpLabel)
 		{
-			if ( pNotification )
+			if(pNotification)
 			{
 				const wchar_t *pszText = NULL;
 				const char *pszTextKey = pNotification->GetUnlocalizedHelpText();
-				if ( pszTextKey )
+				if(pszTextKey)
 				{
-					pszText = g_pVGuiLocalize->Find( pszTextKey );
+					pszText = g_pVGuiLocalize->Find(pszTextKey);
 				}
-				if ( pszText )
-				{					
+				if(pszText)
+				{
 					wchar_t wzFinal[512] = L"";
-					if ( ::input->IsSteamControllerActive() )
+					if(::input->IsSteamControllerActive())
 					{
-						UTIL_ReplaceKeyBindings( pszText, 0, wzFinal, sizeof( wzFinal ), GAME_ACTION_SET_FPSCONTROLS );
+						UTIL_ReplaceKeyBindings(pszText, 0, wzFinal, sizeof(wzFinal), GAME_ACTION_SET_FPSCONTROLS);
 					}
 					else
 					{
-						UTIL_ReplaceKeyBindings( pszText, 0, wzFinal, sizeof( wzFinal ) );
+						UTIL_ReplaceKeyBindings(pszText, 0, wzFinal, sizeof(wzFinal));
 					}
-					ColorizeText( pNotification, pHelpLabel, wzFinal );
+					ColorizeText(pNotification, pHelpLabel, wzFinal);
 				}
 			}
 
-			pHelpLabel->InvalidateLayout( true, false );
+			pHelpLabel->InvalidateLayout(true, false);
 			int posX, posY;
-			pHelpLabel->GetPos( posX, posY );
+			pHelpLabel->GetPos(posX, posY);
 			int iContentWidth, iContentHeight;
-			pHelpLabel->GetContentSize( iContentWidth, iContentHeight );
+			pHelpLabel->GetContentSize(iContentWidth, iContentHeight);
 			int iLabelWidth, iLabelHeight;
-			pHelpLabel->GetSize( iLabelWidth, iLabelHeight );
+			pHelpLabel->GetSize(iLabelWidth, iLabelHeight);
 			int iTextInsetX, iTextInsetY;
-			pHelpLabel->GetTextInset( &iTextInsetX, &iTextInsetY );
-			pHelpLabel->SetSize( iLabelWidth, iContentHeight + iTextInsetY );
+			pHelpLabel->GetTextInset(&iTextInsetX, &iTextInsetY);
+			pHelpLabel->SetSize(iLabelWidth, iContentHeight + iTextInsetY);
 			posY = iHeight;
-			pHelpLabel->SetPos( posX, posY - iTextInsetY );
+			pHelpLabel->SetPos(posX, posY - iTextInsetY);
 			iHeight += iContentHeight + iTextInsetY;
 		}
 
 		// resize ourselves to fit the child height wise
-		int iContainerHeight = MAX( m_iOriginalHeight, iHeight );
-		SetSize( m_iOriginalWidth, m_iOverrideHeight != 0 ? m_iOverrideHeight : iContainerHeight );
+		int iContainerHeight = MAX(m_iOriginalHeight, iHeight);
+		SetSize(m_iOriginalWidth, m_iOverrideHeight != 0 ? m_iOverrideHeight : iContainerHeight);
 	}
 
-	virtual void OnCommand( const char *command )
+	virtual void OnCommand(const char *command)
 	{
-		CEconNotification *pNotification = g_notificationQueue.GetNotification( m_iNotificationID );
-		
-		if ( pNotification != NULL )
+		CEconNotification *pNotification = g_notificationQueue.GetNotification(m_iNotificationID);
+
+		if(pNotification != NULL)
 		{
-			if ( !Q_strncmp( command, "delete", ARRAYSIZE( "delete" ) ) )
+			if(!Q_strncmp(command, "delete", ARRAYSIZE("delete")))
 			{
 				pNotification->Deleted();
-				g_notificationQueue.RemoveNotification( m_iNotificationID );
+				g_notificationQueue.RemoveNotification(m_iNotificationID);
 				return;
 			}
-			else if ( !Q_strncmp( command, "trigger", ARRAYSIZE( "trigger" ) ) )
+			else if(!Q_strncmp(command, "trigger", ARRAYSIZE("trigger")))
 			{
 				pNotification->Trigger();
 			}
-			else if ( !Q_strncmp( command, "accept", ARRAYSIZE( "accept" ) ) )
+			else if(!Q_strncmp(command, "accept", ARRAYSIZE("accept")))
 			{
 				pNotification->Accept();
 			}
-			else if ( !Q_strncmp( command, "decline", ARRAYSIZE( "decline" ) ) )
+			else if(!Q_strncmp(command, "decline", ARRAYSIZE("decline")))
 			{
 				pNotification->Decline();
 			}
 			else
 			{
-				BaseClass::OnCommand( command );
+				BaseClass::OnCommand(command);
 			}
 		}
 		else
 		{
-			BaseClass::OnCommand( command );
+			BaseClass::OnCommand(command);
 		}
 	}
 
-	int GetOverrideHeight() const 
+	int GetOverrideHeight() const
 	{
-		return m_iOverrideHeight; 
+		return m_iOverrideHeight;
 	}
 
-	void SetOverrideHeight( int iHeight )
+	void SetOverrideHeight(int iHeight)
 	{
 		m_iOverrideHeight = iHeight;
 	}
 
 private:
-	vgui::EditablePanel* m_pChild;
-	vgui::Panel* m_pTriggerButton;
-	vgui::Panel* m_pAcceptButton;
-	vgui::Panel* m_pDeclineButton;
+	vgui::EditablePanel *m_pChild;
+	vgui::Panel *m_pTriggerButton;
+	vgui::Panel *m_pAcceptButton;
+	vgui::Panel *m_pDeclineButton;
 	int m_iNotificationID;
 	int m_iOriginalWidth;
 	int m_iOriginalHeight;
@@ -681,216 +688,216 @@ struct NotificationUIInfo_t
 // this is the visualization of the notifications while in game
 class CNotificationQueuePanel : public CHudElement, public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CNotificationQueuePanel, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CNotificationQueuePanel, vgui::EditablePanel);
+
 public:
-	CNotificationQueuePanel( const char *pElementName ) 
-		: CHudElement( pElementName )
-		, BaseClass( NULL, "NotificationQueuePanel" )
-		, m_mapNotificationPanels( DefLessFunc(int) )
-		, m_flInvalidateTime( 0.0f )
-		, m_bInvalidated( false )
+	CNotificationQueuePanel(const char *pElementName)
+		: CHudElement(pElementName),
+		  BaseClass(NULL, "NotificationQueuePanel"),
+		  m_mapNotificationPanels(DefLessFunc(int)),
+		  m_flInvalidateTime(0.0f),
+		  m_bInvalidated(false)
 	{
 		vgui::Panel *pParent = g_pClientMode->GetViewport();
-		SetParent( pParent );
+		SetParent(pParent);
 
-		SetHiddenBits( HIDEHUD_MISCSTATUS );
+		SetHiddenBits(HIDEHUD_MISCSTATUS);
 	}
 
-	virtual ~CNotificationQueuePanel()
+	virtual ~CNotificationQueuePanel() {}
+
+	virtual bool ShouldDraw(void)
 	{
-	}
-
-	virtual bool ShouldDraw( void )
-	{
-		if ( !CHudElement::ShouldDraw() )
+		if(!CHudElement::ShouldDraw())
 		{
 			return false;
 		}
 
-		if ( engine->IsPlayingDemo() )
+		if(engine->IsPlayingDemo())
 		{
 			return false;
 		}
 
-		if ( cl_notifications_show_ingame.GetInt() == 0 )
+		if(cl_notifications_show_ingame.GetInt() == 0)
 		{
 			return false;
 		}
 
-		CHudVote *pHudVote = GET_HUDELEMENT( CHudVote );
-		if ( pHudVote && pHudVote->IsVoteUIActive() )
+		CHudVote *pHudVote = GET_HUDELEMENT(CHudVote);
+		if(pHudVote && pHudVote->IsVoteUIActive())
 		{
 			return false;
 		}
-		
+
 		return m_mapNotificationPanels.Count() > 0 || g_notificationQueue.HasItems();
 	}
 
-	virtual void PerformLayout( void )
+	virtual void PerformLayout(void)
 	{
 		BaseClass::PerformLayout();
 
 		// Get filtered list of only the notifications that show some in-game content
-		CUtlVector< CEconNotification *> notifications;
-		GetNotifications( notifications );
+		CUtlVector<CEconNotification *> notifications;
+		GetNotifications(notifications);
 
 		const float flMoveTime = cl_notifications_move_time.GetFloat();
-		float lerpPercentage = flMoveTime > 0 ? clamp( ( flMoveTime - m_flInvalidateTime ) / flMoveTime, 0.0f, 1.0f ) : 1.0f;
+		float lerpPercentage =
+			flMoveTime > 0 ? clamp((flMoveTime - m_flInvalidateTime) / flMoveTime, 0.0f, 1.0f) : 1.0f;
 		float flCurrTime = engine->Time();
 
 		// move the notifications around
 		const int kMaxVisibleNotifications = cl_notifications_max_num_visible.GetInt();
 
-		int iPosY = MIN( notifications.Count() - 1, kMaxVisibleNotifications - 1 ) * m_iOverlapOffset_Y;
-		int iPosX = MIN( notifications.Count() - 1, kMaxVisibleNotifications - 1 ) * m_iOverlapOffset_X;
+		int iPosY = MIN(notifications.Count() - 1, kMaxVisibleNotifications - 1) * m_iOverlapOffset_Y;
+		int iPosX = MIN(notifications.Count() - 1, kMaxVisibleNotifications - 1) * m_iOverlapOffset_X;
 		int zpos = 100;
 		int iPreviousHeight = 0;
-		for ( int i = 0; i < notifications.Count(); ++i )
+		for(int i = 0; i < notifications.Count(); ++i)
 		{
 			CEconNotification *pNotification = notifications[i];
-			int mapIdx = m_mapNotificationPanels.Find( pNotification->GetID() );
-			if ( m_mapNotificationPanels.IsValidIndex( mapIdx ) == false || pNotification->GetInGameLifeTime() < flCurrTime )
+			int mapIdx = m_mapNotificationPanels.Find(pNotification->GetID());
+			if(m_mapNotificationPanels.IsValidIndex(mapIdx) == false || pNotification->GetInGameLifeTime() < flCurrTime)
 			{
 				continue;
 			}
 			NotificationUIInfo_t &info = m_mapNotificationPanels[mapIdx];
 			CNotificationToastControl *pPanel = info.m_pPanel;
-			if ( pPanel )
+			if(pPanel)
 			{
-				if ( pPanel->IsVisible() == false )
+				if(pPanel->IsVisible() == false)
 				{
-					pPanel->SetVisible( true );
+					pPanel->SetVisible(true);
 				}
-				if ( i == 0 && pPanel->GetOverrideHeight() != 0 )
+				if(i == 0 && pPanel->GetOverrideHeight() != 0)
 				{
-					pPanel->SetOverrideHeight( 0 );
-					pPanel->InvalidateLayout( true, false );
+					pPanel->SetOverrideHeight(0);
+					pPanel->InvalidateLayout(true, false);
 				}
 				int iPanelX;
 				int iPanelY;
-				pPanel->GetPos( iPanelX, iPanelY );
-				if ( m_bInvalidated )
+				pPanel->GetPos(iPanelX, iPanelY);
+				if(m_bInvalidated)
 				{
 					info.m_iStartPosX = iPanelX;
 					info.m_iStartPosY = iPanelY;
 				}
 				int iNewPosX = iPosX;
 				int iNewPosY = iPosY;
-				iNewPosX = Lerp( lerpPercentage, info.m_iStartPosX, iNewPosX );
-				iNewPosY = Lerp( lerpPercentage, info.m_iStartPosY, iNewPosY );
-				pPanel->SetPos( iNewPosX, iNewPosY );
-				pPanel->SetZPos( --zpos );
+				iNewPosX = Lerp(lerpPercentage, info.m_iStartPosX, iNewPosX);
+				iNewPosY = Lerp(lerpPercentage, info.m_iStartPosY, iNewPosY);
+				pPanel->SetPos(iNewPosX, iNewPosY);
+				pPanel->SetZPos(--zpos);
 				bool bStoppedMoving = iNewPosX == iPanelX && iNewPosY == iPosY;
 				// only show panels that are more than we want visible if they are moving
-				if ( i > kMaxVisibleNotifications - 1 )
+				if(i > kMaxVisibleNotifications - 1)
 				{
-					if ( bStoppedMoving )
+					if(bStoppedMoving)
 					{
-						pPanel->SetVisible( false );
+						pPanel->SetVisible(false);
 					}
 					continue;
 				}
 				// don't poke out underneath if we are visible and stopped moving
-				if ( i != 0 && pPanel->GetOverrideHeight() == 0 && bStoppedMoving )
+				if(i != 0 && pPanel->GetOverrideHeight() == 0 && bStoppedMoving)
 				{
-					pPanel->SetOverrideHeight( MIN( pPanel->GetTall(), iPreviousHeight ) );
-					pPanel->InvalidateLayout( true, false );
+					pPanel->SetOverrideHeight(MIN(pPanel->GetTall(), iPreviousHeight));
+					pPanel->InvalidateLayout(true, false);
 				}
 				iPreviousHeight = pPanel->GetTall();
 
-				iPosY = MAX( 0, iPosY - m_iOverlapOffset_Y );
-				iPosX = MAX( 0, iPosX - m_iOverlapOffset_X );
+				iPosY = MAX(0, iPosY - m_iOverlapOffset_Y);
+				iPosX = MAX(0, iPosX - m_iOverlapOffset_X);
 			}
 		}
 		m_bInvalidated = false;
-		SetTall( ScreenHeight() - m_iOriginalY );
+		SetTall(ScreenHeight() - m_iOriginalY);
 	}
 
-	virtual void ApplySchemeSettings( vgui::IScheme *scheme )
+	virtual void ApplySchemeSettings(vgui::IScheme *scheme)
 	{
-		LoadControlSettings( "Resource/UI/Econ/NotificationQueuePanel.res" );
-		GetBounds( m_iOriginalX, m_iOriginalY, m_iOriginalWidth, m_iOriginalHeight );
+		LoadControlSettings("Resource/UI/Econ/NotificationQueuePanel.res");
+		GetBounds(m_iOriginalX, m_iOriginalY, m_iOriginalWidth, m_iOriginalHeight);
 
-		BaseClass::ApplySchemeSettings( scheme );
+		BaseClass::ApplySchemeSettings(scheme);
 	}
 
 	virtual void OnThink()
 	{
 		BaseClass::OnThink();
-		
-		if ( IsVisible() == false )
+
+		if(IsVisible() == false)
 		{
 			return;
 		}
 
 		// Get filtered list of only the notifications that show some in-game content
-		CUtlVector< CEconNotification *> notifications;
-		GetNotifications( notifications );
+		CUtlVector<CEconNotification *> notifications;
+		GetNotifications(notifications);
 
 		float flCurrTime = engine->Time();
 
 		// check to see if we have a panel for each notification
 		int i = 0;
-		for ( i = 0; i < notifications.Count(); ++i )
+		for(i = 0; i < notifications.Count(); ++i)
 		{
 			CEconNotification *pNotification = notifications[i];
-			int mapIdx = m_mapNotificationPanels.Find( pNotification->GetID() );
-			if ( m_mapNotificationPanels.IsValidIndex( mapIdx ) == false || pNotification->GetInGameLifeTime() < flCurrTime )
+			int mapIdx = m_mapNotificationPanels.Find(pNotification->GetID());
+			if(m_mapNotificationPanels.IsValidIndex(mapIdx) == false || pNotification->GetInGameLifeTime() < flCurrTime)
 			{
 				m_bInvalidated = true;
 				// create the panel and add it to the UI
 				// have it slide from the bottom
 				CNotificationToastControl *pControl = NULL;
 				int iPosX = 0, iPosY = 0;
-				vgui::EditablePanel *pPanel = pNotification->CreateUIElement( false );
-				if ( pPanel )
+				vgui::EditablePanel *pPanel = pNotification->CreateUIElement(false);
+				if(pPanel)
 				{
-					pControl = new CNotificationToastControl( this, pPanel, pNotification->GetID(), false );
-					pControl->GetPos( iPosX, iPosY );
-					pControl->SetPos( iPosX, ScreenHeight() );
+					pControl = new CNotificationToastControl(this, pPanel, pNotification->GetID(), false);
+					pControl->GetPos(iPosX, iPosY);
+					pControl->SetPos(iPosX, ScreenHeight());
 					iPosY = ScreenHeight();
 				}
-				NotificationUIInfo_t info = { pControl, iPosX, iPosY };
-				m_mapNotificationPanels.Insert( pNotification->GetID(), info );
+				NotificationUIInfo_t info = {pControl, iPosX, iPosY};
+				m_mapNotificationPanels.Insert(pNotification->GetID(), info);
 			}
 		}
 
 		// now check to see if we have panels and there is no matching notification
 		i = m_mapNotificationPanels.FirstInorder();
-		while ( m_mapNotificationPanels.IsValidIndex( i ) )
+		while(m_mapNotificationPanels.IsValidIndex(i))
 		{
 			int idx = i;
-			i = m_mapNotificationPanels.NextInorder( i );
-			int iID = m_mapNotificationPanels.Key( idx );
+			i = m_mapNotificationPanels.NextInorder(i);
+			int iID = m_mapNotificationPanels.Key(idx);
 
-			CEconNotification *pNotification = g_notificationQueue.GetNotification( iID );
-			if ( pNotification == NULL || pNotification->GetInGameLifeTime() < flCurrTime )
+			CEconNotification *pNotification = g_notificationQueue.GetNotification(iID);
+			if(pNotification == NULL || pNotification->GetInGameLifeTime() < flCurrTime)
 			{
 				// fade here, cause we don't really want to re-layout
 				NotificationUIInfo_t &info = m_mapNotificationPanels[idx];
 				vgui::EditablePanel *pPanel = info.m_pPanel;
-				if ( pPanel )
+				if(pPanel)
 				{
 					pPanel->MarkForDeletion();
 				}
-				m_mapNotificationPanels.RemoveAt( idx );
+				m_mapNotificationPanels.RemoveAt(idx);
 				m_bInvalidated = true;
 			}
 		}
 
-		if ( m_bInvalidated )
+		if(m_bInvalidated)
 		{
-			m_flInvalidateTime = MAX( cl_notifications_move_time.GetFloat(), 0.0f );
+			m_flInvalidateTime = MAX(cl_notifications_move_time.GetFloat(), 0.0f);
 		}
-		if ( m_flInvalidateTime > 0 )
+		if(m_flInvalidateTime > 0)
 		{
 			m_flInvalidateTime -= gpGlobals->frametime;
-			InvalidateLayout( true, false );
+			InvalidateLayout(true, false);
 		}
 	}
 
 protected:
-	typedef CUtlMap< int, NotificationUIInfo_t > tNotificationPanels;
+	typedef CUtlMap<int, NotificationUIInfo_t> tNotificationPanels;
 	tNotificationPanels m_mapNotificationPanels;
 	int m_iOriginalX;
 	int m_iOriginalY;
@@ -899,64 +906,64 @@ protected:
 	float m_flInvalidateTime;
 	bool m_bInvalidated;
 
-	CPanelAnimationVar( int, m_iVisibleBuffer, "buffer_between_visible", "5" );
-	CPanelAnimationVar( int, m_iOverlapOffset_X, "overlap_offset_x", "10" );
-	CPanelAnimationVar( int, m_iOverlapOffset_Y, "overlap_offset_y", "10" );
+	CPanelAnimationVar(int, m_iVisibleBuffer, "buffer_between_visible", "5");
+	CPanelAnimationVar(int, m_iOverlapOffset_X, "overlap_offset_x", "10");
+	CPanelAnimationVar(int, m_iOverlapOffset_Y, "overlap_offset_y", "10");
 
-	void GetNotifications(CUtlVector< CEconNotification *> &notifications )
+	void GetNotifications(CUtlVector<CEconNotification *> &notifications)
 	{
-		const CUtlVector< CEconNotification *> &allNotifications = g_notificationQueue.GetItems();
+		const CUtlVector<CEconNotification *> &allNotifications = g_notificationQueue.GetItems();
 
-		for (int i = 0 ; i < allNotifications.Count() ; ++i )
+		for(int i = 0; i < allNotifications.Count(); ++i)
 		{
 			CEconNotification *pNotification = allNotifications[i];
-			if ( pNotification->BShowInGameElements() )
+			if(pNotification->BShowInGameElements())
 			{
-				notifications.AddToTail( pNotification );
+				notifications.AddToTail(pNotification);
 			}
 		}
 	}
 };
 
-DECLARE_HUDELEMENT( CNotificationQueuePanel );
+DECLARE_HUDELEMENT(CNotificationQueuePanel);
 
 //-----------------------------------------------------------------------------
 
 CEconNotification::CEconNotification()
-	: m_pText("")
-	, m_pSoundFilename( NULL )
-	, m_flExpireTime( engine->Time() + 10.0f )
-	, m_pKeyValues( NULL )
-	, m_bInUse( false )
-	, m_steamID()
+	: m_pText(""),
+	  m_pSoundFilename(NULL),
+	  m_flExpireTime(engine->Time() + 10.0f),
+	  m_pKeyValues(NULL),
+	  m_bInUse(false),
+	  m_steamID()
 {
 }
 
 CEconNotification::~CEconNotification()
 {
-	if ( m_pKeyValues )
+	if(m_pKeyValues)
 	{
 		m_pKeyValues->deleteThis();
 	}
 }
 
-void CEconNotification::SetText( const char *pText )
+void CEconNotification::SetText(const char *pText)
 {
 	m_pText = pText;
 }
 
-void CEconNotification::AddStringToken( const char* pToken, const wchar_t* pValue )
+void CEconNotification::AddStringToken(const char *pToken, const wchar_t *pValue)
 {
-	if ( m_pKeyValues == NULL )
+	if(m_pKeyValues == NULL)
 	{
-		m_pKeyValues = new KeyValues( "CEconNotification" );
+		m_pKeyValues = new KeyValues("CEconNotification");
 	}
-	m_pKeyValues->SetWString( pToken, pValue );
+	m_pKeyValues->SetWString(pToken, pValue);
 }
 
-void CEconNotification::SetKeyValues( KeyValues *pKeyValues )
+void CEconNotification::SetKeyValues(KeyValues *pKeyValues)
 {
-	if ( m_pKeyValues != NULL )
+	if(m_pKeyValues != NULL)
 	{
 		m_pKeyValues->deleteThis();
 	}
@@ -970,7 +977,7 @@ KeyValues *CEconNotification::GetKeyValues() const
 
 const wchar_t *CEconNotification::GetText()
 {
-	g_pVGuiLocalize->ConstructString_safe( m_wszBuffer, m_pText, m_pKeyValues );
+	g_pVGuiLocalize->ConstructString_safe(m_wszBuffer, m_pText, m_pKeyValues);
 	return m_wszBuffer;
 }
 
@@ -979,7 +986,7 @@ int CEconNotification::GetID() const
 	return m_iID;
 }
 
-void CEconNotification::SetLifetime( float flSeconds )
+void CEconNotification::SetLifetime(float flSeconds)
 {
 	m_flExpireTime = engine->Time() + flSeconds;
 }
@@ -991,10 +998,10 @@ float CEconNotification::GetExpireTime() const
 
 float CEconNotification::GetInGameLifeTime() const
 {
-	return m_flExpireTime;	// default's to passed in time unless otherwise set (for derived classes)
+	return m_flExpireTime; // default's to passed in time unless otherwise set (for derived classes)
 }
 
-void CEconNotification::SetIsInUse( bool bInUse)
+void CEconNotification::SetIsInUse(bool bInUse)
 {
 	m_bInUse = bInUse;
 }
@@ -1004,7 +1011,7 @@ bool CEconNotification::GetIsInUse() const
 	return m_bInUse;
 }
 
-void CEconNotification::SetSteamID( const CSteamID &steamID )
+void CEconNotification::SetSteamID(const CSteamID &steamID)
 {
 	m_steamID = steamID;
 }
@@ -1030,34 +1037,24 @@ bool CEconNotification::BHighPriority()
 	return false;
 }
 
-void CEconNotification::Trigger()
-{
-}
+void CEconNotification::Trigger() {}
 
-void CEconNotification::Accept()
-{
-}
+void CEconNotification::Accept() {}
 
-void CEconNotification::Decline()
-{
-}
+void CEconNotification::Decline() {}
 
-void CEconNotification::Deleted()
-{
-}
+void CEconNotification::Deleted() {}
 
-void CEconNotification::Expired()
+void CEconNotification::Expired() {}
+vgui::EditablePanel *CEconNotification::CreateUIElement(bool bMainMenu) const
 {
-}
-vgui::EditablePanel *CEconNotification::CreateUIElement( bool bMainMenu ) const
-{
-	CGenericNotificationToast *pToast = new CGenericNotificationToast( NULL, m_iID, bMainMenu );
+	CGenericNotificationToast *pToast = new CGenericNotificationToast(NULL, m_iID, bMainMenu);
 	return pToast;
 }
 
 const char *CEconNotification::GetUnlocalizedHelpText()
 {
-	switch ( NotificationType() )
+	switch(NotificationType())
 	{
 		case eType_AcceptDecline:
 			return "#Notification_AcceptOrDecline_Help";
@@ -1065,144 +1062,142 @@ const char *CEconNotification::GetUnlocalizedHelpText()
 		case eType_Trigger:
 			return "#Notification_CanTrigger_Help";
 		default:
-			Assert( !"Unhandled enum value" );
+			Assert(!"Unhandled enum value");
 			// ---v
 		case eType_Basic:
 			return "#Notification_Remove_Help";
 	}
-
 }
 
 //-----------------------------------------------------------------------------
 
 class CMainMenuNotificationsControl : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CMainMenuNotificationsControl, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CMainMenuNotificationsControl, vgui::EditablePanel);
+
 public:
-	CMainMenuNotificationsControl( vgui::EditablePanel *pParent, const char *pElementName ) 
-		: BaseClass( pParent, pElementName )
-		, m_mapNotificationPanels( DefLessFunc(int) )
-		, m_iNumItems( 0 )
+	CMainMenuNotificationsControl(vgui::EditablePanel *pParent, const char *pElementName)
+		: BaseClass(pParent, pElementName), m_mapNotificationPanels(DefLessFunc(int)), m_iNumItems(0)
 	{
-		vgui::ivgui()->AddTickSignal( GetVPanel(), 250 );
+		vgui::ivgui()->AddTickSignal(GetVPanel(), 250);
 	}
 
 	virtual ~CMainMenuNotificationsControl()
 	{
-		vgui::ivgui()->RemoveTickSignal( GetVPanel() );
+		vgui::ivgui()->RemoveTickSignal(GetVPanel());
 	}
 
-	virtual void PerformLayout( void )
+	virtual void PerformLayout(void)
 	{
 		BaseClass::PerformLayout();
 
-		const CUtlVector< CEconNotification *> &notifications = g_notificationQueue.GetItems();
+		const CUtlVector<CEconNotification *> &notifications = g_notificationQueue.GetItems();
 
 		// position the notifications around
 		// grow down
 		int iTotalHeight = 0;
 		const int kBuffer = 5;
-		for ( int i = 0; i < notifications.Count(); ++i )
+		for(int i = 0; i < notifications.Count(); ++i)
 		{
 			CEconNotification *pNotification = notifications[i];
-			int mapIdx = m_mapNotificationPanels.Find( pNotification->GetID() );
-			if ( m_mapNotificationPanels.IsValidIndex( mapIdx ) == false )
+			int mapIdx = m_mapNotificationPanels.Find(pNotification->GetID());
+			if(m_mapNotificationPanels.IsValidIndex(mapIdx) == false)
 			{
 				continue;
 			}
 			NotificationUIInfo_t &info = m_mapNotificationPanels[mapIdx];
 			vgui::EditablePanel *pPanel = info.m_pPanel;
-			if ( pPanel )
+			if(pPanel)
 			{
 				int iPanelX;
 				int iPanelY;
 				int iWidth;
-				int iHeight;				
-				pPanel->GetBounds( iPanelX, iPanelY, iWidth, iHeight );
+				int iHeight;
+				pPanel->GetBounds(iPanelX, iPanelY, iWidth, iHeight);
 				int iNewPosX = iPanelX;
 				int iNewPosY = iTotalHeight;
-				pPanel->SetPos( iNewPosX, iNewPosY );
+				pPanel->SetPos(iNewPosX, iNewPosY);
 				iTotalHeight += iHeight + kBuffer;
 			}
 		}
 		int iWidth, iHeight;
-		GetSize( iWidth, iHeight );
-		SetSize( iWidth, iTotalHeight );
-		if ( iTotalHeight != iHeight )
+		GetSize(iWidth, iHeight);
+		SetSize(iWidth, iTotalHeight);
+		if(iTotalHeight != iHeight)
 		{
-			GetParent()->InvalidateLayout( false, false );
+			GetParent()->InvalidateLayout(false, false);
 		}
 	}
 
 	virtual void OnTick()
 	{
-		if ( m_iNumItems != g_notificationQueue.GetItems().Count() )
+		if(m_iNumItems != g_notificationQueue.GetItems().Count())
 		{
 			m_iNumItems = g_notificationQueue.GetItems().Count();
-			PostActionSignal( new KeyValues("Command", "command", "notifications_update" ) );
+			PostActionSignal(new KeyValues("Command", "command", "notifications_update"));
 		}
 	}
 
 	virtual void OnThink()
 	{
 		BaseClass::OnThink();
-		
-		if ( IsVisible() == false )
+
+		if(IsVisible() == false)
 		{
 			return;
 		}
 
-		const CUtlVector< CEconNotification *> &notifications = g_notificationQueue.GetItems();
+		const CUtlVector<CEconNotification *> &notifications = g_notificationQueue.GetItems();
 		bool bInvalidated = false;
 
 		// check to see if we have a panel for each notification
 		int i = 0;
-		for ( i = 0; i < notifications.Count(); ++i )
+		for(i = 0; i < notifications.Count(); ++i)
 		{
 			CEconNotification *pNotification = notifications[i];
-			int mapIdx = m_mapNotificationPanels.Find( pNotification->GetID() );
-			if ( m_mapNotificationPanels.IsValidIndex( mapIdx ) == false )
+			int mapIdx = m_mapNotificationPanels.Find(pNotification->GetID());
+			if(m_mapNotificationPanels.IsValidIndex(mapIdx) == false)
 			{
 				bInvalidated = true;
 				CNotificationToastControl *pControl = NULL;
-				vgui::EditablePanel *pPanel = pNotification->CreateUIElement( true );
-				if ( pPanel )
+				vgui::EditablePanel *pPanel = pNotification->CreateUIElement(true);
+				if(pPanel)
 				{
-					pControl = new CNotificationToastControl( this, pPanel, pNotification->GetID(), true );
+					pControl = new CNotificationToastControl(this, pPanel, pNotification->GetID(), true);
 				}
-				NotificationUIInfo_t info = { pControl, 0, 0 };
-				m_mapNotificationPanels.Insert( pNotification->GetID(), info );
+				NotificationUIInfo_t info = {pControl, 0, 0};
+				m_mapNotificationPanels.Insert(pNotification->GetID(), info);
 			}
 		}
 
 		// now check to see if we have panels and there is no matching notification
 		i = m_mapNotificationPanels.FirstInorder();
-		while ( m_mapNotificationPanels.IsValidIndex( i ) )
+		while(m_mapNotificationPanels.IsValidIndex(i))
 		{
 			int idx = i;
-			i = m_mapNotificationPanels.NextInorder( i );
-			int iID = m_mapNotificationPanels.Key( idx );
-			if ( g_notificationQueue.GetNotification( iID ) == NULL )
+			i = m_mapNotificationPanels.NextInorder(i);
+			int iID = m_mapNotificationPanels.Key(idx);
+			if(g_notificationQueue.GetNotification(iID) == NULL)
 			{
 				NotificationUIInfo_t &info = m_mapNotificationPanels[idx];
 				vgui::EditablePanel *pPanel = info.m_pPanel;
-				if ( pPanel )
+				if(pPanel)
 				{
 					pPanel->MarkForDeletion();
 				}
-				m_mapNotificationPanels.RemoveAt( idx );
+				m_mapNotificationPanels.RemoveAt(idx);
 				bInvalidated = true;
 			}
 		}
 
-		if ( bInvalidated )
+		if(bInvalidated)
 		{
-			InvalidateLayout( true, false );
+			InvalidateLayout(true, false);
 		}
 	}
 
 protected:
-	typedef CUtlMap< int, NotificationUIInfo_t > tNotificationPanels;
+	typedef CUtlMap<int, NotificationUIInfo_t> tNotificationPanels;
 	tNotificationPanels m_mapNotificationPanels;
 	int m_iNumItems;
 };
@@ -1210,66 +1205,66 @@ protected:
 // Show in UI
 class CNotificationsPresentPanel : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CNotificationsPresentPanel, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CNotificationsPresentPanel, vgui::EditablePanel);
+
 public:
-	CNotificationsPresentPanel( vgui::Panel *pParent, const char* pElementName ) : vgui::EditablePanel( pParent, "NotificationsPresentPanel" )
+	CNotificationsPresentPanel(vgui::Panel *pParent, const char *pElementName)
+		: vgui::EditablePanel(pParent, "NotificationsPresentPanel")
 	{
-		SetMouseInputEnabled( true );
+		SetMouseInputEnabled(true);
 	}
 
-	virtual ~CNotificationsPresentPanel()
-	{
-	}
+	virtual ~CNotificationsPresentPanel() {}
 
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme )
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme)
 	{
-		BaseClass::ApplySchemeSettings( pScheme );
-		
-		LoadControlSettings( "Resource/UI/Econ/NotificationsPresentPanel.res" );
+		BaseClass::ApplySchemeSettings(pScheme);
 
-		for ( int i = 0; i < GetChildCount(); i++ )
+		LoadControlSettings("Resource/UI/Econ/NotificationsPresentPanel.res");
+
+		for(int i = 0; i < GetChildCount(); i++)
 		{
-			vgui::Panel *pChild = GetChild( i );
-			pChild->SetMouseInputEnabled( false );
+			vgui::Panel *pChild = GetChild(i);
+			pChild->SetMouseInputEnabled(false);
 		}
 	}
-	
+
 	virtual void OnMousePressed(vgui::MouseCode code)
 	{
-		if ( code != MOUSE_LEFT )
+		if(code != MOUSE_LEFT)
 			return;
 
-		PostActionSignal( new KeyValues("Close") );
+		PostActionSignal(new KeyValues("Close"));
 
 		// audible feedback
 		const char *soundFilename = "ui/buttonclick.wav";
 
-		vgui::surface()->PlaySound( soundFilename );
+		vgui::surface()->PlaySound(soundFilename);
 	}
 };
 
-DECLARE_BUILD_FACTORY( CNotificationsPresentPanel );
+DECLARE_BUILD_FACTORY(CNotificationsPresentPanel);
 
 //-----------------------------------------------------------------------------
 // External interface for the notification queue
 
-int NotificationQueue_Add( CEconNotification *pNotification )
+int NotificationQueue_Add(CEconNotification *pNotification)
 {
-	if ( !engine->IsInGame() || (cl_notifications_show_ingame.GetBool() && pNotification->BShowInGameElements()) )
+	if(!engine->IsInGame() || (cl_notifications_show_ingame.GetBool() && pNotification->BShowInGameElements()))
 	{
-		vgui::surface()->PlaySound( pNotification->GetSoundFilename() );
+		vgui::surface()->PlaySound(pNotification->GetSoundFilename());
 	}
-	return g_notificationQueue.AddNotification( pNotification );
+	return g_notificationQueue.AddNotification(pNotification);
 }
 
-CEconNotification *NotificationQueue_Get( int iID )
+CEconNotification *NotificationQueue_Get(int iID)
 {
-	return g_notificationQueue.GetNotification( iID );
+	return g_notificationQueue.GetNotification(iID);
 }
 
-CEconNotification *NotificationQueue_GetByIndex( int idx )
+CEconNotification *NotificationQueue_GetByIndex(int idx)
 {
-	return g_notificationQueue.GetNotificationByIndex( idx );
+	return g_notificationQueue.GetNotificationByIndex(idx);
 }
 
 void NotificationQueue_RemoveAll()
@@ -1277,29 +1272,29 @@ void NotificationQueue_RemoveAll()
 	g_notificationQueue.RemoveAllNotifications();
 }
 
-void NotificationQueue_Remove( int iID )
+void NotificationQueue_Remove(int iID)
 {
-	g_notificationQueue.RemoveNotification( iID );
+	g_notificationQueue.RemoveNotification(iID);
 }
 
-void NotificationQueue_Remove( CEconNotification *pNotification )
+void NotificationQueue_Remove(CEconNotification *pNotification)
 {
-	g_notificationQueue.RemoveNotification( pNotification );
+	g_notificationQueue.RemoveNotification(pNotification);
 }
 
-void NotificationQueue_Remove( NotificationFilterFunc func )
+void NotificationQueue_Remove(NotificationFilterFunc func)
 {
-	g_notificationQueue.RemoveNotifications( func );
+	g_notificationQueue.RemoveNotifications(func);
 }
 
-int NotificationQueue_Count( NotificationFilterFunc func )
+int NotificationQueue_Count(NotificationFilterFunc func)
 {
-	return g_notificationQueue.CountNotifications( func );
+	return g_notificationQueue.CountNotifications(func);
 }
 
-void NotificationQueue_Visit( CEconNotificationVisitor &visitor )
+void NotificationQueue_Visit(CEconNotificationVisitor &visitor)
 {
-	g_notificationQueue.VisitNotifications( visitor );
+	g_notificationQueue.VisitNotifications(visitor);
 }
 
 void NotificationQueue_Update()
@@ -1312,22 +1307,22 @@ int NotificationQueue_GetNumNotifications()
 	return g_notificationQueue.GetItems().Count();
 }
 
-vgui::EditablePanel* NotificationQueue_CreateMainMenuUIElement( vgui::EditablePanel *pParent, const char *pElementName )
+vgui::EditablePanel *NotificationQueue_CreateMainMenuUIElement(vgui::EditablePanel *pParent, const char *pElementName)
 {
-	CMainMenuNotificationsControl *pControl = new CMainMenuNotificationsControl( pParent, pElementName );
-	pControl->AddActionSignalTarget( pParent );
+	CMainMenuNotificationsControl *pControl = new CMainMenuNotificationsControl(pParent, pElementName);
+	pControl->AddActionSignalTarget(pParent);
 	return pControl;
 }
 
 //-----------------------------------------------------------------------------
 
-CON_COMMAND( cl_trigger_first_notification, "Tries to accept/trigger the first notification" )
+CON_COMMAND(cl_trigger_first_notification, "Tries to accept/trigger the first notification")
 {
-	const CUtlVector< CEconNotification *> &notifications = g_notificationQueue.GetItems();
-	if ( notifications.Count() > 0 )
+	const CUtlVector<CEconNotification *> &notifications = g_notificationQueue.GetItems();
+	if(notifications.Count() > 0)
 	{
 		CEconNotification *pNotification = notifications[0];
-		switch ( pNotification->NotificationType() )
+		switch(pNotification->NotificationType())
 		{
 			case CEconNotification::eType_AcceptDecline:
 				pNotification->Accept();
@@ -1338,18 +1333,18 @@ CON_COMMAND( cl_trigger_first_notification, "Tries to accept/trigger the first n
 			case CEconNotification::eType_Basic:
 				break;
 			default:
-				Assert( !"Unhandled enum value" );
+				Assert(!"Unhandled enum value");
 		}
 	}
 }
 
-CON_COMMAND( cl_decline_first_notification, "Tries to decline/remove the first notification" )
+CON_COMMAND(cl_decline_first_notification, "Tries to decline/remove the first notification")
 {
-	const CUtlVector< CEconNotification *> &notifications = g_notificationQueue.GetItems();
-	if ( notifications.Count() > 0 )
+	const CUtlVector<CEconNotification *> &notifications = g_notificationQueue.GetItems();
+	if(notifications.Count() > 0)
 	{
 		CEconNotification *pNotification = notifications[0];
-		switch ( pNotification->NotificationType() )
+		switch(pNotification->NotificationType())
 		{
 			case CEconNotification::eType_AcceptDecline:
 				pNotification->Decline();
@@ -1362,7 +1357,7 @@ CON_COMMAND( cl_decline_first_notification, "Tries to decline/remove the first n
 				pNotification->MarkForDeletion();
 				break;
 			default:
-				Assert( !"Unhandled enum value" );
+				Assert(!"Unhandled enum value");
 		}
 	}
 }
@@ -1374,62 +1369,61 @@ CON_COMMAND( cl_decline_first_notification, "Tries to decline/remove the first n
 class CTFTestNotification : public CEconNotification
 {
 public:
-	CTFTestNotification( const char* pText, EType eType )
-		: CEconNotification()
-		, m_pText( pText )
-		, m_eType( eType )
-	{
-	}
+	CTFTestNotification(const char *pText, EType eType) : CEconNotification(), m_pText(pText), m_eType(eType) {}
 
-	virtual EType NotificationType() OVERRIDE { return m_eType; }
+	virtual EType NotificationType() OVERRIDE
+	{
+		return m_eType;
+	}
 
 	virtual void Trigger() OVERRIDE
 	{
-		ShowMessageBox( "", m_pText, "#GameUI_OK" );
+		ShowMessageBox("", m_pText, "#GameUI_OK");
 		MarkForDeletion();
 	}
 	virtual void Accept() OVERRIDE
 	{
-		ShowMessageBox( "Accept", m_pText, "#GameUI_OK" );
+		ShowMessageBox("Accept", m_pText, "#GameUI_OK");
 		MarkForDeletion();
 	}
 	virtual void Decline() OVERRIDE
 	{
-		ShowMessageBox( "Decline", m_pText, "#GameUI_OK" );
+		ShowMessageBox("Decline", m_pText, "#GameUI_OK");
 		MarkForDeletion();
 	}
+
 private:
 	const char *m_pText;
 	EType m_eType;
 };
 
-CON_COMMAND( cl_add_notification, "Adds a notification" )
+CON_COMMAND(cl_add_notification, "Adds a notification")
 {
-	if ( args.ArgC() >= 2 )
+	if(args.ArgC() >= 2)
 	{
 		CEconNotification::EType eType = CEconNotification::eType_Basic;
-		if ( args.ArgC() >= 5 )
+		if(args.ArgC() >= 5)
 		{
-			eType = (CEconNotification::EType)atoi( args[4] );
+			eType = (CEconNotification::EType)atoi(args[4]);
 		}
 
-		CEconNotification *pNotification = new CTFTestNotification( args[1], eType );
+		CEconNotification *pNotification = new CTFTestNotification(args[1], eType);
 
-		pNotification->SetText( args[1] );
-		if ( args.ArgC() >= 3 )
+		pNotification->SetText(args[1]);
+		if(args.ArgC() >= 3)
 		{
-			int iLifetime = atoi( args[2] );
-			pNotification->SetLifetime( iLifetime );
+			int iLifetime = atoi(args[2]);
+			pNotification->SetLifetime(iLifetime);
 		}
-		if ( args.ArgC() >= 4 )
+		if(args.ArgC() >= 4)
 		{
-			if ( steamapicontext && steamapicontext->SteamUser() )
+			if(steamapicontext && steamapicontext->SteamUser())
 			{
-				pNotification->SetSteamID( steamapicontext->SteamUser()->GetSteamID() );
+				pNotification->SetSteamID(steamapicontext->SteamUser()->GetSteamID());
 			}
 		}
-		int id = NotificationQueue_Add( pNotification );
-		Msg( "Added notification %d\n", id);
+		int id = NotificationQueue_Add(pNotification);
+		Msg("Added notification %d\n", id);
 	}
 }
 

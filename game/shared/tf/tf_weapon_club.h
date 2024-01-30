@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -23,17 +23,18 @@
 class CTFClub : public CTFWeaponBaseMelee
 {
 public:
-
-	DECLARE_CLASS( CTFClub, CTFWeaponBaseMelee );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_CLASS(CTFClub, CTFWeaponBaseMelee);
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CTFClub();
-	virtual int			GetWeaponID( void ) const			{ return TF_WEAPON_CLUB; }
+	virtual int GetWeaponID(void) const
+	{
+		return TF_WEAPON_CLUB;
+	}
 
 private:
-
-	CTFClub( const CTFClub & ) {}
+	CTFClub(const CTFClub &) {}
 };
 
 #endif // TF_WEAPON_CLUB_H

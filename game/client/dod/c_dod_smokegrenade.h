@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -15,24 +15,26 @@
 class C_DODSmokeGrenade : public C_DODBaseGrenade
 {
 public:
-	DECLARE_CLASS( C_DODSmokeGrenade, C_DODBaseGrenade );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_CLASS(C_DODSmokeGrenade, C_DODBaseGrenade);
+	DECLARE_NETWORKCLASS();
 
 	C_DODSmokeGrenade();
 
-	virtual const char *GetOverviewSpriteName( void );
+	virtual const char *GetOverviewSpriteName(void);
 
-	virtual const char *GetParticleTrailName( void ) { return NULL; }
+	virtual const char *GetParticleTrailName(void)
+	{
+		return NULL;
+	}
 
-	virtual void OnDataChanged( DataUpdateType_t updateType );
-	virtual void ClientThink( void );
+	virtual void OnDataChanged(DataUpdateType_t updateType);
+	virtual void ClientThink(void);
 
-	float CalcSmokeCloudRadius( void );
-	float CalcSmokeCloudAlpha( void );
+	float CalcSmokeCloudRadius(void);
+	float CalcSmokeCloudAlpha(void);
 
 private:
-	float m_flSmokeSpawnTime;	// time the smoke starts emitting
+	float m_flSmokeSpawnTime; // time the smoke starts emitting
 };
-
 
 #endif // C_DOD_SMOKEGRENADE_H

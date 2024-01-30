@@ -18,7 +18,7 @@ struct VS_INPUT
 
 struct VS_OUTPUT
 {
-    float4 vProjPos_POSITION		: POSITION;	
+	float4 vProjPos_POSITION		: POSITION;
 	float  vFog						: FOG;
 	float4 vBumpTexCoordXY_vTexCoordXY : TEXCOORD0;
 	float3 vTangentEyeVect			: TEXCOORD1;
@@ -63,7 +63,7 @@ VS_OUTPUT main( const VS_INPUT v )
 	// Reflection transform
 	o.vReflectXY_vRefractYX = float4( vReflectPos.x, vReflectPos.y, vRefractPos.y, vRefractPos.x );
 	o.W = vProjPos.w;
-	
+
 	o.screenCoord = vProjPos.x;
 
 	// Compute fog based on the position
@@ -102,5 +102,3 @@ VS_OUTPUT main( const VS_INPUT v )
 
 	return o;
 }
-
-

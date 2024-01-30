@@ -13,7 +13,6 @@ class Path;
 class CGameTrace;
 class CTakeDamageInfo;
 
-
 //--------------------------------------------------------------------------------------------------------------------------
 /**
  * Various processes can invoke a "reply" (ie: callback) via instances of this interface
@@ -21,7 +20,7 @@ class CTakeDamageInfo;
 class INextBotReply
 {
 public:
-	virtual void OnSuccess( INextBot *bot )  { }						// invoked when process completed successfully
+	virtual void OnSuccess(INextBot *bot) {} // invoked when process completed successfully
 
 	enum FailureReason
 	{
@@ -29,9 +28,8 @@ public:
 		INTERRUPTED,
 		FAILED
 	};
-	virtual void OnFail( INextBot *bot, FailureReason reason ) { }		// invoked when process failed
+	virtual void OnFail(INextBot *bot, FailureReason reason) {} // invoked when process failed
 };
-
 
 //--------------------------------------------------------------------------------------------------------------------------
 /**
@@ -40,37 +38,43 @@ public:
 class INextBotComponent : public INextBotEventResponder
 {
 public:
-	INextBotComponent( INextBot *bot );
-	virtual ~INextBotComponent() { }
+	INextBotComponent(INextBot *bot);
+	virtual ~INextBotComponent() {}
 
-	virtual void Reset( void )	{ m_lastUpdateTime = 0; m_curInterval = TICK_INTERVAL; }				// reset to initial state
-	virtual void Update( void ) = 0;									// update internal state
-	virtual void Upkeep( void ) { }										// lightweight update guaranteed to occur every server tick
+	virtual void Reset(void)
+	{
+		m_lastUpdateTime = 0;
+		m_curInterval = TICK_INTERVAL;
+	}							   // reset to initial state
+	virtual void Update(void) = 0; // update internal state
+	virtual void Upkeep(void) {}   // lightweight update guaranteed to occur every server tick
 
-	inline bool ComputeUpdateInterval();								// return false is no time has elapsed (interval is zero)
+	inline bool ComputeUpdateInterval(); // return false is no time has elapsed (interval is zero)
 	inline float GetUpdateInterval();
 
-	virtual INextBot *GetBot( void ) const  { return m_bot; }
-	
+	virtual INextBot *GetBot(void) const
+	{
+		return m_bot;
+	}
+
 private:
 	float m_lastUpdateTime;
 	float m_curInterval;
 
 	friend class INextBot;
-	
+
 	INextBot *m_bot;
-	INextBotComponent *m_nextComponent;									// simple linked list of components in the bot
+	INextBotComponent *m_nextComponent; // simple linked list of components in the bot
 };
 
-
-inline bool INextBotComponent::ComputeUpdateInterval() 
-{ 
-	if ( m_lastUpdateTime ) 
-	{ 
+inline bool INextBotComponent::ComputeUpdateInterval()
+{
+	if(m_lastUpdateTime)
+	{
 		float interval = gpGlobals->curtime - m_lastUpdateTime;
 
 		const float minInterval = 0.0001f;
-		if ( interval > minInterval )
+		if(interval > minInterval)
 		{
 			m_curInterval = interval;
 			m_lastUpdateTime = gpGlobals->curtime;
@@ -90,9 +94,9 @@ inline bool INextBotComponent::ComputeUpdateInterval()
 	return true;
 }
 
-inline float INextBotComponent::GetUpdateInterval() 
-{ 
-	return m_curInterval; 
+inline float INextBotComponent::GetUpdateInterval()
+{
+	return m_curInterval;
 }
 
 #endif // _NEXT_BOT_COMPONENT_INTERFACE_H_

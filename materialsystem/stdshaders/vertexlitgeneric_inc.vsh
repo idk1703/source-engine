@@ -12,7 +12,7 @@ sub VertexLitGeneric
 	local( $reflectionVector );
 
 	;------------------------------------------------------------------------------
-	; Vertex blending 
+	; Vertex blending
 	;------------------------------------------------------------------------------
 	&AllocateRegister( \$worldPos );
 	&AllocateRegister( \$worldNormal );
@@ -23,8 +23,8 @@ sub VertexLitGeneric
 	{
 		; NOTE: Don't do this optimization anymore since it would mean a gazillion combos
 		; of the flashlight shaders
-		; Special case for static prop lighting.  We can go directly from 
-		; world to proj space for position, with the exception of z, which 
+		; Special case for static prop lighting.  We can go directly from
+		; world to proj space for position, with the exception of z, which
 		; is needed for fogging *if* height fog is enabled.
 
 		; NOTE: We don't use this path if $envmap is defined since we need
@@ -142,4 +142,3 @@ sub VertexLitGeneric
 	}
 	&FreeRegister( \$worldPos );
 }
-

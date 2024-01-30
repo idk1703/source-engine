@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,7 +24,7 @@ class CChoreoChannelWidget;
 class CChoreoChannelWidget : public CChoreoWidget
 {
 public:
-	typedef CChoreoWidget		BaseClass;
+	typedef CChoreoWidget BaseClass;
 
 	enum
 	{
@@ -43,78 +43,77 @@ public:
 	};
 
 	// Construction
-								CChoreoChannelWidget( CChoreoActorWidget *parent );
-	virtual						~CChoreoChannelWidget( void );
+	CChoreoChannelWidget(CChoreoActorWidget *parent);
+	virtual ~CChoreoChannelWidget(void);
 
-	virtual void				Create( void );
-	virtual void				Layout( RECT& rc );
+	virtual void Create(void);
+	virtual void Layout(RECT &rc);
 
-	virtual	int					GetItemHeight( void );
+	virtual int GetItemHeight(void);
 
-	virtual void				redraw(CChoreoWidgetDrawHelper& drawHelper);
-	virtual void				redrawStatus( CChoreoWidgetDrawHelper& drawHelper, RECT& rcClient, int areaUnderMouse );
+	virtual void redraw(CChoreoWidgetDrawHelper &drawHelper);
+	virtual void redrawStatus(CChoreoWidgetDrawHelper &drawHelper, RECT &rcClient, int areaUnderMouse);
 
 	// Accessors
-	CChoreoChannel				*GetChannel( void );
-	void						SetChannel( CChoreoChannel *channel );
+	CChoreoChannel *GetChannel(void);
+	void SetChannel(CChoreoChannel *channel);
 
 	// Manipulate child events
-	void						AddEvent( CChoreoEventWidget *event );
-	void						RemoveEvent( CChoreoEventWidget *event );
+	void AddEvent(CChoreoEventWidget *event);
+	void RemoveEvent(CChoreoEventWidget *event);
 
-	void						MoveEventToTail( CChoreoEventWidget *event );
+	void MoveEventToTail(CChoreoEventWidget *event);
 
-	CChoreoEventWidget			*GetEvent( int num );
-	int							GetNumEvents( void );
+	CChoreoEventWidget *GetEvent(int num);
+	int GetNumEvents(void);
 
 	// Determine time for click position
-	float						GetTimeForMousePosition( int mx );
+	float GetTimeForMousePosition(int mx);
 
-	int							GetChannelItemUnderMouse( int mx, int my );
+	int GetChannelItemUnderMouse(int mx, int my);
 
-	CChoreoEvent				*GetCaptionClickedEvent();
-	void						GetMasterAndSlaves( CChoreoEvent *master, CUtlVector< CChoreoEvent * >& fulllist );
+	CChoreoEvent *GetCaptionClickedEvent();
+	void GetMasterAndSlaves(CChoreoEvent *master, CUtlVector<CChoreoEvent *> &fulllist);
 
-	void						HandleSelectorClicked();
+	void HandleSelectorClicked();
 
 private:
-
 	struct CloseCaptionInfo
 	{
-		bool		isSelector;
-		RECT		rcSelector;
-		RECT		rcCaption;
-		int			eventindex;
+		bool isSelector;
+		RECT rcSelector;
+		RECT rcCaption;
+		int eventindex;
 	};
 
-	void						GetCloseCaptionExpandCollapseRect( RECT& rc );
-	void						GetCloseCaptionLanguageRect( RECT& rc, bool previous );
-	void						GetCloseCaptions( CUtlVector< CloseCaptionInfo >& selectors );
+	void GetCloseCaptionExpandCollapseRect(RECT &rc);
+	void GetCloseCaptionLanguageRect(RECT &rc, bool previous);
+	void GetCloseCaptions(CUtlVector<CloseCaptionInfo> &selectors);
 
-	int							GetVerticalStackingCount( bool dolayout, RECT* rc );
-	void						LayoutEventInRow( CChoreoEventWidget *event, int row, RECT& rc );
+	int GetVerticalStackingCount(bool dolayout, RECT *rc);
+	void LayoutEventInRow(CChoreoEventWidget *event, int row, RECT &rc);
 
-	void						RenderCloseCaptionInfo( CChoreoWidgetDrawHelper& drawHelper, RECT& rcEventArea );
-	void						RenderCloseCaptions( CChoreoWidgetDrawHelper& drawHelper, RECT& rcEventArea );
-	void						RenderCloseCaptionExpandCollapseRect( CChoreoWidgetDrawHelper& drawHelper, RECT& rcEventArea );
-	void						RenderCloseCaptionSelectors( CChoreoWidgetDrawHelper& drawHelper, RECT& rcEventArea );
+	void RenderCloseCaptionInfo(CChoreoWidgetDrawHelper &drawHelper, RECT &rcEventArea);
+	void RenderCloseCaptions(CChoreoWidgetDrawHelper &drawHelper, RECT &rcEventArea);
+	void RenderCloseCaptionExpandCollapseRect(CChoreoWidgetDrawHelper &drawHelper, RECT &rcEventArea);
+	void RenderCloseCaptionSelectors(CChoreoWidgetDrawHelper &drawHelper, RECT &rcEventArea);
 
-	void						SetUsingCombinedFieldByTokenName( char const *token, bool usingcombinedfile );
+	void SetUsingCombinedFieldByTokenName(char const *token, bool usingcombinedfile);
 
-	bool						CheckHasAudio();
+	bool CheckHasAudio();
 
 	// The actor to whom we belong
-	CChoreoActorWidget			*m_pParent;
+	CChoreoActorWidget *m_pParent;
 
 	// The underlying scene object
-	CChoreoChannel				*m_pChannel;
+	CChoreoChannel *m_pChannel;
 
 	// Children
-	CUtlVector < CChoreoEventWidget * >	m_Events;
-	bool						m_bHasAudio;
-	int							m_nBaseHeight;
+	CUtlVector<CChoreoEventWidget *> m_Events;
+	bool m_bHasAudio;
+	int m_nBaseHeight;
 
-	int							m_nSelectorEventIndex;
+	int m_nSelectorEventIndex;
 };
 
 #endif // CHOREOCHANNELWIDGET_H

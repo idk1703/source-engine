@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -10,6 +10,5 @@
 #pragma once
 
 #include "render3dms.h"
-
 
 #endif // RENDER3D_H

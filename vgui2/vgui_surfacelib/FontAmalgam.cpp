@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,7 +18,7 @@
 //-----------------------------------------------------------------------------
 CFontAmalgam::CFontAmalgam()
 {
-	m_Fonts.EnsureCapacity( 4 );
+	m_Fonts.EnsureCapacity(4);
 	m_iMaxHeight = 0;
 	m_iMaxWidth = 0;
 }
@@ -26,9 +26,7 @@ CFontAmalgam::CFontAmalgam()
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CFontAmalgam::~CFontAmalgam()
-{
-}
+CFontAmalgam::~CFontAmalgam() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Data accessor
@@ -77,15 +75,15 @@ void CFontAmalgam::RemoveAll()
 //-----------------------------------------------------------------------------
 font_t *CFontAmalgam::GetFontForChar(int ch)
 {
-	for (int i = 0; i < m_Fonts.Count(); i++)
+	for(int i = 0; i < m_Fonts.Count(); i++)
 	{
 #if defined(LINUX)
-        if ( ch >= m_Fonts[i].lowRange && ch <= m_Fonts[i].highRange && m_Fonts[i].font->HasChar(ch))
+		if(ch >= m_Fonts[i].lowRange && ch <= m_Fonts[i].highRange && m_Fonts[i].font->HasChar(ch))
 #else
-		if (ch >= m_Fonts[i].lowRange && ch <= m_Fonts[i].highRange)
+		if(ch >= m_Fonts[i].lowRange && ch <= m_Fonts[i].highRange)
 #endif
 		{
-			Assert( m_Fonts[i].font->IsValid() );
+			Assert(m_Fonts[i].font->IsValid());
 			return m_Fonts[i].font;
 		}
 	}
@@ -98,17 +96,17 @@ font_t *CFontAmalgam::GetFontForChar(int ch)
 //-----------------------------------------------------------------------------
 void CFontAmalgam::SetFontScale(float sx, float sy)
 {
-	if (!m_Fonts.Count())
+	if(!m_Fonts.Count())
 		return;
 
 	// Make sure this is a bitmap font!
-	if ( GetFlags( 0 ) & vgui::ISurface::FONTFLAG_BITMAP )
+	if(GetFlags(0) & vgui::ISurface::FONTFLAG_BITMAP)
 	{
-		reinterpret_cast< CBitmapFont* >( m_Fonts[0].font )->SetScale( sx, sy );
+		reinterpret_cast<CBitmapFont *>(m_Fonts[0].font)->SetScale(sx, sy);
 	}
 	else
 	{
-		Warning( "%s: Can't set font scale on a non-bitmap font!\n", m_Fonts[0].font->GetName() );
+		Warning("%s: Can't set font scale on a non-bitmap font!\n", m_Fonts[0].font->GetName());
 	}
 }
 
@@ -117,7 +115,7 @@ void CFontAmalgam::SetFontScale(float sx, float sy)
 //-----------------------------------------------------------------------------
 int CFontAmalgam::GetFontHeight()
 {
-	if (!m_Fonts.Count())
+	if(!m_Fonts.Count())
 	{
 		return m_iMaxHeight;
 	}
@@ -129,7 +127,7 @@ int CFontAmalgam::GetFontHeight()
 //-----------------------------------------------------------------------------
 int CFontAmalgam::GetFontHeightRequested()
 {
-	if (!m_Fonts.Count())
+	if(!m_Fonts.Count())
 	{
 		return m_iMaxHeight;
 	}
@@ -148,10 +146,10 @@ int CFontAmalgam::GetFontMaxWidth()
 // Purpose: returns the name of the font that is loaded
 //-----------------------------------------------------------------------------
 const char *CFontAmalgam::GetFontName(int i)
-{	
-	if ( m_Fonts.IsValidIndex( i ) && m_Fonts[ i ].font )
+{
+	if(m_Fonts.IsValidIndex(i) && m_Fonts[i].font)
 	{
-		return m_Fonts[ i ].font->GetName();
+		return m_Fonts[i].font->GetName();
 	}
 	else
 	{
@@ -162,13 +160,13 @@ const char *CFontAmalgam::GetFontName(int i)
 //-----------------------------------------------------------------------------
 // Purpose: returns the family name of the font that is loaded
 //-----------------------------------------------------------------------------
-const char *CFontAmalgam::GetFontFamilyName( int i )
-{	
-	if ( m_Fonts.IsValidIndex( i ) && m_Fonts[ i ].font )
+const char *CFontAmalgam::GetFontFamilyName(int i)
+{
+	if(m_Fonts.IsValidIndex(i) && m_Fonts[i].font)
 	{
-		return m_Fonts[ i ].font->GetFamilyName();
+		return m_Fonts[i].font->GetFamilyName();
 	}
-	
+
 	return "";
 }
 
@@ -176,8 +174,8 @@ const char *CFontAmalgam::GetFontFamilyName( int i )
 // Purpose: returns the name of the font that is loaded
 //-----------------------------------------------------------------------------
 int CFontAmalgam::GetFlags(int i)
-{	
-	if ( m_Fonts.Count() && m_Fonts[i].font )
+{
+	if(m_Fonts.Count() && m_Fonts[i].font)
 	{
 		return m_Fonts[i].font->GetFlags();
 	}
@@ -191,23 +189,21 @@ int CFontAmalgam::GetFlags(int i)
 // Purpose: returns the number of fonts this amalgam contains
 //-----------------------------------------------------------------------------
 int CFontAmalgam::GetCount()
-{		
+{
 	return m_Fonts.Count();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: returns the max height of the font set
 //-----------------------------------------------------------------------------
 bool CFontAmalgam::GetUnderlined()
 {
-	if (!m_Fonts.Count())
+	if(!m_Fonts.Count())
 	{
 		return false;
 	}
 	return m_Fonts[0].font->GetUnderlined();
 }
-
 
 #ifdef DBGFLAG_VALIDATE
 //-----------------------------------------------------------------------------
@@ -216,11 +212,11 @@ bool CFontAmalgam::GetUnderlined()
 // Input:	validator -		Our global validator object
 //			pchName -		Our name (typically a member var in our container)
 //-----------------------------------------------------------------------------
-void CFontAmalgam::Validate( CValidator &validator, char *pchName )
+void CFontAmalgam::Validate(CValidator &validator, char *pchName)
 {
-	validator.Push( "CFontAmalgam", this, pchName );
+	validator.Push("CFontAmalgam", this, pchName);
 
-	ValidateObj( m_Fonts );
+	ValidateObj(m_Fonts);
 
 	validator.Pop();
 }

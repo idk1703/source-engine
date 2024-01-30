@@ -11,10 +11,10 @@
 #include "tf_team.h"
 #include "func_changeclass.h"
 
-LINK_ENTITY_TO_CLASS( func_changeclass, CChangeClassZone );
+LINK_ENTITY_TO_CLASS(func_changeclass, CChangeClassZone);
 
-#define TF_CHANGECLASS_SOUND				"ChangeClass.Touch"
-#define TF_CHANGECLASS_NEXT_USE_TIME		10.0f
+#define TF_CHANGECLASS_SOUND		 "ChangeClass.Touch"
+#define TF_CHANGECLASS_NEXT_USE_TIME 10.0f
 
 //=============================================================================
 //
@@ -22,7 +22,7 @@ LINK_ENTITY_TO_CLASS( func_changeclass, CChangeClassZone );
 //
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CChangeClassZone::CChangeClassZone()
 {
@@ -32,78 +32,75 @@ CChangeClassZone::CChangeClassZone()
 //-----------------------------------------------------------------------------
 // Purpose: Spawn function for the entity
 //-----------------------------------------------------------------------------
-void CChangeClassZone::Spawn( void )
+void CChangeClassZone::Spawn(void)
 {
 	Precache();
 	InitTrigger();
-	SetTouch( &CChangeClassZone::Touch );
+	SetTouch(&CChangeClassZone::Touch);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Precache function for the entity
 //-----------------------------------------------------------------------------
-void CChangeClassZone::Precache( void )
+void CChangeClassZone::Precache(void)
 {
-	PrecacheScriptSound( TF_CHANGECLASS_SOUND );
+	PrecacheScriptSound(TF_CHANGECLASS_SOUND);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CChangeClassZone::Touch( CBaseEntity *pOther )
+void CChangeClassZone::Touch(CBaseEntity *pOther)
 {
-	if ( !IsDisabled() )
+	if(!IsDisabled())
 	{
-		CTFPlayer *pPlayer = ToTFPlayer( pOther );
-		if ( pPlayer )
+		CTFPlayer *pPlayer = ToTFPlayer(pOther);
+		if(pPlayer)
 		{
-			if ( pPlayer->GetNextChangeClassTime() > gpGlobals->curtime )
+			if(pPlayer->GetNextChangeClassTime() > gpGlobals->curtime)
 				return;
 
 			int iTeam = GetTeamNumber();
-			if ( iTeam && ( pPlayer->GetTeamNumber() != iTeam ) )
+			if(iTeam && (pPlayer->GetTeamNumber() != iTeam))
 				return;
 
 			// bring up the player's changeclass menu
 			CCommand args;
-			args.Tokenize( "changeclass" );
-			pPlayer->ClientCommand( args );
-			pPlayer->SetNextChangeClassTime( gpGlobals->curtime + TF_CHANGECLASS_NEXT_USE_TIME );
+			args.Tokenize("changeclass");
+			pPlayer->ClientCommand(args);
+			pPlayer->SetNextChangeClassTime(gpGlobals->curtime + TF_CHANGECLASS_NEXT_USE_TIME);
 
-			CPASAttenuationFilter filter( pOther, TF_CHANGECLASS_SOUND );
-			EmitSound( filter, pOther->entindex(), TF_CHANGECLASS_SOUND );
+			CPASAttenuationFilter filter(pOther, TF_CHANGECLASS_SOUND);
+			EmitSound(filter, pOther->entindex(), TF_CHANGECLASS_SOUND);
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CChangeClassZone::EndTouch( CBaseEntity *pOther )
-{
+void CChangeClassZone::EndTouch(CBaseEntity *pOther) {}
 
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+void CChangeClassZone::InputEnable(inputdata_t &inputdata)
+{
+	SetDisabled(false);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CChangeClassZone::InputEnable( inputdata_t &inputdata )
+void CChangeClassZone::InputDisable(inputdata_t &inputdata)
 {
-	SetDisabled( false );
+	SetDisabled(true);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CChangeClassZone::InputDisable( inputdata_t &inputdata )
-{
-	SetDisabled( true );
-}
-
-//-----------------------------------------------------------------------------
-// Purpose:
-//-----------------------------------------------------------------------------
-bool CChangeClassZone::IsDisabled( void )
+bool CChangeClassZone::IsDisabled(void)
 {
 	return m_bDisabled;
 }
@@ -111,22 +108,22 @@ bool CChangeClassZone::IsDisabled( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CChangeClassZone::InputToggle( inputdata_t &inputdata )
+void CChangeClassZone::InputToggle(inputdata_t &inputdata)
 {
-	if ( m_bDisabled )
+	if(m_bDisabled)
 	{
-		SetDisabled( false );
+		SetDisabled(false);
 	}
 	else
 	{
-		SetDisabled( true );
+		SetDisabled(true);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CChangeClassZone::SetDisabled( bool bDisabled )
+void CChangeClassZone::SetDisabled(bool bDisabled)
 {
 	m_bDisabled = bDisabled;
 }

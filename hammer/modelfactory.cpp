@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -15,24 +15,23 @@
 #include "MapStudioModel.h"
 #include "ModelFactory.h"
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : eModelType - 
-//			pszModelData - 
-// Output : 
+// Purpose:
+// Input  : eModelType -
+//			pszModelData -
+// Output :
 //-----------------------------------------------------------------------------
 CMapClass *CModelFactory::CreateModel(ModelType_t eModelType, const char *pszModelData)
 {
-	switch (eModelType)
+	switch(eModelType)
 	{
 		case ModelTypeStudio:
 		{
 			int nLen = strlen(pszModelData);
-			if ((nLen > 4) && (!stricmp(&pszModelData[nLen - 4], ".mdl")))
+			if((nLen > 4) && (!stricmp(&pszModelData[nLen - 4], ".mdl")))
 			{
 				CMapStudioModel *pModel = new CMapStudioModel(pszModelData);
-				return(pModel);
+				return (pModel);
 			}
 			break;
 		}
@@ -43,5 +42,5 @@ CMapClass *CModelFactory::CreateModel(ModelType_t eModelType, const char *pszMod
 		}
 	}
 
-	return(NULL);
+	return (NULL);
 }

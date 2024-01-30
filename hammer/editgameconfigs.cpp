@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -20,27 +20,22 @@
 /////////////////////////////////////////////////////////////////////////////
 // CEditGameConfigs dialog
 
-
-CEditGameConfigs::CEditGameConfigs(BOOL bSelectOnly, 
-								   CWnd* pParent /*=NULL*/)
-	: CDialog(CEditGameConfigs::IDD, pParent)
+CEditGameConfigs::CEditGameConfigs(BOOL bSelectOnly, CWnd *pParent /*=NULL*/) : CDialog(CEditGameConfigs::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CEditGameConfigs)
-		// NOTE: the ClassWizard will add member initialization here
+	// NOTE: the ClassWizard will add member initialization here
 	//}}AFX_DATA_INIT
 
 	m_bSelectOnly = bSelectOnly;
 }
 
-
-void CEditGameConfigs::DoDataExchange(CDataExchange* pDX)
+void CEditGameConfigs::DoDataExchange(CDataExchange *pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CEditGameConfigs)
 	DDX_Control(pDX, IDC_CONFIGS, m_cConfigs);
 	//}}AFX_DATA_MAP
 }
-
 
 BEGIN_MESSAGE_MAP(CEditGameConfigs, CDialog)
 	//{{AFX_MSG_MAP(CEditGameConfigs)
@@ -55,7 +50,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CEditGameConfigs message handlers
 
-void CEditGameConfigs::OnAdd() 
+void CEditGameConfigs::OnAdd()
 {
 	char szName[128];
 	szName[0] = 0;
@@ -70,14 +65,13 @@ void CEditGameConfigs::OnAdd()
 	FillConfigList(pConfig->dwID);
 }
 
-void CEditGameConfigs::OnCopy() 
+void CEditGameConfigs::OnCopy()
 {
 	int iCurSel = m_cConfigs.GetCurSel();
 	if(iCurSel == CB_ERR)
 		return;
 
-	CGameConfig *pConfig = Options.configs.FindConfig(
-		m_cConfigs.GetItemData(iCurSel));
+	CGameConfig *pConfig = Options.configs.FindConfig(m_cConfigs.GetItemData(iCurSel));
 
 	CGameConfig *pNewConfig = Options.configs.AddConfig();
 	pNewConfig->CopyFrom(pConfig);
@@ -85,27 +79,26 @@ void CEditGameConfigs::OnCopy()
 	FillConfigList(pNewConfig->dwID);
 }
 
-void CEditGameConfigs::OnRemove() 
+void CEditGameConfigs::OnRemove()
 {
 	int iCurSel = m_cConfigs.GetCurSel();
 	if(iCurSel == CB_ERR)
 		return;
 
 	int iArrayIndex;
-	CGameConfig *pConfig = Options.configs.FindConfig(
-		m_cConfigs.GetItemData(iCurSel), &iArrayIndex);
+	CGameConfig *pConfig = Options.configs.FindConfig(m_cConfigs.GetItemData(iCurSel), &iArrayIndex);
 
 	// check to see if any docs use this game - if so, can't
 	//  delete it.
-	for ( int i=0; i<CMapDoc::GetDocumentCount(); i++ )
+	for(int i = 0; i < CMapDoc::GetDocumentCount(); i++)
 	{
 		CMapDoc *pDoc = CMapDoc::GetDocument(i);
 		if(pDoc->GetGame() == pConfig)
 		{
 			AfxMessageBox("You can't delete this game configuration now\n"
-				"because some loaded documents are using it.\n"
-				"If you want to delete it, you must close those\n"
-				"documents first.");
+						  "because some loaded documents are using it.\n"
+						  "If you want to delete it, you must close those\n"
+						  "documents first.");
 			return;
 		}
 	}
@@ -113,10 +106,11 @@ void CEditGameConfigs::OnRemove()
 	bool bResetDefaults = false;
 
 	// Check to see if this is the last configuation and prompt for the user to make a decision
-	if ( Options.configs.nConfigs <= 1 )
+	if(Options.configs.nConfigs <= 1)
 	{
-		if ( AfxMessageBox( "At least one configuration must be present!\n"
-							"Would you like to reset to the default configurations?", MB_YESNO ) == IDNO )
+		if(AfxMessageBox("At least one configuration must be present!\n"
+						 "Would you like to reset to the default configurations?",
+						 MB_YESNO) == IDNO)
 		{
 			return;
 		}
@@ -125,7 +119,7 @@ void CEditGameConfigs::OnRemove()
 	}
 
 	// Remove selection
-	m_cConfigs.DeleteString( iCurSel );
+	m_cConfigs.DeleteString(iCurSel);
 
 	// FIXME: This will apply the change even if you cancel the dialog.  This needs to store a copy
 	//		  of the data which then reconciles the two versions on OK or Apply! -- jdw
@@ -134,14 +128,14 @@ void CEditGameConfigs::OnRemove()
 	Options.configs.nConfigs--;
 
 	// Reset to defaults
-	if ( bResetDefaults )
+	if(bResetDefaults)
 	{
-		Options.configs.ResetGameConfigs( false );
+		Options.configs.ResetGameConfigs(false);
 		FillConfigList();
 	}
 
 	// Put the selection back to the top
-	m_cConfigs.SetCurSel( 0 );
+	m_cConfigs.SetCurSel(0);
 }
 
 void CEditGameConfigs::FillConfigList(DWORD dwSelectID)
@@ -149,7 +143,7 @@ void CEditGameConfigs::FillConfigList(DWORD dwSelectID)
 	// get current selection so we can keep it
 	DWORD dwCurID = dwSelectID;
 	int iNewIndex = -1;
-	
+
 	if(m_cConfigs.GetCurSel() != LB_ERR && dwCurID == 0xFFFFFFFF)
 	{
 		dwCurID = m_cConfigs.GetItemData(m_cConfigs.GetCurSel());
@@ -163,13 +157,13 @@ void CEditGameConfigs::FillConfigList(DWORD dwSelectID)
 		int iIndex = m_cConfigs.AddString(pConfig->szName);
 		m_cConfigs.SetItemData(iIndex, pConfig->dwID);
 
-		if (dwCurID == pConfig->dwID)
+		if(dwCurID == pConfig->dwID)
 		{
 			iNewIndex = iIndex;
 		}
 	}
 
-	if (iNewIndex == -1)
+	if(iNewIndex == -1)
 	{
 		iNewIndex = 0;
 	}
@@ -177,21 +171,20 @@ void CEditGameConfigs::FillConfigList(DWORD dwSelectID)
 
 	OnSelchangeConfigs();
 
-	if (m_bSelectOnly && Options.configs.nConfigs == 1)
+	if(m_bSelectOnly && Options.configs.nConfigs == 1)
 		OnOK();
 }
 
-void CEditGameConfigs::OnSelchangeConfigs() 
+void CEditGameConfigs::OnSelchangeConfigs()
 {
 	int iCurSel = m_cConfigs.GetCurSel();
 	if(iCurSel == LB_ERR)
 		return;
 
-	m_pSelectedGame = Options.configs.FindConfig(
-		m_cConfigs.GetItemData(iCurSel));
+	m_pSelectedGame = Options.configs.FindConfig(m_cConfigs.GetItemData(iCurSel));
 }
 
-BOOL CEditGameConfigs::OnInitDialog() 
+BOOL CEditGameConfigs::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
@@ -210,8 +203,7 @@ BOOL CEditGameConfigs::OnInitDialog()
 	return TRUE;
 }
 
-void CEditGameConfigs::OnDblclkConfigs() 
+void CEditGameConfigs::OnDblclkConfigs()
 {
 	OnOK();
-	
 }

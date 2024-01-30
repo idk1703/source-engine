@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -20,13 +20,10 @@
 #include "TextureSystem.h"
 #include "mapdoc.h"
 
-
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
-CReplaceTexDlg::CReplaceTexDlg(int nSelected, CWnd* pParent /*=NULL*/)
-	: CDialog(CReplaceTexDlg::IDD, pParent)
+CReplaceTexDlg::CReplaceTexDlg(int nSelected, CWnd *pParent /*=NULL*/) : CDialog(CReplaceTexDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CReplaceTexDlg)
 	m_iSearchAll = nSelected ? FALSE : TRUE;
@@ -41,8 +38,7 @@ CReplaceTexDlg::CReplaceTexDlg(int nSelected, CWnd* pParent /*=NULL*/)
 	m_nSelected = nSelected;
 }
 
-
-void CReplaceTexDlg::DoDataExchange(CDataExchange* pDX)
+void CReplaceTexDlg::DoDataExchange(CDataExchange *pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CReplaceTexDlg)
@@ -60,7 +56,6 @@ void CReplaceTexDlg::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-
 BEGIN_MESSAGE_MAP(CReplaceTexDlg, CDialog)
 	//{{AFX_MSG_MAP(CReplaceTexDlg)
 	ON_BN_CLICKED(IDC_BROWSEREPLACE, OnBrowsereplace)
@@ -73,7 +68,6 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CReplaceTexDlg message handlers
 
-
 void CReplaceTexDlg::BrowseTex(int iEdit)
 {
 	CString strTex;
@@ -85,11 +79,11 @@ void CReplaceTexDlg::BrowseTex(int iEdit)
 	pBrowser->SetUsed(iEdit == IDC_FIND);
 	pBrowser->SetInitialTexture(strTex);
 
-	if (pBrowser->DoModal() == IDOK)
+	if(pBrowser->DoModal() == IDOK)
 	{
 		IEditorTexture *pTex = g_Textures.FindActiveTexture(pBrowser->m_cTextureWindow.szCurTexture);
 		char szName[MAX_PATH];
-		if (pTex != NULL)
+		if(pTex != NULL)
 		{
 			pTex->GetShortName(szName);
 		}
@@ -103,12 +97,12 @@ void CReplaceTexDlg::BrowseTex(int iEdit)
 	delete pBrowser;
 }
 
-void CReplaceTexDlg::OnBrowsereplace() 
+void CReplaceTexDlg::OnBrowsereplace()
 {
 	BrowseTex(IDC_REPLACE);
 }
 
-void CReplaceTexDlg::OnBrowsefind() 
+void CReplaceTexDlg::OnBrowsefind()
 {
 	BrowseTex(IDC_FIND);
 }
@@ -117,7 +111,7 @@ void CReplaceTexDlg::OnBrowsefind()
 // find/replace text string updates:
 //
 
-void CReplaceTexDlg::OnUpdateFind() 
+void CReplaceTexDlg::OnUpdateFind()
 {
 	// get texture window and set texture in there
 	CString strTex;
@@ -126,7 +120,7 @@ void CReplaceTexDlg::OnUpdateFind()
 	m_cFindPic.SetTexture(pTex);
 }
 
-void CReplaceTexDlg::OnUpdateReplace() 
+void CReplaceTexDlg::OnUpdateReplace()
 {
 	// get texture window and set texture in there
 	CString strTex;
@@ -135,7 +129,7 @@ void CReplaceTexDlg::OnUpdateReplace()
 	m_cReplacePic.SetTexture(pTex);
 }
 
-BOOL CReplaceTexDlg::OnInitDialog() 
+BOOL CReplaceTexDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
@@ -150,19 +144,12 @@ BOOL CReplaceTexDlg::OnInitDialog()
 	return TRUE;
 }
 
-
 void CReplaceTexDlg::DoReplaceTextures()
 {
 	CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
-	if ( pDoc )
+	if(pDoc)
 	{
-		pDoc->ReplaceTextures( 
-			m_strFind, 
-			m_strReplace, 
-			m_iSearchAll, 
-			m_iAction | ( m_bMarkOnly ? 0x100 : 0 ), 
-			m_bHidden,
-			(m_bRescaleTextureCoordinates != 0)
-			);
+		pDoc->ReplaceTextures(m_strFind, m_strReplace, m_iSearchAll, m_iAction | (m_bMarkOnly ? 0x100 : 0), m_bHidden,
+							  (m_bRescaleTextureCoordinates != 0));
 	}
 }

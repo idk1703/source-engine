@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -19,11 +19,11 @@
 // CSwitchProps dialog
 class CSwitchProps : public CPropertyPage
 {
-// Construction
+	// Construction
 public:
 	virtual BOOL OnSetActive();
 	virtual BOOL OnKillActive();
-	CSwitchProps(CWnd* pParent = NULL);   // standard constructor
+	CSwitchProps(CWnd *pParent = NULL); // standard constructor
 
 	CPersistentString m_persistDefall;
 	CPersistentString m_persistDisplayMM2;
@@ -36,33 +36,34 @@ public:
 	CPersistentString m_persistPauseSecs;
 	bool alreadyAcknowledged;
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CSwitchProps)
-	enum { IDD = IDD_SWITCHES };
-	CStatic	m_OnlyHereToBeDisabledToo;
-	CStatic	m_OnlyHereToBeDisabled;
-	CButton	m_Pause;
-	CEdit	m_PauseSecs;
-	CButton	m_Defall;
-	CButton	m_DisplayStartupInfo;
-	CEdit	m_elimDays;
-	CButton	m_ElimOldPlrs;
-	CButton	m_UseSupportDir;
-	CButton	m_PersistPlayerStats;
-	CButton	m_DisplayMM2;
+	enum
+	{
+		IDD = IDD_SWITCHES
+	};
+	CStatic m_OnlyHereToBeDisabledToo;
+	CStatic m_OnlyHereToBeDisabled;
+	CButton m_Pause;
+	CEdit m_PauseSecs;
+	CButton m_Defall;
+	CButton m_DisplayStartupInfo;
+	CEdit m_elimDays;
+	CButton m_ElimOldPlrs;
+	CButton m_UseSupportDir;
+	CButton m_PersistPlayerStats;
+	CButton m_DisplayMM2;
 	//}}AFX_DATA
 
-
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CSwitchProps)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
 protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
+													 //}}AFX_VIRTUAL
 
+	// Implementation
+protected:
 	// Generated message map functions
 	//{{AFX_MSG(CSwitchProps)
 	afx_msg void OnDefall();

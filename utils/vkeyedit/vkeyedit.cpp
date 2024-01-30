@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -31,67 +31,65 @@ CreateInterfaceFn GetFileSystemFactory()
 	return g_FileSystemFactory;
 }
 
-
 //-----------------------------------------------------------------------------
 // Loads, unloads the file system DLL
 //-----------------------------------------------------------------------------
-bool FileSystem_LoadFileSystemModule( void )
+bool FileSystem_LoadFileSystemModule(void)
 {
 	char *sFileSystemModuleName = "filesystem_stdio.dll";
 
-	g_pFileSystemModule = Sys_LoadModule( sFileSystemModuleName );
-	Assert( g_pFileSystemModule );
-	if( !g_pFileSystemModule )
+	g_pFileSystemModule = Sys_LoadModule(sFileSystemModuleName);
+	Assert(g_pFileSystemModule);
+	if(!g_pFileSystemModule)
 	{
-		Error( "Unable to load %s", sFileSystemModuleName );
+		Error("Unable to load %s", sFileSystemModuleName);
 		return false;
 	}
 
-	g_FileSystemFactory = Sys_GetFactory( g_pFileSystemModule );
-	if( !g_FileSystemFactory )
+	g_FileSystemFactory = Sys_GetFactory(g_pFileSystemModule);
+	if(!g_FileSystemFactory)
 	{
-		Error( "Unable to get filesystem factory" );
+		Error("Unable to get filesystem factory");
 		return false;
 	}
-	g_pFileSystem = ( IFileSystem * )g_FileSystemFactory( FILESYSTEM_INTERFACE_VERSION, NULL );
-	Assert( g_pFileSystem );
-	if( !g_pFileSystem )
+	g_pFileSystem = (IFileSystem *)g_FileSystemFactory(FILESYSTEM_INTERFACE_VERSION, NULL);
+	Assert(g_pFileSystem);
+	if(!g_pFileSystem)
 	{
-		Error( "Unable to get IFileSystem interface from filesystem factory" );
+		Error("Unable to get IFileSystem interface from filesystem factory");
 		return false;
 	}
 	return true;
 }
 
-void FileSystem_UnloadFileSystemModule( void )
+void FileSystem_UnloadFileSystemModule(void)
 {
-	if ( !g_pFileSystemModule )
+	if(!g_pFileSystemModule)
 		return;
 
 	g_FileSystemFactory = NULL;
 
-	Sys_UnloadModule( g_pFileSystemModule );
+	Sys_UnloadModule(g_pFileSystemModule);
 	g_pFileSystemModule = 0;
 }
 
 //-----------------------------------------------------------------------------
-// Initialize, shutdown the file system 
+// Initialize, shutdown the file system
 //-----------------------------------------------------------------------------
-bool FileSystem_Init( )
+bool FileSystem_Init()
 {
-	if ( !g_pFileSystem )
+	if(!g_pFileSystem)
 		return false;
 
-	if ( g_pFileSystem->Init() != INIT_OK )
+	if(g_pFileSystem->Init() != INIT_OK)
 		return false;
 
-	g_pFileSystem->AddSearchPath( "", "root");
+	g_pFileSystem->AddSearchPath("", "root");
 
 	return true;
 }
 
-
-void FileSystem_Shutdown( void )
+void FileSystem_Shutdown(void)
 {
 	g_pFileSystem->Shutdown();
 }
@@ -102,8 +100,8 @@ void FileSystem_Shutdown( void )
 BEGIN_MESSAGE_MAP(CVkeyeditApp, CWinApp)
 	//{{AFX_MSG_MAP(CVkeyeditApp)
 	ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
-		// NOTE - the ClassWizard will add and remove mapping macros here.
-		//    DO NOT EDIT what you see in these blocks of generated code!
+	// NOTE - the ClassWizard will add and remove mapping macros here.
+	//    DO NOT EDIT what you see in these blocks of generated code!
 	//}}AFX_MSG_MAP
 	// Standard file based document commands
 	ON_COMMAND(ID_FILE_NEW, CWinApp::OnFileNew)
@@ -119,14 +117,14 @@ CVkeyeditApp::CVkeyeditApp()
 {
 	// TODO: add construction code here,
 	// Place all significant initialization in InitInstance
-	
+
 	// Start up the file system
-//	
+	//
 }
 
 CVkeyeditApp::~CVkeyeditApp()
 {
-//	FileSystem_Shutdown();
+	//	FileSystem_Shutdown();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -147,9 +145,9 @@ BOOL CVkeyeditApp::InitInstance()
 	//  the specific initialization routines you do not need.
 
 #ifdef _AFXDLL
-	Enable3dControls();			// Call this when using MFC in a shared DLL
+	Enable3dControls(); // Call this when using MFC in a shared DLL
 #else
-	Enable3dControlsStatic();	// Call this when linking to MFC statically
+	Enable3dControlsStatic(); // Call this when linking to MFC statically
 #endif
 
 	// Change the registry key under which our settings are stored.
@@ -157,17 +155,15 @@ BOOL CVkeyeditApp::InitInstance()
 	// such as the name of your company or organization.
 	SetRegistryKey(_T("Local AppWizard-Generated Applications"));
 
-	LoadStdProfileSettings();  // Load standard INI file options (including MRU)
+	LoadStdProfileSettings(); // Load standard INI file options (including MRU)
 
 	// Register the application's document templates.  Document templates
 	//  serve as the connection between documents, frame windows and views.
 
-	CSingleDocTemplate* pDocTemplate;
-	pDocTemplate = new CSingleDocTemplate(
-		IDR_MAINFRAME,
-		RUNTIME_CLASS(CVkeyeditDoc),
-		RUNTIME_CLASS(CMainFrame),       // main SDI frame window
-		RUNTIME_CLASS(CVkeyeditView));
+	CSingleDocTemplate *pDocTemplate;
+	pDocTemplate = new CSingleDocTemplate(IDR_MAINFRAME, RUNTIME_CLASS(CVkeyeditDoc),
+										  RUNTIME_CLASS(CMainFrame), // main SDI frame window
+										  RUNTIME_CLASS(CVkeyeditView));
 	AddDocTemplate(pDocTemplate);
 
 	FileSystem_LoadFileSystemModule();
@@ -178,7 +174,7 @@ BOOL CVkeyeditApp::InitInstance()
 	ParseCommandLine(cmdInfo);
 
 	// Dispatch commands specified on the command line
-	if (!ProcessShellCommand(cmdInfo))
+	if(!ProcessShellCommand(cmdInfo))
 		return FALSE;
 
 	// The one and only window has been initialized, so show and update it.
@@ -188,7 +184,6 @@ BOOL CVkeyeditApp::InitInstance()
 	return TRUE;
 }
 
-
 /////////////////////////////////////////////////////////////////////////////
 // CAboutDlg dialog used for App About
 
@@ -197,21 +192,24 @@ class CAboutDlg : public CDialog
 public:
 	CAboutDlg();
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CAboutDlg)
-	enum { IDD = IDD_ABOUTBOX };
+	enum
+	{
+		IDD = IDD_ABOUTBOX
+	};
 	//}}AFX_DATA
 
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CAboutDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
+protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
+													 //}}AFX_VIRTUAL
 
-// Implementation
+	// Implementation
 protected:
 	//{{AFX_MSG(CAboutDlg)
-		// No message handlers
+	// No message handlers
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
@@ -222,7 +220,7 @@ CAboutDlg::CAboutDlg() : CDialog(CAboutDlg::IDD)
 	//}}AFX_DATA_INIT
 }
 
-void CAboutDlg::DoDataExchange(CDataExchange* pDX)
+void CAboutDlg::DoDataExchange(CDataExchange *pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CAboutDlg)
@@ -231,7 +229,7 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
 	//{{AFX_MSG_MAP(CAboutDlg)
-		// No message handlers
+	// No message handlers
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -245,10 +243,9 @@ void CVkeyeditApp::OnAppAbout()
 /////////////////////////////////////////////////////////////////////////////
 // CVkeyeditApp message handlers
 
-
-int CVkeyeditApp::ExitInstance() 
+int CVkeyeditApp::ExitInstance()
 {
 	// TODO: Add your specialized code here and/or call the base class
-	
+
 	return CWinApp::ExitInstance();
 }

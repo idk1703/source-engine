@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -34,48 +34,58 @@ enum bonesaw_weapontypes_t
 class CTFBonesaw : public CTFWeaponBaseMelee
 {
 public:
-	DECLARE_CLASS( CTFBonesaw, CTFWeaponBaseMelee );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_CLASS(CTFBonesaw, CTFWeaponBaseMelee);
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CTFBonesaw() {}
-	virtual void		Activate( void );
-	virtual int			GetWeaponID( void ) const			
-	{ 
+	virtual void Activate(void);
+	virtual int GetWeaponID(void) const
+	{
 		const CEconItemView *pEconItemView = GetAttributeContainer()->GetItem();
-		if ( !V_strcmp( pEconItemView->GetItemDefinition()->GetDefinitionName(), "Harvester" ) )
+		if(!V_strcmp(pEconItemView->GetItemDefinition()->GetDefinitionName(), "Harvester"))
 			return TF_WEAPON_HARVESTER_SAW;
-		return TF_WEAPON_BONESAW; 
+		return TF_WEAPON_BONESAW;
 	}
 
-	virtual void		SecondaryAttack();
+	virtual void SecondaryAttack();
 
-	virtual bool		DefaultDeploy( char *szViewModel, char *szWeaponModel, int iActivity, char *szAnimExt );
-	int					GetBonesawType( void ) const		{ int iMode = 0; CALL_ATTRIB_HOOK_INT( iMode, set_weapon_mode ); return iMode; };
+	virtual bool DefaultDeploy(char *szViewModel, char *szWeaponModel, int iActivity, char *szAnimExt);
+	int GetBonesawType(void) const
+	{
+		int iMode = 0;
+		CALL_ATTRIB_HOOK_INT(iMode, set_weapon_mode);
+		return iMode;
+	};
 
-	virtual void		DoMeleeDamage( CBaseEntity* ent, trace_t& trace ) OVERRIDE;
-	
-	float				GetProgress( void ) { return 0; }
-	int					GetCount( void );
-	const char*			GetEffectLabelText( void ) { return "#TF_ORGANS"; }
+	virtual void DoMeleeDamage(CBaseEntity *ent, trace_t &trace) OVERRIDE;
 
-	float				GetBoneSawSpeedMod( void );
+	float GetProgress(void)
+	{
+		return 0;
+	}
+	int GetCount(void);
+	const char *GetEffectLabelText(void)
+	{
+		return "#TF_ORGANS";
+	}
+
+	float GetBoneSawSpeedMod(void);
 
 #ifdef CLIENT_DLL
-	virtual void		OnDataChanged( DataUpdateType_t updateType );
-	void				UpdateChargePoseParam( void );
-	virtual void		GetPoseParameters( CStudioHdr *pStudioHdr, float poseParameter[MAXSTUDIOPOSEPARAM] );
-	virtual void		UpdateAttachmentModels( void );
+	virtual void OnDataChanged(DataUpdateType_t updateType);
+	void UpdateChargePoseParam(void);
+	virtual void GetPoseParameters(CStudioHdr *pStudioHdr, float poseParameter[MAXSTUDIOPOSEPARAM]);
+	virtual void UpdateAttachmentModels(void);
 #endif
 
 private:
-
 #ifdef CLIENT_DLL
-	int			m_iUberChargePoseParam;
-	float		m_flChargeLevel;
+	int m_iUberChargePoseParam;
+	float m_flChargeLevel;
 #endif
 
-	CTFBonesaw( const CTFBonesaw & ) {}
+	CTFBonesaw(const CTFBonesaw &) {}
 };
 
 #endif // TF_WEAPON_BONESAW_H

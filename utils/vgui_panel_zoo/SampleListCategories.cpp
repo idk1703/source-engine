@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -11,21 +11,18 @@
 #include "tier1/KeyValues.h"
 #include "vgui_controls/SectionedListPanel.h"
 
-
 using namespace vgui;
 
-
-class SampleListPanelCats: public DemoPage
+class SampleListPanelCats : public DemoPage
 {
-	public:
-		SampleListPanelCats(Panel *parent, const char *name);
-		~SampleListPanelCats();
+public:
+	SampleListPanelCats(Panel *parent, const char *name);
+	~SampleListPanelCats();
 
-		void OnButtonClicked();
-	
-	private:
-		SectionedListPanel *m_pSectionedListPanel;
-		
+	void OnButtonClicked();
+
+private:
+	SectionedListPanel *m_pSectionedListPanel;
 };
 
 //-----------------------------------------------------------------------------
@@ -41,7 +38,7 @@ SampleListPanelCats::SampleListPanelCats(Panel *parent, const char *name) : Demo
 	m_pSectionedListPanel->AddColumnToSection(0, "items", "items", 0, 150);
 
 	// Add items to the list
-	KeyValues *data = new KeyValues ("items");
+	KeyValues *data = new KeyValues("items");
 	data->SetString("items", "Many actions");
 	m_pSectionedListPanel->AddItem(0, data);
 
@@ -60,7 +57,6 @@ SampleListPanelCats::SampleListPanelCats(Panel *parent, const char *name) : Demo
 	data->SetString("items", "Click menu");
 	m_pSectionedListPanel->AddItem(0, data);
 
-
 	// Add a new section
 	m_pSectionedListPanel->AddSection(1, "RIGHT CLICK");
 	m_pSectionedListPanel->AddColumnToSection(1, "items", "items", 0, 150);
@@ -78,26 +74,17 @@ SampleListPanelCats::SampleListPanelCats(Panel *parent, const char *name) : Demo
 	data->SetString("items", "Commands");
 	m_pSectionedListPanel->AddItem(1, data);
 
-
 	// Set its position.
 	m_pSectionedListPanel->SetPos(90, 25);
 	m_pSectionedListPanel->SetSize(200, 150);
-	
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-SampleListPanelCats::~SampleListPanelCats()
-{
-}
+SampleListPanelCats::~SampleListPanelCats() {}
 
-
-
-
-Panel* SampleListPanelCats_Create(Panel *parent)
+Panel *SampleListPanelCats_Create(Panel *parent)
 {
 	return new SampleListPanelCats(parent, "List Panel - categories");
 }
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -15,9 +15,7 @@
 #define DEBUG_LEAFVIS_H
 #pragma once
 
-
-extern void LeafVisBuild( const Vector& p );
-extern void LeafVisDraw( void );
-
+extern void LeafVisBuild(const Vector &p);
+extern void LeafVisDraw(void);
 
 #endif // DEBUG_LEAFVIS_H

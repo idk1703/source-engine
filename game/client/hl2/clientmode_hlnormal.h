@@ -1,12 +1,12 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
 // $NoKeywords: $
 //=============================================================================//
-#if !defined( CLIENTMODE_HLNORMAL_H )
+#if !defined(CLIENTMODE_HLNORMAL_H)
 #define CLIENTMODE_HLNORMAL_H
 #ifdef _WIN32
 #pragma once
@@ -23,20 +23,19 @@ namespace vgui
 	typedef unsigned long HScheme;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class ClientModeHLNormal : public ClientModeShared
 {
 public:
-	DECLARE_CLASS( ClientModeHLNormal, ClientModeShared );
+	DECLARE_CLASS(ClientModeHLNormal, ClientModeShared);
 
 	ClientModeHLNormal();
 	~ClientModeHLNormal();
 
-	virtual void	Init();
-	virtual bool	ShouldDrawCrosshair( void );
+	virtual void Init();
+	virtual bool ShouldDrawCrosshair(void);
 };
 
 extern IClientMode *GetClientModeNormal();

@@ -14,24 +14,21 @@
 #ifndef INCLUDED_MXPATH
 #define INCLUDED_MXPATH
 
-
-
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-bool mx_setcwd (const char *path);
-const char *mx_getcwd ();
+	bool mx_setcwd(const char *path);
+	const char *mx_getcwd();
 
-const char *mx_getpath (const char *filename);
-const char *mx_getextension (const char *filename);
+	const char *mx_getpath(const char *filename);
+	const char *mx_getextension(const char *filename);
 
-const char *mx_gettemppath ();
+	const char *mx_gettemppath();
 
 #ifdef __cplusplus
 }
 #endif
-
-
 
 #endif // INCLUDED_MXPATH

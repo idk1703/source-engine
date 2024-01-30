@@ -19,21 +19,20 @@ public:
 
 	virtual bool Init();
 	virtual void Shutdown();
-	virtual void Update( float frametime );
+	virtual void Update(float frametime);
 
-	bool GetRoundEndFunFact( int iWinningTeam, int iRoundResult, FunFact& funfact );
+	bool GetRoundEndFunFact(int iWinningTeam, int iRoundResult, FunFact &funfact);
 
 protected:
-	float ScoreFunFact( const FunFact& funfact );
-	void FireGameEvent( IGameEvent *event );
+	float ScoreFunFact(const FunFact &funfact);
+	void FireGameEvent(IGameEvent *event);
 
 private:
-
-	float m_playerCooldown[MAX_PLAYERS];	// Weights for all players.  Updated every round
+	float m_playerCooldown[MAX_PLAYERS]; // Weights for all players.  Updated every round
 
 	struct FunFactDatabaseEntry
 	{
-		const FunFactEvaluator* pEvaluator;
+		const FunFactEvaluator *pEvaluator;
 		int iOccurrences;
 		float fCooldown;
 	};
@@ -42,4 +41,3 @@ private:
 };
 
 #endif
-

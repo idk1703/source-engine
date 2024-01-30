@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -10,14 +10,12 @@
 #pragma once
 #endif
 
-
 void SetupDefaultAskConnectAcceptKey();
-vgui::Panel* CreateAskConnectPanel( vgui::VPANEL parent );
+vgui::Panel *CreateAskConnectPanel(vgui::VPANEL parent);
 
-void ShowAskConnectPanel( const char *pConnectToHostName, float flDuration );
+void ShowAskConnectPanel(const char *pConnectToHostName, float flDuration);
 void HideAskConnectPanel();
 
-bool IsAskConnectPanelActive( char *pHostName, int maxHostNameBytes );
-
+bool IsAskConnectPanelActive(char *pHostName, int maxHostNameBytes);
 
 #endif // VGUI_ASKCONNECTPANEL_H

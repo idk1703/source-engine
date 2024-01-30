@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -21,59 +21,75 @@ class CWaveFile;
 class CSoundEntry : public ITreeItem
 {
 public:
-	CSoundEntry( CVCDFile *vcd, char const *name );
+	CSoundEntry(CVCDFile *vcd, char const *name);
 	~CSoundEntry();
 
-	CVCDFile	*GetOwnerVCDFile();
+	CVCDFile *GetOwnerVCDFile();
 
-	void		SetName( char const *name );
+	void SetName(char const *name);
 
-	char const	*GetName() const;
+	char const *GetName() const;
 
-	int			GetWaveCount() const;
-	CWaveFile	*GetWave( int index );
-	void		ClearWaves();
-	void		AddWave( CWaveFile *wave );
-	void		RemoveWave( CWaveFile *wave );
-	int			FindWave( CWaveFile *wave );
+	int GetWaveCount() const;
+	CWaveFile *GetWave(int index);
+	void ClearWaves();
+	void AddWave(CWaveFile *wave);
+	void RemoveWave(CWaveFile *wave);
+	int FindWave(CWaveFile *wave);
 
-	void		ValidateTree( mxTreeView *tree, mxTreeViewItem* parent );
+	void ValidateTree(mxTreeView *tree, mxTreeViewItem *parent);
 
-	virtual CWorkspace	*GetWorkspace() { return NULL; }
-	virtual CProject	*GetProject() { return NULL; }
-	virtual CScene		*GetScene() { return NULL; }
-	virtual CVCDFile	*GetVCDFile() { return NULL; }
-	virtual CSoundEntry	*GetSoundEntry() { return this; }
-	virtual CWaveFile	*GetWaveFile() { return NULL; }
+	virtual CWorkspace *GetWorkspace()
+	{
+		return NULL;
+	}
+	virtual CProject *GetProject()
+	{
+		return NULL;
+	}
+	virtual CScene *GetScene()
+	{
+		return NULL;
+	}
+	virtual CVCDFile *GetVCDFile()
+	{
+		return NULL;
+	}
+	virtual CSoundEntry *GetSoundEntry()
+	{
+		return this;
+	}
+	virtual CWaveFile *GetWaveFile()
+	{
+		return NULL;
+	}
 
-	void		Play();
+	void Play();
 
-	char const	*GetScriptFile() const;
-	void		SetScriptFile( char const *scriptfile );
+	char const *GetScriptFile() const;
+	void SetScriptFile(char const *scriptfile);
 
-	char const	*GetSentenceText( int wavindex );
-	void		GetCCText( wchar_t *out, int maxchars );
+	char const *GetSentenceText(int wavindex);
+	void GetCCText(wchar_t *out, int maxchars);
 
-	CSoundParametersInternal	*GetSoundParameters();
+	CSoundParametersInternal *GetSoundParameters();
 
-	virtual void Checkout( bool updatestateicons = true );
-	virtual void Checkin( bool updatestateicons = true );
+	virtual void Checkout(bool updatestateicons = true);
+	virtual void Checkin(bool updatestateicons = true);
 
-	bool		IsCheckedOut() const;
-	int			GetIconIndex() const;
+	bool IsCheckedOut() const;
+	int GetIconIndex() const;
 
+	virtual void MoveChildUp(ITreeItem *child);
+	virtual void MoveChildDown(ITreeItem *child);
 
-	virtual void MoveChildUp( ITreeItem *child );
-	virtual void MoveChildDown( ITreeItem *child );
+	virtual void SetDirty(bool dirty);
 
-	virtual void		SetDirty( bool dirty );
-
-	virtual bool		IsChildFirst( ITreeItem *child );
-	virtual bool		IsChildLast( ITreeItem *child );
+	virtual bool IsChildFirst(ITreeItem *child);
+	virtual bool IsChildLast(ITreeItem *child);
 
 private:
-
-	CSoundParameters		m_Params;
+	CSoundParameters m_Params;
 
 	enum
 	{
@@ -82,14 +98,14 @@ private:
 		MAX_SOUND_FILENAME = 128,
 	};
 
-	char				m_szName[ MAX_SOUND_NAME ];
-	char				m_szScriptFile[ MAX_SCRIPT_FILE ];
+	char m_szName[MAX_SOUND_NAME];
+	char m_szScriptFile[MAX_SCRIPT_FILE];
 
-	CVCDFile			*m_pOwner;
+	CVCDFile *m_pOwner;
 
-	CUtlVector< CWaveFile * >	m_Waves;
+	CUtlVector<CWaveFile *> m_Waves;
 
-	int					m_nLastPlay;
+	int m_nLastPlay;
 };
 
 #endif // SOUNDENTRY_H

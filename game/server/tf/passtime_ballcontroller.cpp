@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,38 +15,38 @@
 //-----------------------------------------------------------------------------
 namespace
 {
-	int SortDescendingPriority( CPasstimeBallController *const *ppA, CPasstimeBallController *const *ppB )
+	int SortDescendingPriority(CPasstimeBallController *const *ppA, CPasstimeBallController *const *ppB)
 	{
-		return static_cast< CPasstimeBallController* >( *ppB )->GetPriority() 
-			- static_cast< CPasstimeBallController* >( *ppA )->GetPriority();
+		return static_cast<CPasstimeBallController *>(*ppB)->GetPriority() -
+			   static_cast<CPasstimeBallController *>(*ppA)->GetPriority();
 	}
-}
+} // namespace
 
 //-----------------------------------------------------------------------------
 // static
-int CPasstimeBallController::ApplyTo( CPasstimeBall *pBall )
+int CPasstimeBallController::ApplyTo(CPasstimeBall *pBall)
 {
 	// Sort controllers by iPriority, then call Apply until one returns true.
 	// From then on, skip controllers with a lower iPriority.
 	// This sorts the autolist, but that should be OK.
 	auto &controllers = GetAutoList();
-	controllers.Sort( &SortDescendingPriority );
+	controllers.Sort(&SortDescendingPriority);
 	int iMinPriority = INT_MIN;
 	int iNumControllers = 0;
 
-	for ( auto controller : controllers )
+	for(auto controller : controllers)
 	{
-		if ( !controller->IsEnabled() || !controller->IsActive() )
+		if(!controller->IsEnabled() || !controller->IsActive())
 		{
 			continue;
 		}
 
-		if ( controller->GetPriority() < iMinPriority )
+		if(controller->GetPriority() < iMinPriority)
 		{
 			break;
 		}
 
-		if ( controller->Apply( pBall ) )
+		if(controller->Apply(pBall))
 		{
 			iMinPriority = controller->GetPriority();
 			++iNumControllers;
@@ -57,15 +57,15 @@ int CPasstimeBallController::ApplyTo( CPasstimeBall *pBall )
 
 //-----------------------------------------------------------------------------
 // static
-int CPasstimeBallController::DisableOn( const CPasstimeBall *pBall )
+int CPasstimeBallController::DisableOn(const CPasstimeBall *pBall)
 {
 	auto &controllers = GetAutoList();
 	int iCount = 0;
-	for ( auto pController : controllers )
+	for(auto pController : controllers)
 	{
-		if ( pController->IsEnabled() )
+		if(pController->IsEnabled())
 		{
-			pController->SetIsEnabled( false );
+			pController->SetIsEnabled(false);
 			++iCount;
 		}
 	}
@@ -74,79 +74,74 @@ int CPasstimeBallController::DisableOn( const CPasstimeBall *pBall )
 
 //-----------------------------------------------------------------------------
 // static
-void CPasstimeBallController::BallCollision( CPasstimeBall *pBall,
-	int iCollisionIndex, gamevcollisionevent_t *pEvent )
+void CPasstimeBallController::BallCollision(CPasstimeBall *pBall, int iCollisionIndex, gamevcollisionevent_t *pEvent)
 {
 	auto &controllers = GetAutoList();
-	for ( auto pController : controllers )
+	for(auto pController : controllers)
 	{
-		if ( pController->IsEnabled() && pController->IsActive() )
+		if(pController->IsEnabled() && pController->IsActive())
 		{
-			pController->OnBallCollision( pBall, iCollisionIndex, pEvent );
+			pController->OnBallCollision(pBall, iCollisionIndex, pEvent);
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
 // static
-void CPasstimeBallController::BallPickedUp( CPasstimeBall *pBall,
-	CTFPlayer *pCatcher )
+void CPasstimeBallController::BallPickedUp(CPasstimeBall *pBall, CTFPlayer *pCatcher)
 {
 	auto &controllers = GetAutoList();
-	for ( auto pController : controllers )
+	for(auto pController : controllers)
 	{
-		if ( pController->IsEnabled() && pController->IsActive() )
+		if(pController->IsEnabled() && pController->IsActive())
 		{
-			pController->OnBallPickedUp( pBall, pCatcher );
+			pController->OnBallPickedUp(pBall, pCatcher);
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
 // static
-void CPasstimeBallController::BallDamaged( CPasstimeBall *pBall )
+void CPasstimeBallController::BallDamaged(CPasstimeBall *pBall)
 {
 	auto &controllers = GetAutoList();
-	for ( auto pController : controllers )
+	for(auto pController : controllers)
 	{
-		if ( pController->IsEnabled() && pController->IsActive() )
+		if(pController->IsEnabled() && pController->IsActive())
 		{
-			pController->OnBallDamaged( pBall );
+			pController->OnBallDamaged(pBall);
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
 // static
-void CPasstimeBallController::BallSpawned( CPasstimeBall *pBall )
+void CPasstimeBallController::BallSpawned(CPasstimeBall *pBall)
 {
 	auto &controllers = GetAutoList();
-	for ( auto pController : controllers )
+	for(auto pController : controllers)
 	{
-		if ( pController->IsEnabled() && pController->IsActive() )
+		if(pController->IsEnabled() && pController->IsActive())
 		{
-			pController->OnBallSpawned( pBall );
+			pController->OnBallSpawned(pBall);
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-CPasstimeBallController::CPasstimeBallController( int iPriority )
-	: m_bEnabled( false )
-	, m_iPriority( iPriority ) {}
-
+CPasstimeBallController::CPasstimeBallController(int iPriority) : m_bEnabled(false), m_iPriority(iPriority) {}
 
 //-----------------------------------------------------------------------------
-void CPasstimeBallController::SetIsEnabled( bool bEnabled )
+void CPasstimeBallController::SetIsEnabled(bool bEnabled)
 {
-	if ( m_bEnabled == bEnabled )
+	if(m_bEnabled == bEnabled)
 	{
 		return;
 	}
 
 	m_bEnabled = bEnabled;
 
-	if ( bEnabled )
+	if(bEnabled)
 	{
 		OnEnabled();
 	}
@@ -167,4 +162,3 @@ int CPasstimeBallController::GetPriority() const
 {
 	return m_iPriority;
 }
-

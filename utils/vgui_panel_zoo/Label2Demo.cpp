@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,7 +15,6 @@
 #include <vgui/IImage.h>
 #include <vgui_controls/TextImage.h>
 
-
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
@@ -24,20 +23,20 @@ using namespace vgui;
 // This demo shows a label with multiple images in it.
 //-----------------------------------------------------------------------------
 
-class Label2Demo: public DemoPage
+class Label2Demo : public DemoPage
 {
-	DECLARE_CLASS_SIMPLE( Label2Demo, DemoPage );
+	DECLARE_CLASS_SIMPLE(Label2Demo, DemoPage);
 
-	public:
-		Label2Demo(Panel *parent, const char *name);
-		~Label2Demo();
+public:
+	Label2Demo(Panel *parent, const char *name);
+	~Label2Demo();
 
-		virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
-		
-	private:
-		Label *m_pLabel;
-		TextImage *m_pEndText;
-		IImage *_statusImage;
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+
+private:
+	Label *m_pLabel;
+	TextImage *m_pEndText;
+	IImage *_statusImage;
 };
 
 //-----------------------------------------------------------------------------
@@ -51,7 +50,7 @@ Label2Demo::Label2Demo(Panel *parent, const char *name) : DemoPage(parent, name)
 	// Create a label holding the ending text
 	m_pEndText = new TextImage("Ending Label Text");
 
-	m_pLabel->SetSize( 240, 24 );
+	m_pLabel->SetSize(240, 24);
 
 	// Set the label position
 	m_pLabel->SetPos(100, 100);
@@ -60,10 +59,7 @@ Label2Demo::Label2Demo(Panel *parent, const char *name) : DemoPage(parent, name)
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-Label2Demo::~Label2Demo()
-{
-}
-
+Label2Demo::~Label2Demo() {}
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -79,10 +75,7 @@ void Label2Demo::ApplySchemeSettings(vgui::IScheme *pScheme)
 	m_pLabel->AddImage(m_pEndText, 0);
 }
 
-
-Panel* Label2Demo_Create(Panel *parent)
+Panel *Label2Demo_Create(Panel *parent)
 {
 	return new Label2Demo(parent, "Label2Demo");
 }
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,78 +18,74 @@
 
 class CMinimapResourceZonePanel : public CMinimapTracePanel
 {
-	DECLARE_CLASS( CMinimapResourceZonePanel, CMinimapTracePanel );
+	DECLARE_CLASS(CMinimapResourceZonePanel, CMinimapTracePanel);
 
 public:
-	CMinimapResourceZonePanel( vgui::Panel *parent, const char *panelName );
+	CMinimapResourceZonePanel(vgui::Panel *parent, const char *panelName);
 	virtual ~CMinimapResourceZonePanel();
 
-	virtual bool Init( KeyValues* pKeyValues, MinimapInitData_t* pInitData );
-	virtual void Paint( );
+	virtual bool Init(KeyValues *pKeyValues, MinimapInitData_t *pInitData);
+	virtual void Paint();
 
 private:
 	BitmapImage *m_ppImage;
 };
 
-DECLARE_MINIMAP_FACTORY( CMinimapResourceZonePanel, "minimap_resource_zone_panel" );
+DECLARE_MINIMAP_FACTORY(CMinimapResourceZonePanel, "minimap_resource_zone_panel");
 
-
-CMinimapResourceZonePanel::CMinimapResourceZonePanel( vgui::Panel *parent, const char *panelName )
-: BaseClass( parent, "CMinimapResourceZonePanel" )
+CMinimapResourceZonePanel::CMinimapResourceZonePanel(vgui::Panel *parent, const char *panelName)
+	: BaseClass(parent, "CMinimapResourceZonePanel")
 {
 	m_ppImage = NULL;
 }
 
 CMinimapResourceZonePanel::~CMinimapResourceZonePanel()
 {
-	if ( m_ppImage )
+	if(m_ppImage)
 	{
 		delete m_ppImage;
 		m_ppImage = NULL;
 	}
 }
 
-bool CMinimapResourceZonePanel::Init( KeyValues* pKeyValues, MinimapInitData_t* pInitData )
+bool CMinimapResourceZonePanel::Init(KeyValues *pKeyValues, MinimapInitData_t *pInitData)
 {
 	// Can only be applied to resource zones...
-	C_ResourceZone* pResource = dynamic_cast<C_ResourceZone*>( pInitData->m_pEntity );
-	if (!pResource)
+	C_ResourceZone *pResource = dynamic_cast<C_ResourceZone *>(pInitData->m_pEntity);
+	if(!pResource)
 		return false;
 
-	if (!BaseClass::Init(pKeyValues, pInitData))
+	if(!BaseClass::Init(pKeyValues, pInitData))
 		return false;
 
 	// Read in the images for the resource zone...
 	// Default to null
 	m_ppImage = NULL;
 
-	char const* pMaterialName = pKeyValues->GetString( "material" );
-	if ( !pMaterialName || !pMaterialName[ 0 ] )
+	char const *pMaterialName = pKeyValues->GetString("material");
+	if(!pMaterialName || !pMaterialName[0])
 		return false;
 
 	// modulation color
 	Color color;
-	if (!ParseRGBA( pKeyValues, "color", color ))
-		color.SetColor( 255, 255, 255, 255 );
+	if(!ParseRGBA(pKeyValues, "color", color))
+		color.SetColor(255, 255, 255, 255);
 
 	// hook in the bitmap
-	m_ppImage = new BitmapImage( GetVPanel(), pMaterialName );
-	m_ppImage->SetColor( color );
+	m_ppImage = new BitmapImage(GetVPanel(), pMaterialName);
+	m_ppImage->SetColor(color);
 
 	return true;
 }
 
-void CMinimapResourceZonePanel::Paint( )
+void CMinimapResourceZonePanel::Paint()
 {
-	if ( gHUD.IsHidden( HIDEHUD_MISCSTATUS ) )
+	if(gHUD.IsHidden(HIDEHUD_MISCSTATUS))
 		return;
 
 	// Paint the image for the zone type
-	if ( m_ppImage )
+	if(m_ppImage)
 	{
 		m_ppImage->Paint();
 	}
 }
-
-
-

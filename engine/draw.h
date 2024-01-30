@@ -14,7 +14,7 @@
 #endif
 
 class IMaterial;
-IMaterial	*GL_LoadMaterial( const char *pName, const char *pTextureGroupName );
-void		GL_UnloadMaterial( IMaterial *pMaterial );
+IMaterial *GL_LoadMaterial(const char *pName, const char *pTextureGroupName);
+void GL_UnloadMaterial(IMaterial *pMaterial);
 
-#endif			// DRAW_H
+#endif // DRAW_H

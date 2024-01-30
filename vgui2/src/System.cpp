@@ -1,12 +1,11 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
 
-
-#if !defined( _X360 )
+#if !defined(_X360)
 #define WIN32_LEAN_AND_MEAN
 #define OEMRESOURCE
 #include <windows.h>
@@ -19,7 +18,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include <sys/stat.h>
-
 
 #ifdef ShellExecute
 #undef ShellExecute
@@ -46,7 +44,7 @@
 #include "vgui_key_translation.h"
 #include "filesystem.h"
 
-#if defined( _X360 )
+#if defined(_X360)
 #include "xbox/xbox_win32stubs.h"
 #endif
 
@@ -54,11 +52,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
-
-
 #ifndef _X360
-
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -66,27 +60,27 @@
 //
 //////////////////////////////////////////////////////////////////////////
 
-static BOOL CALLBACK GetMainApplicationWindowHWND_EnumProc( HWND hWnd, LPARAM lParam )
+static BOOL CALLBACK GetMainApplicationWindowHWND_EnumProc(HWND hWnd, LPARAM lParam)
 {
 	// Return TRUE to continue enumeration or FALSE to stop
 
 	// Given window thread/process id
 	DWORD dwProcessId, dwThreadId;
-	dwThreadId = GetWindowThreadProcessId( hWnd, &dwProcessId );
+	dwThreadId = GetWindowThreadProcessId(hWnd, &dwProcessId);
 
 	// Our thread/process id
 	DWORD dwOurProcessId;
 	dwOurProcessId = GetCurrentProcessId();
 
 	// Foreign process
-	if ( dwOurProcessId != dwProcessId )
+	if(dwOurProcessId != dwProcessId)
 		return TRUE;
 	// Service window
-	if ( !IsWindowVisible( hWnd ) || !IsWindowEnabled( hWnd ) )
+	if(!IsWindowVisible(hWnd) || !IsWindowEnabled(hWnd))
 		return TRUE;
 
 	// Assume that we found it
-	*( HWND * )lParam = hWnd;
+	*(HWND *)lParam = hWnd;
 	return FALSE; // stop enumeration
 }
 
@@ -100,33 +94,29 @@ static HWND GetMainApplicationWindowHWND()
 	DWORD dwThreadId = GetCurrentThreadId();
 
 	GUITHREADINFO gti;
-	memset( &gti, 0, sizeof( gti ) );
-	gti.cbSize = sizeof( gti );
-	GetGUIThreadInfo( dwThreadId, &gti );
+	memset(&gti, 0, sizeof(gti));
+	gti.cbSize = sizeof(gti);
+	GetGUIThreadInfo(dwThreadId, &gti);
 
 	hWnd = gti.hwndActive;
-	for ( HWND hParent = hWnd ? GetParent( hWnd ) : hWnd;
-		hParent; hWnd = hParent, hParent = GetParent( hWnd ) )
+	for(HWND hParent = hWnd ? GetParent(hWnd) : hWnd; hParent; hWnd = hParent, hParent = GetParent(hWnd))
 		continue;
 
-	if ( hWnd )
+	if(hWnd)
 		return hWnd;
 
 	//
 	// Pass 2: non-GUI thread requiring the main winow
 	//
-	EnumWindows( GetMainApplicationWindowHWND_EnumProc, ( LPARAM ) &hWnd );
-	if ( hWnd )
+	EnumWindows(GetMainApplicationWindowHWND_EnumProc, (LPARAM)&hWnd);
+	if(hWnd)
 		return hWnd;
 
 	// Failed to find the window by all means...
 	return NULL;
 }
 
-
 #endif // #ifndef _X360
-
-
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -134,10 +124,9 @@ static HWND GetMainApplicationWindowHWND()
 //
 //////////////////////////////////////////////////////////////////////////
 
-
 using namespace vgui;
 
-SHORT System_GetKeyState( int virtualKeyCode )
+SHORT System_GetKeyState(int virtualKeyCode)
 {
 #ifndef _X360
 	return VCRHook_GetKeyState(virtualKeyCode);
@@ -171,7 +160,7 @@ public:
 	virtual int GetClipboardText(int offset, char *buf, int bufLen);
 	virtual int GetClipboardText(int offset, wchar_t *buf, int bufLen);
 
-	virtual void SetClipboardImage( void *pWnd, int x1, int y1, int x2, int y2 );
+	virtual void SetClipboardImage(void *pWnd, int x1, int y1, int x2, int y2);
 
 	virtual bool SetRegistryString(const char *key, const char *value);
 	virtual bool GetRegistryString(const char *key, char *value, int valueLen);
@@ -191,16 +180,20 @@ public:
 	virtual bool CommandLineParamExists(const char *commandName);
 	virtual bool GetCommandLineParamValue(const char *paramName, char *value, int valueBufferSize);
 	virtual const char *GetFullCommandLine();
-	virtual bool GetCurrentTimeAndDate(int *year, int *month, int *dayOfWeek, int *day, int *hour, int *minute, int *second);
+	virtual bool GetCurrentTimeAndDate(int *year, int *month, int *dayOfWeek, int *day, int *hour, int *minute,
+									   int *second);
 
 	// shortcut (.lnk) modification functions
-	virtual bool CreateShortcut(const char *linkFileName, const char *targetPath, const char *arguments, const char *workingDirectory, const char *iconFile);
+	virtual bool CreateShortcut(const char *linkFileName, const char *targetPath, const char *arguments,
+								const char *workingDirectory, const char *iconFile);
 	virtual bool GetShortcutTarget(const char *linkFileName, char *targetPath, char *arguments, int destBufferSizes);
-	virtual bool ModifyShortcutTarget(const char *linkFileName, const char *targetPath, const char *arguments, const char *workingDirectory);
+	virtual bool ModifyShortcutTarget(const char *linkFileName, const char *targetPath, const char *arguments,
+									  const char *workingDirectory);
 
-	virtual KeyCode KeyCode_VirtualKeyToVGUI( int keyCode );
+	virtual KeyCode KeyCode_VirtualKeyToVGUI(int keyCode);
 	virtual const char *GetDesktopFolderPath();
-	virtual void ShellExecuteEx( const char *command, const char *file, const char *pParams );
+	virtual void ShellExecuteEx(const char *command, const char *file, const char *pParams);
+
 private:
 	// auto-away data
 	bool m_bStaticWatchForComputerUse;
@@ -214,16 +207,14 @@ private:
 	KeyValues *m_pUserConfigData;
 	char m_szFileName[MAX_PATH];
 	char m_szPathID[MAX_PATH];
-
 };
-
 
 CSystem g_System;
 EXPOSE_SINGLE_INTERFACE_GLOBALVAR(CSystem, ISystem, VGUI_SYSTEM_INTERFACE_VERSION, g_System);
 
 namespace vgui
 {
-vgui::ISystem *g_pSystem = &g_System;
+	vgui::ISystem *g_pSystem = &g_System;
 }
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
@@ -242,16 +233,14 @@ CSystem::CSystem()
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CSystem::~CSystem()
-{
-}
+CSystem::~CSystem() {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSystem::Shutdown()
 {
-	if (m_pUserConfigData)
+	if(m_pUserConfigData)
 	{
 		m_pUserConfigData->deleteThis();
 		m_pUserConfigData = NULL;
@@ -266,13 +255,13 @@ void CSystem::RunFrame()
 	// record the current frame time
 	m_flFrameTime = GetCurrentTime();
 
-	if (m_bStaticWatchForComputerUse)
+	if(m_bStaticWatchForComputerUse)
 	{
 		// check for mouse movement
 		int x, y;
 		g_pInput->GetCursorPos(x, y);
 		// allow a little slack for jittery mice, don't reset until it's moved more than fifty pixels
-		if (abs((x + y) - (m_iStaticMouseOldX + m_iStaticMouseOldY)) > 50)
+		if(abs((x + y) - (m_iStaticMouseOldX + m_iStaticMouseOldY)) > 50)
 		{
 			m_StaticLastComputerUseTime = GetTimeMillis() / 1000.0;
 			m_iStaticMouseOldX = x;
@@ -297,7 +286,6 @@ double CSystem::GetCurrentTime()
 	return Plat_FloatTime();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: returns the current time in milliseconds
 //-----------------------------------------------------------------------------
@@ -306,55 +294,54 @@ long CSystem::GetTimeMillis()
 	return (long)(GetCurrentTime() * 1000);
 }
 
-void CSystem::ShellExecute( const char *command, const char *file )
+void CSystem::ShellExecute(const char *command, const char *file)
 {
 #ifndef _X360
 	::ShellExecuteA(NULL, command, file, NULL, NULL, SW_SHOWNORMAL);
 #endif
 }
 
-void CSystem::ShellExecuteEx( const char *command, const char *file, const char *pParams )
+void CSystem::ShellExecuteEx(const char *command, const char *file, const char *pParams)
 {
 #ifndef _X360
 	::ShellExecuteA(NULL, command, file, pParams, NULL, SW_SHOWNORMAL);
 #endif
 }
 
-
-void CSystem::SetClipboardImage( void *pWnd, int x1, int y1, int x2, int y2 )
+void CSystem::SetClipboardImage(void *pWnd, int x1, int y1, int x2, int y2)
 {
 #ifndef _X360
-	if ( x2 <= x1 || y2 <= y1 )
+	if(x2 <= x1 || y2 <= y1)
 		return;
 
 	// Main app window
-	HWND hWnd = ( HWND ) ( pWnd );
-	if ( !hWnd )
+	HWND hWnd = (HWND)(pWnd);
+	if(!hWnd)
 		hWnd = GetMainApplicationWindowHWND();
-	if ( !hWnd )
+	if(!hWnd)
 		return;
 
 	// Prepare the blit
 	HBITMAP hBmMem = NULL;
 	{
 		// Device contexts
-		HDC hDc = GetDC( hWnd );
-		HDC hDcMem = CreateCompatibleDC( hDc );
-		hBmMem = CreateCompatibleBitmap( hDc, x2 - x1, y2 - y1 );
-		HBITMAP hBmOld = ( HBITMAP ) SelectObject( hDcMem, hBmMem );
-		BitBlt( hDcMem, 0, 0, x2 - x1, y2 - y1, hDc, x1, y1, SRCCOPY );
-		SelectObject( hDcMem, hBmOld );
-		DeleteDC( hDcMem );
-		ReleaseDC( hWnd, hDc );
+		HDC hDc = GetDC(hWnd);
+		HDC hDcMem = CreateCompatibleDC(hDc);
+		hBmMem = CreateCompatibleBitmap(hDc, x2 - x1, y2 - y1);
+		HBITMAP hBmOld = (HBITMAP)SelectObject(hDcMem, hBmMem);
+		BitBlt(hDcMem, 0, 0, x2 - x1, y2 - y1, hDc, x1, y1, SRCCOPY);
+		SelectObject(hDcMem, hBmOld);
+		DeleteDC(hDcMem);
+		ReleaseDC(hWnd, hDc);
 		// hBmMem now holds the image.
 	}
 
-	if ( !OpenClipboard( GetDesktopWindow() ) )
+	if(!OpenClipboard(GetDesktopWindow()))
 		return;
 
 	EmptyClipboard();
 
-	if (hBmMem)
+	if(hBmMem)
 	{
 		SetClipboardData(CF_BITMAP, hBmMem);
 	}
@@ -366,22 +353,22 @@ void CSystem::SetClipboardImage( void *pWnd, int x1, int y1, int x2, int y2 )
 void CSystem::SetClipboardText(const char *text, int textLen)
 {
 #ifndef _X360
-	if (!text)
+	if(!text)
 		return;
 
-	if (textLen <= 0)
+	if(textLen <= 0)
 		return;
 
-	if (!OpenClipboard(GetDesktopWindow() ))
+	if(!OpenClipboard(GetDesktopWindow()))
 		return;
 
 	EmptyClipboard();
 
 	HANDLE hmem = GlobalAlloc(GMEM_MOVEABLE, textLen + 1);
-	if (hmem)
+	if(hmem)
 	{
 		void *ptr = GlobalLock(hmem);
-		if (ptr != null)
+		if(ptr != null)
 		{
 			memset(ptr, 0, textLen + 1);
 			memcpy(ptr, text, textLen);
@@ -390,7 +377,7 @@ void CSystem::SetClipboardText(const char *text, int textLen)
 			SetClipboardData(CF_TEXT, hmem);
 		}
 	}
-	
+
 	CloseClipboard();
 #endif
 }
@@ -401,32 +388,32 @@ void CSystem::SetClipboardText(const char *text, int textLen)
 void CSystem::SetClipboardText(const wchar_t *text, int textLen)
 {
 #ifndef _X360
-	if (!text)
+	if(!text)
 		return;
 
-	if (textLen <= 0)
+	if(textLen <= 0)
 		return;
 
-	BOOL cb = OpenClipboard(GetDesktopWindow() );
-	if (!cb)
+	BOOL cb = OpenClipboard(GetDesktopWindow());
+	if(!cb)
 		return;
 
 	EmptyClipboard();
 
 	HANDLE hmem = GlobalAlloc(GMEM_MOVEABLE, (textLen + 1) * sizeof(wchar_t));
-	if (hmem)
+	if(hmem)
 	{
 		void *ptr = GlobalLock(hmem);
-		if (ptr != null)
+		if(ptr != null)
 		{
 			memset(ptr, 0, (textLen + 1) * sizeof(wchar_t));
 			memcpy(ptr, text, textLen * sizeof(wchar_t));
 			GlobalUnlock(hmem);
 
-			SetClipboardData( CF_UNICODETEXT, hmem );
+			SetClipboardData(CF_UNICODETEXT, hmem);
 		}
 	}
-	
+
 	CloseClipboard();
 #endif
 }
@@ -435,13 +422,13 @@ int CSystem::GetClipboardTextCount()
 {
 #ifndef _X360
 	int count = 0;
-	
-	if ( VCRGetMode() != VCR_Playback )
+
+	if(VCRGetMode() != VCR_Playback)
 	{
-		if (OpenClipboard(GetDesktopWindow() ))
+		if(OpenClipboard(GetDesktopWindow()))
 		{
 			HANDLE hmem = GetClipboardData(CF_TEXT);
-			if (hmem)
+			if(hmem)
 			{
 				count = GlobalSize(hmem);
 			}
@@ -449,7 +436,7 @@ int CSystem::GetClipboardTextCount()
 			CloseClipboard();
 		}
 	}
-	VCRGenericValue( "clipboard", &count, sizeof( count ) );
+	VCRGenericValue("clipboard", &count, sizeof(count));
 
 	return count;
 #else
@@ -461,27 +448,27 @@ int CSystem::GetClipboardText(int offset, char *buf, int bufLen)
 {
 #ifndef _X360
 	int count = 0;
-	if ( buf && bufLen > 0 && VCRGetMode() != VCR_Playback )
+	if(buf && bufLen > 0 && VCRGetMode() != VCR_Playback)
 	{
-		if (OpenClipboard(GetDesktopWindow()))
+		if(OpenClipboard(GetDesktopWindow()))
 		{
 			HANDLE hmem = GetClipboardData(CF_UNICODETEXT);
-			if (hmem)
+			if(hmem)
 			{
 				int len = GlobalSize(hmem);
 				count = len - offset;
-				if (count <= 0)
+				if(count <= 0)
 				{
 					count = 0;
 				}
 				else
 				{
-					if (bufLen < count)
+					if(bufLen < count)
 					{
 						count = bufLen;
 					}
 					void *ptr = GlobalLock(hmem);
-					if (ptr)
+					if(ptr)
 					{
 						memcpy(buf, ((char *)ptr) + offset, count);
 						GlobalUnlock(hmem);
@@ -492,8 +479,8 @@ int CSystem::GetClipboardText(int offset, char *buf, int bufLen)
 			CloseClipboard();
 		}
 	}
-	VCRGenericValue( "cb", &count, sizeof( count ) );
-	VCRGenericValue( "cb", buf, count );
+	VCRGenericValue("cb", &count, sizeof(count));
+	VCRGenericValue("cb", buf, count);
 
 	return count;
 #else
@@ -508,23 +495,23 @@ int CSystem::GetClipboardText(int offset, wchar_t *buf, int bufLen)
 {
 #ifndef _X360
 	int retVal = 0;
-	if ( buf && bufLen > 0 && VCRGetMode() != VCR_Playback )
+	if(buf && bufLen > 0 && VCRGetMode() != VCR_Playback)
 	{
-		if (OpenClipboard( GetDesktopWindow() ) )
+		if(OpenClipboard(GetDesktopWindow()))
 		{
 			HANDLE hmem = GetClipboardData(CF_UNICODETEXT);
-			if (hmem)
+			if(hmem)
 			{
 				int len = GlobalSize(hmem);
 				int count = len - offset;
-				if (count > 0)
+				if(count > 0)
 				{
-					if (bufLen < count)
+					if(bufLen < count)
 					{
 						count = bufLen;
 					}
 					void *ptr = GlobalLock(hmem);
-					if (ptr)
+					if(ptr)
 					{
 						memcpy(buf, ((wchar_t *)ptr) + offset, count);
 						retVal = count / sizeof(wchar_t);
@@ -537,8 +524,8 @@ int CSystem::GetClipboardText(int offset, wchar_t *buf, int bufLen)
 		CloseClipboard();
 	}
 
-	VCRGenericValue( "cb", &retVal, sizeof( retVal ) );
-	VCRGenericValue( "cb", buf, retVal*sizeof(wchar_t) );
+	VCRGenericValue("cb", &retVal, sizeof(retVal));
+	VCRGenericValue("cb", buf, retVal * sizeof(wchar_t));
 
 	return retVal;
 #else
@@ -548,37 +535,37 @@ int CSystem::GetClipboardText(int offset, wchar_t *buf, int bufLen)
 
 static bool staticSplitRegistryKey(const char *key, char *key0, int key0Len, char *key1, int key1Len)
 {
-	if(key==null)
-	{
-		return false;
-	}
-	
-	int len=strlen(key);
-	if(len<=0)
+	if(key == null)
 	{
 		return false;
 	}
 
-	int Start=-1;
-	for(int i=len-1;i>=0;i--)
+	int len = strlen(key);
+	if(len <= 0)
 	{
-		if(key[i]=='\\')
+		return false;
+	}
+
+	int Start = -1;
+	for(int i = len - 1; i >= 0; i--)
+	{
+		if(key[i] == '\\')
 		{
 			break;
 		}
 		else
 		{
-			Start=i;
+			Start = i;
 		}
 	}
 
-	if(Start==-1)
+	if(Start == -1)
 	{
 		return false;
 	}
-	
-	vgui_strcpy(key0,Start+1,key);
-	vgui_strcpy(key1,(len-Start)+1,key+Start);
+
+	vgui_strcpy(key0, Start + 1, key);
+	vgui_strcpy(key1, (len - Start) + 1, key + Start);
 
 	return true;
 }
@@ -589,29 +576,30 @@ bool CSystem::SetRegistryString(const char *key, const char *value)
 	HKEY hKey;
 
 	HKEY hSlot = HKEY_CURRENT_USER;
-	if (!strncmp(key, "HKEY_LOCAL_MACHINE", 18))
+	if(!strncmp(key, "HKEY_LOCAL_MACHINE", 18))
 	{
 		hSlot = HKEY_LOCAL_MACHINE;
 		key += 19;
 	}
-	else if (!strncmp(key, "HKEY_CURRENT_USER", 17))
+	else if(!strncmp(key, "HKEY_CURRENT_USER", 17))
 	{
 		hSlot = HKEY_CURRENT_USER;
 		key += 18;
 	}
 
 	char key0[256], key1[256];
-	if (!staticSplitRegistryKey(key, key0, sizeof(key0), key1, sizeof(key1)))
+	if(!staticSplitRegistryKey(key, key0, sizeof(key0), key1, sizeof(key1)))
 	{
 		return false;
 	}
 
-	if(VCRHook_RegCreateKeyEx(hSlot,key0,null,null,REG_OPTION_NON_VOLATILE, value ? KEY_WRITE : KEY_ALL_ACCESS,null,&hKey,null)!=ERROR_SUCCESS)
+	if(VCRHook_RegCreateKeyEx(hSlot, key0, null, null, REG_OPTION_NON_VOLATILE, value ? KEY_WRITE : KEY_ALL_ACCESS,
+							  null, &hKey, null) != ERROR_SUCCESS)
 	{
 		return false;
 	}
 
-	if (VCRHook_RegSetValueEx(hKey, key1, NULL, REG_SZ, (uchar*)value, strlen(value) + 1) == ERROR_SUCCESS)
+	if(VCRHook_RegSetValueEx(hKey, key1, NULL, REG_SZ, (uchar *)value, strlen(value) + 1) == ERROR_SUCCESS)
 	{
 		VCRHook_RegCloseKey(hKey);
 		return true;
@@ -626,38 +614,38 @@ bool CSystem::SetRegistryString(const char *key, const char *value)
 bool CSystem::GetRegistryString(const char *key, char *value, int valueLen)
 {
 #ifndef _X360
-	if (!value)
+	if(!value)
 		return false;
 	value[0] = 0;
 
 	HKEY hKey;
 
 	HKEY hSlot = HKEY_CURRENT_USER;
-	if (!strncmp(key, "HKEY_LOCAL_MACHINE", 18))
+	if(!strncmp(key, "HKEY_LOCAL_MACHINE", 18))
 	{
 		hSlot = HKEY_LOCAL_MACHINE;
 		key += 19;
 	}
-	else if (!strncmp(key, "HKEY_CURRENT_USER", 17))
+	else if(!strncmp(key, "HKEY_CURRENT_USER", 17))
 	{
 		hSlot = HKEY_CURRENT_USER;
 		key += 18;
 	}
 
-	char key0[256],key1[256];
-	if(!staticSplitRegistryKey(key,key0,256,key1,256))
+	char key0[256], key1[256];
+	if(!staticSplitRegistryKey(key, key0, 256, key1, 256))
 	{
 		return false;
 	}
 
-	if(VCRHook_RegOpenKeyEx(hSlot,key0,null,KEY_READ,&hKey)!=ERROR_SUCCESS)
+	if(VCRHook_RegOpenKeyEx(hSlot, key0, null, KEY_READ, &hKey) != ERROR_SUCCESS)
 	{
 		return false;
 	}
 
-	ulong len=valueLen;
-	if(VCRHook_RegQueryValueEx(hKey,key1,null,null,(uchar*)value,&len)==ERROR_SUCCESS)
-	{		
+	ulong len = valueLen;
+	if(VCRHook_RegQueryValueEx(hKey, key1, null, null, (uchar *)value, &len) == ERROR_SUCCESS)
+	{
 		VCRHook_RegCloseKey(hKey);
 		return true;
 	}
@@ -673,29 +661,30 @@ bool CSystem::SetRegistryInteger(const char *key, int value)
 #ifndef _X360
 	HKEY hKey;
 	HKEY hSlot = HKEY_CURRENT_USER;
-	if (!strncmp(key, "HKEY_LOCAL_MACHINE", 18))
+	if(!strncmp(key, "HKEY_LOCAL_MACHINE", 18))
 	{
 		hSlot = HKEY_LOCAL_MACHINE;
 		key += 19;
 	}
-	else if (!strncmp(key, "HKEY_CURRENT_USER", 17))
+	else if(!strncmp(key, "HKEY_CURRENT_USER", 17))
 	{
 		hSlot = HKEY_CURRENT_USER;
 		key += 18;
 	}
 
-	char key0[256],key1[256];
-	if(!staticSplitRegistryKey(key,key0,256,key1,256))
+	char key0[256], key1[256];
+	if(!staticSplitRegistryKey(key, key0, 256, key1, 256))
 	{
 		return false;
 	}
 
-	if(VCRHook_RegCreateKeyEx(hSlot,key0,null,null,REG_OPTION_NON_VOLATILE,KEY_WRITE,null,&hKey,null)!=ERROR_SUCCESS)
+	if(VCRHook_RegCreateKeyEx(hSlot, key0, null, null, REG_OPTION_NON_VOLATILE, KEY_WRITE, null, &hKey, null) !=
+	   ERROR_SUCCESS)
 	{
 		return false;
 	}
-		
-	if(VCRHook_RegSetValueEx(hKey,key1,null,REG_DWORD,(uchar*)&value,4)==ERROR_SUCCESS)
+
+	if(VCRHook_RegSetValueEx(hKey, key1, null, REG_DWORD, (uchar *)&value, 4) == ERROR_SUCCESS)
 	{
 		VCRHook_RegCloseKey(hKey);
 		return true;
@@ -711,31 +700,31 @@ bool CSystem::GetRegistryInteger(const char *key, int &value)
 #ifndef _X360
 	HKEY hKey;
 	HKEY hSlot = HKEY_CURRENT_USER;
-	if (!strncmp(key, "HKEY_LOCAL_MACHINE", 18))
+	if(!strncmp(key, "HKEY_LOCAL_MACHINE", 18))
 	{
 		hSlot = HKEY_LOCAL_MACHINE;
 		key += 19;
 	}
-	else if (!strncmp(key, "HKEY_CURRENT_USER", 17))
+	else if(!strncmp(key, "HKEY_CURRENT_USER", 17))
 	{
 		hSlot = HKEY_CURRENT_USER;
 		key += 18;
 	}
 
-	char key0[256],key1[256];
-	if(!staticSplitRegistryKey(key,key0,256,key1,256))
+	char key0[256], key1[256];
+	if(!staticSplitRegistryKey(key, key0, 256, key1, 256))
 	{
 		return false;
 	}
 
-	if(VCRHook_RegOpenKeyEx(hSlot,key0,null,KEY_READ,&hKey)!=ERROR_SUCCESS)
+	if(VCRHook_RegOpenKeyEx(hSlot, key0, null, KEY_READ, &hKey) != ERROR_SUCCESS)
 	{
 		return false;
 	}
 
-	ulong len=4;
-	if(VCRHook_RegQueryValueEx(hKey,key1,null,null,(uchar*)&value,&len)==ERROR_SUCCESS)
-	{		
+	ulong len = 4;
+	if(VCRHook_RegQueryValueEx(hKey, key1, null, null, (uchar *)&value, &len) == ERROR_SUCCESS)
+	{
 		VCRHook_RegCloseKey(hKey);
 		return true;
 	}
@@ -752,18 +741,18 @@ bool CSystem::DeleteRegistryKey(const char *key)
 {
 #ifndef _X360
 	HKEY hSlot = HKEY_CURRENT_USER;
-	if (!strncmp(key, "HKEY_LOCAL_MACHINE", 18))
+	if(!strncmp(key, "HKEY_LOCAL_MACHINE", 18))
 	{
 		hSlot = HKEY_LOCAL_MACHINE;
 		key += 19;
 	}
-	else if (!strncmp(key, "HKEY_CURRENT_USER", 17))
+	else if(!strncmp(key, "HKEY_CURRENT_USER", 17))
 	{
 		hSlot = HKEY_CURRENT_USER;
 		key += 18;
 	}
 
-	if (SHDeleteKey(hSlot, key) == ERROR_SUCCESS)
+	if(SHDeleteKey(hSlot, key) == ERROR_SUCCESS)
 	{
 		return true;
 	}
@@ -776,12 +765,12 @@ bool CSystem::DeleteRegistryKey(const char *key)
 //-----------------------------------------------------------------------------
 bool CSystem::SetWatchForComputerUse(bool state)
 {
-	if (state == m_bStaticWatchForComputerUse)
+	if(state == m_bStaticWatchForComputerUse)
 		return true;
 
 	m_bStaticWatchForComputerUse = state;
 
-	if (m_bStaticWatchForComputerUse)
+	if(m_bStaticWatchForComputerUse)
 	{
 		// enable watching
 	}
@@ -789,7 +778,7 @@ bool CSystem::SetWatchForComputerUse(bool state)
 	{
 		// disable watching
 	}
-	
+
 	return true;
 }
 
@@ -798,7 +787,7 @@ bool CSystem::SetWatchForComputerUse(bool state)
 //-----------------------------------------------------------------------------
 double CSystem::GetTimeSinceLastUse()
 {
-	if (m_bStaticWatchForComputerUse)
+	if(m_bStaticWatchForComputerUse)
 	{
 		return (GetTimeMillis() / 1000.0) - m_StaticLastComputerUseTime;
 	}
@@ -811,10 +800,10 @@ double CSystem::GetTimeSinceLastUse()
 //-----------------------------------------------------------------------------
 int CSystem::GetAvailableDrives(char *buf, int bufLen)
 {
-#if defined( _X360 ) || defined ( OSX )
+#if defined(_X360) || defined(OSX)
 	return 0;
 #else // Windows
-	return GetLogicalDriveStrings( bufLen, buf );
+	return GetLogicalDriveStrings(bufLen, buf);
 #endif
 }
 
@@ -827,13 +816,13 @@ double CSystem::GetFreeDiskSpace(const char *path)
 	strcpy(buf, path);
 	// strip of to first slash (to make it look like 'x:\')
 	char *slash = strstr(buf, "\\");
-	if (slash)
+	if(slash)
 	{
 		slash[1] = 0;
 	}
 
 	ULARGE_INTEGER userFreeBytes, totalBytes, totalFreeBytes;
-	if (::GetDiskFreeSpaceEx(buf, &userFreeBytes, &totalBytes, &totalFreeBytes))
+	if(::GetDiskFreeSpaceEx(buf, &userFreeBytes, &totalBytes, &totalFreeBytes))
 	{
 		return (double)userFreeBytes.QuadPart;
 	}
@@ -845,12 +834,12 @@ double CSystem::GetFreeDiskSpace(const char *path)
 //-----------------------------------------------------------------------------
 KeyValues *CSystem::GetUserConfigFileData(const char *dialogName, int dialogID)
 {
-	if (!m_pUserConfigData)
+	if(!m_pUserConfigData)
 		return NULL;
 
 	Assert(dialogName && *dialogName);
 
-	if (dialogID)
+	if(dialogID)
 	{
 		char buf[256];
 		Q_snprintf(buf, sizeof(buf), "%s_%d", dialogName, dialogID);
@@ -865,7 +854,7 @@ KeyValues *CSystem::GetUserConfigFileData(const char *dialogName, int dialogID)
 //-----------------------------------------------------------------------------
 void CSystem::SetUserConfigFile(const char *fileName, const char *pathName)
 {
-	if (!m_pUserConfigData)
+	if(!m_pUserConfigData)
 	{
 		m_pUserConfigData = new KeyValues("UserConfigData");
 	}
@@ -874,7 +863,7 @@ void CSystem::SetUserConfigFile(const char *fileName, const char *pathName)
 	strncpy(m_szPathID, pathName, sizeof(m_szPathID) - 1);
 
 	// open
-	m_pUserConfigData->UsesEscapeSequences( true ); // VGUI may use this
+	m_pUserConfigData->UsesEscapeSequences(true); // VGUI may use this
 	m_pUserConfigData->LoadFromFile(g_pFullFileSystem, m_szFileName, m_szPathID);
 }
 
@@ -883,7 +872,7 @@ void CSystem::SetUserConfigFile(const char *fileName, const char *pathName)
 //-----------------------------------------------------------------------------
 void CSystem::SaveUserConfigFile()
 {
-	if (m_pUserConfigData)
+	if(m_pUserConfigData)
 	{
 		m_pUserConfigData->SaveToFile(g_pFullFileSystem, m_szFileName, m_szPathID);
 	}
@@ -906,7 +895,7 @@ bool CSystem::GetCommandLineParamValue(const char *paramName, char *value, int v
 {
 	const char *cmdLine = GetFullCommandLine();
 	const char *loc = strstr(cmdLine, paramName);
-	if (!loc)
+	if(!loc)
 		return false;
 
 	loc += strlen(paramName);
@@ -916,7 +905,7 @@ bool CSystem::GetCommandLineParamValue(const char *paramName, char *value, int v
 
 	strncpy(value, token, valueBufferSize - 1);
 	value[valueBufferSize - 1] = 0;
-	
+
 	return true;
 }
 
@@ -928,44 +917,44 @@ const char *CSystem::GetFullCommandLine()
 	return VCRHook_GetCommandLine();
 }
 
-
-KeyCode CSystem::KeyCode_VirtualKeyToVGUI( int keyCode )
+KeyCode CSystem::KeyCode_VirtualKeyToVGUI(int keyCode)
 {
-	return ::KeyCode_VirtualKeyToVGUI( keyCode );
+	return ::KeyCode_VirtualKeyToVGUI(keyCode);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: returns the current local time and date
 //-----------------------------------------------------------------------------
-bool CSystem::GetCurrentTimeAndDate(int *year, int *month, int *dayOfWeek, int *day, int *hour, int *minute, int *second)
+bool CSystem::GetCurrentTimeAndDate(int *year, int *month, int *dayOfWeek, int *day, int *hour, int *minute,
+									int *second)
 {
 	SYSTEMTIME time;
 	GetLocalTime(&time);
-	if (year)
+	if(year)
 	{
 		*year = time.wYear;
 	}
-	if (month)
+	if(month)
 	{
 		*month = time.wMonth;
 	}
-	if (dayOfWeek)
+	if(dayOfWeek)
 	{
 		*dayOfWeek = time.wDayOfWeek;
 	}
-	if (day)
+	if(day)
 	{
 		*day = time.wDay;
 	}
-	if (hour)
+	if(hour)
 	{
 		*hour = time.wHour;
 	}
-	if (minute)
+	if(minute)
 	{
 		*minute = time.wMinute;
 	}
-	if (second)
+	if(second)
 	{
 		*second = time.wSecond;
 	}
@@ -975,7 +964,8 @@ bool CSystem::GetCurrentTimeAndDate(int *year, int *month, int *dayOfWeek, int *
 //-----------------------------------------------------------------------------
 // Purpose: Creates a shortcut file
 //-----------------------------------------------------------------------------
-bool CSystem::CreateShortcut(const char *linkFileName, const char *targetPath, const char *arguments, const char *workingDirectory, const char *iconFile)
+bool CSystem::CreateShortcut(const char *linkFileName, const char *targetPath, const char *arguments,
+							 const char *workingDirectory, const char *iconFile)
 {
 #ifndef _X360
 	bool bSuccess = false;
@@ -984,36 +974,36 @@ bool CSystem::CreateShortcut(const char *linkFileName, const char *targetPath, c
 
 	// make sure it doesn't already exist
 	struct _stat statBuf;
-	if (_stat(linkFileName, &statBuf) != -1)
+	if(_stat(linkFileName, &statBuf) != -1)
 		return false;
 
 	// Create the ShellLink object
 	IShellLink *psl;
-	HRESULT hres = ::CoCreateInstance(CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, IID_IShellLink, (LPVOID*) &psl);
-	if (SUCCEEDED(hres))
+	HRESULT hres = ::CoCreateInstance(CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, IID_IShellLink, (LPVOID *)&psl);
+	if(SUCCEEDED(hres))
 	{
 		// Set the target information from the link object
 		psl->SetPath(targetPath);
 		psl->SetArguments(arguments);
-		if (workingDirectory && *workingDirectory)
+		if(workingDirectory && *workingDirectory)
 		{
 			psl->SetWorkingDirectory(workingDirectory);
 		}
-		if (iconFile && *iconFile)
+		if(iconFile && *iconFile)
 		{
 			psl->SetIconLocation(iconFile, 0);
 		}
 
 		// Bind the ShellLink object to the Persistent File
 		IPersistFile *ppf;
-		hres = psl->QueryInterface( IID_IPersistFile, (LPVOID *) &ppf);
-		if (SUCCEEDED(hres))
+		hres = psl->QueryInterface(IID_IPersistFile, (LPVOID *)&ppf);
+		if(SUCCEEDED(hres))
 		{
 			wchar_t wsz[MAX_PATH];
 			// Get a UNICODE wide string wsz from the link path
 			MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, temp, -1, wsz, MAX_PATH);
 			hres = ppf->Save(wsz, TRUE);
-			if (SUCCEEDED(hres))
+			if(SUCCEEDED(hres))
 			{
 				bSuccess = true;
 			}
@@ -1042,28 +1032,28 @@ bool CSystem::GetShortcutTarget(const char *linkFileName, char *targetPath, char
 
 	// Create the ShellLink object
 	IShellLink *psl;
-	HRESULT hres = ::CoCreateInstance(CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, IID_IShellLink, (LPVOID*) &psl);
-	if (SUCCEEDED(hres))
+	HRESULT hres = ::CoCreateInstance(CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, IID_IShellLink, (LPVOID *)&psl);
+	if(SUCCEEDED(hres))
 	{
 		IPersistFile *ppf;
 		// Bind the ShellLink object to the Persistent File
-		hres = psl->QueryInterface( IID_IPersistFile, (LPVOID *) &ppf);
-		if (SUCCEEDED(hres))
+		hres = psl->QueryInterface(IID_IPersistFile, (LPVOID *)&ppf);
+		if(SUCCEEDED(hres))
 		{
 			wchar_t wsz[MAX_PATH];
 			// Get a UNICODE wide string wsz from the link path
 			MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, temp, -1, wsz, MAX_PATH);
-			
+
 			// Read the link into the persistent file
 			hres = ppf->Load(wsz, 0);
-			
-			if (SUCCEEDED(hres))
+
+			if(SUCCEEDED(hres))
 			{
-				//Read the target information from the link object
-				//UNC paths are supported (SLGP_UNCPRIORITY)
+				// Read the target information from the link object
+				// UNC paths are supported (SLGP_UNCPRIORITY)
 				psl->GetPath(targetPath, destBufferSizes, NULL, SLGP_UNCPRIORITY);
 
-				//Read the arguments from the link object
+				// Read the arguments from the link object
 				psl->GetArguments(arguments, destBufferSizes);
 			}
 			ppf->Release();
@@ -1079,7 +1069,8 @@ bool CSystem::GetShortcutTarget(const char *linkFileName, char *targetPath, char
 //-----------------------------------------------------------------------------
 // Purpose: sets shortcut (.lnk) information
 //-----------------------------------------------------------------------------
-bool CSystem::ModifyShortcutTarget(const char *linkFileName, const char *targetPath, const char *arguments, const char *workingDirectory)
+bool CSystem::ModifyShortcutTarget(const char *linkFileName, const char *targetPath, const char *arguments,
+								   const char *workingDirectory)
 {
 #ifndef _X360
 	bool bSuccess = false;
@@ -1089,23 +1080,23 @@ bool CSystem::ModifyShortcutTarget(const char *linkFileName, const char *targetP
 
 	// Create the ShellLink object
 	IShellLink *psl;
-	HRESULT hres = ::CoCreateInstance(CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, IID_IShellLink, (LPVOID*) &psl);
-	if (SUCCEEDED(hres))
+	HRESULT hres = ::CoCreateInstance(CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, IID_IShellLink, (LPVOID *)&psl);
+	if(SUCCEEDED(hres))
 	{
 		IPersistFile *ppf;
 		// Bind the ShellLink object to the Persistent File
-		hres = psl->QueryInterface( IID_IPersistFile, (LPVOID *) &ppf);
-		if (SUCCEEDED(hres))
+		hres = psl->QueryInterface(IID_IPersistFile, (LPVOID *)&ppf);
+		if(SUCCEEDED(hres))
 		{
 			wchar_t wsz[MAX_PATH];
 			// Get a UNICODE wide string wsz from the link path
 			MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, temp, -1, wsz, MAX_PATH);
-			
+
 			// Read the link into the persistent file
 			hres = ppf->Load(wsz, 0);
-			
-			if (SUCCEEDED(hres))
-			{ 
+
+			if(SUCCEEDED(hres))
+			{
 				// Set the target information from the link object
 				psl->SetPath(targetPath);
 				psl->SetArguments(arguments);
@@ -1133,16 +1124,16 @@ const char *CSystem::GetDesktopFolderPath()
 	folderPath[0] = 0;
 
 	// try the custom regkey
-	if ( GetRegistryString( "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\\Desktop", folderPath, sizeof(folderPath) ) 
-		&& strlen(folderPath) > 6 )
+	if(GetRegistryString(
+		   "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\\Desktop",
+		   folderPath, sizeof(folderPath)) &&
+	   strlen(folderPath) > 6)
 	{
 		return folderPath;
 	}
 
-
-	// try the default 
-	if ( ::SHGetSpecialFolderPath( NULL, folderPath, CSIDL_DESKTOP, false ) 
-		&& strlen(folderPath) > 6 )
+	// try the default
+	if(::SHGetSpecialFolderPath(NULL, folderPath, CSIDL_DESKTOP, false) && strlen(folderPath) > 6)
 	{
 		return folderPath;
 	}

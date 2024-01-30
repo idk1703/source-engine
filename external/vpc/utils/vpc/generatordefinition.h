@@ -11,9 +11,9 @@
 
 struct PropertyName_t
 {
-	int				m_nPropertyId;
-	const char		*m_pPrefixName;
-	const char		*m_pPropertyName;
+	int m_nPropertyId;
+	const char *m_pPrefixName;
+	const char *m_pPropertyName;
 };
 
 enum configKeyword_e
@@ -54,8 +54,8 @@ enum PropertyType_e
 
 struct PropertyOrdinal_t
 {
-	CUtlString	m_ParseString;
-	CUtlString	m_ValueString;
+	CUtlString m_ParseString;
+	CUtlString m_ValueString;
 };
 
 struct ToolProperty_t
@@ -72,20 +72,20 @@ struct ToolProperty_t
 		m_bPreferSemicolonNoSpace = false;
 	}
 
-	CUtlString						m_ParseString;
-	CUtlString						m_AliasString;
-	CUtlString						m_LegacyString;
-	CUtlString						m_OutputString;
-	CUtlVector< PropertyOrdinal_t >	m_Ordinals;
+	CUtlString m_ParseString;
+	CUtlString m_AliasString;
+	CUtlString m_LegacyString;
+	CUtlString m_OutputString;
+	CUtlVector<PropertyOrdinal_t> m_Ordinals;
 
-	int								m_nPropertyId;
-	PropertyType_e					m_nType;
-	bool							m_bFixSlashes;
-	bool							m_bEmitAsGlobalProperty;
-	bool							m_bInvertOutput;
-	bool							m_bAppendSlash;
-	bool							m_bPreferSemicolonNoComma;
-	bool							m_bPreferSemicolonNoSpace;
+	int m_nPropertyId;
+	PropertyType_e m_nType;
+	bool m_bFixSlashes;
+	bool m_bEmitAsGlobalProperty;
+	bool m_bInvertOutput;
+	bool m_bAppendSlash;
+	bool m_bPreferSemicolonNoComma;
+	bool m_bPreferSemicolonNoSpace;
 };
 
 struct GeneratorTool_t
@@ -95,9 +95,9 @@ struct GeneratorTool_t
 		m_nKeyword = KEYWORD_UNKNOWN;
 	}
 
-	CUtlString						m_ParseString;
-	CUtlVector< ToolProperty_t >	m_Properties;
-	configKeyword_e					m_nKeyword;
+	CUtlString m_ParseString;
+	CUtlVector<ToolProperty_t> m_Properties;
+	configKeyword_e m_nKeyword;
 };
 
 class CGeneratorDefinition
@@ -105,26 +105,24 @@ class CGeneratorDefinition
 public:
 	CGeneratorDefinition();
 
-	void			LoadDefinition( const char *pDefinitionName, PropertyName_t *pPropertyNames );
-	ToolProperty_t	*GetProperty( configKeyword_e keyword, const char *pPropertyName );
+	void LoadDefinition(const char *pDefinitionName, PropertyName_t *pPropertyNames);
+	ToolProperty_t *GetProperty(configKeyword_e keyword, const char *pPropertyName);
 
-	const char		*GetScriptName( CRC32_t *pCRC );
+	const char *GetScriptName(CRC32_t *pCRC);
 
 private:
-	void	AssignIdentifiers();
-	void	IterateToolKey( KeyValues *pToolKV );
-	void	IteratePropertyKey( GeneratorTool_t *pTool, KeyValues *pPropertyKV );
-	void	IterateAttributesKey( ToolProperty_t *pProperty, KeyValues *pAttributesKV );
-	void	Clear();
+	void AssignIdentifiers();
+	void IterateToolKey(KeyValues *pToolKV);
+	void IteratePropertyKey(GeneratorTool_t *pTool, KeyValues *pPropertyKV);
+	void IterateAttributesKey(ToolProperty_t *pProperty, KeyValues *pAttributesKV);
+	void Clear();
 
-	PropertyName_t					*m_pPropertyNames;
-	CUtlString						m_ScriptName;
-	CUtlString						m_NameString;
-	CUtlString						m_VersionString;
-	CUtlVector< GeneratorTool_t >	m_Tools;
-	CRC32_t							m_ScriptCRC;
+	PropertyName_t *m_pPropertyNames;
+	CUtlString m_ScriptName;
+	CUtlString m_NameString;
+	CUtlString m_VersionString;
+	CUtlVector<GeneratorTool_t> m_Tools;
+	CRC32_t m_ScriptCRC;
 };
-
-
 
 #endif // GENERATORDEFINITION_H

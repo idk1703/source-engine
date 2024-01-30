@@ -15,9 +15,9 @@ $Configuration
 {
 	$PreBuildEvent [$WIN32]
 	{
-		$CommandLine		"call $SRCDIR\vpc_scripts\valve_p4_edit.cmd $SRCDIR\game\shared\tf\schema_tf.h $SRCDIR" "\n" \ 
+		$CommandLine		"call $SRCDIR\vpc_scripts\valve_p4_edit.cmd $SRCDIR\game\shared\tf\schema_tf.h $SRCDIR" "\n" \
 							"call $SRCDIR\vpc_scripts\valve_p4_edit.cmd $SRCDIR\game\shared\tf\schema_tf.cpp $SRCDIR" "\n" \
-							"$BASE" 
+							"$BASE"
 	}
 }
 
@@ -25,16 +25,16 @@ $Project "schema (TF)"
 {
 	$File "gc\base_gcschema.sch"
 	{
-		$Configuration 
-		{ 
-			$ExcludedFromBuild	"Yes" 
+		$Configuration
+		{
+			$ExcludedFromBuild	"Yes"
 		}
 	}
 	$File "econ\econ_gcschema.sch"
 	{
-		$Configuration 
-		{ 
-			$ExcludedFromBuild	"Yes" 
+		$Configuration
+		{
+			$ExcludedFromBuild	"Yes"
 		}
 	}
 	$File "tf\schema_tf.sch"
@@ -51,4 +51,3 @@ $Project "schema (TF)"
 		}
 	}
 }
-

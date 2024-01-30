@@ -1,11 +1,11 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
 // Primary header for engine
-#if !defined( QUAKEDEF_H )
+#if !defined(QUAKEDEF_H)
 #define QUAKEDEF_H
 #ifdef _WIN32
 #pragma once
@@ -26,6 +26,5 @@
 #include "protocol.h"
 #include "render.h"
 #include "gl_model.h"
-
 
 #endif // QUAKEDEF_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -19,14 +19,12 @@
 class CMasterMsgHandler : public CMsgHandler
 {
 public:
-	CMasterMsgHandler( IGameList *baseobject, HANDLERTYPE type, void *typeinfo = NULL );
+	CMasterMsgHandler(IGameList *baseobject, HANDLERTYPE type, void *typeinfo = NULL);
 
-	virtual bool Process( netadr_t *from, CMsgBuffer *msg );
+	virtual bool Process(netadr_t *from, CMsgBuffer *msg);
 
 private:
 	IGameList *m_pGameList;
 };
-
-
 
 #endif // MASTERMSGHANDLER_H

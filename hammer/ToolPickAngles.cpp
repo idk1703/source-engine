@@ -13,7 +13,6 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Constructor. Inits data members.
 //-----------------------------------------------------------------------------
@@ -22,14 +21,10 @@ CToolPickAngles::CToolPickAngles(void)
 	m_pNotifyTarget = NULL;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Destructor.
 //-----------------------------------------------------------------------------
-CToolPickAngles::~CToolPickAngles(void)
-{
-}
-
+CToolPickAngles::~CToolPickAngles(void) {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles the left mouse button up message in the 3D view.
@@ -43,7 +38,6 @@ bool CToolPickAngles::OnLMouseUp3D(CMapView3D *pView, UINT nFlags, const Vector2
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Handles the left mouse button up message in the 3D view.
 // Input  : pView - The view that the event occurred in.
@@ -54,17 +48,17 @@ bool CToolPickAngles::OnLMouseUp3D(CMapView3D *pView, UINT nFlags, const Vector2
 bool CToolPickAngles::OnLMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint)
 {
 	unsigned long ulFace;
-	CMapClass *pObject = pView->NearestObjectAt( vPoint, ulFace);
-	if (pObject != NULL)
+	CMapClass *pObject = pView->NearestObjectAt(vPoint, ulFace);
+	if(pObject != NULL)
 	{
 		CMapClass *pSelObject = pObject->PrepareSelection(selectObjects);
-		CMapEntity *pEntity = dynamic_cast <CMapEntity *>(pSelObject);
-		if (pEntity != NULL)
+		CMapEntity *pEntity = dynamic_cast<CMapEntity *>(pSelObject);
+		if(pEntity != NULL)
 		{
 			//
 			// We clicked on an entity.
 			//
-			if (m_pNotifyTarget)
+			if(m_pNotifyTarget)
 			{
 				Vector vecCenter;
 				pEntity->GetBoundsCenter(vecCenter);
@@ -73,8 +67,8 @@ bool CToolPickAngles::OnLMouseDown3D(CMapView3D *pView, UINT nFlags, const Vecto
 		}
 		else
 		{
-			CMapSolid *pSolid = dynamic_cast <CMapSolid *> (pObject);
-			if (pSolid == NULL)
+			CMapSolid *pSolid = dynamic_cast<CMapSolid *>(pObject);
+			if(pSolid == NULL)
 			{
 				return true;
 			}
@@ -82,16 +76,16 @@ bool CToolPickAngles::OnLMouseDown3D(CMapView3D *pView, UINT nFlags, const Vecto
 			//
 			// Build a ray to trace against the face that they clicked on to
 			// find the point of intersection.
-			//			
-			Vector Start,End;
-			pView->GetCamera()->BuildRay( vPoint, Start, End);
+			//
+			Vector Start, End;
+			pView->GetCamera()->BuildRay(vPoint, Start, End);
 
 			Vector HitPos;
 			Vector HitNormal;
 			CMapFace *pFace = pSolid->GetFace(ulFace);
-			if (pFace->TraceLine(HitPos, HitNormal, Start, End))
+			if(pFace->TraceLine(HitPos, HitNormal, Start, End))
 			{
-				if (m_pNotifyTarget)
+				if(m_pNotifyTarget)
 				{
 					m_pNotifyTarget->OnNotifyPickAngles(HitPos);
 				}
@@ -101,7 +95,6 @@ bool CToolPickAngles::OnLMouseDown3D(CMapView3D *pView, UINT nFlags, const Vecto
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles the left mouse button double click message in the 3D view.
@@ -115,7 +108,6 @@ bool CToolPickAngles::OnLMouseDblClk3D(CMapView3D *pView, UINT nFlags, const Vec
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Handles the right mouse button up message in the 3D view.
 // Input  : pView - The view that the event occurred in.
@@ -128,7 +120,6 @@ bool CToolPickAngles::OnRMouseUp3D(CMapView3D *pView, UINT nFlags, const Vector2
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Handles the mouse button up message in the 3D view.
 // Input  : pView - The view that the event occurred in.
@@ -140,7 +131,6 @@ bool CToolPickAngles::OnRMouseDown3D(CMapView3D *pView, UINT nFlags, const Vecto
 {
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles the mouse move message in the 3D view.
@@ -155,20 +145,17 @@ bool CToolPickAngles::OnMouseMove3D(CMapView3D *pView, UINT nFlags, const Vector
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Sets the cursor to the correct cursor for this tool.
 //-----------------------------------------------------------------------------
 void CToolPickAngles::SetToolCursor(void)
 {
 	static HCURSOR hcur = NULL;
-	
-	if (!hcur)
+
+	if(!hcur)
 	{
 		hcur = LoadCursor(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDC_CROSSHAIR));
 	}
-	
+
 	SetCursor(hcur);
 }
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -12,24 +12,22 @@
 
 #include "clientmode_shared.h"
 
-class ClientModeHL1Normal : public ClientModeShared 
+class ClientModeHL1Normal : public ClientModeShared
 {
-DECLARE_CLASS( ClientModeHL1Normal, ClientModeShared );
+	DECLARE_CLASS(ClientModeHL1Normal, ClientModeShared);
 
 public:
-					ClientModeHL1Normal();
-	virtual			~ClientModeHL1Normal();
+	ClientModeHL1Normal();
+	virtual ~ClientModeHL1Normal();
 
-	virtual	void	InitViewport();
+	virtual void InitViewport();
 
-	virtual float	GetViewModelFOV( void );
+	virtual float GetViewModelFOV(void);
 
-	virtual int		GetDeathMessageStartHeight( void );
+	virtual int GetDeathMessageStartHeight(void);
 };
 
-
 extern IClientMode *GetClientModeNormal();
-extern ClientModeHL1Normal* GetClientModeHL1Normal();
-
+extern ClientModeHL1Normal *GetClientModeHL1Normal();
 
 #endif // HL1_CLIENTMODE_H

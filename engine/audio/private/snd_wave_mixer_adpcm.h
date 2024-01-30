@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -15,10 +15,9 @@
 #define SND_WAVE_MIXER_ADPCM_H
 #pragma once
 
-
 class CAudioMixer;
 class IWaveData;
 
-CAudioMixer *CreateADPCMMixer( IWaveData *data );
+CAudioMixer *CreateADPCMMixer(IWaveData *data);
 
 #endif // SND_WAVE_MIXER_ADPCM_H

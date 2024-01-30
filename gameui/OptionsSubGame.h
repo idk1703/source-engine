@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,18 +18,16 @@
 //-----------------------------------------------------------------------------
 class COptionsSubGame : public vgui::Frame
 {
-	DECLARE_CLASS_SIMPLE( COptionsSubGame, vgui::Frame );
+	DECLARE_CLASS_SIMPLE(COptionsSubGame, vgui::Frame);
 
 public:
-	COptionsSubGame( vgui::Panel *parent, const char *name );
-	~COptionsSubGame( void );
+	COptionsSubGame(vgui::Panel *parent, const char *name);
+	~COptionsSubGame(void);
 
-	virtual void OnCommand( const char *command );
-	virtual void OnClose( void );
+	virtual void OnCommand(const char *command);
+	virtual void OnClose(void);
 
 private:
 };
-
-
 
 #endif // OPTIONS_SUB_GAME_H

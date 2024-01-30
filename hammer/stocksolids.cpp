@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -10,14 +10,12 @@
 #include "hammer_mathlib.h"
 #include "MapSolid.h"
 
-
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
+#pragma warning(disable : 4244)
 
-#pragma warning(disable:4244)
-
-//Vector pmPoints[64];
+// Vector pmPoints[64];
 
 StockSolid::StockSolid(int nFields)
 {
@@ -25,42 +23,35 @@ StockSolid::StockSolid(int nFields)
 	cofs.Init();
 }
 
-
 StockSolid::~StockSolid()
 {
-	if ( pFields )
+	if(pFields)
 	{
 		delete[] pFields;
 		pFields = NULL;
 	}
 }
 
-
 void StockSolid::AllocateDataFields(int nFields_)
 {
 	pFields = new STSDATAFIELD[nFields_];
 	Assert(pFields);
 	iMaxFields = nFields_;
-	this->nFields = 0;	// none yet
+	this->nFields = 0; // none yet
 }
 
-
-void StockSolid::Serialize(std::fstream& file, BOOL bIsStoring)
-{
-}
-
+void StockSolid::Serialize(std::fstream &file, BOOL bIsStoring) {}
 
 int StockSolid::GetFieldCount() const
 {
 	return nFields;
 }
 
-
 void StockSolid::SetFieldData(int iIndex, int iData)
 {
 	Assert(iIndex < nFields);
 
-	STSDATAFIELD& field = pFields[iIndex];
+	STSDATAFIELD &field = pFields[iIndex];
 	field.iValue = iData;
 
 	if(field.flags & DFFLAG_RANGED)
@@ -69,12 +60,11 @@ void StockSolid::SetFieldData(int iIndex, int iData)
 	}
 }
 
-
 int StockSolid::GetFieldData(int iIndex, int *piData) const
 {
 	Assert(iIndex < nFields);
 
-	STSDATAFIELD& field = pFields[iIndex];
+	STSDATAFIELD &field = pFields[iIndex];
 
 	if(piData)
 		piData[0] = field.iValue;
@@ -82,30 +72,27 @@ int StockSolid::GetFieldData(int iIndex, int *piData) const
 	return field.iValue;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void StockSolid::SetOrigin(const Vector &o)
 {
 	origin = o;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void StockSolid::SetCenterOffset(const Vector &ofs)
 {
 	cofs = ofs;
 }
 
-
 void StockSolid::AddDataField(STSDF_TYPE type, const char *pszName, int iRangeLower, int iRangeUpper)
 {
 	Assert(nFields < iMaxFields);
-	
-	STSDATAFIELD& field = pFields[nFields++];
+
+	STSDATAFIELD &field = pFields[nFields++];
 
 	field.type = type;
 	field.flags = 0;
@@ -119,25 +106,22 @@ void StockSolid::AddDataField(STSDF_TYPE type, const char *pszName, int iRangeLo
 	}
 }
 
-
 // ----------------------------------------------------------------------------
 // StockBlock()
 // ----------------------------------------------------------------------------
-StockBlock::StockBlock() :
-	StockSolid(3)
+StockBlock::StockBlock() : StockSolid(3)
 {
 	AddDataField(DFTYPE_INTEGER, "Width (X)");
 	AddDataField(DFTYPE_INTEGER, "Depth (Y)");
 	AddDataField(DFTYPE_INTEGER, "Height (Z)");
 }
 
-
 void StockBlock::SetFromBox(BoundBox *pBox)
 {
 	// round floats before converting to integers
-	SetFieldData(fieldWidth, (pBox->bmaxs[0] - pBox->bmins[0])+0.5f );
-	SetFieldData(fieldDepth, (pBox->bmaxs[1] - pBox->bmins[1])+0.5f );
-	SetFieldData(fieldHeight, (pBox->bmaxs[2] - pBox->bmins[2])+0.5f );
+	SetFieldData(fieldWidth, (pBox->bmaxs[0] - pBox->bmins[0]) + 0.5f);
+	SetFieldData(fieldDepth, (pBox->bmaxs[1] - pBox->bmins[1]) + 0.5f);
+	SetFieldData(fieldHeight, (pBox->bmaxs[2] - pBox->bmins[2]) + 0.5f);
 
 	Vector o;
 	pBox->GetBoundsCenter(o);
@@ -145,14 +129,13 @@ void StockBlock::SetFromBox(BoundBox *pBox)
 	SetOrigin(o);
 }
 
-
 void StockBlock::CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eAlignment)
 {
 	CMapFace Face;
 
-	float fDepth = float(GetFieldData(fieldDepth))/2;
-	float fWidth = float(GetFieldData(fieldWidth))/2;
-	float fHeight = float(GetFieldData(fieldHeight))/2;
+	float fDepth = float(GetFieldData(fieldDepth)) / 2;
+	float fWidth = float(GetFieldData(fieldWidth)) / 2;
+	float fHeight = float(GetFieldData(fieldHeight)) / 2;
 
 	// create box
 	Vector bmins, bmaxs;
@@ -178,7 +161,7 @@ void StockBlock::CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eAlignment
 	Points[2][0] = bmaxs[0];
 	Points[2][1] = bmins[1];
 	Points[2][2] = bmaxs[2];
-	
+
 	Points[3][0] = bmins[0];
 	Points[3][1] = bmins[1];
 	Points[3][2] = bmaxs[2];
@@ -257,18 +240,15 @@ void StockBlock::CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eAlignment
 	pSolid->InitializeTextureAxes(eAlignment, INIT_TEXTURE_ALL | INIT_TEXTURE_FORCE);
 }
 
-
 // ----------------------------------------------------------------------------
 // StockWedge()
 // ----------------------------------------------------------------------------
-StockWedge::StockWedge() :
-	StockSolid(3)
+StockWedge::StockWedge() : StockSolid(3)
 {
 	AddDataField(DFTYPE_INTEGER, "Width (X)");
 	AddDataField(DFTYPE_INTEGER, "Depth (Y)");
 	AddDataField(DFTYPE_INTEGER, "Height (Z)");
 }
-
 
 void StockWedge::SetFromBox(BoundBox *pBox)
 {
@@ -282,14 +262,13 @@ void StockWedge::SetFromBox(BoundBox *pBox)
 	SetOrigin(o);
 }
 
-
 void StockWedge::CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eTextureAlignment)
 {
 	CMapFace Face;
 
-	float fDepth = float(GetFieldData(fieldDepth))/2;
-	float fWidth = float(GetFieldData(fieldWidth))/2;
-	float fHeight = float(GetFieldData(fieldHeight))/2;
+	float fDepth = float(GetFieldData(fieldDepth)) / 2;
+	float fWidth = float(GetFieldData(fieldWidth)) / 2;
+	float fHeight = float(GetFieldData(fieldHeight)) / 2;
 
 	Vector Points[4];
 
@@ -310,7 +289,7 @@ void StockWedge::CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eTextureAl
 	pSolid->AddFace(&Face);
 
 	// bottom
-	for (int i = 0; i < 3; i++)
+	for(int i = 0; i < 3; i++)
 	{
 		Points[i][2] = origin[2] - fHeight;
 	}
@@ -330,7 +309,7 @@ void StockWedge::CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eTextureAl
 	Points[2][0] = origin[0] - fWidth;
 	Points[2][1] = origin[1] - fDepth;
 	Points[2][2] = origin[2] + fHeight;
-	
+
 	Points[3][0] = origin[0] - fWidth;
 	Points[3][1] = origin[1] - fDepth;
 	Points[3][2] = origin[2] - fHeight;
@@ -350,7 +329,7 @@ void StockWedge::CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eTextureAl
 	Points[2][0] = origin[0] - fWidth;
 	Points[2][1] = origin[1] - fDepth;
 	Points[2][2] = origin[2] - fHeight;
-	
+
 	Points[3][0] = origin[0] - fWidth;
 	Points[3][1] = origin[1] - fDepth;
 	Points[3][2] = origin[2] + fHeight;
@@ -370,7 +349,7 @@ void StockWedge::CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eTextureAl
 	Points[2][0] = origin[0] + fWidth;
 	Points[2][1] = origin[1] - fDepth;
 	Points[2][2] = origin[2] - fHeight;
-	
+
 	Points[3][0] = origin[0] + fWidth;
 	Points[3][1] = origin[1] - fDepth;
 	Points[3][2] = origin[2] + fHeight;
@@ -382,12 +361,10 @@ void StockWedge::CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eTextureAl
 	pSolid->InitializeTextureAxes(eTextureAlignment, INIT_TEXTURE_ALL | INIT_TEXTURE_FORCE);
 }
 
-
 // ----------------------------------------------------------------------------
 // StockCylinder()
 // ----------------------------------------------------------------------------
-StockCylinder::StockCylinder()
-	: StockSolid(4)
+StockCylinder::StockCylinder() : StockSolid(4)
 {
 	AddDataField(DFTYPE_INTEGER, "Width (X)");
 	AddDataField(DFTYPE_INTEGER, "Depth (Y)");
@@ -396,7 +373,6 @@ StockCylinder::StockCylinder()
 
 	SetFieldData(fieldSideCount, 8);
 }
-
 
 void StockCylinder::SetFromBox(BoundBox *pBox)
 {
@@ -410,35 +386,34 @@ void StockCylinder::SetFromBox(BoundBox *pBox)
 	SetOrigin(o);
 }
 
-
 void StockCylinder::CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eTextureAlignment)
 {
 	CMapFace Face;
 
-	float fDepth = float(GetFieldData(fieldDepth))/2;
-	float fWidth = float(GetFieldData(fieldWidth))/2;
-	float fHeight = float(GetFieldData(fieldHeight))/2;
+	float fDepth = float(GetFieldData(fieldDepth)) / 2;
+	float fWidth = float(GetFieldData(fieldWidth)) / 2;
+	float fHeight = float(GetFieldData(fieldHeight)) / 2;
 	int nSides = GetFieldData(fieldSideCount);
 
 	Vector pmPoints[64];
-	polyMake(origin[0] - fWidth, origin[1] - fDepth, origin[0] + fWidth, origin[1] + fDepth, nSides, 0, pmPoints );
+	polyMake(origin[0] - fWidth, origin[1] - fDepth, origin[0] + fWidth, origin[1] + fDepth, nSides, 0, pmPoints);
 
 	// face 0 - top face
-	for(int i = 0; i < nSides+1; i++)
+	for(int i = 0; i < nSides + 1; i++)
 	{
 		pmPoints[i][2] = origin[2] - fHeight;
 	}
 
-	Face.CreateFace( pmPoints, -nSides);
+	Face.CreateFace(pmPoints, -nSides);
 	pSolid->AddFace(&Face);
 
 	// bottom face
-	for(int i = 0; i < nSides+1; i++)
+	for(int i = 0; i < nSides + 1; i++)
 	{
 		pmPoints[i][2] = origin[2] + fHeight;
 	}
 
-	Face.CreateFace( pmPoints, nSides);
+	Face.CreateFace(pmPoints, nSides);
 	pSolid->AddFace(&Face);
 
 	// other sides
@@ -450,12 +425,12 @@ void StockCylinder::CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eTextur
 		Points[0][1] = pmPoints[i][1];
 		Points[0][2] = origin[2] - fHeight;
 
-		Points[1][0] = pmPoints[i+1][0];
-		Points[1][1] = pmPoints[i+1][1];
+		Points[1][0] = pmPoints[i + 1][0];
+		Points[1][1] = pmPoints[i + 1][1];
 		Points[1][2] = origin[2] - fHeight;
 
-		Points[2][0] = pmPoints[i+1][0];
-		Points[2][1] = pmPoints[i+1][1];
+		Points[2][0] = pmPoints[i + 1][0];
+		Points[2][1] = pmPoints[i + 1][1];
 		Points[2][2] = origin[2] + fHeight;
 
 		Points[3][0] = pmPoints[i][0];
@@ -471,12 +446,10 @@ void StockCylinder::CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eTextur
 	pSolid->InitializeTextureAxes(eTextureAlignment, INIT_TEXTURE_ALL | INIT_TEXTURE_FORCE);
 }
 
-
 // ----------------------------------------------------------------------------
 // StockSpike()
 // ----------------------------------------------------------------------------
-StockSpike::StockSpike()
-	: StockSolid(4)
+StockSpike::StockSpike() : StockSolid(4)
 {
 	AddDataField(DFTYPE_INTEGER, "Width (X)");
 	AddDataField(DFTYPE_INTEGER, "Depth (Y)");
@@ -485,7 +458,6 @@ StockSpike::StockSpike()
 
 	SetFieldData(fieldSideCount, 8);
 }
-
 
 void StockSpike::SetFromBox(BoundBox *pBox)
 {
@@ -499,12 +471,11 @@ void StockSpike::SetFromBox(BoundBox *pBox)
 	SetOrigin(o);
 }
 
-
 void StockSpike::CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eTextureAlignment)
 {
-	float fDepth = float(GetFieldData(fieldDepth))/2;
-	float fWidth = float(GetFieldData(fieldWidth))/2;
-	float fHeight = float(GetFieldData(fieldHeight))/2;
+	float fDepth = float(GetFieldData(fieldDepth)) / 2;
+	float fWidth = float(GetFieldData(fieldWidth)) / 2;
+	float fHeight = float(GetFieldData(fieldHeight)) / 2;
 	int nSides = GetFieldData(fieldSideCount);
 	CMapFace NewFace;
 
@@ -513,7 +484,7 @@ void StockSpike::CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eTextureAl
 	polyMake(origin[0] - fWidth, origin[1] - fDepth, origin[0] + fWidth, origin[1] + fDepth, nSides, 0, pmPoints);
 
 	// bottom face
-	for(int i = 0; i < nSides+1; i++)
+	for(int i = 0; i < nSides + 1; i++)
 	{
 		// YWB rounding???
 		pmPoints[i][2] = V_rint(origin[2] - fHeight);
@@ -537,9 +508,9 @@ void StockSpike::CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eTextureAl
 		Points[1][1] = pmPoints[i][1];
 		Points[1][2] = pmPoints[i][2];
 
-		Points[2][0] = pmPoints[i+1][0];
-		Points[2][1] = pmPoints[i+1][1];
-		Points[2][2] = pmPoints[i+1][2];
+		Points[2][0] = pmPoints[i + 1][0];
+		Points[2][1] = pmPoints[i + 1][1];
+		Points[2][2] = pmPoints[i + 1][2];
 
 		NewFace.CreateFace(Points, 3);
 		pSolid->AddFace(&NewFace);
@@ -549,9 +520,7 @@ void StockSpike::CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eTextureAl
 	pSolid->InitializeTextureAxes(eTextureAlignment, INIT_TEXTURE_ALL | INIT_TEXTURE_FORCE);
 }
 
-
-StockSphere::StockSphere()
-	: StockSolid(4)
+StockSphere::StockSphere() : StockSolid(4)
 {
 	AddDataField(DFTYPE_INTEGER, "Width (X)");
 	AddDataField(DFTYPE_INTEGER, "Depth (Y)");
@@ -560,7 +529,6 @@ StockSphere::StockSphere()
 
 	SetFieldData(fieldSideCount, 8);
 }
-
 
 void StockSphere::SetFromBox(BoundBox *pBox)
 {
@@ -573,7 +541,6 @@ void StockSphere::SetFromBox(BoundBox *pBox)
 
 	SetOrigin(o);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Builds a tesselated sphere.
@@ -593,21 +560,21 @@ void StockSphere::CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eTextureA
 
 	//
 	// Build the sphere by building slices at constant angular intervals.
-	// 
+	//
 	// Each slice is a ring of four-sided faces, except for the top and bottom slices,
 	// which are flattened cones.
 	//
 	// Unrolled, a sphere made with 5 'sides' has 25 faces and looks like this:
-	//				
+	//
 	//			/\  /\  /\  /\  /\
 	//		   / 0\/ 1\/ 2\/ 3\/ 4\
-	//		  |  5|  6|  7|  8|  9| 	
-	//		  | 10| 11| 12| 13| 14| 	
-	//		  | 15| 16| 17| 18| 19| 	
+	//		  |  5|  6|  7|  8|  9|
+	//		  | 10| 11| 12| 13| 14|
+	//		  | 15| 16| 17| 18| 19|
 	//		   \20/\21/\22/\23/\24/
 	//			\/  \/  \/  \/  \/
 	//
-	for (int nSlice = 0; nSlice < nSides; nSlice++)
+	for(int nSlice = 0; nSlice < nSides; nSlice++)
 	{
 		float fAngle1 = fAngle + fAngleStep;
 
@@ -617,7 +584,8 @@ void StockSphere::CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eTextureA
 		Vector TopPoints[64];
 		float fUpperWidth = fWidth * sin(DEG2RAD(fAngle));
 		float fUpperDepth = fDepth * sin(DEG2RAD(fAngle));
-		polyMake(origin[0] - fUpperWidth, origin[1] - fUpperDepth, origin[0] + fUpperWidth, origin[1] + fUpperDepth, nSides, 0, TopPoints);
+		polyMake(origin[0] - fUpperWidth, origin[1] - fUpperDepth, origin[0] + fUpperWidth, origin[1] + fUpperDepth,
+				 nSides, 0, TopPoints);
 
 		//
 		// Make the lower polygon.
@@ -625,7 +593,8 @@ void StockSphere::CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eTextureA
 		Vector BottomPoints[64];
 		float fLowerWidth = fWidth * sin(DEG2RAD(fAngle1));
 		float fLowerDepth = fDepth * sin(DEG2RAD(fAngle1));
-		polyMake(origin[0] - fLowerWidth, origin[1] - fLowerDepth, origin[0] + fLowerWidth, origin[1] + fLowerDepth, nSides, 0, BottomPoints);
+		polyMake(origin[0] - fLowerWidth, origin[1] - fLowerDepth, origin[0] + fLowerWidth, origin[1] + fLowerDepth,
+				 nSides, 0, BottomPoints);
 
 		//
 		// Build the faces that connect the upper and lower polygons.
@@ -634,15 +603,15 @@ void StockSphere::CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eTextureA
 		float fUpperHeight = origin[2] + fHeight * cos(DEG2RAD(fAngle));
 		float fLowerHeight = origin[2] + fHeight * cos(DEG2RAD(fAngle1));
 
-		for (int i = 0; i < nSides; i++)
+		for(int i = 0; i < nSides; i++)
 		{
-			if (nSlice != 0)
+			if(nSlice != 0)
 			{
 				Points[0][0] = TopPoints[i + 1][0];
 				Points[0][1] = TopPoints[i + 1][1];
 				Points[0][2] = fUpperHeight;
 			}
-			
+
 			Points[1][0] = TopPoints[i][0];
 			Points[1][1] = TopPoints[i][1];
 			Points[1][2] = fUpperHeight;
@@ -651,7 +620,7 @@ void StockSphere::CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eTextureA
 			Points[2][1] = BottomPoints[i][1];
 			Points[2][2] = fLowerHeight;
 
-			if (nSlice != nSides - 1)
+			if(nSlice != nSides - 1)
 			{
 				Points[3][0] = BottomPoints[i + 1][0];
 				Points[3][1] = BottomPoints[i + 1][1];
@@ -661,11 +630,11 @@ void StockSphere::CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eTextureA
 			//
 			// Top and bottom are cones, not rings, so remove one vertex per face.
 			//
-			if (nSlice == 0)
+			if(nSlice == 0)
 			{
 				Face.CreateFace(&Points[1], 3);
 			}
-			else if (nSlice == nSides - 1)
+			else if(nSlice == nSides - 1)
 			{
 				Face.CreateFace(Points, 3);
 			}
@@ -677,12 +646,10 @@ void StockSphere::CreateMapSolid(CMapSolid *pSolid, TextureAlignment_t eTextureA
 			Face.texture.smooth = 1.f;
 			pSolid->AddFace(&Face);
 		}
-	
+
 		fAngle += fAngleStep;
 	}
 
 	pSolid->CalcBounds();
 	pSolid->InitializeTextureAxes(eTextureAlignment, INIT_TEXTURE_ALL | INIT_TEXTURE_FORCE);
 }
-
-

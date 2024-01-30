@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -20,12 +20,13 @@ using namespace vgui;
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CCustomTabExplanationDialog::CCustomTabExplanationDialog(vgui::Panel *parent) : BaseClass(parent, "CustomTabExplanationDialog")
+CCustomTabExplanationDialog::CCustomTabExplanationDialog(vgui::Panel *parent)
+	: BaseClass(parent, "CustomTabExplanationDialog")
 {
 	SetDeleteSelfOnClose(true);
-	SetSizeable( false );
+	SetSizeable(false);
 
 	input()->SetAppModalSurface(GetVPanel());
 
@@ -37,28 +38,26 @@ CCustomTabExplanationDialog::CCustomTabExplanationDialog(vgui::Panel *parent) : 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CCustomTabExplanationDialog::~CCustomTabExplanationDialog()
+CCustomTabExplanationDialog::~CCustomTabExplanationDialog() {}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+void CCustomTabExplanationDialog::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
+	BaseClass::ApplySchemeSettings(pScheme);
+
+	SetDialogVariable("game", ModInfo().GetGameName());
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-void CCustomTabExplanationDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
-{
-	BaseClass::ApplySchemeSettings( pScheme );
-
-	SetDialogVariable( "game", ModInfo().GetGameName() );
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCustomTabExplanationDialog::OnKeyCodePressed(KeyCode code)
 {
-	if (code == KEY_ESCAPE)
+	if(code == KEY_ESCAPE)
 	{
 		Close();
 	}
@@ -71,22 +70,22 @@ void CCustomTabExplanationDialog::OnKeyCodePressed(KeyCode code)
 //-----------------------------------------------------------------------------
 // Purpose: handles button commands
 //-----------------------------------------------------------------------------
-void CCustomTabExplanationDialog::OnCommand( const char *command )
+void CCustomTabExplanationDialog::OnCommand(const char *command)
 {
-	if ( !stricmp( command, "ok" ) || !stricmp( command, "cancel" ) || !stricmp( command, "close" ) )
+	if(!stricmp(command, "ok") || !stricmp(command, "cancel") || !stricmp(command, "close"))
 	{
 		Close();
 	}
 	else
 	{
-		BaseClass::OnCommand( command );
+		BaseClass::OnCommand(command);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CCustomTabExplanationDialog::OnClose( void )
+void CCustomTabExplanationDialog::OnClose(void)
 {
 	BaseClass::OnClose();
 	GameUI().AllowEngineHideGameUI();

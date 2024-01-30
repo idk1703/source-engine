@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -29,8 +29,5 @@ private:
 	// the parent class that we push info back to
 	CServerInfo *m_pServerInfo;
 };
-
-
-
 
 #endif // SERVERINFOMSGHANDLERDETAILS_H

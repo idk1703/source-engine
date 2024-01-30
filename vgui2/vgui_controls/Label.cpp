@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,10 +28,10 @@
 using namespace vgui;
 
 #ifndef max
-#define max(a,b)            (((a) > (b)) ? (a) : (b))
+#define max(a, b) (((a) > (b)) ? (a) : (b))
 #endif
 
-DECLARE_BUILD_FACTORY_DEFAULT_TEXT( Label, Label );
+DECLARE_BUILD_FACTORY_DEFAULT_TEXT(Label, Label);
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
@@ -45,7 +45,7 @@ Label::Label(Panel *parent, const char *panelName, const char *text) : BaseClass
 	SetText(text);
 	_textImageIndex = AddImage(_textImage, 0);
 
-	REGISTER_COLOR_AS_OVERRIDABLE( _disabledFgColor2, "disabledfgcolor2_override" );
+	REGISTER_COLOR_AS_OVERRIDABLE(_disabledFgColor2, "disabledfgcolor2_override");
 }
 
 //-----------------------------------------------------------------------------
@@ -60,7 +60,7 @@ Label::Label(Panel *parent, const char *panelName, const wchar_t *wszText) : Bas
 	SetText(wszText);
 	_textImageIndex = AddImage(_textImage, 0);
 
-	REGISTER_COLOR_AS_OVERRIDABLE( _disabledFgColor2, "disabledfgcolor2_override" );
+	REGISTER_COLOR_AS_OVERRIDABLE(_disabledFgColor2, "disabledfgcolor2_override");
 }
 
 //-----------------------------------------------------------------------------
@@ -69,8 +69,8 @@ Label::Label(Panel *parent, const char *panelName, const wchar_t *wszText) : Bas
 Label::~Label()
 {
 	delete _textImage;
-	delete [] _associateName;
-	delete [] _fontOverrideName;
+	delete[] _associateName;
+	delete[] _fontOverrideName;
 }
 
 //-----------------------------------------------------------------------------
@@ -92,7 +92,7 @@ void Label::Init()
 	m_bUseProportionalInsets = false;
 	m_bAutoWideDirty = false;
 
-//	SetPaintBackgroundEnabled(false);
+	//	SetPaintBackgroundEnabled(false);
 }
 
 //-----------------------------------------------------------------------------
@@ -100,7 +100,7 @@ void Label::Init()
 //-----------------------------------------------------------------------------
 void Label::SetTextColorState(EColorState state)
 {
-	if (_textColorState != state)
+	if(_textColorState != state)
 	{
 		_textColorState = state;
 		InvalidateLayout();
@@ -112,61 +112,60 @@ void Label::SetTextColorState(EColorState state)
 //-----------------------------------------------------------------------------
 void Label::GetContentSize(int &wide, int &tall)
 {
-	if( GetFont() == INVALID_FONT ) // we haven't loaded our font yet, so load it now
+	if(GetFont() == INVALID_FONT) // we haven't loaded our font yet, so load it now
 	{
-		IScheme *pScheme = scheme()->GetIScheme( GetScheme() );
-		if ( pScheme )
+		IScheme *pScheme = scheme()->GetIScheme(GetScheme());
+		if(pScheme)
 		{
-			SetFont( pScheme->GetFont( "Default", IsProportional() ) );
+			SetFont(pScheme->GetFont("Default", IsProportional()));
 		}
 	}
-
 
 	int tx0, ty0, tx1, ty1;
 	ComputeAlignment(tx0, ty0, tx1, ty1);
 
 	// the +8 is padding to the content size
-	// the code which uses it should really set that itself; 
+	// the code which uses it should really set that itself;
 	// however a lot of existing code relies on this
-	wide = (tx1 - tx0) + _textInset[0]; 
+	wide = (tx1 - tx0) + _textInset[0];
 
 	// get the size of the text image and remove it
 	int iWide, iTall;
 	_textImage->GetSize(iWide, iTall);
-	wide -=  iWide;
+	wide -= iWide;
 	// get the full, untruncated (no elipsis) size of the text image.
 	_textImage->GetContentSize(iWide, iTall);
 	wide += iWide;
 
 	// addin the image offsets as well
-	for (int i=0; i < _imageDar.Size(); i++)
+	for(int i = 0; i < _imageDar.Size(); i++)
 		wide += _imageDar[i].offset;
 
 	tall = max((ty1 - ty0) + _textInset[1], iTall);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Calculate the keyboard key that is a hotkey 
+// Purpose: Calculate the keyboard key that is a hotkey
 //-----------------------------------------------------------------------------
 wchar_t Label::CalculateHotkey(const char *text)
 {
-	for (const char *ch = text; *ch != 0; ch++)
+	for(const char *ch = text; *ch != 0; ch++)
 	{
-		if (*ch == '&')
-			{
+		if(*ch == '&')
+		{
 			// get the next character
 			ch++;
 
-			if (*ch == '&')
+			if(*ch == '&')
 			{
 				// just an &
 				continue;
 			}
-			else if (*ch == 0)
+			else if(*ch == 0)
 			{
 				break;
 			}
-			else if (V_isalnum(*ch))
+			else if(V_isalnum(*ch))
 			{
 				// found the hotkey
 				return (wchar_t)tolower(*ch);
@@ -179,25 +178,25 @@ wchar_t Label::CalculateHotkey(const char *text)
 
 wchar_t Label::CalculateHotkey(const wchar_t *text)
 {
-	if( text )
+	if(text)
 	{
-		for (const wchar_t *ch = text; *ch != 0; ch++)
+		for(const wchar_t *ch = text; *ch != 0; ch++)
 		{
-			if (*ch == '&')
+			if(*ch == '&')
 			{
 				// get the next character
 				ch++;
 
-				if (*ch == '&')
+				if(*ch == '&')
 				{
 					// just an &
 					continue;
 				}
-				else if (*ch == 0)
+				else if(*ch == 0)
 				{
 					break;
 				}
-				else if (iswalnum(*ch))
+				else if(iswalnum(*ch))
 				{
 					// found the hotkey
 					return (wchar_t)towlower(*ch);
@@ -215,10 +214,10 @@ wchar_t Label::CalculateHotkey(const wchar_t *text)
 Panel *Label::HasHotkey(wchar_t key)
 {
 #ifdef VGUI_HOTKEYS_ENABLED
-	if ( iswalnum( key ) )
-		key = towlower( key );
+	if(iswalnum(key))
+		key = towlower(key);
 
-	if (_hotkey == key)
+	if(_hotkey == key)
 		return this;
 #endif
 
@@ -244,7 +243,7 @@ wchar_t Label::GetHotKey()
 void Label::OnHotkeyPressed()
 {
 	// we can't accept focus, but if we are associated to a control give it to that
-	if (_associate.Get() && !IsBuildModeActive())
+	if(_associate.Get() && !IsBuildModeActive())
 	{
 		_associate->RequestFocus();
 	}
@@ -255,7 +254,7 @@ void Label::OnHotkeyPressed()
 //-----------------------------------------------------------------------------
 void Label::OnMousePressed(MouseCode code)
 {
-	if (_associate.Get() && !IsBuildModeActive())
+	if(_associate.Get() && !IsBuildModeActive())
 	{
 		_associate->RequestFocus();
 	}
@@ -278,7 +277,7 @@ void Label::GetText(wchar_t *textOut, int bufLenInBytes)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Take the string and looks it up in the localization file 
+// Purpose: Take the string and looks it up in the localization file
 //          to convert it to unicode
 //			Setting the text will not set the size of the label.
 //			Set the size explicitly or use setToContent()
@@ -286,7 +285,7 @@ void Label::GetText(wchar_t *textOut, int bufLenInBytes)
 void Label::SetText(const char *text)
 {
 	// if set to null, just make blank
-	if (!text)
+	if(!text)
 	{
 		text = "";
 	}
@@ -294,12 +293,12 @@ void Label::SetText(const char *text)
 	// let the text image do the translation itself
 	_textImage->SetText(text);
 
-	if( text[0] == '#' )
+	if(text[0] == '#')
 	{
-		SetHotkey(CalculateHotkey(g_pVGuiLocalize->Find(text)));		
+		SetHotkey(CalculateHotkey(g_pVGuiLocalize->Find(text)));
 	}
 	else
-	{	
+	{
 		SetHotkey(CalculateHotkey(text));
 	}
 
@@ -316,25 +315,25 @@ void Label::SetText(const wchar_t *unicodeString, bool bClearUnlocalizedSymbol)
 {
 	m_bAutoWideDirty = m_bAutoWideToContents;
 
-	if ( unicodeString && _textImage->GetUText() && !Q_wcscmp(unicodeString,_textImage->GetUText()) )
+	if(unicodeString && _textImage->GetUText() && !Q_wcscmp(unicodeString, _textImage->GetUText()))
 		return;
 
 	_textImage->SetText(unicodeString, bClearUnlocalizedSymbol);
 
-//!! need to calculate hotkey from translated string
+	//!! need to calculate hotkey from translated string
 	SetHotkey(CalculateHotkey(unicodeString));
 
-    InvalidateLayout();     // possible that the textimage needs to expand
+	InvalidateLayout(); // possible that the textimage needs to expand
 	Repaint();
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: updates localized text
 //-----------------------------------------------------------------------------
-void Label::OnDialogVariablesChanged(KeyValues *dialogVariables )
+void Label::OnDialogVariablesChanged(KeyValues *dialogVariables)
 {
 	StringIndex_t index = _textImage->GetUnlocalizedTextSymbol();
-	if (index != INVALID_LOCALIZE_STRING_INDEX)
+	if(index != INVALID_LOCALIZE_STRING_INDEX)
 	{
 		// reconstruct the string from the variables
 		wchar_t buf[1024];
@@ -352,20 +351,20 @@ void Label::SetTextInset(int xInset, int yInset)
 	_textInset[1] = yInset;
 
 	int wide, tall;
-	GetSize( wide, tall);
+	GetSize(wide, tall);
 	_textImage->SetDrawWidth(wide - _textInset[0]);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void Label::GetTextInset(int *xInset, int *yInset )
+void Label::GetTextInset(int *xInset, int *yInset)
 {
-	if ( xInset )
+	if(xInset)
 	{
 		*xInset = _textInset[0];
 	}
-	if ( yInset )
+	if(yInset)
 	{
 		*yInset = _textInset[1];
 	}
@@ -382,9 +381,9 @@ void Label::SetEnabled(bool state)
 //-----------------------------------------------------------------------------
 // Purpose: Calculates where in the panel the content resides
 // Input  : &tx0 - [out] position of the content
-//			&ty0 - 
-//			&tx1 - 
-//			&ty1 - 
+//			&ty0 -
+//			&tx1 -
+//			&ty1 -
 // Note:	horizontal alignment is west if the image dar has
 //			more than one image in it, this is because we use image sizes
 //			to determine layout in classes for example, Menu.
@@ -393,7 +392,7 @@ void Label::ComputeAlignment(int &tx0, int &ty0, int &tx1, int &ty1)
 {
 	int wide, tall;
 	GetPaintSize(wide, tall);
-	int tWide,tTall;
+	int tWide, tTall;
 
 	// text bounding box
 	tx0 = 0;
@@ -403,19 +402,19 @@ void Label::ComputeAlignment(int &tx0, int &ty0, int &tx1, int &ty1)
 	int maxX = 0, maxY = 0;
 
 	int actualXAlignment = _contentAlignment;
-	for (int i = 0; i < _imageDar.Count(); i++)
+	for(int i = 0; i < _imageDar.Count(); i++)
 	{
 		TImageInfo &imageInfo = _imageDar[i];
 		IImage *image = imageInfo.image;
-		if (!image)
+		if(!image)
 			continue; // skip over null images
 
 		// add up the bounds
 		int iWide, iTall;
 		image->GetSize(iWide, iTall);
-		if (iWide > wide) // if the image is larger than the label just do a west alignment
+		if(iWide > wide) // if the image is larger than the label just do a west alignment
 			actualXAlignment = Label::a_west;
-		
+
 		// get the max height
 		maxY = max(maxY, iTall);
 		maxX += iWide;
@@ -426,9 +425,9 @@ void Label::ComputeAlignment(int &tx0, int &ty0, int &tx1, int &ty1)
 
 	tWide = maxX;
 	tTall = maxY;
-	
+
 	// x align text
-	switch (actualXAlignment)
+	switch(actualXAlignment)
 	{
 		// left
 		case Label::a_northwest:
@@ -457,9 +456,9 @@ void Label::ComputeAlignment(int &tx0, int &ty0, int &tx1, int &ty1)
 	}
 
 	// y align text
-	switch (_contentAlignment)
+	switch(_contentAlignment)
 	{
-		//top
+		// top
 		case Label::a_northwest:
 		case Label::a_north:
 		case Label::a_northeast:
@@ -498,10 +497,10 @@ void Label::Paint()
 	ComputeAlignment(tx0, ty0, tx1, ty1);
 
 	// calculate who our associate is if we haven't already
-	if (_associateName)
+	if(_associateName)
 	{
 		SetAssociatedControl(FindSiblingByName(_associateName));
-		delete [] _associateName;
+		delete[] _associateName;
 		_associateName = NULL;
 	}
 
@@ -511,20 +510,20 @@ void Label::Paint()
 	int imageYPos = 0; // a place to save the y offset for when we draw the disable version of the image
 
 	// draw the set of images
-	for (int i = 0; i < _imageDar.Count(); i++)
+	for(int i = 0; i < _imageDar.Count(); i++)
 	{
 		TImageInfo &imageInfo = _imageDar[i];
 		IImage *image = imageInfo.image;
-		if (!image)
+		if(!image)
 			continue; // skip over null images
 
 		// add the offset to x
 		x += imageInfo.offset;
 
 		// if this is the text image then add its inset to the left or from the right
-		if (i == _textImageIndex)
+		if(i == _textImageIndex)
 		{
-			switch ( _contentAlignment )
+			switch(_contentAlignment)
 			{
 				// left
 				case Label::a_northwest:
@@ -546,7 +545,7 @@ void Label::Paint()
 		}
 
 		// see if the image is in a fixed position
-		if (imageInfo.xpos >= 0)
+		if(imageInfo.xpos >= 0)
 		{
 			x = imageInfo.xpos;
 		}
@@ -556,11 +555,12 @@ void Label::Paint()
 		image->SetPos(x, y);
 
 		// fix up y for center-aligned text
-		if (_contentAlignment == Label::a_west || _contentAlignment == Label::a_center || _contentAlignment == Label::a_east)
+		if(_contentAlignment == Label::a_west || _contentAlignment == Label::a_center ||
+		   _contentAlignment == Label::a_east)
 		{
 			int iw, it;
 			image->GetSize(iw, it);
-			if (it < (ty1 - ty0))
+			if(it < (ty1 - ty0))
 			{
 				imageYPos = ((ty1 - ty0) - it) / 2 + y;
 				image->SetPos(x, ((ty1 - ty0) - it) / 2 + y);
@@ -568,22 +568,22 @@ void Label::Paint()
 		}
 
 		// don't resize the image unless its too big
-		if (imageInfo.width >= 0)
+		if(imageInfo.width >= 0)
 		{
 			int w, t;
 			image->GetSize(w, t);
-			if (w > imageInfo.width)
+			if(w > imageInfo.width)
 			{
 				image->SetSize(imageInfo.width, t);
 			}
 		}
 
 		// if it's the basic text image then draw specially
-		if (image == _textImage)
+		if(image == _textImage)
 		{
-			if (IsEnabled())
+			if(IsEnabled())
 			{
-				if (_associate.Get() && ipanel()->HasParent(input()->GetFocus(), _associate->GetVPanel()))
+				if(_associate.Get() && ipanel()->HasParent(input()->GetFocus(), _associate->GetVPanel()))
 				{
 					_textImage->SetColor(_associateColor);
 				}
@@ -622,19 +622,18 @@ void Label::Paint()
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Helper function, draws a simple line with dashing parameters
 //-----------------------------------------------------------------------------
 void Label::DrawDashedLine(int x0, int y0, int x1, int y1, int dashLen, int gapLen)
 {
 	// work out which way the line goes
-	if ((x1 - x0) > (y1 - y0))
+	if((x1 - x0) > (y1 - y0))
 	{
 		// x direction line
-		while (1)
+		while(1)
 		{
-			if (x0 + dashLen > x1)
+			if(x0 + dashLen > x1)
 			{
 				// draw partial
 				surface()->DrawFilledRect(x0, y0, x1, y1);
@@ -646,7 +645,7 @@ void Label::DrawDashedLine(int x0, int y0, int x1, int y1, int dashLen, int gapL
 
 			x0 += dashLen;
 
-			if (x0 + gapLen > x1)
+			if(x0 + gapLen > x1)
 				break;
 
 			x0 += gapLen;
@@ -655,9 +654,9 @@ void Label::DrawDashedLine(int x0, int y0, int x1, int y1, int dashLen, int gapL
 	else
 	{
 		// y direction
-		while (1)
+		while(1)
 		{
-			if (y0 + dashLen > y1)
+			if(y0 + dashLen > y1)
 			{
 				// draw partial
 				surface()->DrawFilledRect(x0, y0, x1, y1);
@@ -669,7 +668,7 @@ void Label::DrawDashedLine(int x0, int y0, int x1, int y1, int dashLen, int gapL
 
 			y0 += dashLen;
 
-			if (y0 + gapLen > y1)
+			if(y0 + gapLen > y1)
 				break;
 
 			y0 += gapLen;
@@ -679,7 +678,7 @@ void Label::DrawDashedLine(int x0, int y0, int x1, int y1, int dashLen, int gapL
 
 void Label::SetContentAlignment(Alignment alignment)
 {
-	_contentAlignment=alignment;
+	_contentAlignment = alignment;
 	Repaint();
 }
 
@@ -725,7 +724,7 @@ HFont Label::GetFont()
 //-----------------------------------------------------------------------------
 void Label::SetFgColor(Color color)
 {
-	if (!(GetFgColor() == color))
+	if(!(GetFgColor() == color))
 	{
 		BaseClass::SetFgColor(color);
 		_textImage->SetColor(color);
@@ -751,7 +750,7 @@ void Label::SetDisabledFgColor1(Color color)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Label::SetDisabledFgColor2(Color color)
 {
@@ -759,7 +758,7 @@ void Label::SetDisabledFgColor2(Color color)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Color Label::GetDisabledFgColor1()
 {
@@ -767,7 +766,7 @@ Color Label::GetDisabledFgColor1()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Color Label::GetDisabledFgColor2()
 {
@@ -775,20 +774,19 @@ Color Label::GetDisabledFgColor2()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 TextImage *Label::GetTextImage()
 {
 	return _textImage;
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool Label::RequestInfo(KeyValues *outputData)
 {
-	if (!stricmp(outputData->GetName(), "GetText"))
+	if(!stricmp(outputData->GetName(), "GetText"))
 	{
 		wchar_t wbuf[256];
 		_textImage->GetText(wbuf, 255);
@@ -805,14 +803,14 @@ bool Label::RequestInfo(KeyValues *outputData)
 void Label::OnSetText(KeyValues *params)
 {
 	KeyValues *pkvText = params->FindKey("text", false);
-	if (!pkvText)
+	if(!pkvText)
 		return;
 
-	if (pkvText->GetDataType() == KeyValues::TYPE_STRING)
+	if(pkvText->GetDataType() == KeyValues::TYPE_STRING)
 	{
 		SetText(pkvText->GetString());
 	}
-	else if (pkvText->GetDataType() == KeyValues::TYPE_WSTRING)
+	else if(pkvText->GetDataType() == KeyValues::TYPE_WSTRING)
 	{
 		SetText(pkvText->GetWString());
 	}
@@ -849,7 +847,6 @@ void Label::ResetToSimpleTextImage()
 	_textImageIndex = AddImage(_textImage, 0);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Multiple image handling
 //			Images are drawn from left to right across the label, ordered by index
@@ -859,9 +856,9 @@ void Label::ResetToSimpleTextImage()
 void Label::SetImageAtIndex(int index, IImage *image, int offset)
 {
 	EnsureImageCapacity(index);
-//	Assert( image );
+	//	Assert( image );
 
-	if ( _imageDar[index].image != image || _imageDar[index].offset != offset)
+	if(_imageDar[index].image != image || _imageDar[index].offset != offset)
 	{
 		_imageDar[index].image = image;
 		_imageDar[index].offset = (short)offset;
@@ -874,7 +871,7 @@ void Label::SetImageAtIndex(int index, IImage *image, int offset)
 //-----------------------------------------------------------------------------
 IImage *Label::GetImageAtIndex(int index)
 {
-	if ( _imageDar.IsValidIndex( index ) )
+	if(_imageDar.IsValidIndex(index))
 		return _imageDar[index].image;
 	return NULL;
 }
@@ -888,24 +885,24 @@ int Label::GetImageCount()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Move where the default text image is within the image array 
+// Purpose: Move where the default text image is within the image array
 //			(it starts in position 0)
-// Input  : newIndex - 
+// Input  : newIndex -
 // Output : int - the index the default text image was previously in
 //-----------------------------------------------------------------------------
 int Label::SetTextImageIndex(int newIndex)
 {
-	if (newIndex == _textImageIndex)
+	if(newIndex == _textImageIndex)
 		return _textImageIndex;
 
 	EnsureImageCapacity(newIndex);
 
 	int oldIndex = _textImageIndex;
-	if ( _textImageIndex >= 0 )
+	if(_textImageIndex >= 0)
 	{
 		_imageDar[_textImageIndex].image = NULL;
 	}
-	if (newIndex > -1)
+	if(newIndex > -1)
 	{
 		_imageDar[newIndex].image = _textImage;
 	}
@@ -918,7 +915,7 @@ int Label::SetTextImageIndex(int newIndex)
 //-----------------------------------------------------------------------------
 void Label::EnsureImageCapacity(int maxIndex)
 {
-	while (_imageDar.Size() <= maxIndex)
+	while(_imageDar.Size() <= maxIndex)
 	{
 		AddImage(NULL, 0);
 	}
@@ -929,7 +926,7 @@ void Label::EnsureImageCapacity(int maxIndex)
 //-----------------------------------------------------------------------------
 void Label::SetImagePreOffset(int index, int preOffset)
 {
-	if (_imageDar.IsValidIndex(index) && _imageDar[index].offset != preOffset)
+	if(_imageDar.IsValidIndex(index) && _imageDar[index].offset != preOffset)
 	{
 		_imageDar[index].offset = (short)preOffset;
 		InvalidateLayout();
@@ -953,7 +950,7 @@ void Label::SetImageBounds(int index, int x, int width)
 //-----------------------------------------------------------------------------
 void Label::SetAssociatedControl(Panel *control)
 {
-	if (control != this)
+	if(control != this)
 	{
 		_associate = control;
 	}
@@ -969,7 +966,7 @@ void Label::SetAssociatedControl(Panel *control)
 //-----------------------------------------------------------------------------
 void Label::OnRequestFocus(VPANEL subFocus, VPANEL defaultPanel)
 {
-	if (_associate.Get() && subFocus == GetVPanel() && !IsBuildModeActive())
+	if(_associate.Get() && subFocus == GetVPanel() && !IsBuildModeActive())
 	{
 		// we've received focus; pass the focus onto the associate instead
 		_associate->RequestFocus();
@@ -987,48 +984,49 @@ void Label::ApplySchemeSettings(IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 
-	if (_fontOverrideName)
+	if(_fontOverrideName)
 	{
 		// use the custom specified font since we have one set
 		SetFont(pScheme->GetFont(_fontOverrideName, IsProportional()));
 	}
-	if ( GetFont() == INVALID_FONT )
+	if(GetFont() == INVALID_FONT)
 	{
-		SetFont( pScheme->GetFont( "Default", IsProportional() ) );
-	}	
+		SetFont(pScheme->GetFont("Default", IsProportional()));
+	}
 
-	if ( m_bWrap || m_bCenterWrap )
+	if(m_bWrap || m_bCenterWrap)
 	{
-		//tell it how big it is
+		// tell it how big it is
 		int wide, tall;
 		Panel::GetSize(wide, tall);
-		wide -= _textInset[0];		// take inset into account
+		wide -= _textInset[0]; // take inset into account
 		_textImage->SetSize(wide, tall);
 
 		_textImage->RecalculateNewLinePositions();
 	}
 	else
 	{
-		// if you don't set the size of the image, many, many buttons will break - we might want to look into fixing this all over the place later
+		// if you don't set the size of the image, many, many buttons will break - we might want to look into fixing
+		// this all over the place later
 		int wide, tall;
 		_textImage->GetContentSize(wide, tall);
 		_textImage->SetSize(wide, tall);
 	}
 
-	if ( m_bAutoWideToContents )
+	if(m_bAutoWideToContents)
 	{
 		m_bAutoWideDirty = true;
 		HandleAutoSizing();
 	}
 
 	// clear out any the images, since they will have been invalidated
-	for (int i = 0; i < _imageDar.Count(); i++)
+	for(int i = 0; i < _imageDar.Count(); i++)
 	{
 		IImage *image = _imageDar[i].image;
-		if (!image)
+		if(!image)
 			continue; // skip over null images
 
-		if (i == _textImageIndex)
+		if(i == _textImageIndex)
 			continue;
 
 		_imageDar[i].image = NULL;
@@ -1038,62 +1036,80 @@ void Label::ApplySchemeSettings(IScheme *pScheme)
 	SetDisabledFgColor2(GetSchemeColor("Label.DisabledFgColor2", pScheme));
 	SetBgColor(GetSchemeColor("Label.BgColor", pScheme));
 
-	switch (_textColorState)
+	switch(_textColorState)
 	{
-	case CS_DULL:
-		SetFgColor(GetSchemeColor("Label.TextDullColor", pScheme));
-		break;
-	case CS_BRIGHT:
-		SetFgColor(GetSchemeColor("Label.TextBrightColor", pScheme));
-		break;
-	case CS_NORMAL:
-	default:
-		SetFgColor(GetSchemeColor("Label.TextColor", pScheme));
-		break;
+		case CS_DULL:
+			SetFgColor(GetSchemeColor("Label.TextDullColor", pScheme));
+			break;
+		case CS_BRIGHT:
+			SetFgColor(GetSchemeColor("Label.TextBrightColor", pScheme));
+			break;
+		case CS_NORMAL:
+		default:
+			SetFgColor(GetSchemeColor("Label.TextColor", pScheme));
+			break;
 	}
 
 	_associateColor = GetSchemeColor("Label.SelectedTextColor", pScheme);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void Label::GetSettings( KeyValues *outResourceData )
+void Label::GetSettings(KeyValues *outResourceData)
 {
 	// panel settings
-	Panel::GetSettings( outResourceData );
+	Panel::GetSettings(outResourceData);
 
 	// label settings
 	char buf[256];
-	_textImage->GetUnlocalizedText( buf, 255 );
-	if (!strnicmp(buf, "#var_", 5))
+	_textImage->GetUnlocalizedText(buf, 255);
+	if(!strnicmp(buf, "#var_", 5))
 	{
 		// strip off the variable prepender on save
-		outResourceData->SetString( "labelText", buf + 5 );
+		outResourceData->SetString("labelText", buf + 5);
 	}
 	else
 	{
-		outResourceData->SetString( "labelText", buf );
+		outResourceData->SetString("labelText", buf);
 	}
 
 	const char *alignmentString = "";
-	switch ( _contentAlignment )
+	switch(_contentAlignment)
 	{
-	case a_northwest:	alignmentString = "north-west";	break;
-	case a_north:		alignmentString = "north";		break;
-	case a_northeast:	alignmentString = "north-east";	break;
-	case a_center:		alignmentString = "center";		break;
-	case a_east:		alignmentString = "east";		break;
-	case a_southwest:	alignmentString = "south-west";	break;
-	case a_south:		alignmentString = "south";		break;
-	case a_southeast:	alignmentString = "south-east";	break;
-	case a_west:	
-	default:			alignmentString = "west";	break;
+		case a_northwest:
+			alignmentString = "north-west";
+			break;
+		case a_north:
+			alignmentString = "north";
+			break;
+		case a_northeast:
+			alignmentString = "north-east";
+			break;
+		case a_center:
+			alignmentString = "center";
+			break;
+		case a_east:
+			alignmentString = "east";
+			break;
+		case a_southwest:
+			alignmentString = "south-west";
+			break;
+		case a_south:
+			alignmentString = "south";
+			break;
+		case a_southeast:
+			alignmentString = "south-east";
+			break;
+		case a_west:
+		default:
+			alignmentString = "west";
+			break;
 	}
 
-	outResourceData->SetString( "textAlignment", alignmentString );
+	outResourceData->SetString("textAlignment", alignmentString);
 
-	if (_associate)
+	if(_associate)
 	{
 		outResourceData->SetString("associate", _associate->GetName());
 	}
@@ -1101,17 +1117,17 @@ void Label::GetSettings( KeyValues *outResourceData )
 	outResourceData->SetInt("dulltext", (int)(_textColorState == CS_DULL));
 	outResourceData->SetInt("brighttext", (int)(_textColorState == CS_BRIGHT));
 
-	if (_fontOverrideName)
+	if(_fontOverrideName)
 	{
 		outResourceData->SetString("font", _fontOverrideName);
 	}
-	
-	outResourceData->SetInt("wrap", ( m_bWrap ? 1 : 0 ));
-	outResourceData->SetInt("centerwrap", ( m_bCenterWrap ? 1 : 0 ));
 
-	if ( m_bUseProportionalInsets )
+	outResourceData->SetInt("wrap", (m_bWrap ? 1 : 0));
+	outResourceData->SetInt("centerwrap", (m_bCenterWrap ? 1 : 0));
+
+	if(m_bUseProportionalInsets)
 	{
-		outResourceData->SetInt("textinsetx", scheme()->GetProportionalNormalizedValueEx( GetScheme(), _textInset[0] ) );
+		outResourceData->SetInt("textinsetx", scheme()->GetProportionalNormalizedValueEx(GetScheme(), _textInset[0]));
 		outResourceData->SetInt("textinsety", _textInset[1]);
 	}
 	else
@@ -1119,22 +1135,22 @@ void Label::GetSettings( KeyValues *outResourceData )
 		outResourceData->SetInt("textinsetx", _textInset[0]);
 		outResourceData->SetInt("textinsety", _textInset[1]);
 	}
-	outResourceData->SetInt("auto_wide_tocontents", ( m_bAutoWideToContents ? 1 : 0 ));
-	outResourceData->SetInt("use_proportional_insets", ( m_bUseProportionalInsets ? 1 : 0 ));
+	outResourceData->SetInt("auto_wide_tocontents", (m_bAutoWideToContents ? 1 : 0));
+	outResourceData->SetInt("use_proportional_insets", (m_bUseProportionalInsets ? 1 : 0));
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void Label::ApplySettings( KeyValues *inResourceData )
+void Label::ApplySettings(KeyValues *inResourceData)
 {
-	BaseClass::ApplySettings( inResourceData );
+	BaseClass::ApplySettings(inResourceData);
 
 	// label settings
-	const char *labelText =	inResourceData->GetString( "labelText", NULL );
-	if ( labelText )
+	const char *labelText = inResourceData->GetString("labelText", NULL);
+	if(labelText)
 	{
-		if (labelText[0] == '%' && labelText[strlen(labelText) - 1] == '%')
+		if(labelText[0] == '%' && labelText[strlen(labelText) - 1] == '%')
 		{
 			// it's a variable, set it to be a special variable localized string
 			wchar_t unicodeVar[256];
@@ -1152,66 +1168,66 @@ void Label::ApplySettings( KeyValues *inResourceData )
 	}
 
 	// text alignment
-	const char *alignmentString = inResourceData->GetString( "textAlignment", "" );
+	const char *alignmentString = inResourceData->GetString("textAlignment", "");
 	int align = -1;
 
-	if ( !stricmp(alignmentString, "north-west") )
+	if(!stricmp(alignmentString, "north-west"))
 	{
 		align = a_northwest;
 	}
-	else if ( !stricmp(alignmentString, "north") )
+	else if(!stricmp(alignmentString, "north"))
 	{
 		align = a_north;
 	}
-	else if ( !stricmp(alignmentString, "north-east") )
+	else if(!stricmp(alignmentString, "north-east"))
 	{
 		align = a_northeast;
 	}
-	else if ( !stricmp(alignmentString, "west") )
+	else if(!stricmp(alignmentString, "west"))
 	{
 		align = a_west;
 	}
-	else if ( !stricmp(alignmentString, "center") )
+	else if(!stricmp(alignmentString, "center"))
 	{
 		align = a_center;
 	}
-	else if ( !stricmp(alignmentString, "east") )
+	else if(!stricmp(alignmentString, "east"))
 	{
 		align = a_east;
 	}
-	else if ( !stricmp(alignmentString, "south-west") )
+	else if(!stricmp(alignmentString, "south-west"))
 	{
 		align = a_southwest;
 	}
-	else if ( !stricmp(alignmentString, "south") )
+	else if(!stricmp(alignmentString, "south"))
 	{
 		align = a_south;
 	}
-	else if ( !stricmp(alignmentString, "south-east") )
+	else if(!stricmp(alignmentString, "south-east"))
 	{
 		align = a_southeast;
 	}
 
-	if ( align != -1 )
+	if(align != -1)
 	{
-		SetContentAlignment( (Alignment)align );
+		SetContentAlignment((Alignment)align);
 	}
 
 	// the control we are to be associated with may not have been created yet,
 	// so keep a pointer to it's name and calculate it when we can
 	const char *associateName = inResourceData->GetString("associate", "");
-	if (associateName[0] != 0)
+	if(associateName[0] != 0)
 	{
 		int len = Q_strlen(associateName) + 1;
-		_associateName = new char[ len ];
-		Q_strncpy( _associateName, associateName, len );
+		_associateName = new char[len];
+		Q_strncpy(_associateName, associateName, len);
 	}
 
-	if (inResourceData->GetInt("dulltext", 0) == 1)
+	if(inResourceData->GetInt("dulltext", 0) == 1)
 	{
 		SetTextColorState(CS_DULL);
 	}
-	else if (inResourceData->GetInt("brighttext", 0) == 1)
+	else if(inResourceData->GetInt("brighttext", 0) == 1)
 	{
 		SetTextColorState(CS_BRIGHT);
 	}
@@ -1222,44 +1238,44 @@ void Label::ApplySettings( KeyValues *inResourceData )
 
 	// font settings
 	const char *overrideFont = inResourceData->GetString("font", "");
-	IScheme *pScheme = scheme()->GetIScheme( GetScheme() );
+	IScheme *pScheme = scheme()->GetIScheme(GetScheme());
 
-	if (*overrideFont)
+	if(*overrideFont)
 	{
-		delete [] _fontOverrideName;
+		delete[] _fontOverrideName;
 		int len = Q_strlen(overrideFont) + 1;
-		_fontOverrideName = new char[ len ];
-		Q_strncpy(_fontOverrideName, overrideFont, len );
+		_fontOverrideName = new char[len];
+		Q_strncpy(_fontOverrideName, overrideFont, len);
 		SetFont(pScheme->GetFont(_fontOverrideName, IsProportional()));
 	}
-	else if (_fontOverrideName)
+	else if(_fontOverrideName)
 	{
-		delete [] _fontOverrideName;
+		delete[] _fontOverrideName;
 		_fontOverrideName = NULL;
 		SetFont(pScheme->GetFont("Default", IsProportional()));
 	}
 
 	bool bWrapText = inResourceData->GetInt("centerwrap", 0) > 0;
-	SetCenterWrap( bWrapText );
+	SetCenterWrap(bWrapText);
 
 	m_bAutoWideToContents = inResourceData->GetInt("auto_wide_tocontents", 0) > 0;
 
 	bWrapText = inResourceData->GetInt("wrap", 0) > 0;
-	SetWrap( bWrapText );
+	SetWrap(bWrapText);
 
 	int inset_x = inResourceData->GetInt("textinsetx", _textInset[0]);
 	int inset_y = inResourceData->GetInt("textinsety", _textInset[1]);
 	// Had to play it safe and add a new key for backwards compatibility
 	m_bUseProportionalInsets = inResourceData->GetInt("use_proportional_insets", 0) > 0;
-	if ( m_bUseProportionalInsets )
+	if(m_bUseProportionalInsets)
 	{
-		inset_x = scheme()->GetProportionalScaledValueEx( GetScheme(), inset_x );
+		inset_x = scheme()->GetProportionalScaledValueEx(GetScheme(), inset_x);
 	}
 
-	SetTextInset( inset_x, inset_y );
+	SetTextInset(inset_x, inset_y);
 
 	bool bAllCaps = inResourceData->GetInt("allcaps", 0) > 0;
-	SetAllCaps( bAllCaps );
+	SetAllCaps(bAllCaps);
 
 	InvalidateLayout(true);
 }
@@ -1267,10 +1283,13 @@ void Label::ApplySettings( KeyValues *inResourceData )
 //-----------------------------------------------------------------------------
 // Purpose: Returns a description of the label string
 //-----------------------------------------------------------------------------
-const char *Label::GetDescription( void )
+const char *Label::GetDescription(void)
 {
 	static char buf[1024];
-	Q_snprintf(buf, sizeof(buf), "%s, string labelText, string associate, alignment textAlignment, int wrap, int dulltext, int brighttext, string font", BaseClass::GetDescription());
+	Q_snprintf(buf, sizeof(buf),
+			   "%s, string labelText, string associate, alignment textAlignment, int wrap, int dulltext, int "
+			   "brighttext, string font",
+			   BaseClass::GetDescription());
 	return buf;
 }
 
@@ -1286,9 +1305,9 @@ void Label::PerformLayout()
 	wide -= _textInset[0]; // take inset into account
 
 	// if we just have a textImage, this is trivial.
-	if (_imageDar.Count() == 1 && _textImageIndex == 0)
-	{	
-		if ( m_bWrap || m_bCenterWrap )
+	if(_imageDar.Count() == 1 && _textImageIndex == 0)
+	{
+		if(m_bWrap || m_bCenterWrap)
 		{
 			int twide, ttall;
 			_textImage->GetContentSize(twide, ttall);
@@ -1298,9 +1317,9 @@ void Label::PerformLayout()
 		{
 			int twide, ttall;
 			_textImage->GetContentSize(twide, ttall);
-			
+
 			// tell the textImage how much space we have to draw in
-			if ( wide < twide)
+			if(wide < twide)
 				_textImage->SetSize(wide, ttall);
 			else
 				_textImage->SetSize(twide, ttall);
@@ -1315,24 +1334,24 @@ void Label::PerformLayout()
 
 	// assume the images in the dar cannot be resized, and if
 	// the images + the textimage are too wide we shring the textimage part
-	if (_textImageIndex < 0)
+	if(_textImageIndex < 0)
 		return;
-	
+
 	// get the size of the images
-	int	widthOfImages = 0;
-	for (int i = 0; i < _imageDar.Count(); i++)
+	int widthOfImages = 0;
+	for(int i = 0; i < _imageDar.Count(); i++)
 	{
 		TImageInfo &imageInfo = _imageDar[i];
 		IImage *image = imageInfo.image;
-		if (!image)
+		if(!image)
 			continue; // skip over null images
 
-		if (i == _textImageIndex)
+		if(i == _textImageIndex)
 			continue;
 
 		// add up the bounds
 		int iWide, iTall;
-		image->GetSize(iWide, iTall);		
+		image->GetSize(iWide, iTall);
 		widthOfImages += iWide;
 	}
 
@@ -1340,44 +1359,44 @@ void Label::PerformLayout()
 	int spaceAvail = wide - widthOfImages;
 
 	// if we have no space at all just leave everything as is.
-	if (spaceAvail < 0)
+	if(spaceAvail < 0)
 		return;
 
 	int twide, ttall;
-	_textImage->GetSize (twide, ttall);
+	_textImage->GetSize(twide, ttall);
 	// tell the textImage how much space we have to draw in
-	_textImage->SetSize(spaceAvail, ttall);	
+	_textImage->SetSize(spaceAvail, ttall);
 
 	HandleAutoSizing();
 }
 
-void Label::SetWrap( bool bWrap )
+void Label::SetWrap(bool bWrap)
 {
 	m_bWrap = bWrap;
-	_textImage->SetWrap( m_bWrap );
+	_textImage->SetWrap(m_bWrap);
 
 	InvalidateLayout();
 }
 
-void Label::SetCenterWrap( bool bWrap )
+void Label::SetCenterWrap(bool bWrap)
 {
 	m_bCenterWrap = bWrap;
-	_textImage->SetCenterWrap( m_bCenterWrap );
+	_textImage->SetCenterWrap(m_bCenterWrap);
 
 	InvalidateLayout();
 }
 
-void Label::SetAllCaps( bool bAllCaps )
+void Label::SetAllCaps(bool bAllCaps)
 {
 	m_bAllCaps = bAllCaps;
-	_textImage->SetAllCaps( m_bAllCaps );
+	_textImage->SetAllCaps(m_bAllCaps);
 
 	InvalidateLayout();
 }
 
-void Label::HandleAutoSizing( void )
+void Label::HandleAutoSizing(void)
 {
-	if ( m_bAutoWideDirty )
+	if(m_bAutoWideDirty)
 	{
 		m_bAutoWideDirty = false;
 
@@ -1387,6 +1406,3 @@ void Label::HandleAutoSizing( void )
 		SetSize(wide, GetTall());
 	}
 }
-
-
-

@@ -17,11 +17,11 @@ CHandle<CMannVsMachineLogic> g_hMannVsMachineLogic;
 
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
-BEGIN_DATADESC( CMannVsMachineLogic )
-	DEFINE_THINKFUNC( Update ),
+BEGIN_DATADESC(CMannVsMachineLogic)
+	DEFINE_THINKFUNC(Update),
 END_DATADESC()
 
-LINK_ENTITY_TO_CLASS( tf_logic_mann_vs_machine, CMannVsMachineLogic );
+LINK_ENTITY_TO_CLASS(tf_logic_mann_vs_machine, CMannVsMachineLogic);
 
 //-------------------------------------------------------------------------
 CMannVsMachineLogic::CMannVsMachineLogic()
@@ -31,132 +31,130 @@ CMannVsMachineLogic::CMannVsMachineLogic()
 	m_flNextAlarmCheck = 0.0f;
 }
 
-
 //-------------------------------------------------------------------------
 CMannVsMachineLogic::~CMannVsMachineLogic()
 {
 	g_hMannVsMachineLogic = NULL;
 }
 
-
 //-------------------------------------------------------------------------
-void CMannVsMachineLogic::Spawn( void )
+void CMannVsMachineLogic::Spawn(void)
 {
 	BaseClass::Spawn();
 
-	SetThink( &CMannVsMachineLogic::Update );
-	SetNextThink( gpGlobals->curtime );
+	SetThink(&CMannVsMachineLogic::Update);
+	SetNextThink(gpGlobals->curtime);
 
 	g_hMannVsMachineLogic = this;
 }
 
-
 //-------------------------------------------------------------------------
-void CMannVsMachineLogic::SetupOnRoundStart( void )
+void CMannVsMachineLogic::SetupOnRoundStart(void)
 {
-	if ( !TFGameRules() || !TFGameRules()->IsMannVsMachineMode() )
+	if(!TFGameRules() || !TFGameRules()->IsMannVsMachineMode())
 		return;
 
-	if ( m_populationManager )
+	if(m_populationManager)
 	{
 		m_populationManager->SetupOnRoundStart();
 	}
 }
 
-
 //--------------------------------------------------------------------------------------------------------
-void CMannVsMachineLogic::Update( void )
+void CMannVsMachineLogic::Update(void)
 {
-	VPROF_BUDGET( "CMannVsMachineLogic::Update", "Game" );
+	VPROF_BUDGET("CMannVsMachineLogic::Update", "Game");
 
-	SetNextThink( gpGlobals->curtime +  0.05f );
+	SetNextThink(gpGlobals->curtime + 0.05f);
 
-	if ( !TFGameRules() || !TFGameRules()->IsMannVsMachineMode() )
+	if(!TFGameRules() || !TFGameRules()->IsMannVsMachineMode())
 		return;
 
-	if ( m_populationManager )
+	if(m_populationManager)
 	{
 		m_populationManager->Update();
 	}
 
 	// we don't need to run this check as often as we're calling our update() function
-	if ( m_flNextAlarmCheck < gpGlobals->curtime )
+	if(m_flNextAlarmCheck < gpGlobals->curtime)
 	{
 		m_flNextAlarmCheck = gpGlobals->curtime + 0.1;
-		for ( int i=0; i<ICaptureFlagAutoList::AutoList().Count(); ++i )
+		for(int i = 0; i < ICaptureFlagAutoList::AutoList().Count(); ++i)
 		{
-			CCaptureFlag *pFlag = static_cast<CCaptureFlag *>( ICaptureFlagAutoList::AutoList()[i] );
-			if ( pFlag->IsStolen() )
+			CCaptureFlag *pFlag = static_cast<CCaptureFlag *>(ICaptureFlagAutoList::AutoList()[i]);
+			if(pFlag->IsStolen())
 			{
-				for ( int j=0; j<IFlagDetectionZoneAutoList::AutoList().Count(); ++j )
+				for(int j = 0; j < IFlagDetectionZoneAutoList::AutoList().Count(); ++j)
 				{
-					CFlagDetectionZone *pZone = static_cast<CFlagDetectionZone *>( IFlagDetectionZoneAutoList::AutoList()[j] );
-  					if ( !pZone->IsDisabled() && pZone->IsAlarmZone() && pZone->PointIsWithin( pFlag->GetAbsOrigin() ) )
+					CFlagDetectionZone *pZone =
+						static_cast<CFlagDetectionZone *>(IFlagDetectionZoneAutoList::AutoList()[j]);
+					if(!pZone->IsDisabled() && pZone->IsAlarmZone() && pZone->PointIsWithin(pFlag->GetAbsOrigin()))
 					{
 						// Is the alarm currently off?
-						if ( TFGameRules()->GetMannVsMachineAlarmStatus() == false )
+						if(TFGameRules()->GetMannVsMachineAlarmStatus() == false)
 						{
-							IGameEvent *event = gameeventmanager->CreateEvent( "mvm_bomb_alarm_triggered" );
-							if ( event )
+							IGameEvent *event = gameeventmanager->CreateEvent("mvm_bomb_alarm_triggered");
+							if(event)
 							{
-								gameeventmanager->FireEvent( event );
+								gameeventmanager->FireEvent(event);
 							}
 						}
 
-						TFGameRules()->SetMannVsMachineAlarmStatus( true );
+						TFGameRules()->SetMannVsMachineAlarmStatus(true);
 						return;
 					}
 				}
 			}
 		}
 
-		TFGameRules()->SetMannVsMachineAlarmStatus( false );
+		TFGameRules()->SetMannVsMachineAlarmStatus(false);
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CMannVsMachineLogic::InitPopulationManager( void )
+void CMannVsMachineLogic::InitPopulationManager(void)
 {
 	bool bFound = false;
 	const char *pszFormat = MVM_POP_FILE_PATH "/%s.pop";
-	char szFileName[MAX_PATH] = { 0 };
+	char szFileName[MAX_PATH] = {0};
 
 	// Did they request something specific?
-	if ( Q_strlen( TFGameRules()->GetNextMvMPopfile() ) )
+	if(Q_strlen(TFGameRules()->GetNextMvMPopfile()))
 	{
-		Q_snprintf( szFileName, sizeof( szFileName ), pszFormat, TFGameRules()->GetNextMvMPopfile() );
-		if ( g_pFullFileSystem->FileExists( szFileName, "GAME" ) )
+		Q_snprintf(szFileName, sizeof(szFileName), pszFormat, TFGameRules()->GetNextMvMPopfile());
+		if(g_pFullFileSystem->FileExists(szFileName, "GAME"))
 		{
 			bFound = true;
 		}
 		else
 		{
 			// It might need the additional map prefix to find the file
-			Q_snprintf( szFileName, sizeof( szFileName ), MVM_POP_FILE_PATH "/%s_%s.pop", STRING( gpGlobals->mapname ), TFGameRules()->GetNextMvMPopfile() );
-			if ( g_pFullFileSystem->FileExists( szFileName, "GAME" ) )
+			Q_snprintf(szFileName, sizeof(szFileName), MVM_POP_FILE_PATH "/%s_%s.pop", STRING(gpGlobals->mapname),
+					   TFGameRules()->GetNextMvMPopfile());
+			if(g_pFullFileSystem->FileExists(szFileName, "GAME"))
 			{
 				bFound = true;
 			}
-			if ( !bFound )
+			if(!bFound)
 			{
-				Warning( "Population file '%s' not found", TFGameRules()->GetNextMvMPopfile() );
+				Warning("Population file '%s' not found", TFGameRules()->GetNextMvMPopfile());
 			}
 		}
 	}
 
 	// See if we have any default popfiles and use the default-iest one
-	if ( !bFound )
+	if(!bFound)
 	{
-		CUtlVector< CUtlString > defaultPopFileList;
+		CUtlVector<CUtlString> defaultPopFileList;
 		CUtlString defaultPopFileName;
-		g_pPopulationManager->FindDefaultPopulationFileShortNames( defaultPopFileList );
-		if ( defaultPopFileList.Count() )
+		g_pPopulationManager->FindDefaultPopulationFileShortNames(defaultPopFileList);
+		if(defaultPopFileList.Count())
 		{
-			if ( g_pPopulationManager->FindPopulationFileByShortName( defaultPopFileList[0], defaultPopFileName ) )
+			if(g_pPopulationManager->FindPopulationFileByShortName(defaultPopFileList[0], defaultPopFileName))
 			{
-				V_strncpy( szFileName, defaultPopFileName, sizeof( szFileName ) );
+				V_strncpy(szFileName, defaultPopFileName, sizeof(szFileName));
 				bFound = true;
 			}
 		}
@@ -164,23 +162,23 @@ void CMannVsMachineLogic::InitPopulationManager( void )
 
 	// Use mapname.pop. This won't exist but would've been the highest priority default so you'll at least get an error
 	// about the file of last resort.
-	if ( !bFound )
+	if(!bFound)
 	{
-		Q_snprintf( szFileName, sizeof( szFileName ), pszFormat, STRING( gpGlobals->mapname ) );
+		Q_snprintf(szFileName, sizeof(szFileName), pszFormat, STRING(gpGlobals->mapname));
 	}
 
-	if ( m_populationManager && V_strcmp( m_populationManager->GetPopulationFilename(), szFileName ) != 0 )
+	if(m_populationManager && V_strcmp(m_populationManager->GetPopulationFilename(), szFileName) != 0)
 	{
-		UTIL_RemoveImmediate( m_populationManager );
+		UTIL_RemoveImmediate(m_populationManager);
 		m_populationManager = NULL;
 	}
 
-	if ( !m_populationManager )
+	if(!m_populationManager)
 	{
-		m_populationManager = (CPopulationManager *)CreateEntityByName( "info_populator" );
-		m_populationManager->SetPopulationFilename( szFileName );
+		m_populationManager = (CPopulationManager *)CreateEntityByName("info_populator");
+		m_populationManager->SetPopulationFilename(szFileName);
 	}
 
 	// Clear the Value since its now loaded
-	TFGameRules()->SetNextMvMPopfile( "" );
+	TFGameRules()->SetNextMvMPopfile("");
 }

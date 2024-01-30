@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,12 +19,12 @@
 class CTFPlayer;
 #endif // GAME_DLL
 
-DECLARE_AUTO_LIST( IDroppedWeaponAutoList );
+DECLARE_AUTO_LIST(IDroppedWeaponAutoList);
 
 class CTFDroppedWeapon : public CBaseAnimating, public IDroppedWeaponAutoList
 {
 public:
-	DECLARE_CLASS( CTFDroppedWeapon, CBaseAnimating );
+	DECLARE_CLASS(CTFDroppedWeapon, CBaseAnimating);
 	DECLARE_NETWORKCLASS();
 
 	CTFDroppedWeapon();
@@ -33,44 +33,53 @@ public:
 	virtual void Spawn() OVERRIDE;
 
 #ifdef CLIENT_DLL
-	virtual void OnPreDataChanged( DataUpdateType_t updateType ) OVERRIDE;
-	virtual void OnDataChanged( DataUpdateType_t updateType ) OVERRIDE;
+	virtual void OnPreDataChanged(DataUpdateType_t updateType) OVERRIDE;
+	virtual void OnDataChanged(DataUpdateType_t updateType) OVERRIDE;
 	virtual void ClientThink() OVERRIDE;
 
 	// target id
-	virtual bool IsVisibleToTargetID( void ) const OVERRIDE;
+	virtual bool IsVisibleToTargetID(void) const OVERRIDE;
 
 	// Draw Attachment models
-	virtual bool			OnInternalDrawModel( ClientModelRenderInfo_t *pInfo );
+	virtual bool OnInternalDrawModel(ClientModelRenderInfo_t *pInfo);
 
-	virtual IMaterial		*GetEconWeaponMaterialOverride( int iTeam ) OVERRIDE;
-	virtual void			ModifyEmitSoundParams( EmitSound_t &params ) OVERRIDE;
+	virtual IMaterial *GetEconWeaponMaterialOverride(int iTeam) OVERRIDE;
+	virtual void ModifyEmitSoundParams(EmitSound_t &params) OVERRIDE;
 #endif // CLIENT_DLL
 
 #ifdef GAME_DLL
-	static CTFDroppedWeapon *Create( CTFPlayer *pLastOwner, const Vector &vecOrigin, const QAngle &vecAngles, const char *pszModelName, const CEconItemView *pItem );
-	void InitDroppedWeapon( CTFPlayer *pPlayer, CTFWeaponBase *pWeapon, bool bSwap, bool bIsSuicide = false );
-	void InitPickedUpWeapon( CTFPlayer *pPlayer, CTFWeaponBase *pWeapon );
+	static CTFDroppedWeapon *Create(CTFPlayer *pLastOwner, const Vector &vecOrigin, const QAngle &vecAngles,
+									const char *pszModelName, const CEconItemView *pItem);
+	void InitDroppedWeapon(CTFPlayer *pPlayer, CTFWeaponBase *pWeapon, bool bSwap, bool bIsSuicide = false);
+	void InitPickedUpWeapon(CTFPlayer *pPlayer, CTFWeaponBase *pWeapon);
 
 	void ChargeLevelDegradeThink();
 #endif // GAME_DLL
 
-	CEconItemView *GetItem() { return &m_Item; }
-	const CEconItemView *GetItem() const { return &m_Item; }
+	CEconItemView *GetItem()
+	{
+		return &m_Item;
+	}
+	const CEconItemView *GetItem() const
+	{
+		return &m_Item;
+	}
 
-	float GetChargeLevel( void ){ return m_flChargeLevel; }
+	float GetChargeLevel(void)
+	{
+		return m_flChargeLevel;
+	}
 
 private:
-
-	CNetworkVarEmbedded( CEconItemView,	m_Item );
-	CNetworkVar( float, m_flChargeLevel );
+	CNetworkVarEmbedded(CEconItemView, m_Item);
+	CNetworkVar(float, m_flChargeLevel);
 
 #ifdef GAME_DLL
 
-	CHandle< CTFPlayer > m_hPlayer;
+	CHandle<CTFPlayer> m_hPlayer;
 
 	// preserve weapon ammo in the clip
-	void SetItem( const CEconItemView *pItem );
+	void SetItem(const CEconItemView *pItem);
 
 	// preserve ammo count
 	int m_nClip;
@@ -84,12 +93,12 @@ private:
 
 #ifdef CLIENT_DLL
 	void SetupParticleEffect();
-	HPARTICLEFFECT		m_effect;
+	HPARTICLEFFECT m_effect;
 
-	CHandle< C_BaseAnimating > m_worldmodelStatTrakAddon;
+	CHandle<C_BaseAnimating> m_worldmodelStatTrakAddon;
 
-	void UpdateGlowEffect( void );
-	void DestroyGlowEffect( void );
+	void UpdateGlowEffect(void);
+	void DestroyGlowEffect(void);
 	CGlowObject *m_pGlowEffect;
 	bool m_bShouldGlowForLocalPlayer;
 

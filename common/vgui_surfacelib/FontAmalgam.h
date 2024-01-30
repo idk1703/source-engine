@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,7 +28,7 @@ public:
 	void SetName(const char *name);
 
 	// adds a font to the amalgam
-	void AddFont( font_t *font, int lowRange, int highRange);
+	void AddFont(font_t *font, int lowRange, int highRange);
 
 	// returns the font for the given character
 	font_t *GetFontForChar(int ch);
@@ -74,6 +74,5 @@ private:
 	int m_iMaxWidth;
 	int m_iMaxHeight;
 };
-
 
 #endif // FONTAMALGAM_H

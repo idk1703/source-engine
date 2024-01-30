@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -8,39 +8,42 @@
 
 class CPasteSpecialDlg : public CDialog
 {
-// Construction
+	// Construction
 public:
-	CPasteSpecialDlg(CWnd* pParent, BoundBox*);
+	CPasteSpecialDlg(CWnd *pParent, BoundBox *);
 	void SaveToIni();
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CPasteSpecialDlg)
-	enum { IDD = IDD_WC_PASTESPECIAL };
-	int		m_iCopies;
-	BOOL	m_bGroup;
-	int		m_iOffsetX;
-	int		m_iOffsetY;
-	int		m_iOffsetZ;
-	float	m_fRotateX;
-	float	m_fRotateZ;
-	float	m_fRotateY;
-	BOOL	m_bCenterOriginal;
-	BOOL	m_bMakeEntityNamesUnique;
-	BOOL	m_bAddPrefix;
-	CString	m_strPrefix;
+	enum
+	{
+		IDD = IDD_WC_PASTESPECIAL
+	};
+	int m_iCopies;
+	BOOL m_bGroup;
+	int m_iOffsetX;
+	int m_iOffsetY;
+	int m_iOffsetZ;
+	float m_fRotateX;
+	float m_fRotateZ;
+	float m_fRotateY;
+	BOOL m_bCenterOriginal;
+	BOOL m_bMakeEntityNamesUnique;
+	BOOL m_bAddPrefix;
+	CString m_strPrefix;
 	//}}AFX_DATA
 
 	BoundBox ObjectsBox;
 
-// Overrides
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CPasteSpecialDlg)
-	protected:
+protected:
 	virtual BOOL OnInitDialog();
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
+													 //}}AFX_VIRTUAL
 
-// Implementation
+	// Implementation
 protected:
 	void GetOffset(int iAxis, int iEditCtrl);
 

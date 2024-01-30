@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -21,39 +21,39 @@ class CChoreoEvent;
 class CChoreoGlobalEventWidget : public CChoreoWidget
 {
 public:
-	typedef CChoreoWidget		BaseClass;
+	typedef CChoreoWidget BaseClass;
 
 	// Construction/destruction
-					CChoreoGlobalEventWidget( CChoreoWidget *parent );
-	virtual			~CChoreoGlobalEventWidget( void );
+	CChoreoGlobalEventWidget(CChoreoWidget *parent);
+	virtual ~CChoreoGlobalEventWidget(void);
 
 	// Create children
-	virtual void	Create( void );
+	virtual void Create(void);
 	// Redo layout
-	virtual void	Layout( RECT& rc );
+	virtual void Layout(RECT &rc);
 
 	// Screen refresh
-	virtual void	redraw(CChoreoWidgetDrawHelper& drawHelper);
+	virtual void redraw(CChoreoWidgetDrawHelper &drawHelper);
 
 	// Access underlying scene object
-	CChoreoEvent	*GetEvent( void );
-	void			SetEvent( CChoreoEvent *event );
+	CChoreoEvent *GetEvent(void);
+	void SetEvent(CChoreoEvent *event);
 
 	// Draw focus rect while mouse dragging is going on
-	void			DrawFocusRect( void );
-private:
+	void DrawFocusRect(void);
 
-	void			DrawLabel( CChoreoWidgetDrawHelper& drawHelper, COLORREF clr, int x, int y, bool right );
+private:
+	void DrawLabel(CChoreoWidgetDrawHelper &drawHelper, COLORREF clr, int x, int y, bool right);
 
 	// The underlying scene object
-	CChoreoEvent	*m_pEvent;
+	CChoreoEvent *m_pEvent;
 
 	// For updating focus rect
-	bool				m_bDragging;
-	int					m_xStart;
-	RECT				m_rcFocus;
-	RECT				m_rcOrig;
-	HCURSOR				m_hPrevCursor;
+	bool m_bDragging;
+	int m_xStart;
+	RECT m_rcFocus;
+	RECT m_rcOrig;
+	HCURSOR m_hPrevCursor;
 };
 
 #endif // CHOREOGLOBALEVENTWIDGET_H

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -52,10 +52,10 @@ bool CVarListPropertyPage::LoadVarList(const char *varfile)
 
 	// load list from file
 	KeyValues *dat = new KeyValues("VarList");
-	if (dat->LoadFromFile( g_pFullFileSystem, varfile, NULL))
+	if(dat->LoadFromFile(g_pFullFileSystem, varfile, NULL))
 	{
 		// enter into list
-		for (KeyValues *rule = dat->GetFirstSubKey(); rule != NULL; rule = rule->GetNextKey())
+		for(KeyValues *rule = dat->GetFirstSubKey(); rule != NULL; rule = rule->GetNextKey())
 		{
 			m_pRulesList->AddItem(rule, 0, false, false);
 		}
@@ -83,7 +83,7 @@ void CVarListPropertyPage::EditVariable()
 	// get rule from the list
 	int itemID = m_pRulesList->GetSelectedItem(0);
 	KeyValues *rule = m_pRulesList->GetItem(itemID);
-	if (!rule)
+	if(!rule)
 		return;
 
 	OnEditVariable(rule);
@@ -105,10 +105,10 @@ void CVarListPropertyPage::OnEditVariable(KeyValues *rule)
 void CVarListPropertyPage::RefreshVarList()
 {
 	// iterate the vars
-	for (int i = 0; i < m_pRulesList->GetItemCount(); i++)
+	for(int i = 0; i < m_pRulesList->GetItemCount(); i++)
 	{
 		KeyValues *row = m_pRulesList->GetItem(i);
-		if (!row)
+		if(!row)
 			continue;
 
 		// request the info from the server on each one of them
@@ -126,12 +126,12 @@ void CVarListPropertyPage::SetVarString(const char *varName, const char *value)
 	// find the item by name
 	int itemID = m_pRulesList->GetItem(varName);
 	KeyValues *rule = m_pRulesList->GetItem(itemID);
-	if (!rule)
+	if(!rule)
 		return;
 
 	// parse the rule
 	const char *type = rule->GetString("type");
-	if (!stricmp(type, "enumeration"))
+	if(!stricmp(type, "enumeration"))
 	{
 		// look up the value in the enumeration
 		int iValue = atoi(value);
@@ -139,12 +139,12 @@ void CVarListPropertyPage::SetVarString(const char *varName, const char *value)
 		rule->SetString("value", result);
 		rule->SetInt("enum", iValue);
 	}
-	else 
+	else
 	{
 		// no special type, treat it as a string
 		rule->SetString("value", value);
 	}
-		
+
 	m_pRulesList->ApplyItemChanges(itemID);
 }
 
@@ -156,7 +156,7 @@ void CVarListPropertyPage::SetCustomStringList(const char *varName, const char *
 	// find the item by name
 	int itemID = m_pRulesList->GetItem(varName);
 	KeyValues *rule = m_pRulesList->GetItem(itemID);
-	if (!rule)
+	if(!rule)
 		return;
 
 	rule->SetString("stringlist", stringList);
@@ -169,7 +169,7 @@ const char *CVarListPropertyPage::GetVarString(const char *varName)
 {
 	int itemID = m_pRulesList->GetItem(varName);
 	KeyValues *rule = m_pRulesList->GetItem(itemID);
-	if (!rule)
+	if(!rule)
 		return "";
 
 	return rule->GetString("value");
@@ -180,7 +180,7 @@ const char *CVarListPropertyPage::GetVarString(const char *varName)
 //-----------------------------------------------------------------------------
 void CVarListPropertyPage::OnKeyCodeTyped(KeyCode code)
 {
-	if (code == KEY_F5)
+	if(code == KEY_F5)
 	{
 		OnResetData();
 	}
@@ -195,7 +195,7 @@ void CVarListPropertyPage::OnKeyCodeTyped(KeyCode code)
 //-----------------------------------------------------------------------------
 void CVarListPropertyPage::OnItemSelected()
 {
-	if (m_pRulesList->GetSelectedItemsCount() > 0)
+	if(m_pRulesList->GetSelectedItemsCount() > 0)
 	{
 		m_pEditButton->SetEnabled(true);
 	}

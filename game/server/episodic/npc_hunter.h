@@ -7,7 +7,7 @@
 #ifndef NPC_HUNTER_H
 #define NPC_HUNTER_H
 
-#if defined( _WIN32 )
+#if defined(_WIN32)
 #pragma once
 #endif
 
@@ -18,8 +18,8 @@ bool Hunter_IsHunter(CBaseEntity *pEnt);
 
 // call throughs for member functions
 
-void Hunter_StriderBusterAttached( CBaseEntity *pHunter, CBaseEntity *pAttached );
-void Hunter_StriderBusterDetached( CBaseEntity *pHunter, CBaseEntity *pAttached );
-void Hunter_StriderBusterLaunched( CBaseEntity *pBuster );
+void Hunter_StriderBusterAttached(CBaseEntity *pHunter, CBaseEntity *pAttached);
+void Hunter_StriderBusterDetached(CBaseEntity *pHunter, CBaseEntity *pAttached);
+void Hunter_StriderBusterLaunched(CBaseEntity *pBuster);
 
 #endif

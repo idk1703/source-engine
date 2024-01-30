@@ -36,8 +36,7 @@ class CRenderQueue;
 
 //----------------------------------------------------------------------------------------
 
-class CClientReplayContext : public IClientReplayContext,
-							 public IErrorReporter
+class CClientReplayContext : public IClientReplayContext, public IErrorReporter
 {
 public:
 	LINK_TO_SHARED_REPLAYCONTEXT_IMP();
@@ -45,59 +44,63 @@ public:
 	CClientReplayContext();
 	~CClientReplayContext();
 
-	virtual bool				Init( CreateInterfaceFn fnFactory );
-	virtual void				Shutdown();
+	virtual bool Init(CreateInterfaceFn fnFactory);
+	virtual void Shutdown();
 
-	virtual void				Think();	// Called by engine
+	virtual void Think(); // Called by engine
 
-	bool						ReconstructReplayIfNecessary( CReplay *pReplay );
-	void						DisableReplayOnClient( bool bDisable );
-	bool						IsClientSideReplayDisabled() const		{ return m_bClientSideReplayDisabled; }
+	bool ReconstructReplayIfNecessary(CReplay *pReplay);
+	void DisableReplayOnClient(bool bDisable);
+	bool IsClientSideReplayDisabled() const
+	{
+		return m_bClientSideReplayDisabled;
+	}
 
 	//
 	// IClientReplayContext
 	//
-	virtual CReplay				*GetReplay( ReplayHandle_t hReplay );
-	virtual IReplayManager		*GetReplayManager();
-	virtual IReplayMovieRenderer	*GetMovieRenderer();
-	virtual IReplayMovieManager	*GetMovieManager();
-	virtual IReplayScreenshotManager	*GetScreenshotManager();
-	virtual IReplayPerformanceManager	*GetPerformanceManager();
+	virtual CReplay *GetReplay(ReplayHandle_t hReplay);
+	virtual IReplayManager *GetReplayManager();
+	virtual IReplayMovieRenderer *GetMovieRenderer();
+	virtual IReplayMovieManager *GetMovieManager();
+	virtual IReplayScreenshotManager *GetScreenshotManager();
+	virtual IReplayPerformanceManager *GetPerformanceManager();
 	virtual IReplayPerformanceController *GetPerformanceController();
-	virtual IReplayRenderQueue			*GetRenderQueue();
-	virtual void				SetMovieRenderer( IReplayMovieRenderer *pMovieRenderer );
-	virtual void				OnSignonStateFull();
-	virtual void				OnClientSideDisconnect();
-	virtual void				PlayReplay( ReplayHandle_t hReplay, int iPerformance, bool bPlaySound );
-	virtual void				OnPlayerSpawn();
-	virtual void				OnPlayerClassChanged();
-	virtual void				GetPlaybackTimes( float &flOutTime, float &flOutLength, const CReplay *pReplay, const CReplayPerformance *pPerformance );
-	virtual uint64				GetServerSessionId( ReplayHandle_t hReplay );
-	virtual void				CleanupUnneededBlocks();
+	virtual IReplayRenderQueue *GetRenderQueue();
+	virtual void SetMovieRenderer(IReplayMovieRenderer *pMovieRenderer);
+	virtual void OnSignonStateFull();
+	virtual void OnClientSideDisconnect();
+	virtual void PlayReplay(ReplayHandle_t hReplay, int iPerformance, bool bPlaySound);
+	virtual void OnPlayerSpawn();
+	virtual void OnPlayerClassChanged();
+	virtual void GetPlaybackTimes(float &flOutTime, float &flOutLength, const CReplay *pReplay,
+								  const CReplayPerformance *pPerformance);
+	virtual uint64 GetServerSessionId(ReplayHandle_t hReplay);
+	virtual void CleanupUnneededBlocks();
 
 	//
 	// IErrorReporter
 	//
-	virtual void				ReportErrorsToUser( wchar_t *pErrorText );
+	virtual void ReportErrorsToUser(wchar_t *pErrorText);
 
-	void						TestDownloader( const char *pURL );
+	void TestDownloader(const char *pURL);
 
-	CReplayManager				*m_pReplayManager;
-	CScreenshotManager			*m_pScreenshotManager;
-	IReplayMovieRenderer		*m_pMovieRenderer;
-	CReplayMovieManager			*m_pMovieManager;
-	CReplayPerformanceManager	*m_pPerformanceManager;
-	CPerformanceController		*m_pPerformanceController;
-	CSessionBlockDownloader		*m_pSessionBlockDownloader;
-	CRenderQueue				*m_pRenderQueue;
-	
-	CHttpDownloader				*m_pTestDownloader;
+	CReplayManager *m_pReplayManager;
+	CScreenshotManager *m_pScreenshotManager;
+	IReplayMovieRenderer *m_pMovieRenderer;
+	CReplayMovieManager *m_pMovieManager;
+	CReplayPerformanceManager *m_pPerformanceManager;
+	CPerformanceController *m_pPerformanceController;
+	CSessionBlockDownloader *m_pSessionBlockDownloader;
+	CRenderQueue *m_pRenderQueue;
+
+	CHttpDownloader *m_pTestDownloader;
 
 private:
-	void						DebugThink();
-	void						ReplayThink();
+	void DebugThink();
+	void ReplayThink();
 
-	bool						m_bClientSideReplayDisabled;
+	bool m_bClientSideReplayDisabled;
 };
 
 //----------------------------------------------------------------------------------------
@@ -126,7 +129,8 @@ inline CReplayManager *CL_GetReplayManager()
 
 inline CClientRecordingSessionBlockManager *CL_GetRecordingSessionBlockManager()
 {
-	return static_cast< CClientRecordingSessionBlockManager * >( g_pClientReplayContextInternal->GetRecordingSessionBlockManager() );
+	return static_cast<CClientRecordingSessionBlockManager *>(
+		g_pClientReplayContextInternal->GetRecordingSessionBlockManager());
 }
 
 inline CScreenshotManager *CL_GetScreenshotManager()
@@ -186,4 +190,4 @@ CClientRecordingSession *CL_GetRecordingSessionInProgress();
 
 //----------------------------------------------------------------------------------------
 
-#endif	// CL_REPLAYCONTEXT_H
+#endif // CL_REPLAYCONTEXT_H

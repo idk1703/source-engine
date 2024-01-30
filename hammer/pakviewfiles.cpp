@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -24,27 +24,22 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNCREATE(CPakViewFiles, CListView)
 
-CPakViewFiles::CPakViewFiles()
-{
-}
+CPakViewFiles::CPakViewFiles() {}
 
-CPakViewFiles::~CPakViewFiles()
-{
-}
-
+CPakViewFiles::~CPakViewFiles() {}
 
 BEGIN_MESSAGE_MAP(CPakViewFiles, CListView)
 	//{{AFX_MSG_MAP(CPakViewFiles)
-		// NOTE - the ClassWizard will add and remove mapping macros here.
+	// NOTE - the ClassWizard will add and remove mapping macros here.
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CPakViewFiles drawing
 
-void CPakViewFiles::OnDraw(CDC* pDC)
+void CPakViewFiles::OnDraw(CDC *pDC)
 {
-	CDocument* pDoc = GetDocument();
+	CDocument *pDoc = GetDocument();
 	// TODO: add draw code here
 }
 
@@ -57,7 +52,7 @@ void CPakViewFiles::AssertValid() const
 	CListView::AssertValid();
 }
 
-void CPakViewFiles::Dump(CDumpContext& dc) const
+void CPakViewFiles::Dump(CDumpContext &dc) const
 {
 	CListView::Dump(dc);
 }
@@ -66,20 +61,20 @@ void CPakViewFiles::Dump(CDumpContext& dc) const
 /////////////////////////////////////////////////////////////////////////////
 // CPakViewFiles message handlers
 
-void CPakViewFiles::OnInitialUpdate() 
+void CPakViewFiles::OnInitialUpdate()
 {
 	CListView::OnInitialUpdate();
-	CListCtrl& lc = GetListCtrl();
+	CListCtrl &lc = GetListCtrl();
 
 	// modify the list control's attributes
 	DWORD dwStyle = GetWindowLong(lc.m_hWnd, GWL_STYLE);
-	SetWindowLong(lc.m_hWnd, GWL_STYLE, (dwStyle & ~LVS_TYPEMASK) |
-		LVS_ALIGNLEFT | LVS_AUTOARRANGE | LVS_REPORT | // LVS_ICON |
-  		// LVS_NOITEMDATA | 
-		 LVS_SORTASCENDING);
+	SetWindowLong(lc.m_hWnd, GWL_STYLE,
+				  (dwStyle & ~LVS_TYPEMASK) | LVS_ALIGNLEFT | LVS_AUTOARRANGE | LVS_REPORT | // LVS_ICON |
+																							 // LVS_NOITEMDATA |
+					  LVS_SORTASCENDING);
 
 	// add some headers
-	
+
 	// 1. name of entry
 	lc.InsertColumn(0, "Name", LVCFMT_LEFT, 150, colName);
 	// 2. size of entry

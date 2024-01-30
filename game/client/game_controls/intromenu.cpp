@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -26,7 +26,7 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CIntroMenu::CIntroMenu( IViewPort *pViewPort ) : Frame( NULL, PANEL_INTRO )
+CIntroMenu::CIntroMenu(IViewPort *pViewPort) : Frame(NULL, PANEL_INTRO)
 {
 	// initialize dialog
 	m_pViewPort = pViewPort;
@@ -34,13 +34,13 @@ CIntroMenu::CIntroMenu( IViewPort *pViewPort ) : Frame( NULL, PANEL_INTRO )
 	m_pTitleLabel = NULL;
 
 	// load the new scheme early!!
-	SetScheme( "ClientScheme" );
-	SetMoveable( false );
-	SetSizeable( false );
-	SetProportional( true );
+	SetScheme("ClientScheme");
+	SetMoveable(false);
+	SetSizeable(false);
+	SetProportional(true);
 
 	// hide the system buttons
-	SetTitleBarVisible( false );
+	SetTitleBarVisible(false);
 
 	Reset();
 }
@@ -48,75 +48,71 @@ CIntroMenu::CIntroMenu( IViewPort *pViewPort ) : Frame( NULL, PANEL_INTRO )
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CIntroMenu::~CIntroMenu()
-{
-}
+CIntroMenu::~CIntroMenu() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets the color of the top and bottom bars
 //-----------------------------------------------------------------------------
-void CIntroMenu::ApplySchemeSettings( IScheme *pScheme )
+void CIntroMenu::ApplySchemeSettings(IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
 	LoadControlSettings("Resource/UI/IntroMenu.res");
 
-	m_pTitleLabel = dynamic_cast<Label *>( FindChildByName( "titlelabel" ) );
+	m_pTitleLabel = dynamic_cast<Label *>(FindChildByName("titlelabel"));
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CIntroMenu::Reset( void )
+void CIntroMenu::Reset(void)
 {
 	Update();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CIntroMenu::Update( void )
-{
-}
+void CIntroMenu::Update(void) {}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CIntroMenu::OnCommand( const char *command )
+void CIntroMenu::OnCommand(const char *command)
 {
-	if ( !Q_strcmp( command, "skip" ) )
+	if(!Q_strcmp(command, "skip"))
 	{
-		engine->ClientCmd( "intro_skip" );
-		m_pViewPort->ShowPanel( this, false );
+		engine->ClientCmd("intro_skip");
+		m_pViewPort->ShowPanel(this, false);
 	}
 
-	BaseClass::OnCommand( command );
+	BaseClass::OnCommand(command);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CIntroMenu::ShowPanel( bool bShow )
+void CIntroMenu::ShowPanel(bool bShow)
 {
-	if ( BaseClass::IsVisible() == bShow )
+	if(BaseClass::IsVisible() == bShow)
 		return;
 
-	m_pViewPort->ShowBackGround( bShow );
+	m_pViewPort->ShowBackGround(bShow);
 
-	if ( bShow )
+	if(bShow)
 	{
 		Activate();
 
-		if ( GameRules() )
+		if(GameRules())
 		{
-			SetDialogVariable( "gamemode", g_pVGuiLocalize->Find( GameRules()->GetGameTypeName() ) );
+			SetDialogVariable("gamemode", g_pVGuiLocalize->Find(GameRules()->GetGameTypeName()));
 		}
 
-		SetMouseInputEnabled( true );
+		SetMouseInputEnabled(true);
 	}
 	else
 	{
-		SetVisible( false );
-		SetMouseInputEnabled( false );
+		SetVisible(false);
+		SetMouseInputEnabled(false);
 	}
 }

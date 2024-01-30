@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -9,27 +9,28 @@
 #include "c_baseobject.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_ObjectRallyFlag : public C_BaseObject
 {
-	DECLARE_CLASS( C_ObjectRallyFlag, C_BaseObject );
+	DECLARE_CLASS(C_ObjectRallyFlag, C_BaseObject);
+
 public:
 	DECLARE_CLIENTCLASS();
 
 	C_ObjectRallyFlag();
 
 private:
-	C_ObjectRallyFlag( const C_ObjectRallyFlag & ); // not defined, not accessible
+	C_ObjectRallyFlag(const C_ObjectRallyFlag &); // not defined, not accessible
 };
 
 IMPLEMENT_CLIENTCLASS_DT(C_ObjectRallyFlag, DT_ObjectRallyFlag, CObjectRallyFlag)
-END_RECV_TABLE()
+END_RECV_TABLE
+()
 
-//-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-C_ObjectRallyFlag::C_ObjectRallyFlag()
+	//-----------------------------------------------------------------------------
+	// Purpose:
+	//-----------------------------------------------------------------------------
+	C_ObjectRallyFlag::C_ObjectRallyFlag()
 {
 }
-

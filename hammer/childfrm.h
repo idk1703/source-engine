@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -15,8 +15,10 @@ enum DrawType_t;
 class CMySplitterWnd : public CSplitterWnd
 {
 public:
-
-	CMySplitterWnd(void) { pMaxPrev = NULL; }
+	CMySplitterWnd(void)
+	{
+		pMaxPrev = NULL;
+	}
 
 	int sizePrev[2][2];
 	CWnd *pMaxPrev;
@@ -24,15 +26,13 @@ public:
 	void ToggleMax(CWnd *pWnd);
 };
 
-
 class CChildFrame : public CMDIChildWnd
 {
 	DECLARE_DYNCREATE(CChildFrame)
-		
-		public:
-	
+
+public:
 	CChildFrame(void);
-	
+
 	CView *ReplaceView(CRuntimeClass *pViewClass);
 	void SetSplitterMode(BOOL bSplitter);
 	CView *GetActiveView(void);
@@ -48,23 +48,21 @@ class CChildFrame : public CMDIChildWnd
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CChildFrame)
 public:
-	BOOL PreCreateWindow(CREATESTRUCT& cs);
+	BOOL PreCreateWindow(CREATESTRUCT &cs);
 	//}}AFX_VIRTUAL
 
 public:
-
 	virtual ~CChildFrame(void);
 #ifdef _DEBUG
 	virtual void AssertValid() const;
-	virtual void Dump(CDumpContext& dc) const;
+	virtual void Dump(CDumpContext &dc) const;
 #endif
 
 protected:
-
-	virtual BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext);
+	virtual BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext *pContext);
 
 	//{{AFX_MSG(CChildFrame)
-	afx_msg void OnSetFocus( CWnd* pOldWnd ); 
+	afx_msg void OnSetFocus(CWnd *pOldWnd);
 
 	afx_msg void OnClose();
 	afx_msg void OnView2dxy();
@@ -79,26 +77,24 @@ protected:
 	afx_msg void OnView3dLightmapGrid();
 	afx_msg void OnView3dWireframe();
 	afx_msg void OnView3dSmooth(void);
-	//afx_msg void OnView3dEngine(void);
-	//afx_msg void OnUpdateView2d(CCmdUI* pCmdUI);
-	//afx_msg void OnUpdateView3d(CCmdUI* pCmdUI);
+	// afx_msg void OnView3dEngine(void);
+	// afx_msg void OnUpdateView2d(CCmdUI* pCmdUI);
+	// afx_msg void OnUpdateView3d(CCmdUI* pCmdUI);
 	afx_msg void OnViewAutosize4();
-	afx_msg void OnUpdateViewAutosize4(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateViewAutosize4(CCmdUI *pCmdUI);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnPaint();
 	afx_msg void OnViewMaximizepane();
-	afx_msg void OnUpdateViewMaximizepane(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateViewMaximizepane(CCmdUI *pCmdUI);
 	afx_msg void OnWindowToggle();
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
 
-		CMySplitterWnd *m_wndSplitter;
+	CMySplitterWnd *m_wndSplitter;
 };
 
-
 void SetDefaultChildType(BOOL b4Views);
-
 
 #endif // CHILDFRM_H

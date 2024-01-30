@@ -18,4 +18,3 @@ for missingSymbol in $missingSymbols; do
 		echo `c++filt "$missingSymbol"` "($missingSymbol)"
 	fi
 done
-

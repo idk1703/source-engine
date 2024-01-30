@@ -101,4 +101,3 @@ clean:
 	 $(MAKE) -f $(MAKE_VCPM) $(BASE_DEFINES) clean
 	 $(MAKE) -f $(MAKE_PLUGIN) $(BASE_DEFINES) clean
 	 $(MAKE) -f $(MAKE_MOD) $(BASE_DEFINES) clean
-

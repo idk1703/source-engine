@@ -25,29 +25,35 @@ namespace vgui
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CLadderLobbyLeaderboard : public CTFLeaderboardPanel
 {
-	DECLARE_CLASS_SIMPLE( CLadderLobbyLeaderboard, CTFLeaderboardPanel );
-public:
+	DECLARE_CLASS_SIMPLE(CLadderLobbyLeaderboard, CTFLeaderboardPanel);
 
-	CLadderLobbyLeaderboard( Panel *pParent, const char *pszPanelName );
+public:
+	CLadderLobbyLeaderboard(Panel *pParent, const char *pszPanelName);
 
 	//-----------------------------------------------------------------------------
 	// Purpose: Create leaderboard panels
 	//-----------------------------------------------------------------------------
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme) OVERRIDE;
 	virtual void PerformLayout() OVERRIDE;
-	virtual void OnCommand( const char *command ) OVERRIDE;
+	virtual void OnCommand(const char *command) OVERRIDE;
 
-	virtual bool GetLeaderboardData( CUtlVector< LeaderboardEntry_t* >& scores );
+	virtual bool GetLeaderboardData(CUtlVector<LeaderboardEntry_t *> &scores);
 	virtual bool UpdateLeaderboards();
 
-	void SetLeaderboard( const char *pszLeaderboardName, bool bGlobal );
+	void SetLeaderboard(const char *pszLeaderboardName, bool bGlobal);
 
-	const char *GetLeaderboardName() const { return m_pszLeaderboardName; }
-	bool IsDataValid( void ) { return m_bIsDataValid; }
+	const char *GetLeaderboardName() const
+	{
+		return m_pszLeaderboardName;
+	}
+	bool IsDataValid(void)
+	{
+		return m_bIsDataValid;
+	}
 
 private:
 	const char *m_pszLeaderboardName;
@@ -57,48 +63,51 @@ private:
 	vgui::ScrollableEditablePanel *m_pScoreListScroller;
 	EditablePanel *m_pScoreList;
 
-	CTFTextToolTip		*m_pToolTip;
-	vgui::EditablePanel		*m_pToolTipEmbeddedPanel;
+	CTFTextToolTip *m_pToolTip;
+	vgui::EditablePanel *m_pToolTipEmbeddedPanel;
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CLobbyPanel_Comp : public CBaseLobbyPanel, public CLocalSteamSharedObjectListener
 {
-	DECLARE_CLASS_SIMPLE( CLobbyPanel_Comp, CBaseLobbyPanel );
+	DECLARE_CLASS_SIMPLE(CLobbyPanel_Comp, CBaseLobbyPanel);
 
 public:
-	CLobbyPanel_Comp( vgui::Panel *pParent, CBaseLobbyContainerFrame* pLobbyContainer );
+	CLobbyPanel_Comp(vgui::Panel *pParent, CBaseLobbyContainerFrame *pLobbyContainer);
 	virtual ~CLobbyPanel_Comp();
 
 	//
 	// Panel overrides
 	//
 	virtual void PerformLayout() OVERRIDE;
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme ) OVERRIDE;
-	virtual void OnCommand( const char *command ) OVERRIDE;
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme) OVERRIDE;
+	virtual void OnCommand(const char *command) OVERRIDE;
 
-	virtual EMatchGroup GetMatchGroup( void ) const OVERRIDE;
+	virtual EMatchGroup GetMatchGroup(void) const OVERRIDE;
 
-	virtual void SOCreated( const CSteamID & steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent ) OVERRIDE;
-	virtual void SOUpdated( const CSteamID & steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent ) OVERRIDE;
+	virtual void SOCreated(const CSteamID &steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent) OVERRIDE;
+	virtual void SOUpdated(const CSteamID &steamIDOwner, const CSharedObject *pObject, ESOCacheEvent eEvent) OVERRIDE;
 
 	virtual void OnThink() OVERRIDE;
 
 	//
 	// CGameEventListener overrides
 	//
-	virtual void FireGameEvent( IGameEvent *event ) OVERRIDE;
+	virtual void FireGameEvent(IGameEvent *event) OVERRIDE;
 
 private:
 	virtual bool ShouldShowLateJoin() const OVERRIDE;
-	virtual void ApplyChatUserSettings( const LobbyPlayerInfo &player,KeyValues *pKV ) const OVERRIDE;
-	virtual const char* GetResFile() const OVERRIDE { return "Resource/UI/LobbyPanel_Comp.res"; }
+	virtual void ApplyChatUserSettings(const LobbyPlayerInfo &player, KeyValues *pKV) const OVERRIDE;
+	virtual const char *GetResFile() const OVERRIDE
+	{
+		return "Resource/UI/LobbyPanel_Comp.res";
+	}
 
-	CPanelAnimationVarAliasType( int, m_iStatMedalWidth, "stat_medal_width", "14", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iMedalCountWidth, "stat_medal_count_width", "20", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iHasPassWidth, "has_pass_width", "12", "proportional_int" );
+	CPanelAnimationVarAliasType(int, m_iStatMedalWidth, "stat_medal_width", "14", "proportional_int");
+	CPanelAnimationVarAliasType(int, m_iMedalCountWidth, "stat_medal_count_width", "20", "proportional_int");
+	CPanelAnimationVarAliasType(int, m_iHasPassWidth, "has_pass_width", "12", "proportional_int");
 
 	CUtlVector<vgui::Label *> m_vecSearchCriteriaLabels;
 
@@ -117,7 +126,7 @@ private:
 		NUM_SORT_METHODS
 	};
 
-	CScrollableList* m_pMatchHistoryScroller;
+	CScrollableList *m_pMatchHistoryScroller;
 	EMatchHistorySortMethods_t m_eMatchSortMethod;
 	bool m_bDescendingMatchHistorySort;
 
@@ -129,11 +138,10 @@ private:
 
 	void WriteGameSettingsControls() OVERRIDE;
 
-	int GetMedalCountForStat( EMatchGroup unLadderType, RankStatType_t nStatType, int nMedalLevel );
-
+	int GetMedalCountForStat(EMatchGroup unLadderType, RankStatType_t nStatType, int nMedalLevel);
 
 	void UpdateMatchDataForLocalPlayer();
 	bool m_bMatchDataForLocalPlayerDirty;
 };
 
-#endif //TF_LOBBYPANEL_COMP_H
+#endif // TF_LOBBYPANEL_COMP_H

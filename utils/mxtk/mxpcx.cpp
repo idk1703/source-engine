@@ -15,84 +15,79 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-
-mxImage *
-mxPcxRead (const char *filename)
+mxImage *mxPcxRead(const char *filename)
 {
-    FILE *file = fopen (filename, "rb");
-    if (!file)
-        return 0;
+	FILE *file = fopen(filename, "rb");
+	if(!file)
+		return 0;
 
 	mxPcxHeader header;
-    if (fread (&header, sizeof (mxPcxHeader), 1, file) == -1)
+	if(fread(&header, sizeof(mxPcxHeader), 1, file) == -1)
 	{
-        fclose (file);
-        return 0;
-    }
-/*
-    if (header.bitsPerPixel != 8 ||
-		header.version != 5)
-	{
-        fclose (file);
-        return 0;
-    }
+		fclose(file);
+		return 0;
+	}
+	/*
+		if (header.bitsPerPixel != 8 ||
+			header.version != 5)
+		{
+			fclose (file);
+			return 0;
+		}
 
-    (void) fseek (file, -769, SEEK_END);
-    if (fgetc (file) != 12) {
-        fclose (file);
-        return NULL;
-    }
-*/
-	(void) fseek (file, -768, SEEK_END);
+		(void) fseek (file, -769, SEEK_END);
+		if (fgetc (file) != 12) {
+			fclose (file);
+			return NULL;
+		}
+	*/
+	(void)fseek(file, -768, SEEK_END);
 
-    int w = header.xmax - header.xmin + 1;
-    int h = header.ymax - header.ymin + 1;
+	int w = header.xmax - header.xmin + 1;
+	int h = header.ymax - header.ymin + 1;
 
-	mxImage *image = new mxImage ();
-	if (!image->create (w, h, 8))
+	mxImage *image = new mxImage();
+	if(!image->create(w, h, 8))
 	{
 		delete image;
-		fclose (file);
+		fclose(file);
 		return 0;
 	}
 
-    if (fread ((byte *) image->palette, sizeof (byte), 768, file) == -1)
+	if(fread((byte *)image->palette, sizeof(byte), 768, file) == -1)
 	{
-        fclose (file);
-        return 0;
-    }
+		fclose(file);
+		return 0;
+	}
 
-    (void) fseek(file, sizeof (mxPcxHeader), SEEK_SET);
-    int ptr = 0;
+	(void)fseek(file, sizeof(mxPcxHeader), SEEK_SET);
+	int ptr = 0;
 	int ch, rep;
-	byte *data = (byte *) image->data;
+	byte *data = (byte *)image->data;
 	int size = w * h;
-    while (ptr < size)
+	while(ptr < size)
 	{
-        ch = fgetc(file);
-        if (ch >= 192)
+		ch = fgetc(file);
+		if(ch >= 192)
 		{
-            rep = ch - 192;
-            ch = fgetc(file);
-        }
-        else {
-            rep = 1;
-        }
+			rep = ch - 192;
+			ch = fgetc(file);
+		}
+		else
+		{
+			rep = 1;
+		}
 
-        while (rep--)
+		while(rep--)
 			data[ptr++] = (byte)ch;
-    }
+	}
 
-    fclose(file);
+	fclose(file);
 
 	return image;
 }
 
-
-
-bool
-mxPcxWrite (const char * /*filename*/, mxImage * /*image*/)
+bool mxPcxWrite(const char * /*filename*/, mxImage * /*image*/)
 {
 	return false;
 }

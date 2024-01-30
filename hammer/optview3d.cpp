@@ -12,15 +12,12 @@
 #include "MapDoc.h"
 #include "hammer.h"
 #include "OPTView3D.h"
-#include "Options.h"	
-
+#include "Options.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 IMPLEMENT_DYNCREATE(COPTView3D, CPropertyPage)
-
 
 BEGIN_MESSAGE_MAP(COPTView3D, CPropertyPage)
 	//{{AFX_MSG_MAP(COPTView3D)
@@ -28,34 +25,28 @@ BEGIN_MESSAGE_MAP(COPTView3D, CPropertyPage)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-
-COPTView3D::COPTView3D(void)
-	: CPropertyPage(COPTView3D::IDD)
+COPTView3D::COPTView3D(void) : CPropertyPage(COPTView3D::IDD)
 {
 	//{{AFX_DATA_INIT(COPTView3D)
 	//}}AFX_DATA_INIT
 }
 
-
-COPTView3D::~COPTView3D(void)
-{
-}
+COPTView3D::~COPTView3D(void) {}
 
 void PASCAL DDV_FOVRange(CDataExchange *pDX, int value)
 {
-	if ( ( value > 100 ) | ( value < 30 ) )
+	if((value > 100) | (value < 30))
 	{
 		AfxMessageBox("FOV must be 30-100.", MB_ICONEXCLAMATION | MB_OK);
 		pDX->Fail();
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pDX - 
+// Purpose:
+// Input  : pDX -
 //-----------------------------------------------------------------------------
-void COPTView3D::DoDataExchange(CDataExchange* pDX)
+void COPTView3D::DoDataExchange(CDataExchange *pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(COPTView3D)
@@ -89,13 +80,13 @@ void COPTView3D::DoDataExchange(CDataExchange* pDX)
 	//
 	// If going from controls to data.
 	//
-	if (pDX->m_bSaveAndValidate)
+	if(pDX->m_bSaveAndValidate)
 	{
 		Options.view3d.iBackPlane = m_cBackPlane.GetPos();
 		Options.view3d.nModelDistance = m_ModelDistance.GetPos();
 		Options.view3d.nDetailDistance = m_DetailDistance.GetPos();
 		Options.view3d.nForwardSpeedMax = m_ForwardSpeedMax.GetPos();
-		Options.view3d.nTimeToMaxSpeed = m_TimeToMaxSpeed.GetPos();	
+		Options.view3d.nTimeToMaxSpeed = m_TimeToMaxSpeed.GetPos();
 	}
 	//
 	// Else going from data to controls.
@@ -142,10 +133,9 @@ void COPTView3D::DoDataExchange(CDataExchange* pDX)
 		m_TimeToMaxSpeed.SetPos(Options.view3d.nTimeToMaxSpeed);
 		int nTime = m_TimeToMaxSpeed.GetPos();
 		str.Format("%.2f sec", (float)nTime / 1000.0f);
-		m_TimeToMaxSpeedText.SetWindowText(str);	
+		m_TimeToMaxSpeedText.SetWindowText(str);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Called before the dialog is displayed.
@@ -159,34 +149,33 @@ BOOL COPTView3D::OnInitDialog(void)
 	return TRUE;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Called by the framework when the user chooses the OK or the Apply Now button.
 // Output : Nonzero if the changes are accepted; otherwise zero.
 //-----------------------------------------------------------------------------
 BOOL COPTView3D::OnApply(void)
 {
-	if (Options.view3d.bFilterTextures != m_bOldFilterTextures)
+	if(Options.view3d.bFilterTextures != m_bOldFilterTextures)
 	{
-		AfxMessageBox("The changes to the 'Filter textures' setting will not take effect for any currently visible textures. Close all 3D views and reopen them for the new setting to completely take effect.");
+		AfxMessageBox("The changes to the 'Filter textures' setting will not take effect for any currently visible "
+					  "textures. Close all 3D views and reopen them for the new setting to completely take effect.");
 	}
 
 	Options.PerformChanges(COptions::secView3D);
 	return CPropertyPage::OnApply();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Handles all the sliders in the property page.
 // Input  : Per MFC OnHScroll.
 //-----------------------------------------------------------------------------
-void COPTView3D::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar *pScrollBar) 
+void COPTView3D::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar *pScrollBar)
 {
 	//
 	// If it is the back plane scroll bar, update the back plane text.
 	// Also, notify the 3D view so that it can update in realtime.
 	//
-	if (pScrollBar->m_hWnd == m_cBackPlane.m_hWnd)
+	if(pScrollBar->m_hWnd == m_cBackPlane.m_hWnd)
 	{
 		int iBack = m_cBackPlane.GetPos();
 
@@ -195,17 +184,17 @@ void COPTView3D::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar *pScrollBar)
 		m_cBackText.SetWindowText(str);
 
 		CMainFrame *pMainWnd = GetMainWnd();
-		if (pMainWnd != NULL)
+		if(pMainWnd != NULL)
 		{
 			Options.view3d.iBackPlane = m_cBackPlane.GetPos();
-			pMainWnd->UpdateAllDocViews( MAPVIEW_OPTIONS_CHANGED | MAPVIEW_RENDER_NOW );
+			pMainWnd->UpdateAllDocViews(MAPVIEW_OPTIONS_CHANGED | MAPVIEW_RENDER_NOW);
 		}
 	}
 	//
 	// Else if it is the model distance scroll bar, update the model distance text.
 	// Also, notify the 3D view so that it can update in realtime.
 	//
-	else if (pScrollBar->m_hWnd == m_ModelDistance.m_hWnd)
+	else if(pScrollBar->m_hWnd == m_ModelDistance.m_hWnd)
 	{
 		int nDistance = m_ModelDistance.GetPos();
 
@@ -214,17 +203,17 @@ void COPTView3D::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar *pScrollBar)
 		m_ModelDistanceText.SetWindowText(str);
 
 		CMainFrame *pMainWnd = GetMainWnd();
-		if (pMainWnd != NULL)
+		if(pMainWnd != NULL)
 		{
 			Options.view3d.nModelDistance = m_ModelDistance.GetPos();
-			pMainWnd->UpdateAllDocViews(MAPVIEW_UPDATE_ONLY_3D | MAPVIEW_OPTIONS_CHANGED | MAPVIEW_RENDER_NOW );
+			pMainWnd->UpdateAllDocViews(MAPVIEW_UPDATE_ONLY_3D | MAPVIEW_OPTIONS_CHANGED | MAPVIEW_RENDER_NOW);
 		}
 	}
 	//
 	// Else if it is the detail distance scroll bar, update the detail distance text.
 	// Also, notify the 3D view so that it can update in realtime.
 	//
-	else if (pScrollBar->m_hWnd == m_DetailDistance.m_hWnd)
+	else if(pScrollBar->m_hWnd == m_DetailDistance.m_hWnd)
 	{
 		int nDistance = m_DetailDistance.GetPos();
 
@@ -233,16 +222,16 @@ void COPTView3D::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar *pScrollBar)
 		m_DetailDistanceText.SetWindowText(str);
 
 		CMainFrame *pMainWnd = GetMainWnd();
-		if (pMainWnd != NULL)
+		if(pMainWnd != NULL)
 		{
 			Options.view3d.nDetailDistance = m_DetailDistance.GetPos();
-			pMainWnd->UpdateAllDocViews(MAPVIEW_UPDATE_ONLY_3D | MAPVIEW_OPTIONS_CHANGED | MAPVIEW_RENDER_NOW );
+			pMainWnd->UpdateAllDocViews(MAPVIEW_UPDATE_ONLY_3D | MAPVIEW_OPTIONS_CHANGED | MAPVIEW_RENDER_NOW);
 		}
 	}
 	//
 	// Else if it is the maximum forward speed scroll bar, update the maximum forward speed.
 	//
-	else if (pScrollBar->m_hWnd == m_ForwardSpeedMax.m_hWnd)
+	else if(pScrollBar->m_hWnd == m_ForwardSpeedMax.m_hWnd)
 	{
 		int nSpeed = m_ForwardSpeedMax.GetPos();
 
@@ -254,7 +243,7 @@ void COPTView3D::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar *pScrollBar)
 	//
 	// Else if it is the time to max speed scroll bar, update the time to max speed.
 	//
-	else if (pScrollBar->m_hWnd == m_TimeToMaxSpeed.m_hWnd)
+	else if(pScrollBar->m_hWnd == m_TimeToMaxSpeed.m_hWnd)
 	{
 		float fTimeSeconds = (float)m_TimeToMaxSpeed.GetPos() / 1000.0f;
 
@@ -265,5 +254,3 @@ void COPTView3D::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar *pScrollBar)
 
 	CPropertyPage::OnHScroll(nSBCode, nPos, pScrollBar);
 }
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -12,7 +12,7 @@
 
 #include "convar.h"
 
-float GetCurrentGravity( void );
+float GetCurrentGravity(void);
 
 extern ConVar sv_gravity;
 extern ConVar sv_stopspeed;

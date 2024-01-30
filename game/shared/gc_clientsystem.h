@@ -10,7 +10,7 @@
 #endif
 
 #ifdef CLIENT_DLL
-	#include "clientsteamcontext.h"
+#include "clientsteamcontext.h"
 #endif
 
 //=============================================================================
@@ -20,10 +20,9 @@
 //=============================================================================
 class CGCClientSystem : public CAutoGameSystemPerFrame
 {
-	DECLARE_CLASS_GAMEROOT( CGCClientSystem, CAutoGameSystem );
+	DECLARE_CLASS_GAMEROOT(CGCClientSystem, CAutoGameSystem);
 
 public:
-
 	// Constructor/Destructor.
 	CGCClientSystem();
 	~CGCClientSystem();
@@ -34,63 +33,67 @@ public:
 	virtual void LevelShutdownPostEntity() OVERRIDE;
 	virtual void Shutdown() OVERRIDE;
 
-	// Updates.  Gameservers do this at a slightly different place than clients
-	#ifdef CLIENT_DLL
-		virtual void Update( float frametime ) OVERRIDE;
-	#else
-		virtual void PreClientUpdate() OVERRIDE;
-	#endif
+// Updates.  Gameservers do this at a slightly different place than clients
+#ifdef CLIENT_DLL
+	virtual void Update(float frametime) OVERRIDE;
+#else
+	virtual void PreClientUpdate() OVERRIDE;
+#endif
 
 	// Connection status
-	bool BConnectedtoGC() const { return m_bConnectedToGC; }
+	bool BConnectedtoGC() const
+	{
+		return m_bConnectedToGC;
+	}
 
 	// GC Messages
-	bool BSendMessage( uint32 unMsgType, const uint8 *pubData, uint32 cubData );
-	bool BSendMessage( const GCSDK::CGCMsgBase& msg );
-	bool BSendMessage( const GCSDK::CProtoBufMsgBase& msg );
+	bool BSendMessage(uint32 unMsgType, const uint8 *pubData, uint32 cubData);
+	bool BSendMessage(const GCSDK::CGCMsgBase &msg);
+	bool BSendMessage(const GCSDK::CProtoBufMsgBase &msg);
 
 	// GC SOCache
-	GCSDK::CGCClientSharedObjectCache *GetSOCache( const CSteamID &steamID );
-	GCSDK::CGCClientSharedObjectCache *FindOrAddSOCache( const CSteamID &steamID );
+	GCSDK::CGCClientSharedObjectCache *GetSOCache(const CSteamID &steamID);
+	GCSDK::CGCClientSharedObjectCache *FindOrAddSOCache(const CSteamID &steamID);
 
 	// GC Client
 	GCSDK::CGCClient *GetGCClient();
 
-	// Steam
-	#ifndef CLIENT_DLL
-		void GameServerActivate();
-	#endif
+// Steam
+#ifndef CLIENT_DLL
+	void GameServerActivate();
+#endif
 
 protected:
-
 	void SetupGC();
 	virtual void InitGC();
 	virtual void PreInitGC() {}
 	virtual void PostInitGC() {}
 
-	#ifdef CLIENT_DLL
-		friend class CGCClientJobClientWelcome;
-		virtual void ReceivedClientWelcome( const CMsgClientWelcome &msg );
+#ifdef CLIENT_DLL
+	friend class CGCClientJobClientWelcome;
+	virtual void ReceivedClientWelcome(const CMsgClientWelcome &msg);
 
-		friend class CGCClientJobClientGoodbye;
-		virtual void ReceivedClientGoodbye( const CMsgClientGoodbye &msg );
-	#else
-		friend class CGCClientJobServerWelcome;
-		virtual void ReceivedServerWelcome( const CMsgServerWelcome &msg );
+	friend class CGCClientJobClientGoodbye;
+	virtual void ReceivedClientGoodbye(const CMsgClientGoodbye &msg);
+#else
+	friend class CGCClientJobServerWelcome;
+	virtual void ReceivedServerWelcome(const CMsgServerWelcome &msg);
 
-		friend class CGCClientJobServerGoodbye;
-		virtual void ReceivedServerGoodbye( const CMsgServerGoodbye &msg );
-	#endif
+	friend class CGCClientJobServerGoodbye;
+	virtual void ReceivedServerGoodbye(const CMsgServerGoodbye &msg);
+#endif
 
-	void SetConnectedToGC( bool bConnected ) { m_bConnectedToGC = bConnected; }
+	void SetConnectedToGC(bool bConnected)
+	{
+		m_bConnectedToGC = bConnected;
+	}
 
 private:
-
-	#ifdef CLIENT_DLL
-		void SteamLoggedOnCallback( const SteamLoggedOnChange_t &loggedOnState );
-	#else
-		STEAM_GAMESERVER_CALLBACK( CGCClientSystem, OnLogonSuccess, SteamServersConnected_t, m_CallbackLogonSuccess );
-	#endif
+#ifdef CLIENT_DLL
+	void SteamLoggedOnCallback(const SteamLoggedOnChange_t &loggedOnState);
+#else
+	STEAM_GAMESERVER_CALLBACK(CGCClientSystem, OnLogonSuccess, SteamServersConnected_t, m_CallbackLogonSuccess);
+#endif
 
 	bool m_bInittedGC;
 	bool m_bConnectedToGC;
@@ -103,9 +106,7 @@ private:
 	friend class CGCClientSystemJob;
 };
 
-
-void SetGCClientSystem( CGCClientSystem* pGCClientSystem );
+void SetGCClientSystem(CGCClientSystem *pGCClientSystem);
 CGCClientSystem *GCClientSystem();
 
 #endif // GC_CLIENTSYSTEM_H
-
